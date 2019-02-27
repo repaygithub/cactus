@@ -1,0 +1,9 @@
+{
+  "name": "@repay/eslint-config",
+  "version": "0.0.0",
+  "description": "ESLint configuration for front end applications",
+  "main": "index.js",
+  "repository": "https://github.com/repaygithub/cactus",
+  "license": "unlicensed",
+  "private": true
+}

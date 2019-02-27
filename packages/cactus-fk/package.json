@@ -1,0 +1,9 @@
+{
+  "name": "@repay/cactus-fk",
+  "version": "0.0.0",
+  "description": "Framework package",
+  "main": "index.js",
+  "repository": "https://github.com/repaygithub/cactus",
+  "license": "unlicensed",
+  "private": true
+}

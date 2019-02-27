@@ -1,0 +1,9 @@
+{
+  "name": "@repay/babel-preset",
+  "version": "0.0.0",
+  "description": "Babel preset for front end applications",
+  "main": "index.js",
+  "repository": "https://github.com/repaygithub/cactus",
+  "license": "unlicensed",
+  "private": true
+}

@@ -1,0 +1,21 @@
+{
+  "name": "cactus",
+  "version": "0.0.0",
+  "description": "Cactus Framework and Utilities Monorepo",
+  "main": "index.js",
+  "repository": "git@github.com:repaygithub/cactus.git",
+  "contributors": [
+    "Dhalton",
+    "JamesNimlos"
+  ],
+  "license": "unlicensed",
+  "private": true,
+  "bolt": {
+    "workspaces": [
+      "packages/*"
+    ]
+  },
+  "dependencies": {
+    "bolt": "^0.22.6"
+  }
+}
