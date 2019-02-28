@@ -5,5 +5,22 @@
   "main": "index.js",
   "repository": "https://github.com/repaygithub/cactus",
   "license": "unlicensed",
-  "private": true
+  "private": true,
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.ts"
+    ],
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": "src/.*\\.test\\.(jsx?|tsx?)$",
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.9"
+  }
 }
