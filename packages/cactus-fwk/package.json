@@ -6,6 +6,10 @@
   "repository": "https://github.com/repaygithub/cactus",
   "license": "unlicensed",
   "private": true,
+  "scripts": {
+    "test": "jest",
+    "tdd": "jest --watch"
+  },
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/tests/setup.ts"
@@ -21,9 +25,14 @@
     ]
   },
   "devDependencies": {
+    "@repay/babel-preset": "./packages/babel-preset",
     "@types/jest": "^24.0.9",
+    "@types/react": "^16.8.6",
     "jest": "^24.1.0",
+    "jest-dom": "^3.1.2",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3"
-  }
+    "react-dom": "^16.8.3",
+    "react-testing-library": "^6.0.0"
+  },
+  "dependencies": {}
 }

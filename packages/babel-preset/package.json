@@ -5,5 +5,15 @@
   "main": "index.js",
   "repository": "https://github.com/repaygithub/cactus",
   "license": "unlicensed",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
+    "@babel/plugin-transform-destructuring": "^7.3.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3"
+  }
 }
