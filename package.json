@@ -17,5 +17,17 @@
   },
   "dependencies": {
     "bolt": "^0.22.6"
+  },
+  "devDependencies": {
+    "@repay/eslint-config": "^1.0.2"
+  },
+  "peerDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.14.2"
   }
 }
