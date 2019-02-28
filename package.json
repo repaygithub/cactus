@@ -17,5 +17,17 @@
   },
   "dependencies": {
     "bolt": "^0.22.6"
+  },
+  "devDependencies": {
+    "@repay/eslint-config": "^1.0.2",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.14.1",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "prettier": "^1.16.4",
+    "typescript": "^3.3.3333",
+    "typescript-eslint-parser": "^22.0.0"
   }
 }
