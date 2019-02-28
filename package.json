@@ -8,20 +8,19 @@
     "Dhalton",
     "JamesNimlos"
   ],
+  "scripts": {
+    "fwk": "yarn workspace @repay/cactus-fwk"
+  },
   "license": "unlicensed",
   "private": true,
-  "bolt": {
-    "workspaces": [
-      "packages/*"
-    ]
-  },
-  "dependencies": {
-    "@types/jest": "^24.0.9",
-    "bolt": "^0.22.6",
-    "jest": "^24.1.0"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
+    "@babel/core": "^7.3.4",
     "@repay/eslint-config": "^1.0.2",
+    "@types/jest": "^24.0.9",
+    "@types/react": "^16.8.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",
     "eslint-config-prettier": "^4.1.0",
