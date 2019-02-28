@@ -26,5 +26,16 @@ describe('@repay/cactus-fwk', () => {
       )
       expect(container).toHaveTextContent('This should render')
     })
+
+    test('should render key from default language when key does not exist for requested language', () => {
+      const global = { this_is_the_key: 'This should render' }
+      const i18nController = new I18nController({ defaultLang: 'en', global })
+      const { container } = render(
+        <AppRoot lang="es" withI18n={i18nController}>
+          <Text get="this_is_the_key">This is the default content.</Text>
+        </AppRoot>
+      )
+      expect(container).toHaveTextContent('This should render')
+    })
   })
 })
