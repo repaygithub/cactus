@@ -25,8 +25,7 @@ module.exports = function babelPreset(api) {
           // Users cannot override this behavior because this Babel
           // configuration is highly tuned for ES5 support
           ignoreBrowserslistConfig: true,
-          // If users import all core-js they're probably not concerned with
-          // bundle size. We shouldn't rely on magic to try and shrink it.
+          // Don't include core-js, users should import @babel/polyfill themselves
           useBuiltIns: false,
           // Do not transform modules to CJS
           modules: false,
@@ -70,7 +69,6 @@ module.exports = function babelPreset(api) {
           useBuiltIns: true,
         },
       ],
-      require('@babel/plugin-proposal-export-default-from').default,
     ].filter(Boolean),
   }
 }
