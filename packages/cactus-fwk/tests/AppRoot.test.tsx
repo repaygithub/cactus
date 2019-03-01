@@ -1,22 +1,12 @@
 import * as React from 'react'
 import { cleanup, render } from 'react-testing-library'
-import AppRoot, { Text, I18nController } from './index'
+import AppRoot, { Text, I18nController } from '../src/index'
 
 afterEach(cleanup)
 
-describe('@repay/cactus-fwk', () => {
-  describe('<Text />', () => {
-    test('can render get id', () => {
-      const { container } = render(<Text get="this_is_my_key" />)
-      expect(container).toHaveTextContent('this_is_my_key')
-    })
-
-    test('renders children when no dictionary is present', () => {
-      const { container } = render(<Text get="this_is_my_key">This is the default content.</Text>)
-      expect(container).toHaveTextContent('This is the default content.')
-    })
-
-    test('should render transalation when provided', () => {
+describe('cactus-fwk', () => {
+  describe('<AppRoot/>', () => {
+    test('allows Text to render translations when provided', () => {
       const global = { this_is_the_key: 'This should render' }
       const i18nController = new I18nController({ defaultLang: 'en', global })
       const { container } = render(

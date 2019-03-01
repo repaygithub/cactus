@@ -17,7 +17,8 @@
     "transform": {
       "^.+\\.(t|j)sx?$": "babel-jest"
     },
-    "testRegex": "src/.*\\.test\\.(jsx?|tsx?)$",
+    "testRegex": "tests/.*\\.test\\.(jsx?|tsx?)$",
+    "verbose": true,
     "coverageReporters": [
       "lcov",
       "text",
