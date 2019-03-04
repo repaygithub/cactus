@@ -14,16 +14,6 @@ interface LoadingStateListener {
   (params: LoadingState): void
 }
 
-function prefixIds(section: string, dict: KeyDictionary = {}): KeyDictionary {
-  let prefixedDict: KeyDictionary = {}
-  for (const id in dict) {
-    if (dict.hasOwnProperty(id)) {
-      prefixedDict[`${section}/${id}`] = dict[id]
-    }
-  }
-  return prefixedDict
-}
-
 interface I18nControllerOptions {
   /**
    * Initializes global section dictionary
@@ -36,14 +26,16 @@ interface I18nControllerOptions {
   defaultLang: string
 }
 
+const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
+
 export default abstract class BaseI18nController {
-  _dict: Dictionary = {}
   defaultLang: string
   _loadingState: LoadingState = {}
   _listeners: LoadingStateListener[] = []
 
   constructor(options: I18nControllerOptions) {
     this.defaultLang = options.defaultLang
+    _dictionaries.set(this, {})
     if (this.load === undefined) {
       throw new Error('You must override the `load` method!')
     }
@@ -51,31 +43,44 @@ export default abstract class BaseI18nController {
     if (options.global === undefined) {
       this._load({ lang: this.defaultLang, section: 'global' })
     } else {
-      this._setDict(this.defaultLang, 'global', options.global)
+      this.setDict(this.defaultLang, 'global', options.global)
     }
   }
 
   abstract load({ lang, section }: { lang: string; section: string }): Promise<KeyDictionary>
 
-  _setDict(lang: string, section: string, dict: KeyDictionary) {
-    this._dict[lang] = prefixIds(section, dict)
+  _getDict(): Dictionary {
+    return _dictionaries.get(this) || {}
+  }
+
+  setDict(lang: string, section: string, dict: KeyDictionary) {
+    const _dict = this._getDict()
+    if (!_dict[lang]) {
+      _dict[lang] = {}
+    }
+    for (const id in dict) {
+      if (dict.hasOwnProperty(id)) {
+        _dict[lang][`${section}/${id}`] = dict[id]
+      }
+    }
     this._loadingState[`${lang}/${section}`] = 'loaded'
   }
 
   get({
     lang = this.defaultLang,
-    section,
+    section = 'global',
     id,
   }: {
     lang?: string
-    section: string
+    section?: string
     id: string
   }): string {
+    const _dict = this._getDict()
     const key = `${section}/${id}`
-    if (this._dict[lang] && this._dict[lang][key]) {
-      return this._dict[lang][key]
+    if (_dict[lang] && _dict[lang][key]) {
+      return _dict[lang][key]
     }
-    return this._dict[this.defaultLang][key]
+    return _dict[this.defaultLang][key]
   }
 
   _load(args: { lang: string; section: string }): void {
@@ -87,8 +92,7 @@ export default abstract class BaseI18nController {
 
     this._loadingState[loadingKey] = 'loading'
     this.load(args).then(dict => {
-      this._dict[lang] = prefixIds(section, dict)
-      this._loadingState[loadingKey] = 'loaded'
+      this.setDict(lang, section, dict)
       const updatedLoadingState = { ...this._loadingState }
       this._listeners.forEach(l => l(updatedLoadingState))
     })

@@ -10,13 +10,13 @@ export interface I18nContextType {
 
 const I18nContext = React.createContext<I18nContextType | null>(null)
 
-const useI18nText = (id: string) => {
+const useI18nText = (id: string, sectionOverride?: string) => {
   const context = useContext(I18nContext)
   if (context === null) {
     return null
   }
   const { controller, lang, section } = context
-  return controller.get({ lang, section, id })
+  return controller.get({ lang, section: sectionOverride || section, id })
 }
 
 const useI18nContext = (section?: string) => {
@@ -88,10 +88,11 @@ const I18nSection: React.FC<I18nSectionProps> = props => {
 
 interface I18nTextProps {
   get: string
+  section?: string
 }
 
 const I18nText: React.FC<I18nTextProps> = props => {
-  const text = useI18nText(props.get)
+  const text = useI18nText(props.get, props.section)
   return <React.Fragment>{text || props.children || props.get}</React.Fragment>
 }
 

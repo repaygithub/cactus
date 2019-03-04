@@ -82,7 +82,7 @@ describe('i18n functionality', () => {
       )
     })
 
-    test('Should load default global when none is provided', () => {
+    test('should load default global when none is provided', () => {
       const mockLoad = jest.fn((...args) => MockPromise.resolve({}))
       class Controller extends BaseI18nController {
         //@ts-ignore
@@ -92,6 +92,12 @@ describe('i18n functionality', () => {
       }
       new Controller({ defaultLang: 'en' })
       expect(mockLoad).toHaveBeenCalled()
+    })
+
+    test('can access translations outside React context', () => {
+      const global = { key_for_the_people: 'We are the people!' }
+      const controller = new I18nController({ defaultLang: 'en', global })
+      expect(controller.get({ id: 'key_for_the_people' })).toBe('We are the people!')
     })
   })
 
@@ -137,6 +143,20 @@ describe('i18n functionality', () => {
         <I18nText get="this_is_my_key">This is the default content.</I18nText>
       )
       expect(container).toHaveTextContent('This is the default content.')
+    })
+
+    test('can override section', () => {
+      const global = { key_for_the_people: 'We are the people!' }
+      const controller = new I18nController({ defaultLang: 'en', global })
+      controller.setDict('en', 'kleenex', { key_for_the_people: 'We are NOT the people!' })
+      let { container } = render(
+        <AppRoot withI18n={controller}>
+          <I18nSection name="kleenex">
+            <I18nText get="key_for_the_people" section="global" />
+          </I18nSection>
+        </AppRoot>
+      )
+      expect(container).toHaveTextContent('We are the people!')
     })
   })
 })
