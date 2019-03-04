@@ -23,7 +23,8 @@
       "lcov",
       "text",
       "json-summary"
-    ]
+    ],
+    "collectCoverageFrom": ["src/**/*.{ts,tsx}"]
   },
   "devDependencies": {
     "@repay/babel-preset": "./packages/babel-preset",

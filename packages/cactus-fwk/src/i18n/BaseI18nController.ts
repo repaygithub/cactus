@@ -24,17 +24,22 @@ interface I18nControllerOptions {
    * fallback language if key does not exist
    */
   defaultLang: string
+
+  /** Set the current lang explicitly or uses provided default */
+  lang?: string
 }
 
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
 
 export default abstract class BaseI18nController {
+  lang: string
   defaultLang: string
   _loadingState: LoadingState = {}
   _listeners: LoadingStateListener[] = []
 
   constructor(options: I18nControllerOptions) {
     this.defaultLang = options.defaultLang
+    this.lang = options.lang || this.defaultLang
     _dictionaries.set(this, {})
     if (this.load === undefined) {
       throw new Error('You must override the `load` method!')
@@ -64,6 +69,10 @@ export default abstract class BaseI18nController {
       }
     }
     this._loadingState[`${lang}/${section}`] = 'loaded'
+  }
+
+  setLang(lang: string) {
+    this.lang = lang
   }
 
   get({
