@@ -89,6 +89,7 @@ export default abstract class BaseI18nController {
     if (_dict[lang] && _dict[lang][key]) {
       return _dict[lang][key]
     }
+    // users should ensure the default lang has been loaded.
     return _dict[this.defaultLang][key]
   }
 
