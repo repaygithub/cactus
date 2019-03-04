@@ -1,5 +1,2 @@
-import AppRoot from './AppRoot'
-import { Text, BaseI18nController, KeyDictionary, Section } from './i18n/index'
-
-export default AppRoot
-export { Text, BaseI18nController, KeyDictionary, Section }
+export { default } from './AppRoot'
+export { BaseI18nController, KeyDictionary, I18nSection, I18nText } from './i18n/index'

@@ -1,110 +1,5 @@
-import React, { useEffect } from 'react'
-
-export interface KeyDictionary {
-  [key: string]: string
-}
-
-interface I18nControllerOptions {
-  /**
-   * Initializes global section dictionary
-   */
-  global?: KeyDictionary
-
-  /**
-   * fallback language if key does not exist
-   */
-  defaultLang: string
-}
-
-interface Dictionary {
-  [lang: string]: KeyDictionary
-}
-
-interface LoadingState {
-  [langSectionKey: string]: 'loading' | 'loaded' | 'failed' | undefined
-}
-
-interface LoadingStateListener {
-  (params: LoadingState): void
-}
-
-function prefixIds(section: string, dict: KeyDictionary = {}): KeyDictionary {
-  let prefixedDict: KeyDictionary = {}
-  for (const id in dict) {
-    if (dict.hasOwnProperty(id)) {
-      prefixedDict[`${section}/${id}`] = dict[id]
-    }
-  }
-  return prefixedDict
-}
-
-abstract class BaseI18nController {
-  _dict: Dictionary = {}
-  defaultLang: string
-  _loadingState: LoadingState = {}
-  _listeners: LoadingStateListener[] = []
-
-  constructor(options: I18nControllerOptions) {
-    this.defaultLang = options.defaultLang
-    if (this.load === undefined) {
-      throw new Error('You must override the `load` method!')
-    }
-
-    if (options.global === undefined) {
-      this._load({ lang: this.defaultLang, section: 'global' })
-    } else {
-      this._setDict(this.defaultLang, 'global', options.global)
-    }
-  }
-
-  abstract load({ lang, section }: { lang: string; section: string }): Promise<KeyDictionary>
-
-  _setDict(lang: string, section: string, dict: KeyDictionary) {
-    this._dict[lang] = prefixIds(section, dict)
-    this._loadingState[`${lang}/${section}`] = 'loaded'
-  }
-
-  get({
-    lang = this.defaultLang,
-    section,
-    id,
-  }: {
-    lang?: string
-    section: string
-    id: string
-  }): string {
-    const key = `${section}/${id}`
-    if (this._dict[lang] && this._dict[lang][key]) {
-      return this._dict[lang][key]
-    }
-    return this._dict[this.defaultLang][key]
-  }
-
-  _load(args: { lang: string; section: string }): void {
-    const { lang, section } = args
-    const loadingKey = `${lang}/${section}`
-    if (this._loadingState[loadingKey] !== undefined) {
-      return
-    }
-
-    this._loadingState[loadingKey] = 'loading'
-    this.load(args).then(dict => {
-      this._dict[lang] = prefixIds(section, dict)
-      this._loadingState[loadingKey] = 'loaded'
-      const updatedLoadingState = { ...this._loadingState }
-      this._listeners.forEach(l => l(updatedLoadingState))
-    })
-  }
-
-  addListener(listener: LoadingStateListener): void {
-    this._listeners.push(listener)
-    listener(this._loadingState)
-  }
-
-  removeListener(listener: LoadingStateListener): void {
-    this._listeners = this._listeners.filter(l => l !== listener)
-  }
-}
+import React, { useEffect, useState, useContext } from 'react'
+import BaseI18nController, { LoadingState, KeyDictionary } from './BaseI18nController'
 
 export interface I18nContextType {
   controller: BaseI18nController
@@ -114,8 +9,9 @@ export interface I18nContextType {
 }
 
 const I18nContext = React.createContext<I18nContextType | null>(null)
+
 const useI18nText = (id: string) => {
-  const context = React.useContext(I18nContext)
+  const context = useContext(I18nContext)
   if (context === null) {
     return null
   }
@@ -124,7 +20,7 @@ const useI18nText = (id: string) => {
 }
 
 const useI18nContext = (section?: string) => {
-  const context = React.useContext(I18nContext)
+  const context = useContext(I18nContext)
   if (context === null) {
     return null
   }
@@ -135,11 +31,47 @@ const useI18nContext = (section?: string) => {
   return newContext
 }
 
-interface SectionProps {
+interface I18nProviderProps {
+  controller?: BaseI18nController
+  lang?: string
+}
+
+const I18nProvider: React.FC<I18nProviderProps> = props => {
+  const controller = props.controller
+  const lang = props.lang || navigator.language.split('-')[0]
+  let i18nContext: I18nContextType | null = null
+  let [loadingState, setLoading] = useState({})
+  useEffect(() => {
+    if (controller instanceof BaseI18nController) {
+      controller.addListener(setLoading)
+      return () => controller.removeListener(setLoading)
+    }
+  }, [controller])
+  useEffect(() => {
+    if (controller instanceof BaseI18nController) {
+      controller._load({ lang, section: 'global' })
+    }
+  }, [controller, lang])
+  if (controller instanceof BaseI18nController) {
+    i18nContext = {
+      controller: controller,
+      lang,
+      section: 'global',
+      loadingState,
+    }
+  }
+  return (
+    <I18nContext.Provider value={i18nContext}>
+      <React.Fragment>{props.children}</React.Fragment>
+    </I18nContext.Provider>
+  )
+}
+
+interface I18nSectionProps {
   name: string
 }
 
-const Section: React.FC<SectionProps> = props => {
+const I18nSection: React.FC<I18nSectionProps> = props => {
   const sectionContext = useI18nContext(props.name)
   useEffect(() => {
     if (sectionContext !== null) {
@@ -154,13 +86,13 @@ const Section: React.FC<SectionProps> = props => {
   )
 }
 
-interface TextProps {
+interface I18nTextProps {
   get: string
 }
 
-const Text: React.FC<TextProps> = props => {
+const I18nText: React.FC<I18nTextProps> = props => {
   const text = useI18nText(props.get)
   return <React.Fragment>{text || props.children || props.get}</React.Fragment>
 }
 
-export { Text, BaseI18nController, I18nContext, Section }
+export { BaseI18nController, KeyDictionary, I18nProvider, I18nSection, I18nText }
