@@ -53,6 +53,7 @@ const I18nProvider: React.FC<I18nProviderProps> = props => {
     }
   }, [controller, lang])
   if (controller instanceof BaseI18nController) {
+    controller.setLang(lang)
     i18nContext = {
       controller: controller,
       lang,
