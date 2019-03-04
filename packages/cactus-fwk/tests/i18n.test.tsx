@@ -98,6 +98,10 @@ describe('i18n functionality', () => {
       const global = { key_for_the_people: 'We are the people!' }
       const controller = new I18nController({ defaultLang: 'en', global })
       expect(controller.get({ id: 'key_for_the_people' })).toBe('We are the people!')
+      const spanish = { key_for_the_people: 'Nosotros somos personas!' }
+      controller.setLang('es')
+      controller.setDict('es', 'global', spanish)
+      expect(controller.get({ id: 'key_for_the_people' })).toBe('Nosotros somos personas!')
     })
   })
 

@@ -76,7 +76,7 @@ export default abstract class BaseI18nController {
   }
 
   get({
-    lang = this.defaultLang,
+    lang = this.lang,
     section = 'global',
     id,
   }: {
