@@ -38,7 +38,7 @@ interface I18nProviderProps {
 
 const I18nProvider: React.FC<I18nProviderProps> = props => {
   const controller = props.controller
-  const lang = props.lang || navigator.language.split('-')[0]
+  const lang = props.lang || navigator.language
   let i18nContext: I18nContextType | null = null
   let [loadingState, setLoading] = useState({})
   useEffect(() => {

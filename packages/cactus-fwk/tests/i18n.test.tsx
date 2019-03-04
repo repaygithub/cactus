@@ -117,9 +117,12 @@ describe('i18n functionality', () => {
 
     test('should override global context', () => {
       const controller = new I18nController({ defaultLang: 'en', global: {} })
+      const globalPromise = MockPromise.resolve({ 'runny-nose': 'WRONG KEY' })
       const sectionPromise = MockPromise.resolve({ 'runny-nose': 'This text should render' })
       //@ts-ignore
-      controller.load = jest.fn(() => sectionPromise)
+      controller.load = jest.fn(({ section }) =>
+        section === 'global' ? globalPromise : sectionPromise
+      )
       let container
       act(() => {
         let tester = render(
@@ -129,6 +132,7 @@ describe('i18n functionality', () => {
             </I18nSection>
           </AppRoot>
         )
+        globalPromise._call()
         sectionPromise._call()
         container = tester.container
       })
@@ -151,15 +155,19 @@ describe('i18n functionality', () => {
 
     test('can override section', () => {
       const global = { key_for_the_people: 'We are the people!' }
-      const controller = new I18nController({ defaultLang: 'en', global })
-      controller.setDict('en', 'kleenex', { key_for_the_people: 'We are NOT the people!' })
-      let { container } = render(
-        <AppRoot withI18n={controller}>
-          <I18nSection name="kleenex">
-            <I18nText get="key_for_the_people" section="global" />
-          </I18nSection>
-        </AppRoot>
-      )
+      const controller = new I18nController({ defaultLang: 'en-US', global })
+      controller.setDict('en-US', 'kleenex', { key_for_the_people: 'We are NOT the people!' })
+      let container
+      act(() => {
+        let tester = render(
+          <AppRoot withI18n={controller}>
+            <I18nSection name="kleenex">
+              <I18nText get="key_for_the_people" section="global" />
+            </I18nSection>
+          </AppRoot>
+        )
+        container = tester.container
+      })
       expect(container).toHaveTextContent('We are the people!')
     })
   })
