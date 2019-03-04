@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cleanup, render, act, RenderResult } from 'react-testing-library'
-import AppRoot, { Text, BaseI18nController, KeyDictionary, Section } from '../src/index'
+import AppRoot, { I18nText, BaseI18nController, KeyDictionary, I18nSection } from '../src/index'
 
 type MaybeFunc = ((params: any) => any) | null
 
@@ -63,18 +63,18 @@ describe('cactus-fwk', () => {
     test('can use AppRoot without i18n', () => {
       const { container } = render(
         <AppRoot>
-          <Text get="this_is_the_key">This is the default content.</Text>
+          <I18nText get="this_is_the_key">This is the default content.</I18nText>
         </AppRoot>
       )
       expect(container).toHaveTextContent('This is the default content.')
     })
 
-    test('allows Text to render translations when provided', () => {
+    test('allows I18nText to render translations when provided', () => {
       const global = { this_is_the_key: 'This should render' }
       const i18nController = new I18nController({ defaultLang: 'en', global })
       const { container } = render(
         <AppRoot lang="en" withI18n={i18nController}>
-          <Text get="this_is_the_key">This is the default content.</Text>
+          <I18nText get="this_is_the_key">This is the default content.</I18nText>
         </AppRoot>
       )
       expect(container).toHaveTextContent('This should render')
@@ -91,7 +91,7 @@ describe('cactus-fwk', () => {
       act(() => {
         tester = render(
           <AppRoot lang="es" withI18n={i18nController}>
-            <Text get="this_is_the_key">This is the default content.</Text>
+            <I18nText get="this_is_the_key">This is the default content.</I18nText>
           </AppRoot>
         )
         esGlobalPromise._call()
@@ -110,7 +110,7 @@ describe('cactus-fwk', () => {
       act(() => {
         let tester = render(
           <AppRoot lang="es" withI18n={i18nController}>
-            <Text get="this_is_the_key">This is the default content.</Text>
+            <I18nText get="this_is_the_key">This is the default content.</I18nText>
           </AppRoot>
         )
         esGlobalPromise._call()
@@ -142,12 +142,12 @@ describe('cactus-fwk', () => {
     })
   })
 
-  describe('<Section />', () => {
+  describe('<I18nSection />', () => {
     test('can be rendered without providing context', () => {
       const { container } = render(
-        <Section name="blank">
-          <Text get="this_is_the_key">This is the default content.</Text>
-        </Section>
+        <I18nSection name="blank">
+          <I18nText get="this_is_the_key">This is the default content.</I18nText>
+        </I18nSection>
       )
       expect(container).toHaveTextContent('This is the default content.')
     })
@@ -161,9 +161,9 @@ describe('cactus-fwk', () => {
       act(() => {
         let tester = render(
           <AppRoot withI18n={controller}>
-            <Section name="kleenex">
-              <Text get="runny-nose" />
-            </Section>
+            <I18nSection name="kleenex">
+              <I18nText get="runny-nose" />
+            </I18nSection>
           </AppRoot>
         )
         sectionPromise._call()
