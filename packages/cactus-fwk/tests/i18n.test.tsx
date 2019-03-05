@@ -103,6 +103,20 @@ describe('i18n functionality', () => {
       controller.setDict('es', 'global', spanish)
       expect(controller.get({ id: 'key_for_the_people' })).toBe('Nosotros somos personas!')
     })
+
+    test('keeps track of failed resources', () => {
+      const globalPromise = MockPromise.reject(Error('failed to load requested resource'))
+      const mockLoad = jest.fn((...args) => globalPromise)
+      class Controller extends BaseI18nController {
+        //@ts-ignore
+        load(...args) {
+          return mockLoad(...args)
+        }
+      }
+      const controller = new Controller({ defaultLang: 'en' })
+      globalPromise._call()
+      expect(controller._loadingState['en/global']).toBe('failed')
+    })
   })
 
   describe('<I18nSection />', () => {

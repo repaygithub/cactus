@@ -101,11 +101,15 @@ export default abstract class BaseI18nController {
     }
 
     this._loadingState[loadingKey] = 'loading'
-    this.load(args).then(dict => {
-      this.setDict(lang, section, dict)
-      const updatedLoadingState = { ...this._loadingState }
-      this._listeners.forEach(l => l(updatedLoadingState))
-    })
+    this.load(args)
+      .then(dict => {
+        this.setDict(lang, section, dict)
+        const updatedLoadingState = { ...this._loadingState }
+        this._listeners.forEach(l => l(updatedLoadingState))
+      })
+      .catch(() => {
+        this._loadingState[loadingKey] = 'failed'
+      })
   }
 
   addListener(listener: LoadingStateListener): void {

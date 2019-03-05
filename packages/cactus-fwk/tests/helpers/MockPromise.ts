@@ -5,29 +5,37 @@ class MockPromise {
   _catch: MaybeFunc = null
   _chain: MockPromise | null = null
   _value: any
+  _hasThrown: boolean
 
-  constructor(value?: any) {
+  constructor(value?: any, hasThrown: boolean = false) {
     this._value = value
+    this._hasThrown = hasThrown
   }
 
   _setValue(value: any) {
     this._value = value
   }
 
-  _call(value?: any, hasThrown?: boolean) {
+  _call(value: any = this._value, hasThrown: boolean = this._hasThrown) {
     let callback = hasThrown ? this._catch : this._then
-    value = value || this._value
-    let threwAgain = false
+    let keepThrowing = false
     let nextValue: any
-    try {
-      nextValue = callback !== null && callback(value)
-    } catch (e) {
-      threwAgain = true
-      nextValue = e
+    if (callback !== null) {
+      try {
+        nextValue = callback(value)
+      } catch (e) {
+        keepThrowing = true
+        nextValue = e
+      }
+    } else if (hasThrown) {
+      keepThrowing = true
+      nextValue = value
     }
 
     if (this._chain !== null) {
-      this._chain._call(nextValue, threwAgain)
+      this._chain._call(nextValue, keepThrowing)
+    } else if (keepThrowing) {
+      console.error('[unhandledMockPromiseRejection]: ', nextValue)
     }
   }
 
@@ -43,6 +51,10 @@ class MockPromise {
 
   static resolve(value: any): MockPromise {
     return new MockPromise(value)
+  }
+
+  static reject(error: any): MockPromise {
+    return new MockPromise(error, true)
   }
 }
 
