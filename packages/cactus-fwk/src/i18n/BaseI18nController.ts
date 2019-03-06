@@ -38,7 +38,7 @@ export default abstract class BaseI18nController {
   constructor(options: I18nControllerOptions) {
     this.defaultLang = options.defaultLang
     this.lang = options.lang || this.defaultLang
-    _dictionaries.set(this, {})
+    _dictionaries.set(this, { [this.defaultLang]: {} })
     if (this.load === undefined) {
       throw new Error('You must override the `load` method!')
     }
