@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import BaseI18nController, { LoadingState, KeyDictionary } from './BaseI18nController'
+import BaseI18nController, { LoadingState } from './BaseI18nController'
 
 export interface I18nContextType {
   controller: BaseI18nController
@@ -97,4 +97,4 @@ const I18nText: React.FC<I18nTextProps> = props => {
   return <React.Fragment>{text || props.children || props.get}</React.Fragment>
 }
 
-export { BaseI18nController, KeyDictionary, I18nProvider, I18nSection, I18nText }
+export { BaseI18nController, I18nProvider, I18nSection, I18nText }

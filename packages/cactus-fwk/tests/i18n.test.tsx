@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { cleanup, render, act, RenderResult } from 'react-testing-library'
 import MockPromise from './helpers/MockPromise'
-import AppRoot, { BaseI18nController, KeyDictionary, I18nSection, I18nText } from '../src/index'
+import AppRoot, { BaseI18nController, I18nSection, I18nText } from '../src/index'
+import { KeyDictionary } from '../src/types'
 
 class I18nController extends BaseI18nController {
   load(arg: { lang: string; section: string }) {

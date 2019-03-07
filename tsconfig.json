@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "lib": ["es2015", "dom"],
+    "lib": ["esnext", "dom"],
     "strict": true,
     "jsx": "react",
     "declaration": true,
     "target": "es5",
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true
   },
