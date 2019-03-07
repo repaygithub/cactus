@@ -1,6 +1,4 @@
-export interface KeyDictionary {
-  [key: string]: string
-}
+import { KeyDictionary } from '../types'
 
 interface Dictionary {
   [lang: string]: KeyDictionary

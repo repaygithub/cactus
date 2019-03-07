@@ -2,11 +2,15 @@
   "name": "@repay/cactus-fwk",
   "version": "0.0.0",
   "description": "Framework package",
-  "main": "index.js",
+  "main": "dist/cactus-fwk.cjs.js",
+  "module": "dist/cactus-fwk.js",
+  "typings": "dist/index.d.ts",
   "repository": "https://github.com/repaygithub/cactus",
   "license": "unlicensed",
   "private": true,
   "scripts": {
+    "build": "repay-scripts build --lib src/index.ts",
+    "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly",
     "test": "jest",
     "tdd": "jest --watch"
   },
@@ -24,10 +28,13 @@
       "text",
       "json-summary"
     ],
-    "collectCoverageFrom": ["src/**/*.{ts,tsx}"]
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ]
   },
   "devDependencies": {
     "@repay/babel-preset": "./packages/babel-preset",
+    "@repay/scripts": "^0.0.1",
     "@types/jest": "^24.0.9",
     "@types/react": "^16.8.6",
     "jest": "^24.1.0",
@@ -36,5 +43,8 @@
     "react-dom": "^16.8.3",
     "react-testing-library": "^6.0.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^16.8.3"
+  }
 }
