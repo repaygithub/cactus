@@ -15,8 +15,8 @@ const useI18nText = (id: string, sectionOverride?: string) => {
   if (context === null) {
     return null
   }
-  const { controller, lang, section } = context
-  return controller.get({ lang, section: sectionOverride || section, id })
+  const { controller, section } = context
+  return controller.get({ section: sectionOverride || section, id })
 }
 
 const useI18nContext = (section?: string) => {

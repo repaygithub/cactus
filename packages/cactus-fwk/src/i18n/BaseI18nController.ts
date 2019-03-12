@@ -1,7 +1,11 @@
-import { KeyDictionary } from '../types'
+import { ResourceDefinition } from '../types'
+import { FluentBundle, FluentResource } from 'fluent'
 
 interface Dictionary {
-  [lang: string]: KeyDictionary
+  /**
+   * Dictionary containing fluent bundles for each section
+   */
+  [section: string]: { [lang: string]: FluentBundle }
 }
 
 export interface LoadingState {
@@ -12,11 +16,14 @@ interface LoadingStateListener {
   (params: LoadingState): void
 }
 
+/** matches .ftl format files for fluent parsing */
+type FTL = string
+
 interface I18nControllerOptions {
   /**
    * Initializes global section dictionary
    */
-  global?: KeyDictionary
+  global?: FTL
 
   /**
    * fallback language if key does not exist
@@ -32,13 +39,15 @@ const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
 export default abstract class BaseI18nController {
   lang: string
   defaultLang: string
+  _languages: string[]
   _loadingState: LoadingState = {}
   _listeners: LoadingStateListener[] = []
 
   constructor(options: I18nControllerOptions) {
     this.defaultLang = options.defaultLang
     this.lang = options.lang || this.defaultLang
-    _dictionaries.set(this, { [this.defaultLang]: {} })
+    this._languages = this.lang === this.defaultLang ? [this.lang] : [this.lang, this.defaultLang]
+    _dictionaries.set(this, { global: {} })
     if (this.load === undefined) {
       throw new Error('You must override the `load` method!')
     }
@@ -50,63 +59,70 @@ export default abstract class BaseI18nController {
     }
   }
 
-  abstract load({ lang, section }: { lang: string; section: string }): Promise<KeyDictionary>
+  abstract load({ lang, section }: { lang: string; section: string }): Promise<ResourceDefinition[]>
 
   _getDict(): Dictionary {
     return _dictionaries.get(this) || {}
   }
 
-  setDict(lang: string, section: string, dict: KeyDictionary) {
+  setDict(lang: string, section: string, ftl: FTL) {
+    if (!this._languages.includes(lang)) {
+      // TODO do something about loading unrequested languages
+    }
+    const bundle = new FluentBundle(lang)
+    bundle.addMessages(ftl)
+    // TODO add scoped global bundle
     const _dict = this._getDict()
-    if (!_dict[lang]) {
-      _dict[lang] = {}
+    if (!_dict[section]) {
+      _dict[section] = {}
     }
-    for (const id in dict) {
-      if (dict.hasOwnProperty(id)) {
-        _dict[lang][`${section}/${id}`] = dict[id]
-      }
-    }
-    this._loadingState[`${lang}/${section}`] = 'loaded'
+    _dict[section][lang] = bundle
+
+    this._loadingState[`${section}/${lang}`] = 'loaded'
   }
 
   setLang(lang: string) {
     this.lang = lang
+    this._languages = [this.lang, this.defaultLang]
   }
 
-  get({
-    lang = this.lang,
-    section = 'global',
-    id,
-  }: {
-    lang?: string
-    section?: string
-    id: string
-  }): string {
+  get({ section = 'global', id }: { section?: string; id: string }): string | null {
     const _dict = this._getDict()
-    const key = `${section}/${id}`
-    if (_dict[lang] && _dict[lang][key]) {
-      return _dict[lang][key]
+    const bundles = _dict[section]
+    if (bundles !== undefined) {
+      const lang = this._languages.find(l => bundles[l] && bundles[l].hasMessage(id))
+      const bundle = lang && bundles[lang]
+      if (!bundle) {
+        // TODO: handle bundle with id not found
+        return null
+      }
+      const message = bundle.getMessage(id)
+      return bundle.format(message, {}, [])
     }
-    // users should ensure the default lang has been loaded.
-    return _dict[this.defaultLang][key]
+    return null
   }
 
   _load(args: { lang: string; section: string }): void {
     const { lang, section } = args
-    const loadingKey = `${lang}/${section}`
+    const loadingKey = `${section}/${lang}`
     if (this._loadingState[loadingKey] !== undefined) {
       return
     }
 
     this._loadingState[loadingKey] = 'loading'
     this.load(args)
-      .then(dict => {
-        this.setDict(lang, section, dict)
+      .then(resourceDefs => {
+        resourceDefs.forEach(resDef => {
+          this.setDict(resDef.lang, section, resDef.ftl)
+        })
         const updatedLoadingState = { ...this._loadingState }
         this._listeners.forEach(l => l(updatedLoadingState))
       })
-      .catch(() => {
+      .catch(error => {
         this._loadingState[loadingKey] = 'failed'
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
+        }
       })
   }
 
