@@ -1,3 +1,7 @@
-export interface KeyDictionary {
-  [key: string]: string
+export interface ResourceDefinition {
+  lang: string
+  /**
+   * FTL message resource
+   */
+  ftl: string
 }
