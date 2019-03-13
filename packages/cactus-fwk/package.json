@@ -11,8 +11,11 @@
   "scripts": {
     "predev": "yarn build:types",
     "dev": "repay-scripts dev --lib src/index.ts",
+    "prebuild": "yarn test:ci",
     "build": "repay-scripts build --lib src/index.ts",
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly",
+    "check": "tsc --project ./tsconfig.json --noEmit",
+    "test:ci": "yarn check && yarn test --coverage",
     "test": "jest",
     "tdd": "jest --watch"
   },
