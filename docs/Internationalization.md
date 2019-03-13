@@ -4,7 +4,12 @@ The Cactus Framework implements i18n using the core technologies developed by Mo
 
 ## How to use
 
-// TODO
+// TODO: finish
+
+- User will have to override the base controller's load function
+- The controller will only attempt to load
+- User is expected to handle failed resource loading in the load function. (e.g. retry loading languages or loading the fallback languages)
+- User will have to handle when all locales fail to load for a given section (e.g. reload browser or redirect to error page)
 
 ## Why Fluent?
 
