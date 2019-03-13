@@ -110,7 +110,15 @@ export default abstract class BaseI18nController {
     this.lang = this._languages[0]
   }
 
-  get({ section = 'global', id }: { section?: string; id: string }): string | null {
+  get({
+    args,
+    section = 'global',
+    id,
+  }: {
+    args?: object
+    section?: string
+    id: string
+  }): string | null {
     const _dict = this._getDict()
     const bundles = _dict[section]
     if (bundles !== undefined) {
@@ -126,8 +134,7 @@ export default abstract class BaseI18nController {
         return null
       }
       const message = bundle.getMessage(id)
-      // TODO use provided props and attributes
-      return bundle.format(message, {}, [])
+      return bundle.format(message, args)
     }
     return null
   }

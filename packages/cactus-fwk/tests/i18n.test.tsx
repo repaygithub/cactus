@@ -131,7 +131,7 @@ describe('i18n functionality', () => {
     })
 
     describe('with mock console.error', () => {
-      let _error
+      let _error: any
       beforeEach(() => {
         _error = console.error
         console.error = jest.fn()
@@ -211,6 +211,22 @@ describe('i18n functionality', () => {
         <I18nText get="this_is_my_key">This is the default content.</I18nText>
       )
       expect(container).toHaveTextContent('This is the default content.')
+    })
+
+    test('can render variables in a translation', () => {
+      debugger
+      const global = `key-for-the-group= We are the { $groupName }!`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const { container } = render(
+        <AppRoot withI18n={controller}>
+          <I18nText get="key-for-the-group" args={{ groupName: 'people' }} />
+        </AppRoot>
+      )
+      expect(container).toHaveTextContent('We are the \u2068people\u2069!')
     })
 
     test('can override section', () => {
