@@ -1,21 +1,17 @@
 import { BaseI18nController } from '@repay/cactus-fwk'
 
-interface KeyDictionary {
-  [k: string]: string
+interface ResourceDefinition {
+  lang: string
+  ftl: string
 }
 
 class I18nController extends BaseI18nController {
-  load(args: { lang: string; section: string }): Promise<KeyDictionary> {
+  load(args: { lang: string; section: string }): Promise<ResourceDefinition[]> {
     const [lang] = args.lang.split('-')
-    return import(`./locales/${lang}/${args.section}.json`)
-      .then(({ default: dict }) => {
-        return dict
-      })
-      .catch(error => {
-        console.error(error)
-        throw error
-      })
+    return import(`./locales/${lang}/${args.section}.js`).then(({ default: ftl }) => {
+      return [{ lang, ftl }]
+    })
   }
 }
 
-export default new I18nController({ defaultLang: 'en-US' })
+export default new I18nController({ defaultLang: 'en', supportedLangs: ['en', 'es'] })
