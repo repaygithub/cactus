@@ -1,31 +1,27 @@
-import React, { Component } from 'react'
+import React, { Component, ChangeEvent } from 'react'
 import { I18nText, I18nSection } from '@repay/cactus-fwk'
 import { Link, RouteComponentProps } from '@reach/router'
 
-class App extends Component<RouteComponentProps> {
+type AppProps = {
+  onLangChange: (event: ChangeEvent<HTMLSelectElement>) => void
+  lang: string
+}
+
+class App extends Component<RouteComponentProps<AppProps>> {
   render() {
     return (
-      <div className="App">
-        <h2 className="App-header">
-          <p>
-            <I18nText get="welcome-message" />
-          </p>
-        </h2>
+      <>
         <div>
-          <I18nSection name="coffee">
-            <Link to="coffee">
-              <I18nText get="link-message" />
-            </Link>
-          </I18nSection>
+          <select onChange={this.props.onLangChange} value={this.props.lang}>
+            <option value="">Use Browser</option>
+            <option value="es-MX">🇲🇽 Español</option>
+          </select>
+          <Link to="/">
+            <I18nText get="home-link" />
+          </Link>
         </div>
-        <div>
-          <I18nSection name="snacks">
-            <Link to="snacks">
-              <I18nText get="link-message" />
-            </Link>
-          </I18nSection>
-        </div>
-      </div>
+        {this.props.children}
+      </>
     )
   }
 }
