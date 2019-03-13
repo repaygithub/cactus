@@ -26,7 +26,11 @@ describe('i18n functionality', () => {
 
     test('allows I18nText to render translations when provided', () => {
       const global = `this_is_the_key = This should render`
-      const i18nController = new I18nController({ defaultLang: 'en', global })
+      const i18nController = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en'],
+        global,
+      })
       const { container } = render(
         <AppRoot lang="en" withI18n={i18nController}>
           <I18nText get="this_is_the_key">This is the default content.</I18nText>
@@ -39,7 +43,11 @@ describe('i18n functionality', () => {
       const globalEn = 'this-is-the-key = This should not render'
       const globalEs = 'this-is-the-key = Este texto debe mostrar'
       const globalEsResDef: ResourceDefinition = { lang: 'es', ftl: globalEs }
-      const i18nController = new I18nController({ defaultLang: 'en', global: globalEn })
+      const i18nController = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'es'],
+        global: globalEn,
+      })
       const esGlobalPromise = MockPromise.resolve([globalEsResDef])
       // @ts-ignore
       i18nController.load = jest.fn(() => esGlobalPromise)
@@ -58,7 +66,11 @@ describe('i18n functionality', () => {
 
     test('should render key from default language when key does not exist for requested language', () => {
       const global = `this_is_the_key = This should render`
-      const i18nController = new I18nController({ defaultLang: 'en', global })
+      const i18nController = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'es'],
+        global,
+      })
       const esGlobalPromise = MockPromise.resolve([{ lang: 'es', ftl: '' }])
       //@ts-ignore
       i18nController.load = jest.fn(() => esGlobalPromise)
@@ -77,12 +89,19 @@ describe('i18n functionality', () => {
   })
 
   describe('I18nController class', () => {
+    test('should throw error when no supported languages are given', () => {
+      //@ts-ignore
+      expect(() => new BaseI18nController({ defaultLang: 'en' })).toThrowError(
+        'You must provide supported languages!'
+      )
+    })
+
     test('load() should throw when not overridden', () => {
       //@ts-ignore
       class BadI18nController extends BaseI18nController {}
-      expect(() => new BadI18nController({ defaultLang: 'en' })).toThrowError(
-        'You must override the `load` method!'
-      )
+      expect(
+        () => new BadI18nController({ defaultLang: 'en', supportedLangs: ['en'] })
+      ).toThrowError('You must override the `load` method!')
     })
 
     test('should load default global when none is provided', () => {
@@ -93,13 +112,17 @@ describe('i18n functionality', () => {
           return mockLoad(...args)
         }
       }
-      new Controller({ defaultLang: 'en' })
+      new Controller({ defaultLang: 'en', supportedLangs: ['en'] })
       expect(mockLoad).toHaveBeenCalled()
     })
 
     test('can access translations outside React context', () => {
       const global = `key_for_the_people = We are the people!`
-      const controller = new I18nController({ defaultLang: 'en', global })
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'es'],
+        global,
+      })
       expect(controller.get({ id: 'key_for_the_people' })).toBe('We are the people!')
       const spanish = `key_for_the_people = Nosotros somos personas!`
       controller.setLang('es')
@@ -126,7 +149,7 @@ describe('i18n functionality', () => {
             return mockLoad(...args)
           }
         }
-        const controller = new Controller({ defaultLang: 'en' })
+        const controller = new Controller({ defaultLang: 'en', supportedLangs: ['en'] })
         globalPromise._call()
         expect(controller._loadingState['global/en']).toBe('failed')
       })
@@ -144,7 +167,11 @@ describe('i18n functionality', () => {
     })
 
     test('should override global context', () => {
-      const controller = new I18nController({ defaultLang: 'en', global: `runny-nose = WRONG KEY` })
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+        global: `runny-nose = WRONG KEY`,
+      })
       const globalPromise = MockPromise.resolve([{ lang: 'en-US', ftl: `runny-nose = WRONG KEY` }])
       const sectionPromise = MockPromise.resolve([
         {
@@ -188,7 +215,11 @@ describe('i18n functionality', () => {
 
     test('can override section', () => {
       const global = `key_for_the_people= We are the people!`
-      const controller = new I18nController({ defaultLang: 'en-US', global })
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
       controller.setDict('en-US', 'kleenex', `key_for_the_people = We are NOT the people!`)
       let container
       act(() => {
