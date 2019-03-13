@@ -1,5 +1,6 @@
 import { ResourceDefinition } from '../types'
 import { FluentBundle, FluentResource } from 'fluent'
+import { negotiateLanguages } from 'fluent-langneg'
 
 interface Dictionary {
   /**
@@ -21,6 +22,11 @@ type FTL = string
 
 interface I18nControllerOptions {
   /**
+   * Should be an array of locale codes
+   */
+  supportedLangs: string[]
+
+  /**
    * Initializes global section dictionary
    */
   global?: FTL
@@ -37,16 +43,20 @@ interface I18nControllerOptions {
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
 
 export default abstract class BaseI18nController {
-  lang: string
+  lang: string = ''
   defaultLang: string
-  _languages: string[]
+  _supportedLangs: string[]
+  _languages: string[] = []
   _loadingState: LoadingState = {}
   _listeners: LoadingStateListener[] = []
 
   constructor(options: I18nControllerOptions) {
+    if (!Array.isArray(options.supportedLangs) || options.supportedLangs.length === 0) {
+      throw new Error('You must provide supported languages!')
+    }
+    this._supportedLangs = options.supportedLangs
     this.defaultLang = options.defaultLang
-    this.lang = options.lang || this.defaultLang
-    this._languages = this.lang === this.defaultLang ? [this.lang] : [this.lang, this.defaultLang]
+    this.setLang(options.lang || this.defaultLang)
     _dictionaries.set(this, { global: {} })
     if (this.load === undefined) {
       throw new Error('You must override the `load` method!')
@@ -83,7 +93,10 @@ export default abstract class BaseI18nController {
 
   setLang(lang: string) {
     this.lang = lang
-    this._languages = [this.lang, this.defaultLang]
+    this._languages = negotiateLanguages([this.lang], this._supportedLangs, {
+      defaultLocale: this.defaultLang,
+      strategy: 'matching',
+    })
   }
 
   get({ section = 'global', id }: { section?: string; id: string }): string | null {
@@ -124,6 +137,10 @@ export default abstract class BaseI18nController {
           console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
         }
       })
+  }
+
+  hasLoaded(section: string) {
+    return this._languages.some(l => this._loadingState[`${section}/${l}`] === 'loaded')
   }
 
   addListener(listener: LoadingStateListener): void {

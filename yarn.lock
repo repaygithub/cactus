@@ -797,6 +797,11 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
+"@types/fluent-langneg@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@types/fluent-langneg/-/fluent-langneg-0.1.1.tgz#ec7f31c8e759e0206ac7a8367d2c92c913296dc9"
+  integrity sha512-3BX6Q5Rp+FU7ST6k63XJE+COIOC9zXkkaYvLpGpwKEvSjP9DpA6PSDR1oaea2XCoZ0AKNMwCQ7LeRS8nY5oISQ==
+
 "@types/jest-diff@*":
   version "20.0.1"
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
@@ -3173,6 +3178,11 @@ flatted@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.0.tgz#55122b6536ea496b4b44893ee2608141d10d9916"
   integrity sha512-R+H8IZclI8AAkSBRQJLVOsxwAoHd6WC40b4QTNWIjzAa6BXOBfQcM587MXDTVPeYaopFNWHUFLx7eNmHDSxMWg==
+
+fluent-langneg@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/fluent-langneg/-/fluent-langneg-0.1.1.tgz#8a6a95e0c57a1c339aa598cb1ee7e3df0c976adb"
+  integrity sha512-7lCFviLfesnxV4SnwAJh1epnKw97doF1Fmrjx3rAjq1/bbgrmuC43rpL7Qx81keB4Eu+YsjFZ7hCMg2mM25SyA==
 
 fluent@^0.11.0:
   version "0.11.0"

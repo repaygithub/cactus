@@ -80,6 +80,12 @@ const I18nSection: React.FC<I18nSectionProps> = props => {
       sectionContext.controller._load({ lang, section })
     }
   })
+  // wait to render until section is loaded
+  // TODO display loading component after X ms not loaded
+  // TODO display error when all sections have failed to load
+  if (sectionContext !== null && !sectionContext.controller.hasLoaded(props.name)) {
+    return null
+  }
   return (
     <I18nContext.Provider value={sectionContext}>
       <React.Fragment>{props.children}</React.Fragment>
