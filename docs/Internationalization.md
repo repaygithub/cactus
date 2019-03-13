@@ -11,7 +11,24 @@ The Cactus Framework implements i18n using the core technologies developed by Mo
 - User is expected to handle failed resource loading in the load function. (e.g. retry loading languages or loading the fallback languages)
 - User will have to handle when all locales fail to load for a given section (e.g. reload browser or redirect to error page)
 
-## Why Fluent?
+### Testing
+
+Fluent supports BiDi text by default by wrapping provided values (placeables) in bi-directional unicode characters, specifically the _First Strong Isolate_ and _Pop Directional Isolate_ characters. To test exact text matches you must account for these extra characters.
+
+```js
+const global = `key-for-the-group= We are the { $groupName }!`
+const controller = new I18nController({
+  defaultLang: 'en-US',
+  supportedLangs: ['en-US'],
+  global,
+})
+const translatedText = controller.get({ id: 'key-for-the-group', args: { groupName: 'people' } })
+expect(translatedText).toBe('We are the \u2068people\u2069!')
+```
+
+For more information on these characters and why they are necessary, see Mozilla's explainer on the [Unicode Bidirectional Algorithm](https://developer.mozilla.org/en-US/docs/Web/Localization/Unicode_Bidirectional_Text_Algorithm)
+
+## Why Project Fluent?
 
 |                                           | Project Fluent        | ICU MessageFormat                | GetText        |
 | ----------------------------------------- | --------------------- | -------------------------------- | -------------- |
