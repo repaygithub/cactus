@@ -92,7 +92,7 @@ describe('i18n functionality', () => {
     test('should throw error when no supported languages are given', () => {
       //@ts-ignore
       expect(() => new BaseI18nController({ defaultLang: 'en' })).toThrowError(
-        'You must provide supported languages!'
+        'You must provide supported languages'
       )
     })
 
@@ -101,7 +101,7 @@ describe('i18n functionality', () => {
       class BadI18nController extends BaseI18nController {}
       expect(
         () => new BadI18nController({ defaultLang: 'en', supportedLangs: ['en'] })
-      ).toThrowError('You must override the `load` method!')
+      ).toThrowError('You must override the `load` method')
     })
 
     test('should load default global when none is provided', () => {

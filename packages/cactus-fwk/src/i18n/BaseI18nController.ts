@@ -2,6 +2,8 @@ import { ResourceDefinition } from '../types'
 import { FluentBundle, FluentResource } from 'fluent'
 import { negotiateLanguages } from 'fluent-langneg'
 
+const __DEV__ = process.env.NODE_ENV !== 'production'
+
 interface Dictionary {
   /**
    * Dictionary containing fluent bundles for each section
@@ -52,15 +54,22 @@ export default abstract class BaseI18nController {
 
   constructor(options: I18nControllerOptions) {
     if (!Array.isArray(options.supportedLangs) || options.supportedLangs.length === 0) {
-      throw new Error('You must provide supported languages!')
+      throw new Error('You must provide supported languages')
     }
+    if (this.load === undefined) {
+      throw new Error('You must override the `load` method')
+    }
+    if (!options.defaultLang) {
+      throw new Error('You must provide a default language')
+    }
+    if (!options.supportedLangs.includes(options.defaultLang)) {
+      throw new Error('The default language provided is not a supported language')
+    }
+
     this._supportedLangs = options.supportedLangs
     this.defaultLang = options.defaultLang
     this.setLang(options.lang || this.defaultLang)
     _dictionaries.set(this, { global: {} })
-    if (this.load === undefined) {
-      throw new Error('You must override the `load` method!')
-    }
 
     if (options.global === undefined) {
       this._load({ lang: this.defaultLang, section: 'global' })
@@ -76,12 +85,14 @@ export default abstract class BaseI18nController {
   }
 
   setDict(lang: string, section: string, ftl: FTL) {
-    if (!this._languages.includes(lang)) {
-      // TODO do something about loading unrequested languages
+    if (!this._languages.includes(lang) && __DEV__) {
+      console.warn(
+        `You are loading an unrequested translation ${lang} for section: ${section} which will not be used. ` +
+          `Ignore this message if you have just updated the requested language.`
+      )
     }
     const bundle = new FluentBundle(lang)
     bundle.addMessages(ftl)
-    // TODO add scoped global bundle
     const _dict = this._getDict()
     if (!_dict[section]) {
       _dict[section] = {}
@@ -92,11 +103,11 @@ export default abstract class BaseI18nController {
   }
 
   setLang(lang: string) {
-    this.lang = lang
-    this._languages = negotiateLanguages([this.lang], this._supportedLangs, {
+    this._languages = negotiateLanguages([lang], this._supportedLangs, {
       defaultLocale: this.defaultLang,
       strategy: 'matching',
     })
+    this.lang = this._languages[0]
   }
 
   get({ section = 'global', id }: { section?: string; id: string }): string | null {
@@ -106,10 +117,16 @@ export default abstract class BaseI18nController {
       const lang = this._languages.find(l => bundles[l] && bundles[l].hasMessage(id))
       const bundle = lang && bundles[lang]
       if (!bundle) {
-        // TODO: handle bundle with id not found
+        if (__DEV__) {
+          console.warn(
+            `The requested id ${id} for section ${section} does not exist` +
+              ` in these translations: ${this._languages.join(', ')}`
+          )
+        }
         return null
       }
       const message = bundle.getMessage(id)
+      // TODO use provided props and attributes
       return bundle.format(message, {}, [])
     }
     return null
@@ -133,7 +150,7 @@ export default abstract class BaseI18nController {
       })
       .catch(error => {
         this._loadingState[loadingKey] = 'failed'
-        if (process.env.NODE_ENV !== 'production') {
+        if (__DEV__) {
           console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
         }
       })
