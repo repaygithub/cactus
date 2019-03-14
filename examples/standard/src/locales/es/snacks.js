@@ -4,5 +4,5 @@ snacks-header = ¡Nos encantan los bocadillos!
 snacks-desc = Aquí hay una lista muy larga de los bocadillos que nos gustan:
 cookies = galletas
 chips = papas fritas
-crackers = galletas
+fruit = fruta
 `
