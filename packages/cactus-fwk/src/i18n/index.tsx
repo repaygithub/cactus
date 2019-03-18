@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  ComponentType,
+  ComponentProps,
+  JSXElementConstructor,
+} from 'react'
 import BaseI18nController, { LoadingState } from './BaseI18nController'
 
 export interface I18nContextType {
@@ -14,6 +21,15 @@ const useI18nText = (id: string, args?: object, sectionOverride?: string) => {
   const context = useContext(I18nContext)
   if (context === null) {
     return null
+  }
+  const { controller, section } = context
+  return controller.getText({ args, section: sectionOverride || section, id })
+}
+
+const useI18nResource = (id: string, args?: object, sectionOverride?: string) => {
+  const context = useContext(I18nContext)
+  if (context === null) {
+    return [null, {}]
   }
   const { controller, section } = context
   return controller.get({ args, section: sectionOverride || section, id })
@@ -104,4 +120,36 @@ const I18nText: React.FC<I18nTextProps> = props => {
   return <React.Fragment>{text || props.children || props.get}</React.Fragment>
 }
 
-export { BaseI18nController, I18nProvider, I18nSection, I18nText }
+type TagNameOrReactComp = keyof JSX.IntrinsicElements | JSXElementConstructor<any>
+
+type I18nElementProps<Elem extends TagNameOrReactComp> = {
+  as: Elem
+} & Partial<ComponentProps<Elem>> &
+  I18nTextProps
+
+const I18nElement = function<Elem extends TagNameOrReactComp>(props: I18nElementProps<Elem>) {
+  const { get, args = {}, section, as, ...rest } = props
+  const [message, attrs] = useI18nResource(get, args, section)
+  const elemProps = { ...rest, ...attrs }
+  return React.createElement(as, elemProps, message || get)
+}
+
+interface I18nFormattedProps extends I18nTextProps {
+  formatter: (message: string) => React.ReactNode
+}
+
+const I18nFormatted: React.FC<I18nFormattedProps> = props => {
+  const text = useI18nText(props.get, props.args, props.section)
+  return <React.Fragment>{text !== null ? props.formatter(text) : props.get}</React.Fragment>
+}
+
+export {
+  BaseI18nController,
+  I18nProvider,
+  I18nSection,
+  I18nElement,
+  I18nFormatted,
+  I18nText,
+  useI18nText,
+  useI18nResource,
+}

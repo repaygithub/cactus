@@ -3,5 +3,5 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["src", "tests", "custom.d.ts", "tests/jest-dom.d.ts"]
+  "include": ["src", "custom.d.ts"]
 }

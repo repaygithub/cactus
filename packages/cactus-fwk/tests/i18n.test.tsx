@@ -1,7 +1,13 @@
 import * as React from 'react'
-import { cleanup, render, act, RenderResult } from 'react-testing-library'
+import { cleanup, render, act, fireEvent, RenderResult } from 'react-testing-library'
 import MockPromise from './helpers/MockPromise'
-import AppRoot, { BaseI18nController, I18nSection, I18nText } from '../src/index'
+import AppRoot, {
+  BaseI18nController,
+  I18nSection,
+  I18nElement,
+  I18nText,
+  I18nFormatted,
+} from '../src/index'
 import { ResourceDefinition } from '../src/types'
 
 class I18nController extends BaseI18nController {
@@ -117,27 +123,65 @@ describe('i18n functionality', () => {
     })
 
     test('can access translations outside React context', () => {
-      const global = `key_for_the_people = We are the people!`
+      const global = `
+key_for_the_people = We are the people!
+  .aria-label=anything { $value }
+  .name=test
+key-for-no-people = blah blah blue stew`
       const controller = new I18nController({
         defaultLang: 'en',
         supportedLangs: ['en', 'es'],
         global,
       })
-      expect(controller.get({ id: 'key_for_the_people' })).toBe('We are the people!')
+      expect(controller.getText({ id: 'key_for_the_people', args: { value: 'foo' } })).toBe(
+        'We are the people!'
+      )
+      expect(controller.getText({ id: 'key-for-no-people' })).toBe('blah blah blue stew')
       const spanish = `key_for_the_people = Nosotros somos personas!`
       controller.setLang('es')
       controller.setDict('es', 'global', spanish)
-      expect(controller.get({ id: 'key_for_the_people' })).toBe('Nosotros somos personas!')
+      expect(controller.getText({ id: 'key_for_the_people' })).toBe('Nosotros somos personas!')
     })
 
-    describe('with mock console.error', () => {
+    describe('with mocked console.error and console.warn', () => {
       let _error: any
+      let _warn: any
       beforeEach(() => {
         _error = console.error
+        _warn = console.warn
+        console.warn = jest.fn()
         console.error = jest.fn()
       })
       afterEach(() => {
         console.error = _error
+        console.warn = _warn
+      })
+
+      test('get() should gracefully handle missing id', () => {
+        const global = `this_is_the_key = This should render`
+        const i18nController = new I18nController({
+          defaultLang: 'en',
+          lang: 'es',
+          supportedLangs: ['en', 'es'],
+          global,
+        })
+        expect(i18nController.get({ id: 'bogogo' })).toEqual([null, {}])
+        expect(console.warn).toHaveBeenCalledWith(
+          `The requested id bogogo for section global does not exist in these translations: es, en`
+        )
+      })
+
+      test('get() should gracefully handle missing section', () => {
+        const global = `this_is_the_key = This should render`
+        const i18nController = new I18nController({
+          defaultLang: 'en',
+          supportedLangs: ['en', 'es'],
+          global,
+        })
+        expect(i18nController.get({ section: 'foobar', id: 'bogogo' })).toEqual([null, {}])
+        expect(console.warn).toHaveBeenCalledWith(
+          `The requested section foobar does not exist when requesting id bogogo`
+        )
       })
 
       test('keeps track of failed resources', () => {
@@ -214,7 +258,6 @@ describe('i18n functionality', () => {
     })
 
     test('can render variables in a translation', () => {
-      debugger
       const global = `key-for-the-group= We are the { $groupName }!`
       const controller = new I18nController({
         defaultLang: 'en-US',
@@ -249,6 +292,84 @@ describe('i18n functionality', () => {
         container = tester.container
       })
       expect(container).toHaveTextContent('We are the people!')
+    })
+  })
+
+  describe('<I18nElement />', () => {
+    test('can render get id when no context present', () => {
+      const { container } = render(<I18nElement get="this_is_my_key" as="div" />)
+      expect(container).toHaveTextContent('this_is_my_key')
+    })
+
+    test('can render variables in a translation', () => {
+      const global = `key-for-the-group= We are the { $groupName }!`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const { container } = render(
+        <AppRoot withI18n={controller}>
+          <I18nElement get="key-for-the-group" as="div" args={{ groupName: 'people' }} />
+        </AppRoot>
+      )
+      expect(container).toHaveTextContent('We are the \u2068people\u2069!')
+    })
+
+    test('can render an element with attributes', () => {
+      const global = `
+key-for-the-group= We are the { $groupName }!
+  .aria-label = { $groupName} run the world`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const { getByLabelText } = render(
+        <AppRoot withI18n={controller}>
+          <I18nElement get="key-for-the-group" as="div" args={{ groupName: 'people' }} />
+        </AppRoot>
+      )
+      expect(getByLabelText('\u2068people\u2069 run the world')).not.toBeNull()
+    })
+
+    test('should pass additional props to rendered element', () => {
+      const global = `
+key-for-the-group= We are the people!
+  .aria-label = people run the world`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const handleClick = jest.fn()
+      const { getByLabelText } = render(
+        <AppRoot withI18n={controller}>
+          <I18nElement get="key-for-the-group" as="div" onClick={handleClick} />
+        </AppRoot>
+      )
+      fireEvent.click(getByLabelText('people run the world'))
+      expect(handleClick).toHaveBeenCalled()
+    })
+  })
+
+  describe('<I18nFormatted />', () => {
+    test('should handle additional formatting', () => {
+      const global = `key-for-the-group= We are the people!`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const formatter = jest.fn((text: string) => {
+        return <div data-testid="hoobla">{text}</div>
+      })
+      const { getByTestId } = render(
+        <AppRoot withI18n={controller}>
+          <I18nFormatted get="key-for-the-group" formatter={formatter} />
+        </AppRoot>
+      )
+      expect(getByTestId('hoobla')).toHaveTextContent('We are the people!')
     })
   })
 })

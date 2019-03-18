@@ -1,5 +1,6 @@
 import { ResourceDefinition } from '../types'
-import { FluentBundle, FluentResource } from 'fluent'
+import { FluentBundle } from 'fluent'
+import { FluentNode, FluentMessage } from 'fluent'
 import { negotiateLanguages } from 'fluent-langneg'
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
@@ -43,6 +44,10 @@ interface I18nControllerOptions {
 }
 
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
+
+function isFluentNode(message: FluentMessage): message is FluentNode {
+  return typeof message !== 'string' && !Array.isArray(message)
+}
 
 export default abstract class BaseI18nController {
   lang: string = ''
@@ -92,7 +97,11 @@ export default abstract class BaseI18nController {
       )
     }
     const bundle = new FluentBundle(lang)
-    bundle.addMessages(ftl)
+    const errors = bundle.addMessages(ftl)
+    if (Array.isArray(errors) && errors.length) {
+      console.error(`Errors found in resource for section ${section} ${lang}`)
+      console.log(errors)
+    }
     const _dict = this._getDict()
     if (!_dict[section]) {
       _dict[section] = {}
@@ -118,25 +127,54 @@ export default abstract class BaseI18nController {
     args?: object
     section?: string
     id: string
-  }): string | null {
+  }): [(string | null), object] {
     const _dict = this._getDict()
     const bundles = _dict[section]
     if (bundles !== undefined) {
       const lang = this._languages.find(l => bundles[l] && bundles[l].hasMessage(id))
       const bundle = lang && bundles[lang]
       if (!bundle) {
-        if (__DEV__) {
+        if (
+          __DEV__ &&
+          (section !== 'global' || this._loadingState[`global/${this.defaultLang}`] === 'loaded')
+        ) {
           console.warn(
             `The requested id ${id} for section ${section} does not exist` +
               ` in these translations: ${this._languages.join(', ')}`
           )
         }
-        return null
+        return [null, {}]
       }
       const message = bundle.getMessage(id)
-      return bundle.format(message, args)
+      const attrs: { [key: string]: string } = {}
+      if (isFluentNode(message) && message.attrs !== null) {
+        Object.entries(message.attrs).forEach(([attr, value]) => {
+          attrs[attr] = bundle.format(value, args)
+        })
+      }
+      let text = bundle.format(message, args)
+      return [text, attrs]
     }
-    return null
+    if (
+      __DEV__ &&
+      (section !== 'global' || this._loadingState[`global/${this.defaultLang}`] === 'loaded')
+    ) {
+      console.warn(`The requested section ${section} does not exist when requesting id ${id}`)
+    }
+    return [null, {}]
+  }
+
+  getText({
+    args,
+    section = 'global',
+    id,
+  }: {
+    args?: object
+    section?: string
+    id: string
+  }): string | null {
+    const [message] = this.get({ args, section, id })
+    return message
   }
 
   _load(args: { lang: string; section: string }): void {
