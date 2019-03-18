@@ -1,5 +1,12 @@
 import * as React from 'react'
-import { cleanup, render, act, fireEvent, RenderResult } from 'react-testing-library'
+import {
+  cleanup,
+  render,
+  act,
+  fireEvent,
+  RenderResult,
+  getByLabelText,
+} from 'react-testing-library'
 import MockPromise from './helpers/MockPromise'
 import AppRoot, {
   BaseI18nController,
@@ -7,6 +14,8 @@ import AppRoot, {
   I18nElement,
   I18nText,
   I18nFormatted,
+  useI18nText,
+  useI18nResource,
 } from '../src/index'
 import { ResourceDefinition } from '../src/types'
 
@@ -370,6 +379,138 @@ key-for-the-group= We are the people!
         </AppRoot>
       )
       expect(getByTestId('hoobla')).toHaveTextContent('We are the people!')
+    })
+  })
+
+  describe('useI18nText()', () => {
+    test('returns fluent text', () => {
+      const global = `key-for-the-group= We are the people!`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const TestI18nText = () => {
+        const text = useI18nText('key-for-the-group')
+        return <div data-testid="used-text">{text}</div>
+      }
+      const { getByTestId } = render(
+        <AppRoot withI18n={controller}>
+          <TestI18nText />
+        </AppRoot>
+      )
+      expect(getByTestId('used-text')).toHaveTextContent('We are the people!')
+    })
+
+    test('returns formatted fluent text with args', () => {
+      const global = `key-for-the-group= We are the { $groupName }!`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const TestI18nText = () => {
+        const text = useI18nText('key-for-the-group', { groupName: 'rabbits' })
+        return <div data-testid="used-text">{text}</div>
+      }
+      const { getByTestId } = render(
+        <AppRoot withI18n={controller}>
+          <TestI18nText />
+        </AppRoot>
+      )
+      expect(getByTestId('used-text')).toHaveTextContent(/We are the .rabbits.!/)
+    })
+
+    test('allows overriding section for text', () => {
+      const global = `key-for-the-group= We are the { $groupName }!`
+      const simple = `key-for-the-group = We are the simple people!`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      controller.setDict('en-US', 'simple', simple)
+      const TestI18nText = () => {
+        const text = useI18nText('key-for-the-group', undefined, 'simple')
+        return <div data-testid="used-text">{text}</div>
+      }
+      const { getByTestId } = render(
+        <AppRoot withI18n={controller}>
+          <TestI18nText />
+        </AppRoot>
+      )
+      expect(getByTestId('used-text')).toHaveTextContent(/We are the simple people!/)
+    })
+  })
+
+  describe('useI18nResource()', () => {
+    test('returns fluent text and attributes', () => {
+      const global = `
+key-for-the-group= We are the people!
+  .aria-label = people run the world`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const TestI18nResource = () => {
+        const [text, attrs] = useI18nResource('key-for-the-group')
+        return <div {...attrs}>{text}</div>
+      }
+      const { getByLabelText } = render(
+        <AppRoot withI18n={controller}>
+          <TestI18nResource />
+        </AppRoot>
+      )
+      expect(getByLabelText('people run the world')).toHaveTextContent('We are the people!')
+    })
+
+    test('returns formatted text and attributes applying provided args', () => {
+      const global = `
+key-for-the-group= We are the { $groupName }!
+  .aria-label = people run the { $place }`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const TestI18nResource = () => {
+        const [text, attrs] = useI18nResource('key-for-the-group', {
+          groupName: 'people',
+          place: 'world',
+        })
+        return <div {...attrs}>{text}</div>
+      }
+      const { getByLabelText } = render(
+        <AppRoot withI18n={controller}>
+          <TestI18nResource />
+        </AppRoot>
+      )
+      expect(getByLabelText(/people run the .world./)).toHaveTextContent(/We are the .people.!/)
+    })
+
+    test('allows overriding section', () => {
+      const global = `key-for-the-group= We are the people!`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      controller.setDict('en-US', 'other', 'key-for-the-group = We are the OTHER people!')
+      const TestI18nResource = () => {
+        const [text, attrs] = useI18nResource('key-for-the-group', undefined, 'other')
+        return (
+          <div data-testid="select-me" {...attrs}>
+            {text}
+          </div>
+        )
+      }
+      const { getByTestId } = render(
+        <AppRoot withI18n={controller}>
+          <TestI18nResource />
+        </AppRoot>
+      )
+      expect(getByTestId('select-me')).toHaveTextContent(/We are the OTHER people!/)
     })
   })
 })
