@@ -15,7 +15,13 @@ declare module 'fluent' {
   export class FluentNumber extends FluentType {}
   export class FluentDateTime extends FluentType {}
 
-  export type FluentNode = FluentType | string
+  export type FluentNode = {
+    type?: 'str' | 'num' | 'var' | 'term' | 'ref' | 'select'
+    value: FluentMessage
+    attrs: { [key: string]: FluentMessage } | null
+  }
+
+  export type FluentMessage = FluentNode | string | (FluentNode | string)[]
 
   export class FluentResource extends Map {
     static fromString(source: string): FluentResource
@@ -23,10 +29,11 @@ declare module 'fluent' {
 
   export class FluentBundle {
     constructor(locales: string | string[], options?: FluentBundleContructorOptions)
+    messages: IterableIterator<[string, FluentMessage]>
     addMessages(source: string): string[]
     hasMessage(source: string): boolean
-    getMessage(id: string): FluentNode[]
-    format(message: FluentNode[], args?: object, errors?: string[]): string
+    getMessage(id: string): FluentMessage
+    format(message: FluentMessage, args?: object, errors?: string[]): string
     addResource(res: FluentResource): string[]
   }
 

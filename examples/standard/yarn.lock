@@ -998,6 +998,9 @@
 
 "@repay/cactus-fwk@../../packages/cactus-fwk/":
   version "0.0.0"
+  dependencies:
+    fluent "^0.11.0"
+    fluent-langneg "^0.1.1"
 
 "@repay/scripts@^0.0.2":
   version "0.0.2"
@@ -4549,6 +4552,16 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
   integrity sha1-2uRqnXj74lKSJYzB54CkHZXAN4I=
+
+fluent-langneg@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/fluent-langneg/-/fluent-langneg-0.1.1.tgz#8a6a95e0c57a1c339aa598cb1ee7e3df0c976adb"
+  integrity sha512-7lCFviLfesnxV4SnwAJh1epnKw97doF1Fmrjx3rAjq1/bbgrmuC43rpL7Qx81keB4Eu+YsjFZ7hCMg2mM25SyA==
+
+fluent@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/fluent/-/fluent-0.11.0.tgz#c6d4bcdb27d70eecb3c891e4f536e6dd94973580"
+  integrity sha512-HISy2vMEpHapwXOxp6Qljo6ObJPMLAI1Sh6RdiQLCdTgRr/0Cl1qPaXAPTvQar2dvDwzJH3oi1qsycCW/R5S/g==
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
