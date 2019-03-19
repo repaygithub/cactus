@@ -1,0 +1,26 @@
+# Internationalization
+
+The Cactus Framework implements i18n using the core technologies developed by Mozilla and [Project Fluent](https://projectfluent.org/). We chose Fluent because of it's design principles, features, and extensibility. We use these tools to provide our own API that can be used to implement internationalization easily.
+
+## Quick Links
+
+  - [Fluent Syntax](./Fluent%20Syntax.md)
+  - [Getting Started](./Getting%20Started.md)
+  - [API Documentation](./API%20Documentation.md)
+  - [Why Project Fluent?](./Project%20Fluent.md)
+
+## Fluent Syntax
+
+Because we make use of Fluent's tools to make internationalization possible, our API uses translations written using the Fluent ftl syntax. You can find a small example of some features of Fluent's syntax [here](./Fluent%20Syntax.md).
+
+## Getting Started
+
+Getting started with the internationalization tools that are available with the Cactus Framework is easy, and we have a quick guide for setting up a project to achieve internationalization, along with a working example to check out. To find out more about what you need to do to get started, go [here](./Getting%20Started.md).
+
+## API Documentation
+
+We have detailed documentation on each of the classes, functions and components you'll need to integrate internationalization into your application [here](./API%20Documentation.md).
+
+## Why Project Fluent?
+
+If you are interested in learning more about why we chose to use Project Fluent over other similar i18n tools, check [this](./Project%20Fluent.md) out.
