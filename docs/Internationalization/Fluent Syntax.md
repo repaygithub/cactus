@@ -13,6 +13,11 @@ basic = This is a simple, basic message.
 # Message using a placeable
 placeable = This is a { $messageType } message.
 
+# Multiline message
+multi = Messages can span
+    multiple lines, as long as new lines
+    are indented by at least one space.
+
 # Message using attributes
 attribute = This message has a placeholder attribute.
     .placeholder = How useful!
