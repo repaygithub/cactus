@@ -3,8 +3,6 @@ import { FluentBundle } from 'fluent'
 import { FluentNode, FluentMessage } from 'fluent'
 import { negotiateLanguages } from 'fluent-langneg'
 
-const __DEV__ = process.env.NODE_ENV !== 'production'
-
 interface Dictionary {
   /**
    * Dictionary containing fluent bundles for each section
@@ -41,6 +39,9 @@ interface I18nControllerOptions {
 
   /** Set the current lang explicitly or uses provided default */
   lang?: string
+
+  /** Flag for displaying error messages. Default is false */
+  debugMode?: boolean
 }
 
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
@@ -56,6 +57,7 @@ export default abstract class BaseI18nController {
   _languages: string[] = []
   _loadingState: LoadingState = {}
   _listeners: LoadingStateListener[] = []
+  _debugMode: boolean
 
   constructor(options: I18nControllerOptions) {
     if (!Array.isArray(options.supportedLangs) || options.supportedLangs.length === 0) {
@@ -75,6 +77,7 @@ export default abstract class BaseI18nController {
     this.defaultLang = options.defaultLang
     this.setLang(options.lang || this.defaultLang)
     _dictionaries.set(this, { global: {} })
+    this._debugMode = options.debugMode || false
 
     if (options.global === undefined) {
       this._load({ lang: this.defaultLang, section: 'global' })
@@ -90,7 +93,7 @@ export default abstract class BaseI18nController {
   }
 
   setDict(lang: string, section: string, ftl: FTL) {
-    if (!this._languages.includes(lang) && __DEV__) {
+    if (!this._languages.includes(lang) && this._debugMode) {
       console.warn(
         `You are loading an unrequested translation ${lang} for section: ${section} which will not be used. ` +
           `Ignore this message if you have just updated the requested language.`
@@ -135,7 +138,7 @@ export default abstract class BaseI18nController {
       const bundle = lang && bundles[lang]
       if (!bundle) {
         if (
-          __DEV__ &&
+          this._debugMode &&
           (section !== 'global' || this._loadingState[`global/${this.defaultLang}`] === 'loaded')
         ) {
           console.warn(
@@ -156,7 +159,7 @@ export default abstract class BaseI18nController {
       return [text, attrs]
     }
     if (
-      __DEV__ &&
+      this._debugMode &&
       (section !== 'global' || this._loadingState[`global/${this.defaultLang}`] === 'loaded')
     ) {
       console.warn(`The requested section ${section} does not exist when requesting id ${id}`)
@@ -195,7 +198,7 @@ export default abstract class BaseI18nController {
       })
       .catch(error => {
         this._loadingState[loadingKey] = 'failed'
-        if (__DEV__) {
+        if (this._debugMode) {
           console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
         }
       })
