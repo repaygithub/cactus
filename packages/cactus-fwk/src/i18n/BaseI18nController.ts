@@ -77,7 +77,7 @@ export default abstract class BaseI18nController {
     this.defaultLang = options.defaultLang
     this.setLang(options.lang || this.defaultLang)
     _dictionaries.set(this, { global: {} })
-    this._debugMode = options.debugMode || false
+    this._debugMode = Boolean(options.debugMode)
 
     if (options.global === undefined) {
       this._load({ lang: this.defaultLang, section: 'global' })
@@ -93,7 +93,7 @@ export default abstract class BaseI18nController {
   }
 
   setDict(lang: string, section: string, ftl: FTL) {
-    if (!this._languages.includes(lang) && this._debugMode) {
+    if (this._debugMode && !this._languages.includes(lang)) {
       console.warn(
         `You are loading an unrequested translation ${lang} for section: ${section} which will not be used. ` +
           `Ignore this message if you have just updated the requested language.`
