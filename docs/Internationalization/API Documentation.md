@@ -26,22 +26,23 @@ The `load` function is what will load your translations into the controller. You
 
 The `setDict` function can be used to load a specific translation resource into the controller manually. This function accepts three arguments:
 
-| Arg      | Type   | Required | Description                                                                   |
-| --------- | ------ | -------- | ----------------------------------------------------------------------------- |
-| `lang`    | String | Y        | The language that is being loaded                                            |
+| Arg       | Type   | Required | Description                                                     |
+| --------- | ------ | -------- | --------------------------------------------------------------- |
+| `lang`    | String | Y        | The language that is being loaded                               |
 | `section` | String | Y        | The section of the app that the translation is being loaded for |
-| `ftl` | String | Y | The actual ftl-formatted translation |
+| `ftl`     | String | Y        | The actual ftl-formatted translation                            |
 
 ### Constructor
 
 The `BaseI18nController` constructor accepts a single options object with the following attributes:
 
-| Attr             | Type     | Required | Description                                                                                       |
-| ---------------- | -------- | -------- | ------------------------------------------------------------------------------------------------- |
-| `defaultLang`    | String   | Y        | The default language                                                                              |
-| `supportedLangs` | String[] | Y        | A list of all languages the application supports                                                  |
-| `lang`           | String   | N        | The current language that should be rendered                                                      |
-| `global`         | String   | N        | A global ftl translation, used for loading the initial global dictionary at time of instantiation |
+| Attr             | Type     | Required | Description                                                                                                   |
+| ---------------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------- |
+| `defaultLang`    | String   | Y        | The default language                                                                                          |
+| `supportedLangs` | String[] | Y        | A list of all languages the application supports                                                              |
+| `lang`           | String   | N        | The current language that should be rendered                                                                  |
+| `global`         | String   | N        | A global ftl translation, used for loading the initial global dictionary at time of instantiation             |
+| `debugMode`      | Boolean  | N        | A flag to indicate whether or not certain console warnings should be displayed. This flag defaults to `false` |
 
 ### Extending The Base
 
