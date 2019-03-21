@@ -9,12 +9,15 @@
     "JamesNimlos"
   ],
   "scripts": {
+    "w": "yarn workspace",
+    "ws": "yarn workspaces",
     "fwk": "yarn workspace @repay/cactus-fwk"
   },
   "license": "unlicensed",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "devDependencies": {
     "@babel/core": "^7.3.4",
