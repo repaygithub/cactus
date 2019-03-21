@@ -10,12 +10,12 @@
     "typescript": "3.3.3333"
   },
   "scripts": {
-    "dev": "repay-scripts dev --babel-env development src/index.tsx",
+    "dev": "repay-scripts dev --debug --config webpack.config.js src/index.tsx",
     "build": "repay-scripts build src/index.tsx",
     "test": "echo tests not implemented && exit 1"
   },
   "devDependencies": {
-    "@repay/scripts": "^0.0.2",
+    "@repay/scripts": "^0.1.0",
     "@types/reach__router": "^1.2.3",
     "@types/react": "^16.8.8",
     "@types/react-dom": "^16.8.3"

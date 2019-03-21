@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@repay/babel-preset": "./packages/babel-preset",
-    "@repay/scripts": "^0.0.1",
+    "@repay/scripts": "^0.1.0",
     "@types/fluent-langneg": "^0.1.1",
     "@types/jest": "^24.0.9",
     "@types/react": "^16.8.6",
