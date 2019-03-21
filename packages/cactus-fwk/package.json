@@ -40,7 +40,7 @@
     ]
   },
   "devDependencies": {
-    "@repay/babel-preset": "./packages/babel-preset",
+    "@repay/babel-preset": "^0.1.0",
     "@repay/scripts": "^0.1.0",
     "@types/fluent-langneg": "^0.1.1",
     "@types/jest": "^24.0.9",

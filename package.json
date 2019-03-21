@@ -11,7 +11,9 @@
   "scripts": {
     "w": "yarn workspace",
     "ws": "yarn workspaces",
-    "fwk": "yarn workspace @repay/cactus-fwk"
+    "fwk": "yarn workspace @repay/cactus-fwk",
+    "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
+    "fmt": "yarn lint --fix"
   },
   "license": "unlicensed",
   "private": true,
@@ -21,15 +23,11 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.3.4",
-    "@repay/eslint-config": "^1.0.2",
+    "@repay/eslint-config": "^1.1.0",
     "@types/jest": "^24.0.9",
     "@types/react": "^16.8.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-config-react": "^1.1.7",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.4",
     "prettier": "^1.16.4",
     "typescript": "^3.3.3",
     "typescript-eslint-parser": "^22.0.0"

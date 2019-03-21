@@ -173,7 +173,7 @@ key-for-no-people = blah blah blue stew`
           lang: 'es',
           supportedLangs: ['en', 'es'],
           global,
-          debugMode: true
+          debugMode: true,
         })
         expect(i18nController.get({ id: 'bogogo' })).toEqual([null, {}])
         expect(console.warn).toHaveBeenCalledWith(
@@ -187,7 +187,7 @@ key-for-no-people = blah blah blue stew`
           defaultLang: 'en',
           supportedLangs: ['en', 'es'],
           global,
-          debugMode: true
+          debugMode: true,
         })
         expect(i18nController.get({ section: 'foobar', id: 'bogogo' })).toEqual([null, {}])
         expect(console.warn).toHaveBeenCalledWith(

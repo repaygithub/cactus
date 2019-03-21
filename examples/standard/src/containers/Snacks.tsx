@@ -11,6 +11,9 @@ const snackList = list.map(() => {
 const Snacks: React.FC<RouteComponentProps> = () => {
   const snackTranslationMap: { [k: string]: string | null } = {}
   for (const key of snackKeys) {
+    // Never use a hook in a loop unless you know the array is a constant and it
+    // will loop the same values every render
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     snackTranslationMap[key] = useI18nText(key, undefined, 'snacks')
   }
   return (
