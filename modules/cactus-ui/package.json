@@ -5,5 +5,9 @@
   "main": "index.js",
   "repository": "https://github.com/repaygithub/cactus",
   "license": "unlicensed",
-  "private": true
+  "private": true,
+  "scripts": {
+    "test": "echo no tests implemented for @repay/cactus-ui",
+    "test:ci": "yarn test"
+  }
 }

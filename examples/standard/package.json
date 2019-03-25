@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "repay-scripts dev --debug --config webpack.config.js src/index.tsx",
     "build": "repay-scripts build src/index.tsx",
-    "test": "echo tests not implemented && exit 1"
+    "test": "echo tests not implemented for standard example",
+    "test:ci": "yarn test"
   },
   "devDependencies": {
     "@repay/scripts": "^0.1.0",

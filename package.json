@@ -13,12 +13,14 @@
     "ws": "yarn workspaces",
     "fwk": "yarn workspace @repay/cactus-fwk",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
-    "fmt": "yarn lint --fix"
+    "fmt": "yarn lint --fix",
+    "test": "yarn test:ci",
+    "test:ci": "yarn ws run test:ci"
   },
   "license": "unlicensed",
   "private": true,
   "workspaces": [
-    "packages/*",
+    "modules/*",
     "examples/*"
   ],
   "devDependencies": {
