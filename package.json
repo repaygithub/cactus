@@ -1,6 +1,6 @@
 {
   "name": "cactus",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Cactus Framework and Utilities Monorepo",
   "main": "index.js",
   "repository": "git@github.com:repaygithub/cactus.git",
@@ -12,12 +12,14 @@
     "w": "yarn workspace",
     "ws": "yarn workspaces",
     "fwk": "yarn workspace @repay/cactus-fwk",
+    "web": "yarn workspace @repay/cactus-web",
+    "theme": "yarn workspace @repay/cactus-theme",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "fmt": "yarn lint --fix",
     "test": "yarn test:ci",
     "test:ci": "yarn ws run test:ci"
   },
-  "license": "unlicensed",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "modules/*",

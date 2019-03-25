@@ -1,0 +1,12 @@
+{
+  "name": "@repay/cactus-theme",
+  "version": "0.0.0",
+  "description": "The theme for the Cactus design-system at REPAY",
+  "main": "index.js",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-theme",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo no tests implemented for @repay/cactus-theme",
+    "test:ci": "yarn test"
+  }
+}
