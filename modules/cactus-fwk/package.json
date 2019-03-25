@@ -5,7 +5,7 @@
   "main": "dist/cactus-fwk.cjs.js",
   "module": "dist/cactus-fwk.js",
   "typings": "dist/index.d.ts",
-  "repository": "https://github.com/repaygithub/cactus/tree/master/packages/cactus-fwk",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-fwk",
   "license": "MIT",
   "scripts": {
     "cleanup": "rm -rf dist coverage",

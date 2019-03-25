@@ -1,0 +1,12 @@
+{
+  "name": "@repay/cactus-web",
+  "version": "0.0.0",
+  "description": "A UI component library for web built in React by REPAY",
+  "main": "index.js",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-ui",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo no tests implemented for @repay/cactus-ui",
+    "test:ci": "yarn test"
+  }
+}
