@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "@repay/cactus-fwk": "./packages/cactus-fwk/",
+    "@repay/cactus-fwk": "./modules/cactus-fwk/",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "typescript": "3.3.3333"
