@@ -8,6 +8,8 @@ exports[`component: Button should default to standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  font-size: 18px;
+  line-height: 1.5em;
   color: hsl(210,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(210,96%,11%);
@@ -22,6 +24,7 @@ exports[`component: Button should default to standard variant 1`] = `
 
 <button
     class="c0"
+    type="button"
   >
     Click me!
   </button>
@@ -36,6 +39,8 @@ exports[`component: Button should render call to action variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  font-size: 18px;
+  line-height: 1.5em;
   color: hsl(0,0%,100%);
   background-color: hsl(210,96%,35%);
   border-color: hsl(210,96%,35%);
@@ -50,6 +55,7 @@ exports[`component: Button should render call to action variant 1`] = `
 
 <button
     class="c0"
+    type="button"
   >
     Click me!
   </button>
@@ -64,21 +70,18 @@ exports[`component: Button should render disabled variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
-  color: hsl(210,96%,11%);
-  background-color: hsl(0,0%,100%);
-  border-color: hsl(210,96%,11%);
-}
-
-.c0:hover,
-.c0:focus {
-  color: hsl(0,0%,100%);
-  background-color: hsl(210,96%,11%);
-  border-color: hsl(210,96%,11%);
+  font-size: 18px;
+  line-height: 1.5em;
+  color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  border-color: hsl(0,0%,90%);
+  cursor: not-allowed;
 }
 
 <button
     class="c0"
     disabled=""
+    type="button"
   >
     Click me!
   </button>
@@ -93,6 +96,8 @@ exports[`component: Button should render standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  font-size: 18px;
+  line-height: 1.5em;
   color: hsl(210,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(210,96%,11%);
@@ -107,6 +112,7 @@ exports[`component: Button should render standard variant 1`] = `
 
 <button
     class="c0"
+    type="button"
   >
     Click me!
   </button>

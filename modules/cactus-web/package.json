@@ -11,7 +11,8 @@
     "tdd": "jest --watch",
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
-    "dev": "start-storybook -p 9001 -c .storybook"
+    "dev": "start-storybook -p 9001 -c .storybook",
+    "build:stories": "build-storybook -c .storybook -o ./.storybook/dist"
   },
   "jest": {
     "transform": {
@@ -34,10 +35,10 @@
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@repay/scripts": "^0.1.0",
-    "@storybook/addon-info": "^5.0.5",
+    "@storybook/addon-actions": "^5.0.5",
     "@storybook/addon-knobs": "^5.0.5",
-    "@storybook/addon-options": "^5.0.5",
-    "@storybook/react": "^5.0.5",
+    "@storybook/react": "^5.1.0-alpha.20",
+    "@storybook/theming": "^5.0.5",
     "@types/storybook__addon-knobs": "^4.0.4",
     "@types/storybook__react": "^4.0.1",
     "@types/styled-components": "^4.1.12",
@@ -47,7 +48,6 @@
     "jest": "^24.1.0",
     "jest-styled-components": "^6.2.1",
     "react": "^16.8.3",
-    "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "react-dom": "^16.8.5",
     "react-testing-library": "^6.0.3",
     "styled-components": "^4.1.2",

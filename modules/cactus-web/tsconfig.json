@@ -6,5 +6,5 @@
     "lib": ["esnext", "dom"],
     "types": ["react", "jest"]
   },
-  "include": ["src", "stories"]
+  "include": ["src", "stories", "custom.d.ts"]
 }
