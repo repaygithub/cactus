@@ -7,10 +7,26 @@
   "license": "MIT",
   "scripts": {
     "new": "node scripts/make-component.js",
-    "test": "echo no tests implemented for @repay/cactus-web",
+    "test": "jest",
+    "tdd": "jest --watch",
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "dev": "start-storybook -p 9001 -c .storybook"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": ".*\\.test\\.(tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
@@ -23,7 +39,9 @@
     "@types/storybook__react": "^4.0.1",
     "@types/styled-components": "^4.1.12",
     "@types/styled-system": "^4.0.0",
+    "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.5",
+    "jest": "^24.1.0",
     "react": "^16.8.3",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "react-dom": "^16.8.5",
