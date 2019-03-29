@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { cleanup, render, fireEvent } from 'react-testing-library'
 import Button from './Button'
-import cactusTheme from '@repay/cactus-theme'
 import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
+import 'jest-styled-components'
 
 afterEach(cleanup)
 
@@ -16,7 +17,7 @@ describe('component: Button', () => {
       </ThemeProvider>
     )
 
-    expect(button).toMatchSnapshot()
+    expect(button.asFragment()).toMatchSnapshot()
   })
 
   test('should render standard variant', () => {
@@ -28,7 +29,7 @@ describe('component: Button', () => {
       </ThemeProvider>
     )
 
-    expect(button).toMatchSnapshot()
+    expect(button.asFragment()).toMatchSnapshot()
   })
 
   test('should render call to action variant', () => {
@@ -40,7 +41,7 @@ describe('component: Button', () => {
       </ThemeProvider>
     )
 
-    expect(button).toMatchSnapshot()
+    expect(button.asFragment()).toMatchSnapshot()
   })
 
   test('should render disabled variant', () => {
@@ -52,7 +53,7 @@ describe('component: Button', () => {
       </ThemeProvider>
     )
 
-    expect(button).toMatchSnapshot()
+    expect(button.asFragment()).toMatchSnapshot()
   })
 
   test('should trigger onClick', () => {
