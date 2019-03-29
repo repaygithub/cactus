@@ -2,8 +2,26 @@
 
 exports[`component: Button should default to standard variant 1`] = `
 <DocumentFragment>
-  <button
-    class="bElwSB"
+  .c0 {
+  border-radius: 20px;
+  padding: 2px 30px;
+  border: 2px solid;
+  outline: none;
+  cursor: pointer;
+  color: hsl(210,96%,11%);
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(210,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(0,0%,100%);
+  background-color: hsl(210,96%,11%);
+  border-color: hsl(210,96%,11%);
+}
+
+<button
+    class="c0"
   >
     Click me!
   </button>
@@ -12,8 +30,26 @@ exports[`component: Button should default to standard variant 1`] = `
 
 exports[`component: Button should render call to action variant 1`] = `
 <DocumentFragment>
-  <button
-    class="hdDwhV"
+  .c0 {
+  border-radius: 20px;
+  padding: 2px 30px;
+  border: 2px solid;
+  outline: none;
+  cursor: pointer;
+  color: hsl(0,0%,100%);
+  background-color: hsl(210,96%,35%);
+  border-color: hsl(210,96%,35%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(0,0%,100%);
+  background-color: hsl(210,96%,11%);
+  border-color: hsl(210,96%,11%);
+}
+
+<button
+    class="c0"
   >
     Click me!
   </button>
@@ -22,8 +58,26 @@ exports[`component: Button should render call to action variant 1`] = `
 
 exports[`component: Button should render disabled variant 1`] = `
 <DocumentFragment>
-  <button
-    class="bElwSB"
+  .c0 {
+  border-radius: 20px;
+  padding: 2px 30px;
+  border: 2px solid;
+  outline: none;
+  cursor: pointer;
+  color: hsl(210,96%,11%);
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(210,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(0,0%,100%);
+  background-color: hsl(210,96%,11%);
+  border-color: hsl(210,96%,11%);
+}
+
+<button
+    class="c0"
     disabled=""
   >
     Click me!
@@ -33,8 +87,26 @@ exports[`component: Button should render disabled variant 1`] = `
 
 exports[`component: Button should render standard variant 1`] = `
 <DocumentFragment>
-  <button
-    class="bElwSB"
+  .c0 {
+  border-radius: 20px;
+  padding: 2px 30px;
+  border: 2px solid;
+  outline: none;
+  cursor: pointer;
+  color: hsl(210,96%,11%);
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(210,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(0,0%,100%);
+  background-color: hsl(210,96%,11%);
+  border-color: hsl(210,96%,11%);
+}
+
+<button
+    class="c0"
   >
     Click me!
   </button>

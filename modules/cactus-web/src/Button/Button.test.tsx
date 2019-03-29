@@ -3,7 +3,6 @@ import { cleanup, render, fireEvent } from 'react-testing-library'
 import Button from './Button'
 import { ThemeProvider } from 'styled-components'
 import cactusTheme from '@repay/cactus-theme'
-import 'jest-styled-components'
 
 afterEach(cleanup)
 

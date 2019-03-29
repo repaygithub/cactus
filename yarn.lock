@@ -7024,7 +7024,7 @@ jest-snapshot@^24.1.0:
     pretty-format "^24.0.0"
     semver "^5.5.0"
 
-jest-styled-components@^6.3.1:
+jest-styled-components@^6.2.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/jest-styled-components/-/jest-styled-components-6.3.1.tgz#fa21a89bfe8c20081c7c083cbaed2200854b60e3"
   integrity sha512-zie3ajvJbwlbHCAq8/Bv5jdbcYCz0ZMRNNX6adL7wSRpkCVPQtiJigv1140JN1ZOJIODPn8VKrjeFCN+jlPa7w==
@@ -10795,7 +10795,7 @@ style-loader@^0.23.1:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
 
-styled-components@^4.2.0:
+styled-components@^4.1.2:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-4.2.0.tgz#811fbbec4d64c7189f6c7482b9eb6fefa7fefef7"
   integrity sha512-L/LzkL3ZbBhqIVHdR7DbYujy4tqvTNRfc+4JWDCYyhTatI+8CRRQUmdaR0+ARl03DWsfKLhjewll5uNLrqrl4A==
