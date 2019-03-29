@@ -2,7 +2,7 @@ import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components
 import { space, SpaceProps } from 'styled-system'
 import { CactusTheme } from '@repay/cactus-theme'
 
-type ButtonVariants = 'standard' | 'action'
+export type ButtonVariants = 'standard' | 'action'
 
 interface ButtonProps extends SpaceProps {
   variant?: ButtonVariants
@@ -46,19 +46,32 @@ const variantMap: VariantMap = {
   `,
 }
 
-const Button = styled.button<ButtonProps>`
+const variantOrDiabled = (
+  props: ButtonProps
+): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+  if (props.disabled) {
+    return variantMap.disabled
+  } else if (props.variant !== undefined) {
+    return variantMap[props.variant]
+  }
+}
+
+export const Button = styled.button<ButtonProps>`
   border-radius: 20px;
   padding: 2px 30px;
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  font-size: 18px;
+  line-height: 1.5em;
   ${space}
-  ${p => p.variant !== undefined && variantMap[p.variant]}
+  ${variantOrDiabled}
 `
 
 Button.defaultProps = {
   variant: 'standard',
   disabled: false,
+  type: 'button',
 }
 
 export default Button

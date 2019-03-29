@@ -3,16 +3,13 @@ import { ThemeProvider } from 'styled-components'
 import cactusTheme from '@repay/cactus-theme'
 import { configure, addParameters, addDecorator } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
-import { withInfo } from '@storybook/addon-info'
 
 addParameters({
   options: {
     name: '@repay/cactus-web',
     url: 'https://github.com/repaygithub/cactus/tree/master/modules/cactus-web',
   },
-  info: false,
 })
-addDecorator(withInfo())
 addDecorator(withKnobs)
 addDecorator(story => (
   <div
