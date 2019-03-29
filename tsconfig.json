@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext"],
     "strict": true,
     "jsx": "react",
     "declaration": true,
@@ -9,5 +9,5 @@
     "moduleResolution": "node",
     "esModuleInterop": true
   },
-  "exclude": ["**/node_modules"]
+  "exclude": ["node_modules"]
 }

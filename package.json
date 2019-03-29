@@ -17,23 +17,28 @@
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "fmt": "yarn lint --fix",
     "test": "yarn test:ci",
-    "test:ci": "yarn ws run test:ci"
+    "test:ci": "yarn ws run test:ci",
+    "docs:publish": "gh-pages -d ./modules/cactus-web/.storybook/dist"
   },
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "modules/*",
-    "examples/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "modules/*",
+      "examples/*"
+    ],
+    "noHoist": [
+      "**/jest-styled-components"
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@repay/eslint-config": "^1.1.0",
-    "@types/jest": "^24.0.9",
-    "@types/react": "^16.8.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.14.1",
+    "gh-pages": "^2.0.1",
     "prettier": "^1.16.4",
-    "typescript": "^3.3.3",
+    "styled-components": "^4.1.2",
     "typescript-eslint-parser": "^22.0.0"
   }
 }

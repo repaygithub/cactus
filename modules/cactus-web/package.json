@@ -6,7 +6,59 @@
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-ui",
   "license": "MIT",
   "scripts": {
-    "test": "echo no tests implemented for @repay/cactus-ui",
-    "test:ci": "yarn test"
+    "new": "node scripts/make-component.js",
+    "test": "jest",
+    "tdd": "jest --watch",
+    "test:ci": "yarn test:types && yarn test",
+    "test:types": "tsc -p ./tsconfig.json --noEmit",
+    "dev": "start-storybook -p 9001 -c .storybook",
+    "build:stories": "build-storybook -c .storybook -o ./.storybook/dist"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/__setup__/setup.ts"
+    ],
+    "testRegex": ".*\\.test\\.(tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@repay/scripts": "^0.1.0",
+    "@storybook/addon-actions": "^5.0.5",
+    "@storybook/addon-knobs": "^5.0.5",
+    "@storybook/react": "^5.1.0-alpha.20",
+    "@storybook/theming": "^5.0.5",
+    "@types/storybook__addon-knobs": "^4.0.4",
+    "@types/storybook__react": "^4.0.1",
+    "@types/styled-components": "^4.1.12",
+    "@types/styled-system": "^4.0.0",
+    "babel-jest": "^24.5.0",
+    "babel-loader": "^8.0.5",
+    "jest": "^24.1.0",
+    "jest-styled-components": "^6.2.1",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.5",
+    "react-testing-library": "^6.0.3",
+    "styled-components": "^4.1.2",
+    "typescript": "^3.3.4000",
+    "webpack": "^4.29.6"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3"
+  },
+  "dependencies": {
+    "@repay/cactus-theme": "./modules/cactus-theme",
+    "styled-system": "^4.1.0"
   }
 }

@@ -1,11 +1,12 @@
 # Cactus Framework and Design System
 
-An application framework and design system built in React at [REPAY](https://github.com/repaygithub).
+An application framework and design system built in React at [REPAY](https://github.com/repaygithub). View the WIP documentation on the published [Github pages](https://repaygithub.github.io/cactus/).
 
 ## Modules
 
 - [`@repay/cactus-fwk`](./modules/cactus-fwk/) - Cactus Framework
-- [`@repay/cactus-web`](./modules/cactus-fwk/) - Cactus Web UI Components
+- [`@repay/cactus-theme`](./modules/cactus-theme/) - Cactus UI Theme
+- [`@repay/cactus-web`](./modules/cactus-web/) - Cactus Web UI Components
 
 ## Examples
 
