@@ -2,23 +2,24 @@
   "name": "standard",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "repay-scripts dev --debug --config webpack.config.js src/index.tsx",
+    "build": "repay-scripts build src/index.tsx",
+    "test": "yarn test:types",
+    "test:ci": "yarn test",
+    "test:types": "tsc -p ./tsconfig.json --noEmit"
+  },
   "dependencies": {
     "@reach/router": "^1.2.1",
     "@repay/cactus-fwk": "./modules/cactus-fwk/",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "typescript": "3.3.3333"
-  },
-  "scripts": {
-    "dev": "repay-scripts dev --debug --config webpack.config.js src/index.tsx",
-    "build": "repay-scripts build src/index.tsx",
-    "test": "echo tests not implemented for standard example",
-    "test:ci": "yarn test"
+    "react-dom": "^16.8.3"
   },
   "devDependencies": {
     "@repay/scripts": "^0.1.0",
     "@types/reach__router": "^1.2.3",
     "@types/react": "^16.8.8",
-    "@types/react-dom": "^16.8.3"
+    "@types/react-dom": "^16.8.3",
+    "typescript": "^3.3.4000"
   }
 }

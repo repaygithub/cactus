@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
 import { configure, addParameters, addDecorator } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
 import { withInfo } from '@storybook/addon-info'
@@ -15,7 +17,7 @@ addDecorator(withKnobs)
 addDecorator(story => (
   <div
     style={{
-      fontFamily: 'Helvetica, sans serif',
+      fontFamily: 'Helvetica, Arial, sans serif',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -24,12 +26,18 @@ addDecorator(story => (
       marginTop: '20px',
     }}
   >
-    {story()}
+    <ThemeProvider theme={cactusTheme}>{story()}</ThemeProvider>
   </div>
 ))
 
-function loadStories() {
-  require('../stories/Web.stories.tsx')
+function requireAll(req) {
+  req.keys().forEach(filename => req(filename))
 }
 
-configure(loadStories, module)
+const componentStories = require.context('../src', true, /\.(story|stories)\.(j|t)sx?$/)
+const metaStories = require.context('../stories', true, /\.(story|stories)\.(j|t)sx?$/)
+
+configure(() => {
+  requireAll(componentStories)
+  requireAll(metaStories)
+}, module)
