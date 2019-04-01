@@ -1,0 +1,52 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:lts
+
+    working_directory: ~/code
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Nodejs Version
+          command: node --version
+
+      - run:
+          name: Install Packages
+          command: yarn install --frozen-lockfile
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Build cactus-theme
+          command: yarn theme build
+
+      - run:
+          name: Link cactus-theme
+          command: |
+            cd ./modules/cactus-theme && yarn link && cd ../cactus-web && yarn link @repay/cactus-theme
+
+      - run:
+          name: Build cactus-fwk
+          command: yarn fwk build
+
+      - run:
+          name: Link cactus-fwk
+          command: |
+            cd ./modules/cactus-fwk && yarn link && cd ../../examples/standard && yarn link @repay/cactus-fwk
+
+      - run:
+          name: Test Packages
+          command: yarn run test:ci
