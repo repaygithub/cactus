@@ -12,6 +12,7 @@
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
     "dev": "repay-scripts dev --lib index.ts",
+    "prebuild": "yarn build:types",
     "build": "repay-scripts build --lib index.ts",
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
