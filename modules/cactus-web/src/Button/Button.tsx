@@ -49,7 +49,7 @@ const inverseVariantMap: VariantMap = {
     &:focus {
       color: ${p => p.theme.colors.callToAction};
       background-color: ${p => p.theme.colors.white};
-      border-color: ${p => p.theme.colors.white}
+      border-color: ${p => p.theme.colors.white};
     }
   `,
   standard: css`

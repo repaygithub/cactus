@@ -11,11 +11,7 @@ const darkModeStyle: React.CSSProperties = {
 
 class DarkMode extends Component {
   render() {
-    return (
-      <div style={darkModeStyle}>
-        {this.props.children}
-      </div>
-    )
+    return <div style={darkModeStyle}>{this.props.children}</div>
   }
 }
 

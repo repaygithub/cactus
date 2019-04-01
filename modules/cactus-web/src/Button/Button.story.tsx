@@ -23,18 +23,15 @@ buttonStories.add(
   { options: { showPanel: true } }
 )
 
-buttonStories.add(
-  'Inverse Colors',
-  () => (
-    <DarkMode>
-      <Button
-        variant={select('variant', buttonVariants, 'standard')}
-        disabled={boolean('disabled', false)}
-        inverse={true}
-        {...eventLoggers}
-      >
-        {text('children', 'An Inverse Button')}
-      </Button>
-    </DarkMode>
-  )
-)
+buttonStories.add('Inverse Colors', () => (
+  <DarkMode>
+    <Button
+      variant={select('variant', buttonVariants, 'standard')}
+      disabled={boolean('disabled', false)}
+      inverse={true}
+      {...eventLoggers}
+    >
+      {text('children', 'An Inverse Button')}
+    </Button>
+  </DarkMode>
+))

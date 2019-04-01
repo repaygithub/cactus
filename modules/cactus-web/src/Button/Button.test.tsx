@@ -50,7 +50,9 @@ describe('component: Button', () => {
   test('should render inverse standard variant', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button variant="standard" inverse>Click me!</Button>
+        <Button variant="standard" inverse>
+          Click me!
+        </Button>
       </ThemeProvider>
     )
 
@@ -60,7 +62,9 @@ describe('component: Button', () => {
   test('should render inverse call to action variant', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button variant="action" inverse>Click me!</Button>
+        <Button variant="action" inverse>
+          Click me!
+        </Button>
       </ThemeProvider>
     )
 
@@ -70,7 +74,9 @@ describe('component: Button', () => {
   test('should render inverse disabled variant', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button disabled inverse>}>Click me!</Button>
+        <Button disabled inverse>
+          }>Click me!
+        </Button>
       </ThemeProvider>
     )
 
