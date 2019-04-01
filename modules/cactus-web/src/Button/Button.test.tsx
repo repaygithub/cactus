@@ -47,6 +47,36 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
+  test('should render inverse standard variant', () => {
+    const button = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button variant="standard" inverse>Click me!</Button>
+      </ThemeProvider>
+    )
+
+    expect(button.asFragment()).toMatchSnapshot()
+  })
+
+  test('should render inverse call to action variant', () => {
+    const button = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button variant="action" inverse>Click me!</Button>
+      </ThemeProvider>
+    )
+
+    expect(button.asFragment()).toMatchSnapshot()
+  })
+
+  test('should render inverse disabled variant', () => {
+    const button = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button disabled inverse>}>Click me!</Button>
+      </ThemeProvider>
+    )
+
+    expect(button.asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
