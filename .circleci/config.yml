@@ -30,5 +30,23 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
+          name: Build cactus-theme
+          command: yarn theme build
+
+      - run:
+          name: Link cactus-theme
+          command: |
+            cd ./modules/cactus-theme && yarn link && cd ../cactus-web && yarn link @repay/cactus-theme
+
+      - run:
+          name: Build cactus-fwk
+          command: yarn fwk build
+
+      - run:
+          name: Link cactus-fwk
+          command: |
+            cd ./modules/cactus-fwk && yarn link && cd ../../examples/standard && yarn link @repay/cactus-fwk
+
+      - run:
           name: Test Packages
           command: yarn run test:ci

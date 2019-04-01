@@ -1,5 +1,7 @@
 # Cactus Framework and Design System
 
+[![CircleCI](https://circleci.com/gh/repaygithub/cactus.svg?style=svg)](https://circleci.com/gh/repaygithub/cactus)
+
 An application framework and design system built in React at [REPAY](https://github.com/repaygithub). View the WIP documentation on the published [Github pages](https://repaygithub.github.io/cactus/).
 
 ## Modules
