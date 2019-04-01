@@ -17,7 +17,7 @@
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "fmt": "yarn lint --fix",
     "test": "yarn test:ci",
-    "test:ci": "yarn ws run test:ci",
+    "test:ci": "yarn lint && yarn ws run test:ci",
     "docs:publish": "gh-pages -d ./modules/cactus-web/.storybook/dist"
   },
   "license": "MIT",

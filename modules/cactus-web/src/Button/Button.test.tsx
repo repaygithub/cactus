@@ -10,9 +10,7 @@ describe('component: Button', () => {
   test('should default to standard variant', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button>
-          Click me!
-        </Button>
+        <Button>Click me!</Button>
       </ThemeProvider>
     )
 
@@ -22,9 +20,7 @@ describe('component: Button', () => {
   test('should render standard variant', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button variant="standard">
-          Click me!
-        </Button>
+        <Button variant="standard">Click me!</Button>
       </ThemeProvider>
     )
 
@@ -34,9 +30,7 @@ describe('component: Button', () => {
   test('should render call to action variant', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button variant="action">
-          Click me!
-        </Button>
+        <Button variant="action">Click me!</Button>
       </ThemeProvider>
     )
 
@@ -46,9 +40,7 @@ describe('component: Button', () => {
   test('should render disabled variant', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button disabled>
-          Click me!
-        </Button>
+        <Button disabled>Click me!</Button>
       </ThemeProvider>
     )
 
