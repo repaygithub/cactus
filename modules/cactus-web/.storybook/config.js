@@ -33,9 +33,7 @@ function requireAll(req) {
 }
 
 const componentStories = require.context('../src', true, /\.(story|stories)\.(j|t)sx?$/)
-const metaStories = require.context('../stories', true, /\.(story|stories)\.(j|t)sx?$/)
 
 configure(() => {
   requireAll(componentStories)
-  requireAll(metaStories)
 }, module)

@@ -7,11 +7,10 @@ export type ButtonVariants = 'standard' | 'action'
 interface ButtonProps extends SpaceProps {
   variant?: ButtonVariants
   disabled?: boolean
+  inverse?: boolean
 }
 
-type VariantMap = { [K in ButtonVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> } & {
-  disabled: FlattenInterpolation<ThemeProps<CactusTheme>>
-}
+type VariantMap = { [K in ButtonVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
 const variantMap: VariantMap = {
   action: css`
@@ -38,21 +37,50 @@ const variantMap: VariantMap = {
       border-color: ${p => p.theme.colors.base};
     }
   `,
-  disabled: css`
-    color: ${p => p.theme.colors.mediumGray};
-    background-color: ${p => p.theme.colors.lightGray};
-    border-color: ${p => p.theme.colors.lightGray};
-    cursor: not-allowed;
+}
+
+const inverseVariantMap: VariantMap = {
+  action: css`
+    color: ${p => p.theme.colors.callToActionText};
+    background-color: ${p => p.theme.colors.callToAction};
+    border-color: ${p => p.theme.colors.callToAction};
+
+    &:hover,
+    &:focus {
+      color: ${p => p.theme.colors.callToAction};
+      background-color: ${p => p.theme.colors.white};
+      border-color: ${p => p.theme.colors.white};
+    }
+  `,
+  standard: css`
+    color: ${p => p.theme.colors.white};
+    background-color: ${p => p.theme.colors.base};
+    border-color: ${p => p.theme.colors.white};
+
+    &:hover,
+    &:focus {
+      color: ${p => p.theme.colors.base};
+      background-color: ${p => p.theme.colors.white};
+      border-color: ${p => p.theme.colors.white};
+    }
   `,
 }
 
-const variantOrDiabled = (
+const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
+  color: ${p => p.theme.colors.mediumGray};
+  background-color: ${p => p.theme.colors.lightGray};
+  border-color: ${p => p.theme.colors.lightGray};
+  cursor: not-allowed;
+`
+
+const variantOrDisabled = (
   props: ButtonProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+  const map = props.inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
-    return variantMap.disabled
+    return disabled
   } else if (props.variant !== undefined) {
-    return variantMap[props.variant]
+    return map[props.variant]
   }
 }
 
@@ -65,12 +93,13 @@ export const Button = styled.button<ButtonProps>`
   font-size: 18px;
   line-height: 1.5em;
   ${space}
-  ${variantOrDiabled}
+  ${variantOrDisabled}
 `
 
 Button.defaultProps = {
   variant: 'standard',
   disabled: false,
+  inverse: false,
   type: 'button',
 }
 
