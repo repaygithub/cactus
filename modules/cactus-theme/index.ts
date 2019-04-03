@@ -31,7 +31,7 @@ export interface GeneratorOptions {
   primaryHue: number
 }
 
-const repayOptions: GeneratorOptions = { primaryHue: 210 }
+const repayOptions: GeneratorOptions = { primaryHue: 200 }
 
 export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): CactusTheme {
   return {

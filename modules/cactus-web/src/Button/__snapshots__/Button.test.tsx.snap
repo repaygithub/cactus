@@ -10,16 +10,16 @@ exports[`component: Button should default to standard variant 1`] = `
   cursor: pointer;
   font-size: 18px;
   line-height: 1.5em;
-  color: hsl(210,96%,11%);
+  color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
-  border-color: hsl(210,96%,11%);
+  border-color: hsl(200,96%,11%);
 }
 
 .c0:hover,
 .c0:focus {
   color: hsl(0,0%,100%);
-  background-color: hsl(210,96%,11%);
-  border-color: hsl(210,96%,11%);
+  background-color: hsl(200,96%,11%);
+  border-color: hsl(200,96%,11%);
 }
 
 <button
@@ -42,15 +42,15 @@ exports[`component: Button should render call to action variant 1`] = `
   font-size: 18px;
   line-height: 1.5em;
   color: hsl(0,0%,100%);
-  background-color: hsl(210,96%,35%);
-  border-color: hsl(210,96%,35%);
+  background-color: hsl(200,96%,35%);
+  border-color: hsl(200,96%,35%);
 }
 
 .c0:hover,
 .c0:focus {
   color: hsl(0,0%,100%);
-  background-color: hsl(210,96%,11%);
-  border-color: hsl(210,96%,11%);
+  background-color: hsl(200,96%,11%);
+  border-color: hsl(200,96%,11%);
 }
 
 <button
@@ -99,13 +99,13 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   font-size: 18px;
   line-height: 1.5em;
   color: hsl(0,0%,100%);
-  background-color: hsl(210,96%,35%);
-  border-color: hsl(210,96%,35%);
+  background-color: hsl(200,96%,35%);
+  border-color: hsl(200,96%,35%);
 }
 
 .c0:hover,
 .c0:focus {
-  color: hsl(210,96%,35%);
+  color: hsl(200,96%,35%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(0,0%,100%);
 }
@@ -156,13 +156,13 @@ exports[`component: Button should render inverse standard variant 1`] = `
   font-size: 18px;
   line-height: 1.5em;
   color: hsl(0,0%,100%);
-  background-color: hsl(210,96%,11%);
+  background-color: hsl(200,96%,11%);
   border-color: hsl(0,0%,100%);
 }
 
 .c0:hover,
 .c0:focus {
-  color: hsl(210,96%,11%);
+  color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(0,0%,100%);
 }
@@ -186,16 +186,16 @@ exports[`component: Button should render standard variant 1`] = `
   cursor: pointer;
   font-size: 18px;
   line-height: 1.5em;
-  color: hsl(210,96%,11%);
+  color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
-  border-color: hsl(210,96%,11%);
+  border-color: hsl(200,96%,11%);
 }
 
 .c0:hover,
 .c0:focus {
   color: hsl(0,0%,100%);
-  background-color: hsl(210,96%,11%);
-  border-color: hsl(210,96%,11%);
+  background-color: hsl(200,96%,11%);
+  border-color: hsl(200,96%,11%);
 }
 
 <button
