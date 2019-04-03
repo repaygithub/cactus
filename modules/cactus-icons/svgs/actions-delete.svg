@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/actions-delete</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/actions-delete" stroke="none" stroke-width="1"  >
+        <path d="M6,20.375 C6,20.9969 6.5031,21.5 7.125,21.5 L16.125,21.5 C16.7469,21.5 17.25,20.9969 17.25,20.375 L17.25,8 L6,8 L6,20.375 Z M9,5.125 C9,4.0204305 10.0073593,3.125 11.25,3.125 C12.4926407,3.125 13.5,4.0204305 13.5,5.125 L16.9760509,5.125 C16.9760509,5.125 16.9760509,7.375 16.9760509,7.375 L6.0233365,7.375 C5.99222117,5.875 5.99222117,5.125 6.0233365,5.125 L9,5.125 Z M8,19 L8,10 L14.75,10 L14.75,19 L8,19 Z" id="icons/delete"  fill-rule="nonzero"></path>
+    </g>
+</svg>

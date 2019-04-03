@@ -4,3 +4,6 @@ dist
 .git
 .cache
 !**/.storybook
+
+modules/cactus-icons/i/
+modules/cactus-icons/ts/

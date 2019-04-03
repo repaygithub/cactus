@@ -1,7 +1,9 @@
-build/
 coverage/
 dist/
 node_modules/
 package-lock.json
 yarn.lock
 package.json
+
+modules/cactus-icons/i/
+modules/cactus-icons/ts/

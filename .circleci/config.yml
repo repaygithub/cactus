@@ -34,18 +34,12 @@ jobs:
           command: yarn theme build
 
       - run:
-          name: Link cactus-theme
-          command: |
-            cd ./modules/cactus-theme && yarn link && cd ../cactus-web && yarn link @repay/cactus-theme
-
-      - run:
           name: Build cactus-fwk
           command: yarn fwk build
 
       - run:
-          name: Link cactus-fwk
-          command: |
-            cd ./modules/cactus-fwk && yarn link && cd ../../examples/standard && yarn link @repay/cactus-fwk
+          name: Build cactus-icons
+          command: yarn icons build
 
       - run:
           name: Test Packages

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/interface/tables</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/interface/tables" stroke="none" stroke-width="1"  >
+        <path d="M18.84,13.8 L18.84,10.2 L5.16,10.2 L5.16,13.8 L18.84,13.8 Z M18.84,15.96 L5.16,15.96 L5.16,18.84 L18.84,18.84 L18.84,15.96 Z M18.84,8.04 L18.84,5.16 L5.16,5.16 L5.16,8.04 L18.84,8.04 Z M3,4.08 C3,3.48353247 3.48353247,3 4.08,3 L19.92,3 C20.5164675,3 21,3.48353247 21,4.08 L21,19.92 C21,20.5164675 20.5164675,21 19.92,21 L4.08,21 C3.48353247,21 3,20.5164675 3,19.92 L3,4.08 Z" id="tables"  fill-rule="nonzero"></path>
+    </g>
+</svg>

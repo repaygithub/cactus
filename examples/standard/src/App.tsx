@@ -1,6 +1,7 @@
 import React, { Component, ChangeEvent } from 'react'
-import { I18nText, I18nSection } from '@repay/cactus-fwk'
+import { I18nText } from '@repay/cactus-fwk'
 import { Link, RouteComponentProps } from '@reach/router'
+import Heart from '@repay/cactus-icons/i/status-like'
 
 type AppProps = {
   onLangChange: (event: ChangeEvent<HTMLSelectElement>) => void
@@ -17,6 +18,7 @@ class App extends Component<RouteComponentProps<AppProps>> {
             <option value="es-MX">🇲🇽 Español</option>
           </select>
           <Link to="/">
+            <Heart />
             <I18nText get="home-link" />
           </Link>
         </div>

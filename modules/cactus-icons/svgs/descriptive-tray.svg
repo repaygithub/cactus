@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/descriptive-tray</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/descriptive-tray" stroke="none" stroke-width="1"  >
+        <path d="M19.875,3 L4.125,3 C3.5031,3 3,3.5031 3,4.125 L3,19.875 C3,20.4969 3.5031,21 4.125,21 L19.875,21 C20.4969,21 21,20.4969 21,19.875 L21,4.125 C21,3.5031 20.4969,3 19.875,3 Z M18.75,18.75 L5.25,18.75 L5.25,14.25 L7.5,14.25 L7.5,15.375 C7.5,15.9969 8.0031,16.5 8.625,16.5 L15.375,16.5 C15.9969,16.5 16.5,15.9969 16.5,15.375 L16.5,14.25 L18.75,14.25 L18.75,18.75 Z M18.75,12 L15.375,12 C14.7531,12 14.25,12.5031 14.25,13.125 L14.25,14.25 L9.75,14.25 L9.75,13.125 C9.75,12.5031 9.2469,12 8.625,12 L5.25,12 L5.25,5.25 L18.75,5.25 L18.75,12 Z" id="descriptive-tray"  fill-rule="nonzero"></path>
+    </g>
+</svg>

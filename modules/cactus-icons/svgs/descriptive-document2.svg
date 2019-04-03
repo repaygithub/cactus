@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/descriptive-document2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/descriptive-document2" stroke="none" stroke-width="1"  >
+        <path d="M18.625,3 L5.125,3 C4.5031,3 4,3.5031 4,4.125 L4,19.875 C4,20.4969 4.5031,21 5.125,21 L18.625,21 C19.2469,21 19.75,20.4969 19.75,19.875 L19.75,4.125 C19.75,3.5031 19.2469,3 18.625,3 Z M6.25,18.75 L6.25,5.25 L17.5,5.25 L17.5,18.75 L6.25,18.75 Z M9.625,15.15 L14.125,15.15 C14.7469,15.15 15.25,14.6469 15.25,14.025 C15.25,13.4031 14.7469,12.9 14.125,12.9 L9.625,12.9 C9.0031,12.9 8.5,13.4031 8.5,14.025 C8.5,14.6469 9.0031,15.15 9.625,15.15 Z M9.625,10.65 L11.875,10.65 C12.4969,10.65 13,10.1469 13,9.525 C13,8.9031 12.4969,8.4 11.875,8.4 L9.625,8.4 C9.0031,8.4 8.5,8.9031 8.5,9.525 C8.5,10.1469 9.0031,10.65 9.625,10.65 Z" id="descriptive-document2"  fill-rule="nonzero"></path>
+    </g>
+</svg>
