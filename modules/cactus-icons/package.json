@@ -1,13 +1,15 @@
 {
   "name": "@repay/cactus-icons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cactus design-system icons as React elements",
   "module": "i/index.js",
   "types": "i/index.d.ts",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-icons",
   "author": "REPAY",
   "license": "MIT",
-  "files": ["i"],
+  "files": [
+    "i"
+  ],
   "scripts": {
     "cleanup": "rm -rf ts i",
     "build": "yarn build:ci",
