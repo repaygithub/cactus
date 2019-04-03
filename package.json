@@ -14,6 +14,7 @@
     "fwk": "yarn workspace @repay/cactus-fwk",
     "web": "yarn workspace @repay/cactus-web",
     "theme": "yarn workspace @repay/cactus-theme",
+    "icons": "yarn workspace @repay/cactus-icons",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "fmt": "yarn lint --fix",
     "test": "yarn test:ci",

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/interface-desktop</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icons/interface-desktop" stroke="none" stroke-width="1"  >
+        <path d="M19.875,3 C20.4969,3 21,3.5031 21,4.125 L21,15.375 C21,15.9969 20.4969,16.5 19.875,16.5 L13.125,16.5 L13.125,18.75 L15.375,18.75 C15.9969,18.75 16.5,19.2531 16.5,19.875 C16.5,20.4969 15.9969,21 15.375,21 L8.625,21 C8.0031,21 7.5,20.4969 7.5,19.875 C7.5,19.2531 8.0031,18.75 8.625,18.75 L10.875,18.75 L10.875,16.5 L4.125,16.5 C3.5031,16.5 3,15.9969 3,15.375 L3,4.125 C3,3.5031 3.5031,3 4.125,3 L19.875,3 Z M5.25,14.25 L18.75,14.25 L18.75,5.25 L5.25,5.25 L5.25,14.25 Z" id="interface-desktop"  fill-rule="nonzero"></path>
+    </g>
+</svg>
