@@ -4,6 +4,7 @@ import { space, SpaceProps, color, ColorProps, width, WidthProps } from 'styled-
 interface SvgProps extends SpaceProps, ColorProps, WidthProps {}
 
 const Svg = styled.svg<SvgProps>`
+  vertical-align: middle;
   ${space}
   ${color}
   ${width}
