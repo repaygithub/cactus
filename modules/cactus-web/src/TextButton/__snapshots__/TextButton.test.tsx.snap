@@ -3,11 +3,12 @@
 exports[`component: TextButton should default to standard variant 1`] = `
 <DocumentFragment>
   .c0 {
-  font-weight: 300;
+  font-size: 18px;
   border: none;
   padding: 0px;
   background-color: transparent;
-  color: hsl(210,96%,11%);
+  font-weight: 300;
+  color: hsl(200,96%,11%);
 }
 
 .c0:hover {
@@ -32,11 +33,12 @@ exports[`component: TextButton should default to standard variant 1`] = `
 exports[`component: TextButton should render call to action variant 1`] = `
 <DocumentFragment>
   .c0 {
-  font-weight: 300;
+  font-size: 18px;
   border: none;
   padding: 0px;
   background-color: transparent;
-  color: hsl(210,96%,35%);
+  font-weight: 300;
+  color: hsl(200,96%,35%);
 }
 
 .c0:hover {
@@ -61,7 +63,7 @@ exports[`component: TextButton should render call to action variant 1`] = `
 exports[`component: TextButton should render disabled variant 1`] = `
 <DocumentFragment>
   .c0 {
-  font-weight: 300;
+  font-size: 18px;
   border: none;
   padding: 0px;
   background-color: transparent;
@@ -91,11 +93,12 @@ exports[`component: TextButton should render disabled variant 1`] = `
 exports[`component: TextButton should render inverse call to action variant 1`] = `
 <DocumentFragment>
   .c0 {
-  font-weight: 300;
+  font-size: 18px;
   border: none;
   padding: 0px;
   background-color: transparent;
-  color: hsl(210,96%,35%);
+  font-weight: 700;
+  color: hsl(200,96%,35%);
 }
 
 .c0:hover {
@@ -120,7 +123,7 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
 exports[`component: TextButton should render inverse disabled variant 1`] = `
 <DocumentFragment>
   .c0 {
-  font-weight: 300;
+  font-size: 18px;
   border: none;
   padding: 0px;
   background-color: transparent;
@@ -150,10 +153,11 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
 exports[`component: TextButton should render inverse standard variant 1`] = `
 <DocumentFragment>
   .c0 {
-  font-weight: 300;
+  font-size: 18px;
   border: none;
   padding: 0px;
   background-color: transparent;
+  font-weight: 700;
   color: hsl(0,0%,100%);
 }
 
@@ -179,11 +183,12 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
 exports[`component: TextButton should render standard variant 1`] = `
 <DocumentFragment>
   .c0 {
-  font-weight: 300;
+  font-size: 18px;
   border: none;
   padding: 0px;
   background-color: transparent;
-  color: hsl(210,96%,11%);
+  font-weight: 300;
+  color: hsl(200,96%,11%);
 }
 
 .c0:hover {

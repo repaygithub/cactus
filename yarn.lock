@@ -1495,12 +1495,6 @@
   resolved "https://registry.yarnpkg.com/@repay/babel-preset/-/babel-preset-0.1.0.tgz#8c41902014afa57a6a606e1ea1a24684331fd6de"
   integrity sha512-Ek+sh+ts5FXD/lgRKVtELvlbWED6/gIuo2cxaTxYSjIgwgDK7aOzFwZ4HCqKcaVTqBzmnfGptOlsVAp4h/x8Qw==
 
-"@repay/cactus-fwk@./modules/cactus-fwk/":
-  version "0.1.0"
-  dependencies:
-    fluent "^0.11.0"
-    fluent-langneg "^0.1.1"
-
 "@repay/cactus-theme@./modules/cactus-theme":
   version "0.0.0"
 
