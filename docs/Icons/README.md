@@ -13,7 +13,7 @@ yarn add --dev @repay/cactus-icons
 Import all the icons or each icon individually and render as jsx elements.
 
 ```jsx
-import ActionAdd from '@repay/cactus-icons/actions-add'
+import ActionAdd from '@repay/cactus-icons/i/actions-add'
 import { ActionsDelete, ActionsGear } from '@repay/cactus-icons'
 
 export default props => (

@@ -1,9 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "i",
     "lib": ["esnext", "dom"],
     "types": ["react", "jest"]
   },
-  "include": ["built", "custom.d.ts"]
+  "include": ["ts"]
 }
