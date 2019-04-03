@@ -3,8 +3,8 @@ const path = require('path')
 
 async function copyToDist(localPath) {
   return fs.writeFile(
-    path.join(process.cwd(), localPath),
-    await fs.readFile(path.join(process.cwd(), 'dist', localPath), 'utf8'),
+    path.join(process.cwd(), 'dist', localPath),
+    await fs.readFile(path.join(process.cwd(), localPath), 'utf8'),
     'utf8'
   )
 }
