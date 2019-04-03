@@ -20,9 +20,21 @@
     "build:babel": "NODE_ENV=production babel ts -d i -x .ts -x .tsx",
     "build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "debug": "node --inspect-brk ./node_modules/.bin/svgr svgs -d built --config-file svgr.config.js --ext tsx",
-    "test": "echo no tests implemented for cactus-icons",
+    "test": "yarn jest",
     "test:ci": "yarn test:types",
-    "test:types": "tsc -p tsconfig.json --noEmit"
+    "test:types": "tsc -p tsconfig.test.json --noEmit"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": ".*\\.test\\.(tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ]
   },
   "peerDependencies": {
     "react": "^16.8.3"
@@ -32,6 +44,10 @@
     "@babel/core": "^7.4.0",
     "@repay/babel-preset": "^0.1.1",
     "@svgr/cli": "^4.1.0",
+    "babel-jest": "^24.5.0",
+    "jest": "^24.1.0",
+    "react": "^16.8.3",
+    "react-testing-library": "^6.0.0",
     "typescript": "^3.3.4000"
   },
   "dependencies": {

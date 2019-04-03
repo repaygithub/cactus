@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "i",
     "lib": ["esnext", "dom"],
-    "types": ["react", "jest"]
+    "types": []
   },
   "include": ["ts"]
 }
