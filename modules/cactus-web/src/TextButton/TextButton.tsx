@@ -52,6 +52,7 @@ const TextButton = styled.button<TextButtonProps>`
   font-size: 18px;
   border: none;
   padding: 0px;
+  outline: none;
   background-color: transparent;
   :hover {
     cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
