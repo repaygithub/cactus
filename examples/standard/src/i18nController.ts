@@ -1,4 +1,4 @@
-import { BaseI18nController } from '@repay/cactus-fwk'
+import { BaseI18nController } from '@repay/cactus-i18n'
 
 interface ResourceDefinition {
   lang: string

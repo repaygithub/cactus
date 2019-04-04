@@ -67,27 +67,27 @@ const controller = new I18nController({
 export default controller
 ```
 
-## AppRoot
+## I18nProvider
 
-The `<AppRoot />` component is a top-level app component that is used to provide i18n context to the rest of an application.
+The `<I18nProvider />` component is a top-level component that is used to provide i18n context to the rest of an application.
 
 ### Props
 
-| Prop       | Type   | Required | Description                                                                                           |
-| ---------- | ------ | -------- | ----------------------------------------------------------------------------------------------------- |
-| `withI18n` | String | N        | Used for passing the controller to the `AppRoot`. This prop tells the component to use i18n features. |
-| `lang`     | String | N        | Used for setting the current language that should be rendered.                                        |
+| Prop         | Type   | Required | Description                                                    |
+| ------------ | ------ | -------- | -------------------------------------------------------------- |
+| `controller` | String | Y        | Used for passing the controller to the `I18nProvider`.         |
+| `lang`       | String | N        | Used for setting the current language that should be rendered. |
 
 ### Example Usage
 
 ```jsx
-import AppRoot from '@repay/cactus-fwk'
+import I18nProvider from '@repay/cactus-i18n'
 import i18nController from './I18nController'
 ...
 return (
-  <AppRoot withI18n={i18nController} lang="es">
+  <I18nProvider controller={i18nController} lang="es">
     ...
-  </AppRoot>
+  </I18nProvider>
 )
 ```
 
@@ -104,7 +104,7 @@ The `<I18nSection />` component was designed to allow the translations to be bro
 ### Example Usage
 
 ```jsx
-import { I18nSection } from '@repay/cactus-fwk'
+import { I18nSection } from '@repay/cactus-i18n'
 ...
 const sectionComponent = () => {
   return (
@@ -130,7 +130,7 @@ The `<I18nText />` component is used for rendering translated text in an applica
 ### Example Usage
 
 ```jsx
-import { I18nText, I18nSection } from '@repay/cactus-fwk'
+import { I18nText, I18nSection } from '@repay/cactus-i18n'
 ...
 // No section provided; global translations will be loaded
 const text = () => {
@@ -146,7 +146,7 @@ const section = () => {
     </I18nSection>
   )
 }
-// Section overridden; translations for "my-section" will be loaded
+// Section overridden; translations for "my-section" will be loaded instead
 const override = () => {
   return (
     <I18nSection name="example">
@@ -173,7 +173,7 @@ The `<I18nElement />` component was created to allow translations to be rendered
 ### Example Usage
 
 ```jsx
-import { I18nElement, I18nSection } from '@repay/cactus-fwk'
+import { I18nElement, I18nSection } from '@repay/cactus-i18n'
 ...
 // No section provided; global translations will be loaded
 const element = () => {
@@ -185,7 +185,7 @@ const element = () => {
 const section = () => {
   return (
     <I18NSection name="example">
-      <I18nElement as="div" get="translation-key" args={{ groupName: "example" }} />
+      <I18nElement as={Text} get="translation-key" args={{ groupName: "example" }} />
     </I18NSection>
   )
 }
@@ -217,7 +217,7 @@ write your formatter function such that it returns a formatted string or a dom e
 ### Example Usage
 
 ```jsx
-import { I18nFormatted } from '@repay/cactus-fwk'
+import { I18nFormatted } from '@repay/cactus-i18n'
 ...
 const formatter = text => {
   // Carry out any extra formatting necessary
@@ -232,7 +232,7 @@ const formatted = () => {
 
 ## useI18nText & useI18nResource
 
-`useI18nText` and `useI18nResource` are functions that have been exported to allow you to hook into the internationalization context, and get translations directly, if necessary. They function similarly, but the difference is what gets returned. `useI18nText` will return *only* the text for a given translation, while `useI18nResource` will not only return the text of the translation, but any attributes defined in the ftl for that translation as well. Take the following ftl for instance:
+`useI18nText` and `useI18nResource` are functions that have been exported to allow you to hook into the internationalization context, and get translations directly, if necessary. They function similarly, but the difference is what gets returned. `useI18nText` will return _only_ the text for a given translation, while `useI18nResource` will not only return the text of the translation, but any attributes defined in the ftl for that translation as well. Take the following ftl for instance:
 
 ```js
 // ftl translation
@@ -242,7 +242,7 @@ welcome-message = Welcome, { $user }
 `
 ```
 
-The translation has an `aria-label` attribute associated with it, meaning you could call `useI18nResource` to get the translation *and* the aria-label that goes with it.
+The translation has an `aria-label` attribute associated with it, meaning you could call `useI18nResource` to get the translation _and_ the aria-label that goes with it.
 
 ### Parameters
 
@@ -255,7 +255,7 @@ The translation has an `aria-label` attribute associated with it, meaning you co
 ### Example Usage
 
 ```js
-import { useI18nText, useI18nResource } from '@repay/cactus-fwk'
+import { useI18nText, useI18nResource } from '@repay/cactus-i18n'
 ...
 const message = useI18nText('welcome-message', { user: 'CS Human' }) // "Welcome, CS Human"
 const [message, attrs] = useI18nResource('welcome-message', { user: 'CS Human' }) // ["Welcome, CS Human", { aria-label: "Greetings" }]
@@ -274,6 +274,7 @@ const controller = new I18nController({
 })
 const translatedText = controller.get({ id: 'key-for-the-group', args: { groupName: 'people' } })
 expect(translatedText).toBe('We are the \u2068people\u2069!')
+expect(translatedText).toMatch(/We are the .people.!/)
 ```
 
 For more information on these characters and why they are necessary, see Mozilla's explainer on the [Unicode Bidirectional Algorithm](https://developer.mozilla.org/en-US/docs/Web/Localization/Unicode_Bidirectional_Text_Algorithm)

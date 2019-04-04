@@ -1,5 +1,5 @@
 import React from 'react'
-import { I18nSection, I18nText } from '@repay/cactus-fwk'
+import { I18nSection, I18nText } from '@repay/cactus-i18n'
 import { RouteComponentProps } from '@reach/router'
 
 const Coffee: React.FC<RouteComponentProps> = () => {

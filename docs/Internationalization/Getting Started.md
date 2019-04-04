@@ -2,10 +2,10 @@
 
 Let's get started with a simple example using the internationalization capabilities of this framework. To set up a project with i18n, we'll follow these steps:
 
-  1. Define a set of translations using the ftl syntax specified by Project Fluent. Documentation on ftl syntax can be found [here](https://projectfluent.org/fluent/guide/).
-  2. Extend the `BaseI18nController` class. We will need to override the `load` method to tell the controller where to get the translations from, and which translations to use.
-  3. Use the `AppRoot` component at the top level of the application and give the controller object to this component. This will give the application the ability to utilize the controller and the i18n components to achieve internationalization throughout the app.
-  4. Use the provided internationalization components such as `I18nSection` and `I18nText` to render translatable text in the application. We'll use these components to tell the controller which translations we need and where to pull them from.
+1. Define a set of translations using the ftl syntax specified by Project Fluent. Documentation on ftl syntax can be found [here](https://projectfluent.org/fluent/guide/).
+2. Extend the `BaseI18nController` class. We will need to override the `load` method to tell the controller where to get the translations from, and which translations to use.
+3. Use the `I18nProvider` component (default export) at the top level of the application and give the controller object to this component. This will give the application the ability to utilize the controller and the i18n components to achieve internationalization throughout the app.
+4. Use the provided internationalization components such as `I18nSection` and `I18nText` to render translatable text in the application. We'll use these components to tell the controller which translations we need and where to pull them from.
 
 ## Defining Translations
 
@@ -31,6 +31,7 @@ export default `
 welcome-message =
 ¡Bienvenido a la página de cuentas, { $user }!`
 ```
+
 Notice that we put translations in two separate folders; one for English and one for Spanish. We also made `global.js` and `accounts.js`. This is because of how the i18n framework utilizes sections for organizations and efficiency. We'll discuss that more later. For now, let's move on to extending the `BaseI18nController` class.
 
 ## Extending `BaseI18nController`
@@ -41,7 +42,7 @@ Let's see what this might look like:
 
 ```js
 // i18nController.js
-import { BaseI18nController } from '@repay/cactus-fwk'
+import { BaseI18nController } from '@repay/cactus-i18n'
 
 class I18nController extends BaseI18nController {
   load(args) {
@@ -56,26 +57,28 @@ class I18nController extends BaseI18nController {
 const controller = new I18nController({ defaultLang: 'en', supportedLangs: ['en', 'es'] })
 export default controller
 ```
-In this example, we assume that the translations are stored locally in a folder called `locales`. We use the language and section to load the translations needed, and then return them. Now that we've extended the `BaseI18nController` class, we can start using `<AppRoot />`.
 
-## Using `<AppRoot />`
+In this example, we assume that the translations are stored locally in a folder called `locales`. We use the language and section to load the translations needed, and then return them. Now that we've extended the `BaseI18nController` class, we can start using `<I18nProvider />`.
 
-The `AppRoot` component is designed to be a top-level wrapper component that can provide all of its children (the rest of the application) with the means to make internationalization happen. Let's see how this would look:
+## Using `<I18nProvider />`
+
+The `I18nProvider` component is designed to be a top-level wrapper component that can provide all of its children (the rest of the application) with the means to make internationalization happen. Let's see how this would look:
 
 ```jsx
 // index.js
-import AppRoot from '@repay/cactus-fwk'
+import I18nProvider from '@repay/cactus-i18n'
 import i18nController from './i18nController.js'
 
 const mainComponent = () => {
   return (
-    <AppRoot withI18n={i18nController} lang="en">
+    <I18nProvider controller={i18nController} lang="en">
       ...
-    </AppRoot>
+    </I18nProvider>
   )
 }
 ```
-Here, we make `<AppRoot />` the top-level component in our app, and we provide it with an instantiated object of the `I18nController` class that we set up earlier. Providing this component with the controller using the `withI18n` prop will tell the wrapper that we are going to want to use i18n features. Now, let's start using some other tools to display some text.
+
+Here, we make `<I18nProvider />` the top-level component in our app, and we provide it with an instantiated object of the `I18nController` class that we set up earlier. Providing this component with the controller using the `controller` prop will allow us to use i18n features. Now, let's start using some other tools to display some text.
 
 ## Using I18n Components
 
@@ -86,12 +89,13 @@ Now that our setup is complete, we can add on to the work we did in the last ste
 ...
 const mainComponent = () => {
   return (
-    <AppRoot withI18n={i18nController} lang="en">
+    <I18nProvider controller={i18nController} lang="en">
       <I18nText get="welcome-message" args={{ user: "CS Human" }} />
-    </AppRoot>
+    </I18nProvider>
   )
 } // Welcome, CS Human!
 ```
+
 Notice that we told `I18nText` that we wanted to get the `welcome-message` translation, but we didn't use an `I18nSection` component. This means the controller will look for the global translation. We also made use of the `args` prop to pass an object that contains the value for the `user` variable in the translation. But what if we had used a section? Let's check it out:
 
 ```jsx
@@ -99,26 +103,27 @@ Notice that we told `I18nText` that we wanted to get the `welcome-message` trans
 ...
 const mainComponent = () => {
   return (
-    <AppRoot withI18n={i18nController} lang="en">
+    <I18nProvider controller={i18nController} lang="en">
       <I18nSection name="accounts">
         <I18nText get="welcome-message" args={{ user: "CS Human" }} />
       </I18nSection>
-    </AppRoot>
+    </I18nProvider>
   )
 } // Welcome to the accounts page, CS Human!
 ```
-Notice that we used the same `get` value on `I18nText`, but by making the `I18nText` component as a child of `I18nSection`, we told the controller that we should be loading translations for the "accounts" section, instead of global. What if we wanted to load translations for a different language, though? To do so, we'll just need to change the `lang` prop on `AppRoot`:
+
+Notice that we used the same `get` value on `I18nText`, but by making the `I18nText` component as a child of `I18nSection`, we told the controller that we should be loading translations for the "accounts" section, instead of global. What if we wanted to load translations for a different language, though? To do so, we'll just need to change the `lang` prop on `I18nProvider`:
 
 ```jsx
 // index.js
 ...
 const mainComponent = () => {
   return (
-    <AppRoot withI18n={i18nController} lang="es">
+    <I18nProvider controller={i18nController} lang="es">
       <I18nSection name="accounts">
         <I18nText get="welcome-message" args={{ user: "CS Human" }} />
       </I18nSection>
-    </AppRoot>
+    </I18nProvider>
   )
 } // ¡Bienvenido a la página de cuentas, CS Human!
 ```

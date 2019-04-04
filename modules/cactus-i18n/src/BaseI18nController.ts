@@ -1,4 +1,4 @@
-import { ResourceDefinition } from '../types'
+import { ResourceDefinition } from './types'
 import { FluentBundle } from 'fluent'
 import { FluentNode, FluentMessage } from 'fluent'
 import { negotiateLanguages } from 'fluent-langneg'

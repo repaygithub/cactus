@@ -1,14 +1,7 @@
 import * as React from 'react'
-import {
-  cleanup,
-  render,
-  act,
-  fireEvent,
-  RenderResult,
-  getByLabelText,
-} from 'react-testing-library'
+import { cleanup, render, act, fireEvent, RenderResult } from 'react-testing-library'
 import MockPromise from './helpers/MockPromise'
-import AppRoot, {
+import I18nProvider, {
   BaseI18nController,
   I18nSection,
   I18nElement,
@@ -29,16 +22,7 @@ class I18nController extends BaseI18nController {
 afterEach(cleanup)
 
 describe('i18n functionality', () => {
-  describe('<AppRoot />', () => {
-    test('can use AppRoot without an i18n controller', () => {
-      const { container } = render(
-        <AppRoot>
-          <I18nText get="this_is_the_key">This is the default content.</I18nText>
-        </AppRoot>
-      )
-      expect(container).toHaveTextContent('This is the default content.')
-    })
-
+  describe('<I18nProvider />', () => {
     test('allows I18nText to render translations when provided', () => {
       const global = `this_is_the_key = This should render`
       const i18nController = new I18nController({
@@ -47,9 +31,9 @@ describe('i18n functionality', () => {
         global,
       })
       const { container } = render(
-        <AppRoot lang="en" withI18n={i18nController}>
+        <I18nProvider lang="en" controller={i18nController}>
           <I18nText get="this_is_the_key">This is the default content.</I18nText>
-        </AppRoot>
+        </I18nProvider>
       )
       expect(container).toHaveTextContent('This should render')
     })
@@ -69,9 +53,9 @@ describe('i18n functionality', () => {
       let tester: RenderResult
       act(() => {
         tester = render(
-          <AppRoot lang="es" withI18n={i18nController}>
+          <I18nProvider lang="es" controller={i18nController}>
             <I18nText get="this-is-the-key">This is the default content.</I18nText>
-          </AppRoot>
+          </I18nProvider>
         )
         esGlobalPromise._call()
       })
@@ -92,14 +76,36 @@ describe('i18n functionality', () => {
       let container
       act(() => {
         let tester = render(
-          <AppRoot lang="es" withI18n={i18nController}>
+          <I18nProvider lang="es" controller={i18nController}>
             <I18nText get="this_is_the_key">This is the default content.</I18nText>
-          </AppRoot>
+          </I18nProvider>
         )
         esGlobalPromise._call()
         container = tester.container
       })
       expect(container).toHaveTextContent('This should render')
+    })
+
+    describe('with mocked console.error', () => {
+      let _error: any
+      beforeEach(() => {
+        _error = console.error
+        console.error = jest.fn()
+      })
+      afterEach(() => {
+        console.error = _error
+      })
+
+      test('throws when I18nProvider is rendered without a controller', () => {
+        expect(() => {
+          render(
+            // @ts-ignore
+            <I18nProvider>
+              <I18nText get="this_is_the_key">This is the default content.</I18nText>
+            </I18nProvider>
+          )
+        }).toThrowError()
+      })
     })
   })
 
@@ -241,11 +247,11 @@ key-for-no-people = blah blah blue stew`
       let container
       act(() => {
         let tester = render(
-          <AppRoot withI18n={controller}>
+          <I18nProvider controller={controller}>
             <I18nSection name="kleenex">
               <I18nText get="runny-nose" />
             </I18nSection>
-          </AppRoot>
+          </I18nProvider>
         )
         globalPromise._call()
         sectionPromise._call()
@@ -276,9 +282,9 @@ key-for-no-people = blah blah blue stew`
         global,
       })
       const { container } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <I18nText get="key-for-the-group" args={{ groupName: 'people' }} />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(container).toHaveTextContent('We are the \u2068people\u2069!')
     })
@@ -294,11 +300,11 @@ key-for-no-people = blah blah blue stew`
       let container
       act(() => {
         let tester = render(
-          <AppRoot withI18n={controller}>
+          <I18nProvider controller={controller}>
             <I18nSection name="kleenex">
               <I18nText get="key_for_the_people" section="global" />
             </I18nSection>
-          </AppRoot>
+          </I18nProvider>
         )
         container = tester.container
       })
@@ -320,9 +326,9 @@ key-for-no-people = blah blah blue stew`
         global,
       })
       const { container } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <I18nElement get="key-for-the-group" as="div" args={{ groupName: 'people' }} />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(container).toHaveTextContent('We are the \u2068people\u2069!')
     })
@@ -337,9 +343,9 @@ key-for-the-group= We are the { $groupName }!
         global,
       })
       const { getByLabelText } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <I18nElement get="key-for-the-group" as="div" args={{ groupName: 'people' }} />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByLabelText('\u2068people\u2069 run the world')).not.toBeNull()
     })
@@ -355,9 +361,9 @@ key-for-the-group= We are the people!
       })
       const handleClick = jest.fn()
       const { getByLabelText } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <I18nElement get="key-for-the-group" as="div" onClick={handleClick} />
-        </AppRoot>
+        </I18nProvider>
       )
       fireEvent.click(getByLabelText('people run the world'))
       expect(handleClick).toHaveBeenCalled()
@@ -376,9 +382,9 @@ key-for-the-group= We are the people!
         return <div data-testid="hoobla">{text}</div>
       })
       const { getByTestId } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <I18nFormatted get="key-for-the-group" formatter={formatter} />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByTestId('hoobla')).toHaveTextContent('We are the people!')
     })
@@ -397,9 +403,9 @@ key-for-the-group= We are the people!
         return <div data-testid="used-text">{text}</div>
       }
       const { getByTestId } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <TestI18nText />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByTestId('used-text')).toHaveTextContent('We are the people!')
     })
@@ -416,9 +422,9 @@ key-for-the-group= We are the people!
         return <div data-testid="used-text">{text}</div>
       }
       const { getByTestId } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <TestI18nText />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByTestId('used-text')).toHaveTextContent(/We are the .rabbits.!/)
     })
@@ -437,9 +443,9 @@ key-for-the-group= We are the people!
         return <div data-testid="used-text">{text}</div>
       }
       const { getByTestId } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <TestI18nText />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByTestId('used-text')).toHaveTextContent(/We are the simple people!/)
     })
@@ -460,9 +466,9 @@ key-for-the-group= We are the people!
         return <div {...attrs}>{text}</div>
       }
       const { getByLabelText } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <TestI18nResource />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByLabelText('people run the world')).toHaveTextContent('We are the people!')
     })
@@ -484,9 +490,9 @@ key-for-the-group= We are the { $groupName }!
         return <div {...attrs}>{text}</div>
       }
       const { getByLabelText } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <TestI18nResource />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByLabelText(/people run the .world./)).toHaveTextContent(/We are the .people.!/)
     })
@@ -508,9 +514,9 @@ key-for-the-group= We are the { $groupName }!
         )
       }
       const { getByTestId } = render(
-        <AppRoot withI18n={controller}>
+        <I18nProvider controller={controller}>
           <TestI18nResource />
-        </AppRoot>
+        </I18nProvider>
       )
       expect(getByTestId('select-me')).toHaveTextContent(/We are the OTHER people!/)
     })
