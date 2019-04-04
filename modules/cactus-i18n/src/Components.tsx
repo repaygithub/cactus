@@ -2,7 +2,6 @@ import React, {
   useEffect,
   useState,
   useContext,
-  ComponentType,
   ComponentProps,
   JSXElementConstructor,
 } from 'react'
@@ -48,12 +47,15 @@ const useI18nContext = (section?: string) => {
 }
 
 interface I18nProviderProps {
-  controller?: BaseI18nController
+  controller: BaseI18nController
   lang?: string
 }
 
 const I18nProvider: React.FC<I18nProviderProps> = props => {
   const controller = props.controller
+  if (!(controller instanceof BaseI18nController)) {
+    throw Error('I18nProvider must be given a controller which extends BaseI18nController')
+  }
   const lang = props.lang || navigator.language
   let i18nContext: I18nContextType | null = null
   let [loadingState, setLoading] = useState({})
@@ -144,7 +146,6 @@ const I18nFormatted: React.FC<I18nFormattedProps> = props => {
 }
 
 export {
-  BaseI18nController,
   I18nProvider,
   I18nSection,
   I18nElement,

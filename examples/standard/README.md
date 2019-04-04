@@ -1,3 +1,3 @@
 # Standard Example
 
-A stardard implementation of `@repay/cactus-fwk` and related libraries.
+A stardard implementation of the Cactus design-system libraries.

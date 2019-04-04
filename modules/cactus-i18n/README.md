@@ -1,4 +1,4 @@
-# `@repay/cactus-fwk`
+# `@repay/cactus-i18n`
 
 A React framework to implement common front-end requirements.
 

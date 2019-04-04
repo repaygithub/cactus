@@ -7,6 +7,7 @@ An application framework and design system built in React at [REPAY](https://git
 ## Modules
 
 - [`@repay/cactus-fwk`](./modules/cactus-fwk/) - Cactus Framework
+- [`@repay/cactus-i18n`](./modules/cactus-i18n/) - Cactus I18n library
 - [`@repay/cactus-icons`](./modules/cactus-icons/) - Cactus Icons
 - [`@repay/cactus-theme`](./modules/cactus-theme/) - Cactus UI Theme
 - [`@repay/cactus-web`](./modules/cactus-web/) - Cactus Web UI Components

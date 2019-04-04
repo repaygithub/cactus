@@ -34,8 +34,8 @@ jobs:
           command: yarn theme build
 
       - run:
-          name: Build cactus-fwk
-          command: yarn fwk build
+          name: Build cactus-i18n
+          command: yarn i18n build
 
       - run:
           name: Build cactus-icons

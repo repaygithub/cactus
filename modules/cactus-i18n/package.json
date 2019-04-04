@@ -1,11 +1,11 @@
 {
-  "name": "@repay/cactus-fwk",
+  "name": "@repay/cactus-i18n",
   "version": "0.1.0",
   "description": "Framework package",
-  "main": "dist/cactus-fwk.cjs.js",
-  "module": "dist/cactus-fwk.js",
+  "main": "dist/cactus-i18n.cjs.js",
+  "module": "dist/cactus-i18n.js",
   "typings": "dist/index.d.ts",
-  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-fwk",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-i18n",
   "license": "MIT",
   "scripts": {
     "cleanup": "rm -rf dist coverage",

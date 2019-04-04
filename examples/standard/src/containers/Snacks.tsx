@@ -1,5 +1,5 @@
 import React from 'react'
-import { I18nSection, I18nText, useI18nText } from '@repay/cactus-fwk'
+import { I18nSection, I18nText, useI18nText } from '@repay/cactus-i18n'
 import { Link, RouteComponentProps } from '@reach/router'
 
 const snackKeys = ['cookies', 'chips', 'fruit']

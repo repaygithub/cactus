@@ -1,5 +1,5 @@
 import React, { Component, ChangeEvent } from 'react'
-import { I18nText } from '@repay/cactus-fwk'
+import { I18nText } from '@repay/cactus-i18n'
 import { Link, RouteComponentProps } from '@reach/router'
 import Heart from '@repay/cactus-icons/i/status-like'
 

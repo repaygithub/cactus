@@ -1,6 +1,6 @@
 import React, { Component, ChangeEvent } from 'react'
 import ReactDOM from 'react-dom'
-import AppRoot from '@repay/cactus-fwk'
+import I18nProvider from '@repay/cactus-i18n'
 import i18nController from './i18nController'
 import { Router } from '@reach/router'
 import App from './App'
@@ -16,7 +16,7 @@ class RootWrapper extends Component {
     this.setState({ lang: event.target.value })
   render() {
     return (
-      <AppRoot withI18n={i18nController} lang={this.state.lang}>
+      <I18nProvider controller={i18nController} lang={this.state.lang}>
         <Router>
           <App path="/" onLangChange={this.handleLangChange} lang={this.state.lang}>
             <Home path="/" />
@@ -25,7 +25,7 @@ class RootWrapper extends Component {
             <Snack path="snacks/:snack" />
           </App>
         </Router>
-      </AppRoot>
+      </I18nProvider>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, RouteComponentProps } from '@reach/router'
-import { I18nSection, I18nText } from '@repay/cactus-fwk'
+import { I18nSection, I18nText } from '@repay/cactus-i18n'
 
 const Home: React.FC<RouteComponentProps> = () => (
   <div className="App">

@@ -1517,9 +1517,6 @@
   resolved "https://registry.yarnpkg.com/@repay/babel-preset/-/babel-preset-0.1.1.tgz#caf3ced2d9b8791dd6f777f3e8f9d525272d507e"
   integrity sha512-Zx+T7ptjE5etBezz7dUUR7oUhk1fgVwu7EY2n4GOSIM2HdCBh+ZtKiDziwe6eUXWh7z3tXOvKJVibK9RJNa6ZA==
 
-"@repay/cactus-theme@./modules/cactus-theme":
-  version "0.1.0"
-
 "@repay/eslint-config@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@repay/eslint-config/-/eslint-config-1.1.0.tgz#6efa96dd24a898cb5efd77018394691d55b384eb"
