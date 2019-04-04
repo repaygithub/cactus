@@ -1,7 +1,7 @@
 # `@repay/cactus-i18n`
 
-A React framework to implement common front-end requirements.
+A React library to implement i18n using Fluent.
 
 ## Documentation
 
-Documentation is available in the [root of the repository](https://github.com/repaygithub/cactus/tree/master/docs).
+Documentation is available in the [root of the repository](https://github.com/repaygithub/cactus/tree/master/docs/Internationalization/).
