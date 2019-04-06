@@ -1,0 +1,591 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: IconButton should default to standard medium icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render call to action icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,35%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,11%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="action"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render disabled variant 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    disabled=""
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render icon button with aria-label 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    aria-label="uchiha-itachi"
+    class="c0"
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render inverse call to action icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,35%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(0,0%,100%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="action"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render inverse disabled variant 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    disabled=""
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render inverse standard icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(0,0%,100%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,11%);
+  background: hsl(0,0%,100%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render large icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 40px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render small icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 16px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render standard medium icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should render tiny icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 8px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
