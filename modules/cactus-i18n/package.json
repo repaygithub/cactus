@@ -1,0 +1,60 @@
+{
+  "name": "@repay/cactus-i18n",
+  "version": "0.1.0",
+  "description": "I18n library for React using Fluent",
+  "main": "dist/cactus-i18n.cjs.js",
+  "module": "dist/cactus-i18n.js",
+  "typings": "dist/index.d.ts",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-i18n",
+  "license": "MIT",
+  "scripts": {
+    "cleanup": "rm -rf dist coverage",
+    "predev": "yarn run cleanup && yarn build:types",
+    "dev": "repay-scripts dev --lib src/index.ts",
+    "build": "repay-scripts build --lib src/index.ts",
+    "postbuild": "yarn build:types",
+    "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly",
+    "test:types": "tsc --project ./tsconfig.json --noEmit",
+    "test:ci": "yarn test:types && yarn test --coverage",
+    "test": "jest",
+    "tdd": "jest --watch"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.ts"
+    ],
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": "tests/.*\\.test\\.(jsx?|tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ]
+  },
+  "devDependencies": {
+    "@repay/babel-preset": "^0.1.0",
+    "@repay/scripts": "^0.1.0",
+    "@types/fluent-langneg": "^0.1.1",
+    "@types/jest": "^24.0.9",
+    "@types/react": "^16.8.6",
+    "jest": "^24.1.0",
+    "jest-dom": "^3.1.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-testing-library": "^6.0.0",
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {
+    "fluent": "^0.11.0",
+    "fluent-langneg": "^0.1.1"
+  },
+  "peerDependencies": {
+    "react": "^16.8.3"
+  }
+}

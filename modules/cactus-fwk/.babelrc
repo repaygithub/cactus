@@ -1,3 +1,4 @@
 {
-  "presets": ["@repay/babel-preset"]
+  "presets": ["@repay/babel-preset"],
+  "sourceMaps": "inline"
 }
