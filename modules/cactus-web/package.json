@@ -8,7 +8,6 @@
   "scripts": {
     "new": "node scripts/make-component.js",
     "test": "jest",
-    "debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand --testNamePattern=\"IconButton.test.tsx\"",
     "tdd": "jest --watch",
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
