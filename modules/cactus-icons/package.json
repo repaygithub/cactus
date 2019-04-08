@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "description": "Cactus design-system icons as React elements",
   "module": "i/index.js",
+  "main": "i/index.cjs.js",
   "types": "i/index.d.ts",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-icons",
   "author": "REPAY",
@@ -14,9 +15,10 @@
     "cleanup": "rm -rf ts i",
     "build": "yarn build:ci",
     "postbuild": "node scripts/gen-docs.js",
-    "build:ci": "yarn build:ts && yarn build:babel && yarn build:types",
+    "build:ci": "yarn build:ts && yarn build:cjs && yarn build:babel && yarn build:types",
     "build:ts": "svgr svgs -d ts --config-file svgr.config.js --ext tsx --filename-case kebab",
     "postbuild:ts": "node ./scripts/post-build-ts",
+    "build:cjs": "repay-scripts build --lib --config rollup.config.js ts/index.ts",
     "build:babel": "NODE_ENV=production babel ts -d i -x .ts -x .tsx",
     "build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
     "debug": "node --inspect-brk ./node_modules/.bin/svgr svgs -d built --config-file svgr.config.js --ext tsx",
@@ -37,17 +39,20 @@
     ]
   },
   "peerDependencies": {
-    "react": "^16.8.3"
+    "react": "^16.8.3",
+    "styled-components": "^4.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
     "@repay/babel-preset": "^0.1.1",
+    "@repay/scripts": "^0.2.0-next",
     "@svgr/cli": "^4.1.0",
     "babel-jest": "^24.5.0",
     "jest": "^24.1.0",
     "react": "^16.8.3",
     "react-testing-library": "^6.0.0",
+    "styled-components": "^4.1.2",
     "typescript": "^3.3.4000"
   },
   "dependencies": {
