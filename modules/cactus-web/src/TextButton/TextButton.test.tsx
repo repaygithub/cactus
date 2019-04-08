@@ -3,6 +3,7 @@ import { cleanup, render, fireEvent } from 'react-testing-library'
 import TextButton from './TextButton'
 import cactusTheme from '@repay/cactus-theme'
 import { ThemeProvider } from 'styled-components'
+import { StatusCheck } from '@repay/cactus-icons'
 
 afterEach(cleanup)
 
@@ -109,5 +110,31 @@ describe('component: TextButton', () => {
 
     fireEvent.click(getByTestId('not-clicked'))
     expect(onClick).not.toHaveBeenCalled()
+  })
+
+  test('should render a text+icon button', () => {
+    const textIconButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <TextButton>
+          <StatusCheck />
+          Check check
+        </TextButton>
+      </ThemeProvider>
+    )
+
+    expect(textIconButton.asFragment()).toMatchSnapshot()
+  })
+
+  test('should render a disabled text+icon button', () => {
+    const textIconButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <TextButton>
+          <StatusCheck />
+          Check check
+        </TextButton>
+      </ThemeProvider>
+    )
+
+    expect(textIconButton.asFragment()).toMatchSnapshot()
   })
 })

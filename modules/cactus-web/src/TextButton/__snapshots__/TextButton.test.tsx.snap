@@ -31,6 +31,100 @@ exports[`component: TextButton should default to standard variant 1`] = `
 </DocumentFragment>
 `;
 
+exports[`component: TextButton should render a disabled text+icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  border: none;
+  padding: 0px;
+  outline: none;
+  background-color: transparent;
+  font-weight: 300;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover {
+  cursor: pointer;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+    Check check
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: TextButton should render a text+icon button 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  border: none;
+  padding: 0px;
+  outline: none;
+  background-color: transparent;
+  font-weight: 300;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover {
+  cursor: pointer;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+    Check check
+  </button>
+</DocumentFragment>
+`;
+
 exports[`component: TextButton should render call to action variant 1`] = `
 <DocumentFragment>
   .c0 {
