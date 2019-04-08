@@ -71,6 +71,8 @@ exports[`component: TextButton should render disabled variant 1`] = `
   outline: none;
   background-color: transparent;
   color: hsl(0,0%,70%);
+  -webkit-text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .c0:hover {
@@ -133,6 +135,8 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   outline: none;
   background-color: transparent;
   color: hsl(0,0%,70%);
+  -webkit-text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .c0:hover {

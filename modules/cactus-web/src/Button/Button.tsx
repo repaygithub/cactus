@@ -71,6 +71,7 @@ const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
   background-color: ${p => p.theme.colors.lightGray};
   border-color: ${p => p.theme.colors.lightGray};
   cursor: not-allowed;
+  text-decoration: line-through;
 `
 
 const variantOrDisabled = (
