@@ -30,6 +30,10 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       - run:
+          name: Build cactus-fwk
+          command: yarn fwk build
+
+      - run:
           name: Build cactus-theme
           command: yarn theme build
 

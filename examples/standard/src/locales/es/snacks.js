@@ -5,5 +5,6 @@ snacks-desc = Aquí hay una lista muy larga de los bocadillos que nos gustan:
 cookies = galletas
 chips = papas fritas
 fruit = fruta
+carrots = zanahorias
 go-to-snack = Visita la pagina de { $snack }
 `

@@ -1,21 +1,33 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { I18nSection, I18nText, useI18nText } from '@repay/cactus-i18n'
+import { useFeatureFlags } from '@repay/cactus-fwk'
 import { Link, RouteComponentProps } from '@reach/router'
 
-const snackKeys = ['cookies', 'chips', 'fruit']
-const list = Array(10000).fill(0)
-const snackList = list.map(() => {
-  return snackKeys[Math.floor(Math.random() * 3)]
-})
+const snackKeysNoCarrots = ['cookies', 'chips', 'fruit']
+const snackKeysWithCarrots = snackKeysNoCarrots.concat('carrots')
+
+function fillSnackList(snackKeys: string[]) {
+  const snackKeysLength = snackKeys.length
+  const snackList = []
+  for (let i = 0; i < 1000; ++i) {
+    snackList[i] = snackKeys[Math.floor(Math.random() * snackKeysLength)]
+  }
+  return snackList
+}
 
 const Snacks: React.FC<RouteComponentProps> = () => {
-  const snackTranslationMap: { [k: string]: string | null } = {}
-  for (const key of snackKeys) {
-    // Never use a hook in a loop unless you know the array is a constant and it
-    // will loop the same values every render
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    snackTranslationMap[key] = useI18nText(key, undefined, 'snacks')
+  const [includesCarrots] = useFeatureFlags('include_carrot_snacks')
+  const snackKeys = includesCarrots ? snackKeysWithCarrots : snackKeysNoCarrots
+
+  // We always get all translations to ensure hooks order
+  const snackTranslationMap: { [k: string]: string | null } = {
+    cookies: useI18nText('cookies', undefined, 'snacks'),
+    chips: useI18nText('chips', undefined, 'snacks'),
+    fruit: useI18nText('fruit', undefined, 'snacks'),
+    carrots: useI18nText('carrots', undefined, 'snacks'),
   }
+  // memoize expensive calculation
+  const snackList = useMemo(() => fillSnackList(snackKeys), [snackKeys])
   return (
     <I18nSection name="snacks">
       <h2>
