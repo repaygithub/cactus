@@ -35,6 +35,7 @@ const inverseVariantMap: VariantMap = {
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
   color: ${p => p.theme.colors.mediumGray};
+  text-decoration: line-through;
 `
 
 const variantOrDisabled = (
