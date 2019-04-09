@@ -1,17 +1,20 @@
 {
   "name": "@repay/cactus-fwk",
-  "version": "0.1.0",
+  "version": "0.2.0-next",
   "description": "Cactus Framework for React",
   "main": "dist/cactus-fwk.cjs.js",
   "module": "dist/cactus-fwk.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-fwk",
   "author": "REPAY",
   "license": "MIT",
   "scripts": {
     "cleanup": "rm -rf dist coverage",
     "predev": "yarn run cleanup && yarn build:types",
-    "dev": "repay-scripts dev --lib src/index.ts",
+    "dev": "repay-scripts dev --lib src/index.tsx",
     "build": "repay-scripts build --lib src/index.ts",
     "postbuild": "yarn build:types",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly",
@@ -19,6 +22,24 @@
     "test:ci": "yarn test:types && yarn test --coverage",
     "test": "jest",
     "tdd": "jest --watch"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.ts"
+    ],
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": "tests/.*\\.test\\.(jsx?|tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ]
   },
   "devDependencies": {
     "@repay/babel-preset": "^0.1.2",
