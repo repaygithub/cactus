@@ -5,9 +5,7 @@ import { I18nSection, I18nText } from '@repay/cactus-i18n'
 const Home: React.FC<RouteComponentProps> = () => (
   <div className="App">
     <h2 className="App-header">
-      <p>
-        <I18nText get="welcome-message" />
-      </p>
+      <I18nText get="welcome-message" />
     </h2>
     <div>
       <I18nSection name="coffee">

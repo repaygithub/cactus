@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "repay-scripts dev --debug --config webpack.config.js src/index.tsx",
+    "dev": "repay-scripts dev --config webpack.config.js src/index.tsx",
     "build": "repay-scripts build src/index.tsx",
     "test": "yarn test:types",
     "test:ci": "yarn test",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "@repay/cactus-fwk": "^0.2.0-next",
     "@repay/cactus-i18n": "^0.1.0",
     "@repay/cactus-icons": "^0.2.0",
     "react": "^16.8.3",
