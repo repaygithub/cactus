@@ -1,0 +1,28 @@
+{
+  "name": "theme-components",
+  "version": "0.1.0",
+  "description": "An example implementation of repay/cactus-web using @repay/cactus-theme",
+  "private": true,
+  "scripts": {
+    "dev": "repay-scripts dev --debug src/index.tsx"
+  },
+  "devDependencies": {
+    "@repay/scripts": "^0.2.0-next",
+    "@types/reach__router": "^1.2.3",
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.3",
+    "typescript": "^3.3.4000"
+  },
+  "dependencies": {
+    "@reach/router": "^1.2.1",
+    "@repay/cactus-icons": "^0.2.0",
+    "@repay/cactus-theme": "^0.1.0",
+    "@repay/cactus-web": "file:../../modules/cactus-web",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "styled-components": "^4.1.2"
+  },
+  "resolutions": {
+    "styled-components": "^4.1.2"
+  }
+}
