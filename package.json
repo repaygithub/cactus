@@ -20,7 +20,10 @@
     "fmt": "yarn lint --fix",
     "test": "yarn test:ci",
     "test:ci": "yarn lint && yarn ws run test:ci",
-    "docs:publish": "gh-pages -d ./modules/cactus-web/.storybook/dist"
+    "build": "yarn fwk build && yarn theme build && yarn icons build && yarn i18n build",
+    "predocs:publish": "./scripts/build-storybooks.js",
+    "docs:publish": "gh-pages -d ./dist",
+    "cleanup": "rm -rf dist && yarn ws run cleanup"
   },
   "license": "MIT",
   "private": true,
@@ -37,6 +40,7 @@
     "@babel/core": "^7.3.4",
     "@repay/eslint-config": "^1.1.0",
     "babel-eslint": "^10.0.1",
+    "cpy": "^7.2.0",
     "eslint": "^5.14.1",
     "gh-pages": "^2.0.1",
     "prettier": "^1.16.4",
