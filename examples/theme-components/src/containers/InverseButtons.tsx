@@ -1,16 +1,16 @@
-import React, { Component, DetailedHTMLProps, TableHTMLAttributes } from 'react'
+import React, { Component, CSSProperties } from 'react'
 import { Button, TextButton, IconButton } from '@repay/cactus-web'
 import { ActionsAdd, NavigationChevronLeft } from '@repay/cactus-icons'
 import { Link, RouteComponentProps } from '@reach/router'
 import cactusTheme from '@repay/cactus-theme'
 
-const tableStyle = {
+const tableStyle: CSSProperties = {
   textAlign: 'center',
   width: '30%',
   marginLeft: '35%',
   marginRight: '35%',
   marginTop: '5px',
-} as DetailedHTMLProps<TableHTMLAttributes<HTMLTableElement>, HTMLTableElement>
+}
 
 interface InverseButtonsState {
   clickCount: number

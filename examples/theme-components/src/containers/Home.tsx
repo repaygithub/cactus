@@ -1,15 +1,15 @@
-import React, { Component, DetailedHTMLProps, TableHTMLAttributes } from 'react'
+import React, { Component, CSSProperties } from 'react'
 import { Link, RouteComponentProps } from '@reach/router'
 import { TextButton } from '@repay/cactus-web'
 
-const tableStyle = {
+const tableStyle: CSSProperties = {
   border: '1px solid black',
   textAlign: 'center',
   width: '30%',
   marginLeft: '35%',
   marginRight: '35%',
   marginTop: '5px',
-} as DetailedHTMLProps<TableHTMLAttributes<HTMLTableElement>, HTMLTableElement>
+}
 
 class Home extends Component<RouteComponentProps> {
   render() {
