@@ -45,7 +45,7 @@ jobs:
           name: Build cactus-icons
           command: yarn icons build
 
-      -run:
+      - run:
           name: Build cactus-web
           command: yarn web build
 
