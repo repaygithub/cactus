@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import * as styledComponents from 'styled-components'
-import cactusTheme from '@repay/cactus-theme'
+import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import { Router } from '@reach/router'
 import { Buttons, Home, InverseButtons } from './containers'
 
 const { ThemeProvider } = styledComponents
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
-  cactusTheme
+  CactusTheme
 >
 
 const appRoot = document.createElement('div')

@@ -34,6 +34,8 @@ class Home extends Component<RouteComponentProps> {
               <tr>
                 <td>Buttons</td>
                 <td>
+                  {/*
+                  // @ts-ignore */}
                   <TextButton as={Link} to="/Buttons/Standard">
                     Go!
                   </TextButton>
@@ -42,6 +44,8 @@ class Home extends Component<RouteComponentProps> {
               <tr>
                 <td>Inverse Buttons</td>
                 <td>
+                  {/*
+                  // @ts-ignore */}
                   <TextButton as={Link} to="/Buttons/Inverse">
                     Go!
                   </TextButton>

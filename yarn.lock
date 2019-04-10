@@ -1708,12 +1708,6 @@
     "@babel/preset-react" "^7.0.0"
     "@babel/preset-typescript" "^7.3.3"
 
-"@repay/cactus-web@file:modules/cactus-web":
-  version "0.0.0"
-  dependencies:
-    "@repay/cactus-theme" "^0.1.0"
-    styled-system "^4.1.0"
-
 "@repay/eslint-config@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@repay/eslint-config/-/eslint-config-1.1.0.tgz#6efa96dd24a898cb5efd77018394691d55b384eb"

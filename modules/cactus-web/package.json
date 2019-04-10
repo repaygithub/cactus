@@ -3,8 +3,8 @@
   "version": "0.1.1",
   "description": "A UI component library for web built in React by REPAY",
   "main": "dist/cactus-web.js",
-  "module": "dist/cactus-web.es.js",
-  "type": "dist/index.d.ts",
+  "module": "dist/cactus-web.cjs.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-ui",
   "license": "MIT",
   "scripts": {

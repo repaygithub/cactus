@@ -34,6 +34,8 @@ class Buttons extends Component<RouteComponentProps> {
   render() {
     return (
       <div>
+        {/*
+        // @ts-ignore */}
         <TextButton as={Link} to="/">
           <NavigationChevronLeft />
           Back

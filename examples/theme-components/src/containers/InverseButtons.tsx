@@ -41,6 +41,8 @@ class InverseButtons extends Component<RouteComponentProps> {
           height: '100%',
         }}
       >
+        {/*
+        // @ts-ignore */}
         <TextButton inverse as={Link} to="/">
           <NavigationChevronLeft />
           Back

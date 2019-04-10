@@ -45,6 +45,10 @@ jobs:
           name: Build cactus-icons
           command: yarn icons build
 
+      -run:
+          name: Build cactus-web
+          command: yarn web build
+
       - run:
           name: Test Packages
           command: yarn run test:ci
