@@ -6,6 +6,7 @@
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-ui",
   "license": "MIT",
   "scripts": {
+    "cleanup": "rm -rf dist coverage .storybook/dist",
     "new": "node scripts/make-component.js",
     "test": "jest",
     "tdd": "jest --watch",
@@ -43,7 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@repay/cactus-icons": "^0.2.0",
-    "@repay/scripts": "^0.2.0-next",
+    "@repay/scripts": "^0.2.0",
     "@storybook/addon-actions": "^5.0.5",
     "@storybook/addon-knobs": "^5.0.5",
     "@storybook/react": "^5.1.0-alpha.20",

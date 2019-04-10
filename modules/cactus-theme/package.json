@@ -8,6 +8,7 @@
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "cleanup": "rm -rf dist",
     "test": "echo no unit tests implemented for @repay/cactus-theme",
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
@@ -17,7 +18,7 @@
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@repay/scripts": "^0.2.0-next",
+    "@repay/scripts": "^0.2.0",
     "typescript": "^3.3.4000"
   }
 }

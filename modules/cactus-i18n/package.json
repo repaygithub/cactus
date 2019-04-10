@@ -4,7 +4,7 @@
   "description": "I18n library for React using Fluent",
   "main": "dist/cactus-i18n.cjs.js",
   "module": "dist/cactus-i18n.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-i18n",
   "license": "MIT",
   "scripts": {
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@repay/babel-preset": "^0.1.0",
-    "@repay/scripts": "^0.2.0-next",
+    "@repay/scripts": "^0.2.0",
     "@types/fluent-langneg": "^0.1.1",
     "@types/jest": "^24.0.9",
     "@types/react": "^16.8.6",

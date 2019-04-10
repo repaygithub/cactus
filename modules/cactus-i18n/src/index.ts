@@ -8,3 +8,4 @@ export {
   useI18nText,
 } from './Components'
 export { default as BaseI18nController } from './BaseI18nController'
+export * from './types'

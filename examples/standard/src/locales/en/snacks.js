@@ -5,5 +5,6 @@ snacks-desc = Here's a really long list of the snacks we like:
 cookies = cookies
 chips = chips
 fruit = fruit
+carrots = carrots
 go-to-snack = Visit { $snack } page
 `
