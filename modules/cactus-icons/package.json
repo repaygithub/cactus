@@ -46,7 +46,7 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
     "@repay/babel-preset": "^0.1.1",
-    "@repay/scripts": "^0.2.0-next",
+    "@repay/scripts": "^0.2.0",
     "@svgr/cli": "^4.1.0",
     "babel-jest": "^24.5.0",
     "jest": "^24.1.0",
