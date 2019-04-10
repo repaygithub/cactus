@@ -188,3 +188,7 @@ import Add from '@repay/cactus-icons/i/actions-add'
   Disabled
 </TextButton>
 ```
+
+## Next Steps
+
+For a detailed and working example using both `@repay/cactus-web` components and `@repay/cactus-theme`, go [here](../../examples/theme-components).
