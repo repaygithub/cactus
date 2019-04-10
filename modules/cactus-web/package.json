@@ -2,7 +2,7 @@
   "name": "@repay/cactus-web",
   "version": "0.0.0",
   "description": "A UI component library for web built in React by REPAY",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-ui",
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,10 @@
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "dev": "start-storybook -p 9001 -c .storybook",
-    "build:stories": "build-storybook -c .storybook -o ./.storybook/dist"
+    "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
+    "prebuild": "yarn build:types",
+    "build": "repay-scripts build --lib --config rollup.config.js src/index.ts",
+    "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
   "jest": {
     "transform": {
@@ -56,12 +59,14 @@
     "react": "^16.8.3",
     "react-dom": "^16.8.5",
     "react-testing-library": "^6.0.3",
+    "rollup-plugin-commonjs": "^9.3.4",
     "styled-components": "^4.1.2",
     "typescript": "^3.3.4000",
     "webpack": "^4.29.6"
   },
   "peerDependencies": {
-    "react": "^16.8.3"
+    "react": "^16.8.3",
+    "styled-components": "^4.1.2"
   },
   "dependencies": {
     "@repay/cactus-theme": "^0.1.0",

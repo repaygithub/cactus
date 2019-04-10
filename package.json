@@ -40,7 +40,6 @@
     "eslint": "^5.14.1",
     "gh-pages": "^2.0.1",
     "prettier": "^1.16.4",
-    "styled-components": "^4.1.2",
     "typescript-eslint-parser": "^22.0.0"
   }
 }
