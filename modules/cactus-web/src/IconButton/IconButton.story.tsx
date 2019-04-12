@@ -27,7 +27,7 @@ iconButtonStories.add('Basic Usage', () => {
       <Icon />
     </IconButton>
   )
-  })
+})
 
 iconButtonStories.add('Inverse Colors', () => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
