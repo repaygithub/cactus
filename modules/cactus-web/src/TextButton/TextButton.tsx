@@ -13,11 +13,9 @@ type VariantMap = { [K in TextButtonVariants]: FlattenInterpolation<ThemeProps<C
 
 const variantMap: VariantMap = {
   action: css`
-    font-weight: 300;
     color: ${p => p.theme.colors.callToAction};
   `,
   standard: css`
-    font-weight: 300;
     color: ${p => p.theme.colors.darkContrast};
   `,
 }
@@ -28,7 +26,6 @@ const inverseVariantMap: VariantMap = {
     color: ${p => p.theme.colors.callToAction};
   `,
   standard: css`
-    font-weight: 700;
     color: ${p => p.theme.colors.white};
   `,
 }

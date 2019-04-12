@@ -8,7 +8,6 @@ exports[`component: TextButton should default to standard variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
-  font-weight: 300;
   color: hsl(200,96%,11%);
 }
 
@@ -44,7 +43,6 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
-  font-weight: 300;
   color: hsl(200,96%,11%);
 }
 
@@ -96,7 +94,6 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
-  font-weight: 300;
   color: hsl(200,96%,11%);
 }
 
@@ -148,7 +145,6 @@ exports[`component: TextButton should render call to action variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
-  font-weight: 300;
   color: hsl(200,96%,35%);
 }
 
@@ -296,7 +292,6 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
-  font-weight: 700;
   color: hsl(0,0%,100%);
 }
 
@@ -332,7 +327,6 @@ exports[`component: TextButton should render standard variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
-  font-weight: 300;
   color: hsl(200,96%,11%);
 }
 
