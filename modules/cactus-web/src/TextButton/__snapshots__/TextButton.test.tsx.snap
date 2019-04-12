@@ -23,6 +23,11 @@ exports[`component: TextButton should default to standard variant 1`] = `
   text-decoration: underline;
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 <button
     class="c0"
   >
@@ -52,6 +57,11 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 .c1 {
@@ -101,6 +111,11 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   text-decoration: underline;
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 .c1 {
   vertical-align: middle;
   width: 1em;
@@ -148,6 +163,11 @@ exports[`component: TextButton should render call to action variant 1`] = `
   text-decoration: underline;
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 <button
     class="c0"
   >
@@ -178,6 +198,11 @@ exports[`component: TextButton should render disabled variant 1`] = `
 .c0:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 <button
@@ -212,6 +237,11 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   text-decoration: underline;
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 <button
     class="c0"
   >
@@ -242,6 +272,11 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
 .c0:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 <button
@@ -276,6 +311,11 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   text-decoration: underline;
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 <button
     class="c0"
   >
@@ -305,6 +345,11 @@ exports[`component: TextButton should render standard variant 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 <button

@@ -62,6 +62,10 @@ const TextButton = styled.button<TextButtonProps>`
   :focus {
     text-decoration: ${p => (p.disabled ? 'none' : 'underline')};
   }
+  svg {
+    display: inline-block;
+    margin-top: -4px;
+  }
   ${variantOrDisabled}
 `
 
