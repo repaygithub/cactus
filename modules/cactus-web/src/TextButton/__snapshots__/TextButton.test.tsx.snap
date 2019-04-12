@@ -187,13 +187,6 @@ exports[`component: TextButton should render disabled variant 1`] = `
 
 .c0:hover {
   cursor: auto;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c0:focus {
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
 
 .c0 svg {
@@ -261,13 +254,6 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
 
 .c0:hover {
   cursor: auto;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c0:focus {
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
 
 .c0 svg {

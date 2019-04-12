@@ -54,10 +54,10 @@ const TextButton = styled.button<TextButtonProps>`
   background-color: transparent;
   :hover {
     cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
-    text-decoration: ${p => (p.disabled ? 'none' : 'underline')};
+    text-decoration: ${p => (!p.disabled && 'underline')};
   }
   :focus {
-    text-decoration: ${p => (p.disabled ? 'none' : 'underline')};
+    text-decoration: ${p => (!p.disabled && 'underline')};
   }
   svg {
     display: inline-block;
