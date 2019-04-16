@@ -13,11 +13,9 @@ type VariantMap = { [K in TextButtonVariants]: FlattenInterpolation<ThemeProps<C
 
 const variantMap: VariantMap = {
   action: css`
-    font-weight: 300;
     color: ${p => p.theme.colors.callToAction};
   `,
   standard: css`
-    font-weight: 300;
     color: ${p => p.theme.colors.darkContrast};
   `,
 }
@@ -28,7 +26,6 @@ const inverseVariantMap: VariantMap = {
     color: ${p => p.theme.colors.callToAction};
   `,
   standard: css`
-    font-weight: 700;
     color: ${p => p.theme.colors.white};
   `,
 }
@@ -57,10 +54,14 @@ const TextButton = styled.button<TextButtonProps>`
   background-color: transparent;
   :hover {
     cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
-    text-decoration: ${p => (p.disabled ? 'none' : 'underline')};
+    text-decoration: ${p => !p.disabled && 'underline'};
   }
   :focus {
-    text-decoration: ${p => (p.disabled ? 'none' : 'underline')};
+    text-decoration: ${p => !p.disabled && 'underline'};
+  }
+  svg {
+    display: inline-block;
+    margin-top: -4px;
   }
   ${variantOrDisabled}
 `

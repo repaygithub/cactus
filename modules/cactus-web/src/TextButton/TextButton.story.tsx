@@ -4,11 +4,11 @@ import { text, boolean, select } from '@storybook/addon-knobs/react'
 import { actions } from '@storybook/addon-actions'
 import TextButton, { TextButtonVariants } from './TextButton'
 import DarkMode from '../storySupport/DarkMode'
-import Add from '@repay/cactus-icons/i/actions-add'
-import NavLeft from '@repay/cactus-icons/i/navigation-chevron-left'
-import Trophy from '@repay/cactus-icons/i/status-trophy'
+import * as icons from '@repay/cactus-icons'
 
 const textButtonVariants: TextButtonVariants[] = ['standard', 'action']
+type IconName = keyof typeof icons
+const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
 const textButtonStories = storiesOf('TextButton', module)
 const textIconButtonStories = storiesOf('Text+Icon Button', module)
@@ -36,77 +36,35 @@ textButtonStories.add('Inverse Colors', () => (
   </DarkMode>
 ))
 
-textIconButtonStories.add('Add Button', () => (
-  <TextButton
-    variant={select('variant', textButtonVariants, 'standard')}
-    disabled={boolean('disabled', false)}
-    {...eventLoggers}
-  >
-    <Add />
-    {text('children', 'Add')}
-  </TextButton>
-))
-
-textIconButtonStories.add('Inverse Add Button', () => (
-  <DarkMode>
+textIconButtonStories.add('Basic Usage', () => {
+  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
+  const Icon = icons[iconName]
+  return (
     <TextButton
       variant={select('variant', textButtonVariants, 'standard')}
       disabled={boolean('disabled', false)}
-      inverse
       {...eventLoggers}
     >
-      <Add />
+      <Icon />
       {text('children', 'Add')}
     </TextButton>
-  </DarkMode>
-))
+  )
+})
 
-textIconButtonStories.add('Back Button', () => (
-  <TextButton
-    variant={select('variant', textButtonVariants, 'standard')}
-    disabled={boolean('disabled', false)}
-    {...eventLoggers}
-  >
-    <NavLeft />
-    {text('children', 'Back')}
-  </TextButton>
-))
-
-textIconButtonStories.add('Inverse Back Button', () => (
-  <DarkMode>
-    <TextButton
-      variant={select('variant', textButtonVariants, 'standard')}
-      disabled={boolean('disabled', false)}
-      inverse
-      {...eventLoggers}
-    >
-      <NavLeft />
-      {text('children', 'Back')}
-    </TextButton>
-  </DarkMode>
-))
-
-textIconButtonStories.add('Trophy Button', () => (
-  <TextButton
-    variant={select('variant', textButtonVariants, 'standard')}
-    disabled={boolean('disabled', false)}
-    {...eventLoggers}
-  >
-    <Trophy />
-    {text('children', 'You win!')}
-  </TextButton>
-))
-
-textIconButtonStories.add('Inverse Trophy Button', () => (
-  <DarkMode>
-    <TextButton
-      variant={select('variant', textButtonVariants, 'standard')}
-      disabled={boolean('disabled', false)}
-      inverse
-      {...eventLoggers}
-    >
-      <Trophy />
-      {text('children', 'You win!')}
-    </TextButton>
-  </DarkMode>
-))
+textIconButtonStories.add('Inverse Colors', () => {
+  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
+  const Icon = icons[iconName]
+  return (
+    <DarkMode>
+      <TextButton
+        variant={select('variant', textButtonVariants, 'standard')}
+        disabled={boolean('disabled', false)}
+        inverse
+        {...eventLoggers}
+      >
+        <Icon />
+        {text('children', 'Add')}
+      </TextButton>
+    </DarkMode>
+  )
+})
