@@ -45,22 +45,23 @@
     "styled-components": "^4.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.0",
-    "@repay/babel-preset": "^0.1.1",
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@repay/babel-preset": "^0.2.0",
     "@repay/cactus-theme": "^0.1.0",
-    "@repay/scripts": "^0.2.0",
-    "@storybook/addon-knobs": "^5.0.5",
-    "@storybook/react": "^5.1.0-alpha.20",
-    "@svgr/cli": "^4.1.0",
-    "@types/storybook__addon-knobs": "^4.0.4",
+    "@repay/scripts": "^0.2.2",
+    "@storybook/addon-knobs": "^5.0.8",
+    "@storybook/react": "5.0.8",
+    "@svgr/cli": "^4.2.0",
+    "@types/storybook__addon-knobs": "^4.0.5",
     "@types/storybook__react": "^4.0.1",
-    "babel-jest": "^24.5.0",
-    "jest": "^24.1.0",
-    "react": "^16.8.3",
-    "react-testing-library": "^6.0.0",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-testing-library": "^6.1.2",
     "styled-components": "^4.1.2",
-    "typescript": "^3.3.4000"
+    "typescript": "3.4.3"
   },
   "dependencies": {
     "styled-system": "^4.1.0"
