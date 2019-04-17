@@ -12,6 +12,8 @@ Each component discussed here should be a child of the `ThemeProvider` component
   - [Text Button](#TextButton)
   - [Icon Button](#IconButton)
   - [Text+Icon Button](#Text+Icon-Button)
+- [Form Elements](#Form-Elements)
+  - [CheckBox](#CheckBox)
 
 ## Common Aspects
 
@@ -187,6 +189,29 @@ import Add from '@repay/cactus-icons/i/actions-add'
   <NavLeft />
   Disabled
 </TextButton>
+```
+
+## Form Elements
+
+### `CheckBox`
+
+#### Props
+
+| Prop       | Type    | Required | Description                                                                 | Default |
+| ---------- | ------- | -------- | --------------------------------------------------------------------------- | ------- |
+| `id`       | String  | Y        | An ID that is necessary within the checkbox to ensure proper functionality. | None    |
+| `disabled` | Boolean | N        | Indicates whether the checkbox should be disabled or not.                   | `false` |
+
+#### Example Usage
+
+```jsx
+import { CheckBox } from '@repay/cactus-web'
+...
+// Basic Usage
+<CheckBox id="checkbox" />
+
+// Disabled
+<CheckBox id="another-checkbox" disabled />
 ```
 
 ## Next Steps

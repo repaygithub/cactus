@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: CheckBox should render a checkbox 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c1 {
+  opacity: 0;
+  border: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.c2 {
+  display: inline-block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid hsl(200,96%,11%);
+  background: none;
+  border-radius: 1px;
+}
+
+.c2 svg {
+  visibility: hidden;
+  display: block;
+  color: hsl(0,0%,100%);
+  width: 12px;
+  height: 12px;
+}
+
+.c0 {
+  cursor: pointer;
+  display: block;
+  vertical-align: middle;
+  position: relative;
+}
+
+.c0 input:checked ~ div {
+  border-color: hsl(200,96%,35%);
+  background-color: hsl(200,96%,35%);
+}
+
+.c0 input:checked ~ div svg {
+  visibility: visible;
+}
+
+<label
+    class="c0"
+    for="check"
+  >
+    <input
+      class="c1"
+      id="check"
+      type="checkbox"
+    />
+    <div
+      aria-hidden="true"
+      class="c2"
+    >
+      <svg
+        class="c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+        />
+      </svg>
+    </div>
+  </label>
+</DocumentFragment>
+`;
+
+exports[`component: CheckBox should render a disabled checkbox 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c1 {
+  opacity: 0;
+  border: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.c2 {
+  display: inline-block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid hsl(0,0%,90%);
+  background: hsl(0,0%,90%);
+  border-radius: 1px;
+}
+
+.c2 svg {
+  visibility: hidden;
+  display: block;
+  color: hsl(0,0%,100%);
+  width: 12px;
+  height: 12px;
+}
+
+.c0 {
+  cursor: cursor;
+  display: block;
+  vertical-align: middle;
+  position: relative;
+}
+
+<label
+    class="c0"
+    disabled=""
+    for="checking"
+  >
+    <input
+      class="c1"
+      disabled=""
+      id="checking"
+      type="checkbox"
+    />
+    <div
+      aria-hidden="true"
+      class="c2"
+      disabled=""
+    >
+      <svg
+        class="c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+        />
+      </svg>
+    </div>
+  </label>
+</DocumentFragment>
+`;
