@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 interface RadioButtonProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
   id: string
+  name: string
   disabled?: boolean
 }
 

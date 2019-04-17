@@ -49,6 +49,7 @@ exports[`component: RadioButton should render a disabled radio button 1`] = `
       class="c1"
       disabled=""
       id="radio"
+      name="test"
       type="radio"
     />
     <div
@@ -112,6 +113,7 @@ exports[`component: RadioButton should render a radio button 1`] = `
     <input
       class="c1"
       id="radio"
+      name="test"
       type="radio"
     />
     <div

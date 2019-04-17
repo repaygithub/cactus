@@ -10,7 +10,7 @@ describe('component: RadioButton', () => {
   test('should render a radio button', () => {
     const radioButton = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton id="radio" />
+        <RadioButton name="test" id="radio" />
       </ThemeProvider>
     )
 
@@ -20,7 +20,7 @@ describe('component: RadioButton', () => {
   test('should render a disabled radio button', () => {
     const radioButton = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton id="radio" disabled />
+        <RadioButton name="test" id="radio" disabled />
       </ThemeProvider>
     )
 
@@ -31,7 +31,7 @@ describe('component: RadioButton', () => {
     const onChange = jest.fn()
     const { getByTestId } = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton id="radio" onChange={onChange} data-testid="will-change" />
+        <RadioButton name="test" id="radio" onChange={onChange} data-testid="will-change" />
       </ThemeProvider>
     )
 
@@ -43,7 +43,7 @@ describe('component: RadioButton', () => {
     const onFocus = jest.fn()
     const { getByTestId } = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton id="radio" onFocus={onFocus} data-testid="will-focus" />
+        <RadioButton name="test" id="radio" onFocus={onFocus} data-testid="will-focus" />
       </ThemeProvider>
     )
 
@@ -55,7 +55,7 @@ describe('component: RadioButton', () => {
     const onBlur = jest.fn()
     const { getByTestId } = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton id="radio" onBlur={onBlur} data-testid="will-blur" />
+        <RadioButton name="test" id="radio" onBlur={onBlur} data-testid="will-blur" />
       </ThemeProvider>
     )
 
