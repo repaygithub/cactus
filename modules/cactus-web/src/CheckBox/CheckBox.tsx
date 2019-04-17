@@ -2,12 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { StatusCheck } from '@repay/cactus-icons'
 
-interface CheckBoxProps {
+interface CheckBoxProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
   id: string
   disabled?: boolean
-  onChange?: (event: React.FormEvent<HTMLInputElement>) => any
-  onBlur?: (event: React.FormEvent<HTMLInputElement>) => any
-  onFocus?: (event: React.FormEvent<HTMLInputElement>) => any
 }
 
 interface StyledCheckBoxProps extends React.HTMLProps<HTMLDivElement> {
@@ -18,7 +15,7 @@ interface CheckBoxContainerProps extends React.HTMLProps<HTMLLabelElement> {
   disabled?: boolean
 }
 
-const HiddenCheckBox = styled.input.attrs({ type: 'checkbox' })`
+const HiddenCheckBox = styled.input.attrs({ type: 'checkbox' as string })`
   opacity: 0;
   border: 0;
   width: 0;
