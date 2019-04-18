@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { cleanup, render, fireEvent } from 'react-testing-library'
+import userEvent from 'user-event'
 import CheckBox from './CheckBox'
 import cactusTheme from '@repay/cactus-theme'
 import { ThemeProvider } from 'styled-components'
@@ -63,7 +64,27 @@ describe('component: CheckBox', () => {
     expect(onBlur).toHaveBeenCalled()
   })
 
-  /* TODO: Change events are still being fired when clicked even when disabled. There is a PR for the user-event library
-  that should be included in v2 since it is a breaking change. We'll have to stay on the lookout for that version
-  and finish these tests afterward https://github.com/Gpx/user-event/pull/97 */
+  test('should not trigger onChange event', () => {
+    const onChange = jest.fn()
+    const { getByTestId } = render(
+      <ThemeProvider theme={cactusTheme}>
+        <CheckBox id="checked" onChange={onChange} data-testid="will-not-check" disabled />
+      </ThemeProvider>
+    )
+
+    userEvent.click(getByTestId('will-not-check'))
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
+  test('should not trigger onFocus event', () => {
+    const onFocus = jest.fn()
+    const { getByTestId } = render(
+      <ThemeProvider theme={cactusTheme}>
+        <CheckBox id="checked" onFocus={onFocus} data-testid="will-not-check" disabled />
+      </ThemeProvider>
+    )
+
+    userEvent.click(getByTestId('will-not-check'))
+    expect(onFocus).not.toHaveBeenCalled()
+  })
 })

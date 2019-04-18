@@ -2355,6 +2355,11 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
+"@types/user-event@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@types/user-event/-/user-event-1.4.0.tgz#6633337050e4509e6d2c7a8b19737bacab1e31c3"
+  integrity sha512-Jni9x2qNpSjuTCeYoHE1j2JL/1Lhx6rbNbEzjtCdTY1XuZRgU3c1tKHSsqbR/xTqB46cl/DFRalLkFeLRiKuwg==
+
 "@types/vfile-message@*":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/vfile-message/-/vfile-message-1.0.1.tgz#e1e9895cc6b36c462d4244e64e6d0b6eaf65355a"
@@ -4820,6 +4825,16 @@ dom-serializer@0:
   dependencies:
     domelementtype "^1.3.0"
     entities "^1.1.1"
+
+dom-testing-library@3.19.3:
+  version "3.19.3"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.19.3.tgz#fba399987be1bdd57b07c4bc3ef46c3c084b26d9"
+  integrity sha512-oiI+oq91iO/Vpp+pt8PqfqLfBK074FH0eprhoFNvBCvJOk7vL4ozbe/yj/kEEGR6kiT4F3MAam19AX1fdGFjrA==
+  dependencies:
+    "@babel/runtime" "^7.3.4"
+    "@sheerun/mutationobserver-shim" "^0.3.2"
+    pretty-format "^24.5.0"
+    wait-for-expect "^1.1.0"
 
 dom-testing-library@^3.19.0:
   version "3.19.1"
@@ -11748,6 +11763,13 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
+
+user-event@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/user-event/-/user-event-2.0.1.tgz#cb70e358de6ce435baa306a5d7caf41f9ca9afe1"
+  integrity sha512-L/GnWRAVxikEaOrlkPh3ajmz03kqO0EchxLqr1+d3LMh9+bT6DMd/384qctHe8EOnGAPYNiG50/mQP5KGtJSpQ==
+  dependencies:
+    dom-testing-library "3.19.3"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
