@@ -29,37 +29,37 @@ describe('component: RadioButton', () => {
 
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
-    const { getByTestId } = render(
+    const { getByLabelText } = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton name="test" id="radio" onChange={onChange} data-testid="will-change" />
+        <RadioButton name="test" id="radio" onChange={onChange} aria-label="will-change" />
       </ThemeProvider>
     )
 
-    fireEvent.click(getByTestId('will-change'))
+    fireEvent.click(getByLabelText('will-change'))
     expect(onChange).toHaveBeenCalled()
   })
 
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
-    const { getByTestId } = render(
+    const { getByLabelText } = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton name="test" id="radio" onFocus={onFocus} data-testid="will-focus" />
+        <RadioButton name="test" id="radio" onFocus={onFocus} aria-label="will-focus" />
       </ThemeProvider>
     )
 
-    fireEvent.focus(getByTestId('will-focus'))
+    fireEvent.focus(getByLabelText('will-focus'))
     expect(onFocus).toHaveBeenCalled()
   })
 
   test('should trigger onFocus event', () => {
     const onBlur = jest.fn()
-    const { getByTestId } = render(
+    const { getByLabelText } = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton name="test" id="radio" onBlur={onBlur} data-testid="will-blur" />
+        <RadioButton name="test" id="radio" onBlur={onBlur} aria-label="will-blur" />
       </ThemeProvider>
     )
 
-    fireEvent.blur(getByTestId('will-blur'))
+    fireEvent.blur(getByLabelText('will-blur'))
     expect(onBlur).toHaveBeenCalled()
   })
 
