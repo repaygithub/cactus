@@ -24,7 +24,7 @@ class ToggleManager extends React.Component<ManagerProps, State> {
   render() {
     return (
       <Toggle
-        val={this.state.value}
+        value={this.state.value}
         onClick={this.handleToggle}
         disabled={boolean('disabled', false)}
         {...this.props}

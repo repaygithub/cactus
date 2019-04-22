@@ -29,7 +29,7 @@ const shadowMap: ShadowMap = {
 }
 
 const chooseShadow = (
-  props: ToggleProps
+  props: ToggleButtonProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
   if (props.shadowVariant !== undefined && !props.disabled && props.shadows) {
     return shadowMap[props.shadowVariant]
@@ -37,7 +37,13 @@ const chooseShadow = (
 }
 
 interface ToggleProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'value' | 'ref' | 'as'> {
-  val: boolean
+  value: boolean
+  disabled?: boolean
+  shadows?: boolean
+  shadowVariant?: ShadowVariants
+}
+
+interface ToggleButtonProps {
   disabled?: boolean
   shadows?: boolean
   shadowVariant?: ShadowVariants
@@ -55,7 +61,7 @@ const StyledCheck = styled(StatusCheck)`
   color: ${p => p.theme.colors.white};
 `
 
-const ToggleButton = styled.button<ToggleProps>`
+const ToggleButton = styled.button<ToggleButtonProps>`
   position: relative;
   width: 45px;
   height: 20px;
@@ -123,8 +129,9 @@ const ToggleButton = styled.button<ToggleProps>`
 `
 
 const Toggle = (props: ToggleProps) => {
+  const { value, ...toggleProps } = props
   return (
-    <ToggleButton aria-checked={props.val} {...props}>
+    <ToggleButton aria-checked={value} {...toggleProps}>
       <StyledX />
       <StyledCheck />
     </ToggleButton>

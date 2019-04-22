@@ -10,7 +10,7 @@ describe('component: Toggle', () => {
   test('should render a toggle', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle val={false} />
+        <Toggle value={false} />
       </ThemeProvider>
     )
 
@@ -20,7 +20,7 @@ describe('component: Toggle', () => {
   test('should render a disabled toggle', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle val={false} />
+        <Toggle value={false} />
       </ThemeProvider>
     )
 
@@ -30,7 +30,7 @@ describe('component: Toggle', () => {
   test('should initialize value to false', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle val={true} />
+        <Toggle value={true} />
       </ThemeProvider>
     )
 
@@ -41,7 +41,7 @@ describe('component: Toggle', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle val={false} onClick={onClick} data-testid="will-click" />
+        <Toggle value={false} onClick={onClick} data-testid="will-click" />
       </ThemeProvider>
     )
 
@@ -53,7 +53,7 @@ describe('component: Toggle', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle val={false} onClick={onClick} disabled={true} data-testid="will-not-click" />
+        <Toggle value={false} onClick={onClick} disabled={true} data-testid="will-not-click" />
       </ThemeProvider>
     )
 
