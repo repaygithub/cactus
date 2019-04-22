@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: RadioButton should render a disabled radio button 1`] = `
+<DocumentFragment>
+  .c0 {
+  cursor: cursor;
+  display: block;
+  position: relative;
+}
+
+.c0 input:checked ~ div:after {
+  display: block;
+}
+
+.c1 {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.c2 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: hsl(0,0%,90%);
+  border: 2px solid hsl(0,0%,90%);
+}
+
+.c2:after {
+  position: absolute;
+  content: '';
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 2px 2px;
+  box-sizing: border-box;
+}
+
+<label
+    class="c0"
+    disabled=""
+    for="radio"
+  >
+    <input
+      class="c1"
+      disabled=""
+      id="radio"
+      name="test"
+      type="radio"
+    />
+    <div
+      aria-hidden="true"
+      class="c2"
+      disabled=""
+    />
+  </label>
+</DocumentFragment>
+`;
+
+exports[`component: RadioButton should render a radio button 1`] = `
+<DocumentFragment>
+  .c0 {
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+.c0 input:checked ~ div {
+  border-color: hsl(200,96%,35%);
+}
+
+.c0 input:checked ~ div:after {
+  display: block;
+}
+
+.c1 {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.c2 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: none;
+  border: 2px solid hsl(200,96%,11%);
+}
+
+.c2:after {
+  position: absolute;
+  content: '';
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: hsl(200,96%,35%);
+  margin: 2px 2px;
+  box-sizing: border-box;
+}
+
+<label
+    class="c0"
+    for="radio"
+  >
+    <input
+      class="c1"
+      id="radio"
+      name="test"
+      type="radio"
+    />
+    <div
+      aria-hidden="true"
+      class="c2"
+    />
+  </label>
+</DocumentFragment>
+`;

@@ -1,0 +1,24 @@
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import { boolean } from '@storybook/addon-knobs'
+import { actions } from '@storybook/addon-actions'
+import RadioButton from './RadioButton'
+
+const radioButtonStories = storiesOf('RadioButton', module)
+const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+
+radioButtonStories.add('Basic Usage', () => (
+  <RadioButton id="some-id" name="test" disabled={boolean('disabled', false)} {...eventLoggers} />
+))
+
+radioButtonStories.add('Multiple Radio Buttons', () => (
+  <div>
+    <RadioButton id="some-id" name="test" disabled={boolean('disabled', false)} {...eventLoggers} />
+    <RadioButton
+      id="some-other-id"
+      name="test"
+      disabled={boolean('disabled', false)}
+      {...eventLoggers}
+    />
+  </div>
+))
