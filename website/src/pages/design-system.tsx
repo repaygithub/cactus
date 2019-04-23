@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
-import Box from '../../components/Box'
 
 const Em = styled.em`
   font-style: normal;
