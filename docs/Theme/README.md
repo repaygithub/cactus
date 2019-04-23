@@ -1,6 +1,14 @@
+---
+order: 2
+---
+
 # Cactus Theme
 
 The `@repay/cactus-theme` library exports a theme generator which will create a theme that can be used with the `ThemeProvider` component to share that theme with each child component within it.
+
+## Quick Links
+
+- [Source Code](../../modules/cactus-theme/)
 
 ## ThemeProvider
 
@@ -44,4 +52,4 @@ const myTheme = generateTheme({ primaryHue: 150 })
 
 ## Next Steps
 
-Seems pretty easy, right? Well, we can't stop here. To see how you can use the components available in `@repay/cactus-web` in conjunction with the theming principles we just went over in order to create a consistent and great looking front end application, click [here](../../docs/Components/README.md)
+Seems pretty easy, right? Well, we can't stop here. To see how you can use the components available in `@repay/cactus-web` in conjunction with the theming principles we just went over in order to create a consistent and great looking front end application, click [here](../Components/README.md)

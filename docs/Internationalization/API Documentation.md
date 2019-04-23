@@ -1,3 +1,8 @@
+---
+title: API Docs
+order: 3
+---
+
 # Internationalization API Documentation
 
 ## BaseI18nController

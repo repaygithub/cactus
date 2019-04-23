@@ -1,9 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import * as styledComponents from 'styled-components'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import { Router } from '@reach/router'
-import { Buttons, Home, InverseButtons } from './containers'
+const ButtonsPage = React.lazy(() =>
+  import(/* webpackChunkName: "Buttons" */ './containers/Buttons')
+)
+const HomePage = React.lazy(() => import(/* webpackChunkName: "Home" */ './containers/Home'))
+const InverseButtonsPage = React.lazy(() =>
+  import(/* webpackChunkName: "InverseButtons" */ './containers/InverseButtons')
+)
 
 const { ThemeProvider } = styledComponents
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
@@ -26,14 +32,14 @@ class RootTheme extends Component {
   render() {
     return (
       <ThemeProvider theme={cactusTheme}>
-        <>
+        <Suspense fallback="loading...">
           <GlobalStyle />
           <Router style={{ height: '100%' }}>
-            <Home path="/" />
-            <Buttons path="/Buttons/Standard" />
-            <InverseButtons path="/Buttons/Inverse" />
+            <HomePage path="/" />
+            <ButtonsPage path="/Buttons/Standard" />
+            <InverseButtonsPage path="/Buttons/Inverse" />
           </Router>
-        </>
+        </Suspense>
       </ThemeProvider>
     )
   }

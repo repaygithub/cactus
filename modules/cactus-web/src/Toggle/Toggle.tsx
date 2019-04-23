@@ -36,7 +36,11 @@ const chooseShadow = (
   }
 }
 
-interface ToggleProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'value' | 'ref' | 'as'> {
+interface ToggleProps
+  extends Omit<
+    React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+    'value' | 'ref'
+  > {
   value: boolean
   disabled?: boolean
   shadows?: boolean

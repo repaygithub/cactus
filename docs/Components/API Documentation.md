@@ -1,4 +1,8 @@
-# Component Library API Documentation
+---
+title: API Docs
+---
+
+# Cactus Web API Documentation
 
 Each component discussed here should be a child of the `ThemeProvider` component provided by [styled-components](https://www.npmjs.com/package/styled-components). If you are not familiar with `ThemeProvider` or how it should be used, check out their documentation and our examples in [@repay/cactus-theme](../Theme/README.md).
 
@@ -112,7 +116,7 @@ import { TextButton } from '@repay/cactus-web'
 
 ### `IconButton`
 
-The `IconButton` is designed to turn a simple icon into a button. The way it's designed, it can be used with icons defined in [@repay/cactus-icons](../../modules/cactus-icons/README.md) or with icons taken from another library.
+The `IconButton` is designed to turn a simple icon into a button. The way it's designed, it can be used with icons defined in [@repay/cactus-icons](../Icons/README.md) or with icons taken from another library.
 
 #### Props
 

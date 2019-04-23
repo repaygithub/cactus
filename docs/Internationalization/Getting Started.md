@@ -1,4 +1,8 @@
-# Standard Usage
+---
+order: 2
+---
+
+# Getting Started
 
 Let's get started with a simple example using the internationalization capabilities of this framework. To set up a project with i18n, we'll follow these steps:
 

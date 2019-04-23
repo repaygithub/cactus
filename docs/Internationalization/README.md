@@ -1,3 +1,8 @@
+---
+title: Cactus i18n
+order: 8
+---
+
 # Internationalization
 
 The Cactus I18n library implements i18n using the core technologies developed by Mozilla and [Project Fluent](https://projectfluent.org/). We chose Fluent because of it's design principles, features, and extensibility. We use these tools to provide our own API that can be used to implement internationalization easily.
@@ -8,6 +13,7 @@ The Cactus I18n library implements i18n using the core technologies developed by
 - [Getting Started](./Getting%20Started.md)
 - [API Documentation](./API%20Documentation.md)
 - [Why Project Fluent?](./Project%20Fluent.md)
+- [Source Code](../../modules/cactus-i18n/)
 
 ## Fluent Syntax
 

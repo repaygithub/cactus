@@ -1,0 +1,10 @@
+[
+  {
+    "name": "@repay/cactus-icons",
+    "dirname": "cactus-icons"
+  },
+  {
+    "name": "@repay/cactus-web",
+    "dirname": "cactus-web"
+  }
+]
