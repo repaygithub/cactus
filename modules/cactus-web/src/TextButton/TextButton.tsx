@@ -16,7 +16,7 @@ const variantMap: VariantMap = {
     color: ${p => p.theme.colors.callToAction};
   `,
   standard: css`
-    color: ${p => p.theme.colors.darkContrast};
+    color: ${p => p.theme.colors.base};
   `,
 }
 
