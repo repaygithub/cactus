@@ -1,3 +1,7 @@
+---
+order: 4
+---
+
 # Why Project Fluent?
 
 There are other tools to aide in solving internationalization problems, so why did we choose Project Fluent? Well, let's compare Fluent to some other similar tools available.

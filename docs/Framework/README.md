@@ -1,3 +1,7 @@
+---
+order: 1
+---
+
 # Cactus Framework
 
 The Cactus Framework implements a set of common front-end necessities at a top level provided via React context. The framework attempts to have fewer top level provider components and implements hooks and higher-order components to access these data stores as needed.
@@ -6,6 +10,7 @@ The Cactus Framework implements a set of common front-end necessities at a top l
 
 - [API Documentation](./API/README.md)
   - [Feature Flags](./API/Feature%20Flags.md)
+- [Source Code](../../modules/cactus-fwk/)
 
 ## Getting Started
 
