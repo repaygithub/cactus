@@ -52,6 +52,8 @@ const TextButton = styled.button<TextButtonProps>`
   padding: 0px;
   outline: none;
   background-color: transparent;
+  text-decoration: none;
+
   :hover {
     cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
     text-decoration: ${p => !p.disabled && 'underline'};
