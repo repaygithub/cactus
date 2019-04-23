@@ -5,7 +5,11 @@ import { CactusTheme } from '@repay/cactus-theme'
 export type IconButtonVariants = 'standard' | 'action'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
-interface IconButtonProps extends React.HTMLProps<HTMLButtonElement> {
+interface IconButtonProps
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   iconSize?: IconButtonSizes
   variant?: IconButtonVariants
   disabled?: boolean
