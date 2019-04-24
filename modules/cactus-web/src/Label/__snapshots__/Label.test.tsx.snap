@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Label should render a label component 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,35%);
+}
+
+<label
+    class="c0"
+  >
+    It is important to label UI elements
+  </label>
+</DocumentFragment>
+`;
