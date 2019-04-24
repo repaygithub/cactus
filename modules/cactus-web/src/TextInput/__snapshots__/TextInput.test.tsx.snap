@@ -35,22 +35,22 @@ exports[`component: TextInput should render a disabled input 1`] = `
 }
 
 .c1::-webkit-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::-moz-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1:-ms-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
@@ -97,7 +97,7 @@ exports[`component: TextInput should render a success input 1`] = `
 }
 
 .c1 {
-  border: 1px solid hsl(200,96%,11%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -114,22 +114,22 @@ exports[`component: TextInput should render a success input 1`] = `
 }
 
 .c1::-webkit-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::-moz-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1:-ms-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
@@ -173,7 +173,7 @@ exports[`component: TextInput should render a text input 1`] = `
 }
 
 .c1 {
-  border: 1px solid hsl(200,96%,11%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -189,22 +189,22 @@ exports[`component: TextInput should render a text input 1`] = `
 }
 
 .c1::-webkit-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::-moz-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1:-ms-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
@@ -250,7 +250,7 @@ exports[`component: TextInput should render an error input 1`] = `
 }
 
 .c1 {
-  border: 1px solid hsl(200,96%,11%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -267,22 +267,22 @@ exports[`component: TextInput should render an error input 1`] = `
 }
 
 .c1::-webkit-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::-moz-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1:-ms-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
@@ -326,7 +326,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
 }
 
 .c1 {
-  border: 1px solid hsl(200,96%,11%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -342,22 +342,22 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
 }
 
 .c1::-webkit-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::-moz-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1:-ms-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
@@ -404,7 +404,7 @@ exports[`component: TextInput should render an invalid input 1`] = `
 }
 
 .c1 {
-  border: 1px solid hsl(200,96%,11%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -421,22 +421,22 @@ exports[`component: TextInput should render an invalid input 1`] = `
 }
 
 .c1::-webkit-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::-moz-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1:-ms-input-placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
 .c1::placeholder {
-  color: hsl(200,18%,80%);
+  color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
