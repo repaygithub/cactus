@@ -1,4 +1,8 @@
-# API of Cactus Framework
+---
+title: API Docs
+---
+
+# Cactus Framework API Documentation
 
 ## Features
 

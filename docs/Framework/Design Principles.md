@@ -1,4 +1,9 @@
-# Design Principles
+---
+title: Design Principles
+order: 1
+---
+
+# Cactus Framework Design Principles
 
 ## 1. Avoid Premature Abstraction
 

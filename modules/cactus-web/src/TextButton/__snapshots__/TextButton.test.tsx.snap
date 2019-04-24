@@ -8,6 +8,8 @@ exports[`component: TextButton should default to standard variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(200,96%,11%);
 }
 
@@ -43,6 +45,8 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(200,96%,11%);
 }
 
@@ -94,6 +98,8 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(200,96%,11%);
 }
 
@@ -145,6 +151,8 @@ exports[`component: TextButton should render call to action variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(200,96%,35%);
 }
 
@@ -180,6 +188,8 @@ exports[`component: TextButton should render disabled variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(0,0%,70%);
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
@@ -211,6 +221,8 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-weight: 700;
   color: hsl(200,96%,35%);
 }
@@ -247,6 +259,8 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(0,0%,70%);
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
@@ -278,6 +292,8 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(0,0%,100%);
 }
 
@@ -313,6 +329,8 @@ exports[`component: TextButton should render standard variant 1`] = `
   padding: 0px;
   outline: none;
   background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   color: hsl(200,96%,11%);
 }
 

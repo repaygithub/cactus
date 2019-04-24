@@ -16,19 +16,21 @@
     "web": "yarn workspace @repay/cactus-web",
     "theme": "yarn workspace @repay/cactus-theme",
     "icons": "yarn workspace @repay/cactus-icons",
+    "docs": "yarn workspace docs-website",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "fmt": "yarn lint --fix",
     "test": "yarn test:ci",
     "test:ci": "yarn lint && yarn ws run test:ci",
     "build": "yarn fwk build && yarn theme build && yarn web build && yarn icons build && yarn i18n build",
-    "predocs:publish": "./scripts/build-storybooks.js",
-    "docs:publish": "gh-pages -d ./dist",
+    "predocs:publish": "yarn docs build",
+    "docs:publish": "gh-pages -d ./website/public",
     "cleanup": "rm -rf dist && yarn ws run cleanup"
   },
   "license": "MIT",
   "private": true,
   "workspaces": {
     "packages": [
+      "website/",
       "modules/*",
       "examples/*"
     ],
@@ -40,7 +42,6 @@
     "@babel/core": "^7.4.3",
     "@repay/eslint-config": "^1.1.1",
     "babel-eslint": "^10.0.1",
-    "cpy": "^7.2.0",
     "eslint": "^5.16.0",
     "gh-pages": "^2.0.1",
     "prettier": "^1.17.0",

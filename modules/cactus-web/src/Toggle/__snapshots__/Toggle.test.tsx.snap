@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Toggle should initialize value to false 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c2 {
+  width: 18px;
+  height: 18px;
+  color: hsl(0,0%,100%);
+}
+
+.c5 {
+  width: 18px;
+  height: 18px;
+  color: hsl(0,0%,100%);
+}
+
+.c0 {
+  position: relative;
+  width: 45px;
+  height: 20px;
+  border-radius: 10px;
+  outline: none;
+  background-color: hsl(200,96%,11%);
+  border: 1px solid hsl(200,96%,11%);
+  cursor: pointer;
+}
+
+.c0::after {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  content: '';
+  top: 0;
+  left: 0;
+  position: absolute;
+  -webkit-transition: -webkit-transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+  background-color: hsl(0,0%,100%);
+}
+
+.c0[aria-checked='true'] {
+  background-color: hsl(200,96%,35%);
+  border-color: hsl(200,96%,35%);
+}
+
+.c0[aria-checked='true']::after {
+  -webkit-transform: translateX(25px);
+  -ms-transform: translateX(25px);
+  transform: translateX(25px);
+}
+
+.c0[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c0[aria-checked='true'] .c4 {
+  opacity: 1;
+}
+
+.c0 .c1 {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0 .c4 {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0[disabled] {
+  background-color: hsl(0,0%,90%);
+  border-color: hsl(0,0%,90%);
+}
+
+<button
+    aria-checked="true"
+    class="c0"
+  >
+    <svg
+      class="c1 c2 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M13.469 12l7.227-7.228a1.038 1.038 0 1 0-1.469-1.468L12 10.531 4.773 3.304a1.038 1.038 0 1 0-1.469 1.468L10.531 12l-7.227 7.227a1.038 1.038 0 1 0 1.47 1.469L12 13.468l7.227 7.228a1.038 1.038 0 1 0 1.469-1.47L13.469 12z"
+      />
+    </svg>
+    <svg
+      class="c4 c5 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: Toggle should render a disabled toggle 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c2 {
+  width: 18px;
+  height: 18px;
+  color: hsl(0,0%,100%);
+}
+
+.c5 {
+  width: 18px;
+  height: 18px;
+  color: hsl(0,0%,100%);
+}
+
+.c0 {
+  position: relative;
+  width: 45px;
+  height: 20px;
+  border-radius: 10px;
+  outline: none;
+  background-color: hsl(200,96%,11%);
+  border: 1px solid hsl(200,96%,11%);
+  cursor: pointer;
+}
+
+.c0::after {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  content: '';
+  top: 0;
+  left: 0;
+  position: absolute;
+  -webkit-transition: -webkit-transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+  background-color: hsl(0,0%,100%);
+}
+
+.c0[aria-checked='true'] {
+  background-color: hsl(200,96%,35%);
+  border-color: hsl(200,96%,35%);
+}
+
+.c0[aria-checked='true']::after {
+  -webkit-transform: translateX(25px);
+  -ms-transform: translateX(25px);
+  transform: translateX(25px);
+}
+
+.c0[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c0[aria-checked='true'] .c4 {
+  opacity: 1;
+}
+
+.c0 .c1 {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0 .c4 {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0[disabled] {
+  background-color: hsl(0,0%,90%);
+  border-color: hsl(0,0%,90%);
+}
+
+<button
+    aria-checked="false"
+    class="c0"
+  >
+    <svg
+      class="c1 c2 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M13.469 12l7.227-7.228a1.038 1.038 0 1 0-1.469-1.468L12 10.531 4.773 3.304a1.038 1.038 0 1 0-1.469 1.468L10.531 12l-7.227 7.227a1.038 1.038 0 1 0 1.47 1.469L12 13.468l7.227 7.228a1.038 1.038 0 1 0 1.469-1.47L13.469 12z"
+      />
+    </svg>
+    <svg
+      class="c4 c5 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: Toggle should render a toggle 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c2 {
+  width: 18px;
+  height: 18px;
+  color: hsl(0,0%,100%);
+}
+
+.c5 {
+  width: 18px;
+  height: 18px;
+  color: hsl(0,0%,100%);
+}
+
+.c0 {
+  position: relative;
+  width: 45px;
+  height: 20px;
+  border-radius: 10px;
+  outline: none;
+  background-color: hsl(200,96%,11%);
+  border: 1px solid hsl(200,96%,11%);
+  cursor: pointer;
+}
+
+.c0::after {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  content: '';
+  top: 0;
+  left: 0;
+  position: absolute;
+  -webkit-transition: -webkit-transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+  background-color: hsl(0,0%,100%);
+}
+
+.c0[aria-checked='true'] {
+  background-color: hsl(200,96%,35%);
+  border-color: hsl(200,96%,35%);
+}
+
+.c0[aria-checked='true']::after {
+  -webkit-transform: translateX(25px);
+  -ms-transform: translateX(25px);
+  transform: translateX(25px);
+}
+
+.c0[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c0[aria-checked='true'] .c4 {
+  opacity: 1;
+}
+
+.c0 .c1 {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0 .c4 {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c0[disabled] {
+  background-color: hsl(0,0%,90%);
+  border-color: hsl(0,0%,90%);
+}
+
+<button
+    aria-checked="false"
+    class="c0"
+  >
+    <svg
+      class="c1 c2 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M13.469 12l7.227-7.228a1.038 1.038 0 1 0-1.469-1.468L12 10.531 4.773 3.304a1.038 1.038 0 1 0-1.469 1.468L10.531 12l-7.227 7.227a1.038 1.038 0 1 0 1.47 1.469L12 13.468l7.227 7.228a1.038 1.038 0 1 0 1.469-1.47L13.469 12z"
+      />
+    </svg>
+    <svg
+      class="c4 c5 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;

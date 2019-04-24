@@ -1,3 +1,7 @@
+---
+order: 1
+---
+
 # Fluent Syntax
 
 Project Fluent designed their own syntax for internationalization purposes. We'll go over some of the basics of the ftl syntax here, and provide a small example.

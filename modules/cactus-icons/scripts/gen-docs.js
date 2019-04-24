@@ -31,7 +31,7 @@ async function main() {
   </figure>\n`
   }
   markdown += '</div>\n'
-  await fs.writeFile(path.join(CWD, '../..', 'docs/Icons/Available_Icons.md'), markdown, 'utf8')
+  await fs.writeFile(path.join(CWD, '../..', 'docs/Icons/Available Icons.md'), markdown, 'utf8')
 }
 
 main().catch(error => {

@@ -1,14 +1,20 @@
-# Component Library
+---
+order: 3
+---
+
+# Cactus Web
 
 The `@repay/cactus-web` component library provides several components that can be shared across different front end applications to allow a more consistent design across each application.
 
 ## Quick Links
-- [Theming](../../modules/cactus-theme/README.md)
+
+- [Theming](../Theme/README.md)
 - [API Documentation](./API%20Documentation.md)
+- [Source Code](../../modules/cactus-web/)
 
 ## Theming
 
-The components in this library are designed to work with a theme that is generated using `@repay/cactus-theme` and given the `ThemeProvider` component created by [styled-components](https://www.npmjs.com/package/styled-components). This will apply a color scheme to all of the components available in this library so that the design is standardized and complies with accessibility standards. If you would like a more detailed breakdown on how to generate and use a theme, see [@repay/cactus-theme](../../modules/cactus-theme/README.md).
+The components in this library are designed to work with a theme that is generated using `@repay/cactus-theme` and given the `ThemeProvider` component created by [styled-components](https://www.npmjs.com/package/styled-components). This will apply a color scheme to all of the components available in this library so that the design is standardized and complies with accessibility standards. If you would like a more detailed breakdown on how to generate and use a theme, see [@repay/cactus-theme](../Theme/README.md).
 
 ## API Documentation
 
