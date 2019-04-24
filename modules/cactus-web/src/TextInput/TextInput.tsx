@@ -53,27 +53,24 @@ const displayStatus = (props: TextInputProps) => {
 const StyledCheck = styled(StatusCheck)<StyledCheckProps>`
   width: 20px;
   height: 20px;
-  position: relative;
-  left: -28px;
-  opacity: ${p => (p.status === 'success' && !p.disabled ? '1' : '0')};
+  position: absolute;
+  right: 8px;
   color: ${p => p.theme.colors.success};
 `
 
 const StyledAlert = styled(NotificationAlert)<StyledAlertProps>`
   width: 24px;
   height: 24px;
-  position: relative;
-  left: -50px;
-  opacity: ${p => (p.status === 'invalid' && !p.disabled ? '1' : '0')};
+  position: absolute;
+  right: 8px;
   color: ${p => p.theme.colors.warning};
 `
 
 const StyledError = styled(NotificationError)<StyledErrorProps>`
   width: 20px;
   height: 20px;
-  position: relative;
-  left: -72px;
-  opacity: ${p => (p.status === 'error' && !p.disabled ? '1' : '0')};
+  position: absolute;
+  right: 8px;
   color: ${p => p.theme.colors.error};
 `
 
@@ -86,14 +83,12 @@ const TextInputContainer = styled.div`
 `
 
 const Input = styled.input<InputProps>`
-  display: block;
-  position: relative;
   border: 1px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
   border-radius: 20px;
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 18px;
+  padding: 7px 28px;
   font-size: 18px;
   width: ${p => p.width || 'auto'};
   background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
@@ -115,9 +110,9 @@ const TextInput = (props: TextInputProps) => {
   return (
     <TextInputContainer>
       <Input {...props} />
-      <StyledCheck disabled={disabled} status={status} />
-      <StyledAlert disabled={disabled} status={status} />
-      <StyledError disabled={disabled} status={status} />
+      {status === 'success' && !disabled && <StyledCheck disabled={disabled} status={status} />}
+      {status === 'invalid' && !disabled && <StyledAlert disabled={disabled} status={status} />}
+      {status === 'error' && !disabled && <StyledError disabled={disabled} status={status} />}
     </TextInputContainer>
   )
 }
