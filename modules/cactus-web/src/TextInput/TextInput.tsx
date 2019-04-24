@@ -5,7 +5,11 @@ import { StatusCheck, NotificationAlert, NotificationError } from '@repay/cactus
 
 export type Status = 'success' | 'invalid' | 'error'
 
-interface TextInputProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
+interface TextInputProps
+  extends Omit<
+    React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+    'ref'
+  > {
   disabled?: boolean
   status?: Status | null
 }
