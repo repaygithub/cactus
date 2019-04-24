@@ -1,0 +1,462 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: TextInput should render a disabled input 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  border: 1px solid hsl(0,0%,90%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,90%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+      disabled=""
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput should render a success input 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c2 {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 8px;
+  color: hsl(145,89%,28%);
+}
+
+.c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(145,89%,28%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+    <svg
+      class="c2 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.814 19.74a1.18 1.18 0 0 1-.787-.302l-5.64-5.088a1.173 1.173 0 1 1 1.573-1.743l4.72 4.257 9.233-11.427a1.173 1.173 0 1 1 1.826 1.476L10.727 19.304a1.181 1.181 0 0 1-.913.436"
+      />
+    </svg>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput should render a text input 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput should render an error input 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c2 {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 8px;
+  color: hsl(353,84%,44%);
+}
+
+.c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(353,84%,44%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+    <svg
+      class="c2 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M5.828 18.84h12.345L12 6.496 5.828 18.84zM19.92 21H4.08c-.374 0-.722-.194-.92-.511a1.082 1.082 0 0 1-.046-1.051l7.92-15.841a1.08 1.08 0 0 1 1.932 0l7.92 15.84c.168.334.149.733-.046 1.052a1.083 1.083 0 0 1-.92.511zm-7.955-6.41c.477 0 .865-.268.865-.598v-3.194c0-.33-.388-.598-.865-.598s-.865.268-.865.599v3.193c0 .33.388.598.865.598zm1.008 1.947a.936.936 0 1 0-1.873 0 .936.936 0 1 0 1.873 0z"
+      />
+    </svg>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput should render an input with a placeholder 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+      placeholder="hold my place"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput should render an invalid input 1`] = `
+<DocumentFragment>
+  .c3 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c2 {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 8px;
+  color: hsl(47,82%,47%);
+}
+
+.c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(47,82%,47%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+    <svg
+      class="c2 c3"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M12 21c-.276 0-.553-.105-.764-.317l-7.92-7.92a1.08 1.08 0 0 1 0-1.527l7.92-7.92a1.08 1.08 0 0 1 1.528 0l7.92 7.92a1.08 1.08 0 0 1 0 1.527l-7.92 7.92A1.077 1.077 0 0 1 12 21zm-6.393-9L12 18.393 18.393 12 12 5.606 5.607 12zm6.357.79c-.477 0-.864-.268-.864-.6V9c0-.332.387-.599.864-.599s.864.267.864.599v3.192c0 .331-.387.6-.864.6zm1.009 1.947a.936.936 0 1 1-1.873 0 .936.936 0 1 1 1.873 0z"
+      />
+    </svg>
+  </div>
+</DocumentFragment>
+`;
