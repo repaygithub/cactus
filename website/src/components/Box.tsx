@@ -24,6 +24,7 @@ import {
   justifySelf,
   alignSelf,
   order,
+  zIndex,
   PositionProps,
   TopProps,
   BottomProps,
@@ -48,6 +49,7 @@ import {
   JustifySelfProps,
   OrderProps,
   AlignSelfProps,
+  ZIndexProps,
 } from 'styled-system'
 
 interface BoxProps
@@ -74,7 +76,8 @@ interface BoxProps
     FlexDirectionProps,
     JustifySelfProps,
     OrderProps,
-    AlignSelfProps {}
+    AlignSelfProps,
+    ZIndexProps {}
 
 const Box = styled('div')<BoxProps>(
   {
@@ -103,7 +106,8 @@ const Box = styled('div')<BoxProps>(
   flexDirection,
   justifySelf,
   alignSelf,
-  order
+  order,
+  zIndex
 )
 
 export default Box

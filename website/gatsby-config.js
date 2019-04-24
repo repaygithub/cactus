@@ -10,6 +10,14 @@ module.exports = {
   plugins: [
     'gatsby-plugin-typescript',
     'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-plugin-svgr',
+      options: {
+        svgProps: {
+          fill: 'currentcolor',
+        },
+      },
+    },
     'gatsby-plugin-styled-components',
     'gatsby-plugin-catch-links',
     {
