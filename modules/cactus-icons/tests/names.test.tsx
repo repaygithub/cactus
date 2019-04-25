@@ -1,6 +1,6 @@
 import { cleanup } from 'react-testing-library'
-import fs from 'fs'
-import path from 'path'
+const fs = require('fs')
+const path = require('path')
 
 afterEach(cleanup)
 
