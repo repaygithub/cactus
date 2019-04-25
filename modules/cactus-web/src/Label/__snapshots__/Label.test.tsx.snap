@@ -6,7 +6,7 @@ exports[`component: Label should render a label component 1`] = `
   font-size: 18px;
   height: 28px;
   font-weight: 400;
-  color: hsl(200,10%,35%);
+  color: hsl(200,10%,20%);
 }
 
 <label
