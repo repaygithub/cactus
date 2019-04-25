@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import { Link } from 'gatsby'
 
 const Em = styled.em`
   font-style: normal;
@@ -18,7 +19,7 @@ export default () => {
         as our design system learns from implementation.
       </p>
       <p>
-        Next, read about our <a href="/design-system/language/">design language</a>.
+        Next, read about our <Link to="/design-system/language/">design language</Link>.
       </p>
     </>
   )

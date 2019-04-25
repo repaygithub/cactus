@@ -9,7 +9,7 @@ const CactusGlobalStyles = createGlobalStyle`
 html,
 body {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: ${p => p.theme.fontSizes.body};
   font-weight: 400;
   color: ${p => p.theme.colors.darkestContrast};
   font-style: normal;

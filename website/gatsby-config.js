@@ -1,12 +1,14 @@
 const path = require('path')
+const { default: cactusTheme } = require('@repay/cactus-theme')
 
 module.exports = {
   siteMetadata: {
-    title: 'Cactus Docs',
+    title: 'Cactus Design System',
     author: 'REPAY',
     description: 'Cactus Design System and Framework documentation',
     keywords: ['typescript', 'react', 'styled-components', 'styled-system', ''].join(', '),
   },
+  pathPrefix: '/cactus',
   plugins: [
     'gatsby-plugin-typescript',
     'gatsby-plugin-react-helmet',
@@ -78,6 +80,16 @@ module.exports = {
     // TODO review and add the following if desired
     // 'gatsby-plugin-lunr',
     // 'gatsby-plugin-feed',
-    // 'gatsby-plugin-manifest',
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'Cactus Design System',
+        short_name: 'Cactus DS',
+        icon: 'src/assets/cactus-with-fill.svg',
+        start_url: '/',
+        background_color: cactusTheme.colors.white,
+        theme_color: cactusTheme.colors.base,
+      },
+    },
   ],
 }

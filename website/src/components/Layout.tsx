@@ -79,7 +79,12 @@ function createMenuGroups(pages: Edges<Markdown>) {
         title: 'Design System',
         url: '/design-system/',
         order: -1, // always first
-        items: [],
+        items: [
+          { title: 'Language', url: '/design-system/language/', order: 0, items: [] },
+          { title: 'Foundation', url: '/design-system/foundation/', order: 10, items: [] },
+          { title: 'Color', url: '/design-system/color/', order: 20, items: [] },
+          { title: 'Typography', url: '/design-system/typography/', order: 30, items: [] },
+        ],
       },
       {
         title: 'Storybooks',
