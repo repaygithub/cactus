@@ -25,7 +25,7 @@
     "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
     "debug": "node --inspect-brk ./node_modules/.bin/svgr svgs -d built --config-file svgr.config.js --ext tsx",
     "test": "yarn jest",
-    "test:ci": "yarn test:types",
+    "test:ci": "yarn test && yarn test:types",
     "test:types": "tsc -p tsconfig.test.json --noEmit"
   },
   "jest": {
