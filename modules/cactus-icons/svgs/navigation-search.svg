@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/navigation-search</title>
-    <desc>Created with Sketch.</desc>
-    <g id="icons/navigation-search" stroke="none" stroke-width="1"  >
-        <path d="M20.6706,19.0794 L17.1759,15.5847 C18.1596,14.2698 18.75,12.6435 18.75,10.875 C18.75,6.5253 15.2247,3 10.875,3 C6.5253,3 3,6.5253 3,10.875 C3,15.2238 6.5253,18.75 10.875,18.75 C12.6444,18.75 14.2707,18.1596 15.5865,17.175 L19.0794,20.6706 C19.5195,21.1089 20.2314,21.1089 20.6706,20.6706 C21.1098,20.2305 21.1098,19.5186 20.6706,19.0794 M10.875,16.5 C7.7682,16.5 5.25,13.9818 5.25,10.875 C5.25,7.7682 7.7682,5.25 10.875,5.25 C13.9818,5.25 16.5,7.7682 16.5,10.875 C16.5,13.9818 13.9818,16.5 10.875,16.5" id="icons/search"  fill-rule="nonzero"></path>
-    </g>
-</svg>

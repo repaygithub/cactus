@@ -4,7 +4,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-add.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/add.svg"
       style="width:100px;"
       alt="svg for ActionsAdd" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -15,7 +15,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-coachmarks.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/coachmarks.svg"
       style="width:100px;"
       alt="svg for ActionsCoachmarks" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -26,7 +26,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-delete.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/delete.svg"
       style="width:100px;"
       alt="svg for ActionsDelete" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -37,7 +37,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-download.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/download.svg"
       style="width:100px;"
       alt="svg for ActionsDownload" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -48,7 +48,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-edit.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/edit.svg"
       style="width:100px;"
       alt="svg for ActionsEdit" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -59,18 +59,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-filter-mod.svg"
-      style="width:100px;"
-      alt="svg for ActionsFilterMod" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/actions-filter-mod</code>
-      <div>ActionsFilterMod</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/actions-filter.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/filter.svg"
       style="width:100px;"
       alt="svg for ActionsFilter" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -81,7 +70,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-gear.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/gear.svg"
       style="width:100px;"
       alt="svg for ActionsGear" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -92,18 +81,29 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-logout.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/key.svg"
       style="width:100px;"
-      alt="svg for ActionsLogout" />
+      alt="svg for ActionsKey" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/actions-logout</code>
-      <div>ActionsLogout</div>
+      <code style="white-space:pre-wrap;font-size:10px;">/i/actions-key</code>
+      <div>ActionsKey</div>
     </figcaption>
   </figure>
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-redo.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/print.svg"
+      style="width:100px;"
+      alt="svg for ActionsPrint" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/actions-print</code>
+      <div>ActionsPrint</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/actions/redo.svg"
       style="width:100px;"
       alt="svg for ActionsRedo" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -114,7 +114,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-remove.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/refresh.svg"
+      style="width:100px;"
+      alt="svg for ActionsRefresh" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/actions-refresh</code>
+      <div>ActionsRefresh</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/actions/remove.svg"
       style="width:100px;"
       alt="svg for ActionsRemove" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -125,18 +136,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/actions-search.svg"
-      style="width:100px;"
-      alt="svg for ActionsSearch" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/actions-search</code>
-      <div>ActionsSearch</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/actions-upload.svg"
+    <img src="../../modules/cactus-icons/svgs/actions/upload.svg"
       style="width:100px;"
       alt="svg for ActionsUpload" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -147,7 +147,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/batchstatus-inprogress.svg"
+    <img src="../../modules/cactus-icons/svgs/batchstatus/inprogress.svg"
       style="width:100px;"
       alt="svg for BatchstatusInprogress" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -158,7 +158,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/batchstatus-open.svg"
+    <img src="../../modules/cactus-icons/svgs/batchstatus/open.svg"
       style="width:100px;"
       alt="svg for BatchstatusOpen" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -169,7 +169,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/batchstatus-settle.svg"
+    <img src="../../modules/cactus-icons/svgs/batchstatus/reconciled.svg"
+      style="width:100px;"
+      alt="svg for BatchstatusReconciled" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/batchstatus-reconciled</code>
+      <div>BatchstatusReconciled</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/batchstatus/settle.svg"
       style="width:100px;"
       alt="svg for BatchstatusSettle" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -180,7 +191,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-at.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/assistant.svg"
+      style="width:100px;"
+      alt="svg for DescriptiveAssistant" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-assistant</code>
+      <div>DescriptiveAssistant</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/descriptive/at.svg"
       style="width:100px;"
       alt="svg for DescriptiveAt" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -191,7 +213,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-box.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/box.svg"
       style="width:100px;"
       alt="svg for DescriptiveBox" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -202,7 +224,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-calendar.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/calendar.svg"
       style="width:100px;"
       alt="svg for DescriptiveCalendar" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -213,7 +235,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-cart.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/cart.svg"
       style="width:100px;"
       alt="svg for DescriptiveCart" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -224,40 +246,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-chart-bars.svg"
-      style="width:100px;"
-      alt="svg for DescriptiveChartBars" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-bars</code>
-      <div>DescriptiveChartBars</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/descriptive-chart-piechart.svg"
-      style="width:100px;"
-      alt="svg for DescriptiveChartPiechart" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-piechart</code>
-      <div>DescriptiveChartPiechart</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/descriptive-chart-presentation.svg"
-      style="width:100px;"
-      alt="svg for DescriptiveChartPresentation" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-presentation</code>
-      <div>DescriptiveChartPresentation</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/descriptive-clock.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/clock.svg"
       style="width:100px;"
       alt="svg for DescriptiveClock" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -268,7 +257,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-cloud.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/cloud.svg"
       style="width:100px;"
       alt="svg for DescriptiveCloud" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -279,7 +268,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-comment.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/comment.svg"
       style="width:100px;"
       alt="svg for DescriptiveComment" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -290,7 +279,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-connect.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/connect.svg"
       style="width:100px;"
       alt="svg for DescriptiveConnect" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -301,7 +290,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-discussions.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/discussions.svg"
       style="width:100px;"
       alt="svg for DescriptiveDiscussions" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -312,7 +301,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-document1.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/document1.svg"
       style="width:100px;"
       alt="svg for DescriptiveDocument1" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -323,7 +312,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-document2.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/document2.svg"
       style="width:100px;"
       alt="svg for DescriptiveDocument2" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -334,7 +323,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-envelope.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/envelope.svg"
       style="width:100px;"
       alt="svg for DescriptiveEnvelope" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -345,7 +334,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-filter.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/filter.svg"
       style="width:100px;"
       alt="svg for DescriptiveFilter" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -356,7 +345,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-folder.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/folder.svg"
       style="width:100px;"
       alt="svg for DescriptiveFolder" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -367,7 +356,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-home.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/home.svg"
       style="width:100px;"
       alt="svg for DescriptiveHome" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -378,7 +367,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-internet.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/internet.svg"
       style="width:100px;"
       alt="svg for DescriptiveInternet" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -389,7 +378,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-location.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/location.svg"
       style="width:100px;"
       alt="svg for DescriptiveLocation" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -400,7 +389,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-lock.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/lock.svg"
       style="width:100px;"
       alt="svg for DescriptiveLock" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -411,7 +400,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-profile.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/profile.svg"
       style="width:100px;"
       alt="svg for DescriptiveProfile" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -422,7 +411,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-receipt.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/receipt.svg"
       style="width:100px;"
       alt="svg for DescriptiveReceipt" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -433,7 +422,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-ruler.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/ruler.svg"
       style="width:100px;"
       alt="svg for DescriptiveRuler" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -444,7 +433,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-suitcase.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/suitcase.svg"
       style="width:100px;"
       alt="svg for DescriptiveSuitcase" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -455,7 +444,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/descriptive-tray.svg"
+    <img src="../../modules/cactus-icons/svgs/descriptive/tray.svg"
       style="width:100px;"
       alt="svg for DescriptiveTray" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -466,29 +455,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/interface-batch.svg"
+    <img src="../../modules/cactus-icons/svgs/interface/SMS.svg"
       style="width:100px;"
-      alt="svg for InterfaceBatch" />
+      alt="svg for InterfaceSms" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/interface-batch</code>
-      <div>InterfaceBatch</div>
+      <code style="white-space:pre-wrap;font-size:10px;">/i/interface-sms</code>
+      <div>InterfaceSms</div>
     </figcaption>
   </figure>
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/interface-card.svg"
-      style="width:100px;"
-      alt="svg for InterfaceCard" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/interface-card</code>
-      <div>InterfaceCard</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/interface-desktop.svg"
+    <img src="../../modules/cactus-icons/svgs/interface/desktop.svg"
       style="width:100px;"
       alt="svg for InterfaceDesktop" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -499,7 +477,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/interface-laptop.svg"
+    <img src="../../modules/cactus-icons/svgs/interface/card.svg"
+      style="width:100px;"
+      alt="svg for InterfaceCard" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/interface-card</code>
+      <div>InterfaceCard</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/interface/laptop.svg"
       style="width:100px;"
       alt="svg for InterfaceLaptop" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -510,29 +499,29 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/interface-table.svg"
+    <img src="../../modules/cactus-icons/svgs/interface/page.svg"
       style="width:100px;"
-      alt="svg for InterfaceTable" />
+      alt="svg for InterfacePage" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/interface-table</code>
-      <div>InterfaceTable</div>
+      <code style="white-space:pre-wrap;font-size:10px;">/i/interface-page</code>
+      <div>InterfacePage</div>
     </figcaption>
   </figure>
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/interface.svg"
+    <img src="../../modules/cactus-icons/svgs/interface/tables.svg"
       style="width:100px;"
-      alt="svg for Interface" />
+      alt="svg for InterfaceTables" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/interface</code>
-      <div>Interface</div>
+      <code style="white-space:pre-wrap;font-size:10px;">/i/interface-tables</code>
+      <div>InterfaceTables</div>
     </figcaption>
   </figure>
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/multimedia-call.svg"
+    <img src="../../modules/cactus-icons/svgs/multimedia/call.svg"
       style="width:100px;"
       alt="svg for MultimediaCall" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -543,7 +532,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/multimedia-camera.svg"
+    <img src="../../modules/cactus-icons/svgs/multimedia/camera.svg"
       style="width:100px;"
       alt="svg for MultimediaCamera" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -554,7 +543,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/multimedia-videocamera.svg"
+    <img src="../../modules/cactus-icons/svgs/multimedia/videocamera.svg"
       style="width:100px;"
       alt="svg for MultimediaVideocamera" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -565,7 +554,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/multimedia-voice.svg"
+    <img src="../../modules/cactus-icons/svgs/multimedia/voice.svg"
       style="width:100px;"
       alt="svg for MultimediaVoice" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -576,7 +565,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/multimedia-volumen.svg"
+    <img src="../../modules/cactus-icons/svgs/multimedia/volumen.svg"
       style="width:100px;"
       alt="svg for MultimediaVolumen" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -587,62 +576,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/navigation-3-lines.svg"
-      style="width:100px;"
-      alt="svg for Navigation3Lines" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-3-lines</code>
-      <div>Navigation3Lines</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/navigation-chevron-down.svg"
-      style="width:100px;"
-      alt="svg for NavigationChevronDown" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-down</code>
-      <div>NavigationChevronDown</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/navigation-chevron-left.svg"
-      style="width:100px;"
-      alt="svg for NavigationChevronLeft" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-left</code>
-      <div>NavigationChevronLeft</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/navigation-chevron-right.svg"
-      style="width:100px;"
-      alt="svg for NavigationChevronRight" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-right</code>
-      <div>NavigationChevronRight</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/navigation-chevron-up.svg"
-      style="width:100px;"
-      alt="svg for NavigationChevronUp" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-up</code>
-      <div>NavigationChevronUp</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/navigation-close.svg"
+    <img src="../../modules/cactus-icons/svgs/navigation/close.svg"
       style="width:100px;"
       alt="svg for NavigationClose" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -653,7 +587,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/navigation-less.svg"
+    <img src="../../modules/cactus-icons/svgs/navigation/less.svg"
       style="width:100px;"
       alt="svg for NavigationLess" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -664,7 +598,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/navigation-menu.svg"
+    <img src="../../modules/cactus-icons/svgs/navigation/logout.svg"
+      style="width:100px;"
+      alt="svg for NavigationLogout" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-logout</code>
+      <div>NavigationLogout</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/menu.svg"
       style="width:100px;"
       alt="svg for NavigationMenu" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -675,7 +620,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/navigation-plus.svg"
+    <img src="../../modules/cactus-icons/svgs/navigation/plus.svg"
       style="width:100px;"
       alt="svg for NavigationPlus" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -686,7 +631,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/navigation-search.svg"
+    <img src="../../modules/cactus-icons/svgs/navigation/search.svg"
       style="width:100px;"
       alt="svg for NavigationSearch" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -697,7 +642,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/notification-alert.svg"
+    <img src="../../modules/cactus-icons/svgs/notification/alert.svg"
       style="width:100px;"
       alt="svg for NotificationAlert" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -708,7 +653,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/notification-error.svg"
+    <img src="../../modules/cactus-icons/svgs/notification/error.svg"
       style="width:100px;"
       alt="svg for NotificationError" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -719,7 +664,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/notification-info.svg"
+    <img src="../../modules/cactus-icons/svgs/notification/info.svg"
       style="width:100px;"
       alt="svg for NotificationInfo" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -730,7 +675,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/notification-note.svg"
+    <img src="../../modules/cactus-icons/svgs/notification/note.svg"
       style="width:100px;"
       alt="svg for NotificationNote" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -741,7 +686,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-amex.svg"
+    <img src="../../modules/cactus-icons/svgs/notification/notification.svg"
+      style="width:100px;"
+      alt="svg for NotificationNotification" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/notification-notification</code>
+      <div>NotificationNotification</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/payment/amex.svg"
       style="width:100px;"
       alt="svg for PaymentAmex" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -752,7 +708,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-barcode.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/bank.svg"
+      style="width:100px;"
+      alt="svg for PaymentBank" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/payment-bank</code>
+      <div>PaymentBank</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/payment/barcode.svg"
       style="width:100px;"
       alt="svg for PaymentBarcode" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -763,7 +730,29 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-cash.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/batch.svg"
+      style="width:100px;"
+      alt="svg for PaymentBatch" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/payment-batch</code>
+      <div>PaymentBatch</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/payment/card-back.svg"
+      style="width:100px;"
+      alt="svg for PaymentCardBack" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/payment-card-back</code>
+      <div>PaymentCardBack</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/payment/cash.svg"
       style="width:100px;"
       alt="svg for PaymentCash" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -774,7 +763,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-cashback.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/cashback.svg"
       style="width:100px;"
       alt="svg for PaymentCashback" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -785,7 +774,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-charge.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/charge.svg"
       style="width:100px;"
       alt="svg for PaymentCharge" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -796,7 +785,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-credit.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/credit.svg"
       style="width:100px;"
       alt="svg for PaymentCredit" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -807,7 +796,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-csc.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/csc.svg"
       style="width:100px;"
       alt="svg for PaymentCsc" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -818,7 +807,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-cvv.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/cvv.svg"
       style="width:100px;"
       alt="svg for PaymentCvv" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -829,7 +818,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-debit.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/debit.svg"
       style="width:100px;"
       alt="svg for PaymentDebit" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -840,7 +829,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-invoice.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/invoice.svg"
       style="width:100px;"
       alt="svg for PaymentInvoice" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -851,7 +840,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-paybycard.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/master.svg"
+      style="width:100px;"
+      alt="svg for PaymentMaster" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/payment-master</code>
+      <div>PaymentMaster</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/payment/paybycard.svg"
       style="width:100px;"
       alt="svg for PaymentPaybycard" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -862,7 +862,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-refund.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/payment.svg"
+      style="width:100px;"
+      alt="svg for PaymentPayment" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/payment-payment</code>
+      <div>PaymentPayment</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/payment/refund.svg"
       style="width:100px;"
       alt="svg for PaymentRefund" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -873,7 +884,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-token.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/token.svg"
       style="width:100px;"
       alt="svg for PaymentToken" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -884,7 +895,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/payment-wallet.svg"
+    <img src="../../modules/cactus-icons/svgs/payment/wallet.svg"
       style="width:100px;"
       alt="svg for PaymentWallet" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -895,40 +906,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/status-check.svg"
-      style="width:100px;"
-      alt="svg for StatusCheck" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/status-check</code>
-      <div>StatusCheck</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/status-follow.svg"
-      style="width:100px;"
-      alt="svg for StatusFollow" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/status-follow</code>
-      <div>StatusFollow</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/status-like.svg"
-      style="width:100px;"
-      alt="svg for StatusLike" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/status-like</code>
-      <div>StatusLike</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/status-money.svg"
+    <img src="../../modules/cactus-icons/svgs/status/Money.svg"
       style="width:100px;"
       alt="svg for StatusMoney" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -939,7 +917,40 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/status-recomend.svg"
+    <img src="../../modules/cactus-icons/svgs/status/check.svg"
+      style="width:100px;"
+      alt="svg for StatusCheck" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-check</code>
+      <div>StatusCheck</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/status/follow.svg"
+      style="width:100px;"
+      alt="svg for StatusFollow" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-follow</code>
+      <div>StatusFollow</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/status/like.svg"
+      style="width:100px;"
+      alt="svg for StatusLike" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-like</code>
+      <div>StatusLike</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/status/recomend.svg"
       style="width:100px;"
       alt="svg for StatusRecomend" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -950,7 +961,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/status-spinner.svg"
+    <img src="../../modules/cactus-icons/svgs/status/spinner.svg"
       style="width:100px;"
       alt="svg for StatusSpinner" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -961,18 +972,7 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/status-star.svg"
-      style="width:100px;"
-      alt="svg for StatusStar" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/status-star</code>
-      <div>StatusStar</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/status-sun.svg"
+    <img src="../../modules/cactus-icons/svgs/status/sun.svg"
       style="width:100px;"
       alt="svg for StatusSun" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -983,7 +983,18 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/status-target.svg"
+    <img src="../../modules/cactus-icons/svgs/status/star.svg"
+      style="width:100px;"
+      alt="svg for StatusStar" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-star</code>
+      <div>StatusStar</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/status/target.svg"
       style="width:100px;"
       alt="svg for StatusTarget" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -994,7 +1005,29 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/status-trophy.svg"
+    <img src="../../modules/cactus-icons/svgs/status/thumbsdown.svg"
+      style="width:100px;"
+      alt="svg for StatusThumbsdown" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-thumbsdown</code>
+      <div>StatusThumbsdown</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/status/thumbsup.svg"
+      style="width:100px;"
+      alt="svg for StatusThumbsup" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-thumbsup</code>
+      <div>StatusThumbsup</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/status/trophy.svg"
       style="width:100px;"
       alt="svg for StatusTrophy" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
@@ -1005,12 +1038,133 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/status-unfollow.svg"
+    <img src="../../modules/cactus-icons/svgs/status/unfollow.svg"
       style="width:100px;"
       alt="svg for StatusUnfollow" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/status-unfollow</code>
       <div>StatusUnfollow</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/descriptive/chart/bars.svg"
+      style="width:100px;"
+      alt="svg for DescriptiveChartBars" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-bars</code>
+      <div>DescriptiveChartBars</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/descriptive/chart/piechart.svg"
+      style="width:100px;"
+      alt="svg for DescriptiveChartPiechart" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-piechart</code>
+      <div>DescriptiveChartPiechart</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/descriptive/chart/presentation.svg"
+      style="width:100px;"
+      alt="svg for DescriptiveChartPresentation" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-presentation</code>
+      <div>DescriptiveChartPresentation</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/chevron/down.svg"
+      style="width:100px;"
+      alt="svg for NavigationChevronDown" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-down</code>
+      <div>NavigationChevronDown</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/chevron/left.svg"
+      style="width:100px;"
+      alt="svg for NavigationChevronLeft" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-left</code>
+      <div>NavigationChevronLeft</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/chevron/nav.svg"
+      style="width:100px;"
+      alt="svg for NavigationChevronNav" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-nav</code>
+      <div>NavigationChevronNav</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/chevron/right.svg"
+      style="width:100px;"
+      alt="svg for NavigationChevronRight" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-right</code>
+      <div>NavigationChevronRight</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/chevron/up.svg"
+      style="width:100px;"
+      alt="svg for NavigationChevronUp" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-chevron-up</code>
+      <div>NavigationChevronUp</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/logout/black.svg"
+      style="width:100px;"
+      alt="svg for NavigationLogoutBlack" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-logout-black</code>
+      <div>NavigationLogoutBlack</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/menu/dots.svg"
+      style="width:100px;"
+      alt="svg for NavigationMenuDots" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-menu-dots</code>
+      <div>NavigationMenuDots</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/menu/lines.svg"
+      style="width:100px;"
+      alt="svg for NavigationMenuLines" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-menu-lines</code>
+      <div>NavigationMenuLines</div>
     </figcaption>
   </figure>
 </div>

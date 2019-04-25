@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/payment-wallet</title>
-    <desc>Created with Sketch.</desc>
-    <g id="icons/payment-wallet" stroke="none" stroke-width="1"  >
-        <path d="M19.875,8.625 L19.875,4.125 C19.875,3.5031 19.3719,3 18.75,3 L4.125,3 C3.5031,3 3,3.5031 3,4.125 L3,19.875 C3,20.4969 3.5031,21 4.125,21 L18.75,21 C19.3719,21 19.875,20.4969 19.875,19.875 L19.875,15.375 C20.4969,15.375 21,14.8719 21,14.25 L21,9.75 C21,9.1281 20.4969,8.625 19.875,8.625 Z M17.625,18.75 L5.25,18.75 L5.25,5.25 L17.625,5.25 L17.625,8.625 L14.25,8.625 C13.6281,8.625 13.125,9.1281 13.125,9.75 L13.125,14.25 C13.125,14.8719 13.6281,15.375 14.25,15.375 L17.625,15.375 L17.625,18.75 Z M15.375,13.125 L18.75,13.125 L18.75,10.875 L15.375,10.875 L15.375,13.125 Z" id="payment-wallet" ></path>
-    </g>
-</svg>
