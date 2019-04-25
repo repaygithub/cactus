@@ -54,14 +54,14 @@ interface ToggleButtonProps {
 }
 
 const StyledX = styled(NavigationClose)`
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: ${p => p.theme.colors.white};
 `
 
 const StyledCheck = styled(StatusCheck)`
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: ${p => p.theme.colors.white};
 `
 
@@ -71,8 +71,8 @@ const ToggleButton = styled.button<ToggleButtonProps>`
   height: 20px;
   border-radius: 10px;
   outline: none;
-  background-color: ${p => p.theme.colors.base};
-  border: 1px solid ${p => p.theme.colors.base};
+  background-color: ${p => p.theme.colors.darkestContrast};
+  border: 1px solid ${p => p.theme.colors.darkestContrast};
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
 
   ::after {
@@ -106,16 +106,16 @@ const ToggleButton = styled.button<ToggleButtonProps>`
 
   ${StyledX} {
     position: absolute;
-    top: 0;
-    left: 20px;
+    top: 1px;
+    left: 22px;
     opacity: 1;
     transition: opacity 0.3s;
   }
 
   ${StyledCheck} {
     position: absolute;
-    top: 0;
-    left: 4px;
+    top: 1px;
+    left: 5px;
     opacity: 0;
     transition: opacity 0.3s;
   }
