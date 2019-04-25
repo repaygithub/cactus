@@ -132,8 +132,6 @@ Array [
   "navigation-close.js",
   "navigation-less.d.ts",
   "navigation-less.js",
-  "navigation-logout-black.d.ts",
-  "navigation-logout-black.js",
   "navigation-logout.d.ts",
   "navigation-logout.js",
   "navigation-menu-dots.d.ts",

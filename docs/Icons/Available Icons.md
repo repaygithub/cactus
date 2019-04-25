@@ -697,17 +697,6 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/navigation/logout/black.svg"
-      style="width:100px;"
-      alt="svg for NavigationLogoutBlack" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-logout-black</code>
-      <div>NavigationLogoutBlack</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
     <img src="../../modules/cactus-icons/svgs/navigation/menu.svg"
       style="width:100px;"
       alt="svg for NavigationMenu" />
