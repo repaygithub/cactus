@@ -3,6 +3,11 @@ export type ColorStyle = {
   backgroundColor: string
 }
 
+export interface FontSizeObject extends Array<number> {
+  small?: number
+  body?: number
+}
+
 export interface CactusTheme {
   colors: {
     /** Core colors */
@@ -29,6 +34,7 @@ export interface CactusTheme {
     error: string
   }
   space: number[]
+  fontSizes: FontSizeObject
   colorStyles: {
     base: ColorStyle
     callToAction: ColorStyle
@@ -76,6 +82,10 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   let error = `hsl(353, 84%, 44%)`
   let warning = `hsl(47, 82%, 47%)`
 
+  const fontSizes: FontSizeObject = [15, 18, 21.6, 25.92, 31.104, 37.325]
+  fontSizes.small = fontSizes[0]
+  fontSizes.body = fontSizes[1]
+
   return {
     colors: {
       /** Core colors */
@@ -102,6 +112,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       warning,
     },
     space: [0, 2, 4, 8, 16, 32, 64],
+    fontSizes,
     colorStyles: {
       base: {
         backgroundColor: base,
