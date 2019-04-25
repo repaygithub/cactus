@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/descriptive-comment</title>
-    <desc>Created with Sketch.</desc>
-    <g id="icons/descriptive-comment" stroke="none" stroke-width="1"  >
-        <path d="M19.875,3 L4.125,3 C3.5031,3 3,3.5031 3,4.125 L3,15.375 C3,15.9969 3.5031,16.5 4.125,16.5 L6.375,16.5 L6.375,19.875 C6.375,20.3295 6.6486,20.7408 7.0689,20.9136 C7.2093,20.9721 7.3551,21 7.5,21 C7.7925,21 8.0805,20.8857 8.2956,20.6706 L12.4662,16.5 L19.875,16.5 C20.4969,16.5 21,15.9969 21,15.375 L21,4.125 C21,3.5031 20.4969,3 19.875,3 Z M18.75,14.25 L12,14.25 C11.712,14.25 11.424,14.3598 11.2044,14.5794 L8.625,17.1588 L8.625,15.375 C8.625,14.7531 8.1219,14.25 7.5,14.25 L5.25,14.25 L5.25,5.25 L18.75,5.25 L18.75,14.25 Z" id="descriptive-comment"  fill-rule="nonzero"></path>
-    </g>
-</svg>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/actions-edit</title>
-    <desc>Created with Sketch.</desc>
-    <g id="icons/actions-edit" stroke="none" stroke-width="1"  >
-        <path d="M20.6702594,7.63579236 L16.3623796,3.32974064 C15.9236394,2.89008645 15.2106867,2.89008645 14.7710325,3.32974064 L3,15.1016872 L3,20.999086 L8.89831283,20.999086 L20.6702594,9.22805347 C21.1099135,8.7865712 21.1099135,8.07636059 20.6702594,7.63579236 Z M8.06287847,18.7496287 L5.24945729,18.7496287 L5.24945729,15.9371215 L5.29790151,15.8886773 L8.11040865,18.7011844 L8.06287847,18.7496287 Z M9.70175572,17.1107514 L6.88924858,14.2982443 L15.3752142,5.81227863 L18.1877214,8.62478577 L9.70175572,17.1107514 Z" id="icons/edit"  fill-rule="nonzero"></path>
-    </g>
-</svg>

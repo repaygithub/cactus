@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/status-spinner</title>
-    <desc>Created with Sketch.</desc>
-    <g id="icons/status-spinner" stroke="none" stroke-width="1"  >
-        <path d="M12,21 L12,19 C15.8659932,19 19,15.8659932 19,12 C19,8.18945141 15.9516404,5.08074727 12.1490172,5.00155029 C12.074648,5.00025934 12.0497425,5 12,5 C8.13400675,5 5,8.13400675 5,12 L3,12 C3,7.02943725 7.02943725,3 12,3 C12.0636257,3 12.0954736,3.00033163 12.1906621,3.00198391 C17.0808462,3.10383145 21,7.10056778 21,12 C21,16.9705627 16.9705627,21 12,21 Z" id="icons/Spinner"  fill-rule="nonzero"></path>
-    </g>
-</svg>

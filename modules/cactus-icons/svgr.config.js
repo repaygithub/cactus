@@ -33,5 +33,4 @@ module.exports = {
   svgProps: {
     fill: 'currentcolor',
   },
-  prettierConfig,
 }

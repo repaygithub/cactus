@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    <title>icons/descriptive-calendar</title>
-    <desc>Created with Sketch.</desc>
-    <g id="icons/descriptive-calendar" stroke="none" stroke-width="1"  >
-        <path d="M20,4 C20.4969,4.125 21,4.6281 21,5 L21,20 C21,20.4969 20.4969,21 20,21 L4,21 C3.5031,21 3,20.4969 3,20 L3,5 C3,4.6281 3.5031,4.125 4,4 L8,4 C7.5,3.5031 8.0031,3 9,3 C9.2469,3 9.75,3.5031 10,4 L14,4 C14.25,3.5031 14.7531,3 15,3 C15.9969,3 16.5,3.5031 17,4 L20,4 Z M5,19 L19,19 L19,11 L5,11 L5,19 Z M19,8 L19,6 L17,6 C16.6666667,6.5528 16.1449333,7 16,7 C14.8550667,7 14.3333333,6.5528 14,6 L10,6 C9.66666667,6.5528 9.14493333,7 9,7 C7.85506667,7 7.33333333,6.5528 7,6 L5,6 L5,8 L19,8 Z" id="descriptive-calendar"  fill-rule="nonzero"></path>
-    </g>
-</svg>
