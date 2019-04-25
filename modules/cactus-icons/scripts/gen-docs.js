@@ -7,6 +7,7 @@ const CWD = process.cwd()
 
 async function main() {
   let svgs = await fg(['./svgs/**/*.svg'])
+  svgs.sort()
   let icons = svgs.map(filePath => {
     filePath = filePath.replace('./svgs/', '').replace('.svg', '')
     let fileName = filePath
