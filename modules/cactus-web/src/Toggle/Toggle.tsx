@@ -135,7 +135,7 @@ const ToggleButton = styled.button<ToggleButtonProps>`
 const Toggle = (props: ToggleProps) => {
   const { value, ...toggleProps } = props
   return (
-    <ToggleButton aria-checked={value} {...toggleProps}>
+    <ToggleButton type="button" aria-checked={value} {...toggleProps}>
       <StyledX />
       <StyledCheck />
     </ToggleButton>
