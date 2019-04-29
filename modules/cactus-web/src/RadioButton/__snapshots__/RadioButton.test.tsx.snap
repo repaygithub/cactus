@@ -12,6 +12,10 @@ exports[`component: RadioButton should render a disabled radio button 1`] = `
   display: block;
 }
 
+.c0 input:focus ~ div {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
 .c1 {
   opacity: 0;
   height: 0;
@@ -75,6 +79,10 @@ exports[`component: RadioButton should render a radio button 1`] = `
 
 .c0 input:checked ~ div:after {
   display: block;
+}
+
+.c0 input:focus ~ div {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
 .c1 {

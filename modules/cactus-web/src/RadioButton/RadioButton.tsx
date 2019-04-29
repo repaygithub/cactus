@@ -19,11 +19,17 @@ const RadioButtonContainer = styled.label<RadioButtonContainerProps>`
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
   display: block;
   position: relative;
+
   input:checked ~ div {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
   }
+
   input:checked ~ div:after {
     display: block;
+  }
+
+  input:focus ~ div {
+    box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
 `
 
@@ -42,6 +48,7 @@ const StyledRadioButton = styled.div<StyledRadioButtonProps>`
   border-radius: 50%;
   background-color: ${p => (p.disabled ? p.theme.colors.lightGray : 'none')};
   border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
+
   :after {
     position: absolute;
     content: '';
