@@ -2,6 +2,7 @@ import * as React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import Box from '../../components/Box'
+import { Link } from 'gatsby'
 
 const Em = styled.em`
   font-style: normal;
@@ -74,8 +75,8 @@ export default () => {
         <a href="http://atomicdesign.bradfrost.com/">book by Brad Frost</a> who created it.
       </p>
       <p>
-        Next, we'll present and dicuss our <a href="/design-system/foundation/">foundation</a> of
-        design tokens.
+        Next, we'll present and dicuss our <Link to="/design-system/foundation/">foundation</Link>{' '}
+        of design tokens.
       </p>
     </>
   )

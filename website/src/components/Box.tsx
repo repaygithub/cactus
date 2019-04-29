@@ -6,6 +6,8 @@ import {
   right,
   left,
   width,
+  maxWidth,
+  minWidth,
   space,
   fontSize,
   color,
@@ -24,12 +26,15 @@ import {
   justifySelf,
   alignSelf,
   order,
+  zIndex,
   PositionProps,
   TopProps,
   BottomProps,
   LeftProps,
   RightProps,
   WidthProps,
+  MaxWidthProps,
+  MinWidthProps,
   SpaceProps,
   FontSizeProps,
   ColorProps,
@@ -48,6 +53,7 @@ import {
   JustifySelfProps,
   OrderProps,
   AlignSelfProps,
+  ZIndexProps,
 } from 'styled-system'
 
 interface BoxProps
@@ -57,6 +63,8 @@ interface BoxProps
     LeftProps,
     RightProps,
     WidthProps,
+    MaxWidthProps,
+    MinWidthProps,
     SpaceProps,
     FontSizeProps,
     ColorProps,
@@ -74,7 +82,8 @@ interface BoxProps
     FlexDirectionProps,
     JustifySelfProps,
     OrderProps,
-    AlignSelfProps {}
+    AlignSelfProps,
+    ZIndexProps {}
 
 const Box = styled('div')<BoxProps>(
   {
@@ -103,7 +112,8 @@ const Box = styled('div')<BoxProps>(
   flexDirection,
   justifySelf,
   alignSelf,
-  order
+  order,
+  zIndex
 )
 
 export default Box

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Helmet from 'react-helmet'
 import { color, ColorProps, textAlign, TextAlignProps } from 'styled-system'
+import { Link } from 'gatsby'
 import styled from 'styled-components'
 import Box from '../../components/Box'
 
@@ -56,7 +57,7 @@ export default () => {
         </Box>
       </Box>
       <p>
-        Next, we will review the <a href="../color/">color system</a>.
+        Next, we will review the <Link to="/design-system/color/">color system</Link>.
       </p>
     </>
   )

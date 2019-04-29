@@ -90,7 +90,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        'styled-components': path.resolve('node_modules/styled-components'),
+        'styled-components': path.resolve('../node_modules/styled-components'),
       },
     },
   })
