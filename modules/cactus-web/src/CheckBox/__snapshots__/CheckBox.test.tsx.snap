@@ -50,6 +50,10 @@ exports[`component: CheckBox should render a checkbox 1`] = `
   visibility: visible;
 }
 
+.c0 input:focus ~ div {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
 <label
     class="c0"
     for="check"
@@ -118,6 +122,14 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
   display: block;
   vertical-align: middle;
   position: relative;
+}
+
+.c0 input:checked ~ div svg {
+  visibility: visible;
+}
+
+.c0 input:focus ~ div {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
 <label
