@@ -89,6 +89,7 @@ exports[`component: Toggle should initialize value to false 1`] = `
 <button
     aria-checked="true"
     class="c0"
+    type="button"
   >
     <svg
       class="c1 c2 c3"
@@ -205,6 +206,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
 <button
     aria-checked="false"
     class="c0"
+    type="button"
   >
     <svg
       class="c1 c2 c3"
@@ -321,6 +323,7 @@ exports[`component: Toggle should render a toggle 1`] = `
 <button
     aria-checked="false"
     class="c0"
+    type="button"
   >
     <svg
       class="c1 c2 c3"
