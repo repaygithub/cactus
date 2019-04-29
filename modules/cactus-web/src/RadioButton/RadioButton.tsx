@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Omit } from '../types'
 
 interface RadioButtonProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
   id: string

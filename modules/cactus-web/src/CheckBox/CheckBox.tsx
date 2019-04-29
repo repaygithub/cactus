@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { StatusCheck } from '@repay/cactus-icons'
+import { Omit } from '../types'
 
 interface CheckBoxProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
   id: string

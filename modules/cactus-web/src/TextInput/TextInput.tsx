@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
 import { StatusCheck, NotificationAlert, NotificationError } from '@repay/cactus-icons'
+import { Omit } from '../types'
 
 export type Status = 'success' | 'invalid' | 'error'
 
