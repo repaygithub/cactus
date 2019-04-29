@@ -49,7 +49,8 @@ const variantOrDisabled = (
 const TextButton = styled.button<TextButtonProps>`
   font-size: 18px;
   border: none;
-  padding: 0px;
+  padding: 2px 0;
+  line-height: 1.5em;
   outline: none;
   background-color: transparent;
   text-decoration: none;
@@ -58,13 +59,16 @@ const TextButton = styled.button<TextButtonProps>`
     cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
     text-decoration: ${p => !p.disabled && 'underline'};
   }
+
   :focus {
     text-decoration: ${p => !p.disabled && 'underline'};
   }
+
   svg {
     display: inline-block;
     margin-top: -4px;
   }
+
   ${variantOrDisabled}
 `
 
