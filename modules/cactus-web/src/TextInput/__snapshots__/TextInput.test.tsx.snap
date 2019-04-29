@@ -24,7 +24,7 @@ exports[`component: TextInput should render a disabled input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 16px;
+  padding: 7px 28px 7px 15px;
   font-size: 18px;
   width: auto;
   background-color: hsl(0,0%,90%);
@@ -102,7 +102,7 @@ exports[`component: TextInput should render a success input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 16px;
+  padding: 7px 28px 7px 15px;
   font-size: 18px;
   width: auto;
   background-color: hsl(0,0%,100%);
@@ -178,7 +178,7 @@ exports[`component: TextInput should render a text input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 16px;
+  padding: 7px 28px 7px 15px;
   font-size: 18px;
   width: auto;
   background-color: hsl(0,0%,100%);
@@ -255,7 +255,7 @@ exports[`component: TextInput should render an error input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 16px;
+  padding: 7px 28px 7px 15px;
   font-size: 18px;
   width: auto;
   background-color: hsl(0,0%,100%);
@@ -331,7 +331,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 16px;
+  padding: 7px 28px 7px 15px;
   font-size: 18px;
   width: auto;
   background-color: hsl(0,0%,100%);
@@ -409,7 +409,7 @@ exports[`component: TextInput should render an invalid input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 16px;
+  padding: 7px 28px 7px 15px;
   font-size: 18px;
   width: auto;
   background-color: hsl(0,0%,100%);
