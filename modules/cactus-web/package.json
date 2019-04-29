@@ -74,8 +74,8 @@
     "styled-components": "^4.1.2"
   },
   "dependencies": {
-    "@repay/cactus-icons": "^0.2.0",
-    "@repay/cactus-theme": "^0.2.0",
+    "@repay/cactus-icons": "^1.0.0",
+    "@repay/cactus-theme": "^1.0.0",
     "styled-system": "^4.1.0"
   }
 }

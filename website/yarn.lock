@@ -903,29 +903,25 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@repay/cactus-icons@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@repay/cactus-icons/-/cactus-icons-0.2.0.tgz#184a3f0ecac822cd5cc3e34b178e707cc315dc0c"
-  integrity sha512-SwNUhme2DYQOlxLTGPTxqQmVIxmxJtpYdjx9+TUDPYeamP8wkcHkQEX2Tt2baDEAfaa5Tih7HpLLFj+tjFFHTg==
+"@repay/cactus-icons@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-icons/-/cactus-icons-1.0.0.tgz#52d254bd1399161a8ea7b7c1d95f222789237f60"
+  integrity sha512-GkLC8a4PJvPWpqaOwwRNX4PUyQ8mTZJ/7aofkJqQ4dYb09362R6ocrHgrQH+oU8+YgIz4BiH11qLuGCOh68d1A==
   dependencies:
     styled-system "^4.1.0"
 
-"@repay/cactus-theme@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@repay/cactus-theme/-/cactus-theme-0.1.0.tgz#4973c68b236b1ac138955c770ff23ce4d40ccd95"
-  integrity sha512-iT75r+Z1fgOzogYsyUhzhJW43NUw1F4RGT93R240IMBK3Q5TPfmgdNebTcPGRKbrmeLjedd+Cn3geiE4L8nDEA==
+"@repay/cactus-theme@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-theme/-/cactus-theme-1.0.0.tgz#4aa8a7b3d43afb0278fd5163aaf08d0ec574c5b3"
+  integrity sha512-1q+CC2VEYgAGCPTPXzFQHD9Xpjio6u5ZHMFo9M/fZ4JqJwO6m7Fy+ejFXDyf21TiDh4mW1MeN+Q8kvEI9uYedQ==
 
-"@repay/cactus-theme@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@repay/cactus-theme/-/cactus-theme-0.2.0.tgz#292990c547d28b0ddf799184ee4662965d8ce8a4"
-  integrity sha512-Jf4YDoCUYJQPM8VlPOsIOMbIEGNTDdI7TTLtdR3vMpOlgsaF8e4Y8KTR4yoemgjqVSbenI9V5g6NzWtEpyTLew==
-
-"@repay/cactus-web@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@repay/cactus-web/-/cactus-web-0.1.1.tgz#8c4d5f99a030c0ad24593ce70ea059f7883c6042"
-  integrity sha512-a5atXEiWWb8tfr1n/Kzl3Vi2P0VqPU8L0moDWrkRpx+DMi5uJmdi6MusUVJdgxRdg8SU+FfZ7NyJL9kXBRPhyg==
+"@repay/cactus-web@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-web/-/cactus-web-1.0.1.tgz#3c06b7e64312b729a8cdcd5667647e225682fb00"
+  integrity sha512-0/g2MttfJV112g0wiFp/zZBwXhk2Z23w4hcMsrzMiESAxr6vA994Dd2ROn4o/ql9gJ2T5IdfAz8lDQjJuVK8mw==
   dependencies:
-    "@repay/cactus-theme" "^0.1.0"
+    "@repay/cactus-icons" "^1.0.0"
+    "@repay/cactus-theme" "^1.0.0"
     styled-system "^4.1.0"
 
 "@sindresorhus/is@^0.7.0":
