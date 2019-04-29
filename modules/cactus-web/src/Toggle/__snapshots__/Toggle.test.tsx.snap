@@ -30,6 +30,10 @@ exports[`component: Toggle should initialize value to false 1`] = `
   cursor: pointer;
 }
 
+.c0:focus {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
 .c0::after {
   width: 18px;
   height: 18px;
@@ -146,6 +150,10 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   cursor: pointer;
 }
 
+.c0:focus {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
 .c0::after {
   width: 18px;
   height: 18px;
@@ -260,6 +268,10 @@ exports[`component: Toggle should render a toggle 1`] = `
   background-color: hsl(200,10%,20%);
   border: 1px solid hsl(200,10%,20%);
   cursor: pointer;
+}
+
+.c0:focus {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
 .c0::after {

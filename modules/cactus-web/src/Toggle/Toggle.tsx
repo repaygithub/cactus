@@ -1,40 +1,6 @@
 import React from 'react'
-import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
+import styled from 'styled-components'
 import { StatusCheck, NavigationClose } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
-
-export type ShadowVariants = 's0' | 's1' | 's2' | 's3' | 's4' | 's5'
-
-type ShadowMap = { [K in ShadowVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
-
-const shadowMap: ShadowMap = {
-  s0: css`
-    box-shadow: 0 0 3px ${p => p.theme.colors.callToAction};
-  `,
-  s1: css`
-    box-shadow: 0 3px 8px ${p => p.theme.colors.callToAction};
-  `,
-  s2: css`
-    box-shadow: 0 9px 24px ${p => p.theme.colors.callToAction};
-  `,
-  s3: css`
-    box-shadow: 0 12px 24px ${p => p.theme.colors.callToAction};
-  `,
-  s4: css`
-    box-shadow: 0 30px 42px ${p => p.theme.colors.callToAction};
-  `,
-  s5: css`
-    box-shadow: 0 45px 46px ${p => p.theme.colors.callToAction};
-  `,
-}
-
-const chooseShadow = (
-  props: ToggleButtonProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  if (props.shadowVariant !== undefined && !props.disabled && props.shadows) {
-    return shadowMap[props.shadowVariant]
-  }
-}
 
 interface ToggleProps
   extends Omit<
@@ -43,14 +9,10 @@ interface ToggleProps
   > {
   value: boolean
   disabled?: boolean
-  shadows?: boolean
-  shadowVariant?: ShadowVariants
 }
 
 interface ToggleButtonProps {
   disabled?: boolean
-  shadows?: boolean
-  shadowVariant?: ShadowVariants
 }
 
 const StyledX = styled(NavigationClose)`
@@ -74,6 +36,10 @@ const ToggleButton = styled.button<ToggleButtonProps>`
   background-color: ${p => p.theme.colors.darkestContrast};
   border: 1px solid ${p => p.theme.colors.darkestContrast};
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
+
+  &:focus {
+    box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
+  }
 
   ::after {
     width: 18px;
@@ -123,12 +89,6 @@ const ToggleButton = styled.button<ToggleButtonProps>`
   &[disabled] {
     background-color: ${p => p.theme.colors.lightGray};
     border-color: ${p => p.theme.colors.lightGray};
-  }
-
-  // Experimental properties; may not use
-  &:hover,
-  &:focus {
-    ${chooseShadow};
   }
 `
 
