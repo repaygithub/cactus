@@ -46,14 +46,20 @@ const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
   display: block;
   vertical-align: middle;
   position: relative;
+
   input:checked ~ div {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
     background-color: ${p => !p.disabled && p.theme.colors.callToAction};
   }
+
   input:checked ~ div {
     svg {
-      ${p => !p.disabled && 'visibility: visible'};
+      visibility: visible;
     }
+  }
+
+  input:focus ~ div {
+    box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
 `
 
