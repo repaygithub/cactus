@@ -21,7 +21,7 @@
     "fmt": "yarn lint --fix",
     "test": "yarn test:ci",
     "test:ci": "yarn lint && yarn ws run test:ci",
-    "build": "yarn fwk build && yarn theme build && yarn web build && yarn icons build && yarn i18n build",
+    "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build",
     "predocs:publish": "yarn docs build",
     "docs:publish": "gh-pages -d ./website/public",
     "cleanup": "rm -rf dist && yarn ws run cleanup"
