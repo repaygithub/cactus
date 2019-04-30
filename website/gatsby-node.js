@@ -45,7 +45,7 @@ exports.createPages = ({ actions, graphql }) => {
 
     const edges = result.data.allMdx.edges
 
-    // Create pages:
+    // Create pages from all of the sourced markdown files
     edges.forEach(({ node }) => {
       const { fields } = node
       createPage({
@@ -120,7 +120,11 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 }
 
 exports.onCreateBabelConfig = ({ actions }) => {
-  // required for docz
+  /**
+   * Required to match individual component files to their docgen data.
+   * Adds a __filemeta property to all react components
+   */
+
   actions.setBabelPlugin({
     name: 'babel-plugin-export-metadata',
   })
@@ -131,6 +135,10 @@ const docgen = reactDocgenTs.withCustomConfig(
   []
 )
 
+/**
+ * Sources component files and creates a docgen object for each of them.
+ * Adds the DocItem[] data to the graphql as type DocgenDB
+ */
 exports.sourceNodes = async ({ actions, createNodeId }) => {
   const { createNode } = actions
 
@@ -139,6 +147,9 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
     '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.test.tsx'),
     '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.story.tsx'),
   ])
+  /**
+   * props = DocItem[] where DocItem = { key: filepath, value: ComponentDoc }
+   */
   const props = await Promise.all(
     componentPaths.map(filePath => {
       const doc = docgen.parse(filePath)

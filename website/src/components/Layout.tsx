@@ -118,7 +118,6 @@ function createMenuGroups(pages: Edges<Markdown>) {
     })
 
   sortGroup(group)
-  console.log(group)
 
   return group
 }
