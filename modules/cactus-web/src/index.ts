@@ -1,5 +1,6 @@
 export { default as Button } from './Button/Button'
 export { default as CheckBox } from './CheckBox/CheckBox'
+export { default as CheckBoxField } from './CheckBoxField/CheckBoxField'
 export { default as IconButton } from './IconButton/IconButton'
 export { default as Label } from './Label/Label'
 export { default as RadioButton } from './RadioButton/RadioButton'

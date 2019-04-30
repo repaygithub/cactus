@@ -3,7 +3,11 @@ import styled from 'styled-components'
 import { StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
 
-interface CheckBoxProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
+export interface CheckBoxProps
+  extends Omit<
+    React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+    'ref'
+  > {
   id: string
   disabled?: boolean
 }
@@ -12,7 +16,8 @@ interface StyledCheckBoxProps extends React.HTMLProps<HTMLDivElement> {
   disabled?: boolean
 }
 
-interface CheckBoxContainerProps extends React.HTMLProps<HTMLLabelElement> {
+interface CheckBoxContainerProps
+  extends React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement> {
   disabled?: boolean
 }
 
@@ -27,10 +32,9 @@ const HiddenCheckBox = styled.input.attrs({ type: 'checkbox' as string })`
 const StyledCheckBox = styled.div<StyledCheckBoxProps>`
   display: inline-block;
   box-sizing: border-box;
-  position: absolute;
   width: 16px;
   height: 16px;
-  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
+  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
   background: ${p => (p.disabled ? p.theme.colors.lightGray : 'none')};
   border-radius: 1px;
   svg {
@@ -46,8 +50,6 @@ const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
   display: block;
   vertical-align: middle;
-  position: relative;
-
   input:checked ~ div {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
     background-color: ${p => !p.disabled && p.theme.colors.callToAction};
