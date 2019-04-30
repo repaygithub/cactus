@@ -184,6 +184,44 @@ exports[`component: TextButton should render call to action variant 1`] = `
 </DocumentFragment>
 `;
 
+exports[`component: TextButton should render danger variant 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  border: none;
+  padding: 2px 0;
+  line-height: 1.5em;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: hsl(353,84%,44%);
+}
+
+.c0:hover {
+  cursor: pointer;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+<button
+    class="c0"
+  >
+    Click me!
+  </button>
+</DocumentFragment>
+`;
+
 exports[`component: TextButton should render disabled variant 1`] = `
 <DocumentFragment>
   .c0 {

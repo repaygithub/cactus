@@ -1,11 +1,12 @@
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
 
-export type TextButtonVariants = 'standard' | 'action'
+export type TextButtonVariants = 'standard' | 'action' | 'danger'
 
 interface TextButtonProps {
   variant?: TextButtonVariants
   disabled?: boolean
+  // No inverse danger variant
   inverse?: boolean
 }
 
@@ -18,6 +19,9 @@ const variantMap: VariantMap = {
   standard: css`
     color: ${p => p.theme.colors.base};
   `,
+  danger: css`
+    color: ${p => p.theme.colors.error};
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -28,6 +32,7 @@ const inverseVariantMap: VariantMap = {
   standard: css`
     color: ${p => p.theme.colors.white};
   `,
+  danger: css``,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
@@ -38,11 +43,15 @@ const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
 const variantOrDisabled = (
   props: TextButtonProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const map = props.inverse ? inverseVariantMap : variantMap
+  const { variant, inverse } = props
+  if (variant === 'danger' && inverse) {
+    throw new Error('A danger variant does not exist for an inverse TextButton.')
+  }
+  const map = inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
     return disabled
-  } else if (props.variant !== undefined) {
-    return map[props.variant]
+  } else if (variant !== undefined) {
+    return map[variant]
   }
 }
 
