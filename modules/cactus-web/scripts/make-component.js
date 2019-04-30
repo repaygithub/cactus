@@ -79,7 +79,7 @@ function testTemplate(componentName) {
 import * as React from 'react'
 import { cleanup, render, fireEvent } from 'react-testing-library'
 import ${componentName} from './${componentName}'
-import repayTheme from '../repayTheme'
+import cactusTheme from '@repay/cactus-theme'
 import { ThemeProvider } from 'styled-components'
 
 afterEach(cleanup)
@@ -87,7 +87,7 @@ afterEach(cleanup)
 describe('component: ${componentName}', () => {
   test('snapshot', () => {
     const { container } = render(
-      <ThemeProvider theme={repayTheme}>
+      <ThemeProvider theme={cactusTheme}>
         <${componentName} />
       </ThemeProvider>
     )
@@ -117,19 +117,19 @@ name: ${componentName}
 menu: Components
 ---
 
-import { Playground, PropsTable } from 'docz'
+import PropsTable from 'website-src/components/PropsTable'
 import ${componentName} from './${componentName}'
-import repayTheme from '../repayTheme'
+import cactusTheme from '@repay/cactus-theme'
 
 # ${componentName}
 
 ## Best practices
 
+TODO
+
 ## Basic usage
 
-<Playground>
-  <${componentName} theme={repayTheme} />
-</Playground>
+TODO
 
 ## Properties
 

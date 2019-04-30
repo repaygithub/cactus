@@ -118,6 +118,7 @@ function createMenuGroups(pages: Edges<Markdown>) {
     })
 
   sortGroup(group)
+  console.log(group)
 
   return group
 }
@@ -138,11 +139,21 @@ const StyledLink = styled(Link)`
   }
 `
 
+const StyledA = StyledLink.withComponent('a')
+
+const isStorybookUrl = (url: string) => url.includes('/stories/')
+
 const BaseMenuList: React.FC<{ menu: MenuGroup; className?: string }> = ({ menu, className }) => (
   <ul className={className}>
     {menu.items.map(item => (
       <li key={item.url}>
-        <StyledLink to={item.url}>{item.title}</StyledLink>
+        {isStorybookUrl(item.url) ? (
+          <StyledA as="a" href={item.url}>
+            {item.title}
+          </StyledA>
+        ) : (
+          <StyledLink to={item.url}>{item.title}</StyledLink>
+        )}
         {item.items.length > 0 && <MenuList menu={item} />}
       </li>
     ))}

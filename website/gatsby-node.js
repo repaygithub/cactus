@@ -1,10 +1,21 @@
 const path = require('path')
+const crypto = require('crypto')
+const fg = require('fast-glob')
+const reactDocgenTs = require('react-docgen-typescript')
 const { createFilePath } = require('gatsby-source-filesystem')
+const modulesHelper = require('./tools/modules-helper')
+
+const digest = str =>
+  crypto
+    .createHash('md5')
+    .update(str)
+    .digest('hex')
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions
 
   const GenericTemplate = path.resolve('src/templates/GenericTemplate.tsx')
+  const ComponentTemplate = path.resolve('src/templates/ComponentTemplate.tsx')
 
   return graphql(`
     {
@@ -21,6 +32,7 @@ exports.createPages = ({ actions, graphql }) => {
             fields {
               title
               slug
+              isComponent
             }
           }
         }
@@ -33,12 +45,12 @@ exports.createPages = ({ actions, graphql }) => {
 
     const edges = result.data.allMdx.edges
 
-    // Create single content pages:
+    // Create pages:
     edges.forEach(({ node }) => {
       const { fields } = node
       createPage({
         path: fields.slug,
-        component: GenericTemplate,
+        component: fields.isComponent ? ComponentTemplate : GenericTemplate,
         context: {
           slug: fields.slug,
         },
@@ -47,11 +59,15 @@ exports.createPages = ({ actions, graphql }) => {
   })
 }
 
-function toSlug(path) {
-  return path
+function toSlug(filePath, options) {
+  let formatted = filePath
     .toLowerCase()
     .replace(/(\s|%20)/g, '-')
     .replace(/readme\/$/, '')
+  if (options.isComponent) {
+    formatted = path.join('/components', formatted.split('/')[1] + '/')
+  }
+  return formatted
 }
 
 function getTitle({ node, getNode }) {
@@ -73,10 +89,16 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === 'Mdx') {
+    const isComponent = getNode(node.parent).sourceInstanceName === 'components'
     createNodeField({
       name: 'slug',
       node,
-      value: toSlug(createFilePath({ node, getNode })),
+      value: toSlug(createFilePath({ node, getNode }), { isComponent }),
+    })
+    createNodeField({
+      name: 'isComponent',
+      node,
+      value: isComponent,
     })
     createNodeField({
       name: 'title',
@@ -91,7 +113,49 @@ exports.onCreateWebpackConfig = ({ actions }) => {
     resolve: {
       alias: {
         'styled-components': path.resolve('../node_modules/styled-components'),
+        'website-src': path.resolve('./src'),
       },
+    },
+  })
+}
+
+exports.onCreateBabelConfig = ({ actions }) => {
+  // required for docz
+  actions.setBabelPlugin({
+    name: 'babel-plugin-export-metadata',
+  })
+}
+
+const docgen = reactDocgenTs.withCustomConfig(
+  modulesHelper.resolveModule('cactus-web/tsconfig.json'),
+  []
+)
+
+exports.sourceNodes = async ({ actions, createNodeId }) => {
+  const { createNode } = actions
+
+  const componentPaths = await fg([
+    modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.tsx'),
+    '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.test.tsx'),
+    '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.story.tsx'),
+  ])
+  const props = await Promise.all(
+    componentPaths.map(filePath => {
+      const doc = docgen.parse(filePath)
+      return { key: path.relative(__dirname, filePath), value: doc }
+    })
+  )
+
+  const stringified = JSON.stringify(props || [])
+  const contentDigest = digest(stringified)
+
+  createNode({
+    id: createNodeId('docgen-data'),
+    db: stringified,
+    children: [],
+    internal: {
+      contentDigest,
+      type: 'DocgenDB',
     },
   })
 }

@@ -1,4 +1,5 @@
 const path = require('path')
+const modulesHelper = require('./tools/modules-helper')
 const { default: cactusTheme } = require('@repay/cactus-theme')
 
 module.exports = {
@@ -27,6 +28,14 @@ module.exports = {
       options: {
         name: 'docs',
         path: path.join(__dirname, '../docs'),
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: 'components',
+        path: modulesHelper.resolveModule('cactus-web/src'),
+        ignore: ['!**/*.mdx'],
       },
     },
     'gatsby-transformer-sharp',

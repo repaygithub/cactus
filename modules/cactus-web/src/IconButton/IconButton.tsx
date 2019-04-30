@@ -84,7 +84,7 @@ const variantOrDisabled = (
   }
 }
 
-const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
+const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
   const { label, children, inverse, iconSize, ...buttonProps } = props
 
   return (
@@ -94,14 +94,14 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, 
   )
 })
 
-IconButton.defaultProps = {
+IconButtonBase.defaultProps = {
   variant: 'standard',
   iconSize: 'medium',
   disabled: false,
   inverse: false,
 }
 
-export default styled(IconButton)<IconButtonProps>`
+export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   display: ${p => p.display || 'inline-flex'};
   font-size: ${p => p.iconSize !== undefined && sizeMap[p.iconSize]};
   align-items: center;
@@ -114,3 +114,5 @@ export default styled(IconButton)<IconButtonProps>`
   cursor: pointer;
   ${variantOrDisabled}
 `
+
+export default IconButton
