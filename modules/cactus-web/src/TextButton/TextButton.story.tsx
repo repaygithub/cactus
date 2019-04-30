@@ -6,7 +6,7 @@ import TextButton, { TextButtonVariants } from './TextButton'
 import DarkMode from '../storySupport/DarkMode'
 import * as icons from '@repay/cactus-icons'
 
-const textButtonVariants: TextButtonVariants[] = ['standard', 'action']
+const textButtonVariants: TextButtonVariants[] = ['standard', 'action', 'danger']
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')

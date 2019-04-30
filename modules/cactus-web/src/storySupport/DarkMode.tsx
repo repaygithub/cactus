@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import cactusTheme from '@repay/cactus-theme'
 
 const darkModeStyle: React.CSSProperties = {
-  backgroundColor: cactusTheme.colors.darkContrast,
+  backgroundColor: cactusTheme.colors.base,
   width: '100vw',
   height: '100vh',
   textAlign: 'center',

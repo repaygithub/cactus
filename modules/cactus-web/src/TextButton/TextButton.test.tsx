@@ -38,6 +38,16 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
+  test('should render danger variant', () => {
+    const textButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <TextButton variant="danger">Click me!</TextButton>
+      </ThemeProvider>
+    )
+
+    expect(textButton.asFragment()).toMatchSnapshot()
+  })
+
   test('should render disabled variant', () => {
     const textButton = render(
       <ThemeProvider theme={cactusTheme}>
