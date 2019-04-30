@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "@repay/cactus-fwk": "^0.2.0-next",
+    "@repay/cactus-fwk": "^1.0.0",
     "@repay/cactus-i18n": "^0.1.0",
-    "@repay/cactus-icons": "^0.2.0",
+    "@repay/cactus-icons": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
