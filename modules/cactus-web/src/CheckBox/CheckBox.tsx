@@ -3,7 +3,11 @@ import styled from 'styled-components'
 import { StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
 
-export interface CheckBoxProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
+export interface CheckBoxProps
+  extends Omit<
+    React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+    'ref'
+  > {
   id: string
   disabled?: boolean
 }
@@ -12,7 +16,8 @@ interface StyledCheckBoxProps extends React.HTMLProps<HTMLDivElement> {
   disabled?: boolean
 }
 
-interface CheckBoxContainerProps extends React.HTMLProps<HTMLLabelElement> {
+interface CheckBoxContainerProps
+  extends React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement> {
   disabled?: boolean
 }
 
