@@ -94,7 +94,12 @@ describe('component: CheckBoxField', () => {
     const onFocus = jest.fn()
     const { getByTestId } = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="Not For Sale" onFocus={onFocus} data-testid="will-not-check" disabled />
+        <CheckBoxField
+          label="Not For Sale"
+          onFocus={onFocus}
+          data-testid="will-not-check"
+          disabled
+        />
       </ThemeProvider>
     )
 
