@@ -11,11 +11,11 @@ exports[`component: TextButton should default to standard variant 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(200,96%,11%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -49,11 +49,11 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(200,96%,11%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -103,11 +103,11 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(200,96%,11%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -157,11 +157,11 @@ exports[`component: TextButton should render call to action variant 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(200,96%,35%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -195,11 +195,11 @@ exports[`component: TextButton should render danger variant 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(353,84%,44%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -233,13 +233,9 @@ exports[`component: TextButton should render disabled variant 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(0,0%,70%);
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
-}
-
-.c0:hover {
-  cursor: auto;
+  cursor: not-allowed;
 }
 
 .c0 svg {
@@ -267,12 +263,12 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   font-weight: 700;
   color: hsl(200,96%,35%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -306,13 +302,9 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(0,0%,70%);
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
-}
-
-.c0:hover {
-  cursor: auto;
+  cursor: not-allowed;
 }
 
 .c0 svg {
@@ -340,11 +332,11 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(0,0%,100%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -378,11 +370,11 @@ exports[`component: TextButton should render standard variant 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(200,96%,11%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
