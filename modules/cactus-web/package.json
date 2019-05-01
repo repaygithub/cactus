@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-web",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A UI component library for web built in React by REPAY",
   "main": "dist/cactus-web.js",
   "module": "dist/cactus-web.cjs.js",
