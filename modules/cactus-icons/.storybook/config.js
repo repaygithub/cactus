@@ -5,7 +5,6 @@ import { withKnobs } from '@storybook/addon-knobs'
 
 addParameters({
   options: {
-    name: '@repay/cactus-icons',
     theme: storybookTheme,
   },
 })

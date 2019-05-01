@@ -7,7 +7,6 @@ import { withKnobs } from '@storybook/addon-knobs'
 
 addParameters({
   options: {
-    name: '@repay/cactus-web',
     theme: storybookTheme,
   },
 })
