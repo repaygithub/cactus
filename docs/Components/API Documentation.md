@@ -37,7 +37,7 @@ Most of the time, a theme will make use of a lighter base color, and components 
 
 ### Spacing
 
-Each component offered by this library supports the margin spacing props made available by [Styled System](https://github.com/styled-system/styled-system). A quick rundown of the spacing props offered can be found [here](https://styled-system.com/api#space). These props allow you to pass aliases of different spacing parameters and will map them to css. You can pass number values for these props which will translate to pixel values defined in [Cactus Theme](../Theme/README.md).
+Each component offered by this library supports the margin spacing props made available by [Styled System](https://github.com/styled-system/styled-system). A quick rundown of the spacing props offered can be found [here](https://styled-system.com/api#space). These props allow you to pass aliases of different spacing parameters and will map them to css. You can pass number values for these props which will translate to pixel values defined in [Cactus Theme](../Theme/README.md). It's important to note that we do *NOT* support the padding props that Styled System provides.
 
 #### Spacing Props Offered by Our Library
 
