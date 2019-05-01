@@ -11,6 +11,7 @@ Each component discussed here should be a child of the `ThemeProvider` component
 - [Common Aspects](#Common-Aspects)
   - [Variants](#Variants)
   - [Inverse Components](#Inverse-Components)
+  - [Spacing](#Spacing)
 - [Buttons](#Buttons)
   - [Standard Button](#Button)
   - [Text Button](#TextButton)
@@ -33,6 +34,34 @@ You will see that components in this library typically support multiple variants
 ### Inverse Components
 
 Most of the time, a theme will make use of a lighter base color, and components placed on that background will be easily visible, however, if the base color is dark, it will be necessary to use the inverse colors for a component so that it is easy to see. The inverse components flip the colors used in their standard counterpart which will provide more contrast, making them easier to see.
+
+### Spacing
+
+Each component offered by this library supports the margin spacing props made available by [Styled System](https://github.com/styled-system/styled-system). A quick rundown of the spacing props offered can be found [here](https://styled-system.com/api#space). These props allow you to pass aliases of different spacing parameters and will map them to css. You can pass number values for these props which will translate to pixel values defined in [Cactus Theme](../Theme/README.md).
+
+#### Spacing Props Offered by Our Library
+
+| Props                | CSS Equivalent                 |
+| -------------------- | ------------------------------ |
+| `m`, `margin`        | `margin`                       |
+| `mt`, `marginTop`    | `margin-top`                   |
+| `mr`, `marginRight`  | `margin-right`                 |
+| `mb`, `marginBottom` | `margin-bottom`                |
+| `ml`, `marginLeft`   | `margin-left`                  |
+| `mx`                 | `margin-left` & `margin-right` |
+| `my`                 | `margin-top` & `margin-bottom` |
+
+#### Number to Pixel Mapping
+
+| Number | Pixels |
+| ------ | ------ |
+| `0`    | `0px`  |
+| `1`    | `2px`  |
+| `2`    | `4px`  |
+| `3`    | `8px`  |
+| `4`    | `16px` |
+| `5`    | `32px` |
+| `6`    | `64px` |
 
 ## Buttons
 
