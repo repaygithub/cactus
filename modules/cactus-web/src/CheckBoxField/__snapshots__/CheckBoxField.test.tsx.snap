@@ -61,6 +61,12 @@ exports[`component: CheckBoxField should not support padding space props 1`] = `
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
+.c5 {
+  position: relative;
+  top: 4px;
+  left: 8px;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -75,18 +81,6 @@ exports[`component: CheckBoxField should not support padding space props 1`] = `
   align-items: center;
   padding-top: 4px;
   padding-bottom: 4px;
-}
-
-.c0 .c5 {
-  position: relative;
-  top: 2px;
-  left: 8px;
-}
-
-.c7 .c5 {
-  position: relative;
-  top: 2px;
-  left: 8px;
 }
 
 <div
@@ -189,6 +183,12 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
+.c5 {
+  position: relative;
+  top: 4px;
+  left: 8px;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -203,12 +203,6 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   align-items: center;
   padding-top: 4px;
   padding-bottom: 4px;
-}
-
-.c0 .c5 {
-  position: relative;
-  top: 2px;
-  left: 8px;
 }
 
 <div
@@ -306,6 +300,12 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
+.c5 {
+  position: relative;
+  top: 4px;
+  left: 8px;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -320,12 +320,6 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   align-items: center;
   padding-top: 4px;
   padding-bottom: 4px;
-}
-
-.c0 .c5 {
-  position: relative;
-  top: 2px;
-  left: 8px;
 }
 
 <div
@@ -431,9 +425,9 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c7 .c5 {
+.c5 {
   position: relative;
-  top: 2px;
+  top: 4px;
   left: 8px;
 }
 
@@ -452,12 +446,6 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   padding-top: 4px;
   padding-bottom: 4px;
   margin-right: 8px;
-}
-
-.c0 .c5 {
-  position: relative;
-  top: 2px;
-  left: 8px;
 }
 
 <div

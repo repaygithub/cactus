@@ -49,11 +49,11 @@ exports[`component: TextButton should not support padding space props 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   color: hsl(200,96%,11%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -444,12 +444,12 @@ exports[`component: TextButton should support space props 1`] = `
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
+  cursor: pointer;
   margin-right: 32px;
   color: hsl(200,96%,11%);
 }
 
 .c0:hover {
-  cursor: pointer;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
