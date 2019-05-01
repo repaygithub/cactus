@@ -8,7 +8,7 @@ import GlobalStyles from './GlobalStyles'
 import Box from './Box'
 import Menu from '@repay/cactus-icons/i/navigation-menu-lines'
 import Close from '@repay/cactus-icons/i/navigation-close'
-import { useStaticQuery, graphql, Link } from 'gatsby'
+import { useStaticQuery, graphql, Link, withPrefix } from 'gatsby'
 import storybooks from '../storybook-config.json'
 
 interface MenuGroup {
@@ -92,7 +92,7 @@ function createMenuGroups(pages: Edges<Markdown>) {
         order: 1000, // always first
         items: storybooks.map(story => ({
           title: story.name,
-          url: `/stories/${story.dirname}/`,
+          url: withPrefix(`/stories/${story.dirname}/`),
           order: 1,
           items: [],
         })),
@@ -141,13 +141,18 @@ const StyledLink = styled(Link)`
 const StyledA = StyledLink.withComponent('a')
 
 const isStorybookUrl = (url: string) => url.includes('/stories/')
+const forceLocationReload = (event: React.SyntheticEvent<HTMLAnchorElement>) => {
+  event.preventDefault()
+  const href = event.currentTarget.getAttribute('href')
+  window && href !== null && href !== '' && (window.location.href = href)
+}
 
 const BaseMenuList: React.FC<{ menu: MenuGroup; className?: string }> = ({ menu, className }) => (
   <ul className={className}>
     {menu.items.map(item => (
       <li key={item.url}>
         {isStorybookUrl(item.url) ? (
-          <StyledA as="a" href={item.url}>
+          <StyledA href={item.url} onClick={forceLocationReload}>
             {item.title}
           </StyledA>
         ) : (
