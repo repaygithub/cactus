@@ -105,8 +105,6 @@ exports[`component: Button should render disabled variant 1`] = `
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
 }
 
 <button
@@ -164,8 +162,6 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
-  -webkit-text-decoration: line-through;
-  text-decoration: line-through;
 }
 
 <button

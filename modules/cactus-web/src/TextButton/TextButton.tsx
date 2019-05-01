@@ -46,7 +46,7 @@ const inverseVariantMap: VariantMap = {
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
   color: ${p => p.theme.colors.mediumGray};
-  text-decoration: line-through;
+  cursor: not-allowed;
 `
 
 const variantOrDisabled = (
@@ -72,9 +72,9 @@ const StyledTextButton = styled.button<TextButtonProps>`
   outline: none;
   background-color: transparent;
   text-decoration: none;
+  cursor: pointer;
 
   :hover {
-    cursor: ${p => (p.disabled ? 'auto' : 'pointer')};
     text-decoration: ${p => !p.disabled && 'underline'};
   }
 
