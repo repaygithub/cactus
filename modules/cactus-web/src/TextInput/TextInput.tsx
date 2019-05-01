@@ -1,16 +1,19 @@
 import React from 'react'
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
+import { space, SpaceProps } from 'styled-system'
 import { CactusTheme } from '@repay/cactus-theme'
 import { StatusCheck, NotificationAlert, NotificationError } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import splitProps from '../helpers/splitProps'
 
 export type Status = 'success' | 'invalid' | 'error'
 
 interface TextInputProps
   extends Omit<
-    React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    'ref'
-  > {
+      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+      'ref'
+    >,
+    SpaceProps {
   disabled?: boolean
   status?: Status | null
 }
@@ -85,6 +88,8 @@ const TextInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  ${space}
 `
 
 const Input = styled.input<InputProps>`
@@ -111,9 +116,10 @@ const Input = styled.input<InputProps>`
 `
 
 const TextInput = (props: TextInputProps) => {
-  const { disabled, status } = props
+  const [componentProps, marginProps] = splitProps<TextInputProps>(props, 'TextInput')
+  const { disabled, status } = componentProps
   return (
-    <TextInputContainer>
+    <TextInputContainer {...marginProps}>
       <Input {...props} />
       {status === 'success' && !disabled && <StyledCheck disabled={disabled} status={status} />}
       {status === 'invalid' && !disabled && <StyledAlert disabled={disabled} status={status} />}

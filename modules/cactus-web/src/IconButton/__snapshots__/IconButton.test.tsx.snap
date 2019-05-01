@@ -37,7 +37,59 @@ exports[`component: IconButton should default to standard medium icon button 1`]
 
 <button
     class="c0"
-    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should not support padding space props 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
   >
     <svg
       class="c1"
@@ -91,7 +143,6 @@ exports[`component: IconButton should render call to action icon button 1`] = `
 
 <button
     class="c0"
-    variant="action"
   >
     <svg
       class="c1"
@@ -142,7 +193,6 @@ exports[`component: IconButton should render disabled variant 1`] = `
 <button
     class="c0"
     disabled=""
-    variant="standard"
   >
     <svg
       class="c1"
@@ -197,7 +247,7 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
 <button
     aria-label="uchiha-itachi"
     class="c0"
-    variant="standard"
+    label="uchiha-itachi"
   >
     <svg
       class="c1"
@@ -251,7 +301,6 @@ exports[`component: IconButton should render inverse call to action icon button 
 
 <button
     class="c0"
-    variant="action"
   >
     <svg
       class="c1"
@@ -302,7 +351,6 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
 <button
     class="c0"
     disabled=""
-    variant="standard"
   >
     <svg
       class="c1"
@@ -357,7 +405,6 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
 
 <button
     class="c0"
-    variant="standard"
   >
     <svg
       class="c1"
@@ -411,7 +458,6 @@ exports[`component: IconButton should render large icon button 1`] = `
 
 <button
     class="c0"
-    variant="standard"
   >
     <svg
       class="c1"
@@ -465,7 +511,6 @@ exports[`component: IconButton should render small icon button 1`] = `
 
 <button
     class="c0"
-    variant="standard"
   >
     <svg
       class="c1"
@@ -519,7 +564,6 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
 
 <button
     class="c0"
-    variant="standard"
   >
     <svg
       class="c1"
@@ -573,7 +617,60 @@ exports[`component: IconButton should render tiny icon button 1`] = `
 
 <button
     class="c0"
-    variant="standard"
+  >
+    <svg
+      class="c1"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: IconButton should support margin space props 1`] = `
+<DocumentFragment>
+  .c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 24px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 16px;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+<button
+    class="c0"
   >
     <svg
       class="c1"

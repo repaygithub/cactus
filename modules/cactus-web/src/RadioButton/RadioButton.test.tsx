@@ -27,6 +27,32 @@ describe('component: RadioButton', () => {
     expect(radioButton.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const radioButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <RadioButton name="test" id="SPACE PROPS YEAH" margin={4} />
+      </ThemeProvider>
+    )
+
+    expect(radioButton.asFragment()).toMatchSnapshot()
+  })
+
+  test('should not support padding space props', () => {
+    const _error = console.error
+    console.error = jest.fn()
+    const radioButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <RadioButton name="test" id="SPACE PROPS YEAH" padding={4} />
+      </ThemeProvider>
+    )
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Padding props are not supported! The value 4 for prop padding will have no effect on RadioButton.'
+    )
+    expect(radioButton.asFragment()).toMatchSnapshot()
+    console.error = _error
+  })
+
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(

@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import { space, SpaceProps } from 'styled-system'
 import Label from '../Label/Label'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import { Omit } from '../types'
 import useId from '../helpers/useId'
+import splitProps from '../helpers/splitProps'
 
-interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id'> {
+interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id'>, SpaceProps {
   label: string
   labelProps?: object
   id?: string
   name?: string
 }
+
+const StyledLabel = styled(Label)`
+  position: relative;
+  top: 4px;
+  left: 8px;
+`
 
 const CheckBoxFieldContainer = styled.div`
   display: flex;
@@ -19,23 +27,20 @@ const CheckBoxFieldContainer = styled.div`
   padding-top: 4px;
   padding-bottom: 4px;
 
-  ${Label} {
-    position: relative;
-    top: 2px;
-    left: 8px;
-  }
+  ${space}
 `
 
 const CheckBoxField = (props: CheckBoxFieldProps) => {
-  const { label, labelProps, id, ...checkboxProps } = props
+  const [componentProps, marginProps] = splitProps<CheckBoxFieldProps>(props, 'CheckBoxField')
+  const { label, labelProps, id, ...checkboxProps } = componentProps
   const checkboxId = useId(id, checkboxProps.name)
 
   return (
-    <CheckBoxFieldContainer>
+    <CheckBoxFieldContainer {...marginProps}>
       <CheckBox id={checkboxId} {...checkboxProps} />
-      <Label htmlFor={checkboxId} {...labelProps}>
+      <StyledLabel htmlFor={checkboxId} {...labelProps}>
         {label}
-      </Label>
+      </StyledLabel>
     </CheckBoxFieldContainer>
   )
 }

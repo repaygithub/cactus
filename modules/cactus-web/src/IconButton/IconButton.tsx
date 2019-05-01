@@ -1,15 +1,19 @@
 import React from 'react'
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
+import { space, SpaceProps } from 'styled-system'
 import { CactusTheme } from '@repay/cactus-theme'
+import { Omit } from '../types'
+import splitProps from '../helpers/splitProps'
 
 export type IconButtonVariants = 'standard' | 'action'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
 interface IconButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+  extends Omit<
+      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+      'ref'
+    >,
+    SpaceProps {
   iconSize?: IconButtonSizes
   variant?: IconButtonVariants
   disabled?: boolean
@@ -85,23 +89,17 @@ const variantOrDisabled = (
 }
 
 const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
-  const { label, children, inverse, iconSize, ...buttonProps } = props
+  const [componentProps, marginProps] = splitProps<IconButtonProps>(props, 'IconButton')
+  const { label, children, inverse, iconSize, ...buttonProps } = componentProps
 
   return (
-    <button aria-label={label} ref={ref} {...buttonProps}>
+    <button aria-label={label} ref={ref} {...buttonProps} {...marginProps}>
       {children}
     </button>
   )
 })
 
-IconButtonBase.defaultProps = {
-  variant: 'standard',
-  iconSize: 'medium',
-  disabled: false,
-  inverse: false,
-}
-
-export const IconButton = styled(IconButtonBase)<IconButtonProps>`
+export const StyledIconButton = styled.button<IconButtonProps>`
   display: ${p => p.display || 'inline-flex'};
   font-size: ${p => p.iconSize !== undefined && sizeMap[p.iconSize]};
   align-items: center;
@@ -112,7 +110,27 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   background: transparent;
   outline: none;
   cursor: pointer;
+
+  ${space}
   ${variantOrDisabled}
 `
+
+const IconButton = (props: IconButtonProps) => {
+  const [componentProps, marginProps] = splitProps<IconButtonProps>(props, 'IconButton')
+  const { label, children } = componentProps
+
+  return (
+    <StyledIconButton aria-label={label} {...componentProps} {...marginProps}>
+      {children}
+    </StyledIconButton>
+  )
+}
+
+IconButton.defaultProps = {
+  variant: 'standard',
+  iconSize: 'medium',
+  disabled: false,
+  inverse: false,
+}
 
 export default IconButton

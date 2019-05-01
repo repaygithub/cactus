@@ -1,13 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import { space, SpaceProps } from 'styled-system'
 import { StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import splitProps from '../helpers/splitProps'
 
 export interface CheckBoxProps
   extends Omit<
-    React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    'ref'
-  > {
+      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+      'ref'
+    >,
+    SpaceProps {
   id: string
   disabled?: boolean
 }
@@ -17,7 +20,8 @@ interface StyledCheckBoxProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 interface CheckBoxContainerProps
-  extends React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement> {
+  extends React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>,
+    SpaceProps {
   disabled?: boolean
 }
 
@@ -50,6 +54,8 @@ const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
   display: block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   input:checked ~ div {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
     background-color: ${p => !p.disabled && p.theme.colors.callToAction};
@@ -64,12 +70,16 @@ const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
   input:focus ~ div {
     box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
+
+  ${space}
 `
 
 const CheckBox = (props: CheckBoxProps) => {
-  const { disabled, id, ...checkBoxProps } = props
+  const [componentProps, marginProps] = splitProps<CheckBoxProps>(props, 'CheckBox')
+  const { disabled, id, className, ...checkBoxProps } = componentProps
+
   return (
-    <CheckBoxContainer disabled={disabled} htmlFor={id}>
+    <CheckBoxContainer disabled={disabled} htmlFor={id} className={className} {...marginProps}>
       <HiddenCheckBox id={id} disabled={disabled} {...checkBoxProps} />
       <StyledCheckBox aria-hidden={true} disabled={disabled}>
         <StatusCheck />

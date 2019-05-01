@@ -20,14 +20,14 @@ describe('component: Toggle', () => {
   test('should render a disabled toggle', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle value={false} />
+        <Toggle value={false} disabled={true} />
       </ThemeProvider>
     )
 
     expect(toggle.asFragment()).toMatchSnapshot()
   })
 
-  test('should initialize value to false', () => {
+  test('should initialize value to true', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
         <Toggle value={true} />
@@ -35,6 +35,32 @@ describe('component: Toggle', () => {
     )
 
     expect(toggle.asFragment()).toMatchSnapshot()
+  })
+
+  test('should support margin space props', () => {
+    const toggle = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Toggle value={false} marginBottom={4} />
+      </ThemeProvider>
+    )
+
+    expect(toggle.asFragment()).toMatchSnapshot()
+  })
+
+  test('should not support padding space props', () => {
+    const _error = console.error
+    console.error = jest.fn()
+    const toggle = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Toggle value={false} paddingBottom={4} />
+      </ThemeProvider>
+    )
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Padding props are not supported! The value 4 for prop paddingBottom will have no effect on Toggle.'
+    )
+    expect(toggle.asFragment()).toMatchSnapshot()
+    console.error = _error
   })
 
   test('should trigger onClick event', () => {

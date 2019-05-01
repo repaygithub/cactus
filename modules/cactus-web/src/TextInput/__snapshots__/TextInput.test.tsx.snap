@@ -1,5 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`component: TextInput should not support padding space props 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c1 {
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
 exports[`component: TextInput should render a disabled input 1`] = `
 <DocumentFragment>
   .c0 {
@@ -457,6 +521,71 @@ exports[`component: TextInput should render an invalid input 1`] = `
         d="M11.9998875,21 C11.723584,21 11.4472806,20.8946987 11.2357779,20.683196 L3.31657896,12.763097 C2.89447368,12.3409918 2.89447368,11.6578832 3.31657896,11.2357779 L11.2357779,3.31657896 C11.6578832,2.89447368 12.3418918,2.89447368 12.763997,3.31657896 L20.683196,11.2357779 C21.1053013,11.6578832 21.1053013,12.3409918 20.683196,12.763097 L12.763997,20.683196 C12.5524944,20.8946987 12.276191,21 11.9998875,21 Z M5.60710759,11.9998875 L11.9998875,18.3926674 L18.3926674,11.9998875 L11.9998875,5.60620758 L5.60710759,11.9998875 Z M11.9641121,12.7903224 C11.4871061,12.7903224 11.1001013,12.522119 11.1001013,12.1909149 L11.1001013,8.99857498 C11.1001013,8.66737084 11.4871061,8.4000675 11.9641121,8.4000675 C12.441118,8.4000675 12.8281229,8.66737084 12.8281229,8.99857498 L12.8281229,12.1909149 C12.8281229,12.522119 12.441118,12.7903224 11.9641121,12.7903224 Z M12.9730247,14.7370467 C12.9730247,15.2554532 12.5545194,15.6739584 12.036113,15.6739584 C11.5186065,15.6739584 11.1001013,15.2554532 11.1001013,14.7370467 C11.1001013,14.2195402 11.5186065,13.800135 12.036113,13.800135 C12.5545194,13.800135 12.9730247,14.2195402 12.9730247,14.7370467 Z"
       />
     </svg>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput should support margin space props 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.c1 {
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
   </div>
 </DocumentFragment>
 `;

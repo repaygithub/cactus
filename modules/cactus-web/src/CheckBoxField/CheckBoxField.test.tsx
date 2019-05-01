@@ -42,6 +42,32 @@ describe('component: CheckBoxField', () => {
     expect(getById(container, labelElement.htmlFor)).not.toBeNull()
   })
 
+  test('should support margin space props', () => {
+    const checkboxField = render(
+      <ThemeProvider theme={cactusTheme}>
+        <CheckBoxField label="space props" id="not-random" mr={3} />
+      </ThemeProvider>
+    )
+
+    expect(checkboxField.asFragment()).toMatchSnapshot()
+  })
+
+  test('should not support padding space props', () => {
+    const _error = console.error
+    console.error = jest.fn()
+    const checkboxField = render(
+      <ThemeProvider theme={cactusTheme}>
+        <CheckBoxField label="space props" id="not-random" pr={3} />
+      </ThemeProvider>
+    )
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Padding props are not supported! The value 3 for prop pr will have no effect on CheckBoxField.'
+    )
+    expect(checkboxField.asFragment()).toMatchSnapshot()
+    console.error = _error
+  })
+
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByTestId } = render(

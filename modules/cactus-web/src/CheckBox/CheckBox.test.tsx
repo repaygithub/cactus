@@ -28,6 +28,32 @@ describe('component: CheckBox', () => {
     expect(checkBox.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const checkBox = render(
+      <ThemeProvider theme={cactusTheme}>
+        <CheckBox id="SPACE PROPS YEAH" m={4} />
+      </ThemeProvider>
+    )
+
+    expect(checkBox.asFragment()).toMatchSnapshot()
+  })
+
+  test('should not support padding space props', () => {
+    const _error = console.error
+    console.error = jest.fn()
+    const checkbox = render(
+      <ThemeProvider theme={cactusTheme}>
+        <CheckBox id="SPACE PROPS YEAH" p={4} />
+      </ThemeProvider>
+    )
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Padding props are not supported! The value 4 for prop p will have no effect on CheckBox.'
+    )
+    expect(checkbox.asFragment()).toMatchSnapshot()
+    console.error = _error
+  })
+
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByTestId } = render(

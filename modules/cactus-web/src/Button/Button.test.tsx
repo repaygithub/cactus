@@ -83,6 +83,32 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const button = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button mt={5}>}>I have margins!</Button>
+      </ThemeProvider>
+    )
+
+    expect(button.asFragment()).toMatchSnapshot()
+  })
+
+  test('should not support padding space props', () => {
+    const _error = console.error
+    console.error = jest.fn()
+    const button = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button pt={5} />
+      </ThemeProvider>
+    )
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Padding props are not supported! The value 5 for prop pt will have no effect on Button.'
+    )
+    expect(button.asFragment()).toMatchSnapshot()
+    console.error = _error
+  })
+
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(

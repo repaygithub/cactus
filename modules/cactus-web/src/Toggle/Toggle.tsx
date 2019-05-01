@@ -1,13 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import { space, SpaceProps } from 'styled-system'
 import { StatusCheck, NavigationClose } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import splitProps from '../helpers/splitProps'
 
 interface ToggleProps
   extends Omit<
-    React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-    'value' | 'ref'
-  > {
+      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+      'value' | 'ref'
+    >,
+    SpaceProps {
   value: boolean
   disabled?: boolean
 }
@@ -91,12 +94,15 @@ const ToggleButton = styled.button<ToggleButtonProps>`
     background-color: ${p => p.theme.colors.lightGray};
     border-color: ${p => p.theme.colors.lightGray};
   }
+
+  ${space}
 `
 
 const Toggle = (props: ToggleProps) => {
-  const { value, ...toggleProps } = props
+  const [componentProps, marginProps] = splitProps<ToggleProps>(props, 'Toggle')
+  const { value, ...toggleProps } = componentProps
   return (
-    <ToggleButton type="button" aria-checked={value} {...toggleProps}>
+    <ToggleButton type="button" aria-checked={value} {...toggleProps} {...marginProps}>
       <StyledX />
       <StyledCheck />
     </ToggleButton>

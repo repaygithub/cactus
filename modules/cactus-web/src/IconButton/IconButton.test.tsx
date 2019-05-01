@@ -116,6 +116,36 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const iconButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <IconButton mb={4}>
+          <StatusCheck />
+        </IconButton>
+      </ThemeProvider>
+    )
+
+    expect(iconButton.asFragment()).toMatchSnapshot()
+  })
+
+  test('should not support padding space props', () => {
+    const _error = console.error
+    console.error = jest.fn()
+    const iconButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <IconButton pb={4}>
+          <StatusCheck />
+        </IconButton>
+      </ThemeProvider>
+    )
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Padding props are not supported! The value 4 for prop pb will have no effect on IconButton.'
+    )
+    expect(iconButton.asFragment()).toMatchSnapshot()
+    console.error = _error
+  })
+
   test('should render disabled variant', () => {
     const iconButton = render(
       <ThemeProvider theme={cactusTheme}>

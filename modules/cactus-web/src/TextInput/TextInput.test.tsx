@@ -68,6 +68,32 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const textInput = render(
+      <ThemeProvider theme={cactusTheme}>
+        <TextInput marginTop={4} />
+      </ThemeProvider>
+    )
+
+    expect(textInput.asFragment()).toMatchSnapshot()
+  })
+
+  test('should not support padding space props', () => {
+    const _error = console.error
+    console.error = jest.fn()
+    const textInput = render(
+      <ThemeProvider theme={cactusTheme}>
+        <TextInput paddingTop={4} />
+      </ThemeProvider>
+    )
+
+    expect(console.error).toHaveBeenCalledWith(
+      'Padding props are not supported! The value 4 for prop paddingTop will have no effect on TextInput.'
+    )
+    expect(textInput.asFragment()).toMatchSnapshot()
+    console.error = _error
+  })
+
   test('should trigger onChange handler', () => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(

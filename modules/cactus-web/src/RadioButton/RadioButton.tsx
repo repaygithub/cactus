@@ -1,8 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { space, SpaceProps } from 'styled-system'
 import { Omit } from '../types'
+import splitProps from '../helpers/splitProps'
 
-interface RadioButtonProps extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'> {
+interface RadioButtonProps
+  extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'>,
+    SpaceProps {
   id: string
   name: string
   disabled?: boolean
@@ -32,6 +36,8 @@ const RadioButtonContainer = styled.label<RadioButtonContainerProps>`
   input:focus ~ div {
     box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
+
+  ${space}
 `
 
 const HiddenRadioButton = styled.input.attrs({ type: 'radio' as string })`
@@ -64,9 +70,10 @@ const StyledRadioButton = styled.div<StyledRadioButtonProps>`
 `
 
 const RadioButton = (props: RadioButtonProps) => {
-  const { disabled, id, ...radioButtonProps } = props
+  const [componentProps, marginProps] = splitProps<RadioButtonProps>(props, 'RadioButton')
+  const { disabled, id, ...radioButtonProps } = componentProps
   return (
-    <RadioButtonContainer htmlFor={id} disabled={disabled}>
+    <RadioButtonContainer htmlFor={id} disabled={disabled} {...marginProps}>
       <HiddenRadioButton id={id} disabled={disabled} {...radioButtonProps} />
       <StyledRadioButton aria-hidden={true} disabled={disabled} />
     </RadioButtonContainer>

@@ -1,9 +1,18 @@
+import React from 'react'
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
+import { space, SpaceProps } from 'styled-system'
+import splitProps from '../helpers/splitProps'
+import { Omit } from '../types'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger'
 
-interface TextButtonProps {
+interface TextButtonProps
+  extends Omit<
+      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+      'ref'
+    >,
+    SpaceProps {
   variant?: TextButtonVariants
   disabled?: boolean
   // No inverse danger variant
@@ -55,7 +64,7 @@ const variantOrDisabled = (
   }
 }
 
-export const TextButton = styled.button<TextButtonProps>`
+const StyledTextButton = styled.button<TextButtonProps>`
   font-size: 18px;
   border: none;
   padding: 2px 0;
@@ -78,8 +87,14 @@ export const TextButton = styled.button<TextButtonProps>`
     margin-top: -4px;
   }
 
+  ${space}
   ${variantOrDisabled}
 `
+
+const TextButton = (props: TextButtonProps) => {
+  const [componentProps, marginProps] = splitProps<TextButtonProps>(props, 'TextButton')
+  return <StyledTextButton {...componentProps} {...marginProps} />
+}
 
 TextButton.defaultProps = {
   variant: 'standard',
