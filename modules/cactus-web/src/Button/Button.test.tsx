@@ -83,6 +83,16 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const button = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button mt={5}>I have margins!</Button>
+      </ThemeProvider>
+    )
+
+    expect(button.asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(

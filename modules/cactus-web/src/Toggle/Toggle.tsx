@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { StatusCheck, NavigationClose } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import { margins, MarginProps } from '../helpers/margins'
 
 interface ToggleProps
   extends Omit<
-    React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-    'value' | 'ref'
-  > {
+      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+      'value' | 'ref'
+    >,
+    MarginProps {
   value: boolean
   disabled?: boolean
 }
@@ -91,6 +93,8 @@ const ToggleButton = styled.button<ToggleButtonProps>`
     background-color: ${p => p.theme.colors.lightGray};
     border-color: ${p => p.theme.colors.lightGray};
   }
+
+  ${margins}
 `
 
 const Toggle = (props: ToggleProps) => {

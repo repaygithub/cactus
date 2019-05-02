@@ -68,6 +68,16 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const textInput = render(
+      <ThemeProvider theme={cactusTheme}>
+        <TextInput marginTop={4} />
+      </ThemeProvider>
+    )
+
+    expect(textInput.asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onChange handler', () => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(

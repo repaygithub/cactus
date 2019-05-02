@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Label from '../Label/Label'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import { Omit } from '../types'
 import useId from '../helpers/useId'
+import { margins, splitProps, MarginProps } from '../helpers/margins'
 
-interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id'> {
+interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id'>, MarginProps {
   label: string
   labelProps?: object
   id?: string
@@ -24,14 +25,17 @@ const CheckBoxFieldContainer = styled.div`
     top: 2px;
     left: 8px;
   }
+
+  ${margins}
 `
 
 const CheckBoxField = (props: CheckBoxFieldProps) => {
-  const { label, labelProps, id, ...checkboxProps } = props
+  const [componentProps, marginProps] = splitProps<CheckBoxFieldProps>(props)
+  const { label, labelProps, id, ...checkboxProps } = componentProps
   const checkboxId = useId(id, checkboxProps.name)
 
   return (
-    <CheckBoxFieldContainer>
+    <CheckBoxFieldContainer {...marginProps}>
       <CheckBox id={checkboxId} {...checkboxProps} />
       <Label htmlFor={checkboxId} {...labelProps}>
         {label}

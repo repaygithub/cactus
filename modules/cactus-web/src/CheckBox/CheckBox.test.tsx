@@ -28,6 +28,16 @@ describe('component: CheckBox', () => {
     expect(checkBox.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const checkBox = render(
+      <ThemeProvider theme={cactusTheme}>
+        <CheckBox id="MARGIN PROPS YEAH" m={4} />
+      </ThemeProvider>
+    )
+
+    expect(checkBox.asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByTestId } = render(

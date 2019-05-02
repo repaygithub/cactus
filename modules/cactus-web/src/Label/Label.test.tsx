@@ -16,4 +16,14 @@ describe('component: Label', () => {
 
     expect(label.asFragment()).toMatchSnapshot()
   })
+
+  test('should support margin space props', () => {
+    const label = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Label ml={2} />
+      </ThemeProvider>
+    )
+
+    expect(label.asFragment()).toMatchSnapshot()
+  })
 })

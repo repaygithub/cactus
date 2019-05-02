@@ -1,10 +1,16 @@
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
-import { space, SpaceProps } from 'styled-system'
 import { CactusTheme } from '@repay/cactus-theme'
+import { Omit } from '../types'
+import { margins, MarginProps } from '../helpers/margins'
 
 export type ButtonVariants = 'standard' | 'action'
 
-interface ButtonProps extends SpaceProps {
+interface ButtonProps
+  extends Omit<
+      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+      'ref'
+    >,
+    MarginProps {
   variant?: ButtonVariants
   disabled?: boolean
   inverse?: boolean
@@ -92,7 +98,7 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   font-size: 18px;
   line-height: 1.5em;
-  ${space}
+  ${margins}
   ${variantOrDisabled}
 `
 

@@ -94,6 +94,16 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
+  test('should support space props', () => {
+    const textButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <TextButton marginRight={5}>I have margins!</TextButton>
+      </ThemeProvider>
+    )
+
+    expect(textButton.asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(

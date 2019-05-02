@@ -60,6 +60,7 @@
     "@types/user-event": "^1.4.0",
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
+    "csstype": "^2.6.4",
     "jest": "^24.7.1",
     "jest-styled-components": "^6.2.1",
     "react": "^16.8.6",
@@ -75,8 +76,8 @@
     "styled-components": "^4.1.2"
   },
   "dependencies": {
-    "@repay/cactus-icons": "^1.0.0",
-    "@repay/cactus-theme": "^1.0.0",
+    "@repay/cactus-icons": "^0.3.0",
+    "@repay/cactus-theme": "^0.3.0",
     "styled-system": "^4.1.0"
   }
 }

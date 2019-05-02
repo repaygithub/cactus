@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "@repay/cactus-icons": "^1.0.0",
-    "@repay/cactus-theme": "^1.0.0",
-    "@repay/cactus-web": "^1.0.1",
+    "@repay/cactus-icons": "^0.3.0",
+    "@repay/cactus-theme": "^0.3.0",
+    "@repay/cactus-web": "^0.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^4.1.2"

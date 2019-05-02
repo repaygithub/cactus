@@ -6,6 +6,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "custom.d.ts"
   ],
   "exclude": [
     "src/**/*.test.ts",

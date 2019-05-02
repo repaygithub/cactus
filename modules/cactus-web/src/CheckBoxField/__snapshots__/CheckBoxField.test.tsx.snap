@@ -237,3 +237,130 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   </div>
 </DocumentFragment>
 `;
+
+exports[`component: CheckBoxField should support margin space props 1`] = `
+<DocumentFragment>
+  .c6 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c2 {
+  opacity: 0;
+  border: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.c3 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 2px solid hsl(200,10%,20%);
+  background: none;
+  border-radius: 1px;
+}
+
+.c3 svg {
+  visibility: hidden;
+  display: block;
+  color: hsl(0,0%,100%);
+  width: 12px;
+  height: 12px;
+}
+
+.c1 {
+  cursor: pointer;
+  display: block;
+  vertical-align: middle;
+}
+
+.c1 input:checked ~ div {
+  border-color: hsl(200,96%,35%);
+  background-color: hsl(200,96%,35%);
+}
+
+.c1 input:checked ~ div svg {
+  visibility: visible;
+}
+
+.c1 input:focus ~ div {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c7 .c5 {
+  position: relative;
+  top: 2px;
+  left: 8px;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-right: 8px;
+}
+
+.c0 .c5 {
+  position: relative;
+  top: 2px;
+  left: 8px;
+}
+
+<div
+    class="c0"
+  >
+    <label
+      class="c1"
+      for="not-random"
+    >
+      <input
+        class="c2"
+        id="not-random"
+        type="checkbox"
+      />
+      <div
+        aria-hidden="true"
+        class="c3"
+      >
+        <svg
+          class="c4"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+          />
+        </svg>
+      </div>
+    </label>
+    <label
+      class="c5 c6"
+      for="not-random"
+    >
+      space props
+    </label>
+  </div>
+</DocumentFragment>
+`;
