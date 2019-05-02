@@ -562,6 +562,7 @@ exports[`component: Toggle should support margin space props 1`] = `
 <button
     aria-checked="false"
     class="c0"
+    marginbottom="4"
     type="button"
   >
     <svg
