@@ -18,9 +18,17 @@ interface StyledCheckBoxProps extends React.HTMLProps<HTMLDivElement> {
   disabled?: boolean
 }
 
-interface CheckBoxContainerProps
-  extends React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement> {
-  disabled?: boolean
+const CheckBoxBase = (props: CheckBoxProps) => {
+  const [componentProps] = splitProps<CheckBoxProps>(props)
+  const { disabled, id, className, ...checkBoxProps } = componentProps
+  return (
+    <label className={className} htmlFor={id}>
+      <HiddenCheckBox id={id} disabled={disabled} {...checkBoxProps} />
+      <StyledCheckBox aria-hidden={true} disabled={disabled}>
+        <StatusCheck />
+      </StyledCheckBox>
+    </label>
+  )
 }
 
 const HiddenCheckBox = styled.input.attrs({ type: 'checkbox' as string })`
@@ -31,7 +39,7 @@ const HiddenCheckBox = styled.input.attrs({ type: 'checkbox' as string })`
   position: absolute;
 `
 
-const StyledCheckBox = styled.div<StyledCheckBoxProps>`
+const StyledCheckBox = styled.span<StyledCheckBoxProps>`
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -48,40 +56,28 @@ const StyledCheckBox = styled.div<StyledCheckBoxProps>`
   }
 `
 
-const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
-  cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
-  display: block;
+export const CheckBox = styled(CheckBoxBase)`
+  position: relative;
+  display: inline-block;
   vertical-align: middle;
-  input:checked ~ div {
+  cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
+  input:checked ~ span {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
     background-color: ${p => !p.disabled && p.theme.colors.callToAction};
   }
 
-  input:checked ~ div {
+  input:checked ~ span {
     svg {
       visibility: visible;
     }
   }
 
-  input:focus ~ div {
+  input:focus ~ span {
     box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
 
   ${margins}
 `
-
-const CheckBox = (props: CheckBoxProps) => {
-  const [componentProps, marginProps] = splitProps<CheckBoxProps>(props)
-  const { disabled, id, ...checkBoxProps } = componentProps
-  return (
-    <CheckBoxContainer disabled={disabled} htmlFor={id} {...marginProps}>
-      <HiddenCheckBox id={id} disabled={disabled} {...checkBoxProps} />
-      <StyledCheckBox aria-hidden={true} disabled={disabled}>
-        <StatusCheck />
-      </StyledCheckBox>
-    </CheckBoxContainer>
-  )
-}
 
 CheckBox.defaultProps = {
   disabled: false,

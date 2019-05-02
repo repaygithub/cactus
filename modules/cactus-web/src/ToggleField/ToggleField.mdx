@@ -1,0 +1,67 @@
+---
+name: ToggleField
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import ToggleField from './ToggleField'
+import cactusTheme from '@repay/cactus-theme'
+
+# ToggleField
+
+The ToggleField is a Field component to be used in a Form, is composed of a [`Toggle`](../Toggle.mdx) and a `Label` and requires a `name` and `label`. It also implements our standardized `FieldChangeHandler` interface defined as:
+
+```ts
+type FieldOnChangeHandler<ValueType> = (fieldName: string, fieldValue: ValueType) => void
+```
+
+`ValueType` is a `boolean` for Toggles.
+
+## Best practices
+
+The Toggle cannot manage it's own state, therefore this field **must** be controlled via an onChange handler and value. Any provided `id` will be automatically added to the label and toggle for accessibility; if an id is not provided, one will be created.
+
+## Basic usage
+
+```jsx
+import React, { useState } from 'react'
+import { Button, ToggleField } from '@repay/cactus-web'
+
+export default function Form() {
+  const [values, setValues] = useState({ enabled: false })
+  const handleChange = useCallback(
+    (name, value) => {
+      setValues(state => setValues({ ...state, [name]: value }))
+    },
+    [setValues]
+  )
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...values }
+      // send data to api
+    },
+    [values]
+  )
+
+  return (
+    <form onSubmit={onSubmit}>
+      <ToggleField
+        name="enabled"
+        label="Is Enabled"
+        onChange={handleChange}
+        value={values.enabled}
+      />
+      <Button type="submit" variant="callToAction">
+        Submit
+      </Button>
+    </form>
+  )
+}
+```
+
+View and edit the available props in the published [ToggleField stories](https://repaygithub.github.io/cactus/stories/cactus-web/?path=/story/togglefield--basic-usage) and review available props below.
+
+## Properties
+
+<PropsTable of={ToggleField} />

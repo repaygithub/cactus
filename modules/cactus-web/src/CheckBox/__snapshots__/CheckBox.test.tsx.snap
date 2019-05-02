@@ -34,21 +34,22 @@ exports[`component: CheckBox should render a checkbox 1`] = `
 }
 
 .c0 {
-  cursor: pointer;
-  display: block;
+  position: relative;
+  display: inline-block;
   vertical-align: middle;
+  cursor: pointer;
 }
 
-.c0 input:checked ~ div {
+.c0 input:checked ~ span {
   border-color: hsl(200,96%,35%);
   background-color: hsl(200,96%,35%);
 }
 
-.c0 input:checked ~ div svg {
+.c0 input:checked ~ span svg {
   visibility: visible;
 }
 
-.c0 input:focus ~ div {
+.c0 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
@@ -61,7 +62,7 @@ exports[`component: CheckBox should render a checkbox 1`] = `
       id="check"
       type="checkbox"
     />
-    <div
+    <span
       aria-hidden="true"
       class="c2"
     >
@@ -76,7 +77,7 @@ exports[`component: CheckBox should render a checkbox 1`] = `
           d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
         />
       </svg>
-    </div>
+    </span>
   </label>
 </DocumentFragment>
 `;
@@ -115,22 +116,22 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
 }
 
 .c0 {
-  cursor: cursor;
-  display: block;
+  position: relative;
+  display: inline-block;
   vertical-align: middle;
+  cursor: cursor;
 }
 
-.c0 input:checked ~ div svg {
+.c0 input:checked ~ span svg {
   visibility: visible;
 }
 
-.c0 input:focus ~ div {
+.c0 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
 <label
     class="c0"
-    disabled=""
     for="checking"
   >
     <input
@@ -139,7 +140,7 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
       id="checking"
       type="checkbox"
     />
-    <div
+    <span
       aria-hidden="true"
       class="c2"
       disabled=""
@@ -155,7 +156,7 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
           d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
         />
       </svg>
-    </div>
+    </span>
   </label>
 </DocumentFragment>
 `;

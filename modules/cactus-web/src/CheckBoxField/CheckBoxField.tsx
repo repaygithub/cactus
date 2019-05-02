@@ -2,28 +2,25 @@ import React from 'react'
 import styled from 'styled-components'
 import Label from '../Label/Label'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
-import { Omit } from '../types'
+import { Omit, FieldOnChangeHandler } from '../types'
 import useId from '../helpers/useId'
 import { margins, splitProps, MarginProps } from '../helpers/margins'
 
-interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id'>, MarginProps {
+interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id' | 'onChange'>, MarginProps {
   label: string
   labelProps?: object
   id?: string
-  name?: string
+  name: string
+  onChange?: FieldOnChangeHandler<boolean>
 }
 
 const CheckBoxFieldContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-top: 4px;
-  padding-bottom: 4px;
-
   ${Label} {
-    position: relative;
-    top: 2px;
-    left: 8px;
+    padding-left: 8px;
+  }
+
+  ${CheckBox} {
+    top: -1px;
   }
 
   ${margins}
@@ -31,12 +28,21 @@ const CheckBoxFieldContainer = styled.div`
 
 const CheckBoxField = (props: CheckBoxFieldProps) => {
   const [componentProps, marginProps] = splitProps<CheckBoxFieldProps>(props)
-  const { label, labelProps, id, ...checkboxProps } = componentProps
-  const checkboxId = useId(id, checkboxProps.name)
+  const { label, labelProps, id, name, onChange, ...checkboxProps } = componentProps
+  const checkboxId = useId(id, name)
+  const handleChange = React.useCallback(
+    (event: React.FormEvent<HTMLInputElement>) => {
+      if (typeof onChange === 'function') {
+        const target = (event.target as unknown) as HTMLInputElement
+        onChange(name, target.checked)
+      }
+    },
+    [name, onChange]
+  )
 
   return (
     <CheckBoxFieldContainer {...marginProps}>
-      <CheckBox id={checkboxId} {...checkboxProps} />
+      <CheckBox {...checkboxProps} id={checkboxId} name={name} onChange={handleChange} />
       <Label htmlFor={checkboxId} {...labelProps}>
         {label}
       </Label>

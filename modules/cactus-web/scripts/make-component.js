@@ -1,21 +1,23 @@
+// try to exit if only help command
+const args = process.argv.slice(2)
+if (includesAny(args, '-h', '--help')) {
+  console.log(`
+Usage: node make-component.js [...options] ComponentName
+- component name must be the last argument, contain no spaces,
+  and should be pascal case.
+
+  Options:
+  --help, -h      display this information
+  --force, -f     overwrite component if it exists
+    `)
+  return
+}
+
 const fs = require('fs').promises
 const path = require('path')
+const prettier = require('prettier')
 
 async function main() {
-  const args = process.argv.slice(2)
-  if (includesAny(args, '-h', '--help')) {
-    console.log(`
-    Usage: node make-component.js [...options] ComponentName
-    - component name must be the last argument, contain no spaces,
-      and shoulb be pascal case.
-
-      Options:
-      --help, -h      display this information
-      --force, -f     overwrite component if it exists
-    `)
-    return
-  }
-
   const srcDir = path.join(__dirname, '..', 'src')
   const componentName = args.pop()
   const componentDir = path.join(srcDir, componentName)
@@ -23,21 +25,33 @@ async function main() {
   if (doesComponentExist) {
     if (includesAny(args, '--force', '-f')) {
       console.log('component already exists, removing directory')
+      const files = await fs.readdir(componentDir)
+      await Promise.all(files.map(f => fs.unlink(path.join(componentDir, f))))
       await fs.rmdir(componentDir)
     } else {
       throw new Error(`${componentName} already exists.`)
     }
   }
 
-  await fs.mkdir(componentDir)
+  const [prettierConfig] = await Promise.all([
+    prettier.resolveConfig(__filename),
+    fs.mkdir(componentDir),
+  ])
 
-  const fileWithExt = ext => path.join(componentDir, `${componentName}${ext}`)
+  const writeFile = (ext, source) =>
+    fs.writeFile(
+      path.join(componentDir, `${componentName}${ext}`),
+      prettier.format(
+        source,
+        Object.assign({ parser: ext.endsWith('tsx') ? 'typescript' : 'markdown' }, prettierConfig)
+      )
+    )
 
   await Promise.all([
-    fs.writeFile(fileWithExt('.tsx'), componentTemplate(componentName)),
-    fs.writeFile(fileWithExt('.test.tsx'), testTemplate(componentName)),
-    fs.writeFile(fileWithExt('.story.tsx'), storyTemplate(componentName)),
-    fs.writeFile(fileWithExt('.mdx'), mdxTemplate(componentName)),
+    writeFile('.tsx', componentTemplate(componentName)),
+    writeFile('.test.tsx', testTemplate(componentName)),
+    writeFile('.story.tsx', storyTemplate(componentName)),
+    writeFile('.mdx', mdxTemplate(componentName)),
   ])
 }
 
@@ -60,18 +74,18 @@ async function fileExists(filePath) {
 }
 
 function componentTemplate(componentName) {
-  return (
-    `
-import React from 'react'
+  return `
 import styled from 'styled-components'
+import { space, SpaceProps } from 'styled-system'
 
-interface ${componentName}Props {}
+interface ${componentName}Props extends SpaceProps {}
 
-const ${componentName} = styled.div<${componentName}Props>\`\`
+export const ${componentName} = styled.div<${componentName}Props>\`
+  \${space}
+\`
 
 export default ${componentName}
-    `.trim() + '\n'
-  )
+    `
 }
 
 function testTemplate(componentName) {
@@ -95,23 +109,20 @@ describe('component: ${componentName}', () => {
     expect(container).toMatchSnapshot()
   })
 })
-`.trim()
+`
 }
 
 function storyTemplate(componentName) {
-  return (
-    ` 
+  return ` 
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import ${componentName} from './${componentName}'
 
-storiesOf('${componentName}', module).add('Basic Usage', () => <${componentName} />)`.trim() + '\n'
-  )
+storiesOf('${componentName}', module).add('Basic Usage', () => <${componentName} />)`
 }
 
 function mdxTemplate(componentName) {
-  return (
-    `
+  return `
 ---
 name: ${componentName}
 menu: Components
@@ -125,15 +136,26 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Best practices
 
-TODO
+TODO - see README for what to include here
 
 ## Basic usage
 
-TODO
+TODO - brief description
+
+\`\`\`jsx
+import React from 'react'
+
+<${componentName} />
+\`\`\`
+
+\`\`\`tsx
+import * as React from 'react'
+
+<${componentName} />
+\`\`\`
 
 ## Properties
 
 <PropsTable of={${componentName}} />
-  `.trim() + '\n'
-  )
+  `
 }

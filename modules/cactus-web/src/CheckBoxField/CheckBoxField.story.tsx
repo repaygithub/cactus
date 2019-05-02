@@ -7,8 +7,8 @@ const checkBoxFieldStories = storiesOf('CheckBoxField', module)
 
 checkBoxFieldStories.add('Basic Usage', () => (
   <CheckBoxField
-    name="CheckBoxFormField"
-    id="check-1"
+    name={text('name', 'CheckBoxFormField')}
+    id={text('id', 'checkbox-1')}
     label={text('label', 'A Label')}
     disabled={boolean('disabled', false)}
   />

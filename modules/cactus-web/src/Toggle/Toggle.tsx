@@ -4,7 +4,7 @@ import { StatusCheck, NavigationClose } from '@repay/cactus-icons'
 import { Omit } from '../types'
 import { margins, MarginProps } from '../helpers/margins'
 
-interface ToggleProps
+export interface ToggleProps
   extends Omit<
       React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
       'value' | 'ref'
@@ -14,8 +14,14 @@ interface ToggleProps
   disabled?: boolean
 }
 
-interface ToggleButtonProps {
-  disabled?: boolean
+const ToggleBase = (props: ToggleProps) => {
+  const { value, ...toggleProps } = props
+  return (
+    <button type="button" aria-checked={value} {...toggleProps}>
+      <StyledX />
+      <StyledCheck />
+    </button>
+  )
 }
 
 const StyledX = styled(NavigationClose)`
@@ -30,7 +36,7 @@ const StyledCheck = styled(StatusCheck)`
   color: ${p => p.theme.colors.white};
 `
 
-const ToggleButton = styled.button<ToggleButtonProps>`
+export const Toggle = styled(ToggleBase)`
   position: relative;
   width: 45px;
   height: 20px;
@@ -96,15 +102,5 @@ const ToggleButton = styled.button<ToggleButtonProps>`
 
   ${margins}
 `
-
-const Toggle = (props: ToggleProps) => {
-  const { value, ...toggleProps } = props
-  return (
-    <ToggleButton type="button" aria-checked={value} {...toggleProps}>
-      <StyledX />
-      <StyledCheck />
-    </ToggleButton>
-  )
-}
 
 export default Toggle
