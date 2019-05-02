@@ -920,6 +920,13 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
+"@repay/cactus-icons@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-icons/-/cactus-icons-0.3.0.tgz#7cc3294921145a94a59c227d9bb0292ae5da4914"
+  integrity sha512-uWbXXFKMjF5najqhk+LRplj3dUkA2pEX/SN+EdcdyrePQiKk8J+alnKqdqeNKekyPLuOYkXvT5bvUoTiKW11cA==
+  dependencies:
+    styled-system "^4.1.0"
+
 "@repay/cactus-icons@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@repay/cactus-icons/-/cactus-icons-1.0.0.tgz#52d254bd1399161a8ea7b7c1d95f222789237f60"
@@ -927,15 +934,20 @@
   dependencies:
     styled-system "^4.1.0"
 
+"@repay/cactus-theme@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-theme/-/cactus-theme-0.3.0.tgz#1fbbcab20588ff6df241092e42735c245e1452e7"
+  integrity sha512-9Gujer6kCFxUBTzRTKVEp4i9XTYhUAfeDh9oshnAWSxu8lebwFgvEgw1KgaDMryoPqcpGtW8MLmMKs704jossA==
+
 "@repay/cactus-theme@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@repay/cactus-theme/-/cactus-theme-1.0.0.tgz#4aa8a7b3d43afb0278fd5163aaf08d0ec574c5b3"
   integrity sha512-1q+CC2VEYgAGCPTPXzFQHD9Xpjio6u5ZHMFo9M/fZ4JqJwO6m7Fy+ejFXDyf21TiDh4mW1MeN+Q8kvEI9uYedQ==
 
-"@repay/cactus-web@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@repay/cactus-web/-/cactus-web-1.0.1.tgz#3c06b7e64312b729a8cdcd5667647e225682fb00"
-  integrity sha512-0/g2MttfJV112g0wiFp/zZBwXhk2Z23w4hcMsrzMiESAxr6vA994Dd2ROn4o/ql9gJ2T5IdfAz8lDQjJuVK8mw==
+"@repay/cactus-web@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-web/-/cactus-web-0.2.1.tgz#e0d6dbbcfea8078c07eac59753e196f04824a1a9"
+  integrity sha512-7RKs+GcFePqqk99Buab/fAm7B3GSvlViXOqlLrVBLvh4qgU4bNpudwZZPCyFgNVMH6OypzKRiaUQp1WtmmZiJQ==
   dependencies:
     "@repay/cactus-icons" "^1.0.0"
     "@repay/cactus-theme" "^1.0.0"
