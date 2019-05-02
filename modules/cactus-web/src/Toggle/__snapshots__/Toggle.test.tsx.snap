@@ -119,6 +119,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
 <button
     aria-checked="true"
     class="c0"
+    role="switch"
     type="button"
   >
     <svg
@@ -267,6 +268,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
     aria-checked="false"
     class="c0"
     disabled=""
+    role="switch"
     type="button"
   >
     <svg
@@ -388,6 +390,7 @@ exports[`component: Toggle should render a toggle 1`] = `
 <button
     aria-checked="false"
     class="c0"
+    role="switch"
     type="button"
   >
     <svg
@@ -562,7 +565,7 @@ exports[`component: Toggle should support margin space props 1`] = `
 <button
     aria-checked="false"
     class="c0"
-    marginbottom="4"
+    role="switch"
     type="button"
   >
     <svg

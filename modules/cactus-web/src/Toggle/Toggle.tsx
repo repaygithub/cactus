@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { StatusCheck, NavigationClose } from '@repay/cactus-icons'
 import { Omit } from '../types'
-import { margins, MarginProps } from '../helpers/margins'
+import { margins, MarginProps, splitProps } from '../helpers/margins'
 
 export interface ToggleProps
   extends Omit<
@@ -15,9 +15,10 @@ export interface ToggleProps
 }
 
 const ToggleBase = (props: ToggleProps) => {
-  const { value, ...toggleProps } = props
+  const [componentProps] = splitProps(props)
+  const { value, ...toggleProps } = componentProps
   return (
-    <button type="button" aria-checked={value} {...toggleProps}>
+    <button type="button" role="switch" aria-checked={value} {...toggleProps}>
       <StyledX />
       <StyledCheck />
     </button>
