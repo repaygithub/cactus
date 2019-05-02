@@ -1,15 +1,14 @@
 import React from 'react'
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
+import { margins, MarginProps } from '../helpers/margins'
 
 export type IconButtonVariants = 'standard' | 'action'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
 interface IconButtonProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
+  extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+    MarginProps {
   iconSize?: IconButtonSizes
   variant?: IconButtonVariants
   disabled?: boolean
@@ -113,6 +112,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   outline: none;
   cursor: pointer;
   ${variantOrDisabled}
+  ${margins}
 `
 
 export default IconButton

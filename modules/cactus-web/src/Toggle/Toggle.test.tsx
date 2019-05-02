@@ -20,17 +20,27 @@ describe('component: Toggle', () => {
   test('should render a disabled toggle', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle value={false} />
+        <Toggle value={false} disabled={true} />
       </ThemeProvider>
     )
 
     expect(toggle.asFragment()).toMatchSnapshot()
   })
 
-  test('should initialize value to false', () => {
+  test('should initialize value to true', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
         <Toggle value={true} />
+      </ThemeProvider>
+    )
+
+    expect(toggle.asFragment()).toMatchSnapshot()
+  })
+
+  test('should support margin space props', () => {
+    const toggle = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Toggle value={false} marginBottom={4} />
       </ThemeProvider>
     )
 

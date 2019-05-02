@@ -1,9 +1,16 @@
 import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
+import { Omit } from '../types'
+import { margins, MarginProps } from '../helpers/margins'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger'
 
-interface TextButtonProps {
+interface TextButtonProps
+  extends Omit<
+      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+      'ref'
+    >,
+    MarginProps {
   variant?: TextButtonVariants
   disabled?: boolean
   // No inverse danger variant
@@ -79,6 +86,7 @@ export const TextButton = styled.button<TextButtonProps>`
   }
 
   ${variantOrDisabled}
+  ${margins}
 `
 
 TextButton.defaultProps = {

@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import { splitProps, margins, MarginProps } from '../helpers/margins'
 
 export interface CheckBoxProps
   extends Omit<
-    React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-    'ref'
-  > {
+      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+      'ref'
+    >,
+    MarginProps {
   id: string
   disabled?: boolean
 }
@@ -50,6 +52,8 @@ const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
   display: block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   input:checked ~ div {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
     background-color: ${p => !p.disabled && p.theme.colors.callToAction};
@@ -64,12 +68,15 @@ const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
   input:focus ~ div {
     box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
+
+  ${margins}
 `
 
 const CheckBox = (props: CheckBoxProps) => {
-  const { disabled, id, ...checkBoxProps } = props
+  const [componentProps, marginProps] = splitProps<CheckBoxProps>(props)
+  const { disabled, id, ...checkBoxProps } = componentProps
   return (
-    <CheckBoxContainer disabled={disabled} htmlFor={id}>
+    <CheckBoxContainer disabled={disabled} htmlFor={id} {...marginProps}>
       <HiddenCheckBox id={id} disabled={disabled} {...checkBoxProps} />
       <StyledCheckBox aria-hidden={true} disabled={disabled}>
         <StatusCheck />

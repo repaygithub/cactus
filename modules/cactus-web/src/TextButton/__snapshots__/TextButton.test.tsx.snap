@@ -396,3 +396,42 @@ exports[`component: TextButton should render standard variant 1`] = `
   </button>
 </DocumentFragment>
 `;
+
+exports[`component: TextButton should support space props 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  border: none;
+  padding: 2px 0;
+  line-height: 1.5em;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+  margin-right: 32px;
+}
+
+.c0:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+<button
+    class="c0"
+  >
+    I have margins!
+  </button>
+</DocumentFragment>
+`;

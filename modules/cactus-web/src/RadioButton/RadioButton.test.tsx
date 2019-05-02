@@ -27,6 +27,16 @@ describe('component: RadioButton', () => {
     expect(radioButton.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const radioButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <RadioButton name="test" id="SPACE PROPS YEAH" margin={4} />
+      </ThemeProvider>
+    )
+
+    expect(radioButton.asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(

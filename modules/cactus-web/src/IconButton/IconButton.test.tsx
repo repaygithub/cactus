@@ -140,6 +140,18 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const iconButton = render(
+      <ThemeProvider theme={cactusTheme}>
+        <IconButton mb={4}>
+          <StatusCheck />
+        </IconButton>
+      </ThemeProvider>
+    )
+
+    expect(iconButton.asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(

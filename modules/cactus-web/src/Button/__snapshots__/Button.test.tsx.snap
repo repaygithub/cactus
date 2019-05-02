@@ -206,3 +206,35 @@ exports[`component: Button should render standard variant 1`] = `
   </button>
 </DocumentFragment>
 `;
+
+exports[`component: Button should support margin space props 1`] = `
+<DocumentFragment>
+  .c0 {
+  border-radius: 20px;
+  padding: 2px 30px;
+  border: 2px solid;
+  outline: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1.5em;
+  margin-top: 32px;
+  color: hsl(200,96%,11%);
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(200,96%,11%);
+}
+
+.c0:hover,
+.c0:focus {
+  color: hsl(0,0%,100%);
+  background-color: hsl(200,96%,11%);
+  border-color: hsl(200,96%,11%);
+}
+
+<button
+    class="c0"
+    type="button"
+  >
+    I have margins!
+  </button>
+</DocumentFragment>
+`;
