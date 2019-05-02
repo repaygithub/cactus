@@ -86,7 +86,7 @@ describe('component: Button', () => {
   test('should support margin space props', () => {
     const button = render(
       <ThemeProvider theme={cactusTheme}>
-        <Button mt={5}>}>I have margins!</Button>
+        <Button mt={5}>I have margins!</Button>
       </ThemeProvider>
     )
 

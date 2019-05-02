@@ -263,7 +263,7 @@ exports[`component: Button should support margin space props 1`] = `
     class="c0"
     type="button"
   >
-    }&gt;I have margins!
+    I have margins!
   </button>
 </DocumentFragment>
 `;
