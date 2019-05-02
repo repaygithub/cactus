@@ -44,8 +44,6 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   cursor: pointer;
   display: block;
   vertical-align: middle;
-  width: 16px;
-  height: 16px;
 }
 
 .c1 input:checked ~ div {
@@ -166,8 +164,6 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   cursor: cursor;
   display: block;
   vertical-align: middle;
-  width: 16px;
-  height: 16px;
 }
 
 .c1 input:checked ~ div svg {
@@ -286,8 +282,6 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   cursor: pointer;
   display: block;
   vertical-align: middle;
-  width: 16px;
-  height: 16px;
 }
 
 .c1 input:checked ~ div {

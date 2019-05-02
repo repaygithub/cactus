@@ -52,8 +52,6 @@ const CheckBoxContainer = styled.label<CheckBoxContainerProps>`
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
   display: block;
   vertical-align: middle;
-  width: 16px;
-  height: 16px;
   input:checked ~ div {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
     background-color: ${p => !p.disabled && p.theme.colors.callToAction};
