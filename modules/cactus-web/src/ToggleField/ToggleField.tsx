@@ -49,6 +49,7 @@ export const ToggleField = styled(ToggleFieldBase)`
   ${margins}
 
   ${Label} {
+    cursor: pointer;
     margin-right: 8px;
   }
 

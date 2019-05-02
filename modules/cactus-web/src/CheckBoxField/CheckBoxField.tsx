@@ -16,6 +16,7 @@ interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id' | 'onChange'>, Mar
 
 const CheckBoxFieldContainer = styled.div`
   ${Label} {
+    cursor: pointer;
     padding-left: 8px;
   }
 
