@@ -14,7 +14,7 @@ export interface CheckBoxProps
   disabled?: boolean
 }
 
-interface StyledCheckBoxProps extends React.HTMLProps<HTMLDivElement> {
+interface StyledCheckBoxProps extends React.HTMLProps<HTMLSpanElement> {
   disabled?: boolean
 }
 
