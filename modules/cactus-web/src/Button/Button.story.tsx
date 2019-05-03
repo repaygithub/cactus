@@ -50,4 +50,5 @@ buttonStories.add('With Icon', () => {
     >
       <Icon /> {text('children', 'Button')}
     </Button>
-)})
+  )
+})
