@@ -3,6 +3,7 @@ import { cleanup, render, fireEvent } from 'react-testing-library'
 import Button from './Button'
 import { ThemeProvider } from 'styled-components'
 import cactusTheme from '@repay/cactus-theme'
+import { ActionsDelete } from '@repay/cactus-icons'
 
 afterEach(cleanup)
 
@@ -91,6 +92,16 @@ describe('component: Button', () => {
     )
 
     expect(button.asFragment()).toMatchSnapshot()
+  })
+
+  test('should support svgs as children', () => {
+    const button = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button>
+          <ActionsDelete /> Delete
+        </Button>
+      </ThemeProvider>
+    )
   })
 
   test('should trigger onClick', () => {

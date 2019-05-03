@@ -15,6 +15,11 @@ exports[`component: Button should default to standard variant 1`] = `
   border-color: hsl(200,96%,11%);
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 .c0:hover,
 .c0:focus {
   color: hsl(0,0%,100%);
@@ -44,6 +49,11 @@ exports[`component: Button should render call to action variant 1`] = `
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 .c0:hover,
@@ -78,6 +88,11 @@ exports[`component: Button should render disabled variant 1`] = `
   cursor: not-allowed;
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 <button
     class="c0"
     disabled=""
@@ -101,6 +116,11 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 .c0:hover,
@@ -135,6 +155,11 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   cursor: not-allowed;
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 <button
     class="c0"
     disabled=""
@@ -158,6 +183,11 @@ exports[`component: Button should render inverse standard variant 1`] = `
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(0,0%,100%);
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 .c0:hover,
@@ -191,6 +221,11 @@ exports[`component: Button should render standard variant 1`] = `
   border-color: hsl(200,96%,11%);
 }
 
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
 .c0:hover,
 .c0:focus {
   color: hsl(0,0%,100%);
@@ -221,6 +256,11 @@ exports[`component: Button should support margin space props 1`] = `
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
 }
 
 .c0:hover,
