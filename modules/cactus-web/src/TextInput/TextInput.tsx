@@ -57,6 +57,19 @@ const displayStatus = (props: TextInputProps) => {
   }
 }
 
+const TextInputBase = (props: TextInputProps) => {
+  const { disabled, status, className } = props
+
+  return (
+    <div className={className}>
+      <Input {...props} />
+      {status === 'success' && !disabled && <StyledCheck disabled={disabled} status={status} />}
+      {status === 'invalid' && !disabled && <StyledAlert disabled={disabled} status={status} />}
+      {status === 'error' && !disabled && <StyledError disabled={disabled} status={status} />}
+    </div>
+  )
+}
+
 const StyledCheck = styled(StatusCheck)<StyledCheckProps>`
   width: 20px;
   height: 20px;
@@ -79,16 +92,6 @@ const StyledError = styled(NotificationError)<StyledErrorProps>`
   position: absolute;
   right: 8px;
   color: ${p => p.theme.colors.error};
-`
-
-const TextInputContainer = styled.div`
-  position: relative;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  ${margins}
 `
 
 const Input = styled.input<InputProps>`
@@ -114,17 +117,18 @@ const Input = styled.input<InputProps>`
   ${displayStatus}
 `
 
-const TextInput = (props: TextInputProps) => {
-  const [componentProps, marginProps] = splitProps<TextInputProps>(props)
-  const { disabled, status } = componentProps
-  return (
-    <TextInputContainer {...marginProps}>
-      <Input {...props} />
-      {status === 'success' && !disabled && <StyledCheck disabled={disabled} status={status} />}
-      {status === 'invalid' && !disabled && <StyledAlert disabled={disabled} status={status} />}
-      {status === 'error' && !disabled && <StyledError disabled={disabled} status={status} />}
-    </TextInputContainer>
-  )
+export const TextInput = styled(TextInputBase)`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  ${margins}
+`
+
+TextInput.defaultProps = {
+  disabled: false,
+  status: null,
 }
 
 export default TextInput

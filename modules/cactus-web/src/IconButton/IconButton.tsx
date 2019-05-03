@@ -96,6 +96,7 @@ const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((pro
 IconButtonBase.defaultProps = {
   variant: 'standard',
   iconSize: 'medium',
+  display: 'inline-flex',
   disabled: false,
   inverse: false,
 }

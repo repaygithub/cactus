@@ -8,10 +8,11 @@ export type ButtonVariants = 'standard' | 'action'
 interface ButtonProps
   extends Omit<
       React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-      'ref'
+      'ref' | 'disabled'
     >,
     MarginProps {
   variant?: ButtonVariants
+  /** !important */
   disabled?: boolean
   inverse?: boolean
 }

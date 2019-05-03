@@ -19,7 +19,7 @@ interface StyledCheckBoxProps extends React.HTMLProps<HTMLSpanElement> {
 }
 
 const CheckBoxBase = (props: CheckBoxProps) => {
-  const [componentProps] = splitProps<CheckBoxProps>(props)
+  const componentProps = splitProps<CheckBoxProps>(props)
   const { disabled, id, className, ...checkBoxProps } = componentProps
   return (
     <label className={className} htmlFor={id}>
