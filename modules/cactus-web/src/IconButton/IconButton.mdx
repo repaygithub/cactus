@@ -9,11 +9,44 @@ import cactusTheme from '@repay/cactus-theme'
 
 # IconButton
 
+The `IconButton` allows you to turn icons into buttons, and it was designed to allow the use of icons from any library.
+
 ## Best practices
+
+- To ensure that the `IconButton` is accessible, use a descriptive `label`. This will set the `aria-label` on the button.
+- Icon sizes should not be defined manually; the size should be defined using the `iconSize` prop.
 
 ## Basic usage
 
-TODO
+```jsx
+import { IconButton } from '@repay/cactus-web
+import { StatusCheck } from '@repay/cactus-icons
+...
+// Basic usage
+<IconButton>
+  <StatusCheck />
+</IconButton>
+
+// Call to action variant
+<IconButton variant="action">
+  <StatusCheck />
+</IconButton>
+
+// Inverse
+<IconButton inverse={true}>
+  <StatusCheck />
+</IconButton>
+
+// Sizing
+<IconButton iconSize="large">
+  <StatusCheck />
+</IconButton>
+
+// Disabled
+<IconButton disabled={true}>
+  <StatusCheck />
+</IconButton>
+```
 
 ## Properties
 

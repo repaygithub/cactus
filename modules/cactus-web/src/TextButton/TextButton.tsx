@@ -12,6 +12,7 @@ interface TextButtonProps
     >,
     MarginProps {
   variant?: TextButtonVariants
+  /** !important */
   disabled?: boolean
   // No inverse danger variant
   inverse?: boolean

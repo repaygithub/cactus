@@ -58,7 +58,7 @@ export const margins = mapProps(props => ({
 
 export function splitProps<ComponentProps extends MarginProps>(
   props: ComponentProps
-): [Omit<ComponentProps, keyof MarginProps>, MarginProps] {
+): Omit<ComponentProps, keyof MarginProps> {
   // Destructure any margin space props and create an object out of them
   const {
     m,
@@ -75,20 +75,6 @@ export function splitProps<ComponentProps extends MarginProps>(
     my,
     ...componentProps
   } = props
-  const marginProps: MarginProps = {
-    m,
-    margin,
-    mt,
-    marginTop,
-    mr,
-    marginRight,
-    mb,
-    marginBottom,
-    ml,
-    marginLeft,
-    mx,
-    my,
-  }
 
-  return [componentProps as Omit<ComponentProps, keyof MarginProps>, marginProps]
+  return componentProps as Omit<ComponentProps, keyof MarginProps>
 }

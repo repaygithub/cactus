@@ -2,23 +2,7 @@
 
 exports[`component: TextInput should render a disabled input 1`] = `
 <DocumentFragment>
-  .c0 {
-  position: relative;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c1 {
+  .c1 {
   border: 1px solid hsl(0,0%,90%);
   border-radius: 20px;
   height: 32px;
@@ -54,11 +38,26 @@ exports[`component: TextInput should render a disabled input 1`] = `
   font-style: oblique;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 <div
     class="c0"
   >
     <input
-      class="c1"
+      class="c0 c1"
       disabled=""
     />
   </div>
@@ -78,22 +77,6 @@ exports[`component: TextInput should render a success input 1`] = `
   position: absolute;
   right: 8px;
   color: hsl(145,89%,28%);
-}
-
-.c0 {
-  position: relative;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .c1 {
@@ -133,11 +116,26 @@ exports[`component: TextInput should render a success input 1`] = `
   font-style: oblique;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 <div
     class="c0"
   >
     <input
-      class="c1"
+      class="c0 c1"
     />
     <svg
       class="c2 c3"
@@ -156,23 +154,7 @@ exports[`component: TextInput should render a success input 1`] = `
 
 exports[`component: TextInput should render a text input 1`] = `
 <DocumentFragment>
-  .c0 {
-  position: relative;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c1 {
+  .c1 {
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -208,11 +190,26 @@ exports[`component: TextInput should render a text input 1`] = `
   font-style: oblique;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 <div
     class="c0"
   >
     <input
-      class="c1"
+      class="c0 c1"
     />
   </div>
 </DocumentFragment>
@@ -231,22 +228,6 @@ exports[`component: TextInput should render an error input 1`] = `
   position: absolute;
   right: 8px;
   color: hsl(353,84%,44%);
-}
-
-.c0 {
-  position: relative;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .c1 {
@@ -286,11 +267,26 @@ exports[`component: TextInput should render an error input 1`] = `
   font-style: oblique;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 <div
     class="c0"
   >
     <input
-      class="c1"
+      class="c0 c1"
     />
     <svg
       class="c2 c3"
@@ -309,23 +305,7 @@ exports[`component: TextInput should render an error input 1`] = `
 
 exports[`component: TextInput should render an input with a placeholder 1`] = `
 <DocumentFragment>
-  .c0 {
-  position: relative;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c1 {
+  .c1 {
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -361,11 +341,26 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   font-style: oblique;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 <div
     class="c0"
   >
     <input
-      class="c1"
+      class="c0 c1"
       placeholder="hold my place"
     />
   </div>
@@ -385,22 +380,6 @@ exports[`component: TextInput should render an invalid input 1`] = `
   position: absolute;
   right: 8px;
   color: hsl(47,82%,47%);
-}
-
-.c0 {
-  position: relative;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .c1 {
@@ -440,11 +419,26 @@ exports[`component: TextInput should render an invalid input 1`] = `
   font-style: oblique;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
 <div
     class="c0"
   >
     <input
-      class="c1"
+      class="c0 c1"
     />
     <svg
       class="c2 c3"
@@ -463,24 +457,7 @@ exports[`component: TextInput should render an invalid input 1`] = `
 
 exports[`component: TextInput should support margin space props 1`] = `
 <DocumentFragment>
-  .c0 {
-  position: relative;
-  text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-top: 16px;
-}
-
-.c1 {
+  .c1 {
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -516,11 +493,27 @@ exports[`component: TextInput should support margin space props 1`] = `
   font-style: oblique;
 }
 
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
 <div
     class="c0"
   >
     <input
-      class="c1"
+      class="c0 c1"
     />
   </div>
 </DocumentFragment>

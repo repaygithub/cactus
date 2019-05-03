@@ -84,7 +84,7 @@ const variantOrDisabled = (
 }
 
 const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
-  const { label, children, inverse, iconSize, ...buttonProps } = props
+  const { label, children, inverse, iconSize, display, ...buttonProps } = props
 
   return (
     <button aria-label={label} ref={ref} {...buttonProps}>
@@ -96,6 +96,7 @@ const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((pro
 IconButtonBase.defaultProps = {
   variant: 'standard',
   iconSize: 'medium',
+  display: 'inline-flex',
   disabled: false,
   inverse: false,
 }

@@ -6,30 +6,20 @@ import { Omit, FieldOnChangeHandler } from '../types'
 import useId from '../helpers/useId'
 import { margins, splitProps, MarginProps } from '../helpers/margins'
 
-interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id' | 'onChange'>, MarginProps {
+interface CheckBoxFieldProps
+  extends Omit<CheckBoxProps, 'id' | 'onChange' | 'disabled'>,
+    MarginProps {
   label: string
   labelProps?: object
   id?: string
   name: string
   onChange?: FieldOnChangeHandler<boolean>
+  disabled?: boolean
 }
 
-const CheckBoxFieldContainer = styled.div`
-  ${Label} {
-    cursor: pointer;
-    padding-left: 8px;
-  }
-
-  ${CheckBox} {
-    top: -1px;
-  }
-
-  ${margins}
-`
-
-const CheckBoxField = (props: CheckBoxFieldProps) => {
-  const [componentProps, marginProps] = splitProps<CheckBoxFieldProps>(props)
-  const { label, labelProps, id, name, onChange, ...checkboxProps } = componentProps
+const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
+  const componentProps = splitProps<CheckBoxFieldProps>(props)
+  const { label, labelProps, id, name, onChange, className, ...checkboxProps } = componentProps
   const checkboxId = useId(id, name)
   const handleChange = React.useCallback(
     (event: React.FormEvent<HTMLInputElement>) => {
@@ -42,13 +32,35 @@ const CheckBoxField = (props: CheckBoxFieldProps) => {
   )
 
   return (
-    <CheckBoxFieldContainer {...marginProps}>
+    <div className={className}>
       <CheckBox {...checkboxProps} id={checkboxId} name={name} onChange={handleChange} />
       <Label htmlFor={checkboxId} {...labelProps}>
         {label}
       </Label>
-    </CheckBoxFieldContainer>
+    </div>
   )
+}
+
+export const CheckBoxField = styled(CheckBoxFieldBase)`
+  & + & {
+    margin-top: 8px;
+  }
+
+  ${Label} {
+    cursor: pointer;
+    padding-left: 8px;
+  }
+
+  ${CheckBox} {
+    top: -1px;
+  }
+
+  ${margins}
+`
+
+CheckBoxField.defaultProps = {
+  labelProps: {},
+  disabled: false,
 }
 
 export default CheckBoxField

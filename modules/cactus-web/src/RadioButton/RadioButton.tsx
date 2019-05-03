@@ -11,33 +11,20 @@ interface RadioButtonProps
   disabled?: boolean
 }
 
-interface RadioButtonContainerProps extends React.HTMLProps<HTMLLabelElement> {
+interface StyledRadioButtonProps extends React.HTMLProps<HTMLSpanElement> {
   disabled?: boolean
 }
 
-interface StyledRadioButtonProps extends React.HTMLProps<HTMLDivElement> {
-  disabled?: boolean
+const RadioButtonBase = (props: RadioButtonProps) => {
+  const componentProps = splitProps<RadioButtonProps>(props)
+  const { disabled, id, className, ...radioButtonProps } = componentProps
+  return (
+    <label className={className} htmlFor={id}>
+      <HiddenRadioButton id={id} disabled={disabled} {...radioButtonProps} />
+      <StyledRadioButton aria-hidden={true} disabled={disabled} />
+    </label>
+  )
 }
-
-const RadioButtonContainer = styled.label<RadioButtonContainerProps>`
-  cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
-  display: block;
-  position: relative;
-
-  input:checked ~ div {
-    border-color: ${p => !p.disabled && p.theme.colors.callToAction};
-  }
-
-  input:checked ~ div:after {
-    display: block;
-  }
-
-  input:focus ~ div {
-    box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
-  }
-
-  ${margins}
-`
 
 const HiddenRadioButton = styled.input.attrs({ type: 'radio' as string })`
   opacity: 0;
@@ -46,7 +33,7 @@ const HiddenRadioButton = styled.input.attrs({ type: 'radio' as string })`
   position: absolute;
 `
 
-const StyledRadioButton = styled.div<StyledRadioButtonProps>`
+const StyledRadioButton = styled.span<StyledRadioButtonProps>`
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -68,15 +55,28 @@ const StyledRadioButton = styled.div<StyledRadioButtonProps>`
   }
 `
 
-const RadioButton = (props: RadioButtonProps) => {
-  const [componentProps, marginProps] = splitProps<RadioButtonProps>(props)
-  const { disabled, id, ...radioButtonProps } = componentProps
-  return (
-    <RadioButtonContainer htmlFor={id} disabled={disabled} {...marginProps}>
-      <HiddenRadioButton id={id} disabled={disabled} {...radioButtonProps} />
-      <StyledRadioButton aria-hidden={true} disabled={disabled} />
-    </RadioButtonContainer>
-  )
+export const RadioButton = styled(RadioButtonBase)`
+  position: relative;
+  display: inline-block;
+  cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
+
+  input:checked ~ span {
+    border-color: ${p => !p.disabled && p.theme.colors.callToAction};
+  }
+
+  input:checked ~ span:after {
+    display: block;
+  }
+
+  input:focus ~ span {
+    box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
+  }
+
+  ${margins}
+`
+
+RadioButton.defaultProps = {
+  disabled: false,
 }
 
 export default RadioButton

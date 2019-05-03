@@ -15,7 +15,7 @@ export interface ToggleProps
 }
 
 const ToggleBase = (props: ToggleProps) => {
-  const [componentProps] = splitProps(props)
+  const componentProps = splitProps(props)
   const { value, ...toggleProps } = componentProps
   return (
     <button type="button" role="switch" aria-checked={value} {...toggleProps}>
@@ -103,5 +103,9 @@ export const Toggle = styled(ToggleBase)`
 
   ${margins}
 `
+
+Toggle.defaultProps = {
+  disabled: false,
+}
 
 export default Toggle

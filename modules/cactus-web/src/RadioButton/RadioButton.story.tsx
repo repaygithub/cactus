@@ -13,12 +13,21 @@ radioButtonStories.add('Basic Usage', () => (
 
 radioButtonStories.add('Multiple Radio Buttons', () => (
   <div>
-    <RadioButton id="some-id" name="test" disabled={boolean('disabled', false)} {...eventLoggers} />
-    <RadioButton
-      id="some-other-id"
-      name="test"
-      disabled={boolean('disabled', false)}
-      {...eventLoggers}
-    />
+    <div>
+      <RadioButton
+        id="some-id"
+        name="test"
+        disabled={boolean('disabled', false)}
+        {...eventLoggers}
+      />
+    </div>
+    <div>
+      <RadioButton
+        id="some-other-id"
+        name="test"
+        disabled={boolean('disabled', false)}
+        {...eventLoggers}
+      />
+    </div>
   </div>
 ))
