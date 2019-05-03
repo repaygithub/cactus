@@ -1,74 +1,75 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent, queryByAttribute } from 'react-testing-library'
+import { cleanup, render, fireEvent } from 'react-testing-library'
 import userEvent from 'user-event'
-import CheckBoxField from './CheckBoxField'
+import ToggleField from './ToggleField'
 import cactusTheme from '@repay/cactus-theme'
 import { ThemeProvider } from 'styled-components'
 
 afterEach(cleanup)
 
-describe('component: CheckBoxField', () => {
-  test('should render a checkbox field', () => {
-    const checkboxField = render(
+describe('component: ToggleField', () => {
+  test('snapshot', () => {
+    const { container } = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="SoIA" id="my-id" name="checkbox-test" />
+        <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} />
       </ThemeProvider>
     )
 
-    expect(checkboxField.asFragment()).toMatchSnapshot()
+    expect(container).toMatchSnapshot()
   })
 
-  test('should render a disabled checkbox field', () => {
-    const checkboxField = render(
+  test('snapshot when value=true', () => {
+    const { container } = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="NMNL" id="my-id" name="checkbox-test" disabled />
+        <ToggleField id="static-id" name="is_enabled" label="Enabled" value={true} />
       </ThemeProvider>
     )
 
-    expect(checkboxField.asFragment()).toMatchSnapshot()
+    expect(container).toMatchSnapshot()
+  })
+
+  test('snapshot when disabled', () => {
+    const { container } = render(
+      <ThemeProvider theme={cactusTheme}>
+        <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} disabled />
+      </ThemeProvider>
+    )
+
+    expect(container).toMatchSnapshot()
   })
 
   test('should generate unique id when one is not provided', () => {
-    const { container, getByText } = render(
+    const { getByLabelText } = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="Scoreboard" name="scoreboard" />
+        <ToggleField label="Show me the money" name="show-me-the-money" value={true} />
       </ThemeProvider>
     )
 
-    const getById = queryByAttribute.bind(null, 'id')
-
-    const labelElement = getByText('Scoreboard') as HTMLLabelElement
-    expect(labelElement.htmlFor).toContain('scoreboard')
-    expect(getById(container, labelElement.htmlFor)).not.toBeNull()
+    expect(getByLabelText('Show me the money').id).toContain('show-me-the-money')
   })
 
-  test('should support margin space props', () => {
-    const checkboxField = render(
-      <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="space props" name="space_props" id="not-random" mr={3} />
-      </ThemeProvider>
-    )
-
-    expect(checkboxField.asFragment()).toMatchSnapshot()
-  })
-
-  test('should trigger onChange event', () => {
+  test('should trigger onChange event with next value', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="Katastro" name="katastro" onChange={onChange} />
+        <ToggleField
+          label="Show me the money"
+          name="show-me-the-money"
+          value={true}
+          onChange={onChange}
+        />
       </ThemeProvider>
     )
 
-    fireEvent.click(getByLabelText('Katastro'))
-    expect(onChange).toHaveBeenCalledWith('katastro', true)
+    fireEvent.click(getByLabelText('Show me the money'))
+    expect(onChange).toHaveBeenCalledWith('show-me-the-money', false)
   })
 
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="Strange Nights" name="strange_nights" onFocus={onFocus} />
+        <ToggleField label="Strange Nights" name="strange_nights" value={false} onFocus={onFocus} />
       </ThemeProvider>
     )
 
@@ -80,7 +81,7 @@ describe('component: CheckBoxField', () => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBoxField label="Washed." name="washed" onBlur={onBlur} />
+        <ToggleField label="Washed." name="washed" value={false} onBlur={onBlur} />
       </ThemeProvider>
     )
 
@@ -93,7 +94,7 @@ describe('component: CheckBoxField', () => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
         <ThemeProvider theme={cactusTheme}>
-          <CheckBoxField label="Flow" name="flow" onChange={onChange} disabled />
+          <ToggleField label="Flow" name="flow" value={false} onChange={onChange} disabled />
         </ThemeProvider>
       )
 
@@ -105,7 +106,13 @@ describe('component: CheckBoxField', () => {
       const onFocus = jest.fn()
       const { getByLabelText } = render(
         <ThemeProvider theme={cactusTheme}>
-          <CheckBoxField label="Not For Sale" name="not_for_sale" onFocus={onFocus} disabled />
+          <ToggleField
+            label="Not For Sale"
+            name="not_for_sale"
+            value={true}
+            onFocus={onFocus}
+            disabled
+          />
         </ThemeProvider>
       )
 

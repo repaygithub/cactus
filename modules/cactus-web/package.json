@@ -15,6 +15,7 @@
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "dev": "start-storybook -p 9001 -c .storybook",
+    "dev:build": "repay-scripts dev --lib --config rollup.config.js src/index.ts",
     "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
     "prebuild": "yarn build:types",
     "build": "repay-scripts build --lib --config rollup.config.js src/index.ts",

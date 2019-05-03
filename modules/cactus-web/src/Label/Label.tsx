@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Omit } from '../types'
 import { margins, MarginProps } from '../helpers/margins'
 
-interface LabelProps
+export interface LabelProps
   extends Omit<
       React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>,
       'ref'

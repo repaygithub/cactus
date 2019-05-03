@@ -11,6 +11,7 @@ import {
   ResponsiveValue,
 } from 'styled-system'
 import * as CSS from 'csstype'
+import { Omit } from '../types'
 
 export interface MarginProps<TLength = TLengthStyledSystem> {
   /** Margin on top, left, bottom and right */
@@ -57,7 +58,7 @@ export const margins = mapProps(props => ({
 
 export function splitProps<ComponentProps extends MarginProps>(
   props: ComponentProps
-): [ComponentProps, MarginProps] {
+): [Omit<ComponentProps, keyof MarginProps>, MarginProps] {
   // Destructure any margin space props and create an object out of them
   const {
     m,
@@ -89,5 +90,5 @@ export function splitProps<ComponentProps extends MarginProps>(
     my,
   }
 
-  return [componentProps as ComponentProps, marginProps]
+  return [componentProps as Omit<ComponentProps, keyof MarginProps>, marginProps]
 }
