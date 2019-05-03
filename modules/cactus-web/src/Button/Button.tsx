@@ -98,6 +98,12 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   font-size: 18px;
   line-height: 1.5em;
+
+  svg {
+    display: inline-block;
+    margin-top: -4px;
+  }
+
   ${margins}
   ${variantOrDisabled}
 `
