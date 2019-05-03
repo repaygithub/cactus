@@ -1,8 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
-import { StatusCheck, NavigationClose } from '@repay/cactus-icons'
+
+import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { NavigationClose, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
-import { margins, MarginProps, splitProps } from '../helpers/margins'
+import styled from 'styled-components'
 
 export interface ToggleProps
   extends Omit<

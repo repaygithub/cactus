@@ -1,7 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
+
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
-import { margins, splitProps, MarginProps } from '../helpers/margins'
+import styled from 'styled-components'
 
 interface RadioButtonProps
   extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'>,

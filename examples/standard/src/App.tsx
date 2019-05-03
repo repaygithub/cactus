@@ -1,4 +1,5 @@
-import React, { Component, ChangeEvent, CSSProperties } from 'react'
+import React, { ChangeEvent, Component, CSSProperties } from 'react'
+
 import { I18nText } from '@repay/cactus-i18n'
 import { Link, RouteComponentProps } from '@reach/router'
 import Heart from '@repay/cactus-icons/i/status-like'

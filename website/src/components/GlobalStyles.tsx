@@ -1,5 +1,5 @@
-import { CactusTheme } from '@repay/cactus-theme'
 import * as styledComponents from 'styled-components'
+import { CactusTheme } from '@repay/cactus-theme'
 
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import cactusTheme from '@repay/cactus-theme'
 
 const darkModeStyle: React.CSSProperties = {

@@ -1,6 +1,7 @@
 import React from 'react'
-import AppRoot, { useFeatureFlags, withFeatureFlags, FeatureFlag } from '../src/index'
+
 import { render } from 'react-testing-library'
+import AppRoot, { FeatureFlag, useFeatureFlags, withFeatureFlags } from '../src/index'
 
 describe('feature flags', () => {
   test('feature flags context object is optional on top level component', () => {

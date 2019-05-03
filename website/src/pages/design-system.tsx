@@ -1,7 +1,8 @@
 import * as React from 'react'
+
+import { Link } from 'gatsby'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
 
 const Em = styled.em`
   font-style: normal;

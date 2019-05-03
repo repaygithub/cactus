@@ -1,5 +1,5 @@
+import { color, ColorProps, space, SpaceProps, width, WidthProps } from 'styled-system'
 import styled from 'styled-components'
-import { space, SpaceProps, color, ColorProps, width, WidthProps } from 'styled-system'
 
 interface SvgProps extends SpaceProps, ColorProps, WidthProps {}
 

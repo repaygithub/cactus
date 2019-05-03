@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent } from 'react-testing-library'
-import Button from './Button'
+
+import { cleanup, fireEvent, render } from 'react-testing-library'
 import { ThemeProvider } from 'styled-components'
+import Button from './Button'
 import cactusTheme from '@repay/cactus-theme'
 import { ActionsDelete } from '@repay/cactus-icons'
 

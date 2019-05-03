@@ -1,7 +1,8 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { text, boolean } from '@storybook/addon-knobs'
+
 import { actions } from '@storybook/addon-actions'
+import { boolean, text } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import FormHandler from '../storySupport/FormHandler'
 import ToggleField from './ToggleField'
 

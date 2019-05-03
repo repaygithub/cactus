@@ -1,9 +1,10 @@
 import * as React from 'react'
-import Helmet from 'react-helmet'
+
 import { color, ColorProps, textAlign, TextAlignProps } from 'styled-system'
 import { Link } from 'gatsby'
-import styled from 'styled-components'
 import Box from '../../components/Box'
+import Helmet from 'react-helmet'
+import styled from 'styled-components'
 
 const CenteredList = styled.ul`
   list-style: none;

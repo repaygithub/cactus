@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent, queryByAttribute } from 'react-testing-library'
-import userEvent from 'user-event'
-import CheckBoxField from './CheckBoxField'
-import cactusTheme from '@repay/cactus-theme'
+
+import { cleanup, fireEvent, queryByAttribute, render } from 'react-testing-library'
 import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
+import CheckBoxField from './CheckBoxField'
+import userEvent from 'user-event'
 
 afterEach(cleanup)
 

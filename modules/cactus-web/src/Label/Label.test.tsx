@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent } from 'react-testing-library'
-import Label from './Label'
-import cactusTheme from '@repay/cactus-theme'
+
+import { cleanup, render } from 'react-testing-library'
 import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
+import Label from './Label'
 
 afterEach(cleanup)
 

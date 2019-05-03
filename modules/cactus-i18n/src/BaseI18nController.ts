@@ -1,7 +1,7 @@
-import { ResourceDefinition } from './types'
 import { FluentBundle } from 'fluent'
-import { FluentNode, FluentMessage } from 'fluent'
+import { FluentMessage, FluentNode } from 'fluent'
 import { negotiateLanguages } from 'fluent-langneg'
+import { ResourceDefinition } from './types'
 
 interface Dictionary {
   /**

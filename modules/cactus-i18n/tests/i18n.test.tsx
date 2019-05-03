@@ -1,16 +1,17 @@
 import * as React from 'react'
-import { cleanup, render, act, fireEvent, RenderResult } from 'react-testing-library'
-import MockPromise from './helpers/MockPromise'
+
+import { act, cleanup, fireEvent, render, RenderResult } from 'react-testing-library'
+import { ResourceDefinition } from '../src/types'
 import I18nProvider, {
   BaseI18nController,
-  I18nSection,
   I18nElement,
-  I18nText,
   I18nFormatted,
-  useI18nText,
+  I18nSection,
+  I18nText,
   useI18nResource,
+  useI18nText,
 } from '../src/index'
-import { ResourceDefinition } from '../src/types'
+import MockPromise from './helpers/MockPromise'
 
 class I18nController extends BaseI18nController {
   load(arg: { lang: string; section: string }) {
