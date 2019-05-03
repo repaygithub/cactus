@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const fg = require('fast-glob')
 const reactDocgenTs = require('react-docgen-typescript')
 const { createFilePath } = require('gatsby-source-filesystem')
+const chokidar = require('chokidar')
 const modulesHelper = require('./tools/modules-helper')
 
 const digest = str =>
@@ -141,32 +142,55 @@ const docgen = reactDocgenTs.withCustomConfig(
  */
 exports.sourceNodes = async ({ actions, createNodeId }) => {
   const { createNode } = actions
-
-  const componentPaths = await fg([
+  const componentGlobs = [
     modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.tsx'),
     '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.test.tsx'),
     '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.story.tsx'),
-  ])
+  ]
+
   /**
-   * props = DocItem[] where DocItem = { key: filepath, value: ComponentDoc }
+   * docgenData = DocItem[] where DocItem = { key: filepath, value: ComponentDoc }
    */
-  const props = await Promise.all(
-    componentPaths.map(filePath => {
+  let docgenData = []
+
+  const createComponentDb = async filePath => {
+    // initial sourcing
+    if (filePath === undefined) {
+      const componentPaths = await fg(componentGlobs.slice())
+      docgenData = componentPaths.map(filePath => {
+        const doc = docgen.parse(filePath)
+        return { key: path.relative(__dirname, filePath), value: doc }
+      })
+    } else {
+      const relativePath = path.relative(__dirname, filePath)
       const doc = docgen.parse(filePath)
-      return { key: path.relative(__dirname, filePath), value: doc }
+      const previous = docgenData.find(d => d.key === relativePath)
+      if (!previous) {
+        docgenData.push({ key: relativePath, value: doc })
+      } else {
+        previous.value = doc
+      }
+    }
+
+    const stringified = JSON.stringify(docgenData || [])
+    const contentDigest = digest(stringified)
+
+    createNode({
+      id: createNodeId('docgen-data'),
+      db: stringified,
+      children: [],
+      internal: {
+        contentDigest,
+        type: 'DocgenDB',
+      },
     })
-  )
+  }
 
-  const stringified = JSON.stringify(props || [])
-  const contentDigest = digest(stringified)
+  await createComponentDb()
 
-  createNode({
-    id: createNodeId('docgen-data'),
-    db: stringified,
-    children: [],
-    internal: {
-      contentDigest,
-      type: 'DocgenDB',
-    },
-  })
+  // add watcher for reloading
+  chokidar
+    .watch(componentGlobs.slice())
+    .on('change', path => createComponentDb(path))
+    .on('add', path => createComponentDb(path))
 }
