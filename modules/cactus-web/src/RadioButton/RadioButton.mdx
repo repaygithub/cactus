@@ -11,9 +11,27 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Best practices
 
+- Each `RadioButton` must have a unique `id`.
+- The `name` prop should be used to create a group of radio buttons by providing them with the same name.
+- When pairing a `RadioButton` with a label, you should connect your label to the radio button using the `htmlFor` prop.
+This is paramount for making a checkbox accessible.
+  - Example:
+  ```jsx
+  <RadioButton id="rb" name="rb-group"/>
+  <Label htmlFor="rb">Not Today</Label>
+  ```
+
 ## Basic usage
 
-TODO
+```jsx
+import { RadioButton } from '@repay/cactus-web
+...
+// Basic usage
+<RadioButton id="rb-1" name="rb-group" />
+
+// Disabled
+<RadioButton id="rb-2" name="rb-group" disabled={true}/>
+```
 
 ## Properties
 

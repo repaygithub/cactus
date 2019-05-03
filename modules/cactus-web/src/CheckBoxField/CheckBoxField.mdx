@@ -9,13 +9,51 @@ import cactusTheme from '@repay/cactus-theme'
 
 # CheckBoxField
 
+The `CheckBoxField` is a combination of `CheckBox` and `Label`, along with some accessibility features that are taken care of for you.
+
 ## Best practices
 
-TODO
+- Use meaningful labels for each `CheckBoxField` so that they are accessible.
+- If you don't provide an ID, a unique ID will be generated for you.
 
 ## Basic usage
 
-TODO
+```jsx
+import React, { useState } from 'react'
+import { Button, CheckBoxField } from '@repay/cactus-web'
+
+export default function Form() {
+  const [values, setValues] = useState({ checked: false })
+  const handleChange = useCallback(
+    (name, value) => {
+      setValues(state => setValues({ ...state, [name]: value }))
+    },
+    [setValues]
+  )
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...values }
+      // send data to api
+    },
+    [values]
+  )
+
+  return (
+    <form onSubmit={onSubmit}>
+      <CheckBoxField
+        name="checkboxfield"
+        label="Is Checked"
+        onChange={handleChange}
+        value={values.checked}
+      />
+      <Button type="submit" variant="action">
+        Submit
+      </Button>
+    </form>
+  )
+}
+```
 
 ## Properties
 

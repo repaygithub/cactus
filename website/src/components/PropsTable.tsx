@@ -50,9 +50,9 @@ const Table = styled.table`
 
 function sortProps(props: PropItem[]) {
   return props.sort((a, b) => {
-    if (a.name < b.name) {
+    if (a.name > b.name) {
       return 1
-    } else if (a.name > b.name) {
+    } else if (a.name < b.name) {
       return -1
     }
     return 0
@@ -88,9 +88,13 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
       const prop = props[i]
       if (prop.parent) {
         let sourceFile = prop.parent.fileName
-        if (sourceFile.endsWith(componentName + '.tsx')) {
+        if (
+          sourceFile.endsWith(componentName + '.tsx') ||
+          prop.description.includes('!important')
+        ) {
+          prop.description = prop.description.replace(/!important\s*/, '')
           ownProps.push(prop)
-        } else if (sourceFile.includes('styled-system')) {
+        } else if (sourceFile.includes('styled-system') || sourceFile.includes('helpers/margins')) {
           styledSystemProps.push(prop)
         }
       } else {
@@ -123,6 +127,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
               <tr>
                 <th>Name</th>
                 <th>Required</th>
+                <th>Default Value</th>
                 <th>Type</th>
                 <th>Description</th>
               </tr>
@@ -134,6 +139,10 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
                     <code>{prop.name}</code>
                   </td>
                   <td>{prop.required ? 'Y' : 'N'}</td>
+                  <td>
+                    {prop.defaultValue &&
+                      (prop.defaultValue.value === '' ? '{empty string}' : prop.defaultValue.value)}
+                  </td>
                   <td>{prop.type.name}</td>
                   <td>{prop.description}</td>
                 </tr>

@@ -11,9 +11,26 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Best practices
 
+- Each `CheckBox` component must have a unique `id`.
+- When pairing a `CheckBox` with a label, you should connect your label to the checkbox using the `htmlFor` prop. This is paramount for making
+a checkbox accessible.
+  - Example:
+  ```jsx
+  <CheckBox id="cb" />
+  <Label htmlFor="cb">Winter is Coming</Label>
+  ```
+
 ## Basic usage
 
-TODO
+```jsx
+import { CheckBox } from '@repay/cactus-web'
+...
+// Basic usage
+<CheckBox id="cb-1" />
+
+//Disabled
+<CheckBox id="cb-2" disabled={true} />
+```
 
 ## Properties
 

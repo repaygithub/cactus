@@ -11,11 +11,43 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Best practices
 
-Should update
+- `Button` components typically should not be used for navigation between pages.
+- If you want to make a link look like a button, there are a couple of solutions, depending on whether or not you are using Typescript. However, this will modify the button's styles.
+  - JSX Solution:
+  ```jsx
+  <Button as={Link} to='/path/to/something'>Go Somewhere!</Button>
+  ```
+  - TSX Solution:
+  ```tsx
+  const ButtonLink = Button.withComponent(Link)
+  <ButtonLink to='/path/to/something'>Go Somewhere!</ButtonLink>
+  ```
 
 ## Basic usage
 
-TODO
+```jsx
+import { Button } from '@repay/cactus-web'
+...
+// Basic usage
+<Button>
+  Basic Button
+</Button>
+
+// Call to action variant
+<Button variant="action">
+  Take Some Action
+</Button>
+
+// Inverse
+<Button inverse>
+  Inversed
+</Button>
+
+// Disabled
+<Button disabled>
+  Disabled
+</Button>
+```
 
 ## Properties
 
