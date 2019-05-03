@@ -37,7 +37,6 @@ exports[`component: IconButton should default to standard medium icon button 1`]
 
 <button
     class="c0"
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -92,7 +91,6 @@ exports[`component: IconButton should render call to action icon button 1`] = `
 
 <button
     class="c0"
-    display="inline-flex"
     variant="action"
   >
     <svg
@@ -144,7 +142,6 @@ exports[`component: IconButton should render disabled variant 1`] = `
 <button
     class="c0"
     disabled=""
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -200,7 +197,6 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
 <button
     aria-label="uchiha-itachi"
     class="c0"
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -255,7 +251,6 @@ exports[`component: IconButton should render inverse call to action icon button 
 
 <button
     class="c0"
-    display="inline-flex"
     variant="action"
   >
     <svg
@@ -307,7 +302,6 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
 <button
     class="c0"
     disabled=""
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -363,7 +357,6 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
 
 <button
     class="c0"
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -418,7 +411,6 @@ exports[`component: IconButton should render large icon button 1`] = `
 
 <button
     class="c0"
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -473,7 +465,6 @@ exports[`component: IconButton should render small icon button 1`] = `
 
 <button
     class="c0"
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -528,7 +519,6 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
 
 <button
     class="c0"
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -583,7 +573,6 @@ exports[`component: IconButton should render tiny icon button 1`] = `
 
 <button
     class="c0"
-    display="inline-flex"
     variant="standard"
   >
     <svg
@@ -639,7 +628,6 @@ exports[`component: IconButton should support margin space props 1`] = `
 
 <button
     class="c0"
-    display="inline-flex"
     mb="4"
     variant="standard"
   >
