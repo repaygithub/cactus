@@ -16,7 +16,6 @@ storiesOf('ToggleField', module).add('Basic Usage', () => (
         value={value}
         onChange={onChange}
         disabled={boolean('disabled', false)}
-        {...eventLoggers}
       />
     )}
   </FormHandler>

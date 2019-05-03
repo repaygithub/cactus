@@ -29,8 +29,8 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
         onClick(event)
       }
       if (typeof onChange === 'function') {
-        const target = (event.target as unknown) as HTMLButtonElement
-        onChange(name, target.getAttribute('aria-checked') !== 'true')
+        const currentTarget = (event.currentTarget as unknown) as HTMLButtonElement
+        onChange(name, currentTarget.getAttribute('aria-checked') !== 'true')
       }
     },
     [onClick, onChange, name]
