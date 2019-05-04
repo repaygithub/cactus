@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{233:function(e,n,t){"use strict";t.r(n);var a=t(0),l=t(238),r=t.n(l);n.default=function(){return a.createElement(a.Fragment,null,a.createElement(r.a,{title:"Typography"}),a.createElement("h1",null,"Typography"),a.createElement("p",null,"TODO"))}}}]);
+//# sourceMappingURL=component---src-pages-design-system-typography-tsx-84a26b54dc9cbc9a5a4d.js.map
