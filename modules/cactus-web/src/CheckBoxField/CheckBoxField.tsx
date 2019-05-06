@@ -1,10 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
-import Label from '../Label/Label'
+
+import { FieldOnChangeHandler, Omit } from '../types'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
-import { Omit, FieldOnChangeHandler } from '../types'
+import Label from '../Label/Label'
+import styled from 'styled-components'
 import useId from '../helpers/useId'
-import { margins, splitProps, MarginProps } from '../helpers/margins'
 
 interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'disabled'>,

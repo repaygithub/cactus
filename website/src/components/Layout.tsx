@@ -1,15 +1,16 @@
 import * as React from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+
+import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
+import { IconButton } from '@repay/cactus-web'
 import { Motion, spring } from 'react-motion'
 import { useRect } from '@reach/rect'
-import cactusTheme from '@repay/cactus-theme'
-import { IconButton } from '@repay/cactus-web'
-import GlobalStyles from './GlobalStyles'
 import Box from './Box'
-import Menu from '@repay/cactus-icons/i/navigation-menu-lines'
+import cactusTheme from '@repay/cactus-theme'
 import Close from '@repay/cactus-icons/i/navigation-close'
-import { useStaticQuery, graphql, Link, withPrefix } from 'gatsby'
+import GlobalStyles from './GlobalStyles'
+import Menu from '@repay/cactus-icons/i/navigation-menu-lines'
 import storybooks from '../storybook-config.json'
+import styled, { ThemeProvider } from 'styled-components'
 
 interface MenuGroup {
   title: string

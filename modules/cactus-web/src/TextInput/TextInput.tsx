@@ -1,9 +1,10 @@
 import React from 'react'
-import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
+
 import { CactusTheme } from '@repay/cactus-theme'
-import { StatusCheck, NotificationAlert, NotificationError } from '@repay/cactus-icons'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
-import { margins, splitProps, MarginProps } from '../helpers/margins'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type Status = 'success' | 'invalid' | 'error'
 

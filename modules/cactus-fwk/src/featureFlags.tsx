@@ -1,4 +1,5 @@
-import React, { createContext, useContext, ComponentType, FC } from 'react'
+import React, { ComponentType, createContext, FC, useContext } from 'react'
+
 import { FeatureFlagsObject } from './types'
 
 const FeatureFlagContext = createContext<FeatureFlagsObject | null>(null)

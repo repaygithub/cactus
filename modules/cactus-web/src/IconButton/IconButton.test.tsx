@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent } from 'react-testing-library'
-import cactusTheme from '@repay/cactus-theme'
-import IconButton from './IconButton'
+
+import { cleanup, fireEvent, render } from 'react-testing-library'
 import { StatusCheck } from '@repay/cactus-icons'
 import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
+import IconButton from './IconButton'
 
 afterEach(cleanup)
 

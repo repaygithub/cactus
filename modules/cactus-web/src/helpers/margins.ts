@@ -1,16 +1,16 @@
+import * as CSS from 'csstype'
 import {
-  margin,
-  marginTop,
-  marginBottom,
-  marginRight,
-  marginLeft,
-  mapProps,
   compose,
   is,
-  TLengthStyledSystem,
+  mapProps,
+  margin,
+  marginBottom,
+  marginLeft,
+  marginRight,
+  marginTop,
   ResponsiveValue,
+  TLengthStyledSystem,
 } from 'styled-system'
-import * as CSS from 'csstype'
 import { Omit } from '../types'
 
 export interface MarginProps<TLength = TLengthStyledSystem> {

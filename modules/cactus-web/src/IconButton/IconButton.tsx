@@ -1,7 +1,8 @@
 import React from 'react'
-import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
+
 import { CactusTheme } from '@repay/cactus-theme'
-import { margins, MarginProps } from '../helpers/margins'
+import { MarginProps, margins } from '../helpers/margins'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type IconButtonVariants = 'standard' | 'action'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'

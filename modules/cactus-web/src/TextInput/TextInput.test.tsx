@@ -1,9 +1,10 @@
 import * as React from 'react'
+
 import { cleanup, render } from 'react-testing-library'
-import userEvent from 'user-event'
-import TextInput from './TextInput'
-import cactusTheme from '@repay/cactus-theme'
 import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
+import TextInput from './TextInput'
+import userEvent from 'user-event'
 
 afterEach(cleanup)
 

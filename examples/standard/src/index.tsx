@@ -1,11 +1,12 @@
-import React, { Component, ChangeEvent } from 'react'
+import React, { ChangeEvent, Component } from 'react'
 import ReactDOM from 'react-dom'
-import I18nProvider from '@repay/cactus-i18n'
-import i18nController from './i18nController'
+
+import { Coffee, Home, Snack, Snacks } from './containers/index'
 import { Router } from '@reach/router'
 import App from './App'
-import { Coffee, Home, Snacks, Snack } from './containers/index'
 import AppRoot, { FeatureFlagsObject } from '@repay/cactus-fwk'
+import i18nController from './i18nController'
+import I18nProvider from '@repay/cactus-i18n'
 
 const appRoot = document.createElement('div')
 appRoot.className = 'app-root'

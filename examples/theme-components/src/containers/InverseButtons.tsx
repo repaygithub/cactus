@@ -1,6 +1,7 @@
 import React, { Component, CSSProperties } from 'react'
-import { Button, TextButton, IconButton } from '@repay/cactus-web'
+
 import { ActionsAdd, NavigationChevronLeft } from '@repay/cactus-icons'
+import { Button, IconButton, TextButton } from '@repay/cactus-web'
 import { Link, RouteComponentProps } from '@reach/router'
 import cactusTheme from '@repay/cactus-theme'
 

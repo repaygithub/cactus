@@ -1,10 +1,11 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { text, boolean, select } from '@storybook/addon-knobs/react'
+
+import * as icons from '@repay/cactus-icons'
 import { actions } from '@storybook/addon-actions'
+import { boolean, select, text } from '@storybook/addon-knobs/react'
+import { storiesOf } from '@storybook/react'
 import Button, { ButtonVariants } from './Button'
 import DarkMode from '../storySupport/DarkMode'
-import * as icons from '@repay/cactus-icons'
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]

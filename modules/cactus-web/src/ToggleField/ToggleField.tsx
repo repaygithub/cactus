@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { Omit, FieldOnChangeHandler } from '../types'
-import styled from 'styled-components'
-import { margins, MarginProps } from '../helpers/margins'
+
+import { FieldOnChangeHandler, Omit } from '../types'
+import { MarginProps, margins } from '../helpers/margins'
 import Label, { LabelProps } from '../Label/Label'
+import styled from 'styled-components'
 import Toggle, { ToggleProps } from '../Toggle/Toggle'
 import useId from '../helpers/useId'
 

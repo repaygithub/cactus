@@ -1,7 +1,7 @@
-import styled, { FlattenInterpolation, ThemeProps, css } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
+import { MarginProps, margins } from '../helpers/margins'
 import { Omit } from '../types'
-import { margins, MarginProps } from '../helpers/margins'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type ButtonVariants = 'standard' | 'action'
 

@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
+
 import { I18nSection, I18nText, useI18nText } from '@repay/cactus-i18n'
-import { useFeatureFlags } from '@repay/cactus-fwk'
 import { Link, RouteComponentProps } from '@reach/router'
+import { useFeatureFlags } from '@repay/cactus-fwk'
 
 const snackKeysNoCarrots = ['cookies', 'chips', 'fruit']
 const snackKeysWithCarrots = snackKeysNoCarrots.concat('carrots')
