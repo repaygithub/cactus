@@ -168,12 +168,25 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   color: hsl(200,10%,20%);
 }
 
+.c9 + .c0 {
+  margin-top: 8px;
+}
+
+.c9 .c7 {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.c9 .c2 {
+  top: -1px;
+}
+
 .c1 + .c0 {
   margin-top: 8px;
 }
 
 .c1 .c7 {
-  cursor: pointer;
+  cursor: not-allowed;
   padding-left: 8px;
 }
 
@@ -293,6 +306,19 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 }
 
 .c9 .c2 {
+  top: -1px;
+}
+
+.c10 + .c0 {
+  margin-top: 8px;
+}
+
+.c10 .c7 {
+  cursor: not-allowed;
+  padding-left: 8px;
+}
+
+.c10 .c2 {
   top: -1px;
 }
 

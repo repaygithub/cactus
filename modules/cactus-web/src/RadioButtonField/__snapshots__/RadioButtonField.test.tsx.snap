@@ -1,0 +1,343 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: RadioButtonField should render a disabled radio button field 1`] = `
+.c7 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.c5 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: hsl(0,0%,90%);
+  border: 2px solid hsl(0,0%,90%);
+}
+
+.c5:after {
+  position: absolute;
+  content: '';
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: hsl(0,0%,90%);
+  margin: 2px 2px;
+  box-sizing: border-box;
+}
+
+.c3 {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: cursor;
+}
+
+.c3 input:checked ~ span {
+  background-color: transparent;
+}
+
+.c3 input:checked ~ span:after {
+  display: block;
+}
+
+.c3 input:focus ~ span {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c8 + .c0 {
+  margin-top: 8px;
+}
+
+.c8 .c6 {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.c8 .c2 {
+  top: -1px;
+}
+
+.c1 + .c0 {
+  margin-top: 8px;
+}
+
+.c1 .c6 {
+  cursor: not-allowed;
+  padding-left: 8px;
+}
+
+.c1 .c2 {
+  top: -1px;
+}
+
+<div>
+  <div
+    class="c0 c1"
+  >
+    <label
+      class="c2 c3"
+      for="rb"
+    >
+      <input
+        class="c4"
+        disabled=""
+        id="rb"
+        name="rb"
+        type="radio"
+      />
+      <span
+        aria-hidden="true"
+        class="c5"
+        disabled=""
+      />
+    </label>
+    <label
+      class="c6 c7"
+      for="rb"
+    >
+      My Label
+    </label>
+  </div>
+</div>
+`;
+
+exports[`component: RadioButtonField should render a radio button field 1`] = `
+.c7 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.c5 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 2px solid hsl(200,96%,11%);
+}
+
+.c5:after {
+  position: absolute;
+  content: '';
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: hsl(200,96%,35%);
+  margin: 2px 2px;
+  box-sizing: border-box;
+}
+
+.c3 {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.c3 input:checked ~ span {
+  border-color: hsl(200,96%,35%);
+  background-color: transparent;
+}
+
+.c3 input:checked ~ span:after {
+  display: block;
+}
+
+.c3 input:focus ~ span {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c1 + .c0 {
+  margin-top: 8px;
+}
+
+.c1 .c6 {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.c1 .c2 {
+  top: -1px;
+}
+
+<div>
+  <div
+    class="c0 c1"
+  >
+    <label
+      class="c2 c3"
+      for="rb"
+    >
+      <input
+        class="c4"
+        id="rb"
+        name="rb"
+        type="radio"
+      />
+      <span
+        aria-hidden="true"
+        class="c5"
+      />
+    </label>
+    <label
+      class="c6 c7"
+      for="rb"
+    >
+      My Label
+    </label>
+  </div>
+</div>
+`;
+
+exports[`component: RadioButtonField should support margin space props 1`] = `
+.c7 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.c5 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 2px solid hsl(200,96%,11%);
+}
+
+.c5:after {
+  position: absolute;
+  content: '';
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: hsl(200,96%,35%);
+  margin: 2px 2px;
+  box-sizing: border-box;
+}
+
+.c3 {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-left: 16px;
+}
+
+.c3 input:checked ~ span {
+  border-color: hsl(200,96%,35%);
+  background-color: transparent;
+}
+
+.c3 input:checked ~ span:after {
+  display: block;
+}
+
+.c3 input:focus ~ span {
+  box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c8 + .c0 {
+  margin-top: 8px;
+}
+
+.c8 .c6 {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.c8 .c2 {
+  top: -1px;
+}
+
+.c9 + .c0 {
+  margin-top: 8px;
+}
+
+.c9 .c6 {
+  cursor: not-allowed;
+  padding-left: 8px;
+}
+
+.c9 .c2 {
+  top: -1px;
+}
+
+.c1 {
+  margin-left: 16px;
+}
+
+.c1 + .c0 {
+  margin-top: 8px;
+}
+
+.c1 .c6 {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.c1 .c2 {
+  top: -1px;
+}
+
+<div>
+  <div
+    class="c0 c1"
+  >
+    <label
+      class="c2 c3"
+      for="Ackermann"
+    >
+      <input
+        class="c4"
+        id="Ackermann"
+        name="rbf"
+        type="radio"
+      />
+      <span
+        aria-hidden="true"
+        class="c5"
+      />
+    </label>
+    <label
+      class="c6 c7"
+      for="Ackermann"
+    >
+      Mikasa
+    </label>
+  </div>
+</div>
+`;

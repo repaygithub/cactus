@@ -26,6 +26,7 @@ exports[`component: RadioButton should render a disabled radio button 1`] = `
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  background-color: hsl(0,0%,90%);
   margin: 2px 2px;
   box-sizing: border-box;
 }
@@ -33,7 +34,12 @@ exports[`component: RadioButton should render a disabled radio button 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
+  vertical-align: middle;
   cursor: cursor;
+}
+
+.c0 input:checked ~ span {
+  background-color: transparent;
 }
 
 .c0 input:checked ~ span:after {
@@ -79,7 +85,7 @@ exports[`component: RadioButton should render a radio button 1`] = `
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: none;
+  background-color: transparent;
   border: 2px solid hsl(200,96%,11%);
 }
 
@@ -98,11 +104,13 @@ exports[`component: RadioButton should render a radio button 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
+  vertical-align: middle;
   cursor: pointer;
 }
 
 .c0 input:checked ~ span {
   border-color: hsl(200,96%,35%);
+  background-color: transparent;
 }
 
 .c0 input:checked ~ span:after {
@@ -146,7 +154,7 @@ exports[`component: RadioButton should support margin space props 1`] = `
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: none;
+  background-color: transparent;
   border: 2px solid hsl(200,96%,11%);
 }
 
@@ -165,12 +173,14 @@ exports[`component: RadioButton should support margin space props 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
+  vertical-align: middle;
   cursor: pointer;
   margin: 16px;
 }
 
 .c0 input:checked ~ span {
   border-color: hsl(200,96%,35%);
+  background-color: transparent;
 }
 
 .c0 input:checked ~ span:after {
