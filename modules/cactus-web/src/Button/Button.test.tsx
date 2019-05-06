@@ -1,10 +1,10 @@
 import * as React from 'react'
 
+import { ActionsDelete } from '@repay/cactus-icons'
 import { cleanup, fireEvent, render } from 'react-testing-library'
 import { ThemeProvider } from 'styled-components'
 import Button from './Button'
 import cactusTheme from '@repay/cactus-theme'
-import { ActionsDelete } from '@repay/cactus-icons'
 
 afterEach(cleanup)
 
