@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent, queryByAttribute } from 'react-testing-library'
-import RadioButtonField from './RadioButtonField'
-import cactusTheme from '@repay/cactus-theme'
+
+import { cleanup, fireEvent, queryByAttribute, render } from 'react-testing-library'
 import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
+import RadioButtonField from './RadioButtonField'
 
 afterEach(cleanup)
 

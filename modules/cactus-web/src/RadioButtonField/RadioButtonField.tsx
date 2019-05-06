@@ -1,9 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
+
+import { FieldOnChangeHandler, Omit } from '../types'
+import { MarginProps, margins } from '../helpers/margins'
 import Label from '../Label/Label'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
-import { Omit, FieldOnChangeHandler } from '../types'
-import { margins, MarginProps } from '../helpers/margins'
+import styled from 'styled-components'
 import useId from '../helpers/useId'
 
 interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id' | 'onChange'>, MarginProps {
