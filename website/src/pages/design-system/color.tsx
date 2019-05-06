@@ -1,13 +1,24 @@
 import * as React from 'react'
-import Helmet from 'react-helmet'
-import Color from 'color'
-import Box from '../../components/Box'
-import Text from '../../components/Text'
+import {
+  border,
+  borderBottom,
+  borderColor,
+  borderLeft,
+  borderRight,
+  borderStyle,
+  borderTop,
+  borderWidth,
+} from 'styled-system'
 import { Link } from 'gatsby'
-import cactusTheme, { ColorVariant, CactusColor } from '@repay/cactus-theme'
+import Box from '../../components/Box'
+import cactusTheme, { CactusColor, ColorVariant } from '@repay/cactus-theme'
+import Color from 'color'
+import Helmet from 'react-helmet'
+import Text from '../../components/Text'
 
 const upperCaseFirst = (word: string) => word.charAt(0).toUpperCase() + word.slice(1)
 
+const borderRadius: React.CSSProperties = { borderRadius: '4px' }
 const extraStyles: React.CSSProperties = { textAlign: 'right', borderRadius: '4px' }
 
 type ColorDisplayProps = {

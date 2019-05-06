@@ -1,7 +1,8 @@
 import * as React from 'react'
-import storybookTheme from './theme'
-import { configure, addParameters, addDecorator } from '@storybook/react'
+
+import { addDecorator, addParameters, configure } from '@storybook/react'
 import { withKnobs } from '@storybook/addon-knobs'
+import storybookTheme from './theme'
 
 addParameters({
   options: {

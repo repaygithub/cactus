@@ -1,8 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
-import { StatusCheck } from '@repay/cactus-icons'
+
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
-import { splitProps, margins, MarginProps } from '../helpers/margins'
+import { StatusCheck } from '@repay/cactus-icons'
+import styled from 'styled-components'
 
 export interface CheckBoxProps
   extends Omit<

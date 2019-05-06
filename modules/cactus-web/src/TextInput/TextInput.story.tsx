@@ -1,7 +1,8 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { boolean, text, select } from '@storybook/addon-knobs/react'
+
 import { actions } from '@storybook/addon-actions'
+import { boolean, select, text } from '@storybook/addon-knobs/react'
+import { storiesOf } from '@storybook/react'
 import TextInput, { Status } from './TextInput'
 
 const textInputStories = storiesOf('TextInput', module)

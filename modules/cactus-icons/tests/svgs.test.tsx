@@ -1,6 +1,7 @@
 import React from 'react'
-import { render, cleanup } from 'react-testing-library'
+
 import * as icons from '../ts'
+import { cleanup, render } from 'react-testing-library'
 
 afterEach(cleanup)
 

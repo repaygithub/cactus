@@ -1,9 +1,10 @@
 import * as React from 'react'
+
+import { addDecorator, addParameters, configure } from '@storybook/react'
 import { ThemeProvider } from 'styled-components'
+import { withKnobs } from '@storybook/addon-knobs'
 import cactusTheme from '@repay/cactus-theme'
 import storybookTheme from './theme'
-import { configure, addParameters, addDecorator } from '@storybook/react'
-import { withKnobs } from '@storybook/addon-knobs'
 
 addParameters({
   options: {

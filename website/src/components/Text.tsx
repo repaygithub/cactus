@@ -1,24 +1,24 @@
-import styled from 'styled-components'
 import {
-  space,
-  fontSize,
   color,
-  colorStyle,
-  fontFamily,
-  fontWeight,
-  textAlign,
-  lineHeight,
-  letterSpacing,
-  SpaceProps,
-  FontSizeProps,
   ColorProps,
+  colorStyle,
   ColorStyleProps,
+  fontFamily,
   FontFamilyProps,
+  fontSize,
+  FontSizeProps,
+  fontWeight,
   FontWeightProps,
-  TextAlignProps,
-  LineHeightProps,
+  letterSpacing,
   LetterSpacingProps,
+  lineHeight,
+  LineHeightProps,
+  space,
+  SpaceProps,
+  textAlign,
+  TextAlignProps,
 } from 'styled-system'
+import styled from 'styled-components'
 
 interface TextProps
   extends SpaceProps,

@@ -2,14 +2,7 @@
 
 exports[`component: CheckBoxField should render a checkbox field 1`] = `
 <DocumentFragment>
-  .c8 {
-  font-size: 18px;
-  height: 28px;
-  font-weight: 400;
-  color: hsl(200,10%,20%);
-}
-
-.c6 {
+  .c6 {
   vertical-align: middle;
   width: 1em;
 }
@@ -58,6 +51,13 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 
 .c3 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c8 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
 }
 
 .c1 + .c0 {
@@ -115,14 +115,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 
 exports[`component: CheckBoxField should render a disabled checkbox field 1`] = `
 <DocumentFragment>
-  .c8 {
-  font-size: 18px;
-  height: 28px;
-  font-weight: 400;
-  color: hsl(200,10%,20%);
-}
-
-.c6 {
+  .c6 {
   vertical-align: middle;
   width: 1em;
 }
@@ -166,6 +159,13 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 
 .c3 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c8 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
 }
 
 .c9 + .c0 {
@@ -238,14 +238,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 
 exports[`component: CheckBoxField should support margin space props 1`] = `
 <DocumentFragment>
-  .c8 {
-  font-size: 18px;
-  height: 28px;
-  font-weight: 400;
-  color: hsl(200,10%,20%);
-}
-
-.c6 {
+  .c6 {
   vertical-align: middle;
   width: 1em;
 }
@@ -294,6 +287,13 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 
 .c3 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c8 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
 }
 
 .c9 + .c0 {

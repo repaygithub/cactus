@@ -1,7 +1,8 @@
 import * as React from 'react'
+
 import { graphql } from 'gatsby'
-import Helmet from 'react-helmet'
 import DocgenProvider, { DocItem } from '../components/DocgenProvider'
+import Helmet from 'react-helmet'
 import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 
 type ComponentTemplateProps = {

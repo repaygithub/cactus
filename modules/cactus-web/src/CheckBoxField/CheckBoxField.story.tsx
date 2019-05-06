@@ -1,6 +1,7 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+
 import { boolean, text } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import CheckBoxField from './CheckBoxField'
 
 const checkBoxFieldStories = storiesOf('CheckBoxField', module)

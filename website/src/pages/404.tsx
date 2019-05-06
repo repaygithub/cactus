@@ -1,6 +1,7 @@
 import * as React from 'react'
-import Box from '../components/Box'
+
 import { ReactComponent as NoResultsCactus } from '../assets/no-results-cactus.svg'
+import Box from '../components/Box'
 
 export default () => (
   <>

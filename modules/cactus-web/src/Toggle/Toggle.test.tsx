@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent } from 'react-testing-library'
-import Toggle from './Toggle'
-import cactusTheme from '@repay/cactus-theme'
+
+import { cleanup, fireEvent, render } from 'react-testing-library'
 import { ThemeProvider } from 'styled-components'
+import cactusTheme from '@repay/cactus-theme'
+import Toggle from './Toggle'
 
 afterEach(cleanup)
 
