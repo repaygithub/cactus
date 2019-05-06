@@ -40,7 +40,12 @@ exports[`component: TextButton should default to standard variant 1`] = `
 
 exports[`component: TextButton should render a disabled text+icon button 1`] = `
 <DocumentFragment>
-  .c0 {
+  .c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c0 {
   font-size: 18px;
   border: none;
   padding: 2px 0;
@@ -66,11 +71,6 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
-}
-
-.c1 {
-  vertical-align: middle;
-  width: 1em;
 }
 
 <button
@@ -94,7 +94,12 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
 
 exports[`component: TextButton should render a text+icon button 1`] = `
 <DocumentFragment>
-  .c0 {
+  .c1 {
+  vertical-align: middle;
+  width: 1em;
+}
+
+.c0 {
   font-size: 18px;
   border: none;
   padding: 2px 0;
@@ -120,11 +125,6 @@ exports[`component: TextButton should render a text+icon button 1`] = `
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
-}
-
-.c1 {
-  vertical-align: middle;
-  width: 1em;
 }
 
 <button
