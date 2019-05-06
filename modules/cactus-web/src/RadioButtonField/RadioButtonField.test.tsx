@@ -61,7 +61,7 @@ describe('component: RadioButtonField', () => {
     )
 
     fireEvent.click(getByLabelText('Levi'))
-    expect(onChange).toHaveBeenCalled()
+    expect(onChange).toHaveBeenCalledWith('rbf', 'on')
   })
 
   test('should trigger onFocus event', () => {

@@ -23,7 +23,7 @@ import React, { useState } from 'react'
 import { Button, RadioButtonField } from '@repay/cactus-web'
 
 export default function Form() {
-  const [values, setValues] = useState({ selected: false })
+  const [values, setValues] = useState({ radiobuttonfield: 'option_a' })
   const handleChange = useCallback(
     (name, value) => {
       setValues(state => setValues({ ...state, [name]: value }))
@@ -38,14 +38,21 @@ export default function Form() {
     },
     [values]
   )
-
   return (
     <form onSubmit={onSubmit}>
       <RadioButtonField
         name="radiobuttonfield"
-        label="Is Selected"
+        label="option a"
+        value="option_a"
         onChange={handleChange}
-        checked={values.selected}
+        checked={values.radiobuttonfield === 'option_a'}
+      />
+      <RadioButtonField
+        name="radiobuttonfield"
+        label="option b"
+        value="option_b"
+        onChange={handleChange}
+        checked={values.radiobuttonfield === 'option_b'}
       />
       <Button type="submit" variant="action">
         Submit

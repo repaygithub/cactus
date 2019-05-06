@@ -12,7 +12,7 @@ interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id' | 'onChange'
   name: string
   labelProps?: object
   id?: string
-  onChange?: FieldOnChangeHandler<boolean>
+  onChange?: FieldOnChangeHandler<string>
 }
 
 const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
@@ -22,7 +22,7 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
     (event: React.FormEvent<HTMLInputElement>) => {
       if (typeof onChange === 'function') {
         const target = (event.target as unknown) as HTMLInputElement
-        onChange(name, target.checked)
+        onChange(name, target.value)
       }
     },
     [name, onChange]
