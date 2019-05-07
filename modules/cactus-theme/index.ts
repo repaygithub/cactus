@@ -8,6 +8,13 @@ export interface FontSizeObject extends Array<number> {
   body?: number
 }
 
+export interface IconSizeObject extends Array<number> {
+  tiny?: number
+  small?: number
+  medium?: number
+  large?: number
+}
+
 export interface CactusTheme {
   colors: {
     /** Core colors */
@@ -35,6 +42,7 @@ export interface CactusTheme {
   }
   space: number[]
   fontSizes: FontSizeObject
+  iconSizes: IconSizeObject
   colorStyles: {
     base: ColorStyle
     callToAction: ColorStyle
@@ -86,6 +94,12 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   fontSizes.small = fontSizes[0]
   fontSizes.body = fontSizes[1]
 
+  const iconSizes: IconSizeObject = [8, 16, 24, 40]
+  iconSizes.tiny = iconSizes[0]
+  iconSizes.small = iconSizes[1]
+  iconSizes.medium = iconSizes[2]
+  iconSizes.large = iconSizes[3]
+
   return {
     colors: {
       /** Core colors */
@@ -113,6 +127,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
     },
     space: [0, 2, 4, 8, 16, 32, 64],
     fontSizes,
+    iconSizes,
     colorStyles: {
       base: {
         backgroundColor: base,
