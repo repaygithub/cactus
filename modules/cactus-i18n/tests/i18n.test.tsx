@@ -6,6 +6,7 @@ import I18nProvider, {
   BaseI18nController,
   I18nElement,
   I18nFormatted,
+  I18nResource,
   I18nSection,
   I18nText,
   useI18nResource,
@@ -368,6 +369,59 @@ key-for-the-group= We are the people!
       )
       fireEvent.click(getByLabelText('people run the world'))
       expect(handleClick).toHaveBeenCalled()
+    })
+  })
+
+  describe('<I18nResource />', () => {
+    test('renders get key when message not found', () => {
+      const { container } = render(
+        <I18nResource get="this_is_my_key">{message => <span>{message}</span>}</I18nResource>
+      )
+      expect(container).toHaveTextContent('this_is_my_key')
+    })
+
+    test('calls provided children as render prop', () => {
+      const global = `
+key-for-the-group = We are the { $groupName }!
+  .aria-label = { $groupName} run the world`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const { getByLabelText } = render(
+        <I18nProvider controller={controller}>
+          <I18nResource get="key-for-the-group" args={{ groupName: 'people' }}>
+            {(message, attrs) => <span {...attrs}>{message}</span>}
+          </I18nResource>
+        </I18nProvider>
+      )
+      const span = getByLabelText('\u2068people\u2069 run the world') as HTMLSpanElement
+      expect(span).not.toBeNull()
+      expect(span).toHaveTextContent('We are the \u2068people\u2069!')
+    })
+
+    test('calls provided render prop', () => {
+      const global = `
+key-for-the-group = We are the { $groupName }!
+  .aria-label = { $groupName} run the world`
+      const controller = new I18nController({
+        defaultLang: 'en-US',
+        supportedLangs: ['en-US'],
+        global,
+      })
+      const { getByLabelText } = render(
+        <I18nProvider controller={controller}>
+          <I18nResource
+            get="key-for-the-group"
+            args={{ groupName: 'people' }}
+            render={(message, attrs) => <span {...attrs}>{message}</span>}
+          />
+        </I18nProvider>
+      )
+      const span = getByLabelText('\u2068people\u2069 run the world') as HTMLSpanElement
+      expect(span).not.toBeNull()
+      expect(span).toHaveTextContent('We are the \u2068people\u2069!')
     })
   })
 

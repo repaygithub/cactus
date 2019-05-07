@@ -1,51 +1,8 @@
-import React, {
-  ComponentProps,
-  JSXElementConstructor,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import React, { ComponentProps, JSXElementConstructor, useEffect, useState } from 'react'
 
-import BaseI18nController, { LoadingState } from './BaseI18nController'
-
-export interface I18nContextType {
-  controller: BaseI18nController
-  section: string
-  lang: string
-  loadingState: LoadingState
-}
-
-const I18nContext = React.createContext<I18nContextType | null>(null)
-
-const useI18nText = (id: string, args?: object, sectionOverride?: string) => {
-  const context = useContext(I18nContext)
-  if (context === null) {
-    return null
-  }
-  const { controller, section } = context
-  return controller.getText({ args, section: sectionOverride || section, id })
-}
-
-const useI18nResource = (id: string, args?: object, sectionOverride?: string) => {
-  const context = useContext(I18nContext)
-  if (context === null) {
-    return [null, {}]
-  }
-  const { controller, section } = context
-  return controller.get({ args, section: sectionOverride || section, id })
-}
-
-const useI18nContext = (section?: string) => {
-  const context = useContext(I18nContext)
-  if (context === null) {
-    return null
-  }
-  const newContext = { ...context }
-  if (section) {
-    newContext.section = section
-  }
-  return newContext
-}
+import { I18nContext, useI18nContext, useI18nResource, useI18nText } from './hooks'
+import { I18nContextType } from './types'
+import BaseI18nController from './BaseI18nController'
 
 interface I18nProviderProps {
   controller: BaseI18nController
@@ -137,6 +94,27 @@ const I18nElement = function<Elem extends TagNameOrReactComp>(props: I18nElement
   return React.createElement(as, elemProps, message || get)
 }
 
+interface I18nResourceProps extends I18nTextProps {
+  render?: (message: string, attributes?: object | null) => React.ReactNode
+  children?: (message: string, attributes?: object | null) => React.ReactNode
+}
+
+const I18nResource: React.FC<I18nResourceProps> = props => {
+  const [message, attrs] = useI18nResource(props.get, props.args, props.section)
+  let renderer = null
+  if (typeof props.children === 'function') {
+    renderer = props.children
+  } else if (typeof props.render === 'function') {
+    renderer = props.render
+  }
+
+  return (
+    <React.Fragment>
+      {renderer !== null ? renderer(message || props.get, attrs) : null}
+    </React.Fragment>
+  )
+}
+
 interface I18nFormattedProps extends I18nTextProps {
   formatter: (message: string) => React.ReactNode
 }
@@ -146,12 +124,4 @@ const I18nFormatted: React.FC<I18nFormattedProps> = props => {
   return <React.Fragment>{text !== null ? props.formatter(text) : props.get}</React.Fragment>
 }
 
-export {
-  I18nProvider,
-  I18nSection,
-  I18nElement,
-  I18nFormatted,
-  I18nText,
-  useI18nText,
-  useI18nResource,
-}
+export { I18nProvider, I18nSection, I18nElement, I18nFormatted, I18nResource, I18nText }
