@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "cleanup": "rm -rf dist",
-    "dev": "repay-scripts dev --config ./repay-scripts.config.js --debug -p 3436 src/index.tsx",
+    "dev": "repay-scripts dev --config ./repay-scripts.config.js -p 3436 src/index.tsx",
     "build": "repay-scripts build --config ./repay-scripts.config.js src/index.tsx",
     "test": "yarn test:types",
     "test:ci": "yarn test",

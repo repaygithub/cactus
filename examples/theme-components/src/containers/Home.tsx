@@ -1,7 +1,7 @@
 import React, { Component, CSSProperties } from 'react'
 
 import { Link, RouteComponentProps } from '@reach/router'
-import { TextButton } from '@repay/cactus-web'
+import { TextButton, ToggleField } from '@repay/cactus-web'
 
 const tableStyle: CSSProperties = {
   border: '1px solid black',
@@ -13,6 +13,10 @@ const tableStyle: CSSProperties = {
 }
 
 class Home extends Component<RouteComponentProps> {
+  state = { enabled: false }
+
+  handleChange = (name: string, value: boolean) => this.setState({ [name]: value })
+
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
@@ -21,6 +25,12 @@ class Home extends Component<RouteComponentProps> {
           @repay/cactus-theme!
         </h2>
         <div>
+          <ToggleField
+            label="Is Enabled"
+            name="enabled"
+            value={this.state.enabled}
+            onChange={this.handleChange}
+          />
           <span>Use the table below to navigate to different components.</span>
           <table style={tableStyle}>
             <tbody>
