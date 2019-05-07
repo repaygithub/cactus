@@ -230,8 +230,50 @@ const formatter = text => {
 }
 const formatted = () => {
   return (
-    <I18nFormatted get="translation-key" formatter={formatter} args={ format: "reversed" } />
+    <I18nFormatted get="translation-key" formatter={formatter} args={{ format: "reversed" }} />
   )
+}
+```
+
+## I18nResource
+
+The `<I18nResource />` component is used to access the message and attributes when inside the render function of a class component. It can also allow using translated text as arguments for other messages.
+
+### Props
+
+| Prop       | Type       | Required | Description                                                                              |
+| ---------- | ---------- | -------- | ---------------------------------------------------------------------------------------- |
+| `get`      | String     | Y        | Tells the component which translation to look for in the loaded section                  |
+| `args`     | Object     | N        | Provides a key-value mapping for any variables that should be displayed in a translation |
+| `section`  | String     | N        | Used for overriding the current section to load translations from another                |
+| `children` | RenderFunc | N        | A function that receives message and attributes and returns React elements               |
+| `render`   | RenderFunc | N        | A function that receives message and attributes and returns React elements               |
+
+Either `children` or `render` must be provided to the element or it will render `null`.
+
+```ts
+type RenderFunc = (message: string, attributes?: object | null) => React.ReactNode
+```
+
+### Example Usage
+
+```jsx
+import * as React from 'react'
+import { I18nResource } from '@repay/cactus-i18n'
+
+class BigComponent extends React.Component {
+  // state management functions
+  render() {
+    // some calculations
+    return (
+      <div>
+        {/* Other react elements */}
+        <I18nResource get="translation-key">
+          {(message, attrs) => <h1 {...attrs}>{message}</h1>}
+        </I18nResource>
+      </div>
+    )
+  }
 }
 ```
 
