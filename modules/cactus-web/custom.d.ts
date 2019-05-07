@@ -67,7 +67,7 @@ declare module 'styled-system' {
     cssProperty?: string
     key?: string
     getter?: () => any
-    transformValue?: (n: string | number) => any
+    transformValue?: (n: string | number, scale: Array<string | number>) => any
     scale?: Array<string | number>
   }
 
