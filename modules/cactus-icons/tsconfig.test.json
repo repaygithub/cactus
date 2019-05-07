@@ -3,5 +3,5 @@
   "compilerOptions": {
     "types": ["jest", "node"]
   },
-  "include": ["ts", "tests"]
+  "include": ["ts", "tests", "custom.d.ts"]
 }

@@ -5,5 +5,5 @@
     "lib": ["esnext", "dom"],
     "types": []
   },
-  "include": ["ts"]
+  "include": ["ts", "custom.d.ts"]
 }

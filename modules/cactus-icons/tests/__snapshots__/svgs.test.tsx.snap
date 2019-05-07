@@ -3,7 +3,7 @@
 exports[`renders ActionsAdd 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -19,7 +19,7 @@ exports[`renders ActionsAdd 1`] = `
 exports[`renders ActionsCoachmarks 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -36,7 +36,7 @@ exports[`renders ActionsCoachmarks 1`] = `
 exports[`renders ActionsDelete 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -52,7 +52,7 @@ exports[`renders ActionsDelete 1`] = `
 exports[`renders ActionsDownload 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -68,7 +68,7 @@ exports[`renders ActionsDownload 1`] = `
 exports[`renders ActionsEdit 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ exports[`renders ActionsEdit 1`] = `
 exports[`renders ActionsFilter 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -105,7 +105,7 @@ exports[`renders ActionsFilter 1`] = `
 exports[`renders ActionsGear 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -122,7 +122,7 @@ exports[`renders ActionsGear 1`] = `
 exports[`renders ActionsKey 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -138,7 +138,7 @@ exports[`renders ActionsKey 1`] = `
 exports[`renders ActionsPrint 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -155,7 +155,7 @@ exports[`renders ActionsPrint 1`] = `
 exports[`renders ActionsRedo 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -172,7 +172,7 @@ exports[`renders ActionsRedo 1`] = `
 exports[`renders ActionsRefresh 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -188,7 +188,7 @@ exports[`renders ActionsRefresh 1`] = `
 exports[`renders ActionsRemove 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -204,7 +204,7 @@ exports[`renders ActionsRemove 1`] = `
 exports[`renders ActionsUpload 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -220,7 +220,7 @@ exports[`renders ActionsUpload 1`] = `
 exports[`renders BatchstatusInprogress 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -236,7 +236,7 @@ exports[`renders BatchstatusInprogress 1`] = `
 exports[`renders BatchstatusOpen 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -253,7 +253,7 @@ exports[`renders BatchstatusOpen 1`] = `
 exports[`renders BatchstatusReconciled 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -269,7 +269,7 @@ exports[`renders BatchstatusReconciled 1`] = `
 exports[`renders BatchstatusSettle 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -285,7 +285,7 @@ exports[`renders BatchstatusSettle 1`] = `
 exports[`renders DescriptiveAssistant 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -301,7 +301,7 @@ exports[`renders DescriptiveAssistant 1`] = `
 exports[`renders DescriptiveAt 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -317,7 +317,7 @@ exports[`renders DescriptiveAt 1`] = `
 exports[`renders DescriptiveBox 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -333,7 +333,7 @@ exports[`renders DescriptiveBox 1`] = `
 exports[`renders DescriptiveCalendar 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -349,7 +349,7 @@ exports[`renders DescriptiveCalendar 1`] = `
 exports[`renders DescriptiveCart 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -365,7 +365,7 @@ exports[`renders DescriptiveCart 1`] = `
 exports[`renders DescriptiveChartBars 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -381,7 +381,7 @@ exports[`renders DescriptiveChartBars 1`] = `
 exports[`renders DescriptiveChartPiechart 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -397,7 +397,7 @@ exports[`renders DescriptiveChartPiechart 1`] = `
 exports[`renders DescriptiveChartPresentation 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -413,7 +413,7 @@ exports[`renders DescriptiveChartPresentation 1`] = `
 exports[`renders DescriptiveClock 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -429,7 +429,7 @@ exports[`renders DescriptiveClock 1`] = `
 exports[`renders DescriptiveCloud 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -445,7 +445,7 @@ exports[`renders DescriptiveCloud 1`] = `
 exports[`renders DescriptiveComment 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -461,7 +461,7 @@ exports[`renders DescriptiveComment 1`] = `
 exports[`renders DescriptiveConnect 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -477,7 +477,7 @@ exports[`renders DescriptiveConnect 1`] = `
 exports[`renders DescriptiveDiscussions 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -493,7 +493,7 @@ exports[`renders DescriptiveDiscussions 1`] = `
 exports[`renders DescriptiveDocument1 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -509,7 +509,7 @@ exports[`renders DescriptiveDocument1 1`] = `
 exports[`renders DescriptiveDocument2 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -525,7 +525,7 @@ exports[`renders DescriptiveDocument2 1`] = `
 exports[`renders DescriptiveEnvelope 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -541,7 +541,7 @@ exports[`renders DescriptiveEnvelope 1`] = `
 exports[`renders DescriptiveFilter 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -557,7 +557,7 @@ exports[`renders DescriptiveFilter 1`] = `
 exports[`renders DescriptiveFolder 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -573,7 +573,7 @@ exports[`renders DescriptiveFolder 1`] = `
 exports[`renders DescriptiveHome 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -590,7 +590,7 @@ exports[`renders DescriptiveHome 1`] = `
 exports[`renders DescriptiveInternet 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -606,7 +606,7 @@ exports[`renders DescriptiveInternet 1`] = `
 exports[`renders DescriptiveLocation 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -622,7 +622,7 @@ exports[`renders DescriptiveLocation 1`] = `
 exports[`renders DescriptiveLock 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -638,7 +638,7 @@ exports[`renders DescriptiveLock 1`] = `
 exports[`renders DescriptiveProfile 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -654,7 +654,7 @@ exports[`renders DescriptiveProfile 1`] = `
 exports[`renders DescriptiveReceipt 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -670,7 +670,7 @@ exports[`renders DescriptiveReceipt 1`] = `
 exports[`renders DescriptiveRuler 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -686,7 +686,7 @@ exports[`renders DescriptiveRuler 1`] = `
 exports[`renders DescriptiveSuitcase 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -702,7 +702,7 @@ exports[`renders DescriptiveSuitcase 1`] = `
 exports[`renders DescriptiveTray 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -718,7 +718,7 @@ exports[`renders DescriptiveTray 1`] = `
 exports[`renders InterfaceCard 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -734,7 +734,7 @@ exports[`renders InterfaceCard 1`] = `
 exports[`renders InterfaceDesktop 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -750,7 +750,7 @@ exports[`renders InterfaceDesktop 1`] = `
 exports[`renders InterfaceLaptop 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -766,7 +766,7 @@ exports[`renders InterfaceLaptop 1`] = `
 exports[`renders InterfacePage 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -782,7 +782,7 @@ exports[`renders InterfacePage 1`] = `
 exports[`renders InterfaceSms 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -799,7 +799,7 @@ exports[`renders InterfaceSms 1`] = `
 exports[`renders InterfaceTables 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -815,7 +815,7 @@ exports[`renders InterfaceTables 1`] = `
 exports[`renders MultimediaCall 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -831,7 +831,7 @@ exports[`renders MultimediaCall 1`] = `
 exports[`renders MultimediaCamera 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -847,7 +847,7 @@ exports[`renders MultimediaCamera 1`] = `
 exports[`renders MultimediaVideocamera 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -863,7 +863,7 @@ exports[`renders MultimediaVideocamera 1`] = `
 exports[`renders MultimediaVoice 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -879,7 +879,7 @@ exports[`renders MultimediaVoice 1`] = `
 exports[`renders MultimediaVolumen 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -895,7 +895,7 @@ exports[`renders MultimediaVolumen 1`] = `
 exports[`renders NavigationChevronDown 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -911,7 +911,7 @@ exports[`renders NavigationChevronDown 1`] = `
 exports[`renders NavigationChevronLeft 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -927,7 +927,7 @@ exports[`renders NavigationChevronLeft 1`] = `
 exports[`renders NavigationChevronNav 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -943,7 +943,7 @@ exports[`renders NavigationChevronNav 1`] = `
 exports[`renders NavigationChevronRight 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -959,7 +959,7 @@ exports[`renders NavigationChevronRight 1`] = `
 exports[`renders NavigationChevronUp 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -975,7 +975,7 @@ exports[`renders NavigationChevronUp 1`] = `
 exports[`renders NavigationClose 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -991,7 +991,7 @@ exports[`renders NavigationClose 1`] = `
 exports[`renders NavigationLess 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1007,7 +1007,7 @@ exports[`renders NavigationLess 1`] = `
 exports[`renders NavigationLogout 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1023,7 +1023,7 @@ exports[`renders NavigationLogout 1`] = `
 exports[`renders NavigationMenu 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1039,7 +1039,7 @@ exports[`renders NavigationMenu 1`] = `
 exports[`renders NavigationMenuDots 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1055,7 +1055,7 @@ exports[`renders NavigationMenuDots 1`] = `
 exports[`renders NavigationMenuLines 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1071,7 +1071,7 @@ exports[`renders NavigationMenuLines 1`] = `
 exports[`renders NavigationPlus 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1087,7 +1087,7 @@ exports[`renders NavigationPlus 1`] = `
 exports[`renders NavigationSearch 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1103,7 +1103,7 @@ exports[`renders NavigationSearch 1`] = `
 exports[`renders NotificationAlert 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1119,7 +1119,7 @@ exports[`renders NotificationAlert 1`] = `
 exports[`renders NotificationError 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1135,7 +1135,7 @@ exports[`renders NotificationError 1`] = `
 exports[`renders NotificationInfo 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1151,7 +1151,7 @@ exports[`renders NotificationInfo 1`] = `
 exports[`renders NotificationNote 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1167,7 +1167,7 @@ exports[`renders NotificationNote 1`] = `
 exports[`renders NotificationNotification 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1184,7 +1184,7 @@ exports[`renders NotificationNotification 1`] = `
 exports[`renders PaymentAmex 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1200,7 +1200,7 @@ exports[`renders PaymentAmex 1`] = `
 exports[`renders PaymentBank 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1217,7 +1217,7 @@ exports[`renders PaymentBank 1`] = `
 exports[`renders PaymentBarcode 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1234,7 +1234,7 @@ exports[`renders PaymentBarcode 1`] = `
 exports[`renders PaymentBatch 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1250,7 +1250,7 @@ exports[`renders PaymentBatch 1`] = `
 exports[`renders PaymentCardBack 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1266,7 +1266,7 @@ exports[`renders PaymentCardBack 1`] = `
 exports[`renders PaymentCash 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1282,7 +1282,7 @@ exports[`renders PaymentCash 1`] = `
 exports[`renders PaymentCashback 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1299,7 +1299,7 @@ exports[`renders PaymentCashback 1`] = `
 exports[`renders PaymentCharge 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1315,7 +1315,7 @@ exports[`renders PaymentCharge 1`] = `
 exports[`renders PaymentCredit 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1331,7 +1331,7 @@ exports[`renders PaymentCredit 1`] = `
 exports[`renders PaymentCsc 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1347,7 +1347,7 @@ exports[`renders PaymentCsc 1`] = `
 exports[`renders PaymentCvv 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1363,7 +1363,7 @@ exports[`renders PaymentCvv 1`] = `
 exports[`renders PaymentDebit 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1379,7 +1379,7 @@ exports[`renders PaymentDebit 1`] = `
 exports[`renders PaymentInvoice 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1396,7 +1396,7 @@ exports[`renders PaymentInvoice 1`] = `
 exports[`renders PaymentMaster 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1412,7 +1412,7 @@ exports[`renders PaymentMaster 1`] = `
 exports[`renders PaymentPaybycard 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1429,7 +1429,7 @@ exports[`renders PaymentPaybycard 1`] = `
 exports[`renders PaymentPayment 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1445,7 +1445,7 @@ exports[`renders PaymentPayment 1`] = `
 exports[`renders PaymentRefund 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1462,7 +1462,7 @@ exports[`renders PaymentRefund 1`] = `
 exports[`renders PaymentToken 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1479,7 +1479,7 @@ exports[`renders PaymentToken 1`] = `
 exports[`renders PaymentWallet 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1496,7 +1496,7 @@ exports[`renders PaymentWallet 1`] = `
 exports[`renders StatusCheck 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1512,7 +1512,7 @@ exports[`renders StatusCheck 1`] = `
 exports[`renders StatusFollow 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1528,7 +1528,7 @@ exports[`renders StatusFollow 1`] = `
 exports[`renders StatusLike 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1555,7 +1555,7 @@ exports[`renders StatusLike 1`] = `
 exports[`renders StatusMoney 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1571,7 +1571,7 @@ exports[`renders StatusMoney 1`] = `
 exports[`renders StatusRecomend 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1587,7 +1587,7 @@ exports[`renders StatusRecomend 1`] = `
 exports[`renders StatusSpinner 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1603,7 +1603,7 @@ exports[`renders StatusSpinner 1`] = `
 exports[`renders StatusStar 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1619,7 +1619,7 @@ exports[`renders StatusStar 1`] = `
 exports[`renders StatusSun 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1640,7 +1640,7 @@ exports[`renders StatusSun 1`] = `
 exports[`renders StatusTarget 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1656,7 +1656,7 @@ exports[`renders StatusTarget 1`] = `
 exports[`renders StatusThumbsdown 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1675,7 +1675,7 @@ exports[`renders StatusThumbsdown 1`] = `
 exports[`renders StatusThumbsup 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1694,7 +1694,7 @@ exports[`renders StatusThumbsup 1`] = `
 exports[`renders StatusTrophy 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1710,7 +1710,7 @@ exports[`renders StatusTrophy 1`] = `
 exports[`renders StatusUnfollow 1`] = `
 <DocumentFragment>
   <svg
-    class="sc-bdVaJa bnWwrs"
+    class="sc-bdVaJa cqUrtM"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"

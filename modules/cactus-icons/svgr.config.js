@@ -15,8 +15,11 @@ import * as React from 'react'
 import { SpaceProps } from 'styled-system'
 import Svg from './Svg'
 
+type IconSizes = 'tiny' | 'small' | 'medium' | 'large'
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref'>, SpaceProps {}
+interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref'>, SpaceProps {
+  iconSize?: IconSizes
+}
 
 const ${componentName} = (props: Props) => (
   ${jsx}

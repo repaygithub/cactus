@@ -1,7 +1,9 @@
 import * as React from 'react'
 
 import { addDecorator, addParameters, configure } from '@storybook/react'
+import { ThemeProvider } from 'styled-components'
 import { withKnobs } from '@storybook/addon-knobs'
+import cactusTheme from '@repay/cactus-theme'
 import storybookTheme from './theme'
 
 addParameters({
@@ -22,7 +24,7 @@ addDecorator(story => (
       marginTop: '20px',
     }}
   >
-    {story()}
+    <ThemeProvider theme={cactusTheme}>{story()}</ThemeProvider>
   </div>
 ))
 
