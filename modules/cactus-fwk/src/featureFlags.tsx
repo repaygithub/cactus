@@ -16,11 +16,11 @@ const useFeatureFlags = <FeatureFlags extends string[]>(...features: FeatureFlag
   return result
 }
 
-const withFeatureFlags = <FeatureFlags extends string[], P extends object>(
+const withFeatureFlags = <FeatureFlags extends string[], Props extends any>(
   features: FeatureFlags,
-  Component: ComponentType<P>
+  Component: ComponentType<Props>
 ) => {
-  return (props: P) => (
+  return (props: Props) => (
     <FeatureFlagContext.Consumer>
       {featureFlags => {
         const flags: FeatureFlagsObject = {}
@@ -28,12 +28,13 @@ const withFeatureFlags = <FeatureFlags extends string[], P extends object>(
           for (const key of features) {
             flags[key] = false
           }
-          return <Component {...props} {...flags} />
+        } else {
+          for (const key of features) {
+            flags[key] = Boolean(featureFlags[key])
+          }
         }
-        for (const key of features) {
-          flags[key] = featureFlags[key]
-        }
-        return <Component {...props} {...flags} />
+        let propsWithFlags = { ...props, ...flags } as Props
+        return <Component {...propsWithFlags} />
       }}
     </FeatureFlagContext.Consumer>
   )
