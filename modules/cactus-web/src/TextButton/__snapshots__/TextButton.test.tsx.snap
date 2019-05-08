@@ -42,7 +42,6 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -96,7 +95,6 @@ exports[`component: TextButton should render a text+icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {

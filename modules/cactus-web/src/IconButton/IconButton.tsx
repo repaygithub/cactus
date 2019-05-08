@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
+import { get, px, style } from 'styled-system'
 import { MarginProps, margins } from '../helpers/margins'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -18,14 +19,12 @@ interface IconButtonProps
   inverse?: boolean
 }
 
-type SizeMap = { [K in IconButtonSizes]: string }
-
-const sizeMap: SizeMap = {
-  tiny: '8px',
-  small: '16px',
-  medium: '24px',
-  large: '40px',
-}
+const iconSizes = style({
+  prop: 'iconSize',
+  cssProperty: 'fontSize',
+  key: 'iconSizes',
+  transformValue: (size, scale) => px(get(scale, size)),
+})
 
 type VariantMap = { [K in IconButtonVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
@@ -104,7 +103,6 @@ IconButtonBase.defaultProps = {
 
 export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   display: ${p => p.display || 'inline-flex'};
-  font-size: ${p => p.iconSize !== undefined && sizeMap[p.iconSize]};
   align-items: center;
   justify-content: center;
   padding: 0px;
@@ -115,6 +113,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   cursor: pointer;
   ${variantOrDisabled}
   ${margins}
+  ${iconSizes}
 `
 
 export default IconButton

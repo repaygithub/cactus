@@ -6,21 +6,43 @@ prettierConfig.parser = 'typescript'
 const template = ({ template }, opts, { componentName, jsx }) => {
   const typeScriptTpl = template.smart({ plugins: ['typescript'] })
 
-  // convert standard svg to use Svg component instead
-  jsx.openingElement.name.name = 'Svg'
-  jsx.closingElement.name.name = 'Svg'
-
   return typeScriptTpl.ast`
 import * as React from 'react'
-import { SpaceProps } from 'styled-system'
-import Svg from './Svg'
+import {
+  color,
+  ColorProps,
+  get,
+  px,
+  space,
+  SpaceProps,
+  style,
+} from 'styled-system'
+import styled from 'styled-components'
 
+type IconSizes = 'tiny' | 'small' | 'medium' | 'large'
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref'>, SpaceProps {}
+interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'color'>, SpaceProps, ColorProps {
+  iconSize?: IconSizes
+  color?: string
+}
 
-const ${componentName} = (props: Props) => (
+const iconSizes = style({
+  prop: 'iconSize',
+  cssProperty: 'fontSize',
+  key: 'iconSizes',
+  transformValue: (size, scale) => px(get(scale, size)),
+})
+
+const Base = (props: Props) => (
   ${jsx}
 )
+
+const ${componentName} = styled(Base)\`
+  vertical-align: middle;
+  \${space}
+  \${color}
+  \${iconSizes}
+\`
 
 export default ${componentName}
 `

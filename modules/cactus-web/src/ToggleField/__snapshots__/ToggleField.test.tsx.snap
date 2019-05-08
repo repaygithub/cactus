@@ -8,18 +8,15 @@ exports[`component: ToggleField snapshot 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c7 {
-  vertical-align: middle;
-  width: 1em;
-}
-
 .c6 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c9 {
+.c8 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
@@ -69,7 +66,7 @@ exports[`component: ToggleField snapshot 1`] = `
   opacity: 0;
 }
 
-.c4[aria-checked='true'] .c8 {
+.c4[aria-checked='true'] .c7 {
   opacity: 1;
 }
 
@@ -82,7 +79,7 @@ exports[`component: ToggleField snapshot 1`] = `
   transition: opacity 0.3s;
 }
 
-.c4 .c8 {
+.c4 .c7 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -124,7 +121,7 @@ exports[`component: ToggleField snapshot 1`] = `
       type="button"
     >
       <svg
-        class="c5 c6 c7"
+        class="c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -135,7 +132,7 @@ exports[`component: ToggleField snapshot 1`] = `
         />
       </svg>
       <svg
-        class="c8 c9 c7"
+        class="c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -158,32 +155,29 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c7 {
-  vertical-align: middle;
-  width: 1em;
-}
-
 .c6 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c9 {
+.c8 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c10[aria-checked='true'] .c5 {
+.c9[aria-checked='true'] .c5 {
   opacity: 0;
 }
 
-.c10[aria-checked='true'] .c8 {
+.c9[aria-checked='true'] .c7 {
   opacity: 1;
 }
 
-.c10 .c5 {
+.c9 .c5 {
   position: absolute;
   top: 1px;
   left: 22px;
@@ -192,7 +186,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   transition: opacity 0.3s;
 }
 
-.c10 .c8 {
+.c9 .c7 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -245,7 +239,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   opacity: 0;
 }
 
-.c4[aria-checked='true'] .c8 {
+.c4[aria-checked='true'] .c7 {
   opacity: 1;
 }
 
@@ -258,7 +252,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   transition: opacity 0.3s;
 }
 
-.c4 .c8 {
+.c4 .c7 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -301,7 +295,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
       type="button"
     >
       <svg
-        class="c5 c6 c7"
+        class="c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -312,7 +306,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
         />
       </svg>
       <svg
-        class="c8 c9 c7"
+        class="c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -335,18 +329,15 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c7 {
-  vertical-align: middle;
-  width: 1em;
-}
-
 .c6 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c9 {
+.c8 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
@@ -396,7 +387,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   opacity: 0;
 }
 
-.c4[aria-checked='true'] .c8 {
+.c4[aria-checked='true'] .c7 {
   opacity: 1;
 }
 
@@ -409,7 +400,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   transition: opacity 0.3s;
 }
 
-.c4 .c8 {
+.c4 .c7 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -451,7 +442,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
       type="button"
     >
       <svg
-        class="c5 c6 c7"
+        class="c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -462,7 +453,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
         />
       </svg>
       <svg
-        class="c8 c9 c7"
+        class="c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

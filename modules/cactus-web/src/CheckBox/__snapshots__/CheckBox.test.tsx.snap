@@ -4,7 +4,6 @@ exports[`component: CheckBox should render a checkbox 1`] = `
 <DocumentFragment>
   .c3 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c1 {
@@ -86,7 +85,6 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
 <DocumentFragment>
   .c3 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c1 {
@@ -165,7 +163,6 @@ exports[`component: CheckBox should support margin space props 1`] = `
 <DocumentFragment>
   .c3 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c1 {

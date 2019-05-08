@@ -4,7 +4,6 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 <DocumentFragment>
   .c6 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c4 {
@@ -117,7 +116,6 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 <DocumentFragment>
   .c6 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c4 {
@@ -240,7 +238,6 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 <DocumentFragment>
   .c6 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c4 {

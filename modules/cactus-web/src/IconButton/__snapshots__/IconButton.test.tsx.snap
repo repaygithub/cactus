@@ -4,7 +4,6 @@ exports[`component: IconButton should default to standard medium icon button 1`]
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -12,7 +11,6 @@ exports[`component: IconButton should default to standard medium icon button 1`]
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -28,6 +26,7 @@ exports[`component: IconButton should default to standard medium icon button 1`]
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,11%);
+  font-size: 24px;
 }
 
 .c0:hover,
@@ -58,7 +57,6 @@ exports[`component: IconButton should render call to action icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -66,7 +64,6 @@ exports[`component: IconButton should render call to action icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -82,6 +79,7 @@ exports[`component: IconButton should render call to action icon button 1`] = `
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,35%);
+  font-size: 24px;
 }
 
 .c0:hover,
@@ -112,7 +110,6 @@ exports[`component: IconButton should render disabled variant 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -120,7 +117,6 @@ exports[`component: IconButton should render disabled variant 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -137,6 +133,7 @@ exports[`component: IconButton should render disabled variant 1`] = `
   cursor: pointer;
   color: hsl(0,0%,70%);
   cursor: not-allowed;
+  font-size: 24px;
 }
 
 <button
@@ -163,7 +160,6 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -171,7 +167,6 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -187,6 +182,7 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,11%);
+  font-size: 24px;
 }
 
 .c0:hover,
@@ -218,7 +214,6 @@ exports[`component: IconButton should render inverse call to action icon button 
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -226,7 +221,6 @@ exports[`component: IconButton should render inverse call to action icon button 
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -242,6 +236,7 @@ exports[`component: IconButton should render inverse call to action icon button 
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,35%);
+  font-size: 24px;
 }
 
 .c0:hover,
@@ -272,7 +267,6 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -280,7 +274,6 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -297,6 +290,7 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
   cursor: pointer;
   color: hsl(0,0%,70%);
   cursor: not-allowed;
+  font-size: 24px;
 }
 
 <button
@@ -323,7 +317,6 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -331,7 +324,6 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -347,6 +339,7 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
   outline: none;
   cursor: pointer;
   color: hsl(0,0%,100%);
+  font-size: 24px;
 }
 
 .c0:hover,
@@ -378,7 +371,6 @@ exports[`component: IconButton should render large icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -386,7 +378,6 @@ exports[`component: IconButton should render large icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 40px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -402,6 +393,7 @@ exports[`component: IconButton should render large icon button 1`] = `
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,11%);
+  font-size: 40px;
 }
 
 .c0:hover,
@@ -432,7 +424,6 @@ exports[`component: IconButton should render small icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -440,7 +431,6 @@ exports[`component: IconButton should render small icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 16px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -456,6 +446,7 @@ exports[`component: IconButton should render small icon button 1`] = `
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,11%);
+  font-size: 16px;
 }
 
 .c0:hover,
@@ -486,7 +477,6 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -494,7 +484,6 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -510,6 +499,7 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,11%);
+  font-size: 24px;
 }
 
 .c0:hover,
@@ -540,7 +530,6 @@ exports[`component: IconButton should render tiny icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -548,7 +537,6 @@ exports[`component: IconButton should render tiny icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 8px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -564,6 +552,7 @@ exports[`component: IconButton should render tiny icon button 1`] = `
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,11%);
+  font-size: 8px;
 }
 
 .c0:hover,
@@ -594,7 +583,6 @@ exports[`component: IconButton should support margin space props 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -602,7 +590,6 @@ exports[`component: IconButton should support margin space props 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  font-size: 24px;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -619,6 +606,7 @@ exports[`component: IconButton should support margin space props 1`] = `
   cursor: pointer;
   color: hsl(200,96%,11%);
   margin-bottom: 16px;
+  font-size: 24px;
 }
 
 .c0:hover,

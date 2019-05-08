@@ -15,13 +15,6 @@ async function main() {
     index += `export { default as ${icon} } from './${iconFile.toLowerCase()}'\n`
   }
   await fs.writeFile(path.join(__dirname, '..', 'ts/index.ts'), index, 'utf8')
-
-  // copy Svg.ts
-  await fs.writeFile(
-    path.join(__dirname, '..', 'ts/Svg.ts'),
-    await fs.readFile(path.join(__dirname, '..', 'src/Svg.ts'), 'utf8'),
-    'utf8'
-  )
 }
 
 main()
