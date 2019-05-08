@@ -2,8 +2,12 @@
 
 exports[`renders ActionsAdd 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -18,8 +22,12 @@ exports[`renders ActionsAdd 1`] = `
 
 exports[`renders ActionsCoachmarks 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -35,8 +43,12 @@ exports[`renders ActionsCoachmarks 1`] = `
 
 exports[`renders ActionsDelete 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -51,8 +63,12 @@ exports[`renders ActionsDelete 1`] = `
 
 exports[`renders ActionsDownload 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -67,8 +83,12 @@ exports[`renders ActionsDownload 1`] = `
 
 exports[`renders ActionsEdit 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -83,17 +103,22 @@ exports[`renders ActionsEdit 1`] = `
 
 exports[`renders ActionsFilter 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
+    stroke="currentColor"
     viewBox="0 0 24 24"
     width="1em"
   >
     <path
       d="M14.3478261,13.193995 L14.3478261,20 L10.6521739,20 L10.6521739,13.193995 L3.87523649,5 L21.1247635,5 L14.3478261,13.193995 Z"
       fill="none"
-      stroke="#000"
+      stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round"
       stroke-width="2"
@@ -104,8 +129,12 @@ exports[`renders ActionsFilter 1`] = `
 
 exports[`renders ActionsGear 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -121,8 +150,12 @@ exports[`renders ActionsGear 1`] = `
 
 exports[`renders ActionsKey 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -137,8 +170,12 @@ exports[`renders ActionsKey 1`] = `
 
 exports[`renders ActionsPrint 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -154,8 +191,12 @@ exports[`renders ActionsPrint 1`] = `
 
 exports[`renders ActionsRedo 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -171,8 +212,12 @@ exports[`renders ActionsRedo 1`] = `
 
 exports[`renders ActionsRefresh 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -187,8 +232,12 @@ exports[`renders ActionsRefresh 1`] = `
 
 exports[`renders ActionsRemove 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -203,8 +252,12 @@ exports[`renders ActionsRemove 1`] = `
 
 exports[`renders ActionsUpload 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -219,8 +272,12 @@ exports[`renders ActionsUpload 1`] = `
 
 exports[`renders BatchstatusInprogress 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -235,8 +292,12 @@ exports[`renders BatchstatusInprogress 1`] = `
 
 exports[`renders BatchstatusOpen 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -252,8 +313,12 @@ exports[`renders BatchstatusOpen 1`] = `
 
 exports[`renders BatchstatusReconciled 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -268,8 +333,12 @@ exports[`renders BatchstatusReconciled 1`] = `
 
 exports[`renders BatchstatusSettle 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -284,8 +353,12 @@ exports[`renders BatchstatusSettle 1`] = `
 
 exports[`renders DescriptiveAssistant 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -300,8 +373,12 @@ exports[`renders DescriptiveAssistant 1`] = `
 
 exports[`renders DescriptiveAt 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -316,8 +393,12 @@ exports[`renders DescriptiveAt 1`] = `
 
 exports[`renders DescriptiveBox 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -332,8 +413,12 @@ exports[`renders DescriptiveBox 1`] = `
 
 exports[`renders DescriptiveCalendar 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -348,8 +433,12 @@ exports[`renders DescriptiveCalendar 1`] = `
 
 exports[`renders DescriptiveCart 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -364,8 +453,12 @@ exports[`renders DescriptiveCart 1`] = `
 
 exports[`renders DescriptiveChartBars 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -380,8 +473,12 @@ exports[`renders DescriptiveChartBars 1`] = `
 
 exports[`renders DescriptiveChartPiechart 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -396,8 +493,12 @@ exports[`renders DescriptiveChartPiechart 1`] = `
 
 exports[`renders DescriptiveChartPresentation 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -412,8 +513,12 @@ exports[`renders DescriptiveChartPresentation 1`] = `
 
 exports[`renders DescriptiveClock 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -428,8 +533,12 @@ exports[`renders DescriptiveClock 1`] = `
 
 exports[`renders DescriptiveCloud 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -444,8 +553,12 @@ exports[`renders DescriptiveCloud 1`] = `
 
 exports[`renders DescriptiveComment 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -460,8 +573,12 @@ exports[`renders DescriptiveComment 1`] = `
 
 exports[`renders DescriptiveConnect 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -476,8 +593,12 @@ exports[`renders DescriptiveConnect 1`] = `
 
 exports[`renders DescriptiveDiscussions 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -492,8 +613,12 @@ exports[`renders DescriptiveDiscussions 1`] = `
 
 exports[`renders DescriptiveDocument1 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -508,8 +633,12 @@ exports[`renders DescriptiveDocument1 1`] = `
 
 exports[`renders DescriptiveDocument2 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -524,8 +653,12 @@ exports[`renders DescriptiveDocument2 1`] = `
 
 exports[`renders DescriptiveEnvelope 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -540,8 +673,12 @@ exports[`renders DescriptiveEnvelope 1`] = `
 
 exports[`renders DescriptiveFilter 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -556,8 +693,12 @@ exports[`renders DescriptiveFilter 1`] = `
 
 exports[`renders DescriptiveFolder 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -572,8 +713,12 @@ exports[`renders DescriptiveFolder 1`] = `
 
 exports[`renders DescriptiveHome 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -589,8 +734,12 @@ exports[`renders DescriptiveHome 1`] = `
 
 exports[`renders DescriptiveInternet 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -605,8 +754,12 @@ exports[`renders DescriptiveInternet 1`] = `
 
 exports[`renders DescriptiveLocation 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -621,8 +774,12 @@ exports[`renders DescriptiveLocation 1`] = `
 
 exports[`renders DescriptiveLock 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -637,8 +794,12 @@ exports[`renders DescriptiveLock 1`] = `
 
 exports[`renders DescriptiveProfile 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -653,8 +814,12 @@ exports[`renders DescriptiveProfile 1`] = `
 
 exports[`renders DescriptiveReceipt 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -669,8 +834,12 @@ exports[`renders DescriptiveReceipt 1`] = `
 
 exports[`renders DescriptiveRuler 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -685,8 +854,12 @@ exports[`renders DescriptiveRuler 1`] = `
 
 exports[`renders DescriptiveSuitcase 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -701,8 +874,12 @@ exports[`renders DescriptiveSuitcase 1`] = `
 
 exports[`renders DescriptiveTray 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -717,8 +894,12 @@ exports[`renders DescriptiveTray 1`] = `
 
 exports[`renders InterfaceCard 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -733,8 +914,12 @@ exports[`renders InterfaceCard 1`] = `
 
 exports[`renders InterfaceDesktop 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -749,8 +934,12 @@ exports[`renders InterfaceDesktop 1`] = `
 
 exports[`renders InterfaceLaptop 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -765,8 +954,12 @@ exports[`renders InterfaceLaptop 1`] = `
 
 exports[`renders InterfacePage 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -781,8 +974,12 @@ exports[`renders InterfacePage 1`] = `
 
 exports[`renders InterfaceSms 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -798,8 +995,12 @@ exports[`renders InterfaceSms 1`] = `
 
 exports[`renders InterfaceTables 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -814,8 +1015,12 @@ exports[`renders InterfaceTables 1`] = `
 
 exports[`renders MultimediaCall 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -830,8 +1035,12 @@ exports[`renders MultimediaCall 1`] = `
 
 exports[`renders MultimediaCamera 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -846,8 +1055,12 @@ exports[`renders MultimediaCamera 1`] = `
 
 exports[`renders MultimediaVideocamera 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -862,8 +1075,12 @@ exports[`renders MultimediaVideocamera 1`] = `
 
 exports[`renders MultimediaVoice 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -878,8 +1095,12 @@ exports[`renders MultimediaVoice 1`] = `
 
 exports[`renders MultimediaVolumen 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -894,8 +1115,12 @@ exports[`renders MultimediaVolumen 1`] = `
 
 exports[`renders NavigationChevronDown 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -910,8 +1135,12 @@ exports[`renders NavigationChevronDown 1`] = `
 
 exports[`renders NavigationChevronLeft 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -926,8 +1155,12 @@ exports[`renders NavigationChevronLeft 1`] = `
 
 exports[`renders NavigationChevronNav 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -942,8 +1175,12 @@ exports[`renders NavigationChevronNav 1`] = `
 
 exports[`renders NavigationChevronRight 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -958,8 +1195,12 @@ exports[`renders NavigationChevronRight 1`] = `
 
 exports[`renders NavigationChevronUp 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -974,8 +1215,12 @@ exports[`renders NavigationChevronUp 1`] = `
 
 exports[`renders NavigationClose 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -990,8 +1235,12 @@ exports[`renders NavigationClose 1`] = `
 
 exports[`renders NavigationLess 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1006,8 +1255,12 @@ exports[`renders NavigationLess 1`] = `
 
 exports[`renders NavigationLogout 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1022,8 +1275,12 @@ exports[`renders NavigationLogout 1`] = `
 
 exports[`renders NavigationMenu 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1038,8 +1295,12 @@ exports[`renders NavigationMenu 1`] = `
 
 exports[`renders NavigationMenuDots 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1054,8 +1315,12 @@ exports[`renders NavigationMenuDots 1`] = `
 
 exports[`renders NavigationMenuLines 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1070,8 +1335,12 @@ exports[`renders NavigationMenuLines 1`] = `
 
 exports[`renders NavigationPlus 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1086,8 +1355,12 @@ exports[`renders NavigationPlus 1`] = `
 
 exports[`renders NavigationSearch 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1102,8 +1375,12 @@ exports[`renders NavigationSearch 1`] = `
 
 exports[`renders NotificationAlert 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1118,8 +1395,12 @@ exports[`renders NotificationAlert 1`] = `
 
 exports[`renders NotificationError 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1134,8 +1415,12 @@ exports[`renders NotificationError 1`] = `
 
 exports[`renders NotificationInfo 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1150,8 +1435,12 @@ exports[`renders NotificationInfo 1`] = `
 
 exports[`renders NotificationNote 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1166,8 +1455,12 @@ exports[`renders NotificationNote 1`] = `
 
 exports[`renders NotificationNotification 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1183,8 +1476,12 @@ exports[`renders NotificationNotification 1`] = `
 
 exports[`renders PaymentAmex 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1199,8 +1496,12 @@ exports[`renders PaymentAmex 1`] = `
 
 exports[`renders PaymentBank 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1216,8 +1517,12 @@ exports[`renders PaymentBank 1`] = `
 
 exports[`renders PaymentBarcode 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1233,8 +1538,12 @@ exports[`renders PaymentBarcode 1`] = `
 
 exports[`renders PaymentBatch 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1249,8 +1558,12 @@ exports[`renders PaymentBatch 1`] = `
 
 exports[`renders PaymentCardBack 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1265,8 +1578,12 @@ exports[`renders PaymentCardBack 1`] = `
 
 exports[`renders PaymentCash 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1281,8 +1598,12 @@ exports[`renders PaymentCash 1`] = `
 
 exports[`renders PaymentCashback 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1298,8 +1619,12 @@ exports[`renders PaymentCashback 1`] = `
 
 exports[`renders PaymentCharge 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1314,8 +1639,12 @@ exports[`renders PaymentCharge 1`] = `
 
 exports[`renders PaymentCredit 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1330,8 +1659,12 @@ exports[`renders PaymentCredit 1`] = `
 
 exports[`renders PaymentCsc 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1346,8 +1679,12 @@ exports[`renders PaymentCsc 1`] = `
 
 exports[`renders PaymentCvv 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1362,8 +1699,12 @@ exports[`renders PaymentCvv 1`] = `
 
 exports[`renders PaymentDebit 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1378,8 +1719,12 @@ exports[`renders PaymentDebit 1`] = `
 
 exports[`renders PaymentInvoice 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1395,8 +1740,12 @@ exports[`renders PaymentInvoice 1`] = `
 
 exports[`renders PaymentMaster 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1411,8 +1760,12 @@ exports[`renders PaymentMaster 1`] = `
 
 exports[`renders PaymentPaybycard 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1428,8 +1781,12 @@ exports[`renders PaymentPaybycard 1`] = `
 
 exports[`renders PaymentPayment 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1444,8 +1801,12 @@ exports[`renders PaymentPayment 1`] = `
 
 exports[`renders PaymentRefund 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1461,8 +1822,12 @@ exports[`renders PaymentRefund 1`] = `
 
 exports[`renders PaymentToken 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1478,8 +1843,12 @@ exports[`renders PaymentToken 1`] = `
 
 exports[`renders PaymentWallet 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1495,8 +1864,12 @@ exports[`renders PaymentWallet 1`] = `
 
 exports[`renders StatusCheck 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1511,8 +1884,12 @@ exports[`renders StatusCheck 1`] = `
 
 exports[`renders StatusFollow 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1527,8 +1904,12 @@ exports[`renders StatusFollow 1`] = `
 
 exports[`renders StatusLike 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1554,8 +1935,12 @@ exports[`renders StatusLike 1`] = `
 
 exports[`renders StatusMoney 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1570,8 +1955,12 @@ exports[`renders StatusMoney 1`] = `
 
 exports[`renders StatusRecomend 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1586,8 +1975,12 @@ exports[`renders StatusRecomend 1`] = `
 
 exports[`renders StatusSpinner 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1602,8 +1995,12 @@ exports[`renders StatusSpinner 1`] = `
 
 exports[`renders StatusStar 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1618,17 +2015,22 @@ exports[`renders StatusStar 1`] = `
 
 exports[`renders StatusSun 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
+    stroke="currentColor"
     viewBox="0 0 24 24"
     width="1em"
   >
     <path
       d="M15.1304348,12 C15.1304348,13.7287826 13.7287826,15.1304348 12,15.1304348 C10.2704348,15.1304348 8.86956522,13.7287826 8.86956522,12 C8.86956522,10.2704348 10.2704348,8.86956522 12,8.86956522 C13.7287826,8.86956522 15.1304348,10.2704348 15.1304348,12 Z M12.3913043,3 L12.3913043,6.13043478 L12.3913043,3 Z M12.3913043,17.8695652 L12.3913043,21 L12.3913043,17.8695652 Z M5.63598261,5.63598261 L7.84841739,7.84998261 L5.63598261,5.63598261 Z M16.1499391,16.1499391 L18.3639391,18.3647217 L16.1499391,16.1499391 Z M3,12.3913043 L6.13043478,12.3913043 L3,12.3913043 Z M17.8695652,12.3913043 L21,12.3913043 L17.8695652,12.3913043 Z M5.63598261,18.3648 L7.84841739,16.1500174 L5.63598261,18.3648 Z M16.1499391,7.85006087 L18.3639391,5.63606087 L16.1499391,7.85006087 Z"
       fill="none"
-      stroke="#000"
+      stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round"
       stroke-width="2"
@@ -1639,8 +2041,12 @@ exports[`renders StatusSun 1`] = `
 
 exports[`renders StatusTarget 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1655,17 +2061,22 @@ exports[`renders StatusTarget 1`] = `
 
 exports[`renders StatusThumbsdown 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
+    stroke="currentColor"
     viewBox="0 0 24 24"
     width="1em"
   >
     <path
       d="M4,12.8239451 L5.51358562,12.8239451 L5.51358562,4.05982549 L4,4.05982549 L4,12.8239451 Z M14.7705118,13.5681311 C13.835316,13.5681311 13.1770336,14.5416061 13.5175491,15.4596163 L13.8064682,16.238395 C14.0826289,17.0015418 13.9764395,17.8534235 13.5206421,18.5233748 C13.2939706,18.8565466 12.9922149,19.1277205 12.6402344,19.3158751 L11.6830323,19.8275568 L9.02717124,13.7013886 L9.02717124,4.39202621 L10.0271719,4.39202685 L17.0597552,4.39204008 C17.7993285,4.38894595 18.4271159,4.92210158 18.557357,5.64758944 L19.6340706,11.6232545 C19.7119881,12.0635364 19.5943458,12.5168766 19.3297691,12.8389564 L19.259486,12.9294784 C19.0063942,13.2796805 18.6197737,13.5088822 18.1915537,13.5608481 L18.071084,13.5681311 L14.7705118,13.5681311 Z M17.3983805,13.9603653 C17.4138382,13.9323767 17.4263888,13.9188939 17.4864541,13.9605128 L18.1026082,13.9615451 C18.6641918,13.9319323 19.185434,13.6457562 19.5602723,13.1302465 C19.9189953,12.6925698 20.0697538,12.1116146 19.9702704,11.5494442 L18.8926574,5.56874715 C18.7282995,4.65320851 17.9531191,3.99627339 17.0543425,4.00002482 L8.85597603,4.00002482 C8.76617528,4.00002482 8.68478083,4.08314406 8.68478083,4.19603811 L8.68467508,13.7496023 C8.68510761,13.7793421 8.69152435,13.8084652 8.70768766,13.8448123 L11.3289297,19.8915225 C11.3593221,19.9605724 11.4203868,20.0005633 11.4886944,20.0000279 C12.4045175,19.997765 13.2639383,19.5375001 13.7907376,18.7631869 C14.0875542,18.3269127 14.2606819,17.8172629 14.2921002,17.3521843 L14.2921002,13.9698979 L15.2823125,13.9602056 C15.9438328,13.9537306 16.4411555,13.9504891 16.7754916,13.9504891 C16.9466076,13.9504891 17.0764573,13.9513315 17.1674103,13.9530939 C17.2353553,13.9545993 17.2353553,13.9545993 17.2992775,13.957568 C17.3171337,13.9586263 17.3259555,13.9591492 17.338162,13.9602644 L17.3983805,13.9603653 Z"
-      fill="none"
-      stroke="#000"
+      fill="currentColor"
+      stroke="currentColor"
       stroke-width="2"
     />
   </svg>
@@ -1674,17 +2085,22 @@ exports[`renders StatusThumbsdown 1`] = `
 
 exports[`renders StatusThumbsup 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
+    stroke="currentColor"
     viewBox="0 0 24 24"
     width="1em"
   >
     <path
       d="M4,11.1761173 L4,19.9402369 L5.51358562,19.9402369 L5.51358562,11.1761173 L4,11.1761173 Z M14.7705118,10.4319313 L18.071084,10.4319313 L18.1915537,10.4392142 C18.6197737,10.4911802 19.0063942,10.7203819 19.2413244,11.0462413 L19.3108528,11.1372969 C19.5943458,11.4831858 19.7119881,11.936526 19.6335234,12.3798722 L18.5574704,18.3518423 C18.4271159,19.0779608 17.7993285,19.6111164 17.0639395,19.6080311 L9.02717124,19.6080362 L9.02717124,10.2986738 L11.6830323,4.17250562 L12.6402344,4.68418726 C12.9922149,4.87234184 13.2939706,5.14351579 13.5206421,5.47668759 C13.9764395,6.1466389 14.0826289,6.99852062 13.8036885,7.76925283 L13.5175817,8.54035801 C13.1770336,9.45845624 13.835316,10.4319313 14.7705118,10.4319313 Z M17.3984952,10.0399047 L17.3369845,10.0399047 C17.3253737,10.0409477 17.3165545,10.0414704 17.2992775,10.0424943 C17.2353553,10.0454631 17.2353553,10.0454631 17.1674103,10.0469685 C17.0764573,10.0487308 16.9466076,10.0495733 16.7754916,10.0495733 C16.4411555,10.0495733 15.9438328,10.0463318 15.2823125,10.0398568 L14.2921002,10.0301645 L14.2921002,9.03990467 L14.2940949,6.71100909 C14.2606819,6.18279951 14.0875542,5.67314973 13.7907376,5.23687544 C13.2639383,4.46256229 12.4045175,4.0022974 11.4830974,4.00000502 C11.4203868,3.99949906 11.3593221,4.03948997 11.3311649,4.10342288 L8.70331096,10.1651978 C8.69152435,10.1915971 8.68510761,10.2207203 8.68478083,10.235918 L8.68478083,19.8040243 C8.68478083,19.9169183 8.76617528,20.0000376 8.85597603,20.0000376 L17.0585261,20.0000463 C17.9531191,20.003789 18.7282995,19.3468539 18.8927708,18.4306846 L19.9697235,12.4536805 C20.0697538,11.8884478 19.9189953,11.3074926 19.5231944,10.821664 C19.185434,10.3543062 18.6641918,10.0681301 18.155266,10.0399047 L17.4859408,10.0399047 C17.4264651,10.0809892 17.4138565,10.0676724 17.3984952,10.0399047 Z M17.1825179,8.04588175 C17.1832226,8.04584882 17.1839616,8.04581358 17.1847688,8.04577509 C17.183988,8.04580366 17.1833049,8.04582865 17.1826254,8.04585942 Z"
       fill="none"
-      stroke="#000"
+      stroke="currentColor"
       stroke-width="2"
     />
   </svg>
@@ -1693,8 +2109,12 @@ exports[`renders StatusThumbsup 1`] = `
 
 exports[`renders StatusTrophy 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"
@@ -1709,8 +2129,12 @@ exports[`renders StatusTrophy 1`] = `
 
 exports[`renders StatusUnfollow 1`] = `
 <DocumentFragment>
-  <svg
-    class="sc-bdVaJa cqUrtM"
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"

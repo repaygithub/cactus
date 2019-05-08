@@ -4,7 +4,6 @@ exports[`component: IconButton should default to standard medium icon button 1`]
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -58,7 +57,6 @@ exports[`component: IconButton should render call to action icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -112,7 +110,6 @@ exports[`component: IconButton should render disabled variant 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -163,7 +160,6 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -218,7 +214,6 @@ exports[`component: IconButton should render inverse call to action icon button 
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -272,7 +267,6 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -323,7 +317,6 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -378,7 +371,6 @@ exports[`component: IconButton should render large icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -432,7 +424,6 @@ exports[`component: IconButton should render small icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -486,7 +477,6 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -540,7 +530,6 @@ exports[`component: IconButton should render tiny icon button 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {
@@ -594,7 +583,6 @@ exports[`component: IconButton should support margin space props 1`] = `
 <DocumentFragment>
   .c1 {
   vertical-align: middle;
-  width: 1em;
 }
 
 .c0 {

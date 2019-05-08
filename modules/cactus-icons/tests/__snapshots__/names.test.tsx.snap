@@ -2,8 +2,6 @@
 
 exports[`Icon names should match the snapshot of icon names 1`] = `
 Array [
-  "Svg.d.ts",
-  "Svg.js",
   "actions-add.d.ts",
   "actions-add.js",
   "actions-coachmarks.d.ts",

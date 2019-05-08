@@ -2,18 +2,15 @@
 
 exports[`component: Toggle should initialize value to true 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c2 {
   vertical-align: middle;
-  width: 1em;
-}
-
-.c2 {
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c5 {
+.c4 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
@@ -63,7 +60,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
   opacity: 0;
 }
 
-.c0[aria-checked='true'] .c4 {
+.c0[aria-checked='true'] .c3 {
   opacity: 1;
 }
 
@@ -76,7 +73,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
   transition: opacity 0.3s;
 }
 
-.c0 .c4 {
+.c0 .c3 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -90,15 +87,15 @@ exports[`component: Toggle should initialize value to true 1`] = `
   border-color: hsl(0,0%,90%);
 }
 
-.c6[aria-checked='true'] .c1 {
+.c5[aria-checked='true'] .c1 {
   opacity: 0;
 }
 
-.c6[aria-checked='true'] .c4 {
+.c5[aria-checked='true'] .c3 {
   opacity: 1;
 }
 
-.c6 .c1 {
+.c5 .c1 {
   position: absolute;
   top: 1px;
   left: 22px;
@@ -107,7 +104,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
   transition: opacity 0.3s;
 }
 
-.c6 .c4 {
+.c5 .c3 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -123,7 +120,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
     type="button"
   >
     <svg
-      class="c1 c2 c3"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -134,7 +131,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
       />
     </svg>
     <svg
-      class="c4 c5 c3"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -150,32 +147,29 @@ exports[`component: Toggle should initialize value to true 1`] = `
 
 exports[`component: Toggle should render a disabled toggle 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c2 {
   vertical-align: middle;
-  width: 1em;
-}
-
-.c2 {
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c5 {
+.c4 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c6[aria-checked='true'] .c1 {
+.c5[aria-checked='true'] .c1 {
   opacity: 0;
 }
 
-.c6[aria-checked='true'] .c4 {
+.c5[aria-checked='true'] .c3 {
   opacity: 1;
 }
 
-.c6 .c1 {
+.c5 .c1 {
   position: absolute;
   top: 1px;
   left: 22px;
@@ -184,7 +178,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   transition: opacity 0.3s;
 }
 
-.c6 .c4 {
+.c5 .c3 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -237,7 +231,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   opacity: 0;
 }
 
-.c0[aria-checked='true'] .c4 {
+.c0[aria-checked='true'] .c3 {
   opacity: 1;
 }
 
@@ -250,7 +244,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   transition: opacity 0.3s;
 }
 
-.c0 .c4 {
+.c0 .c3 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -272,7 +266,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
     type="button"
   >
     <svg
-      class="c1 c2 c3"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -283,7 +277,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
       />
     </svg>
     <svg
-      class="c4 c5 c3"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -299,18 +293,15 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
 
 exports[`component: Toggle should render a toggle 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c2 {
   vertical-align: middle;
-  width: 1em;
-}
-
-.c2 {
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c5 {
+.c4 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
@@ -360,7 +351,7 @@ exports[`component: Toggle should render a toggle 1`] = `
   opacity: 0;
 }
 
-.c0[aria-checked='true'] .c4 {
+.c0[aria-checked='true'] .c3 {
   opacity: 1;
 }
 
@@ -373,7 +364,7 @@ exports[`component: Toggle should render a toggle 1`] = `
   transition: opacity 0.3s;
 }
 
-.c0 .c4 {
+.c0 .c3 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -394,7 +385,7 @@ exports[`component: Toggle should render a toggle 1`] = `
     type="button"
   >
     <svg
-      class="c1 c2 c3"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -405,7 +396,7 @@ exports[`component: Toggle should render a toggle 1`] = `
       />
     </svg>
     <svg
-      class="c4 c5 c3"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -421,28 +412,51 @@ exports[`component: Toggle should render a toggle 1`] = `
 
 exports[`component: Toggle should support margin space props 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c2 {
   vertical-align: middle;
-  width: 1em;
-}
-
-.c2 {
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
 }
 
-.c5 {
+.c4 {
+  vertical-align: middle;
   width: 16px;
   height: 16px;
   color: hsl(0,0%,100%);
+}
+
+.c5[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c5[aria-checked='true'] .c3 {
+  opacity: 1;
+}
+
+.c5 .c1 {
+  position: absolute;
+  top: 1px;
+  left: 22px;
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c5 .c3 {
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 
 .c6[aria-checked='true'] .c1 {
   opacity: 0;
 }
 
-.c6[aria-checked='true'] .c4 {
+.c6[aria-checked='true'] .c3 {
   opacity: 1;
 }
 
@@ -455,33 +469,7 @@ exports[`component: Toggle should support margin space props 1`] = `
   transition: opacity 0.3s;
 }
 
-.c6 .c4 {
-  position: absolute;
-  top: 1px;
-  left: 5px;
-  opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c7[aria-checked='true'] .c1 {
-  opacity: 0;
-}
-
-.c7[aria-checked='true'] .c4 {
-  opacity: 1;
-}
-
-.c7 .c1 {
-  position: absolute;
-  top: 1px;
-  left: 22px;
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c7 .c4 {
+.c6 .c3 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -535,7 +523,7 @@ exports[`component: Toggle should support margin space props 1`] = `
   opacity: 0;
 }
 
-.c0[aria-checked='true'] .c4 {
+.c0[aria-checked='true'] .c3 {
   opacity: 1;
 }
 
@@ -548,7 +536,7 @@ exports[`component: Toggle should support margin space props 1`] = `
   transition: opacity 0.3s;
 }
 
-.c0 .c4 {
+.c0 .c3 {
   position: absolute;
   top: 1px;
   left: 5px;
@@ -569,7 +557,7 @@ exports[`component: Toggle should support margin space props 1`] = `
     type="button"
   >
     <svg
-      class="c1 c2 c3"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -580,7 +568,7 @@ exports[`component: Toggle should support margin space props 1`] = `
       />
     </svg>
     <svg
-      class="c4 c5 c3"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"

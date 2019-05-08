@@ -19,7 +19,7 @@ storiesOf('Icons', module).add('All', () => {
   return (
     <Icon
       iconSize={select('icon size', iconSizes, 'large')}
-      style={{ fill: theme.colors.callToAction }}
+      style={{ color: theme.colors.callToAction }}
     />
   )
 })

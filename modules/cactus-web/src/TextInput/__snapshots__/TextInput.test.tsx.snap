@@ -66,12 +66,8 @@ exports[`component: TextInput should render a disabled input 1`] = `
 
 exports[`component: TextInput should render a success input 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c2 {
   vertical-align: middle;
-  width: 1em;
-}
-
-.c2 {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -138,9 +134,10 @@ exports[`component: TextInput should render a success input 1`] = `
       class="c0 c1"
     />
     <svg
-      class="c2 c3"
+      class="c2"
       fill="currentcolor"
       height="1em"
+      status="success"
       viewBox="0 0 24 24"
       width="1em"
     >
@@ -217,12 +214,8 @@ exports[`component: TextInput should render a text input 1`] = `
 
 exports[`component: TextInput should render an error input 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c2 {
   vertical-align: middle;
-  width: 1em;
-}
-
-.c2 {
   width: 20px;
   height: 20px;
   position: absolute;
@@ -289,9 +282,10 @@ exports[`component: TextInput should render an error input 1`] = `
       class="c0 c1"
     />
     <svg
-      class="c2 c3"
+      class="c2"
       fill="currentcolor"
       height="1em"
+      status="error"
       viewBox="0 0 24 24"
       width="1em"
     >
@@ -369,12 +363,8 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
 
 exports[`component: TextInput should render an invalid input 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c2 {
   vertical-align: middle;
-  width: 1em;
-}
-
-.c2 {
   width: 24px;
   height: 24px;
   position: absolute;
@@ -441,9 +431,10 @@ exports[`component: TextInput should render an invalid input 1`] = `
       class="c0 c1"
     />
     <svg
-      class="c2 c3"
+      class="c2"
       fill="currentcolor"
       height="1em"
+      status="invalid"
       viewBox="0 0 24 24"
       width="1em"
     >
