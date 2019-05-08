@@ -14,8 +14,8 @@
     "@reach/router": "^1.2.1",
     "@repay/cactus-fwk": "^0.3.0",
     "@repay/cactus-i18n": "^0.1.0",
-    "@repay/cactus-icons": "^0.3.0",
-    "@repay/cactus-web": "^0.2.1",
+    "@repay/cactus-icons": "^0.4.0",
+    "@repay/cactus-web": "^0.3.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
