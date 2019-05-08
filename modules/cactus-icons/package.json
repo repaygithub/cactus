@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-icons",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Cactus design-system icons as React elements",
   "module": "i/index.js",
   "main": "i/index.cjs.js",
