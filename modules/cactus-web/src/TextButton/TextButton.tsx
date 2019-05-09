@@ -94,6 +94,7 @@ TextButton.defaultProps = {
   variant: 'standard',
   disabled: false,
   inverse: false,
+  type: 'button',
 }
 
 export default TextButton

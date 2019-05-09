@@ -99,6 +99,7 @@ IconButtonBase.defaultProps = {
   display: 'inline-flex',
   disabled: false,
   inverse: false,
+  type: 'button',
 }
 
 export const IconButton = styled(IconButtonBase)<IconButtonProps>`
