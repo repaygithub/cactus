@@ -66,7 +66,7 @@ const variantOrDisabled = (
 export const TextButton = styled.button<TextButtonProps>`
   font-size: 18px;
   border: none;
-  padding: 2px 0;
+  padding: 4px 0 4px 0;
   line-height: 1.5em;
   outline: none;
   background-color: transparent;
