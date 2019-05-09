@@ -33,7 +33,7 @@ const iconSizes = style({
   transformValue: (size, scale) => px(get(scale, size)),
 })
 
-const Base = (props: Props) => (
+const Base = ({ iconSize, ...props }: Props) => (
   ${jsx}
 )
 
