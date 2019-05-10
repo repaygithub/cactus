@@ -4,6 +4,7 @@ import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
 import { IconButton } from '@repay/cactus-web'
 import { Motion, spring } from 'react-motion'
 import { useRect } from '@reach/rect'
+import { width } from 'styled-system'
 import Box from './Box'
 import cactusTheme from '@repay/cactus-theme'
 import Close from '@repay/cactus-icons/i/navigation-close'
@@ -85,6 +86,8 @@ function createMenuGroups(pages: Edges<Markdown>) {
           { title: 'Foundation', url: '/design-system/foundation/', order: 10, items: [] },
           { title: 'Color', url: '/design-system/color/', order: 20, items: [] },
           { title: 'Typography', url: '/design-system/typography/', order: 30, items: [] },
+          { title: 'Icons', url: '/design-system/icons/', order: 40, items: [] },
+          { title: 'Shared Styles', url: '/design-system/shared-styles/', order: 50, items: [] },
         ],
       },
       {
@@ -211,11 +214,12 @@ const springConfig = { stiffness: 220, damping: 26 }
 
 const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) => {
   // TODO default open should depend on window width
-  const [isOpen, setOpen] = React.useState(false)
+  const [isOpen, setOpen] = React.useState(window && window.innerWidth >= 1024)
   const toggleOpen = React.useCallback(() => setOpen(!isOpen), [isOpen, setOpen])
   const sidebarRef = React.createRef<HTMLDivElement>()
   const rect = useRect(sidebarRef)
   const sidebarWidth = isOpen && rect ? rect.width : 0
+
   const {
     allMdx: { edges: pages },
   } = useStaticQuery(graphql`
