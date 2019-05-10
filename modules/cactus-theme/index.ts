@@ -4,8 +4,16 @@ export type ColorStyle = {
 }
 
 export interface FontSizeObject extends Array<number> {
-  small?: number
+  h1?: number
+  h2?: number
+  h3?: number
+  h4?: number
   body?: number
+  /**
+   * Alias for body
+   */
+  p?: number
+  small?: number
 }
 
 export interface IconSizeObject extends Array<number> {
@@ -91,8 +99,12 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   let warning = `hsl(47, 82%, 47%)`
 
   const fontSizes: FontSizeObject = [15, 18, 21.6, 25.92, 31.104, 37.325]
+  fontSizes.h1 = fontSizes[5]
+  fontSizes.h2 = fontSizes[4]
+  fontSizes.h3 = fontSizes[3]
+  fontSizes.h4 = fontSizes[2]
+  fontSizes.body = fontSizes.p = fontSizes[1]
   fontSizes.small = fontSizes[0]
-  fontSizes.body = fontSizes[1]
 
   const iconSizes: IconSizeObject = [8, 16, 24, 40]
   iconSizes.tiny = iconSizes[0]
@@ -125,7 +137,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       error,
       warning,
     },
-    space: [0, 2, 4, 8, 16, 32, 64],
+    space: [0, 4, 8, 16, 24, 32, 40],
     fontSizes,
     iconSizes,
     colorStyles: {

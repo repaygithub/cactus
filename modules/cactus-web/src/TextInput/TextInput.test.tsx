@@ -72,7 +72,7 @@ describe('component: TextInput', () => {
   test('should support margin space props', () => {
     const textInput = render(
       <ThemeProvider theme={cactusTheme}>
-        <TextInput marginTop={4} />
+        <TextInput marginTop={3} />
       </ThemeProvider>
     )
 
