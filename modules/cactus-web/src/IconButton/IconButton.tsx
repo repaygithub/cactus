@@ -2,7 +2,7 @@ import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
 import { get, px, style } from 'styled-system'
-import { MarginProps, margins } from '../helpers/margins'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type IconButtonVariants = 'standard' | 'action'
@@ -85,9 +85,10 @@ const variantOrDisabled = (
 
 const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
   const { label, children, inverse, iconSize, display, ...buttonProps } = props
+  const withoutMargins = splitProps(buttonProps)
 
   return (
-    <button aria-label={label} ref={ref} {...buttonProps}>
+    <button aria-label={label} ref={ref} {...withoutMargins}>
       {children}
     </button>
   )

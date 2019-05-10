@@ -627,7 +627,6 @@ exports[`component: IconButton should support margin space props 1`] = `
 
 <button
     class="c0"
-    mb="4"
     type="button"
     variant="standard"
   >

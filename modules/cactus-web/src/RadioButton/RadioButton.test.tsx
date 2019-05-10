@@ -30,7 +30,7 @@ describe('component: RadioButton', () => {
   test('should support margin space props', () => {
     const radioButton = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButton name="test" id="SPACE PROPS YEAH" margin={4} />
+        <RadioButton name="test" id="SPACE PROPS YEAH" margin={3} />
       </ThemeProvider>
     )
 

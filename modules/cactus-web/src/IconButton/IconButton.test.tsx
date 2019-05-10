@@ -144,7 +144,7 @@ describe('component: IconButton', () => {
   test('should support margin space props', () => {
     const iconButton = render(
       <ThemeProvider theme={cactusTheme}>
-        <IconButton mb={4}>
+        <IconButton mb={3}>
           <StatusCheck />
         </IconButton>
       </ThemeProvider>
