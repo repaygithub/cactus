@@ -7,6 +7,8 @@ import {
   FontFamilyProps,
   fontSize,
   FontSizeProps,
+  fontStyle,
+  FontStyleProps,
   fontWeight,
   FontWeightProps,
   letterSpacing,
@@ -28,6 +30,7 @@ interface TextProps
     FontFamilyProps,
     FontWeightProps,
     TextAlignProps,
+    FontStyleProps,
     LineHeightProps,
     LetterSpacingProps {}
 
@@ -39,6 +42,7 @@ const Text = styled('p')<TextProps>(
   fontFamily,
   fontWeight,
   textAlign,
+  fontStyle,
   lineHeight,
   letterSpacing
 )

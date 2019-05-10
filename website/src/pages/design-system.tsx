@@ -20,7 +20,7 @@ export default () => {
         as our design system learns from implementation.
       </p>
       <p>
-        Next, read about our <Link to="/design-system/language/">design language</Link>.
+        Read about our <Link to="/design-system/language/">design language</Link>.
       </p>
     </>
   )

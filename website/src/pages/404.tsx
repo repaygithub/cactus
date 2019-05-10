@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 import { ReactComponent as NoResultsCactus } from '../assets/no-results-cactus.svg'
-import Box from '../components/Box'
+import Box, { Flex } from '../components/Box'
 
 export default () => (
   <>
-    <Box
+    <Flex
       display="flex"
       justifyContent="center"
       flexDirection="column"
@@ -17,6 +17,6 @@ export default () => (
       <Box position="absolute" left="0" top="0" right="0" zIndex={-1}>
         <NoResultsCactus />
       </Box>
-    </Box>
+    </Flex>
   </>
 )

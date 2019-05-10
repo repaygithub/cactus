@@ -1,122 +1,10 @@
 import * as React from 'react'
-import {
-  border,
-  borderBottom,
-  borderColor,
-  borderLeft,
-  borderRight,
-  borderStyle,
-  borderTop,
-  borderWidth,
-} from 'styled-system'
+
+import { AccessibilityBox, ColorBox, PaletteBox } from '../../components/Color'
 import { Link } from 'gatsby'
-import Box from '../../components/Box'
-import cactusTheme, { CactusColor, ColorVariant } from '@repay/cactus-theme'
-import Color from 'color'
+import Box, { Flex } from '../../components/Box'
 import Helmet from 'react-helmet'
-import Text from '../../components/Text'
-
-const upperCaseFirst = (word: string) => word.charAt(0).toUpperCase() + word.slice(1)
-
-const borderRadius: React.CSSProperties = { borderRadius: '4px' }
-const extraStyles: React.CSSProperties = { textAlign: 'right', borderRadius: '4px' }
-
-type ColorDisplayProps = {
-  displayName?: string
-  color: CactusColor | string
-  textColor?: CactusColor | string
-}
-
-function isCactusColor(color: string): color is CactusColor {
-  return cactusTheme.colors.hasOwnProperty(color)
-}
-
-function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
-  const hasDisplayName = Boolean(displayName)
-  let hslaStr: string
-  if (isCactusColor(color)) {
-    hslaStr = cactusTheme.colors[color]
-  } else {
-    hslaStr = color
-  }
-  let c = Color(hslaStr)
-  let [hue, saturation, luminosity, alpha] = c.array()
-  const isWhite = hue === 0 && saturation === 0 && luminosity === 100
-  return (
-    <Box
-      pt={hasDisplayName ? 4 : 3}
-      px={3}
-      pb={3}
-      mb={hasDisplayName ? 0 : '-4px'}
-      width="100%"
-      color={textColor}
-      bg={color}
-      borderWidth="1px"
-      borderStyle="solid"
-      borderColor={isWhite ? cactusTheme.colors.mediumGray : color}
-      style={extraStyles}
-    >
-      {hasDisplayName && (
-        <>
-          <span>#{displayName}</span>
-          <br />
-        </>
-      )}
-      <span>Hex {c.hex().slice(1)}</span>
-      <br />
-      <span>
-        H{hue} S{saturation} L{luminosity} A{alpha}
-      </span>
-    </Box>
-  )
-}
-
-type ColorBoxProps = {
-  name: ColorVariant
-  title?: string
-  children?: React.ReactNode
-}
-
-function ColorBox({ name, title, children }: ColorBoxProps) {
-  let displayName = title || upperCaseFirst(name)
-  let variant = cactusTheme.colorStyles[name]
-  return (
-    <Box px={4} py={3} width="240px">
-      <ColorDisplay
-        displayName={displayName}
-        color={variant.backgroundColor}
-        textColor={variant.color}
-      />
-      {children}
-    </Box>
-  )
-}
-
-type PaletteItem = {
-  bg: CactusColor
-  color: CactusColor
-}
-
-type PaletteBoxProps = {
-  colors: PaletteItem[]
-  title: string
-  children?: React.ReactNode
-}
-
-function PaletteBox({ colors, title, children }: PaletteBoxProps) {
-  return (
-    <Box px={4} py={3} width="240px">
-      {colors.map((item, index) => (
-        <ColorDisplay
-          displayName={index === colors.length ? title : undefined}
-          color={item.bg}
-          textColor={item.color}
-        />
-      ))}
-      {children}
-    </Box>
-  )
-}
+import Text, { Span } from '../../components/Text'
 
 export default () => {
   return (
@@ -128,7 +16,7 @@ export default () => {
         Based on REPAY having many white-labelled products, we carefully thought of a strategy so we
         can achieve the same look and feel and meet the accessibility standards.
       </p>
-      <Box display="flex" justifyContent="center" flexWrap="wrap" maxWidth="1200px" m="0 auto">
+      <Flex display="flex" justifyContent="center" flexWrap="wrap" maxWidth="1200px" m="0 auto">
         <ColorBox name="base" />
         <ColorBox name="callToAction" />
         <ColorBox name="standard" title="White" />
@@ -138,7 +26,7 @@ export default () => {
         <ColorBox name="error" />
         <ColorBox name="warning" />
         <ColorBox name="disable" />
-      </Box>
+      </Flex>
       <h2>Color Scheme</h2>
       <p>
         The standard Cactus color scheme is based on a monochromatic palette and a complementary
@@ -146,7 +34,7 @@ export default () => {
         the rest will be variations (brightness and saturation).
       </p>
       <h3 style={{ fontWeight: 400 }}>Monochromatic Scheme</h3>
-      <Box display="flex" justifyContent="center" flexWrap="wrap" maxWidth="1200px" m="0 auto">
+      <Flex display="flex" justifyContent="center" flexWrap="wrap" maxWidth="1200px" m="0 auto">
         <ColorBox name="base">
           <h4>Base Color</h4>
           <Text fontSize="small">
@@ -204,13 +92,19 @@ export default () => {
             The fully desaturated gray color indicates disabled or not yet available.
           </Text>
         </ColorBox>
-      </Box>
+      </Flex>
       <h2>Color Application</h2>
       <p>
         Colors must be used in a consistent manor throughout the application to solidify the design
         language and guide the user.
       </p>
-      <Box display="flex" justifyContent="center" flexWrap="wrap" maxWidth="1200px" margin="0 auto">
+      <Flex
+        display="flex"
+        justifyContent="center"
+        flexWrap="wrap"
+        maxWidth="1200px"
+        margin="0 auto"
+      >
         <ColorBox name="base">
           <h4>Base Color</h4>
           <Text fontSize="small">Headers, standard buttons, selection controls, hover states</Text>
@@ -269,10 +163,65 @@ export default () => {
             Neutral indicators, alert messages, action buttons, text fields, headlines, and icons
           </Text>
         </PaletteBox>
-      </Box>
-      <p>TODO: Accessibility charts</p>
+      </Flex>
+      <h2>Accessibility Standards</h2>
+      <Text>
+        Beware of foreground and background contrast issues and ensure the text always passes
+        minimum WCAG AA guidance. We can quantify contrast in a "contrast ratio" of the background
+        color and the text color.
+      </Text>
+      <Text>
+        <Span fontWeight={600}>Level AA</Span> requires a contrast ratio of at least 4.5:1 for
+        normal text and 3:1 for large text. <br />
+        Graphics and user <Span fontWeight={600}>interface</Span> components (such as form input
+        borders) also require a 3:1. <br />
+        <Span fontWeight={600}>Level AAA</Span> requires a contrast ratio of at least 7:1 for normal
+        text and 4.5:1 for large text.
+      </Text>
+      <Text fontStyle="italic">
+        Large text is defined as 14 point (18.66px) and bold or 18 point (24px) and larger and not
+        bold. Note that these requirements don't apply to decorative elements like logos and
+        illustrations.
+      </Text>
+      <Flex
+        display="flex"
+        justifyContent="center"
+        flexWrap="wrap"
+        maxWidth="1200px"
+        margin="0 auto"
+      >
+        <AccessibilityBox color="base" title="Base" isDark />
+        <AccessibilityBox color="callToAction" title="CTA" isDark />
+        <AccessibilityBox color="white" title="White" isDark={false} />
+        <AccessibilityBox color="darkestContrast" title="DarkestContrast" isDark />
+        <AccessibilityBox color="darkContrast" title="DarkContrast" isDark />
+        <AccessibilityBox color="mediumContrast" title="MediumContrast" isDark />
+        <AccessibilityBox color="lightContrast" title="LightContrast" isDark={false} />
+        <AccessibilityBox color="success" title="Success" isDark />
+        <AccessibilityBox color="error" title="Error" isDark />
+        <AccessibilityBox color="warning" title="Warning" isDark={false} />
+        <AccessibilityBox color="lightGray" title="LightGray" isDark={false} />
+        <AccessibilityBox color="mediumGray" title="MediumGray" isDark />
+        <AccessibilityBox color="darkGray" title="DarkGray" isDark />
+      </Flex>
+      <Text as="h4" fontSize="h4">
+        Exceptions to contrast requirements:
+      </Text>
+      <Text>
+        <Span fontWeight={600}>Large Text:</Span> Large-scale text and images of large-scale text
+        have a contrast ratio of at least 3:1.
+      </Text>
+      <Text>
+        <Span fontWeight={600}>Incidental:</Span> Text or images of text that are part of an
+        inactive user interface component, pure decoration, not visible to users, or within a
+        picture that contains significant other visual content all have no contrast requirements.
+      </Text>
+      <Text>
+        <Span fontWeight={600}>Logos:</Span> Text that is part of a logo or brand name has no
+        minimum contrast requirement.
+      </Text>
       <p>
-        Next, we will review the <Link to="/design-system/typography/">typography</Link>.
+        Now we'll review <Link to="/design-system/typography/">typography</Link> decisions.
       </p>
     </>
   )

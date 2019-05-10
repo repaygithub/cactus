@@ -7,6 +7,8 @@ import {
   AlignSelfProps,
   borderColor,
   BorderColorProps,
+  borderRadius,
+  BorderRadiusProps,
   borderStyle,
   BorderStyleProps,
   borderWidth,
@@ -29,6 +31,8 @@ import {
   FlexWrapProps,
   fontSize,
   FontSizeProps,
+  height,
+  HeightProps,
   justifyContent,
   JustifyContentProps,
   justifySelf,
@@ -63,6 +67,7 @@ interface BoxProps
     LeftProps,
     RightProps,
     WidthProps,
+    HeightProps,
     MaxWidthProps,
     MinWidthProps,
     SpaceProps,
@@ -72,17 +77,8 @@ interface BoxProps
     DisplayProps,
     BorderColorProps,
     BorderWidthProps,
+    BorderRadiusProps,
     BorderStyleProps,
-    FlexProps,
-    AlignItemsProps,
-    AlignContentProps,
-    JustifyContentProps,
-    FlexWrapProps,
-    FlexBasisProps,
-    FlexDirectionProps,
-    JustifySelfProps,
-    OrderProps,
-    AlignSelfProps,
     ZIndexProps {}
 
 const Box = styled('div')<BoxProps>(
@@ -96,13 +92,34 @@ const Box = styled('div')<BoxProps>(
   left,
   space,
   width,
+  height,
+  maxWidth,
+  minWidth,
   fontSize,
   colorStyle,
   color,
   display,
   borderColor,
   borderWidth,
+  borderRadius,
   borderStyle,
+  zIndex
+)
+
+interface FlexBoxProps
+  extends BoxProps,
+    FlexProps,
+    AlignItemsProps,
+    AlignContentProps,
+    JustifyContentProps,
+    FlexWrapProps,
+    FlexBasisProps,
+    FlexDirectionProps,
+    JustifySelfProps,
+    OrderProps,
+    AlignSelfProps {}
+
+export const Flex = styled(Box)<FlexBoxProps>(
   flex,
   alignItems,
   alignContent,
@@ -112,8 +129,11 @@ const Box = styled('div')<BoxProps>(
   flexDirection,
   justifySelf,
   alignSelf,
-  order,
-  zIndex
+  order
 )
+
+Flex.defaultProps = {
+  display: 'flex',
+}
 
 export default Box

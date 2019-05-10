@@ -47,3 +47,17 @@ declare type AllMarkdown = {
   totalCount: number
   edges: Edges<Markdown>
 }
+
+declare module '*.svg' {
+  import * as React from 'react'
+
+  export const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
+
+  const src: string
+  export default src
+}
+
+declare module '*.png' {
+  const source: string
+  export default source
+}
