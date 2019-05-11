@@ -148,7 +148,7 @@ const isStorybookUrl = (url: string) => url.includes('/stories/')
 const forceLocationReload = (event: React.SyntheticEvent<HTMLAnchorElement>) => {
   event.preventDefault()
   const href = event.currentTarget.getAttribute('href')
-  window && href !== null && href !== '' && (window.location.href = href)
+  global.window && href !== null && href !== '' && (global.window.location.href = href)
 }
 
 const BaseMenuList: React.FC<{ menu: MenuGroup; className?: string }> = ({ menu, className }) => (
@@ -214,7 +214,7 @@ const springConfig = { stiffness: 220, damping: 26 }
 
 const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) => {
   // TODO default open should depend on window width
-  const [isOpen, setOpen] = React.useState(window && window.innerWidth >= 1024)
+  const [isOpen, setOpen] = React.useState(global.window && global.window.innerWidth >= 1024)
   const toggleOpen = React.useCallback(() => setOpen(!isOpen), [isOpen, setOpen])
   const sidebarRef = React.createRef<HTMLDivElement>()
   const rect = useRect(sidebarRef)
