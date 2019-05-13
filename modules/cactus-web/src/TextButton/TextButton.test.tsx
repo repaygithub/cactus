@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { cleanup, fireEvent, render } from 'react-testing-library'
 import { StatusCheck } from '@repay/cactus-icons'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import TextButton from './TextButton'
 
@@ -11,9 +11,9 @@ afterEach(cleanup)
 describe('component: TextButton', () => {
   test('should default to standard variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton>Click me!</TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -21,9 +21,9 @@ describe('component: TextButton', () => {
 
   test('should render standard variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton variant="standard">Click me!</TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -31,9 +31,9 @@ describe('component: TextButton', () => {
 
   test('should render call to action variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton variant="action">Click me!</TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -41,9 +41,9 @@ describe('component: TextButton', () => {
 
   test('should render danger variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton variant="danger">Click me!</TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -51,9 +51,9 @@ describe('component: TextButton', () => {
 
   test('should render disabled variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton disabled>Click me!</TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -61,11 +61,11 @@ describe('component: TextButton', () => {
 
   test('should render inverse standard variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton variant="standard" inverse>
           Click me!
         </TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -73,11 +73,11 @@ describe('component: TextButton', () => {
 
   test('should render inverse call to action variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton variant="action" inverse>
           Click me!
         </TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -85,11 +85,11 @@ describe('component: TextButton', () => {
 
   test('should render inverse disabled variant', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton variant="standard" inverse disabled>
           Click me!
         </TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -97,9 +97,9 @@ describe('component: TextButton', () => {
 
   test('should support space props', () => {
     const textButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton marginRight={5}>I have margins!</TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textButton.asFragment()).toMatchSnapshot()
@@ -108,11 +108,11 @@ describe('component: TextButton', () => {
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton onClick={onClick} data-testid="clicked">
           Click me!
         </TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByTestId('clicked'))
@@ -122,11 +122,11 @@ describe('component: TextButton', () => {
   test('should not trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton disabled onClick={onClick} data-testid="not-clicked">
           Click me!
         </TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByTestId('not-clicked'))
@@ -135,12 +135,12 @@ describe('component: TextButton', () => {
 
   test('should render a text+icon button', () => {
     const textIconButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton>
           <StatusCheck />
           Check check
         </TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textIconButton.asFragment()).toMatchSnapshot()
@@ -148,12 +148,12 @@ describe('component: TextButton', () => {
 
   test('should render a disabled text+icon button', () => {
     const textIconButton = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <TextButton>
           <StatusCheck />
           Check check
         </TextButton>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textIconButton.asFragment()).toMatchSnapshot()

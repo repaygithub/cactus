@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, render } from 'react-testing-library'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import Toggle from './Toggle'
 
@@ -10,9 +10,9 @@ afterEach(cleanup)
 describe('component: Toggle', () => {
   test('should render a toggle', () => {
     const toggle = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Toggle value={false} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(toggle.asFragment()).toMatchSnapshot()
@@ -20,9 +20,9 @@ describe('component: Toggle', () => {
 
   test('should render a disabled toggle', () => {
     const toggle = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Toggle value={false} disabled={true} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(toggle.asFragment()).toMatchSnapshot()
@@ -30,9 +30,9 @@ describe('component: Toggle', () => {
 
   test('should initialize value to true', () => {
     const toggle = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Toggle value={true} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(toggle.asFragment()).toMatchSnapshot()
@@ -40,9 +40,9 @@ describe('component: Toggle', () => {
 
   test('should support margin space props', () => {
     const toggle = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Toggle value={false} marginBottom={4} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(toggle.asFragment()).toMatchSnapshot()
@@ -51,9 +51,9 @@ describe('component: Toggle', () => {
   test('should trigger onClick event', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Toggle value={false} onClick={onClick} data-testid="will-click" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByTestId('will-click'))
@@ -63,9 +63,9 @@ describe('component: Toggle', () => {
   test('should not trigger onClick event', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Toggle value={false} onClick={onClick} disabled={true} data-testid="will-not-click" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByTestId('will-not-click'))

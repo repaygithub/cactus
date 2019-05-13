@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { addDecorator, addParameters, configure } from '@storybook/react'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../src/StyleProvider/StyleProvider'
 import { withKnobs } from '@storybook/addon-knobs'
 import cactusTheme from '@repay/cactus-theme'
 import storybookTheme from './theme'
@@ -24,7 +24,9 @@ addDecorator(story => (
       marginTop: '20px',
     }}
   >
-    <ThemeProvider theme={cactusTheme}>{story()}</ThemeProvider>
+    <StyleProvider theme={cactusTheme} global>
+      {story()}
+    </StyleProvider>
   </div>
 ))
 

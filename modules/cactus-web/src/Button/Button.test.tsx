@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { ActionsDelete } from '@repay/cactus-icons'
 import { cleanup, fireEvent, render } from 'react-testing-library'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Button from './Button'
 import cactusTheme from '@repay/cactus-theme'
 
@@ -11,9 +11,9 @@ afterEach(cleanup)
 describe('component: Button', () => {
   test('should default to standard variant', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button>Click me!</Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -21,9 +21,9 @@ describe('component: Button', () => {
 
   test('should render standard variant', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button variant="standard">Click me!</Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -31,9 +31,9 @@ describe('component: Button', () => {
 
   test('should render call to action variant', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button variant="action">Click me!</Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -41,9 +41,9 @@ describe('component: Button', () => {
 
   test('should render disabled variant', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button disabled>Click me!</Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -51,11 +51,11 @@ describe('component: Button', () => {
 
   test('should render inverse standard variant', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button variant="standard" inverse>
           Click me!
         </Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -63,11 +63,11 @@ describe('component: Button', () => {
 
   test('should render inverse call to action variant', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button variant="action" inverse>
           Click me!
         </Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -75,11 +75,11 @@ describe('component: Button', () => {
 
   test('should render inverse disabled variant', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button disabled inverse>
           }>Click me!
         </Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -87,9 +87,9 @@ describe('component: Button', () => {
 
   test('should support margin space props', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button mt={5}>I have margins!</Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(button.asFragment()).toMatchSnapshot()
@@ -97,22 +97,22 @@ describe('component: Button', () => {
 
   test('should support svgs as children', () => {
     const button = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button>
           <ActionsDelete /> Delete
         </Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
   })
 
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button onClick={onClick} variant="action" data-testid="clicked">
           Click me!
         </Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByTestId('clicked'))
@@ -122,11 +122,11 @@ describe('component: Button', () => {
   test('should not trigger disabled onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Button onClick={onClick} variant="action" disabled data-testid="not-clicked">
           Click me!
         </Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByTestId('not-clicked'))

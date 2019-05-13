@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, render } from 'react-testing-library'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import ToggleField from './ToggleField'
 import userEvent from 'user-event'
@@ -11,9 +11,9 @@ afterEach(cleanup)
 describe('component: ToggleField', () => {
   test('snapshot', () => {
     const { container } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(container).toMatchSnapshot()
@@ -21,9 +21,9 @@ describe('component: ToggleField', () => {
 
   test('snapshot when value=true', () => {
     const { container } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={true} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(container).toMatchSnapshot()
@@ -31,9 +31,9 @@ describe('component: ToggleField', () => {
 
   test('snapshot when disabled', () => {
     const { container } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} disabled />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(container).toMatchSnapshot()
@@ -41,9 +41,9 @@ describe('component: ToggleField', () => {
 
   test('should generate unique id when one is not provided', () => {
     const { getByLabelText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <ToggleField label="Show me the money" name="show-me-the-money" value={true} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(getByLabelText('Show me the money').id).toContain('show-me-the-money')
@@ -52,14 +52,14 @@ describe('component: ToggleField', () => {
   test('should trigger onChange event with next value', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <ToggleField
           label="Show me the money"
           name="show-me-the-money"
           value={true}
           onChange={onChange}
         />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByLabelText('Show me the money'))
@@ -69,9 +69,9 @@ describe('component: ToggleField', () => {
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <ToggleField label="Strange Nights" name="strange_nights" value={false} onFocus={onFocus} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.focus(getByLabelText('Strange Nights'))
@@ -81,9 +81,9 @@ describe('component: ToggleField', () => {
   test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <ToggleField label="Washed." name="washed" value={false} onBlur={onBlur} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.blur(getByLabelText('Washed.'))
@@ -94,9 +94,9 @@ describe('component: ToggleField', () => {
     test('should not trigger onChange event', () => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
-        <ThemeProvider theme={cactusTheme}>
+        <StyleProvider theme={cactusTheme}>
           <ToggleField label="Flow" name="flow" value={false} onChange={onChange} disabled />
-        </ThemeProvider>
+        </StyleProvider>
       )
 
       userEvent.click(getByLabelText('Flow'))
@@ -106,7 +106,7 @@ describe('component: ToggleField', () => {
     test('should not trigger onFocus event', () => {
       const onFocus = jest.fn()
       const { getByLabelText } = render(
-        <ThemeProvider theme={cactusTheme}>
+        <StyleProvider theme={cactusTheme}>
           <ToggleField
             label="Not For Sale"
             name="not_for_sale"
@@ -114,7 +114,7 @@ describe('component: ToggleField', () => {
             onFocus={onFocus}
             disabled
           />
-        </ThemeProvider>
+        </StyleProvider>
       )
 
       userEvent.click(getByLabelText('Not For Sale'))

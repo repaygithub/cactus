@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom'
 import * as styledComponents from 'styled-components'
 import { Coffee, Home, Snack, Snacks } from './containers/index'
 import { Router } from '@reach/router'
+import { StyleProvider } from '@repay/cactus-web'
 import App from './App'
 import AppRoot, { FeatureFlagsObject } from '@repay/cactus-fwk'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import i18nController from './i18nController'
 import I18nProvider from '@repay/cactus-i18n'
 
-const { ThemeProvider } = styledComponents
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
 >
@@ -30,7 +30,7 @@ class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsOb
   }
   render() {
     return (
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <AppRoot featureFlags={this.state.features}>
           <I18nProvider controller={i18nController} lang={this.state.lang}>
             <Router>
@@ -48,7 +48,7 @@ class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsOb
             </Router>
           </I18nProvider>
         </AppRoot>
-      </ThemeProvider>
+      </StyleProvider>
     )
   }
 }
