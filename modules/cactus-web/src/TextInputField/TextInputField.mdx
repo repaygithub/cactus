@@ -1,0 +1,63 @@
+---
+name: TextInputField
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import TextInputField from './TextInputField'
+import cactusTheme from '@repay/cactus-theme'
+
+# TextInputField
+
+The `TextInputField` is a combination of `TextInput`, `Label`, and some handy tools to make integrating this filed into a form easier.
+
+## Best practices
+
+- Use descriptive labels for the input field.
+- Be descriptive with the tooltip, if necessary.
+- Make use of the `success`, `warning`, and `error` message props when appropriate to make the validity of inputs obvious to the user.
+
+## Basic usage
+
+
+```jsx
+import React, { useState } from 'react'
+import { Button, TextInputField } from '@repay/cactus-web'
+
+export default function Form() {
+  const [values, setValues] = useState({ input: '' })
+  const handleChange = useCallback(
+    (name, value) => {
+      setValues(state => setValues({ ...state, name: value }))
+    },
+    [setValues]
+  )
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...values }
+      // send data to api
+    },
+    [values]
+  )
+
+  return (
+    <form onSubmit={onSubmit}>
+      <TextInputField
+        name="input"
+        label="Input"
+        onChange={handleChange}
+        value={values.input}
+      />
+      <Button type="submit" variant="action">
+        Submit
+      </Button>
+    </form>
+  )
+}
+
+```
+
+## Properties
+
+<PropsTable of={TextInputField} />
