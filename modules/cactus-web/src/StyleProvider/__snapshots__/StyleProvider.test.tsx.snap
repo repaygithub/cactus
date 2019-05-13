@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`component: ThemeProvider should provide a default theme to children 1`] = `
+<div>
+  <div>
+    theme included
+  </div>
+</div>
+`;
+
 exports[`component: ThemeProvider should provide the theme to children 1`] = `
 <div>
   <div>

@@ -9,7 +9,7 @@ afterEach(cleanup)
 describe('component: RadioButton', () => {
   test('should render a radio button', () => {
     const radioButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <RadioButton name="test" id="radio" />
       </StyleProvider>
     )
@@ -19,7 +19,7 @@ describe('component: RadioButton', () => {
 
   test('should render a disabled radio button', () => {
     const radioButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <RadioButton name="test" id="radio" disabled />
       </StyleProvider>
     )
@@ -29,7 +29,7 @@ describe('component: RadioButton', () => {
 
   test('should support margin space props', () => {
     const radioButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <RadioButton name="test" id="SPACE PROPS YEAH" margin={4} />
       </StyleProvider>
     )
@@ -40,7 +40,7 @@ describe('component: RadioButton', () => {
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <RadioButton name="test" id="radio" onChange={onChange} aria-label="will-change" />
       </StyleProvider>
     )
@@ -52,7 +52,7 @@ describe('component: RadioButton', () => {
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <RadioButton name="test" id="radio" onFocus={onFocus} aria-label="will-focus" />
       </StyleProvider>
     )
@@ -64,7 +64,7 @@ describe('component: RadioButton', () => {
   test('should trigger onFocus event', () => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <RadioButton name="test" id="radio" onBlur={onBlur} aria-label="will-blur" />
       </StyleProvider>
     )

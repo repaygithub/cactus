@@ -24,7 +24,7 @@ addDecorator(story => (
       marginTop: '20px',
     }}
   >
-    <StyleProvider theme={cactusTheme} global>
+    <StyleProvider global>
       {story()}
     </StyleProvider>
   </div>

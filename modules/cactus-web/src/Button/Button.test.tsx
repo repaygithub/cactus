@@ -11,7 +11,7 @@ afterEach(cleanup)
 describe('component: Button', () => {
   test('should default to standard variant', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button>Click me!</Button>
       </StyleProvider>
     )
@@ -21,7 +21,7 @@ describe('component: Button', () => {
 
   test('should render standard variant', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button variant="standard">Click me!</Button>
       </StyleProvider>
     )
@@ -31,7 +31,7 @@ describe('component: Button', () => {
 
   test('should render call to action variant', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button variant="action">Click me!</Button>
       </StyleProvider>
     )
@@ -41,7 +41,7 @@ describe('component: Button', () => {
 
   test('should render disabled variant', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button disabled>Click me!</Button>
       </StyleProvider>
     )
@@ -51,7 +51,7 @@ describe('component: Button', () => {
 
   test('should render inverse standard variant', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button variant="standard" inverse>
           Click me!
         </Button>
@@ -63,7 +63,7 @@ describe('component: Button', () => {
 
   test('should render inverse call to action variant', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button variant="action" inverse>
           Click me!
         </Button>
@@ -75,7 +75,7 @@ describe('component: Button', () => {
 
   test('should render inverse disabled variant', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button disabled inverse>
           }>Click me!
         </Button>
@@ -87,7 +87,7 @@ describe('component: Button', () => {
 
   test('should support margin space props', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button mt={5}>I have margins!</Button>
       </StyleProvider>
     )
@@ -97,7 +97,7 @@ describe('component: Button', () => {
 
   test('should support svgs as children', () => {
     const button = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button>
           <ActionsDelete /> Delete
         </Button>
@@ -108,7 +108,7 @@ describe('component: Button', () => {
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button onClick={onClick} variant="action" data-testid="clicked">
           Click me!
         </Button>
@@ -122,7 +122,7 @@ describe('component: Button', () => {
   test('should not trigger disabled onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button onClick={onClick} variant="action" disabled data-testid="not-clicked">
           Click me!
         </Button>

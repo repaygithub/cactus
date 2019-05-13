@@ -11,7 +11,7 @@ afterEach(cleanup)
 describe('component: TextButton', () => {
   test('should default to standard variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton>Click me!</TextButton>
       </StyleProvider>
     )
@@ -21,7 +21,7 @@ describe('component: TextButton', () => {
 
   test('should render standard variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton variant="standard">Click me!</TextButton>
       </StyleProvider>
     )
@@ -31,7 +31,7 @@ describe('component: TextButton', () => {
 
   test('should render call to action variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton variant="action">Click me!</TextButton>
       </StyleProvider>
     )
@@ -41,7 +41,7 @@ describe('component: TextButton', () => {
 
   test('should render danger variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton variant="danger">Click me!</TextButton>
       </StyleProvider>
     )
@@ -51,7 +51,7 @@ describe('component: TextButton', () => {
 
   test('should render disabled variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton disabled>Click me!</TextButton>
       </StyleProvider>
     )
@@ -61,7 +61,7 @@ describe('component: TextButton', () => {
 
   test('should render inverse standard variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton variant="standard" inverse>
           Click me!
         </TextButton>
@@ -73,7 +73,7 @@ describe('component: TextButton', () => {
 
   test('should render inverse call to action variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton variant="action" inverse>
           Click me!
         </TextButton>
@@ -85,7 +85,7 @@ describe('component: TextButton', () => {
 
   test('should render inverse disabled variant', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton variant="standard" inverse disabled>
           Click me!
         </TextButton>
@@ -97,7 +97,7 @@ describe('component: TextButton', () => {
 
   test('should support space props', () => {
     const textButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton marginRight={5}>I have margins!</TextButton>
       </StyleProvider>
     )
@@ -108,7 +108,7 @@ describe('component: TextButton', () => {
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton onClick={onClick} data-testid="clicked">
           Click me!
         </TextButton>
@@ -122,7 +122,7 @@ describe('component: TextButton', () => {
   test('should not trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton disabled onClick={onClick} data-testid="not-clicked">
           Click me!
         </TextButton>
@@ -135,7 +135,7 @@ describe('component: TextButton', () => {
 
   test('should render a text+icon button', () => {
     const textIconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton>
           <StatusCheck />
           Check check
@@ -148,7 +148,7 @@ describe('component: TextButton', () => {
 
   test('should render a disabled text+icon button', () => {
     const textIconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextButton>
           <StatusCheck />
           Check check

@@ -11,7 +11,7 @@ afterEach(cleanup)
 describe('component: IconButton', () => {
   test('should default to standard medium icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton>
           <StatusCheck />
         </IconButton>
@@ -23,7 +23,7 @@ describe('component: IconButton', () => {
 
   test('should render standard medium icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton iconSize="medium">
           <StatusCheck />
         </IconButton>
@@ -35,7 +35,7 @@ describe('component: IconButton', () => {
 
   test('should render tiny icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton iconSize="tiny">
           <StatusCheck />
         </IconButton>
@@ -47,7 +47,7 @@ describe('component: IconButton', () => {
 
   test('should render small icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton iconSize="small">
           <StatusCheck />
         </IconButton>
@@ -59,7 +59,7 @@ describe('component: IconButton', () => {
 
   test('should render large icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton iconSize="large">
           <StatusCheck />
         </IconButton>
@@ -71,7 +71,7 @@ describe('component: IconButton', () => {
 
   test('should render call to action icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton variant="action">
           <StatusCheck />
         </IconButton>
@@ -83,7 +83,7 @@ describe('component: IconButton', () => {
 
   test('should render inverse standard icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton variant="standard" inverse>
           <StatusCheck />
         </IconButton>
@@ -95,7 +95,7 @@ describe('component: IconButton', () => {
 
   test('should render inverse call to action icon button', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton variant="action" inverse>
           <StatusCheck />
         </IconButton>
@@ -107,7 +107,7 @@ describe('component: IconButton', () => {
 
   test('should render icon button with aria-label', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton label="uchiha-itachi">
           <StatusCheck />
         </IconButton>
@@ -119,7 +119,7 @@ describe('component: IconButton', () => {
 
   test('should render disabled variant', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton disabled>
           <StatusCheck />
         </IconButton>
@@ -131,7 +131,7 @@ describe('component: IconButton', () => {
 
   test('should render inverse disabled variant', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton inverse disabled>
           <StatusCheck />
         </IconButton>
@@ -143,7 +143,7 @@ describe('component: IconButton', () => {
 
   test('should support margin space props', () => {
     const iconButton = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton mb={4}>
           <StatusCheck />
         </IconButton>
@@ -156,7 +156,7 @@ describe('component: IconButton', () => {
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton onClick={onClick} data-testid="clicked">
           <StatusCheck />
         </IconButton>
@@ -170,7 +170,7 @@ describe('component: IconButton', () => {
   test('should not trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <IconButton disabled onClick={onClick} data-testid="not-clicked">
           <StatusCheck />
         </IconButton>

@@ -11,7 +11,7 @@ const iconEntries = Object.entries(icons)
 
 test.each(iconEntries)('renders %s', (_, Component) => {
   const { asFragment } = render(
-    <StyleProvider theme={cactusTheme}>
+    <StyleProvider>
       <Component />
     </StyleProvider>
   )

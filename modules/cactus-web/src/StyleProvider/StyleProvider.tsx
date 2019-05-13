@@ -1,7 +1,8 @@
 import React from 'react'
 
 import * as styledComponents from 'styled-components'
-import { CactusTheme } from '@repay/cactus-theme'
+import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import { Omit } from '../types'
 
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
@@ -27,14 +28,15 @@ body {
 }
 `
 
-interface StyleProviderProps extends styledComponents.ThemeProviderProps<any, any> {
+interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<any, any>, 'theme'> {
+  theme?: CactusTheme
   global?: boolean
 }
 
 export const StyleProvider = (props: StyleProviderProps) => {
-  const { global, children, ...themeProviderProps } = props
+  const { global, children, theme, ...themeProviderProps } = props
   return (
-    <styledComponents.ThemeProvider {...themeProviderProps}>
+    <styledComponents.ThemeProvider theme={theme ? theme : cactusTheme} {...themeProviderProps}>
       <React.Fragment>
         <DebugStyle />
         {global && <GlobalStyle />}

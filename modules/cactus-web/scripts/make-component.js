@@ -101,7 +101,7 @@ afterEach(cleanup)
 describe('component: ${componentName}', () => {
   test('snapshot', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <${componentName} />
       </StyleProvider>
     )

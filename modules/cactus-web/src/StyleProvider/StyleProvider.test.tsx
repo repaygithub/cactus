@@ -21,7 +21,17 @@ afterEach(cleanup)
 describe('component: ThemeProvider', () => {
   test('should provide the theme to children', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
+        <TestComponent />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should provide a default theme to children', () => {
+    const { container } = render(
+      <StyleProvider>
         <TestComponent />
       </StyleProvider>
     )

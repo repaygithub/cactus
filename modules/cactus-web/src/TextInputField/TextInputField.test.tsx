@@ -11,7 +11,7 @@ afterEach(cleanup)
 describe('component: TextInputField', () => {
   test('should render a TextInputField', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField name="instigate" label="Enter some text" toolTip="Go on, do it" />
       </StyleProvider>
     )
@@ -21,7 +21,7 @@ describe('component: TextInputField', () => {
 
   test('should render a disabled TextInputField', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField name="trick" label="Come on, type something" toolTip="Sike!" disabled />
       </StyleProvider>
     )
@@ -31,7 +31,7 @@ describe('component: TextInputField', () => {
 
   test('should render a TextInputField with a placeholder', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField
           name="promise"
           label="Ok ok, now do it"
@@ -45,7 +45,7 @@ describe('component: TextInputField', () => {
 
   test('should render a success TextInputField', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField
           name="success"
           label="No seriously, type something"
@@ -59,7 +59,7 @@ describe('component: TextInputField', () => {
 
   test('should render a warning TextInputField', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField name="warn" label="Do it again" warning="Really? That's all you got?" />
       </StyleProvider>
     )
@@ -69,7 +69,7 @@ describe('component: TextInputField', () => {
 
   test('should render an error TextInputField', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField name="error" label="Try again" error="That's it, we're done here" />
       </StyleProvider>
     )
@@ -79,7 +79,7 @@ describe('component: TextInputField', () => {
 
   test('should support margin space props', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField name="margins" label="Check out all these sick margins" m={3} />
       </StyleProvider>
     )
@@ -90,7 +90,7 @@ describe('component: TextInputField', () => {
   test('should trigger onChange handler', () => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInputField
           name="change"
           label="Better type something this time"

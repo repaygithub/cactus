@@ -10,7 +10,7 @@ afterEach(cleanup)
 describe('component: Toggle', () => {
   test('should render a toggle', () => {
     const toggle = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Toggle value={false} />
       </StyleProvider>
     )
@@ -20,7 +20,7 @@ describe('component: Toggle', () => {
 
   test('should render a disabled toggle', () => {
     const toggle = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Toggle value={false} disabled={true} />
       </StyleProvider>
     )
@@ -30,7 +30,7 @@ describe('component: Toggle', () => {
 
   test('should initialize value to true', () => {
     const toggle = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Toggle value={true} />
       </StyleProvider>
     )
@@ -40,7 +40,7 @@ describe('component: Toggle', () => {
 
   test('should support margin space props', () => {
     const toggle = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Toggle value={false} marginBottom={4} />
       </StyleProvider>
     )
@@ -51,7 +51,7 @@ describe('component: Toggle', () => {
   test('should trigger onClick event', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Toggle value={false} onClick={onClick} data-testid="will-click" />
       </StyleProvider>
     )
@@ -63,7 +63,7 @@ describe('component: Toggle', () => {
   test('should not trigger onClick event', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Toggle value={false} onClick={onClick} disabled={true} data-testid="will-not-click" />
       </StyleProvider>
     )

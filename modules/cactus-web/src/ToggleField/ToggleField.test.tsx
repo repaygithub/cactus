@@ -11,7 +11,7 @@ afterEach(cleanup)
 describe('component: ToggleField', () => {
   test('snapshot', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} />
       </StyleProvider>
     )
@@ -21,7 +21,7 @@ describe('component: ToggleField', () => {
 
   test('snapshot when value=true', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={true} />
       </StyleProvider>
     )
@@ -31,7 +31,7 @@ describe('component: ToggleField', () => {
 
   test('snapshot when disabled', () => {
     const { container } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} disabled />
       </StyleProvider>
     )
@@ -41,7 +41,7 @@ describe('component: ToggleField', () => {
 
   test('should generate unique id when one is not provided', () => {
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <ToggleField label="Show me the money" name="show-me-the-money" value={true} />
       </StyleProvider>
     )
@@ -52,7 +52,7 @@ describe('component: ToggleField', () => {
   test('should trigger onChange event with next value', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <ToggleField
           label="Show me the money"
           name="show-me-the-money"
@@ -69,7 +69,7 @@ describe('component: ToggleField', () => {
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <ToggleField label="Strange Nights" name="strange_nights" value={false} onFocus={onFocus} />
       </StyleProvider>
     )
@@ -81,7 +81,7 @@ describe('component: ToggleField', () => {
   test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <ToggleField label="Washed." name="washed" value={false} onBlur={onBlur} />
       </StyleProvider>
     )
@@ -94,7 +94,7 @@ describe('component: ToggleField', () => {
     test('should not trigger onChange event', () => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
-        <StyleProvider theme={cactusTheme}>
+        <StyleProvider>
           <ToggleField label="Flow" name="flow" value={false} onChange={onChange} disabled />
         </StyleProvider>
       )
@@ -106,7 +106,7 @@ describe('component: ToggleField', () => {
     test('should not trigger onFocus event', () => {
       const onFocus = jest.fn()
       const { getByLabelText } = render(
-        <StyleProvider theme={cactusTheme}>
+        <StyleProvider>
           <ToggleField
             label="Not For Sale"
             name="not_for_sale"

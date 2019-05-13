@@ -11,7 +11,7 @@ afterEach(cleanup)
 describe('component: CheckBoxField', () => {
   test('should render a checkbox field', () => {
     const checkboxField = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="SoIA" id="my-id" name="checkbox-test" />
       </StyleProvider>
     )
@@ -21,7 +21,7 @@ describe('component: CheckBoxField', () => {
 
   test('should render a disabled checkbox field', () => {
     const checkboxField = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="NMNL" id="my-id" name="checkbox-test" disabled />
       </StyleProvider>
     )
@@ -31,7 +31,7 @@ describe('component: CheckBoxField', () => {
 
   test('should generate unique id when one is not provided', () => {
     const { container, getByText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Scoreboard" name="scoreboard" />
       </StyleProvider>
     )
@@ -45,7 +45,7 @@ describe('component: CheckBoxField', () => {
 
   test('should support margin space props', () => {
     const checkboxField = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="space props" name="space_props" id="not-random" mr={3} />
       </StyleProvider>
     )
@@ -56,7 +56,7 @@ describe('component: CheckBoxField', () => {
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Katastro" name="katastro" onChange={onChange} />
       </StyleProvider>
     )
@@ -68,7 +68,7 @@ describe('component: CheckBoxField', () => {
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Strange Nights" name="strange_nights" onFocus={onFocus} />
       </StyleProvider>
     )
@@ -80,7 +80,7 @@ describe('component: CheckBoxField', () => {
   test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Washed." name="washed" onBlur={onBlur} />
       </StyleProvider>
     )
@@ -93,7 +93,7 @@ describe('component: CheckBoxField', () => {
     test('should not trigger onChange event', () => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
-        <StyleProvider theme={cactusTheme}>
+        <StyleProvider>
           <CheckBoxField label="Flow" name="flow" onChange={onChange} disabled />
         </StyleProvider>
       )
@@ -105,7 +105,7 @@ describe('component: CheckBoxField', () => {
     test('should not trigger onFocus event', () => {
       const onFocus = jest.fn()
       const { getByLabelText } = render(
-        <StyleProvider theme={cactusTheme}>
+        <StyleProvider>
           <CheckBoxField label="Not For Sale" name="not_for_sale" onFocus={onFocus} disabled />
         </StyleProvider>
       )

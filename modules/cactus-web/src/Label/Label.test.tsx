@@ -10,7 +10,7 @@ afterEach(cleanup)
 describe('component: Label', () => {
   test('should render a label component', () => {
     const label = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Label>It is important to label UI elements</Label>
       </StyleProvider>
     )
@@ -20,7 +20,7 @@ describe('component: Label', () => {
 
   test('should support margin space props', () => {
     const label = render(
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider>
         <Label ml={2} />
       </StyleProvider>
     )
