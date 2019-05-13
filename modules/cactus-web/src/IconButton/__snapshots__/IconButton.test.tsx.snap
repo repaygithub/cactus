@@ -29,6 +29,10 @@ exports[`component: IconButton should default to standard medium icon button 1`]
   font-size: 24px;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0:hover,
 .c0:focus {
   color: hsl(200,96%,35%);
@@ -81,6 +85,10 @@ exports[`component: IconButton should render call to action icon button 1`] = `
   cursor: pointer;
   color: hsl(200,96%,35%);
   font-size: 24px;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:hover,
@@ -138,6 +146,10 @@ exports[`component: IconButton should render disabled variant 1`] = `
   font-size: 24px;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 <button
     class="c0"
     disabled=""
@@ -186,6 +198,10 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
   cursor: pointer;
   color: hsl(200,96%,11%);
   font-size: 24px;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:hover,
@@ -243,6 +259,10 @@ exports[`component: IconButton should render inverse call to action icon button 
   font-size: 24px;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0:hover,
 .c0:focus {
   color: hsl(0,0%,100%);
@@ -298,6 +318,10 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
   font-size: 24px;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 <button
     class="c0"
     disabled=""
@@ -346,6 +370,10 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
   cursor: pointer;
   color: hsl(0,0%,100%);
   font-size: 24px;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:hover,
@@ -403,6 +431,10 @@ exports[`component: IconButton should render large icon button 1`] = `
   font-size: 40px;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0:hover,
 .c0:focus {
   color: hsl(200,96%,35%);
@@ -455,6 +487,10 @@ exports[`component: IconButton should render small icon button 1`] = `
   cursor: pointer;
   color: hsl(200,96%,11%);
   font-size: 16px;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:hover,
@@ -511,6 +547,10 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
   font-size: 24px;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0:hover,
 .c0:focus {
   color: hsl(200,96%,35%);
@@ -563,6 +603,10 @@ exports[`component: IconButton should render tiny icon button 1`] = `
   cursor: pointer;
   color: hsl(200,96%,11%);
   font-size: 8px;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:hover,
@@ -618,6 +662,10 @@ exports[`component: IconButton should support margin space props 1`] = `
   color: hsl(200,96%,11%);
   margin-bottom: 16px;
   font-size: 24px;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:hover,

@@ -113,6 +113,11 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   background: transparent;
   outline: none;
   cursor: pointer;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
   ${variantOrDisabled}
   ${margins}
   ${iconSizes}

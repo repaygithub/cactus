@@ -81,6 +81,10 @@ export const TextButton = styled.button<TextButtonProps>`
     text-decoration: ${p => !p.disabled && 'underline'};
   }
 
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
   svg {
     display: inline-block;
     margin-top: -4px;
