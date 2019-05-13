@@ -137,7 +137,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       error,
       warning,
     },
-    space: [0, 4, 8, 16, 24, 32, 40],
+    space: [0, 2, 4, 8, 16, 32, 64],
     fontSizes,
     iconSizes,
     colorStyles: {

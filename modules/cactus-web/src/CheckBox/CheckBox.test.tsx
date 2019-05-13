@@ -32,7 +32,7 @@ describe('component: CheckBox', () => {
   test('should support margin space props', () => {
     const checkBox = render(
       <ThemeProvider theme={cactusTheme}>
-        <CheckBox id="MARGIN PROPS YEAH" m={3} />
+        <CheckBox id="MARGIN PROPS YEAH" m={4} />
       </ThemeProvider>
     )
 

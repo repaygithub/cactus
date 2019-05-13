@@ -41,7 +41,7 @@ describe('component: Toggle', () => {
   test('should support margin space props', () => {
     const toggle = render(
       <ThemeProvider theme={cactusTheme}>
-        <Toggle value={false} marginBottom={3} />
+        <Toggle value={false} marginBottom={4} />
       </ThemeProvider>
     )
 

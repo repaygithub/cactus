@@ -45,7 +45,7 @@ describe('component: RadioButtonField', () => {
   test('should support margin space props', () => {
     const { container } = render(
       <ThemeProvider theme={cactusTheme}>
-        <RadioButtonField id="Ackermann" name="rbf" label="Mikasa" marginLeft={3} />
+        <RadioButtonField id="Ackermann" name="rbf" label="Mikasa" marginLeft={4} />
       </ThemeProvider>
     )
 
