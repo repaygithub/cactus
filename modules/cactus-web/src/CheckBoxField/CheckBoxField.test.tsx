@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, queryByAttribute, render } from 'react-testing-library'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import CheckBoxField from './CheckBoxField'
 import userEvent from 'user-event'
@@ -11,9 +11,9 @@ afterEach(cleanup)
 describe('component: CheckBoxField', () => {
   test('should render a checkbox field', () => {
     const checkboxField = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="SoIA" id="my-id" name="checkbox-test" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(checkboxField.asFragment()).toMatchSnapshot()
@@ -21,9 +21,9 @@ describe('component: CheckBoxField', () => {
 
   test('should render a disabled checkbox field', () => {
     const checkboxField = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="NMNL" id="my-id" name="checkbox-test" disabled />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(checkboxField.asFragment()).toMatchSnapshot()
@@ -31,9 +31,9 @@ describe('component: CheckBoxField', () => {
 
   test('should generate unique id when one is not provided', () => {
     const { container, getByText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Scoreboard" name="scoreboard" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     const getById = queryByAttribute.bind(null, 'id')
@@ -45,9 +45,9 @@ describe('component: CheckBoxField', () => {
 
   test('should support margin space props', () => {
     const checkboxField = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="space props" name="space_props" id="not-random" mr={3} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(checkboxField.asFragment()).toMatchSnapshot()
@@ -56,9 +56,9 @@ describe('component: CheckBoxField', () => {
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Katastro" name="katastro" onChange={onChange} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByLabelText('Katastro'))
@@ -68,9 +68,9 @@ describe('component: CheckBoxField', () => {
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Strange Nights" name="strange_nights" onFocus={onFocus} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.focus(getByLabelText('Strange Nights'))
@@ -80,9 +80,9 @@ describe('component: CheckBoxField', () => {
   test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBoxField label="Washed." name="washed" onBlur={onBlur} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.blur(getByLabelText('Washed.'))
@@ -93,9 +93,9 @@ describe('component: CheckBoxField', () => {
     test('should not trigger onChange event', () => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
-        <ThemeProvider theme={cactusTheme}>
+        <StyleProvider>
           <CheckBoxField label="Flow" name="flow" onChange={onChange} disabled />
-        </ThemeProvider>
+        </StyleProvider>
       )
 
       userEvent.click(getByLabelText('Flow'))
@@ -105,9 +105,9 @@ describe('component: CheckBoxField', () => {
     test('should not trigger onFocus event', () => {
       const onFocus = jest.fn()
       const { getByLabelText } = render(
-        <ThemeProvider theme={cactusTheme}>
+        <StyleProvider>
           <CheckBoxField label="Not For Sale" name="not_for_sale" onFocus={onFocus} disabled />
-        </ThemeProvider>
+        </StyleProvider>
       )
 
       userEvent.click(getByLabelText('Not For Sale'))

@@ -47,6 +47,9 @@ export interface CactusTheme {
     success: string
     warning: string
     error: string
+    transparentSuccess: string
+    transparentWarning: string
+    transparentError: string
   }
   space: number[]
   fontSizes: FontSizeObject
@@ -97,6 +100,9 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   let success = `hsl(145, 89%, 28%)`
   let error = `hsl(353, 84%, 44%)`
   let warning = `hsl(47, 82%, 47%)`
+  let transparentSuccess = `hsla(145, 89%, 28%, 0.2)`
+  let transparentError = `hsla(353, 84%, 44%, 0.2)`
+  let transparentWarning = `hsla(47, 82%, 47%, 0.2)`
 
   const fontSizes: FontSizeObject = [15, 18, 21.6, 25.92, 31.104, 37.325]
   fontSizes.h1 = fontSizes[5]
@@ -136,6 +142,9 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       success,
       error,
       warning,
+      transparentSuccess,
+      transparentError,
+      transparentWarning,
     },
     space: [0, 2, 4, 8, 16, 32, 64],
     fontSizes,

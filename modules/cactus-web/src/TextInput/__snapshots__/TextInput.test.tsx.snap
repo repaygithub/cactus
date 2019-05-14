@@ -3,7 +3,7 @@
 exports[`component: TextInput should render a disabled input 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 1px solid hsl(0,0%,90%);
+  border: 2px solid hsl(0,0%,90%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -72,11 +72,11 @@ exports[`component: TextInput should render a success input 1`] = `
   height: 20px;
   position: absolute;
   right: 8px;
-  color: hsl(145,89%,28%);
+  color: hsl(200,10%,20%);
 }
 
 .c1 {
-  border: 1px solid hsl(200,9%,35%);
+  border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -86,6 +86,7 @@ exports[`component: TextInput should render a success input 1`] = `
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(145,89%,28%);
+  background: hsla(145,89%,28%,0.2);
 }
 
 .c1:focus {
@@ -152,7 +153,7 @@ exports[`component: TextInput should render a success input 1`] = `
 exports[`component: TextInput should render a text input 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 1px solid hsl(200,9%,35%);
+  border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -220,11 +221,11 @@ exports[`component: TextInput should render an error input 1`] = `
   height: 20px;
   position: absolute;
   right: 8px;
-  color: hsl(353,84%,44%);
+  color: hsl(200,10%,20%);
 }
 
 .c1 {
-  border: 1px solid hsl(200,9%,35%);
+  border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -234,6 +235,7 @@ exports[`component: TextInput should render an error input 1`] = `
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
+  background: hsla(353,84%,44%,0.2);
 }
 
 .c1:focus {
@@ -300,7 +302,7 @@ exports[`component: TextInput should render an error input 1`] = `
 exports[`component: TextInput should render an input with a placeholder 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 1px solid hsl(200,9%,35%);
+  border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -361,7 +363,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
 </DocumentFragment>
 `;
 
-exports[`component: TextInput should render an invalid input 1`] = `
+exports[`component: TextInput should render an warning input 1`] = `
 <DocumentFragment>
   .c2 {
   vertical-align: middle;
@@ -369,11 +371,11 @@ exports[`component: TextInput should render an invalid input 1`] = `
   height: 24px;
   position: absolute;
   right: 8px;
-  color: hsl(47,82%,47%);
+  color: hsl(200,10%,20%);
 }
 
 .c1 {
-  border: 1px solid hsl(200,9%,35%);
+  border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -383,6 +385,7 @@ exports[`component: TextInput should render an invalid input 1`] = `
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(47,82%,47%);
+  background: hsla(47,82%,47%,0.2);
 }
 
 .c1:focus {
@@ -434,7 +437,7 @@ exports[`component: TextInput should render an invalid input 1`] = `
       class="c2"
       fill="currentcolor"
       height="1em"
-      status="invalid"
+      status="warning"
       viewBox="0 0 24 24"
       width="1em"
     >
@@ -449,7 +452,7 @@ exports[`component: TextInput should render an invalid input 1`] = `
 exports[`component: TextInput should support margin space props 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 1px solid hsl(200,9%,35%);
+  border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;

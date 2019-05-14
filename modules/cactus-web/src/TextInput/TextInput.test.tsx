@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, render } from 'react-testing-library'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import TextInput from './TextInput'
 import userEvent from 'user-event'
@@ -11,9 +11,9 @@ afterEach(cleanup)
 describe('component: TextInput', () => {
   test('should render a text input', () => {
     const input = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInput />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(input.asFragment()).toMatchSnapshot()
@@ -21,9 +21,9 @@ describe('component: TextInput', () => {
 
   test('should render a disabled input', () => {
     const input = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInput disabled />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(input.asFragment()).toMatchSnapshot()
@@ -31,9 +31,9 @@ describe('component: TextInput', () => {
 
   test('should render an input with a placeholder', () => {
     const input = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInput placeholder="hold my place" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(input.asFragment()).toMatchSnapshot()
@@ -41,19 +41,19 @@ describe('component: TextInput', () => {
 
   test('should render a success input', () => {
     const input = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInput status="success" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(input.asFragment()).toMatchSnapshot()
   })
 
-  test('should render an invalid input', () => {
+  test('should render an warning input', () => {
     const input = render(
-      <ThemeProvider theme={cactusTheme}>
-        <TextInput status="invalid" />
-      </ThemeProvider>
+      <StyleProvider>
+        <TextInput status="warning" />
+      </StyleProvider>
     )
 
     expect(input.asFragment()).toMatchSnapshot()
@@ -61,9 +61,9 @@ describe('component: TextInput', () => {
 
   test('should render an error input', () => {
     const input = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInput status="error" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(input.asFragment()).toMatchSnapshot()
@@ -71,9 +71,9 @@ describe('component: TextInput', () => {
 
   test('should support margin space props', () => {
     const textInput = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInput marginTop={4} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(textInput.asFragment()).toMatchSnapshot()
@@ -82,9 +82,9 @@ describe('component: TextInput', () => {
   test('should trigger onChange handler', () => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <TextInput placeholder="get this" onChange={onChange} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     userEvent.type(getByPlaceholderText('get this'), 'typing...')

@@ -13,7 +13,7 @@ type StatusOptions = { [k in Status | 'none']: Status | null }
 const statusOptions: StatusOptions = {
   none: null,
   success: 'success',
-  invalid: 'invalid',
+  warning: 'warning',
   error: 'error',
 }
 

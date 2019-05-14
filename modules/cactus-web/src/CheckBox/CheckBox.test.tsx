@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, render } from 'react-testing-library'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import CheckBox from './CheckBox'
 import userEvent from 'user-event'
@@ -11,9 +11,9 @@ afterEach(cleanup)
 describe('component: CheckBox', () => {
   test('should render a checkbox', () => {
     const checkBox = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="check" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(checkBox.asFragment()).toMatchSnapshot()
@@ -21,9 +21,9 @@ describe('component: CheckBox', () => {
 
   test('should render a disabled checkbox', () => {
     const checkBox = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="checking" disabled />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(checkBox.asFragment()).toMatchSnapshot()
@@ -31,9 +31,9 @@ describe('component: CheckBox', () => {
 
   test('should support margin space props', () => {
     const checkBox = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="MARGIN PROPS YEAH" m={4} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(checkBox.asFragment()).toMatchSnapshot()
@@ -42,9 +42,9 @@ describe('component: CheckBox', () => {
   test('should trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="checked" onChange={onChange} data-testid="will-check" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.click(getByTestId('will-check'))
@@ -54,9 +54,9 @@ describe('component: CheckBox', () => {
   test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="checked" onFocus={onFocus} data-testid="will-check" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.focus(getByTestId('will-check'))
@@ -66,9 +66,9 @@ describe('component: CheckBox', () => {
   test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="checked" onBlur={onBlur} data-testid="will-check" />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     fireEvent.blur(getByTestId('will-check'))
@@ -78,9 +78,9 @@ describe('component: CheckBox', () => {
   test('should not trigger onChange event', () => {
     const onChange = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="checked" onChange={onChange} data-testid="will-not-check" disabled />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     userEvent.click(getByTestId('will-not-check'))
@@ -90,9 +90,9 @@ describe('component: CheckBox', () => {
   test('should not trigger onFocus event', () => {
     const onFocus = jest.fn()
     const { getByTestId } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <CheckBox id="checked" onFocus={onFocus} data-testid="will-not-check" disabled />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     userEvent.click(getByTestId('will-not-check'))

@@ -1,14 +1,14 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { MarginProps, margins } from '../helpers/margins'
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
-export type Status = 'success' | 'invalid' | 'error'
+export type Status = 'success' | 'warning' | 'error'
 
-interface TextInputProps
+export interface TextInputProps
   extends Omit<
       React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
       'ref'
@@ -43,12 +43,15 @@ type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> 
 const statusMap: StatusMap = {
   success: css`
     border-color: ${p => p.theme.colors.success};
+    background: ${p => p.theme.colors.transparentSuccess};
   `,
-  invalid: css`
+  warning: css`
     border-color: ${p => p.theme.colors.warning};
+    background: ${p => p.theme.colors.transparentWarning};
   `,
   error: css`
     border-color: ${p => p.theme.colors.error};
+    background: ${p => p.theme.colors.transparentError};
   `,
 }
 
@@ -65,7 +68,7 @@ const TextInputBase = (props: TextInputProps) => {
     <div className={className}>
       <Input {...props} />
       {status === 'success' && !disabled && <StyledCheck disabled={disabled} status={status} />}
-      {status === 'invalid' && !disabled && <StyledAlert disabled={disabled} status={status} />}
+      {status === 'warning' && !disabled && <StyledAlert disabled={disabled} status={status} />}
       {status === 'error' && !disabled && <StyledError disabled={disabled} status={status} />}
     </div>
   )
@@ -76,7 +79,7 @@ const StyledCheck = styled(StatusCheck)<StyledCheckProps>`
   height: 20px;
   position: absolute;
   right: 8px;
-  color: ${p => p.theme.colors.success};
+  color: ${p => p.theme.colors.darkestContrast};
 `
 
 const StyledAlert = styled(NotificationAlert)<StyledAlertProps>`
@@ -84,7 +87,7 @@ const StyledAlert = styled(NotificationAlert)<StyledAlertProps>`
   height: 24px;
   position: absolute;
   right: 8px;
-  color: ${p => p.theme.colors.warning};
+  color: ${p => p.theme.colors.darkestContrast};
 `
 
 const StyledError = styled(NotificationError)<StyledErrorProps>`
@@ -92,11 +95,11 @@ const StyledError = styled(NotificationError)<StyledErrorProps>`
   height: 20px;
   position: absolute;
   right: 8px;
-  color: ${p => p.theme.colors.error};
+  color: ${p => p.theme.colors.darkestContrast};
 `
 
 const Input = styled.input<InputProps>`
-  border: 1px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
+  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
   border-radius: 20px;
   height: 32px;
   outline: none;

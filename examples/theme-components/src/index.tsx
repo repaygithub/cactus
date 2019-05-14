@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import * as styledComponents from 'styled-components'
 import { Router } from '@reach/router'
+import { StyleProvider } from '@repay/cactus-web'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 
 const ButtonsPage = React.lazy(() =>
@@ -13,7 +14,6 @@ const InverseButtonsPage = React.lazy(() =>
   import(/* webpackChunkName: "InverseButtons" */ './containers/InverseButtons')
 )
 
-const { ThemeProvider } = styledComponents
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
 >
@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
 class RootTheme extends Component {
   render() {
     return (
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme}>
         <Suspense fallback="loading...">
           <GlobalStyle />
           <Router style={{ height: '100%' }}>
@@ -42,7 +42,7 @@ class RootTheme extends Component {
             <InverseButtonsPage path="/Buttons/Inverse" />
           </Router>
         </Suspense>
-      </ThemeProvider>
+      </StyleProvider>
     )
   }
 }

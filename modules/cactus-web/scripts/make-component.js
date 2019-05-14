@@ -76,12 +76,12 @@ async function fileExists(filePath) {
 function componentTemplate(componentName) {
   return `
 import styled from 'styled-components'
-import { space, SpaceProps } from 'styled-system'
+import { margins, MarginProps } from '../helpers/margins'
 
 interface ${componentName}Props extends SpaceProps {}
 
 export const ${componentName} = styled.div<${componentName}Props>\`
-  \${space}
+  \${margins}
 \`
 
 export default ${componentName}
@@ -94,16 +94,16 @@ import * as React from 'react'
 import { cleanup, render, fireEvent } from 'react-testing-library'
 import ${componentName} from './${componentName}'
 import cactusTheme from '@repay/cactus-theme'
-import { ThemeProvider } from 'styled-components'
+import { StyleProvider } from '@repay/cactus-web'
 
 afterEach(cleanup)
 
 describe('component: ${componentName}', () => {
   test('snapshot', () => {
     const { container } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <${componentName} />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(container).toMatchSnapshot()
@@ -113,7 +113,7 @@ describe('component: ${componentName}', () => {
 }
 
 function storyTemplate(componentName) {
-  return ` 
+  return `
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import ${componentName} from './${componentName}'

@@ -1,0 +1,888 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: TextInputField should render a TextInputField 1`] = `
+.c2 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  vertical-align: middle;
+}
+
+.c6 {
+  border: 2px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: 100%;
+  background-color: hsl(0,0%,100%);
+}
+
+.c6:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c6::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c6::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c6:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c6::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c5 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 {
+  position: relative;
+  width: auto;
+}
+
+.c0 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 .c3 {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+    >
+      Enter some text
+    </label>
+    <span
+      title="Go on, do it"
+    >
+      <svg
+        class="c3 c4"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M12,21 C7.0374,21 3,16.9626 3,12 C3,7.0374 7.0374,3 12,3 C16.9626,3 21,7.0374 21,12 C21,16.9626 16.9626,21 12,21 Z M12,5.16 C8.229,5.16 5.16,8.2281 5.16,12 C5.16,15.7719 8.229,18.84 12,18.84 C15.771,18.84 18.84,15.7719 18.84,12 C18.84,8.2281 15.771,5.16 12,5.16 Z M13.4823,14.1384 C13.845,14.1384 14.1384,14.4327 14.1384,14.7945 C14.1384,15.1572 13.845,15.4515 13.4823,15.4515 L10.8561,15.4515 C10.4934,15.4515 10.2,15.1572 10.2,14.7945 C10.2,14.4327 10.4934,14.1384 10.8561,14.1384 L11.5131,14.1384 L11.5131,11.5131 L11.2935,11.5131 C10.9317,11.5131 10.6374,11.2188 10.6374,10.8561 C10.6374,10.4934 10.9317,10.2 11.2935,10.2 L12.1692,10.2 C12.5319,10.2 12.8262,10.4934 12.8262,10.8561 L12.8262,14.1384 L13.4823,14.1384 Z M12.1944,7.5 C12.7965,7.5 13.2888,7.9914 13.2888,8.5944 C13.2888,9.201 12.7965,9.6888 12.1944,9.6888 C11.5878,9.6888 11.1,9.201 11.1,8.5944 C11.1,7.9914 11.5878,7.5 12.1944,7.5 Z"
+        />
+      </svg>
+    </span>
+    <div
+      class="c5"
+    >
+      <input
+        class="c5 c6"
+        width="100%"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: TextInputField should render a TextInputField with a placeholder 1`] = `
+.c2 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  border: 2px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: 100%;
+  background-color: hsl(0,0%,100%);
+}
+
+.c4:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c3 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 {
+  position: relative;
+  width: auto;
+}
+
+.c0 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 .c5 {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+    >
+      Ok ok, now do it
+    </label>
+    <div
+      class="c3"
+    >
+      <input
+        class="c3 c4"
+        placeholder="I won't disable it again, promise"
+        width="100%"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: TextInputField should render a disabled TextInputField 1`] = `
+.c2 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  vertical-align: middle;
+}
+
+.c6 {
+  border: 2px solid hsl(0,0%,90%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: 100%;
+  background-color: hsl(0,0%,90%);
+}
+
+.c6:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c6::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c6::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c6:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c6::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c5 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 {
+  position: relative;
+  width: auto;
+}
+
+.c0 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 .c3 {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+    >
+      Come on, type something
+    </label>
+    <span
+      title="Sike!"
+    >
+      <svg
+        class="c3 c4"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M12,21 C7.0374,21 3,16.9626 3,12 C3,7.0374 7.0374,3 12,3 C16.9626,3 21,7.0374 21,12 C21,16.9626 16.9626,21 12,21 Z M12,5.16 C8.229,5.16 5.16,8.2281 5.16,12 C5.16,15.7719 8.229,18.84 12,18.84 C15.771,18.84 18.84,15.7719 18.84,12 C18.84,8.2281 15.771,5.16 12,5.16 Z M13.4823,14.1384 C13.845,14.1384 14.1384,14.4327 14.1384,14.7945 C14.1384,15.1572 13.845,15.4515 13.4823,15.4515 L10.8561,15.4515 C10.4934,15.4515 10.2,15.1572 10.2,14.7945 C10.2,14.4327 10.4934,14.1384 10.8561,14.1384 L11.5131,14.1384 L11.5131,11.5131 L11.2935,11.5131 C10.9317,11.5131 10.6374,11.2188 10.6374,10.8561 C10.6374,10.4934 10.9317,10.2 11.2935,10.2 L12.1692,10.2 C12.5319,10.2 12.8262,10.4934 12.8262,10.8561 L12.8262,14.1384 L13.4823,14.1384 Z M12.1944,7.5 C12.7965,7.5 13.2888,7.9914 13.2888,8.5944 C13.2888,9.201 12.7965,9.6888 12.1944,9.6888 C11.5878,9.6888 11.1,9.201 11.1,8.5944 C11.1,7.9914 11.5878,7.5 12.1944,7.5 Z"
+        />
+      </svg>
+    </span>
+    <div
+      class="c5"
+    >
+      <input
+        class="c5 c6"
+        disabled=""
+        width="100%"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: TextInputField should render a success TextInputField 1`] = `
+.c2 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c5 {
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 8px;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  border: 2px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: 100%;
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(145,89%,28%);
+  background: hsla(145,89%,28%,0.2);
+}
+
+.c4:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c3 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c6 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  top: 4px;
+  min-height: 16px;
+  font-size: 15px;
+  box-sizing: border-box;
+  word-break: break-all;
+  border-color: hsl(145,89%,28%);
+  background: hsl(145,89%,28%);
+  color: hsl(0,0%,100%);
+}
+
+.c6 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
+.c0 {
+  position: relative;
+  width: auto;
+}
+
+.c0 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 .c7 {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+    >
+      No seriously, type something
+    </label>
+    <div
+      class="c3"
+    >
+      <input
+        class="c3 c4"
+        width="100%"
+      />
+      <svg
+        class="c5"
+        fill="currentcolor"
+        height="1em"
+        status="success"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+        />
+      </svg>
+    </div>
+    <div
+      class="c6"
+    >
+      <span>
+        Great! you typed something!
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: TextInputField should render a warning TextInputField 1`] = `
+.c2 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c5 {
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 8px;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  border: 2px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: 100%;
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(47,82%,47%);
+  background: hsla(47,82%,47%,0.2);
+}
+
+.c4:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c3 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c6 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  top: 4px;
+  min-height: 16px;
+  font-size: 15px;
+  box-sizing: border-box;
+  word-break: break-all;
+  border-color: hsl(47,82%,47%);
+  background-color: hsl(47,82%,47%);
+  color: hsl(200,10%,20%);
+}
+
+.c6 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
+.c0 {
+  position: relative;
+  width: auto;
+}
+
+.c0 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 .c7 {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+    >
+      Do it again
+    </label>
+    <div
+      class="c3"
+    >
+      <input
+        class="c3 c4"
+        width="100%"
+      />
+      <svg
+        class="c5"
+        fill="currentcolor"
+        height="1em"
+        status="warning"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M11.9998875,21 C11.723584,21 11.4472806,20.8946987 11.2357779,20.683196 L3.31657896,12.763097 C2.89447368,12.3409918 2.89447368,11.6578832 3.31657896,11.2357779 L11.2357779,3.31657896 C11.6578832,2.89447368 12.3418918,2.89447368 12.763997,3.31657896 L20.683196,11.2357779 C21.1053013,11.6578832 21.1053013,12.3409918 20.683196,12.763097 L12.763997,20.683196 C12.5524944,20.8946987 12.276191,21 11.9998875,21 Z M5.60710759,11.9998875 L11.9998875,18.3926674 L18.3926674,11.9998875 L11.9998875,5.60620758 L5.60710759,11.9998875 Z M11.9641121,12.7903224 C11.4871061,12.7903224 11.1001013,12.522119 11.1001013,12.1909149 L11.1001013,8.99857498 C11.1001013,8.66737084 11.4871061,8.4000675 11.9641121,8.4000675 C12.441118,8.4000675 12.8281229,8.66737084 12.8281229,8.99857498 L12.8281229,12.1909149 C12.8281229,12.522119 12.441118,12.7903224 11.9641121,12.7903224 Z M12.9730247,14.7370467 C12.9730247,15.2554532 12.5545194,15.6739584 12.036113,15.6739584 C11.5186065,15.6739584 11.1001013,15.2554532 11.1001013,14.7370467 C11.1001013,14.2195402 11.5186065,13.800135 12.036113,13.800135 C12.5545194,13.800135 12.9730247,14.2195402 12.9730247,14.7370467 Z"
+        />
+      </svg>
+    </div>
+    <div
+      class="c6"
+    >
+      <span>
+        Really? That's all you got?
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: TextInputField should render an error TextInputField 1`] = `
+.c2 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c5 {
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 8px;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  border: 2px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: 100%;
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(353,84%,44%);
+  background: hsla(353,84%,44%,0.2);
+}
+
+.c4:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c3 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c6 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  top: 4px;
+  min-height: 16px;
+  font-size: 15px;
+  box-sizing: border-box;
+  word-break: break-all;
+  border-color: hsl(353,84%,44%);
+  background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
+}
+
+.c6 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
+.c0 {
+  position: relative;
+  width: auto;
+}
+
+.c0 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 .c7 {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+    >
+      Try again
+    </label>
+    <div
+      class="c3"
+    >
+      <input
+        class="c3 c4"
+        width="100%"
+      />
+      <svg
+        class="c5"
+        fill="currentcolor"
+        height="1em"
+        status="error"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M5.82753204,18.84 L18.172832,18.84 L11.999732,6.4956 L5.82753204,18.84 Z M19.919732,21 L4.08063204,21 C3.70623204,21 3.35793204,20.8065 3.16083204,20.4888 C2.96463204,20.1702 2.94663204,19.7715 3.11403204,19.4376 L11.034032,3.5967 C11.216732,3.2313 11.591132,3 11.999732,3 C12.409232,3 12.783632,3.2313 12.966332,3.5967 L20.886332,19.4376 C21.053732,19.7715 21.034832,20.1702 20.839532,20.4888 C20.642432,20.8065 20.294132,21 19.919732,21 Z M11.9649,14.5902 C12.4419,14.5902 12.8298,14.322 12.8298,13.9917 L12.8298,10.7985 C12.8298,10.4682 12.4419,10.2 11.9649,10.2 C11.4879,10.2 11.1,10.4682 11.1,10.7985 L11.1,13.9917 C11.1,14.322 11.4879,14.5902 11.9649,14.5902 Z M12.9729,16.5369 C12.9729,16.0185 12.5544,15.6 12.036,15.6 C11.5185,15.6 11.1,16.0185 11.1,16.5369 C11.1,17.0544 11.5185,17.4738 12.036,17.4738 C12.5544,17.4738 12.9729,17.0544 12.9729,16.5369 Z"
+        />
+      </svg>
+    </div>
+    <div
+      class="c6"
+    >
+      <span>
+        That's it, we're done here
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: TextInputField should support margin space props 1`] = `
+.c2 {
+  font-size: 18px;
+  height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c4 {
+  border: 2px solid hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  width: 100%;
+  background-color: hsl(0,0%,100%);
+}
+
+.c4:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c4::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c3 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 8px;
+}
+
+.c5 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 {
+  position: relative;
+  width: auto;
+  margin: 8px;
+}
+
+.c0 .c1 {
+  position: relative;
+  bottom: 4px;
+  padding-left: 15px;
+}
+
+.c0 .c6 {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+    >
+      Check out all these sick margins
+    </label>
+    <div
+      class="c3"
+    >
+      <input
+        class="c3 c4"
+        width="100%"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -37,7 +37,7 @@ class InverseButtons extends Component<RouteComponentProps> {
     return (
       <div
         style={{
-          backgroundColor: cactusTheme.colors.darkContrast,
+          backgroundColor: cactusTheme.colors.base,
           color: cactusTheme.colors.white,
           height: '100%',
         }}
