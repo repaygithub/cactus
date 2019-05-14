@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cleanup, fireEvent, render } from 'react-testing-library'
+import { cleanup, render } from 'react-testing-library'
 import { Theme } from 'styled-system'
 import { withTheme } from 'styled-components'
 import cactusTheme from '@repay/cactus-theme'
@@ -21,7 +21,7 @@ afterEach(cleanup)
 describe('component: ThemeProvider', () => {
   test('should provide the theme to children', () => {
     const { container } = render(
-      <StyleProvider>
+      <StyleProvider theme={cactusTheme}>
         <TestComponent />
       </StyleProvider>
     )

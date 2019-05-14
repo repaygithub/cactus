@@ -1,8 +1,8 @@
 import React from 'react'
 
 import * as styledComponents from 'styled-components'
-import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import { Omit } from '../types'
+import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
@@ -23,7 +23,7 @@ body {
   color: ${p => p.theme.colors.darkestContrast};
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.56;
+  line-height: 1.54;
   letter-spacing: normal;
 }
 `
