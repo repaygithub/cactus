@@ -100,6 +100,10 @@ export const Button = styled.button<ButtonProps>`
   font-size: 18px;
   line-height: 1.5em;
 
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
   svg {
     display: inline-block;
     margin-top: -4px;

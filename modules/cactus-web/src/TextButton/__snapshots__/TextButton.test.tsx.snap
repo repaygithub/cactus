@@ -25,6 +25,10 @@ exports[`component: TextButton should default to standard variant 1`] = `
   text-decoration: underline;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -66,6 +70,10 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0 svg {
@@ -122,6 +130,10 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   text-decoration: underline;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -172,6 +184,10 @@ exports[`component: TextButton should render call to action variant 1`] = `
   text-decoration: underline;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -211,6 +227,10 @@ exports[`component: TextButton should render danger variant 1`] = `
   text-decoration: underline;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -239,6 +259,10 @@ exports[`component: TextButton should render disabled variant 1`] = `
   cursor: pointer;
   color: hsl(0,0%,70%);
   cursor: not-allowed;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0 svg {
@@ -282,6 +306,10 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   text-decoration: underline;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -310,6 +338,10 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   cursor: pointer;
   color: hsl(0,0%,70%);
   cursor: not-allowed;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0 svg {
@@ -352,6 +384,10 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   text-decoration: underline;
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -389,6 +425,10 @@ exports[`component: TextButton should render standard variant 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0 svg {
@@ -429,6 +469,10 @@ exports[`component: TextButton should support space props 1`] = `
 .c0:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0 svg {
