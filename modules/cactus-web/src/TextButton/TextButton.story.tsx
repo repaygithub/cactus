@@ -14,29 +14,6 @@ const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
 const textButtonStories = storiesOf('TextButton', module)
 const textIconButtonStories = storiesOf('Text+Icon Button', module)
 
-textButtonStories.add('Basic Usage', () => (
-  <TextButton
-    variant={select('variant', textButtonVariants, 'standard')}
-    disabled={boolean('disabled', false)}
-    {...eventLoggers}
-  >
-    {text('children', 'A Text Button')}
-  </TextButton>
-))
-
-textButtonStories.add('Inverse Colors', () => (
-  <DarkMode>
-    <TextButton
-      variant={select('variant', textButtonVariants, 'standard')}
-      disabled={boolean('disabled', false)}
-      inverse={true}
-      {...eventLoggers}
-    >
-      {text('children', 'An Inverse Text Button')}
-    </TextButton>
-  </DarkMode>
-))
-
 textIconButtonStories.add('Basic Usage', () => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const Icon = icons[iconName]
@@ -44,28 +21,11 @@ textIconButtonStories.add('Basic Usage', () => {
     <TextButton
       variant={select('variant', textButtonVariants, 'standard')}
       disabled={boolean('disabled', false)}
+      inverse={boolean('inverse', false)}
       {...eventLoggers}
     >
       <Icon />
       {text('children', 'Add')}
     </TextButton>
-  )
-})
-
-textIconButtonStories.add('Inverse Colors', () => {
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const Icon = icons[iconName]
-  return (
-    <DarkMode>
-      <TextButton
-        variant={select('variant', textButtonVariants, 'standard')}
-        disabled={boolean('disabled', false)}
-        inverse
-        {...eventLoggers}
-      >
-        <Icon />
-        {text('children', 'Add')}
-      </TextButton>
-    </DarkMode>
   )
 })

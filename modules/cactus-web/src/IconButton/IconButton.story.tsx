@@ -22,29 +22,11 @@ iconButtonStories.add('Basic Usage', () => {
       variant={select('variant', iconButtonVariants, 'standard')}
       iconSize={select('size', iconButtonSizes, 'medium')}
       disabled={boolean('disabled', false)}
+      inverse={boolean('inverse', false)}
       label="add"
       {...eventLoggers}
     >
       <Icon />
     </IconButton>
-  )
-})
-
-iconButtonStories.add('Inverse Colors', () => {
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const Icon = icons[iconName]
-  return (
-    <DarkMode>
-      <IconButton
-        variant={select('variant', iconButtonVariants, 'standard')}
-        iconSize={select('size', iconButtonSizes, 'medium')}
-        disabled={boolean('disabled', false)}
-        label="add"
-        inverse
-        {...eventLoggers}
-      >
-        <Icon />
-      </IconButton>
-    </DarkMode>
   )
 })

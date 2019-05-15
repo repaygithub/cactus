@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Spinner snapshot 1`] = `
+.c0 {
+  vertical-align: middle;
+  font-size: 40px;
+  -webkit-animation: iVXCSc 0.75s linear infinite;
+  animation: iVXCSc 0.75s linear infinite;
+}
+
+<div>
+  <svg
+    class="c0"
+    fill="currentcolor"
+    height="1em"
+    viewBox="0 0 24 24"
+    width="1em"
+  >
+    <path
+      d="M12,21 L12,19 C15.8659932,19 19,15.8659932 19,12 C19,8.18945141 15.9516404,5.08074727 12.1490172,5.00155029 C12.074648,5.00025934 12.0497425,5 12,5 C8.13400675,5 5,8.13400675 5,12 L3,12 C3,7.02943725 7.02943725,3 12,3 C12.0636257,3 12.0954736,3.00033163 12.1906621,3.00198391 C17.0808462,3.10383145 21,7.10056778 21,12 C21,16.9705627 16.9705627,21 12,21 Z"
+    />
+  </svg>
+</div>
+`;
