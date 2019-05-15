@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { cleanup, render } from 'react-testing-library'
-import { ThemeProvider } from 'styled-components'
-import cactusTheme from '@repay/cactus-theme'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Spinner from './Spinner'
 
 afterEach(cleanup)
@@ -9,9 +8,9 @@ afterEach(cleanup)
 describe('component: Spinner', () => {
   test('snapshot', () => {
     const { container } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <Spinner />
-      </ThemeProvider>
+      </StyleProvider>
     )
 
     expect(container).toMatchSnapshot()
