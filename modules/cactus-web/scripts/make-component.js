@@ -53,6 +53,8 @@ async function main() {
     writeFile('.story.tsx', storyTemplate(componentName)),
     writeFile('.mdx', mdxTemplate(componentName)),
   ])
+
+  console.log(`Successfully created ${componentName}.`)
 }
 
 main().catch(error => {

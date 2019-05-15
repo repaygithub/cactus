@@ -2,12 +2,13 @@ import React from 'react'
 
 import * as icons from '../i'
 import { CactusTheme, generateTheme } from '@repay/cactus-theme'
-import { IconSizes } from '../src/Svg'
 import { number, select } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
+
+type IconSizes = 'tiny' | 'small' | 'medium' | 'large'
 const iconSizes: IconSizes[] = ['tiny', 'small', 'medium', 'large']
 
 storiesOf('Icons', module).add('All', () => {
@@ -18,7 +19,7 @@ storiesOf('Icons', module).add('All', () => {
 
   return (
     <Icon
-      iconSize={select('icon size', iconSizes, 'large')}
+      iconSize={select('iconSize', iconSizes, 'large')}
       style={{ color: theme.colors.callToAction }}
     />
   )

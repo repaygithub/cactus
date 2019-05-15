@@ -19,6 +19,8 @@ buttonStories.add(
     <Button
       variant={select('variant', buttonVariants, 'standard')}
       disabled={boolean('disabled', false)}
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
       {...eventLoggers}
     >
       {text('children', 'A Button')}
@@ -27,19 +29,6 @@ buttonStories.add(
   { options: { showPanel: true } }
 )
 
-buttonStories.add('Inverse Colors', () => (
-  <DarkMode>
-    <Button
-      variant={select('variant', buttonVariants, 'standard')}
-      disabled={boolean('disabled', false)}
-      inverse={true}
-      {...eventLoggers}
-    >
-      {text('children', 'An Inverse Button')}
-    </Button>
-  </DarkMode>
-))
-
 buttonStories.add('With Icon', () => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const Icon = icons[iconName]
@@ -47,9 +36,45 @@ buttonStories.add('With Icon', () => {
     <Button
       variant={select('variant', buttonVariants, 'standard')}
       disabled={boolean('disabled', false)}
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
       {...eventLoggers}
     >
       <Icon /> {text('children', 'Button')}
     </Button>
+  )
+})
+
+interface TimedLoadingProps {
+  children: (state: { loading: boolean; onClick: any }) => React.ReactElement<any>
+}
+
+const TimedLoading: React.FC<TimedLoadingProps> = ({ children }) => {
+  const [loading, setLoading] = React.useState(false)
+  const onClick = React.useCallback(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  }, [setLoading])
+
+  return children({ loading, onClick })
+}
+
+buttonStories.add('Loading on click', () => {
+  return (
+    <TimedLoading>
+      {({ loading, onClick }) => (
+        <Button
+          variant={select('variant', buttonVariants, 'standard')}
+          disabled={boolean('disabled', false)}
+          inverse={boolean('inverse', false)}
+          loading={loading}
+          onClick={onClick}
+        >
+          {text('children', 'Submit')}
+        </Button>
+      )}
+    </TimedLoading>
   )
 })

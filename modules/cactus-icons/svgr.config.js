@@ -21,7 +21,7 @@ import styled from 'styled-components'
 
 type IconSizes = 'tiny' | 'small' | 'medium' | 'large'
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'color'>, SpaceProps, ColorProps {
+export interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'color'>, SpaceProps, ColorProps {
   iconSize?: IconSizes
   color?: string
 }

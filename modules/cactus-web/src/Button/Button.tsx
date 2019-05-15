@@ -1,6 +1,9 @@
+import React from 'react'
+
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
+import Spinner from '../Spinner/Spinner'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type ButtonVariants = 'standard' | 'action'
@@ -15,6 +18,8 @@ interface ButtonProps
   /** !important */
   disabled?: boolean
   inverse?: boolean
+  loading?: boolean
+  loadingText?: string
 }
 
 type VariantMap = { [K in ButtonVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -91,7 +96,30 @@ const variantOrDisabled = (
   }
 }
 
-export const Button = styled.button<ButtonProps>`
+const ButtonBase: React.FC<ButtonProps> = ({
+  loading,
+  children,
+  inverse,
+  disabled,
+  variant,
+  loadingText,
+  ...rest
+}) => {
+  const props = splitProps(rest)
+  let spanProps = null
+  if (loading === true) {
+    spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
+  }
+  return (
+    <button {...props} disabled={loading || disabled} aria-live="assertive">
+      <span {...spanProps}>{children}</span>
+      {loading && <Spinner iconSize="medium" aria-label={loadingText} />}
+    </button>
+  )
+}
+
+export const Button = styled(ButtonBase)`
+  position: relative;
   border-radius: 20px;
   padding: 2px 30px;
   border: 2px solid;
@@ -109,6 +137,14 @@ export const Button = styled.button<ButtonProps>`
     margin-top: -4px;
   }
 
+  ${Spinner} {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -12px;
+    margin-top: -12px;
+  }
+
   ${margins}
   ${variantOrDisabled}
 `
@@ -118,6 +154,7 @@ Button.defaultProps = {
   disabled: false,
   inverse: false,
   type: 'button',
+  loadingText: 'loading',
 }
 
 export default Button

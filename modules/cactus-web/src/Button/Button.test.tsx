@@ -105,6 +105,15 @@ describe('component: Button', () => {
     )
   })
 
+  test('should render Spinner when loading is true', () => {
+    const { asFragment } = render(
+      <ThemeProvider theme={cactusTheme}>
+        <Button loading>Submit</Button>
+      </ThemeProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+
   test('should trigger onClick', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
