@@ -4,7 +4,6 @@ import * as icons from '@repay/cactus-icons/i'
 import { actions } from '@storybook/addon-actions'
 import { boolean, select } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
-import DarkMode from '../storySupport/DarkMode'
 import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 
 const iconButtonVariants: IconButtonVariants[] = ['standard', 'action']

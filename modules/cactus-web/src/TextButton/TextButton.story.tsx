@@ -4,7 +4,6 @@ import * as icons from '@repay/cactus-icons'
 import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
-import DarkMode from '../storySupport/DarkMode'
 import TextButton, { TextButtonVariants } from './TextButton'
 
 const textButtonVariants: TextButtonVariants[] = ['standard', 'action', 'danger']

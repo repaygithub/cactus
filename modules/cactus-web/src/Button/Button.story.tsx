@@ -5,7 +5,6 @@ import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Button, { ButtonVariants } from './Button'
-import DarkMode from '../storySupport/DarkMode'
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
@@ -21,6 +20,7 @@ buttonStories.add(
       disabled={boolean('disabled', false)}
       loading={boolean('loading', false)}
       inverse={boolean('inverse', false)}
+      loadingText={text('loadingText?', 'loading')}
       {...eventLoggers}
     >
       {text('children', 'A Button')}
