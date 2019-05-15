@@ -4,7 +4,6 @@ import { ActionsDelete } from '@repay/cactus-icons'
 import { cleanup, fireEvent, render } from 'react-testing-library'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Button from './Button'
-import cactusTheme from '@repay/cactus-theme'
 
 afterEach(cleanup)
 
@@ -107,9 +106,9 @@ describe('component: Button', () => {
 
   test('should render Spinner when loading is true', () => {
     const { asFragment } = render(
-      <ThemeProvider theme={cactusTheme}>
+      <StyleProvider>
         <Button loading>Submit</Button>
-      </ThemeProvider>
+      </StyleProvider>
     )
     expect(asFragment()).toMatchSnapshot()
   })

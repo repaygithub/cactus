@@ -75,6 +75,10 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   border-color: hsl(200,96%,11%);
 }
 
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
