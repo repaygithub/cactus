@@ -51,6 +51,7 @@
     "@storybook/addon-actions": "^5.0.8",
     "@storybook/addon-knobs": "^5.0.8",
     "@storybook/addon-options": "^5.0.8",
+    "@storybook/components": "^5.0.11",
     "@storybook/react": "5.0.8",
     "@storybook/theming": "^5.0.8",
     "@types/react": "^16.8.15",
