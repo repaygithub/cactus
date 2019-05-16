@@ -22,11 +22,10 @@ export default () => {
       <Helmet title="Typography" />
       <h1>Typography</h1>
       <Text>
-        Cactus uses Helvetica as the principal font. It is classic, clean, and practical. It is a
-        good choice for our products. Unix and Apple computers have always had Helvetica, and it is
-        a native font on PostScript printers. In the case were Helvetica is missing, the fallback is
-        Arial. Arial is a near-copy of Helvetica, updated slightly, and installed on Windows in
-        place of Helvetica.
+        Cactus uses Helvetica as the principal font. It is classic, clean, and practical. Unix and
+        Apple computers have always had Helvetica, and it is a native font on PostScript printers.
+        In the case were Helvetica is missing, the fallback is Arial. Arial is a near-copy of
+        Helvetica, updated slightly, and installed on Windows in place of Helvetica.
       </Text>
       <Flex alignItems="center">
         <img

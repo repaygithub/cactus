@@ -12,9 +12,9 @@ export default () => {
       <Helmet title="Color" />
       <h1>Color</h1>
       <p>
-        The first foundation is Color which is one of the most important aspects of our platform.
+        The first foundation is Color, which is one of the most important aspects of our platform.
         Based on REPAY having many white-labelled products, we carefully thought of a strategy so we
-        can achieve the same look and feel and meet the accessibility standards.
+        can achieve the same look and feel while meeting accessibility standards.
       </p>
       <Flex display="flex" justifyContent="center" flexWrap="wrap" maxWidth="1200px" m="0 auto">
         <ColorBox name="base" />
@@ -38,22 +38,22 @@ export default () => {
         <ColorBox name="base">
           <h4>Base Color</h4>
           <Text fontSize="small">
-            This color will be the base of the color scheme and will be common throughout the
-            product. As the base, it will define the rest of the palette.
+            This color is the brand color or base color of the scheme. It will be prominent
+            throughout the product.
           </Text>
         </ColorBox>
         <ColorBox name="callToAction">
           <h4>Call to Action</h4>
           <Text fontSize="small">
-            It is a variation of our base color; the standard scheme has a dark base and this color
-            as additional luminosity / lightness. This is an accent color and is used infrequently
-            to draw attention and imply an action.
+            This color is a lighter variation of the base color. This accent color will be used in
+            small amounts in order to stand out.
           </Text>
         </ColorBox>
         <ColorBox name="standard" title="White">
           <h4>White</h4>
           <Text fontSize="small">
-            White is a common color and will be used throughout to balance and harmonize the scheme.
+            White is a common color included in a color scheme. It provides balance and harmonizes
+            the scheme.
           </Text>
         </ColorBox>
         <ColorBox name="lightContrast">
@@ -69,27 +69,29 @@ export default () => {
         <ColorBox name="success">
           <h4>Green</h4>
           <Text fontSize="small">
-            This color is part of our intuitive scheme, so green will mean success and positive
+            This color is part of our intuitive scheme. Green will mean success and positive
             outcomes.
           </Text>
         </ColorBox>
         <ColorBox name="error">
           <h4>Red</h4>
           <Text fontSize="small">
-            This color is part of our intuitive scheme, so red will mean error and negative.
+            This color is part of our intuitive scheme. Red will mean error and destructive
+            outcomes.
           </Text>
         </ColorBox>
         <ColorBox name="warning">
           <h4>Yellow</h4>
           <Text fontSize="small">
-            This color is part of our intuitive scheme, yellow will indicate warning and bringing to
-            attention but moderate.
+            This color is part of our intuitive scheme. Yellow will indicate warning and bringing to
+            attention.
           </Text>
         </ColorBox>
         <ColorBox name="disable">
           <h4>Gray</h4>
           <Text fontSize="small">
-            The fully desaturated gray color indicates disabled or not yet available.
+            This color is part of our intuitive scheme. Gray color indicates disabled or not yet
+            available.
           </Text>
         </ColorBox>
       </Flex>

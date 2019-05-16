@@ -71,8 +71,8 @@ type PropsTableProps = {
 }
 
 const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
+  debugger
   const data = useDocgen()
-  const componentName = component.displayName || component.name
   const fileName = component.__filemeta && component.__filemeta.filename
   const docItem = data.find(doc => doc.key === fileName)
 
@@ -81,6 +81,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
       return {}
     }
     const doc = docItem.value[0]
+    const componentName = doc.displayName
     const props = Object.values(doc.props)
     const ownProps = []
     const styledSystemProps = []
@@ -112,7 +113,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
       styledSystemProps,
       styledComponentProps: probablyStyledComponentProps,
     }
-  }, [docItem, componentName])
+  }, [docItem])
 
   if (ownProps === undefined) {
     return null

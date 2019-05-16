@@ -9,7 +9,7 @@
     "cleanup": "gatsby clean",
     "update:stories-cache": "node tools/build-storybook-cache.js",
     "predev": "yarn update:stories-cache",
-    "dev": "gatsby develop --https",
+    "dev": "gatsby develop --https --port 8001",
     "prebuild": "yarn cleanup && yarn update:stories-cache",
     "build": "gatsby build --prefix-paths",
     "postbuild": "node tools/build-storybooks",
