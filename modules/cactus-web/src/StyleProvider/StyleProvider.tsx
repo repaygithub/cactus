@@ -33,7 +33,7 @@ interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<an
   global?: boolean
 }
 
-export const StyleProvider = (props: StyleProviderProps) => {
+export const StyleProvider: React.FC<StyleProviderProps> = props => {
   const { global, children, theme, ...themeProviderProps } = props
   return (
     <styledComponents.ThemeProvider theme={theme ? theme : cactusTheme} {...themeProviderProps}>
