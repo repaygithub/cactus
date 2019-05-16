@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnChangeHandler, Omit } from '../types'
 import { Label } from '../Label/Label'
 import { MarginProps, margins } from '../helpers/margins'
-import { NotificationInfo } from '@repay/cactus-icons'
 import { Status, TextInput, TextInputProps } from '../TextInput/TextInput'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import Tooltip from '../Tooltip/Tooltip'
 
 interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status' | 'onChange'> {
   label: string
@@ -15,7 +15,7 @@ interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status'
   success?: string
   warning?: string
   error?: string
-  toolTip?: string
+  tooltip?: string
   onChange?: FieldOnChangeHandler<string>
 }
 
@@ -76,11 +76,14 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     success,
     warning,
     error,
-    toolTip,
+    tooltip,
     onChange,
     name,
     ...inputProps
   } = props
+
+  const [ref, setRef] = useState<HTMLDivElement | null>(null)
+
   let status: Status | null = null
   if (success && !warning && !error) {
     status = 'success'
@@ -100,14 +103,22 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     [onChange, name]
   )
 
+  let containerWidth = undefined
+  if (ref) {
+    containerWidth = `${ref.getBoundingClientRect().width - 32}px`
+  }
+
   return (
-    <div className={className}>
+    <div
+      className={className}
+      ref={ref => {
+        if (ref) {
+          setRef(ref)
+        }
+      }}
+    >
       <Label {...labelProps}>{label}</Label>
-      {toolTip && (
-        <span title={toolTip}>
-          <NotificationInfo />
-        </span>
-      )}
+      {tooltip && <Tooltip label={tooltip} maxWidth={containerWidth} />}
       <TextInput {...inputProps} width="100%" status={status} onChange={handleChange} />
       {status === 'success' && (
         <StatusLabel status="success">
@@ -138,10 +149,9 @@ export const TextInputField = styled(TextInputFieldBase)`
     padding-left: 15px;
   }
 
-  ${NotificationInfo} {
+  ${Tooltip} {
     position: absolute;
     right: 8px
-    top: 4px;
     font-size: 16px;
   }
 
@@ -152,7 +162,7 @@ TextInputField.defaultProps = {
   error: undefined,
   labelProps: {},
   success: undefined,
-  toolTip: undefined,
+  tooltip: undefined,
   warning: undefined,
 }
 
