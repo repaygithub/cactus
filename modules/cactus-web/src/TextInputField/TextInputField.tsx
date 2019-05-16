@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnChangeHandler, Omit } from '../types'
@@ -82,7 +82,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     ...inputProps
   } = props
 
-  const [ref, setRef] = useState<HTMLDivElement | null>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
 
   let status: Status | null = null
   if (success && !warning && !error) {
@@ -104,19 +104,12 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   )
 
   let containerWidth = undefined
-  if (ref) {
-    containerWidth = `${ref.getBoundingClientRect().width - 32}px`
+  if (ref.current) {
+    containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
   }
 
   return (
-    <div
-      className={className}
-      ref={ref => {
-        if (ref) {
-          setRef(ref)
-        }
-      }}
-    >
+    <div className={className} ref={ref}>
       <Label {...labelProps}>{label}</Label>
       {tooltip && <Tooltip label={tooltip} maxWidth={containerWidth} />}
       <TextInput {...inputProps} width="100%" status={status} onChange={handleChange} />

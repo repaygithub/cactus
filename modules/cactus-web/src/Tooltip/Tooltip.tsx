@@ -100,12 +100,9 @@ const TooltipBase = (props: TooltipProps) => {
   const [trigger, tooltip] = useTooltip({ DEBUG_STYLE })
   return (
     <Fragment>
-      {cloneElement(
-        <span className={className}>
-          <NotificationInfo />
-        </span>,
-        trigger
-      )}
+      <span className={className} {...trigger}>
+        <NotificationInfo />
+      </span>
       <TooltipPopup label={label} ariaLabel={ariaLabel} {...tooltip} {...rest} />
     </Fragment>
   )

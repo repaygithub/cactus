@@ -24,10 +24,6 @@ const StyledContainer = styled(StyledContainerBase)`
   align-items: center;
   overflow-y: auto;
   ${p => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
-  
-  > div {
-    padding: 16px;
-  }
 `
 
 interface ProvideCactusThemeProps {
