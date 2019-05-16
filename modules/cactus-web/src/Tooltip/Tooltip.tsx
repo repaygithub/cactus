@@ -1,6 +1,7 @@
 import React, { cloneElement, CSSProperties, forwardRef, Fragment, useRef } from 'react'
 
 import { MarginProps, margins } from '../helpers/margins'
+import { maxWidth } from 'styled-system'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { Omit } from '../types'
 import { useRect } from '@reach/rect'
@@ -8,7 +9,6 @@ import { useTooltip } from '@reach/tooltip'
 import Portal from '@reach/portal'
 import styled from 'styled-components'
 import VisuallyHidden from '@reach/visually-hidden'
-import { maxWidth } from 'styled-system'
 
 interface Styles {
   top: string
@@ -19,10 +19,7 @@ interface Styles {
   borderBottomLeftRadius?: string
 }
 
-type Position = (
-  triggerRect: DOMRect,
-  tooltipRect: DOMRect | null
-) => Styles
+type Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => Styles
 
 interface TooltipProps
   extends MarginProps,
@@ -77,10 +74,10 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   const directionRight = collisions.left && !collisions.right
   const directionUp = collisions.bottom && !collisions.top
 
-  styles = (directionRight && !directionUp) ? { ...styles, borderTopLeftRadius: '0px' } : styles
-  styles = (directionRight && directionUp) ? { ...styles, borderBottomLeftRadius: '0px' } : styles
-  styles = (!directionRight && !directionUp) ? { ...styles, borderTopRightRadius: '0px' } : styles
-  styles = (!directionRight && directionUp) ? { ...styles, borderBottomRightRadius: '0px' } : styles
+  styles = directionRight && !directionUp ? { ...styles, borderTopLeftRadius: '0px' } : styles
+  styles = directionRight && directionUp ? { ...styles, borderBottomLeftRadius: '0px' } : styles
+  styles = !directionRight && !directionUp ? { ...styles, borderTopRightRadius: '0px' } : styles
+  styles = !directionRight && directionUp ? { ...styles, borderBottomRightRadius: '0px' } : styles
 
   return {
     ...styles,
@@ -158,7 +155,17 @@ const getStyles = (
 }
 
 const TooltipContentBase = forwardRef<HTMLDivElement, TooltipContentProps>(function TooltipContent(
-  { label, ariaLabel, position = cactusPosition, isVisible, id, triggerRect, style, maxWidth, ...rest },
+  {
+    label,
+    ariaLabel,
+    position = cactusPosition,
+    isVisible,
+    id,
+    triggerRect,
+    style,
+    maxWidth,
+    ...rest
+  },
   forwardRef
 ) {
   const useAriaLabel = ariaLabel != null
