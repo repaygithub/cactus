@@ -71,7 +71,6 @@ type PropsTableProps = {
 }
 
 const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
-  debugger
   const data = useDocgen()
   const fileName = component.__filemeta && component.__filemeta.filename
   const docItem = data.find(doc => doc.key === fileName)
