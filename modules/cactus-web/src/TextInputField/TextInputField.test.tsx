@@ -12,7 +12,7 @@ describe('component: TextInputField', () => {
   test('should render a TextInputField', () => {
     const { container } = render(
       <StyleProvider>
-        <TextInputField name="instigate" label="Enter some text" toolTip="Go on, do it" />
+        <TextInputField name="instigate" label="Enter some text" tooltip="Go on, do it" />
       </StyleProvider>
     )
 
@@ -22,7 +22,7 @@ describe('component: TextInputField', () => {
   test('should render a disabled TextInputField', () => {
     const { container } = render(
       <StyleProvider>
-        <TextInputField name="trick" label="Come on, type something" toolTip="Sike!" disabled />
+        <TextInputField name="trick" label="Come on, type something" tooltip="Sike!" disabled />
       </StyleProvider>
     )
 

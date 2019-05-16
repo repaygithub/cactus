@@ -1149,3 +1149,38 @@ declare module 'styled-system' {
 
   export const styles: StylesProps
 }
+
+declare module '@reach/portal' {
+  interface PortalProps {
+    children: React.ReactNode
+    type?: 'string'
+  }
+
+  const Portal: React.ComponentType<PortalProps>
+
+  export default Portal
+}
+
+declare module '@reach/rect' {
+  import { Ref } from 'react'
+  type RectProps = {
+    observe?: boolean
+    onChange?: (rect: DOMRect) => void
+    children?: React.ReactNode
+  }
+
+  const Rect: React.FC<RectProps>
+
+  export default Rect
+  export function useRect<Element>(rect: Ref<Element>, isSelected?: boolean): DOMRect | null
+}
+
+declare module '@reach/visually-hidden' {
+  interface VisuallyHiddenProps {
+    role: string
+    id?: string
+  }
+
+  const VisuallyHidden: React.SFC<VisuallyHiddenProps>
+  export default VisuallyHidden
+}

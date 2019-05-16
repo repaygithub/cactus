@@ -78,6 +78,10 @@
     "styled-components": "^4.1.2"
   },
   "dependencies": {
+    "@reach/portal": "^0.2.1",
+    "@reach/rect": "^0.2.0",
+    "@reach/tooltip": "^0.2.0",
+    "@reach/visually-hidden": "^0.1.4",
     "@repay/cactus-icons": "^0.4.1",
     "@repay/cactus-theme": "^0.4.1",
     "styled-system": "^4.1.0"

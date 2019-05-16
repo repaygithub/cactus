@@ -1,0 +1,41 @@
+---
+name: Tooltip
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Tooltip from './Tooltip'
+import cactusTheme from '@repay/cactus-theme'
+
+# Tooltip
+
+The `Tooltip` component can be used to provide helpful tips to end users.
+
+## Best practices
+
+- Provide useful tips relevant to the field that the tooltip is associated with.
+
+## Basic usage
+
+```jsx
+import React, { useState } from 'react'
+import { Tooltip, TextInput, Label } from '@repay/cactus-web'
+
+const MyComponent = (props) => (
+  const [value, setValue] = useState('')
+  const handleChange = (name, value) => {
+    setValue(value)
+  }
+  return (
+    <div>
+        <Label>Custom Input</Label>
+        <Tooltip label="Type something!" />
+        <TextInput onChange={handleChange} />
+    </div>
+  )
+)
+```
+
+## Properties
+
+<PropsTable of={Tooltip} />

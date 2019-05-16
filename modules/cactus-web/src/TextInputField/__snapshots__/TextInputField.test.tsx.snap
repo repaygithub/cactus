@@ -77,7 +77,6 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 .c0 .c3 {
   position: absolute;
   right: 8px;
-  top: 4px;
   font-size: 16px;
 }
 
@@ -91,10 +90,12 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
       Enter some text
     </label>
     <span
-      title="Go on, do it"
+      aria-describedby="tooltip:1"
+      class="c3 "
+      data-reach-tooltip-trigger=""
     >
       <svg
-        class="c3 c4"
+        class="c4"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -190,7 +191,6 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 .c0 .c5 {
   position: absolute;
   right: 8px;
-  top: 4px;
   font-size: 16px;
 }
 
@@ -293,7 +293,6 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 .c0 .c3 {
   position: absolute;
   right: 8px;
-  top: 4px;
   font-size: 16px;
 }
 
@@ -307,10 +306,12 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
       Come on, type something
     </label>
     <span
-      title="Sike!"
+      aria-describedby="tooltip:2"
+      class="c3 "
+      data-reach-tooltip-trigger=""
     >
       <svg
-        class="c3 c4"
+        class="c4"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -439,7 +440,6 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 .c0 .c7 {
   position: absolute;
   right: 8px;
-  top: 4px;
   font-size: 16px;
 }
 
@@ -588,7 +588,6 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 .c0 .c7 {
   position: absolute;
   right: 8px;
-  top: 4px;
   font-size: 16px;
 }
 
@@ -737,7 +736,6 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 .c0 .c7 {
   position: absolute;
   right: 8px;
-  top: 4px;
   font-size: 16px;
 }
 
@@ -862,7 +860,6 @@ exports[`component: TextInputField should support margin space props 1`] = `
 .c0 .c6 {
   position: absolute;
   right: 8px;
-  top: 4px;
   font-size: 16px;
 }
 
