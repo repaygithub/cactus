@@ -191,7 +191,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       h1: {
         fontSize: '37.325px',
         lineHeight: '2.074em',
-      }
+      },
     },
     colorStyles: {
       base: {
