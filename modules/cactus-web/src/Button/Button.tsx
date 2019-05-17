@@ -125,8 +125,9 @@ export const Button = styled(ButtonBase)`
   border: 2px solid;
   outline: none;
   cursor: pointer;
-  font-size: 18px;
-  line-height: 1.5em;
+  height: 36px;
+  font-size: ${p => p.theme.textStyles.medium.fontSize};
+  line-height: ${p => p.theme.textStyles.medium.lineHeight};
 
   &::-moz-focus-inner {
     border: 0;

@@ -9,8 +9,9 @@ exports[`component: Button should default to standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -68,8 +69,9 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -176,8 +178,9 @@ exports[`component: Button should render call to action variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
@@ -228,8 +231,9 @@ exports[`component: Button should render disabled variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
@@ -275,8 +279,9 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
@@ -327,8 +332,9 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
@@ -374,8 +380,9 @@ exports[`component: Button should render inverse standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(0,0%,100%);
@@ -426,8 +433,9 @@ exports[`component: Button should render standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -478,8 +486,9 @@ exports[`component: Button should support margin space props 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  height: 36px;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1em;
   margin-top: 32px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);

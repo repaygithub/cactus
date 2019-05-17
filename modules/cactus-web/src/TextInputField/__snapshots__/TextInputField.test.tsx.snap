@@ -3,6 +3,7 @@
 exports[`component: TextInputField should render a TextInputField 1`] = `
 .c2 {
   font-size: 18px;
+  line-height: 1em;
   height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
@@ -15,11 +16,12 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 .c6 {
   border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
+  line-height: 1em;
   width: 100%;
   background-color: hsl(0,0%,100%);
 }
@@ -121,6 +123,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 exports[`component: TextInputField should render a TextInputField with a placeholder 1`] = `
 .c2 {
   font-size: 18px;
+  line-height: 1em;
   height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
@@ -129,11 +132,12 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 .c4 {
   border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
+  line-height: 1em;
   width: 100%;
   background-color: hsl(0,0%,100%);
 }
@@ -219,6 +223,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 exports[`component: TextInputField should render a disabled TextInputField 1`] = `
 .c2 {
   font-size: 18px;
+  line-height: 1em;
   height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
@@ -231,11 +236,12 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 .c6 {
   border: 2px solid hsl(0,0%,90%);
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
+  line-height: 1em;
   width: 100%;
   background-color: hsl(0,0%,90%);
 }
@@ -338,6 +344,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 exports[`component: TextInputField should render a success TextInputField 1`] = `
 .c2 {
   font-size: 18px;
+  line-height: 1em;
   height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
@@ -355,11 +362,12 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 .c4 {
   border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
+  line-height: 1em;
   width: 100%;
   background-color: hsl(0,0%,100%);
   border-color: hsl(145,89%,28%);
@@ -486,6 +494,7 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 exports[`component: TextInputField should render a warning TextInputField 1`] = `
 .c2 {
   font-size: 18px;
+  line-height: 1em;
   height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
@@ -503,11 +512,12 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 .c4 {
   border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
+  line-height: 1em;
   width: 100%;
   background-color: hsl(0,0%,100%);
   border-color: hsl(47,82%,47%);
@@ -634,6 +644,7 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 exports[`component: TextInputField should render an error TextInputField 1`] = `
 .c2 {
   font-size: 18px;
+  line-height: 1em;
   height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
@@ -651,11 +662,12 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 .c4 {
   border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
+  line-height: 1em;
   width: 100%;
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
@@ -782,6 +794,7 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 exports[`component: TextInputField should support margin space props 1`] = `
 .c2 {
   font-size: 18px;
+  line-height: 1em;
   height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
@@ -790,11 +803,12 @@ exports[`component: TextInputField should support margin space props 1`] = `
 .c4 {
   border: 2px solid hsl(200,9%,35%);
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
+  line-height: 1em;
   width: 100%;
   background-color: hsl(0,0%,100%);
 }

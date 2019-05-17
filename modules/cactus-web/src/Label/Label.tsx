@@ -12,7 +12,8 @@ export interface LabelProps
     MarginProps {}
 
 export const Label = styled.label<LabelProps>`
-  font-size: 18px;
+  font-size: ${p => p.theme.textStyles.medium.fontSize};
+  line-height: ${p => p.theme.textStyles.medium.lineHeight};
   height: 28px;
   font-weight: 400;
   color: ${p => p.theme.colors.darkestContrast};
