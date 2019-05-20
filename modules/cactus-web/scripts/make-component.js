@@ -80,7 +80,7 @@ function componentTemplate(componentName) {
 import styled from 'styled-components'
 import { margins, MarginProps } from '../helpers/margins'
 
-interface ${componentName}Props extends SpaceProps {}
+interface ${componentName}Props extends MarginProps {}
 
 export const ${componentName} = styled.div<${componentName}Props>\`
   \${margins}

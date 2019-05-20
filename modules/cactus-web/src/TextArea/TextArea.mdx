@@ -1,0 +1,50 @@
+---
+name: TextArea
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import TextArea from './TextArea'
+import cactusTheme from '@repay/cactus-theme'
+
+# TextArea
+
+## Best practices
+
+- Use the `aria-labelledby` prop to associate labels with your text area to make them accessible.
+
+## Basic usage
+
+```jsx
+import React, { useState, useCallback } from 'react'
+import { Button, TextArea, Label } from '@repay/cactus-web'
+
+export default function Form() {
+  const [values, setValues] = useState({ textArea: '' })
+  const handleChange = useCallback(
+    event => {
+      setValues({ ...values, [event.target.name]: event.target.value })
+    }
+  )
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...values }
+      // send data to api
+    }
+  )
+  return (
+    <form onSubmit={handleSubmit}>
+      <Label id="label-id">Enter some text</Label>
+      <TextArea aria-labelledby="label-id" name="textArea" onChange={handleChange} />
+      <Button type="submit" variant="action">
+        Submit
+      </Button>
+    </form>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={TextArea} />
