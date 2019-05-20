@@ -105,8 +105,7 @@ const Input = styled.input<InputProps>`
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
-  font-size: ${p => p.theme.textStyles.medium.fontSize};
-  line-height: ${p => p.theme.textStyles.medium.lineHeight};
+  ${p => p.theme.textStyles.body};
   width: ${p => p.width || 'auto'};
   background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
 

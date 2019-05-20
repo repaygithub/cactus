@@ -56,8 +56,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 
 .c8 {
   font-size: 18px;
-  line-height: 1em;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -166,8 +165,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 
 .c8 {
   font-size: 18px;
-  line-height: 1em;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -296,8 +294,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 
 .c8 {
   font-size: 18px;
-  line-height: 1em;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }

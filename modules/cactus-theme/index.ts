@@ -62,7 +62,7 @@ export interface CactusTheme {
   textStyles: {
     tiny: TextStyle
     small: TextStyle
-    medium: TextStyle
+    body: TextStyle
     h4: TextStyle
     h3: TextStyle
     h2: TextStyle
@@ -166,31 +166,31 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
     textStyles: {
       tiny: {
         fontSize: '12.5px',
-        lineHeight: '0.833em',
+        lineHeight: '18px',
       },
       small: {
         fontSize: '15px',
-        lineHeight: '0.833em',
+        lineHeight: '23px',
       },
-      medium: {
+      body: {
         fontSize: '18px',
-        lineHeight: '1em',
+        lineHeight: '28px',
       },
       h4: {
         fontSize: '21.6px',
-        lineHeight: '1.2em',
+        lineHeight: '32px',
       },
       h3: {
         fontSize: '25.92px',
-        lineHeight: '1.44em',
+        lineHeight: '40px',
       },
       h2: {
         fontSize: '31.104px',
-        lineHeight: '1.728em',
+        lineHeight: '48px',
       },
       h1: {
         fontSize: '37.325px',
-        lineHeight: '2.074em',
+        lineHeight: '56px',
       },
     },
     colorStyles: {

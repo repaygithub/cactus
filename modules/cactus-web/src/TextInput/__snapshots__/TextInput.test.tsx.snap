@@ -10,7 +10,7 @@ exports[`component: TextInput should render a disabled input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 1em;
+  line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,90%);
 }
@@ -84,7 +84,7 @@ exports[`component: TextInput should render a success input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 1em;
+  line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(145,89%,28%);
@@ -162,7 +162,7 @@ exports[`component: TextInput should render a text input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 1em;
+  line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -235,7 +235,7 @@ exports[`component: TextInput should render an error input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 1em;
+  line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
@@ -313,7 +313,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 1em;
+  line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -387,7 +387,7 @@ exports[`component: TextInput should render an warning input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 1em;
+  line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(47,82%,47%);
@@ -465,7 +465,7 @@ exports[`component: TextInput should support margin space props 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 1em;
+  line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
