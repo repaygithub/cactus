@@ -53,7 +53,7 @@ export const CheckBoxField = styled(CheckBoxFieldBase)`
   }
 
   ${CheckBox} {
-    top: -1px;
+    top: -3px;
   }
 
   ${margins}

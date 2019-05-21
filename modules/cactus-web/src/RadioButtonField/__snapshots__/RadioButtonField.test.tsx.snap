@@ -3,7 +3,7 @@
 exports[`component: RadioButtonField should render a disabled radio button field 1`] = `
 .c7 {
   font-size: 18px;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -41,6 +41,8 @@ exports[`component: RadioButtonField should render a disabled radio button field
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   cursor: cursor;
 }
 
@@ -66,7 +68,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
 }
 
 .c8 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 .c1 + .c0 {
@@ -79,7 +81,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
 }
 
 .c1 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 <div>
@@ -116,7 +118,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
 exports[`component: RadioButtonField should render a radio button field 1`] = `
 .c7 {
   font-size: 18px;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -154,6 +156,8 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
@@ -180,7 +184,7 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 }
 
 .c1 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 <div>
@@ -215,7 +219,7 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 exports[`component: RadioButtonField should support margin space props 1`] = `
 .c7 {
   font-size: 18px;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -253,6 +257,8 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
   margin-left: 16px;
 }
@@ -280,7 +286,7 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 }
 
 .c8 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 .c9 + .c0 {
@@ -293,7 +299,7 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 }
 
 .c9 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 .c1 {
@@ -310,7 +316,7 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 }
 
 .c1 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 <div>
