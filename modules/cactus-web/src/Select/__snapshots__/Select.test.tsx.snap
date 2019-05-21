@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Select /> snapshot 1`] = `
+<DocumentFragment>
+  .c4 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c1 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,9%,35%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c1::-moz-focus-inner {
+  border: 0;
+}
+
+.c1:focus,
+.c1[aria-expanded],
+.c1:hover {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1:focus .c3,
+.c1[aria-expanded] .c3,
+.c1:hover .c3 {
+  color: hsl(200,96%,35%);
+}
+
+.c1[aria-expanded] .c3 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c1 .c3 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c2 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c0 {
+  position: relative;
+}
+
+<div
+    class="c0"
+  >
+    <button
+      aria-haspopup="listbox"
+      class="c1"
+      type="button"
+    >
+      <span
+        class="c2"
+      >
+        Select an option
+      </span>
+      <svg
+        class="c3 c4"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+        />
+      </svg>
+    </button>
+  </div>
+</DocumentFragment>
+`;

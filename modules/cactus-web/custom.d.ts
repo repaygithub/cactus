@@ -36,17 +36,17 @@ declare module '@reach/portal' {
 }
 
 declare module '@reach/rect' {
-  import { Ref } from 'react'
+  import { Ref, ReactNode } from 'react'
   type RectProps = {
     observe?: boolean
     onChange?: (rect: DOMRect) => void
-    children?: React.ReactNode
+    children?: (arg: { ref: (node: HTMLElement | null) => void; rect: DOMRect | undefined }) => ReactNode
   }
 
   const Rect: React.FC<RectProps>
 
   export default Rect
-  export function useRect<Element>(rect: Ref<Element>, isSelected?: boolean): DOMRect | null
+  export function useRect<Element>(rect: Ref<Element>, observe?: boolean): DOMRect | null
 }
 
 declare module '@reach/visually-hidden' {
