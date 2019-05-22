@@ -1,4 +1,5 @@
 import { actions } from '@storybook/addon-actions'
+import { array, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import arizonaCities from '../storySupport/arizonaCities'
 import FormHandler from '../storySupport/FormHandler'
@@ -11,10 +12,10 @@ storiesOf('Select', module)
   .add('Basic Usage', () => (
     <React.Fragment>
       <Select
-        options={['name', 'other', 'three']}
-        name="random"
-        id="select-input"
-        mb={2}
+        options={array('options', ['name', 'other', 'three'])}
+        name={text('name', 'random')}
+        id={text('id', 'select-input')}
+        m={text('m', '2')}
         {...eventLoggers}
       />
     </React.Fragment>
@@ -24,10 +25,9 @@ storiesOf('Select', module)
     () => (
       <React.Fragment>
         <Select
-          options={['name', 'other', 'three']}
-          name="random"
-          id="select-input"
-          mb={2}
+          options={array('options', ['name', 'other', 'three'])}
+          name={text('name', 'random')}
+          id={text('id', 'select-input')}
           {...eventLoggers}
         />
         <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
@@ -44,7 +44,6 @@ storiesOf('Select', module)
           options={arizonaCities}
           name="random"
           id="select-input"
-          mb={2}
           {...eventLoggers}
           onChange={onChange}
           value={value}
