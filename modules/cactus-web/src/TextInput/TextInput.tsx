@@ -101,11 +101,11 @@ const StyledError = styled(NotificationError)<StyledErrorProps>`
 const Input = styled.input<InputProps>`
   border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
   border-radius: 20px;
-  height: 32px;
+  height: 36px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
-  font-size: 18px;
+  ${p => p.theme.textStyles.body};
   width: ${p => p.width || 'auto'};
   background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
 
