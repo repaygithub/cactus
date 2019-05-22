@@ -7,8 +7,18 @@ import Tooltip from './Tooltip'
 
 const tooltipStories = storiesOf('Tooltip', module)
 
-tooltipStories.add('Basic Usage', () => (
-  <Tooltip label={text('label', 'Some tooltip text here')}>
-    <NotificationInfo />
-  </Tooltip>
-))
+tooltipStories
+  .add('Basic Usage', () => (
+    <Tooltip label={text('label', 'Some tooltip text here')}>
+      <NotificationInfo />
+    </Tooltip>
+  ))
+  .add(
+    'Collision Detection',
+    () => (
+      <Tooltip label={text('label', 'Some tooltip text here')}>
+        <NotificationInfo />
+      </Tooltip>
+    ),
+    { cactus: { overrides: { height: '200vh', width: '200vw' } } }
+  )
