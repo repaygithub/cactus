@@ -93,24 +93,23 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   }
 }
 
-const StyledSpan = styled.span`
-  outline: none;
-`
-
 /**
  * Stolen from reach/tooltip and adapted to fit our needs
  * https://github.com/reach/reach-ui/tree/master/packages/tooltip
  */
 
 const TooltipBase = (props: TooltipProps) => {
-  const { children, label, ariaLabel, DEBUG_STYLE, className, ...rest } = props
+  const { children, label, ariaLabel, DEBUG_STYLE, className, id, ...rest } = props
   const [trigger, tooltip] = useTooltip({ DEBUG_STYLE })
   return (
     <Fragment>
-      <StyledSpan className={className} {...trigger} tabIndex={0}>
+      <span className={className} {...trigger}>
         <NotificationInfo />
-      </StyledSpan>
+      </span>
       <TooltipPopup label={label} ariaLabel={ariaLabel} {...tooltip} {...rest} />
+      <VisuallyHidden role="tooltip" id={id}>
+        {label}
+      </VisuallyHidden>
     </Fragment>
   )
 }
@@ -192,11 +191,6 @@ const TooltipContentBase = forwardRef<HTMLDivElement, TooltipContentProps>(funct
         }}
         {...rest}
       />
-      {useAriaLabel && (
-        <VisuallyHidden role="tooltip" id={id}>
-          {ariaLabel}
-        </VisuallyHidden>
-      )}
     </Fragment>
   )
 })

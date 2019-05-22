@@ -95,9 +95,9 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     status = 'error'
   }
 
-  const fieldId = useId(id)
-  const statusId = status ? `${fieldId}-status` : ''
-  const tipId = tooltip ? `${fieldId}-tip` : ''
+  const inputId = useId(id)
+  const statusId = status ? `${inputId}-status` : ''
+  const tipId = tooltip ? `${inputId}-tip` : ''
 
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,10 +115,19 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   }
 
   return (
-    <div className={className} ref={ref} id={fieldId}>
-      <Label {...labelProps}>{label}</Label>
+    <div className={className} ref={ref}>
+      <Label htmlFor={inputId} {...labelProps}>
+        {label}
+      </Label>
       {tooltip && <Tooltip id={tipId} label={tooltip} maxWidth={containerWidth} />}
-      <TextInput {...inputProps} width="100%" status={status} onChange={handleChange} aria-describedby={`${tipId} ${statusId}`} />
+      <TextInput
+        {...inputProps}
+        id={inputId}
+        width="100%"
+        status={status}
+        onChange={handleChange}
+        aria-describedby={`${tipId} ${statusId}`}
+      />
       {status === 'success' && (
         <StatusLabel status="success" id={statusId}>
           <span>{success}</span>

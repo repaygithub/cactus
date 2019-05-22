@@ -23,6 +23,12 @@ exports[`component: Tooltip should render tooltip icon 1`] = `
       />
     </svg>
   </span>
+  <div
+    role="tooltip"
+    style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+  >
+    pitloot
+  </div>
 </div>
 `;
 
