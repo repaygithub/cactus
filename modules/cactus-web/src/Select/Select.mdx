@@ -9,24 +9,71 @@ import cactusTheme from '@repay/cactus-theme'
 
 # Select
 
+This component is to be used in place of a `<select></select>` tag.
+
 ## Best practices
 
-TODO - see README for what to include here
+- For accessibility, The `Select` component should be used in coordination with a `Label` where the `id` on the `Select` is passed as `htmlFor` on the `Label`.
+- The option values should be a unique set.
 
 ## Basic usage
 
-TODO - brief description
+The `Select` element requires options be provided as an array. They can be either an array of strings which represent both the option value and label, or as an object where the value and label are provided separately.
+
+### Minimum Required Props
 
 ```jsx
 import React from 'react'
+import { Select } from '@repay/cactus-web'
 
-;<Select />
+export default () => {
+  return (
+    <form>
+      <Select
+        name="needed-for-events"
+        id="required-for-accessibility"
+        options={['somebody', 'once', 'told me', 'the world', 'was', 'gonna', 'roll me']}
+      />
+    </form>
+  )
+}
 ```
 
-```tsx
-import * as React from 'react'
+#### Controlled Component
 
-;<Select />
+```jsx
+import React, { useState, useCallback } from 'react'
+
+export default () => {
+  const [values, setValues] = useState({ enabled: false })
+  const handleChange = useCallback(
+    (name, value) => {
+      setValues(state => setValues({ ...state, [name]: value }))
+    },
+    [setValues]
+  )
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...values }
+      // send data to api
+    },
+    [values]
+  )
+
+  return (
+    <form onSubmit={onSubmit}>
+      <Label htmlFor="smashed-mouth-select">Smashmouth</Label>
+      <Select
+        name="smashmouth"
+        id="smashed-mouth-select"
+        options={['somebody', 'once', 'told me', 'the world', 'was', 'gonna', 'roll me']}
+        onChange={handleChange}
+        value={values.smashmouth}
+      />
+    </form>
+  )
+}
 ```
 
 ## Properties
