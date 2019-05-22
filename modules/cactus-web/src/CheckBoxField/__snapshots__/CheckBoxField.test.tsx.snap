@@ -36,6 +36,8 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
@@ -54,7 +56,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 
 .c8 {
   font-size: 18px;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -69,7 +71,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 }
 
 .c1 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 <div
@@ -148,6 +150,8 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   cursor: cursor;
 }
 
@@ -161,7 +165,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 
 .c8 {
   font-size: 18px;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -176,7 +180,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 }
 
 .c9 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 .c1 + .c0 {
@@ -189,7 +193,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 }
 
 .c1 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 <div
@@ -270,6 +274,8 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
@@ -288,7 +294,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 
 .c8 {
   font-size: 18px;
-  height: 28px;
+  line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
@@ -303,7 +309,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 }
 
 .c9 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 .c10 + .c0 {
@@ -316,7 +322,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 }
 
 .c10 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 .c1 {
@@ -333,7 +339,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 }
 
 .c1 .c2 {
-  top: -1px;
+  top: -3px;
 }
 
 <div

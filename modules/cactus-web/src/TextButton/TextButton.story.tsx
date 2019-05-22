@@ -10,7 +10,6 @@ const textButtonVariants: TextButtonVariants[] = ['standard', 'action', 'danger'
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
-const textButtonStories = storiesOf('TextButton', module)
 const textIconButtonStories = storiesOf('Text+Icon Button', module)
 
 textIconButtonStories.add('Basic Usage', () => {

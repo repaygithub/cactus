@@ -60,6 +60,8 @@ export const RadioButton = styled(RadioButtonBase)`
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  width: 16px;
+  height: 16px;
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
 
   input:checked ~ span {

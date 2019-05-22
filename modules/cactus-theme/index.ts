@@ -23,6 +23,11 @@ export interface IconSizeObject extends Array<number> {
   large?: number
 }
 
+export type TextStyle = {
+  fontSize: string
+  lineHeight: string
+}
+
 export interface CactusTheme {
   colors: {
     /** Core colors */
@@ -54,6 +59,15 @@ export interface CactusTheme {
   space: number[]
   fontSizes: FontSizeObject
   iconSizes: IconSizeObject
+  textStyles: {
+    tiny: TextStyle
+    small: TextStyle
+    body: TextStyle
+    h4: TextStyle
+    h3: TextStyle
+    h2: TextStyle
+    h1: TextStyle
+  }
   colorStyles: {
     base: ColorStyle
     callToAction: ColorStyle
@@ -149,6 +163,36 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
     space: [0, 2, 4, 8, 16, 32, 64],
     fontSizes,
     iconSizes,
+    textStyles: {
+      tiny: {
+        fontSize: '12.5px',
+        lineHeight: '18px',
+      },
+      small: {
+        fontSize: '15px',
+        lineHeight: '23px',
+      },
+      body: {
+        fontSize: '18px',
+        lineHeight: '28px',
+      },
+      h4: {
+        fontSize: '21.6px',
+        lineHeight: '32px',
+      },
+      h3: {
+        fontSize: '25.92px',
+        lineHeight: '40px',
+      },
+      h2: {
+        fontSize: '31.104px',
+        lineHeight: '48px',
+      },
+      h1: {
+        fontSize: '37.325px',
+        lineHeight: '56px',
+      },
+    },
     colorStyles: {
       base: {
         backgroundColor: base,
