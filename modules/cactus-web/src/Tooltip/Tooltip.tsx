@@ -1,4 +1,4 @@
-import React, { cloneElement, CSSProperties, forwardRef, Fragment, useRef } from 'react'
+import React, { CSSProperties, forwardRef, Fragment, useRef } from 'react'
 
 import { MarginProps, margins } from '../helpers/margins'
 import { maxWidth } from 'styled-system'
@@ -90,6 +90,10 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   }
 }
 
+const StyledSpan = styled.span`
+  outline: none;
+`
+
 /**
  * Stolen from reach/tooltip and adapted to fit our needs
  * https://github.com/reach/reach-ui/tree/master/packages/tooltip
@@ -100,9 +104,9 @@ const TooltipBase = (props: TooltipProps) => {
   const [trigger, tooltip] = useTooltip({ DEBUG_STYLE })
   return (
     <Fragment>
-      <span className={className} {...trigger}>
+      <StyledSpan className={className} {...trigger} tabIndex={0}>
         <NotificationInfo />
-      </span>
+      </StyledSpan>
       <TooltipPopup label={label} ariaLabel={ariaLabel} {...tooltip} {...rest} />
     </Fragment>
   )

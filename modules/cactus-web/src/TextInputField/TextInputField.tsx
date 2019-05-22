@@ -2,16 +2,17 @@ import React, { useRef } from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnChangeHandler, Omit } from '../types'
-import { Label } from '../Label/Label'
+import { Label, LabelProps } from '../Label/Label'
 import { MarginProps, margins } from '../helpers/margins'
 import { Status, TextInput, TextInputProps } from '../TextInput/TextInput'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import Tooltip from '../Tooltip/Tooltip'
+import useId from '../helpers/useId'
 
 interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status' | 'onChange'> {
   label: string
   name: string
-  labelProps?: object
+  labelProps?: LabelProps
   success?: string
   warning?: string
   error?: string
@@ -79,6 +80,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     tooltip,
     onChange,
     name,
+    id,
     ...inputProps
   } = props
 
@@ -92,6 +94,10 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   } else if (error && !success && !warning) {
     status = 'error'
   }
+
+  const fieldId = useId(id)
+  const statusId = status ? `${fieldId}-status` : ''
+  const tipId = tooltip ? `${fieldId}-tip` : ''
 
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,22 +115,22 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   }
 
   return (
-    <div className={className} ref={ref}>
+    <div className={className} ref={ref} id={fieldId}>
       <Label {...labelProps}>{label}</Label>
-      {tooltip && <Tooltip label={tooltip} maxWidth={containerWidth} />}
-      <TextInput {...inputProps} width="100%" status={status} onChange={handleChange} />
+      {tooltip && <Tooltip id={tipId} label={tooltip} maxWidth={containerWidth} />}
+      <TextInput {...inputProps} width="100%" status={status} onChange={handleChange} aria-describedby={`${tipId} ${statusId}`} />
       {status === 'success' && (
-        <StatusLabel status="success">
+        <StatusLabel status="success" id={statusId}>
           <span>{success}</span>
         </StatusLabel>
       )}
       {status === 'warning' && (
-        <StatusLabel status="warning">
+        <StatusLabel status="warning" id={statusId}>
           <span>{warning}</span>
         </StatusLabel>
       )}
       {status === 'error' && (
-        <StatusLabel status="error">
+        <StatusLabel status="error" id={statusId}>
           <span>{error}</span>
         </StatusLabel>
       )}
