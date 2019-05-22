@@ -1,5 +1,6 @@
 import React, { cloneElement, CSSProperties, forwardRef, Fragment, useRef } from 'react'
 
+import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { MarginProps, margins } from '../helpers/margins'
 import { maxWidth } from 'styled-system'
 import { NotificationInfo } from '@repay/cactus-icons'
@@ -55,9 +56,11 @@ interface TooltipContentProps extends React.HTMLProps<HTMLDivElement> {
 
 const OFFSET = 8
 const cactusPosition: Position = (triggerRect, tooltipRect) => {
+  const scrollX = getScrollX()
+  const scrollY = getScrollY()
   let styles: Styles = {
-    left: `${triggerRect.left + window.scrollX}px`,
-    top: `${triggerRect.top + triggerRect.height + window.scrollY}px`,
+    left: `${triggerRect.left + scrollX}px`,
+    top: `${triggerRect.top + triggerRect.height + scrollY}px`,
   }
 
   if (!tooltipRect) {
@@ -82,11 +85,11 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   return {
     ...styles,
     left: directionRight
-      ? `${triggerRect.left + OFFSET + window.scrollX}px`
-      : `${triggerRect.right - OFFSET - tooltipRect.width + window.scrollX}px`,
+      ? `${triggerRect.left + OFFSET + scrollX}px`
+      : `${triggerRect.right - OFFSET - tooltipRect.width + scrollX}px`,
     top: directionUp
-      ? `${triggerRect.top - tooltipRect.height + window.scrollY}px`
-      : `${triggerRect.top + triggerRect.height + window.scrollY}px`,
+      ? `${triggerRect.top - tooltipRect.height + scrollY}px`
+      : `${triggerRect.top + triggerRect.height + scrollY}px`,
   }
 }
 
@@ -208,7 +211,7 @@ export const TooltipContent = styled(TooltipContentBase)`
   color: ${p => p.theme.colors.darkestContrast};
   border: 2px solid ${p => p.theme.colors.callToAction};
   box-sizing: border-box;
-  word-break: break-all;
+  overflow-wrap: break-word;
 
   ${maxWidth}
 `

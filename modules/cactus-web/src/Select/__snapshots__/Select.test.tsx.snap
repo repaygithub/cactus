@@ -32,14 +32,12 @@ exports[`<Select /> snapshot 1`] = `
 }
 
 .c1:focus,
-.c1[aria-expanded],
-.c1:hover {
+.c1[aria-expanded] {
   border-color: hsl(200,96%,35%);
 }
 
 .c1:focus .c3,
-.c1[aria-expanded] .c3,
-.c1:hover .c3 {
+.c1[aria-expanded] .c3 {
   color: hsl(200,96%,35%);
 }
 

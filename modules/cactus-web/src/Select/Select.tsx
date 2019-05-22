@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { MarginProps, margins } from '../helpers/margins'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { styles } from 'styled-system'
 import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import Rect from '@reach/rect'
@@ -44,8 +44,7 @@ const SelectTrigger = styled.button`
   }
 
   &:focus,
-  &[aria-expanded],
-  &:hover {
+  &[aria-expanded] {
     border-color: ${p => p.theme.colors.callToAction};
 
     ${NavigationChevronDown} {
@@ -115,6 +114,22 @@ function asOption(opt: string | OptionType): OptionType {
   return opt
 }
 
+function getOptionId(option: OptionType) {
+  return `${option.label}-${option.value}`.replace(/\s/g, '-')
+}
+
+function getOptionsMap(options: OptionType[]) {
+  let optionsMap: { [k: string]: OptionType & { id: string } } = {}
+  for (let i = 0; i < options.length; ++i) {
+    const opt = asOption(options[i])
+    optionsMap[opt.value] = {
+      ...opt,
+      id: getOptionId(opt),
+    }
+  }
+  return optionsMap
+}
+
 function getSelectedIndex(options: string[] | OptionType[], value: string): number {
   for (let i = 0; i < options.length; ++i) {
     const opt = options[i]
@@ -130,19 +145,22 @@ function getSelectedIndex(options: string[] | OptionType[], value: string): numb
 }
 
 const OFFSET = 8
+const SCROLLBAR_WIDTH = 10
 function positionList(
   isOpen: boolean,
   triggerRect: DOMRect | undefined,
   listRect: DOMRect | undefined
 ): React.CSSProperties | undefined {
   if (!isOpen || triggerRect === undefined) {
-    return { visibility: 'hidden', height: 0, width: 0 }
+    return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
   }
+  const scrollY = getScrollY()
+  const scrollX = getScrollX()
 
   // default assumes no collisions bottom
   let style: React.CSSProperties = {
-    top: window.scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
-    left: window.scrollX + triggerRect.left + 'px',
+    top: scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
+    left: scrollX + triggerRect.left + 'px',
     width: triggerRect.width + 'px',
   }
   if (listRect === undefined) {
@@ -160,18 +178,18 @@ function positionList(
   }
 
   if (collisions.bottom && !collisions.top) {
-    style.top = window.scrollY + triggerRect.top - listRect.height - OFFSET + 'px'
+    style.top = scrollY + triggerRect.top - listRect.height - OFFSET + 'px'
   } else if (collisions.top && collisions.bottom) {
-    style.top = window.scrollY + 'px'
-    style.maxHeight = window.innerHeight + 'px'
+    style.top = scrollY + 'px'
+    style.maxHeight = window.innerHeight - SCROLLBAR_WIDTH + 'px'
   }
   if (collisions.right && !collisions.left) {
-    style.left = window.innerWidth + window.scrollX - listRect.width + 'px'
+    style.left = window.innerWidth + scrollX - listRect.width + 'px'
   } else if (collisions.left && !collisions.right) {
-    style.left = window.scrollX + 'px'
+    style.left = scrollX + 'px'
   } else if (collisions.right && collisions.left) {
-    style.left = window.scrollX + 'px'
-    style.width = window.innerWidth + 'px'
+    style.left = scrollX + 'px'
+    style.width = window.innerWidth - SCROLLBAR_WIDTH + 'px'
   }
 
   return style
@@ -196,18 +214,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.didScroll = false
     this.listRef = React.createRef<HTMLUListElement>()
     this.triggerRef = React.createRef<HTMLButtonElement>()
-
-    this.optionsMap = {}
-    for (let i = 0; i < props.options.length; ++i) {
-      const opt = asOption(props.options[i])
-      this.optionsMap[opt.value] = {
-        ...opt,
-        id: `${opt.label}-${opt.value}`.replace(/\s/g, '-'),
-      }
-    }
   }
 
-  optionsMap: { [key: string]: OptionType & { id: string } }
   pendingChars: string
   searchIndex: number
   didScroll: boolean
@@ -228,12 +236,14 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       window.requestAnimationFrame(() => {
         let listEl = this.listRef.current
         let selected = this.state.selectedValue || this.state.value
+
         if (listEl === null || selected === null) {
           return
         }
-        let optionEl: HTMLLIElement | null = listEl.querySelector(
-          `#${this.optionsMap[selected].id}`
+        let selectedOption: OptionType = asOption(
+          this.props.options[getSelectedIndex(this.props.options, selected)]
         )
+        let optionEl: HTMLLIElement | null = listEl.querySelector(`#${getOptionId(selectedOption)}`)
         if (optionEl === null) {
           return
         }
@@ -317,7 +327,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     const key = event.which || event.keyCode
     const selectedValue =
       this.state.selectedValue !== null ? this.state.selectedValue : this.state.value
-    if (selectedValue === null || !this.optionsMap.hasOwnProperty(selectedValue)) {
+    if (selectedValue === null) {
       return
     }
     let nextIndex = getSelectedIndex(this.props.options, selectedValue)
@@ -394,7 +404,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   handleOptionMouseEnter = (event: React.MouseEvent<HTMLLIElement>) => {
     const currentTarget = event.currentTarget
-    // not triggered by automated scrolling
+    // prevent triggering by automated scrolling
     if (!this.didScroll) {
       this.setState({ selectedValue: currentTarget.getAttribute('data-value') as string })
     }
@@ -472,7 +482,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     clearTimeout(this.scrollClear)
     this.scrollClear = setTimeout(() => {
       this.didScroll = false
-    }, 100)
+    }, 150) // 120ms worked on Firefox and IE11 so 150 us just extra safe
   }
 
   /** END helpers */
@@ -482,6 +492,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     let { isOpen, value, selectedValue } = this.state
     // @ts-ignore
     let options: OptionType[] = mixOptions.map(asOption)
+    let optionsMap = getOptionsMap(options)
 
     return (
       <div className={className}>
@@ -502,8 +513,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                 aria-haspopup="listbox"
                 aria-expanded={isOpen || undefined}
               >
-                {value && this.optionsMap.hasOwnProperty(value) ? (
-                  <ValueSpan>{this.optionsMap[value].label}</ValueSpan>
+                {value && optionsMap.hasOwnProperty(value) ? (
+                  <ValueSpan>{optionsMap[value].label}</ValueSpan>
                 ) : (
                   <Placeholder>{placeholder}</Placeholder>
                 )}
@@ -514,7 +525,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                   {({ ref: listRef, rect: listRect }) => {
                     const selected = selectedValue !== null ? selectedValue : value
                     const activeDescendant =
-                      selected && isOpen ? this.optionsMap[selected].id : undefined
+                      selected && isOpen ? optionsMap[selected].id : undefined
                     return (
                       <List
                         onBlur={this.handleListBlur}
@@ -532,7 +543,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                         aria-activedescendant={activeDescendant}
                       >
                         {options.map(o => {
-                          const opt = this.optionsMap[o.value]
+                          const opt = optionsMap[o.value]
                           const isSelected = selected === opt.value || undefined
                           return (
                             <Option
