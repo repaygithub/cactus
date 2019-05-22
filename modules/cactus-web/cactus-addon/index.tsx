@@ -1,36 +1,54 @@
 import * as React from 'react'
 
-import { BACKGROUND_CHANGE, DECORATOR_LISTENING, NAME, THEME_CHANGE } from './constants'
+import { BACKGROUND_CHANGE, DECORATOR_LISTENING, NAME, PROP_NAME, THEME_CHANGE } from './constants'
 import { StyleProvider } from '../src/StyleProvider/StyleProvider'
 import addons, { makeDecorator } from '@storybook/addons'
 import cactusTheme, { generateTheme } from '@repay/cactus-theme'
-import styled from 'styled-components'
+import styled, { CSSObject } from 'styled-components'
+
+type AlignmentTypes = 'center' | 'left' | 'right' | 'bottom' | 'top'
 
 interface StyledContainerBaseProps {
   inverse: boolean
   className?: string
+  align?: AlignmentTypes
+  overrides?: CSSObject
 }
 
-const StyledContainerBase: React.FC<StyledContainerBaseProps> = ({ className, children }) => (
-  <div className={className}>{children}</div>
-)
+const StyledContainerBase: React.FC<StyledContainerBaseProps> = ({
+  className,
+  children,
+  ...rest
+}) => <div className={className}>{children}</div>
+
+const alignmentMap: { [k in AlignmentTypes]: CSSObject } = {
+  center: { justifyContent: 'center', alignItems: 'center' },
+  left: { justifyContent: 'start', alignItems: 'center' },
+  right: { justifyContent: 'end', alignItems: 'center' },
+  bottom: { justifyContent: 'center', alignItems: 'end' },
+  top: { justifyContent: 'center', alignItems: 'start' },
+}
 
 const StyledContainer = styled(StyledContainerBase)`
-  position: absolute
+  position: relative;
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
   overflow-y: auto;
   ${p => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
+  ${p => alignmentMap[p.align]};
+  ${p => p.overrides}
 `
+
+StyledContainer.defaultProps = {
+  align: 'center',
+}
 
 interface ProvideCactusThemeProps {
   channel: any
 }
 
-const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = props => {
+const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({ channel, ...props }) => {
   const [theme, setTheme] = React.useState(cactusTheme)
   const [inverse, setInverse] = React.useState(false)
 
@@ -43,28 +61,43 @@ const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = props => {
       setInverse(inverse)
     }
 
-    props.channel.on(THEME_CHANGE, updateTheme)
-    props.channel.on(BACKGROUND_CHANGE, updateBackground)
+    channel.on(THEME_CHANGE, updateTheme)
+    channel.on(BACKGROUND_CHANGE, updateBackground)
 
-    props.channel.emit(DECORATOR_LISTENING)
+    channel.emit(DECORATOR_LISTENING)
     return () => {
-      props.channel.removeListener(THEME_CHANGE, updateTheme)
-      props.channel.removeListener(BACKGROUND_CHANGE, updateBackground)
+      channel.removeListener(THEME_CHANGE, updateTheme)
+      channel.removeListener(BACKGROUND_CHANGE, updateBackground)
     }
-  }, [props.channel])
+  }, [channel])
 
   return (
     <StyleProvider theme={theme} global>
-      <StyledContainer inverse={inverse}>{props.children}</StyledContainer>
+      <StyledContainer {...props} inverse={inverse} />
     </StyleProvider>
   )
 }
 
+export interface CactusAddonsOptions {
+  align?: AlignmentTypes
+  overrides?: CSSObject
+}
+
 export default makeDecorator({
   name: NAME,
-  wrapper: (getStory, context) => {
+  parameterName: PROP_NAME,
+  wrapper: (
+    getStory: any,
+    context: any,
+    { parameters, options }: { parameters?: CactusAddonsOptions; options?: CactusAddonsOptions }
+  ) => {
     const channel = addons.getChannel()
+    parameters = { ...options, ...parameters }
 
-    return <ProvideCactusTheme channel={channel}>{getStory(context)}</ProvideCactusTheme>
+    return (
+      <ProvideCactusTheme {...parameters} channel={channel}>
+        {getStory(context)}
+      </ProvideCactusTheme>
+    )
   },
 })

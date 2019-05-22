@@ -39,7 +39,7 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
   color: hsl(200,10%,20%);
   border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 <div

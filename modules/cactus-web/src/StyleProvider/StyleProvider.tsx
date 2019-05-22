@@ -25,6 +25,7 @@ body {
   font-stretch: normal;
   line-height: 1.54;
   letter-spacing: normal;
+  margin: 0;
 }
 `
 

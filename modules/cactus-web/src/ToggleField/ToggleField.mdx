@@ -24,7 +24,7 @@ The Toggle cannot manage it's own state, therefore this field **must** be contro
 ## Basic usage
 
 ```jsx
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Button, ToggleField } from '@repay/cactus-web'
 
 export default function Form() {
