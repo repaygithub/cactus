@@ -11,7 +11,7 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Best practices
 
-- Use the `aria-labelledby` prop to associate labels with your text area to make them accessible.
+- Use the `htmlFor` prop to associate labels with your text area to make them accessible.
 
 ## Basic usage
 
@@ -35,8 +35,8 @@ export default function Form() {
   )
   return (
     <form onSubmit={handleSubmit}>
-      <Label id="label-id">Enter some text</Label>
-      <TextArea aria-labelledby="label-id" name="textArea" onChange={handleChange} />
+      <Label htmlFor="my-id">Enter some text</Label>
+      <TextArea id="my-id" name="textArea" onChange={handleChange} />
       <Button type="submit" variant="action">
         Submit
       </Button>

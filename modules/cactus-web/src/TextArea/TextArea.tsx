@@ -67,7 +67,7 @@ const Area = styled.textarea<TextAreaProps>`
   min-height: 100px;
   min-width: 336px;
   box-sizing: border-box;
-  font-size: 18px;
+  ${p => p.theme.textStyles.body}
   padding: 8px 16px;
   outline: none;
   background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
@@ -115,14 +115,15 @@ const StyledError = styled(NotificationError)<StyledErrorProps>`
 `
 
 const TextAreaBase = (props: TextAreaProps) => {
-  const { disabled, status, className } = props
+  const { disabled, status, className, ...rest } = props
+  const statusProps = { disabled, status }
 
   return (
     <div className={className}>
-      <Area {...props} />
-      {status === 'success' && !disabled && <StyledCheck disabled={disabled} status={status} />}
-      {status === 'warning' && !disabled && <StyledAlert disabled={disabled} status={status} />}
-      {status === 'error' && !disabled && <StyledError disabled={disabled} status={status} />}
+      <Area {...statusProps} {...rest} />
+      {status === 'success' && !disabled && <StyledCheck {...statusProps} />}
+      {status === 'warning' && !disabled && <StyledAlert {...statusProps} />}
+      {status === 'error' && !disabled && <StyledError {...statusProps} />}
     </div>
   )
 }
