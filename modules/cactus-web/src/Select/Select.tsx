@@ -17,10 +17,21 @@ interface SelectProps extends MarginProps {
   value?: string
   placeholder?: string
   className?: string
+  disabled?: boolean
   onChange?: (name: string, value: string) => void
   onBlur?: (name: string) => void
   onFocus?: (name: string) => void
 }
+
+const ValueSpan = styled.span`
+  font-size: ${p => p.theme.fontSizes.p}px;
+`
+
+const Placeholder = styled.span`
+  font-style: italic;
+  color: ${p => p.theme.colors.darkContrast};
+  font-size: ${p => p.theme.fontSizes.p}px;
+`
 
 const SelectTrigger = styled.button`
   position: relative;
@@ -33,11 +44,20 @@ const SelectTrigger = styled.button`
   border-radius: 20px;
   border-width: 2px;
   border-style: solid;
-  border-color: ${p => p.theme.colors.darkContrast};
+  border-color: ${p => p.theme.colors.darkestContrast};
   text-align: left;
   outline: none;
   appearance: none;
   cursor: pointer;
+
+  :disabled {
+    border-color: ${p => p.theme.colors.mediumGray};
+    color: ${p => p.theme.colors.mediumGray};
+
+    ${Placeholder} {
+      display: none;
+    }
+  }
 
   &::-moz-focus-inner {
     border: 0;
@@ -63,16 +83,6 @@ const SelectTrigger = styled.button`
     right: 14px; // 14 + 2px from border
     top: 10px;
   }
-`
-
-const ValueSpan = styled.span`
-  font-size: ${p => p.theme.fontSizes.p}px;
-`
-
-const Placeholder = styled.span`
-  font-style: italic;
-  color: ${p => p.theme.colors.darkContrast};
-  font-size: ${p => p.theme.fontSizes.p}px;
 `
 
 const List = styled.ul`
@@ -488,7 +498,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END helpers */
 
   render() {
-    let { name, id, options: mixOptions, className, placeholder } = this.props
+    let { name, id, disabled, options: mixOptions, className, placeholder } = this.props
     let { isOpen, value, selectedValue } = this.state
     // @ts-ignore
     let options: OptionType[] = mixOptions.map(asOption)
@@ -500,10 +510,13 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
           {({ ref: triggerRef, rect: triggerRect }) => (
             <>
               <SelectTrigger
+                id={id}
+                name={name}
                 onKeyUp={this.handleKeyUp}
                 onClick={this.handleClick}
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
+                disabled={disabled}
                 ref={node => {
                   triggerRef(node)
                   // @ts-ignore

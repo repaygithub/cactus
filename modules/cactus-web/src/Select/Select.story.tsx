@@ -1,5 +1,5 @@
 import { actions } from '@storybook/addon-actions'
-import { array, text } from '@storybook/addon-knobs'
+import { array, boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import arizonaCities from '../storySupport/arizonaCities'
 import FormHandler from '../storySupport/FormHandler'
@@ -15,6 +15,7 @@ storiesOf('Select', module)
         options={array('options', ['name', 'other', 'three'])}
         name={text('name', 'random')}
         id={text('id', 'select-input')}
+        disabled={boolean('disabled', false)}
         m={text('m', '2')}
         {...eventLoggers}
       />
@@ -28,6 +29,7 @@ storiesOf('Select', module)
           options={array('options', ['name', 'other', 'three'])}
           name={text('name', 'random')}
           id={text('id', 'select-input')}
+          disabled={boolean('disabled', false)}
           {...eventLoggers}
         />
         <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
@@ -44,6 +46,7 @@ storiesOf('Select', module)
           options={arizonaCities}
           name="random"
           id="select-input"
+          disabled={boolean('disabled', false)}
           {...eventLoggers}
           onChange={onChange}
           value={value}
