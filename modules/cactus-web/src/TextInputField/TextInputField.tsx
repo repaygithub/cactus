@@ -1,11 +1,11 @@
 import React, { useRef } from 'react'
 
-import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnChangeHandler, Omit } from '../types'
 import { Label, LabelProps } from '../Label/Label'
 import { MarginProps, margins } from '../helpers/margins'
-import { Status, TextInput, TextInputProps } from '../TextInput/TextInput'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import { TextInput, TextInputProps } from '../TextInput/TextInput'
+import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
+import styled from 'styled-components'
 import Tooltip from '../Tooltip/Tooltip'
 import useId from '../helpers/useId'
 
@@ -19,55 +19,6 @@ interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status'
   tooltip?: string
   onChange?: FieldOnChangeHandler<string>
 }
-
-interface StatusLabelProps {
-  status: Status
-}
-
-type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
-
-const statusMap: StatusMap = {
-  success: css`
-    border-color: ${p => p.theme.colors.success};
-    background: ${p => p.theme.colors.success};
-    color: ${p => p.theme.colors.white};
-  `,
-  warning: css`
-    border-color: ${p => p.theme.colors.warning};
-    background-color: ${p => p.theme.colors.warning};
-    color: ${p => p.theme.colors.darkestContrast};
-  `,
-  error: css`
-    border-color: ${p => p.theme.colors.error};
-    background-color: ${p => p.theme.colors.error};
-    color: ${p => p.theme.colors.white};
-  `,
-}
-
-const statusColors = (props: StatusLabelProps) => {
-  const { status } = props
-  return statusMap[status]
-}
-
-const StatusLabel = styled.div<StatusLabelProps>`
-  border-radius: 0 8px 8px 8px;
-  padding: 8px 16px 8px 16px;
-  position: relative;
-  top: 4px;
-  min-height: 16px;
-  font-size: 15px;
-  box-sizing: border-box;
-  word-break: break-all;
-
-  span {
-    position: relative;
-    display: inline-block;
-    bottom: 2px;
-    vertical-align: middle;
-  }
-
-  ${statusColors}
-`
 
 const TextInputFieldBase = (props: TextInputFieldProps) => {
   const {
@@ -129,19 +80,19 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
         aria-describedby={`${tipId} ${statusId}`}
       />
       {status === 'success' && (
-        <StatusLabel status="success" id={statusId}>
+        <StatusMessage status="success" id={statusId}>
           <span>{success}</span>
-        </StatusLabel>
+        </StatusMessage>
       )}
       {status === 'warning' && (
-        <StatusLabel status="warning" id={statusId}>
+        <StatusMessage status="warning" id={statusId}>
           <span>{warning}</span>
-        </StatusLabel>
+        </StatusMessage>
       )}
       {status === 'error' && (
-        <StatusLabel status="error" id={statusId}>
+        <StatusMessage status="error" id={statusId}>
           <span>{error}</span>
-        </StatusLabel>
+        </StatusMessage>
       )}
     </div>
   )

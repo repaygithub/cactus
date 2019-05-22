@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { actions } from '@storybook/addon-actions'
 import { boolean, text } from '@storybook/addon-knobs'
-import { Status } from '../TextInput/TextInput'
+import { Status } from '../StatusMessage/StatusMessage'
 import { storiesOf } from '@storybook/react'
 import TextInputField from './TextInputField'
 
@@ -16,6 +16,7 @@ const InputValidator = () => {
 
   return (
     <TextInputField
+      name="input"
       label="Type Something"
       tooltip="You must type more than 5 characters"
       onChange={(_, value) => setInput(value)}

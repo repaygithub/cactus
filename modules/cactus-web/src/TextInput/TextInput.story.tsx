@@ -2,8 +2,9 @@ import React from 'react'
 
 import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs/react'
+import { Status } from '../StatusMessage/StatusMessage'
 import { storiesOf } from '@storybook/react'
-import TextInput, { Status } from './TextInput'
+import TextInput from './TextInput'
 
 const textInputStories = storiesOf('TextInput', module)
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
