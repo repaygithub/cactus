@@ -20,7 +20,7 @@ function getActiveValue(): string {
     .textContent
 }
 
-describe('<Select />', () => {
+describe('component: Select', () => {
   test('snapshot', () => {
     const { asFragment } = render(
       <StyleProvider>

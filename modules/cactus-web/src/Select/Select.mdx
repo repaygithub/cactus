@@ -20,6 +20,17 @@ This component is to be used in place of a `<select></select>` tag.
 
 The `Select` element requires options be provided as an array. They can be either an array of strings which represent both the option value and label, or as an object where the value and label are provided separately.
 
+```js
+let options = ['provide options', 'as and array', 'of strings']
+// OR
+let options = [
+  // both label and value must be
+  { label: 'Provide Options', value: 'provide-options' },
+  { label: 'As an Array', value: 'as-an-array' },
+  { label: 'of objects', value: 'of-objects' },
+]
+```
+
 ### Minimum Required Props
 
 ```jsx

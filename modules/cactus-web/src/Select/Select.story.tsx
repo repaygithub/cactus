@@ -1,5 +1,5 @@
 import { actions } from '@storybook/addon-actions'
-import { array, boolean, select, text } from '@storybook/addon-knobs'
+import { array, boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import arizonaCities from '../storySupport/arizonaCities'
 import FormHandler from '../storySupport/FormHandler'
