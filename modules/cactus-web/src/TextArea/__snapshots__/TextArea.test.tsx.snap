@@ -47,7 +47,7 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
   >
     <textarea
       class="c1"
@@ -116,7 +116,7 @@ exports[`component: TextArea should render a success textarea 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
   >
     <textarea
       class="c1"
@@ -184,7 +184,7 @@ exports[`component: TextArea should render a textarea 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
   >
     <textarea
       class="c1"
@@ -240,7 +240,7 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
   >
     <textarea
       class="c1"
@@ -309,7 +309,7 @@ exports[`component: TextArea should render a warning textarea 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
   >
     <textarea
       class="c1"
@@ -389,7 +389,7 @@ exports[`component: TextArea should render an error textarea 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
   >
     <textarea
       class="c1"
@@ -458,7 +458,7 @@ exports[`component: TextArea should support margin space props 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
   >
     <textarea
       class="c1"
