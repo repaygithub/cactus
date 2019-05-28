@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, render } from 'react-testing-library'
-import { StyleProvider } from '@repay/cactus-web'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextArea from './TextArea'
 import userEvent from 'user-event'
 

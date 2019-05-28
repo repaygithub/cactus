@@ -1,4 +1,4 @@
-import React, { cloneElement, CSSProperties, forwardRef, Fragment, useRef } from 'react'
+import React, { CSSProperties, forwardRef, Fragment, useRef } from 'react'
 
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { MarginProps, margins } from '../helpers/margins'
@@ -99,7 +99,7 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
  */
 
 const TooltipBase = (props: TooltipProps) => {
-  const { children, label, ariaLabel, DEBUG_STYLE, className, ...rest } = props
+  const { children, label, ariaLabel, DEBUG_STYLE, className, id, ...rest } = props
   const [trigger, tooltip] = useTooltip({ DEBUG_STYLE })
   return (
     <Fragment>
@@ -107,6 +107,9 @@ const TooltipBase = (props: TooltipProps) => {
         <NotificationInfo />
       </span>
       <TooltipPopup label={label} ariaLabel={ariaLabel} {...tooltip} {...rest} />
+      <VisuallyHidden role="tooltip" id={id}>
+        {label}
+      </VisuallyHidden>
     </Fragment>
   )
 }
@@ -188,11 +191,6 @@ const TooltipContentBase = forwardRef<HTMLDivElement, TooltipContentProps>(funct
         }}
         {...rest}
       />
-      {useAriaLabel && (
-        <VisuallyHidden role="tooltip" id={id}>
-          {ariaLabel}
-        </VisuallyHidden>
-      )}
     </Fragment>
   )
 })

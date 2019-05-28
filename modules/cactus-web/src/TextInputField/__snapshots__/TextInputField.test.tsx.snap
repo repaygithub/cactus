@@ -81,12 +81,17 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   font-size: 16px;
 }
 
+.c0 .c7 {
+  margin-top: 4px;
+}
+
 <div>
   <div
     class="c0"
   >
     <label
       class="c1 c2"
+      for="instigate"
     >
       Enter some text
     </label>
@@ -108,10 +113,19 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
       </svg>
     </span>
     <div
+      id="instigate-tip"
+      role="tooltip"
+      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+    >
+      Go on, do it
+    </div>
+    <div
       class="c5"
     >
       <input
+        aria-describedby="instigate-tip "
         class="c5 c6"
+        id="instigate"
         width="100%"
       />
     </div>
@@ -190,10 +204,14 @@ exports[`component: TextInputField should render a TextInputField with a placeho
   padding-left: 15px;
 }
 
-.c0 .c5 {
+.c0 .c6 {
   position: absolute;
   right: 8px;
   font-size: 16px;
+}
+
+.c0 .c5 {
+  margin-top: 4px;
 }
 
 <div>
@@ -202,6 +220,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
   >
     <label
       class="c1 c2"
+      for="promise"
     >
       Ok ok, now do it
     </label>
@@ -209,7 +228,9 @@ exports[`component: TextInputField should render a TextInputField with a placeho
       class="c3"
     >
       <input
+        aria-describedby=" "
         class="c3 c4"
+        id="promise"
         placeholder="I won't disable it again, promise"
         width="100%"
       />
@@ -299,12 +320,17 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
   font-size: 16px;
 }
 
+.c0 .c7 {
+  margin-top: 4px;
+}
+
 <div>
   <div
     class="c0"
   >
     <label
       class="c1 c2"
+      for="trick"
     >
       Come on, type something
     </label>
@@ -326,11 +352,20 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
       </svg>
     </span>
     <div
+      id="trick-tip"
+      role="tooltip"
+      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+    >
+      Sike!
+    </div>
+    <div
       class="c5"
     >
       <input
+        aria-describedby="trick-tip "
         class="c5 c6"
         disabled=""
+        id="trick"
         width="100%"
       />
     </div>
@@ -409,21 +444,21 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
   align-items: center;
 }
 
-.c6 {
+.c7 {
   border-radius: 0 8px 8px 8px;
   padding: 8px 16px 8px 16px;
   position: relative;
-  top: 4px;
   min-height: 16px;
-  font-size: 15px;
   box-sizing: border-box;
-  word-break: break-all;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
   border-color: hsl(145,89%,28%);
   background: hsl(145,89%,28%);
   color: hsl(0,0%,100%);
 }
 
-.c6 span {
+.c7 span {
   position: relative;
   display: inline-block;
   bottom: 2px;
@@ -441,10 +476,14 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
   padding-left: 15px;
 }
 
-.c0 .c7 {
+.c0 .c8 {
   position: absolute;
   right: 8px;
   font-size: 16px;
+}
+
+.c0 .c6 {
+  margin-top: 4px;
 }
 
 <div>
@@ -453,6 +492,7 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
   >
     <label
       class="c1 c2"
+      for="success"
     >
       No seriously, type something
     </label>
@@ -460,7 +500,9 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
       class="c3"
     >
       <input
+        aria-describedby=" success-status"
         class="c3 c4"
+        id="success"
         width="100%"
       />
       <svg
@@ -477,7 +519,8 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
       </svg>
     </div>
     <div
-      class="c6"
+      class="c6 c7"
+      id="success-status"
     >
       <span>
         Great! you typed something!
@@ -558,21 +601,21 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
   align-items: center;
 }
 
-.c6 {
+.c7 {
   border-radius: 0 8px 8px 8px;
   padding: 8px 16px 8px 16px;
   position: relative;
-  top: 4px;
   min-height: 16px;
-  font-size: 15px;
   box-sizing: border-box;
-  word-break: break-all;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
   border-color: hsl(47,82%,47%);
   background-color: hsl(47,82%,47%);
   color: hsl(200,10%,20%);
 }
 
-.c6 span {
+.c7 span {
   position: relative;
   display: inline-block;
   bottom: 2px;
@@ -590,10 +633,14 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
   padding-left: 15px;
 }
 
-.c0 .c7 {
+.c0 .c8 {
   position: absolute;
   right: 8px;
   font-size: 16px;
+}
+
+.c0 .c6 {
+  margin-top: 4px;
 }
 
 <div>
@@ -602,6 +649,7 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
   >
     <label
       class="c1 c2"
+      for="warn"
     >
       Do it again
     </label>
@@ -609,7 +657,9 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
       class="c3"
     >
       <input
+        aria-describedby=" warn-status"
         class="c3 c4"
+        id="warn"
         width="100%"
       />
       <svg
@@ -626,7 +676,8 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
       </svg>
     </div>
     <div
-      class="c6"
+      class="c6 c7"
+      id="warn-status"
     >
       <span>
         Really? That's all you got?
@@ -707,21 +758,21 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
   align-items: center;
 }
 
-.c6 {
+.c7 {
   border-radius: 0 8px 8px 8px;
   padding: 8px 16px 8px 16px;
   position: relative;
-  top: 4px;
   min-height: 16px;
-  font-size: 15px;
   box-sizing: border-box;
-  word-break: break-all;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
   border-color: hsl(353,84%,44%);
   background-color: hsl(353,84%,44%);
   color: hsl(0,0%,100%);
 }
 
-.c6 span {
+.c7 span {
   position: relative;
   display: inline-block;
   bottom: 2px;
@@ -739,10 +790,14 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
   padding-left: 15px;
 }
 
-.c0 .c7 {
+.c0 .c8 {
   position: absolute;
   right: 8px;
   font-size: 16px;
+}
+
+.c0 .c6 {
+  margin-top: 4px;
 }
 
 <div>
@@ -751,6 +806,7 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
   >
     <label
       class="c1 c2"
+      for="error"
     >
       Try again
     </label>
@@ -758,7 +814,9 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
       class="c3"
     >
       <input
+        aria-describedby=" error-status"
         class="c3 c4"
+        id="error"
         width="100%"
       />
       <svg
@@ -775,7 +833,8 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
       </svg>
     </div>
     <div
-      class="c6"
+      class="c6 c7"
+      id="error-status"
     >
       <span>
         That's it, we're done here
@@ -864,10 +923,14 @@ exports[`component: TextInputField should support margin space props 1`] = `
   padding-left: 15px;
 }
 
-.c0 .c6 {
+.c0 .c7 {
   position: absolute;
   right: 8px;
   font-size: 16px;
+}
+
+.c0 .c6 {
+  margin-top: 4px;
 }
 
 <div>
@@ -876,6 +939,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
   >
     <label
       class="c1 c2"
+      for="margins"
     >
       Check out all these sick margins
     </label>
@@ -883,7 +947,9 @@ exports[`component: TextInputField should support margin space props 1`] = `
       class="c3"
     >
       <input
+        aria-describedby=" "
         class="c3 c4"
+        id="margins"
         width="100%"
       />
     </div>

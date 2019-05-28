@@ -4,9 +4,8 @@ import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import { Status } from '../StatusMessage/StatusMessage'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
-
-export type Status = 'success' | 'warning' | 'error'
 
 export interface TextInputProps
   extends Omit<
