@@ -114,6 +114,10 @@ export const TextInputField = styled(TextInputFieldBase)`
     font-size: 16px;
   }
 
+  ${StatusMessage} {
+    margin-top: 4px;
+  }
+
   ${margins}
 `
 

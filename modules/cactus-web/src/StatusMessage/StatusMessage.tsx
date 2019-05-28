@@ -36,11 +36,11 @@ const StatusMessage = styled.div<StatusMessageProps>`
   border-radius: 0 8px 8px 8px;
   padding: 8px 16px 8px 16px;
   position: relative;
-  top: 4px;
   min-height: 16px;
-  font-size: 15px;
   box-sizing: border-box;
   overflow-wrap: break-word;
+
+  ${p => p.theme.textStyles.small};
 
   span {
     position: relative;
