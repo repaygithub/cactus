@@ -105,7 +105,7 @@ export const TextInputField = styled(TextInputFieldBase)`
   ${Label} {
     position: relative;
     bottom: 4px;
-    padding-left: 15px;
+    padding-left: 16px;
   }
 
   ${Tooltip} {
