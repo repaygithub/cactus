@@ -1,0 +1,1139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: SelectField minimal snapshot 1`] = `
+.c8 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c6 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c4 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,10%,20%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c4:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c4:disabled .c5 {
+  display: none;
+}
+
+.c4::-moz-focus-inner {
+  border: 0;
+}
+
+.c4:focus,
+.c4[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4:focus .c7,
+.c4[aria-expanded] .c7 {
+  color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded] .c7 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c4 .c7 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c0 .c10 {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c0 .c3 {
+  width: 100%;
+}
+
+.c0 .c9 {
+  margin-top: 4px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+      for="prevent-random-id"
+    >
+      Requires a label
+    </label>
+    <div
+      class="c3 "
+    >
+      <button
+        aria-describedby=" "
+        aria-haspopup="listbox"
+        class="c4"
+        id="prevent-random-id"
+        name="the-test-select-field"
+        type="button"
+      >
+        <span
+          class="c5 c6"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c7 c8"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: SelectField render with complex options 1`] = `
+.c8 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c6 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c4 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,10%,20%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c4:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c4:disabled .c5 {
+  display: none;
+}
+
+.c4::-moz-focus-inner {
+  border: 0;
+}
+
+.c4:focus,
+.c4[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4:focus .c7,
+.c4[aria-expanded] .c7 {
+  color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded] .c7 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c4 .c7 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c0 .c10 {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c0 .c3 {
+  width: 100%;
+}
+
+.c0 .c9 {
+  margin-top: 4px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+      for="prevent-random-id"
+    >
+      Requires a label
+    </label>
+    <div
+      class="c3 "
+    >
+      <button
+        aria-describedby=" "
+        aria-haspopup="listbox"
+        class="c4"
+        id="prevent-random-id"
+        name="the-test-select-field"
+        type="button"
+      >
+        <span
+          class="c5 c6"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c7 c8"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: SelectField should render a disabled SelectField 1`] = `
+.c8 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c6 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c4 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,10%,20%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c4:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c4:disabled .c5 {
+  display: none;
+}
+
+.c4::-moz-focus-inner {
+  border: 0;
+}
+
+.c4:focus,
+.c4[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4:focus .c7,
+.c4[aria-expanded] .c7 {
+  color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded] .c7 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c4 .c7 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c0 .c10 {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c0 .c3 {
+  width: 100%;
+}
+
+.c0 .c9 {
+  margin-top: 4px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+      for="prevent-random-id"
+    >
+      Requires a label
+    </label>
+    <div
+      class="c3 "
+    >
+      <button
+        aria-describedby=" "
+        aria-haspopup="listbox"
+        class="c4"
+        disabled=""
+        id="prevent-random-id"
+        name="the-test-select-field"
+        type="button"
+      >
+        <span
+          class="c5 c6"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c7 c8"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: SelectField should render an accessible error message 1`] = `
+.c10 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c8 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c6 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,10%,20%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c6:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c6:disabled .c7 {
+  display: none;
+}
+
+.c6::-moz-focus-inner {
+  border: 0;
+}
+
+.c6:focus,
+.c6[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c6:focus .c9,
+.c6[aria-expanded] .c9 {
+  color: hsl(200,96%,35%);
+}
+
+.c6[aria-expanded] .c9 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 .c9 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c13 .c5 {
+  border-color: hsl(145,89%,28%);
+  background: hsla(145,89%,28%,0.2);
+}
+
+.c14 .c5 {
+  border-color: hsl(47,82%,47%);
+  background: hsla(47,82%,47%,0.2);
+}
+
+.c4 .c5 {
+  border-color: hsl(353,84%,44%);
+  background: hsla(353,84%,44%,0.2);
+}
+
+.c12 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  min-height: 16px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
+  border-color: hsl(353,84%,44%);
+  background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
+}
+
+.c12 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c0 .c15 {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c0 .c3 {
+  width: 100%;
+}
+
+.c0 .c11 {
+  margin-top: 4px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+      for="for-the-snap"
+    >
+      Requires a label
+    </label>
+    <div
+      class="c3 c4"
+    >
+      <button
+        aria-describedby=" for-the-snap-status"
+        aria-haspopup="listbox"
+        class="c5 c6"
+        id="for-the-snap"
+        name="the-test-select-field"
+        type="button"
+      >
+        <span
+          class="c7 c8"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c9 c10"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="c11 c12"
+      id="for-the-snap-status"
+    >
+      <span>
+        You've done this incorrectly
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: SelectField should render an accessible success message 1`] = `
+.c10 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c8 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c6 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,10%,20%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c6:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c6:disabled .c7 {
+  display: none;
+}
+
+.c6::-moz-focus-inner {
+  border: 0;
+}
+
+.c6:focus,
+.c6[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c6:focus .c9,
+.c6[aria-expanded] .c9 {
+  color: hsl(200,96%,35%);
+}
+
+.c6[aria-expanded] .c9 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 .c9 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c4 .c5 {
+  border-color: hsl(145,89%,28%);
+  background: hsla(145,89%,28%,0.2);
+}
+
+.c12 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  min-height: 16px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
+  border-color: hsl(145,89%,28%);
+  background: hsl(145,89%,28%);
+  color: hsl(0,0%,100%);
+}
+
+.c12 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c0 .c13 {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c0 .c3 {
+  width: 100%;
+}
+
+.c0 .c11 {
+  margin-top: 4px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+      for="for-the-snap"
+    >
+      Requires a label
+    </label>
+    <div
+      class="c3 c4"
+    >
+      <button
+        aria-describedby=" for-the-snap-status"
+        aria-haspopup="listbox"
+        class="c5 c6"
+        id="for-the-snap"
+        name="the-test-select-field"
+        type="button"
+      >
+        <span
+          class="c7 c8"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c9 c10"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="c11 c12"
+      id="for-the-snap-status"
+    >
+      <span>
+        You're GREAT!
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: SelectField should render an accessible warning message 1`] = `
+.c10 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c8 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c6 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,10%,20%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c6:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c6:disabled .c7 {
+  display: none;
+}
+
+.c6::-moz-focus-inner {
+  border: 0;
+}
+
+.c6:focus,
+.c6[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c6:focus .c9,
+.c6[aria-expanded] .c9 {
+  color: hsl(200,96%,35%);
+}
+
+.c6[aria-expanded] .c9 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 .c9 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c13 .c5 {
+  border-color: hsl(145,89%,28%);
+  background: hsla(145,89%,28%,0.2);
+}
+
+.c4 .c5 {
+  border-color: hsl(47,82%,47%);
+  background: hsla(47,82%,47%,0.2);
+}
+
+.c12 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  min-height: 16px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
+  border-color: hsl(47,82%,47%);
+  background-color: hsl(47,82%,47%);
+  color: hsl(200,10%,20%);
+}
+
+.c12 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c0 .c14 {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c0 .c3 {
+  width: 100%;
+}
+
+.c0 .c11 {
+  margin-top: 4px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+      for="for-the-snap"
+    >
+      Requires a label
+    </label>
+    <div
+      class="c3 c4"
+    >
+      <button
+        aria-describedby=" for-the-snap-status"
+        aria-haspopup="listbox"
+        class="c5 c6"
+        id="for-the-snap"
+        name="the-test-select-field"
+        type="button"
+      >
+        <span
+          class="c7 c8"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c9 c10"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="c11 c12"
+      id="for-the-snap-status"
+    >
+      <span>
+        You got a ridiculous warning
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: SelectField supports margin props 1`] = `
+.c9 {
+  vertical-align: middle;
+  font-size: 8px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  color: hsl(200,10%,20%);
+}
+
+.c7 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c5 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,10%,20%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c5:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c5:disabled .c6 {
+  display: none;
+}
+
+.c5::-moz-focus-inner {
+  border: 0;
+}
+
+.c5:focus,
+.c5[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c5:focus .c8,
+.c5[aria-expanded] .c8 {
+  color: hsl(200,96%,35%);
+}
+
+.c5[aria-expanded] .c8 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c5 .c8 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c10 .c4 {
+  border-color: hsl(145,89%,28%);
+  background: hsla(145,89%,28%,0.2);
+}
+
+.c11 .c4 {
+  border-color: hsl(47,82%,47%);
+  background: hsla(47,82%,47%,0.2);
+}
+
+.c12 .c4 {
+  border-color: hsl(353,84%,44%);
+  background: hsla(353,84%,44%,0.2);
+}
+
+.c13 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c13 .c3 {
+  width: 100%;
+}
+
+.c0 {
+  position: relative;
+  margin: 8px;
+}
+
+.c0 .c1 {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c0 .c15 {
+  position: absolute;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c0 .c3 {
+  width: 100%;
+}
+
+.c0 .c14 {
+  margin-top: 4px;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <label
+      class="c1 c2"
+      for="for-the-snap"
+    >
+      Requires a label
+    </label>
+    <div
+      class="c3 "
+    >
+      <button
+        aria-describedby=" "
+        aria-haspopup="listbox"
+        class="c4 c5"
+        id="for-the-snap"
+        name="the-test-select-field"
+        type="button"
+      >
+        <span
+          class="c6 c7"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c8 c9"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,7.66792387 C3,7.34292387 3.1088999,7.01792387 3.3266997,6.76592387 C3.77489928,6.24492387 4.51829859,6.22792387 4.98629816,6.72692387 L12.1286915,14.3379239 L18.9785852,6.40192387 C19.4276848,5.88192387 20.1710841,5.86392387 20.6390837,6.36292387 C21.1070832,6.86192387 21.1214832,7.68792387 20.6732836,8.20792387 L13.0106907,17.0849239 C12.5624911,17.6049239 11.8190918,17.6229239 11.3510923,17.1239239 L3.36179967,8.60892387 C3.12149989,8.35392387 3,8.01092387 3,7.66792387"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
