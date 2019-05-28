@@ -40,7 +40,7 @@ const StatusMessage = styled.div<StatusMessageProps>`
   min-height: 16px;
   font-size: 15px;
   box-sizing: border-box;
-  word-break: break-all;
+  overflow-wrap: break-word;
 
   span {
     position: relative;
