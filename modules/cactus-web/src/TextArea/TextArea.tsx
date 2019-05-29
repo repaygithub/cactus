@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
@@ -38,11 +38,6 @@ interface StyledErrorProps {
   status?: Status | null
 }
 
-interface DivProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  height?: string
-}
-
 type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
 const statusMap: StatusMap = {
@@ -79,6 +74,7 @@ const Area = styled.textarea<TextAreaProps>`
   height: ${p => p.height || 'auto'};
   width: ${p => p.width || 'auto'};
   resize: none;
+  display: block;
 
   &:focus {
     border-color: ${p => p.theme.colors.callToAction};
@@ -119,32 +115,23 @@ const StyledError = styled(NotificationError)<StyledErrorProps>`
   color: ${p => p.theme.colors.darkestContrast};
 `
 
-const StyledDiv = styled.div<DivProps>`
-  height: ${p => p.height};
-`
-
 const TextAreaBase = (props: TextAreaProps) => {
   const { disabled, status, className, ...rest } = props
   const statusProps = { disabled, status }
 
-  const ref = useRef<HTMLTextAreaElement | null>(null)
-  let textAreaHeight = undefined
-  if (ref.current) {
-    textAreaHeight = `${ref.current.getBoundingClientRect().height}px`
-  }
-
   return (
-    <StyledDiv className={className} height={textAreaHeight}>
-      <Area ref={ref} {...statusProps} {...rest} />
+    <div className={className}>
+      <Area {...statusProps} {...rest} />
       {status === 'success' && !disabled && <StyledCheck {...statusProps} />}
       {status === 'warning' && !disabled && <StyledAlert {...statusProps} />}
       {status === 'error' && !disabled && <StyledError {...statusProps} />}
-    </StyledDiv>
+    </div>
   )
 }
 
 export const TextArea = styled(TextAreaBase)`
   position: relative;
+  display: block;
 
   ${margins}
 `

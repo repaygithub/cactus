@@ -22,6 +22,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   height: auto;
   width: 100%;
   resize: none;
+  display: block;
 }
 
 .c6:focus {
@@ -50,6 +51,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 
 .c5 {
   position: relative;
+  display: block;
 }
 
 .c4 {
@@ -112,7 +114,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       the boolest dude in the office
     </div>
     <div
-      class="c5 "
+      class="c5"
     >
       <textarea
         aria-describedby="boolest-tip "
@@ -147,6 +149,7 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
   height: auto;
   width: 100%;
   resize: none;
+  display: block;
 }
 
 .c6:focus {
@@ -175,6 +178,7 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
 
 .c5 {
   position: relative;
+  display: block;
 }
 
 .c4 {
@@ -237,7 +241,7 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
       the boolest dude in the office
     </div>
     <div
-      class="c5 "
+      class="c5"
     >
       <textarea
         aria-describedby="boolest-tip "
@@ -273,6 +277,7 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
   height: auto;
   width: 100%;
   resize: none;
+  display: block;
 }
 
 .c6:focus {
@@ -301,6 +306,7 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
 
 .c5 {
   position: relative;
+  display: block;
 }
 
 .c4 {
@@ -363,7 +369,7 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
       the boolest dude in the office
     </div>
     <div
-      class="c5 "
+      class="c5"
     >
       <textarea
         aria-describedby="boolest-tip "
@@ -420,6 +426,7 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
   height: auto;
   width: 100%;
   resize: none;
+  display: block;
   border-color: hsl(145,89%,28%);
   background: hsla(145,89%,28%,0.2);
 }
@@ -460,6 +467,7 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
 
 .c5 {
   position: relative;
+  display: block;
 }
 
 .c4 {
@@ -522,7 +530,7 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
       the dart master
     </div>
     <div
-      class="c5 "
+      class="c5"
     >
       <textarea
         aria-describedby="darts-tip darts-status"
@@ -598,6 +606,7 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
   height: auto;
   width: 100%;
   resize: none;
+  display: block;
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
 }
@@ -638,6 +647,7 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
 
 .c5 {
   position: relative;
+  display: block;
 }
 
 .c4 {
@@ -700,7 +710,7 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
       the dart master
     </div>
     <div
-      class="c5 "
+      class="c5"
     >
       <textarea
         aria-describedby="darts-tip darts-status"
@@ -776,6 +786,7 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
   height: auto;
   width: 100%;
   resize: none;
+  display: block;
   border-color: hsl(353,84%,44%);
   background: hsla(353,84%,44%,0.2);
 }
@@ -816,6 +827,7 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
 
 .c5 {
   position: relative;
+  display: block;
 }
 
 .c4 {
@@ -878,7 +890,7 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
       the dart master
     </div>
     <div
-      class="c5 "
+      class="c5"
     >
       <textarea
         aria-describedby="darts-tip darts-status"
@@ -933,6 +945,7 @@ exports[`component: TextAreaField should support margin space props 1`] = `
   height: auto;
   width: 100%;
   resize: none;
+  display: block;
 }
 
 .c6:focus {
@@ -961,6 +974,7 @@ exports[`component: TextAreaField should support margin space props 1`] = `
 
 .c5 {
   position: relative;
+  display: block;
   margin-left: 8px;
   margin-right: 8px;
 }
@@ -1039,7 +1053,7 @@ exports[`component: TextAreaField should support margin space props 1`] = `
       you are missing a comma, sir
     </div>
     <div
-      class="c5 "
+      class="c5"
     >
       <textarea
         aria-describedby="missing-tip "
