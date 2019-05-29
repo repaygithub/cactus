@@ -10,20 +10,52 @@ const textButtonVariants: TextButtonVariants[] = ['standard', 'action', 'danger'
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
-const textIconButtonStories = storiesOf('Text+Icon Button', module)
 
-textIconButtonStories.add('Basic Usage', () => {
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const Icon = icons[iconName]
-  return (
+storiesOf('TextButton', module)
+  .add('Basic Usage', () => (
     <TextButton
-      variant={select('variant', textButtonVariants, 'standard')}
+      variant={select('variant', textButtonVariants, 'danger')}
       disabled={boolean('disabled', false)}
       inverse={boolean('inverse', false)}
+      m={text('m', '')}
       {...eventLoggers}
     >
-      <Icon />
-      {text('children', 'Add')}
+      {text('children', 'Cancel')}
     </TextButton>
-  )
-})
+  ))
+  .add('Multiple', () => (
+    <p>
+      <TextButton
+        variant={select('variant', textButtonVariants, 'standard', 'First')}
+        disabled={boolean('disabled', false, 'First')}
+        inverse={boolean('inverse', false, 'First')}
+        m={text('m', '', 'First')}
+      >
+        {text('children', 'Add')}
+      </TextButton>
+      {' | '}
+      <TextButton
+        variant={select('variant', textButtonVariants, 'danger', 'Second')}
+        disabled={boolean('disabled', false, 'Second')}
+        inverse={boolean('inverse', false, 'Second')}
+        m={text('m', '', 'Second')}
+      >
+        {text('children', 'Remove')}
+      </TextButton>
+    </p>
+  ))
+  .add('With Icon', () => {
+    const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
+    const Icon = icons[iconName]
+    return (
+      <TextButton
+        variant={select('variant', textButtonVariants, 'standard')}
+        disabled={boolean('disabled', false)}
+        inverse={boolean('inverse', false)}
+        {...eventLoggers}
+      >
+        <Icon />
+        {text('children', 'Add')}
+      </TextButton>
+    )
+  })

@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 html,
 body {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: ${p => p.theme.fontSizes.body};
+  ${p => p.theme.textStyles.body}
   font-weight: 400;
   color: ${p => p.theme.colors.darkestContrast};
   font-style: normal;

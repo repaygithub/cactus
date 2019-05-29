@@ -30,8 +30,7 @@ const variantMap: VariantMap = {
     background-color: ${p => p.theme.colors.callToAction};
     border-color: ${p => p.theme.colors.callToAction};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${p => p.theme.colors.baseText};
       background-color: ${p => p.theme.colors.base};
       border-color: ${p => p.theme.colors.base};
@@ -42,8 +41,7 @@ const variantMap: VariantMap = {
     background-color: ${p => p.theme.colors.white};
     border-color: ${p => p.theme.colors.base};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${p => p.theme.colors.baseText};
       background-color: ${p => p.theme.colors.base};
       border-color: ${p => p.theme.colors.base};
@@ -57,8 +55,7 @@ const inverseVariantMap: VariantMap = {
     background-color: ${p => p.theme.colors.callToAction};
     border-color: ${p => p.theme.colors.callToAction};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${p => p.theme.colors.callToAction};
       background-color: ${p => p.theme.colors.white};
       border-color: ${p => p.theme.colors.white};
@@ -69,8 +66,7 @@ const inverseVariantMap: VariantMap = {
     background-color: ${p => p.theme.colors.base};
     border-color: ${p => p.theme.colors.white};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${p => p.theme.colors.base};
       background-color: ${p => p.theme.colors.white};
       border-color: ${p => p.theme.colors.white};
@@ -129,6 +125,20 @@ export const Button = styled(ButtonBase)`
 
   &::-moz-focus-inner {
     border: 0;
+  }
+
+  &:focus {
+    ::after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: calc(100% + 6px);
+      width: calc(100% + 6px);
+      top: -5px;
+      left: -5px;
+      border: 2px solid ${p => p.theme.colors.callToAction};
+      border-radius: 20px;
+    }
   }
 
   svg {

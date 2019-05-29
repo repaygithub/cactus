@@ -11,17 +11,31 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Best practices
 
-- `TextButton` components typically should not be used for navigation between pages.
-- If you want to make a link look like a button, there are a couple of solutions, depending on whether or not you are using Typescript. However, this will modify the button's styles.
+- `TextButton` components should not be used for navigation between pages without modification.
+- If you want to make a link/anchor look like a button, there are a couple of solutions, depending on whether or not you are using Typescript. However, this will modify the button's styles.
   - JSX Solution:
   ```jsx
-  <TextButton as={Link} to='/path/to/something'>Go Somewhere!</TextButton>
+  <TextButton as={Link} to="/path/to/something">
+    Go Somewhere!
+  </TextButton>
   ```
   - TSX Solution:
   ```tsx
   const TextButtonLink = Button.withComponent(Link)
   <TextButtonLink to='/path/to/something'>Go Somewhere!</TextButtonLink>
   ```
+- Buttons should not be placed within paragraphs of text and instead should be in a distinct section.
+- Multiple buttons in a line should be separated with a | (pipe) and extra 4px spacing
+
+<>
+<TextButton>
+Button One
+</TextButton>
+{' | '}
+<TextButton>
+Button Two
+</TextButton>
+</>
 
 ## Basic usage
 
@@ -54,6 +68,7 @@ import { TextButton } from '@repay/cactus-web'
 You can combine icons with the `TextButton` component to get a text button with an icon.
 
 Example:
+
 ```jsx
 import { TextButton } from '@repay/cactus-web'
 import { StatusCheck } from '@repay/cactus-icons'
