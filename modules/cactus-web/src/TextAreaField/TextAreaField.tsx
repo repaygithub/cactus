@@ -1,18 +1,18 @@
 import React, { useRef } from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
-import { Label, LabelProps } from '../Label/Label'
 import { MarginProps, margins } from '../helpers/margins'
-import { TextInput, TextInputProps } from '../TextInput/TextInput'
-import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
+import Label from '../Label/Label'
+import StatusMessage from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
+import TextArea, { Status, TextAreaProps } from '../TextArea/TextArea'
 import Tooltip from '../Tooltip/Tooltip'
 import useId from '../helpers/useId'
 
-interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status' | 'onChange'> {
+interface TextAreaFieldProps extends MarginProps, Omit<TextAreaProps, 'status' | 'onChange'> {
   label: string
   name: string
-  labelProps?: LabelProps
+  labelProps?: object
   success?: string
   warning?: string
   error?: string
@@ -20,7 +20,7 @@ interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status'
   onChange?: FieldOnChangeHandler<string>
 }
 
-const TextInputFieldBase = (props: TextInputFieldProps) => {
+const TextAreaFieldBase = (props: TextAreaFieldProps) => {
   const {
     label,
     labelProps,
@@ -32,10 +32,14 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     onChange,
     name,
     id,
-    ...inputProps
+    ...textAreaProps
   } = props
 
   const ref = useRef<HTMLDivElement | null>(null)
+  let containerWidth = undefined
+  if (ref.current) {
+    containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
+  }
 
   let status: Status | null = null
   if (success && !warning && !error) {
@@ -46,38 +50,33 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     status = 'error'
   }
 
-  const inputId = useId(id)
-  const statusId = status ? `${inputId}-status` : ''
-  const tipId = tooltip ? `${inputId}-tip` : ''
+  const textAreaId = useId(id)
+  const statusId = status ? `${textAreaId}-status` : ''
+  const tipId = tooltip ? `${textAreaId}-tip` : ''
 
   const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (typeof onChange === 'function') {
-        const currentTarget = (event.currentTarget as unknown) as HTMLInputElement
+        const currentTarget = (event.currentTarget as unknown) as HTMLTextAreaElement
         onChange(name, currentTarget.value)
       }
     },
     [onChange, name]
   )
 
-  let containerWidth = undefined
-  if (ref.current) {
-    containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
-  }
-
   return (
     <div className={className} ref={ref}>
-      <Label htmlFor={inputId} {...labelProps}>
+      <Label htmlFor={textAreaId} {...labelProps}>
         {label}
       </Label>
-      {tooltip && <Tooltip id={tipId} label={tooltip} maxWidth={containerWidth} />}
-      <TextInput
-        {...inputProps}
-        id={inputId}
+      {tooltip && <Tooltip label={tooltip} maxWidth={containerWidth} />}
+      <TextArea
+        id={textAreaId}
         width="100%"
         status={status}
         onChange={handleChange}
         aria-describedby={`${tipId} ${statusId}`}
+        {...textAreaProps}
       />
       {status === 'success' && (
         <StatusMessage status="success" id={statusId}>
@@ -98,7 +97,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   )
 }
 
-export const TextInputField = styled(TextInputFieldBase)`
+export const TextAreaField = styled(TextAreaFieldBase)`
   position: relative;
   width: ${p => p.width || 'auto'};
 
@@ -121,12 +120,12 @@ export const TextInputField = styled(TextInputFieldBase)`
   ${margins}
 `
 
-TextInputField.defaultProps = {
-  error: undefined,
-  labelProps: {},
+TextAreaField.defaultProps = {
   success: undefined,
-  tooltip: undefined,
   warning: undefined,
+  error: undefined,
+  tooltip: undefined,
+  labelProps: {},
 }
 
-export default TextInputField
+export default TextAreaField

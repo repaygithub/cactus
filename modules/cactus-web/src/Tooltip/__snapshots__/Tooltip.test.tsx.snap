@@ -3,6 +3,7 @@
 exports[`component: Tooltip should render tooltip icon 1`] = `
 .c0 {
   vertical-align: middle;
+  color: hsl(200,96%,35%);
 }
 
 <div>

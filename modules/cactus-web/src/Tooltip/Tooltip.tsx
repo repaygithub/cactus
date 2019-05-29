@@ -93,6 +93,10 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   }
 }
 
+const StyledInfo = styled(NotificationInfo)`
+  color: ${p => p.theme.colors.callToAction};
+`
+
 /**
  * Stolen from reach/tooltip and adapted to fit our needs
  * https://github.com/reach/reach-ui/tree/master/packages/tooltip
@@ -104,7 +108,7 @@ const TooltipBase = (props: TooltipProps) => {
   return (
     <Fragment>
       <span className={className} {...trigger}>
-        <NotificationInfo />
+        <StyledInfo />
       </span>
       <TooltipPopup label={label} ariaLabel={ariaLabel} {...tooltip} {...rest} />
       <VisuallyHidden role="tooltip" id={id}>

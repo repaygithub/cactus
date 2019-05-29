@@ -1,0 +1,60 @@
+---
+name: TextAreaField
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import TextAreaField from './TextAreaField'
+import cactusTheme from '@repay/cactus-theme'
+
+# TextAreaField
+
+The `TextAreaField` is a combination of `TextArea`, `Label` and some setup for tooltips, status messages, and tooling around accessibility.
+
+## Best practices
+
+- Use descriptive labels for the text area field
+- Make use of the tooltip when necessary
+- Make use of the `success`, `warning`, and `error` message props when appropriate to make the validity of inputs obvious to the user.
+
+## Basic usage
+
+```jsx
+import React, { useCallback, useState } from 'react'
+import { Button, TextAreaField } from '@repay/cactus-web'
+
+export default function Form() {
+  const [values, setValues] = useState({ textArea: '' })
+  const handleChange = useCallback(
+    (name, value) => {
+      setValues(state => setValues({ ...state, [name]: value }))
+    },
+    [setValues]
+  )
+  const onSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...values }
+      // send data to api
+    }
+  )
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <TextAreaField
+        name="textArea"
+        label="Type Something"
+        onChange={handleChange}
+        value={values.textArea}
+      />
+      <Button type="submit" variant="action">
+        Submit
+      </Button>
+    </form>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={TextAreaField} />

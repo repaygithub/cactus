@@ -8,7 +8,7 @@ import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components
 
 export type Status = 'success' | 'warning' | 'error'
 
-interface TextAreaProps
+export interface TextAreaProps
   extends Omit<
       React.DetailedHTMLProps<
         React.TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -74,6 +74,7 @@ const Area = styled.textarea<TextAreaProps>`
   height: ${p => p.height || 'auto'};
   width: ${p => p.width || 'auto'};
   resize: none;
+  display: block;
 
   &:focus {
     border-color: ${p => p.theme.colors.callToAction};
@@ -130,6 +131,7 @@ const TextAreaBase = (props: TextAreaProps) => {
 
 export const TextArea = styled(TextAreaBase)`
   position: relative;
+  display: block;
 
   ${margins}
 `
