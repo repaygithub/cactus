@@ -18,6 +18,8 @@ Array [
   "ToggleField",
   "Tooltip",
   "Select",
+  "SelectField",
+  "Spinner",
   "StyleProvider",
   "useId",
 ]
