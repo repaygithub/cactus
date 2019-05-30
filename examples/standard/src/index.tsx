@@ -11,10 +11,6 @@ import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import i18nController from './i18nController'
 import I18nProvider from '@repay/cactus-i18n'
 
-const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
-  CactusTheme
->
-
 const appRoot = document.createElement('div')
 appRoot.className = 'app-root'
 document.body.appendChild(appRoot)
