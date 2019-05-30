@@ -1,23 +1,21 @@
 import * as React from 'react'
 import { FieldOnChangeHandler } from '../types'
 
-interface FormHandlerProps<Element extends HTMLElement, Value> {
-  defaultValue: Value
+interface FormHandlerProps<Value = any> {
+  defaultValue?: Value
   onChange: (name: string, value: Value) => Value
-  children: (state: FormHandlerState<Element, Value>) => React.ReactNode
+  children: (state: FormHandlerState<Value>) => React.ReactNode
 }
 
-export interface FormHandlerState<Element extends HTMLElement, Value> {
-  value: Value
+export interface FormHandlerState<Value> {
+  value?: Value
   onChange: FieldOnChangeHandler<Value>
 }
 
 /**
  * Helper for Field component stories to manage value via onChange handler
  */
-const FormHandler = <Element extends HTMLElement, Value>(
-  props: FormHandlerProps<Element, Value>
-) => {
+function FormHandler<Value>(props: FormHandlerProps<Value>) {
   const { defaultValue, onChange: providedOnChange, children } = props
   const [value, setValue] = React.useState(defaultValue)
   const onChange = React.useCallback(

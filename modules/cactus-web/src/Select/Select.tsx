@@ -1,26 +1,72 @@
 import React from 'react'
 
+import { CactusTheme } from '@repay/cactus-theme'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
-import { MarginProps, margins } from '../helpers/margins'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { NavigationChevronDown } from '@repay/cactus-icons'
+import { Omit } from '../types'
+import { Status } from '../StatusMessage/StatusMessage'
+import { width, WidthProps } from 'styled-system'
 import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import Rect from '@reach/rect'
-import styled from 'styled-components'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
-type OptionType = { label: string; value: string }
+export type OptionType = { label: string; value: string }
 
-interface SelectProps extends MarginProps {
+export interface SelectProps
+  extends MarginProps,
+    WidthProps,
+    Omit<
+      React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+      'ref' | 'onChange' | 'onBlur' | 'onFocus'
+    > {
   options: OptionType[] | string[]
   id: string
   name: string
   value?: string
   placeholder?: string
   className?: string
+  /** !important */
+  disabled?: boolean
+  status?: Status
   onChange?: (name: string, value: string) => void
   onBlur?: (name: string) => void
   onFocus?: (name: string) => void
 }
+
+type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+
+const statusMap: StatusMap = {
+  success: css`
+    border-color: ${p => p.theme.colors.success};
+    background: ${p => p.theme.colors.transparentSuccess};
+  `,
+  warning: css`
+    border-color: ${p => p.theme.colors.warning};
+    background: ${p => p.theme.colors.transparentWarning};
+  `,
+  error: css`
+    border-color: ${p => p.theme.colors.error};
+    background: ${p => p.theme.colors.transparentError};
+  `,
+}
+
+const displayStatus = (props: SelectProps) => {
+  if (props.status && !props.disabled) {
+    return statusMap[props.status]
+  }
+}
+
+const ValueSpan = styled.span`
+  font-size: ${p => p.theme.fontSizes.p}px;
+`
+
+const Placeholder = styled.span`
+  font-style: italic;
+  color: ${p => p.theme.colors.darkContrast};
+  font-size: ${p => p.theme.fontSizes.p}px;
+`
 
 const SelectTrigger = styled.button`
   position: relative;
@@ -33,11 +79,21 @@ const SelectTrigger = styled.button`
   border-radius: 20px;
   border-width: 2px;
   border-style: solid;
-  border-color: ${p => p.theme.colors.darkContrast};
+  border-color: ${p => p.theme.colors.darkestContrast};
   text-align: left;
   outline: none;
   appearance: none;
   cursor: pointer;
+
+  :disabled {
+    border-color: ${p => p.theme.colors.mediumGray};
+    color: ${p => p.theme.colors.mediumGray};
+    cursor: not-allowed;
+
+    ${Placeholder} {
+      display: none;
+    }
+  }
 
   &::-moz-focus-inner {
     border: 0;
@@ -63,16 +119,6 @@ const SelectTrigger = styled.button`
     right: 14px; // 14 + 2px from border
     top: 10px;
   }
-`
-
-const ValueSpan = styled.span`
-  font-size: ${p => p.theme.fontSizes.p}px;
-`
-
-const Placeholder = styled.span`
-  font-style: italic;
-  color: ${p => p.theme.colors.darkContrast};
-  font-size: ${p => p.theme.fontSizes.p}px;
 `
 
 const List = styled.ul`
@@ -488,7 +534,20 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END helpers */
 
   render() {
-    let { name, id, options: mixOptions, className, placeholder } = this.props
+    let {
+      name,
+      id,
+      disabled,
+      options: mixOptions,
+      className,
+      placeholder,
+      width,
+      status,
+      onChange,
+      onBlur,
+      onFocus,
+      ...rest
+    } = splitProps(this.props)
     let { isOpen, value, selectedValue } = this.state
     // @ts-ignore
     let options: OptionType[] = mixOptions.map(asOption)
@@ -500,10 +559,14 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
           {({ ref: triggerRef, rect: triggerRect }) => (
             <>
               <SelectTrigger
+                {...rest}
+                id={id}
+                name={name}
                 onKeyUp={this.handleKeyUp}
                 onClick={this.handleClick}
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
+                disabled={disabled}
                 ref={node => {
                   triggerRef(node)
                   // @ts-ignore
@@ -573,8 +636,12 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 }
 
 export const Select = styled(SelectBase)`
-  position: relative;
   ${margins}
+  ${width}
+
+  ${SelectTrigger} {
+    ${displayStatus}
+  }
 `
 
 Select.defaultProps = {

@@ -12,6 +12,7 @@
     "new": "node scripts/make-component.js",
     "test": "jest",
     "tdd": "jest --watch",
+    "tdd:focus": "yarn tdd --testPathPattern",
     "test:ci": "yarn test:types && yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "dev": "start-storybook -p 9001 -c .storybook",

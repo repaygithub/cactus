@@ -14,7 +14,7 @@ interface ToggleFieldProps extends MarginProps, Omit<ToggleProps, 'id' | 'onChan
   id?: string
   /** required for form state management */
   name: string
-  value: boolean
+  value?: boolean
   /** !important */
   disabled?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -58,5 +58,9 @@ export const ToggleField = styled(ToggleFieldBase)`
     vertical-align: text-bottom;
   }
 `
+
+ToggleField.defaultProps = {
+  value: false,
+}
 
 export default ToggleField

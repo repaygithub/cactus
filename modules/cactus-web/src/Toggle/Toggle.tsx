@@ -11,7 +11,7 @@ export interface ToggleProps
       'value' | 'ref'
     >,
     MarginProps {
-  value: boolean
+  value?: boolean
   disabled?: boolean
 }
 
