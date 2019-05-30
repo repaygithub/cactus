@@ -20,6 +20,18 @@ exports[`component: Button should default to standard variant 1`] = `
   border: 0;
 }
 
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -33,8 +45,7 @@ exports[`component: Button should default to standard variant 1`] = `
   margin-top: -12px;
 }
 
-.c0:hover,
-.c0:focus {
+.c0:hover {
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(200,96%,11%);
@@ -79,6 +90,18 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   border: 0;
 }
 
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -92,8 +115,7 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   margin-top: -12px;
 }
 
-.c0:hover,
-.c0:focus {
+.c0:hover {
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(200,96%,11%);
@@ -187,6 +209,18 @@ exports[`component: Button should render call to action variant 1`] = `
   border: 0;
 }
 
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -200,8 +234,7 @@ exports[`component: Button should render call to action variant 1`] = `
   margin-top: -12px;
 }
 
-.c0:hover,
-.c0:focus {
+.c0:hover {
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(200,96%,11%);
@@ -238,6 +271,18 @@ exports[`component: Button should render disabled variant 1`] = `
 
 .c0::-moz-focus-inner {
   border: 0;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -286,6 +331,18 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   border: 0;
 }
 
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -299,8 +356,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   margin-top: -12px;
 }
 
-.c0:hover,
-.c0:focus {
+.c0:hover {
   color: hsl(200,96%,35%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(0,0%,100%);
@@ -337,6 +393,18 @@ exports[`component: Button should render inverse disabled variant 1`] = `
 
 .c0::-moz-focus-inner {
   border: 0;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -385,6 +453,18 @@ exports[`component: Button should render inverse standard variant 1`] = `
   border: 0;
 }
 
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -398,8 +478,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   margin-top: -12px;
 }
 
-.c0:hover,
-.c0:focus {
+.c0:hover {
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(0,0%,100%);
@@ -437,6 +516,18 @@ exports[`component: Button should render standard variant 1`] = `
   border: 0;
 }
 
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -450,8 +541,7 @@ exports[`component: Button should render standard variant 1`] = `
   margin-top: -12px;
 }
 
-.c0:hover,
-.c0:focus {
+.c0:hover {
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(200,96%,11%);
@@ -490,6 +580,18 @@ exports[`component: Button should support margin space props 1`] = `
   border: 0;
 }
 
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
 .c0 svg {
   display: inline-block;
   margin-top: -4px;
@@ -503,8 +605,7 @@ exports[`component: Button should support margin space props 1`] = `
   margin-top: -12px;
 }
 
-.c0:hover,
-.c0:focus {
+.c0:hover {
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(200,96%,11%);

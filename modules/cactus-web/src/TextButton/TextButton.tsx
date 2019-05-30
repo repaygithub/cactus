@@ -65,19 +65,31 @@ const variantOrDisabled = (
 
 export const TextButton = styled.button<TextButtonProps>`
   ${p => p.theme.textStyles.body};
+  position: relative;
   border: none;
-  padding: 4px 0 4px 0;
+  padding: 4px;
   outline: none;
   background-color: transparent;
   text-decoration: none;
   cursor: pointer;
 
-  :hover {
+  &:hover {
     text-decoration: ${p => !p.disabled && 'underline'};
   }
 
-  :focus {
-    text-decoration: ${p => !p.disabled && 'underline'};
+  &:focus {
+    ::after {
+      content: '';
+      display: block;
+      box-sizing: border-box;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0px;
+      left: 0px;
+      border: 2px solid ${p => p.theme.colors.callToAction};
+      border-radius: 20px;
+    }
   }
 
   &::-moz-focus-inner {
