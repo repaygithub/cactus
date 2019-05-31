@@ -3,8 +3,10 @@
 exports[`library exports should match previous exported names 1`] = `
 Array [
   "Button",
+  "Box",
   "CheckBox",
   "CheckBoxField",
+  "Flex",
   "IconButton",
   "Label",
   "RadioButton",
