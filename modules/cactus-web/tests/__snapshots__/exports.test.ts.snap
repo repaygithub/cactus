@@ -7,6 +7,7 @@ Array [
   "CheckBoxField",
   "IconButton",
   "Label",
+  "Link",
   "RadioButton",
   "RadioButtonField",
   "TextArea",
