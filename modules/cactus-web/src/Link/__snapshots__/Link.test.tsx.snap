@@ -4,8 +4,7 @@ exports[`component: Link should render a Link 1`] = `
 .c0 {
   font-style: italic;
   outline: none;
-  font-size: 18px;
-  line-height: 28px;
+  position: relative;
 }
 
 .c0:link {
@@ -21,10 +20,19 @@ exports[`component: Link should render a Link 1`] = `
 }
 
 .c0:focus {
-  padding: 1px 2px 1px 1px;
-  border-radius: 4px;
   color: hsl(200,96%,11%);
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
   border: 2px solid hsl(200,96%,35%);
+  border-radius: 4px;
 }
 
 <div>

@@ -26,6 +26,7 @@ const LinkBase = (props: LinkProps) => {
 export const Link = styled(LinkBase)`
   font-style: italic;
   outline: none;
+  position: relative;
 
   :link {
     color: ${p => p.theme.colors.callToAction};
@@ -40,13 +41,20 @@ export const Link = styled(LinkBase)`
   }
 
   :focus {
-    padding: 1px 2px 1px 1px;
-    border-radius: 4px;
     color: ${p => p.theme.colors.base};
-    border: 2px solid ${p => p.theme.colors.callToAction};
+    ::after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: calc(100% + 6px);
+      width: calc(100% + 6px);
+      top: -5px;
+      left: -5px;
+      border: 2px solid ${p => p.theme.colors.callToAction};
+      border-radius: 4px;
+    }
   }
 
-  ${p => p.theme.textStyles.body};
   ${margins};
 `
 
