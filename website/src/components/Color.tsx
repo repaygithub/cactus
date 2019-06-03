@@ -22,8 +22,8 @@ import {
   textAlign,
   TextAlignProps,
 } from 'styled-system'
+import { Box, Flex } from '@repay/cactus-web'
 import { Span } from './Text'
-import Box, { Flex } from './Box'
 import cactusTheme, { CactusColor, ColorVariant } from '@repay/cactus-theme'
 import Color from 'color'
 import StatusCheck from '@repay/cactus-icons/i/status-check'

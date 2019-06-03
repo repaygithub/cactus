@@ -1,8 +1,8 @@
 import * as React from 'react'
 
+import { Box } from '@repay/cactus-web'
 import { PropItem } from 'react-docgen-typescript'
 import { useDocgen } from './DocgenProvider'
-import Box from './Box'
 
 // TODO maybe move as outside component
 import styled from 'styled-components'

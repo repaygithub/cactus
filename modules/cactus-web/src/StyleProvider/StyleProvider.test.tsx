@@ -18,7 +18,7 @@ const TestComponent = withTheme(TestComponentBase)
 
 afterEach(cleanup)
 
-describe('component: ThemeProvider', () => {
+describe('component: StyleProvider', () => {
   test('should provide the theme to children', () => {
     const { container } = render(
       <StyleProvider theme={cactusTheme}>

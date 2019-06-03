@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Box, { Flex } from '../../components/Box'
+import { Box, Flex } from '@repay/cactus-web'
 import cactusTheme from '@repay/cactus-theme'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'

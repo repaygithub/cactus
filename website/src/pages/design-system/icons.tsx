@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { categories, iconsCategoryMap } from '../../helpers/iconGroups'
-import { Flex } from '../../components/Box'
+import { Flex } from '@repay/cactus-web'
 import Text from '../../components/Text'
 
 export default () => (
