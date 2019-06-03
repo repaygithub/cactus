@@ -1,8 +1,8 @@
 import React, { ChangeEvent, Component, CSSProperties } from 'react'
 
+import { Box, Flex, ToggleField } from '@repay/cactus-web'
 import { I18nResource, I18nText } from '@repay/cactus-i18n'
 import { Link, RouteComponentProps } from '@reach/router'
-import { ToggleField } from '@repay/cactus-web'
 import { withFeatureFlags } from '@repay/cactus-fwk'
 import Heart from '@repay/cactus-icons/i/status-like'
 
@@ -14,21 +14,11 @@ type AppProps = {
   children?: React.ReactNode
 }
 
-const headerStyles: CSSProperties = { display: 'flex' }
-
-const featureBoxStyles: CSSProperties = {
-  position: 'fixed',
-  bottom: '20px',
-  right: '20px',
-  border: '2px solid #CCC',
-  padding: '16px',
-}
-
 class App extends Component<RouteComponentProps<AppProps>> {
   render() {
     return (
       <>
-        <div style={headerStyles}>
+        <Flex>
           <select onChange={this.props.onLangChange} value={this.props.lang}>
             <option value="">Use Browser</option>
             <option value="es-MX">🇲🇽 Español</option>
@@ -37,9 +27,17 @@ class App extends Component<RouteComponentProps<AppProps>> {
             <Heart />
             <I18nText get="home-link" />
           </Link>
-        </div>
+        </Flex>
         {this.props.children}
-        <div style={featureBoxStyles}>
+        <Box
+          position="fixed"
+          bottom="20px"
+          right="20px"
+          borderWidth="2px"
+          borderStyle="solid"
+          borderColor="mediumContrast"
+          padding={4}
+        >
           <div>
             <I18nResource get="feature-carrots-label">
               {label => (
@@ -53,7 +51,7 @@ class App extends Component<RouteComponentProps<AppProps>> {
               )}
             </I18nResource>
           </div>
-        </div>
+        </Box>
       </>
     )
   }
