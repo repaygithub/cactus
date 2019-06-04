@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Link should render a Link 1`] = `
+.c0 {
+  font-style: italic;
+  outline: none;
+  position: relative;
+}
+
+.c0:link {
+  color: hsl(200,96%,35%);
+}
+
+.c0:visited {
+  color: hsl(210,50%,35%);
+}
+
+.c0:hover {
+  color: hsl(200,96%,11%);
+}
+
+.c0:focus {
+  color: hsl(200,96%,11%);
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 6px);
+  width: calc(100% + 6px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 4px;
+}
+
+<div>
+  <a
+    class="c0"
+    href="https://somewhere.over/the/rainbow"
+  >
+    way up high
+  </a>
+</div>
+`;

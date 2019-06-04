@@ -9,6 +9,7 @@ Array [
   "Flex",
   "IconButton",
   "Label",
+  "Link",
   "RadioButton",
   "RadioButtonField",
   "TextArea",

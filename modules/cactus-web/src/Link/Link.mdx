@@ -1,0 +1,35 @@
+---
+name: Link
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Link from './Link'
+import cactusTheme from '@repay/cactus-theme'
+
+# Link
+
+## Basic usage
+
+The `Link` component can be used by passing the url in the `to` prop, and providing the desired text as the children.
+
+```jsx
+import React from 'react'
+import { Link } from '@repay/cactus-web'
+
+const MyComponent = props => {
+  // normal component things here
+  return (
+    <div>
+      <Link to="https://google.com">
+        Go to google
+      </Link>
+      // rest of component
+    </div>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={Link} />
