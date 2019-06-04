@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
 class RootTheme extends Component {
   render() {
     return (
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider theme={cactusTheme} global>
         <Suspense fallback="loading...">
           <GlobalStyle />
           <Router style={{ height: '100%' }}>

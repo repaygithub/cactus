@@ -1,16 +1,7 @@
-import React, { Component, CSSProperties } from 'react'
+import React, { Component } from 'react'
 
+import { Box, TextButton, ToggleField } from '@repay/cactus-web'
 import { Link, RouteComponentProps } from '@reach/router'
-import { TextButton, ToggleField } from '@repay/cactus-web'
-
-const tableStyle: CSSProperties = {
-  border: '1px solid black',
-  textAlign: 'center',
-  width: '30%',
-  marginLeft: '35%',
-  marginRight: '35%',
-  marginTop: '5px',
-}
 
 class Home extends Component<RouteComponentProps> {
   state = { enabled: false }
@@ -32,7 +23,16 @@ class Home extends Component<RouteComponentProps> {
             onChange={this.handleChange}
           />
           <span>Use the table below to navigate to different components.</span>
-          <table style={tableStyle}>
+          <Box
+            as="table"
+            borderWidth="1px"
+            borderStyle="solid"
+            borderColor="darkestContrast"
+            width="30%"
+            marginLeft="35%"
+            marginRight="35%"
+            marginTop="5px"
+          >
             <tbody>
               <tr>
                 <td>
@@ -63,7 +63,7 @@ class Home extends Component<RouteComponentProps> {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </Box>
         </div>
       </div>
     )

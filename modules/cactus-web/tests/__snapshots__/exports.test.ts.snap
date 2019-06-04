@@ -4,6 +4,7 @@ exports[`library exports should match previous exported names 1`] = `
 Array [
   "Button",
   "Box",
+  "Card",
   "CheckBox",
   "CheckBoxField",
   "Flex",
@@ -24,7 +25,8 @@ Array [
   "SelectField",
   "Spinner",
   "StyleProvider",
+  "Text",
+  "Span",
   "useId",
-  "Card",
 ]
 `;

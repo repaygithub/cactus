@@ -26,7 +26,7 @@ class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsOb
   }
   render() {
     return (
-      <StyleProvider theme={cactusTheme}>
+      <StyleProvider global theme={cactusTheme}>
         <AppRoot featureFlags={this.state.features}>
           <I18nProvider controller={i18nController} lang={this.state.lang}>
             <Router>
