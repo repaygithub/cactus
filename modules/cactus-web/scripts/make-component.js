@@ -46,8 +46,18 @@ async function main() {
         Object.assign({ parser: ext.endsWith('tsx') ? 'typescript' : 'markdown' }, prettierConfig)
       )
     )
+  const indexPath = path.join(__dirname, '..', './src/index.ts')
+  const currentIndexExports = await fs.readFile(indexPath, 'utf8')
 
   await Promise.all([
+    fs.writeFile(
+      indexPath,
+      prettier.format(
+        currentIndexExports +
+          `export { ${componentName} } from './${componentName}/${componentName}'\n`,
+        Object.assign({ parser: 'typescript' }, prettierConfig)
+      )
+    ),
     writeFile('.tsx', componentTemplate(componentName)),
     writeFile('.test.tsx', testTemplate(componentName)),
     writeFile('.story.tsx', storyTemplate(componentName)),

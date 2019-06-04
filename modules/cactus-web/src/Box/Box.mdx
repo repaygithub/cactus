@@ -1,0 +1,38 @@
+---
+name: Box
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Box from './Box'
+import cactusTheme from '@repay/cactus-theme'
+
+# Box
+
+## Best practices
+
+Use the theme based parameters when possible, this will prevent discrepencies should the theme update in the future.
+
+## Basic usage
+
+The `Box` component is a generic component intended to be used for spacing and alignment within an application. The default `Box` is a `div` element but can be swapped for any element type using the `as="dd"` prop. The only built-in style is `box-sizing: border-box` for intuitive sizing.
+
+```jsx
+import React from 'react'
+import { Box, Button } from '@repay/cactus-web'
+
+/**
+ *  center a button in it's container using margin = 0 auto
+ *  and setting padding top and bottom to the 3rd
+ *  space with the `ph` prop
+ */
+export default () => (
+  <Box ph={3} margin="0 auto">
+    <Button variant="action">Click Me!</Button>
+  </Box>
+)
+```
+
+## Properties
+
+<PropsTable of={Box} />

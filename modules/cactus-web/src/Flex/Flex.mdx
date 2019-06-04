@@ -1,0 +1,41 @@
+---
+name: Flex
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Flex from './Flex'
+import cactusTheme from '@repay/cactus-theme'
+
+# Flex
+
+## Best practices
+
+Use the theme based parameters when possible to avoid discrepencies between the design-system and the layout.
+
+The `flexDirection=reverse` property should only be used for user experience purposes to affect the tab order. An example would be that the submit button is on the right and we want the user to tab there first instead of the Cancel button which is on the left.
+
+## Basic usage
+
+The `Flex` component is a generic component which is an extension of the [`Box`](../Box.md) component which adds flex based styling.
+
+```jsx
+import React from 'react'
+import { Flex, Button } from '@repay/cactus-web'
+
+/**
+ *  center a button in it's container using margin = 0 auto
+ *  and setting padding top and bottom to the 3rd
+ *  space with the `ph` prop
+ */
+export default () => (
+  <Flex ph={3} justifyContent="space-between">
+    <Button variant="standard">Cancel</Button>
+    <Button variant="action">Action</Button>
+  </Flex>
+)
+```
+
+## Properties
+
+<PropsTable of={Flex} />

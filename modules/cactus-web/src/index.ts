@@ -1,6 +1,8 @@
 export { Button } from './Button/Button'
+export { Box } from './Box/Box'
 export { CheckBox } from './CheckBox/CheckBox'
 export { CheckBoxField } from './CheckBoxField/CheckBoxField'
+export { Flex } from './Flex/Flex'
 export { IconButton } from './IconButton/IconButton'
 export { Label } from './Label/Label'
 export { Link } from './Link/Link'

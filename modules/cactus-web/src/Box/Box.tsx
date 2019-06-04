@@ -1,10 +1,6 @@
 import {
-  alignContent,
-  AlignContentProps,
-  alignItems,
-  AlignItemsProps,
-  alignSelf,
-  AlignSelfProps,
+  backgroundColor,
+  BackgroundColorProps,
   borderColor,
   BorderColorProps,
   borderRadius,
@@ -21,30 +17,14 @@ import {
   ColorStyleProps,
   display,
   DisplayProps,
-  flex,
-  flexBasis,
-  FlexBasisProps,
-  flexDirection,
-  FlexDirectionProps,
-  FlexProps,
-  flexWrap,
-  FlexWrapProps,
-  fontSize,
-  FontSizeProps,
   height,
   HeightProps,
-  justifyContent,
-  JustifyContentProps,
-  justifySelf,
-  JustifySelfProps,
   left,
   LeftProps,
   maxWidth,
   MaxWidthProps,
   minWidth,
   MinWidthProps,
-  order,
-  OrderProps,
   position,
   PositionProps,
   right,
@@ -60,7 +40,7 @@ import {
 } from 'styled-system'
 import styled from 'styled-components'
 
-interface BoxProps
+export interface BoxProps
   extends PositionProps,
     TopProps,
     BottomProps,
@@ -71,21 +51,22 @@ interface BoxProps
     MaxWidthProps,
     MinWidthProps,
     SpaceProps,
-    FontSizeProps,
     ColorProps,
     ColorStyleProps,
     DisplayProps,
+    BackgroundColorProps,
     BorderColorProps,
     BorderWidthProps,
     BorderRadiusProps,
     BorderStyleProps,
     ZIndexProps {}
 
-const Box = styled('div')<BoxProps>(
+export const Box = styled('div')<BoxProps>(
   {
     boxSizing: 'border-box',
   },
   position,
+  display,
   top,
   right,
   bottom,
@@ -95,45 +76,14 @@ const Box = styled('div')<BoxProps>(
   height,
   maxWidth,
   minWidth,
-  fontSize,
   colorStyle,
   color,
-  display,
+  backgroundColor,
   borderColor,
   borderWidth,
   borderRadius,
   borderStyle,
   zIndex
 )
-
-interface FlexBoxProps
-  extends BoxProps,
-    FlexProps,
-    AlignItemsProps,
-    AlignContentProps,
-    JustifyContentProps,
-    FlexWrapProps,
-    FlexBasisProps,
-    FlexDirectionProps,
-    JustifySelfProps,
-    OrderProps,
-    AlignSelfProps {}
-
-export const Flex = styled(Box)<FlexBoxProps>(
-  flex,
-  alignItems,
-  alignContent,
-  justifyContent,
-  flexWrap,
-  flexBasis,
-  flexDirection,
-  justifySelf,
-  alignSelf,
-  order
-)
-
-Flex.defaultProps = {
-  display: 'flex',
-}
 
 export default Box

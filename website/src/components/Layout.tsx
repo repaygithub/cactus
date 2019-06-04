@@ -1,17 +1,13 @@
 import * as React from 'react'
 
+import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
 import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
-import { IconButton } from '@repay/cactus-web'
 import { Motion, spring } from 'react-motion'
 import { useRect } from '@reach/rect'
-import { width } from 'styled-system'
-import Box from './Box'
-import cactusTheme from '@repay/cactus-theme'
 import Close from '@repay/cactus-icons/i/navigation-close'
-import GlobalStyles from './GlobalStyles'
 import Menu from '@repay/cactus-icons/i/navigation-menu-lines'
 import storybooks from '../storybook-config.json'
-import styled, { ThemeProvider } from 'styled-components'
+import styled from 'styled-components'
 
 interface MenuGroup {
   title: string
@@ -185,6 +181,8 @@ const MenuList = styled(BaseMenuList)`
   }
 `
 
+const PositionableIconButton = Box.withComponent(IconButton)
+
 const InnerSidebar = styled.div`
   float: right;
   min-width: 200px;
@@ -248,37 +246,33 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
   `)
   let groups = React.useMemo(() => createMenuGroups(pages), [pages])
   return (
-    <ThemeProvider theme={cactusTheme}>
-      <>
-        <GlobalStyles />
-        <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
-          {({ width }) => {
-            return (
-              <div className={className}>
-                <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
-                  <InnerSidebar ref={sidebarRef}>
-                    <MenuList menu={groups} />
-                  </InnerSidebar>
-                </OuterSidebar>
-                <Box
-                  as={IconButton}
-                  position="fixed"
-                  top="8px"
-                  fontSize="24px"
-                  onClick={toggleOpen}
-                  style={{ left: width + 8 }}
-                >
-                  {isOpen ? <Close /> : <Menu />}
-                </Box>
-                <Box p="16px 40px" style={{ marginLeft: width }}>
-                  {children}
-                </Box>
-              </div>
-            )
-          }}
-        </Motion>
-      </>
-    </ThemeProvider>
+    <StyleProvider global>
+      <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
+        {({ width }) => {
+          return (
+            <div className={className}>
+              <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
+                <InnerSidebar ref={sidebarRef}>
+                  <MenuList menu={groups} />
+                </InnerSidebar>
+              </OuterSidebar>
+              <PositionableIconButton
+                position="fixed"
+                top="8px"
+                iconSize="medium"
+                onClick={toggleOpen}
+                style={{ left: width + 8 }}
+              >
+                {isOpen ? <Close /> : <Menu />}
+              </PositionableIconButton>
+              <Box p="16px 40px" style={{ marginLeft: width }}>
+                {children}
+              </Box>
+            </div>
+          )
+        }}
+      </Motion>
+    </StyleProvider>
   )
 }
 

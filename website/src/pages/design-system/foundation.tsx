@@ -1,8 +1,8 @@
 import * as React from 'react'
 
+import { Box, Flex } from '@repay/cactus-web'
 import { color, ColorProps, textAlign, TextAlignProps } from 'styled-system'
 import { Link } from 'gatsby'
-import Box, { Flex } from '../../components/Box'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
@@ -23,8 +23,8 @@ export default () => {
       <Helmet title="Foundation" />
       <h1>Cactus Foundations</h1>
       <p>The foundations are the building blocks that unify our system.</p>
-      <Flex display="flex" justifyContent="space-between" flexDirection="row">
-        <Flex p={3} flexBasis="25%">
+      <Flex display="flex" justifyContent="space-between">
+        <Flex p={3} flexBasis="25%" flexDirection="column">
           <Heading textAlign="center">Color</Heading>
           <CenteredList>
             <li>General Description</li>
@@ -33,7 +33,7 @@ export default () => {
             <li>Accessibility Standards</li>
           </CenteredList>
         </Flex>
-        <Flex p={3} flexBasis="25%">
+        <Flex p={3} flexBasis="25%" flexDirection="column">
           <Heading textAlign="center">Typography</Heading>
           <CenteredList>
             <li>General Description</li>
@@ -42,14 +42,14 @@ export default () => {
             <li>Heirarchy</li>
           </CenteredList>
         </Flex>
-        <Flex p={3} flexBasis="25%">
+        <Flex p={3} flexBasis="25%" flexDirection="column">
           <Heading textAlign="center">Icons</Heading>
           <CenteredList>
             <li>Size</li>
             <li>Categories</li>
           </CenteredList>
         </Flex>
-        <Flex p={3} flexBasis="25%">
+        <Flex p={3} flexBasis="25%" flexDirection="column">
           <Heading textAlign="center">Grid</Heading>
           <CenteredList>
             <li>Description</li>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
+import { Box, Flex } from '@repay/cactus-web'
 import { ReactComponent as NoResultsCactus } from '../assets/no-results-cactus.svg'
-import Box, { Flex } from '../components/Box'
 
 export default () => (
   <>
