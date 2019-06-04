@@ -20,8 +20,8 @@ const ToggleBase = (props: ToggleProps) => {
   const { value, ...toggleProps } = componentProps
   return (
     <button type="button" role="switch" aria-checked={value} {...toggleProps}>
-      <StyledX />
-      <StyledCheck />
+      <StyledX aria-hidden="true" />
+      <StyledCheck aria-hidden="true" />
     </button>
   )
 }
