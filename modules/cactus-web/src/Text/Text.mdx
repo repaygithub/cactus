@@ -11,22 +11,22 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Best practices
 
-TODO - see README for what to include here
+Prefer using the built-in styles defined by the cactus theme in order to adhere to the design system.
 
 ## Basic usage
 
-TODO - brief description
+The `Text` is a `p` tag and can be used when you would like to render text that needs custom styles like italics or text alignment. There is also a `Span` component that is exported for convenience.
 
 ```jsx
 import React from 'react'
 
-;<Text />
-```
-
-```tsx
-import * as React from 'react'
-
-;<Text />
+export default () => (
+  <Text textAlign="right" fontStyle="italic" margin="0 auto">
+    Stilton fondue stilton. Hard cheese port-salut manchego stinking bishop monterey jack edam
+    lancashire camembert de normandie. Paneer cheese on toast cheesy feet halloumi cheesecake cheese
+    strings who moved my cheese when the cheese comes out everybody's happy. Bavarian bergkase.
+  </Text>
+)
 ```
 
 ## Properties
