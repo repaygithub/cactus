@@ -35,6 +35,7 @@ export interface CactusTheme {
     baseText: string
     callToAction: string
     callToActionText: string
+    transparentCTA: string
 
     /** Contrasts */
     lightContrast: string
@@ -97,6 +98,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   let baseText = `hsl(0, 0%, 100%)`
   let callToAction = `hsl(${primaryHue}, 96%, 35%)`
   let callToActionText = `hsl(0, 0%, 100%)`
+  let transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.3)`
 
   /** Contrasts */
   let lightContrast = `hsl(${primaryHue}, 29%, 90%)`
@@ -139,6 +141,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       baseText,
       callToAction,
       callToActionText,
+      transparentCTA,
 
       /** Contrasts */
       lightContrast,
