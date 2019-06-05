@@ -136,6 +136,17 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/actions/undo.svg"
+      style="width:100px;"
+      alt="svg for ActionsUndo" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/actions-undo</code>
+      <div>ActionsUndo</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/actions/upload.svg"
       style="width:100px;"
       alt="svg for ActionsUpload" />
@@ -213,6 +224,17 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/descriptive/bars.svg"
+      style="width:100px;"
+      alt="svg for DescriptiveBars" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-bars</code>
+      <div>DescriptiveBars</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/descriptive/box.svg"
       style="width:100px;"
       alt="svg for DescriptiveBox" />
@@ -241,39 +263,6 @@
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-cart</code>
       <div>DescriptiveCart</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/descriptive/chart/bars.svg"
-      style="width:100px;"
-      alt="svg for DescriptiveChartBars" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-bars</code>
-      <div>DescriptiveChartBars</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/descriptive/chart/piechart.svg"
-      style="width:100px;"
-      alt="svg for DescriptiveChartPiechart" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-piechart</code>
-      <div>DescriptiveChartPiechart</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/descriptive/chart/presentation.svg"
-      style="width:100px;"
-      alt="svg for DescriptiveChartPresentation" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-chart-presentation</code>
-      <div>DescriptiveChartPresentation</div>
     </figcaption>
   </figure>
   <figure
@@ -428,6 +417,28 @@
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-lock</code>
       <div>DescriptiveLock</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/descriptive/piechart.svg"
+      style="width:100px;"
+      alt="svg for DescriptivePiechart" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-piechart</code>
+      <div>DescriptivePiechart</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/descriptive/presentation.svg"
+      style="width:100px;"
+      alt="svg for DescriptivePresentation" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-presentation</code>
+      <div>DescriptivePresentation</div>
     </figcaption>
   </figure>
   <figure
@@ -598,12 +609,56 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/multimedia/volumen.svg"
+    <img src="../../modules/cactus-icons/svgs/multimedia/volume.svg"
       style="width:100px;"
-      alt="svg for MultimediaVolumen" />
+      alt="svg for MultimediaVolume" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/multimedia-volumen</code>
-      <div>MultimediaVolumen</div>
+      <code style="white-space:pre-wrap;font-size:10px;">/i/multimedia-volume</code>
+      <div>MultimediaVolume</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/arrow/down.svg"
+      style="width:100px;"
+      alt="svg for NavigationArrowDown" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-arrow-down</code>
+      <div>NavigationArrowDown</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/arrow/left.svg"
+      style="width:100px;"
+      alt="svg for NavigationArrowLeft" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-arrow-left</code>
+      <div>NavigationArrowLeft</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/arrow/right.svg"
+      style="width:100px;"
+      alt="svg for NavigationArrowRight" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-arrow-right</code>
+      <div>NavigationArrowRight</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/arrow/up.svg"
+      style="width:100px;"
+      alt="svg for NavigationArrowUp" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-arrow-up</code>
+      <div>NavigationArrowUp</div>
     </figcaption>
   </figure>
   <figure
@@ -664,12 +719,78 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/navigation/circle/down.svg"
+      style="width:100px;"
+      alt="svg for NavigationCircleDown" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-circle-down</code>
+      <div>NavigationCircleDown</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/circle/left.svg"
+      style="width:100px;"
+      alt="svg for NavigationCircleLeft" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-circle-left</code>
+      <div>NavigationCircleLeft</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/circle/right.svg"
+      style="width:100px;"
+      alt="svg for NavigationCircleRight" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-circle-right</code>
+      <div>NavigationCircleRight</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/circle/up.svg"
+      style="width:100px;"
+      alt="svg for NavigationCircleUp" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-circle-up</code>
+      <div>NavigationCircleUp</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/navigation/close.svg"
       style="width:100px;"
       alt="svg for NavigationClose" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-close</code>
       <div>NavigationClose</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/drag&drop.svg"
+      style="width:100px;"
+      alt="svg for NavigationDragDrop" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-drag&drop</code>
+      <div>NavigationDragDrop</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/navigation/hamburger.svg"
+      style="width:100px;"
+      alt="svg for NavigationHamburger" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-hamburger</code>
+      <div>NavigationHamburger</div>
     </figcaption>
   </figure>
   <figure
@@ -697,34 +818,12 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
-    <img src="../../modules/cactus-icons/svgs/navigation/menu.svg"
-      style="width:100px;"
-      alt="svg for NavigationMenu" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-menu</code>
-      <div>NavigationMenu</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/navigation/menu/dots.svg"
+    <img src="../../modules/cactus-icons/svgs/navigation/menu-dots.svg"
       style="width:100px;"
       alt="svg for NavigationMenuDots" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-menu-dots</code>
       <div>NavigationMenuDots</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/navigation/menu/lines.svg"
-      style="width:100px;"
-      alt="svg for NavigationMenuLines" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-menu-lines</code>
-      <div>NavigationMenuLines</div>
     </figcaption>
   </figure>
   <figure
@@ -791,17 +890,6 @@
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/notification-note</code>
       <div>NotificationNote</div>
-    </figcaption>
-  </figure>
-  <figure
-    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
-  >
-    <img src="../../modules/cactus-icons/svgs/notification/notification.svg"
-      style="width:100px;"
-      alt="svg for NotificationNotification" />
-    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
-      <code style="white-space:pre-wrap;font-size:10px;">/i/notification-notification</code>
-      <div>NotificationNotification</div>
     </figcaption>
   </figure>
   <figure
@@ -961,6 +1049,17 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/payment/pay.svg"
+      style="width:100px;"
+      alt="svg for PaymentPay" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/payment-pay</code>
+      <div>PaymentPay</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/payment/paybycard.svg"
       style="width:100px;"
       alt="svg for PaymentPaybycard" />
@@ -1027,12 +1126,34 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/status/approve.svg"
+      style="width:100px;"
+      alt="svg for StatusApprove" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-approve</code>
+      <div>StatusApprove</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/status/check.svg"
       style="width:100px;"
       alt="svg for StatusCheck" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/status-check</code>
       <div>StatusCheck</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
+    <img src="../../modules/cactus-icons/svgs/status/danger.svg"
+      style="width:100px;"
+      alt="svg for StatusDanger" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-danger</code>
+      <div>StatusDanger</div>
     </figcaption>
   </figure>
   <figure
