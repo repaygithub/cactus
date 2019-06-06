@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Card should support margin space props 1`] = `
+.c0 {
+  margin: 4px;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+}
+
+.c0:hover {
+  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    Content
+  </div>
+</div>
+`;
+
+exports[`component: Card snapshot 1`] = `
+.c0 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+}
+
+.c0:hover {
+  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
