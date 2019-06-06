@@ -29,6 +29,14 @@ body {
 }
 `
 
+const checkThemeProperties = (theme: CactusTheme) => {
+  if (theme.colors.transparentCTA === undefined) {
+    console.warn(
+      "You are using an outdated version of @repay/cactus-theme. Some features won't be available in @repay/cactus-web with this version. Please upgrade to @repay/cactus-theme >= 0.4.3."
+    )
+  }
+}
+
 interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<any, any>, 'theme'> {
   theme?: CactusTheme
   global?: boolean
@@ -36,6 +44,8 @@ interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<an
 
 export const StyleProvider: React.FC<StyleProviderProps> = props => {
   const { global, children, theme, ...themeProviderProps } = props
+  checkThemeProperties(theme || cactusTheme)
+
   return (
     <styledComponents.ThemeProvider theme={theme ? theme : cactusTheme} {...themeProviderProps}>
       <React.Fragment>
