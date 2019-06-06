@@ -109,7 +109,7 @@ const ButtonBase: React.FC<ButtonProps> = ({
   return (
     <button {...props} disabled={loading || disabled} aria-live="assertive">
       <span {...spanProps}>{children}</span>
-      {loading && <Spinner iconSize="medium" aria-label={loadingText} />}
+      {loading && <Spinner iconSize="small" aria-label={loadingText} />}
     </button>
   )
 }
@@ -152,8 +152,8 @@ export const Button = styled(ButtonBase)`
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -12px;
-    margin-top: -12px;
+    margin-left: -8px;
+    margin-top: -8px;
   }
 
   ${margins}

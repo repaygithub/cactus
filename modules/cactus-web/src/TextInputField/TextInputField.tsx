@@ -110,6 +110,7 @@ export const TextInputField = styled(TextInputFieldBase)`
 
   ${Tooltip} {
     position: absolute;
+    top: -2px;
     right: 8px
     font-size: 16px;
   }
