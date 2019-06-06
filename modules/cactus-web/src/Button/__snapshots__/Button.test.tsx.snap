@@ -9,6 +9,7 @@ exports[`component: Button should default to standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(200,96%,11%);
@@ -24,12 +25,13 @@ exports[`component: Button should default to standard variant 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -79,6 +81,7 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(200,96%,11%);
@@ -94,12 +97,13 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -198,6 +202,7 @@ exports[`component: Button should render call to action variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(0,0%,100%);
@@ -213,12 +218,13 @@ exports[`component: Button should render call to action variant 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -261,6 +267,7 @@ exports[`component: Button should render disabled variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(0,0%,70%);
@@ -277,12 +284,13 @@ exports[`component: Button should render disabled variant 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -320,6 +328,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(0,0%,100%);
@@ -335,12 +344,13 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -383,6 +393,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(0,0%,70%);
@@ -399,12 +410,13 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -442,6 +454,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(0,0%,100%);
@@ -457,12 +470,13 @@ exports[`component: Button should render inverse standard variant 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -505,6 +519,7 @@ exports[`component: Button should render standard variant 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   color: hsl(200,96%,11%);
@@ -520,12 +535,13 @@ exports[`component: Button should render standard variant 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {
@@ -568,6 +584,7 @@ exports[`component: Button should support margin space props 1`] = `
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
   margin-top: 32px;
@@ -584,12 +601,13 @@ exports[`component: Button should support margin space props 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: calc(100% + 6px);
-  width: calc(100% + 6px);
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .c0 svg {

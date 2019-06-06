@@ -72,6 +72,7 @@ export const TextButton = styled.button<TextButtonProps>`
   background-color: transparent;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
 
   &:hover {
     text-decoration: ${p => !p.disabled && 'underline'};
