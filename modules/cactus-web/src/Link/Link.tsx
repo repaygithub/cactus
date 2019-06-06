@@ -42,7 +42,7 @@ export const Link = styled(LinkBase)`
     background-color: ${p => p.theme.colors.transparentCTA};
   }
 
-  ${margins}
+  ${margins};
 `
 
 export default Link
