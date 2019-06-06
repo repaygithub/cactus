@@ -961,6 +961,13 @@
   dependencies:
     styled-system "^4.1.0"
 
+"@repay/cactus-icons@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-icons/-/cactus-icons-0.5.0.tgz#4dc865acc16b6a8b89ec544a5e18b92be96c80fc"
+  integrity sha512-PthWHYZkUGCimrQOoZ0f3T3KJ7swlvPyti6kuXtwBJfQ7KrHh7nBcE64u4UfdwcYz59VqQ8HqW0FasZkcaNEIw==
+  dependencies:
+    styled-system "^4.1.0"
+
 "@repay/cactus-theme@^0.4.2":
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/@repay/cactus-theme/-/cactus-theme-0.4.2.tgz#d15eaec26a49fe74215d471154bab03876673a6b"
