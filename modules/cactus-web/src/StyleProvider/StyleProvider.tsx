@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
 html,
 body {
   font-family: Helvetica, Arial, sans-serif;
-  ${p => p.theme.textStyles.body}
+  ${p => p.theme.textStyles.body};
   font-weight: 400;
   color: ${p => p.theme.colors.darkestContrast};
   font-style: normal;
@@ -26,6 +26,26 @@ body {
   line-height: 1.54;
   letter-spacing: normal;
   margin: 0;
+}
+
+small {
+  ${p => p.theme.textStyles.small}
+}
+
+h1 {
+  ${p => p.theme.textStyles.h1};
+}
+
+h2 {
+  ${p => p.theme.textStyles.h2};
+}
+
+h3 {
+  ${p => p.theme.textStyles.h3};
+}
+
+h4, h5, h6 {
+  ${p => p.theme.textStyles.h4};
 }
 `
 

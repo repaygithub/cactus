@@ -121,6 +121,7 @@ exports[`component: ToggleField snapshot 1`] = `
       type="button"
     >
       <svg
+        aria-hidden="true"
         class="c5 c6"
         fill="currentcolor"
         height="1em"
@@ -132,6 +133,7 @@ exports[`component: ToggleField snapshot 1`] = `
         />
       </svg>
       <svg
+        aria-hidden="true"
         class="c7 c8"
         fill="currentcolor"
         height="1em"
@@ -295,6 +297,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
       type="button"
     >
       <svg
+        aria-hidden="true"
         class="c5 c6"
         fill="currentcolor"
         height="1em"
@@ -306,6 +309,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
         />
       </svg>
       <svg
+        aria-hidden="true"
         class="c7 c8"
         fill="currentcolor"
         height="1em"
@@ -442,6 +446,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
       type="button"
     >
       <svg
+        aria-hidden="true"
         class="c5 c6"
         fill="currentcolor"
         height="1em"
@@ -453,6 +458,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
         />
       </svg>
       <svg
+        aria-hidden="true"
         class="c7 c8"
         fill="currentcolor"
         height="1em"
