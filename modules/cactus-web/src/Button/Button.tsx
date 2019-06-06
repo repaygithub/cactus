@@ -121,6 +121,7 @@ export const Button = styled(ButtonBase)`
   border: 2px solid;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
   ${p => p.theme.textStyles.body};
 
   &::-moz-focus-inner {
@@ -132,12 +133,13 @@ export const Button = styled(ButtonBase)`
       content: '';
       display: block;
       position: absolute;
-      height: calc(100% + 6px);
-      width: calc(100% + 6px);
+      height: calc(100% + 10px);
+      width: calc(100% + 10px);
       top: -5px;
       left: -5px;
       border: 2px solid ${p => p.theme.colors.callToAction};
       border-radius: 20px;
+      box-sizing: border-box;
     }
   }
 

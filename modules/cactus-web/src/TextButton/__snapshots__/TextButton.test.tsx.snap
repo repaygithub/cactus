@@ -13,6 +13,7 @@ exports[`component: TextButton should default to standard variant 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(200,96%,11%);
 }
 
@@ -69,6 +70,7 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(200,96%,11%);
 }
 
@@ -136,6 +138,7 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(200,96%,11%);
 }
 
@@ -199,6 +202,7 @@ exports[`component: TextButton should render call to action variant 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(200,96%,35%);
 }
 
@@ -251,6 +255,7 @@ exports[`component: TextButton should render danger variant 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(353,84%,44%);
 }
 
@@ -303,6 +308,7 @@ exports[`component: TextButton should render disabled variant 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
@@ -352,6 +358,7 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   font-weight: 700;
   color: hsl(200,96%,35%);
 }
@@ -405,6 +412,7 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
@@ -454,6 +462,7 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(0,0%,100%);
 }
 
@@ -506,6 +515,7 @@ exports[`component: TextButton should render standard variant 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(200,96%,11%);
 }
 
@@ -558,6 +568,7 @@ exports[`component: TextButton should support space props 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   cursor: pointer;
+  box-sizing: border-box;
   color: hsl(200,96%,11%);
   margin-right: 32px;
 }
