@@ -16,6 +16,18 @@ describe('component: Link', () => {
     expect(container).toMatchSnapshot()
   })
 
+  test('should support margin space props', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Link my={4} to="https://somewhere.over/the/rainbow">
+          way up high
+        </Link>
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
   test('should contain the correct href', () => {
     const { getByText } = render(
       <StyleProvider>
