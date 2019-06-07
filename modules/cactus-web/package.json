@@ -84,7 +84,7 @@
     "@reach/tooltip": "^0.2.0",
     "@reach/visually-hidden": "^0.1.4",
     "@repay/cactus-icons": "^0.4.1",
-    "@repay/cactus-theme": "^0.4.2",
+    "@repay/cactus-theme": "^0.4.3",
     "styled-system": "^4.1.0"
   }
 }
