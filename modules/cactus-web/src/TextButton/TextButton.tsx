@@ -100,6 +100,7 @@ export const TextButton = styled.button<TextButtonProps>`
   svg {
     display: inline-block;
     margin-top: -4px;
+    margin-right: 4px;
   }
 
   ${variantOrDisabled}

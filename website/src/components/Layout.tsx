@@ -5,7 +5,7 @@ import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
 import { Motion, spring } from 'react-motion'
 import { useRect } from '@reach/rect'
 import Close from '@repay/cactus-icons/i/navigation-close'
-import Menu from '@repay/cactus-icons/i/navigation-menu-lines'
+import Menu from '@repay/cactus-icons/i/navigation-hamburger'
 import storybooks from '../storybook-config.json'
 import styled from 'styled-components'
 
