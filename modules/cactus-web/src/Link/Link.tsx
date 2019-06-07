@@ -1,6 +1,7 @@
-import React, { useRef } from 'react'
+import React from 'react'
 
-import { MarginProps, margins } from '../helpers/margins'
+import { CactusTheme } from '@repay/cactus-theme'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
 import styled from 'styled-components'
 
@@ -14,13 +15,9 @@ interface LinkProps
 }
 
 const LinkBase = (props: LinkProps) => {
-  const { className, to, children, ...rest } = props
+  const { to, ...rest } = splitProps(props)
 
-  return (
-    <a className={className} href={to} {...rest}>
-      {children}
-    </a>
-  )
+  return <a href={to} {...rest} />
 }
 
 export const Link = styled(LinkBase)`
@@ -33,7 +30,7 @@ export const Link = styled(LinkBase)`
   }
 
   :visited {
-    color: hsl(210, 50%, 35%);
+    color: ${p => p.theme.colors.mediumContrast};
   }
 
   :hover {
@@ -41,18 +38,8 @@ export const Link = styled(LinkBase)`
   }
 
   :focus {
-    color: ${p => p.theme.colors.base};
-    ::after {
-      content: '';
-      display: block;
-      position: absolute;
-      height: calc(100% + 6px);
-      width: calc(100% + 6px);
-      top: -5px;
-      left: -5px;
-      border: 2px solid ${p => p.theme.colors.callToAction};
-      border-radius: 4px;
-    }
+    color: ${p => p.theme.colors.callToAction};
+    background-color: ${p => p.theme.colors.transparentCTA};
   }
 
   ${margins};
