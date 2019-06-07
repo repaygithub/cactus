@@ -4,6 +4,16 @@ import * as styledComponents from 'styled-components'
 import { Omit } from '../types'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 
+interface Env {
+  NODE_ENV: string
+}
+
+interface Process {
+  env: Env
+}
+
+declare var process: Process
+
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
 >
@@ -29,12 +39,15 @@ body {
 }
 `
 
+let shouldCheckTheme = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test'
+
 const checkThemeProperties = (theme: CactusTheme) => {
   if (theme.colors.transparentCTA === undefined) {
     console.warn(
       "You are using an outdated version of @repay/cactus-theme. Some features won't be available in @repay/cactus-web with this version. Please upgrade to @repay/cactus-theme >= 0.4.3."
     )
   }
+  shouldCheckTheme = false
 }
 
 interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<any, any>, 'theme'> {
@@ -44,7 +57,7 @@ interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<an
 
 export const StyleProvider: React.FC<StyleProviderProps> = props => {
   const { global, children, theme, ...themeProviderProps } = props
-  checkThemeProperties(theme || cactusTheme)
+  shouldCheckTheme && checkThemeProperties(theme || cactusTheme)
 
   return (
     <styledComponents.ThemeProvider theme={theme ? theme : cactusTheme} {...themeProviderProps}>
