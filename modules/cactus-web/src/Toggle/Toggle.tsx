@@ -27,14 +27,20 @@ const ToggleBase = (props: ToggleProps) => {
 }
 
 const StyledX = styled(NavigationClose)`
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 3px;
+  left: 25px;
   color: ${p => p.theme.colors.white};
 `
 
 const StyledCheck = styled(StatusCheck)`
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 1px;
+  left: 5px;
   color: ${p => p.theme.colors.white};
 `
 
@@ -82,17 +88,11 @@ export const Toggle = styled(ToggleBase)`
   }
 
   ${StyledX} {
-    position: absolute;
-    top: 1px;
-    left: 22px;
     opacity: 1;
     transition: opacity 0.3s;
   }
 
   ${StyledCheck} {
-    position: absolute;
-    top: 1px;
-    left: 5px;
     opacity: 0;
     transition: opacity 0.3s;
   }

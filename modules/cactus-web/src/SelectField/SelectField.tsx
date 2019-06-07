@@ -106,6 +106,7 @@ export const SelectField = styled(SelectFieldBase)`
   ${Tooltip}  {
     position: absolute;
     right: 8px
+    top: 2px;
     font-size: 16px;
   }
 

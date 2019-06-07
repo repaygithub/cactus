@@ -74,26 +74,26 @@ const TextInputBase = (props: TextInputProps) => {
 }
 
 const StyledCheck = styled(StatusCheck)<StyledCheckProps>`
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   position: absolute;
-  right: 8px;
+  right: 10px;
   color: ${p => p.theme.colors.darkestContrast};
 `
 
 const StyledAlert = styled(NotificationAlert)<StyledAlertProps>`
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   position: absolute;
-  right: 8px;
+  right: 12px;
   color: ${p => p.theme.colors.darkestContrast};
 `
 
 const StyledError = styled(NotificationError)<StyledErrorProps>`
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   position: absolute;
-  right: 8px;
+  right: 12px;
   color: ${p => p.theme.colors.darkestContrast};
 `
 
