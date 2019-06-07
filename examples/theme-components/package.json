@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "@repay/cactus-icons": "^0.5.0",
+    "@repay/cactus-icons": "^0.5.1",
     "@repay/cactus-theme": "^0.4.2",
     "@repay/cactus-web": "^0.4.2",
     "react": "^16.8.6",
