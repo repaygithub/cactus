@@ -98,7 +98,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   let baseText = `hsl(0, 0%, 100%)`
   let callToAction = `hsl(${primaryHue}, 96%, 35%)`
   let callToActionText = `hsl(0, 0%, 100%)`
-  let transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.3)`
+  let transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.25)`
 
   /** Contrasts */
   let lightContrast = `hsl(${primaryHue}, 29%, 90%)`

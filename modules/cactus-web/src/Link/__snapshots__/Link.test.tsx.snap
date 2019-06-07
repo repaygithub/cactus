@@ -21,7 +21,7 @@ exports[`component: Link should render a Link 1`] = `
 
 .c0:focus {
   color: hsl(200,96%,35%);
-  background-color: hsla(200,96%,35%,0.3);
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 <div>
@@ -57,7 +57,7 @@ exports[`component: Link should support margin space props 1`] = `
 
 .c0:focus {
   color: hsl(200,96%,35%);
-  background-color: hsla(200,96%,35%,0.3);
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 <div>
