@@ -2,9 +2,10 @@ import * as React from 'react'
 
 import { AccessibilityBox, ColorBox, PaletteBox } from '../../components/Color'
 import { Box, Flex } from '@repay/cactus-web'
-import { Link } from 'gatsby'
 import Helmet from 'react-helmet'
 import Text, { Span } from '../../components/Text'
+
+import Link from '../../components/Link'
 
 export default () => {
   return (

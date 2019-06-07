@@ -62,4 +62,9 @@ declare module '*.png' {
   export default source
 }
 
+declare module '@mdx-js/react' {
+  var MDXProvider: any
+  export { MDXProvider }
+}
+
 declare const global: { [key: string]: any }

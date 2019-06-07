@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { graphql } from 'gatsby'
+import { MDXProvider } from '@mdx-js/react'
 import Helmet from 'react-helmet'
+import Link from '../components/Link'
 import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 
 type GenericTemplateProps = {
@@ -8,6 +10,10 @@ type GenericTemplateProps = {
     mdx: Markdown
     site: Site
   }
+}
+
+const components = {
+  a: Link,
 }
 
 const GenericTemplate = ({ data }: GenericTemplateProps) => {
@@ -18,7 +24,9 @@ const GenericTemplate = ({ data }: GenericTemplateProps) => {
   return (
     <>
       <Helmet title={`${fields.title}`} />
-      <MDXRenderer>{code.body}</MDXRenderer>
+      <MDXProvider components={components}>
+        <MDXRenderer>{code.body}</MDXRenderer>
+      </MDXProvider>
     </>
   )
 }

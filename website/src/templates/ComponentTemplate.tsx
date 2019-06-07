@@ -1,8 +1,10 @@
 import * as React from 'react'
 
 import { graphql } from 'gatsby'
+import { MDXProvider } from '@mdx-js/react'
 import DocgenProvider, { DocItem } from '../components/DocgenProvider'
 import Helmet from 'react-helmet'
+import Link from '../components/Link'
 import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 
 type ComponentTemplateProps = {
@@ -13,6 +15,10 @@ type ComponentTemplateProps = {
     }
     mdx: Markdown
   }
+}
+
+const components = {
+  a: Link,
 }
 
 const ComponentTemplate = ({ data }: ComponentTemplateProps) => {
@@ -33,7 +39,9 @@ const ComponentTemplate = ({ data }: ComponentTemplateProps) => {
       <Helmet title={`${fields.title}`} />
       <DocgenProvider docs={database}>
         <>
-          <MDXRenderer>{code.body}</MDXRenderer>
+          <MDXProvider components={components}>
+            <MDXRenderer>{code.body}</MDXRenderer>
+          </MDXProvider>
         </>
       </DocgenProvider>
     </>
