@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@repay/cactus-icons": "^0.5.1",
-    "@repay/cactus-theme": "^0.4.2",
+    "@repay/cactus-theme": "^0.4.3",
     "@repay/cactus-web": "^0.4.2",
     "normalize.css": "^8.0.1",
     "prismjs": "^1.16.0",
