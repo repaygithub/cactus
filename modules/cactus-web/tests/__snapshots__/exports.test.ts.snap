@@ -8,6 +8,7 @@ Array [
   "CheckBox",
   "CheckBoxField",
   "Flex",
+  "Grid",
   "IconButton",
   "Label",
   "Link",
