@@ -25,20 +25,37 @@ ShadowBox.defaultProps = {
 
 const Table = styled('table')`
   border-collapse: collapse;
+  width: 50%;
+ 
   th {
-    padding: 16px;
     border: 1px solid black;
     text-align: left;
+    padding: 3px;
   }
   td {
-    padding: 16px;
     border: 1px solid black;
     text-align: right;
     font-weight: 200;
+    padding 3px;
+  }
+  @media only screen and (max-width: 760px) {
+    padding: 0;
+    th {
+      font-size: 66%;
+      font-weight: 400;
+      padding: 1px;
+    }
+    td {
+      font-size: 66%;
+      font-weight: 300;
+      padding: 1px;
+    }
   }
 `
 
 const ColumnKey = styled('table')`
+  padding: 5% 0 0 2%;
+
   th {
     padding: 20px 0 0 0;
     font-weight: 600;
@@ -48,6 +65,9 @@ const ColumnKey = styled('table')`
     padding: 5px 0 0 0;
     font-weight: 200;
     text-align: left;
+  }
+  @media only screen and (max-width: 1000px) {
+    width: 100%;
   }
 `
 
@@ -82,6 +102,12 @@ const SpacingBox = (props: SpacingBoxProps) => {
     </Flex>
   )
 }
+
+const Img = styled('img')`
+  width: auto;
+  max-width: 75%;
+  heght: auto;
+`
 
 export default () => {
   return (
@@ -140,68 +166,65 @@ export default () => {
         This grid enables the creation of a standard interface by defining the abstract composition
         of an page and how individual components associate within an interface.
       </Text>
+      <Text> The main bar, footer, and action bar use the 8pt grid for placement.</Text>
+      <Box>
+        <Img src={GridImage} alt="Columns" style={{ padding: '1% 0 0 0 ' }} />
 
-      <Text style={{ padding: '50px 0 0 845px' }}>
-        The main bar, footer, and action <br />
-        bar use the 8pt grid for placement.
-      </Text>
-
-      <img src={GridImage} alt="Columns" style={{ padding: ' 5px 0 0 0 ' }} />
-
-      <Text style={{ float: 'left', padding: '150px 65px 0 95px' }}>
-        Our product is composed of <br /> 1) Main Bar (Quickline Bar) <br />
-        2) Action Bar
-        <br /> 3) Side panel <br /> 4) Content <br /> 5) Footer
-      </Text>
-
+        <Text style={{ float: 'left', padding: '5% 5% 0 5%' }}>
+          Our product is composed of <br /> 1) Main Bar (Quickline Bar) <br />
+          2) Action Bar
+          <br /> 3) Side panel <br /> 4) Content <br /> 5) Footer
+        </Text>
+      </Box>
       <br />
+      <Box>
+        <Img src={ColumnImage} alt="Grid" style={{ float: 'left', padding: '4% 3% 0 2% ' }} />
 
-      <img src={ColumnImage} alt="Grid" style={{ float: 'left', padding: '60px 50px 0 25px ' }} />
+        <ColumnKey>
+          <tr>
+            <th>
+              <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 50%, 89%)' }}>
+                <Box m="0 0 0 30px"> Column</Box>
+              </Flex>
+            </th>
+          </tr>
 
-      <ColumnKey style={{ padding: '40px 50px 0' }}>
-        <tr>
+          <tr>
+            <td style={{ width: '275px' }}>
+              The columns are fluid, having a responsive width which conforms to the size of their
+              parent container.
+            </td>
+          </tr>
+
           <th>
-            <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 50%, 89%)' }}>
-              <Box m="0 0 0 30px"> Column</Box>
+            <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 52%, 54%)' }}>
+              <Box m="0 0 0 30px"> Margin</Box>
             </Flex>
           </th>
-        </tr>
 
-        <tr>
-          <td style={{ width: '275px' }}>
-            The columns are fluid, having a responsive width which conforms to the size of their
-            parent container.
-          </td>
-        </tr>
+          <tr>
+            <td style={{ width: '150px' }}>
+              Margins are the negative space between the edge of the format and the outer edge of
+              the content.
+            </td>
+          </tr>
 
-        <th>
-          <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 52%, 54%)' }}>
-            <Box m="0 0 0 30px"> Margin</Box>
-          </Flex>
-        </th>
+          <th>
+            <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 51%, 77%)' }}>
+              <Box m="0 0 0 30px"> Gutter</Box>
+            </Flex>
+          </th>
 
-        <tr>
-          <td style={{ width: '150px' }}>
-            Margins are the negative space between the edge of the format and the outer edge of the
-            content.
-          </td>
-        </tr>
+          <tr>
+            <td style={{ width: '150px' }}>
+              Grid columns are seperated by areas of white space referred to as "gutters". Gutters
+              improve legibility by providing negative space between page elements.
+            </td>
+          </tr>
+        </ColumnKey>
+      </Box>
 
-        <th>
-          <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 51%, 77%)' }}>
-            <Box m="0 0 0 30px"> Gutter</Box>
-          </Flex>
-        </th>
-
-        <tr>
-          <td style={{ width: '150px' }}>
-            Grid columns are seperated by areas of white space referred to as "gutters". Gutters
-            improve legibility by providing negative space between page elements.
-          </td>
-        </tr>
-      </ColumnKey>
-
-      <Text as="h2" fontSize="h2" textAlign="left" style={{ padding: '75px 0 0 0' }}>
+      <Text as="h2" fontSize="h2" textAlign="left" style={{ padding: '5% 0 0 0' }}>
         Break-points
       </Text>
       <Text>
@@ -233,7 +256,7 @@ export default () => {
         </tr>
 
         <tr>
-          <th style={{ fontWeight: 200 }}>mini</th>
+          <th>mini</th>
           <td> >320px</td>
           <td> 320</td>
           <td> 64</td>
@@ -243,7 +266,7 @@ export default () => {
         </tr>
 
         <tr>
-          <th style={{ fontWeight: 200 }}>small</th>
+          <th>small</th>
           <td> >768px</td>
           <td> 708</td>
           <td> 102</td>
@@ -253,7 +276,7 @@ export default () => {
         </tr>
 
         <tr>
-          <th style={{ fontWeight: 400 }}>medium</th>
+          <th>medium</th>
           <td> >1024px</td>
           <td> 964</td>
           <td> 104</td>
@@ -263,7 +286,7 @@ export default () => {
         </tr>
 
         <tr>
-          <th style={{ fontWeight: 200 }}>large</th>
+          <th>large</th>
           <td> >1200px</td>
           <td> 1140</td>
           <td> 79</td>
@@ -273,7 +296,7 @@ export default () => {
         </tr>
 
         <tr>
-          <th style={{ fontWeight: 200 }}>extra large</th>
+          <th>extra large</th>
           <td> >1440px</td>
           <td> 1380</td>
           <td> 99</td>

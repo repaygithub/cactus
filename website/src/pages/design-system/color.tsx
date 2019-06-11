@@ -196,16 +196,16 @@ export default () => {
         <AccessibilityBox color="base" title="Base" isDark />
         <AccessibilityBox color="callToAction" title="CTA" isDark />
         <AccessibilityBox color="white" title="White" isDark={false} />
-        <AccessibilityBox color="darkestContrast" title="DarkestContrast" isDark />
-        <AccessibilityBox color="darkContrast" title="DarkContrast" isDark />
-        <AccessibilityBox color="mediumContrast" title="MediumContrast" isDark />
-        <AccessibilityBox color="lightContrast" title="LightContrast" isDark={false} />
+        <AccessibilityBox color="darkestContrast" title="Darkest Contrast" isDark />
+        <AccessibilityBox color="darkContrast" title="Dark Contrast" isDark />
+        <AccessibilityBox color="mediumContrast" title="Medium Contrast" isDark />
+        <AccessibilityBox color="lightContrast" title="Light Contrast" isDark={false} />
         <AccessibilityBox color="success" title="Success" isDark />
         <AccessibilityBox color="error" title="Error" isDark />
         <AccessibilityBox color="warning" title="Warning" isDark={false} />
-        <AccessibilityBox color="lightGray" title="LightGray" isDark={false} />
-        <AccessibilityBox color="mediumGray" title="MediumGray" isDark />
-        <AccessibilityBox color="darkGray" title="DarkGray" isDark />
+        <AccessibilityBox color="lightGray" title="Light Gray" isDark={false} />
+        <AccessibilityBox color="mediumGray" title="Medium Gray" isDark />
+        <AccessibilityBox color="darkGray" title="Dark Gray" isDark />
       </Flex>
       <Text as="h4" fontSize="h4">
         Exceptions to contrast requirements:
