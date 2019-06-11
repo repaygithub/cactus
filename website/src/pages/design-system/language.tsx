@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 import { Flex } from '@repay/cactus-web'
-import { Link } from 'gatsby'
 import Helmet from 'react-helmet'
+import Link from '../../components/Link'
 import styled from 'styled-components'
 
 const Em = styled.em`

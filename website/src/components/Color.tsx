@@ -60,7 +60,7 @@ function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
       px={3}
       pb={3}
       mb={hasDisplayName ? 0 : '-4px'}
-      width="100%"
+      width="105%"
       color={textColor}
       bg={color}
       borderWidth="1px"
@@ -164,13 +164,27 @@ Cell.defaultProps = {
 
 const HCell = styled(Cell)`
   position: relative;
+  width: 20%;
+  @media only screen and (max-width: 600px) {
+    width: 10%;
+  }
 `
 
 HCell.defaultProps = {
-  px: 3,
+  px: 2,
   pt: 0,
   pb: 2,
 }
+
+const AccessibilityFlex = styled(Flex)`
+  width: device-width;
+
+  @media only screen and (max-width: 600px) {
+    padding: 5% 1% 5% 3%;
+    font-size: small;
+    width: device-width;
+  }
+`
 
 const whiteColor = new Color(cactusTheme.colors.white)
 const darkestContrastColor = new Color(cactusTheme.colors.darkestContrast)
@@ -260,16 +274,15 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
   const contrastToWhite = thisColor.contrast(whiteColor)
   const contrastToDarkestContrast = thisColor.contrast(darkestContrastColor)
   return (
-    <Flex
-      flexWrap="wrap"
-      p={4}
+    <AccessibilityFlex
       m={4}
-      borderRadius="4px"
+      p={4}
+      borderRadius="2px"
       bg={color}
       color={compareColor}
       style={color === 'white' ? { border: borderStyle } : {}}
     >
-      <Table style={{ borderCollapse: 'collapse', borderSpacing: 0, width: '100%' }}>
+      <Table style={{ borderCollapse: 'collapse', borderSpacing: 0 }}>
         <thead>
           <tr style={{ borderBottom: borderStyle }}>
             <HCell as="th" textAlign="left">
@@ -282,7 +295,7 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
                 </Span>
               </Box>
             </HCell>
-            <HCell as="th" borderRight={borderStyle}>
+            <HCell as="th" borderRight={borderStyle} style={{ width: '5px' }}>
               <Span fontWeight={300} fontSize="small" lineHeight="1em">
                 Ratio
               </Span>
@@ -429,6 +442,6 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
           </tr>
         </tbody>
       </Table>
-    </Flex>
+    </AccessibilityFlex>
   )
 }

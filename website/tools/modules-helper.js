@@ -17,14 +17,18 @@ function getModules() {
   }
   // gather module metadata
   const moduleDirs = fs.readdirSync(resolveModule())
-  const packages = moduleDirs.map(dirname => {
-    return JSON.parse(fs.readFileSync(resolveModule(dirname, 'package.json')))
-  })
-  allModules = packages.map((pkg, index) => {
-    pkg.dirname = moduleDirs[index]
-    pkg.hasStorybook = hasStorybook(pkg)
-    return pkg
-  })
+  allModules = []
+  for (let i = 0; i < moduleDirs.length; i++) {
+    const dirname = moduleDirs[i]
+    const packagePath = resolveModule(dirname, 'package.json')
+    if (fs.existsSync(packagePath)) {
+      const pkg = JSON.parse(fs.readFileSync(packagePath))
+      pkg.dirname = dirname
+      pkg.hasStorybook = hasStorybook(pkg)
+      allModules.push(pkg)
+    }
+  }
+
   return allModules
 }
 

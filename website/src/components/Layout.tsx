@@ -5,6 +5,7 @@ import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
 import { Motion, spring } from 'react-motion'
 import { useRect } from '@reach/rect'
 import Close from '@repay/cactus-icons/i/navigation-close'
+import Helmet from 'react-helmet'
 import Menu from '@repay/cactus-icons/i/navigation-hamburger'
 import storybooks from '../storybook-config.json'
 import styled from 'styled-components'
@@ -246,33 +247,41 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
   `)
   let groups = React.useMemo(() => createMenuGroups(pages), [pages])
   return (
-    <StyleProvider global>
-      <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
-        {({ width }) => {
-          return (
-            <div className={className}>
-              <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
-                <InnerSidebar ref={sidebarRef}>
-                  <MenuList menu={groups} />
-                </InnerSidebar>
-              </OuterSidebar>
-              <PositionableIconButton
-                position="fixed"
-                top="8px"
-                iconSize="medium"
-                onClick={toggleOpen}
-                style={{ left: width + 8 }}
-              >
-                {isOpen ? <Close /> : <Menu />}
-              </PositionableIconButton>
-              <Box p="16px 40px" style={{ marginLeft: width }}>
-                {children}
-              </Box>
-            </div>
-          )
-        }}
-      </Motion>
-    </StyleProvider>
+    <React.Fragment>
+      <Helmet>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.00, minimum-scale=1.00, maximum-scale=2.00"
+        />
+      </Helmet>
+      <StyleProvider global>
+        <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
+          {({ width }) => {
+            return (
+              <div className={className}>
+                <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
+                  <InnerSidebar ref={sidebarRef}>
+                    <MenuList menu={groups} />
+                  </InnerSidebar>
+                </OuterSidebar>
+                <PositionableIconButton
+                  position="fixed"
+                  top="8px"
+                  iconSize="medium"
+                  onClick={toggleOpen}
+                  style={{ left: width + 8 }}
+                >
+                  {isOpen ? <Close /> : <Menu />}
+                </PositionableIconButton>
+                <Box maxWidth="2000px" p="16px 40px" style={{ marginLeft: width }}>
+                  {children}
+                </Box>
+              </div>
+            )
+          }}
+        </Motion>
+      </StyleProvider>
+    </React.Fragment>
   )
 }
 
