@@ -31,10 +31,10 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   render() {
     const { error, errorInfo } = this.state
-    const { children, errorView: errorDisplay } = this.props
+    const { children, errorView } = this.props
 
     if (error && errorInfo) {
-      return errorDisplay ? errorDisplay(error, errorInfo) : null
+      return errorView ? errorView(error, errorInfo) : null
     } else {
       return <Fragment>{children}</Fragment>
     }
