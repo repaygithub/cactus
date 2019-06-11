@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { Box } from '@repay/cactus-web'
-import { PropItem } from 'react-docgen-typescript'
+import { ComponentDoc, PropItem } from 'react-docgen-typescript'
 import { useDocgen } from './DocgenProvider'
 
 // TODO maybe move as outside component
@@ -68,9 +68,10 @@ export type ComponentWithFileMeta = React.ComponentType & {
 
 type PropsTableProps = {
   of: ComponentWithFileMeta
+  staticProp?: string
 }
 
-const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
+const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) => {
   const data = useDocgen()
   const fileName = component.__filemeta && component.__filemeta.filename
   const docItem = data.find(doc => doc.key === fileName)
@@ -79,9 +80,13 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
     if (docItem === undefined) {
       return {}
     }
-    const doc = docItem.value[0]
-    const componentName = doc.displayName
-    const props = Object.values(doc.props)
+    let value = docItem.value
+    let doc: ComponentDoc | undefined = value[0]
+    if (staticProp) {
+      doc = value.find(item => item.displayName === staticProp)
+    }
+    const componentName = doc && doc.displayName
+    const props = Object.values((doc && doc.props) || {})
     const ownProps = []
     const styledSystemProps = []
     const probablyStyledComponentProps = []
@@ -91,6 +96,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
         let sourceFile = prop.parent.fileName
         if (
           sourceFile.endsWith(componentName + '.tsx') ||
+          sourceFile.endsWith(component.displayName + '.tsx') ||
           prop.description.includes('!important')
         ) {
           prop.description = prop.description.replace(/!important\s*/, '')
@@ -112,7 +118,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component }) => {
       styledSystemProps,
       styledComponentProps: probablyStyledComponentProps,
     }
-  }, [docItem])
+  }, [component, docItem, staticProp])
 
   if (ownProps === undefined) {
     return null
