@@ -19,7 +19,6 @@ interface ItemProps
   medium?: ColumnNum
   large?: ColumnNum
   extraLarge?: ColumnNum
-  debug?: boolean
 }
 
 const calculateFlexItemSize = (columnNum: ColumnNum) =>
@@ -27,8 +26,6 @@ const calculateFlexItemSize = (columnNum: ColumnNum) =>
 
 export const Item = styled.div<ItemProps>`
   box-sizing: border-box;
-  background-color: ${p => (p.debug ? p.theme.colors.base : 'transparent')};
-  outline: ${p => (p.debug ? `1px solid ${p.theme.colors.base}` : 'none')};
 
   margin: ${GUTTER_WIDTH / 2}px ${GUTTER_WIDTH / 2}px;
   width: ${p => calculateFlexItemSize(p.tiny)};

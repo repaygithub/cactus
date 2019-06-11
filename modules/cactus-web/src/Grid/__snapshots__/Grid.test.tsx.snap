@@ -3,8 +3,6 @@
 exports[`component: Grid breakpoint styles should match larger screen sizes if their breakpoint style is not defined 1`] = `
 .c1 {
   box-sizing: border-box;
-  background-color: transparent;
-  outline: none;
   margin: 8px 8px;
   width: calc(25% - 16px);
 }
@@ -69,8 +67,6 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
 exports[`component: Grid should render extraLarge viewport design 1`] = `
 .c1 {
   box-sizing: border-box;
-  background-color: transparent;
-  outline: none;
   margin: 8px 8px;
   width: calc(33.33333333333333% - 16px);
 }
@@ -141,8 +137,6 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
 exports[`component: Grid should render tiny viewport design 1`] = `
 .c1 {
   box-sizing: border-box;
-  background-color: transparent;
-  outline: none;
   margin: 8px 8px;
   width: calc(25% - 16px);
 }
