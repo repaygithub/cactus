@@ -14,7 +14,7 @@
   "scripts": {
     "cleanup": "rm -rf dist coverage",
     "predev": "yarn run cleanup && yarn build:types",
-    "dev": "repay-scripts dev --lib src/index.tsx",
+    "dev": "repay-scripts dev --lib src/index.ts",
     "build": "repay-scripts build --lib src/index.ts",
     "postbuild": "yarn build:types",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly",
