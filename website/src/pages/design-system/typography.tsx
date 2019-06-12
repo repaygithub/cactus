@@ -20,7 +20,7 @@ const Table = styled('table')`
       display: block; 
       align: left;
     }
-    
+
     thead tr { 
     display: none; 
     }
@@ -43,7 +43,9 @@ const Table = styled('table')`
     td:nth-of-type(1):before { content: " Scale"; }
     td:nth-of-type(2):before { content: " Rem"; }
     td:nth-of-type(3):before { content: "PX"; }
-    td:nth-of-type(4):before { content: "Line Height"; }
+    td:nth-of-type(4):before { content: "Line Height";  }
+    
+  td:nth-of-type(5) {border-bottom: 2px solid #131313;}
   
   }
    
