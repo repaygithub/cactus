@@ -67,12 +67,17 @@ export default () => {
         <img
           src={HelveticaExample}
           alt="Helvetica font example"
-          style={{ width: '50%', maxWidth: '600px' }}
+          style={{ width: '50%', minWidth: '300px', maxWidth: '600px' }}
         />
         <img
           src={ArialExample}
           alt="Arial font example"
-          style={{ width: '50%', maxWidth: '600px', paddingTop: '16px' }}
+          style={{
+            width: '50%',
+            maxWidth: '600px',
+            minWidth: '300px',
+            paddingTop: '20px',
+          }}
         />
       </Flex>
       <h2>Scale</h2>
