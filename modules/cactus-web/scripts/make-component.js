@@ -106,7 +106,7 @@ import * as React from 'react'
 import { cleanup, render, fireEvent } from 'react-testing-library'
 import ${componentName} from './${componentName}'
 import cactusTheme from '@repay/cactus-theme'
-import { StyleProvider } from '@repay/cactus-web'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 
 afterEach(cleanup)
 

@@ -40,8 +40,7 @@ const variantMap: VariantMap = {
   standard: css`
     color: ${p => p.theme.colors.base};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${p => p.theme.colors.callToAction};
     }
   `,
@@ -107,8 +106,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   display: ${p => p.display || 'inline-flex'};
   align-items: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -116,6 +114,10 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
 
   &::-moz-focus-inner {
     border: 0;
+  }
+
+  &:focus {
+    background-color: ${p => p.theme.colors.transparentCTA};
   }
 
   ${variantOrDisabled}

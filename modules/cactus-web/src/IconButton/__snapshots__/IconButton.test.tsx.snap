@@ -19,8 +19,7 @@ exports[`component: IconButton should default to standard medium icon button 1`]
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -33,8 +32,11 @@ exports[`component: IconButton should default to standard medium icon button 1`]
   border: 0;
 }
 
-.c0:hover,
 .c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c0:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -77,8 +79,7 @@ exports[`component: IconButton should render call to action icon button 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -89,6 +90,10 @@ exports[`component: IconButton should render call to action icon button 1`] = `
 
 .c0::-moz-focus-inner {
   border: 0;
+}
+
+.c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 .c0:hover,
@@ -135,8 +140,7 @@ exports[`component: IconButton should render disabled variant 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -148,6 +152,10 @@ exports[`component: IconButton should render disabled variant 1`] = `
 
 .c0::-moz-focus-inner {
   border: 0;
+}
+
+.c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 <button
@@ -190,8 +198,7 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -204,8 +211,11 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
   border: 0;
 }
 
-.c0:hover,
 .c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c0:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -249,8 +259,7 @@ exports[`component: IconButton should render inverse call to action icon button 
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -261,6 +270,10 @@ exports[`component: IconButton should render inverse call to action icon button 
 
 .c0::-moz-focus-inner {
   border: 0;
+}
+
+.c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 .c0:hover,
@@ -307,8 +320,7 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -320,6 +332,10 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
 
 .c0::-moz-focus-inner {
   border: 0;
+}
+
+.c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 <button
@@ -362,8 +378,7 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -374,6 +389,10 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
 
 .c0::-moz-focus-inner {
   border: 0;
+}
+
+.c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 .c0:hover,
@@ -421,8 +440,7 @@ exports[`component: IconButton should render large icon button 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -435,8 +453,11 @@ exports[`component: IconButton should render large icon button 1`] = `
   border: 0;
 }
 
-.c0:hover,
 .c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c0:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -479,8 +500,7 @@ exports[`component: IconButton should render small icon button 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -493,8 +513,11 @@ exports[`component: IconButton should render small icon button 1`] = `
   border: 0;
 }
 
-.c0:hover,
 .c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c0:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -537,8 +560,7 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -551,8 +573,11 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
   border: 0;
 }
 
-.c0:hover,
 .c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c0:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -595,8 +620,7 @@ exports[`component: IconButton should render tiny icon button 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -609,8 +633,11 @@ exports[`component: IconButton should render tiny icon button 1`] = `
   border: 0;
 }
 
-.c0:hover,
 .c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c0:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -653,8 +680,7 @@ exports[`component: IconButton should support margin space props 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
-  border-radius: 50%;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -668,8 +694,11 @@ exports[`component: IconButton should support margin space props 1`] = `
   border: 0;
 }
 
-.c0:hover,
 .c0:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c0:hover {
   color: hsl(200,96%,35%);
 }
 

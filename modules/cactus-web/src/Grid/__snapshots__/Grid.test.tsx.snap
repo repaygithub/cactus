@@ -1,10 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Grid breakpoint styles should match larger screen sizes if their breakpoint style is not defined 1`] = `
-.c1 {
+.c2 {
   box-sizing: border-box;
   margin: 8px 8px;
   width: calc(25% - 16px);
+}
+
+.c3 > .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c4 > .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
 .c0 {
@@ -22,17 +44,40 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
   flex-wrap: wrap;
 }
 
+.c0 > .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
 @media (min-width:769px) {
-  .c1 {
+  .c2 {
     width: calc(50% - 16px);
   }
 }
 
 @supports (display:grid) {
-  .c1 {
+  .c2 {
     grid-column: span 3;
     width: auto;
     margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c3 > .c1 {
+    display: block;
+  }
+}
+
+@supports (display:grid) {
+  .c4 > .c1 {
+    display: block;
   }
 }
 
@@ -41,6 +86,11 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-gap: 16px;
+    justify-items: start;
+  }
+
+  .c0 > .c1 {
+    display: block;
   }
 }
 
@@ -49,23 +99,23 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
     class="c0"
   >
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
   </div>
 </div>
 `;
 
 exports[`component: Grid should render extraLarge viewport design 1`] = `
-.c1 {
+.c2 {
   box-sizing: border-box;
   margin: 8px 8px;
   width: calc(33.33333333333333% - 16px);
@@ -86,14 +136,25 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
   flex-wrap: wrap;
 }
 
+.c0 > .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
 @media (min-width:1441px) {
-  .c1 {
+  .c2 {
     width: calc(16.666666666666664% - 16px);
   }
 }
 
 @supports (display:grid) {
-  .c1 {
+  .c2 {
     grid-column: span 4;
     width: auto;
     margin: 0;
@@ -105,6 +166,11 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-gap: 16px;
+    justify-items: center;
+  }
+
+  .c0 > .c1 {
+    display: block;
   }
 }
 
@@ -113,32 +179,43 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
     class="c0"
   >
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
   </div>
 </div>
 `;
 
 exports[`component: Grid should render tiny viewport design 1`] = `
-.c1 {
+.c2 {
   box-sizing: border-box;
   margin: 8px 8px;
   width: calc(25% - 16px);
+}
+
+.c3 > .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c0 {
@@ -156,11 +233,28 @@ exports[`component: Grid should render tiny viewport design 1`] = `
   flex-wrap: wrap;
 }
 
+.c0 > .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
 @supports (display:grid) {
-  .c1 {
+  .c2 {
     grid-column: span 3;
     width: auto;
     margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c3 > .c1 {
+    display: block;
   }
 }
 
@@ -169,6 +263,11 @@ exports[`component: Grid should render tiny viewport design 1`] = `
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-gap: 16px;
+    justify-items: end;
+  }
+
+  .c0 > .c1 {
+    display: block;
   }
 }
 
@@ -177,16 +276,16 @@ exports[`component: Grid should render tiny viewport design 1`] = `
     class="c0"
   >
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
     <div
-      class="c1"
+      class="c1 c2"
     />
   </div>
 </div>
