@@ -14,6 +14,40 @@ const Table = styled('table')`
   td {
     padding: 16px;
   }
+
+  @media only screen and (max-width: 500px){
+    table, thead, tbody, th, td { 
+      display: block; 
+      align: left;
+    }
+    
+    thead tr { 
+    display: none; 
+    }
+    
+    td { 
+      border: none;
+      position: relative;
+      padding: 0 10% 10% 35%;
+      border-bottom: 1px solid #eee; 
+      overflow-x:auto;
+    }
+    
+    td:before { 
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 30%; 
+    }
+    
+    td:nth-of-type(1):before { content: " Scale"; }
+    td:nth-of-type(2):before { content: " Rem"; }
+    td:nth-of-type(3):before { content: "PX"; }
+    td:nth-of-type(4):before { content: "Line Height"; }
+  
+  }
+   
+
 `
 
 export default () => {

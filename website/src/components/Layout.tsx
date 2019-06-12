@@ -211,6 +211,14 @@ const OuterSidebar = styled.div`
 
 const springConfig = { stiffness: 220, damping: 26 }
 
+const WindowBox = styled(Box)`
+  max-width: 2000px;
+  padding: 16px 40px;
+  @media only screen and (max-width: 400px) {
+    padding: 16px 10px;
+  }
+`
+
 const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) => {
   // TODO default open should depend on window width
   const [isOpen, setOpen] = React.useState(global.window && global.window.innerWidth >= 1024)
@@ -251,7 +259,7 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
       <Helmet>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.00, minimum-scale=1.00, maximum-scale=2.00"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.00"
         />
       </Helmet>
       <StyleProvider global>
@@ -273,9 +281,7 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
                 >
                   {isOpen ? <Close /> : <Menu />}
                 </PositionableIconButton>
-                <Box maxWidth="2000px" p="16px 40px" style={{ marginLeft: width }}>
-                  {children}
-                </Box>
+                <WindowBox style={{ marginLeft: width }}>{children}</WindowBox>
               </div>
             )
           }}
