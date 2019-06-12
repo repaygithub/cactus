@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cleanup, render } from 'react-testing-library'
-import { StyleProvider } from '@repay/cactus-web'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Grid from './Grid'
 
 afterEach(cleanup)
@@ -9,7 +9,7 @@ describe('component: Grid', () => {
   test('should render extraLarge viewport design', () => {
     const { container } = render(
       <StyleProvider>
-        <Grid>
+        <Grid justify="center">
           <Grid.Item tiny={4} extraLarge={2} />
           <Grid.Item tiny={4} extraLarge={2} />
           <Grid.Item tiny={4} extraLarge={2} />
@@ -26,7 +26,7 @@ describe('component: Grid', () => {
   test('should render tiny viewport design', () => {
     const { container } = render(
       <StyleProvider>
-        <Grid>
+        <Grid justify="end">
           <Grid.Item tiny={3} />
           <Grid.Item tiny={3} />
           <Grid.Item tiny={3} />

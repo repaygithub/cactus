@@ -10,7 +10,9 @@ type ColumnNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 
 interface GridProps
   extends MarginProps,
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  justify?: 'start' | 'center' | 'end'
+}
 
 interface ItemProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -69,6 +71,12 @@ export const Item = styled.div<ItemProps>`
   }
 `
 
+const flexJustifyMap = {
+  start: 'flex-start',
+  end: 'flex-end',
+  center: 'center',
+}
+
 interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridProps> {
   Item: React.ComponentType<ItemProps>
 }
@@ -81,15 +89,29 @@ export const Grid = styled.div<GridProps>`
   flex-direction: row;
   flex-wrap: wrap;
 
+  > ${Item} {
+    display: flex;
+    justify-content: ${p => (p.justify ? flexJustifyMap[p.justify] : 'flex-start')};
+  }
+
   @supports (display: grid) {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-gap: ${GUTTER_WIDTH}px;
+    justify-items: ${p => (p.justify ? p.justify : 'start')};
+
+    > ${Item} {
+      display: block;
+    }
   }
 
   ${margins}
 ` as any
 
 Grid.Item = Item
+
+Grid.defaultProps = {
+  justify: 'start',
+}
 
 export default Grid as GridComponent
