@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { ErrorBoundary, ErrorView, OnError } from './ErrorBoundary'
 import { FeatureFlagContext } from './featureFlags'
 import { FeatureFlagsObject } from './types'
-import ErrorBoundary, { ErrorView, OnError } from './ErrorBoundary'
 
 interface AppRootProps {
   /**

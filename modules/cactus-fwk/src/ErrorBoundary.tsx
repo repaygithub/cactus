@@ -1,7 +1,12 @@
-import React, { ErrorInfo, Fragment, ReactElement } from 'react'
+import React, { ComponentType, ErrorInfo, Fragment } from 'react'
 
-export type ErrorView = (error: Error, info: ErrorInfo) => ReactElement
+export type ErrorView = ComponentType<ErrorViewProps>
 export type OnError = (error: Error, info: ErrorInfo) => void
+
+interface ErrorViewProps {
+  error: Error
+  info: ErrorInfo
+}
 
 interface ErrorBoundaryProps {
   onError: OnError
@@ -15,30 +20,49 @@ interface ErrorBoundaryState {
 
 const initialState: ErrorBoundaryState = { error: undefined, errorInfo: undefined }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   readonly state: ErrorBoundaryState = initialState
 
   componentDidCatch(error: Error | null, info: ErrorInfo | null) {
+    const { onError } = this.props
     if (error === null) {
       error = new Error('Error was lost during propagation')
     }
     if (info === null) {
       info = { componentStack: 'Stack trace unavailable.' }
     }
-    this.props.onError(error, info)
+    if (typeof onError === 'function') {
+      onError(error, info)
+    }
     this.setState({ error: error, errorInfo: info })
   }
 
   render() {
     const { error, errorInfo } = this.state
-    const { children, errorView } = this.props
+    const { children, errorView: ErrorView } = this.props
 
     if (error && errorInfo) {
-      return errorView ? errorView(error, errorInfo) : null
+      return ErrorView ? <ErrorView error={error} info={errorInfo} /> : null
     } else {
       return <Fragment>{children}</Fragment>
     }
   }
 }
 
-export default ErrorBoundary
+const noop = (error: Error, info: React.ErrorInfo) => {}
+
+const withErrorBoundary = <BaseProps extends any>(
+  BaseComponent: ComponentType<BaseProps>,
+  onError?: OnError,
+  errorView?: ErrorView
+) => {
+  const Wrapped = (props: BaseProps) => (
+    <ErrorBoundary onError={onError ? onError : noop} errorView={errorView}>
+      <BaseComponent {...props} />
+    </ErrorBoundary>
+  )
+
+  return Wrapped
+}
+
+export default withErrorBoundary
