@@ -25,8 +25,7 @@ ShadowBox.defaultProps = {
 
 const Table = styled('table')`
   border-collapse: collapse;
-  width: 50%;
- 
+
   th {
     border: 1px solid black;
     text-align: left;
@@ -34,22 +33,41 @@ const Table = styled('table')`
   }
   td {
     border: 1px solid black;
-    text-align: right;
     font-weight: 200;
-    padding 3px;
+    padding: 3px;
   }
-  @media only screen and (max-width: 760px) {
-    padding: 0;
-    th {
-      font-size: 66%;
-      font-weight: 400;
-      padding: 1px;
+
+  @media only screen and (max-width: 500px) {
+    table, thead, tbody, th, td { 
+      display: block; 
+      align: left;
+    }
+
+    thead tr { 
+    display: none; 
+    }
+    td  { 
+      border: none;
+      position: relative;
+      border-bottom: 1px solid #eee; 
+      padding: 2px 0 10px 225px;
+    }
+    
+    td:before { 
+    position: absolute;
+    text-align: left;
+    top: 2px;
+    left: 2px;
     }
-    td {
-      font-size: 66%;
-      font-weight: 300;
-      padding: 1px;
-    }
+    
+    td:nth-of-type(1):before { content: "Breaking Points"; }
+    td:nth-of-type(2):before { content: "Responsive Sizes"; }
+    td:nth-of-type(3):before { content: "Content Size"; }
+    td:nth-of-type(4):before { content: "Column Size";  }
+    td:nth-of-type(5):before { content: "Columns";  }
+    td:nth-of-type(6):before { content: "Margin";  }
+    td:nth-of-type(7):before { content: "Gutter";  }
+    td:nth-of-type(7) {border-bottom: 2px solid #131313;}
   }
 `
 
@@ -241,35 +259,22 @@ export default () => {
       <Text>
         The different column sizes automatically change dimensions if they reach a breakpoint.
       </Text>
+
       <Table>
         <thead>
           <tr>
-            <th>
-              <Span> Breaking Points</Span>
-            </th>
-            <th>
-              <Span>Responsive Sizes</Span>
-            </th>
-            <th>
-              <Span>Content Size</Span>
-            </th>
-            <th>
-              <Span>Column Size</Span>
-            </th>
-            <th>
-              <Span>Columns</Span>
-            </th>
-            <th>
-              <Span>Margin</Span>
-            </th>
-            <th>
-              <Span>Gutter</Span>
-            </th>
+            <th>Breaking Points</th>
+            <th>Responsive Sizes</th>
+            <th>Content Size</th>
+            <th>Column Size</th>
+            <th>Columns</th>
+            <th>Margin</th>
+            <th>Gutter</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th>mini</th>
+            <td>mini</td>
             <td> >320px</td>
             <td> 320</td>
             <td> 64</td>
@@ -279,7 +284,7 @@ export default () => {
           </tr>
 
           <tr>
-            <th>small</th>
+            <td>small</td>
             <td> >768px</td>
             <td> 708</td>
             <td> 102</td>
@@ -289,7 +294,7 @@ export default () => {
           </tr>
 
           <tr>
-            <th>medium</th>
+            <td>medium</td>
             <td> >1024px</td>
             <td> 964</td>
             <td> 104</td>
@@ -299,7 +304,7 @@ export default () => {
           </tr>
 
           <tr>
-            <th>large</th>
+            <td>large</td>
             <td> >1200px</td>
             <td> 1140</td>
             <td> 79</td>
@@ -309,7 +314,7 @@ export default () => {
           </tr>
 
           <tr>
-            <th>extra large</th>
+            <td>extra large</td>
             <td> >1440px</td>
             <td> 1380</td>
             <td> 99</td>
