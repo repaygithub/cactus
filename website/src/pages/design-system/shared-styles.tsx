@@ -109,6 +109,14 @@ const Img = styled('img')`
   heght: auto;
 `
 
+const Clear = styled(Box)`
+  ::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+`
+
 export default () => {
   return (
     <>
@@ -167,7 +175,7 @@ export default () => {
         of an page and how individual components associate within an interface.
       </Text>
       <Text> The main bar, footer, and action bar use the 8pt grid for placement.</Text>
-      <Box>
+      <Clear>
         <Img src={GridImage} alt="Columns" style={{ padding: '1% 0 0 0 ' }} />
 
         <Text style={{ float: 'left', padding: '5% 5% 0 5%' }}>
@@ -175,54 +183,57 @@ export default () => {
           2) Action Bar
           <br /> 3) Side panel <br /> 4) Content <br /> 5) Footer
         </Text>
-      </Box>
+      </Clear>
       <br />
-      <Box>
+      <Clear>
         <Img src={ColumnImage} alt="Grid" style={{ float: 'left', padding: '4% 3% 0 2% ' }} />
 
         <ColumnKey>
-          <tr>
+          <thead>
+            <tr>
+              <th>
+                <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 50%, 89%)' }}>
+                  <Box m="0 0 0 30px"> Column</Box>
+                </Flex>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ width: '275px' }}>
+                The columns are fluid, having a responsive width which conforms to the size of their
+                parent container.
+              </td>
+            </tr>
+
             <th>
-              <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 50%, 89%)' }}>
-                <Box m="0 0 0 30px"> Column</Box>
+              <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 52%, 54%)' }}>
+                <Box m="0 0 0 30px"> Margin</Box>
               </Flex>
             </th>
-          </tr>
 
-          <tr>
-            <td style={{ width: '275px' }}>
-              The columns are fluid, having a responsive width which conforms to the size of their
-              parent container.
-            </td>
-          </tr>
+            <tr>
+              <td style={{ width: '150px' }}>
+                Margins are the negative space between the edge of the format and the outer edge of
+                the content.
+              </td>
+            </tr>
 
-          <th>
-            <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 52%, 54%)' }}>
-              <Box m="0 0 0 30px"> Margin</Box>
-            </Flex>
-          </th>
+            <th>
+              <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 51%, 77%)' }}>
+                <Box m="0 0 0 30px"> Gutter</Box>
+              </Flex>
+            </th>
 
-          <tr>
-            <td style={{ width: '150px' }}>
-              Margins are the negative space between the edge of the format and the outer edge of
-              the content.
-            </td>
-          </tr>
-
-          <th>
-            <Flex width="20px" height="20px" style={{ backgroundColor: 'hsl(200, 51%, 77%)' }}>
-              <Box m="0 0 0 30px"> Gutter</Box>
-            </Flex>
-          </th>
-
-          <tr>
-            <td style={{ width: '150px' }}>
-              Grid columns are seperated by areas of white space referred to as "gutters". Gutters
-              improve legibility by providing negative space between page elements.
-            </td>
-          </tr>
+            <tr>
+              <td style={{ width: '150px' }}>
+                Grid columns are seperated by areas of white space referred to as "gutters". Gutters
+                improve legibility by providing negative space between page elements.
+              </td>
+            </tr>
+          </tbody>
         </ColumnKey>
-      </Box>
+      </Clear>
 
       <Text as="h2" fontSize="h2" textAlign="left" style={{ padding: '5% 0 0 0' }}>
         Break-points
@@ -231,79 +242,82 @@ export default () => {
         The different column sizes automatically change dimensions if they reach a breakpoint.
       </Text>
       <Table>
-        <tr>
-          <th>
-            <Span> Breaking Points</Span>
-          </th>
-          <th>
-            <Span>Responsive Sizes</Span>
-          </th>
-          <th>
-            <Span>Content Size</Span>
-          </th>
-          <th>
-            <Span>Column Size</Span>
-          </th>
-          <th>
-            <Span>Columns</Span>
-          </th>
-          <th>
-            <Span>Margin</Span>
-          </th>
-          <th>
-            <Span>Gutter</Span>
-          </th>
-        </tr>
+        <thead>
+          <tr>
+            <th>
+              <Span> Breaking Points</Span>
+            </th>
+            <th>
+              <Span>Responsive Sizes</Span>
+            </th>
+            <th>
+              <Span>Content Size</Span>
+            </th>
+            <th>
+              <Span>Column Size</Span>
+            </th>
+            <th>
+              <Span>Columns</Span>
+            </th>
+            <th>
+              <Span>Margin</Span>
+            </th>
+            <th>
+              <Span>Gutter</Span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>mini</th>
+            <td> >320px</td>
+            <td> 320</td>
+            <td> 64</td>
+            <td> 4</td>
+            <td> 8</td>
+            <td> 16</td>
+          </tr>
 
-        <tr>
-          <th>mini</th>
-          <td> >320px</td>
-          <td> 320</td>
-          <td> 64</td>
-          <td> 4</td>
-          <td> 8</td>
-          <td> 16</td>
-        </tr>
+          <tr>
+            <th>small</th>
+            <td> >768px</td>
+            <td> 708</td>
+            <td> 102</td>
+            <td> 6</td>
+            <td> 8</td>
+            <td> 16</td>
+          </tr>
 
-        <tr>
-          <th>small</th>
-          <td> >768px</td>
-          <td> 708</td>
-          <td> 102</td>
-          <td> 6</td>
-          <td> 8</td>
-          <td> 16</td>
-        </tr>
+          <tr>
+            <th>medium</th>
+            <td> >1024px</td>
+            <td> 964</td>
+            <td> 104</td>
+            <td> 8</td>
+            <td> 10</td>
+            <td> 16</td>
+          </tr>
 
-        <tr>
-          <th>medium</th>
-          <td> >1024px</td>
-          <td> 964</td>
-          <td> 104</td>
-          <td> 8</td>
-          <td> 10</td>
-          <td> 16</td>
-        </tr>
+          <tr>
+            <th>large</th>
+            <td> >1200px</td>
+            <td> 1140</td>
+            <td> 79</td>
+            <td> 12</td>
+            <td> 8</td>
+            <td> 16</td>
+          </tr>
 
-        <tr>
-          <th>large</th>
-          <td> >1200px</td>
-          <td> 1140</td>
-          <td> 79</td>
-          <td> 12</td>
-          <td> 8</td>
-          <td> 16</td>
-        </tr>
-
-        <tr>
-          <th>extra large</th>
-          <td> >1440px</td>
-          <td> 1380</td>
-          <td> 99</td>
-          <td> 12</td>
-          <td> 6</td>
-          <td> 16</td>
-        </tr>
+          <tr>
+            <th>extra large</th>
+            <td> >1440px</td>
+            <td> 1380</td>
+            <td> 99</td>
+            <td> 12</td>
+            <td> 6</td>
+            <td> 16</td>
+          </tr>
+        </tbody>
       </Table>
       <Text as="h2" fontSize="h2">
         Spacing
@@ -313,49 +327,51 @@ export default () => {
       </Text>
 
       <TableSpacing>
-        <tr>
-          <td> Extra Small </td>
+        <tbody>
+          <tr>
+            <td> Extra Small </td>
 
-          <td style={{ padding: '0 0 0 100px' }}>
-            <SpacingBox padding="4px" color="hsl(200, 48%, 94%)" />
-          </td>
-        </tr>
+            <td style={{ padding: '0 0 0 100px' }}>
+              <SpacingBox padding="4px" color="hsl(200, 48%, 94%)" />
+            </td>
+          </tr>
 
-        <tr>
-          <td> Mini </td>
+          <tr>
+            <td> Mini </td>
 
-          <td style={{ padding: '20px 0 0 100px' }}>
-            <SpacingBox padding="8px" color="hsl(200, 48%, 94%)" />
-          </td>
-        </tr>
+            <td style={{ padding: '20px 0 0 100px' }}>
+              <SpacingBox padding="8px" color="hsl(200, 48%, 94%)" />
+            </td>
+          </tr>
 
-        <tr>
-          <td> Small </td>
-          <td style={{ padding: '20px 0 0 100px' }}>
-            <SpacingBox padding="16px" color="hsl(200, 47%, 88%)" />
-          </td>
-        </tr>
+          <tr>
+            <td> Small </td>
+            <td style={{ padding: '20px 0 0 100px' }}>
+              <SpacingBox padding="16px" color="hsl(200, 47%, 88%)" />
+            </td>
+          </tr>
 
-        <tr>
-          <td> Medium </td>
-          <td style={{ padding: '20px 0 0 100px' }}>
-            <SpacingBox padding="24px" color="hsl(200, 48%, 76%)" />
-          </td>
-        </tr>
+          <tr>
+            <td> Medium </td>
+            <td style={{ padding: '20px 0 0 100px' }}>
+              <SpacingBox padding="24px" color="hsl(200, 48%, 76%)" />
+            </td>
+          </tr>
 
-        <tr>
-          <td> Large </td>
-          <td style={{ padding: '20px 0 0 100px' }}>
-            <SpacingBox padding="32px" color="hsl(200, 50%, 70%)" />
-          </td>
-        </tr>
+          <tr>
+            <td> Large </td>
+            <td style={{ padding: '20px 0 0 100px' }}>
+              <SpacingBox padding="32px" color="hsl(200, 50%, 70%)" />
+            </td>
+          </tr>
 
-        <tr>
-          <td> Extra Large </td>
-          <td style={{ padding: '20px 0 0 100px ' }}>
-            <SpacingBox padding="40px" color="hsl(200, 50%, 70%)" />
-          </td>
-        </tr>
+          <tr>
+            <td> Extra Large </td>
+            <td style={{ padding: '20px 0 0 100px ' }}>
+              <SpacingBox padding="40px" color="hsl(200, 50%, 70%)" />
+            </td>
+          </tr>
+        </tbody>
       </TableSpacing>
     </>
   )
