@@ -10,11 +10,19 @@ const CenteredList = styled.ul`
   list-style: none;
   text-align: center;
   padding-left: 0;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 15px;
+  }
 `
 
 const Heading = styled.h2<TextAlignProps & ColorProps>`
   ${color}
   ${textAlign}
+
+  @media only screen and (max-width: 500px) {
+    font-size: 20px;
+  }
 `
 
 export default () => {

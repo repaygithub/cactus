@@ -48,8 +48,13 @@ const Table = styled('table')`
   td:nth-of-type(5) {border-bottom: 2px solid #131313;}
   
   }
-   
+`
+const WeightFlex = styled(Flex)`
+  justify-content: space-between;
 
+  @media only screen and (max-width: 500px) {
+    justify-content: center;
+  }
 `
 
 export default () => {
@@ -170,7 +175,7 @@ export default () => {
       </Table>
       <h2>Weight</h2>
       <Text>We use different weights to convey a visual rhythm and hierarchy.</Text>
-      <Flex justifyContent="space-between">
+      <WeightFlex>
         <Flex flexDirection="column" alignItems="center" p={4}>
           <Span fontSize="h1" fontWeight={300}>
             w300
@@ -195,7 +200,7 @@ export default () => {
             Bold Weight
           </Span>
         </Flex>
-      </Flex>
+      </WeightFlex>
       <Text fontStyle="italic">
         The Light Weight should only be used at sizes greater than or equal to 18px / 1 rem.
         Additionally, Arial doesn't have a 300 weight by default and therefore will not be

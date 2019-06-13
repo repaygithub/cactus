@@ -10,7 +10,11 @@ const Em = styled.em`
   font-weight: 600;
   color: ${p => p.theme.colors.callToAction};
 `
-
+const P = styled.p`
+  @media only screen and (max-width: 500px) {
+    min-width: 300px;
+  }
+`
 export default () => {
   return (
     <>
@@ -30,36 +34,36 @@ export default () => {
       <Flex display="flex" justifyContent="space-between">
         <Flex p="8px" flexBasis="25%" flexDirection="column">
           <h4>Clear</h4>
-          <p>
+          <P>
             An easy to perceive and understand design. It should take minimal effort to identify a
             component or navigate the interface. The text is legible at every size, icons are
             well-defined and obvious. Color is monochrome and minimal. Components are accessible by
             default.
-          </p>
+          </P>
         </Flex>
         <Flex p="8px" flexBasis="25%" flexDirection="column">
           <h4>Consistent</h4>
-          <p>
+          <P>
             A consistent interface is one of our key principles both in design and experience.
             Consistency is the thread that ties together elements in a single design and across
             multiple platforms. This ensures <i>clarity</i> between applications and pages.
-          </p>
+          </P>
         </Flex>
         <Flex p="8px" flexBasis="25%" flexDirection="column">
           <h4>Intuitive</h4>
-          <p>
+          <P>
             A design is intuitive when users can focus on a task at hand without stopping. An
             intuitive design directs attention to important tasks which creates an easy-to-use
             product and frictionless experience.
-          </p>
+          </P>
         </Flex>
         <Flex p="8px" flexBasis="25%" flexDirection="column">
           <h4>Reusable</h4>
-          <p>
+          <P>
             Our design goal is to create a library with reusable components and behaviors. Instances
             of the same component can be used throuout the interface to streamline development and
             reduce the need for users to re-learn or remember.
-          </p>
+          </P>
         </Flex>
       </Flex>
       <h2>Design Methodology</h2>
