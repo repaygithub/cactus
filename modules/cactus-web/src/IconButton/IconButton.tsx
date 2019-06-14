@@ -93,15 +93,6 @@ const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((pro
   )
 })
 
-IconButtonBase.defaultProps = {
-  variant: 'standard',
-  iconSize: 'medium',
-  display: 'inline-flex',
-  disabled: false,
-  inverse: false,
-  type: 'button',
-}
-
 export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   display: ${p => p.display || 'inline-flex'};
   align-items: center;
@@ -124,5 +115,14 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   ${margins}
   ${iconSizes}
 `
+
+IconButton.defaultProps = {
+  variant: 'standard',
+  iconSize: 'medium',
+  display: 'inline-flex',
+  disabled: false,
+  inverse: false,
+  type: 'button',
+}
 
 export default IconButton
