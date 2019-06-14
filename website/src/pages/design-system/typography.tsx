@@ -1,8 +1,9 @@
 import * as React from 'react'
 
-import { Box, Flex } from '@repay/cactus-web'
+import { Flex } from '@repay/cactus-web'
 import cactusTheme from '@repay/cactus-theme'
 import Helmet from 'react-helmet'
+import Link from '../../components/Link'
 import styled from 'styled-components'
 import Text, { Span } from '../../components/Text'
 
@@ -263,7 +264,7 @@ export default () => {
         </tbody>
       </table>
       <Text mt={6} mb={5} fontSize="h3">
-        Next, we'll review all the <a href="/design-system/icons/">icons</a>.
+        Next, we'll review all the <Link href="/design-system/icons/">icons</Link>.
       </Text>
     </>
   )
