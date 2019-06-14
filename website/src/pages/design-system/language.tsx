@@ -73,7 +73,7 @@ export default () => {
         tables, batch cards, notification messages, etc. Atoms and molecules compose our{' '}
         <Em>organisms</Em>: navigation, sidebars, and carousel payment actions. For more information
         on the Atomic Design methodology, see the{' '}
-        <a href="http://atomicdesign.bradfrost.com/">book by Brad Frost</a> who created it.
+        <Link href="http://atomicdesign.bradfrost.com/">book by Brad Frost</Link> who created it.
       </p>
       <p>
         Next, we'll present and dicuss our <Link to="/design-system/foundation/">foundation</Link>{' '}

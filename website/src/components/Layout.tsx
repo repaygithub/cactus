@@ -141,21 +141,14 @@ const StyledLink = styled(Link)`
 
 const StyledA = StyledLink.withComponent('a')
 
-const isStorybookUrl = (url: string) => url.includes('/stories/')
-const forceLocationReload = (event: React.SyntheticEvent<HTMLAnchorElement>) => {
-  event.preventDefault()
-  const href = event.currentTarget.getAttribute('href')
-  global.window && href !== null && href !== '' && (global.window.location.href = href)
-}
+const isStorybookUrl = (url: string) => /stories\/[a-zA-Z]/.test(url)
 
 const BaseMenuList: React.FC<{ menu: MenuGroup; className?: string }> = ({ menu, className }) => (
   <ul className={className}>
     {menu.items.map(item => (
       <li key={item.url}>
         {isStorybookUrl(item.url) ? (
-          <StyledA href={item.url} onClick={forceLocationReload}>
-            {item.title}
-          </StyledA>
+          <StyledA href={item.url}>{item.title}</StyledA>
         ) : (
           <StyledLink to={item.url}>{item.title}</StyledLink>
         )}
