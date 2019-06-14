@@ -1,5 +1,7 @@
 import React, { ComponentType, ErrorInfo, Fragment } from 'react'
 
+import PropTypes from 'prop-types'
+
 export type ErrorView = ComponentType<ErrorViewProps>
 export type OnError = (error: Error, info: ErrorInfo) => void
 
@@ -22,6 +24,19 @@ const initialState: ErrorBoundaryState = { error: undefined, errorInfo: undefine
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   readonly state: ErrorBoundaryState = initialState
+
+  static propTypes = {
+    onError: PropTypes.func.isRequired,
+    errorView: (props: any, propName: any, componentName: any) => {
+      const prop = props[propName]
+      if (prop !== undefined && typeof prop !== 'string' && typeof prop !== 'function') {
+        return new Error(
+          `The prop \`${propName}\` is marked as a component type in \`${componentName}\` but its type is \`${typeof prop}\`.`
+        )
+      }
+      return null
+    },
+  }
 
   componentDidCatch(error: Error | null, info: ErrorInfo | null) {
     const { onError } = this.props
@@ -49,15 +64,17 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 }
 
-const noop = (error: Error, info: React.ErrorInfo) => {}
-
 const withErrorBoundary = <BaseProps extends any>(
   BaseComponent: ComponentType<BaseProps>,
-  onError?: OnError,
+  onError: OnError,
   errorView?: ErrorView
 ) => {
+  if (onError === undefined) {
+    throw new Error('You must pass the `onError` prop when using `withErrorBoundary`!')
+  }
+
   const Wrapped = (props: BaseProps) => (
-    <ErrorBoundary onError={onError ? onError : noop} errorView={errorView}>
+    <ErrorBoundary onError={onError} errorView={errorView}>
       <BaseComponent {...props} />
     </ErrorBoundary>
   )
