@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Box, Flex } from '@repay/cactus-web'
 import ColumnImage from '../design-system/grid-columns.png'
 import GridImage from '../design-system/grid-numbered.png'
+import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import Text, { Span } from '../../components/Text'
 
@@ -138,6 +139,8 @@ const Clear = styled(Box)`
 export default () => {
   return (
     <>
+      <Helmet title="Shared Styles" />
+
       <Text as="h1" fontSize="h1">
         Shared Styles
       </Text>

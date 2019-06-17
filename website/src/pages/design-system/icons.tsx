@@ -2,10 +2,12 @@ import * as React from 'react'
 
 import { categories, iconsCategoryMap } from '../../helpers/iconGroups'
 import { Flex } from '@repay/cactus-web'
+import Helmet from 'react-helmet'
 import Text from '../../components/Text'
 
 export default () => (
   <>
+    <Helmet title="Icons" />
     <Text as="h1" fontSize="h1">
       Icons
     </Text>

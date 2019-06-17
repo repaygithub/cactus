@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { categories, iconsCategoryMap } from '../../helpers/iconGroups'
 import { Flex } from '@repay/cactus-web'
+import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import Text from '../../components/Text'
 
@@ -42,6 +43,7 @@ export default () => (
 
 export default () => (
   <>
+    <Helmet title="Available Icons" />
     <Text as="h1" fontSize="h1">
       Available Icons
     </Text>
