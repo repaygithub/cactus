@@ -13,6 +13,7 @@ const Code = styled.code`
 const Pre = styled.pre`
   padding: ${p => p.theme.space[4]}px;
   background-color: ${p => p.theme.colors.lightGray};
+  white-space: pre-line;
 `
 
 const importFromRootCode = `
