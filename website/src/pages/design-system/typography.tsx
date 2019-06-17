@@ -21,7 +21,7 @@ const Table = styled('table')`
       align: left;
     }
 
-    thead tr { 
+    thead { 
     display: none; 
     }
     
@@ -50,7 +50,7 @@ const Table = styled('table')`
   }
 `
 const WeightFlex = styled(Flex)`
-  justify-content: space-between;
+  justify-content: space-evenly;
 
   @media only screen and (max-width: 500px) {
     justify-content: center;
