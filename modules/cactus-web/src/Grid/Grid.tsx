@@ -11,7 +11,7 @@ type ColumnNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 interface GridProps
   extends MarginProps,
     React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  justify?: 'start' | 'center' | 'end'
+  justify?: 'start' | 'center' | 'end' | 'normal'
 }
 
 interface ItemProps
@@ -75,6 +75,7 @@ const flexJustifyMap = {
   start: 'flex-start',
   end: 'flex-end',
   center: 'center',
+  normal: 'normal',
 }
 
 interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridProps> {
@@ -98,7 +99,7 @@ export const Grid = styled.div<GridProps>`
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-gap: ${GUTTER_WIDTH}px;
-    justify-items: ${p => (p.justify ? p.justify : 'start')};
+    justify-items: ${p => (p.justify ? p.justify : 'normal')};
 
     > ${Item} {
       display: block;
@@ -111,7 +112,7 @@ export const Grid = styled.div<GridProps>`
 Grid.Item = Item
 
 Grid.defaultProps = {
-  justify: 'start',
+  justify: 'normal',
 }
 
 export default Grid as GridComponent

@@ -49,10 +49,10 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
 }
 
 @media (min-width:769px) {
@@ -86,7 +86,7 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
     display: grid;
     grid-template-columns: repeat(12,1fr);
     grid-gap: 16px;
-    justify-items: start;
+    justify-items: normal;
   }
 
   .c0 > .c1 {
