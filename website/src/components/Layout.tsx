@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
+import { ReactComponent as Cactus } from '../assets/cactus.svg'
 import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
 import { Motion, spring } from 'react-motion'
 import { useRect } from '@reach/rect'
@@ -76,8 +77,10 @@ function createMenuGroups(pages: Edges<Markdown>) {
     items: [
       {
         title: 'Design System',
+        // redirects to /design-system/language/
         url: '/design-system/',
-        order: -1, // always first
+        // always first
+        order: -1,
         items: [
           { title: 'Language', url: '/design-system/language/', order: 0, items: [] },
           { title: 'Foundation', url: '/design-system/foundation/', order: 10, items: [] },
@@ -90,9 +93,11 @@ function createMenuGroups(pages: Edges<Markdown>) {
       {
         title: 'Storybooks',
         url: '/stories/',
-        order: 1000, // always first
+        // always last
+        order: 1000,
         items: storybooks.map(story => ({
           title: story.name,
+          // withPrefix because it's not a gatsby link
           url: withPrefix(`/stories/${story.dirname}/`),
           order: 1,
           items: [],
@@ -106,10 +111,12 @@ function createMenuGroups(pages: Edges<Markdown>) {
       ({
         node: {
           fields: { title, slug },
+          frontmatter: { order },
         },
       }): MenuItem => ({
         title,
         url: slug,
+        order,
         routes: slug.replace(/(^\/|\/$)/g, '').split('/'),
       })
     )
@@ -161,6 +168,7 @@ const BaseMenuList: React.FC<{ menu: MenuGroup; className?: string }> = ({ menu,
 const MenuList = styled(BaseMenuList)`
   list-style: none;
   padding-left: 0;
+  margin: 0;
 
   & & ${StyledLink} {
     padding-left: 24px;
@@ -181,7 +189,6 @@ const InnerSidebar = styled.div`
   float: right;
   min-width: 200px;
   height: 100%;
-  padding-top: 8px;
   background-color: ${p => p.theme.colors.background};
   border-right: 2px solid ${p => p.theme.colors.base};
   overflow-y: scroll;
@@ -210,6 +217,29 @@ const WindowBox = styled(Box)`
   @media only screen and (max-width: 400px) {
     padding: 16px 10px;
   }
+`
+
+const RootLink = styled(Link)`
+  display: block;
+  padding: ${p => p.theme.space[3]}px;
+  text-decoration: none;
+  color: ${p => p.theme.colors.base};
+
+  &[aria-current='page'] {
+    background-color: ${p => p.theme.colors.lightContrast};
+  }
+
+  :hover {
+    background-color: ${p => p.theme.colors.base};
+    color: ${p => p.theme.colors.baseText};
+  }
+`
+
+const CactusIcon = styled(Cactus).attrs({
+  fill: 'currentColor',
+})`
+  height: 1em;
+  vertical-align: -1px;
 `
 
 const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) => {
@@ -262,6 +292,9 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
               <div className={className}>
                 <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
                   <InnerSidebar ref={sidebarRef}>
+                    <RootLink to="/">
+                      <CactusIcon /> Cactus DS
+                    </RootLink>
                     <MenuList menu={groups} />
                   </InnerSidebar>
                 </OuterSidebar>

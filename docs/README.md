@@ -2,6 +2,12 @@
 
 An application framework and design system built in React at [REPAY](https://github.com/repaygithub).
 
+## Design System
+
+The Cactus Design System is built to aid designers and developers to make decisions in layout and component usage in applications. The goal is to create better applications by making clear, consistent, intuitive, and reusable patterns. These patterns are then turned into distributable modules for developers to use directly.
+
+The design system starts by defining the [design language](https://repaygithub.github.io/cactus/design-system/language/).
+
 ## Modules
 
 - [`@repay/cactus-fwk`](../modules/cactus-fwk/) - Cactus Framework
@@ -19,7 +25,7 @@ An application framework and design system built in React at [REPAY](https://git
 
 You can install the packages from this repository using any node based package manager that pulls from the [NPM](https://www.npmjs.com/) repository.
 
-```
+```bash
 yarn add --dev @repay/cactus-fwk
 # OR
 npm install --save-dev @repay/cactus-fwk
