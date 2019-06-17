@@ -13,7 +13,20 @@ const digest = str =>
     .digest('hex')
 
 exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions
+  const { createPage, createRedirect } = actions
+
+  createRedirect({
+    fromPath: `/design-system/`,
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/design-system/language/`,
+  })
+  createRedirect({
+    fromPath: `/design-system`,
+    isPermanent: true,
+    redirectInBrowser: true,
+    toPath: `/design-system/language/`,
+  })
 
   const GenericTemplate = path.resolve('src/templates/GenericTemplate.tsx')
   const ComponentTemplate = path.resolve('src/templates/ComponentTemplate.tsx')
