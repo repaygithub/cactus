@@ -3,13 +3,15 @@ import * as React from 'react'
 import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
 import { ReactComponent as Cactus } from '../assets/cactus.svg'
 import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
+import { Location } from '@reach/router'
 import { Motion, spring } from 'react-motion'
 import { useRect } from '@reach/rect'
 import Close from '@repay/cactus-icons/i/navigation-close'
+import debounce from '../helpers/debounce'
 import Helmet from 'react-helmet'
 import Menu from '@repay/cactus-icons/i/navigation-hamburger'
 import storybooks from '../storybook-config.json'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 interface MenuGroup {
   title: string
@@ -183,23 +185,22 @@ const MenuList = styled(BaseMenuList)`
   }
 `
 
-const PositionableIconButton = Box.withComponent(IconButton)
-
 const InnerSidebar = styled.div`
   float: right;
   min-width: 200px;
   height: 100%;
-  background-color: ${p => p.theme.colors.background};
+  background-color: ${p => p.theme.colors.white};
   border-right: 2px solid ${p => p.theme.colors.base};
   overflow-y: scroll;
 `
 const OuterSidebar = styled.div`
   position: fixed;
   height: 100vh;
+  z-index: 52;
   top: 0;
   bottom: 0;
   overflow: hidden;
-  background-color: ${p => p.theme.colors.background};
+  background-color: ${p => p.theme.colors.white};
 
   ::after {
     content: '';
@@ -208,8 +209,6 @@ const OuterSidebar = styled.div`
     height: 0px;
   }
 `
-
-const springConfig = { stiffness: 220, damping: 26 }
 
 const WindowBox = styled(Box)`
   max-width: 2000px;
@@ -242,12 +241,83 @@ const CactusIcon = styled(Cactus).attrs({
   vertical-align: -1px;
 `
 
-const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) => {
-  // TODO default open should depend on window width
+// @ts-ignore
+const Header = styled<{ isOverlayed?: boolean }>(Box)`
+  position: fixed;
+
+  ${(p: any) =>
+    p.isOverlayed &&
+    css`
+      ${IconButton} {
+        color: white;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: ${p => p.theme.colors.base};
+        opacity: 0.5;
+      }
+    `}
+
+  ${IconButton} {
+    position: relative;
+    z-index: 1;
+  }
+`
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: ${p => p.theme.colors.base};
+    opacity: 0.5;
+  }
+`
+
+// defines spring for react-motion
+const springConfig = { stiffness: 220, damping: 26 }
+const checkShouldHaveOverlay = () => global.window && window.innerWidth < 1024
+
+const BaseLayout: React.FC<{ className?: string; location?: string }> = ({
+  children,
+  className,
+  location,
+}) => {
   const [isOpen, setOpen] = React.useState(global.window && global.window.innerWidth >= 1024)
   const toggleOpen = React.useCallback(() => setOpen(!isOpen), [isOpen, setOpen])
+
+  const [hasOverlay, setHasOverlay] = React.useState(checkShouldHaveOverlay)
+  React.useEffect(() => {
+    let handleResize = debounce(() => {
+      setHasOverlay(checkShouldHaveOverlay())
+    }, 200)
+    window.addEventListener('resize', handleResize, false)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  React.useEffect(() => {
+    if (hasOverlay) {
+      setOpen(false)
+    }
+  }, [location]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const sidebarRef = React.createRef<HTMLDivElement>()
-  const rect = useRect(sidebarRef)
+  const rect = useRect(sidebarRef, isOpen)
   const sidebarWidth = isOpen && rect ? rect.width : 0
 
   const {
@@ -290,6 +360,20 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
           {({ width }) => {
             return (
               <div className={className}>
+                <Header
+                  isOverlayed={isOpen && hasOverlay}
+                  position="fixed"
+                  top={0}
+                  paddingTop={3}
+                  zIndex={51}
+                  width="100%"
+                  backgroundColor="white"
+                  style={{ paddingLeft: width + 8 }}
+                >
+                  <IconButton iconSize="medium" onClick={toggleOpen}>
+                    {isOpen ? <Close /> : <Menu />}
+                  </IconButton>
+                </Header>
                 <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
                   <InnerSidebar ref={sidebarRef}>
                     <RootLink to="/">
@@ -298,16 +382,8 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
                     <MenuList menu={groups} />
                   </InnerSidebar>
                 </OuterSidebar>
-                <PositionableIconButton
-                  position="fixed"
-                  top="8px"
-                  iconSize="medium"
-                  onClick={toggleOpen}
-                  style={{ left: width + 8 }}
-                >
-                  {isOpen ? <Close /> : <Menu />}
-                </PositionableIconButton>
-                <WindowBox style={{ marginLeft: width }}>{children}</WindowBox>
+                <WindowBox style={{ marginLeft: hasOverlay ? 0 : width }}>{children}</WindowBox>
+                {hasOverlay && isOpen && <Overlay onClick={toggleOpen} />}
               </div>
             )
           }}
@@ -317,4 +393,6 @@ const BaseLayout: React.FC<{ className?: string }> = ({ children, className }) =
   )
 }
 
-export default styled(BaseLayout)``
+export default styled(props => (
+  <Location>{({ location }) => <BaseLayout {...props} location={location} />}</Location>
+))``
