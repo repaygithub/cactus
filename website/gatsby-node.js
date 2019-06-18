@@ -1,4 +1,5 @@
 const path = require('path')
+const { promises: fs } = require('fs')
 const crypto = require('crypto')
 const fg = require('fast-glob')
 const reactDocgenTs = require('react-docgen-typescript')
@@ -148,12 +149,13 @@ const docgen = reactDocgenTs.withCustomConfig(
   modulesHelper.resolveModule('cactus-web/tsconfig.json'),
   []
 )
+const DOCGEN_CACHE_KEY = 'cactus-docgen'
 
 /**
  * Sources component files and creates a docgen object for each of them.
  * Adds the DocItem[] data to the graphql as type DocgenDB
  */
-exports.sourceNodes = async ({ actions, createNodeId }) => {
+exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
   const { createNode } = actions
   const componentGlobs = [
     modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.tsx'),
@@ -164,16 +166,31 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
   /**
    * docgenData = DocItem[] where DocItem = { key: filepath, value: ComponentDoc }
    */
-  let docgenData = []
+  let docgenData = await cache.get(DOCGEN_CACHE_KEY)
+  if (!Array.isArray(docgenData)) {
+    console.log('[DOCGEN] no cache')
+    docgenData = []
+  } else {
+    console.log('[DOCGEN] cache found')
+  }
 
   const createComponentDb = async filePath => {
     // initial sourcing
     if (filePath === undefined) {
       const componentPaths = await fg(componentGlobs.slice())
-      docgenData = componentPaths.map(filePath => {
-        const doc = docgen.parse(filePath)
-        return { key: path.relative(__dirname, filePath), value: doc }
-      })
+      const updatedDocgenData = []
+      for (const filePath of componentPaths) {
+        const key = path.relative(__dirname, filePath)
+        const hashed = digest(await fs.readFile(filePath, 'utf8'))
+        let previousData = docgenData.find(d => d.key === key)
+        if (previousData && previousData.hashed === hashed) {
+          updatedDocgenData.push(previousData)
+        } else {
+          const doc = docgen.parse(filePath)
+          updatedDocgenData.push({ key, value: doc, hashed })
+        }
+      }
+      docgenData = updatedDocgenData
     } else {
       const relativePath = path.relative(__dirname, filePath)
       const doc = docgen.parse(filePath)
@@ -185,7 +202,8 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
       }
     }
 
-    const stringified = JSON.stringify(docgenData || [])
+    const dataWithoutHash = docgenData.map(d => ({ key: d.key, value: d.value }))
+    const stringified = JSON.stringify(dataWithoutHash)
     const contentDigest = digest(stringified)
 
     createNode({
@@ -197,13 +215,15 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
         type: 'DocgenDB',
       },
     })
+
+    await cache.set(DOCGEN_CACHE_KEY, docgenData)
   }
 
   await createComponentDb()
 
   // add watcher for reloading
   chokidar
-    .watch(componentGlobs.slice())
+    .watch(componentGlobs.slice(), { ignoreInitial: true })
     .on('change', path => createComponentDb(path))
     .on('add', path => createComponentDb(path))
 }
