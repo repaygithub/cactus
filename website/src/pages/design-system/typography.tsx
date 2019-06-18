@@ -1,8 +1,9 @@
 import * as React from 'react'
 
-import { Box, Flex } from '@repay/cactus-web'
+import { Flex } from '@repay/cactus-web'
 import cactusTheme from '@repay/cactus-theme'
 import Helmet from 'react-helmet'
+import Link from '../../components/Link'
 import styled from 'styled-components'
 import Text, { Span } from '../../components/Text'
 
@@ -14,6 +15,42 @@ const Table = styled('table')`
   td {
     padding: 16px;
   }
+
+  @media only screen and (max-width: 500px){
+    table, thead, tbody, th, td { 
+      display: block; 
+      align: left;
+    }
+
+    thead tr { 
+    display: none; 
+    }
+    
+    td { 
+      border: none;
+      position: relative;
+      padding: 0 10% 10% 35%;
+      border-bottom: 1px solid #eee; 
+      overflow-x:auto;
+    }
+    
+    td:before { 
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 30%; 
+    }
+    
+    td:nth-of-type(1):before { content: " Scale"; }
+    td:nth-of-type(2):before { content: " Rem"; }
+    td:nth-of-type(3):before { content: "PX"; }
+    td:nth-of-type(4):before { content: "Line Height";  }
+    
+  td:nth-of-type(5) {border-bottom: 2px solid #131313;}
+  
+  }
+   
+
 `
 
 export default () => {
@@ -31,12 +68,17 @@ export default () => {
         <img
           src={HelveticaExample}
           alt="Helvetica font example"
-          style={{ width: '50%', maxWidth: '600px' }}
+          style={{ width: '50%', minWidth: '300px', maxWidth: '600px' }}
         />
         <img
           src={ArialExample}
           alt="Arial font example"
-          style={{ width: '50%', maxWidth: '600px', paddingTop: '16px' }}
+          style={{
+            width: '50%',
+            maxWidth: '600px',
+            minWidth: '300px',
+            paddingTop: '20px',
+          }}
         />
       </Flex>
       <h2>Scale</h2>
@@ -222,7 +264,7 @@ export default () => {
         </tbody>
       </table>
       <Text mt={6} mb={5} fontSize="h3">
-        Next, we'll review all the <a href="/design-system/icons/">icons</a>.
+        Next, we'll review all the <Link href="/design-system/icons/">icons</Link>.
       </Text>
     </>
   )

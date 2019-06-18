@@ -588,7 +588,7 @@ exports[`component: Button should support margin space props 1`] = `
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
-  margin-top: 32px;
+  margin-top: 24px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
