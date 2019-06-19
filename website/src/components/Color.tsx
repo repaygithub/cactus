@@ -211,18 +211,7 @@ const AccessibilityFlex = styled(Flex)`
     max-width: 95%;
   }
 `
-const SpanRatio = styled(Span)`
-  font-size: 95%;
-  @media only screen and (max-width: 500px) {
-    font-size: 100%;
-  }
-`
-const SmallSpan = styled(Span)`
-  font-size: 80%;
-  @media only screen and (max-width: 500px) {
-    font-size: 100%;
-  }
-`
+
 const SmallTitle = styled(Span)`
   @media only screen and (max-width: 500px) {
     font-size: 18px;
@@ -358,7 +347,6 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
   let thisColor = new Color(hslaStr)
   const contrastToWhite = thisColor.contrast(whiteColor)
   const contrastToDarkestContrast = thisColor.contrast(darkestContrastColor)
-  let t = title
   return (
     <AccessibilityFlex
       p={4}
@@ -417,12 +405,12 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
 
           <tr>
             <HCell>
-              <SmallSpan color="white" fontSize="small">
+              <Span color="white" fontSize="small">
                 White
-              </SmallSpan>
+              </Span>
             </HCell>
             <Cell borderRight={borderStyle} textAlign="center">
-              <SpanRatio> {contrastToWhite.toFixed(2)}</SpanRatio>
+              <Span> {contrastToWhite.toFixed(2)}</Span>
             </Cell>
             <Cell textAlign="center">
               <AccessibilityCheck
@@ -462,12 +450,12 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
           </tr>
           <tr>
             <HCell data-name={title}>
-              <SmallSpan color="darkestContrast" fontSize="small">
+              <Span color="darkestContrast" fontSize="small">
                 Darkest Contrast
-              </SmallSpan>
+              </Span>
             </HCell>
             <Cell borderRight={borderStyle} textAlign="center">
-              <SpanRatio>{contrastToDarkestContrast.toFixed(2)} </SpanRatio>
+              <Span>{contrastToDarkestContrast.toFixed(2)} </Span>
             </Cell>
             <Cell textAlign="center">
               <AccessibilityCheck

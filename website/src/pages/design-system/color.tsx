@@ -186,7 +186,13 @@ export default () => {
         bold. Note that these requirements don't apply to decorative elements like logos and
         illustrations.
       </Text>
-      <Flex display="flex" justifyContent="center" flexWrap="wrap" maxWidth="1200" margin="0 ">
+      <Flex
+        display="flex"
+        justifyContent="center"
+        flexWrap="wrap"
+        maxWidth="1200px"
+        margin="0 auto"
+      >
         <AccessibilityBox color="base" title="Base" isDark />
         <AccessibilityBox color="callToAction" title="CTA" isDark />
         <AccessibilityBox color="white" title="White" isDark={false} />
