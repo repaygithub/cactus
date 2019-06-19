@@ -9,7 +9,8 @@ import styled from 'styled-components'
 
 const Table = styled.table`
   border-radius: 8px;
-  width: 100%;
+  max-width: 100%;
+
   padding: 0;
   border-collapse: collapse;
   overflow: hidden;
@@ -46,6 +47,80 @@ const Table = styled.table`
   td {
     padding: 1em;
     text-align: left;
+  }
+
+  @media only screen and (max-width: 750px) {
+    min-width: 300px;
+
+    thead {
+      display: none;
+    }
+
+    table,
+    td {
+      display: block;
+      border: none;
+    }
+
+    td {
+      position: relative;
+      padding: 0 10% 10% 35%;
+      border-bottom: 1px solid #eee;
+      overflow-x: auto;
+    }
+
+    td:before {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 30%;
+      overflow-x: auto;
+    }
+  }
+`
+
+const CactusTable = styled(Table)`
+  @media only screen and (max-width: 750px) {
+    td:nth-of-type(1):before {
+      content: ' Name';
+    }
+      td:nth-of-type(2):before {
+      content: ' Required';
+    }
+    td:nth-of-type(3):before {
+      content: 'Default Value';
+    }
+    td:nth-of-type(4):before {
+      content: 'Type';
+    }
+    td:nth-of-type(5):before {
+      content: 'Description';
+    }
+
+    td:nth-of-type(5) {
+      border-bottom: 2px solid #131313;
+    }
+  }
+`
+
+const StylingTable = styled(Table)`
+  @media only screen and (max-width: 750px) {
+    td:nth-of-type(1):before {
+      content: ' Name';
+    }
+      td:nth-of-type(2):before {
+      content: ' Required';
+    }
+
+    td:nth-of-type(3):before {
+      content: 'Type';
+    }
+    td:nth-of-type(4):before {
+      content: 'Description';
+    }
+    td:nth-of-type(4) {
+      border-bottom: 2px solid #131313;
+    }
   }
 `
 
@@ -129,7 +204,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
       <Box>
         <h3>Cactus Props</h3>
         {Array.isArray(ownProps) && ownProps.length !== 0 ? (
-          <Table>
+          <CactusTable>
             <thead>
               <tr>
                 <th>Name</th>
@@ -155,14 +230,14 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </CactusTable>
         ) : (
           <Box>There are no custom props.</Box>
         )}
         {Array.isArray(styledSystemProps) && styledSystemProps.length !== 0 && (
           <>
             <h3>Styling Props</h3>
-            <Table>
+            <StylingTable>
               <thead>
                 <tr>
                   <th>Name</th>
@@ -183,7 +258,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
                   </tr>
                 ))}
               </tbody>
-            </Table>
+            </StylingTable>
           </>
         )}
       </Box>
