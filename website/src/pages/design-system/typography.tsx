@@ -22,7 +22,7 @@ const Table = styled('table')`
       align: left;
     }
 
-    thead { 
+    thead  { 
     display: none; 
     }
     
@@ -46,7 +46,7 @@ const Table = styled('table')`
     td:nth-of-type(3):before { content: "PX"; }
     td:nth-of-type(4):before { content: "Line Height";  }
     
-  td:nth-of-type(5) {border-bottom: 2px solid #131313;}
+    td:nth-of-type(5) { border-bottom: 2px solid #131313; }
   
   }
 `
