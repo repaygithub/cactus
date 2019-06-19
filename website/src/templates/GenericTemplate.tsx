@@ -14,6 +14,11 @@ type GenericTemplateProps = {
 
 const components = {
   a: Link,
+  table: (props: any) => (
+    <div style={{ overflowX: 'auto' }}>
+      <table {...props} />
+    </div>
+  ),
 }
 
 const GenericTemplate = ({ data }: GenericTemplateProps) => {
