@@ -36,7 +36,6 @@
     "fast-glob": "^2.2.6",
     "gatsby": "^2.3.23",
     "gatsby-mdx": "^0.6.2",
-    "gatsby-plugin-catch-links": "^2.0.13",
     "gatsby-plugin-manifest": "^2.0.29",
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-sharp": "^2.0.34",
