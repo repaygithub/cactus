@@ -26,6 +26,7 @@ declare type Markdown = {
     path: string
     tags?: ReadonlyArray<string>
     title?: string
+    order?: number
   }
   parent?: {
     absolutePath?: string

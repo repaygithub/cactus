@@ -580,7 +580,7 @@ exports[`component: TextButton should support space props 1`] = `
   cursor: pointer;
   box-sizing: border-box;
   color: hsl(200,96%,11%);
-  margin-right: 32px;
+  margin-right: 24px;
 }
 
 .c0:hover {

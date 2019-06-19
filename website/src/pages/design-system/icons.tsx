@@ -3,6 +3,7 @@ import * as React from 'react'
 import { categories, iconsCategoryMap } from '../../helpers/iconGroups'
 import { Flex } from '@repay/cactus-web'
 import Helmet from 'react-helmet'
+import Link from '../../components/Link'
 import Text from '../../components/Text'
 
 export default () => (
@@ -24,7 +25,7 @@ export default () => (
       outside the named purposed due to utility.
     </Text>
     <Text>
-      To learn how to use the icons see the <a href="/icons/">Icons documentation</a>.
+      To learn how to use the icons see the <Link href="/icons/">Icons documentation</Link>.
     </Text>
     {categories.map(cat => {
       const iconList = iconsCategoryMap[cat]
@@ -47,8 +48,8 @@ export default () => (
       )
     })}
     <Text mt={6} mb={5} fontSize="h3">
-      Lastly, the <a href="/design-system/shared-styles/">shared styles</a> such as shadows and
-      spacing which round out the foundation.
+      Lastly, the <Link href="/design-system/shared-styles/">shared styles</Link> such as shadows
+      and spacing which round out the foundation.
     </Text>
   </>
 )
