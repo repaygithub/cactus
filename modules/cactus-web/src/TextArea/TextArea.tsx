@@ -4,7 +4,7 @@ import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
-import { StatusPropType } from '../StatusMessage/StatusMessage';
+import { StatusPropType } from '../StatusMessage/StatusMessage'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
