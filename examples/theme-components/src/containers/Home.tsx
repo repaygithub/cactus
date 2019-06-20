@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 
-import { Box, TextButton, ToggleField } from '@repay/cactus-web'
-import { Link, RouteComponentProps } from '@reach/router'
+import { Box } from '@repay/cactus-web'
+import { RouteComponentProps } from '@reach/router'
+import Link from '../components/Link'
 
 class Home extends Component<RouteComponentProps> {
-  state = { enabled: false }
-
-  handleChange = (name: string, value: boolean) => this.setState({ [name]: value })
-
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
@@ -16,12 +13,6 @@ class Home extends Component<RouteComponentProps> {
           @repay/cactus-theme!
         </h2>
         <div>
-          <ToggleField
-            label="Is Enabled"
-            name="enabled"
-            value={this.state.enabled}
-            onChange={this.handleChange}
-          />
           <span>Use the table below to navigate to different components.</span>
           <Box
             as="table"
@@ -45,21 +36,19 @@ class Home extends Component<RouteComponentProps> {
               <tr>
                 <td>Buttons</td>
                 <td>
-                  {/*
-                  // @ts-ignore */}
-                  <TextButton as={Link} to="/Buttons/Standard">
-                    Go!
-                  </TextButton>
+                  <Link to="/Buttons/Standard">Go!</Link>
                 </td>
               </tr>
               <tr>
                 <td>Inverse Buttons</td>
                 <td>
-                  {/*
-                  // @ts-ignore */}
-                  <TextButton as={Link} to="/Buttons/Inverse">
-                    Go!
-                  </TextButton>
+                  <Link to="/Buttons/Inverse">Go!</Link>
+                </td>
+              </tr>
+              <tr>
+                <td>Form Elements</td>
+                <td>
+                  <Link to="/FormElements">Go!</Link>
                 </td>
               </tr>
             </tbody>

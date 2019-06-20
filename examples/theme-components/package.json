@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "cleanup": "rm -rf dist",
+    "start": "yarn dev",
     "dev": "repay-scripts dev --config ./repay-scripts.config.js -p 3436 src/index.tsx",
     "build": "repay-scripts build --config ./repay-scripts.config.js src/index.tsx",
     "test": "yarn test:types",
@@ -16,6 +17,7 @@
     "@types/reach__router": "^1.2.4",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
+    "prop-types": "^15.7.2",
     "typescript": "^3.4.3"
   },
   "dependencies": {
