@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties } from 'react'
+import React, { Component } from 'react'
 
 import { ActionsAdd, NavigationChevronLeft } from '@repay/cactus-icons'
 import { Box, Button, Grid, IconButton, TextButton } from '@repay/cactus-web'

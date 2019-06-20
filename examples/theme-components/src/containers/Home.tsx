@@ -51,6 +51,12 @@ class Home extends Component<RouteComponentProps> {
                   <Link to="/FormElements">Go!</Link>
                 </td>
               </tr>
+              <tr>
+                <td>Icons</td>
+                <td>
+                  <Link to="/Icons">Go!</Link>
+                </td>
+              </tr>
             </tbody>
           </Box>
         </div>

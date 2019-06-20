@@ -16,6 +16,7 @@ const InverseButtonsPage = React.lazy(() =>
 const FormExample = React.lazy(() =>
   import(/* webpackChunkName: "FormExample" */ './containers/FormExample')
 )
+const Icons = React.lazy(() => import(/* webpackChunkName: "Icons" */ './containers/Icons'))
 
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
@@ -50,6 +51,7 @@ class RootTheme extends Component {
             <ButtonsPage path="/Buttons/Standard" />
             <InverseButtonsPage path="/Buttons/Inverse" />
             <FormExample path="/FormElements" />
+            <Icons path="/Icons" />
           </Router>
         </Suspense>
       </StyleProvider>
