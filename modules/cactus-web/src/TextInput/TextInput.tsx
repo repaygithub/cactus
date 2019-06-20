@@ -4,7 +4,8 @@ import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
-import { Status } from '../StatusMessage/StatusMessage'
+import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
+import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export interface TextInputProps
@@ -128,6 +129,12 @@ export const TextInput = styled(TextInputBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+TextInput.propTypes = {
+  disabled: PropTypes.bool,
+  status: StatusPropType,
+}
 
 TextInput.defaultProps = {
   disabled: false,

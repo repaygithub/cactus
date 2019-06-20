@@ -3,6 +3,7 @@ import React from 'react'
 import * as styledComponents from 'styled-components'
 import { Omit } from '../types'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
 
 interface Env {
   NODE_ENV: string
@@ -88,6 +89,11 @@ export const StyleProvider: React.FC<StyleProviderProps> = props => {
       </React.Fragment>
     </styledComponents.ThemeProvider>
   )
+}
+
+// @ts-ignore
+StyleProvider.propTypes = {
+  global: PropTypes.bool,
 }
 
 StyleProvider.defaultProps = {

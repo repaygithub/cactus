@@ -3,6 +3,7 @@ import React from 'react'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
 import { StatusCheck } from '@repay/cactus-icons'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export interface CheckBoxProps
@@ -81,6 +82,12 @@ export const CheckBox = styled(CheckBoxBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+CheckBox.propTypes = {
+  id: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+}
 
 CheckBox.defaultProps = {
   disabled: false,

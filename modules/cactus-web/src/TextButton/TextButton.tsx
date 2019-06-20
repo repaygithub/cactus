@@ -1,6 +1,7 @@
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
 import { Omit } from '../types'
+import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger'
@@ -106,6 +107,13 @@ export const TextButton = styled.button<TextButtonProps>`
   ${variantOrDisabled}
   ${margins}
 `
+
+// @ts-ignore
+TextButton.propTypes = {
+  variant: PropTypes.oneOf(['standard', 'action', 'danger']),
+  disabled: PropTypes.bool,
+  inverse: PropTypes.bool,
+}
 
 TextButton.defaultProps = {
   variant: 'standard',

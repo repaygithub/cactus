@@ -1009,8 +1009,6 @@ exports[`component: TextAreaField should support margin space props 1`] = `
 .c5 {
   position: relative;
   display: block;
-  margin-left: 8px;
-  margin-right: 8px;
 }
 
 .c4 {

@@ -260,7 +260,6 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
   width: 16px;
   height: 16px;
   cursor: pointer;
-  margin-left: 16px;
 }
 
 .c3 input:checked ~ span {

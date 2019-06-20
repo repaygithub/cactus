@@ -1,7 +1,10 @@
 import { CactusTheme } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type Status = 'success' | 'warning' | 'error'
+
+export const StatusPropType = PropTypes.oneOf(['success', 'warning', 'error'])
 
 interface StatusMessageProps {
   status: Status
@@ -51,5 +54,10 @@ const StatusMessage = styled.div<StatusMessageProps>`
 
   ${statusColors}
 `
+
+// @ts-ignore
+StatusMessage.propTypes = {
+  status: StatusPropType.isRequired,
+}
 
 export default StatusMessage

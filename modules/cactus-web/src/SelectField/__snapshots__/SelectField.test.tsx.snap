@@ -446,6 +446,27 @@ exports[`component: SelectField should render an accessible error message 1`] = 
   color: hsl(200,10%,20%);
 }
 
+.c12 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  min-height: 16px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
+  border-color: hsl(353,84%,44%);
+  background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
+}
+
+.c12 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
 .c8 {
   font-style: italic;
   color: hsl(200,9%,35%);
@@ -521,27 +542,6 @@ exports[`component: SelectField should render an accessible error message 1`] = 
 .c4 .c5 {
   border-color: hsl(353,84%,44%);
   background: hsla(353,84%,44%,0.2);
-}
-
-.c12 {
-  border-radius: 0 8px 8px 8px;
-  padding: 8px 16px 8px 16px;
-  position: relative;
-  min-height: 16px;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  font-size: 15px;
-  line-height: 23px;
-  border-color: hsl(353,84%,44%);
-  background-color: hsl(353,84%,44%);
-  color: hsl(0,0%,100%);
-}
-
-.c12 span {
-  position: relative;
-  display: inline-block;
-  bottom: 2px;
-  vertical-align: middle;
 }
 
 .c0 {
@@ -634,6 +634,27 @@ exports[`component: SelectField should render an accessible success message 1`] 
   color: hsl(200,10%,20%);
 }
 
+.c12 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  min-height: 16px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
+  border-color: hsl(145,89%,28%);
+  background: hsl(145,89%,28%);
+  color: hsl(0,0%,100%);
+}
+
+.c12 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
 .c8 {
   font-style: italic;
   color: hsl(200,9%,35%);
@@ -699,27 +720,6 @@ exports[`component: SelectField should render an accessible success message 1`] 
 .c4 .c5 {
   border-color: hsl(145,89%,28%);
   background: hsla(145,89%,28%,0.2);
-}
-
-.c12 {
-  border-radius: 0 8px 8px 8px;
-  padding: 8px 16px 8px 16px;
-  position: relative;
-  min-height: 16px;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  font-size: 15px;
-  line-height: 23px;
-  border-color: hsl(145,89%,28%);
-  background: hsl(145,89%,28%);
-  color: hsl(0,0%,100%);
-}
-
-.c12 span {
-  position: relative;
-  display: inline-block;
-  bottom: 2px;
-  vertical-align: middle;
 }
 
 .c0 {
@@ -812,6 +812,27 @@ exports[`component: SelectField should render an accessible warning message 1`] 
   color: hsl(200,10%,20%);
 }
 
+.c12 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  min-height: 16px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
+  border-color: hsl(47,82%,47%);
+  background-color: hsl(47,82%,47%);
+  color: hsl(200,10%,20%);
+}
+
+.c12 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
 .c8 {
   font-style: italic;
   color: hsl(200,9%,35%);
@@ -882,27 +903,6 @@ exports[`component: SelectField should render an accessible warning message 1`] 
 .c4 .c5 {
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
-}
-
-.c12 {
-  border-radius: 0 8px 8px 8px;
-  padding: 8px 16px 8px 16px;
-  position: relative;
-  min-height: 16px;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  font-size: 15px;
-  line-height: 23px;
-  border-color: hsl(47,82%,47%);
-  background-color: hsl(47,82%,47%);
-  color: hsl(200,10%,20%);
-}
-
-.c12 span {
-  position: relative;
-  display: inline-block;
-  bottom: 2px;
-  vertical-align: middle;
 }
 
 .c0 {

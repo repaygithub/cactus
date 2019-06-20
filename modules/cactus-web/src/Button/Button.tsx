@@ -3,6 +3,7 @@ import React from 'react'
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
+import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -159,6 +160,15 @@ export const Button = styled(ButtonBase)`
   ${margins}
   ${variantOrDisabled}
 `
+
+// @ts-ignore
+Button.propTypes = {
+  variant: PropTypes.oneOf(['standard', 'action']),
+  disabled: PropTypes.bool,
+  inverse: PropTypes.bool,
+  loading: PropTypes.bool,
+  loadingText: PropTypes.string,
+}
 
 Button.defaultProps = {
   variant: 'standard',

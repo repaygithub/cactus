@@ -4,6 +4,7 @@ import { FieldOnChangeHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { width, WidthProps } from 'styled-system'
 import Label from '../Label/Label'
+import PropTypes from 'prop-types'
 import Select, { OptionType, SelectProps } from '../Select/Select'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
@@ -118,5 +119,21 @@ export const SelectField = styled(SelectFieldBase)`
     margin-top: 4px;
   }
 `
+
+// @ts-ignore
+SelectField.propTypes = {
+  label: PropTypes.string.isRequired,
+  labelProps: PropTypes.object,
+  name: PropTypes.string.isRequired,
+  // @ts-ignore
+  options: Select.propTypes.options,
+  className: PropTypes.string,
+  id: PropTypes.string,
+  success: PropTypes.string,
+  warning: PropTypes.string,
+  error: PropTypes.string,
+  tooltip: PropTypes.string,
+  onChange: PropTypes.func,
+}
 
 export default SelectField

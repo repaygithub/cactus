@@ -2,6 +2,7 @@ import React from 'react'
 
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export interface RadioButtonProps
@@ -79,6 +80,13 @@ export const RadioButton = styled(RadioButtonBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+RadioButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+}
 
 RadioButton.defaultProps = {
   disabled: false,

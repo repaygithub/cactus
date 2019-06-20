@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 interface LinkProps
@@ -44,5 +44,10 @@ export const Link = styled(LinkBase)`
 
   ${margins};
 `
+
+// @ts-ignore
+Link.propTypes = {
+  to: PropTypes.string.isRequired,
+}
 
 export default Link

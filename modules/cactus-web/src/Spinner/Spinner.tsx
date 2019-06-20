@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { Omit } from '../types'
 import { StatusSpinner as SpinnerBase } from '@repay/cactus-icons'
+import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
 
 const rotate = keyframes`
@@ -21,6 +22,14 @@ interface Props extends Omit<React.ComponentPropsWithRef<typeof SpinnerBase>, 'i
 export const Spinner = styled(SpinnerBase as React.FC<Props>)`
   animation: ${rotate} 0.75s linear infinite;
 `
+
+// @ts-ignore
+Spinner.propTypes = {
+  iconSize: PropTypes.oneOfType([
+    PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
+    PropTypes.string,
+  ]),
+}
 
 Spinner.defaultProps = {
   iconSize: 'large',

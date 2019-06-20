@@ -5,10 +5,11 @@ import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { Omit } from '../types'
-import { Status } from '../StatusMessage/StatusMessage'
+import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import { width, WidthProps } from 'styled-system'
 import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
+import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -643,6 +644,26 @@ export const Select = styled(SelectBase)`
     ${displayStatus}
   }
 `
+
+// @ts-ignore
+Select.propTypes = {
+  options: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({ label: PropTypes.string.isRequired, value: PropTypes.string.isRequired })
+    ),
+    PropTypes.arrayOf(PropTypes.string.isRequired),
+  ]).isRequired,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  placeholder: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  status: StatusPropType,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+}
 
 Select.defaultProps = {
   placeholder: 'Select an option',
