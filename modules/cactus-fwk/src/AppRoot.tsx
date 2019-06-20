@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { WeakValidationMap } from 'react'
 
 import { ErrorBoundary, ErrorView, OnError } from './ErrorBoundary'
 import { FeatureFlagContext } from './featureFlags'
 import { FeatureFlagsObject } from './types'
+import PropTypes from 'prop-types'
 
 interface AppRootProps {
   /**
@@ -30,5 +31,11 @@ const AppRoot: React.FC<AppRootProps> = props => {
     </ErrorBoundary>
   )
 }
+
+AppRoot.propTypes = {
+  featureFlags: PropTypes.objectOf(PropTypes.bool.isRequired),
+  onError: PropTypes.func,
+  globalErrorView: PropTypes.element,
+} as WeakValidationMap<AppRootProps>
 
 export default AppRoot
