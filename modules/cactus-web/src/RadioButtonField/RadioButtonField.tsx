@@ -51,10 +51,6 @@ export const RadioButtonField = styled(RadioButtonFieldBase)`
     padding-left: 8px;
   }
 
-  ${RadioButton} {
-    top: -3px;
-  }
-
   ${margins}
 `
 

@@ -1,21 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: RadioButtonField should render a disabled radio button field 1`] = `
-.c7 {
+.c6 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
 
-.c4 {
+.c3 {
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 }
 
-.c5 {
+.c4 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -25,7 +26,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
   border: 2px solid hsl(0,0%,90%);
 }
 
-.c5:after {
+.c4:after {
   position: absolute;
   content: '';
   display: none;
@@ -37,51 +38,44 @@ exports[`component: RadioButtonField should render a disabled radio button field
   box-sizing: border-box;
 }
 
-.c3 {
+.c2 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: cursor;
 }
 
-.c3 input:checked ~ span {
+.c2 input:checked ~ span {
   background-color: transparent;
 }
 
-.c3 input:checked ~ span:after {
+.c2 input:checked ~ span:after {
   display: block;
 }
 
-.c3 input:focus ~ span {
+.c2 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c8 + .c0 {
+.c7 + .c0 {
   margin-top: 8px;
 }
 
-.c8 .c6 {
+.c7 .c5 {
   cursor: pointer;
   padding-left: 8px;
-}
-
-.c8 .c2 {
-  top: -3px;
 }
 
 .c1 + .c0 {
   margin-top: 8px;
 }
 
-.c1 .c6 {
+.c1 .c5 {
   cursor: not-allowed;
   padding-left: 8px;
-}
-
-.c1 .c2 {
-  top: -3px;
 }
 
 <div>
@@ -89,11 +83,11 @@ exports[`component: RadioButtonField should render a disabled radio button field
     class="c0 c1"
   >
     <label
-      class="c2 c3"
+      class="c2"
       for="rb"
     >
       <input
-        class="c4"
+        class="c3"
         disabled=""
         id="rb"
         name="rb"
@@ -101,12 +95,12 @@ exports[`component: RadioButtonField should render a disabled radio button field
       />
       <span
         aria-hidden="true"
-        class="c5"
+        class="c4"
         disabled=""
       />
     </label>
     <label
-      class="c6 c7"
+      class="c5 c6"
       for="rb"
     >
       My Label
@@ -116,21 +110,22 @@ exports[`component: RadioButtonField should render a disabled radio button field
 `;
 
 exports[`component: RadioButtonField should render a radio button field 1`] = `
-.c7 {
+.c6 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
 
-.c4 {
+.c3 {
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 }
 
-.c5 {
+.c4 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -140,7 +135,7 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
   border: 2px solid hsl(200,96%,11%);
 }
 
-.c5:after {
+.c4:after {
   position: absolute;
   content: '';
   display: none;
@@ -152,25 +147,26 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
   box-sizing: border-box;
 }
 
-.c3 {
+.c2 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
 
-.c3 input:checked ~ span {
+.c2 input:checked ~ span {
   border-color: hsl(200,96%,35%);
   background-color: transparent;
 }
 
-.c3 input:checked ~ span:after {
+.c2 input:checked ~ span:after {
   display: block;
 }
 
-.c3 input:focus ~ span {
+.c2 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
@@ -178,13 +174,9 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
   margin-top: 8px;
 }
 
-.c1 .c6 {
+.c1 .c5 {
   cursor: pointer;
   padding-left: 8px;
-}
-
-.c1 .c2 {
-  top: -3px;
 }
 
 <div>
@@ -192,22 +184,22 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
     class="c0 c1"
   >
     <label
-      class="c2 c3"
+      class="c2"
       for="rb"
     >
       <input
-        class="c4"
+        class="c3"
         id="rb"
         name="rb"
         type="radio"
       />
       <span
         aria-hidden="true"
-        class="c5"
+        class="c4"
       />
     </label>
     <label
-      class="c6 c7"
+      class="c5 c6"
       for="rb"
     >
       My Label
@@ -217,21 +209,22 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 `;
 
 exports[`component: RadioButtonField should support margin space props 1`] = `
-.c7 {
+.c6 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
 
-.c4 {
+.c3 {
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 }
 
-.c5 {
+.c4 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -241,7 +234,7 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
   border: 2px solid hsl(200,96%,11%);
 }
 
-.c5:after {
+.c4:after {
   position: absolute;
   content: '';
   display: none;
@@ -253,52 +246,45 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
   box-sizing: border-box;
 }
 
-.c3 {
+.c2 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
 
-.c3 input:checked ~ span {
+.c2 input:checked ~ span {
   border-color: hsl(200,96%,35%);
   background-color: transparent;
 }
 
-.c3 input:checked ~ span:after {
+.c2 input:checked ~ span:after {
   display: block;
 }
 
-.c3 input:focus ~ span {
+.c2 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
+}
+
+.c7 + .c0 {
+  margin-top: 8px;
+}
+
+.c7 .c5 {
+  cursor: pointer;
+  padding-left: 8px;
 }
 
 .c8 + .c0 {
   margin-top: 8px;
 }
 
-.c8 .c6 {
-  cursor: pointer;
-  padding-left: 8px;
-}
-
-.c8 .c2 {
-  top: -3px;
-}
-
-.c9 + .c0 {
-  margin-top: 8px;
-}
-
-.c9 .c6 {
+.c8 .c5 {
   cursor: not-allowed;
   padding-left: 8px;
-}
-
-.c9 .c2 {
-  top: -3px;
 }
 
 .c1 {
@@ -309,13 +295,9 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
   margin-top: 8px;
 }
 
-.c1 .c6 {
+.c1 .c5 {
   cursor: pointer;
   padding-left: 8px;
-}
-
-.c1 .c2 {
-  top: -3px;
 }
 
 <div>
@@ -323,22 +305,22 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
     class="c0 c1"
   >
     <label
-      class="c2 c3"
+      class="c2"
       for="Ackermann"
     >
       <input
-        class="c4"
+        class="c3"
         id="Ackermann"
         name="rbf"
         type="radio"
       />
       <span
         aria-hidden="true"
-        class="c5"
+        class="c4"
       />
     </label>
     <label
-      class="c6 c7"
+      class="c5 c6"
       for="Ackermann"
     >
       Mikasa

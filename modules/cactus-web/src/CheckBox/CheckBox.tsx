@@ -61,9 +61,10 @@ const StyledCheckBox = styled.span<StyledCheckBoxProps>`
 export const CheckBox = styled(CheckBoxBase)`
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
   width: 16px;
   height: 16px;
+  line-height: 16px;
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
   input:checked ~ span {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};

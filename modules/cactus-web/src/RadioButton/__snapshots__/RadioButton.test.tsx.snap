@@ -6,6 +6,7 @@ exports[`component: RadioButton should render a disabled radio button 1`] = `
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 }
 
@@ -34,7 +35,8 @@ exports[`component: RadioButton should render a disabled radio button 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: cursor;
@@ -78,6 +80,7 @@ exports[`component: RadioButton should render a radio button 1`] = `
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 }
 
@@ -106,7 +109,8 @@ exports[`component: RadioButton should render a radio button 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: pointer;
@@ -149,6 +153,7 @@ exports[`component: RadioButton should support margin space props 1`] = `
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 }
 
@@ -177,7 +182,8 @@ exports[`component: RadioButton should support margin space props 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: pointer;

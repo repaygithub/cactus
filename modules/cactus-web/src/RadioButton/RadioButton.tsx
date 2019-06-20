@@ -32,6 +32,7 @@ const HiddenRadioButton = styled.input.attrs({ type: 'radio' as string })`
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 `
 
@@ -60,7 +61,8 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
 export const RadioButton = styled(RadioButtonBase)`
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
