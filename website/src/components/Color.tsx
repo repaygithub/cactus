@@ -26,6 +26,7 @@ import { Box, Flex } from '@repay/cactus-web'
 import { Span } from './Text'
 import cactusTheme, { CactusColor, ColorVariant } from '@repay/cactus-theme'
 import Color from 'color'
+
 import StatusCheck from '@repay/cactus-icons/i/status-check'
 import StatusX from '@repay/cactus-icons/i/navigation-close'
 import styled from 'styled-components'
@@ -104,6 +105,7 @@ export function ColorBox({ name, title, children }: ColorBoxProps) {
     </Box>
   )
 }
+
 type PaletteItem = {
   bg: CactusColor
   color: CactusColor
@@ -130,8 +132,6 @@ export function PaletteBox({ colors, title, children }: PaletteBoxProps) {
   )
 }
 
-const Table = styled.table``
-
 interface CellProps
   extends BorderProps,
     BorderTopProps,
@@ -144,7 +144,7 @@ interface CellProps
     SpaceProps,
     TextAlignProps {}
 
-const Cell = styled('td')<CellProps>(
+let Cell = styled('td')<CellProps>(
   border,
   borderTop,
   borderRight,
@@ -162,27 +162,101 @@ Cell.defaultProps = {
   pt: 3,
 }
 
-const HCell = styled(Cell)`
+Cell = styled(Cell)`
   position: relative;
   width: 20%;
-  @media only screen and (max-width: 600px) {
-    width: 10%;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 16px;
+    min-height: 40px;
+    padding: 5px 0 5px 25px;
+    display: block;
   }
 `
 
+const HCell = styled(Cell)`
+  position: relative;
+  width: 20%;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 16px;
+    display: block;
+    padding: 3px;
+    width: 85px;
+    height: 50px;
+  }
+`
 HCell.defaultProps = {
   px: 2,
-  pt: 0,
-  pb: 2,
+  pt: 3,
+  pb: 3,
 }
 
-const AccessibilityFlex = styled(Flex)`
-  width: device-width;
+const VertHCell = styled(Cell)`
+  position: relative;
+  width: 20%;
 
-  @media only screen and (max-width: 600px) {
-    padding: 5% 1% 5% 3%;
-    font-size: small;
-    width: device-width;
+  @media only screen and (max-width: 500px) {
+    text-align: left;
+    display: block;
+    width: 100%;
+    height: 50px;
+  }
+`
+
+const AccessibilityFlex = styled(Flex)`
+  max-width: 500px;
+  margin: 16px;
+  @media only screen and (max-width: 500px) {
+    max-width: 95%;
+  }
+`
+
+const SmallTitle = styled(Span)`
+  @media only screen and (max-width: 500px) {
+    font-size: 18px;
+    padding: 0 5px 0 0;
+  }
+`
+
+const Table = styled.table`
+width: 100%;
+
+tr:first-child {
+  border-bottom: 1px solid;
+}
+
+@media only screen and (max-width: 500px) {
+ 
+  th, td{
+    border: none;
+  }
+  table, tbody{
+    display: grid;
+    border: none;
+  }
+  tbody{ 
+    grid-row-gap: 20%;
+    grid-template-columns: 85px 85px 85px;
+    align: left;
+  } 
+
+  tr{
+    text-align: center;
+    border-left: 1px solid;
+    &:nth-child(1) {
+       border-left: none;
+    }
+  }
+
+  th:first-child {
+    border-bottom: 1px solid;
+  }
+  td:first-child {
+    border-bottom: 1px solid;
+  }
+  tr:first-child {
+    border-bottom: none;
   }
 `
 
@@ -249,7 +323,7 @@ function AccessibilityCheck({ contrast, isDark, level, textSize }: Accessibility
       <br />
       <Span
         color={isDark ? 'white' : 'darkestContrast'}
-        fontSize="12px"
+        fontSize="small"
         lineHeight="1em"
         fontWeight={300}
       >
@@ -275,62 +349,47 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
   const contrastToDarkestContrast = thisColor.contrast(darkestContrastColor)
   return (
     <AccessibilityFlex
-      m={4}
       p={4}
+      m={4}
       borderRadius="2px"
       bg={color}
       color={compareColor}
       style={color === 'white' ? { border: borderStyle } : {}}
     >
-      <Table style={{ borderCollapse: 'collapse', borderSpacing: 0 }}>
-        <thead>
-          <tr style={{ borderBottom: borderStyle }}>
+      <Table style={{ borderCollapse: 'collapse', borderColor }}>
+        <tbody>
+          <tr>
             <HCell as="th" textAlign="left">
-              <Span fontSize="h4" lineHeight="1em" fontWeight={400}>
+              <SmallTitle fontSize="h4" fontWeight={400}>
                 {title}
-              </Span>
-              <Box position="absolute" left="8px" top="-48px">
-                <Span color="darkestContrast" fontSize="9.6px" fontWeight={400}>
-                  Color
-                </Span>
-              </Box>
+              </SmallTitle>
             </HCell>
-            <HCell as="th" borderRight={borderStyle} style={{ width: '5px' }}>
-              <Span fontWeight={300} fontSize="small" lineHeight="1em">
+            <VertHCell as="th" borderRight={borderStyle}>
+              <Span fontWeight={300} fontSize="small">
                 Ratio
               </Span>
-            </HCell>
-            <HCell as="th">
-              <Span fontSize="h3" lineHeight="1em" fontWeight={400}>
+            </VertHCell>
+            <VertHCell as="th">
+              <Span fontSize="h3" fontWeight={400}>
                 Aa
               </Span>
-              <Box position="absolute" left="8px" top="-48px" width="150%">
-                <Span color="darkestContrast" fontSize="9.6px" fontWeight={400}>
-                  AA Levels
-                </Span>
-              </Box>
-            </HCell>
-            <HCell as="th" borderRight={borderStyle}>
-              <Span fontSize="small" lineHeight="1em" fontWeight={400}>
+            </VertHCell>
+            <VertHCell as="th" borderRight={borderStyle}>
+              <Span fontSize="small" fontWeight={400}>
                 Aa
               </Span>
-            </HCell>
-            <HCell as="th">
-              <Span fontSize="h3" lineHeight="1em" fontWeight={400}>
+            </VertHCell>
+            <VertHCell as="th">
+              <Span fontSize="h3" fontWeight={400}>
                 Aa
               </Span>
-              <Box position="absolute" left="8px" top="-48px" width="150%">
-                <Span color="darkestContrast" fontSize="9.6px" fontWeight={400}>
-                  AAA Levels
-                </Span>
-              </Box>
-            </HCell>
-            <HCell as="th" borderRight={borderStyle}>
-              <Span fontSize="small" lineHeight="1em" fontWeight={400}>
+            </VertHCell>
+            <VertHCell as="th" borderRight={borderStyle}>
+              <Span fontSize="small" fontWeight={400}>
                 Aa
               </Span>
-            </HCell>
-            <HCell as="th" pl={3}>
+            </VertHCell>
+            <VertHCell as="th" pl={3}>
               <Box
                 display="inline-block"
                 width="20px"
@@ -341,22 +400,18 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
                 borderColor={compareColor}
                 bg="transparent"
               />
-              <Box position="absolute" left="0" top="-48px" width="100%">
-                <Span color="darkestContrast" fontSize="9.6px" fontWeight={400}>
-                  Interface
-                </Span>
-              </Box>
-            </HCell>
+            </VertHCell>
           </tr>
-        </thead>
-        <tbody>
+
           <tr>
-            <Cell textAlign="left">
+            <HCell>
               <Span color="white" fontSize="small">
                 White
               </Span>
+            </HCell>
+            <Cell borderRight={borderStyle} textAlign="center">
+              <Span> {contrastToWhite.toFixed(2)}</Span>
             </Cell>
-            <Cell borderRight={borderStyle}>{contrastToWhite.toFixed(2)}</Cell>
             <Cell textAlign="center">
               <AccessibilityCheck
                 isDark={isDark}
@@ -394,12 +449,14 @@ export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps
             </Cell>
           </tr>
           <tr>
-            <Cell textAlign="left">
+            <HCell data-name={title}>
               <Span color="darkestContrast" fontSize="small">
-                DarkestContrast
+                Darkest Contrast
               </Span>
+            </HCell>
+            <Cell borderRight={borderStyle} textAlign="center">
+              <Span>{contrastToDarkestContrast.toFixed(2)} </Span>
             </Cell>
-            <Cell borderRight={borderStyle}>{contrastToDarkestContrast.toFixed(2)}</Cell>
             <Cell textAlign="center">
               <AccessibilityCheck
                 isDark={isDark}
