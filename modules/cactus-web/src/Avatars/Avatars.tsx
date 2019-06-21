@@ -1,8 +1,5 @@
-import * as icons from '@repay/cactus-icons/i'
 import { CactusTheme } from '@repay/cactus-theme'
-import { color, textStyle } from 'styled-system'
 import { MarginProps, margins } from '../helpers/margins'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type AvatarUsage = 'alert' | 'feedBack' | 'steps'

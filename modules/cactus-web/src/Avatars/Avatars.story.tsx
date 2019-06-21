@@ -1,10 +1,8 @@
-import * as icons from '@repay/cactus-icons/i'
+import * as icons from '@repay/cactus-icons'
 import { select, text } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Avatars, { AvatarColor, AvatarStep, AvatarUsage } from './Avatars'
-import cactusTheme, { CactusColor } from '@repay/cactus-theme'
-import Flex from '../Flex/Flex'
-import Grid from '../Grid/Grid'
+
 import React from 'react'
 
 const avatarIcon: AvatarColor[] = [
@@ -15,11 +13,10 @@ const avatarIcon: AvatarColor[] = [
 ]
 const avatarSteps: AvatarStep[] = ['notDone', 'inProcess', 'done']
 const avatarUse: AvatarUsage[] = ['alert', 'feedBack']
-type IconName = keyof typeof icons
 
 storiesOf('Avatars', module)
   .add('Icons', () => {
-    const iconName: IconName = select('icon', avatarIcon, 'NotificationError')
+    const iconName: AvatarColor = select('icon', avatarIcon, 'NotificationError')
     const Icon = icons[iconName]
     return (
       <Avatars avatarUsage={select('usage', avatarUse, 'feedBack')} avatarColor={iconName}>

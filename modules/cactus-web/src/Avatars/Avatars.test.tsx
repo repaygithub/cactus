@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { cleanup, render, fireEvent } from 'react-testing-library'
+import { cleanup, fireEvent, render } from 'react-testing-library'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Avatars from './Avatars'
 import cactusTheme from '@repay/cactus-theme'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 
 afterEach(cleanup)
 
