@@ -2,10 +2,10 @@
   "name": "@repay/cactus-web",
   "version": "0.4.3",
   "description": "A UI component library for web built in React by REPAY",
-  "main": "dist/cactus-web.js",
-  "module": "dist/cactus-web.cjs.js",
+  "main": "dist/cactus-web.cjs.js",
+  "module": "dist/cactus-web.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-ui",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-web",
   "license": "MIT",
   "scripts": {
     "cleanup": "rm -rf dist coverage .storybook/dist",
@@ -18,7 +18,6 @@
     "dev": "start-storybook -p 9001 -c .storybook",
     "dev:build": "repay-scripts dev --lib --config rollup.config.js src/index.ts",
     "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
-    "prebuild": "yarn build:types",
     "build": "repay-scripts build --lib --config rollup.config.js src/index.ts",
     "postbuild": "yarn build:types",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly"
