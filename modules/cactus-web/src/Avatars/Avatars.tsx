@@ -3,11 +3,7 @@ import { MarginProps, margins } from '../helpers/margins'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type AvatarUsage = 'alert' | 'feedBack'
-export type AvatarType =
-  | 'NotificationError'
-  | 'NotificationAlert'
-  | 'NotificationInfo'
-  | 'StatusCheck'
+export type AvatarType = 'error' | 'warning' | 'info' | 'success'
 
 interface AvatarProps extends MarginProps {
   avatarUsage?: AvatarUsage
@@ -26,10 +22,7 @@ const avatar = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme
 
 const iconColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
   const { avatarType, avatarUsage } = props
-  if (
-    avatarUsage === 'feedBack' &&
-    (avatarType === 'NotificationError' || avatarType === 'StatusCheck')
-  ) {
+  if (avatarUsage === 'feedBack' && (avatarType === 'error' || avatarType === 'success')) {
     return props.theme.colors.white
   } else {
     return props.theme.colors.darkGray
@@ -41,24 +34,24 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
 
   if (avatarUsage === 'alert') {
     switch (avatarType) {
-      case 'NotificationError':
+      case 'error':
         return `hsla(353, 84%, 44%, 0.3)`
-      case 'NotificationAlert':
+      case 'warning':
         return `hsla(47, 82%, 47%, 0.3)`
-      case 'NotificationInfo':
+      case 'info':
         return props.theme.colors.lightContrast
-      case 'StatusCheck':
+      case 'success':
         return `hsla(145, 89%, 28%, 0.3)`
     }
   } else if (avatarUsage === 'feedBack') {
     switch (avatarType) {
-      case 'NotificationError':
+      case 'error':
         return props.theme.colors.error
-      case 'NotificationAlert':
+      case 'warning':
         return props.theme.colors.warning
-      case 'NotificationInfo':
+      case 'info':
         return props.theme.colors.lightContrast
-      case 'StatusCheck':
+      case 'success':
         return props.theme.colors.success
     }
   }
@@ -78,16 +71,16 @@ const usageMap: UsageMap = {
 }
 
 const colorMap: ColorMap = {
-  NotificationError: css`
+  error: css`
     background: ${avaColor};
   `,
-  NotificationAlert: css`
+  warning: css`
     background: ${avaColor};
   `,
-  NotificationInfo: css`
+  info: css`
     background: ${avaColor};
   `,
-  StatusCheck: css`
+  success: css`
     background: ${avaColor};
   `,
 }
@@ -109,7 +102,7 @@ export const Avatars = styled.div<AvatarProps>`
 
 Avatars.defaultProps = {
   avatarUsage: 'feedBack',
-  avatarType: 'NotificationInfo',
+  avatarType: 'info',
 }
 
 export default Avatars

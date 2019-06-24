@@ -19,7 +19,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Error', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="feedBack" avatarType="NotificationError" />
+        <Avatars avatarUsage="feedBack" avatarType="error" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -28,7 +28,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="feedBack" avatarType="NotificationAlert" />
+        <Avatars avatarUsage="feedBack" avatarType="warning" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -37,7 +37,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Information', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="feedBack" avatarType="NotificationInfo" />
+        <Avatars avatarUsage="feedBack" avatarType="info" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -46,7 +46,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Check', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="feedBack" avatarType="StatusCheck" />
+        <Avatars avatarUsage="feedBack" avatarType="success" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -55,7 +55,7 @@ describe('component: Avatars', () => {
   test('Alert Avatar, Error', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="alert" avatarType="NotificationError" />
+        <Avatars avatarUsage="alert" avatarType="error" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -64,7 +64,7 @@ describe('component: Avatars', () => {
   test('Alert Avatar, Alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="alert" avatarType="NotificationAlert" />
+        <Avatars avatarUsage="alert" avatarType="warning" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -73,7 +73,7 @@ describe('component: Avatars', () => {
   test('Alert Avatar, Information', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="alert" avatarType="NotificationInfo" />
+        <Avatars avatarUsage="alert" avatarType="info" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -82,7 +82,7 @@ describe('component: Avatars', () => {
   test('Alert Avatar, Check', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatars avatarUsage="alert" avatarType="StatusCheck" />
+        <Avatars avatarUsage="alert" avatarType="success" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
