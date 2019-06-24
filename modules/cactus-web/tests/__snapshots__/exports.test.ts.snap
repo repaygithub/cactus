@@ -30,5 +30,6 @@ Array [
   "Span",
   "useId",
   "Avatars",
+  "StepAvatar",
 ]
 `;

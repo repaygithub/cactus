@@ -1,8 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`component: Avatars snapshot 1`] = `
+exports[`component: Avatars Alert Avatar, Alert 1`] = `
 .c0 {
   border-radius: 50%;
+  background: hsla(47,82%,47%,0.3);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,50%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Alert Avatar, Check 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsla(145,89%,28%,0.3);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,50%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Alert Avatar, Error 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsla(353,84%,44%,0.3);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,50%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Alert Avatar, Information 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsl(200,29%,90%);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,50%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Default Avatar 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsl(200,29%,90%);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,50%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Feed Back Avatar, Alert 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsl(47,82%,47%);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,50%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Feed Back Avatar, Check 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsl(145,89%,28%);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,100%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Feed Back Avatar, Error 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsl(353,84%,44%);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,100%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: Avatars Feed Back Avatar, Information 1`] = `
+.c0 {
+  border-radius: 50%;
+  background: hsl(200,29%,90%);
+  width: 40px;
+  height: 40px;
+  color: hsl(0,0%,50%);
 }
 
 <div>

@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: StepAvatar Default Step 1`] = `
+.c0 {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 31.104px;
+  font-weight: 400px;
+  text-align: center;
+  background: hsl(200,29%,90%);
+  color: hsl(200,10%,20%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: StepAvatar Step Avatar, Done 1`] = `
+.c0 {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 31.104px;
+  font-weight: 400px;
+  text-align: center;
+  background: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: StepAvatar Step Avatar, In Process 1`] = `
+.c0 {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 31.104px;
+  font-weight: 400px;
+  text-align: center;
+  background: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+  box-shadow: 0px 2px 5px 4px hsl(200,29%,90%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`component: StepAvatar Step Avatar, Not Done 1`] = `
+.c0 {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 31.104px;
+  font-weight: 400px;
+  text-align: center;
+  background: hsl(200,29%,90%);
+  color: hsl(200,10%,20%);
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
