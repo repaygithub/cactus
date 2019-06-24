@@ -2,8 +2,8 @@ import React, { Component, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 
 import * as styledComponents from 'styled-components'
+import { Flex, Spinner, StyleProvider } from '@repay/cactus-web'
 import { Router } from '@reach/router'
-import { StyleProvider } from '@repay/cactus-web'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 
 const ButtonsPage = React.lazy(() =>
@@ -13,6 +13,10 @@ const HomePage = React.lazy(() => import(/* webpackChunkName: "Home" */ './conta
 const InverseButtonsPage = React.lazy(() =>
   import(/* webpackChunkName: "InverseButtons" */ './containers/InverseButtons')
 )
+const FormExample = React.lazy(() =>
+  import(/* webpackChunkName: "FormExample" */ './containers/FormExample')
+)
+const Icons = React.lazy(() => import(/* webpackChunkName: "Icons" */ './containers/Icons'))
 
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
@@ -20,13 +24,13 @@ const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledC
 
 const appRoot = document.createElement('div')
 appRoot.className = 'app-root'
-appRoot.style.cssText = 'height:100%;'
 document.body.appendChild(appRoot)
 
 const GlobalStyle = createGlobalStyle`
   html,
   body {
-    height: 100%;
+    min-height: 100vh;
+    overflow: auto;
   }
 `
 
@@ -34,12 +38,20 @@ class RootTheme extends Component {
   render() {
     return (
       <StyleProvider theme={cactusTheme} global>
-        <Suspense fallback="loading...">
+        <Suspense
+          fallback={
+            <Flex width="100%" justifyContent="center" p={4}>
+              <Spinner />
+            </Flex>
+          }
+        >
           <GlobalStyle />
           <Router style={{ height: '100%' }}>
             <HomePage path="/" />
             <ButtonsPage path="/Buttons/Standard" />
             <InverseButtonsPage path="/Buttons/Inverse" />
+            <FormExample path="/FormElements" />
+            <Icons path="/Icons" />
           </Router>
         </Suspense>
       </StyleProvider>

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export interface RadioButtonProps
@@ -31,6 +32,7 @@ const HiddenRadioButton = styled.input.attrs({ type: 'radio' as string })`
   opacity: 0;
   height: 0;
   width: 0;
+  margin: 0;
   position: absolute;
 `
 
@@ -59,7 +61,8 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
 export const RadioButton = styled(RadioButtonBase)`
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
+  line-height: 16px;
   width: 16px;
   height: 16px;
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
@@ -79,6 +82,13 @@ export const RadioButton = styled(RadioButtonBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+RadioButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+}
 
 RadioButton.defaultProps = {
   disabled: false,

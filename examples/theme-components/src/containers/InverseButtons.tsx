@@ -1,9 +1,10 @@
 import React, { Component, CSSProperties } from 'react'
 
 import { ActionsAdd, NavigationChevronLeft } from '@repay/cactus-icons'
-import { Button, IconButton, TextButton } from '@repay/cactus-web'
-import { Link, RouteComponentProps } from '@reach/router'
+import { Box, Button, Grid, IconButton, TextButton } from '@repay/cactus-web'
+import { RouteComponentProps } from '@reach/router'
 import cactusTheme from '@repay/cactus-theme'
+import Link from '../components/Link'
 
 const tableStyle: CSSProperties = {
   textAlign: 'center',
@@ -39,105 +40,91 @@ class InverseButtons extends Component<RouteComponentProps> {
         style={{
           backgroundColor: cactusTheme.colors.base,
           color: cactusTheme.colors.white,
-          height: '100%',
+          minHeight: '100vh',
         }}
       >
-        {/*
-        // @ts-ignore */}
-        <TextButton inverse as={Link} to="/">
+        <Link to="/">
           <NavigationChevronLeft />
           Back
-        </TextButton>
+        </Link>
         <div style={{ textAlign: 'center', height: '100%' }}>
           <h2>Inverse Buttons</h2>
           <div style={{ height: '100%' }}>
-            <table style={tableStyle} cellPadding="10">
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>Standard</strong>
-                  </td>
-                  <td>
-                    <strong>Call to Action</strong>
-                  </td>
-                  <td>
-                    <strong>Disabled</strong>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <Button inverse onClick={this.handleOnClick}>
-                      Button
-                    </Button>
-                  </td>
-                  <td>
-                    <Button inverse variant="action" onClick={this.handleOnClick}>
-                      CTA Button
-                    </Button>
-                  </td>
-                  <td>
-                    <Button inverse disabled onClick={this.handleOnClick}>
-                      Disabled
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <TextButton inverse onClick={this.handleOnClick}>
-                      Text Button
-                    </TextButton>
-                  </td>
-                  <td>
-                    <TextButton inverse variant="action" onClick={this.handleOnClick}>
-                      CTA Text Button
-                    </TextButton>
-                  </td>
-                  <td>
-                    <TextButton inverse disabled onClick={this.handleOnClick}>
-                      Disabled Text Button
-                    </TextButton>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <TextButton inverse onClick={this.handleOnClick}>
-                      <ActionsAdd />
-                      Text+Icon
-                    </TextButton>
-                  </td>
-                  <td>
-                    <TextButton inverse variant="action" onClick={this.handleOnClick}>
-                      <ActionsAdd />
-                      CTA Text+Icon
-                    </TextButton>
-                  </td>
-                  <td>
-                    <TextButton inverse disabled onClick={this.handleOnClick}>
-                      <ActionsAdd />
-                      Disabled Text+Icon
-                    </TextButton>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <IconButton inverse onClick={this.handleOnClick}>
-                      <ActionsAdd />
-                    </IconButton>
-                  </td>
-                  <td>
-                    <IconButton inverse variant="action" onClick={this.handleOnClick}>
-                      <ActionsAdd />
-                    </IconButton>
-                  </td>
-                  <td>
-                    <IconButton inverse disabled onClick={this.handleOnClick}>
-                      <ActionsAdd />
-                    </IconButton>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <span>Clicked {this.state.clickCount} times!</span>
+            <Grid>
+              <Grid.Item tiny={4}>
+                <strong>Standard</strong>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <strong>Call to Action</strong>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <strong>Disabled</strong>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <Button inverse onClick={this.handleOnClick}>
+                  Button
+                </Button>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <Button inverse variant="action" onClick={this.handleOnClick}>
+                  CTA Button
+                </Button>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <Button inverse disabled onClick={this.handleOnClick}>
+                  Disabled
+                </Button>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <TextButton inverse onClick={this.handleOnClick}>
+                  Text Button
+                </TextButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <TextButton inverse variant="action" onClick={this.handleOnClick}>
+                  CTA Text Button
+                </TextButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <TextButton inverse disabled onClick={this.handleOnClick}>
+                  Disabled Text Button
+                </TextButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <TextButton inverse onClick={this.handleOnClick}>
+                  <ActionsAdd />
+                  Text+Icon
+                </TextButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <TextButton inverse variant="action" onClick={this.handleOnClick}>
+                  <ActionsAdd />
+                  CTA Text+Icon
+                </TextButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <TextButton inverse disabled onClick={this.handleOnClick}>
+                  <ActionsAdd />
+                  Disabled Text+Icon
+                </TextButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <IconButton label="add" inverse onClick={this.handleOnClick}>
+                  <ActionsAdd />
+                </IconButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <IconButton label="add" inverse variant="action" onClick={this.handleOnClick}>
+                  <ActionsAdd />
+                </IconButton>
+              </Grid.Item>
+              <Grid.Item tiny={4}>
+                <IconButton label="add" inverse disabled onClick={this.handleOnClick}>
+                  <ActionsAdd />
+                </IconButton>
+              </Grid.Item>
+            </Grid>
+            <Box>Clicked {this.state.clickCount} times!</Box>
           </div>
         </div>
       </div>

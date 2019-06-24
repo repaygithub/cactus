@@ -4,6 +4,7 @@ import { FieldOnChangeHandler, Omit } from '../types'
 import { Label, LabelProps } from '../Label/Label'
 import { MarginProps, margins } from '../helpers/margins'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
+import PropTypes from 'prop-types'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
 import Tooltip from '../Tooltip/Tooltip'
@@ -121,6 +122,18 @@ export const TextInputField = styled(TextInputFieldBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+TextInputField.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  labelProps: PropTypes.object,
+  success: PropTypes.string,
+  warning: PropTypes.string,
+  error: PropTypes.string,
+  tooltip: PropTypes.string,
+  onChange: PropTypes.func,
+}
 
 TextInputField.defaultProps = {
   error: undefined,

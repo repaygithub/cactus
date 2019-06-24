@@ -1,6 +1,7 @@
 import React, { ComponentType, createContext, FC, useContext } from 'react'
 
 import { FeatureFlagsObject } from './types'
+import PropTypes from 'prop-types'
 
 const FeatureFlagContext = createContext<FeatureFlagsObject | null>(null)
 
@@ -48,6 +49,11 @@ interface FeatureFlagProps {
 const FeatureFlag: FC<FeatureFlagProps> = ({ feature, children }) => {
   const [enabled] = useFeatureFlags(feature)
   return children(enabled)
+}
+
+FeatureFlag.propTypes = {
+  feature: PropTypes.string.isRequired,
+  children: PropTypes.func.isRequired,
 }
 
 export { FeatureFlagContext, useFeatureFlags, withFeatureFlags, FeatureFlag }

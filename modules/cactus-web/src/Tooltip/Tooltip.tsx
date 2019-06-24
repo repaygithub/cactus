@@ -8,6 +8,7 @@ import { Omit } from '../types'
 import { useRect } from '@reach/rect'
 import { useTooltip } from '@reach/tooltip'
 import Portal from '@reach/portal'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import VisuallyHidden from '@reach/visually-hidden'
 
@@ -221,5 +222,13 @@ export const TooltipContent = styled(TooltipContentBase)`
 export const Tooltip = styled(TooltipBase)`
   ${margins}
 `
+
+// @ts-ignore
+Tooltip.propTypes = {
+  label: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string,
+  position: PropTypes.func,
+  maxWidth: PropTypes.string,
+}
 
 export default Tooltip

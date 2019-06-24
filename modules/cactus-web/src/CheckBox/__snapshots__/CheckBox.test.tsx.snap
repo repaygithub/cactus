@@ -35,9 +35,10 @@ exports[`component: CheckBox should render a checkbox 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
   width: 16px;
   height: 16px;
+  line-height: 16px;
   cursor: pointer;
 }
 
@@ -118,9 +119,10 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
   width: 16px;
   height: 16px;
+  line-height: 16px;
   cursor: cursor;
 }
 
@@ -198,9 +200,10 @@ exports[`component: CheckBox should support margin space props 1`] = `
 .c0 {
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
   width: 16px;
   height: 16px;
+  line-height: 16px;
   cursor: pointer;
   margin: 16px;
 }

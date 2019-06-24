@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
-import { MarginProps, margins } from '../helpers/margins'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import Label from '../Label/Label'
+import PropTypes from 'prop-types'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
 import TextArea, { Status, TextAreaProps } from '../TextArea/TextArea'
@@ -33,7 +34,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
     name,
     id,
     ...textAreaProps
-  } = props
+  } = splitProps(props)
 
   const ref = useRef<HTMLDivElement | null>(null)
   let containerWidth = undefined
@@ -120,6 +121,19 @@ export const TextAreaField = styled(TextAreaFieldBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+TextAreaField.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  labelProps: PropTypes.object,
+  success: PropTypes.string,
+  warning: PropTypes.string,
+  error: PropTypes.string,
+  tooltip: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+}
 
 TextAreaField.defaultProps = {
   success: undefined,

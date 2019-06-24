@@ -1,8 +1,9 @@
 import * as React from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
-import { MarginProps, margins } from '../helpers/margins'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import Label, { LabelProps } from '../Label/Label'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Toggle, { ToggleProps } from '../Toggle/Toggle'
 import useId from '../helpers/useId'
@@ -22,7 +23,9 @@ interface ToggleFieldProps extends MarginProps, Omit<ToggleProps, 'id' | 'onChan
 }
 
 const ToggleFieldBase = (props: ToggleFieldProps) => {
-  const { labelProps, className, label, id, name, onChange, onClick, ...toggleProps } = props
+  const { labelProps, className, label, id, name, onChange, onClick, ...toggleProps } = splitProps(
+    props
+  )
   const fieldId = useId(id, name)
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -58,6 +61,18 @@ export const ToggleField = styled(ToggleFieldBase)`
     vertical-align: text-bottom;
   }
 `
+
+// @ts-ignore
+ToggleField.propTypes = {
+  label: PropTypes.string.isRequired,
+  labelProps: PropTypes.object,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  onChange: PropTypes.func,
+}
 
 ToggleField.defaultProps = {
   value: false,

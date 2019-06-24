@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
-import { MarginProps, margins } from '../helpers/margins'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import Label from '../Label/Label'
+import PropTypes from 'prop-types'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
 import styled from 'styled-components'
 import useId from '../helpers/useId'
@@ -16,7 +17,9 @@ interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id' | 'onChange'
 }
 
 const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
-  const { label, labelProps, id, className, name, onChange, ...radioButtonProps } = props
+  const { label, labelProps, id, className, name, onChange, ...radioButtonProps } = splitProps(
+    props
+  )
   const radioButtonId = useId(id, name)
   const handleChange = React.useCallback(
     (event: React.FormEvent<HTMLInputElement>) => {
@@ -48,12 +51,17 @@ export const RadioButtonField = styled(RadioButtonFieldBase)`
     padding-left: 8px;
   }
 
-  ${RadioButton} {
-    top: -3px;
-  }
-
   ${margins}
 `
+
+// @ts-ignore
+RadioButtonField.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  labelProps: PropTypes.object,
+  id: PropTypes.string,
+  onChange: PropTypes.func,
+}
 
 RadioButtonField.defaultProps = {
   labelProps: {},

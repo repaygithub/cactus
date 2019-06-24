@@ -3,6 +3,7 @@ import React, { ComponentProps, JSXElementConstructor, useEffect, useState } fro
 import { I18nContext, useI18nContext, useI18nResource, useI18nText } from './hooks'
 import { I18nContextType } from './types'
 import BaseI18nController from './BaseI18nController'
+import PropTypes from 'prop-types'
 
 interface I18nProviderProps {
   controller: BaseI18nController
@@ -44,6 +45,13 @@ const I18nProvider: React.FC<I18nProviderProps> = props => {
   )
 }
 
+I18nProvider.propTypes = {
+  // TS doesn't like providing an abstract class below
+  // @ts-ignore
+  controller: PropTypes.instanceOf(BaseI18nController),
+  lang: PropTypes.string,
+}
+
 interface I18nSectionProps {
   name: string
 }
@@ -69,6 +77,10 @@ const I18nSection: React.FC<I18nSectionProps> = props => {
   )
 }
 
+I18nSection.propTypes = {
+  name: PropTypes.string.isRequired,
+}
+
 interface I18nTextProps {
   get: string
   args?: object
@@ -78,6 +90,12 @@ interface I18nTextProps {
 const I18nText: React.FC<I18nTextProps> = props => {
   const text = useI18nText(props.get, props.args, props.section)
   return <React.Fragment>{text || props.children || props.get}</React.Fragment>
+}
+
+I18nText.propTypes = {
+  get: PropTypes.string.isRequired,
+  args: PropTypes.object,
+  section: PropTypes.string,
 }
 
 type TagNameOrReactComp = keyof JSX.IntrinsicElements | JSXElementConstructor<any>
@@ -92,6 +110,13 @@ const I18nElement = function<Elem extends TagNameOrReactComp>(props: I18nElement
   const [message, attrs] = useI18nResource(get, args, section)
   const elemProps = { ...rest, ...attrs }
   return React.createElement(as, elemProps, message || get)
+}
+
+I18nElement.propTypes = {
+  get: PropTypes.string.isRequired,
+  args: PropTypes.object,
+  section: PropTypes.string,
+  as: PropTypes.node,
 }
 
 interface I18nResourceProps extends I18nTextProps {
@@ -115,6 +140,14 @@ const I18nResource: React.FC<I18nResourceProps> = props => {
   )
 }
 
+I18nResource.propTypes = {
+  get: PropTypes.string.isRequired,
+  args: PropTypes.object,
+  section: PropTypes.string,
+  render: PropTypes.func,
+  children: PropTypes.func,
+}
+
 interface I18nFormattedProps extends I18nTextProps {
   formatter: (message: string) => React.ReactNode
 }
@@ -122,6 +155,13 @@ interface I18nFormattedProps extends I18nTextProps {
 const I18nFormatted: React.FC<I18nFormattedProps> = props => {
   const text = useI18nText(props.get, props.args, props.section)
   return <React.Fragment>{text !== null ? props.formatter(text) : props.get}</React.Fragment>
+}
+
+I18nFormatted.propTypes = {
+  get: PropTypes.string.isRequired,
+  args: PropTypes.object,
+  section: PropTypes.string,
+  formatter: PropTypes.func.isRequired,
 }
 
 export { I18nProvider, I18nSection, I18nElement, I18nFormatted, I18nResource, I18nText }

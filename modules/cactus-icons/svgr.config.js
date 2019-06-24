@@ -4,9 +4,8 @@ const prettierConfig = JSON.parse(
 prettierConfig.parser = 'typescript'
 
 const template = ({ template }, opts, { componentName, jsx }) => {
-  const typeScriptTpl = template.smart({ plugins: ['typescript'] })
-
-  return typeScriptTpl.ast`
+  const code = `
+import PropTypes from 'prop-types'
 import * as React from 'react'
 import {
   color,
@@ -34,18 +33,30 @@ const iconSizes = style({
 })
 
 const Base = ({ iconSize, ...props }: Props) => (
-  ${jsx}
+  JSX
 )
 
-const ${componentName} = styled(Base)\`
+const COMPONENT_NAME = styled(Base)\`
   vertical-align: middle;
   \${space}
   \${color}
   \${iconSizes}
 \`
 
-export default ${componentName}
-`
+TS_IGNORE
+COMPONENT_NAME.propTypes = {
+  iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
+}
+
+export default COMPONENT_NAME
+  `
+  const typeScriptTpl = template.smart(code, {
+    plugins: ['typescript'],
+    preserveComments: true,
+    placeholderPattern: /^[_A-Z]{2,}$/,
+  })
+
+  return typeScriptTpl({ JSX: jsx, COMPONENT_NAME: componentName, TS_IGNORE: '// @ts-ignore' })
 }
 
 module.exports = {
@@ -55,4 +66,5 @@ module.exports = {
   svgProps: {
     fill: 'currentcolor',
   },
+  prettierConfig,
 }

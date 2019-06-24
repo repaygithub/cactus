@@ -3,6 +3,7 @@ import React from 'react'
 import { CactusTheme } from '@repay/cactus-theme'
 import { get, px, style } from 'styled-system'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
+import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type IconButtonVariants = 'standard' | 'action'
@@ -115,6 +116,16 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   ${margins}
   ${iconSizes}
 `
+
+// @ts-ignore
+IconButton.propTypes = {
+  iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
+  variant: PropTypes.oneOf(['standard', 'action']),
+  disabled: PropTypes.bool,
+  label: PropTypes.string.isRequired,
+  display: PropTypes.oneOf(['flex', 'inline-flex']),
+  inverse: PropTypes.bool,
+}
 
 IconButton.defaultProps = {
   variant: 'standard',

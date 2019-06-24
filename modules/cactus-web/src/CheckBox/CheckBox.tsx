@@ -3,6 +3,7 @@ import React from 'react'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
 import { StatusCheck } from '@repay/cactus-icons'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export interface CheckBoxProps
@@ -60,9 +61,10 @@ const StyledCheckBox = styled.span<StyledCheckBoxProps>`
 export const CheckBox = styled(CheckBoxBase)`
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: -1px;
   width: 16px;
   height: 16px;
+  line-height: 16px;
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
   input:checked ~ span {
     border-color: ${p => !p.disabled && p.theme.colors.callToAction};
@@ -81,6 +83,12 @@ export const CheckBox = styled(CheckBoxBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+CheckBox.propTypes = {
+  id: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+}
 
 CheckBox.defaultProps = {
   disabled: false,

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
+import PropTypes from 'prop-types'
 import styled, { css, StyledComponentBase } from 'styled-components'
 
 const GUTTER_WIDTH = 16
@@ -71,6 +72,17 @@ export const Item = styled.div<ItemProps>`
   }
 `
 
+const ColumnPropType = PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+
+// @ts-ignore
+Item.propTypes = {
+  tiny: ColumnPropType.isRequired,
+  small: ColumnPropType,
+  medium: ColumnPropType,
+  large: ColumnPropType,
+  extraLarge: ColumnPropType,
+}
+
 const flexJustifyMap = {
   start: 'flex-start',
   end: 'flex-end',
@@ -110,6 +122,10 @@ export const Grid = styled.div<GridProps>`
 ` as any
 
 Grid.Item = Item
+
+Grid.propTypes = {
+  justify: PropTypes.oneOf(['start', 'center', 'end', 'normal']),
+}
 
 Grid.defaultProps = {
   justify: 'normal',

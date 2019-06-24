@@ -4,6 +4,8 @@ import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import { StatusPropType } from '../StatusMessage/StatusMessage'
+import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type Status = 'success' | 'warning' | 'error'
@@ -139,6 +141,14 @@ export const TextArea = styled(TextAreaBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+TextArea.propTypes = {
+  disabled: PropTypes.bool,
+  status: StatusPropType,
+  width: PropTypes.string,
+  height: PropTypes.string,
+}
 
 TextArea.defaultProps = {
   disabled: false,

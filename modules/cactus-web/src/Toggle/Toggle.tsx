@@ -3,6 +3,7 @@ import React from 'react'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { NavigationClose, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export interface ToggleProps
@@ -104,6 +105,12 @@ export const Toggle = styled(ToggleBase)`
 
   ${margins}
 `
+
+// @ts-ignore
+Toggle.propTypes = {
+  value: PropTypes.bool,
+  disabled: PropTypes.bool,
+}
 
 Toggle.defaultProps = {
   disabled: false,

@@ -18,7 +18,7 @@ addDecorator(story => (
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100vw',
+      width: 'calc(100vw - 16px)',
       flexDirection: 'column',
       marginTop: '20px',
     }}

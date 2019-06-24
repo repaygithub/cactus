@@ -4,6 +4,7 @@ import { FieldOnChangeHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import Label from '../Label/Label'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import useId from '../helpers/useId'
 
@@ -52,12 +53,18 @@ export const CheckBoxField = styled(CheckBoxFieldBase)`
     padding-left: 8px;
   }
 
-  ${CheckBox} {
-    top: -3px;
-  }
-
   ${margins}
 `
+
+// @ts-ignore
+CheckBoxField.propTypes = {
+  label: PropTypes.string.isRequired,
+  labelProps: PropTypes.object,
+  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+  disabled: PropTypes.bool,
+}
 
 CheckBoxField.defaultProps = {
   labelProps: {},
