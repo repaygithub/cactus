@@ -168,10 +168,7 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
    */
   let docgenData = await cache.get(DOCGEN_CACHE_KEY)
   if (!Array.isArray(docgenData)) {
-    console.log('[DOCGEN] no cache')
     docgenData = []
-  } else {
-    console.log('[DOCGEN] cache found')
   }
 
   const createComponentDb = async filePath => {
