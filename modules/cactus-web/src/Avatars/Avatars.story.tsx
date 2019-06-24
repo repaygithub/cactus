@@ -9,7 +9,7 @@ const avatarIcon: AvatarType[] = ['error', 'warning', 'info', 'success']
 
 const avatarUse: AvatarUsage[] = ['alert', 'feedBack']
 
-storiesOf('Avatars', module).add('Icons', () => {
+storiesOf('Avatars', module).add('Basic Usage', () => {
   const iconName: AvatarType = select('icon', avatarIcon, 'error')
   var Icon = icons['NotificationError']
 

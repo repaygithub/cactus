@@ -5,7 +5,7 @@ import React from 'react'
 
 const avatarSteps: AvatarStep[] = ['notDone', 'inProcess', 'done']
 
-storiesOf('StepAvatar', module).add('Steps', () => {
+storiesOf('StepAvatar', module).add('Basic Usage', () => {
   return (
     <StepAvatar stepType={select('current step', avatarSteps, 'inProcess')}>
       {text('Step Number', '#')}

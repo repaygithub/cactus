@@ -9,24 +9,15 @@ import cactusTheme from '@repay/cactus-theme'
 
 # StepAvatar
 
-## Best practices
-
-TODO - see README for what to include here
-
 ## Basic usage
 
-TODO - brief description
+The `Step Avatar` is an Avatar used to convey the amount of steps in a task. The number inside of the step avatar should be 1 or 2 digits long. There are three types of steps: notDone, inProgress, and done. Each phase of the step is represented by a different background color. The `Step Avatar` is slighty larger than the basic `Avatar`.
 
 ```jsx
 import React from 'react'
-;<StepAvatar />
+importStepAvatar from '@repay/cactus-web'
+
+<StepAvatar stepType="inProcess">
+    #
+</StepAvatar>
 ```
-
-```tsx
-import * as React from 'react'
-;<StepAvatar />
-```
-
-## Properties
-
-<PropsTable of={StepAvatar} />
