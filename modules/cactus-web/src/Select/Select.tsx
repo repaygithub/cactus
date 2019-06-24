@@ -518,7 +518,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       clearTimeout(this.keyClear)
       this.keyClear = undefined
     }
-    this.keyClear = setTimeout(() => {
+    this.keyClear = window.setTimeout(() => {
       this.pendingChars = ''
       this.keyClear = undefined
     }, 500)
@@ -527,7 +527,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   scrolled() {
     this.didScroll = true
     clearTimeout(this.scrollClear)
-    this.scrollClear = setTimeout(() => {
+    this.scrollClear = window.setTimeout(() => {
       this.didScroll = false
     }, 150) // 120ms worked on Firefox and IE11 so 150 us just extra safe
   }

@@ -43,6 +43,9 @@
       "src/**/*.{ts,tsx}",
       "!src/**/*.story.{ts,tsx}",
       "!src/storySupport/**"
+    ],
+    "watchPathIgnorePatterns": [
+      "dist"
     ]
   },
   "devDependencies": {
@@ -55,6 +58,7 @@
     "@storybook/components": "^5.0.11",
     "@storybook/react": "5.0.8",
     "@storybook/theming": "^5.0.8",
+    "@types/puppeteer": "^1.12.4",
     "@types/react": "^16.8.15",
     "@types/storybook__addon-knobs": "^4.0.5",
     "@types/storybook__addon-viewport": "^4.1.0",
@@ -68,6 +72,7 @@
     "jest": "^24.7.1",
     "jest-styled-components": "^6.2.1",
     "prop-types": "^15.7.2",
+    "puppeteer": "^1.17.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-testing-library": "^6.1.2",
