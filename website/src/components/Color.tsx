@@ -48,6 +48,7 @@ function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
   const hasDisplayName = Boolean(displayName)
   let hslaStr: string
   if (isCactusColor(color)) {
+    // @ts-ignore
     hslaStr = cactusTheme.colors[color]
   } else {
     hslaStr = color
@@ -227,7 +228,7 @@ tr:first-child {
 }
 
 @media only screen and (max-width: 500px) {
- 
+
   th, td{
     border: none;
   }
@@ -235,11 +236,11 @@ tr:first-child {
     display: grid;
     border: none;
   }
-  tbody{ 
+  tbody{
     grid-row-gap: 20%;
     grid-template-columns: 85px 85px 85px;
     align: left;
-  } 
+  }
 
   tr{
     text-align: center;

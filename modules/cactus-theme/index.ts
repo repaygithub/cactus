@@ -3,6 +3,19 @@ export type ColorStyle = {
   backgroundColor: string
 }
 
+export type StatusColors = {
+  background: {
+    success: string
+    warning: string
+    error: string
+  }
+  avatar: {
+    success: string
+    warning: string
+    error: string
+  }
+}
+
 export interface FontSizeObject extends Array<number> {
   h1?: number
   h2?: number
@@ -56,6 +69,8 @@ export interface CactusTheme {
     transparentSuccess: string
     transparentWarning: string
     transparentError: string
+
+    status: StatusColors
   }
   space: number[]
   fontSizes: FontSizeObject
@@ -120,6 +135,19 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   let transparentError = `hsla(353, 84%, 44%, 0.2)`
   let transparentWarning = `hsla(47, 82%, 47%, 0.2)`
 
+  const status: StatusColors = {
+    background: {
+      success: `hsla(145, 89%, 28%, 0.2)`,
+      warning: `hsla(47, 82%, 47%, 0.2)`,
+      error: `hsla(353, 84%, 44%, 0.2)`,
+    },
+    avatar: {
+      success: `hsla(145, 89%, 28%, 0.3)`,
+      warning: `hsla(47, 82%, 47%, 0.3)`,
+      error: `hsla(353, 84%, 44%, 0.3)`,
+    },
+  }
+
   const fontSizes: FontSizeObject = [15, 18, 21.6, 25.92, 31.104, 37.325]
   fontSizes.h1 = fontSizes[5]
   fontSizes.h2 = fontSizes[4]
@@ -162,6 +190,9 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       transparentSuccess,
       transparentError,
       transparentWarning,
+
+      /** Status Colors */
+      status,
     },
     space: [0, 2, 4, 8, 16, 24, 32, 40],
     fontSizes,
