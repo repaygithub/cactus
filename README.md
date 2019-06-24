@@ -2,7 +2,9 @@
 
 [![CircleCI](https://circleci.com/gh/repaygithub/cactus.svg?style=svg)](https://circleci.com/gh/repaygithub/cactus)
 
-An application framework and design system built in React at [REPAY](https://github.com/repaygithub). View the WIP documentation on the published [Github pages](https://repaygithub.github.io/cactus/).
+An application framework and design system built in React at [REPAY](https://github.com/repaygithub).
+
+### [View the published documentation](https://repaygithub.github.io/cactus/).
 
 ## Modules
 
@@ -14,7 +16,8 @@ An application framework and design system built in React at [REPAY](https://git
 
 ## Examples
 
-- [Standard Example](./examples/standard/) - generic implementations of features
+- [Standard Example](./examples/standard/) - generic implementations of features as a basic web app.
+- [Theme Components](./examples/theme-components) - exploration of using the components more in depth than the standard.
 
 ## Installation
 
