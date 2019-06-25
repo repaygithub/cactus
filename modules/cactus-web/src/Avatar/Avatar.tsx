@@ -90,7 +90,7 @@ const colorMap: ColorMap = {
 }
 
 const variant = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { avatarType, avatarUsage } = props
+  const { avatarType } = props
 
   if (avatarType !== undefined) {
     return colorMap[avatarType]
@@ -121,7 +121,7 @@ const AvatarBase = (props: AvatarProps) => {
   )
 }
 
-export const Avatars = styled(AvatarBase)<AvatarProps>`
+export const Avatar = styled(AvatarBase)<AvatarProps>`
   ${margins}
   width: 40px;
   height: 40px;
@@ -137,9 +137,9 @@ export const Avatars = styled(AvatarBase)<AvatarProps>`
   }
 `
 
-Avatars.defaultProps = {
+Avatar.defaultProps = {
   avatarUsage: 'feedBack',
   avatarType: 'info',
 }
 
-export default Avatars
+export default Avatar
