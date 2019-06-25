@@ -2,11 +2,13 @@
 
 exports[`component: StepAvatar Default Step 1`] = `
 .c0 {
+  box-sizing: border-box;
   border-radius: 50%;
   width: 48px;
   height: 48px;
+  line-height: 49px;
   font-size: 31.104px;
-  font-weight: 400px;
+  font-weight: 400;
   text-align: center;
   background: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
@@ -15,17 +17,20 @@ exports[`component: StepAvatar Default Step 1`] = `
 <div>
   <div
     class="c0"
+    type="notDone"
   />
 </div>
 `;
 
 exports[`component: StepAvatar Step Avatar, Done 1`] = `
 .c0 {
+  box-sizing: border-box;
   border-radius: 50%;
   width: 48px;
   height: 48px;
+  line-height: 49px;
   font-size: 31.104px;
-  font-weight: 400px;
+  font-weight: 400;
   text-align: center;
   background: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
@@ -34,17 +39,20 @@ exports[`component: StepAvatar Step Avatar, Done 1`] = `
 <div>
   <div
     class="c0"
+    type="done"
   />
 </div>
 `;
 
 exports[`component: StepAvatar Step Avatar, In Process 1`] = `
 .c0 {
+  box-sizing: border-box;
   border-radius: 50%;
   width: 48px;
   height: 48px;
+  line-height: 49px;
   font-size: 31.104px;
-  font-weight: 400px;
+  font-weight: 400;
   text-align: center;
   background: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
@@ -54,17 +62,20 @@ exports[`component: StepAvatar Step Avatar, In Process 1`] = `
 <div>
   <div
     class="c0"
+    type="inProcess"
   />
 </div>
 `;
 
 exports[`component: StepAvatar Step Avatar, Not Done 1`] = `
 .c0 {
+  box-sizing: border-box;
   border-radius: 50%;
   width: 48px;
   height: 48px;
+  line-height: 49px;
   font-size: 31.104px;
-  font-weight: 400px;
+  font-weight: 400;
   text-align: center;
   background: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
@@ -73,6 +84,7 @@ exports[`component: StepAvatar Step Avatar, Not Done 1`] = `
 <div>
   <div
     class="c0"
+    type="notDone"
   />
 </div>
 `;
