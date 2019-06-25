@@ -9,8 +9,8 @@ const avatarUse: AvatarUsage[] = ['alert', 'feedBack']
 storiesOf('Avatar', module).add('Basic Usage', () => {
   return (
     <Avatar
-      avatarUsage={select('usage', avatarUse, 'feedBack')}
-      avatarType={select('icon', avatarIcon, 'error')}
+      usage={select('usage', avatarUse, 'feedBack')}
+      type={select('icon', avatarIcon, 'error')}
     />
   )
 })

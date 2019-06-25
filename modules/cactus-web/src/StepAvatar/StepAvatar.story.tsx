@@ -3,14 +3,13 @@ import { select, text } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Grid from '../Grid/Grid'
 import React from 'react'
-import styled from 'styled-components'
 
 const avatarSteps: AvatarStep[] = ['notDone', 'inProcess', 'done']
 
 storiesOf('StepAvatar', module)
   .add('Basic Usage', () => {
     return (
-      <StepAvatar stepType={select('current step', avatarSteps, 'inProcess')}>
+      <StepAvatar type={select('current step', avatarSteps, 'inProcess')}>
         {text('Step Number', '#')}
       </StepAvatar>
     )
@@ -20,16 +19,16 @@ storiesOf('StepAvatar', module)
       <Grid justify="center">
         <Grid.Item tiny={2} />
         <Grid.Item tiny={2}>
-          <StepAvatar stepType="done">1</StepAvatar>
+          <StepAvatar type="done">1</StepAvatar>
         </Grid.Item>
         <Grid.Item tiny={2}>
-          <StepAvatar stepType="done">2</StepAvatar>
+          <StepAvatar type="done">2</StepAvatar>
         </Grid.Item>
         <Grid.Item tiny={2}>
-          <StepAvatar stepType="inProcess">3</StepAvatar>
+          <StepAvatar type="inProcess">3</StepAvatar>
         </Grid.Item>
         <Grid.Item tiny={2}>
-          <StepAvatar stepType="notDone">4</StepAvatar>
+          <StepAvatar type="notDone">4</StepAvatar>
         </Grid.Item>
         <Grid.Item tiny={2} />
       </Grid>
@@ -39,28 +38,28 @@ storiesOf('StepAvatar', module)
     return (
       <Grid justify="center">
         <Grid.Item tiny={12}>
-          <StepAvatar stepType="done">1</StepAvatar>
+          <StepAvatar type="done">1</StepAvatar>
         </Grid.Item>
 
         <Grid.Item tiny={12} />
         <Grid.Item tiny={12} />
 
         <Grid.Item tiny={12}>
-          <StepAvatar stepType="done">2</StepAvatar>
+          <StepAvatar type="done">2</StepAvatar>
         </Grid.Item>
 
         <Grid.Item tiny={12} />
         <Grid.Item tiny={12} />
 
         <Grid.Item tiny={12}>
-          <StepAvatar stepType="inProcess">3</StepAvatar>
+          <StepAvatar type="inProcess">3</StepAvatar>
         </Grid.Item>
 
         <Grid.Item tiny={12} />
         <Grid.Item tiny={12} />
 
         <Grid.Item tiny={12}>
-          <StepAvatar stepType="notDone">4</StepAvatar>
+          <StepAvatar type="notDone">4</StepAvatar>
         </Grid.Item>
 
         <Grid.Item tiny={12} />

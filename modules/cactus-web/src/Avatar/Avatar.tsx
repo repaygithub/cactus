@@ -13,8 +13,8 @@ export type AvatarUsage = 'alert' | 'feedBack'
 export type AvatarType = 'error' | 'warning' | 'info' | 'success'
 
 interface AvatarProps extends MarginProps {
-  avatarUsage?: AvatarUsage
-  avatarType?: AvatarType
+  usage?: AvatarUsage
+  type?: AvatarType
   className?: string
 }
 
@@ -22,14 +22,14 @@ type ColorMap = { [K in AvatarType]: FlattenInterpolation<ThemeProps<CactusTheme
 type UsageMap = { [K in AvatarUsage]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
 const avatar = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { avatarUsage } = props
+  const { usage: avatarUsage } = props
   if (avatarUsage !== undefined) {
     return usageMap[avatarUsage]
   }
 }
 
 const iconColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
-  const { avatarType, avatarUsage } = props
+  const { type: avatarType, usage: avatarUsage } = props
   if (avatarUsage === 'feedBack' && (avatarType === 'error' || avatarType === 'success')) {
     return props.theme.colors.white
   } else {
@@ -38,7 +38,7 @@ const iconColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
 }
 
 const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
-  const { avatarUsage, avatarType } = props
+  const { usage: avatarUsage, type: avatarType } = props
 
   if (avatarUsage === 'alert') {
     switch (avatarType) {
@@ -90,7 +90,7 @@ const colorMap: ColorMap = {
 }
 
 const variant = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { avatarType } = props
+  const { type: avatarType } = props
 
   if (avatarType !== undefined) {
     return colorMap[avatarType]
@@ -111,7 +111,7 @@ const getIcon = (avatarType: AvatarType = 'info') => {
 }
 
 const AvatarBase = (props: AvatarProps) => {
-  const { className, avatarType } = props
+  const { className, type: avatarType } = props
 
   const Icon = getIcon(avatarType)
   return (
@@ -138,8 +138,8 @@ export const Avatar = styled(AvatarBase)<AvatarProps>`
 `
 
 Avatar.defaultProps = {
-  avatarUsage: 'feedBack',
-  avatarType: 'info',
+  usage: 'feedBack',
+  type: 'info',
 }
 
 export default Avatar

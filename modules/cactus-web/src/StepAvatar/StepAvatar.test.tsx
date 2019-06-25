@@ -19,7 +19,7 @@ describe('component: StepAvatar', () => {
   test('Step Avatar, Not Done', () => {
     const { container } = render(
       <StyleProvider>
-        <StepAvatar stepType="notDone" />
+        <StepAvatar type="notDone" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -28,7 +28,7 @@ describe('component: StepAvatar', () => {
   test('Step Avatar, In Process', () => {
     const { container } = render(
       <StyleProvider>
-        <StepAvatar stepType="inProcess" />
+        <StepAvatar type="inProcess" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -37,7 +37,7 @@ describe('component: StepAvatar', () => {
   test('Step Avatar, Done', () => {
     const { container } = render(
       <StyleProvider>
-        <StepAvatar stepType="done" />
+        <StepAvatar type="done" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
