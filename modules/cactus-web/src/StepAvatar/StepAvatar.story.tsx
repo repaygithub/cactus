@@ -68,6 +68,3 @@ storiesOf('StepAvatar', module)
       </Grid>
     )
   })
-  .add('Interactive Example', () => {
-    return <button />
-  })
