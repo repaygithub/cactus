@@ -11,25 +11,11 @@ import cactusTheme from '@repay/cactus-theme'
 
 ## Basic usage
 
-The `Avatars` component are small, circular, figures used to give additional feedback to users. The avatars have two settings, feedback and alert, which alter the opacity of the background. `Avatars` should be used as a background for icons.
+The `Avatars` component are small, circular, figures used to give additional feedback to users. The avatars have two usage options, feedback and alert, which alter the opacity of the background. `Avatars` have a type, which is the icon that provides feedback to the user. The types are: error, warning, info, and success.
 
 ```jsx
 import Avatars from '@repay/cactus-web'
 import React from 'react'
 
 export default () => <Avatars avatarUsage="feedBack" avatarType="warning" />
-```
-
-```jsx
-import * as icons from '@repay/cactus-icons'
-import * as React from 'react'
-import Avatars from '@repay/cactus-web'
-
-const Icon = icons['StatusCheck']
-
-export default () => (
-  <Avatars avatarUsage="alert" avatarType="success">
-    <Icon iconSize="medium" style={{ padding: '5px 6px' }} />
-  </Avatars>
-)
 ```

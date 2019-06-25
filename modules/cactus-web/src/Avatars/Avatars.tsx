@@ -1,5 +1,12 @@
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
+import {
+  NotificationAlert,
+  NotificationError,
+  NotificationInfo,
+  StatusCheck,
+} from '@repay/cactus-icons'
+import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type AvatarUsage = 'alert' | 'feedBack'
@@ -8,6 +15,7 @@ export type AvatarType = 'error' | 'warning' | 'info' | 'success'
 interface AvatarProps extends MarginProps {
   avatarUsage?: AvatarUsage
   avatarType?: AvatarType
+  className?: string
 }
 
 type ColorMap = { [K in AvatarType]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -59,13 +67,9 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
 
 const usageMap: UsageMap = {
   alert: css`
-    width: 40px;
-    height: 40px;
     color: ${p => p.theme.colors.darkGray};
   `,
   feedBack: css`
-    width: 40px;
-    height: 40px;
     color: ${iconColor};
   `,
 }
@@ -93,11 +97,44 @@ const variant = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusThem
   }
 }
 
-export const Avatars = styled.div<AvatarProps>`
+const getIcon = (avatarType: AvatarType = 'info') => {
+  switch (avatarType) {
+    case 'error':
+      return NotificationError
+    case 'warning':
+      return NotificationAlert
+    case 'info':
+      return NotificationInfo
+    case 'success':
+      return StatusCheck
+  }
+}
+
+const AvatarBase = (props: AvatarProps) => {
+  const { className, avatarType } = props
+
+  const Icon = getIcon(avatarType)
+  return (
+    <div className={className}>
+      <Icon iconSize="medium" />
+    </div>
+  )
+}
+
+export const Avatars = styled(AvatarBase)<AvatarProps>`
   ${margins}
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   ${variant}
   ${avatar}
+  ${NotificationError} {
+    padding-bottom: 4px;
+  }
 `
 
 Avatars.defaultProps = {

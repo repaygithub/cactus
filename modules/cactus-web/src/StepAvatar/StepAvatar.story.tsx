@@ -3,6 +3,7 @@ import { select, text } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Grid from '../Grid/Grid'
 import React from 'react'
+import styled from 'styled-components'
 
 const avatarSteps: AvatarStep[] = ['notDone', 'inProcess', 'done']
 
@@ -66,4 +67,7 @@ storiesOf('StepAvatar', module)
         <Grid.Item tiny={12} />
       </Grid>
     )
+  })
+  .add('Interactive Example', () => {
+    return <button />
   })
