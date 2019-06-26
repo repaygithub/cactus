@@ -15,7 +15,11 @@ storiesOf('FileInput', module).add('Basic Usage', () => {
       labels={{
         delete: text('delete label', 'Click to delete file'),
         retry: text('retry label', 'Click to retry file upload'),
+        loading: text('loading label', 'File uploading'),
+        loaded: text('loaded label', 'File uploaded successfully'),
       }}
+      prompt={text('prompt', 'Drag files here or')}
+      buttonText={text('buttonText', 'Select Files...')}
       onChange={(name, files) => {
         console.log(name)
         console.log(files)

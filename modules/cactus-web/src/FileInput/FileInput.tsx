@@ -44,34 +44,38 @@ interface FileInputProps
     WidthProps,
     Omit<
       React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-      'onChange' | 'onError'
+      'onChange' | 'onError' | 'onFocus' | 'onBlur'
     > {
   name: string
   accept: string[]
-  labels: { delete: string; retry: string }
+  labels?: { delete?: string; retry?: string; loading?: string; loaded?: string }
+  buttonText?: string
+  prompt?: string
   onChange?: FieldOnChangeHandler<FileObject[]>
   onError?: (type: ErrorType, accept?: string[]) => string
+  onFocus?: (name: string) => void
+  onBlur?: (name: string) => void
   rawFiles?: boolean
   multiple?: boolean
   value?: FileObject[]
 }
 
 interface EmptyPromptsProps {
+  prompt: string
   className?: string
-  handleOpenFileSelect: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 interface FileBoxProps {
   fileName: string
   onDelete: (fileName: string) => void
-  deleteLabel: string
   status: FileStatus
+  labels: { delete?: string; loading?: string; loaded?: string }
   className?: string
   errorMsg?: string
 }
 
-interface FileInfoProps extends Omit<FileBoxProps, 'deleteLabel'> {
-  labels: { delete: string; retry: string }
+interface FileInfoProps extends FileBoxProps {
+  labels: { delete?: string; retry?: string; loading?: string; loaded?: string }
   onRetry: (fileName: string) => void
   boxRef?: MutableRefObject<HTMLDivElement | null>
 }
@@ -91,18 +95,13 @@ interface FileObject {
 interface State {
   files: FileObject[]
   inputKey: string
+  isRetrying: boolean
 }
 
 const EmptyPromptsBase = (props: EmptyPromptsProps) => (
   <div className={props.className}>
     <ActionsUpload iconSize="large" />
-    <span>Drag files here or</span>
-    <div>
-      <TextButton variant="action" onClick={props.handleOpenFileSelect}>
-        <BatchstatusOpen iconSize="small" />
-        Select Files...
-      </TextButton>
-    </div>
+    <span>{props.prompt}</span>
   </div>
 )
 
@@ -122,12 +121,6 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
     top: 20%;
     left: 37%;
     color: ${p => p.theme.colors.darkGray};
-  }
-
-  ${TextButton} {
-    position: absolute;
-    left: 35%;
-    bottom: 15%;
   }
 `
 
@@ -176,18 +169,18 @@ const fileBoxMap: FileBoxMap = {
 const fileStatus = (props: FileBoxProps) => fileBoxMap[props.status]
 
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) => {
-  const { fileName, className, status, errorMsg, onDelete, deleteLabel } = props
+  const { fileName, className, status, errorMsg, onDelete, labels } = props
   const onClick = () => {
     onDelete(fileName)
   }
 
   let label = fileName
   if (status === 'loaded') {
-    label += ', successful'
+    label += labels.loaded ? `, ${labels.loaded}` : ', Successful'
   } else if (status === 'error' && errorMsg) {
     label += `, ${errorMsg}`
   } else if (status === 'loading') {
-    label += ', loading'
+    label += labels.loading ? `, ${labels.loading}` : ', Loading'
   }
 
   return (
@@ -201,7 +194,7 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) 
       {status === 'loading' ? (
         <Spinner />
       ) : (
-        <IconButton onClick={onClick} label={deleteLabel}>
+        <IconButton onClick={onClick} label={labels.delete}>
           <NavigationClose />
         </IconButton>
       )}
@@ -245,6 +238,7 @@ const FileBox = styled(FileBoxBase)`
 
 const FileInfoBase = (props: FileInfoProps) => {
   const { className, onRetry, errorMsg, labels, boxRef, ...rest } = props
+  const { retry, ...fileBoxLabels } = labels
 
   const onClick = () => {
     onRetry(rest.fileName)
@@ -252,11 +246,11 @@ const FileInfoBase = (props: FileInfoProps) => {
 
   return (
     <div className={className}>
-      <FileBox errorMsg={errorMsg} deleteLabel={labels.delete} ref={boxRef} {...rest} />
+      <FileBox errorMsg={errorMsg} labels={fileBoxLabels} ref={boxRef} {...rest} />
       {errorMsg && (
         <StatusMessage status="error">
           <span>{errorMsg}</span>
-          <IconButton onClick={onClick} label={labels.retry}>
+          <IconButton onClick={onClick} label={retry || 'Retry Upload'}>
             <ActionsRefresh />
           </IconButton>
         </StatusMessage>
@@ -325,10 +319,19 @@ const FileInputBase = (props: FileInputProps) => {
     className,
     onChange,
     onError = defaultErrorHandler,
+    onFocus,
+    onBlur,
     rawFiles,
     name,
     accept,
-    labels,
+    labels = {
+      delete: 'Delete File',
+      retry: 'Retry Upload',
+      loading: 'Loading',
+      loaded: 'Successful',
+    },
+    buttonText = 'Select Files...',
+    prompt = 'Drag files here or',
     multiple,
     value,
     ...fileInputProps
@@ -336,6 +339,7 @@ const FileInputBase = (props: FileInputProps) => {
   const [state, setState] = useState<State>({
     files: value || [],
     inputKey: Math.random().toString(36),
+    isRetrying: false,
   })
   const isMounted = useRef(true)
   const fileSelector = useRef<HTMLInputElement | null>(null)
@@ -353,25 +357,24 @@ const FileInputBase = (props: FileInputProps) => {
     }
   }, [state.files])
 
+  useEffect(() => {
+    if (value && value !== state.files) {
+      setState(state => ({ ...state, files: value }))
+    }
+  }, [state.files, value])
+
   const saveFiles = (files: FileList | null) => {
     if (files && files.length > 0) {
-      const loadingPromises = Array.from(files).map(
-        file =>
-          new Promise<FileObject>(resolve => {
-            resolve({ fileName: file.name, contents: null, status: 'loading' })
-          })
+      const loadingFiles = Array.from(files).map(
+        file => ({ fileName: file.name, contents: null, status: 'loading' } as FileObject)
       )
+      if (state.isRetrying) {
+        setState(state => ({ ...state, files: [...state.files, ...loadingFiles] }))
+      } else {
+        setState(state => ({ ...state, files: loadingFiles }))
+      }
 
-      Promise.all(loadingPromises).then(results => {
-        if (isMounted.current === true) {
-          setState(state => ({ ...state, files: results }))
-          if (typeof onChange === 'function') {
-            onChange(name, results)
-          }
-        }
-      })
-
-      const readingPromises = Array.from(files).map(file => {
+      const promises = Array.from(files).map(file => {
         if (!accepts(file, accept)) {
           return new Promise<FileObject>(resolve => {
             const errorMsg = onError(FILE_TYPE_ERR, accept)
@@ -385,8 +388,10 @@ const FileInputBase = (props: FileInputProps) => {
         }
 
         if (rawFiles) {
-          return new Promise<FileObject>(resolve => {
-            resolve({ fileName: file.name, contents: file, status: 'loaded' })
+          return Promise.resolve<FileObject>({
+            fileName: file.name,
+            contents: file,
+            status: 'loaded',
           })
         } else {
           const reader = new FileReader()
@@ -443,9 +448,19 @@ const FileInputBase = (props: FileInputProps) => {
         }
       })
 
-      Promise.all(readingPromises).then(results => {
+      Promise.all(promises).then(results => {
         if (isMounted.current === true) {
-          setState(state => ({ ...state, files: results }))
+          if (state.isRetrying) {
+            setState(state => {
+              const final = state.files.map(file => {
+                const updated = results.find(f => f.fileName === file.fileName)
+                return updated ? updated : file
+              })
+              return { ...state, files: final, isRetrying: false }
+            })
+          } else {
+            setState(state => ({ ...state, files: results }))
+          }
           if (typeof onChange === 'function') {
             onChange(name, results)
           }
@@ -476,7 +491,7 @@ const FileInputBase = (props: FileInputProps) => {
 
   const handleDelete = (fileName: string) => {
     const files = state.files.filter(file => file.fileName !== fileName)
-    setState({ files: files, inputKey: Math.random().toString(36) })
+    setState({ files: files, inputKey: Math.random().toString(36), isRetrying: false })
     if (isMounted.current === true) {
       if (typeof onChange === 'function') {
         onChange(name, files)
@@ -487,7 +502,7 @@ const FileInputBase = (props: FileInputProps) => {
   const handleRetry = (fileName: string) => {
     const files = state.files.filter(file => file.fileName !== fileName)
     const promise = new Promise<State>(resolve => {
-      resolve({ files: files, inputKey: Math.random().toString(36) })
+      resolve({ files: files, inputKey: Math.random().toString(36), isRetrying: true })
     })
     promise.then(result => {
       setState(result)
@@ -517,7 +532,20 @@ const FileInputBase = (props: FileInputProps) => {
     e.stopPropagation()
   }
 
-  const emptyClassName = state === undefined ? '' : state.files.length === 0 ? '' : 'notEmpty'
+  const handleInputFocus = (e: React.FocusEvent<HTMLButtonElement>) => {
+    if (typeof onFocus === 'function') {
+      onFocus(name)
+    }
+  }
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
+    if (typeof onBlur === 'function') {
+      onBlur(name)
+    }
+  }
+
+  const emptyClassName =
+    state === undefined ? 'empty' : state.files.length === 0 ? 'empty' : 'notEmpty'
 
   return (
     <div
@@ -537,7 +565,18 @@ const FileInputBase = (props: FileInputProps) => {
         onChange={handleFileSelect}
       />
       {state === undefined ? null : state.files.length === 0 ? (
-        <EmptyPrompts handleOpenFileSelect={handleOpenFileSelect} />
+        <React.Fragment>
+          <EmptyPrompts prompt={prompt} />
+          <TextButton
+            variant="action"
+            onClick={handleOpenFileSelect}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+          >
+            <BatchstatusOpen iconSize="small" />
+            {buttonText}
+          </TextButton>
+        </React.Fragment>
       ) : (
         <React.Fragment>
           {state.files.map((file, index) => (
@@ -552,9 +591,14 @@ const FileInputBase = (props: FileInputProps) => {
               boxRef={index === 0 ? topFileBox : undefined}
             />
           ))}
-          <TextButton variant="action" onClick={handleOpenFileSelect}>
+          <TextButton
+            variant="action"
+            onClick={handleOpenFileSelect}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+          >
             <BatchstatusOpen iconSize="small" />
-            Select Files...
+            {buttonText}
           </TextButton>
         </React.Fragment>
       )}
@@ -573,6 +617,14 @@ export const FileInput = styled(FileInputBase)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.empty {
+    ${TextButton} {
+      position: absolute;
+      left: 35%;
+      bottom: 15%;
+    }
+  }
 
   &.notEmpty {
     flex-direction: column;
@@ -599,9 +651,13 @@ FileInput.propTypes = {
   name: PropTypes.string.isRequired,
   accept: PropTypes.arrayOf(PropTypes.string).isRequired,
   labels: PropTypes.shape({
-    delete: PropTypes.string.isRequired,
-    retry: PropTypes.string.isRequired,
-  }).isRequired,
+    delete: PropTypes.string,
+    retry: PropTypes.string,
+    loading: PropTypes.string,
+    loaded: PropTypes.string,
+  }),
+  buttonText: PropTypes.string,
+  prompt: PropTypes.string,
   onChange: PropTypes.func,
   onError: PropTypes.func,
   rawFiles: PropTypes.bool,
@@ -619,6 +675,14 @@ FileInput.propTypes = {
 FileInput.defaultProps = {
   rawFiles: false,
   multiple: false,
+  labels: {
+    delete: 'Delete File',
+    retry: 'Retry Upload',
+    loading: 'Loading',
+    loaded: 'Successful',
+  },
+  buttonText: 'Select Files...',
+  prompt: 'Drag files here or',
 }
 
 export default FileInput

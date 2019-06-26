@@ -43,9 +43,6 @@
       "src/**/*.{ts,tsx}",
       "!src/**/*.story.{ts,tsx}",
       "!src/storySupport/**"
-    ],
-    "watchPathIgnorePatterns": [
-      "dist"
     ]
   },
   "devDependencies": {
