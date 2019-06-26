@@ -5,7 +5,7 @@ import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components
 export type AvatarStep = 'notDone' | 'inProcess' | 'done'
 
 interface StepAvatarProps extends MarginProps {
-  type?: AvatarStep
+  status?: AvatarStep
 }
 
 type StepColor = { [K in AvatarStep]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -29,7 +29,7 @@ const stepColorMap: StepColor = {
 const variant = (
   props: StepAvatarProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { type: stepType } = props
+  const { status: stepType } = props
   //@ts-ignore
   return stepColorMap[stepType]
 }
@@ -43,12 +43,15 @@ export const StepAvatar = styled.div<StepAvatarProps>`
   font-size: ${p => p.theme.textStyles.h2.fontSize};
   font-weight: 400;
   text-align: center;
+  appearance: none;
+  padding: 0px;
+  border: none;
 
   ${margins}
   ${variant}
 `
 StepAvatar.defaultProps = {
-  type: 'notDone',
+  status: 'notDone',
 }
 
 export default StepAvatar
