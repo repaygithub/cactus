@@ -62,3 +62,15 @@ declare module '@reach/visually-hidden' {
   const VisuallyHidden: React.SFC<VisuallyHiddenProps>
   export default VisuallyHidden
 }
+
+declare module '@repay/scripts' {
+  type RepayScriptsArgs = {
+    command: 'build' | 'dev'
+    entry: string
+    cwd: string
+    port?: string
+  }
+  const repayScripts: (args: RepayScriptsArgs) => void
+
+  export default repayScripts
+}

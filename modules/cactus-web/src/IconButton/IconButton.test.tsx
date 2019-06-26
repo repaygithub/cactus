@@ -12,7 +12,7 @@ describe('component: IconButton', () => {
   test('should default to standard medium icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton>
+        <IconButton label="boolest">
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -24,7 +24,7 @@ describe('component: IconButton', () => {
   test('should render standard medium icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton iconSize="medium">
+        <IconButton label="boolest" iconSize="medium">
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -36,7 +36,7 @@ describe('component: IconButton', () => {
   test('should render tiny icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton iconSize="tiny">
+        <IconButton label="boolest" iconSize="tiny">
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -48,7 +48,7 @@ describe('component: IconButton', () => {
   test('should render small icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton iconSize="small">
+        <IconButton label="boolest" iconSize="small">
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -60,7 +60,7 @@ describe('component: IconButton', () => {
   test('should render large icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton iconSize="large">
+        <IconButton label="boolest" iconSize="large">
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -72,7 +72,7 @@ describe('component: IconButton', () => {
   test('should render call to action icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton variant="action">
+        <IconButton label="boolest" variant="action">
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -84,7 +84,7 @@ describe('component: IconButton', () => {
   test('should render inverse standard icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton variant="standard" inverse>
+        <IconButton label="boolest" variant="standard" inverse>
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -96,7 +96,7 @@ describe('component: IconButton', () => {
   test('should render inverse call to action icon button', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton variant="action" inverse>
+        <IconButton label="boolest" variant="action" inverse>
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -120,7 +120,7 @@ describe('component: IconButton', () => {
   test('should render disabled variant', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton disabled>
+        <IconButton label="boolest" disabled>
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -132,7 +132,7 @@ describe('component: IconButton', () => {
   test('should render inverse disabled variant', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton inverse disabled>
+        <IconButton label="boolest" inverse disabled>
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -144,7 +144,7 @@ describe('component: IconButton', () => {
   test('should support margin space props', () => {
     const iconButton = render(
       <StyleProvider>
-        <IconButton mb={4}>
+        <IconButton label="boolest" mb={4}>
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -157,7 +157,7 @@ describe('component: IconButton', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
-        <IconButton onClick={onClick} data-testid="clicked">
+        <IconButton label="boolest" onClick={onClick} data-testid="clicked">
           <StatusCheck />
         </IconButton>
       </StyleProvider>
@@ -171,7 +171,7 @@ describe('component: IconButton', () => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
-        <IconButton disabled onClick={onClick} data-testid="not-clicked">
+        <IconButton label="boolest" disabled onClick={onClick} data-testid="not-clicked">
           <StatusCheck />
         </IconButton>
       </StyleProvider>

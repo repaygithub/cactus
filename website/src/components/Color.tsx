@@ -227,7 +227,7 @@ tr:first-child {
 }
 
 @media only screen and (max-width: 500px) {
- 
+
   th, td{
     border: none;
   }
@@ -235,11 +235,11 @@ tr:first-child {
     display: grid;
     border: none;
   }
-  tbody{ 
+  tbody{
     grid-row-gap: 20%;
     grid-template-columns: 85px 85px 85px;
     align: left;
-  } 
+  }
 
   tr{
     text-align: center;

@@ -1,0 +1,102 @@
+---
+name: FileInput
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import FileInput from './FileInput'
+import cactusTheme from '@repay/cactus-theme'
+
+# FileInput
+
+The file input can be used to drag & drop or select files to upload.
+
+## Best practices
+
+- Make sure to pass meaningful messages in the `labels` object. These labels will be passed to the `aria-label` prop on some buttons which will make them accessible.
+- Use the `onError` prop to pass an error handling function. This function should return a string describing the error. The `accept` parameter will
+always be present if the error is of type `FileTypeError`.
+- The `labels`, `prompt`, and `buttonText` props can and should all be used to support multiple languages; you can pass translated strings to do this.
+
+
+## Basic usage
+
+You can use the `accept` prop to pass an array of accepted file types as well as the `multiple` prop to define whether or not the user should be
+able to select multiple files to upload
+
+```jsx
+import React, { useCallback, useState } from 'react'
+import { FileInput, Button } from '@repay/cactus-web'
+
+const FileForm = () => {
+  const [state, setState] = useState({})
+
+  const handleChange = useCallback(
+    (name, files) => {
+      setState(state => ({ ...state, [name]: files }))
+    },
+    [setState]
+  )
+
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...state }
+      // send data to api
+    },
+    [state]
+  )
+
+  const handleError = (errorType, accept?) => {
+    let errorMsg = 'An unknown error occurred when reading the file.'
+    switch (errorType) {
+      case 'FileTypeError':
+        errorMsg = `The file provided does not match any of the accepted file types: ${accept.join(
+          ', '
+        )}`
+        break
+      case 'NotFoundError':
+        errorMsg = 'The file provided could not be found. Please try again.'
+        break
+      case 'SecurityError':
+        errorMsg = 'The file could not be read due to security restrictions.'
+        break
+      case 'AbortError':
+        errorMsg = 'The file read operation was aborted. Please try again.'
+        break
+      case 'NotReadableError':
+        errorMsg =
+          'The file read operation failed. The file may be too large. Please try again or select a different file.'
+        break
+      case 'EncodingError':
+        errorMsg = 'The encoding or decoding operation failed. Please try again.'
+        break
+    }
+
+    return errorMsg
+}
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <FileInput
+        name="file-input"
+        accept=['.txt', '.doc']
+        labels={{ delete: 'delete file', retry: 'retry file upload', loading: 'loading', loaded: 'successful' }}
+        prompt="Drag files here or"
+        buttonText="Select Files..."
+        onChange={handleChange}
+        onError={handleError}
+        rawFiles={false}
+        multiple={true}
+      />
+      <Button type="submit" variant="action">
+        Submit
+      </Button>
+    </form>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={FileInput} />
