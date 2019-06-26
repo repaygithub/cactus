@@ -97,7 +97,7 @@ export interface CactusTheme {
   }
 }
 
-export type CactusColor = keyof CactusTheme['colors']
+export type CactusColor = Exclude<keyof CactusTheme['colors'], 'status'>
 
 export type ColorVariant = keyof CactusTheme['colorStyles']
 

@@ -48,7 +48,6 @@ function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
   const hasDisplayName = Boolean(displayName)
   let hslaStr: string
   if (isCactusColor(color)) {
-    // @ts-ignore
     hslaStr = cactusTheme.colors[color]
   } else {
     hslaStr = color
