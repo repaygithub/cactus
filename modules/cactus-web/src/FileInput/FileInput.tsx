@@ -15,6 +15,7 @@ import { MarginProps, margins } from '../helpers/margins'
 import { maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { TextButton } from '../TextButton/TextButton'
 import accepts from '../helpers/accept'
+import Avatar from '../Avatar/Avatar'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import StatusMessage from '../StatusMessage/StatusMessage'
@@ -80,11 +81,6 @@ interface FileInfoProps extends FileBoxProps {
   boxRef?: MutableRefObject<HTMLDivElement | null>
 }
 
-interface AvatarProps {
-  success: boolean
-  className?: string
-}
-
 interface FileObject {
   fileName: string
   contents: File | string | null
@@ -124,32 +120,6 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
   }
 `
 
-const AvatarBase = (props: AvatarProps) => (
-  <div className={props.className}>{props.success ? <StatusCheck /> : <NotificationError />}</div>
-)
-
-const Avatar = styled(AvatarBase)`
-  box-sizing: border-box;
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${p =>
-    p.success ? p.theme.colors.status.avatar.success : p.theme.colors.status.avatar.error};
-
-  ${NotificationError} {
-    height: 16px;
-    width: 16px;
-  }
-
-  ${StatusCheck} {
-    height: 18px;
-    width: 18px;
-  }
-`
-
 type FileBoxMap = { [K in FileStatus]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
 const fileBoxMap: FileBoxMap = {
@@ -186,9 +156,9 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) 
   return (
     <div className={className} tabIndex={0} aria-label={label} ref={ref}>
       {status === 'error' ? (
-        <Avatar success={false} />
+        <Avatar usage="alert" type="error" />
       ) : (
-        status === 'loaded' && <Avatar success={true} />
+        status === 'loaded' && <Avatar usage="alert" type="success" />
       )}
       <span>{fileName}</span>
       {status === 'loading' ? (
@@ -217,6 +187,21 @@ const FileBox = styled(FileBoxBase)`
   span {
     margin-left: 8px;
     ${p => p.theme.textStyles.body};
+  }
+
+  ${Avatar} {
+    height: 24px;
+    width: 24px;
+
+    ${NotificationError} {
+      height: 16px;
+      width: 16px;
+    }
+
+    ${StatusCheck} {
+      height: 18px;
+      width: 18px;
+    }
   }
 
   ${Spinner} {

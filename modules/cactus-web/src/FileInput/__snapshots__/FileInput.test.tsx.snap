@@ -166,24 +166,25 @@ exports[`component: FileInput should render a file input 1`] = `
 `;
 
 exports[`component: FileInput should render a file with an error 1`] = `
-.c13 {
+.c14 {
   vertical-align: middle;
 }
 
-.c16 {
+.c17 {
   vertical-align: middle;
   font-size: 16px;
 }
 
-.c9 {
+.c10 {
   vertical-align: middle;
 }
 
-.c5 {
+.c6 {
   vertical-align: middle;
+  font-size: 24px;
 }
 
-.c7 {
+.c8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -205,19 +206,19 @@ exports[`component: FileInput should render a file with an error 1`] = `
   font-size: 24px;
 }
 
-.c7::-moz-focus-inner {
+.c8::-moz-focus-inner {
   border: 0;
 }
 
-.c7:focus {
+.c8:focus {
   background-color: hsla(200,96%,35%,0.25);
 }
 
-.c7:hover {
+.c8:hover {
   color: hsl(200,96%,35%);
 }
 
-.c15 {
+.c16 {
   font-size: 18px;
   line-height: 28px;
   position: relative;
@@ -232,12 +233,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c15:hover {
+.c16:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c15:focus::after {
+.c16:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -250,46 +251,23 @@ exports[`component: FileInput should render a file with an error 1`] = `
   border-radius: 20px;
 }
 
-.c15::-moz-focus-inner {
+.c16::-moz-focus-inner {
   border: 0;
 }
 
-.c15 svg {
+.c16 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c11 {
-  border-radius: 0 8px 8px 8px;
-  padding: 8px 16px 8px 16px;
-  position: relative;
-  min-height: 16px;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  font-size: 15px;
-  line-height: 23px;
-  border-color: hsl(353,84%,44%);
-  background-color: hsl(353,84%,44%);
-  color: hsl(0,0%,100%);
+.c18 .c5 {
+  padding-bottom: 4px;
 }
 
-.c11 span {
-  position: relative;
-  display: inline-block;
-  bottom: 2px;
-  vertical-align: middle;
-}
-
-.c17 .c4 {
-  height: 16px;
-  width: 16px;
-}
-
-.c3 {
-  box-sizing: border-box;
-  height: 24px;
-  width: 24px;
+.c4 {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -303,33 +281,79 @@ exports[`component: FileInput should render a file with an error 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: hsla(353,84%,44%,0.3);
+  background: hsla(353,84%,44%,0.3);
+  color: hsl(0,0%,50%);
 }
 
-.c3 .c4 {
+.c4 .c5 {
+  padding-bottom: 4px;
+}
+
+.c12 {
+  border-radius: 0 8px 8px 8px;
+  padding: 8px 16px 8px 16px;
+  position: relative;
+  min-height: 16px;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 23px;
+  border-color: hsl(353,84%,44%);
+  background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
+}
+
+.c12 span {
+  position: relative;
+  display: inline-block;
+  bottom: 2px;
+  vertical-align: middle;
+}
+
+.c19 .c3 {
+  height: 24px;
+  width: 24px;
+}
+
+.c19 .c3 .c5 {
   height: 16px;
   width: 16px;
 }
 
-.c3 .c20 {
+.c19 .c3 .c21 {
   height: 18px;
   width: 18px;
 }
 
-.c18 .c6 {
+.c19 .c7 {
   margin-left: auto;
 }
 
-.c18 .c8 {
+.c19 .c9 {
   height: 12px;
   width: 12px;
 }
 
-.c19 .c6 {
+.c20 .c3 {
+  height: 24px;
+  width: 24px;
+}
+
+.c20 .c3 .c5 {
+  height: 16px;
+  width: 16px;
+}
+
+.c20 .c3 .c21 {
+  height: 18px;
+  width: 18px;
+}
+
+.c20 .c7 {
   margin-left: auto;
 }
 
-.c19 .c8 {
+.c20 .c9 {
   height: 12px;
   width: 12px;
 }
@@ -364,16 +388,31 @@ exports[`component: FileInput should render a file with an error 1`] = `
   line-height: 28px;
 }
 
-.c2 .c21 {
+.c2 .c3 {
+  height: 24px;
+  width: 24px;
+}
+
+.c2 .c3 .c5 {
+  height: 16px;
+  width: 16px;
+}
+
+.c2 .c3 .c21 {
+  height: 18px;
+  width: 18px;
+}
+
+.c2 .c22 {
   height: 12px;
   width: 12px;
 }
 
-.c2 .c6 {
+.c2 .c7 {
   margin-left: auto;
 }
 
-.c2 .c8 {
+.c2 .c9 {
   height: 12px;
   width: 12px;
 }
@@ -382,24 +421,24 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 100%;
 }
 
-.c1 .c10 {
+.c1 .c11 {
   position: relative;
   margin-top: 4px;
   width: 100%;
 }
 
-.c1 .c10 span {
+.c1 .c11 span {
   padding-right: 15px;
 }
 
-.c1 .c10 .c6 {
+.c1 .c11 .c7 {
   position: absolute;
   right: 11px;
   top: 14px;
   color: hsl(0,0%,100%);
 }
 
-.c1 .c10 .c12 {
+.c1 .c11 .c13 {
   height: 12px;
   width: 12px;
 }
@@ -426,7 +465,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   align-items: center;
 }
 
-.c0.empty .c14 {
+.c0.empty .c15 {
   position: absolute;
   left: 35%;
   bottom: 15%;
@@ -440,7 +479,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   padding: 0 8px;
 }
 
-.c0.notEmpty .c14 {
+.c0.notEmpty .c15 {
   position: relative;
   margin: 16px 0 16px 0;
 }
@@ -466,10 +505,10 @@ exports[`component: FileInput should render a file with an error 1`] = `
         tabindex="0"
       >
         <div
-          class="c3"
+          class="c3 c4"
         >
           <svg
-            class="c4 c5"
+            class="c5 c6"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -485,12 +524,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
         </span>
         <button
           aria-label="ejecto seato cuz"
-          class="c6 c7"
+          class="c7 c8"
           type="button"
           variant="standard"
         >
           <svg
-            class="c8 c9"
+            class="c9 c10"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -503,19 +542,19 @@ exports[`component: FileInput should render a file with an error 1`] = `
         </button>
       </div>
       <div
-        class="c10 c11"
+        class="c11 c12"
       >
         <span>
           You must not be bool
         </span>
         <button
           aria-label="give it another try"
-          class="c6 c7"
+          class="c7 c8"
           type="button"
           variant="standard"
         >
           <svg
-            class="c12 c13"
+            class="c13 c14"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -529,11 +568,11 @@ exports[`component: FileInput should render a file with an error 1`] = `
       </div>
     </div>
     <button
-      class="c14 c15"
+      class="c15 c16"
       type="button"
     >
       <svg
-        class="c16"
+        class="c17"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -550,20 +589,21 @@ exports[`component: FileInput should render a file with an error 1`] = `
 `;
 
 exports[`component: FileInput should render a loaded file 1`] = `
-.c12 {
+.c13 {
   vertical-align: middle;
   font-size: 16px;
 }
 
-.c9 {
+.c10 {
   vertical-align: middle;
 }
 
-.c5 {
+.c6 {
   vertical-align: middle;
+  font-size: 24px;
 }
 
-.c7 {
+.c8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -585,19 +625,19 @@ exports[`component: FileInput should render a loaded file 1`] = `
   font-size: 24px;
 }
 
-.c7::-moz-focus-inner {
+.c8::-moz-focus-inner {
   border: 0;
 }
 
-.c7:focus {
+.c8:focus {
   background-color: hsla(200,96%,35%,0.25);
 }
 
-.c7:hover {
+.c8:hover {
   color: hsl(200,96%,35%);
 }
 
-.c11 {
+.c12 {
   font-size: 18px;
   line-height: 28px;
   position: relative;
@@ -612,12 +652,12 @@ exports[`component: FileInput should render a loaded file 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c11:hover {
+.c12:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c11:focus::after {
+.c12:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -630,20 +670,19 @@ exports[`component: FileInput should render a loaded file 1`] = `
   border-radius: 20px;
 }
 
-.c11::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c11 svg {
+.c12 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c3 {
-  box-sizing: border-box;
-  height: 24px;
-  width: 24px;
+.c4 {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -657,24 +696,34 @@ exports[`component: FileInput should render a loaded file 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: hsla(145,89%,28%,0.3);
+  background: hsla(145,89%,28%,0.3);
+  color: hsl(0,0%,50%);
 }
 
-.c3 .c15 {
+.c4 .c16 {
+  padding-bottom: 4px;
+}
+
+.c14 .c3 {
+  height: 24px;
+  width: 24px;
+}
+
+.c14 .c3 .c16 {
   height: 16px;
   width: 16px;
 }
 
-.c3 .c4 {
+.c14 .c3 .c5 {
   height: 18px;
   width: 18px;
 }
 
-.c13 .c6 {
+.c14 .c7 {
   margin-left: auto;
 }
 
-.c13 .c8 {
+.c14 .c9 {
   height: 12px;
   width: 12px;
 }
@@ -709,16 +758,31 @@ exports[`component: FileInput should render a loaded file 1`] = `
   line-height: 28px;
 }
 
-.c2 .c16 {
+.c2 .c3 {
+  height: 24px;
+  width: 24px;
+}
+
+.c2 .c3 .c16 {
+  height: 16px;
+  width: 16px;
+}
+
+.c2 .c3 .c5 {
+  height: 18px;
+  width: 18px;
+}
+
+.c2 .c17 {
   height: 12px;
   width: 12px;
 }
 
-.c2 .c6 {
+.c2 .c7 {
   margin-left: auto;
 }
 
-.c2 .c8 {
+.c2 .c9 {
   height: 12px;
   width: 12px;
 }
@@ -727,24 +791,24 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .c17 {
+.c1 .c18 {
   position: relative;
   margin-top: 4px;
   width: 100%;
 }
 
-.c1 .c17 span {
+.c1 .c18 span {
   padding-right: 15px;
 }
 
-.c1 .c17 .c6 {
+.c1 .c18 .c7 {
   position: absolute;
   right: 11px;
   top: 14px;
   color: hsl(0,0%,100%);
 }
 
-.c1 .c17 .c14 {
+.c1 .c18 .c15 {
   height: 12px;
   width: 12px;
 }
@@ -771,7 +835,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   align-items: center;
 }
 
-.c0.empty .c10 {
+.c0.empty .c11 {
   position: absolute;
   left: 35%;
   bottom: 15%;
@@ -785,7 +849,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   padding: 0 8px;
 }
 
-.c0.notEmpty .c10 {
+.c0.notEmpty .c11 {
   position: relative;
   margin: 16px 0 16px 0;
 }
@@ -811,10 +875,10 @@ exports[`component: FileInput should render a loaded file 1`] = `
         tabindex="0"
       >
         <div
-          class="c3"
+          class="c3 c4"
         >
           <svg
-            class="c4 c5"
+            class="c5 c6"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -830,12 +894,12 @@ exports[`component: FileInput should render a loaded file 1`] = `
         </span>
         <button
           aria-label="ejecto seato cuz"
-          class="c6 c7"
+          class="c7 c8"
           type="button"
           variant="standard"
         >
           <svg
-            class="c8 c9"
+            class="c9 c10"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -849,11 +913,11 @@ exports[`component: FileInput should render a loaded file 1`] = `
       </div>
     </div>
     <button
-      class="c10 c11"
+      class="c11 c12"
       type="button"
     >
       <svg
-        class="c12"
+        class="c13"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -954,12 +1018,27 @@ exports[`component: FileInput should render a loading file 1`] = `
   line-height: 28px;
 }
 
+.c2 .c13 {
+  height: 24px;
+  width: 24px;
+}
+
+.c2 .c13 .c10 {
+  height: 16px;
+  width: 16px;
+}
+
+.c2 .c13 .c11 {
+  height: 18px;
+  width: 18px;
+}
+
 .c2 .c3 {
   height: 12px;
   width: 12px;
 }
 
-.c2 .c10 {
+.c2 .c12 {
   margin-left: auto;
 }
 
@@ -972,24 +1051,24 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .c11 {
+.c1 .c14 {
   position: relative;
   margin-top: 4px;
   width: 100%;
 }
 
-.c1 .c11 span {
+.c1 .c14 span {
   padding-right: 15px;
 }
 
-.c1 .c11 .c10 {
+.c1 .c14 .c12 {
   position: absolute;
   right: 11px;
   top: 14px;
   color: hsl(0,0%,100%);
 }
 
-.c1 .c11 .c8 {
+.c1 .c14 .c8 {
   height: 12px;
   width: 12px;
 }
