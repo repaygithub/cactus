@@ -43,13 +43,13 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
   if (avatarUsage === 'alert') {
     switch (avatarType) {
       case 'error':
-        return `hsla(353, 84%, 44%, 0.3)`
+        return props.theme.colors.status.avatar.error
       case 'warning':
-        return `hsla(47, 82%, 47%, 0.3)`
+        return props.theme.colors.status.avatar.warning
       case 'info':
         return props.theme.colors.lightContrast
       case 'success':
-        return `hsla(145, 89%, 28%, 0.3)`
+        return props.theme.colors.status.avatar.success
     }
   } else if (avatarUsage === 'feedBack') {
     switch (avatarType) {
