@@ -42,6 +42,8 @@ export type TextStyle = {
 }
 
 export interface CactusTheme {
+  breakpoints?: Array<String>
+  mediaQueries?: {}
   colors: {
     /** Core colors */
     base: string

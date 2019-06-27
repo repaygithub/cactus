@@ -4,6 +4,7 @@ import { select, text } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Grid from '../Grid/Grid'
 import React from 'react'
+
 const avatarSteps: AvatarStep[] = ['notDone', 'inProcess', 'done']
 
 const StepManager = (props: {

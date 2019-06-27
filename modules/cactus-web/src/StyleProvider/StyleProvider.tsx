@@ -25,6 +25,15 @@ const DebugStyle = createGlobalStyle`
   }
 `
 
+const breakpoints = ['768px', '1024px', '1200px', '1440px']
+
+const queries = {
+  small: `@media screen and (min-width: ${breakpoints[0]})`,
+  medium: `@media screen and (min-width: ${breakpoints[1]})`,
+  large: `@media screen and (min-width: ${breakpoints[2]})`,
+  extralarge: `@media screen and (min-width: ${breakpoints[3]})`,
+}
+
 const GlobalStyle = createGlobalStyle`
 html,
 body {
@@ -77,11 +86,14 @@ interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<an
 }
 
 export const StyleProvider: React.FC<StyleProviderProps> = props => {
-  const { global, children, theme, ...themeProviderProps } = props
-  shouldCheckTheme && checkThemeProperties(theme || cactusTheme)
+  const { global, children, theme: providedTheme, ...themeProviderProps } = props
+  shouldCheckTheme && checkThemeProperties(providedTheme || cactusTheme)
+  const theme = providedTheme ? providedTheme : cactusTheme
+  theme.breakpoints = breakpoints.slice()
+  theme.mediaQueries = queries
 
   return (
-    <styledComponents.ThemeProvider theme={theme ? theme : cactusTheme} {...themeProviderProps}>
+    <styledComponents.ThemeProvider theme={theme} {...themeProviderProps}>
       <React.Fragment>
         <DebugStyle />
         {global && <GlobalStyle />}

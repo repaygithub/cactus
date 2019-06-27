@@ -12,6 +12,7 @@ import cactusTheme from '@repay/cactus-theme'
 The `StyleProvider` is a wrapper for `styled-components`' `ThemeProvider` component which gives you the option to include some global styles.
 
 # Best practices
+
 - Make sure that any components from `@repay/cactus-web` are children of `StyleProvider`. This will ensure that each component has the correct styles.
 
 ## Basic usage
@@ -30,6 +31,40 @@ const App = () => {
 }
 ```
 
-## Properties
+# Breaking Points
 
-<PropsTable of={StyleProvider} />
+The `StyleProvider` has a media queries scale which is based on the provided breaking points, and is added to the given theme. The media queries have screen sizes small, medium, large, and extralarge. The default media query is a screen size less than or equal to 320px.
+
+## Media Queries Usage
+
+```jsx
+import React from 'react'
+import { StyleProvider, Box } from '.@repay/cactus-web'
+import styled from 'styled-components'
+
+const BreakpointBox = styled(Box)`
+  border-radius: 15%;
+
+  ${p => p.theme.mediaQueries.small} {
+    border-radius: 25%;
+  }
+  ${p => p.theme.mediaQueries.medium} {
+    border-radius: 35%;
+  }
+  ${p => p.theme.mediaQueries.large} {
+    border-radius: 45%;
+  }
+  ${p => p.theme.mediaQueries.extralarge} {
+    border-radius: 50%;
+  }
+`
+const backgroundColors = ['springgreen', 'mediumturquoise', 'cornflowerblue', 'thistle', 'pink']
+
+const App = () => {
+  return (
+    <StyleProvider theme={cactusTheme} global={true}>
+      <BreakpointBox backgroundColor={backgroundColors} width="100px" height="100px" />
+    </StyleProvider>
+  )
+}
+```
