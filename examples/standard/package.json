@@ -16,7 +16,7 @@
     "@repay/cactus-i18n": "^0.2.0",
     "@repay/cactus-icons": "^0.6.0",
     "@repay/cactus-theme": "^0.4.4",
-    "@repay/cactus-web": "^0.4.2",
+    "@repay/cactus-web": "^0.4.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
