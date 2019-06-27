@@ -114,11 +114,15 @@ export default abstract class BaseI18nController {
     this._loadingState[`${section}/${lang}`] = 'loaded'
   }
 
-  setLang(lang: string) {
-    this._languages = negotiateLanguages([lang], this._supportedLangs, {
+  private negotiateLang(lang: string) {
+    return negotiateLanguages([lang], this._supportedLangs, {
       defaultLocale: this.defaultLang,
       strategy: 'matching',
     })
+  }
+
+  setLang(lang: string) {
+    this._languages = this.negotiateLang(lang)
     this.lang = this._languages[0]
   }
 
@@ -126,15 +130,21 @@ export default abstract class BaseI18nController {
     args,
     section = 'global',
     id,
+    lang: overrideLang = this.lang,
   }: {
     args?: object
     section?: string
     id: string
+    lang?: string
   }): [(string | null), object] {
     const _dict = this._getDict()
     const bundles = _dict[section]
     if (bundles !== undefined) {
-      const lang = this._languages.find(l => bundles[l] && bundles[l].hasMessage(id))
+      let languages = this._languages
+      if (typeof overrideLang === 'string') {
+        languages = this.negotiateLang(overrideLang)
+      }
+      const lang = languages.find(l => bundles[l] && bundles[l].hasMessage(id))
       const bundle = lang && bundles[lang]
       if (!bundle) {
         if (
@@ -171,12 +181,14 @@ export default abstract class BaseI18nController {
     args,
     section = 'global',
     id,
+    lang,
   }: {
     args?: object
     section?: string
     id: string
+    lang?: string
   }): string | null {
-    const [message] = this.get({ args, section, id })
+    const [message] = this.get({ args, section, id, lang })
     return message
   }
 
@@ -204,8 +216,12 @@ export default abstract class BaseI18nController {
       })
   }
 
-  hasLoaded(section: string) {
-    return this._languages.some(l => this._loadingState[`${section}/${l}`] === 'loaded')
+  hasLoaded(section: string, lang?: string) {
+    let languages = this._languages
+    if (lang !== undefined) {
+      languages = this.negotiateLang(lang)
+    }
+    return languages.some(l => this._loadingState[`${section}/${l}`] === 'loaded')
   }
 
   addListener(listener: LoadingStateListener): void {

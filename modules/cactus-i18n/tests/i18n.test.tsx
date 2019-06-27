@@ -229,37 +229,74 @@ key-for-no-people = blah blah blue stew`
       expect(container).toHaveTextContent('This is the default content.')
     })
 
-    test('should override global context', () => {
-      const controller = new I18nController({
-        defaultLang: 'en',
-        supportedLangs: ['en', 'en-US'],
-        global: `runny-nose = WRONG KEY`,
-      })
-      const globalPromise = MockPromise.resolve([{ lang: 'en-US', ftl: `runny-nose = WRONG KEY` }])
-      const sectionPromise = MockPromise.resolve([
-        {
-          lang: 'en-US',
-          ftl: `runny-nose = This text should render`,
-        },
-      ])
-      //@ts-ignore
-      controller.load = jest.fn(({ section }) =>
-        section === 'global' ? globalPromise : sectionPromise
-      )
-      let container
-      act(() => {
-        let tester = render(
-          <I18nProvider controller={controller}>
-            <I18nSection name="kleenex">
-              <I18nText get="runny-nose" />
-            </I18nSection>
-          </I18nProvider>
+    describe('should override', () => {
+      test('section name', () => {
+        const controller = new I18nController({
+          defaultLang: 'en',
+          supportedLangs: ['en', 'en-US'],
+          global: `runny-nose = WRONG KEY`,
+        })
+        const globalPromise = MockPromise.resolve([
+          { lang: 'en-US', ftl: `runny-nose = WRONG KEY` },
+        ])
+        const sectionPromise = MockPromise.resolve([
+          {
+            lang: 'en-US',
+            ftl: `runny-nose = This text should render`,
+          },
+        ])
+        //@ts-ignore
+        controller.load = jest.fn(({ section }) =>
+          section === 'global' ? globalPromise : sectionPromise
         )
-        globalPromise._call()
-        sectionPromise._call()
-        container = tester.container
+        let container
+        act(() => {
+          let tester = render(
+            <I18nProvider controller={controller}>
+              <I18nSection name="kleenex">
+                <I18nText get="runny-nose" />
+              </I18nSection>
+            </I18nProvider>
+          )
+          globalPromise._call()
+          sectionPromise._call()
+          container = tester.container
+        })
+        expect(container).toHaveTextContent('This text should render')
       })
-      expect(container).toHaveTextContent('This text should render')
+
+      test('language selection', () => {
+        const controller = new I18nController({
+          defaultLang: 'en',
+          supportedLangs: ['en', 'es'],
+          global: `runny-nose = WRONG KEY`,
+        })
+        const globalPromise = MockPromise.resolve([{ lang: 'en', ftl: `runny-nose = WRONG KEY` }])
+        const sectionPromise = MockPromise.resolve([
+          {
+            lang: 'es',
+            ftl: `runny-nose = This text should render`,
+          },
+        ])
+        //@ts-ignore
+        controller.load = jest.fn(({ section, lang }) =>
+          lang === 'en' ? globalPromise : sectionPromise
+        )
+        let container
+        act(() => {
+          let tester = render(
+            <I18nProvider controller={controller}>
+              <I18nSection name="global" lang="es">
+                <I18nText get="runny-nose" />
+              </I18nSection>
+            </I18nProvider>
+          )
+          globalPromise._call()
+          sectionPromise._call()
+          container = tester.container
+        })
+        expect(container).toHaveTextContent('This text should render')
+      })
     })
   })
 
