@@ -1,0 +1,75 @@
+---
+name: FileInputField
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import FileInputField from './FileInputField'
+import cactusTheme from '@repay/cactus-theme'
+
+# FileInputField
+
+The file input field is a form field that can be used to upload files. It includes a label, a tooltip, and some accessibility features
+
+## Best practices
+
+- Make sure to pass meaningful messages in the `labels` object. These labels will be passed to the `aria-label` prop on some buttons which will make them accessible.
+- Use the `onError` prop to pass an error handling function. This function should return a string describing the error. The `accept` parameter will
+always be present if the error is of type `FileTypeError`.
+- The `labels`, `prompt`, and `buttonText` props can and should all be used to support multiple languages; you can pass translated strings to do this.
+
+## Basic usage
+
+The `FileInputField` component works very similarly to the `FileInput` component, but the field will handle labels, tooltips, and accessibility for you.
+For example, `FileInputField` will associate your label and tooltip with the file input to assist users who rely on screen-reader technology.
+You can also pass any props meant for the `Label` component with the `labelProps` object.
+
+```jsx
+import React, { useCallback, useState } from 'react'
+import { FileInputField, Button } from '@repay/cactus-web'
+
+const FileForm = () => {
+  const [state, setState] = useState({})
+
+  const handleChange = useCallback(
+    (name, files) => {
+      setState(state => ({ ...state, [name]: files }))
+    },
+    [setState]
+  )
+
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...state }
+      // send data to api
+    },
+    [state]
+  )
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <FileInputField
+        name="file-input"
+        label="File Input Field"
+        tooltip="Upload some files"
+        accept=['.txt', '.doc']
+        labels={{ delete: 'delete file', retry: 'retry file upload', loading: 'loading', loaded: 'successful' }}
+        prompt="Drag files here or"
+        buttonText="Select Files..."
+        onChange={handleChange}
+        onError={handleError}
+        rawFiles={false}
+        multiple={true}
+      />
+      <Button type="submit" variant="action">
+        Submit
+      </Button>
+    </form>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={FileInputField} />

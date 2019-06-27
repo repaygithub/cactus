@@ -19,7 +19,12 @@ import Avatar from '../Avatar/Avatar'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import StatusMessage from '../StatusMessage/StatusMessage'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, {
+  css,
+  FlattenInterpolation,
+  StyledComponentBase,
+  ThemeProps,
+} from 'styled-components'
 
 const FILE_TYPE_ERR = 'FileTypeError'
 const NOT_FOUND_ERR = 'NotFoundError'
@@ -39,13 +44,13 @@ type ErrorType =
   | 'UnknownError'
 type FileStatus = 'loading' | 'loaded' | 'error'
 
-interface FileInputProps
+export interface FileInputProps
   extends MarginProps,
     MaxWidthProps,
     WidthProps,
     Omit<
       React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-      'onChange' | 'onError' | 'onFocus' | 'onBlur'
+      'onChange' | 'onError' | 'onFocus' | 'onBlur' | 'ref'
     > {
   name: string
   accept: string[]
@@ -319,6 +324,8 @@ const FileInputBase = (props: FileInputProps) => {
     prompt = 'Drag files here or',
     multiple,
     value,
+    id,
+    'aria-describedby': describedBy,
     ...fileInputProps
   } = props
   const [state, setState] = useState<State>({
@@ -554,6 +561,8 @@ const FileInputBase = (props: FileInputProps) => {
           <EmptyPrompts prompt={prompt} />
           <TextButton
             variant="action"
+            id={id}
+            aria-describedby={describedBy}
             onClick={handleOpenFileSelect}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -578,6 +587,8 @@ const FileInputBase = (props: FileInputProps) => {
           ))}
           <TextButton
             variant="action"
+            id={id}
+            aria-describedby={describedBy}
             onClick={handleOpenFileSelect}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -629,7 +640,18 @@ export const FileInput = styled(FileInputBase)`
   ${margins}
   ${width}
   ${maxWidth}
-`
+` as any
+
+FileInput.defaultErrorHandler = defaultErrorHandler
+
+interface FileInputComponent
+  extends StyledComponentBase<
+    React.FunctionComponent<FileInputProps>,
+    CactusTheme,
+    FileInputProps
+  > {
+  defaultErrorHandler: (type: ErrorType, accept?: string[]) => string
+}
 
 // @ts-ignore
 FileInput.propTypes = {
@@ -670,4 +692,4 @@ FileInput.defaultProps = {
   prompt: 'Drag files here or',
 }
 
-export default FileInput
+export default FileInput as FileInputComponent
