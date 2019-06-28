@@ -8,6 +8,7 @@
     "build": "repay-scripts build src/index.tsx",
     "test": "yarn test:types",
     "test:ci": "yarn test",
+    "test:local": "yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {

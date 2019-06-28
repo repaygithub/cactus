@@ -10,7 +10,8 @@
   "scripts": {
     "cleanup": "rm -rf dist",
     "test": "echo no unit tests implemented for @repay/cactus-theme",
-    "test:ci": "yarn test:types && yarn test",
+    "test:local": " yarn test:types && yarn test",
+    "test:ci": "yarn test:local --maxWorkers=2",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
     "dev": "repay-scripts dev --lib index.ts",
     "prebuild": "yarn build:types",

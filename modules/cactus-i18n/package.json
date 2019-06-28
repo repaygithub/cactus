@@ -15,7 +15,8 @@
     "postbuild": "yarn build:types",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
-    "test:ci": "yarn test:types && yarn test --coverage",
+    "test:local": "yarn test:types && yarn test --coverage",
+    "test:ci": "yarn test:local --maxWorkers=2",
     "test": "jest",
     "tdd": "jest --watch"
   },
