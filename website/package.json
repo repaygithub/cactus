@@ -14,7 +14,8 @@
     "build": "gatsby build --prefix-paths",
     "postbuild": "node tools/build-storybooks",
     "test": "tsc -p tsconfig.json --noEmit",
-    "test:ci": "yarn test"
+    "test:ci": "yarn test",
+    "test:local": "yarn test"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
