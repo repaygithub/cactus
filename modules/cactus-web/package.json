@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-web",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "A UI component library for web built in React by REPAY",
   "main": "dist/cactus-web.cjs.js",
   "module": "dist/cactus-web.js",
@@ -87,7 +87,7 @@
     "@reach/tooltip": "^0.2.0",
     "@reach/visually-hidden": "^0.1.4",
     "@repay/cactus-icons": ">=0.5.1",
-    "@repay/cactus-theme": "^0.4.3",
+    "@repay/cactus-theme": "^0.4.4",
     "styled-system": "^4.1.0"
   }
 }

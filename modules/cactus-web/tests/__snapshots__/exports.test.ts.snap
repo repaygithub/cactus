@@ -2,11 +2,14 @@
 
 exports[`library exports should match previous exported names 1`] = `
 Array [
+  "Avatar",
   "Button",
   "Box",
   "Card",
   "CheckBox",
   "CheckBoxField",
+  "FileInput",
+  "FileInputField",
   "Flex",
   "Grid",
   "IconButton",
@@ -25,11 +28,10 @@ Array [
   "Select",
   "SelectField",
   "Spinner",
+  "StepAvatar",
   "StyleProvider",
   "Text",
   "Span",
   "useId",
-  "Avatar",
-  "StepAvatar",
 ]
 `;
