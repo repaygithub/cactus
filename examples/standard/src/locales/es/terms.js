@@ -1,8 +1,8 @@
 export default `
 terms-and-conditions =
-  Ao navegar para esta aplicação, você está concordando em
-  absolutamente nada. Não há suposições sendo feitas em seu
-  nome sem o seu consentimento. Nós apenas queremos você
-  para ser uma boa pessoa e espero que você use este software
-  em uma maneira responsável. ✌️
+  Al navegar a esta aplicación, usted acepta
+  absolutamente nada. No se hacen suposiciones
+  en su nombre sin su consentimiento. Solo te preguntamos
+  ser una buena persona y espero que uses este software en
+  una manera responsable ✌️
 `
