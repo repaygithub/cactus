@@ -19,7 +19,7 @@
     "docs": "yarn workspace docs-website",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "fmt": "yarn lint --fix",
-    "test": "yarn test:ci",
+    "test": "yarn test:local",
     "test:ci": "yarn lint && yarn ws run test:ci",
     "test:local": "yarn lint && yarn ws run test:local",
     "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build",
