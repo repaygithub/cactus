@@ -14,4 +14,12 @@ class I18nController extends BaseI18nController {
   }
 }
 
-export default new I18nController({ defaultLang: 'en', supportedLangs: ['en', 'es'] })
+export const supportedLanguages = [
+  { code: 'en', label: '🇺🇸 English' },
+  { code: 'es', label: '🇲🇽 Español' },
+]
+
+export default new I18nController({
+  defaultLang: 'en',
+  supportedLangs: supportedLanguages.map(l => l.code),
+})
