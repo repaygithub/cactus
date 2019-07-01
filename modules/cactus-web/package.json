@@ -7,6 +7,7 @@
   "types": "dist/index.d.ts",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-web",
   "license": "MIT",
+  "sideEffects": false,
   "scripts": {
     "cleanup": "rm -rf dist coverage .storybook/dist",
     "new": "node scripts/make-component.js",
