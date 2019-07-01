@@ -2,7 +2,7 @@ import { actions } from '@storybook/addon-actions'
 import { select, text } from '@storybook/addon-knobs/react'
 import { storiesOf } from '@storybook/react'
 import Alert, { Status, Type } from './Alert'
-import React, { Component } from 'react'
+import React from 'react'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 const type: Type[] = ['general', 'push']
