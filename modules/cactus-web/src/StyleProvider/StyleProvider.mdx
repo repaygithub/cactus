@@ -31,9 +31,13 @@ const App = () => {
 }
 ```
 
-# Breaking Points
+# Breakpoints
 
-The `StyleProvider` has a media queries scale which is based on the provided breaking points, and is added to the given theme. The media queries have screen sizes small, medium, large, and extralarge. The default media query is a screen size less than or equal to 320px.
+The `StyleProvider` has a media queries scale which is based on the provided breaking points and is added to the given theme. The media queries have screen sizes small, medium, large, and extralarge. The set media queries will be larger than the default, for a mobile first approach.
+
+Props can also vary depending on the current media query. This is done by setting a prop to an array, where the array holds different values for each media query size. The first element of the array maps to the default screen size, and each element after maps to the set media queries from smallest to largest. This is used below in the example code to set the background color.
+
+For more information on Breakpoints and Media Queries visit: https://styled-system.com/theme-specification#breakpoints
 
 ## Media Queries Usage
 
