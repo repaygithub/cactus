@@ -14,7 +14,7 @@ export type Type = 'general' | 'push'
 interface AlertProps extends MarginProps {
   status?: Status
   type?: Type
-  onClick?: any
+  onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void
   className?: string
   children?: React.ReactNode
 }
@@ -106,28 +106,29 @@ const PushAvatarBase = styled(Avatar)`
   margin-top: 10px;
   margin-left: 16px;
 `
-const GeneralTextAlign = styled(Box)`
+const GeneralTextAlign = styled.div`
   margin-left: 72px;
   margin-top: -34px;
   margin-bottom: 34px;
 `
-const PushTextAlign = styled(Box)`
+const PushTextAlign = styled.div`
   margin-left: 16px;
   margin-top: 16px;
   margin-bottom: 16px;
 `
 
-const CloseIcon = styled(Box)`
-  margin-top: 15px;
+const CloseIcon = styled.div`
+  margin-top: 12px;
   justify: center;
 `
 const Button = styled('button')`
   background: none;
   border: none;
+  appearance: none;
 `
 
 const AlertBase = (props: AlertProps) => {
-  const { className, type: type, status: status, onClick: onClick } = props
+  const { className, type: type, status: status, onClose: onClose } = props
 
   if (type === 'push') {
     return (
@@ -142,8 +143,8 @@ const AlertBase = (props: AlertProps) => {
 
           <Grid.Item tiny={2}>
             <CloseIcon>
-              <Button>
-                <NavigationClose onClick={onClick} iconSize="small" />
+              <Button onClick={onClose}>
+                <NavigationClose iconSize="small" />
               </Button>
             </CloseIcon>
           </Grid.Item>
@@ -153,10 +154,8 @@ const AlertBase = (props: AlertProps) => {
   } else {
     return (
       <div className={className}>
-        <Box>
-          <GeneralAvatarBase status={status} type="alert" />
-          <GeneralTextAlign> {props.children} </GeneralTextAlign>
-        </Box>
+        <GeneralAvatarBase status={status} type="alert" />
+        <GeneralTextAlign> {props.children} </GeneralTextAlign>
       </div>
     )
   }

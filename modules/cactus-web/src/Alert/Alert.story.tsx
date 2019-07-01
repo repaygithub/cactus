@@ -6,7 +6,7 @@ import React from 'react'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 const type: Type[] = ['general', 'push']
-const eventLoggers = actions('onClick')
+const eventLoggers = actions('onClose')
 
 storiesOf('Alert', module).add('Basic Usage', () => {
   return (
