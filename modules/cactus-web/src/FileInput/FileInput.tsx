@@ -156,9 +156,9 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) 
   return (
     <div className={className} tabIndex={0} aria-label={label} ref={ref}>
       {status === 'error' ? (
-        <Avatar usage="alert" type="error" />
+        <Avatar type="alert" status="error" />
       ) : (
-        status === 'loaded' && <Avatar usage="alert" type="success" />
+        status === 'loaded' && <Avatar type="alert" status="success" />
       )}
       <span>{fileName}</span>
       {status === 'loading' ? (
