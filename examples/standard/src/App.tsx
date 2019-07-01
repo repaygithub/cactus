@@ -21,6 +21,7 @@ class App extends Component<RouteComponentProps<AppProps>> {
         <Flex>
           <select onChange={this.props.onLangChange} value={this.props.lang}>
             <option value="">Use Browser</option>
+            <option value="en-US">🇺🇸 English</option>
             <option value="es-MX">🇲🇽 Español</option>
           </select>
           <Link to="/">

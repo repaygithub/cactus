@@ -1,11 +1,18 @@
 # Changelog
 
-## @repay/cactus-theme@next
+## [@repay/cactus-theme@v0.4.4](https://github.com/repaygithub/cactus/commit/5f56e984eacfaa10bb546080a66ea237f360495b)
 
+- feat(cactus-theme): Add avatar colors to theme [bb69f3f](https://github.com/repaygithub/cactus/pull/108/commits/bb69f3f706256ed88ee77990f3ad354436cf4013)
 - feat(cactus-theme): update spaces [d1fd970](https://github.com/repaygithub/cactus/commit/d1fd970a3bf705c5f21218554297f484b0e490da)
 
-## @repay/cactus-web@next
+## [@repay/cactus-web@v0.4.4](https://github.com/repaygithub/cactus/commit/ead4054504232e03bb0337a4b2e0dfe034695fe3)
 
+- fix(cactus-web): Updated avatar colors to colors that are in the theme [f7d83b7](https://github.com/repaygithub/cactus/pull/111/commits/f7d83b7579bf544515b9190cdf4cb46acaddc79b)
+- feat(cactus-web): Add FileInputField component [1939ea3](https://github.com/repaygithub/cactus/pull/110/commits/1939ea37d1522a2ec4e3389df0c75c3f06000661)
+- feat(cactus-web): Implemented interactive step story [320d64b](https://github.com/repaygithub/cactus/pull/109/commits/320d64be7cfac718c5c9c09d9b50b59943a6cb25)
+- feat(cactus-web): Add file input component [46061de](https://github.com/repaygithub/cactus/pull/108/commits/46061dede9615815a0078950dfde2e3c16b78c2f)
+- fix(cactus-web): Updated avatars to display the icons from the actual avatar source code [8da3a57](https://github.com/repaygithub/cactus/pull/105/commits/8da3a579351c03a2e3bb2092e5be8ede7f736a9e)
+- feat(cactus-web): Created avatar component [1fd6f40](https://github.com/repaygithub/cactus/pull/105/commits/1fd6f40b5e2d8f182ff973d7dace5f571ce3e82b)
 - fix(cactus-web): vertical alignment of radio and checkbox inputs [14a1dec](https://github.com/repaygithub/cactus/commit/14a1dec99db094c392b167ac142b01ebc5f48346)
 - 🚨 feat(cactus-web): add propTypes to components [c60a0b3](https://github.com/repaygithub/cactus/commit/c60a0b340d3ed7bd49b28c16d87213329f6c57b1)
 - docs(cactus-web): add space to cactus-web api docs [95a5a65](https://github.com/repaygithub/cactus/commit/95a5a658ca6fccafc1de94244b4d02064ddc6e93)

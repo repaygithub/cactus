@@ -25,7 +25,8 @@
     "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
     "debug": "node --inspect-brk ./node_modules/.bin/svgr svgs -d built --config-file svgr.config.js --ext tsx",
     "test": "yarn jest",
-    "test:ci": "yarn test && yarn test:types",
+    "test:local": " yarn test:types && yarn test",
+    "test:ci": "yarn test:local --maxWorkers=2",
     "test:types": "tsc -p tsconfig.test.json --noEmit"
   },
   "jest": {
@@ -52,7 +53,7 @@
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@repay/babel-preset": "^0.2.0",
-    "@repay/cactus-theme": "^0.4.3",
+    "@repay/cactus-theme": "^0.4.4",
     "@repay/scripts": "^0.2.2",
     "@storybook/addon-knobs": "^5.0.8",
     "@storybook/react": "5.0.8",
