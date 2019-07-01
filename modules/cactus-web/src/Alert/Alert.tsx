@@ -134,7 +134,7 @@ const AlertBase = (props: AlertProps) => {
       <div className={className}>
         <Grid>
           <Grid.Item tiny={2}>
-            <PushAvatarBase type={status} usage="alert" />
+            <PushAvatarBase status={status} type="alert" />
           </Grid.Item>
           <Grid.Item tiny={8}>
             <PushTextAlign>{props.children}</PushTextAlign>
@@ -154,7 +154,7 @@ const AlertBase = (props: AlertProps) => {
     return (
       <div className={className}>
         <Box>
-          <GeneralAvatarBase type={status} usage="alert" />
+          <GeneralAvatarBase status={status} type="alert" />
           <GeneralTextAlign> {props.children} </GeneralTextAlign>
         </Box>
       </div>
