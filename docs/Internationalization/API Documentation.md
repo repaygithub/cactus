@@ -98,13 +98,14 @@ return (
 
 ## I18nSection
 
-The `<I18nSection />` component was designed to allow the translations to be broken up into separate sections and loaded only when a specific section is needed. A section component alone will not render anything; it must be used with other internationalization components like `I18nText` or `I18nElement` in order to render any actual translations. This component is really there to tell any of its children i18n components where to look for translated text.
+The `<I18nSection />` component was designed to allow the translations to be broken up into separate sections and loaded only when a specific section is needed. A section component alone will not render anything; it must be used with other internationalization components like `I18nText` or `I18nElement` in order to render any actual translations. This component is really there to tell any of its children i18n components where to look for translated text. It can also be used to manually change the rendered language in cases where a user wants to present information to another person.
 
 ### Props
 
 | Prop   | Type   | Required | Description                                                  |
 | ------ | ------ | -------- | ------------------------------------------------------------ |
 | `name` | String | Y        | Used for telling the component which section is to be loaded |
+| `lang` | String | N        | Used to override the globally selected language              |
 
 ### Example Usage
 

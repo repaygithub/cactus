@@ -33,7 +33,7 @@ const BreakpointBox = styled(Box)`
     height: 150px;
     border-radius: 45%;
   }
-  ${p => p.theme.mediaQueries.extralarge} {
+  ${p => p.theme.mediaQueries.extraLarge} {
     max-width: 1380px;
     width: 200px;
     height: 200px;

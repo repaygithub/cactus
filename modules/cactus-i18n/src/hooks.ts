@@ -9,8 +9,8 @@ export const useI18nText = (id: string, args?: object, sectionOverride?: string)
   if (context === null) {
     return null
   }
-  const { controller, section } = context
-  return controller.getText({ args, section: sectionOverride || section, id })
+  const { controller, section, lang } = context
+  return controller.getText({ args, section: sectionOverride || section, id, lang })
 }
 
 export const useI18nResource = (
@@ -22,11 +22,11 @@ export const useI18nResource = (
   if (context === null) {
     return [null, {}]
   }
-  const { controller, section } = context
-  return controller.get({ args, section: sectionOverride || section, id })
+  const { controller, section, lang } = context
+  return controller.get({ args, section: sectionOverride || section, id, lang })
 }
 
-export const useI18nContext = (section?: string) => {
+export const useI18nContext = (section?: string, lang?: string) => {
   const context = useContext(I18nContext)
   if (context === null) {
     return null
@@ -34,6 +34,9 @@ export const useI18nContext = (section?: string) => {
   const newContext = { ...context }
   if (section) {
     newContext.section = section
+  }
+  if (lang) {
+    newContext.lang = lang
   }
   return newContext
 }

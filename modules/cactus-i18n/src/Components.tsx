@@ -54,10 +54,11 @@ I18nProvider.propTypes = {
 
 interface I18nSectionProps {
   name: string
+  lang?: string
 }
 
 const I18nSection: React.FC<I18nSectionProps> = props => {
-  const sectionContext = useI18nContext(props.name)
+  const sectionContext = useI18nContext(props.name, props.lang)
   useEffect(() => {
     if (sectionContext !== null) {
       const { lang, section } = sectionContext
@@ -65,9 +66,10 @@ const I18nSection: React.FC<I18nSectionProps> = props => {
     }
   })
   // wait to render until section is loaded
-  // TODO display loading component after X ms not loaded
-  // TODO display error when all sections have failed to load
-  if (sectionContext !== null && !sectionContext.controller.hasLoaded(props.name)) {
+  if (
+    sectionContext !== null &&
+    !sectionContext.controller.hasLoaded(sectionContext.section, props.lang)
+  ) {
     return null
   }
   return (
@@ -79,6 +81,7 @@ const I18nSection: React.FC<I18nSectionProps> = props => {
 
 I18nSection.propTypes = {
   name: PropTypes.string.isRequired,
+  lang: PropTypes.string,
 }
 
 interface I18nTextProps {

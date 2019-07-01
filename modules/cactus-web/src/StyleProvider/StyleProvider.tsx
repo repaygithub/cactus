@@ -31,7 +31,7 @@ const queries = {
   small: `@media screen and (min-width: ${breakpoints[0]})`,
   medium: `@media screen and (min-width: ${breakpoints[1]})`,
   large: `@media screen and (min-width: ${breakpoints[2]})`,
-  extralarge: `@media screen and (min-width: ${breakpoints[3]})`,
+  extraLarge: `@media screen and (min-width: ${breakpoints[3]})`,
 }
 
 const GlobalStyle = createGlobalStyle`
