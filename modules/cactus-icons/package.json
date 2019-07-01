@@ -11,6 +11,7 @@
   "files": [
     "i"
   ],
+  "sideEffects": false,
   "scripts": {
     "cleanup": "rm -rf ts i",
     "dev": "start-storybook -p 9001 -c .storybook",
