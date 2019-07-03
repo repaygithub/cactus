@@ -57,12 +57,13 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
     closeLabel,
     'aria-label': ariaLabel = 'Accordion',
   } = props
-  const { isOpen, handleToggle } = useContext(AccordionContext)
+  const { isOpen, isClosing, handleToggle } = useContext(AccordionContext)
 
   const buttonLabel = isOpen ? closeLabel || 'Close' : openLabel || 'Expand'
+  const borderClassName = !isOpen && !isClosing ? 'borderBottom' : ''
 
   return (
-    <div className={className} tabIndex={0} aria-label={ariaLabel}>
+    <div className={`${className} ${borderClassName}`} tabIndex={0} aria-label={ariaLabel}>
       <header>{children}</header>
       <IconButton onClick={handleToggle} label={buttonLabel} iconSize="small" mx="16px">
         {isOpen ? <NavigationChevronDown /> : <NavigationChevronLeft />}
@@ -80,8 +81,11 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
-  background-color: ${p => p.theme.colors.lightContrast};
   ${p => p.theme.textStyles.h3};
+
+  &.borderBottom {
+    border-bottom: 2px solid ${p => p.theme.colors.mediumContrast};
+  }
 `
 
 AccordionHeader.defaultProps = {
@@ -129,6 +133,7 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
 export const AccordionBody = styled(AccordionBodyBase)`
   overflow: hidden;
   transition: all 600ms ease-in;
+  border-bottom: 2px solid ${p => p.theme.colors.mediumContrast};
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({
@@ -167,7 +172,7 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
         newState[allOpen[0]].closing = true
         setTimeout(() => {
           setState(state => ({ ...state, [allOpen[0]]: { ...state[allOpen[0]], closing: false } }))
-        }, 700)
+        }, 600)
       }
     }
     setState(newState)
@@ -254,10 +259,7 @@ const AccordionBase = (props: AccordionProps) => {
 }
 
 export const Accordion = styled(AccordionBase)`
-  width: 100%
-  & + & {
-    border-top: 2px solid ${p => p.theme.colors.mediumContrast};
-  }
+  width: 100%;
   ${margins}
   ${width}
   ${maxWidth}
