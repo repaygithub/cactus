@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import Pagination from './Pagination'
 import React from 'react'
 
-storiesOf('Pagination', module).add('Managed', () => (
+storiesOf('Pagination', module).add('Basic Usage', () => (
   <ManagedPagination size={number('Size', 10)} />
 ))
 

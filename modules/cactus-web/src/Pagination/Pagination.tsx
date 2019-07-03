@@ -28,11 +28,17 @@ const RotatedMenuDots = styled(NavigationMenuDots)`
   transform: rotate(90deg);
 `
 
+const Button = styled('button')`
+  background: none;
+  border: none;
+  appearance: none;
+`
+
 const ElementBox = styled(Box)`
   min-width: 28px;
   height: 28px;
   text-align: center;
-  line-height: 23px;
+  line-height: 26px;
   font-size: 15px;
   color: ${p => p.theme.colors.darkGray};
   position: relative;
@@ -48,27 +54,30 @@ const ElementBox = styled(Box)`
     color: ${p => p.theme.colors.darkGray};
   }
 
-  &.is-selected {
-    button{
-    color: white;
-    }
-    &:after{
-      content: '';
-      z-index: -1;
-      position: absolute;
-      right: 16%;
-      top: 14%;
-      width: 18px; 
-      height: 18px;
+  &:hover{ 
+    ${Button} {
+      color: ${p => p.theme.colors.callToActionText};
+      width: 19px; 
+      height: 19px;
+      padding: 0px;
       border-radius: 50%;
+      background-color: ${p => p.theme.colors.callToAction};
+    }
+  }
+
+  &.is-selected {
+    ${Button}{
+      color: ${p => p.theme.colors.callToActionText};
+      width: 19px; 
+      height: 19px;
+      border-radius: 50%;
+      padding: 0px;
       background-color: ${p => p.theme.colors.base};
     }
   }
   & + & {
       border-left: 2px solid ${p => p.theme.colors.darkGray};
   }
-
-
 `
 
 function DotsIcon() {
@@ -112,12 +121,6 @@ const NumbersBase = (props: NumbersProps) => {
     )
   }
 }
-
-const Button = styled('button')`
-  background: none;
-  border: none;
-  appearance: none;
-`
 
 const Numbers = styled(NumbersBase)`
   display: flex;
