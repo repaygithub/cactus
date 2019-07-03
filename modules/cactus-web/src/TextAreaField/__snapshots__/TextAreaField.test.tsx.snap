@@ -125,6 +125,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
         aria-describedby="boolest-tip "
         class="c6"
         id="boolest"
+        name="boolest"
         width="100%"
       />
     </div>
@@ -257,6 +258,7 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
         aria-describedby="boolest-tip "
         class="c6"
         id="boolest"
+        name="boolest"
         placeholder="no question about it"
         width="100%"
       />
@@ -391,6 +393,7 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
         class="c6"
         disabled=""
         id="boolest"
+        name="boolest"
         width="100%"
       />
     </div>
@@ -556,6 +559,7 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
         aria-describedby="darts-tip darts-status"
         class="c6"
         id="darts"
+        name="darts"
         width="100%"
       />
       <svg
@@ -741,6 +745,7 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
         aria-describedby="darts-tip darts-status"
         class="c6"
         id="darts"
+        name="darts"
         width="100%"
       />
       <svg
@@ -926,6 +931,7 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
         aria-describedby="darts-tip darts-status"
         class="c6"
         id="darts"
+        name="darts"
         width="100%"
       />
       <svg
@@ -1093,6 +1099,7 @@ exports[`component: TextAreaField should support margin space props 1`] = `
         aria-describedby="missing-tip "
         class="c6"
         id="missing"
+        name="missing"
         width="100%"
       />
     </div>

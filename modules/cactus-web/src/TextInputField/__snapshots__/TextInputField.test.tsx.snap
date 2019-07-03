@@ -128,6 +128,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
         aria-describedby="instigate-tip "
         class="c5 c6"
         id="instigate"
+        name="instigate"
         width="100%"
       />
     </div>
@@ -234,6 +235,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
         aria-describedby=" "
         class="c3 c4"
         id="promise"
+        name="promise"
         placeholder="I won't disable it again, promise"
         width="100%"
       />
@@ -371,6 +373,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
         class="c5 c6"
         disabled=""
         id="trick"
+        name="trick"
         width="100%"
       />
     </div>
@@ -509,6 +512,7 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
         aria-describedby=" success-status"
         class="c3 c4"
         id="success"
+        name="success"
         width="100%"
       />
       <svg
@@ -667,6 +671,7 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
         aria-describedby=" warn-status"
         class="c3 c4"
         id="warn"
+        name="warn"
         width="100%"
       />
       <svg
@@ -825,6 +830,7 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
         aria-describedby=" error-status"
         class="c3 c4"
         id="error"
+        name="error"
         width="100%"
       />
       <svg
@@ -959,6 +965,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
         aria-describedby=" "
         class="c3 c4"
         id="margins"
+        name="margins"
         width="100%"
       />
     </div>

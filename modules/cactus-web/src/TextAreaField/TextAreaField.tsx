@@ -77,6 +77,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
         status={status}
         onChange={handleChange}
         aria-describedby={`${tipId} ${statusId}`}
+        name={name}
         {...textAreaProps}
       />
       {status === 'success' && (

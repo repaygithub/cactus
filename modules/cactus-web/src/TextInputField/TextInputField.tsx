@@ -78,6 +78,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
         width="100%"
         status={status}
         onChange={handleChange}
+        name={name}
         aria-describedby={`${tipId} ${statusId}`}
       />
       {status === 'success' && (
