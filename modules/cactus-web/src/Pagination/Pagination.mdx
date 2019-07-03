@@ -1,0 +1,34 @@
+---
+name: Pagination
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Pagination from './Pagination'
+import cactusTheme from '@repay/cactus-theme'
+
+# Pagination
+
+The `Pagination` component creates an interactive list of page numbers which should be implemented to change the screen based on the current page.
+
+## Best practices
+
+The `Pagination` component requires size, current, and onPageChange props. The size needs to be set to how many pages there will be on the webpage. The current prop is used to set the current page value, and its initial value will be the initial page that is selected. The onPageChange should be passed the action that will occur when the user selects a page.
+
+## Basic usage
+
+```jsx
+import React from 'react'
+import Pagination from '@repay/cactus-web'
+
+function ManagedPagination({ size }: any) {
+  const [current, setCurrent] = React.useState(1)
+  return <Pagination current={current} size={size} onPageChange={setCurrent} />
+}
+
+export default () => <ManagedPagination size={20} />
+```
+
+## Properties
+
+<PropsTable of={Pagination} />
