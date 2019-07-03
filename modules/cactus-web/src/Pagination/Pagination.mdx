@@ -1,0 +1,85 @@
+---
+name: Pagination
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Pagination from './Pagination'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+
+# Pagination
+
+The `Pagination` component creates an interactive list of page numbers which should be implemented to change the screen based on the current page. For large numbers it truncates the list to keep the number of links the same, showing a few pages around the current page.
+
+### Try it out
+
+export const code = `
+function ManagedPagination({ pageCount }) {
+  const [current, setCurrent] = React.useState(1)
+  return <Pagination currentPage={current} pageCount={pageCount} onPageChange={setCurrent} />
+}
+render(<ManagedPagination pageCount={11} />)
+`
+
+<LiveProvider code={code} scope={{ Pagination }} noInline>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+
+## Best practices
+
+The only required props are `pageCount`, `currentPage`, and either `onPageChange` or `linkAs`.
+`onPageChange` provides a click/keypress handler that specifies what will happen when the user changes the current page.
+`linkAs` is intended for more specialized use: for instance if changing the page needs to change the URL, a wrapper for a routing library component can be used.
+The component passed to `linkAs` will receive the following props:
+- `page`: clicking the link should direct the user to this page number
+- `disabled`: if the user is currently on the page this component would link to
+- `children`: either the page number or an SVG icon
+- `rel`: (optional) the HTML anchor attribute, for previous/next buttons
+- `onClick`: (optional) will only be passed if an `onPageChange` handler was provided AND `disabled` is false for this specific page; it receives no arguments, being already curried with the `page` number for the current link
+- `className`: for styling
+- `aria-label`: the accessibility label for the link
+- `aria-current`: will be passed only on the link representing the current page
+
+```jsx
+import { Link } from 'react-router'
+import { Pagination } from '@repay/cactus-web'
+
+const PageLink = ({ page, children, disabled, ...props }) => {
+  if (disabled) {
+    props['aria-disabled'] = 'true'
+  } else {
+    props.to = `/my-data/pages/${page}`
+  }
+  return <Link {...props}>{children}</Link>
+}
+
+const URLPagination = (props) => <Pagination {...props} linkAs={PageLink} />
+```
+
+`onPageChange` and `linkAs` can be used together, but since the `linkAs` component receives the page number in its props it may be just as easy to define the handler within that component.
+
+### Accessibility
+
+There are several accessibility-related props, specifically for setting `aria-label` on different pieces of the component.
+
+- `label`: the label for the entire pagination `nav` element
+- `makeLinkLabel`: a function which takes the page number and returns a label for a link to that page
+- `*PageLabel` (e.g. `currentPageLabel`): special labels for the prev/next buttons, last page button, and the link representing the current page
+  - these labels have the appropriate number appended: e.g. if the given label is "last page", it will be attached to the element as "last page, 14"
+  - the first page button uses the same label as the link to page one, since it's self-evident that page one is the first page
+
+`linkAs` has additional accessibility concerns that are handled in the default link component and should be considered in a custom component:
+- The `aria-label` and `aria-current` props should be passed on as-is to the underlying HTML element.
+- If the HTML element doesn't support `disabled` directly, you should set `aria-disabled="true"` on disabled links.
+- Set `tabIndex="0"` to allow focus on elements that normally can't be focused.
+- To make keyboard-only navigation possible, consider adding an `onKeyPress` handler for elements that don't already equate clicking and pressing the &lt;Enter&gt; or &lt;space&gt; keys.
+- If not using an anchor element with `href`, you should set `role="link"`.
+
+## Properties
+
+<PropsTable of={Pagination} />
