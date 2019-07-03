@@ -84,7 +84,7 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   ${p => p.theme.textStyles.h3};
 
   &.borderBottom {
-    border-bottom: 2px solid ${p => p.theme.colors.mediumContrast};
+    border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
   }
 `
 
@@ -133,7 +133,9 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
 export const AccordionBody = styled(AccordionBodyBase)`
   overflow: hidden;
   transition: all 600ms ease-in;
-  border-bottom: 2px solid ${p => p.theme.colors.mediumContrast};
+  border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
+  padding-top: 24px;
+  padding-bottom: 40px;
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({

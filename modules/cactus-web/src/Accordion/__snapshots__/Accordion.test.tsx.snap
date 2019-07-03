@@ -64,14 +64,16 @@ exports[`component: Accordion Component Should open Accordion when button is cli
 }
 
 .c1.borderBottom {
-  border-bottom: 2px solid hsl(200,18%,45%);
+  border-bottom: 2px solid hsl(200,29%,90%);
 }
 
 .c4 {
   overflow: hidden;
   -webkit-transition: all 600ms ease-in;
   transition: all 600ms ease-in;
-  border-bottom: 2px solid hsl(200,18%,45%);
+  border-bottom: 2px solid hsl(200,29%,90%);
+  padding-top: 24px;
+  padding-bottom: 40px;
 }
 
 .c0 {
@@ -186,7 +188,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 }
 
 .c1.borderBottom {
-  border-bottom: 2px solid hsl(200,18%,45%);
+  border-bottom: 2px solid hsl(200,29%,90%);
 }
 
 .c0 {
@@ -292,14 +294,16 @@ exports[`component: Accordion Provider Should manage Accordion state 1`] = `
 }
 
 .c1.borderBottom {
-  border-bottom: 2px solid hsl(200,18%,45%);
+  border-bottom: 2px solid hsl(200,29%,90%);
 }
 
 .c4 {
   overflow: hidden;
   -webkit-transition: all 600ms ease-in;
   transition: all 600ms ease-in;
-  border-bottom: 2px solid hsl(200,18%,45%);
+  border-bottom: 2px solid hsl(200,29%,90%);
+  padding-top: 24px;
+  padding-bottom: 40px;
 }
 
 .c0 {
