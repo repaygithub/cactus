@@ -1,3 +1,4 @@
+export { Alert } from './Alert/Alert'
 export { Avatar } from './Avatar/Avatar'
 export { Button } from './Button/Button'
 export { Box } from './Box/Box'
