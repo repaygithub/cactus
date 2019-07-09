@@ -916,7 +916,6 @@ exports[`component: TextInputField should support margin space props 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin: 8px;
 }
 
 .c5 .c1 {

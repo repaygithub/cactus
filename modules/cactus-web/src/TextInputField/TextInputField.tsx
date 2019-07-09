@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
 import { Label, LabelProps } from '../Label/Label'
-import { MarginProps, margins } from '../helpers/margins'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
 import PropTypes from 'prop-types'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
@@ -34,7 +34,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     name,
     id,
     ...inputProps
-  } = props
+  } = splitProps(props)
 
   const ref = useRef<HTMLDivElement | null>(null)
 
