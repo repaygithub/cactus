@@ -1,0 +1,31 @@
+---
+name: Alert
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Alert from './Alert'
+import cactusTheme from '@repay/cactus-theme'
+
+# Alert
+
+The `Alert` component is designed to provide user feedback. The alert is a rectangular shape providing the user a current status based on the icon and background color.
+
+## Best practices
+
+The `Alert` component should be used to provide users with feedback based on the user's status. The status can be success, error, warning, and info. The `Alert` component should be set to a general alert or a push notification alert. The general alert is larger in size than the push notifcation. The push notification alert has a button, on the top right side, and an onClick action should be set to handle the click event when implementing a push notification.
+
+## Basic usage
+
+```jsx
+import React from 'react'
+import { Alert } from '@repay/cactus-web'
+...
+<Alert status="success" type="general">
+  Message
+</Alert>
+```
+
+## Properties
+
+<PropsTable of={Alert} />

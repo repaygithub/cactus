@@ -1,89 +1,110 @@
 import * as React from 'react'
 import { cleanup, fireEvent, render } from 'react-testing-library'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import Avatar from './Avatar'
+import Alert from './Alert'
 
 afterEach(cleanup)
 
-describe('component: Avatars', () => {
-  test('Default Avatar', () => {
+describe('component: Alert', () => {
+  test('should render the default props, general info alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar />
+        <Alert> Message </Alert>
       </StyleProvider>
     )
+
     expect(container).toMatchSnapshot()
   })
 
-  test('Feed Back Avatar, Error', () => {
+  test('should render general info alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="error" />
+        <Alert status="info" type="general">
+          Message
+        </Alert>
       </StyleProvider>
     )
+
+    expect(container).toMatchSnapshot()
+  })
+  test('should render general error alert', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Alert status="error" type="general">
+          Message
+        </Alert>
+      </StyleProvider>
+    )
+
     expect(container).toMatchSnapshot()
   })
 
-  test('Feed Back Avatar, Alert', () => {
+  test('should render general warning alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="warning" />
+        <Alert status="warning" type="general">
+          Message
+        </Alert>
       </StyleProvider>
     )
+
+    expect(container).toMatchSnapshot()
+  })
+  test('should render general success alert', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Alert status="success" type="general">
+          Message
+        </Alert>
+      </StyleProvider>
+    )
+
     expect(container).toMatchSnapshot()
   })
 
-  test('Feed Back Avatar, Information', () => {
+  test('should render push notification info alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="info" />
+        <Alert status="info" type="push">
+          Message
+        </Alert>
       </StyleProvider>
     )
+
+    expect(container).toMatchSnapshot()
+  })
+  test('should render push notification error alert', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Alert status="error" type="push">
+          Message
+        </Alert>
+      </StyleProvider>
+    )
+
     expect(container).toMatchSnapshot()
   })
 
-  test('Feed Back Avatar, Check', () => {
+  test('should render push notification warning alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="success" />
+        <Alert status="warning" type="push">
+          Message
+        </Alert>
       </StyleProvider>
     )
+
     expect(container).toMatchSnapshot()
   })
-
-  test('Alert Avatar, Error', () => {
+  test('should render push notification success alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="alert" status="error" />
+        <Alert status="success" type="push">
+          Message
+        </Alert>
       </StyleProvider>
     )
-    expect(container).toMatchSnapshot()
-  })
 
-  test('Alert Avatar, Alert', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Avatar type="alert" status="warning" />
-      </StyleProvider>
-    )
-    expect(container).toMatchSnapshot()
-  })
-
-  test('Alert Avatar, Information', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Avatar type="alert" status="info" />
-      </StyleProvider>
-    )
-    expect(container).toMatchSnapshot()
-  })
-
-  test('Alert Avatar, Check', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Avatar type="alert" status="success" />
-      </StyleProvider>
-    )
     expect(container).toMatchSnapshot()
   })
 })
