@@ -33,5 +33,6 @@ Array [
   "Text",
   "Span",
   "useId",
+  "Accordion",
 ]
 `;

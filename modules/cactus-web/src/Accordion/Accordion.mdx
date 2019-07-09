@@ -1,0 +1,91 @@
+---
+name: Accordion
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Accordion from './Accordion'
+import cactusTheme from '@repay/cactus-theme'
+
+# Accordion
+
+## Best practices
+
+- Use descriptive labels for the `openLabel` and `closeLabel` props on `Accordion.Header`. These labels are used for keyboard/screen-reader accessibility.
+
+## Basic usage
+
+You can use a single Accordion by itself:
+
+```jsx
+import React from 'react'
+import { Accordion } from '@repay/cactus-web'
+
+const SingleAccordion = props => {
+  return (
+    <Accordion>
+      <Accordion.Header openLabel="Expand Accordion" closeLabel="Collapse Accordion">
+        My Header
+      </Accordion.Header>
+      <Accordion.Body>
+        Accordion Content Goes Here
+      </Accordion.Body>
+    </Accordion>
+  )
+}
+```
+
+You can also use `Accordion.Provider` to display multiple Accordions at the same time, and the Provider will manage their open/closed states for you:
+
+When using `Accordion.Provider`, you can set the maximum number of Accordions that can be open at the same time using the `maxOpen` prop, which defaults to 1.
+
+```jsx
+import React from 'react'
+import { Accordion } from '@repay/cactus-web'
+
+const MultipleAccordions = props => {
+  return (
+    <Accordion.Provider maxOpen={2}>
+      <Accordion>
+        <Accordion.Header openLabel="Expand Accordion" closeLabel="Collapse Accordion">
+          My Header 1
+        </Accordion.Header>
+        <Accordion.Body>
+          Accordion Content Goes Here
+        </Accordion.Body>
+      </Accordion>
+      <Accordion>
+        <Accordion.Header openLabel="Expand Accordion" closeLabel="Collapse Accordion">
+          My Header 2
+        </Accordion.Header>
+        <Accordion.Body>
+          Accordion Content Goes Here
+        </Accordion.Body>
+      </Accordion>
+      <Accordion>
+        <Accordion.Header openLabel="Expand Accordion" closeLabel="Collapse Accordion">
+          My Header 3
+        </Accordion.Header>
+        <Accordion.Body>
+          Accordion Content Goes Here
+        </Accordion.Body>
+      </Accordion>
+    </Accordion.Provider>
+  )
+}
+```
+
+
+## Properties
+
+## Accordion
+<PropsTable of={Accordion} />
+
+## Accordion Header
+<PropsTable of={Accordion} staticProp="AccordionHeader" />
+
+## Accordion Body
+<PropsTable of={Accordion} staticProp="AccordionBody" />
+
+## Accordion Provider
+<PropsTable of={Accordion} staticProp="AccordionProvider" />
