@@ -2,6 +2,7 @@
 
 exports[`library exports should match previous exported names 1`] = `
 Array [
+  "Alert",
   "Avatar",
   "Button",
   "Box",
