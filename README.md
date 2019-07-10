@@ -57,16 +57,24 @@ Similar shortcuts are available for all published modules:
 - `yarn theme` => `yarn workspace @repay/cactus-theme`
 - `yarn web` => `yarn workspace @repay/cactus-web`
 
-### Standard Commands
+### Commands
 
 > replace \<lib> in the following examples with the shortcut codes listed above.
 
+#### start
+
+The start command will run a website such as in the examples or Storybook for UI based libraries. Not all repositories have an interactive implementation so they do not all have a start command. In cases of no `start` command, use the example applications for implementation practice and testing; the modules are automatically linked from Yarn Workspaces.
+
 #### dev
 
-Runs the given library in development mode.
+Builds the specified library in watch mode and will rebuild on changes.
 
 ```
 yarn <lib> dev
+```
+
+```
+yarn <lib> start
 ```
 
 #### tdd
