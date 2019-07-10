@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "cleanup": "rm -rf dist",
+    "start": "yarn dev",
     "dev": "repay-scripts dev --config webpack.config.js -p 3435 src/index.tsx",
     "build": "repay-scripts build src/index.tsx",
     "test": "yarn test:types",
