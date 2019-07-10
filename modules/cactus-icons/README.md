@@ -8,16 +8,34 @@ For usage, see the documentation for the [Cactus Design System Icons](../../docs
 
 ## Contributing
 
-Building the repository
+### Commands
+
+> All of these commands can be run from the root of the repository using the `web` shortcut. (e.g. `yarn web start`)
+
+Running Storybook
 
 ```
-yarn build
+yarn start
 ```
 
 Testing the build
 
 ```
 yarn test
+```
+
+Building the repository
+
+```
+yarn build
+```
+
+Running build in watch mode
+
+> Does not currently watch for svg changes to rebuild the TypeScript files. (TODO)
+
+```
+yarn dev
 ```
 
 You must build before the tests will pass.
