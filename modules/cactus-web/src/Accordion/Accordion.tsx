@@ -101,20 +101,28 @@ AccordionHeader.propTypes = {
   closeLabel: PropTypes.string,
 }
 
+const BODY_PADDING_TOP = 24
+const BODY_PADDING_BOTTOM = 40
+
 const AccordionBodyBase = (props: AccordionBodyProps) => {
   const { className } = props
   const { isOpen, isClosing } = useContext(AccordionContext)
-  const [state, setState] = useState({ height: 0 })
+  const [state, setState] = useState({ height: 0, paddingTop: 0, paddingBottom: 0 })
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (isOpen && containerRef.current) {
-      const newHeight = containerRef.current.getBoundingClientRect().height
+      const newHeight =
+        containerRef.current.getBoundingClientRect().height + BODY_PADDING_TOP + BODY_PADDING_BOTTOM
       if (newHeight !== state.height) {
-        setState({ height: newHeight })
+        setState({
+          height: newHeight,
+          paddingTop: BODY_PADDING_TOP,
+          paddingBottom: BODY_PADDING_BOTTOM,
+        })
       }
     } else if (!isOpen) {
-      setState({ height: 0 })
+      setState({ height: 0, paddingTop: 0, paddingBottom: 0 })
     }
   }, [isOpen, state.height])
 
@@ -123,6 +131,8 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
       className={className}
       style={{
         height: `${state.height}px`,
+        paddingTop: `${state.paddingTop}px`,
+        paddingBottom: `${state.paddingBottom}px`,
       }}
     >
       <div ref={containerRef}>{props.children}</div>
@@ -131,11 +141,10 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
 }
 
 export const AccordionBody = styled(AccordionBodyBase)`
+  box-sizing: border-box;
   overflow: hidden;
   transition: all 600ms ease-in;
   border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
-  padding-top: 24px;
-  padding-bottom: 40px;
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({

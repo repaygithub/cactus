@@ -68,12 +68,11 @@ exports[`component: Accordion Component Should open Accordion when button is cli
 }
 
 .c4 {
+  box-sizing: border-box;
   overflow: hidden;
   -webkit-transition: all 600ms ease-in;
   transition: all 600ms ease-in;
   border-bottom: 2px solid hsl(200,29%,90%);
-  padding-top: 24px;
-  padding-bottom: 40px;
 }
 
 .c0 {
@@ -114,7 +113,7 @@ exports[`component: Accordion Component Should open Accordion when button is cli
     </div>
     <div
       class="c4"
-      style="height: 0px;"
+      style="height: 64px; padding-top: 24px; padding-bottom: 40px;"
     >
       <div>
         Test Body
@@ -298,12 +297,11 @@ exports[`component: Accordion Provider Should manage Accordion state 1`] = `
 }
 
 .c4 {
+  box-sizing: border-box;
   overflow: hidden;
   -webkit-transition: all 600ms ease-in;
   transition: all 600ms ease-in;
   border-bottom: 2px solid hsl(200,29%,90%);
-  padding-top: 24px;
-  padding-bottom: 40px;
 }
 
 .c0 {
@@ -344,7 +342,7 @@ exports[`component: Accordion Provider Should manage Accordion state 1`] = `
     </div>
     <div
       class="c4"
-      style="height: 0px;"
+      style="height: 64px; padding-top: 24px; padding-bottom: 40px;"
     >
       <div>
         Test Body
