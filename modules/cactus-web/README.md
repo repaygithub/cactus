@@ -1,6 +1,6 @@
 # `@repay/cactus-web`
 
-UI component library using React used by REPAY.
+UI component library build for React, used by REPAY.
 
 ## Usage
 
@@ -8,10 +8,10 @@ For usage, see the documentation for [Cactus Web](../../docs/Components/README.m
 
 ## Contributing
 
-Building the repository
+Running storybook for local development
 
 ```
-yarn build
+yarn start
 ```
 
 Testing the build
@@ -36,6 +36,18 @@ Usage: node make-component.js [...options] ComponentName
   Options:
   --help, -h      display this information
   --force, -f     overwrite component if it exists
+```
+
+Building the repository
+
+```
+yarn build
+```
+
+Running the build in watch mode which will re-build on changes
+
+```
+yarn dev
 ```
 
 ## Best Practices
