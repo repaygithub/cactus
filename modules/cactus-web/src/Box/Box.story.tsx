@@ -29,6 +29,7 @@ const sizes = [0, 1, 2, 3, 4, 5, 6]
 
 const colorStyles = Object.keys(cactusTheme.colorStyles)
 const themeColors = Object.keys(cactusTheme.colors)
+const textStyles = Object.keys(cactusTheme.textStyles)
 
 storiesOf('Box', module)
   .add('Basic Usage with theme build-in values', () => (
@@ -52,6 +53,7 @@ storiesOf('Box', module)
       borderWidth={text('borderWidth', '2px')}
       borderRadius={text('borderRadius', '')}
       borderStyle={text('borderStyle', 'solid')}
+      textStyle={select('textStyle', textStyles, 'body')}
       // @ts-ignore
       zIndex={text('zIndex', '')}
     >
@@ -70,6 +72,7 @@ storiesOf('Box', module)
       borderWidth={text('borderWidth', '')}
       borderRadius={text('borderRadius', '')}
       borderStyle={text('borderStyle', '')}
+      textStyle={select('textStyle', textStyles, 'body')}
     >
       {text('children', 'Example Content')}
     </Box>
