@@ -1,5 +1,20 @@
 # Changelog
 
+## [@repay/cactus-web@v0.4.5](https://github.com/repaygithub/cactus/commit/bb55e816d9adb5f593883cd36538d88c31fc572f)
+
+- feat(cactus-web): Add textStyle prop to Box [5fbe022](https://github.com/repaygithub/cactus/commit/5fbe02282366dcf0899f00df6ef4c49a77de62bd)
+- fix(cactus-web): Fix Accordion not closing bug [a1eea2b](https://github.com/repaygithub/cactus/commit/a1eea2b8c9b6db8551ff4c1d7b5c3074cc555e48)
+- feat(cactus-web): enable tree-shaking [7f49d37](https://github.com/repaygithub/cactus/commit/7f49d37a367b091f90c37fd3793787ccb2f9e41e)
+- fix(cactus-web): Don't pass margin props to inner input element [df33fa6](https://github.com/repaygithub/cactus/commit/df33fa6d459e778aceb41662300e46c6882b8b5e)
+- fix(cactus-web): Change line color & add padding to accordion [fac0445](https://github.com/repaygithub/cactus/commit/fac0445a7147923822a398ad4b9d465007962fb2)
+- fix(cactus-web): Pass name prop to TextArea & TextInput [59244cd](https://github.com/repaygithub/cactus/commit/59244cd3b23671e0c62abff104ca223c25fec84b)
+- fix(cactus-web): Fix Accordion styles [a88c0a7](https://github.com/repaygithub/cactus/commit/a88c0a7809592ff868ec7c5ca167ee38eab32d86)
+- feat(cactus-web): Add Accordion component [f83bec9](https://github.com/repaygithub/cactus/commit/f83bec9fefeb3f271f925cb2b4916146750801e6)
+- fix(cactus-web): Updated alert component based on PR comments [645705a](https://github.com/repaygithub/cactus/commit/645705ae50419e6ae79436cce85d2abe1d2d84b6)
+- feat(cactus-web): Wrote documentation for Alert componenet [a403310](https://github.com/repaygithub/cactus/commit/a40331094e4f480d03eeb69c4b8d31815f11d8be)
+- feat(cactus-web): Created Alert (general and push notifications) component [7d0937a](https://github.com/repaygithub/cactus/commit/7d0937a929ade600139b90450a8c6737076297a8)
+- feat(cactus-web): Added media queries and breakpoints scale to the style provider [3f481b4](https://github.com/repaygithub/cactus/commit/3f481b4774a44878fdb8c2573ed9cc8862f676d9)
+
 ## [@repay/cactus-theme@v0.4.4](https://github.com/repaygithub/cactus/commit/5f56e984eacfaa10bb546080a66ea237f360495b)
 
 - feat(cactus-theme): Add avatar colors to theme [bb69f3f](https://github.com/repaygithub/cactus/pull/108/commits/bb69f3f706256ed88ee77990f3ad354436cf4013)
