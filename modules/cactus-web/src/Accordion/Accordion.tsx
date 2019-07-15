@@ -75,7 +75,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
 export const AccordionHeader = styled(AccordionHeaderBase)`
   box-sizing: border-box;
   width: 100%;
-  height: 48px;
+  min-height: 48px;
   padding-left: 16px;
   display: flex;
   align-items: center;

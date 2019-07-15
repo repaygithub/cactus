@@ -44,7 +44,7 @@ exports[`component: Accordion Component Should open Accordion when button is cli
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  height: 48px;
+  min-height: 48px;
   padding-left: 16px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -167,7 +167,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  height: 48px;
+  min-height: 48px;
   padding-left: 16px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -273,7 +273,7 @@ exports[`component: Accordion Provider Should manage Accordion state 1`] = `
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  height: 48px;
+  min-height: 48px;
   padding-left: 16px;
   display: -webkit-box;
   display: -webkit-flex;
