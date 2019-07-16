@@ -11,7 +11,9 @@ import { NavigationClose } from '@repay/cactus-icons'
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'
 
-interface AlertProps extends MarginProps {
+interface AlertProps
+  extends MarginProps,
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   status?: Status
   type?: Type
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void

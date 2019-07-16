@@ -1,0 +1,29 @@
+{
+  "name": "mock-ebpp",
+  "version": "0.0.1",
+  "description": "Example application used for integration testing.",
+  "main": "index.tsx",
+  "repository": "https://github.com/repaygithub/cactus",
+  "author": "Victoria Vyverman",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "repay-scripts dev src/index.tsx -p 3437",
+    "test:types": "tsc -p ./tsconfig.json --noEmit",
+    "test:ci": "yarn test:types",
+    "cleanup": "rm -rf dist",
+    "test:local": "yarn test:types"
+  },
+  "devDependencies": {
+    "@repay/scripts": "^0.2.2"
+  },
+  "dependencies": {
+    "@reach/router": "^1.2.1",
+    "@repay/cactus-icons": "^0.6.0",
+    "@repay/cactus-theme": "^0.4.4",
+    "@repay/cactus-web": "^0.4.4",
+    "@types/reach__router": "^1.2.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
