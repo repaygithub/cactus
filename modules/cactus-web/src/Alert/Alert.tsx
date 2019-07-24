@@ -1,7 +1,7 @@
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
 import Avatar from '../Avatar/Avatar'
-import Box from '../Box/Box'
+import Flex from '../Flex/Flex'
 import Grid from '../Grid/Grid'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -73,11 +73,9 @@ const backgroundMap: StatusMap = {
 
 const typeMap: TypeMap = {
   general: css`
-    width: 80%;
     min-height: 88px;
   `,
   push: css`
-    width: 320px;
     min-height: 60px;
   `,
 }
@@ -104,29 +102,25 @@ const GeneralAvatarBase = styled(Avatar)`
   margin-top: 24px;
   margin-left: 16px;
 `
-const PushAvatarBase = styled(Avatar)`
-  margin-top: 10px;
-  margin-left: 16px;
-`
 const GeneralTextAlign = styled.div`
   margin-left: 72px;
   margin-top: -34px;
   margin-bottom: 34px;
 `
-const PushTextAlign = styled.div`
-  margin-left: 16px;
-  margin-top: 16px;
-  margin-bottom: 16px;
+const PushAvatarBase = styled(Avatar)`
+  margin: 10px 10px;
 `
-
+const PushTextAlign = styled.div`
+  margin: 16px 0;
+`
 const CloseIcon = styled.div`
   margin-top: 12px;
-  justify: center;
 `
 const Button = styled('button')`
   background: none;
   border: none;
   appearance: none;
+  margin-right: 16px;
 `
 
 const AlertBase = (props: AlertProps) => {
@@ -136,20 +130,25 @@ const AlertBase = (props: AlertProps) => {
     return (
       <div className={className}>
         <Grid>
-          <Grid.Item tiny={2}>
-            <PushAvatarBase status={status} type="alert" />
-          </Grid.Item>
-          <Grid.Item tiny={8}>
-            <PushTextAlign>{props.children}</PushTextAlign>
+          <Flex justifyContent="center">
+            <Grid.Item tiny={1}>
+              <PushAvatarBase status={status} type="alert" />
+            </Grid.Item>
+          </Flex>
+
+          <Grid.Item tiny={10}>
+            <PushTextAlign>{props.children} </PushTextAlign>
           </Grid.Item>
 
-          <Grid.Item tiny={2}>
-            <CloseIcon>
-              <Button onClick={onClose}>
-                <NavigationClose iconSize="small" />
-              </Button>
-            </CloseIcon>
-          </Grid.Item>
+          <Flex justifyContent="flex-end">
+            <Grid.Item tiny={1}>
+              <CloseIcon>
+                <Button onClick={onClose}>
+                  <NavigationClose iconSize="small" />
+                </Button>
+              </CloseIcon>
+            </Grid.Item>
+          </Flex>
         </Grid>
       </div>
     )
@@ -168,6 +167,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   ${backgroundVariant}
   ${sizeVariant}
   border-radius: 8px;
+  width: 100%;
 `
 
 Alert.defaultProps = {
