@@ -22,7 +22,7 @@ storiesOf('Alert', module).add('Basic Usage', () => {
     </Flex>
   )
 })
-storiesOf('Alert', module).add('Small Push', () => {
+storiesOf('Alert', module).add('Small Alert', () => {
   return (
     <Flex width="320px">
       <Alert

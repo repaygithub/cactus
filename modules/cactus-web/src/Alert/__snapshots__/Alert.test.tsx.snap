@@ -42,6 +42,10 @@ exports[`component: Alert should render general error alert 1`] = `
   margin-bottom: 34px;
 }
 
+.c6 .c2 {
+  padding-bottom: 4px;
+}
+
 .c0 {
   background: hsla(353,84%,44%,0.3);
   border: 2px solid hsl(353,84%,44%);
@@ -1257,12 +1261,85 @@ exports[`component: Alert should render push notification warning alert 1`] = `
 `;
 
 exports[`component: Alert should render the default props, general info alert 1`] = `
-.c2 {
+.c12 {
+  vertical-align: middle;
+  font-size: 16px;
+}
+
+.c6 {
   vertical-align: middle;
   font-size: 24px;
 }
 
+.c2 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c9 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(8.333333333333332% - 16px);
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(83.33333333333334% - 16px);
+}
+
 .c1 {
+  box-sizing: border-box;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c1 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c5 {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -1280,26 +1357,65 @@ exports[`component: Alert should render the default props, general info alert 1`
   align-items: center;
   background: hsl(200,29%,90%);
   color: hsl(0,0%,50%);
-  margin-top: 24px;
-  margin-left: 16px;
+  margin: 10px 10px;
 }
 
-.c1 .c4 {
+.c5 .c13 {
   padding-bottom: 4px;
 }
 
-.c3 {
-  margin-left: 72px;
-  margin-top: -34px;
-  margin-bottom: 34px;
+.c8 {
+  margin: 16px 0;
+}
+
+.c10 {
+  margin-top: 12px;
+}
+
+.c11 {
+  background: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-right: 16px;
 }
 
 .c0 {
   background: hsl(0,0%,100%);
   border: 2px solid hsl(200,96%,35%);
-  min-height: 88px;
+  min-height: 60px;
   border-radius: 8px;
   width: 100%;
+}
+
+@supports (display:grid) {
+  .c4 {
+    grid-column: span 1;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c7 {
+    grid-column: span 10;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c1 {
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-gap: 16px;
+    justify-items: normal;
+  }
+
+  .c1 > .c3 {
+    display: block;
+  }
 }
 
 <div>
@@ -1309,24 +1425,68 @@ exports[`component: Alert should render the default props, general info alert 1`
     <div
       class="c1"
     >
-      <svg
+      <div
         class="c2"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
+        display="flex"
       >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </div>
-    <div
-      class="c3"
-    >
-       
-       Message 
-       
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c3 c7"
+      >
+        <div
+          class="c8"
+        >
+           Message 
+           
+        </div>
+      </div>
+      <div
+        class="c9"
+        display="flex"
+      >
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c10"
+          >
+            <button
+              class="c11"
+            >
+              <svg
+                class="c12"
+                fill="currentcolor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+              >
+                <path
+                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
