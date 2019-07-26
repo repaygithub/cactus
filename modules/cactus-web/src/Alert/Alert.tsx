@@ -172,7 +172,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
 
 Alert.defaultProps = {
   status: 'info',
-  type: 'general',
+  type: 'push',
 }
 
 export default Alert
