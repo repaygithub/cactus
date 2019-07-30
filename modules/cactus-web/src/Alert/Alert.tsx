@@ -99,15 +99,6 @@ const sizeVariant = (
   }
 }
 
-const boxShadow = (props: AlertProps) => {
-  const { shadow } = props
-  if (shadow) {
-    return css`
-      box-shadow: 0 9px 24px ${p => p.theme.colors.callToAction};
-    `
-  }
-}
-
 const GeneralAvatarBase = styled(Avatar)`
   margin-top: 24px;
   margin-left: 16px;
@@ -176,7 +167,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   ${margins}
   ${backgroundVariant}
   ${sizeVariant}
-  ${boxShadow}
+  box-shadow: ${p => p.shadow && `0 9px 24px ${p.theme.colors.callToAction};`};
   border-radius: 8px;
   width: 100%;
 `
