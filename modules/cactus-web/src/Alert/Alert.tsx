@@ -19,6 +19,7 @@ interface AlertProps
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void
   className?: string
   children?: React.ReactNode
+  shadow?: boolean
 }
 
 type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -98,6 +99,15 @@ const sizeVariant = (
   }
 }
 
+const boxShadow = (props: AlertProps) => {
+  const { shadow } = props
+  if (shadow) {
+    return css`
+      box-shadow: 0 9px 24px ${p => p.theme.colors.callToAction};
+    `
+  }
+}
+
 const GeneralAvatarBase = styled(Avatar)`
   margin-top: 24px;
   margin-left: 16px;
@@ -166,6 +176,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   ${margins}
   ${backgroundVariant}
   ${sizeVariant}
+  ${boxShadow}
   border-radius: 8px;
   width: 100%;
 `
@@ -173,6 +184,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
 Alert.defaultProps = {
   status: 'info',
   type: 'push',
+  shadow: false,
 }
 
 export default Alert
