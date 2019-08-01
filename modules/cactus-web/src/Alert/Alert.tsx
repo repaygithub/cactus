@@ -109,24 +109,24 @@ const Button = styled('button')`
   margin-right: 16px;
 `
 
-const closeButton = (onClose) => {
-  return(
+const closeButton = (onClose: any) => {
+  return (
     <Flex justifyContent="flex-end">
       <Grid.Item tiny={1}>
-        <div style={{marginTop:"12px"}}>
+        <div style={{ marginTop: '12px' }}>
           <Button onClick={onClose}>
             <NavigationClose iconSize="small" />
           </Button>
-       </div>
+        </div>
       </Grid.Item>
-    </Flex> 
+    </Flex>
   )
 }
 
 const AlertBase = (props: AlertProps) => {
   const { className, type: type, status: status, onClose: onClose } = props
-  const margin = (type === 'push') ? "0px" : "15px"
-  const messageWidth = (onClose) ? 10 : 11
+  const margin = type === 'push' ? '0px' : '15px'
+  const messageWidth = onClose ? 10 : 11
 
   return (
     <div className={className}>
@@ -137,9 +137,9 @@ const AlertBase = (props: AlertProps) => {
           </Grid.Item>
         </Flex>
         <Grid.Item tiny={messageWidth}>
-          <div style={{margin: "16px 0"}}>{props.children} </div>
+          <div style={{ margin: '16px 0' }}>{props.children} </div>
         </Grid.Item>
-        {onClose ? closeButton(onClose) : null }
+        {onClose ? closeButton(onClose) : null}
       </Grid>
     </div>
   )

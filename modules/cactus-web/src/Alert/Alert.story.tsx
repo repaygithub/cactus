@@ -17,7 +17,6 @@ storiesOf('Alert', module).add('Basic Usage', () => {
         status={select('Status', status, 'error')}
         type={select('Type', type, 'general')}
         shadow={boolean('Shadow', false)}
-    
       >
         {text('Message', 'Message goes here')}
       </Alert>
@@ -32,7 +31,7 @@ storiesOf('Alert', module).add('Close Button', () => {
         status={select('Status', status, 'error')}
         type={select('Type', type, 'general')}
         shadow={boolean('Shadow', false)}
-      {...eventLoggers}
+        {...eventLoggers}
       >
         {text('Message', 'Message goes here')}
       </Alert>
