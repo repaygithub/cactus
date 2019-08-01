@@ -1,5 +1,5 @@
 import { CactusTheme } from '@repay/cactus-theme'
-import { IconButton } from '@repay/cactus-web'
+import IconButton from '../IconButton/IconButton'
 import { MarginProps, margins } from '../helpers/margins'
 import Avatar from '../Avatar/Avatar'
 import Flex from '../Flex/Flex'
