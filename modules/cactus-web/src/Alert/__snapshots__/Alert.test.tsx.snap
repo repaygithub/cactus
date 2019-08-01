@@ -1,323 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Alert should render general error alert 1`] = `
-.c3 {
-  vertical-align: middle;
-  font-size: 24px;
-}
-
-.c5 .c2 {
-  padding-bottom: 4px;
-}
-
-.c1 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background: hsla(353,84%,44%,0.3);
-  color: hsl(0,0%,50%);
-  margin-top: 24px;
-  margin-left: 16px;
-}
-
-.c1 .c2 {
-  padding-bottom: 4px;
-}
-
-.c4 {
-  margin-left: 72px;
-  margin-top: -34px;
-  margin-bottom: 34px;
-}
-
-.c6 .c2 {
-  padding-bottom: 4px;
-}
-
-.c0 {
-  background: hsla(353,84%,44%,0.3);
-  border: 2px solid hsl(353,84%,44%);
-  min-height: 88px;
-  border-radius: 8px;
-  width: 100%;
-}
-
-<div>
-  <div
-    class="c0"
-  >
-    <div
-      class="c1"
-    >
-      <svg
-        class="c2 c3"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M11.1055728,1.5527864 C11.4740971,0.815737865 12.5259029,0.815737865 12.8944272,1.5527864 L22.8944272,21.5527864 C23.2268777,22.2176875 22.743382,23 22,23 L2,23 C1.25661798,23 0.773122263,22.2176875 1.10557281,21.5527864 L11.1055728,1.5527864 Z M3.61803399,21 L20.381966,21 L12,4.23606798 L3.61803399,21 Z M12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153 11.4477153,16 12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 Z M13,14 C13,14.5522847 12.5522847,15 12,15 C11.4477153,15 11,14.5522847 11,14 L11,11 C11,10.4477153 11.4477153,10 12,10 C12.5522847,10 13,10.4477153 13,11 L13,14 Z"
-        />
-      </svg>
-    </div>
-    <div
-      class="c4"
-    >
-       
-      Message
-       
-    </div>
-  </div>
-</div>
-`;
-
-exports[`component: Alert should render general info alert 1`] = `
-.c2 {
-  vertical-align: middle;
-  font-size: 24px;
-}
-
-.c1 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background: hsl(200,29%,90%);
-  color: hsl(0,0%,50%);
-  margin-top: 24px;
-  margin-left: 16px;
-}
-
-.c1 .c4 {
-  padding-bottom: 4px;
-}
-
-.c3 {
-  margin-left: 72px;
-  margin-top: -34px;
-  margin-bottom: 34px;
-}
-
-.c0 {
-  background: hsl(0,0%,100%);
-  border: 2px solid hsl(200,96%,35%);
-  min-height: 88px;
-  border-radius: 8px;
-  width: 100%;
-}
-
-<div>
-  <div
-    class="c0"
-  >
-    <div
-      class="c1"
-    >
-      <svg
-        class="c2"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </div>
-    <div
-      class="c3"
-    >
-       
-      Message
-       
-    </div>
-  </div>
-</div>
-`;
-
-exports[`component: Alert should render general success alert 1`] = `
-.c2 {
-  vertical-align: middle;
-  font-size: 24px;
-}
-
-.c1 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background: hsla(145,89%,28%,0.3);
-  color: hsl(0,0%,50%);
-  margin-top: 24px;
-  margin-left: 16px;
-}
-
-.c1 .c4 {
-  padding-bottom: 4px;
-}
-
-.c3 {
-  margin-left: 72px;
-  margin-top: -34px;
-  margin-bottom: 34px;
-}
-
-.c0 {
-  background: hsla(145,89%,28%,0.3);
-  border: 2px solid hsl(145,89%,28%);
-  min-height: 88px;
-  border-radius: 8px;
-  width: 100%;
-}
-
-<div>
-  <div
-    class="c0"
-  >
-    <div
-      class="c1"
-    >
-      <svg
-        class="c2"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
-        />
-      </svg>
-    </div>
-    <div
-      class="c3"
-    >
-       
-      Message
-       
-    </div>
-  </div>
-</div>
-`;
-
-exports[`component: Alert should render general warning alert 1`] = `
-.c2 {
-  vertical-align: middle;
-  font-size: 24px;
-}
-
-.c1 {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background: hsla(47,82%,47%,0.3);
-  color: hsl(0,0%,50%);
-  margin-top: 24px;
-  margin-left: 16px;
-}
-
-.c1 .c4 {
-  padding-bottom: 4px;
-}
-
-.c3 {
-  margin-left: 72px;
-  margin-top: -34px;
-  margin-bottom: 34px;
-}
-
-.c0 {
-  background: hsla(47,82%,47%,0.3);
-  border: 2px solid hsl(47,82%,47%);
-  min-height: 88px;
-  border-radius: 8px;
-  width: 100%;
-}
-
-<div>
-  <div
-    class="c0"
-  >
-    <div
-      class="c1"
-    >
-      <svg
-        class="c2"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M1.39339828,12.7071068 C1.00287399,12.3165825 1.00287399,11.6834175 1.39339828,11.2928932 L11.2928932,1.39339828 C11.6834175,1.00287399 12.3165825,1.00287399 12.7071068,1.39339828 L22.6066017,11.2928932 C22.997126,11.6834175 22.997126,12.3165825 22.6066017,12.7071068 L12.7071068,22.6066017 C12.3165825,22.997126 11.6834175,22.997126 11.2928932,22.6066017 L1.39339828,12.7071068 Z M3.51471863,12 L12,20.4852814 L20.4852814,12 L12,3.51471863 L3.51471863,12 Z M12,16 C11.4477153,16 11,15.5522847 11,15 C11,14.4477153 11.4477153,14 12,14 C12.5522847,14 13,14.4477153 13,15 C13,15.5522847 12.5522847,16 12,16 Z M13,12 C13,12.5522847 12.5522847,13 12,13 C11.4477153,13 11,12.5522847 11,12 L11,9 C11,8.44771525 11.4477153,8 12,8 C12.5522847,8 13,8.44771525 13,9 L13,12 Z"
-        />
-      </svg>
-    </div>
-    <div
-      class="c3"
-    >
-       
-      Message
-       
-    </div>
-  </div>
-</div>
-`;
-
-exports[`component: Alert should render push notification error alert 1`] = `
-.c13 {
-  vertical-align: middle;
-  font-size: 16px;
-}
-
 .c7 {
   vertical-align: middle;
   font-size: 24px;
@@ -338,21 +21,6 @@ exports[`component: Alert should render push notification error alert 1`] = `
   flex-wrap: wrap;
 }
 
-.c10 {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
 .c4 {
   box-sizing: border-box;
   margin: 8px 8px;
@@ -362,7 +30,7 @@ exports[`component: Alert should render push notification error alert 1`] = `
 .c8 {
   box-sizing: border-box;
   margin: 8px 8px;
-  width: calc(83.33333333333334% - 16px);
+  width: calc(91.66666666666666% - 16px);
 }
 
 .c1 {
@@ -378,6 +46,7 @@ exports[`component: Alert should render push notification error alert 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 .c1 > .c3 {
@@ -391,23 +60,7 @@ exports[`component: Alert should render push notification error alert 1`] = `
   justify-content: normal;
 }
 
-.c14 .c6 {
-  padding-bottom: 4px;
-}
-
-.c15 .c6 {
-  padding-bottom: 4px;
-}
-
-.c16 .c6 {
-  padding-bottom: 4px;
-}
-
-.c17 .c6 {
-  padding-bottom: 4px;
-}
-
-.c18 .c6 {
+.c9 .c6 {
   padding-bottom: 4px;
 }
 
@@ -436,27 +89,10 @@ exports[`component: Alert should render push notification error alert 1`] = `
   padding-bottom: 4px;
 }
 
-.c9 {
-  margin: 16px 0;
-}
-
-.c11 {
-  margin-top: 12px;
-}
-
-.c12 {
-  background: none;
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin-right: 16px;
-}
-
 .c0 {
   background: hsla(353,84%,44%,0.3);
   border: 2px solid hsl(353,84%,44%);
-  min-height: 60px;
+  min-height: 88px;
   border-radius: 8px;
   width: 100%;
 }
@@ -471,7 +107,7 @@ exports[`component: Alert should render push notification error alert 1`] = `
 
 @supports (display:grid) {
   .c8 {
-    grid-column: span 10;
+    grid-column: span 11;
     width: auto;
     margin: 0;
   }
@@ -525,38 +161,10 @@ exports[`component: Alert should render push notification error alert 1`] = `
         class="c3 c8"
       >
         <div
-          class="c9"
+          style="margin: 16px 0px;"
         >
           Message
            
-        </div>
-      </div>
-      <div
-        class="c10"
-        display="flex"
-      >
-        <div
-          class="c3 c4"
-        >
-          <div
-            class="c11"
-          >
-            <button
-              class="c12"
-            >
-              <svg
-                class="c13"
-                fill="currentcolor"
-                height="1em"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -564,12 +172,7 @@ exports[`component: Alert should render push notification error alert 1`] = `
 </div>
 `;
 
-exports[`component: Alert should render push notification info alert 1`] = `
-.c12 {
-  vertical-align: middle;
-  font-size: 16px;
-}
-
+exports[`component: Alert should render general info alert 1`] = `
 .c6 {
   vertical-align: middle;
   font-size: 24px;
@@ -590,21 +193,6 @@ exports[`component: Alert should render push notification info alert 1`] = `
   flex-wrap: wrap;
 }
 
-.c9 {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
 .c4 {
   box-sizing: border-box;
   margin: 8px 8px;
@@ -614,7 +202,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
 .c7 {
   box-sizing: border-box;
   margin: 8px 8px;
-  width: calc(83.33333333333334% - 16px);
+  width: calc(91.66666666666666% - 16px);
 }
 
 .c1 {
@@ -630,6 +218,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 .c1 > .c3 {
@@ -664,31 +253,14 @@ exports[`component: Alert should render push notification info alert 1`] = `
   margin: 10px 10px;
 }
 
-.c5 .c13 {
+.c5 .c8 {
   padding-bottom: 4px;
-}
-
-.c8 {
-  margin: 16px 0;
-}
-
-.c10 {
-  margin-top: 12px;
-}
-
-.c11 {
-  background: none;
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin-right: 16px;
 }
 
 .c0 {
   background: hsl(0,0%,100%);
   border: 2px solid hsl(200,96%,35%);
-  min-height: 60px;
+  min-height: 88px;
   border-radius: 8px;
   width: 100%;
 }
@@ -703,7 +275,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
 
 @supports (display:grid) {
   .c7 {
-    grid-column: span 10;
+    grid-column: span 11;
     width: auto;
     margin: 0;
   }
@@ -757,38 +329,10 @@ exports[`component: Alert should render push notification info alert 1`] = `
         class="c3 c7"
       >
         <div
-          class="c8"
+          style="margin: 16px 0px;"
         >
           Message
            
-        </div>
-      </div>
-      <div
-        class="c9"
-        display="flex"
-      >
-        <div
-          class="c3 c4"
-        >
-          <div
-            class="c10"
-          >
-            <button
-              class="c11"
-            >
-              <svg
-                class="c12"
-                fill="currentcolor"
-                height="1em"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -796,12 +340,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
 </div>
 `;
 
-exports[`component: Alert should render push notification success alert 1`] = `
-.c12 {
-  vertical-align: middle;
-  font-size: 16px;
-}
-
+exports[`component: Alert should render general success alert 1`] = `
 .c6 {
   vertical-align: middle;
   font-size: 24px;
@@ -822,21 +361,6 @@ exports[`component: Alert should render push notification success alert 1`] = `
   flex-wrap: wrap;
 }
 
-.c9 {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
 .c4 {
   box-sizing: border-box;
   margin: 8px 8px;
@@ -846,7 +370,7 @@ exports[`component: Alert should render push notification success alert 1`] = `
 .c7 {
   box-sizing: border-box;
   margin: 8px 8px;
-  width: calc(83.33333333333334% - 16px);
+  width: calc(91.66666666666666% - 16px);
 }
 
 .c1 {
@@ -862,6 +386,7 @@ exports[`component: Alert should render push notification success alert 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 .c1 > .c3 {
@@ -896,31 +421,14 @@ exports[`component: Alert should render push notification success alert 1`] = `
   margin: 10px 10px;
 }
 
-.c5 .c13 {
+.c5 .c8 {
   padding-bottom: 4px;
-}
-
-.c8 {
-  margin: 16px 0;
-}
-
-.c10 {
-  margin-top: 12px;
-}
-
-.c11 {
-  background: none;
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin-right: 16px;
 }
 
 .c0 {
   background: hsla(145,89%,28%,0.3);
   border: 2px solid hsl(145,89%,28%);
-  min-height: 60px;
+  min-height: 88px;
   border-radius: 8px;
   width: 100%;
 }
@@ -935,7 +443,7 @@ exports[`component: Alert should render push notification success alert 1`] = `
 
 @supports (display:grid) {
   .c7 {
-    grid-column: span 10;
+    grid-column: span 11;
     width: auto;
     margin: 0;
   }
@@ -989,38 +497,10 @@ exports[`component: Alert should render push notification success alert 1`] = `
         class="c3 c7"
       >
         <div
-          class="c8"
+          style="margin: 16px 0px;"
         >
           Message
            
-        </div>
-      </div>
-      <div
-        class="c9"
-        display="flex"
-      >
-        <div
-          class="c3 c4"
-        >
-          <div
-            class="c10"
-          >
-            <button
-              class="c11"
-            >
-              <svg
-                class="c12"
-                fill="currentcolor"
-                height="1em"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -1028,12 +508,7 @@ exports[`component: Alert should render push notification success alert 1`] = `
 </div>
 `;
 
-exports[`component: Alert should render push notification warning alert 1`] = `
-.c12 {
-  vertical-align: middle;
-  font-size: 16px;
-}
-
+exports[`component: Alert should render general warning alert 1`] = `
 .c6 {
   vertical-align: middle;
   font-size: 24px;
@@ -1054,21 +529,6 @@ exports[`component: Alert should render push notification warning alert 1`] = `
   flex-wrap: wrap;
 }
 
-.c9 {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
 .c4 {
   box-sizing: border-box;
   margin: 8px 8px;
@@ -1078,7 +538,7 @@ exports[`component: Alert should render push notification warning alert 1`] = `
 .c7 {
   box-sizing: border-box;
   margin: 8px 8px;
-  width: calc(83.33333333333334% - 16px);
+  width: calc(91.66666666666666% - 16px);
 }
 
 .c1 {
@@ -1094,6 +554,7 @@ exports[`component: Alert should render push notification warning alert 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 .c1 > .c3 {
@@ -1128,31 +589,14 @@ exports[`component: Alert should render push notification warning alert 1`] = `
   margin: 10px 10px;
 }
 
-.c5 .c13 {
+.c5 .c8 {
   padding-bottom: 4px;
-}
-
-.c8 {
-  margin: 16px 0;
-}
-
-.c10 {
-  margin-top: 12px;
-}
-
-.c11 {
-  background: none;
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin-right: 16px;
 }
 
 .c0 {
   background: hsla(47,82%,47%,0.3);
   border: 2px solid hsl(47,82%,47%);
-  min-height: 60px;
+  min-height: 88px;
   border-radius: 8px;
   width: 100%;
 }
@@ -1167,7 +611,7 @@ exports[`component: Alert should render push notification warning alert 1`] = `
 
 @supports (display:grid) {
   .c7 {
-    grid-column: span 10;
+    grid-column: span 11;
     width: auto;
     margin: 0;
   }
@@ -1221,38 +665,10 @@ exports[`component: Alert should render push notification warning alert 1`] = `
         class="c3 c7"
       >
         <div
-          class="c8"
+          style="margin: 16px 0px;"
         >
           Message
            
-        </div>
-      </div>
-      <div
-        class="c9"
-        display="flex"
-      >
-        <div
-          class="c3 c4"
-        >
-          <div
-            class="c10"
-          >
-            <button
-              class="c11"
-            >
-              <svg
-                class="c12"
-                fill="currentcolor"
-                height="1em"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -1260,12 +676,204 @@ exports[`component: Alert should render push notification warning alert 1`] = `
 </div>
 `;
 
-exports[`component: Alert should render the default props, general info alert 1`] = `
-.c12 {
+exports[`component: Alert should render push notification error alert 1`] = `
+.c7 {
   vertical-align: middle;
-  font-size: 16px;
+  font-size: 24px;
 }
 
+.c2 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(8.333333333333332% - 16px);
+}
+
+.c8 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(91.66666666666666% - 16px);
+}
+
+.c9 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c1 {
+  box-sizing: border-box;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 0px;
+}
+
+.c1 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c10 .c6 {
+  padding-bottom: 4px;
+}
+
+.c5 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: hsla(353,84%,44%,0.3);
+  color: hsl(0,0%,50%);
+  margin: 10px 10px;
+}
+
+.c5 .c6 {
+  padding-bottom: 4px;
+}
+
+.c11 .c6 {
+  padding-bottom: 4px;
+}
+
+.c12 .c6 {
+  padding-bottom: 4px;
+}
+
+.c0 {
+  background: hsla(353,84%,44%,0.3);
+  border: 2px solid hsl(353,84%,44%);
+  min-height: 60px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+@supports (display:grid) {
+  .c4 {
+    grid-column: span 1;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c8 {
+    grid-column: span 11;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c9 > .c3 {
+    display: block;
+  }
+}
+
+@supports (display:grid) {
+  .c1 {
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-gap: 16px;
+    justify-items: normal;
+  }
+
+  .c1 > .c3 {
+    display: block;
+  }
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+        display="flex"
+      >
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6 c7"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M11.1055728,1.5527864 C11.4740971,0.815737865 12.5259029,0.815737865 12.8944272,1.5527864 L22.8944272,21.5527864 C23.2268777,22.2176875 22.743382,23 22,23 L2,23 C1.25661798,23 0.773122263,22.2176875 1.10557281,21.5527864 L11.1055728,1.5527864 Z M3.61803399,21 L20.381966,21 L12,4.23606798 L3.61803399,21 Z M12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153 11.4477153,16 12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 Z M13,14 C13,14.5522847 12.5522847,15 12,15 C11.4477153,15 11,14.5522847 11,14 L11,11 C11,10.4477153 11.4477153,10 12,10 C12.5522847,10 13,10.4477153 13,11 L13,14 Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c3 c8"
+      >
+        <div
+          style="margin: 16px 0px;"
+        >
+          Message
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: Alert should render push notification info alert 1`] = `
 .c6 {
   vertical-align: middle;
   font-size: 24px;
@@ -1286,21 +894,6 @@ exports[`component: Alert should render the default props, general info alert 1`
   flex-wrap: wrap;
 }
 
-.c9 {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
 .c4 {
   box-sizing: border-box;
   margin: 8px 8px;
@@ -1310,7 +903,18 @@ exports[`component: Alert should render the default props, general info alert 1`
 .c7 {
   box-sizing: border-box;
   margin: 8px 8px;
-  width: calc(83.33333333333334% - 16px);
+  width: calc(91.66666666666666% - 16px);
+}
+
+.c8 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
 }
 
 .c1 {
@@ -1326,6 +930,7 @@ exports[`component: Alert should render the default props, general info alert 1`
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  margin-top: 0px;
 }
 
 .c1 > .c3 {
@@ -1360,25 +965,8 @@ exports[`component: Alert should render the default props, general info alert 1`
   margin: 10px 10px;
 }
 
-.c5 .c13 {
+.c5 .c9 {
   padding-bottom: 4px;
-}
-
-.c8 {
-  margin: 16px 0;
-}
-
-.c10 {
-  margin-top: 12px;
-}
-
-.c11 {
-  background: none;
-  border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin-right: 16px;
 }
 
 .c0 {
@@ -1399,7 +987,551 @@ exports[`component: Alert should render the default props, general info alert 1`
 
 @supports (display:grid) {
   .c7 {
-    grid-column: span 10;
+    grid-column: span 11;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c8 > .c3 {
+    display: block;
+  }
+}
+
+@supports (display:grid) {
+  .c1 {
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-gap: 16px;
+    justify-items: normal;
+  }
+
+  .c1 > .c3 {
+    display: block;
+  }
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+        display="flex"
+      >
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c3 c7"
+      >
+        <div
+          style="margin: 16px 0px;"
+        >
+          Message
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: Alert should render push notification success alert 1`] = `
+.c6 {
+  vertical-align: middle;
+  font-size: 24px;
+}
+
+.c2 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(8.333333333333332% - 16px);
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(91.66666666666666% - 16px);
+}
+
+.c8 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c1 {
+  box-sizing: border-box;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 0px;
+}
+
+.c1 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c5 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: hsla(145,89%,28%,0.3);
+  color: hsl(0,0%,50%);
+  margin: 10px 10px;
+}
+
+.c5 .c9 {
+  padding-bottom: 4px;
+}
+
+.c0 {
+  background: hsla(145,89%,28%,0.3);
+  border: 2px solid hsl(145,89%,28%);
+  min-height: 60px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+@supports (display:grid) {
+  .c4 {
+    grid-column: span 1;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c7 {
+    grid-column: span 11;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c8 > .c3 {
+    display: block;
+  }
+}
+
+@supports (display:grid) {
+  .c1 {
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-gap: 16px;
+    justify-items: normal;
+  }
+
+  .c1 > .c3 {
+    display: block;
+  }
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+        display="flex"
+      >
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c3 c7"
+      >
+        <div
+          style="margin: 16px 0px;"
+        >
+          Message
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: Alert should render push notification warning alert 1`] = `
+.c6 {
+  vertical-align: middle;
+  font-size: 24px;
+}
+
+.c2 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(8.333333333333332% - 16px);
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(91.66666666666666% - 16px);
+}
+
+.c8 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c1 {
+  box-sizing: border-box;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 0px;
+}
+
+.c1 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c5 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: hsla(47,82%,47%,0.3);
+  color: hsl(0,0%,50%);
+  margin: 10px 10px;
+}
+
+.c5 .c9 {
+  padding-bottom: 4px;
+}
+
+.c0 {
+  background: hsla(47,82%,47%,0.3);
+  border: 2px solid hsl(47,82%,47%);
+  min-height: 60px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+@supports (display:grid) {
+  .c4 {
+    grid-column: span 1;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c7 {
+    grid-column: span 11;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c8 > .c3 {
+    display: block;
+  }
+}
+
+@supports (display:grid) {
+  .c1 {
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    grid-gap: 16px;
+    justify-items: normal;
+  }
+
+  .c1 > .c3 {
+    display: block;
+  }
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+        display="flex"
+      >
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="c6"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M1.39339828,12.7071068 C1.00287399,12.3165825 1.00287399,11.6834175 1.39339828,11.2928932 L11.2928932,1.39339828 C11.6834175,1.00287399 12.3165825,1.00287399 12.7071068,1.39339828 L22.6066017,11.2928932 C22.997126,11.6834175 22.997126,12.3165825 22.6066017,12.7071068 L12.7071068,22.6066017 C12.3165825,22.997126 11.6834175,22.997126 11.2928932,22.6066017 L1.39339828,12.7071068 Z M3.51471863,12 L12,20.4852814 L20.4852814,12 L12,3.51471863 L3.51471863,12 Z M12,16 C11.4477153,16 11,15.5522847 11,15 C11,14.4477153 11.4477153,14 12,14 C12.5522847,14 13,14.4477153 13,15 C13,15.5522847 12.5522847,16 12,16 Z M13,12 C13,12.5522847 12.5522847,13 12,13 C11.4477153,13 11,12.5522847 11,12 L11,9 C11,8.44771525 11.4477153,8 12,8 C12.5522847,8 13,8.44771525 13,9 L13,12 Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c3 c7"
+      >
+        <div
+          style="margin: 16px 0px;"
+        >
+          Message
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: Alert should render the default props, general info alert 1`] = `
+.c6 {
+  vertical-align: middle;
+  font-size: 24px;
+}
+
+.c2 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(8.333333333333332% - 16px);
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin: 8px 8px;
+  width: calc(91.66666666666666% - 16px);
+}
+
+.c1 {
+  box-sizing: border-box;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.c1 > .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: normal;
+  -webkit-justify-content: normal;
+  -ms-flex-pack: normal;
+  justify-content: normal;
+}
+
+.c5 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: hsl(200,29%,90%);
+  color: hsl(0,0%,50%);
+  margin: 10px 10px;
+}
+
+.c5 .c8 {
+  padding-bottom: 4px;
+}
+
+.c0 {
+  background: hsl(0,0%,100%);
+  border: 2px solid hsl(200,96%,35%);
+  min-height: 88px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+@supports (display:grid) {
+  .c4 {
+    grid-column: span 1;
+    width: auto;
+    margin: 0;
+  }
+}
+
+@supports (display:grid) {
+  .c7 {
+    grid-column: span 11;
     width: auto;
     margin: 0;
   }
@@ -1453,38 +1585,10 @@ exports[`component: Alert should render the default props, general info alert 1`
         class="c3 c7"
       >
         <div
-          class="c8"
+          style="margin: 16px 0px;"
         >
            Message 
            
-        </div>
-      </div>
-      <div
-        class="c9"
-        display="flex"
-      >
-        <div
-          class="c3 c4"
-        >
-          <div
-            class="c10"
-          >
-            <button
-              class="c11"
-            >
-              <svg
-                class="c12"
-                fill="currentcolor"
-                height="1em"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
-                />
-              </svg>
-            </button>
-          </div>
         </div>
       </div>
     </div>
