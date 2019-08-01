@@ -1,9 +1,9 @@
 import { CactusTheme } from '@repay/cactus-theme'
-import IconButton from '../IconButton/IconButton'
 import { MarginProps, margins } from '../helpers/margins'
 import Avatar from '../Avatar/Avatar'
 import Flex from '../Flex/Flex'
 import Grid from '../Grid/Grid'
+import IconButton from '../IconButton/IconButton'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
