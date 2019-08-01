@@ -1,4 +1,5 @@
 import { CactusTheme } from '@repay/cactus-theme'
+import { IconButton } from '@repay/cactus-web'
 import { MarginProps, margins } from '../helpers/margins'
 import Avatar from '../Avatar/Avatar'
 import Flex from '../Flex/Flex'
@@ -102,22 +103,17 @@ const sizeVariant = (
 const AvatarBase = styled(Avatar)`
   margin: 10px 10px;
 `
-const Button = styled('button')`
-  background: none;
-  border: none;
-  appearance: none;
-  margin-right: 16px;
-`
-
 const closeButton = (onClose: any) => {
   return (
     <Flex justifyContent="flex-end">
       <Grid.Item tiny={1}>
-        <div style={{ marginTop: '12px' }}>
-          <Button onClick={onClose}>
-            <NavigationClose iconSize="small" />
-          </Button>
-        </div>
+        <IconButton
+          onClick={onClose}
+          style={{ marginTop: '20px', marginRight: '20px' }}
+          iconSize="small"
+        >
+          <NavigationClose />
+        </IconButton>
       </Grid.Item>
     </Flex>
   )
@@ -137,7 +133,7 @@ const AlertBase = (props: AlertProps) => {
           </Grid.Item>
         </Flex>
         <Grid.Item tiny={messageWidth}>
-          <div style={{ margin: '16px 0' }}>{props.children} </div>
+          <div style={{ margin: '15px 0' }}>{props.children} </div>
         </Grid.Item>
         {onClose ? closeButton(onClose) : null}
       </Grid>

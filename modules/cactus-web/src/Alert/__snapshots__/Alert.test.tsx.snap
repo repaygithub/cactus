@@ -161,7 +161,7 @@ exports[`component: Alert should render general error alert 1`] = `
         class="c3 c8"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -329,7 +329,7 @@ exports[`component: Alert should render general info alert 1`] = `
         class="c3 c7"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -497,7 +497,7 @@ exports[`component: Alert should render general success alert 1`] = `
         class="c3 c7"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -665,7 +665,7 @@ exports[`component: Alert should render general warning alert 1`] = `
         class="c3 c7"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -862,7 +862,7 @@ exports[`component: Alert should render push notification error alert 1`] = `
         class="c3 c8"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -1047,7 +1047,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
         class="c3 c7"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -1232,7 +1232,7 @@ exports[`component: Alert should render push notification success alert 1`] = `
         class="c3 c7"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -1417,7 +1417,7 @@ exports[`component: Alert should render push notification warning alert 1`] = `
         class="c3 c7"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
           Message
            
@@ -1585,7 +1585,7 @@ exports[`component: Alert should render the default props, general info alert 1`
         class="c3 c7"
       >
         <div
-          style="margin: 16px 0px;"
+          style="margin: 15px 0px;"
         >
            Message 
            
