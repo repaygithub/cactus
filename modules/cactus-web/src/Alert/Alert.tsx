@@ -21,6 +21,7 @@ interface AlertProps
   className?: string
   children?: React.ReactNode
   shadow?: boolean
+  closeLabel?: string
 }
 
 type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -103,7 +104,7 @@ const sizeVariant = (
 const AvatarBase = styled(Avatar)`
   margin: 10px 10px;
 `
-const closeButton = (onClose: any) => {
+const closeButton = (onClose: any, closeLabel: string) => {
   return (
     <Flex justifyContent="flex-end">
       <Grid.Item tiny={1}>
@@ -111,6 +112,7 @@ const closeButton = (onClose: any) => {
           onClick={onClose}
           style={{ marginTop: '20px', marginRight: '20px' }}
           iconSize="small"
+          label={closeLabel}
         >
           <NavigationClose />
         </IconButton>
@@ -120,7 +122,13 @@ const closeButton = (onClose: any) => {
 }
 
 const AlertBase = (props: AlertProps) => {
-  const { className, type: type, status: status, onClose: onClose } = props
+  const {
+    className,
+    type: type,
+    status: status,
+    onClose: onClose,
+    closeLabel = 'close alert',
+  } = props
   const margin = type === 'push' ? '0px' : '15px'
   const messageWidth = onClose ? 10 : 11
 
@@ -135,7 +143,7 @@ const AlertBase = (props: AlertProps) => {
         <Grid.Item tiny={messageWidth}>
           <div style={{ margin: '15px 0' }}>{props.children} </div>
         </Grid.Item>
-        {onClose ? closeButton(onClose) : null}
+        {onClose ? closeButton(onClose, closeLabel) : null}
       </Grid>
     </div>
   )
@@ -154,6 +162,7 @@ Alert.defaultProps = {
   status: 'info',
   type: 'general',
   shadow: false,
+  closeLabel: 'close alert',
 }
 
 export default Alert
