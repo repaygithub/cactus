@@ -15,7 +15,21 @@ storiesOf('Alert', module).add('Basic Usage', () => {
     <Flex width="80%">
       <Alert
         status={select('Status', status, 'error')}
-        type={select('Type', type, 'push')}
+        type={select('Type', type, 'general')}
+        shadow={boolean('Shadow', false)}
+      >
+        {text('Message', 'Message goes here')}
+      </Alert>
+    </Flex>
+  )
+})
+
+storiesOf('Alert', module).add('Close Button', () => {
+  return (
+    <Flex width="80%">
+      <Alert
+        status={select('Status', status, 'error')}
+        type={select('Type', type, 'general')}
         shadow={boolean('Shadow', false)}
         {...eventLoggers}
       >

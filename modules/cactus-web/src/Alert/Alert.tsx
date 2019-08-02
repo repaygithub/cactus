@@ -3,6 +3,7 @@ import { MarginProps, margins } from '../helpers/margins'
 import Avatar from '../Avatar/Avatar'
 import Flex from '../Flex/Flex'
 import Grid from '../Grid/Grid'
+import IconButton from '../IconButton/IconButton'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -99,68 +100,45 @@ const sizeVariant = (
   }
 }
 
-const GeneralAvatarBase = styled(Avatar)`
-  margin-top: 24px;
-  margin-left: 16px;
-`
-const GeneralTextAlign = styled.div`
-  margin-left: 72px;
-  margin-top: -34px;
-  margin-bottom: 34px;
-`
-const PushAvatarBase = styled(Avatar)`
+const AvatarBase = styled(Avatar)`
   margin: 10px 10px;
 `
-const PushTextAlign = styled.div`
-  margin: 16px 0;
-`
-const CloseIcon = styled.div`
-  margin-top: 12px;
-`
-const Button = styled('button')`
-  background: none;
-  border: none;
-  appearance: none;
-  margin-right: 16px;
-`
+const closeButton = (onClose: any) => {
+  return (
+    <Flex justifyContent="flex-end">
+      <Grid.Item tiny={1}>
+        <IconButton
+          onClick={onClose}
+          style={{ marginTop: '20px', marginRight: '20px' }}
+          iconSize="small"
+        >
+          <NavigationClose />
+        </IconButton>
+      </Grid.Item>
+    </Flex>
+  )
+}
 
 const AlertBase = (props: AlertProps) => {
   const { className, type: type, status: status, onClose: onClose } = props
+  const margin = type === 'push' ? '0px' : '15px'
+  const messageWidth = onClose ? 10 : 11
 
-  if (type === 'push') {
-    return (
-      <div className={className}>
-        <Grid>
-          <Flex justifyContent="center">
-            <Grid.Item tiny={1}>
-              <PushAvatarBase status={status} type="alert" />
-            </Grid.Item>
-          </Flex>
-
-          <Grid.Item tiny={10}>
-            <PushTextAlign>{props.children} </PushTextAlign>
+  return (
+    <div className={className}>
+      <Grid marginTop={margin}>
+        <Flex justifyContent="center">
+          <Grid.Item tiny={1}>
+            <AvatarBase status={status} type="alert" />
           </Grid.Item>
-
-          <Flex justifyContent="flex-end">
-            <Grid.Item tiny={1}>
-              <CloseIcon>
-                <Button onClick={onClose}>
-                  <NavigationClose iconSize="small" />
-                </Button>
-              </CloseIcon>
-            </Grid.Item>
-          </Flex>
-        </Grid>
-      </div>
-    )
-  } else {
-    return (
-      <div className={className}>
-        <GeneralAvatarBase status={status} type="alert" />
-        <GeneralTextAlign> {props.children} </GeneralTextAlign>
-      </div>
-    )
-  }
+        </Flex>
+        <Grid.Item tiny={messageWidth}>
+          <div style={{ margin: '15px 0' }}>{props.children} </div>
+        </Grid.Item>
+        {onClose ? closeButton(onClose) : null}
+      </Grid>
+    </div>
+  )
 }
 
 export const Alert = styled(AlertBase)<AlertProps>`
@@ -174,7 +152,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
 
 Alert.defaultProps = {
   status: 'info',
-  type: 'push',
+  type: 'general',
   shadow: false,
 }
 
