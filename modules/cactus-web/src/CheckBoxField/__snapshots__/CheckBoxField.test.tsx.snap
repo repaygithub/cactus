@@ -2,11 +2,11 @@
 
 exports[`component: CheckBoxField should render a checkbox field 1`] = `
 <DocumentFragment>
-  .c5 {
+  .c7 {
   vertical-align: middle;
 }
 
-.c3 {
+.c5 {
   opacity: 0;
   border: 0;
   width: 0;
@@ -14,7 +14,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   position: absolute;
 }
 
-.c4 {
+.c6 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -24,7 +24,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   border-radius: 1px;
 }
 
-.c4 svg {
+.c6 svg {
   visibility: hidden;
   display: block;
   color: hsl(0,0%,100%);
@@ -32,7 +32,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   height: 12px;
 }
 
-.c2 {
+.c4 {
   position: relative;
   display: inline-block;
   vertical-align: -1px;
@@ -42,20 +42,24 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   cursor: pointer;
 }
 
-.c2 input:checked ~ span {
+.c4 input:checked ~ span {
   border-color: hsl(200,96%,35%);
   background-color: hsl(200,96%,35%);
 }
 
-.c2 input:checked ~ span svg {
+.c4 input:checked ~ span svg {
   visibility: visible;
 }
 
-.c2 input:focus ~ span {
+.c4 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c7 {
+.c3 + .c2 {
+  margin-top: 16px;
+}
+
+.c9 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
@@ -66,30 +70,30 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   margin-top: 8px;
 }
 
-.c1 .c6 {
+.c1 .c8 {
   cursor: pointer;
   padding-left: 8px;
 }
 
 <div
-    class="c0 c1"
+    class="c0 c1 c2 c3"
   >
     <label
-      class="c2"
+      class="c4"
       for="my-id"
     >
       <input
-        class="c3"
+        class="c5"
         id="my-id"
         name="checkbox-test"
         type="checkbox"
       />
       <span
         aria-hidden="true"
-        class="c4"
+        class="c6"
       >
         <svg
-          class="c5"
+          class="c7"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -102,7 +106,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
       </span>
     </label>
     <label
-      class="c6 c7"
+      class="c8 c9"
       for="my-id"
     >
       SoIA
@@ -113,11 +117,11 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 
 exports[`component: CheckBoxField should render a disabled checkbox field 1`] = `
 <DocumentFragment>
-  .c5 {
+  .c7 {
   vertical-align: middle;
 }
 
-.c3 {
+.c5 {
   opacity: 0;
   border: 0;
   width: 0;
@@ -125,7 +129,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   position: absolute;
 }
 
-.c4 {
+.c6 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -135,7 +139,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   border-radius: 1px;
 }
 
-.c4 svg {
+.c6 svg {
   visibility: hidden;
   display: block;
   color: hsl(0,0%,100%);
@@ -143,7 +147,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   height: 12px;
 }
 
-.c2 {
+.c4 {
   position: relative;
   display: inline-block;
   vertical-align: -1px;
@@ -153,26 +157,30 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   cursor: cursor;
 }
 
-.c2 input:checked ~ span svg {
+.c4 input:checked ~ span svg {
   visibility: visible;
 }
 
-.c2 input:focus ~ span {
+.c4 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c7 {
+.c3 + .c2 {
+  margin-top: 16px;
+}
+
+.c9 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
 
-.c8 + .c0 {
+.c10 + .c0 {
   margin-top: 8px;
 }
 
-.c8 .c6 {
+.c10 .c8 {
   cursor: pointer;
   padding-left: 8px;
 }
@@ -181,20 +189,20 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   margin-top: 8px;
 }
 
-.c1 .c6 {
+.c1 .c8 {
   cursor: not-allowed;
   padding-left: 8px;
 }
 
 <div
-    class="c0 c1"
+    class="c0 c1 c2 c3"
   >
     <label
-      class="c2"
+      class="c4"
       for="my-id"
     >
       <input
-        class="c3"
+        class="c5"
         disabled=""
         id="my-id"
         name="checkbox-test"
@@ -202,11 +210,11 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
       />
       <span
         aria-hidden="true"
-        class="c4"
+        class="c6"
         disabled=""
       >
         <svg
-          class="c5"
+          class="c7"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -219,7 +227,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
       </span>
     </label>
     <label
-      class="c6 c7"
+      class="c8 c9"
       for="my-id"
     >
       NMNL
@@ -230,11 +238,11 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 
 exports[`component: CheckBoxField should support margin space props 1`] = `
 <DocumentFragment>
-  .c5 {
+  .c7 {
   vertical-align: middle;
 }
 
-.c3 {
+.c5 {
   opacity: 0;
   border: 0;
   width: 0;
@@ -242,7 +250,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   position: absolute;
 }
 
-.c4 {
+.c6 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -252,7 +260,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   border-radius: 1px;
 }
 
-.c4 svg {
+.c6 svg {
   visibility: hidden;
   display: block;
   color: hsl(0,0%,100%);
@@ -260,7 +268,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   height: 12px;
 }
 
-.c2 {
+.c4 {
   position: relative;
   display: inline-block;
   vertical-align: -1px;
@@ -270,40 +278,44 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   cursor: pointer;
 }
 
-.c2 input:checked ~ span {
+.c4 input:checked ~ span {
   border-color: hsl(200,96%,35%);
   background-color: hsl(200,96%,35%);
 }
 
-.c2 input:checked ~ span svg {
+.c4 input:checked ~ span svg {
   visibility: visible;
 }
 
-.c2 input:focus ~ span {
+.c4 input:focus ~ span {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c7 {
+.c3 + .c2 {
+  margin-top: 16px;
+}
+
+.c9 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
   color: hsl(200,10%,20%);
 }
 
-.c8 + .c0 {
+.c10 + .c0 {
   margin-top: 8px;
 }
 
-.c8 .c6 {
+.c10 .c8 {
   cursor: pointer;
   padding-left: 8px;
 }
 
-.c9 + .c0 {
+.c11 + .c0 {
   margin-top: 8px;
 }
 
-.c9 .c6 {
+.c11 .c8 {
   cursor: not-allowed;
   padding-left: 8px;
 }
@@ -316,30 +328,30 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   margin-top: 8px;
 }
 
-.c1 .c6 {
+.c1 .c8 {
   cursor: pointer;
   padding-left: 8px;
 }
 
 <div
-    class="c0 c1"
+    class="c0 c1 c2 c3"
   >
     <label
-      class="c2"
+      class="c4"
       for="not-random"
     >
       <input
-        class="c3"
+        class="c5"
         id="not-random"
         name="space_props"
         type="checkbox"
       />
       <span
         aria-hidden="true"
-        class="c4"
+        class="c6"
       >
         <svg
-          class="c5"
+          class="c7"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -352,7 +364,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
       </span>
     </label>
     <label
-      class="c6 c7"
+      class="c8 c9"
       for="not-random"
     >
       space props

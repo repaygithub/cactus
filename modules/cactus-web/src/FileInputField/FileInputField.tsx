@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 
 import { MarginProps, margins, splitProps } from '../helpers/margins'
+import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import FileInput, { FileInputProps } from '../FileInput/FileInput'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
@@ -26,13 +27,13 @@ const FileInputFieldBase = (props: FileInputFieldProps) => {
   }
 
   return (
-    <div className={className} ref={containerRef}>
+    <FieldWrapper className={className} ref={containerRef}>
       <Label htmlFor={inputId} {...labelProps}>
         {label}
       </Label>
       {tooltip && <Tooltip id={tipId} label={tooltip} maxWidth={tooltipWidth} />}
       <FileInput id={inputId} aria-describedby={tipId} {...fileInputProps} />
-    </div>
+    </FieldWrapper>
   )
 }
 
@@ -59,7 +60,7 @@ export const FileInputField = styled(FileInputFieldBase)`
 FileInputField.propTypes = {
   label: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
-  tooltip: PropTypes.string.isRequired,
+  tooltip: PropTypes.string,
   name: PropTypes.string.isRequired,
   accept: PropTypes.arrayOf(PropTypes.string).isRequired,
   labels: PropTypes.shape({

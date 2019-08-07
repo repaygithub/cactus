@@ -2,13 +2,16 @@ import React from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
+import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
 import styled from 'styled-components'
 import useId from '../helpers/useId'
 
-interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id' | 'onChange'>, MarginProps {
+export interface RadioButtonFieldProps
+  extends Omit<RadioButtonProps, 'id' | 'onChange'>,
+    MarginProps {
   label: string
   name: string
   labelProps?: object
@@ -32,12 +35,12 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
   )
 
   return (
-    <div className={className}>
+    <FieldWrapper className={className}>
       <RadioButton id={radioButtonId} name={name} onChange={handleChange} {...radioButtonProps} />
       <Label htmlFor={radioButtonId} {...labelProps}>
         {label}
       </Label>
-    </div>
+    </FieldWrapper>
   )
 }
 

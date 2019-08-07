@@ -3,6 +3,7 @@ import React from 'react'
 import { FieldOnChangeHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { width, WidthProps } from 'styled-system'
+import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import Select, { OptionType, SelectProps } from '../Select/Select'
@@ -62,7 +63,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = props => {
   const tipId = tooltip ? `${inputId}-tip` : ''
 
   return (
-    <div className={className} ref={ref}>
+    <FieldWrapper className={className} ref={ref}>
       <Label {...labelProps} htmlFor={fieldId}>
         {label}
       </Label>
@@ -89,7 +90,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = props => {
           <span>{error}</span>
         </StatusMessage>
       )}
-    </div>
+    </FieldWrapper>
   )
 }
 
