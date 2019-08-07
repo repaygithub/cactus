@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import useId from '../helpers/useId'
 
-export interface CheckBoxFieldProps
+interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'disabled'>,
     MarginProps {
   label: string
