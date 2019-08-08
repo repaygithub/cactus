@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
+import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import StatusMessage from '../StatusMessage/StatusMessage'
@@ -66,7 +67,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
   )
 
   return (
-    <div className={className} ref={ref}>
+    <FieldWrapper className={className} ref={ref}>
       <Label htmlFor={textAreaId} {...labelProps}>
         {label}
       </Label>
@@ -95,7 +96,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
           <span>{error}</span>
         </StatusMessage>
       )}
-    </div>
+    </FieldWrapper>
   )
 }
 

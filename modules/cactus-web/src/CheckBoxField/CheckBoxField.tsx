@@ -3,6 +3,7 @@ import React from 'react'
 import { FieldOnChangeHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
+import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -34,12 +35,12 @@ const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
   )
 
   return (
-    <div className={className}>
+    <FieldWrapper className={className}>
       <CheckBox {...checkboxProps} id={checkboxId} name={name} onChange={handleChange} />
       <Label htmlFor={checkboxId} {...labelProps}>
         {label}
       </Label>
-    </div>
+    </FieldWrapper>
   )
 }
 

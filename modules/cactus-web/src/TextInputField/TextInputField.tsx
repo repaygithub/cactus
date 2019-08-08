@@ -4,6 +4,7 @@ import { FieldOnChangeHandler, Omit } from '../types'
 import { Label, LabelProps } from '../Label/Label'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
+import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import PropTypes from 'prop-types'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
@@ -67,7 +68,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   }
 
   return (
-    <div className={className} ref={ref}>
+    <FieldWrapper className={className} ref={ref}>
       <Label htmlFor={inputId} {...labelProps}>
         {label}
       </Label>
@@ -96,7 +97,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
           <span>{error}</span>
         </StatusMessage>
       )}
-    </div>
+    </FieldWrapper>
   )
 }
 
