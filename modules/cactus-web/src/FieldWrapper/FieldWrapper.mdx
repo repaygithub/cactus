@@ -1,34 +1,67 @@
 ---
-name: FormField
+name: FieldWrapper
 menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
-import FormField from './FormField'
+import FieldWrapper from './FieldWrapper'
 import cactusTheme from '@repay/cactus-theme'
 
-# FormField
+# FieldWrapper
+
+The FieldWrapper component is mainly used internally to wrap our field components to help with spacing.
 
 ## Best practices
 
-TODO - see README for what to include here
+Wrap new field components with the FieldWrapper so that spacing rules are automatically applied when they are rendered as siblings of each other.
 
 ## Basic usage
 
-TODO - brief description
+Any elements can be wrapped
 
 ```jsx
+// MyInput.js
 import React from 'react'
+import { FieldWrapper } from '@repay/cactus-web'
 
-;<FormField />
-```
+const MyInput = props => {
+  const { label, ...inputProps } = props
+  return (
+    <FieldWrapper>
+      <label>{label}</label>
+      <input {...inputProps} />
+    </FieldWrapper>
+  )
+}
 
-```tsx
-import * as React from 'react'
+export default MyInput
 
-;<FormField />
+
+// Form.js
+import React, { useCallback, useState } from 'react'
+import MyInput from './MyInput'
+
+const Form = () => {
+  const [state, setState] = useState({})
+
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault()
+      const data = { ...state }
+      // Send data to api
+  }, [state])
+
+  return (
+    <form onSubmit={handleSubmit}>
+      // Siblings will have 16px of padding between them
+      <MyInput label="Input 1" onChange={(e) => setState(state => ({ ...state, field_1: e.target.value }))} />
+      <MyInput label="Input 2" onChange={(e) => setState(state => ({ ...state, field_2: e.target.value }))} />
+    </form>
+  )
+}
+
 ```
 
 ## Properties
 
-<PropsTable of={FormField} />
+<PropsTable of={FieldWrapper} />
