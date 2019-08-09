@@ -9,13 +9,14 @@ import {
   StatusCheck,
 } from '@repay/cactus-icons'
 import { CactusTheme } from '@repay/cactus-theme'
-import { FieldOnChangeHandler, Omit } from '../types'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { IconButton } from '../IconButton/IconButton'
 import { MarginProps, margins } from '../helpers/margins'
 import { maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { TextButton } from '../TextButton/TextButton'
 import accepts from '../helpers/accept'
 import Avatar from '../Avatar/Avatar'
+import handleEvent from '../helpers/eventHandler'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import StatusMessage from '../StatusMessage/StatusMessage'
@@ -59,8 +60,8 @@ export interface FileInputProps
   prompt?: string
   onChange?: FieldOnChangeHandler<FileObject[]>
   onError?: (type: ErrorType, accept?: string[]) => string
-  onFocus?: (name: string) => void
-  onBlur?: (name: string) => void
+  onFocus?: FieldOnFocusHandler
+  onBlur?: FieldOnBlurHandler
   rawFiles?: boolean
   multiple?: boolean
   value?: FileObject[]
@@ -525,15 +526,11 @@ const FileInputBase = (props: FileInputProps) => {
   }
 
   const handleInputFocus = (e: React.FocusEvent<HTMLButtonElement>) => {
-    if (typeof onFocus === 'function') {
-      onFocus(name)
-    }
+    handleEvent(onFocus, name)
   }
 
   const handleInputBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
-    if (typeof onBlur === 'function') {
-      onBlur(name)
-    }
+    handleEvent(onBlur, name)
   }
 
   const emptyClassName =
@@ -666,6 +663,8 @@ FileInput.propTypes = {
   buttonText: PropTypes.string,
   prompt: PropTypes.string,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
   onError: PropTypes.func,
   rawFiles: PropTypes.bool,
   multiple: PropTypes.bool,

@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
 
-import { FieldOnChangeHandler, Omit } from '../types'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
+import handleEvent from '../helpers/eventHandler'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import StatusMessage from '../StatusMessage/StatusMessage'
@@ -11,7 +12,9 @@ import TextArea, { Status, TextAreaProps } from '../TextArea/TextArea'
 import Tooltip from '../Tooltip/Tooltip'
 import useId from '../helpers/useId'
 
-interface TextAreaFieldProps extends MarginProps, Omit<TextAreaProps, 'status' | 'onChange'> {
+interface TextAreaFieldProps
+  extends MarginProps,
+    Omit<TextAreaProps, 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
   label: string
   name: string
   labelProps?: object
@@ -20,6 +23,8 @@ interface TextAreaFieldProps extends MarginProps, Omit<TextAreaProps, 'status' |
   error?: string
   tooltip?: string
   onChange?: FieldOnChangeHandler<string>
+  onFocus?: FieldOnFocusHandler
+  onBlur?: FieldOnBlurHandler
 }
 
 const TextAreaFieldBase = (props: TextAreaFieldProps) => {
@@ -32,6 +37,8 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
     error,
     tooltip,
     onChange,
+    onFocus,
+    onBlur,
     name,
     id,
     ...textAreaProps
@@ -66,6 +73,14 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
     [onChange, name]
   )
 
+  const handleFocus = (event: React.FocusEvent) => {
+    handleEvent(onFocus, name)
+  }
+
+  const handleBlur = (event: React.FocusEvent) => {
+    handleEvent(onBlur, name)
+  }
+
   return (
     <FieldWrapper className={className} ref={ref}>
       <Label htmlFor={textAreaId} {...labelProps}>
@@ -77,6 +92,8 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
         width="100%"
         status={status}
         onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         aria-describedby={`${tipId} ${statusId}`}
         name={name}
         {...textAreaProps}
@@ -135,6 +152,8 @@ TextAreaField.propTypes = {
   tooltip: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }
 
 TextAreaField.defaultProps = {
