@@ -1,5 +1,9 @@
 # Changelog
 
+## [@repay/cactus-web@v0.4.10](https://github.com/repaygithub/cactus/commit/4d837c65988faf3427c55e3e734c5569638a589f)
+
+- feat(cactus-web): Standardize onFocus & onBlur event handlers [c639edc](https://github.com/repaygithub/cactus/commit/c639edc2768c5846b6ba30981f6a815cfdfc4af4)
+
 ## [@repay/cactus-web@v0.4.9](https://github.com/repaygithub/cactus/commit/d1c71da25ba0e66e7ccd3c4ac40dfc970550d668)
 
 - fix(cactus-web): Remove accidentally exported props [ca9c51f](https://github.com/repaygithub/cactus/commit/ca9c51f7df9a950086a952737c693945ffe24e42)
