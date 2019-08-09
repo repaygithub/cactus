@@ -1,29 +1,43 @@
 import React from 'react'
 
-import { FieldOnChangeHandler, Omit } from '../types'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
+import handleEvent from '../helpers/eventHandler'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import useId from '../helpers/useId'
 
 interface CheckBoxFieldProps
-  extends Omit<CheckBoxProps, 'id' | 'onChange' | 'disabled'>,
+  extends Omit<CheckBoxProps, 'id' | 'onChange' | 'onBlur' | 'onFocus' | 'disabled'>,
     MarginProps {
   label: string
   labelProps?: object
   id?: string
   name: string
   onChange?: FieldOnChangeHandler<boolean>
+  onFocus?: FieldOnFocusHandler
+  onBlur?: FieldOnBlurHandler
   disabled?: boolean
 }
 
 const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
   const componentProps = splitProps<CheckBoxFieldProps>(props)
-  const { label, labelProps, id, name, onChange, className, ...checkboxProps } = componentProps
+  const {
+    label,
+    labelProps,
+    id,
+    name,
+    onChange,
+    onBlur,
+    onFocus,
+    className,
+    ...checkboxProps
+  } = componentProps
   const checkboxId = useId(id, name)
+
   const handleChange = React.useCallback(
     (event: React.FormEvent<HTMLInputElement>) => {
       if (typeof onChange === 'function') {
@@ -34,9 +48,24 @@ const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
     [name, onChange]
   )
 
+  const handleFocus = (event: React.FocusEvent) => {
+    handleEvent(onFocus, name)
+  }
+
+  const handleBlur = (event: React.FocusEvent) => {
+    handleEvent(onBlur, name)
+  }
+
   return (
     <FieldWrapper className={className}>
-      <CheckBox {...checkboxProps} id={checkboxId} name={name} onChange={handleChange} />
+      <CheckBox
+        {...checkboxProps}
+        id={checkboxId}
+        name={name}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      />
       <Label htmlFor={checkboxId} {...labelProps}>
         {label}
       </Label>
@@ -64,6 +93,8 @@ CheckBoxField.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
   disabled: PropTypes.bool,
 }
 

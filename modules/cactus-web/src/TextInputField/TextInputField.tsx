@@ -1,17 +1,20 @@
 import React, { useRef } from 'react'
 
-import { FieldOnChangeHandler, Omit } from '../types'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { Label, LabelProps } from '../Label/Label'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
+import handleEvent from '../helpers/eventHandler'
 import PropTypes from 'prop-types'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
 import Tooltip from '../Tooltip/Tooltip'
 import useId from '../helpers/useId'
 
-interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status' | 'onChange'> {
+interface TextInputFieldProps
+  extends MarginProps,
+    Omit<TextInputProps, 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
   label: string
   name: string
   labelProps?: LabelProps
@@ -20,6 +23,8 @@ interface TextInputFieldProps extends MarginProps, Omit<TextInputProps, 'status'
   error?: string
   tooltip?: string
   onChange?: FieldOnChangeHandler<string>
+  onFocus?: FieldOnFocusHandler
+  onBlur?: FieldOnBlurHandler
 }
 
 const TextInputFieldBase = (props: TextInputFieldProps) => {
@@ -32,6 +37,8 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     error,
     tooltip,
     onChange,
+    onFocus,
+    onBlur,
     name,
     id,
     ...inputProps
@@ -62,6 +69,14 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     [onChange, name]
   )
 
+  const handleFocus = (event: React.FocusEvent) => {
+    handleEvent(onFocus, name)
+  }
+
+  const handleBlur = (event: React.FocusEvent) => {
+    handleEvent(onBlur, name)
+  }
+
   let containerWidth = undefined
   if (ref.current) {
     containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
@@ -79,6 +94,8 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
         width="100%"
         status={status}
         onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         name={name}
         aria-describedby={`${tipId} ${statusId}`}
       />
@@ -135,6 +152,8 @@ TextInputField.propTypes = {
   error: PropTypes.string,
   tooltip: PropTypes.string,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }
 
 TextInputField.defaultProps = {

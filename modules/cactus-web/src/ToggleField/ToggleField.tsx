@@ -1,15 +1,18 @@
 import * as React from 'react'
 
-import { FieldOnChangeHandler, Omit } from '../types'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
+import handleEvent from '../helpers/eventHandler'
 import Label, { LabelProps } from '../Label/Label'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Toggle, { ToggleProps } from '../Toggle/Toggle'
 import useId from '../helpers/useId'
 
-export interface ToggleFieldProps extends MarginProps, Omit<ToggleProps, 'id' | 'onChange'> {
+export interface ToggleFieldProps
+  extends MarginProps,
+    Omit<ToggleProps, 'id' | 'onChange' | 'onFocus' | 'onBlur'> {
   label: string
   /** props to be passed to the Label element (available for accessibility considerations) */
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
@@ -21,13 +24,25 @@ export interface ToggleFieldProps extends MarginProps, Omit<ToggleProps, 'id' | 
   disabled?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   onChange?: FieldOnChangeHandler<boolean>
+  onFocus?: FieldOnFocusHandler
+  onBlur?: FieldOnBlurHandler
 }
 
 const ToggleFieldBase = (props: ToggleFieldProps) => {
-  const { labelProps, className, label, id, name, onChange, onClick, ...toggleProps } = splitProps(
-    props
-  )
+  const {
+    labelProps,
+    className,
+    label,
+    id,
+    name,
+    onChange,
+    onFocus,
+    onBlur,
+    onClick,
+    ...toggleProps
+  } = splitProps(props)
   const fieldId = useId(id, name)
+
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       if (typeof onClick === 'function') {
@@ -40,12 +55,28 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
     },
     [onClick, onChange, name]
   )
+
+  const handleFocus = (event: React.FocusEvent) => {
+    handleEvent(onFocus, name)
+  }
+
+  const handleBlur = (event: React.FocusEvent) => {
+    handleEvent(onBlur, name)
+  }
+
   return (
     <FieldWrapper className={className}>
       <Label {...props.labelProps} htmlFor={fieldId}>
         {props.label}
       </Label>
-      <Toggle {...toggleProps} name={name} id={fieldId} onClick={handleClick} />
+      <Toggle
+        {...toggleProps}
+        name={name}
+        id={fieldId}
+        onClick={handleClick}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+      />
     </FieldWrapper>
   )
 }
@@ -73,6 +104,8 @@ ToggleField.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }
 
 ToggleField.defaultProps = {

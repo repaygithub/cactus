@@ -1,12 +1,13 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { Omit } from '../types'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import { width, WidthProps } from 'styled-system'
+import handleEvent from '../helpers/eventHandler'
 import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import PropTypes from 'prop-types'
@@ -31,9 +32,9 @@ export interface SelectProps
   /** !important */
   disabled?: boolean
   status?: Status
-  onChange?: (name: string, value: string) => void
-  onBlur?: (name: string) => void
-  onFocus?: (name: string) => void
+  onChange?: FieldOnChangeHandler<string>
+  onBlur?: FieldOnBlurHandler
+  onFocus?: FieldOnFocusHandler
 }
 
 type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -319,16 +320,16 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   handleBlur = (event: React.FocusEvent<HTMLButtonElement>) => {
     const isNotControlledBlur = !event.relatedTarget || event.relatedTarget !== this.listRef.current
-    if (isNotControlledBlur && typeof this.props.onBlur === 'function') {
-      this.props.onBlur(this.props.name)
+    if (isNotControlledBlur) {
+      handleEvent(this.props.onBlur, this.props.name)
     }
   }
 
   handleFocus = (event: React.FocusEvent<HTMLButtonElement>) => {
     const isNotControlledFocus =
       !event.relatedTarget || event.relatedTarget !== this.listRef.current
-    if (isNotControlledFocus && typeof this.props.onFocus === 'function') {
-      this.props.onFocus(this.props.name)
+    if (isNotControlledFocus) {
+      handleEvent(this.props.onFocus, this.props.name)
     }
   }
 
