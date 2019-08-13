@@ -1,9 +1,8 @@
 import * as React from 'react'
 
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldEventHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import handleEvent from '../helpers/eventHandler'
 import Label, { LabelProps } from '../Label/Label'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -23,9 +22,9 @@ export interface ToggleFieldProps
   /** !important */
   disabled?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
-  onChange?: FieldOnChangeHandler<boolean>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
+  onChange?: FieldEventHandler<boolean>
+  onFocus?: FieldEventHandler<boolean>
+  onBlur?: FieldEventHandler<boolean>
 }
 
 const ToggleFieldBase = (props: ToggleFieldProps) => {
@@ -43,6 +42,15 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
   } = splitProps(props)
   const fieldId = useId(id, name)
 
+  const handleEvent = (handler?: FieldEventHandler<boolean>) => {
+    return (event: React.FormEvent<HTMLButtonElement>) => {
+      if (typeof handler === 'function') {
+        const target = (event.target as unknown) as HTMLButtonElement
+        handler(name, target.getAttribute('aria-checked') === 'true')
+      }
+    }
+  }
+
   const handleClick = React.useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       if (typeof onClick === 'function') {
@@ -56,14 +64,6 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
     [onClick, onChange, name]
   )
 
-  const handleFocus = (event: React.FocusEvent) => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (event: React.FocusEvent) => {
-    handleEvent(onBlur, name)
-  }
-
   return (
     <FieldWrapper className={className}>
       <Label {...props.labelProps} htmlFor={fieldId}>
@@ -74,8 +74,8 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
         name={name}
         id={fieldId}
         onClick={handleClick}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onFocus={handleEvent(onFocus)}
+        onBlur={handleEvent(onBlur)}
       />
     </FieldWrapper>
   )

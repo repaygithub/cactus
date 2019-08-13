@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldEventHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import handleEvent from '../helpers/eventHandler'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
@@ -17,9 +16,9 @@ export interface RadioButtonFieldProps
   name: string
   labelProps?: object
   id?: string
-  onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
+  onChange?: FieldEventHandler<string>
+  onFocus?: FieldEventHandler<string>
+  onBlur?: FieldEventHandler<string>
 }
 
 const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
@@ -36,22 +35,13 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
   } = splitProps(props)
   const radioButtonId = useId(id, name)
 
-  const handleChange = React.useCallback(
-    (event: React.FormEvent<HTMLInputElement>) => {
-      if (typeof onChange === 'function') {
+  const handleEvent = (handler?: FieldEventHandler<string>) => {
+    return (event: React.FormEvent<HTMLInputElement>) => {
+      if (typeof handler === 'function') {
         const target = (event.target as unknown) as HTMLInputElement
-        onChange(name, target.value)
+        handler(name, target.value)
       }
-    },
-    [name, onChange]
-  )
-
-  const handleFocus = (event: React.FocusEvent) => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (event: React.FocusEvent) => {
-    handleEvent(onBlur, name)
+    }
   }
 
   return (
@@ -59,9 +49,9 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
       <RadioButton
         id={radioButtonId}
         name={name}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onChange={handleEvent(onChange)}
+        onFocus={handleEvent(onFocus)}
+        onBlur={handleEvent(onBlur)}
         {...radioButtonProps}
       />
       <Label htmlFor={radioButtonId} {...labelProps}>

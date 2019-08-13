@@ -222,7 +222,7 @@ describe('component: SelectField', () => {
       )
       let select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.blur(select)
-      expect(onBlur).toHaveBeenCalledWith('the-test-select-field')
+      expect(onBlur).toHaveBeenCalledWith('the-test-select-field', null)
     })
 
     test('onFocus', async () => {
@@ -240,7 +240,7 @@ describe('component: SelectField', () => {
       )
       let select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.focus(select)
-      expect(onFocus).toHaveBeenCalledWith('the-test-select-field')
+      expect(onFocus).toHaveBeenCalledWith('the-test-select-field', null)
     })
   })
 })

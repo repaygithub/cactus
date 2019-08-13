@@ -380,7 +380,7 @@ describe('component: Select', () => {
       let trigger: HTMLElement = getByText('phoenix').parentElement
       fireEvent.focus(trigger)
       fireEvent.blur(trigger)
-      expect(onBlur).toHaveBeenCalledWith('city')
+      expect(onBlur).toHaveBeenCalledWith('city', 'phoenix')
     })
 
     test('is NOT called when list opens', async () => {
@@ -456,7 +456,7 @@ describe('component: Select', () => {
       )
       await animationRender()
       getByText('lose focus').focus()
-      expect(onBlur).toHaveBeenCalledWith('city')
+      expect(onBlur).toHaveBeenCalledWith('city', 'phoenix')
     })
   })
 
@@ -478,7 +478,7 @@ describe('component: Select', () => {
       // @ts-ignore
       let trigger: HTMLElement = getByText('phoenix').parentElement
       fireEvent.focus(trigger)
-      expect(onFocus).toHaveBeenCalledWith('city')
+      expect(onFocus).toHaveBeenCalledWith('city', 'phoenix')
     })
 
     test('is NOT called when list closes via keyboard', async () => {

@@ -1,11 +1,10 @@
 import React, { useRef } from 'react'
 
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldEventHandler, Omit } from '../types'
 import { Label, LabelProps } from '../Label/Label'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import handleEvent from '../helpers/eventHandler'
 import PropTypes from 'prop-types'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
@@ -22,9 +21,9 @@ interface TextInputFieldProps
   warning?: string
   error?: string
   tooltip?: string
-  onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
+  onChange?: FieldEventHandler<string>
+  onFocus?: FieldEventHandler<string>
+  onBlur?: FieldEventHandler<string>
 }
 
 const TextInputFieldBase = (props: TextInputFieldProps) => {
@@ -59,22 +58,13 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   const statusId = status ? `${inputId}-status` : ''
   const tipId = tooltip ? `${inputId}-tip` : ''
 
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (typeof onChange === 'function') {
-        const currentTarget = (event.currentTarget as unknown) as HTMLInputElement
-        onChange(name, currentTarget.value)
+  const handleEvent = (handler?: FieldEventHandler<string>) => {
+    return (event: React.FormEvent<HTMLInputElement>) => {
+      if (typeof handler === 'function') {
+        const target = (event.target as unknown) as HTMLInputElement
+        handler(name, target.value)
       }
-    },
-    [onChange, name]
-  )
-
-  const handleFocus = (event: React.FocusEvent) => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (event: React.FocusEvent) => {
-    handleEvent(onBlur, name)
+    }
   }
 
   let containerWidth = undefined
@@ -93,9 +83,9 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
         id={inputId}
         width="100%"
         status={status}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onChange={handleEvent(onChange)}
+        onFocus={handleEvent(onFocus)}
+        onBlur={handleEvent(onBlur)}
         name={name}
         aria-describedby={`${tipId} ${statusId}`}
       />

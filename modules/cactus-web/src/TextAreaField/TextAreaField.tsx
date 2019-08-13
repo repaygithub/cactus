@@ -1,9 +1,8 @@
 import React, { useRef } from 'react'
 
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldEventHandler, Omit } from '../types'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import handleEvent from '../helpers/eventHandler'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import StatusMessage from '../StatusMessage/StatusMessage'
@@ -22,9 +21,9 @@ interface TextAreaFieldProps
   warning?: string
   error?: string
   tooltip?: string
-  onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
+  onChange?: FieldEventHandler<string>
+  onFocus?: FieldEventHandler<string>
+  onBlur?: FieldEventHandler<string>
 }
 
 const TextAreaFieldBase = (props: TextAreaFieldProps) => {
@@ -63,22 +62,13 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
   const statusId = status ? `${textAreaId}-status` : ''
   const tipId = tooltip ? `${textAreaId}-tip` : ''
 
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      if (typeof onChange === 'function') {
-        const currentTarget = (event.currentTarget as unknown) as HTMLTextAreaElement
-        onChange(name, currentTarget.value)
+  const handleEvent = (handler?: FieldEventHandler<string>) => {
+    return (event: React.FormEvent<HTMLTextAreaElement>) => {
+      if (typeof handler === 'function') {
+        const target = (event.target as unknown) as HTMLTextAreaElement
+        handler(name, target.value)
       }
-    },
-    [onChange, name]
-  )
-
-  const handleFocus = (event: React.FocusEvent) => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (event: React.FocusEvent) => {
-    handleEvent(onBlur, name)
+    }
   }
 
   return (
@@ -91,9 +81,9 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
         id={textAreaId}
         width="100%"
         status={status}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onChange={handleEvent(onChange)}
+        onFocus={handleEvent(onFocus)}
+        onBlur={handleEvent(onBlur)}
         aria-describedby={`${tipId} ${statusId}`}
         name={name}
         {...textAreaProps}

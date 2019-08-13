@@ -9,14 +9,13 @@ import {
   StatusCheck,
 } from '@repay/cactus-icons'
 import { CactusTheme } from '@repay/cactus-theme'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldEventHandler, Omit } from '../types'
 import { IconButton } from '../IconButton/IconButton'
 import { MarginProps, margins } from '../helpers/margins'
 import { maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { TextButton } from '../TextButton/TextButton'
 import accepts from '../helpers/accept'
 import Avatar from '../Avatar/Avatar'
-import handleEvent from '../helpers/eventHandler'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import StatusMessage from '../StatusMessage/StatusMessage'
@@ -58,10 +57,10 @@ export interface FileInputProps
   labels?: { delete?: string; retry?: string; loading?: string; loaded?: string }
   buttonText?: string
   prompt?: string
-  onChange?: FieldOnChangeHandler<FileObject[]>
+  onChange?: FieldEventHandler<FileObject[]>
   onError?: (type: ErrorType, accept?: string[]) => string
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
+  onFocus?: FieldEventHandler<FileObject[]>
+  onBlur?: FieldEventHandler<FileObject[]>
   rawFiles?: boolean
   multiple?: boolean
   value?: FileObject[]
@@ -525,12 +524,12 @@ const FileInputBase = (props: FileInputProps) => {
     e.stopPropagation()
   }
 
-  const handleInputFocus = (e: React.FocusEvent<HTMLButtonElement>) => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleInputBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
-    handleEvent(onBlur, name)
+  const handleEvent = (handler?: FieldEventHandler<FileObject[]>) => {
+    return (event: React.FormEvent<HTMLButtonElement>) => {
+      if (typeof handler === 'function') {
+        handler(name, state.files)
+      }
+    }
   }
 
   const emptyClassName =
@@ -561,8 +560,8 @@ const FileInputBase = (props: FileInputProps) => {
             id={id}
             aria-describedby={describedBy}
             onClick={handleOpenFileSelect}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
+            onFocus={handleEvent(onFocus)}
+            onBlur={handleEvent(onBlur)}
           >
             <BatchstatusOpen iconSize="small" />
             {buttonText}
@@ -587,8 +586,8 @@ const FileInputBase = (props: FileInputProps) => {
             id={id}
             aria-describedby={describedBy}
             onClick={handleOpenFileSelect}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
+            onFocus={handleEvent(onFocus)}
+            onBlur={handleEvent(onBlur)}
           >
             <BatchstatusOpen iconSize="small" />
             {buttonText}

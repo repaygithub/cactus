@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldEventHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { NavigationChevronDown } from '@repay/cactus-icons'
@@ -32,9 +32,9 @@ export interface SelectProps
   /** !important */
   disabled?: boolean
   status?: Status
-  onChange?: FieldOnChangeHandler<string>
-  onBlur?: FieldOnBlurHandler
-  onFocus?: FieldOnFocusHandler
+  onChange?: FieldEventHandler<string | null>
+  onBlur?: FieldEventHandler<string | null>
+  onFocus?: FieldEventHandler<string | null>
 }
 
 type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -318,18 +318,13 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END life-cycle methods */
   /** START event handlers */
 
-  handleBlur = (event: React.FocusEvent<HTMLButtonElement>) => {
-    const isNotControlledBlur = !event.relatedTarget || event.relatedTarget !== this.listRef.current
-    if (isNotControlledBlur) {
-      handleEvent(this.props.onBlur, this.props.name)
-    }
-  }
-
-  handleFocus = (event: React.FocusEvent<HTMLButtonElement>) => {
-    const isNotControlledFocus =
-      !event.relatedTarget || event.relatedTarget !== this.listRef.current
-    if (isNotControlledFocus) {
-      handleEvent(this.props.onFocus, this.props.name)
+  handleEvent = (handler?: FieldEventHandler<string | null>) => {
+    return (event: React.FocusEvent<HTMLButtonElement>) => {
+      const isNotControlledEvent =
+        !event.relatedTarget || event.relatedTarget !== this.listRef.current
+      if (isNotControlledEvent && typeof handler === 'function') {
+        handler(this.props.name, this.state.value)
+      }
     }
   }
 
@@ -367,7 +362,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       !event.relatedTarget || event.relatedTarget !== this.triggerRef.current
     if (isNotControlledBlur && typeof this.props.onBlur === 'function') {
       this.setState({ selectedValue: null })
-      this.props.onBlur(this.props.name)
+      this.props.onBlur(this.props.name, this.state.value)
     }
   }
 
@@ -566,8 +561,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                 name={name}
                 onKeyUp={this.handleKeyUp}
                 onClick={this.handleClick}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
+                onBlur={this.handleEvent(onBlur)}
+                onFocus={this.handleEvent(onFocus)}
                 disabled={disabled}
                 ref={node => {
                   triggerRef(node)
