@@ -163,7 +163,7 @@ function asOption(opt: string | OptionType): OptionType {
 }
 
 function getOptionId(option: OptionType) {
-  return `${option.label}-${option.value}`.replace(/\s/g, '-').replace(/:|\.|\//g, '')
+  return `${option.label}-${option.value}`.replace(/[\s:.\/]/g, '')
 }
 
 function getOptionsMap(options: OptionType[]) {
