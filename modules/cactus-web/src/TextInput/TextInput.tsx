@@ -99,9 +99,9 @@ const StyledError = styled(NotificationError)<StyledErrorProps>`
 `
 
 const Input = styled.input<InputProps>`
-  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
+  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
   border-radius: 20px;
-  height: 36px;
+  height: 32px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
