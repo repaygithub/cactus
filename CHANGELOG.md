@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-web@v0.4.11](https://github.com/repaygithub/cactus/commit/aa5c13b07778dd48eab0a779b2d69538702effb9)
+
+- fix(cactus-web): Refactor option id replace regex [9a499b8](https://github.com/repaygithub/cactus/commit/9a499b88680146e95964a6cac9f18993779a6589)
+- fix(cactus-web): Remove special characters in select ids [4787fb8](https://github.com/repaygithub/cactus/commit/4787fb863e8aff6c5f01acd912353a55154d089f)
+- fix(cactus-web): Set correct height & border color on inputs [5391a8e](https://github.com/repaygithub/cactus/commit/5391a8e7159e76dc864c9379c85401a9020ddc13)
+
 ## [@repay/cactus-web@v0.4.10](https://github.com/repaygithub/cactus/commit/4d837c65988faf3427c55e3e734c5569638a589f)
 
 - feat(cactus-web): Standardize onFocus & onBlur event handlers [c639edc](https://github.com/repaygithub/cactus/commit/c639edc2768c5846b6ba30981f6a815cfdfc4af4)
