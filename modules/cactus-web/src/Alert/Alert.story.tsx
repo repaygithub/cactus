@@ -4,7 +4,6 @@ import { Flex } from '@repay/cactus-web'
 import { storiesOf } from '@storybook/react'
 import Alert, { Status, Type } from './Alert'
 import React from 'react'
-import styled from 'styled-components'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 const type: Type[] = ['general', 'push']

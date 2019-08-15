@@ -9,7 +9,7 @@ describe('component: Alert', () => {
   test('should render the default props, general info alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Alert> Message </Alert>
+        <Alert>Message</Alert>
       </StyleProvider>
     )
 
