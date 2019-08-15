@@ -12,6 +12,7 @@ exports[`component: Card should support margin space props 1`] = `
 }
 
 .c1 {
+  box-sizing: border-box;
   margin: 4px;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
@@ -45,6 +46,7 @@ exports[`component: Card should support margin space props 1`] = `
 
 exports[`component: Card snapshot 1`] = `
 .c1 {
+  box-sizing: border-box;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   border-radius: 8px;
