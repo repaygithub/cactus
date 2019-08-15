@@ -18,7 +18,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Error', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="error" />
+        <Avatar type="feedback" status="error" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -27,7 +27,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Alert', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="warning" />
+        <Avatar type="feedback" status="warning" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -36,7 +36,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Information', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="info" />
+        <Avatar type="feedback" status="info" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
@@ -45,7 +45,7 @@ describe('component: Avatars', () => {
   test('Feed Back Avatar, Check', () => {
     const { container } = render(
       <StyleProvider>
-        <Avatar type="feedBack" status="success" />
+        <Avatar type="feedback" status="success" />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()

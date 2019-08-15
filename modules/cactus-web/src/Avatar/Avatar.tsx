@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
-export type AvatarType = 'alert' | 'feedBack'
+export type AvatarType = 'alert' | 'feedback'
 export type AvatarStatus = 'error' | 'warning' | 'info' | 'success'
 
 interface AvatarProps extends MarginProps {
@@ -22,26 +22,26 @@ type ColorMap = { [K in AvatarStatus]: FlattenInterpolation<ThemeProps<CactusThe
 type UsageMap = { [K in AvatarType]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
 const avatar = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { type: avatarUsage } = props
-  if (avatarUsage !== undefined) {
-    return usageMap[avatarUsage]
+  const { type } = props
+  if (type !== undefined) {
+    return usageMap[type]
   }
 }
 
 const iconColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
-  const { status: avatarType, type: avatarUsage } = props
-  if (avatarUsage === 'feedBack' && (avatarType === 'error' || avatarType === 'success')) {
+  const { status, type } = props
+  if (type === 'feedback' && (status === 'error' || status === 'success')) {
     return props.theme.colors.white
   } else {
-    return props.theme.colors.darkGray
+    return props.theme.colors.darkestContrast
   }
 }
 
 const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
-  const { type: avatarUsage, status: avatarType } = props
+  const { type, status } = props
 
-  if (avatarUsage === 'alert') {
-    switch (avatarType) {
+  if (type === 'alert') {
+    switch (status) {
       case 'error':
         return props.theme.colors.status.avatar.error
       case 'warning':
@@ -51,8 +51,8 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
       case 'success':
         return props.theme.colors.status.avatar.success
     }
-  } else if (avatarUsage === 'feedBack') {
-    switch (avatarType) {
+  } else if (type === 'feedback') {
+    switch (status) {
       case 'error':
         return props.theme.colors.error
       case 'warning':
@@ -67,9 +67,9 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
 
 const usageMap: UsageMap = {
   alert: css`
-    color: ${p => p.theme.colors.darkGray};
+    color: ${p => p.theme.colors.darkestContrast};
   `,
-  feedBack: css`
+  feedback: css`
     color: ${iconColor};
   `,
 }
@@ -90,15 +90,15 @@ const colorMap: ColorMap = {
 }
 
 const variant = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { status: avatarType } = props
+  const { status } = props
 
-  if (avatarType !== undefined) {
-    return colorMap[avatarType]
+  if (status !== undefined) {
+    return colorMap[status]
   }
 }
 
-const getIcon = (avatarType: AvatarStatus = 'info') => {
-  switch (avatarType) {
+const getIcon = (status: AvatarStatus = 'info') => {
+  switch (status) {
     case 'error':
       return NotificationError
     case 'warning':
@@ -111,9 +111,9 @@ const getIcon = (avatarType: AvatarStatus = 'info') => {
 }
 
 const AvatarBase = (props: AvatarProps) => {
-  const { className, status: avatarType } = props
+  const { className, status } = props
 
-  const Icon = getIcon(avatarType)
+  const Icon = getIcon(status)
   return (
     <div className={className}>
       <Icon iconSize="medium" />
@@ -122,7 +122,7 @@ const AvatarBase = (props: AvatarProps) => {
 }
 
 export const Avatar = styled(AvatarBase)<AvatarProps>`
-  ${margins}
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -130,15 +130,17 @@ export const Avatar = styled(AvatarBase)<AvatarProps>`
   justify-content: center;
   align-items: center;
   
-  ${variant}
-  ${avatar}
   ${NotificationError} {
     padding-bottom: 4px;
   }
+  
+  ${margins}
+  ${variant}
+  ${avatar}
 `
 
 Avatar.defaultProps = {
-  type: 'feedBack',
+  type: 'feedback',
   status: 'info',
 }
 
