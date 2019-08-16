@@ -1,8 +1,7 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
-import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
 import { StatusPropType } from '../StatusMessage/StatusMessage'
 import PropTypes from 'prop-types'
@@ -23,21 +22,6 @@ export interface TextAreaProps
   status?: Status | null
   width?: string
   height?: string
-}
-
-interface StyledCheckProps {
-  disabled?: boolean
-  status?: Status | null
-}
-
-interface StyledAlertProps {
-  disabled?: boolean
-  status?: Status | null
-}
-
-interface StyledErrorProps {
-  disabled?: boolean
-  status?: Status | null
 }
 
 type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -94,43 +78,12 @@ const Area = styled.textarea<TextAreaProps>`
   ${displayStatus}
 `
 
-const StyledCheck = styled(StatusCheck)<StyledCheckProps>`
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: ${p => p.theme.colors.darkestContrast};
-`
-
-const StyledAlert = styled(NotificationAlert)<StyledAlertProps>`
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  color: ${p => p.theme.colors.darkestContrast};
-`
-
-const StyledError = styled(NotificationError)<StyledErrorProps>`
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  color: ${p => p.theme.colors.darkestContrast};
-`
-
 const TextAreaBase = (props: TextAreaProps) => {
-  const { disabled, status, className, ...rest } = props
-  const statusProps = { disabled, status }
+  const { className, ...rest } = splitProps(props)
 
   return (
     <div className={className}>
-      <Area {...statusProps} {...rest} />
-      {status === 'success' && !disabled && <StyledCheck {...statusProps} />}
-      {status === 'warning' && !disabled && <StyledAlert {...statusProps} />}
-      {status === 'error' && !disabled && <StyledError {...statusProps} />}
+      <Area {...rest} />
     </div>
   )
 }

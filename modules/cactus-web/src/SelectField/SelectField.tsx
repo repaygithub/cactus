@@ -117,6 +117,7 @@ export const SelectField = styled(SelectFieldBase)`
   }
 
   ${StatusMessage} {
+    margin-left: 16px;
     margin-top: 4px;
   }
 `

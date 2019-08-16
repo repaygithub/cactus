@@ -240,7 +240,7 @@ const FileInfoBase = (props: FileInfoProps) => {
       <FileBox errorMsg={errorMsg} labels={fileBoxLabels} ref={boxRef} {...rest} />
       {errorMsg && (
         <StatusMessage status="error">
-          <span>{errorMsg}</span>
+          {errorMsg}
           <IconButton onClick={onClick} label={retry || 'Retry Upload'}>
             <ActionsRefresh />
           </IconButton>

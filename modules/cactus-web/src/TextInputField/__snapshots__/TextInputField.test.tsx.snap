@@ -46,18 +46,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 }
 
 .c7 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .c2 + .c1 {
@@ -76,7 +65,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 
 .c0 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
@@ -88,6 +77,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 }
 
 .c0 .c9 {
+  margin-left: 16px;
   margin-top: 4px;
 }
 
@@ -130,7 +120,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
     >
       <input
         aria-describedby="instigate-tip "
-        class="c7 c8"
+        class="c8"
         id="instigate"
         name="instigate"
         width="100%"
@@ -186,18 +176,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 }
 
 .c5 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .c2 + .c1 {
@@ -211,7 +190,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 
 .c0 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
@@ -223,6 +202,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 }
 
 .c0 .c7 {
+  margin-left: 16px;
   margin-top: 4px;
 }
 
@@ -241,7 +221,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
     >
       <input
         aria-describedby=" "
-        class="c5 c6"
+        class="c6"
         id="promise"
         name="promise"
         placeholder="I won't disable it again, promise"
@@ -298,18 +278,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 }
 
 .c7 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .c2 + .c1 {
@@ -328,7 +297,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 
 .c0 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
@@ -340,6 +309,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 }
 
 .c0 .c9 {
+  margin-left: 16px;
   margin-top: 4px;
 }
 
@@ -382,7 +352,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
     >
       <input
         aria-describedby="trick-tip "
-        class="c7 c8"
+        class="c8"
         disabled=""
         id="trick"
         name="trick"
@@ -401,34 +371,28 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
   color: hsl(200,10%,20%);
 }
 
-.c9 {
+.c10 {
+  vertical-align: middle;
+}
+
+.c8 {
   border-radius: 0 8px 8px 8px;
   padding: 8px 16px 8px 16px;
   position: relative;
-  min-height: 16px;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  display: inline-block;
+  border: 2px solid;
   font-size: 15px;
   line-height: 23px;
   border-color: hsl(145,89%,28%);
-  background: hsl(145,89%,28%);
-  color: hsl(0,0%,100%);
 }
 
-.c9 span {
-  position: relative;
-  display: inline-block;
-  bottom: 2px;
-  vertical-align: middle;
-}
-
-.c7 {
-  vertical-align: middle;
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  right: 10px;
-  color: hsl(200,10%,20%);
+.c8 .c11,
+.c8 .sc-feJyhm,
+.c8 .c9 {
+  margin-right: 4px;
+  vertical-align: -2px;
 }
 
 .c6 {
@@ -471,18 +435,7 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 }
 
 .c5 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .c2 + .c1 {
@@ -496,18 +449,19 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 
 .c0 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
-.c0 .c10 {
+.c0 .c12 {
   position: absolute;
   top: -2px;
   right: 8px;
   font-size: 16px;
 }
 
-.c0 .c8 {
+.c0 .c7 {
+  margin-left: 16px;
   margin-top: 4px;
 }
 
@@ -526,16 +480,20 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
     >
       <input
         aria-describedby=" success-status"
-        class="c5 c6"
+        class="c6"
         id="success"
         name="success"
         width="100%"
       />
+    </div>
+    <div
+      class="c7 c8"
+      id="success-status"
+    >
       <svg
-        class="c7"
+        class="c9 c10"
         fill="currentcolor"
         height="1em"
-        status="success"
         viewBox="0 0 24 24"
         width="1em"
       >
@@ -543,13 +501,10 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
           d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
         />
       </svg>
-    </div>
-    <div
-      class="c8 c9"
-      id="success-status"
-    >
       <span>
-        Great! you typed something!
+        <span>
+          Great! you typed something!
+        </span>
       </span>
     </div>
   </div>
@@ -564,34 +519,35 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
   color: hsl(200,10%,20%);
 }
 
-.c9 {
+.c10 {
+  vertical-align: middle;
+}
+
+.c11 .c12,
+.c11 .c9,
+.c11 .sc-hrWEMg {
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+.c8 {
   border-radius: 0 8px 8px 8px;
   padding: 8px 16px 8px 16px;
   position: relative;
-  min-height: 16px;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  display: inline-block;
+  border: 2px solid;
   font-size: 15px;
   line-height: 23px;
   border-color: hsl(47,82%,47%);
-  background-color: hsl(47,82%,47%);
-  color: hsl(200,10%,20%);
 }
 
-.c9 span {
-  position: relative;
-  display: inline-block;
-  bottom: 2px;
-  vertical-align: middle;
-}
-
-.c7 {
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  right: 12px;
-  color: hsl(200,10%,20%);
+.c8 .c12,
+.c8 .c9,
+.c8 .sc-hrWEMg {
+  margin-right: 4px;
+  vertical-align: -2px;
 }
 
 .c6 {
@@ -634,18 +590,7 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 }
 
 .c5 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .c2 + .c1 {
@@ -659,18 +604,19 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 
 .c0 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
-.c0 .c10 {
+.c0 .c13 {
   position: absolute;
   top: -2px;
   right: 8px;
   font-size: 16px;
 }
 
-.c0 .c8 {
+.c0 .c7 {
+  margin-left: 16px;
   margin-top: 4px;
 }
 
@@ -689,16 +635,20 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
     >
       <input
         aria-describedby=" warn-status"
-        class="c5 c6"
+        class="c6"
         id="warn"
         name="warn"
         width="100%"
       />
+    </div>
+    <div
+      class="c7 c8"
+      id="warn-status"
+    >
       <svg
-        class="c7"
+        class="c9 c10"
         fill="currentcolor"
         height="1em"
-        status="warning"
         viewBox="0 0 24 24"
         width="1em"
       >
@@ -706,13 +656,10 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
           d="M1.39339828,12.7071068 C1.00287399,12.3165825 1.00287399,11.6834175 1.39339828,11.2928932 L11.2928932,1.39339828 C11.6834175,1.00287399 12.3165825,1.00287399 12.7071068,1.39339828 L22.6066017,11.2928932 C22.997126,11.6834175 22.997126,12.3165825 22.6066017,12.7071068 L12.7071068,22.6066017 C12.3165825,22.997126 11.6834175,22.997126 11.2928932,22.6066017 L1.39339828,12.7071068 Z M3.51471863,12 L12,20.4852814 L20.4852814,12 L12,3.51471863 L3.51471863,12 Z M12,16 C11.4477153,16 11,15.5522847 11,15 C11,14.4477153 11.4477153,14 12,14 C12.5522847,14 13,14.4477153 13,15 C13,15.5522847 12.5522847,16 12,16 Z M13,12 C13,12.5522847 12.5522847,13 12,13 C11.4477153,13 11,12.5522847 11,12 L11,9 C11,8.44771525 11.4477153,8 12,8 C12.5522847,8 13,8.44771525 13,9 L13,12 Z"
         />
       </svg>
-    </div>
-    <div
-      class="c8 c9"
-      id="warn-status"
-    >
       <span>
-        Really? That's all you got?
+        <span>
+          Really? That's all you got?
+        </span>
       </span>
     </div>
   </div>
@@ -727,34 +674,42 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c9 {
+.c10 {
+  vertical-align: middle;
+}
+
+.c11 .c9,
+.c11 .sc-feJyhm,
+.c11 .sc-hrWEMg {
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+.c12 .c9,
+.c12 .sc-feJyhm,
+.c12 .sc-hrWEMg {
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+.c8 {
   border-radius: 0 8px 8px 8px;
   padding: 8px 16px 8px 16px;
   position: relative;
-  min-height: 16px;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  display: inline-block;
+  border: 2px solid;
   font-size: 15px;
   line-height: 23px;
   border-color: hsl(353,84%,44%);
-  background-color: hsl(353,84%,44%);
-  color: hsl(0,0%,100%);
 }
 
-.c9 span {
-  position: relative;
-  display: inline-block;
-  bottom: 2px;
-  vertical-align: middle;
-}
-
-.c7 {
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  right: 12px;
-  color: hsl(200,10%,20%);
+.c8 .c9,
+.c8 .sc-feJyhm,
+.c8 .sc-hrWEMg {
+  margin-right: 4px;
+  vertical-align: -2px;
 }
 
 .c6 {
@@ -797,18 +752,7 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 }
 
 .c5 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .c2 + .c1 {
@@ -822,18 +766,19 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 
 .c0 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
-.c0 .c10 {
+.c0 .c13 {
   position: absolute;
   top: -2px;
   right: 8px;
   font-size: 16px;
 }
 
-.c0 .c8 {
+.c0 .c7 {
+  margin-left: 16px;
   margin-top: 4px;
 }
 
@@ -852,16 +797,20 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
     >
       <input
         aria-describedby=" error-status"
-        class="c5 c6"
+        class="c6"
         id="error"
         name="error"
         width="100%"
       />
+    </div>
+    <div
+      class="c7 c8"
+      id="error-status"
+    >
       <svg
-        class="c7"
+        class="c9 c10"
         fill="currentcolor"
         height="1em"
-        status="error"
         viewBox="0 0 24 24"
         width="1em"
       >
@@ -869,13 +818,10 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
           d="M11.1055728,1.5527864 C11.4740971,0.815737865 12.5259029,0.815737865 12.8944272,1.5527864 L22.8944272,21.5527864 C23.2268777,22.2176875 22.743382,23 22,23 L2,23 C1.25661798,23 0.773122263,22.2176875 1.10557281,21.5527864 L11.1055728,1.5527864 Z M3.61803399,21 L20.381966,21 L12,4.23606798 L3.61803399,21 Z M12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153 11.4477153,16 12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 Z M13,14 C13,14.5522847 12.5522847,15 12,15 C11.4477153,15 11,14.5522847 11,14 L11,11 C11,10.4477153 11.4477153,10 12,10 C12.5522847,10 13,10.4477153 13,11 L13,14 Z"
         />
       </svg>
-    </div>
-    <div
-      class="c8 c9"
-      id="error-status"
-    >
       <span>
-        That's it, we're done here
+        <span>
+          That's it, we're done here
+        </span>
       </span>
     </div>
   </div>
@@ -928,18 +874,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
 }
 
 .c5 {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  box-sizing: border-box;
 }
 
 .c2 + .c1 {
@@ -948,7 +883,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
 
 .c7 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
@@ -960,7 +895,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
 
 .c0 .c3 {
   position: relative;
-  bottom: 4px;
+  margin-bottom: 4px;
   padding-left: 16px;
 }
 
@@ -972,6 +907,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
 }
 
 .c0 .c8 {
+  margin-left: 16px;
   margin-top: 4px;
 }
 
@@ -990,7 +926,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
     >
       <input
         aria-describedby=" "
-        class="c5 c6"
+        class="c6"
         id="margins"
         name="margins"
         width="100%"

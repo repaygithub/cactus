@@ -135,6 +135,7 @@ export const TextAreaField = styled(TextAreaFieldBase)`
   }
 
   ${StatusMessage} {
+    margin-left: 16px;
     margin-top: 4px;
   }
 
