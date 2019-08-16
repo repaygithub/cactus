@@ -7,6 +7,7 @@ exports[`component: Avatars Alert Avatar, Alert 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -23,7 +24,7 @@ exports[`component: Avatars Alert Avatar, Alert 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsla(47,82%,47%,0.3);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c0 .c2 {
@@ -56,6 +57,7 @@ exports[`component: Avatars Alert Avatar, Check 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -72,7 +74,7 @@ exports[`component: Avatars Alert Avatar, Check 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsla(145,89%,28%,0.3);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c0 .c2 {
@@ -121,6 +123,7 @@ exports[`component: Avatars Alert Avatar, Error 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -137,7 +140,7 @@ exports[`component: Avatars Alert Avatar, Error 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsla(353,84%,44%,0.3);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c0 .c1 {
@@ -170,6 +173,7 @@ exports[`component: Avatars Alert Avatar, Information 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -186,7 +190,7 @@ exports[`component: Avatars Alert Avatar, Information 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsl(200,29%,90%);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c0 .c2 {
@@ -219,6 +223,7 @@ exports[`component: Avatars Default Avatar 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -235,7 +240,7 @@ exports[`component: Avatars Default Avatar 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsl(200,29%,90%);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c0 .c2 {
@@ -268,6 +273,7 @@ exports[`component: Avatars Feed Back Avatar, Alert 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -284,7 +290,7 @@ exports[`component: Avatars Feed Back Avatar, Alert 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsl(47,82%,47%);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c0 .c2 {
@@ -317,6 +323,7 @@ exports[`component: Avatars Feed Back Avatar, Check 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -370,6 +377,7 @@ exports[`component: Avatars Feed Back Avatar, Error 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -419,6 +427,7 @@ exports[`component: Avatars Feed Back Avatar, Information 1`] = `
 }
 
 .c0 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -435,7 +444,7 @@ exports[`component: Avatars Feed Back Avatar, Information 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsl(200,29%,90%);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c0 .c2 {

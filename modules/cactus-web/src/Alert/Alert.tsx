@@ -1,19 +1,20 @@
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
 import Avatar from '../Avatar/Avatar'
-import Flex from '../Flex/Flex'
-import Grid from '../Grid/Grid'
 import IconButton from '../IconButton/IconButton'
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 import { NavigationClose } from '@repay/cactus-icons'
+import { width, WidthProps } from 'styled-system'
 
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'
 
 interface AlertProps
   extends MarginProps,
+    WidthProps,
     React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   status?: Status
   type?: Type
@@ -24,11 +25,8 @@ interface AlertProps
   closeLabel?: string
 }
 
-type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
-type TypeMap = { [K in Type]: FlattenInterpolation<ThemeProps<CactusTheme>> }
-
 const backgroundColor = (props: AlertProps & ThemeProps<CactusTheme>) => {
-  const { status: status } = props
+  const { status } = props
   switch (status) {
     case 'error':
       return props.theme.colors.status.avatar.error
@@ -55,108 +53,85 @@ const borderColor = (props: AlertProps & ThemeProps<CactusTheme>) => {
   }
 }
 
-const backgroundMap: StatusMap = {
-  error: css`
-    background: ${backgroundColor};
-    border: 2px solid ${borderColor};
-  `,
-  warning: css`
-    background: ${backgroundColor};
-    border: 2px solid ${borderColor};
-  `,
-  info: css`
-    background: ${backgroundColor};
-    border: 2px solid ${borderColor};
-  `,
-  success: css`
-    background: ${backgroundColor};
-    border: 2px solid ${borderColor};
-  `,
-}
-
+type TypeMap = { [K in Type]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 const typeMap: TypeMap = {
   general: css`
-    min-height: 88px;
+    width: 100%;
+    padding: 24px 16px;
   `,
   push: css`
-    min-height: 60px;
+    padding: 10px 16px;
   `,
 }
 
-const backgroundVariant = (
+const typeVariant = (
   props: AlertProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { status: status } = props
-  if (status !== undefined) {
-    return backgroundMap[status]
-  }
-}
-
-const sizeVariant = (
-  props: AlertProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  const { type: type } = props
+  const { type } = props
   if (type !== undefined) {
     return typeMap[type]
   }
 }
 
-const AvatarBase = styled(Avatar)`
-  margin: 10px 10px;
-`
-const closeButton = (onClose: any, closeLabel: string) => {
-  return (
-    <Flex justifyContent="flex-end">
-      <Grid.Item tiny={1}>
-        <IconButton
-          onClick={onClose}
-          style={{ marginTop: '20px', marginRight: '20px' }}
-          iconSize="small"
-          label={closeLabel}
-        >
-          <NavigationClose />
-        </IconButton>
-      </Grid.Item>
-    </Flex>
-  )
-}
-
 const AlertBase = (props: AlertProps) => {
-  const {
-    className,
-    type: type,
-    status: status,
-    onClose: onClose,
-    closeLabel = 'close alert',
-  } = props
-  const margin = type === 'push' ? '0px' : '15px'
-  const messageWidth = onClose ? 10 : 11
+  const { className, status, onClose, closeLabel } = props
 
   return (
     <div className={className}>
-      <Grid marginTop={margin}>
-        <Flex justifyContent="center">
-          <Grid.Item tiny={1}>
-            <AvatarBase status={status} type="alert" />
-          </Grid.Item>
-        </Flex>
-        <Grid.Item tiny={messageWidth}>
-          <div style={{ margin: '15px 0' }}>{props.children} </div>
-        </Grid.Item>
-        {onClose ? closeButton(onClose, closeLabel) : null}
-      </Grid>
+      <div>
+        <Avatar status={status} type="alert" />
+      </div>
+      <div>{props.children}</div>
+      {typeof onClose === 'function' && (
+        <IconButton onClick={onClose} iconSize="small" label={closeLabel}>
+          <NavigationClose />
+        </IconButton>
+      )}
     </div>
   )
 }
 
 export const Alert = styled(AlertBase)<AlertProps>`
-  ${margins}
-  ${backgroundVariant}
-  ${sizeVariant}
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  flex-wrap: nowrap;
+  background: ${backgroundColor};
+  border: 2px solid ${borderColor};
+  ${typeVariant}
   box-shadow: ${p => p.shadow && `0 9px 24px ${p.theme.colors.callToAction};`};
   border-radius: 8px;
-  width: 100%;
+  ${margins}
+  ${width}
+
+  div:first-child {
+    flex: 0;
+  }
+
+  div:nth-child(2) {
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 8px;
+  }
+
+  ${IconButton} {
+    flex: 0;
+    margin-left: auto;
+    margin-top: 10px;
+  }
 `
+
+// @ts-ignore
+Alert.propTypes = {
+  status: PropTypes.oneOf(['error', 'warning', 'info', 'success']),
+  type: PropTypes.oneOf(['general', 'push']),
+  onClose: PropTypes.func,
+  className: PropTypes.string,
+  children: PropTypes.node,
+  shadow: PropTypes.bool,
+  closeLabel: PropTypes.string,
+}
 
 Alert.defaultProps = {
   status: 'info',

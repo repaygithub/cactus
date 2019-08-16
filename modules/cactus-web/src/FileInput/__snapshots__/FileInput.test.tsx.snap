@@ -266,6 +266,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c4 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -282,7 +283,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsla(353,84%,44%,0.3);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c4 .c5 {
@@ -681,6 +682,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
 }
 
 .c4 {
+  box-sizing: border-box;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -697,7 +699,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   -ms-flex-align: center;
   align-items: center;
   background: hsla(145,89%,28%,0.3);
-  color: hsl(0,0%,50%);
+  color: hsl(200,10%,20%);
 }
 
 .c4 .c16 {
