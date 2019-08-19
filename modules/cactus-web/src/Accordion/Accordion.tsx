@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
 import { MarginProps, margins } from '../helpers/margins'
@@ -26,7 +26,6 @@ interface AccordionBodyProps
 
 interface AccordionContext {
   isOpen: boolean
-  isClosing: boolean
   handleToggle: (() => void) | undefined
 }
 
@@ -37,7 +36,7 @@ interface AccordionProviderProps {
 
 interface AccordionProviderContext {
   accordions: {
-    [key: string]: { open: boolean; closing: boolean }
+    [key: string]: { open: boolean }
   }
   manageOpen: ((name: string, open: boolean) => void) | undefined
   isManaged: boolean
@@ -45,7 +44,6 @@ interface AccordionProviderContext {
 
 const AccordionContext = createContext<AccordionContext>({
   isOpen: false,
-  isClosing: false,
   handleToggle: undefined,
 })
 
@@ -57,13 +55,12 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
     closeLabel,
     'aria-label': ariaLabel = 'Accordion',
   } = props
-  const { isOpen, isClosing, handleToggle } = useContext(AccordionContext)
+  const { isOpen, handleToggle } = useContext(AccordionContext)
 
   const buttonLabel = isOpen ? closeLabel || 'Close' : openLabel || 'Expand'
-  const borderClassName = !isOpen && !isClosing ? 'borderBottom' : ''
 
   return (
-    <div className={`${className} ${borderClassName}`} tabIndex={0} aria-label={ariaLabel}>
+    <div className={className} tabIndex={0} aria-label={ariaLabel}>
       <header>{children}</header>
       <IconButton onClick={handleToggle} label={buttonLabel} iconSize="small" mx="16px">
         {isOpen ? <NavigationChevronDown /> : <NavigationChevronLeft />}
@@ -82,10 +79,6 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   justify-content: space-between;
   font-weight: 600;
   ${p => p.theme.textStyles.h3};
-
-  &.borderBottom {
-    border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
-  }
 `
 
 AccordionHeader.defaultProps = {
@@ -101,41 +94,72 @@ AccordionHeader.propTypes = {
   closeLabel: PropTypes.string,
 }
 
-const BODY_PADDING_TOP = 24
-const BODY_PADDING_BOTTOM = 40
+const AccordionBodyInner = styled.div`
+  box-sizing: border-box;
+  padding-top: 24px;
+  padding-bottom: 40px;
+`
+
+const getHeight = (element: Element | null) => {
+  if (element !== null) {
+    const { height } = element.getBoundingClientRect()
+    return height
+  }
+  return 0
+}
+
+/**
+ * determines animation duration based on pixels travelled with
+ * a min of 200ms and max of 700ms otherwise x / 2 + 100
+ */
+const getDuration = (delta: number) => Math.min(Math.max(Math.abs(delta / 2) + 100, 200), 700)
+
+type AnimationStateType = 'open' | 'animating' | 'closed'
 
 const AccordionBodyBase = (props: AccordionBodyProps) => {
   const { className } = props
-  const { isOpen, isClosing } = useContext(AccordionContext)
-  const [state, setState] = useState({ height: 0, paddingTop: 0, paddingBottom: 0 })
-  const containerRef = useRef<HTMLDivElement | null>(null)
-
+  const { isOpen } = useContext(AccordionContext)
+  const previousIsOpen = useRef(isOpen)
+  const [state, setState] = useState<AnimationStateType>(isOpen ? 'open' : 'closed')
+  const innerRef = useRef<HTMLDivElement | null>(null)
+  const [height, setHeight] = useState(0)
   useEffect(() => {
-    if (isOpen && containerRef.current) {
-      const newHeight =
-        containerRef.current.getBoundingClientRect().height + BODY_PADDING_TOP + BODY_PADDING_BOTTOM
-      if (newHeight !== state.height) {
-        setState({
-          height: newHeight,
-          paddingTop: BODY_PADDING_TOP,
-          paddingBottom: BODY_PADDING_BOTTOM,
-        })
+    window.requestAnimationFrame(() => {
+      if (previousIsOpen.current !== isOpen) {
+        setState('animating')
       }
-    } else if (!isOpen) {
-      setState({ height: 0, paddingTop: 0, paddingBottom: 0 })
-    }
-  }, [isOpen, state.height])
+      previousIsOpen.current = isOpen
 
-  return isOpen || isClosing ? (
+      const currentHeight = getHeight(innerRef.current)
+      if (currentHeight !== height) {
+        setHeight(currentHeight)
+      }
+    })
+  })
+
+  const handleTransitionEnd = useCallback(
+    (event: React.TransitionEvent<HTMLDivElement>) => {
+      if (getHeight(event.currentTarget) === 0) {
+        setState('closed')
+      } else {
+        setState('open')
+      }
+    },
+    [setState]
+  )
+
+  const outerHeight = (isOpen && state === 'animating') || state === 'open' ? height : 0
+  const transitionDuration = state === 'animating' ? getDuration(getHeight(innerRef.current)) : 0
+  return state !== 'closed' ? (
     <div
       className={className}
       style={{
-        height: `${state.height}px`,
-        paddingTop: `${state.paddingTop}px`,
-        paddingBottom: `${state.paddingBottom}px`,
+        height: outerHeight + 'px',
+        transitionDuration: transitionDuration + 'ms',
       }}
+      onTransitionEnd={handleTransitionEnd}
     >
-      <div ref={containerRef}>{props.children}</div>
+      <AccordionBodyInner ref={innerRef}>{props.children}</AccordionBodyInner>
     </div>
   ) : null
 }
@@ -143,8 +167,7 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
 export const AccordionBody = styled(AccordionBodyBase)`
   box-sizing: border-box;
   overflow: hidden;
-  transition: all 600ms ease-in;
-  border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
+  transition: all 200ms ease-in;
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({
@@ -154,7 +177,7 @@ const ProviderContext = createContext<AccordionProviderContext>({
 })
 
 interface AccordionProviderState {
-  [key: string]: { open: boolean; closing: boolean; order: number }
+  [key: string]: { open: boolean; order: number }
 }
 
 let order = 0
@@ -165,7 +188,7 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
 
   const manageOpen = (id: string, open: boolean) => {
     const newState = { ...state }
-    newState[id] = { open: open, closing: !open, order: order++ }
+    newState[id] = { open: open, order: order++ }
     if (open) {
       const allOpen = Object.keys(newState).filter(
         accordionId => newState[accordionId].open === true
@@ -180,20 +203,15 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
           return 0
         })
         newState[allOpen[0]].open = false
-        newState[allOpen[0]].closing = true
-        setTimeout(() => {
-          setState(state => ({ ...state, [allOpen[0]]: { ...state[allOpen[0]], closing: false } }))
-        }, 600)
       }
     }
     setState(newState)
   }
 
-  const value: { [key: string]: { open: boolean; closing: boolean } } = {}
+  const value: { [key: string]: { open: boolean } } = {}
   Object.keys(state).forEach(accordionId => {
     value[accordionId] = {
       open: state[accordionId].open,
-      closing: state[accordionId].closing,
     }
   })
 
@@ -222,27 +240,16 @@ interface AccordionComponent extends StyledComponentBase<'div', CactusTheme, Acc
 
 interface AccordionState {
   isOpen: boolean
-  isClosing: boolean
 }
 
 const AccordionBase = (props: AccordionProps) => {
   const { accordions, manageOpen, isManaged } = useContext(ProviderContext)
   const id = useId()
   let isOpen = false
-  let isClosing = false
   if (isManaged) {
     isOpen = accordions[id] === undefined ? false : accordions[id].open
-    isClosing = accordions[id] === undefined ? false : accordions[id].closing
   }
-  const [state, setState] = useState<AccordionState>({ isOpen: isOpen, isClosing: isClosing })
-
-  useEffect(() => {
-    if (state.isClosing) {
-      setTimeout(() => {
-        setState(state => ({ ...state, isClosing: false }))
-      }, 600)
-    }
-  }, [state.isClosing])
+  const [state, setState] = useState<AccordionState>({ isOpen: isOpen })
 
   const toggleOpen = () => {
     if (isManaged) {
@@ -250,7 +257,7 @@ const AccordionBase = (props: AccordionProps) => {
         manageOpen(id, !isOpen)
       }
     } else {
-      setState(state => ({ isOpen: !state.isOpen, isClosing: state.isOpen }))
+      setState(state => ({ isOpen: !state.isOpen }))
     }
   }
 
@@ -259,7 +266,6 @@ const AccordionBase = (props: AccordionProps) => {
       <AccordionContext.Provider
         value={{
           isOpen: isManaged ? isOpen : state.isOpen,
-          isClosing: isManaged ? isClosing : state.isClosing,
           handleToggle: toggleOpen,
         }}
       >
@@ -271,6 +277,7 @@ const AccordionBase = (props: AccordionProps) => {
 
 export const Accordion = styled(AccordionBase)`
   width: 100%;
+  border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
   ${margins}
   ${width}
   ${maxWidth}
