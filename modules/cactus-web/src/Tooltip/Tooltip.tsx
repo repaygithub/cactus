@@ -78,10 +78,15 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   const directionRight = collisions.left && !collisions.right
   const directionUp = collisions.bottom && !collisions.top
 
-  styles = directionRight && !directionUp ? { ...styles, borderTopLeftRadius: '0px' } : styles
-  styles = directionRight && directionUp ? { ...styles, borderBottomLeftRadius: '0px' } : styles
-  styles = !directionRight && !directionUp ? { ...styles, borderTopRightRadius: '0px' } : styles
-  styles = !directionRight && directionUp ? { ...styles, borderBottomRightRadius: '0px' } : styles
+  if (directionRight && !directionUp) {
+    styles.borderTopLeftRadius = '0px'
+  } else if (directionRight && directionUp) {
+    styles.borderBottomLeftRadius = '0px'
+  } else if (!directionRight && !directionUp) {
+    styles.borderTopRightRadius = '0px'
+  } else if (!directionRight && directionUp) {
+    styles.borderBottomRightRadius = '0px'
+  }
 
   return {
     ...styles,
@@ -91,6 +96,8 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
     top: directionUp
       ? `${triggerRect.top - tooltipRect.height + scrollY}px`
       : `${triggerRect.top + triggerRect.height + scrollY}px`,
+    // setting width to itself explicitly prevents "drift"
+    width: tooltipRect.width + 'px',
   }
 }
 
@@ -180,23 +187,21 @@ const TooltipContentBase = forwardRef<HTMLDivElement, TooltipContentProps>(funct
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const tooltipRect = useRect(tooltipRef, isVisible)
   return (
-    <Fragment>
-      <div
-        data-reach-tooltip
-        role={useAriaLabel ? undefined : 'tooltip'}
-        id={useAriaLabel ? undefined : id}
-        children={label}
-        style={{
-          ...style,
-          ...getStyles(position, triggerRect, tooltipRect),
-        }}
-        ref={node => {
-          tooltipRef.current = node
-          if (typeof forwardRef === 'function') forwardRef(node)
-        }}
-        {...rest}
-      />
-    </Fragment>
+    <div
+      data-reach-tooltip
+      role={useAriaLabel ? undefined : 'tooltip'}
+      id={useAriaLabel ? undefined : id}
+      children={label}
+      style={{
+        ...style,
+        ...getStyles(position, triggerRect, tooltipRect),
+      }}
+      ref={node => {
+        tooltipRef.current = node
+        if (typeof forwardRef === 'function') forwardRef(node)
+      }}
+      {...rest}
+    />
   )
 })
 
@@ -229,6 +234,10 @@ Tooltip.propTypes = {
   ariaLabel: PropTypes.string,
   position: PropTypes.func,
   maxWidth: PropTypes.string,
+}
+
+Tooltip.defaultProps = {
+  maxWidth: Math.min(typeof window !== 'undefined' ? window.innerWidth : 500, 500) + 'px',
 }
 
 export default Tooltip

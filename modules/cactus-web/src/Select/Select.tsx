@@ -530,7 +530,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     clearTimeout(this.scrollClear)
     this.scrollClear = setTimeout(() => {
       this.didScroll = false
-    }, 150) // 120ms worked on Firefox and IE11 so 150 us just extra safe
+    }, 150) // 120ms worked on Firefox and IE11 so 150 is just extra safe
   }
 
   /** END helpers */

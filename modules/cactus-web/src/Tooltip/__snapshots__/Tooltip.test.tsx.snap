@@ -47,6 +47,7 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
   border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
   overflow-wrap: break-word;
+  max-width: 500px;
 }
 
 <div
@@ -54,7 +55,7 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
   data-reach-tooltip="true"
   id="tooltip:3"
   role="tooltip"
-  style="left: -8px; top: 0px; border-top-right-radius: 0px;"
+  style="left: -8px; top: 0px; border-top-right-radius: 0px; width: 0px;"
 >
   This should be displayed
 </div>
