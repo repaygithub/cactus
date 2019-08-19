@@ -124,7 +124,7 @@ export const TextInputField = styled(TextInputFieldBase)`
 
   ${Label} {
     position: relative;
-    bottom: 4px;
+    margin-bottom: 4px;
     padding-left: 16px;
   }
 
@@ -136,6 +136,7 @@ export const TextInputField = styled(TextInputFieldBase)`
   }
 
   ${StatusMessage} {
+    margin-left: 16px;
     margin-top: 4px;
   }
 

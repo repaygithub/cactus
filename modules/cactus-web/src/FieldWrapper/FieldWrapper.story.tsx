@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useCallback, useReducer } from 'react'
 
+import { OptionType } from '../Select/Select'
 import { storiesOf } from '@storybook/react'
+import Box from '../Box/Box'
 import CheckBoxField from '../CheckBoxField/CheckBoxField'
 import FileInputField from '../FileInputField/FileInputField'
 import RadioButtonField from '../RadioButtonField/RadioButtonField'
@@ -9,65 +11,216 @@ import TextAreaField from '../TextAreaField/TextAreaField'
 import TextInputField from '../TextInputField/TextInputField'
 import ToggleField from '../ToggleField/ToggleField'
 
-const ExampleForm = () => {
-  const [state, setState] = useState({
-    input: '',
-    textArea: '',
-    select: '',
-    fileInput: undefined,
-    toggle: false,
-    cb1: false,
-    cb2: false,
-    rb: undefined,
-  })
+type FieldTypes = 'text' | 'textarea' | 'select' | 'file' | 'toggle' | 'checkbox' | 'radio'
 
-  const handleChange = (name: string, value: any) => {
-    setState(state => ({ ...state, [name]: value }))
+type FieldStatus = ['error' | 'warning' | 'success', string]
+
+type FieldValidatorFunc = (field: FieldTypeObjects, value: any) => FieldStatus | null
+
+type FieldTypeObjects = {
+  label: string
+  name: string
+  tooltip?: string
+  validator?: FieldValidatorFunc
+} & (
+  | { type: 'text' | 'textarea' | 'toggle' }
+  | { type: 'select'; options: OptionType[] | string[] }
+  | { type: 'file'; accept?: string[] }
+  | { type: 'checkbox'; value?: string | number }
+  | { type: 'radio'; value: string })
+
+const fieldTypeMap: { [k in FieldTypes]: React.ComponentType<any> } = {
+  text: TextInputField,
+  textarea: TextAreaField,
+  select: SelectField,
+  file: FileInputField,
+  toggle: ToggleField,
+  checkbox: CheckBoxField,
+  radio: RadioButtonField,
+}
+
+const isRequired: FieldValidatorFunc = (field, value) => {
+  return Boolean(value) ? null : ['error', `This field is required.`]
+}
+
+const fields: FieldTypeObjects[] = [
+  {
+    type: 'text',
+    label: 'Field 1',
+    name: 'input',
+    validator: isRequired,
+  },
+  {
+    type: 'textarea',
+    label: 'Field 2',
+    name: 'textArea',
+    validator: (_, value) =>
+      typeof value === 'string' && value.length < 300
+        ? ['warning', 'Recommended length of at least 300.']
+        : null,
+  },
+  {
+    type: 'select',
+    label: 'Field 3 (Select)',
+    name: 'select',
+    options: ['option 1', 'option 2'],
+    validator: (_, value) => (Boolean(value) ? ['success', 'Always successful.'] : null),
+  },
+  {
+    type: 'file',
+    label: 'Field 4 (File)',
+    name: 'fileInput',
+    accept: ['.txt'],
+    tooltip: 'Accepts text files only.',
+  },
+  {
+    type: 'toggle',
+    label: 'Field 5 (Toggle)',
+    name: 'toggle',
+  },
+  {
+    type: 'checkbox',
+    label: 'Field 6',
+    name: 'cb1',
+  },
+  {
+    type: 'checkbox',
+    label: 'Field 7',
+    name: 'cb2',
+  },
+  {
+    type: 'radio',
+    label: 'Field 7',
+    name: 'rb',
+    value: 'a',
+  },
+  {
+    type: 'radio',
+    label: 'Field 8',
+    name: 'rb',
+    value: 'b',
+  },
+]
+
+type FormState = {
+  values: { [k: string]: any }
+  statuses: { [k: string]: null | FieldStatus }
+}
+
+type FormAction = {
+  type: 'change' | 'blur'
+  name: string
+  value?: any
+}
+
+const initForm = () =>
+  ({
+    values: {
+      input: '',
+      textArea: '',
+      select: '',
+      fileInput: undefined,
+      toggle: false,
+      cb1: false,
+      cb2: false,
+      rb: undefined,
+    },
+    statuses: {
+      input: ['error', 'This field is required.'],
+      textArea: ['warning', 'Recommended length of at least 300.'],
+      select: ['success', 'Always successful'],
+    },
+  } as FormState)
+
+const formReducer = (state: FormState, action: FormAction) => {
+  switch (action.type) {
+    case 'change': {
+      return {
+        ...state,
+        values: { ...state.values, [action.name]: action.value },
+      }
+    }
+    case 'blur': {
+      const field = fields.find(f => f.name === action.name)
+      if (field && typeof field.validator === 'function') {
+        return {
+          ...state,
+          statuses: {
+            ...state.statuses,
+            [action.name]: field.validator(field, state.values[action.name]),
+          },
+        }
+      }
+    }
   }
 
+  return state
+}
+
+const ExampleForm = ({ withValidations }: { withValidations?: boolean }) => {
+  const [{ values, statuses }, dispatch] = useReducer(formReducer, null, initForm)
+
+  const handleChange = useCallback(
+    (name: string, value: any) => {
+      dispatch({ type: 'change', name, value })
+    },
+    [dispatch]
+  )
+
+  const handleBlur = useCallback(
+    name => {
+      console.log(`onBlur(${name})`)
+      dispatch({ type: 'blur', name })
+    },
+    [dispatch]
+  )
+
   return (
-    <form style={{ width: '50%' }}>
-      <TextInputField label="Field 1" name="input" onChange={handleChange} value={state.input} />
-      <TextAreaField
-        label="Field 2"
-        name="textArea"
-        onChange={handleChange}
-        value={state.textArea}
-      />
-      <SelectField
-        label="Field 3"
-        name="select"
-        onChange={handleChange}
-        options={['option 1', 'option 2']}
-        value={state.select}
-      />
-      <FileInputField
-        label="Field 4"
-        name="fileInput"
-        onChange={handleChange}
-        accept={['.txt']}
-        width="30%"
-        value={state.fileInput}
-      />
-      <ToggleField label="Field 5" name="toggle" onChange={handleChange} value={state.toggle} />
-      <CheckBoxField label="Field 6" name="cb1" onChange={handleChange} checked={state.cb1} />
-      <CheckBoxField label="Field 7" name="cb2" onChange={handleChange} checked={state.cb2} />
-      <RadioButtonField
-        label="Field 8"
-        name="rb"
-        onChange={handleChange}
-        value="8"
-        checked={state.rb === '8'}
-      />
-      <RadioButtonField
-        label="Field 9"
-        name="rb"
-        onChange={handleChange}
-        value="9"
-        checked={state.rb === '9'}
-      />
-    </form>
+    <div
+      style={{
+        overflowY: 'auto',
+        height: '100vh',
+        width: '100vw',
+        boxSizing: 'border-box',
+      }}
+    >
+      <Box
+        as="form"
+        width="50vw"
+        minWidth="350px"
+        margin="0 auto"
+        py={5}
+        onSubmit={event => event.preventDefault()}
+      >
+        {fields.map(field => {
+          const Field = fieldTypeMap[field.type]
+          let { validator, ...rest } = field
+          let props = rest as React.ComponentPropsWithoutRef<typeof Field>
+          props.value = values[field.name]
+          props.onChange = handleChange
+          props.onBlur = handleBlur
+          switch (field.type) {
+            case 'radio': {
+              props.value = field.value
+              props.checked = field.value === values[field.name]
+              break
+            }
+            case 'checkbox': {
+              props.checked = values[field.name]
+              break
+            }
+          }
+          if (withValidations && Array.isArray(statuses[field.name])) {
+            const [status, message] = statuses[field.name] as FieldStatus
+            props[status] = message
+          }
+          return <Field key={field.type + field.label} {...props} />
+        })}
+      </Box>
+    </div>
   )
 }
 
-storiesOf('FormField', module).add('Basic Usage', () => <ExampleForm />)
+storiesOf('FormField', module)
+  .add('Basic Usage', () => <ExampleForm />)
+  .add('With Statuses', () => <ExampleForm withValidations />)

@@ -1,8 +1,7 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
-import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
+import { MarginProps, margins, splitProps } from '../helpers/margins'
 import { Omit } from '../types'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import PropTypes from 'prop-types'
@@ -19,21 +18,6 @@ export interface TextInputProps
 }
 
 interface InputProps {
-  disabled?: boolean
-  status?: Status | null
-}
-
-interface StyledCheckProps {
-  disabled?: boolean
-  status?: Status | null
-}
-
-interface StyledAlertProps {
-  disabled?: boolean
-  status?: Status | null
-}
-
-interface StyledErrorProps {
   disabled?: boolean
   status?: Status | null
 }
@@ -62,41 +46,14 @@ const displayStatus = (props: TextInputProps) => {
 }
 
 const TextInputBase = (props: TextInputProps) => {
-  const { disabled, status, className } = props
+  const { className, ...rest } = splitProps(props)
 
   return (
     <div className={className}>
-      <Input {...props} />
-      {status === 'success' && !disabled && <StyledCheck disabled={disabled} status={status} />}
-      {status === 'warning' && !disabled && <StyledAlert disabled={disabled} status={status} />}
-      {status === 'error' && !disabled && <StyledError disabled={disabled} status={status} />}
+      <Input {...rest} />
     </div>
   )
 }
-
-const StyledCheck = styled(StatusCheck)<StyledCheckProps>`
-  width: 18px;
-  height: 18px;
-  position: absolute;
-  right: 10px;
-  color: ${p => p.theme.colors.darkestContrast};
-`
-
-const StyledAlert = styled(NotificationAlert)<StyledAlertProps>`
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  right: 12px;
-  color: ${p => p.theme.colors.darkestContrast};
-`
-
-const StyledError = styled(NotificationError)<StyledErrorProps>`
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  right: 12px;
-  color: ${p => p.theme.colors.darkestContrast};
-`
 
 const Input = styled.input<InputProps>`
   border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
@@ -122,11 +79,7 @@ const Input = styled.input<InputProps>`
 `
 
 export const TextInput = styled(TextInputBase)`
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
+  box-sizing: border-box;
   ${margins}
 `
 
