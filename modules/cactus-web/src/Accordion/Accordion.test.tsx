@@ -52,7 +52,7 @@ describe('component: Accordion', () => {
   })
 
   describe('Provider', () => {
-    test('Should manage Accordion state', async () => {
+    test('Should manage Accordion state', () => {
       const { container } = render(
         <StyleProvider>
           <Accordion.Provider>
