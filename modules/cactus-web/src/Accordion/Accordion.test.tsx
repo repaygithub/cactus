@@ -4,7 +4,17 @@ import { act, cleanup, fireEvent, render } from 'react-testing-library'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Accordion from './Accordion'
 
-afterEach(cleanup)
+let _requestAnimationFrame = window.requestAnimationFrame
+
+beforeEach(() => {
+  _requestAnimationFrame = window.requestAnimationFrame
+  window.requestAnimationFrame = (cb: Function) => cb()
+})
+
+afterEach(() => {
+  window.requestAnimationFrame = _requestAnimationFrame
+  cleanup()
+})
 
 describe('component: Accordion', () => {
   describe('Component', () => {
@@ -24,7 +34,6 @@ describe('component: Accordion', () => {
     })
 
     test('Should open Accordion when button is clicked', () => {
-      jest.useFakeTimers()
       const { container } = render(
         <StyleProvider>
           <Accordion>
@@ -37,10 +46,8 @@ describe('component: Accordion', () => {
       const toggleButton = container.querySelector('button') as HTMLButtonElement
       act(() => {
         fireEvent.click(toggleButton)
-        jest.runAllTimers()
       })
       expect(container).toHaveTextContent('Test Body')
-      expect(container).toMatchSnapshot()
     })
   })
 
@@ -60,14 +67,12 @@ describe('component: Accordion', () => {
       const toggleButton = container.querySelector('button') as HTMLButtonElement
       act(() => {
         fireEvent.click(toggleButton)
-        jest.runAllTimers()
       })
       expect(container).toHaveTextContent('Test Body')
       expect(container).toMatchSnapshot()
     })
 
     test('Should close one Accordion when another opens', () => {
-      jest.useFakeTimers()
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider>
@@ -83,25 +88,27 @@ describe('component: Accordion', () => {
         </StyleProvider>
       )
 
-      const a1Button = getByTestId('A1').querySelector('button') as HTMLButtonElement
+      const a1Accordion = getByTestId('A1')
+      const a1Button = a1Accordion.querySelector('button') as HTMLButtonElement
       const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
       act(() => {
         fireEvent.click(a1Button)
-        jest.runAllTimers()
       })
       expect(container).toHaveTextContent('Should show first and not second')
       expect(container).not.toHaveTextContent('Should show second and not first')
 
       act(() => {
         fireEvent.click(a2Button)
-        jest.runAllTimers()
+      })
+      act(() => {
+        // @ts-ignore
+        fireEvent.transitionEnd(a1Accordion.childNodes[1])
       })
       expect(container).toHaveTextContent('Should show second and not first')
       expect(container).not.toHaveTextContent('Should show first and not second')
     })
 
     test('Should allow two Accordions to be open at the same time', () => {
-      jest.useFakeTimers()
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -121,14 +128,12 @@ describe('component: Accordion', () => {
       const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
       act(() => {
         fireEvent.click(a1Button)
-        jest.runAllTimers()
       })
       expect(container).toHaveTextContent('Should show A1')
       expect(container).not.toHaveTextContent('Should show A2')
 
       act(() => {
         fireEvent.click(a2Button)
-        jest.runAllTimers()
       })
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
