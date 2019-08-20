@@ -25,7 +25,7 @@
     "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build",
     "predocs:publish": "yarn docs build",
     "docs:publish": "gh-pages -d ./website/public",
-    "cleanup": "rm -rf dist && yarn ws run cleanup"
+    "cleanup": "yarn ws run cleanup"
   },
   "license": "MIT",
   "private": true,
