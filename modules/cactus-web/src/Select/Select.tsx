@@ -162,17 +162,17 @@ function asOption(opt: string | OptionType): OptionType {
   return opt
 }
 
-function getOptionId(option: OptionType) {
-  return `${option.label}-${option.value}`.replace(/[\s:.\/]/g, '')
+function getOptionId(selectId: string, option: OptionType) {
+  return `${selectId}-${option.label}-${option.value}`.replace(/\s/g, '-')
 }
 
-function getOptionsMap(options: OptionType[]) {
+function getOptionsMap(selectId: string, options: OptionType[]) {
   let optionsMap: { [k: string]: OptionType & { id: string } } = {}
   for (let i = 0; i < options.length; ++i) {
     const opt = asOption(options[i])
     optionsMap[opt.value] = {
       ...opt,
-      id: getOptionId(opt),
+      id: getOptionId(selectId, opt),
     }
   }
   return optionsMap
@@ -291,7 +291,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         let selectedOption: OptionType = asOption(
           this.props.options[getSelectedIndex(this.props.options, selected)]
         )
-        let optionEl: HTMLLIElement | null = listEl.querySelector(`#${getOptionId(selectedOption)}`)
+        let optionEl: HTMLElement | null = document.getElementById(
+          `#${getOptionId(this.props.id, selectedOption)}`
+        )
         if (optionEl === null) {
           return
         }
@@ -553,7 +555,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     let { isOpen, value, selectedValue } = this.state
     // @ts-ignore
     let options: OptionType[] = mixOptions.map(asOption)
-    let optionsMap = getOptionsMap(options)
+    let optionsMap = getOptionsMap(id, options)
 
     return (
       <div className={className}>
