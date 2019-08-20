@@ -1,5 +1,14 @@
 # Changelog
 
+## [@repay/cactus-web@v0.4.12](https://github.com/repaygithub/cactus/commit/2857c72a8c6832a05317e07d6b5108c6cff912e9)
+
+- fix(cactus-web): adjust accordion height when open [185e00b](https://github.com/repaygithub/cactus/commit/185e00b536332f0ca88187373c146811396d5ed5)
+- fix(cactus-web): fix tooltip width drift [c8f1059](https://github.com/repaygithub/cactus/commit/c8f10598c2ccd30c81d3c15fe1ba5ae8e6108646)
+- feat(cactus-web): update styles for input statuses [2446e89](https://github.com/repaygithub/cactus/commit/2446e893b96d3b825ca595bd6b67859e3fa3a8a8)
+- feat(cactus-web): add width prop to Card [0bef3f8](https://github.com/repaygithub/cactus/commit/0bef3f8cac4f11ca03caa1bc8f259a45e3f28d3e)
+- refactor(cactus-web): simplify Alert [b666f1c](https://github.com/repaygithub/cactus/commit/b666f1cd4085022e1c6dbd423a1ce28da541cbea)
+- fix(cactus-web): fix avatar icon color [c781f72](https://github.com/repaygithub/cactus/commit/c781f726c7b803292a6eb137a5b6736c0c2414db)
+
 ## [@repay/cactus-web@v0.4.11](https://github.com/repaygithub/cactus/commit/aa5c13b07778dd48eab0a779b2d69538702effb9)
 
 - fix(cactus-web): Refactor option id replace regex [9a499b8](https://github.com/repaygithub/cactus/commit/9a499b88680146e95964a6cac9f18993779a6589)
