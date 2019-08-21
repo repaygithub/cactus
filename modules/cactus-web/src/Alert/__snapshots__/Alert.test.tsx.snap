@@ -60,9 +60,9 @@ exports[`component: Alert should render general error alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -163,9 +163,9 @@ exports[`component: Alert should render general info alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -266,9 +266,9 @@ exports[`component: Alert should render general success alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -369,9 +369,9 @@ exports[`component: Alert should render general warning alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -483,9 +483,9 @@ exports[`component: Alert should render push notification error alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -585,9 +585,9 @@ exports[`component: Alert should render push notification info alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -687,9 +687,9 @@ exports[`component: Alert should render push notification success alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -789,9 +789,9 @@ exports[`component: Alert should render push notification warning alert 1`] = `
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {
@@ -892,9 +892,9 @@ exports[`component: Alert should render the default props, general info alert 1`
 }
 
 .c0 div:first-child {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
 }
 
 .c0 div:nth-child(2) {

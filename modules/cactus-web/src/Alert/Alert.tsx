@@ -106,7 +106,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   ${width}
 
   div:first-child {
-    flex: 0;
+    flex: 0 0 auto;
   }
 
   div:nth-child(2) {
