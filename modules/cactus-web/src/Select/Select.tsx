@@ -141,10 +141,10 @@ const List = styled.ul`
 
 const Option = styled.li`
   cursor: pointer;
-  display: block;
+  display: list-item;
   border: none;
   height: auto;
-  font-size: ${p => p.theme.fontSizes.small}px;
+  ${p => p.theme.textStyles.small};
   text-align: left;
   box-shadow: none;
   padding: 4px 16px;
