@@ -31,7 +31,7 @@ describe('component: Select', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('can recieve options as objects', () => {
+  test('can receive options as objects', () => {
     let options = [
       { value: 'yum', label: 'Yum' },
       { value: 'who?', label: 'Who?' },
@@ -44,6 +44,21 @@ describe('component: Select', () => {
     )
 
     expect(getByText('Who?')).not.toBeNull()
+  })
+
+  test('sets active descendant to the top option when value does not exist in options', async () => {
+    const { getByText, getByRole } = render(
+      <StyleProvider>
+        <Select id="test-id" name="city" options={['yum', 'who?', 'boss']} value="superman" />
+      </StyleProvider>
+    )
+
+    // @ts-ignore
+    const trigger: HTMLElement = getByText('Select an option').parentElement
+    fireEvent.click(trigger)
+    await animationRender()
+    let topOption = getByText('yum')
+    expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(topOption.id)
   })
 
   describe('keyboard interactions', () => {
