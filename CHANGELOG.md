@@ -1,5 +1,14 @@
 # Changelog
 
+## [@repay/cactus-web@v0.4.13](https://github.com/repaygithub/cactus/commit/4c2e245eaf35c7e9ebfacafdda9ca9d7fc96f121)
+
+- test(cactus-web): Remove unnecessary references to parentElement in select tests [01070e4](https://github.com/repaygithub/cactus/commit/01070e47c476bf4cd2b511dff74ce48dde23ddb8)
+- test(cactus-web): Add test for Select value bug [7085d73](https://github.com/repaygithub/cactus/commit/7085d733cbaa37ad6ceeaece48abdc9723f12975)
+- fix(cactus-web): Ensure empty select option has the same height as others [6b3d575](https://github.com/repaygithub/cactus/commit/6b3d57511d877905bcd2444f81e3a52b62360a74)
+- fix(cactus-web): Fixed Select when value passed is not in options [ab992f5](https://github.com/repaygithub/cactus/commit/ab992f52457ff3d5747964bf35141b926899c51e)
+- fix(cactus-web): Set flex-basis on alert avatar in IE [fabd660](https://github.com/repaygithub/cactus/commit/fabd66062d7439cd1c697f54afffa5676bd52a29)
+- fix(cactus-web): Make select option ids unique enough to use getElementById [2afed83](https://github.com/repaygithub/cactus/commit/2afed8317c0e40c40219af8b32d6bdeda85bb4ff)
+
 ## [@repay/cactus-web@v0.4.12](https://github.com/repaygithub/cactus/commit/2857c72a8c6832a05317e07d6b5108c6cff912e9)
 
 - fix(cactus-web): adjust accordion height when open [185e00b](https://github.com/repaygithub/cactus/commit/185e00b536332f0ca88187373c146811396d5ed5)
