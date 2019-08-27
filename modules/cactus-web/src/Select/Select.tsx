@@ -591,8 +591,12 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                 <Rect observe={isOpen}>
                   {({ ref: listRef, rect: listRect }) => {
                     const selected = selectedValue !== null ? selectedValue : value
-                    const activeDescendant =
-                      selected && isOpen ? optionsMap[selected].id : undefined
+                    let activeDescendant: string | undefined = undefined
+                    if (selected !== null && isOpen) {
+                      activeDescendant = optionsMap.hasOwnProperty(selected)
+                        ? optionsMap[selected].id
+                        : optionsMap[Object.keys(optionsMap)[0]].id
+                    }
                     return (
                       <List
                         onBlur={this.handleListBlur}
@@ -611,7 +615,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                       >
                         {options.map(o => {
                           const opt = optionsMap[o.value]
-                          const isSelected = selected === opt.value || undefined
+                          const isSelected = activeDescendant === opt.id || undefined
                           return (
                             <Option
                               id={opt.id}
