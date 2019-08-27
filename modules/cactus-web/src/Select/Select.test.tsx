@@ -54,7 +54,7 @@ describe('component: Select', () => {
     )
 
     // @ts-ignore
-    const trigger: HTMLElement = getByText('Select an option').parentElement
+    const trigger: HTMLElement = getByText('Select an option')
     fireEvent.click(trigger)
     await animationRender()
     let topOption = getByText('yum')
@@ -69,7 +69,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+      let trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.click(trigger) // space is actually a click on buttons
       rerender(
         <StyleProvider>
@@ -89,7 +89,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+      let trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
       rerender(
         <StyleProvider>
@@ -109,7 +109,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+      let trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -187,7 +187,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+      let trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -214,7 +214,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement
+      let trigger: HTMLElement = getByText('Select an option')
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -246,7 +246,7 @@ describe('component: Select', () => {
           </StyleProvider>
         )
         // @ts-ignore
-        let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+        let trigger: HTMLElement = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
         rerender(
           <StyleProvider>
@@ -271,7 +271,7 @@ describe('component: Select', () => {
           </StyleProvider>
         )
         // @ts-ignore
-        let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+        let trigger: HTMLElement = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
         rerender(
           <StyleProvider>
@@ -333,7 +333,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Click me!').parentElement
+      let trigger: HTMLElement = getByText('Click me!')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -361,7 +361,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Click me!').parentElement
+      let trigger: HTMLElement = getByText('Click me!')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -392,7 +392,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix').parentElement
+      let trigger: HTMLElement = getByText('phoenix')
       fireEvent.focus(trigger)
       fireEvent.blur(trigger)
       expect(onBlur).toHaveBeenCalledWith('city')
@@ -413,7 +413,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix').parentElement
+      let trigger: HTMLElement = getByText('phoenix')
       trigger.focus()
       fireEvent.click(trigger)
       rerender(
@@ -451,7 +451,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix').parentElement
+      let trigger: HTMLElement = getByText('phoenix')
       trigger.focus()
       fireEvent.click(trigger)
       rerender(
@@ -491,7 +491,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix').parentElement
+      let trigger: HTMLElement = getByText('phoenix')
       fireEvent.focus(trigger)
       expect(onFocus).toHaveBeenCalledWith('city')
     })
@@ -510,7 +510,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix').parentElement
+      let trigger: HTMLElement = getByText('phoenix')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
