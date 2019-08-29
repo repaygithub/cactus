@@ -10,6 +10,7 @@ import * as React from 'react'
 import {
   color,
   ColorProps,
+  compose,
   space,
   SpaceProps,
   style,
@@ -31,17 +32,22 @@ const Base = ({ iconSize, verticalAlign, opacity, ...props }: Props) => {
   )
 }
 
-const COMPONENT_NAME = styled(Base)\`
-  vertical-align: middle;
-  \${space}
-  \${color}
-  \${verticalAlign}
-  \${iconSizes}
-\`
+const COMPONENT_NAME = styled(Base)(
+  compose(
+    space,
+    color,
+    verticalAlign,
+    iconSizes
+  )
+)
 
 TS_IGNORE
 COMPONENT_NAME.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
+}
+
+COMPONENT_NAME.defaultProps = {
+  verticalAlign: 'middle',
 }
 
 export default COMPONENT_NAME

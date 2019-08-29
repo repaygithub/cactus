@@ -3,8 +3,8 @@
 exports[`component: Select snapshot 1`] = `
 <DocumentFragment>
   .c4 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c2 {

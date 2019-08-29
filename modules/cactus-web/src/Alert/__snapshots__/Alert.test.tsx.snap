@@ -2,8 +2,8 @@
 
 exports[`component: Alert should render general error alert 1`] = `
 .c3 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c4 .c2 {
@@ -109,8 +109,8 @@ exports[`component: Alert should render general error alert 1`] = `
 
 exports[`component: Alert should render general info alert 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c1 {
@@ -212,8 +212,8 @@ exports[`component: Alert should render general info alert 1`] = `
 
 exports[`component: Alert should render general success alert 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c1 {
@@ -315,8 +315,8 @@ exports[`component: Alert should render general success alert 1`] = `
 
 exports[`component: Alert should render general warning alert 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c1 {
@@ -418,8 +418,8 @@ exports[`component: Alert should render general warning alert 1`] = `
 
 exports[`component: Alert should render push notification error alert 1`] = `
 .c3 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c4 .c2 {
@@ -532,8 +532,8 @@ exports[`component: Alert should render push notification error alert 1`] = `
 
 exports[`component: Alert should render push notification info alert 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c1 {
@@ -634,8 +634,8 @@ exports[`component: Alert should render push notification info alert 1`] = `
 
 exports[`component: Alert should render push notification success alert 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c1 {
@@ -736,8 +736,8 @@ exports[`component: Alert should render push notification success alert 1`] = `
 
 exports[`component: Alert should render push notification warning alert 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c1 {
@@ -838,8 +838,8 @@ exports[`component: Alert should render push notification warning alert 1`] = `
 
 exports[`component: Alert should render the default props, general info alert 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c1 {

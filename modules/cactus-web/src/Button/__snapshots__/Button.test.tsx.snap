@@ -68,8 +68,8 @@ exports[`component: Button should default to standard variant 1`] = `
 exports[`component: Button should render Spinner when loading is true 1`] = `
 <DocumentFragment>
   .c2 {
-  vertical-align: middle;
   font-size: 16px;
+  vertical-align: middle;
   -webkit-animation: iVXCSc 0.75s linear infinite;
   animation: iVXCSc 0.75s linear infinite;
 }
