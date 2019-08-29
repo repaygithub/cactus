@@ -47,6 +47,8 @@ storiesOf('Box', module)
       maxWidth={text('maxWidth', '')}
       minWidth={text('minWidth', '')}
       height={text('height', '120px')}
+      maxHeight={text('maxHeight', '100vh')}
+      minHeight={text('minHeight', '10px')}
       backgroundColor={select('backgroundColor (bg)', themeColors, 'lightContrast')}
       color={select('color', themeColors, 'darkestContrast')}
       borderColor={select('borderColor', themeColors, 'darkestContrast')}

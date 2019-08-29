@@ -4,12 +4,11 @@ exports[`component: Flex should accept basic built-in props 1`] = `
 .c0 {
   box-sizing: border-box;
   position: relative;
+  display: block;
   top: -1;
   right: auto;
   bottom: auto;
   left: -1;
-  z-index: 100;
-  display: block;
   margin: 4px;
   padding: 4px;
   width: 120px;
@@ -20,6 +19,7 @@ exports[`component: Flex should accept basic built-in props 1`] = `
   border-width: 2px;
   border-radius: 20px;
   border-style: solid;
+  z-index: 100;
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -45,14 +45,14 @@ exports[`component: Flex should accept flex props 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   -webkit-box-pack: end;
   -webkit-justify-content: end;
   -ms-flex-pack: end;
   justify-content: end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
@@ -67,12 +67,12 @@ exports[`component: Flex should accept flex props 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
   -webkit-align-self: end;
   -ms-flex-item-align: end;
   align-self: end;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .c2 {
@@ -81,10 +81,10 @@ exports[`component: Flex should accept flex props 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  justify-self: center;
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  justify-self: center;
 }
 
 <div>
