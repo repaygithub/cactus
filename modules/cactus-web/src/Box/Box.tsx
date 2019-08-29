@@ -16,10 +16,10 @@ import {
   PositionProps,
   space,
   SpaceProps,
-  textAlign,
-  TextAlignProps,
   textStyle,
   TextStyleProps,
+  typography,
+  TypographyProps,
 } from 'styled-system'
 import styled from 'styled-components'
 
@@ -31,7 +31,7 @@ export interface BoxProps
     ColorStyleProps,
     DisplayProps,
     BackgroundColorProps,
-    TextAlignProps,
+    TypographyProps,
     TextStyleProps,
     BorderProps {}
 
@@ -47,7 +47,7 @@ export const Box = styled('div')<BoxProps>(
     colorStyle,
     color,
     backgroundColor,
-    textAlign,
+    typography,
     textStyle,
     border
   )
