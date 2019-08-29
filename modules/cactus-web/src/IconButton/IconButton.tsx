@@ -1,10 +1,9 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
+import { iconSizes } from '@repay/cactus-icons'
 import { margin, MarginProps } from 'styled-system'
 import { omitMargins } from '../helpers/omit'
-import { system } from 'styled-system'
-import get from 'lodash/get'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -21,21 +20,6 @@ interface IconButtonProps
   display?: 'flex' | 'inline-flex'
   inverse?: boolean
 }
-
-const iconSizes = system({
-  iconSize: {
-    property: 'fontSize',
-    scale: 'iconSizes',
-    transform: (size, scale) => {
-      let iconSize: string | number = get(scale, size, size)
-      iconSize = iconSize.toString()
-      if (/^[0-9]+$/.test(iconSize)) {
-        iconSize += 'px'
-      }
-      return iconSize
-    },
-  },
-})
 
 type VariantMap = { [K in IconButtonVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
