@@ -118,5 +118,6 @@ Array [
   "StatusThumbsup",
   "StatusTrophy",
   "StatusUnfollow",
+  "iconSizes",
 ]
 `;

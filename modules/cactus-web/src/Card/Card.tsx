@@ -1,12 +1,11 @@
-import { MarginProps, margins } from '../helpers/margins'
-import { width, WidthProps } from 'styled-system'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import styled from 'styled-components'
 
 interface CardProps extends MarginProps, WidthProps {}
 
 export const Card = styled.div<CardProps>`
   box-sizing: border-box;
-  ${margins}
+  ${margin}
   ${width}
   ${p => p.theme.colorStyles.standard};
   border-radius: 8px;

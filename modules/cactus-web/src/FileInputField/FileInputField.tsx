@@ -1,6 +1,8 @@
 import React, { useRef } from 'react'
 
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
+import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import FileInput, { FileInputProps } from '../FileInput/FileInput'
 import Label from '../Label/Label'
@@ -10,13 +12,16 @@ import Tooltip from '../Tooltip/Tooltip'
 import useId from '../helpers/useId'
 
 interface FileInputFieldProps extends FileInputProps, MarginProps {
+  className?: string
   label: string
   labelProps?: object
   tooltip?: string
 }
 
 const FileInputFieldBase = (props: FileInputFieldProps) => {
-  const { className, label, labelProps, id, tooltip, ...fileInputProps } = splitProps(props)
+  const { className, label, labelProps, id, tooltip, ...fileInputProps } = omitMargins(
+    props
+  ) as Omit<FileInputFieldProps, keyof MarginProps>
   const inputId = useId(id, 'file-input')
   const tipId = tooltip ? `${inputId}-tip` : ''
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -53,7 +58,7 @@ export const FileInputField = styled(FileInputFieldBase)`
     font-size: 16px;
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

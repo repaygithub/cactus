@@ -62,7 +62,7 @@
     "@types/node": "^11.13.7",
     "@types/storybook__addon-knobs": "^4.0.5",
     "@types/storybook__react": "^4.0.1",
-    "@types/styled-system": "^4.2.0",
+    "@types/styled-system": "^5.1.1",
     "babel-jest": "^24.7.1",
     "fast-glob": "^2.2.6",
     "jest": "^24.7.1",
@@ -76,6 +76,6 @@
     "typescript": "3.4.3"
   },
   "dependencies": {
-    "styled-system": "^4.1.0"
+    "styled-system": "^5.1.1"
   }
 }

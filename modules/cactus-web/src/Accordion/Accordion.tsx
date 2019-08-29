@@ -1,9 +1,9 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
-import { maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { NavigationChevronDown, NavigationChevronLeft } from '@repay/cactus-icons'
+import { omitMargins } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
 import PropTypes from 'prop-types'
 import styled, { StyledComponentBase } from 'styled-components'
@@ -261,8 +261,10 @@ const AccordionBase = (props: AccordionProps) => {
     }
   }
 
+  const rest = omitMargins(props, 'width', 'maxWidth')
+
   return (
-    <div {...props}>
+    <div {...rest}>
       <AccordionContext.Provider
         value={{
           isOpen: isManaged ? isOpen : state.isOpen,
@@ -278,7 +280,7 @@ const AccordionBase = (props: AccordionProps) => {
 export const Accordion = styled(AccordionBase)`
   width: 100%;
   border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
-  ${margins}
+  ${margin}
   ${width}
   ${maxWidth}
 ` as any

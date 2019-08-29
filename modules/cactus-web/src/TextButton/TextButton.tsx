@@ -1,5 +1,5 @@
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -105,7 +105,7 @@ export const TextButton = styled.button<TextButtonProps>`
   }
 
   ${variantOrDisabled}
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

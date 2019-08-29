@@ -39,8 +39,6 @@ import {
   TopProps,
   width,
   WidthProps,
-  zIndex,
-  ZIndexProps,
 } from 'styled-system'
 import styled from 'styled-components'
 
@@ -64,8 +62,7 @@ export interface BoxProps
     BorderColorProps,
     BorderWidthProps,
     BorderRadiusProps,
-    BorderStyleProps,
-    ZIndexProps {}
+    BorderStyleProps {}
 
 export const Box = styled('div')<BoxProps>(
   {
@@ -73,10 +70,6 @@ export const Box = styled('div')<BoxProps>(
   },
   position,
   display,
-  top,
-  right,
-  bottom,
-  left,
   space,
   width,
   height,
@@ -90,8 +83,7 @@ export const Box = styled('div')<BoxProps>(
   borderColor,
   borderWidth,
   borderRadius,
-  borderStyle,
-  zIndex
+  borderStyle
 )
 
 export default Box

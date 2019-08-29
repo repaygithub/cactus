@@ -1,7 +1,8 @@
 import React, { useRef } from 'react'
 
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
 import Label from '../Label/Label'
@@ -42,7 +43,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
     name,
     id,
     ...textAreaProps
-  } = splitProps(props)
+  } = omitMargins(props) as Omit<TextAreaFieldProps, keyof MarginProps>
 
   const ref = useRef<HTMLDivElement | null>(null)
   let containerWidth = undefined
@@ -139,7 +140,7 @@ export const TextAreaField = styled(TextAreaFieldBase)`
     margin-top: 4px;
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

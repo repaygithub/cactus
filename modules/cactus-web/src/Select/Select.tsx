@@ -3,8 +3,9 @@ import React from 'react'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
+import { omitMargins } from '../helpers/omit'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import { width, WidthProps } from 'styled-system'
 import handleEvent from '../helpers/eventHandler'
@@ -343,7 +344,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       case KeyCodes.DOWN: {
         event.preventDefault()
         this.openList()
-        // this.handleListKeyDown(event)
         break
       }
     }
@@ -551,7 +551,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       onBlur,
       onFocus,
       ...rest
-    } = splitProps(this.props)
+    } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
     let { isOpen, value, selectedValue } = this.state
     // @ts-ignore
     let options: OptionType[] = mixOptions.map(asOption)
@@ -644,7 +644,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 }
 
 export const Select = styled(SelectBase)`
-  ${margins}
+  ${margin}
   ${width}
 
   ${SelectTrigger} {

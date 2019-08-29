@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { MarginProps, margins } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import styled from 'styled-components'
 
 interface FieldWrapperProps
@@ -12,7 +12,7 @@ export const FieldWrapper = styled.div<FieldWrapperProps>`
     margin-top: ${p => p.theme.space[4]}px;
   }
 
-  ${margins}
+  ${margin}
 `
 
 export default FieldWrapper

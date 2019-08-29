@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
@@ -24,7 +25,7 @@ interface CheckBoxFieldProps
 }
 
 const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
-  const componentProps = splitProps<CheckBoxFieldProps>(props)
+  const componentProps = omitMargins(props) as Omit<CheckBoxFieldProps, keyof MarginProps>
   const {
     label,
     labelProps,
@@ -83,7 +84,7 @@ export const CheckBoxField = styled(CheckBoxFieldBase)`
     padding-left: 8px;
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

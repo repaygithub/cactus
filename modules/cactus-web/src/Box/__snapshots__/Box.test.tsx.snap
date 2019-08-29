@@ -4,23 +4,22 @@ exports[`component: Box should accept built-in props 1`] = `
 .c0 {
   box-sizing: border-box;
   position: relative;
-  display: block;
   top: -1;
   right: auto;
   bottom: auto;
   left: -1;
+  z-index: 100;
+  display: block;
   margin: 4px;
   padding: 4px;
   width: 120px;
   height: 120px;
+  background-color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
-  background-color: hsl(200,10%,20%);
-  background-color: hsl(200,10%,20%);
   border-color: hsl(200,96%,35%);
   border-width: 2px;
   border-radius: 20px;
   border-style: solid;
-  z-index: 100;
 }
 
 <div>

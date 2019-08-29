@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
 import Label from '../Label/Label'
@@ -33,7 +34,7 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
     onFocus,
     onBlur,
     ...radioButtonProps
-  } = splitProps(props)
+  } = omitMargins(props) as Omit<RadioButtonFieldProps, keyof MarginProps>
   const radioButtonId = useId(id, name)
 
   const handleChange = React.useCallback(
@@ -81,7 +82,7 @@ export const RadioButtonField = styled(RadioButtonFieldBase)`
     padding-left: 8px;
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

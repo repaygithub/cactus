@@ -15,7 +15,8 @@
     "test:local": "yarn test:types"
   },
   "devDependencies": {
-    "@repay/scripts": "^0.2.2"
+    "@repay/scripts": "^0.2.2",
+    "prop-types": "^15.7.2"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",

@@ -1,12 +1,13 @@
+import React from 'react'
+
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import {
   NotificationAlert,
   NotificationError,
   NotificationInfo,
   StatusCheck,
 } from '@repay/cactus-icons'
-import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type AvatarType = 'alert' | 'feedback'
@@ -134,7 +135,7 @@ export const Avatar = styled(AvatarBase)<AvatarProps>`
     padding-bottom: 4px;
   }
   
-  ${margins}
+  ${margin}
   ${variant}
   ${avatar}
 `

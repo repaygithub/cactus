@@ -1,8 +1,7 @@
 import React, { CSSProperties, forwardRef, Fragment, useRef } from 'react'
 
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
-import { MarginProps, margins } from '../helpers/margins'
-import { maxWidth } from 'styled-system'
+import { margin, MarginProps, maxWidth } from 'styled-system'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { Omit } from '../types'
 import { useRect } from '@reach/rect'
@@ -225,7 +224,7 @@ export const TooltipContent = styled(TooltipContentBase)`
 `
 
 export const Tooltip = styled(TooltipBase)`
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

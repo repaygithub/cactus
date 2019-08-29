@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import { StatusPropType } from '../StatusMessage/StatusMessage'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -79,7 +80,7 @@ const Area = styled.textarea<TextAreaProps>`
 `
 
 const TextAreaBase = (props: TextAreaProps) => {
-  const { className, ...rest } = splitProps(props)
+  const { className, ...rest } = omitMargins(props)
 
   return (
     <div className={className}>
@@ -92,7 +93,7 @@ export const TextArea = styled(TextAreaBase)`
   position: relative;
   display: block;
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { FieldOnChangeHandler, Omit } from '../types'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
-import { width, WidthProps } from 'styled-system'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
@@ -39,9 +39,8 @@ const SelectFieldBase: React.FC<SelectFieldProps> = props => {
     error,
     width,
     ...rest
-  } = splitProps(props)
+  } = omitMargins(props) as Omit<SelectFieldProps, keyof MarginProps>
   const fieldId = useId(id, name)
-  const tooltipId = tooltip ? `${fieldId}-tip` : ''
 
   const ref = React.useRef<HTMLDivElement | null>(null)
   let containerWidth = undefined
@@ -96,7 +95,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = props => {
 
 export const SelectField = styled(SelectFieldBase)`
   position: relative;
-  ${margins}
+  ${margin}
   ${width}
 
   ${Label} {

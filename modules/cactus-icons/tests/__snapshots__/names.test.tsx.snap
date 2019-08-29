@@ -137,6 +137,9 @@ Array [
   "descriptive-tray.d.ts",
   "descriptive-tray.js",
   "descriptive-tray.js.map",
+  "iconSizes.d.ts",
+  "iconSizes.js",
+  "iconSizes.js.map",
   "index.cjs.js",
   "index.cjs.js.map",
   "index.d.ts",
@@ -355,5 +358,8 @@ Array [
   "status-unfollow.d.ts",
   "status-unfollow.js",
   "status-unfollow.js.map",
+  "types.d.ts",
+  "types.js",
+  "types.js.map",
 ]
 `;

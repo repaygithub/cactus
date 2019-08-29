@@ -2,7 +2,8 @@ import React, { useRef } from 'react'
 
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { Label, LabelProps } from '../Label/Label'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
@@ -42,7 +43,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     name,
     id,
     ...inputProps
-  } = splitProps(props)
+  } = omitMargins(props) as Omit<TextInputFieldProps, keyof MarginProps>
 
   const ref = useRef<HTMLDivElement | null>(null)
 
@@ -140,7 +141,7 @@ export const TextInputField = styled(TextInputFieldBase)`
     margin-top: 4px;
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

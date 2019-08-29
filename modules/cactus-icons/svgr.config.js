@@ -10,36 +10,32 @@ import * as React from 'react'
 import {
   color,
   ColorProps,
-  get,
-  px,
   space,
   SpaceProps,
   style,
+  verticalAlign,
+  VerticalAlignProps,
 } from 'styled-system'
 import styled from 'styled-components'
+import { IconSizes, Omit } from './types'
+import iconSizes from './iconSizes'
 
-type IconSizes = 'tiny' | 'small' | 'medium' | 'large'
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-export interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'color'>, SpaceProps, ColorProps {
+export interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'color' | 'opacity'>, SpaceProps, ColorProps, VerticalAlignProps {
   iconSize?: IconSizes
   color?: string
 }
 
-const iconSizes = style({
-  prop: 'iconSize',
-  cssProperty: 'fontSize',
-  key: 'iconSizes',
-  transformValue: (size, scale) => px(get(scale, size)),
-})
-
-const Base = ({ iconSize, ...props }: Props) => (
-  JSX
-)
+const Base = ({ iconSize, verticalAlign, opacity, ...props }: Props) => {
+  return (
+    JSX
+  )
+}
 
 const COMPONENT_NAME = styled(Base)\`
   vertical-align: middle;
   \${space}
   \${color}
+  \${verticalAlign}
   \${iconSizes}
 \`
 

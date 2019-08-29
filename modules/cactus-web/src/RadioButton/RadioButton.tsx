@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -18,7 +19,7 @@ interface StyledRadioButtonProps extends React.HTMLProps<HTMLSpanElement> {
 }
 
 const RadioButtonBase = (props: RadioButtonProps) => {
-  const componentProps = splitProps<RadioButtonProps>(props)
+  const componentProps = omitMargins(props) as Omit<RadioButtonProps, keyof MarginProps>
   const { disabled, id, className, ...radioButtonProps } = componentProps
   return (
     <label className={className} htmlFor={id}>
@@ -80,7 +81,7 @@ export const RadioButton = styled(RadioButtonBase)`
     box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore
