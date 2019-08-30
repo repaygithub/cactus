@@ -23,7 +23,7 @@ interface SelectFieldProps extends MarginProps, WidthProps, Omit<SelectProps, 'i
   warning?: string
   error?: string
   tooltip?: string
-  onChange?: FieldOnChangeHandler<string>
+  onChange?: FieldOnChangeHandler<string | number>
 }
 
 const SelectFieldBase: React.FC<SelectFieldProps> = props => {

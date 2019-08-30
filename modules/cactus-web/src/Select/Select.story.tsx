@@ -40,7 +40,7 @@ storiesOf('Select', module)
     { cactus: { overrides: { height: '220vh', width: '220vw' } } }
   )
   .add('Long list of options', () => (
-    <FormHandler defaultValue={arizonaCities[6]} onChange={(name, value) => value}>
+    <FormHandler defaultValue={arizonaCities[6]} onChange={(name, value: string | number) => value}>
       {({ value, onChange }) => (
         <Select
           options={arizonaCities}
