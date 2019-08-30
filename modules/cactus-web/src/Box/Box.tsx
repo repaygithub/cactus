@@ -1,6 +1,4 @@
 import {
-  backgroundColor,
-  BackgroundColorProps,
   border,
   BorderProps,
   color,
@@ -30,7 +28,6 @@ export interface BoxProps
     ColorProps,
     ColorStyleProps,
     DisplayProps,
-    BackgroundColorProps,
     TypographyProps,
     TextStyleProps,
     BorderProps {}
@@ -46,7 +43,6 @@ export const Box = styled('div')<BoxProps>(
     space,
     colorStyle,
     color,
-    backgroundColor,
     typography,
     textStyle,
     border
