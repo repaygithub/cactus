@@ -34,7 +34,7 @@ storiesOf('SelectField', module)
   .add(
     'Controlled Form',
     () => (
-      <FormHandler onChange={(name: string, value: string) => value}>
+      <FormHandler onChange={(name: string, value: string | number) => value}>
         {({ value, onChange }) => (
           <SelectField
             label={text('label', `What's that in the sky?`)}

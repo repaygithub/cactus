@@ -46,6 +46,29 @@ describe('component: Select', () => {
     expect(getByText('Who?')).not.toBeNull()
   })
 
+  test('can receive an empty list of options', async () => {
+    const { getByText, getByRole } = render(
+      <StyleProvider>
+        <Select id="empty-options" name="test-empty-options" options={[]} />
+      </StyleProvider>
+    )
+
+    const trigger = getByText('Select an option')
+    fireEvent.click(trigger)
+    await animationRender()
+    expect(getByRole('listbox').getAttribute('aria-activedescendant')).toBeNull()
+  })
+
+  test('can receive options with number values', async () => {
+    const options = [{ label: '1', value: 1 }, { label: 'two', value: 2 }, { label: '3', value: 3 }]
+    const { getByText } = render(
+      <StyleProvider>
+        <Select id="test-numbers" name="test-number-options" options={options} />
+      </StyleProvider>
+    )
+    expect(getByText('two')).not.toBeNull()
+  })
+
   test('sets active descendant to the top option when value does not exist in options', async () => {
     const { getByText, getByRole } = render(
       <StyleProvider>
@@ -478,7 +501,7 @@ describe('component: Select', () => {
   describe('onFocus()', () => {
     test('is called when user focuses on Select', () => {
       const onFocus = jest.fn()
-      const { getByText, getByRole, rerender } = render(
+      const { getByText } = render(
         <StyleProvider>
           <Select
             id="test-id"

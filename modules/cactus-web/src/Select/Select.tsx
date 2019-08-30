@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
-export type OptionType = { label: string; value: string }
+export type OptionType = { label: string; value: string | number }
 
 export interface SelectProps
   extends MarginProps,
@@ -26,13 +26,13 @@ export interface SelectProps
   options: OptionType[] | string[]
   id: string
   name: string
-  value?: string
+  value?: string | number
   placeholder?: string
   className?: string
   /** !important */
   disabled?: boolean
   status?: Status
-  onChange?: FieldOnChangeHandler<string>
+  onChange?: FieldOnChangeHandler<string | number>
   onBlur?: FieldOnBlurHandler
   onFocus?: FieldOnFocusHandler
 }
@@ -178,7 +178,7 @@ function getOptionsMap(selectId: string, options: OptionType[]) {
   return optionsMap
 }
 
-function getSelectedIndex(options: string[] | OptionType[], value: string): number {
+function getSelectedIndex(options: string[] | OptionType[], value: string | number): number {
   for (let i = 0; i < options.length; ++i) {
     const opt = options[i]
     if (
@@ -245,8 +245,8 @@ function positionList(
 
 type SelectState = {
   isOpen: boolean
-  value: string | null
-  selectedValue: string | null
+  value: string | number | null
+  selectedValue: string | number | null
 }
 
 class SelectBase extends React.Component<SelectProps, SelectState> {
@@ -262,6 +262,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.didScroll = false
     this.listRef = React.createRef<HTMLUListElement>()
     this.triggerRef = React.createRef<HTMLButtonElement>()
+    // @ts-ignore
+    this.optionsMap = getOptionsMap(props.id, props.options.map(asOption))
   }
 
   pendingChars: string
@@ -271,6 +273,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   scrollClear: number | undefined
   listRef: React.RefObject<HTMLUListElement>
   triggerRef: React.RefObject<HTMLButtonElement>
+  optionsMap: { [k: string]: OptionType & { id: string } }
 
   static getDerivedStateFromProps(props: Readonly<SelectProps>, state: Readonly<SelectState>) {
     if (props.value !== undefined && props.value !== state.value) {
@@ -360,7 +363,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
 
     // set first option as selected
-    this.setState({ selectedValue: asOption(this.props.options[0]).value })
+    const value = this.props.options[0] ? asOption(this.props.options[0]).value : null
+    this.setState({ selectedValue: value })
   }
 
   handleListBlur = (event: React.FocusEvent<HTMLUListElement>) => {
@@ -447,7 +451,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   handleListClick = (event: React.MouseEvent<HTMLUListElement>) => {
     const target = event.target as HTMLElement
     if (target.getAttribute('role') === 'option') {
-      this.raiseChange(target.getAttribute('data-value') as string)
+      const selectedOption = this.optionsMap[target.getAttribute('data-value') as string]
+      this.raiseChange(selectedOption.value)
       this.closeList()
     }
   }
@@ -456,14 +461,15 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     const currentTarget = event.currentTarget
     // prevent triggering by automated scrolling
     if (!this.didScroll) {
-      this.setState({ selectedValue: currentTarget.getAttribute('data-value') as string })
+      const selectedOption = this.optionsMap[currentTarget.getAttribute('data-value') as string]
+      this.setState({ selectedValue: selectedOption.value })
     }
   }
 
   /** END event handlers */
   /** START helpers */
 
-  raiseChange(value: string) {
+  raiseChange(value: string | number) {
     this.setState({
       value,
       selectedValue: null,
@@ -555,7 +561,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     let { isOpen, value, selectedValue } = this.state
     // @ts-ignore
     let options: OptionType[] = mixOptions.map(asOption)
-    let optionsMap = getOptionsMap(id, options)
 
     return (
       <div className={className}>
@@ -580,8 +585,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                 aria-haspopup="listbox"
                 aria-expanded={isOpen || undefined}
               >
-                {value && optionsMap.hasOwnProperty(value) ? (
-                  <ValueSpan>{optionsMap[value].label}</ValueSpan>
+                {value && this.optionsMap.hasOwnProperty(value) ? (
+                  <ValueSpan>{this.optionsMap[value].label}</ValueSpan>
                 ) : (
                   <Placeholder>{placeholder}</Placeholder>
                 )}
@@ -593,9 +598,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                     const selected = selectedValue !== null ? selectedValue : value
                     let activeDescendant: string | undefined = undefined
                     if (selected !== null && isOpen) {
-                      activeDescendant = optionsMap.hasOwnProperty(selected)
-                        ? optionsMap[selected].id
-                        : optionsMap[Object.keys(optionsMap)[0]].id
+                      activeDescendant = this.optionsMap.hasOwnProperty(selected)
+                        ? this.optionsMap[selected].id
+                        : this.optionsMap[Object.keys(this.optionsMap)[0]].id
                     }
                     return (
                       <List
@@ -614,7 +619,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                         aria-activedescendant={activeDescendant}
                       >
                         {options.map(o => {
-                          const opt = optionsMap[o.value]
+                          const opt = this.optionsMap[o.value]
                           const isSelected = activeDescendant === opt.id || undefined
                           return (
                             <Option
@@ -656,7 +661,10 @@ export const Select = styled(SelectBase)`
 Select.propTypes = {
   options: PropTypes.oneOfType([
     PropTypes.arrayOf(
-      PropTypes.shape({ label: PropTypes.string.isRequired, value: PropTypes.string.isRequired })
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      })
     ),
     PropTypes.arrayOf(PropTypes.string.isRequired),
   ]).isRequired,
