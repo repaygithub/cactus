@@ -23,6 +23,7 @@ export interface TextAreaProps
   status?: Status | null
   width?: string
   height?: string
+  resize?: boolean
 }
 
 type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
@@ -60,9 +61,8 @@ const Area = styled.textarea<TextAreaProps>`
   background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
   height: ${p => p.height || 'auto'};
   width: ${p => p.width || 'auto'};
-  resize: none;
   display: block;
-
+  resize: ${p => (p.resize ? 'vertical' : 'none')};
   &:first-line {
     padding-right: 15px;
   }
@@ -102,11 +102,13 @@ TextArea.propTypes = {
   status: StatusPropType,
   width: PropTypes.string,
   height: PropTypes.string,
+  resize: PropTypes.bool,
 }
 
 TextArea.defaultProps = {
   disabled: false,
   status: null,
+  resize: false,
 }
 
 export default TextArea

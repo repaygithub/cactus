@@ -20,7 +20,7 @@ storiesOf('TextArea', module).add('Basic Usage', () => (
     disabled={boolean('disabled', false)}
     placeholder={text('placeholder', 'Placeholder')}
     status={select('status', statusOptions, statusOptions.none)}
+    resize={boolean('resize', false)}
     {...eventLoggers}
-    onChange={e => console.log(e.target.name)}
   />
 ))
