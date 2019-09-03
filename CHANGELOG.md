@@ -1,5 +1,21 @@
 # Changelog
 
+## [@repay/cactus-web@v0.4.14](https://github.com/repaygithub/cactus/commit/dd0a2da9eb7571c6bf1da1f56c96c12c4edf74f9)
+
+- chore(): Upgrade to @repay/cactus-icons v0.6.1 [6f60cf7](https://github.com/repaygithub/cactus/commit/6f60cf75734ddc8a40766d225f5f2d871046d5ea)
+- feat(cactus-web): Add resize prop to TextArea [1cdf8f6](https://github.com/repaygithub/cactus/commit/1cdf8f62895b8a3e7a5ef0766c8d355f316b7286)
+- fix(cactus-web): Allow number values in Select PropTypes [8df3aee](https://github.com/repaygithub/cactus/commit/8df3aee63004283cecfce963d8a292ed6bdd4be6)
+- fix(cactus-web): Remove BackgroundColor from Box [5a8f8cf](https://github.com/repaygithub/cactus/commit/5a8f8cffd51b63217e043765db6b5170cc057263)
+- fix(cactus-web): Allow Select to receive empty options & numbers [7bdb731](https://github.com/repaygithub/cactus/commit/7bdb731da11568b95437ab80937f6fcc0d9e1593)
+- feat(cactus-web): add typography styling to Box and Flex [56d3c4d](https://github.com/repaygithub/cactus/commit/56d3c4d375fcfc0c03652dd91d3feac4263016a9)
+- perf(cactus-web): use iconSizes from icons [a9359ce](https://github.com/repaygithub/cactus/commit/a9359ce76cccd713e514294bfab2edcda3038254)
+- feat(cactus-web): add min and max height to Box and Flex [5c5f876](https://github.com/repaygithub/cactus/commit/5c5f876e02202b6c0f22b9ce2b0961567eb76dd2)
+
+## [@repay/cactus-icons@v0.6.1](https://github.com/repaygithub/cactus/commit/1215a88461e6654873dbda407ff020905a23928b)
+
+- feat(cactus-icons): add verticalAlign prop [a8949b4](https://github.com/repaygithub/cactus/commit/a8949b4ef858ed56af673d4cd5e217828a555696)
+- feat(cactus-web,cactus-icons): upgrade styled-system to v5 [cc09e05](https://github.com/repaygithub/cactus/commit/cc09e05942893f3da700704e50dc59ddf1fa1146)
+
 ## [@repay/cactus-web@v0.4.13](https://github.com/repaygithub/cactus/commit/4c2e245eaf35c7e9ebfacafdda9ca9d7fc96f121)
 
 - test(cactus-web): Remove unnecessary references to parentElement in select tests [01070e4](https://github.com/repaygithub/cactus/commit/01070e47c476bf4cd2b511dff74ce48dde23ddb8)
