@@ -176,7 +176,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
         ) {
           prop.description = prop.description.replace(/!important\s*/, '')
           ownProps.push(prop)
-        } else if (sourceFile.includes('styled-system') || sourceFile.includes('helpers/margins')) {
+        } else if (sourceFile.includes('styled-system')) {
           styledSystemProps.push(prop)
         }
       } else {

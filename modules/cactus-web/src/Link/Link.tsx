@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -15,7 +16,7 @@ interface LinkProps
 }
 
 const LinkBase = (props: LinkProps) => {
-  const { to, ...rest } = splitProps(props)
+  const { to, ...rest } = omitMargins(props)
 
   return <a href={to} {...rest} />
 }
@@ -42,7 +43,7 @@ export const Link = styled(LinkBase)`
     background-color: ${p => p.theme.colors.transparentCTA};
   }
 
-  ${margins};
+  ${margin};
 `
 
 // @ts-ignore

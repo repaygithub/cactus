@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -102,7 +103,7 @@ const ButtonBase: React.FC<ButtonProps> = ({
   loadingText,
   ...rest
 }) => {
-  const props = splitProps(rest)
+  const props = omitMargins(rest)
   let spanProps = null
   if (loading === true) {
     spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
@@ -157,7 +158,7 @@ export const Button = styled(ButtonBase)`
     margin-top: -8px;
   }
 
-  ${margins}
+  ${margin}
   ${variantOrDisabled}
 `
 

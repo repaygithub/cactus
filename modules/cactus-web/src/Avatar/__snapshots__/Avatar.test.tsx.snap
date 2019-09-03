@@ -2,8 +2,8 @@
 
 exports[`component: Avatars Alert Avatar, Alert 1`] = `
 .c1 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c0 {
@@ -52,8 +52,8 @@ exports[`component: Avatars Alert Avatar, Alert 1`] = `
 
 exports[`component: Avatars Alert Avatar, Check 1`] = `
 .c1 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c0 {
@@ -102,8 +102,8 @@ exports[`component: Avatars Alert Avatar, Check 1`] = `
 
 exports[`component: Avatars Alert Avatar, Error 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c3 .c1 {
@@ -168,8 +168,8 @@ exports[`component: Avatars Alert Avatar, Error 1`] = `
 
 exports[`component: Avatars Alert Avatar, Information 1`] = `
 .c1 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c0 {
@@ -218,8 +218,8 @@ exports[`component: Avatars Alert Avatar, Information 1`] = `
 
 exports[`component: Avatars Default Avatar 1`] = `
 .c1 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c0 {
@@ -268,8 +268,8 @@ exports[`component: Avatars Default Avatar 1`] = `
 
 exports[`component: Avatars Feed Back Avatar, Alert 1`] = `
 .c1 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c0 {
@@ -318,8 +318,8 @@ exports[`component: Avatars Feed Back Avatar, Alert 1`] = `
 
 exports[`component: Avatars Feed Back Avatar, Check 1`] = `
 .c1 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c0 {
@@ -368,8 +368,8 @@ exports[`component: Avatars Feed Back Avatar, Check 1`] = `
 
 exports[`component: Avatars Feed Back Avatar, Error 1`] = `
 .c2 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c3 .c1 {
@@ -422,8 +422,8 @@ exports[`component: Avatars Feed Back Avatar, Error 1`] = `
 
 exports[`component: Avatars Feed Back Avatar, Information 1`] = `
 .c1 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c0 {

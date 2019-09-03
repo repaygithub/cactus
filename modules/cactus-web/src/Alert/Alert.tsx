@@ -1,13 +1,13 @@
+import React from 'react'
+
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import Avatar from '../Avatar/Avatar'
 import IconButton from '../IconButton/IconButton'
 import PropTypes from 'prop-types'
-import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 import { NavigationClose } from '@repay/cactus-icons'
-import { width, WidthProps } from 'styled-system'
 
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'
@@ -74,14 +74,14 @@ const typeVariant = (
 }
 
 const AlertBase = (props: AlertProps) => {
-  const { className, status, onClose, closeLabel } = props
+  const { className, status, onClose, closeLabel, children } = props
 
   return (
     <div className={className}>
       <div>
         <Avatar status={status} type="alert" />
       </div>
-      <div>{props.children}</div>
+      <div>{children}</div>
       {typeof onClose === 'function' && (
         <IconButton onClick={onClose} iconSize="small" label={closeLabel}>
           <NavigationClose />
@@ -102,7 +102,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   ${typeVariant}
   box-shadow: ${p => p.shadow && `0 9px 24px ${p.theme.colors.callToAction};`};
   border-radius: 8px;
-  ${margins}
+  ${margin}
   ${width}
 
   div:first-child {

@@ -8,12 +8,21 @@ const prettier = require('prettier')
 async function main() {
   // Find all svgs under the svgs folder
   const svgFiles = await fg(['./svgs/**/*.svg'])
+  const CWD = process.cwd()
 
   try {
     await fs.access(path.resolve(__dirname, '../ts'))
   } catch {
     await fs.mkdir(path.resolve(__dirname, '../ts'))
   }
+
+  await fg(['./src/**/*.ts']).then(extraSources =>
+    Promise.all(
+      extraSources.map(f =>
+        fs.copyFile(path.join(CWD, f), path.join(CWD, 'ts', f.replace('./src/', '')))
+      )
+    )
+  )
 
   const allFiles = svgFiles.map(async svgFile => {
     // Extract the code from all of the files

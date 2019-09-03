@@ -2,8 +2,8 @@
 
 exports[`component: SelectField minimal snapshot 1`] = `
 .c10 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c2 + .c1 {
@@ -151,8 +151,8 @@ exports[`component: SelectField minimal snapshot 1`] = `
 
 exports[`component: SelectField render with complex options 1`] = `
 .c10 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c2 + .c1 {
@@ -300,8 +300,8 @@ exports[`component: SelectField render with complex options 1`] = `
 
 exports[`component: SelectField should render a disabled SelectField 1`] = `
 .c10 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c2 + .c1 {
@@ -450,8 +450,8 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
 
 exports[`component: SelectField should render an accessible error message 1`] = `
 .c12 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c16 {
@@ -673,8 +673,8 @@ exports[`component: SelectField should render an accessible error message 1`] = 
 
 exports[`component: SelectField should render an accessible success message 1`] = `
 .c12 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c16 {
@@ -872,8 +872,8 @@ exports[`component: SelectField should render an accessible success message 1`] 
 
 exports[`component: SelectField should render an accessible warning message 1`] = `
 .c12 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c16 {
@@ -1083,8 +1083,8 @@ exports[`component: SelectField should render an accessible warning message 1`] 
 
 exports[`component: SelectField supports margin props 1`] = `
 .c11 {
-  vertical-align: middle;
   font-size: 8px;
+  vertical-align: middle;
 }
 
 .c2 + .c1 {

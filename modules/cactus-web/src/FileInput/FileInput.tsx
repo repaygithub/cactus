@@ -11,8 +11,8 @@ import {
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { IconButton } from '../IconButton/IconButton'
-import { MarginProps, margins } from '../helpers/margins'
-import { maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import { TextButton } from '../TextButton/TextButton'
 import accepts from '../helpers/accept'
 import Avatar from '../Avatar/Avatar'
@@ -328,7 +328,10 @@ const FileInputBase = (props: FileInputProps) => {
     id,
     'aria-describedby': describedBy,
     ...fileInputProps
-  } = props
+  } = omitMargins(props, 'width', 'maxWidth') as Omit<
+    FileInputProps,
+    keyof MarginProps | 'width' | 'maxWidth'
+  >
   const [state, setState] = useState<State>({
     files: value || [],
     inputKey: Math.random().toString(36),
@@ -634,7 +637,7 @@ export const FileInput = styled(FileInputBase)`
     display: none;
   }
 
-  ${margins}
+  ${margin}
   ${width}
   ${maxWidth}
 ` as any

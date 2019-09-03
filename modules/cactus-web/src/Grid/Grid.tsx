@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import PropTypes from 'prop-types'
 import styled, { css, StyledComponentBase } from 'styled-components'
 
@@ -118,7 +118,7 @@ export const Grid = styled.div<GridProps>`
     }
   }
 
-  ${margins}
+  ${margin}
 ` as any
 
 Grid.Item = Item

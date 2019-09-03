@@ -14,6 +14,7 @@ async function main() {
   for (let [icon, iconFile] of icons) {
     index += `export { default as ${icon} } from './${iconFile.toLowerCase()}'\n`
   }
+  index += `export * from './types'\nexport { default as iconSizes } from './iconSizes'\n`
   await fs.writeFile(path.join(__dirname, '..', 'ts/index.ts'), index, 'utf8')
 }
 

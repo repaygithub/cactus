@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { NavigationClose, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -17,7 +18,7 @@ export interface ToggleProps
 }
 
 const ToggleBase = (props: ToggleProps) => {
-  const componentProps = splitProps(props)
+  const componentProps = omitMargins(props)
   const { value, ...toggleProps } = componentProps
   return (
     <button type="button" role="switch" aria-checked={value} {...toggleProps}>
@@ -103,7 +104,7 @@ export const Toggle = styled(ToggleBase)`
     border-color: ${p => p.theme.colors.lightGray};
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -46,7 +47,7 @@ const displayStatus = (props: TextInputProps) => {
 }
 
 const TextInputBase = (props: TextInputProps) => {
-  const { className, ...rest } = splitProps(props)
+  const { className, ...rest } = omitMargins(props)
 
   return (
     <div className={className}>
@@ -80,7 +81,7 @@ const Input = styled.input<InputProps>`
 
 export const TextInput = styled(TextInputBase)`
   box-sizing: border-box;
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

@@ -25,7 +25,8 @@
     "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build",
     "predocs:publish": "yarn docs build",
     "docs:publish": "gh-pages -d ./website/public",
-    "cleanup": "yarn ws run cleanup"
+    "cleanup": "yarn ws run cleanup",
+    "run-full": "yarn cleanup && yarn build && yarn test:ci"
   },
   "license": "MIT",
   "private": true,
@@ -47,5 +48,9 @@
     "gh-pages": "^2.0.1",
     "prettier": "^1.17.0",
     "typescript-eslint-parser": "^22.0.0"
+  },
+  "resolutions": {
+    "**/union-value": "^2.0.0",
+    "**/set-value": "^3.0.0"
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { MarginProps, margins } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import styled from 'styled-components'
 
@@ -16,7 +16,7 @@ export const Label = styled.label<LabelProps>`
   font-weight: 400;
   color: ${p => p.theme.colors.darkestContrast};
 
-  ${margins}
+  ${margin}
 `
 
 export default Label

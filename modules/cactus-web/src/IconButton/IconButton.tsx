@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { CactusTheme } from '@repay/cactus-theme'
-import { get, px, style } from 'styled-system'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { iconSizes } from '@repay/cactus-icons'
+import { margin, MarginProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -19,13 +20,6 @@ interface IconButtonProps
   display?: 'flex' | 'inline-flex'
   inverse?: boolean
 }
-
-const iconSizes = style({
-  prop: 'iconSize',
-  cssProperty: 'fontSize',
-  key: 'iconSizes',
-  transformValue: (size, scale) => px(get(scale, size)),
-})
 
 type VariantMap = { [K in IconButtonVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
@@ -85,7 +79,7 @@ const variantOrDisabled = (
 
 const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
   const { label, children, inverse, iconSize, display, ...buttonProps } = props
-  const withoutMargins = splitProps(buttonProps)
+  const withoutMargins = omitMargins(buttonProps)
 
   return (
     <button aria-label={label} ref={ref} {...withoutMargins}>
@@ -113,7 +107,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   }
 
   ${variantOrDisabled}
-  ${margins}
+  ${margin}
   ${iconSizes}
 `
 

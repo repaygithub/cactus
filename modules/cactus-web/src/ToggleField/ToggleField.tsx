@@ -1,7 +1,8 @@
 import * as React from 'react'
 
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
+import { omitMargins } from '../helpers/omit'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
 import Label, { LabelProps } from '../Label/Label'
@@ -40,7 +41,7 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
     onBlur,
     onClick,
     ...toggleProps
-  } = splitProps(props)
+  } = omitMargins(props) as Omit<ToggleFieldProps, keyof MarginProps>
   const fieldId = useId(id, name)
 
   const handleClick = React.useCallback(
@@ -82,7 +83,7 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
 }
 
 export const ToggleField = styled(ToggleFieldBase)`
-  ${margins}
+  ${margin}
 
   ${Label} {
     cursor: pointer;

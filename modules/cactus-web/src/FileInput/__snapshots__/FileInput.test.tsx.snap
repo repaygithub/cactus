@@ -2,13 +2,13 @@
 
 exports[`component: FileInput should render a file input 1`] = `
 .c3 {
-  vertical-align: middle;
   font-size: 40px;
+  vertical-align: middle;
 }
 
 .c6 {
-  vertical-align: middle;
   font-size: 16px;
+  vertical-align: middle;
 }
 
 .c5 {
@@ -171,8 +171,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c18 {
-  vertical-align: middle;
   font-size: 16px;
+  vertical-align: middle;
 }
 
 .c10 {
@@ -180,8 +180,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c6 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c13 {
@@ -605,8 +605,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 
 exports[`component: FileInput should render a loaded file 1`] = `
 .c13 {
-  vertical-align: middle;
   font-size: 16px;
+  vertical-align: middle;
 }
 
 .c10 {
@@ -614,8 +614,8 @@ exports[`component: FileInput should render a loaded file 1`] = `
 }
 
 .c6 {
-  vertical-align: middle;
   font-size: 24px;
+  vertical-align: middle;
 }
 
 .c8 {
@@ -951,8 +951,8 @@ exports[`component: FileInput should render a loaded file 1`] = `
 
 exports[`component: FileInput should render a loading file 1`] = `
 .c7 {
-  vertical-align: middle;
   font-size: 16px;
+  vertical-align: middle;
 }
 
 .c6 {

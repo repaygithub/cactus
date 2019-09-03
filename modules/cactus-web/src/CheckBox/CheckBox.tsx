@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { MarginProps, margins, splitProps } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
+import { omitMargins } from '../helpers/omit'
 import { StatusCheck } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -21,7 +22,7 @@ interface StyledCheckBoxProps extends React.HTMLProps<HTMLSpanElement> {
 }
 
 const CheckBoxBase = (props: CheckBoxProps) => {
-  const componentProps = splitProps<CheckBoxProps>(props)
+  const componentProps = omitMargins<CheckBoxProps>(props)
   const { disabled, id, className, ...checkBoxProps } = componentProps
   return (
     <label className={className} htmlFor={id}>
@@ -81,7 +82,7 @@ export const CheckBox = styled(CheckBoxBase)`
     box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
   }
 
-  ${margins}
+  ${margin}
 `
 
 // @ts-ignore

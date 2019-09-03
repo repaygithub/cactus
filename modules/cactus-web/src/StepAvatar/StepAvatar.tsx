@@ -1,5 +1,5 @@
 import { CactusTheme } from '@repay/cactus-theme'
-import { MarginProps, margins } from '../helpers/margins'
+import { margin, MarginProps } from 'styled-system'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type AvatarStep = 'notDone' | 'inProcess' | 'done'
@@ -47,7 +47,7 @@ export const StepAvatar = styled.div<StepAvatarProps>`
   padding: 0px;
   border: none;
 
-  ${margins}
+  ${margin}
   ${variant}
 `
 StepAvatar.defaultProps = {
