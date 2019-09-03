@@ -18,6 +18,7 @@ storiesOf('TextAreaField', module)
       warning={text('warning', '')}
       error={text('error', '')}
       tooltip={text('tooltip', 'Some tooltip text')}
+      resize={boolean('resize', false)}
       {...eventLoggers}
     />
   ))

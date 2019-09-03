@@ -14,8 +14,8 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
   background-color: hsl(0,0%,90%);
   height: auto;
   width: auto;
-  resize: none;
   display: block;
+  resize: none;
 }
 
 .c1:first-line {
@@ -77,8 +77,8 @@ exports[`component: TextArea should render a success textarea 1`] = `
   background-color: hsl(0,0%,100%);
   height: auto;
   width: auto;
-  resize: none;
   display: block;
+  resize: none;
   border-color: hsl(145,89%,28%);
   background: hsla(145,89%,28%,0.2);
 }
@@ -141,8 +141,8 @@ exports[`component: TextArea should render a textarea 1`] = `
   background-color: hsl(0,0%,100%);
   height: auto;
   width: auto;
-  resize: none;
   display: block;
+  resize: none;
 }
 
 .c1:first-line {
@@ -203,8 +203,8 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
   background-color: hsl(0,0%,100%);
   height: auto;
   width: auto;
-  resize: none;
   display: block;
+  resize: none;
 }
 
 .c1:first-line {
@@ -266,8 +266,8 @@ exports[`component: TextArea should render a warning textarea 1`] = `
   background-color: hsl(0,0%,100%);
   height: auto;
   width: auto;
-  resize: none;
   display: block;
+  resize: none;
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
 }
@@ -330,8 +330,8 @@ exports[`component: TextArea should render an error textarea 1`] = `
   background-color: hsl(0,0%,100%);
   height: auto;
   width: auto;
-  resize: none;
   display: block;
+  resize: none;
   border-color: hsl(353,84%,44%);
   background: hsla(353,84%,44%,0.2);
 }
@@ -394,8 +394,8 @@ exports[`component: TextArea should support margin space props 1`] = `
   background-color: hsl(0,0%,100%);
   height: auto;
   width: auto;
-  resize: none;
   display: block;
+  resize: none;
 }
 
 .c1:first-line {
