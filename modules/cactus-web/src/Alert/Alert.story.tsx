@@ -1,6 +1,6 @@
 import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs/react'
-import { Flex } from '@repay/cactus-web'
+import { Flex } from '../index'
 import { storiesOf } from '@storybook/react'
 import Alert, { Status, Type } from './Alert'
 import React from 'react'

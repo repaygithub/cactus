@@ -6,24 +6,28 @@ import { omitMargins } from '../helpers/omit'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
-import Select, { OptionType, SelectProps } from '../Select/Select'
+import Select, { OptionType, SelectProps, SelectValueType } from '../Select/Select'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
 import Tooltip from '../Tooltip/Tooltip'
 import useId from '../helpers/useId'
 
-interface SelectFieldProps extends MarginProps, WidthProps, Omit<SelectProps, 'id'> {
+interface SelectFieldProps
+  extends MarginProps,
+    WidthProps,
+    Omit<SelectProps, 'id' | 'onChange' | keyof MarginProps | keyof WidthProps> {
   label: string
   labelProps?: object
   name: string
-  options: string[] | OptionType[]
+  options: Array<OptionType | string>
   className?: string
   id?: string
   success?: string
   warning?: string
   error?: string
   tooltip?: string
-  onChange?: FieldOnChangeHandler<string | number>
+  multiple?: boolean
+  onChange?: FieldOnChangeHandler<SelectValueType>
 }
 
 const SelectFieldBase: React.FC<SelectFieldProps> = props => {

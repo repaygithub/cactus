@@ -376,7 +376,6 @@ describe('component: Select', () => {
     })
 
     test('mouseEnter sets activedescendant', async () => {
-      const onChange = jest.fn()
       let cities = ['Apache Junction', 'Avondale', 'Benson', 'Bisbee', 'Buckeye', 'Bullhead City']
       const { getByText, getByRole, rerender } = render(
         <StyleProvider>
@@ -528,6 +527,7 @@ describe('component: Select', () => {
             name="city"
             placeholder="Click me!"
             options={['phoenix', 'tucson', 'flagstaff']}
+            onFocus={onFocus}
             value="phoenix"
           />
         </StyleProvider>
@@ -548,6 +548,8 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       await animationRender()
+      expect(onFocus).toHaveBeenCalledWith('city')
+      onFocus.mockReset()
       fireEvent.keyDown(getByRole('listbox'), {
         keyCode: KeyCodes.ESC,
         charCode: KeyCodes.ESC,
@@ -566,6 +568,222 @@ describe('component: Select', () => {
       )
       await animationRender()
       expect(onFocus).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('with multiple=true', () => {
+    test('trigger is rendered with aria-multiselectable=true', async () => {
+      const startingValue = ['tucson']
+      const onChange = jest.fn()
+      const { getByRole } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      expect(document.querySelector('[aria-multiselectable=true]')).not.toBe(null)
+    })
+
+    test('all options are rendered with aria-selected attribute as true or false', async () => {
+      const startingValue = ['tucson']
+      const onChange = jest.fn()
+      const { getByText, getAllByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      // @ts-ignore
+      let trigger: HTMLElement = getByText('tucson')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      let options = getAllByRole('option')
+      options.forEach(o => {
+        expect(o.getAttribute('aria-selected')).toBe(
+          String(o.getAttribute('data-value') === 'tucson')
+        )
+      })
+    })
+
+    test('can select multiple options', async () => {
+      const startingValue = ['tucson']
+      const onChange = jest.fn()
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      // @ts-ignore
+      let trigger: HTMLElement = getByText('tucson')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      let list = getByRole('listbox')
+      expect(document.activeElement).toBe(list)
+      expect(getActiveValue()).toBe('tucson')
+      fireEvent.click(getByText('flagstaff', { selector: '[role="option"]' }))
+      await animationRender()
+      expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'flagstaff'])
+    })
+
+    test('removed value when selected again', async () => {
+      const startingValue = ['tucson']
+      const onChange = jest.fn()
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      // @ts-ignore
+      let trigger: HTMLElement = getByText('tucson')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      let list = getByRole('listbox')
+      expect(document.activeElement).toBe(list)
+      expect(getActiveValue()).toBe('tucson')
+      fireEvent.click(getByText('tucson', { selector: '[role="option"]' }))
+      await animationRender()
+      expect(onChange).toHaveBeenCalledWith('city', [])
+    })
+
+    test('SPACE key will toggle option', async () => {
+      const startingValue = ['tucson']
+      const onChange = jest.fn()
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      // @ts-ignore
+      let trigger: HTMLElement = getByText('tucson')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(getActiveValue()).toBe('tucson')
+      fireEvent.keyDown(getByRole('listbox'), {
+        keyCode: KeyCodes.SPACE,
+        charCode: KeyCodes.SPACE,
+      })
+      await animationRender()
+      expect(onChange).toHaveBeenCalledWith('city', [])
+      expect(document.activeElement).toBe(getByRole('listbox'))
+    })
+
+    test('CLICK w/ metaKey key will toggle option but not close', async () => {
+      const startingValue = ['tucson']
+      const onChange = jest.fn()
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      // @ts-ignore
+      let trigger: HTMLElement = getByText('tucson')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={startingValue}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(getActiveValue()).toBe('tucson')
+      fireEvent.click(getByText('phoenix'), { metaKey: true })
+      await animationRender()
+      expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'phoenix'])
+      expect(document.activeElement).toBe(getByRole('listbox'))
     })
   })
 })

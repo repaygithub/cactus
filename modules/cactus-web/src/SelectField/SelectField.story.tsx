@@ -1,5 +1,6 @@
 import { actions } from '@storybook/addon-actions'
 import { array, boolean, text } from '@storybook/addon-knobs'
+import { SelectValueType } from '../Select/Select'
 import { storiesOf } from '@storybook/react'
 import FormHandler from '../storySupport/FormHandler'
 import React from 'react'
@@ -34,7 +35,7 @@ storiesOf('SelectField', module)
   .add(
     'Controlled Form',
     () => (
-      <FormHandler onChange={(name: string, value: string | number) => value}>
+      <FormHandler onChange={(name: string, value: SelectValueType) => value}>
         {({ value, onChange }) => (
           <SelectField
             label={text('label', `What's that in the sky?`)}

@@ -4,9 +4,17 @@ import { storiesOf } from '@storybook/react'
 import arizonaCities from '../storySupport/arizonaCities'
 import FormHandler from '../storySupport/FormHandler'
 import React from 'react'
-import Select from './Select'
+import Select, { OptionType } from './Select'
 
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+
+const longOptions: OptionType[] = [
+  { label: 'This should be the longest option available', value: 'long-option' },
+  { label: 'Here is another option', value: 'another-option' },
+  { label: 'One more option', value: 'the-last-option' },
+]
+
+const defaultMultiValue = arizonaCities.slice(6, 15)
 
 storiesOf('Select', module)
   .add('Basic Usage', () => (
@@ -16,6 +24,7 @@ storiesOf('Select', module)
         name={text('name', 'random')}
         id={text('id', 'select-input')}
         disabled={boolean('disabled', false)}
+        multiple={boolean('multiple', false)}
         m={text('m', '2')}
         {...eventLoggers}
       />
@@ -40,7 +49,10 @@ storiesOf('Select', module)
     { cactus: { overrides: { height: '220vh', width: '220vw' } } }
   )
   .add('Long list of options', () => (
-    <FormHandler defaultValue={arizonaCities[6]} onChange={(name, value: string | number) => value}>
+    <FormHandler
+      defaultValue={arizonaCities[6]}
+      onChange={(name, value: string | number | Array<string | number> | null) => value}
+    >
       {({ value, onChange }) => (
         <Select
           options={arizonaCities}
@@ -50,6 +62,43 @@ storiesOf('Select', module)
           {...eventLoggers}
           onChange={onChange}
           value={value}
+        />
+      )}
+    </FormHandler>
+  ))
+  .add('Long option labels', () => (
+    <FormHandler
+      defaultValue=""
+      onChange={(name, value: string | number | Array<string | number> | null) => value}
+    >
+      {({ value, onChange }) => (
+        <Select
+          options={longOptions}
+          name="random"
+          id="select-input"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+          onChange={onChange}
+          value={value}
+        />
+      )}
+    </FormHandler>
+  ))
+  .add('With Multiselect', () => (
+    <FormHandler
+      defaultValue={defaultMultiValue}
+      onChange={(name, value: string | number | Array<string | number> | null) => value}
+    >
+      {({ value, onChange }) => (
+        <Select
+          options={arizonaCities}
+          name="random"
+          id="select-input"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+          onChange={onChange}
+          value={value}
+          multiple
         />
       )}
     </FormHandler>
