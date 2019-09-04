@@ -607,7 +607,8 @@ export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
   border-radius: 8px;
   border: 2px ${p => (p.theme.disabled ? 'solid' : 'dotted')};
-  border-color: ${p => (p.theme.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
+  border-color: ${p =>
+    p.theme.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast};
   min-width: 300px;
   min-height: 100px;
   position: relative;
