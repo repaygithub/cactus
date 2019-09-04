@@ -192,6 +192,7 @@ const FileBox = styled(FileBoxBase)`
 
   span {
     margin-left: 8px;
+    margin-right: 8px;
     ${p => p.theme.textStyles.body};
   }
 
@@ -606,11 +607,11 @@ export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
   border-radius: 8px;
   border: 2px ${p => (p.theme.disabled ? 'solid' : 'dotted')};
-  border-color: ${p => (p.theme.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
+  border-color: ${p => (p.theme.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
   min-width: 300px;
   min-height: 100px;
   position: relative;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
 
