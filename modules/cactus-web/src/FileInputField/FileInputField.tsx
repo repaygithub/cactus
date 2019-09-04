@@ -46,6 +46,7 @@ export const FileInputField = styled(FileInputFieldBase)`
   position: relative;
 
   ${Label} {
+    display: block;
     position: relative;
     bottom: 4px;
     padding-left: 16px;
