@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: SelectField minimal snapshot 1`] = `
-.c10 {
+.c11 {
   font-size: 8px;
   vertical-align: middle;
 }
@@ -17,13 +17,13 @@ exports[`component: SelectField minimal snapshot 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c8 {
+.c9 {
   font-style: italic;
   color: hsl(200,9%,35%);
   font-size: 18px;
 }
 
-.c6 {
+.c7 {
   position: relative;
   box-sizing: border-box;
   min-width: 194px;
@@ -43,40 +43,44 @@ exports[`component: SelectField minimal snapshot 1`] = `
   cursor: pointer;
 }
 
-.c6:disabled {
+.c7:disabled {
   border-color: hsl(0,0%,70%);
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
 
-.c6:disabled .c7 {
+.c7:disabled .c8 {
   display: none;
 }
 
-.c6::-moz-focus-inner {
+.c7::-moz-focus-inner {
   border: 0;
 }
 
-.c6:focus,
-.c6[aria-expanded] {
+.c7:focus,
+.c7[aria-expanded] {
   border-color: hsl(200,96%,35%);
 }
 
-.c6:focus .c9,
-.c6[aria-expanded] .c9 {
+.c7:focus .c10,
+.c7[aria-expanded] .c10 {
   color: hsl(200,96%,35%);
 }
 
-.c6[aria-expanded] .c9 {
+.c7[aria-expanded] .c10 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c6 .c9 {
+.c7 .c10 {
   position: absolute;
   right: 14px;
   top: 10px;
+}
+
+.c6 {
+  max-width: 100%;
 }
 
 .c0 {
@@ -89,7 +93,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   padding-right: 28px;
 }
 
-.c0 .c12 {
+.c0 .c13 {
   position: absolute;
   right: 8px;
   top: 2px;
@@ -100,7 +104,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   width: 100%;
 }
 
-.c0 .c11 {
+.c0 .c12 {
   margin-left: 16px;
   margin-top: 4px;
 }
@@ -116,24 +120,24 @@ exports[`component: SelectField minimal snapshot 1`] = `
       Requires a label
     </label>
     <div
-      class="c5 "
+      class="c5 c6"
     >
       <button
         aria-describedby=" "
         aria-haspopup="listbox"
         aria-multiselectable="false"
-        class="c6"
+        class="c7"
         id="prevent-random-id"
         name="the-test-select-field"
         type="button"
       >
         <span
-          class="c7 c8"
+          class="c8 c9"
         >
           Select an option
         </span>
         <svg
-          class="c9 c10"
+          class="c10 c11"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -151,7 +155,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
 `;
 
 exports[`component: SelectField render with complex options 1`] = `
-.c10 {
+.c11 {
   font-size: 8px;
   vertical-align: middle;
 }
@@ -167,13 +171,13 @@ exports[`component: SelectField render with complex options 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c8 {
+.c9 {
   font-style: italic;
   color: hsl(200,9%,35%);
   font-size: 18px;
 }
 
-.c6 {
+.c7 {
   position: relative;
   box-sizing: border-box;
   min-width: 194px;
@@ -193,40 +197,44 @@ exports[`component: SelectField render with complex options 1`] = `
   cursor: pointer;
 }
 
-.c6:disabled {
+.c7:disabled {
   border-color: hsl(0,0%,70%);
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
 
-.c6:disabled .c7 {
+.c7:disabled .c8 {
   display: none;
 }
 
-.c6::-moz-focus-inner {
+.c7::-moz-focus-inner {
   border: 0;
 }
 
-.c6:focus,
-.c6[aria-expanded] {
+.c7:focus,
+.c7[aria-expanded] {
   border-color: hsl(200,96%,35%);
 }
 
-.c6:focus .c9,
-.c6[aria-expanded] .c9 {
+.c7:focus .c10,
+.c7[aria-expanded] .c10 {
   color: hsl(200,96%,35%);
 }
 
-.c6[aria-expanded] .c9 {
+.c7[aria-expanded] .c10 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c6 .c9 {
+.c7 .c10 {
   position: absolute;
   right: 14px;
   top: 10px;
+}
+
+.c6 {
+  max-width: 100%;
 }
 
 .c0 {
@@ -239,7 +247,7 @@ exports[`component: SelectField render with complex options 1`] = `
   padding-right: 28px;
 }
 
-.c0 .c12 {
+.c0 .c13 {
   position: absolute;
   right: 8px;
   top: 2px;
@@ -250,7 +258,7 @@ exports[`component: SelectField render with complex options 1`] = `
   width: 100%;
 }
 
-.c0 .c11 {
+.c0 .c12 {
   margin-left: 16px;
   margin-top: 4px;
 }
@@ -266,24 +274,24 @@ exports[`component: SelectField render with complex options 1`] = `
       Requires a label
     </label>
     <div
-      class="c5 "
+      class="c5 c6"
     >
       <button
         aria-describedby=" "
         aria-haspopup="listbox"
         aria-multiselectable="false"
-        class="c6"
+        class="c7"
         id="prevent-random-id"
         name="the-test-select-field"
         type="button"
       >
         <span
-          class="c7 c8"
+          class="c8 c9"
         >
           Select an option
         </span>
         <svg
-          class="c9 c10"
+          class="c10 c11"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -301,7 +309,7 @@ exports[`component: SelectField render with complex options 1`] = `
 `;
 
 exports[`component: SelectField should render a disabled SelectField 1`] = `
-.c10 {
+.c11 {
   font-size: 8px;
   vertical-align: middle;
 }
@@ -317,13 +325,13 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c8 {
+.c9 {
   font-style: italic;
   color: hsl(200,9%,35%);
   font-size: 18px;
 }
 
-.c6 {
+.c7 {
   position: relative;
   box-sizing: border-box;
   min-width: 194px;
@@ -343,40 +351,44 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
   cursor: pointer;
 }
 
-.c6:disabled {
+.c7:disabled {
   border-color: hsl(0,0%,70%);
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
 
-.c6:disabled .c7 {
+.c7:disabled .c8 {
   display: none;
 }
 
-.c6::-moz-focus-inner {
+.c7::-moz-focus-inner {
   border: 0;
 }
 
-.c6:focus,
-.c6[aria-expanded] {
+.c7:focus,
+.c7[aria-expanded] {
   border-color: hsl(200,96%,35%);
 }
 
-.c6:focus .c9,
-.c6[aria-expanded] .c9 {
+.c7:focus .c10,
+.c7[aria-expanded] .c10 {
   color: hsl(200,96%,35%);
 }
 
-.c6[aria-expanded] .c9 {
+.c7[aria-expanded] .c10 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c6 .c9 {
+.c7 .c10 {
   position: absolute;
   right: 14px;
   top: 10px;
+}
+
+.c6 {
+  max-width: 100%;
 }
 
 .c0 {
@@ -389,7 +401,7 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
   padding-right: 28px;
 }
 
-.c0 .c12 {
+.c0 .c13 {
   position: absolute;
   right: 8px;
   top: 2px;
@@ -400,7 +412,7 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
   width: 100%;
 }
 
-.c0 .c11 {
+.c0 .c12 {
   margin-left: 16px;
   margin-top: 4px;
 }
@@ -416,25 +428,25 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
       Requires a label
     </label>
     <div
-      class="c5 "
+      class="c5 c6"
     >
       <button
         aria-describedby=" "
         aria-haspopup="listbox"
         aria-multiselectable="false"
-        class="c6"
+        class="c7"
         disabled=""
         id="prevent-random-id"
         name="the-test-select-field"
         type="button"
       >
         <span
-          class="c7 c8"
+          class="c8 c9"
         >
           Select an option
         </span>
         <svg
-          class="c9 c10"
+          class="c10 c11"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -576,6 +588,10 @@ exports[`component: SelectField should render an accessible error message 1`] = 
 .c20 .c7 {
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
+}
+
+.c6 {
+  max-width: 100%;
 }
 
 .c6 .c7 {
@@ -776,6 +792,10 @@ exports[`component: SelectField should render an accessible success message 1`] 
   position: absolute;
   right: 14px;
   top: 10px;
+}
+
+.c6 {
+  max-width: 100%;
 }
 
 .c6 .c7 {
@@ -990,6 +1010,10 @@ exports[`component: SelectField should render an accessible warning message 1`] 
   background: hsla(145,89%,28%,0.2);
 }
 
+.c6 {
+  max-width: 100%;
+}
+
 .c6 .c7 {
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
@@ -1088,7 +1112,7 @@ exports[`component: SelectField should render an accessible warning message 1`] 
 `;
 
 exports[`component: SelectField supports margin props 1`] = `
-.c11 {
+.c12 {
   font-size: 8px;
   vertical-align: middle;
 }
@@ -1104,13 +1128,13 @@ exports[`component: SelectField supports margin props 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c9 {
+.c10 {
   font-style: italic;
   color: hsl(200,9%,35%);
   font-size: 18px;
 }
 
-.c7 {
+.c8 {
   position: relative;
   box-sizing: border-box;
   min-width: 194px;
@@ -1130,64 +1154,68 @@ exports[`component: SelectField supports margin props 1`] = `
   cursor: pointer;
 }
 
-.c7:disabled {
+.c8:disabled {
   border-color: hsl(0,0%,70%);
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
 
-.c7:disabled .c8 {
+.c8:disabled .c9 {
   display: none;
 }
 
-.c7::-moz-focus-inner {
+.c8::-moz-focus-inner {
   border: 0;
 }
 
-.c7:focus,
-.c7[aria-expanded] {
+.c8:focus,
+.c8[aria-expanded] {
   border-color: hsl(200,96%,35%);
 }
 
-.c7:focus .c10,
-.c7[aria-expanded] .c10 {
+.c8:focus .c11,
+.c8[aria-expanded] .c11 {
   color: hsl(200,96%,35%);
 }
 
-.c7[aria-expanded] .c10 {
+.c8[aria-expanded] .c11 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c7 .c10 {
+.c8 .c11 {
   position: absolute;
   right: 14px;
   top: 10px;
 }
 
-.c12 .c6 {
+.c6 {
+  max-width: 100%;
+}
+
+.c13 .c7 {
   border-color: hsl(145,89%,28%);
   background: hsla(145,89%,28%,0.2);
 }
 
-.c13 .c6 {
+.c14 .c7 {
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
 }
 
-.c14 .c6 {
+.c15 .c7 {
   border-color: hsl(353,84%,44%);
   background: hsla(353,84%,44%,0.2);
 }
 
-.c15 .c3 {
+.c16 .c3 {
   box-sizing: border-box;
   padding-left: 16px;
   padding-right: 28px;
 }
 
-.c15 .c5 {
+.c16 .c5 {
   width: 100%;
 }
 
@@ -1202,7 +1230,7 @@ exports[`component: SelectField supports margin props 1`] = `
   padding-right: 28px;
 }
 
-.c0 .c17 {
+.c0 .c18 {
   position: absolute;
   right: 8px;
   top: 2px;
@@ -1213,7 +1241,7 @@ exports[`component: SelectField supports margin props 1`] = `
   width: 100%;
 }
 
-.c0 .c16 {
+.c0 .c17 {
   margin-left: 16px;
   margin-top: 4px;
 }
@@ -1229,24 +1257,24 @@ exports[`component: SelectField supports margin props 1`] = `
       Requires a label
     </label>
     <div
-      class="c5 "
+      class="c5 c6"
     >
       <button
         aria-describedby=" "
         aria-haspopup="listbox"
         aria-multiselectable="false"
-        class="c6 c7"
+        class="c7 c8"
         id="for-the-snap"
         name="the-test-select-field"
         type="button"
       >
         <span
-          class="c8 c9"
+          class="c9 c10"
         >
           Select an option
         </span>
         <svg
-          class="c10 c11"
+          class="c11 c12"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"

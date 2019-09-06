@@ -28,7 +28,7 @@ export interface SelectProps
       React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
       'ref' | 'onChange' | 'onBlur' | 'onFocus'
     > {
-  options: Array<OptionType | string>
+  options: Array<OptionType | string | number>
   id: string
   name: string
   value?: string | number | Array<string | number> | null
@@ -108,6 +108,22 @@ const ValueTag = styled(ValueTagBase)`
   }
 `
 
+function isElement(el?: any): el is HTMLElement {
+  return el && el.nodeType === 1
+}
+
+function doesChildOverflow(parentRect: ClientRect, childRect: ClientRect) {
+  return childRect.left + childRect.width > parentRect.left + parentRect.width
+}
+
+function willTruncateBlockShow(
+  parentRect: ClientRect,
+  childRect: ClientRect,
+  truncateRect: ClientRect
+) {
+  return parentRect.left + parentRect.width >= childRect.left + truncateRect.width
+}
+
 const ValueSwitch = (props: {
   options: ExtendedOptionType[]
   placeholder: string | undefined
@@ -120,46 +136,49 @@ const ValueSwitch = (props: {
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
   const [numToRender, setNum] = useState(numSelected)
-  const valueString = selected.reduce((m, o) => m + o.label, '')
   const [prevValue, setPrevValue] = useState<string>('')
+  const valueString = selected.reduce((m, o) => m + o.label, '')
   const shouldRenderAll = prevValue !== valueString
   /**
    * finds the maximum number of values it can display
    */
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useLayoutEffect(() => {
-    if (spanRef.current !== null && moreRef.current !== null && prevValue !== valueString) {
-      let rect = spanRef.current.getBoundingClientRect()
-      let visitedSpans = 0
-      if (prevValue !== valueString) {
-        setPrevValue(valueString)
-      }
-      // TODO try looping backwards?
-      for (let i = 0; i < spanRef.current.childNodes.length; ++i) {
-        let child = spanRef.current.childNodes[i]
-        if (child.nodeType === 1) {
-          const childRect = (child as HTMLElement).getBoundingClientRect()
-          if (childRect.left + childRect.width > rect.left + rect.width) {
-            const moreRect = moreRef.current.getBoundingClientRect()
-            for (i = i - 1; i > 1; --i) {
-              child = spanRef.current.childNodes[i]
-              const backRect = (child as HTMLElement).getBoundingClientRect()
-              if (rect.left + rect.width >= backRect.left + moreRect.width) {
-                if (i !== numToRender || shouldRenderAll) {
-                  setNum(i)
-                }
-                return
-              }
+    if (spanRef.current !== null && moreRef.current !== null && shouldRenderAll) {
+      setPrevValue(valueString)
+      let parentRect = spanRef.current.getBoundingClientRect()
+      let numberChildren = spanRef.current.childNodes.length
+      let index =
+        numToRender < numberChildren && isElement(spanRef.current.childNodes[numToRender])
+          ? numToRender
+          : 0
+      let child: any = spanRef.current.childNodes[index] as HTMLElement
+      let childRect = child.getBoundingClientRect()
+      let direction = doesChildOverflow(parentRect, childRect) ? -1 : 1
+      const moreRect = moreRef.current.getBoundingClientRect()
+      while (index >= 0 && index < numberChildren) {
+        child = spanRef.current.childNodes[index]
+        if (isElement(child)) {
+          childRect = child.getBoundingClientRect()
+          if (direction === -1) {
+            if (willTruncateBlockShow(parentRect, childRect, moreRect)) {
+              setNum(index)
+              return
             }
-            setNum(0)
+          } else if (doesChildOverflow(parentRect, childRect)) {
+            if (willTruncateBlockShow(parentRect, childRect, moreRect)) {
+              setNum(index)
+            } else {
+              setNum(index - 1)
+            }
             return
           }
-          ++visitedSpans
         }
+        index += direction
       }
-      setNum(visitedSpans)
+      setNum(numberChildren)
     }
-  }, [valueString, numToRender, shouldRenderAll, prevValue])
+  }, [numToRender, shouldRenderAll, valueString])
 
   if (numSelected === 0) {
     return <Placeholder>{props.placeholder}</Placeholder>
@@ -610,9 +629,11 @@ function findMatchInRange(
   return null
 }
 
-function asOption(opt: string | OptionType) {
+function asOption(opt: number | string | OptionType) {
   if (typeof opt === 'string') {
     return { label: opt, value: opt } as OptionType
+  } else if (typeof opt === 'number') {
+    return { label: String(opt), value: opt } as OptionType
   }
   return opt as OptionType
 }
@@ -845,7 +866,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** used to reduce rerenders of List and ValueSpan */
   memoizedExtOptions: {
     id: string | undefined
-    options: Array<string | OptionType>
+    options: Array<string | number | OptionType>
     memo: ExtendedOptionType[]
   } = {
     id: undefined,
@@ -957,6 +978,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 }
 
 export const Select = styled(SelectBase)`
+  max-width: 100%;
   ${margin}
   ${width}
 
@@ -975,6 +997,7 @@ Select.propTypes = {
       })
     ),
     PropTypes.arrayOf(PropTypes.string.isRequired),
+    PropTypes.arrayOf(PropTypes.number.isRequired),
   ]).isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

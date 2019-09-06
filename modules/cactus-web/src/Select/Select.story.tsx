@@ -84,22 +84,26 @@ storiesOf('Select', module)
       )}
     </FormHandler>
   ))
-  .add('With Multiselect', () => (
-    <FormHandler
-      defaultValue={defaultMultiValue}
-      onChange={(name, value: string | number | Array<string | number> | null) => value}
-    >
-      {({ value, onChange }) => (
-        <Select
-          options={arizonaCities}
-          name="random"
-          id="select-input"
-          disabled={boolean('disabled', false)}
-          {...eventLoggers}
-          onChange={onChange}
-          value={value}
-          multiple
-        />
-      )}
-    </FormHandler>
-  ))
+  .add(
+    'With Multiselect',
+    () => (
+      <FormHandler
+        defaultValue={defaultMultiValue}
+        onChange={(name, value: string | number | Array<string | number> | null) => value}
+      >
+        {({ value, onChange }) => (
+          <Select
+            options={arizonaCities}
+            name="random"
+            id="select-input"
+            disabled={boolean('disabled', false)}
+            {...eventLoggers}
+            onChange={onChange}
+            value={value}
+            multiple
+          />
+        )}
+      </FormHandler>
+    ),
+    { cactus: { overrides: { overflow: 'hidden' } } }
+  )

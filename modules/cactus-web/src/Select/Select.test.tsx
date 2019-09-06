@@ -593,7 +593,7 @@ describe('component: Select', () => {
     test('all options are rendered with aria-selected attribute as true or false', async () => {
       const startingValue = ['tucson']
       const onChange = jest.fn()
-      const { getByText, getAllByRole, rerender } = render(
+      const { getByText, getAllByRole } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -605,22 +605,6 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      let trigger: HTMLElement = getByText('tucson')
-      fireEvent.click(trigger)
-      rerender(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value={startingValue}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
-      )
-      await animationRender()
       let options = getAllByRole('option')
       options.forEach(o => {
         expect(o.getAttribute('aria-selected')).toBe(
