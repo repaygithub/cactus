@@ -405,7 +405,6 @@ const FileInputBase = (props: FileInputProps) => {
                   errorMsg: errorMsg,
                 })
               }
-              dataURL = dataURL.replace(/data:.+\/.+\;base64,/g, '')
               resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
             }
 
