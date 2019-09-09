@@ -470,6 +470,9 @@ const FileInputBase = (props: FileInputProps) => {
     event.stopPropagation()
 
     saveFiles(event.dataTransfer.files)
+    if (fileSelector.current) {
+      fileSelector.current.files = event.dataTransfer.files
+    }
   }
 
   const handleOpenFileSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -553,6 +556,7 @@ const FileInputBase = (props: FileInputProps) => {
         ref={fileSelector}
         key={state.inputKey}
         accept={accept && accept.join()}
+        name={name}
         multiple={multiple}
         onChange={handleFileSelect}
       />

@@ -124,6 +124,7 @@ exports[`component: FileInput should render a file input 1`] = `
   >
     <input
       accept=".tsx"
+      name="throatpunch"
       type="file"
     />
     <div
@@ -499,6 +500,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   >
     <input
       accept=".md"
+      name="throatpunch"
       type="file"
     />
     <div
@@ -882,6 +884,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   >
     <input
       accept=".md"
+      name="throatpunch"
       type="file"
     />
     <div
@@ -1143,6 +1146,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   >
     <input
       accept=".md"
+      name="throatpunch"
       type="file"
     />
     <div

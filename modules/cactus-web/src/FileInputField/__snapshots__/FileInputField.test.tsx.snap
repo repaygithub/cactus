@@ -401,6 +401,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
     >
       <input
         accept=".txt"
+        name="bears"
         type="file"
       />
       <div
@@ -854,6 +855,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
     >
       <input
         accept=".txt"
+        name="bears"
         type="file"
       />
       <div
@@ -1185,6 +1187,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
     >
       <input
         accept=".txt"
+        name="bears"
         type="file"
       />
       <div
@@ -1427,6 +1430,7 @@ exports[`component: FileInputField should render file input field 1`] = `
     >
       <input
         accept=".txt"
+        name="bears"
         type="file"
       />
       <div
