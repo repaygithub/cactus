@@ -68,7 +68,7 @@ FileInputField.propTypes = {
   labelProps: PropTypes.object,
   tooltip: PropTypes.string,
   name: PropTypes.string.isRequired,
-  accept: PropTypes.arrayOf(PropTypes.string).isRequired,
+  accept: PropTypes.arrayOf(PropTypes.string),
   labels: PropTypes.shape({
     delete: PropTypes.string,
     retry: PropTypes.string,

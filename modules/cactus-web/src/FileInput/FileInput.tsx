@@ -54,7 +54,7 @@ export interface FileInputProps
       'onChange' | 'onError' | 'onFocus' | 'onBlur' | 'ref'
     > {
   name: string
-  accept: string[]
+  accept?: string[]
   labels?: { delete?: string; retry?: string; loading?: string; loaded?: string }
   buttonText?: string
   prompt?: string
@@ -372,7 +372,7 @@ const FileInputBase = (props: FileInputProps) => {
       }
 
       const promises = Array.from(files).map(file => {
-        if (!accepts(file, accept)) {
+        if (accept && !accepts(file, accept)) {
           return new Promise<FileObject>(resolve => {
             const errorMsg = onError(FILE_TYPE_ERR, accept)
             resolve({
@@ -405,7 +405,6 @@ const FileInputBase = (props: FileInputProps) => {
                   errorMsg: errorMsg,
                 })
               }
-              dataURL = dataURL.replace(/data:.+\/.+\;base64,/g, '')
               resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
             }
 
@@ -471,6 +470,9 @@ const FileInputBase = (props: FileInputProps) => {
     event.stopPropagation()
 
     saveFiles(event.dataTransfer.files)
+    if (fileSelector.current) {
+      fileSelector.current.files = event.dataTransfer.files
+    }
   }
 
   const handleOpenFileSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -553,7 +555,8 @@ const FileInputBase = (props: FileInputProps) => {
         type="file"
         ref={fileSelector}
         key={state.inputKey}
-        accept={accept.join()}
+        accept={accept && accept.join()}
+        name={name}
         multiple={multiple}
         onChange={handleFileSelect}
       />
@@ -658,7 +661,7 @@ interface FileInputComponent
 // @ts-ignore
 FileInput.propTypes = {
   name: PropTypes.string.isRequired,
-  accept: PropTypes.arrayOf(PropTypes.string).isRequired,
+  accept: PropTypes.arrayOf(PropTypes.string),
   labels: PropTypes.shape({
     delete: PropTypes.string,
     retry: PropTypes.string,
