@@ -2,23 +2,23 @@
 
 exports[`component: Select snapshot 1`] = `
 <DocumentFragment>
-  .c4 {
+  .c5 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c2 {
+.c3 {
   font-style: italic;
   color: hsl(200,9%,35%);
   font-size: 18px;
 }
 
-.c0 {
+.c1 {
   position: relative;
   box-sizing: border-box;
   min-width: 194px;
   width: 100%;
-  height: 32px;
+  height: 36px;
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 20px;
@@ -33,59 +33,64 @@ exports[`component: Select snapshot 1`] = `
   cursor: pointer;
 }
 
-.c0:disabled {
+.c1:disabled {
   border-color: hsl(0,0%,70%);
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
 
-.c0:disabled .c1 {
+.c1:disabled .c2 {
   display: none;
 }
 
-.c0::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c0:focus,
-.c0[aria-expanded] {
+.c1:focus,
+.c1[aria-expanded] {
   border-color: hsl(200,96%,35%);
 }
 
-.c0:focus .c3,
-.c0[aria-expanded] .c3 {
+.c1:focus .c4,
+.c1[aria-expanded] .c4 {
   color: hsl(200,96%,35%);
 }
 
-.c0[aria-expanded] .c3 {
+.c1[aria-expanded] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3 {
+.c1 .c4 {
   position: absolute;
   right: 14px;
   top: 10px;
 }
 
+.c0 {
+  max-width: 100%;
+}
+
 <div
-    class=""
+    class="c0"
   >
     <button
       aria-haspopup="listbox"
-      class="c0"
+      aria-multiselectable="false"
+      class="c1"
       id="test-id"
       name="city"
       type="button"
     >
       <span
-        class="c1 c2"
+        class="c2 c3"
       >
         Select an option
       </span>
       <svg
-        class="c3 c4"
+        class="c4 c5"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
