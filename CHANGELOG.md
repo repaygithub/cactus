@@ -1,5 +1,13 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.0](https://github.com/repaygithub/cactus/commit/2b2dce1c9c07759769c17092b11e47f785c306eb)
+
+- feat(cactus-web): Persist value in hidden file input [20a38cf](https://github.com/repaygithub/cactus/commit/20a38cfd6081c8db9b99d89ddcd0220c3ced9f03)
+- feat(cactus-web): Make accept optional on FileInput [d536d64](https://github.com/repaygithub/cactus/commit/d536d646b9d4a6fe60f0443c24ba4d0b6ef89ebb)
+- feat(cactus-web): BREAKING 🧨 Include entire dataURL in FileInput values [e052f93]https://github.com/repaygithub/cactus/commit/e052f933f15510bdf693c08a7abe901f0a3c6f47
+- feat(cactus-web): BREAKING 🧨 Select allows multiselect [04e4b31](https://github.com/repaygithub/cactus/commit/04e4b314f39e681e42aa92a00f5b8bd5c620be10)
+- fix(cactus-web): Prevent file input from growing to 100% of parent width [8086425](https://github.com/repaygithub/cactus/commit/8086425bffeab45440d20c854578ab1fc3f64a78)
+
 ## [@repay/cactus-web@v0.4.14](https://github.com/repaygithub/cactus/commit/dd0a2da9eb7571c6bf1da1f56c96c12c4edf74f9)
 
 - chore(): Upgrade to @repay/cactus-icons v0.6.1 [6f60cf7](https://github.com/repaygithub/cactus/commit/6f60cf75734ddc8a40766d225f5f2d871046d5ea)
