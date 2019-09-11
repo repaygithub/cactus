@@ -1,5 +1,9 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.1](https://github.com/repaygithub/cactus/commit/3c03d05f209bfc7be119911182768486becb978c)
+
+- fix(cactus-web): Set select height to 32px [de8333c](https://github.com/repaygithub/cactus/commit/de8333c2c423b01a455d784e8087cf96febcd6b3)
+
 ## [@repay/cactus-web@v0.5.0](https://github.com/repaygithub/cactus/commit/2b2dce1c9c07759769c17092b11e47f785c306eb)
 
 - feat(cactus-web): Persist value in hidden file input [20a38cf](https://github.com/repaygithub/cactus/commit/20a38cfd6081c8db9b99d89ddcd0220c3ced9f03)
