@@ -90,10 +90,12 @@ const ValueTagBase = React.forwardRef<
 const ValueTag = styled(ValueTagBase)`
   box-sizing: border-box;
   ${p => p.theme.textStyles.small};
-  padding: 4px 8px 4px 8px;
+  padding: 0 8px 0 8px;
   border: 1px solid ${p => p.theme.colors.lightGray};
   border-radius: 7px;
   margin-right: 2px;
+  display: inline-block;
+  height: 24px;
   ${p => (p.hidden ? { visibility: 'hidden' } : undefined)}
 
   ${NavigationClose} {
@@ -104,7 +106,7 @@ const ValueTag = styled(ValueTagBase)`
     font-size: 8px;
     padding: 0;
     margin-left: 16px;
-    vertical-align: 3px;
+    vertical-align: 1px;
   }
 `
 
@@ -240,7 +242,7 @@ const SelectTrigger = styled.button`
   box-sizing: border-box;
   min-width: 194px;
   width: 100%;
-  height: 36px;
+  height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 20px;
