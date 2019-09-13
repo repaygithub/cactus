@@ -840,7 +840,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   closeList = () => {
     this.setState({ isOpen: false })
     window.requestAnimationFrame(() => {
-      this.triggerRef.current!.focus()
+      if (this.triggerRef.current !== null) {
+        this.triggerRef.current.focus()
+      }
     })
   }
 
@@ -870,10 +872,12 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     id: string | undefined
     options: Array<string | number | OptionType>
     memo: ExtendedOptionType[]
+    value: SelectValueType
   } = {
     id: undefined,
     options: [],
     memo: [],
+    value: null,
   }
 
   getExtOptions() {
@@ -881,13 +885,15 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (
       this.memoizedExtOptions.memo.length !== 0 &&
       this.memoizedExtOptions.id === selectId &&
-      this.props.options === this.memoizedExtOptions.options
+      this.props.options === this.memoizedExtOptions.options &&
+      this.props.value === this.memoizedExtOptions.value
     ) {
       return this.memoizedExtOptions.memo
     }
     this.memoizedExtOptions = {
       id: selectId,
       options: this.props.options,
+      value: this.state.value,
       memo: this.props.options.map(o => {
         let opt = asOption(o)
         return {
