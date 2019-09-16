@@ -13,7 +13,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -167,7 +167,7 @@ exports[`component: SelectField render with complex options 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -321,7 +321,7 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -480,7 +480,7 @@ exports[`component: SelectField should render an accessible error message 1`] = 
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -708,7 +708,7 @@ exports[`component: SelectField should render an accessible success message 1`] 
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -912,7 +912,7 @@ exports[`component: SelectField should render an accessible warning message 1`] 
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -1124,7 +1124,7 @@ exports[`component: SelectField supports margin props 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 

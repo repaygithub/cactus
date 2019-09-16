@@ -4,7 +4,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -134,7 +134,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -236,7 +236,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -367,7 +367,7 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -515,7 +515,7 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -670,7 +670,7 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -832,7 +832,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
