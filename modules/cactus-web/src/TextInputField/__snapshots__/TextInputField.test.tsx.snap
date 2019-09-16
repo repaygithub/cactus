@@ -9,7 +9,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 }
 
 .c8 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -71,7 +71,6 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -139,7 +138,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 }
 
 .c6 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -196,7 +195,6 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 
 .c0 .c8 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -241,7 +239,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 }
 
 .c8 {
-  border: 2px solid hsl(0,0%,90%);
+  border: 1px solid hsl(0,0%,90%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -303,7 +301,6 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -396,7 +393,7 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 }
 
 .c6 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -455,7 +452,6 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 
 .c0 .c12 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -551,7 +547,7 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 }
 
 .c6 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -610,7 +606,6 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 
 .c0 .c13 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -713,7 +708,7 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 }
 
 .c6 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -772,7 +767,6 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 
 .c0 .c13 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -837,7 +831,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
 }
 
 .c6 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -901,7 +895,6 @@ exports[`component: TextInputField should support margin space props 1`] = `
 
 .c0 .c9 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }

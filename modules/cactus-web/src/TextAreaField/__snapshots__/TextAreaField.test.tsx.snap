@@ -13,7 +13,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 }
 
 .c8 {
-  border: 2px solid hsl(200,9%,35%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
@@ -80,7 +80,6 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -151,7 +150,7 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
 }
 
 .c8 {
-  border: 2px solid hsl(200,9%,35%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
@@ -218,7 +217,6 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -290,7 +288,7 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
 }
 
 .c8 {
-  border: 2px solid hsl(0,0%,90%);
+  border: 1px solid hsl(0,0%,90%);
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
@@ -357,7 +355,6 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -453,7 +450,7 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
 }
 
 .c8 {
-  border: 2px solid hsl(200,9%,35%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
@@ -522,7 +519,6 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -645,7 +641,7 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
 }
 
 .c8 {
-  border: 2px solid hsl(200,9%,35%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
@@ -714,7 +710,6 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -844,7 +839,7 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
 }
 
 .c8 {
-  border: 2px solid hsl(200,9%,35%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
@@ -913,7 +908,6 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -1005,7 +999,7 @@ exports[`component: TextAreaField should support margin space props 1`] = `
 }
 
 .c8 {
-  border: 2px solid hsl(200,9%,35%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
@@ -1067,7 +1061,6 @@ exports[`component: TextAreaField should support margin space props 1`] = `
 
 .c9 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }
@@ -1087,7 +1080,6 @@ exports[`component: TextAreaField should support margin space props 1`] = `
 
 .c0 .c5 {
   position: absolute;
-  top: -2px;
   right: 8px;
   font-size: 16px;
 }

@@ -50,7 +50,7 @@ const displayStatus = (props: TextAreaProps) => {
 }
 
 const Area = styled.textarea<TextAreaProps>`
-  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
+  border: 1px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
   border-radius: 8px;
   min-height: 100px;
   min-width: 336px;

@@ -246,9 +246,9 @@ const SelectTrigger = styled.button`
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 20px;
-  border-width: 2px;
+  border-width: 1px;
   border-style: solid;
-  border-color: ${p => p.theme.colors.darkestContrast};
+  border-color: ${p => p.theme.colors.darkContrast};
   text-align: left;
   outline: none;
   appearance: none;

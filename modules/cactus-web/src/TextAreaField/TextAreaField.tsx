@@ -130,7 +130,6 @@ export const TextAreaField = styled(TextAreaFieldBase)`
 
   ${Tooltip} {
     position: absolute;
-    top: -2px;
     right: 8px
     font-size: 16px;
   }

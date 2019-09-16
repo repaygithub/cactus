@@ -3,7 +3,7 @@
 exports[`component: TextInput should render a disabled input 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 2px solid hsl(0,0%,90%);
+  border: 1px solid hsl(0,0%,90%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -57,7 +57,7 @@ exports[`component: TextInput should render a disabled input 1`] = `
 exports[`component: TextInput should render a success input 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -112,7 +112,7 @@ exports[`component: TextInput should render a success input 1`] = `
 exports[`component: TextInput should render a text input 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -165,7 +165,7 @@ exports[`component: TextInput should render a text input 1`] = `
 exports[`component: TextInput should render an error input 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -220,7 +220,7 @@ exports[`component: TextInput should render an error input 1`] = `
 exports[`component: TextInput should render an input with a placeholder 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -274,7 +274,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
 exports[`component: TextInput should render an warning input 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
@@ -329,7 +329,7 @@ exports[`component: TextInput should render an warning input 1`] = `
 exports[`component: TextInput should support margin space props 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
