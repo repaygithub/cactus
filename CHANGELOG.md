@@ -1,5 +1,9 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.2](https://github.com/repaygithub/cactus/commit/e578224d529265b451c4eb8365fe52c2b832fed4)
+
+- fix(cactus-web): Add value to select memoization [de3e8aa](https://github.com/repaygithub/cactus/commit/de3e8aae97a396cc83ce96ad8de86ca516ec42cc)
+
 ## [@repay/cactus-web@v0.5.1](https://github.com/repaygithub/cactus/commit/3c03d05f209bfc7be119911182768486becb978c)
 
 - fix(cactus-web): Set select height to 32px [de8333c](https://github.com/repaygithub/cactus/commit/de8333c2c423b01a455d784e8087cf96febcd6b3)
