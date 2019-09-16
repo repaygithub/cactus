@@ -84,6 +84,63 @@ describe('component: Select', () => {
     expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(topOption.id)
   })
 
+  test('can update value through props', async () => {
+    const { getByText, rerender, getByTestId } = render(
+      <StyleProvider>
+        <Select
+          id="test-id"
+          data-testid="my-select"
+          name="city"
+          options={['one', 'two', 'three']}
+        />
+      </StyleProvider>
+    )
+
+    // @ts-ignore
+    let trigger: HTMLElement = getByTestId('my-select')
+    fireEvent.click(trigger)
+    rerender(
+      <StyleProvider>
+        <Select
+          id="test-id"
+          data-testid="my-select"
+          name="city"
+          options={['one', 'two', 'three']}
+        />
+      </StyleProvider>
+    )
+    await animationRender()
+    fireEvent.click(getByText('one'))
+    await animationRender()
+    rerender(
+      <StyleProvider>
+        <Select
+          id="test-id"
+          data-testid="my-select"
+          name="city"
+          options={['one', 'two', 'three']}
+        />
+      </StyleProvider>
+    )
+    trigger = getByTestId('my-select')
+    expect(trigger).toHaveTextContent('one')
+
+    rerender(
+      <StyleProvider>
+        <Select
+          id="test-id"
+          data-testid="my-select"
+          name="city"
+          options={['one', 'two', 'three']}
+          value="two"
+        />
+      </StyleProvider>
+    )
+    await animationRender()
+    trigger = getByTestId('my-select')
+    expect(trigger).toHaveTextContent('two')
+  })
+
   describe('keyboard interactions', () => {
     test('listbox gets focus on SPACE and first option selected', async () => {
       const { getByText, getByRole, rerender } = render(
