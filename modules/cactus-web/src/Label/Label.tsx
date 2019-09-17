@@ -13,7 +13,7 @@ export interface LabelProps
 
 export const Label = styled.label<LabelProps>`
   ${p => p.theme.textStyles.body};
-  font-weight: 400;
+  font-weight: 600;
   color: ${p => p.theme.colors.darkestContrast};
 
   ${margin}

@@ -8,7 +8,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
 .c8 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -121,7 +121,7 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 .c8 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -224,7 +224,7 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 .c8 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 

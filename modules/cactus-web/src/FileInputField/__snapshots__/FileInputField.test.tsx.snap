@@ -335,7 +335,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -789,7 +789,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -1121,7 +1121,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
@@ -1364,7 +1364,7 @@ exports[`component: FileInputField should render file input field 1`] = `
 .c4 {
   font-size: 18px;
   line-height: 28px;
-  font-weight: 400;
+  font-weight: 600;
   color: hsl(200,10%,20%);
 }
 

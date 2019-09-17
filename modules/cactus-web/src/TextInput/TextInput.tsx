@@ -57,7 +57,7 @@ const TextInputBase = (props: TextInputProps) => {
 }
 
 const Input = styled.input<InputProps>`
-  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
+  border: 1px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
   border-radius: 20px;
   height: 32px;
   outline: none;
