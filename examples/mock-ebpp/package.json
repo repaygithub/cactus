@@ -9,14 +9,47 @@
   "private": false,
   "scripts": {
     "dev": "repay-scripts dev src/index.tsx -p 3437",
+    "build": "repay-scripts build src/index.tsx",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
-    "test:ci": "yarn test:types",
+    "test:ci": "yarn test:local --maxWorkers=2",
     "cleanup": "rm -rf dist",
-    "test:local": "yarn test:types"
+    "test:local": "yarn test:types && yarn test",
+    "test": "yarn build && jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": ".*\\.test\\.(tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
+    "globalSetup": "./tests/config/setup.ts",
+    "globalTeardown": "./tests/config/teardown.ts",
+    "testEnvironment": "./tests/config/puppeteer-environment.js"
   },
   "devDependencies": {
+    "@repay/babel-preset": "^0.3.0",
     "@repay/scripts": "^0.2.2",
-    "prop-types": "^15.7.2"
+    "@testing-library/react": "^9.1.4",
+    "@types/expect-puppeteer": "^3.3.1",
+    "@types/jest-environment-puppeteer": "^4.3.1",
+    "@types/node": "^12.7.5",
+    "@types/puppeteer": "^1.19.1",
+    "@types/rimraf": "^2.0.2",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "jest": "^24.9.0",
+    "jest-puppeteer": "^4.3.0",
+    "pptr-testing-library": "^0.4.0",
+    "prop-types": "^15.7.2",
+    "puppeteer": "^1.19.0"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
