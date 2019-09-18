@@ -5,14 +5,14 @@ exports[`component: ToggleField snapshot 1`] = `
   margin-top: 16px;
 }
 
-.c4 {
+.c10 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
-.c8 {
+.c6 {
   vertical-align: middle;
   width: 12px;
   height: 12px;
@@ -22,7 +22,7 @@ exports[`component: ToggleField snapshot 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c10 {
+.c8 {
   vertical-align: middle;
   width: 15px;
   height: 15px;
@@ -32,7 +32,7 @@ exports[`component: ToggleField snapshot 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c6 {
+.c4 {
   position: relative;
   width: 45px;
   height: 20px;
@@ -43,11 +43,11 @@ exports[`component: ToggleField snapshot 1`] = `
   cursor: pointer;
 }
 
-.c6:focus {
+.c4:focus {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c6::after {
+.c4::after {
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -61,48 +61,48 @@ exports[`component: ToggleField snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c6[aria-checked='true'] {
+.c4[aria-checked='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c6[aria-checked='true']::after {
+.c4[aria-checked='true']::after {
   -webkit-transform: translateX(25px);
   -ms-transform: translateX(25px);
   transform: translateX(25px);
 }
 
-.c6[aria-checked='true'] .c7 {
+.c4[aria-checked='true'] .c5 {
   opacity: 0;
 }
 
-.c6[aria-checked='true'] .c9 {
+.c4[aria-checked='true'] .c7 {
   opacity: 1;
 }
 
-.c6 .c7 {
+.c4 .c5 {
   opacity: 1;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-.c6 .c9 {
+.c4 .c7 {
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-.c6[disabled] {
+.c4[disabled] {
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
 }
 
-.c0 .c3 {
+.c0 .c9 {
   cursor: pointer;
-  margin-right: 8px;
+  margin-left: 8px;
 }
 
-.c0 .c5 {
+.c0 .c3 {
   vertical-align: text-bottom;
 }
 
@@ -110,15 +110,9 @@ exports[`component: ToggleField snapshot 1`] = `
   <div
     class="c0 c1 c2"
   >
-    <label
-      class="c3 c4"
-      for="static-id"
-    >
-      Enabled
-    </label>
     <button
       aria-checked="false"
-      class="c5 c6"
+      class="c3 c4"
       id="static-id"
       name="is_enabled"
       role="switch"
@@ -126,7 +120,7 @@ exports[`component: ToggleField snapshot 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="c7 c8"
+        class="c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -138,7 +132,7 @@ exports[`component: ToggleField snapshot 1`] = `
       </svg>
       <svg
         aria-hidden="true"
-        class="c9 c10"
+        class="c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -149,6 +143,12 @@ exports[`component: ToggleField snapshot 1`] = `
         />
       </svg>
     </button>
+    <label
+      class="c9 c10"
+      for="static-id"
+    >
+      Enabled
+    </label>
   </div>
 </div>
 `;
@@ -158,14 +158,14 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   margin-top: 16px;
 }
 
-.c4 {
+.c10 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
-.c8 {
+.c6 {
   vertical-align: middle;
   width: 12px;
   height: 12px;
@@ -175,7 +175,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c10 {
+.c8 {
   vertical-align: middle;
   width: 15px;
   height: 15px;
@@ -185,27 +185,27 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c11[aria-checked='true'] .c7 {
+.c11[aria-checked='true'] .c5 {
   opacity: 0;
 }
 
-.c11[aria-checked='true'] .c9 {
+.c11[aria-checked='true'] .c7 {
   opacity: 1;
+}
+
+.c11 .c5 {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 
 .c11 .c7 {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c11 .c9 {
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-.c6 {
+.c4 {
   position: relative;
   width: 45px;
   height: 20px;
@@ -216,11 +216,11 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   cursor: cursor;
 }
 
-.c6:focus {
+.c4:focus {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c6::after {
+.c4::after {
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -234,48 +234,48 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c6[aria-checked='true'] {
+.c4[aria-checked='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c6[aria-checked='true']::after {
+.c4[aria-checked='true']::after {
   -webkit-transform: translateX(25px);
   -ms-transform: translateX(25px);
   transform: translateX(25px);
 }
 
-.c6[aria-checked='true'] .c7 {
+.c4[aria-checked='true'] .c5 {
   opacity: 0;
 }
 
-.c6[aria-checked='true'] .c9 {
+.c4[aria-checked='true'] .c7 {
   opacity: 1;
 }
 
-.c6 .c7 {
+.c4 .c5 {
   opacity: 1;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-.c6 .c9 {
+.c4 .c7 {
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-.c6[disabled] {
+.c4[disabled] {
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
 }
 
-.c0 .c3 {
+.c0 .c9 {
   cursor: pointer;
-  margin-right: 8px;
+  margin-left: 8px;
 }
 
-.c0 .c5 {
+.c0 .c3 {
   vertical-align: text-bottom;
 }
 
@@ -283,15 +283,9 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   <div
     class="c0 c1 c2"
   >
-    <label
-      class="c3 c4"
-      for="static-id"
-    >
-      Enabled
-    </label>
     <button
       aria-checked="false"
-      class="c5 c6"
+      class="c3 c4"
       disabled=""
       id="static-id"
       name="is_enabled"
@@ -300,7 +294,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="c7 c8"
+        class="c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -312,7 +306,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
       </svg>
       <svg
         aria-hidden="true"
-        class="c9 c10"
+        class="c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -323,6 +317,12 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
         />
       </svg>
     </button>
+    <label
+      class="c9 c10"
+      for="static-id"
+    >
+      Enabled
+    </label>
   </div>
 </div>
 `;
@@ -332,14 +332,14 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   margin-top: 16px;
 }
 
-.c4 {
+.c10 {
   font-size: 18px;
   line-height: 28px;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
-.c8 {
+.c6 {
   vertical-align: middle;
   width: 12px;
   height: 12px;
@@ -349,7 +349,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c10 {
+.c8 {
   vertical-align: middle;
   width: 15px;
   height: 15px;
@@ -359,7 +359,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c6 {
+.c4 {
   position: relative;
   width: 45px;
   height: 20px;
@@ -370,11 +370,11 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   cursor: pointer;
 }
 
-.c6:focus {
+.c4:focus {
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c6::after {
+.c4::after {
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -388,48 +388,48 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c6[aria-checked='true'] {
+.c4[aria-checked='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c6[aria-checked='true']::after {
+.c4[aria-checked='true']::after {
   -webkit-transform: translateX(25px);
   -ms-transform: translateX(25px);
   transform: translateX(25px);
 }
 
-.c6[aria-checked='true'] .c7 {
+.c4[aria-checked='true'] .c5 {
   opacity: 0;
 }
 
-.c6[aria-checked='true'] .c9 {
+.c4[aria-checked='true'] .c7 {
   opacity: 1;
 }
 
-.c6 .c7 {
+.c4 .c5 {
   opacity: 1;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-.c6 .c9 {
+.c4 .c7 {
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-.c6[disabled] {
+.c4[disabled] {
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
 }
 
-.c0 .c3 {
+.c0 .c9 {
   cursor: pointer;
-  margin-right: 8px;
+  margin-left: 8px;
 }
 
-.c0 .c5 {
+.c0 .c3 {
   vertical-align: text-bottom;
 }
 
@@ -437,15 +437,9 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   <div
     class="c0 c1 c2"
   >
-    <label
-      class="c3 c4"
-      for="static-id"
-    >
-      Enabled
-    </label>
     <button
       aria-checked="true"
-      class="c5 c6"
+      class="c3 c4"
       id="static-id"
       name="is_enabled"
       role="switch"
@@ -453,7 +447,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="c7 c8"
+        class="c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -465,7 +459,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
       </svg>
       <svg
         aria-hidden="true"
-        class="c9 c10"
+        class="c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -476,6 +470,12 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
         />
       </svg>
     </button>
+    <label
+      class="c9 c10"
+      for="static-id"
+    >
+      Enabled
+    </label>
   </div>
 </div>
 `;
