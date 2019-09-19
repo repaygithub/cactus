@@ -105,9 +105,9 @@ const ValueTag = styled(ValueTagBase)`
     background-color: transparent;
     border: none;
     font-size: 8px;
-    padding: 0;
-    margin-left: 16px;
-    vertical-align: 1px;
+    padding: 4px;
+    margin-left: 12px;
+    vertical-align: -3px;
   }
 `
 
