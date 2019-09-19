@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 
+import '../helpers/polyfills'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
@@ -714,6 +715,21 @@ type SelectState = {
   value: string | number | Array<number | string> | null
 }
 
+const closestOption = (target: Element | null) => {
+  if (target === null) {
+    return target
+  } else if (typeof target.closest === 'function') {
+    return target.closest('li[role=option]')
+  } else {
+    let myTarget: Element | (Node & ParentNode) | null = target
+    do {
+      if ((myTarget as Element).matches('li[role=option')) return myTarget as Element
+      myTarget = myTarget.parentElement || myTarget.parentNode
+    } while (myTarget !== null && myTarget.nodeType === 1)
+    return null
+  }
+}
+
 class SelectBase extends React.Component<SelectProps, SelectState> {
   state = {
     isOpen: false,
@@ -785,8 +801,13 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   }
 
   handleListClick = (event: React.MouseEvent<HTMLUListElement>) => {
-    const target = event.target as HTMLElement
+    let target: Element | null = event.target as HTMLElement
+    if (target.getAttribute('role') !== 'option') {
+      target = closestOption(target)
+      if (target === null) return
+    }
     if (target.getAttribute('role') === 'option') {
+      event.preventDefault()
       const activeId = target.id as string
       const active = this.getExtOptions().find(o => o.id === activeId)
       this.raiseChange(active || null)

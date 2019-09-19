@@ -650,7 +650,7 @@ describe('component: Select', () => {
     test('all options are rendered with aria-selected attribute as true or false', async () => {
       const startingValue = ['tucson']
       const onChange = jest.fn()
-      const { getByText, getAllByRole } = render(
+      const { getAllByRole } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -668,6 +668,50 @@ describe('component: Select', () => {
           String(o.getAttribute('data-value') === 'tucson')
         )
       })
+    })
+
+    test('can click checkboxes to add values', async () => {
+      const onChange = jest.fn()
+      const { getByText, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      const selectTrigger = getByText('Select an option')
+      fireEvent.click(selectTrigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      const phoenixCheckbox = document.querySelector('input[type=checkbox]') as Element
+      fireEvent.click(phoenixCheckbox)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(onChange).toHaveBeenCalledWith('city', ['phoenix'])
     })
 
     test('can select multiple options', async () => {
