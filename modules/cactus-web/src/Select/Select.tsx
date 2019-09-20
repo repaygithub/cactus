@@ -84,7 +84,7 @@ const ValueTagBase = React.forwardRef<
   return (
     <span id={id} ref={ref} className={className}>
       <span className="value-tag__label">{children}</span>
-      {closeOption && <NavigationClose role="close" />}
+      {closeOption && <NavigationClose data-role="close" />}
     </span>
   )
 })
@@ -770,7 +770,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (target && target.tagName === 'path') {
       target = target.closest('svg')
     }
-    if (target && target.matches('[role=close]')) {
+    if (target && target.getAttribute('data-role') === 'close') {
       const valueTag = target.closest('span')
       let optId = valueTag ? valueTag.getAttribute('id') : null
       if (optId) {
