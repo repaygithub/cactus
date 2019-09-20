@@ -1,5 +1,16 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.3](https://github.com/repaygithub/cactus/commit/a97ab14f3690f7461bc106b62cbe620777c5fa5f)
+
+- refactor(cactus-web): Use data-role rather than role for close buttons [641f54a](https://github.com/repaygithub/cactus/commit/641f54a65dad0e2b67b1cc872ddbffed1c3fe41b)
+- fix(cactus-web): Capture click events at the trigger level [90274d4](https://github.com/repaygithub/cactus/commit/90274d45a775fea85bdd0d3d4783dd369b911701)
+- chore(cactus-web): Add polyfill helpers to sideEffects [c886a1e](https://github.com/repaygithub/cactus/commit/c886a1ec3818aadda6e2d828a0b2a70b823a82a4)
+- fix(cactus-web): Make clickable area around 'X' larger in multiselect tags [2843bac](https://github.com/repaygithub/cactus/commit/2843bacf22eac5d77804883c4dbabf19d2c0b540)
+- fix(cactus-web): Click checkbox to add values in multiselect [8f83b8a](https://github.com/repaygithub/cactus/commit/8f83b8a332660646ce578d0150524a1c6a11ebe3)
+- refactor(cactus-web): Swap location of toggle & label in ToggleField [c855d3b](https://github.com/repaygithub/cactus/commit/c855d3b2b47c6964152839048e687dcf51986d6d)
+- refactor(cactus-web): Update border colors & widths [67ac636](https://github.com/repaygithub/cactus/commit/67ac63605de9aba019edbc87dfa6c351fa223478)
+- refactor(cactus-web): Set label font weight to 600 [8c09edd](https://github.com/repaygithub/cactus/commit/8c09eddf4ec1d3bbff0b8599933bf8faec398933)
+
 ## [@repay/cactus-web@v0.5.2](https://github.com/repaygithub/cactus/commit/e578224d529265b451c4eb8365fe52c2b832fed4)
 
 - fix(cactus-web): Add value to select memoization [de3e8aa](https://github.com/repaygithub/cactus/commit/de3e8aae97a396cc83ce96ad8de86ca516ec42cc)
