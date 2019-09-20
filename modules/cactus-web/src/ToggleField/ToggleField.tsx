@@ -67,9 +67,6 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
 
   return (
     <FieldWrapper className={className}>
-      <Label {...props.labelProps} htmlFor={fieldId}>
-        {props.label}
-      </Label>
       <Toggle
         {...toggleProps}
         name={name}
@@ -78,6 +75,9 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
+      <Label {...props.labelProps} htmlFor={fieldId}>
+        {props.label}
+      </Label>
     </FieldWrapper>
   )
 }
@@ -87,7 +87,7 @@ export const ToggleField = styled(ToggleFieldBase)`
 
   ${Label} {
     cursor: pointer;
-    margin-right: 8px;
+    margin-left: 8px;
   }
 
   ${Toggle} {
