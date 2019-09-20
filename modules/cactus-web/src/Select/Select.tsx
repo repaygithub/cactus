@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 
+import '../helpers/polyfills'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
@@ -73,16 +74,17 @@ const displayStatus = (props: SelectProps) => {
 const ValueTagBase = React.forwardRef<
   HTMLSpanElement,
   {
+    id?: string
     className?: string
-    onRemove?: (event: React.MouseEvent<SVGElement>) => void
+    closeOption?: boolean
     children: React.ReactNode
     hidden?: boolean
   }
->(({ className, onRemove, children }, ref) => {
+>(({ id, className, closeOption, children }, ref) => {
   return (
-    <span ref={ref} className={className}>
+    <span id={id} ref={ref} className={className}>
       <span className="value-tag__label">{children}</span>
-      {onRemove && <NavigationClose onClick={onRemove} />}
+      {closeOption && <NavigationClose data-role="close" />}
     </span>
   )
 })
@@ -104,9 +106,9 @@ const ValueTag = styled(ValueTagBase)`
     background-color: transparent;
     border: none;
     font-size: 8px;
-    padding: 0;
-    margin-left: 16px;
-    vertical-align: 1px;
+    padding: 4px;
+    margin-left: 12px;
+    vertical-align: -3px;
   }
 `
 
@@ -131,7 +133,6 @@ const ValueSwitch = (props: {
   placeholder: string | undefined
   extraLabel: string
   multiple?: boolean
-  onRemove: (opt: OptionType) => void
 }) => {
   const selected = props.options.filter(o => o.isSelected)
   const numSelected = selected.length
@@ -189,13 +190,7 @@ const ValueSwitch = (props: {
       return (
         <ValueSpan ref={spanRef}>
           {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(opt => (
-            <ValueTag
-              onRemove={e => {
-                e.stopPropagation()
-                props.onRemove(opt)
-              }}
-              key={opt.value + opt.label}
-            >
+            <ValueTag id={`value-tag::${opt.id}`} closeOption key={opt.value + opt.label}>
               {opt.label}
             </ValueTag>
           ))}
@@ -208,12 +203,7 @@ const ValueSwitch = (props: {
       const value = selected[0]
       return (
         <ValueSpan>
-          <ValueTag
-            onRemove={e => {
-              e.stopPropagation()
-              props.onRemove(selected[0])
-            }}
-          >
+          <ValueTag id={`value-tag::${value.id}`} closeOption>
             {value.label}
           </ValueTag>
         </ValueSpan>
@@ -327,6 +317,7 @@ const Option = styled.li`
   }
 
   ${CheckBox} {
+    pointer-events: none;
     margin-right: 4px;
     vertical-align: -2px;
   }
@@ -771,8 +762,26 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    handleEvent(this.props.onFocus, this.props.name)
-    this.openList()
+    let target: Element | null = event.target as HTMLElement
+    // Get element from point if in IE
+    if (/MSIE|Trident/.test(window.navigator.userAgent)) {
+      target = document.elementFromPoint(event.clientX, event.clientY)
+    }
+    if (target && target.tagName === 'path') {
+      target = target.closest('svg')
+    }
+    if (target && target.getAttribute('data-role') === 'close') {
+      const valueTag = target.closest('span')
+      let optId = valueTag ? valueTag.getAttribute('id') : null
+      if (optId) {
+        optId = optId.split('::')[1]
+      }
+      const option = this.getExtOptions().find(opt => opt.id === optId)
+      this.raiseChange(option || null)
+    } else {
+      handleEvent(this.props.onFocus, this.props.name)
+      this.openList()
+    }
   }
 
   handleListBlur = (event: React.FocusEvent<HTMLUListElement>) => {
@@ -785,8 +794,13 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   }
 
   handleListClick = (event: React.MouseEvent<HTMLUListElement>) => {
-    const target = event.target as HTMLElement
+    let target: Element | null = event.target as HTMLElement
+    if (target.getAttribute('role') !== 'option') {
+      target = target.closest('[role=option]')
+      if (target === null) return
+    }
     if (target.getAttribute('role') === 'option') {
+      event.preventDefault()
       const activeId = target.id as string
       const active = this.getExtOptions().find(o => o.id === activeId)
       this.raiseChange(active || null)
@@ -962,7 +976,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                   options={options}
                   placeholder={placeholder}
                   multiple={multiple}
-                  onRemove={this.raiseChange}
                 />
                 <NavigationChevronDown iconSize="tiny" />
               </SelectTrigger>
