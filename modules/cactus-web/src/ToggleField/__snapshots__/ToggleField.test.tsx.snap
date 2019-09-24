@@ -17,8 +17,8 @@ exports[`component: ToggleField snapshot 1`] = `
   width: 12px;
   height: 12px;
   position: absolute;
-  top: 3px;
-  left: 25px;
+  top: 6px;
+  right: 8px;
   color: hsl(0,0%,100%);
 }
 
@@ -27,19 +27,19 @@ exports[`component: ToggleField snapshot 1`] = `
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 1px;
+  top: 4px;
   left: 5px;
   color: hsl(0,0%,100%);
 }
 
 .c4 {
   position: relative;
-  width: 45px;
-  height: 20px;
-  border-radius: 10px;
+  width: 51px;
+  height: 26px;
+  border-radius: 13px;
   outline: none;
-  background-color: hsl(200,10%,20%);
-  border: 1px solid hsl(200,10%,20%);
+  background-color: hsl(353,84%,44%);
+  border: 1px solid hsl(353,84%,44%);
   cursor: pointer;
 }
 
@@ -48,28 +48,29 @@ exports[`component: ToggleField snapshot 1`] = `
 }
 
 .c4::after {
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   content: '';
-  top: 0;
-  left: 0;
+  top: -1px;
+  left: -1px;
   position: absolute;
   -webkit-transition: -webkit-transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
   background-color: hsl(0,0%,100%);
+  box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
 .c4[aria-checked='true'] {
-  background-color: hsl(200,96%,35%);
-  border-color: hsl(200,96%,35%);
+  background-color: hsl(145,89%,28%);
+  border-color: hsl(145,89%,28%);
 }
 
 .c4[aria-checked='true']::after {
-  -webkit-transform: translateX(25px);
-  -ms-transform: translateX(25px);
-  transform: translateX(25px);
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 .c4[aria-checked='true'] .c5 {
@@ -93,17 +94,18 @@ exports[`component: ToggleField snapshot 1`] = `
 }
 
 .c4[disabled] {
-  background-color: hsl(0,0%,90%);
-  border-color: hsl(0,0%,90%);
+  opacity: 0.5;
 }
 
 .c0 .c9 {
   cursor: pointer;
   margin-left: 8px;
+  line-height: 26px;
+  vertical-align: -2px;
 }
 
 .c0 .c3 {
-  vertical-align: text-bottom;
+  vertical-align: middle;
 }
 
 <div>
@@ -170,8 +172,8 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   width: 12px;
   height: 12px;
   position: absolute;
-  top: 3px;
-  left: 25px;
+  top: 6px;
+  right: 8px;
   color: hsl(0,0%,100%);
 }
 
@@ -180,7 +182,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 1px;
+  top: 4px;
   left: 5px;
   color: hsl(0,0%,100%);
 }
@@ -207,12 +209,12 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
 
 .c4 {
   position: relative;
-  width: 45px;
-  height: 20px;
-  border-radius: 10px;
+  width: 51px;
+  height: 26px;
+  border-radius: 13px;
   outline: none;
-  background-color: hsl(200,10%,20%);
-  border: 1px solid hsl(200,10%,20%);
+  background-color: hsl(353,84%,44%);
+  border: 1px solid hsl(353,84%,44%);
   cursor: cursor;
 }
 
@@ -221,28 +223,29 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
 }
 
 .c4::after {
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   content: '';
-  top: 0;
-  left: 0;
+  top: -1px;
+  left: -1px;
   position: absolute;
   -webkit-transition: -webkit-transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
   background-color: hsl(0,0%,100%);
+  box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
 .c4[aria-checked='true'] {
-  background-color: hsl(200,96%,35%);
-  border-color: hsl(200,96%,35%);
+  background-color: hsl(145,89%,28%);
+  border-color: hsl(145,89%,28%);
 }
 
 .c4[aria-checked='true']::after {
-  -webkit-transform: translateX(25px);
-  -ms-transform: translateX(25px);
-  transform: translateX(25px);
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 .c4[aria-checked='true'] .c5 {
@@ -266,17 +269,29 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
 }
 
 .c4[disabled] {
-  background-color: hsl(0,0%,90%);
-  border-color: hsl(0,0%,90%);
+  opacity: 0.5;
+}
+
+.c12 .c9 {
+  cursor: pointer;
+  margin-left: 8px;
+  line-height: 26px;
+  vertical-align: -2px;
+}
+
+.c12 .c3 {
+  vertical-align: middle;
 }
 
 .c0 .c9 {
-  cursor: pointer;
+  cursor: not-allowed;
   margin-left: 8px;
+  line-height: 26px;
+  vertical-align: -2px;
 }
 
 .c0 .c3 {
-  vertical-align: text-bottom;
+  vertical-align: middle;
 }
 
 <div>
@@ -344,8 +359,8 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   width: 12px;
   height: 12px;
   position: absolute;
-  top: 3px;
-  left: 25px;
+  top: 6px;
+  right: 8px;
   color: hsl(0,0%,100%);
 }
 
@@ -354,19 +369,19 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 1px;
+  top: 4px;
   left: 5px;
   color: hsl(0,0%,100%);
 }
 
 .c4 {
   position: relative;
-  width: 45px;
-  height: 20px;
-  border-radius: 10px;
+  width: 51px;
+  height: 26px;
+  border-radius: 13px;
   outline: none;
-  background-color: hsl(200,10%,20%);
-  border: 1px solid hsl(200,10%,20%);
+  background-color: hsl(353,84%,44%);
+  border: 1px solid hsl(353,84%,44%);
   cursor: pointer;
 }
 
@@ -375,28 +390,29 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
 }
 
 .c4::after {
-  width: 18px;
-  height: 18px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   content: '';
-  top: 0;
-  left: 0;
+  top: -1px;
+  left: -1px;
   position: absolute;
   -webkit-transition: -webkit-transform 0.3s;
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
   background-color: hsl(0,0%,100%);
+  box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
 .c4[aria-checked='true'] {
-  background-color: hsl(200,96%,35%);
-  border-color: hsl(200,96%,35%);
+  background-color: hsl(145,89%,28%);
+  border-color: hsl(145,89%,28%);
 }
 
 .c4[aria-checked='true']::after {
-  -webkit-transform: translateX(25px);
-  -ms-transform: translateX(25px);
-  transform: translateX(25px);
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 .c4[aria-checked='true'] .c5 {
@@ -420,17 +436,18 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
 }
 
 .c4[disabled] {
-  background-color: hsl(0,0%,90%);
-  border-color: hsl(0,0%,90%);
+  opacity: 0.5;
 }
 
 .c0 .c9 {
   cursor: pointer;
   margin-left: 8px;
+  line-height: 26px;
+  vertical-align: -2px;
 }
 
 .c0 .c3 {
-  vertical-align: text-bottom;
+  vertical-align: middle;
 }
 
 <div>

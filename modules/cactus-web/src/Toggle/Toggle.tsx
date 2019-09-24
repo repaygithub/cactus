@@ -32,8 +32,8 @@ const StyledX = styled(NavigationClose)`
   width: 12px;
   height: 12px;
   position: absolute;
-  top: 3px;
-  left: 25px;
+  top: 6px;
+  right: 8px;
   color: ${p => p.theme.colors.white};
 `
 
@@ -41,19 +41,19 @@ const StyledCheck = styled(StatusCheck)`
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 1px;
+  top: 4px;
   left: 5px;
   color: ${p => p.theme.colors.white};
 `
 
 export const Toggle = styled(ToggleBase)`
   position: relative;
-  width: 45px;
-  height: 20px;
-  border-radius: 10px;
+  width: 51px;
+  height: 26px;
+  border-radius: 13px;
   outline: none;
-  background-color: ${p => p.theme.colors.darkestContrast};
-  border: 1px solid ${p => p.theme.colors.darkestContrast};
+  background-color: ${p => p.theme.colors.error};
+  border: 1px solid ${p => p.theme.colors.error};
   cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
 
   &:focus {
@@ -61,23 +61,24 @@ export const Toggle = styled(ToggleBase)`
   }
 
   ::after {
-    width: 18px;
-    height: 18px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     content: '';
-    top: 0;
-    left: 0;
+    top: -1px;
+    left: -1px;
     position: absolute;
     transition: transform 0.3s;
     background-color: ${p => p.theme.colors.white};
+    box-shadow: 0 0 3px ${p => p.theme.colors.darkestContrast};
   }
 
   &[aria-checked='true'] {
-    background-color: ${p => p.theme.colors.callToAction};
-    border-color: ${p => p.theme.colors.callToAction};
+    background-color: ${p => p.theme.colors.success};
+    border-color: ${p => p.theme.colors.success};
 
     ::after {
-      transform: translateX(25px);
+      transform: translateX(26px);
     }
 
     ${StyledX} {
@@ -100,8 +101,7 @@ export const Toggle = styled(ToggleBase)`
   }
 
   &[disabled] {
-    background-color: ${p => p.theme.colors.lightGray};
-    border-color: ${p => p.theme.colors.lightGray};
+    opacity: 0.5;
   }
 
   ${margin}
