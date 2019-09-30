@@ -57,10 +57,10 @@ type TypeMap = { [K in Type]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 const typeMap: TypeMap = {
   general: css`
     width: 100%;
-    padding: 24px 16px;
+    padding: ${p => p.theme.space[4]}px;
   `,
   push: css`
-    padding: 10px 16px;
+    padding: 10px ${p => p.theme.space[4]}px;
   `,
 }
 
