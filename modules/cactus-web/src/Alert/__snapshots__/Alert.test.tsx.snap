@@ -55,7 +55,7 @@ exports[`component: Alert should render general error alert 1`] = `
   background: hsla(353,84%,44%,0.3);
   border: 2px solid hsl(353,84%,44%);
   width: 100%;
-  padding: 24px 16px;
+  padding: 16px;
   border-radius: 8px;
 }
 
@@ -158,7 +158,7 @@ exports[`component: Alert should render general info alert 1`] = `
   background: hsl(0,0%,100%);
   border: 2px solid hsl(200,96%,35%);
   width: 100%;
-  padding: 24px 16px;
+  padding: 16px;
   border-radius: 8px;
 }
 
@@ -261,7 +261,7 @@ exports[`component: Alert should render general success alert 1`] = `
   background: hsla(145,89%,28%,0.3);
   border: 2px solid hsl(145,89%,28%);
   width: 100%;
-  padding: 24px 16px;
+  padding: 16px;
   border-radius: 8px;
 }
 
@@ -364,7 +364,7 @@ exports[`component: Alert should render general warning alert 1`] = `
   background: hsla(47,82%,47%,0.3);
   border: 2px solid hsl(47,82%,47%);
   width: 100%;
-  padding: 24px 16px;
+  padding: 16px;
   border-radius: 8px;
 }
 
@@ -887,7 +887,7 @@ exports[`component: Alert should render the default props, general info alert 1`
   background: hsl(0,0%,100%);
   border: 2px solid hsl(200,96%,35%);
   width: 100%;
-  padding: 24px 16px;
+  padding: 16px;
   border-radius: 8px;
 }
 
