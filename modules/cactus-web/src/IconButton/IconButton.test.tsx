@@ -81,6 +81,18 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
+  test('should render danger icon button', () => {
+    const iconButton = render(
+      <StyleProvider>
+        <IconButton label="boolest" variant="danger">
+          <StatusCheck />
+        </IconButton>
+      </StyleProvider>
+    )
+
+    expect(iconButton.asFragment()).toMatchSnapshot()
+  })
+
   test('should render inverse standard icon button', () => {
     const iconButton = render(
       <StyleProvider>
@@ -97,6 +109,18 @@ describe('component: IconButton', () => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" variant="action" inverse>
+          <StatusCheck />
+        </IconButton>
+      </StyleProvider>
+    )
+
+    expect(iconButton.asFragment()).toMatchSnapshot()
+  })
+
+  test('should render inverse danger icon button', () => {
+    const iconButton = render(
+      <StyleProvider>
+        <IconButton label="boolest" variant="danger" inverse>
           <StatusCheck />
         </IconButton>
       </StyleProvider>

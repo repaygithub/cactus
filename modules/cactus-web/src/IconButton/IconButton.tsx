@@ -7,7 +7,7 @@ import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
-export type IconButtonVariants = 'standard' | 'action'
+export type IconButtonVariants = 'standard' | 'action' | 'danger'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
 interface IconButtonProps
@@ -39,6 +39,13 @@ const variantMap: VariantMap = {
       color: ${p => p.theme.colors.callToAction};
     }
   `,
+  danger: css`
+    color: ${p => p.theme.colors.error};
+
+    &:hover {
+      color: ${p => p.theme.colors.errorDark};
+    }
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -57,6 +64,14 @@ const inverseVariantMap: VariantMap = {
     &:focus {
       color: ${p => p.theme.colors.base};
       background: ${p => p.theme.colors.white};
+    }
+  `,
+  danger: css`
+    color: ${p => p.theme.colors.error};
+
+    &:hover,
+    &:focus {
+      color: ${p => p.theme.colors.white};
     }
   `,
 }
@@ -114,7 +129,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
 // @ts-ignore
 IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
-  variant: PropTypes.oneOf(['standard', 'action']),
+  variant: PropTypes.oneOf(['standard', 'action', 'danger']),
   disabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
   display: PropTypes.oneOf(['flex', 'inline-flex']),

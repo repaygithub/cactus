@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react'
 import Grid from '../Grid/Grid'
 import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 
-const iconButtonVariants: IconButtonVariants[] = ['standard', 'action']
+const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']
 const iconButtonSizes: IconButtonSizes[] = ['tiny', 'small', 'medium', 'large']
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
