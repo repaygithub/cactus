@@ -38,6 +38,16 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
+  test('should render danger variant', () => {
+    const { asFragment } = render(
+      <StyleProvider>
+        <Button variant="danger">I am dangerous</Button>
+      </StyleProvider>
+    )
+
+    expect(asFragment()).toMatchSnapshot()
+  })
+
   test('should render disabled variant', () => {
     const button = render(
       <StyleProvider>
@@ -70,6 +80,18 @@ describe('component: Button', () => {
     )
 
     expect(button.asFragment()).toMatchSnapshot()
+  })
+
+  test('should render inverse danger variant', () => {
+    const { asFragment } = render(
+      <StyleProvider>
+        <Button variant="danger" inverse>
+          I am also dangerous
+        </Button>
+      </StyleProvider>
+    )
+
+    expect(asFragment()).toMatchSnapshot()
   })
 
   test('should render inverse disabled variant', () => {

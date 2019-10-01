@@ -165,6 +165,22 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   margin-top: -8px;
 }
 
+.c8 .c1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c9 .c1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -254,6 +270,71 @@ exports[`component: Button should render call to action variant 1`] = `
   >
     <span>
       Click me!
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: Button should render danger variant 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  border-radius: 20px;
+  padding: 2px 30px;
+  border: 2px solid;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0,0%,100%);
+  background-color: hsl(353,84%,44%);
+  border-color: hsl(353,84%,44%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c0 .c1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c0:hover {
+  color: hsl(0,0%,100%);
+  background-color: hsl(353,96%,11%);
+  border-color: hsl(353,96%,11%);
+}
+
+<button
+    aria-live="assertive"
+    class="c0"
+    type="button"
+  >
+    <span>
+      I am dangerous
     </span>
   </button>
 </DocumentFragment>
@@ -380,6 +461,70 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   >
     <span>
       Click me!
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`component: Button should render inverse danger variant 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  border-radius: 20px;
+  padding: 2px 30px;
+  border: 2px solid;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(353,84%,44%);
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(353,84%,44%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid hsl(200,96%,35%);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c0 .c1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c0:hover {
+  color: hsl(0,0%,100%);
+  background-color: hsl(353,84%,44%);
+}
+
+<button
+    aria-live="assertive"
+    class="c0"
+    type="button"
+  >
+    <span>
+      I am also dangerous
     </span>
   </button>
 </DocumentFragment>
