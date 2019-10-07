@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
-export type ButtonVariants = 'standard' | 'action'
+export type ButtonVariants = 'standard' | 'action' | 'danger'
 
 interface ButtonProps
   extends Omit<
@@ -49,6 +49,17 @@ const variantMap: VariantMap = {
       border-color: ${p => p.theme.colors.base};
     }
   `,
+  danger: css`
+    color: ${p => p.theme.colors.white};
+    background-color: ${p => p.theme.colors.error};
+    border-color: ${p => p.theme.colors.error};
+
+    &:hover {
+      color: ${p => p.theme.colors.white};
+      background-color: ${p => p.theme.colors.errorDark};
+      border-color: ${p => p.theme.colors.errorDark};
+    }
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -72,6 +83,16 @@ const inverseVariantMap: VariantMap = {
       color: ${p => p.theme.colors.base};
       background-color: ${p => p.theme.colors.white};
       border-color: ${p => p.theme.colors.white};
+    }
+  `,
+  danger: css`
+    color: ${p => p.theme.colors.error};
+    background-color: ${p => p.theme.colors.white};
+    border-color: ${p => p.theme.colors.error};
+
+    &:hover {
+      color: ${p => p.theme.colors.white};
+      background-color: ${p => p.theme.colors.error};
     }
   `,
 }
@@ -164,7 +185,7 @@ export const Button = styled(ButtonBase)`
 
 // @ts-ignore
 Button.propTypes = {
-  variant: PropTypes.oneOf(['standard', 'action']),
+  variant: PropTypes.oneOf(['standard', 'action', 'danger']),
   disabled: PropTypes.bool,
   inverse: PropTypes.bool,
   loading: PropTypes.bool,

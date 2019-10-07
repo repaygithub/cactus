@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react'
 import Grid from '../Grid/Grid'
 import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 
-const iconButtonVariants: IconButtonVariants[] = ['standard', 'action']
+const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']
 const iconButtonSizes: IconButtonSizes[] = ['tiny', 'small', 'medium', 'large']
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
@@ -34,13 +34,15 @@ storiesOf('IconButton', module)
     const variantSelection = select('variant', iconButtonVariants, 'standard')
     return (
       <Grid justify="center">
-        {Object.values(icons).map(Icon => (
-          <Grid.Item tiny={3} medium={2} large={1}>
-            <IconButton variant={variantSelection}>
-              <Icon />
-            </IconButton>
-          </Grid.Item>
-        ))}
+        {Object.values(icons)
+          .slice(0, Object.keys(icons).length - 2)
+          .map((Icon, ix) => (
+            <Grid.Item tiny={3} medium={2} large={1} key={ix}>
+              <IconButton label={`icb-${ix}`} variant={variantSelection}>
+                <Icon />
+              </IconButton>
+            </Grid.Item>
+          ))}
       </Grid>
     )
   })

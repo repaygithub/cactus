@@ -76,6 +76,7 @@ export interface CactusTheme {
     transparentSuccess: string
     transparentWarning: string
     transparentError: string
+    errorDark: string
 
     status: StatusColors
   }
@@ -141,6 +142,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
   let transparentSuccess = `hsla(145, 89%, 28%, 0.2)`
   let transparentError = `hsla(353, 84%, 44%, 0.2)`
   let transparentWarning = `hsla(47, 82%, 47%, 0.2)`
+  let errorDark = `hsl(353, 96%, 11%)`
 
   const status: StatusColors = {
     background: {
@@ -197,6 +199,7 @@ export function generateTheme({ primaryHue }: GeneratorOptions = repayOptions): 
       transparentSuccess,
       transparentError,
       transparentWarning,
+      errorDark,
 
       /** Status Colors */
       status,
