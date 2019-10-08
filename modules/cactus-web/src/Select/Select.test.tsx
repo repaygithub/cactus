@@ -833,7 +833,7 @@ describe('component: Select', () => {
       expect(document.activeElement).toBe(getByRole('listbox'))
     })
 
-    test('CLICK w/ metaKey key will toggle option but not close', async () => {
+    test('CLICK will toggle option but not close', async () => {
       const startingValue = ['tucson']
       const onChange = jest.fn()
       const { getByText, getByRole, rerender } = render(
@@ -865,7 +865,7 @@ describe('component: Select', () => {
       )
       await animationRender()
       expect(getActiveValue()).toBe('tucson')
-      fireEvent.click(getByText('phoenix'), { metaKey: true })
+      fireEvent.click(getByText('phoenix'))
       await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'phoenix'])
       expect(document.activeElement).toBe(getByRole('listbox'))

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as styledComponents from 'styled-components'
+import { breakpoints } from '../helpers/constants'
 import { Omit } from '../types'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -25,13 +26,11 @@ const DebugStyle = createGlobalStyle`
   }
 `
 
-const breakpoints = ['768px', '1024px', '1200px', '1440px']
-
 const queries = {
-  small: `@media screen and (min-width: ${breakpoints[0]})`,
-  medium: `@media screen and (min-width: ${breakpoints[1]})`,
-  large: `@media screen and (min-width: ${breakpoints[2]})`,
-  extraLarge: `@media screen and (min-width: ${breakpoints[3]})`,
+  small: `@media screen and (min-width: ${breakpoints.small}px)`,
+  medium: `@media screen and (min-width: ${breakpoints.medium}px)`,
+  large: `@media screen and (min-width: ${breakpoints.large}px)`,
+  extraLarge: `@media screen and (min-width: ${breakpoints.extraLarge}px)`,
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -89,7 +88,7 @@ export const StyleProvider: React.FC<StyleProviderProps> = props => {
   const { global, children, theme: providedTheme, ...themeProviderProps } = props
   shouldCheckTheme && checkThemeProperties(providedTheme || cactusTheme)
   const theme = providedTheme ? providedTheme : cactusTheme
-  theme.breakpoints = breakpoints.slice()
+  theme.breakpoints = Object.values(breakpoints).map(bp => bp.toString())
   theme.mediaQueries = queries
 
   return (
