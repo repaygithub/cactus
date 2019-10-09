@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-theme",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "The theme for the Cactus design-system at REPAY",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-theme",
   "license": "MIT",
