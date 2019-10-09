@@ -4,3 +4,10 @@ export const breakpoints = {
   large: 1200,
   extraLarge: 1440,
 }
+
+export const breakpointOrder: Array<keyof typeof breakpoints> = [
+  'small',
+  'medium',
+  'large',
+  'extraLarge',
+]

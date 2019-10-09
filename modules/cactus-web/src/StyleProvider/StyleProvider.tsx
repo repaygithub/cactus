@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as styledComponents from 'styled-components'
-import { breakpoints } from '../helpers/constants'
+import { breakpointOrder, breakpoints } from '../helpers/constants'
 import { Omit } from '../types'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -88,7 +88,7 @@ export const StyleProvider: React.FC<StyleProviderProps> = props => {
   const { global, children, theme: providedTheme, ...themeProviderProps } = props
   shouldCheckTheme && checkThemeProperties(providedTheme || cactusTheme)
   const theme = providedTheme ? providedTheme : cactusTheme
-  theme.breakpoints = Object.values(breakpoints).map(bp => bp.toString())
+  theme.breakpoints = breakpointOrder.map(bp => breakpoints[bp].toString())
   theme.mediaQueries = queries
 
   return (
