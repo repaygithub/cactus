@@ -1,5 +1,18 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.4](https://github.com/repaygithub/cactus/commit/fbda5e83406068fb154eb70d730e7c843ee98258)
+
+- fix(cactus-web): Ensure breakpoint order will always be consistent [2f91910](https://github.com/repaygithub/cactus/commit/2f91910519353b954bd9dd83ad7b0180568e42df)
+- feat(cactus-web): Add more mobile optimized select dropdown [ba7bef3](https://github.com/repaygithub/cactus/commit/ba7bef38493b890bc27d279d40755ca7c4a6791c)
+- feat(cactus-web): Add danger variant to button [869430d](https://github.com/repaygithub/cactus/commit/869430dae8504db8ccfb402c96579fcccf055867)
+- feat(cactus-web): Add danger variant to icon button [26b1e21](https://github.com/repaygithub/cactus/commit/26b1e21244044cb162ba0712168f2f376c33c5ea)
+- refactor(cactus-web): Set general alert padding to 16px [a890085](https://github.com/repaygithub/cactus/commit/a8900858847f9a3ba1b9c8304b82ccd8064d5783)
+- refactor(cactus-web): New toggle styles [ef9c109](https://github.com/repaygithub/cactus/commit/ef9c1092e668ce6e48c1f60d03c028d56dcf9333)
+
+## [@repay/cactus-theme@v0.4.5](https://github.com/repaygithub/cactus/commit/827cdc94f96a891e367f3d25ee6930c9637ca9cc)
+
+- feat(cactus-theme): Add danger dark color to theme [7b376af](https://github.com/repaygithub/cactus/commit/7b376af09ab3f5cc5fcb838c2fad74262e611e2f)
+
 ## [@repay/cactus-web@v0.5.3](https://github.com/repaygithub/cactus/commit/a97ab14f3690f7461bc106b62cbe620777c5fa5f)
 
 - refactor(cactus-web): Use data-role rather than role for close buttons [641f54a](https://github.com/repaygithub/cactus/commit/641f54a65dad0e2b67b1cc872ddbffed1c3fe41b)
