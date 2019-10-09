@@ -92,7 +92,7 @@
     "@reach/tooltip": "^0.2.0",
     "@reach/visually-hidden": "^0.1.4",
     "@repay/cactus-icons": "^0.6.1",
-    "@repay/cactus-theme": "^0.4.4",
+    "@repay/cactus-theme": "^0.4.5",
     "lodash": "^4.17.15",
     "styled-system": "^5.1.1"
   }
