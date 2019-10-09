@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 
 import '../helpers/polyfills'
+import { breakpoints } from '../helpers/constants'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
@@ -10,12 +11,14 @@ import { omitMargins } from '../helpers/omit'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import { width, WidthProps } from 'styled-system'
 import CheckBox from '../CheckBox/CheckBox'
+import Flex from '../Flex/Flex'
 import handleEvent from '../helpers/eventHandler'
 import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import TextButton from '../TextButton/TextButton'
 
 export type SelectValueType = string | number | Array<string | number> | null
 export type OptionType = { label: string; value: string | number }
@@ -280,20 +283,25 @@ const SelectTrigger = styled.button`
   }
 `
 
+const DONE_SECTION_HEIGHT = 52
+
 const StyledList = styled.ul`
-  position: absolute;
+  position: relative;
   box-sizing: border-box;
   z-index: 100;
-  max-height: 400px;
+  max-height: inherit;
   max-width: 100vw;
   padding: 8px 0;
   margin-top: 0;
+  margin-bottom: 0;
   overflow-y: auto;
   outline: none;
-  border-radius: 8px;
-  box-shadow: 0 3px 9px 0 rgba(7, 61, 232, 0.28), 0 3px 8px 0 rgba(17, 51, 159, 0.07),
-    0 3px 9px 0 rgba(7, 61, 232, 0.28), 0 3px 8px 0 rgba(17, 51, 159, 0.07);
-  background-color: ${p => p.theme.colors.white};
+
+  @media (max-width: ${breakpoints.medium}px) {
+    height: ${window.innerHeight * 0.4 - DONE_SECTION_HEIGHT}px;
+    margin-bottom: ${DONE_SECTION_HEIGHT}px;
+    padding: 20px 0;
+  }
 `
 
 const Option = styled.li`
@@ -306,13 +314,23 @@ const Option = styled.li`
   box-shadow: none;
   padding: 4px 16px;
 
-  &.highlighted-option {
-    background-color: ${p => p.theme.colors.callToAction};
-    color: ${p => p.theme.colors.callToActionText};
+  @media (max-width: ${breakpoints.medium}px) {
+    padding: 6px 16px;
 
-    // haxors
-    ${CheckBox} > input:not(:checked) + span {
-      border-color: white;
+    & + & {
+      border-top: 1px solid ${p => p.theme.colors.lightGray};
+    }
+  }
+
+  @media (min-width: ${breakpoints.medium}px) {
+    &.highlighted-option {
+      background-color: ${p => p.theme.colors.callToAction};
+      color: ${p => p.theme.colors.callToActionText};
+
+      // haxors
+      ${CheckBox} > input:not(:checked) + span {
+        border-color: white;
+      }
     }
   }
 
@@ -320,6 +338,45 @@ const Option = styled.li`
     pointer-events: none;
     margin-right: 4px;
     vertical-align: -2px;
+  }
+`
+
+const ListWrapper = styled.div`
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 8px;
+  max-height: 400px;
+  max-width: 100vw;
+  box-shadow: 0 3px 9px 0 rgba(7, 61, 232, 0.28), 0 3px 8px 0 rgba(17, 51, 159, 0.07),
+    0 3px 9px 0 rgba(7, 61, 232, 0.28), 0 3px 8px 0 rgba(17, 51, 159, 0.07);
+  background-color: ${p => p.theme.colors.white};
+
+  @media (max-width: ${breakpoints.medium}px) {
+    border-radius: 0;
+    box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
+
+    &:after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: ${window.innerHeight * 0.4 - DONE_SECTION_HEIGHT}px;
+      width: 100%;
+      content: '';
+      pointer-events: none;
+      z-index: 100;
+      background: linear-gradient(white, transparent 20% 80%, white);
+    }
+  }
+
+  ${Flex} {
+    bottom: 0;
+    position: fixed;
+    height: ${DONE_SECTION_HEIGHT}px;
+    border-top: 1px solid ${p => p.theme.colors.lightGray};
+    width: 100%;
+    padding: 8px 0;
   }
 `
 
@@ -545,7 +602,7 @@ class List extends React.Component<ListProps, ListState> {
   }
 
   render() {
-    const { isOpen, multiple, triggerRect, options } = this.props
+    const { isOpen, multiple, triggerRect, options, onClose } = this.props
     const { activeDescendant } = this.state
 
     return (
@@ -557,48 +614,57 @@ class List extends React.Component<ListProps, ListState> {
               listRef(n)
             }
             return (
-              <StyledList
-                onBlur={this.handleBlur}
-                onClick={this.props.onClick}
-                onKeyDown={this.handleKeyDown}
-                role="listbox"
-                tabIndex={-1}
-                ref={mergeRefs}
-                style={positionList(isOpen, triggerRect, listRect)}
-                aria-activedescendant={activeDescendant || undefined}
-              >
-                {options.map(opt => {
-                  let optId = opt.id
-                  let isSelected = opt.isSelected
-                  let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
-                  // multiselectable should have aria-select©ed on all options
-                  if (multiple) {
-                    ariaSelected = isSelected ? 'true' : 'false'
-                  }
-                  return (
-                    <Option
-                      id={optId}
-                      key={optId}
-                      className={activeDescendant === optId ? 'highlighted-option' : undefined}
-                      data-value={opt.value}
-                      role="option"
-                      aria-selected={ariaSelected}
-                      onMouseEnter={this.handleOptionMouseEnter}
-                    >
-                      {multiple && (
-                        <CheckBox
-                          id={`multiselect-option-check-${optId}`}
-                          aria-hidden="true"
-                          checked={isSelected}
-                          readOnly
-                          mr={2}
-                        />
-                      )}
-                      {opt.label}
-                    </Option>
-                  )
-                })}
-              </StyledList>
+              <ListWrapper style={positionList(isOpen, triggerRect, listRect)}>
+                <StyledList
+                  onBlur={this.handleBlur}
+                  onClick={this.props.onClick}
+                  onKeyDown={this.handleKeyDown}
+                  role="listbox"
+                  tabIndex={-1}
+                  ref={mergeRefs}
+                  aria-activedescendant={activeDescendant || undefined}
+                >
+                  {options.map(opt => {
+                    let optId = opt.id
+                    let isSelected = opt.isSelected
+                    let ariaSelected: boolean | 'true' | 'false' | undefined =
+                      isSelected || undefined
+                    // multiselectable should have aria-select©ed on all options
+                    if (multiple) {
+                      ariaSelected = isSelected ? 'true' : 'false'
+                    }
+                    return (
+                      <Option
+                        id={optId}
+                        key={optId}
+                        className={activeDescendant === optId ? 'highlighted-option' : undefined}
+                        data-value={opt.value}
+                        role="option"
+                        aria-selected={ariaSelected}
+                        onMouseEnter={this.handleOptionMouseEnter}
+                      >
+                        {multiple && (
+                          <CheckBox
+                            id={`multiselect-option-check-${optId}`}
+                            aria-hidden="true"
+                            checked={isSelected}
+                            readOnly
+                            mr={2}
+                          />
+                        )}
+                        {opt.label}
+                      </Option>
+                    )
+                  })}
+                </StyledList>
+                {window.innerWidth < breakpoints.medium ? (
+                  <Flex justifyContent="center">
+                    <TextButton onClick={onClose} variant="action">
+                      Done
+                    </TextButton>
+                  </Flex>
+                ) : null}
+              </ListWrapper>
             )
           }}
         </Rect>
@@ -659,8 +725,17 @@ function positionList(
   if (!isOpen || triggerRect === undefined) {
     return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
   }
+
   const scrollY = getScrollY()
   const scrollX = getScrollX()
+
+  if (window.innerWidth < breakpoints.medium) {
+    return {
+      bottom: 0,
+      height: window.innerHeight * 0.4 + 'px',
+      width: window.innerWidth + 'px',
+    }
+  }
 
   // default assumes no collisions bottom
   let style: React.CSSProperties = {
@@ -804,7 +879,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       const activeId = target.id as string
       const active = this.getExtOptions().find(o => o.id === activeId)
       this.raiseChange(active || null)
-      if (!this.props.multiple || !event.metaKey) {
+      if (!this.props.multiple) {
         this.closeList()
       }
     }
