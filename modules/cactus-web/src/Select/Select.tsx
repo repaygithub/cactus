@@ -285,6 +285,10 @@ const SelectTrigger = styled.button`
 
 const DONE_SECTION_HEIGHT = 52
 
+function responsiveHeight() {
+  return (typeof window !== 'undefined' && window.innerHeight * 0.4 - DONE_SECTION_HEIGHT) || 0
+}
+
 const StyledList = styled.ul`
   position: relative;
   box-sizing: border-box;
@@ -298,7 +302,7 @@ const StyledList = styled.ul`
   outline: none;
 
   @media (max-width: ${breakpoints.medium}px) {
-    height: ${window.innerHeight * 0.4 - DONE_SECTION_HEIGHT}px;
+    height: ${responsiveHeight}px;
     margin-bottom: ${DONE_SECTION_HEIGHT}px;
     padding: 20px 0;
   }
@@ -361,7 +365,7 @@ const ListWrapper = styled.div`
       bottom: 0;
       left: 0;
       right: 0;
-      height: ${window.innerHeight * 0.4 - DONE_SECTION_HEIGHT}px;
+      height: ${responsiveHeight}px;
       width: 100%;
       content: '';
       pointer-events: none;
@@ -657,7 +661,7 @@ class List extends React.Component<ListProps, ListState> {
                     )
                   })}
                 </StyledList>
-                {window.innerWidth < breakpoints.medium ? (
+                {typeof window !== 'undefined' && window.innerWidth < breakpoints.medium ? (
                   <Flex justifyContent="center">
                     <TextButton onClick={onClose} variant="action">
                       Done

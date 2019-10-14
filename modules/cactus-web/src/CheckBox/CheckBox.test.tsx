@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-import { cleanup, fireEvent, render } from 'react-testing-library'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import CheckBox from './CheckBox'
-import userEvent from 'user-event'
+import userEvent from '@testing-library/user-event'
 
 afterEach(cleanup)
 

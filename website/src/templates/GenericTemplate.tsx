@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { graphql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Helmet from 'react-helmet'
 import Link from '../components/Link'
-import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 
 type GenericTemplateProps = {
   data: {
@@ -23,14 +23,14 @@ const components = {
 
 const GenericTemplate = ({ data }: GenericTemplateProps) => {
   const {
-    mdx: { fields, code },
+    mdx: { fields, body },
   } = data
 
   return (
     <>
       <Helmet title={`${fields.title}`} />
       <MDXProvider components={components}>
-        <MDXRenderer>{code.body}</MDXRenderer>
+        <MDXRenderer>{body}</MDXRenderer>
       </MDXProvider>
     </>
   )
@@ -41,9 +41,7 @@ export default GenericTemplate
 export const pageQuery = graphql`
   query($slug: String!) {
     mdx(fields: { slug: { eq: $slug } }) {
-      code {
-        body
-      }
+      body
       fields {
         title
         slug

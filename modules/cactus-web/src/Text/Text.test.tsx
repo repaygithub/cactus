@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { cleanup, fireEvent, render } from 'react-testing-library'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import { Span, Text } from './Text'
 import { StyleProvider } from '@repay/cactus-web'
 

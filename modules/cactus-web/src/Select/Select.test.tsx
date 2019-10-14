@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { cleanup, fireEvent, render } from 'react-testing-library'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import KeyCodes from '../helpers/keyCodes'
 import Select from './Select'
 import StyleProvider from '../StyleProvider/StyleProvider'
@@ -458,7 +458,7 @@ describe('component: Select', () => {
   describe('onBlur()', () => {
     test('is called when user blurs the closed Select', () => {
       const onBlur = jest.fn()
-      const { getByText, getByRole, rerender } = render(
+      const { getByRole } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -471,7 +471,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix')
+      let trigger: HTMLElement = getByRole('button')
       fireEvent.focus(trigger)
       fireEvent.blur(trigger)
       expect(onBlur).toHaveBeenCalledWith('city')
@@ -479,7 +479,7 @@ describe('component: Select', () => {
 
     test('is NOT called when list opens', async () => {
       const onBlur = jest.fn()
-      const { getByText, getByRole, rerender } = render(
+      const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -492,7 +492,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix')
+      let trigger: HTMLElement = getByRole('button')
       trigger.focus()
       fireEvent.click(trigger)
       rerender(
@@ -530,7 +530,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix')
+      let trigger: HTMLElement = getByRole('button')
       trigger.focus()
       fireEvent.click(trigger)
       rerender(
@@ -557,7 +557,7 @@ describe('component: Select', () => {
   describe('onFocus()', () => {
     test('is called when user focuses on Select', () => {
       const onFocus = jest.fn()
-      const { getByText } = render(
+      const { getByRole } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -570,14 +570,14 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix')
+      let trigger: HTMLElement = getByRole('button')
       fireEvent.focus(trigger)
       expect(onFocus).toHaveBeenCalledWith('city')
     })
 
     test('is NOT called when list closes via keyboard', async () => {
       const onFocus = jest.fn()
-      const { getByText, getByRole, rerender } = render(
+      const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -590,7 +590,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('phoenix')
+      let trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -607,9 +607,11 @@ describe('component: Select', () => {
       await animationRender()
       expect(onFocus).toHaveBeenCalledWith('city')
       onFocus.mockReset()
-      fireEvent.keyDown(getByRole('listbox'), {
-        keyCode: KeyCodes.ESC,
-        charCode: KeyCodes.ESC,
+      act(() => {
+        fireEvent.keyDown(getByRole('listbox'), {
+          keyCode: KeyCodes.ESC,
+          charCode: KeyCodes.ESC,
+        })
       })
       rerender(
         <StyleProvider>
@@ -650,7 +652,7 @@ describe('component: Select', () => {
     test('all options are rendered with aria-selected attribute as true or false', async () => {
       const startingValue = ['tucson']
       const onChange = jest.fn()
-      const { getAllByRole } = render(
+      const { getByRole, getAllByRole } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -662,6 +664,10 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
+      act(() => {
+        fireEvent.click(getByRole('button'))
+      })
+      await animationRender()
       let options = getAllByRole('option')
       options.forEach(o => {
         expect(o.getAttribute('aria-selected')).toBe(
@@ -730,7 +736,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('tucson')
+      let trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -769,7 +775,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('tucson')
+      let trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -795,7 +801,7 @@ describe('component: Select', () => {
     test('SPACE key will toggle option', async () => {
       const startingValue = ['tucson']
       const onChange = jest.fn()
-      const { getByText, getByRole, rerender } = render(
+      const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -808,7 +814,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('tucson')
+      let trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -849,7 +855,7 @@ describe('component: Select', () => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('tucson')
+      let trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>

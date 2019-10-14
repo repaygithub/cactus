@@ -1,4 +1,4 @@
-import { cleanup } from 'react-testing-library'
+import { cleanup } from '@testing-library/react'
 const fs = require('fs')
 const path = require('path')
 

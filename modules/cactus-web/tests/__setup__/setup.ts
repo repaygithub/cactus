@@ -1,4 +1,4 @@
-import 'jest-dom/extend-expect'
+import '@testing-library/jest-dom/extend-expect'
 import 'jest-styled-components'
 
 // filter out @reach style warnings from console during tests

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as icons from '../ts'
-import { cleanup, render } from 'react-testing-library'
+import { cleanup, render } from '@testing-library/react'
 import { StyleProvider } from '@repay/cactus-web'
 
 afterEach(cleanup)

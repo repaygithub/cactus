@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { cleanup, fireEvent, render } from 'react-testing-library'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import RadioButton from './RadioButton'
@@ -74,6 +74,6 @@ describe('component: RadioButton', () => {
   })
 
   /* TODO: fireEvent.click and userEvent.click on a disabled radio button fall victim to the same problem that affects
-  the checkboxes; it's a bug in react-testing-library and/or user-event. If/when that issue is fixed, we should add
+  the checkboxes; it's a bug in @testing-library/react and/or user-event. If/when that issue is fixed, we should add
   tests to ensure that no events are triggered when the radio button is disabled. */
 })

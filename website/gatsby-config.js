@@ -40,7 +40,7 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
-      resolve: 'gatsby-mdx',
+      resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: ['.md', '.mdx'],
         gatsbyRemarkPlugins: [

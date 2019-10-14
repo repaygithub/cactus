@@ -1,4 +1,4 @@
-import * as icons from '@repay/cactus-icons'
+import * as iconsList from '@repay/cactus-icons'
 
 type IconObject = {
   name: string
@@ -10,7 +10,9 @@ type IconObject = {
 
 const iconsCategoryMap: { [key: string]: IconObject[] } = {}
 
-for (const [fullName, Icon] of Object.entries(icons)) {
+const icons = Object.entries(iconsList).filter(([name]) => name !== 'iconSizes')
+
+for (const [fullName, Icon] of icons) {
   const path = fullName.replace(/(.)([A-Z])/, '$1-$2').toLowerCase()
   const [category, ...nameArr] = path.split('-')
   const name = nameArr.join(' ')
