@@ -2,10 +2,10 @@ import * as React from 'react'
 
 import { graphql } from 'gatsby'
 import { MDXProvider } from '@mdx-js/react'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 import DocgenProvider, { DocItem } from '../components/DocgenProvider'
 import Helmet from 'react-helmet'
 import Link from '../components/Link'
-import MDXRenderer from 'gatsby-mdx/mdx-renderer'
 
 type ComponentTemplateProps = {
   data: {
@@ -24,7 +24,7 @@ const components = {
 const ComponentTemplate = ({ data }: ComponentTemplateProps) => {
   const {
     docgenDb: { db },
-    mdx: { code, fields },
+    mdx: { body, fields },
   } = data
 
   let database: DocItem[] = []
@@ -40,7 +40,7 @@ const ComponentTemplate = ({ data }: ComponentTemplateProps) => {
       <DocgenProvider docs={database}>
         <>
           <MDXProvider components={components}>
-            <MDXRenderer>{code.body}</MDXRenderer>
+            <MDXRenderer>{body}</MDXRenderer>
           </MDXProvider>
         </>
       </DocgenProvider>
@@ -57,9 +57,7 @@ export const pageQuery = graphql`
       db
     }
     mdx(fields: { slug: { eq: $slug } }) {
-      code {
-        body
-      }
+      body
       fields {
         title
         slug

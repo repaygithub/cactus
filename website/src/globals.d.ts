@@ -13,9 +13,7 @@ declare type Edges<T> = Edge<T>[]
 declare type Markdown = {
   id: string
   excerpt?: string
-  code: {
-    body: string
-  }
+  body: string
   fields: {
     title: string
     slug: string
