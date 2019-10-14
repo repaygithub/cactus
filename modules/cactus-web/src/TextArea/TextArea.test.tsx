@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cleanup, render } from 'react-testing-library'
+import { cleanup, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextArea from './TextArea'
 import userEvent from 'user-event'

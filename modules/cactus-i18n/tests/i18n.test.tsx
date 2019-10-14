@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { act, cleanup, fireEvent, render, RenderResult } from 'react-testing-library'
+import { act, cleanup, fireEvent, render, RenderResult } from '@testing-library/react'
 import { ResourceDefinition } from '../src/types'
 import I18nProvider, {
   BaseI18nController,
@@ -52,17 +52,16 @@ describe('i18n functionality', () => {
       const esGlobalPromise = MockPromise.resolve([globalEsResDef])
       // @ts-ignore
       i18nController.load = jest.fn(() => esGlobalPromise)
-      let tester: RenderResult
+      const { container } = render(
+        <I18nProvider lang="es" controller={i18nController}>
+          <I18nText get="this-is-the-key">This is the default content.</I18nText>
+        </I18nProvider>
+      )
       act(() => {
-        tester = render(
-          <I18nProvider lang="es" controller={i18nController}>
-            <I18nText get="this-is-the-key">This is the default content.</I18nText>
-          </I18nProvider>
-        )
         esGlobalPromise._call()
       })
       // @ts-ignore
-      expect(tester.container).toHaveTextContent('Este texto debe mostrar')
+      expect(container).toHaveTextContent('Este texto debe mostrar')
     })
 
     test('should render key from default language when key does not exist for requested language', () => {
@@ -75,15 +74,13 @@ describe('i18n functionality', () => {
       const esGlobalPromise = MockPromise.resolve([{ lang: 'es', ftl: '' }])
       //@ts-ignore
       i18nController.load = jest.fn(() => esGlobalPromise)
-      let container
+      let { container } = render(
+        <I18nProvider lang="es" controller={i18nController}>
+          <I18nText get="this_is_the_key">This is the default content.</I18nText>
+        </I18nProvider>
+      )
       act(() => {
-        let tester = render(
-          <I18nProvider lang="es" controller={i18nController}>
-            <I18nText get="this_is_the_key">This is the default content.</I18nText>
-          </I18nProvider>
-        )
         esGlobalPromise._call()
-        container = tester.container
       })
       expect(container).toHaveTextContent('This should render')
     })
@@ -249,18 +246,16 @@ key-for-no-people = blah blah blue stew`
         controller.load = jest.fn(({ section }) =>
           section === 'global' ? globalPromise : sectionPromise
         )
-        let container
+        let { container } = render(
+          <I18nProvider controller={controller}>
+            <I18nSection name="kleenex">
+              <I18nText get="runny-nose" />
+            </I18nSection>
+          </I18nProvider>
+        )
         act(() => {
-          let tester = render(
-            <I18nProvider controller={controller}>
-              <I18nSection name="kleenex">
-                <I18nText get="runny-nose" />
-              </I18nSection>
-            </I18nProvider>
-          )
           globalPromise._call()
           sectionPromise._call()
-          container = tester.container
         })
         expect(container).toHaveTextContent('This text should render')
       })
@@ -282,18 +277,16 @@ key-for-no-people = blah blah blue stew`
         controller.load = jest.fn(({ section, lang }) =>
           lang === 'en' ? globalPromise : sectionPromise
         )
-        let container
+        const { container } = render(
+          <I18nProvider controller={controller}>
+            <I18nSection name="global" lang="es">
+              <I18nText get="runny-nose" />
+            </I18nSection>
+          </I18nProvider>
+        )
         act(() => {
-          let tester = render(
-            <I18nProvider controller={controller}>
-              <I18nSection name="global" lang="es">
-                <I18nText get="runny-nose" />
-              </I18nSection>
-            </I18nProvider>
-          )
           globalPromise._call()
           sectionPromise._call()
-          container = tester.container
         })
         expect(container).toHaveTextContent('This text should render')
       })

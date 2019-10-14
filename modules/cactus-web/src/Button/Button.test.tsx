@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { ActionsDelete } from '@repay/cactus-icons'
-import { cleanup, fireEvent, render } from 'react-testing-library'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Button from './Button'
 

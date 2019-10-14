@@ -19,8 +19,8 @@
     "@repay/cactus-icons": "^0.6.1",
     "@repay/cactus-theme": "^0.4.5",
     "@repay/cactus-web": "^0.5.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   },
   "devDependencies": {
     "@repay/scripts": "^0.3.1",

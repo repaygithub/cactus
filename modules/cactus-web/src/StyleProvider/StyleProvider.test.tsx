@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cleanup, render } from 'react-testing-library'
+import { cleanup, render } from '@testing-library/react'
 import { Theme } from 'styled-system'
 import { withTheme } from 'styled-components'
 import cactusTheme from '@repay/cactus-theme'

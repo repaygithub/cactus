@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { cleanup, render } from 'react-testing-library'
+import { cleanup, render } from '@testing-library/react'
 import AppRoot, { ErrorBoundary, withErrorBoundary } from '../src/index'
 
 afterEach(cleanup)
