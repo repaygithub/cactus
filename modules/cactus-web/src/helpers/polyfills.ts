@@ -1,9 +1,9 @@
-if (!Element.prototype.matches) {
+if (typeof window !== 'undefined' && !(window as any).Element.prototype.matches) {
   // @ts-ignore
   Element.prototype.matches = Element.prototype.msMatchesSelector
 }
 
-if (!Element.prototype.closest) {
+if (typeof window !== 'undefined' && !(window as any).Element.prototype.closest) {
   Element.prototype.closest = function(s: string) {
     var el: Element | (Node & ParentNode) | null = this
 
