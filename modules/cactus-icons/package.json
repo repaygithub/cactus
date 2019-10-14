@@ -63,7 +63,7 @@
     "@types/node": "^11.13.7",
     "@types/storybook__addon-knobs": "^4.0.5",
     "@types/storybook__react": "^4.0.1",
-    "@types/styled-system": "^5.1.1",
+    "@types/styled-system": "^5.1.2",
     "babel-jest": "^24.7.1",
     "fast-glob": "^2.2.6",
     "jest": "^24.7.1",

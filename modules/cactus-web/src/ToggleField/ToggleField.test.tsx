@@ -4,7 +4,7 @@ import { cleanup, fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import ToggleField from './ToggleField'
-import userEvent from 'user-event'
+import userEvent from '@testing-library/user-event'
 
 afterEach(cleanup)
 

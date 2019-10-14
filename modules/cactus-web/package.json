@@ -61,14 +61,15 @@
     "@storybook/theming": "^5.0.8",
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
+    "@testing-library/user-event": "^7.1.2",
     "@types/lodash": "^4.14.138",
-    "@types/react": "^16.8.15",
+    "@types/react": "^16.9.5",
     "@types/storybook__addon-knobs": "^4.0.5",
     "@types/storybook__addon-viewport": "^4.1.0",
     "@types/storybook__react": "^4.0.1",
     "@types/styled-components": "^4.1.14",
-    "@types/styled-system": "^5.1.1",
-    "@types/user-event": "^1.4.0",
+    "@types/styled-system": "^5.1.2",
+    "@types/user-event": "^4.1.0",
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.5",
     "csstype": "^2.6.4",
@@ -79,8 +80,7 @@
     "react-dom": "^16.10.2",
     "rollup-plugin-commonjs": "^9.3.4",
     "styled-components": "^4.1.2",
-    "typescript": "^3.4.3",
-    "user-event": "^2.0.1"
+    "typescript": "^3.4.3"
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { cleanup, render } from '@testing-library/react'
 import { StyleProvider } from '@repay/cactus-web'
 import TextAreaField from './TextAreaField'
-import userEvent from 'user-event'
+import userEvent from '@testing-library/user-event'
 
 afterEach(cleanup)
 
