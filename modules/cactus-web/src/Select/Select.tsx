@@ -535,7 +535,7 @@ class List extends React.Component<ListProps, ListState> {
       clearTimeout(this.keyClear)
       this.keyClear = undefined
     }
-    this.keyClear = setTimeout(() => {
+    this.keyClear = window.setTimeout(() => {
       this.pendingChars = ''
       this.keyClear = undefined
     }, 500)
@@ -545,7 +545,7 @@ class List extends React.Component<ListProps, ListState> {
   scrolled = () => {
     this.didScroll = true
     clearTimeout(this.scrollClear)
-    this.scrollClear = setTimeout(() => {
+    this.scrollClear = window.setTimeout(() => {
       this.didScroll = false
     }, 150) // 120ms worked on Firefox and IE11 so 150 is just extra safe
   }

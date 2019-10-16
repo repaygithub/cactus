@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { actions } from '@storybook/addon-actions'
-import { boolean, select, text } from '@storybook/addon-knobs/react'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Status } from '../StatusMessage/StatusMessage'
 import { storiesOf } from '@storybook/react'
 import TextInput from './TextInput'

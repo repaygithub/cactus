@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { select, text } from '@storybook/addon-knobs/react'
+import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import cactusTheme from '@repay/cactus-theme'
 import Spinner from './Spinner'
