@@ -49,8 +49,8 @@
     "prettier": "^1.17.0",
     "typescript-eslint-parser": "^22.0.0"
   },
-  "resolutions": {
-    "**/union-value": "^2.0.0",
-    "**/set-value": "^3.0.0"
+  "resolutions": {},
+  "dependencies": {
+    "core-js": "^3.3.2"
   }
 }

@@ -1,4 +1,4 @@
-import { select } from '@storybook/addon-knobs/react'
+import { select } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Avatar, { AvatarStatus, AvatarType } from './Avatar'
 import React from 'react'

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as icons from '../i'
-import { number, select } from '@storybook/addon-knobs/react'
+import { number, select } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import cactusTheme, { CactusTheme, generateTheme } from '@repay/cactus-theme'
 

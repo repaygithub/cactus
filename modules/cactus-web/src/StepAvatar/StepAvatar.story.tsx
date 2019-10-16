@@ -1,6 +1,6 @@
 import { AvatarStep, StepAvatar } from './StepAvatar'
 
-import { select, text } from '@storybook/addon-knobs/react'
+import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Grid from '../Grid/Grid'
 import React from 'react'

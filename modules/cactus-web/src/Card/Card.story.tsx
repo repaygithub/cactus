@@ -1,4 +1,4 @@
-import { date, text } from '@storybook/addon-knobs/react'
+import { date, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Box from '../Box/Box'
 import Card from './Card'

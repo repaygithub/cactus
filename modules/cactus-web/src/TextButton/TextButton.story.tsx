@@ -2,7 +2,7 @@ import React from 'react'
 
 import * as icons from '@repay/cactus-icons'
 import { actions } from '@storybook/addon-actions'
-import { boolean, select, text } from '@storybook/addon-knobs/react'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import TextButton, { TextButtonVariants } from './TextButton'
 

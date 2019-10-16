@@ -1,4 +1,4 @@
-import { select, text } from '@storybook/addon-knobs/react'
+import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Box from './Box'
 import cactusTheme from '@repay/cactus-theme'
