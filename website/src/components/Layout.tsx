@@ -17,7 +17,7 @@ import styled, { css } from 'styled-components'
 interface MenuGroup {
   title: string
   url: string
-  order: number
+  order?: number
   items: MenuGroup[]
 }
 
@@ -56,7 +56,7 @@ function addNode(group: MenuGroup, node: MenuItem) {
     group.items.push({
       title: node.title,
       url: `${group.url}${node.routes[0]}/`,
-      order: node.order || group.items.length + 1,
+      order: node.order || undefined,
       items: [],
     })
   } else {

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import { actions } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
