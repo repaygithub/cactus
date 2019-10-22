@@ -3,8 +3,9 @@ import * as React from 'react'
 import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
 import { ReactComponent as Cactus } from '../assets/cactus.svg'
 import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
-import { Location } from '@reach/router'
+import { Location, WindowLocation } from '@reach/router'
 import { Motion, spring } from 'react-motion'
+import { NavigationChevronLeft } from '@repay/cactus-icons'
 import { useRect } from '@reach/rect'
 import Close from '@repay/cactus-icons/i/navigation-close'
 import debounce from '../helpers/debounce'
@@ -132,6 +133,54 @@ function createMenuGroups(pages: Edges<Markdown>) {
   return group
 }
 
+type MenuContextType = { state: string[]; open: Function; close: Function }
+const MenuContext = React.createContext<MenuContextType>({
+  state: [],
+  open: () => {},
+  close: () => {},
+})
+
+const initialize = (location: WindowLocation) => () => {
+  let state: string[] = []
+  let split = location.pathname.split('/').filter(Boolean)
+  for (let i = 0; i < split.length; ++i) {
+    state.push('/' + split.slice(0, i).join('/') + '/')
+  }
+  return state
+}
+
+const MenuController: React.FC<{ location: WindowLocation }> = ({ children, location }) => {
+  const [state, setState] = React.useState(initialize(location))
+  const open = React.useCallback(
+    path => {
+      setState(s => [...s, path])
+    },
+    [setState]
+  )
+  const close = React.useCallback(
+    path => {
+      setState(s => s.filter(p => p !== path))
+    },
+    [setState]
+  )
+
+  return (
+    <MenuContext.Provider value={{ state, open, close }}>
+      <>{children}</>
+    </MenuContext.Provider>
+  )
+}
+
+const useMenu = (path: string) => {
+  const context = React.useContext(MenuContext)
+  const isOpen = context.state.includes(path)
+
+  return {
+    isOpen,
+    toggle: () => (isOpen ? context.close(path) : context.open(path)),
+  }
+}
+
 const StyledLink = styled(Link)`
   display: block;
   padding: 8px;
@@ -139,12 +188,17 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 
   &[aria-current='page'] {
-    background-color: ${p => p.theme.colors.lightContrast};
+    background-color: ${p => p.theme.colors.mediumContrast};
+    color: ${p => p.theme.colors.white};
   }
 
-  :hover {
+  &:hover {
     background-color: ${p => p.theme.colors.base};
     color: ${p => p.theme.colors.baseText};
+
+    ~ ${IconButton} {
+      color: ${p => p.theme.colors.baseText};
+    }
   }
 `
 
@@ -152,25 +206,64 @@ const StyledA = StyledLink.withComponent('a')
 
 const isStorybookUrl = (url: string) => /stories\/[a-zA-Z]/.test(url)
 
-const BaseMenuList: React.FC<{ menu: MenuGroup; className?: string }> = ({ menu, className }) => (
-  <ul className={className}>
-    {menu.items.map(item => (
-      <li key={item.url}>
-        {isStorybookUrl(item.url) ? (
-          <StyledA href={item.url}>{item.title}</StyledA>
-        ) : (
-          <StyledLink to={item.url}>{item.title}</StyledLink>
-        )}
-        {item.items.length > 0 && <MenuList menu={item} />}
-      </li>
-    ))}
-  </ul>
+const NavToggle = ({ toggle, ...rest }: any) => (
+  <IconButton {...rest} onClick={toggle} label="open section" iconSize="small">
+    <NavigationChevronLeft />
+  </IconButton>
 )
 
-const MenuList = styled(BaseMenuList)`
+const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }) => {
+  const { isOpen, toggle } = useMenu(item.url)
+  const hasChildren = item.items.length > 0
+
+  return (
+    <li>
+      {isStorybookUrl(item.url) ? (
+        <StyledA href={item.url}>{item.title}</StyledA>
+      ) : (
+        <StyledLink to={item.url}>{item.title}</StyledLink>
+      )}
+      {hasChildren && (
+        <>
+          <NavToggle aria-expanded={isOpen ? 'true' : 'false'} toggle={toggle} />
+          {isOpen && (
+            <MenuList>
+              {item.items.map(item => (
+                <MenuItem item={item} key={item.url} />
+              ))}
+            </MenuList>
+          )}
+        </>
+      )}
+    </li>
+  )
+}
+
+const MenuList = styled('ul')`
   list-style: none;
   padding-left: 0;
   margin: 0;
+
+  li {
+    position: relative;
+  }
+
+  ${IconButton} {
+    position: absolute;
+    right: 12px;
+    padding-left: 4px;
+    padding-right: 4px;
+    top: 0;
+    height: 41px;
+
+    &[aria-expanded='true'] {
+      transform: rotate(-90deg);
+    }
+  }
+
+  ${StyledLink} {
+    padding-right: 28px;
+  }
 
   & & ${StyledLink} {
     padding-left: 24px;
@@ -185,13 +278,20 @@ const MenuList = styled(BaseMenuList)`
   }
 `
 
-const InnerSidebar = styled.div`
+const Scrollable = styled.div`
+  box-sizing: border-box;
+  padding-top: 64px;
+  overflow-y: scroll;
+  max-height: 100vh;
+`
+
+const InnerSidebar = styled.nav`
+  position: relative;
   float: right;
   min-width: 200px;
   height: 100%;
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${p => p.theme.colors.lightContrast};
   border-right: 2px solid ${p => p.theme.colors.base};
-  overflow-y: scroll;
 `
 const OuterSidebar = styled.div`
   position: fixed;
@@ -219,18 +319,21 @@ const WindowBox = styled(Box)`
 `
 
 const RootLink = styled(Link)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   display: block;
   padding: ${p => p.theme.space[3]}px;
   text-decoration: none;
   color: ${p => p.theme.colors.base};
+  background-color: ${p => p.theme.colors.base};
+  color: ${p => p.theme.colors.baseText};
+  font-weight: 600;
 
-  &[aria-current='page'] {
-    background-color: ${p => p.theme.colors.lightContrast};
-  }
-
-  :hover {
-    background-color: ${p => p.theme.colors.base};
-    color: ${p => p.theme.colors.baseText};
+  &:hover,
+  &:focus {
+    color: ${p => p.theme.colors.lightContrast};
   }
 `
 
@@ -293,7 +396,7 @@ const Overlay = styled.div`
 const springConfig = { stiffness: 220, damping: 26 }
 const checkShouldHaveOverlay = () => global.window && window.innerWidth < 1024
 
-const BaseLayout: React.FC<{ className?: string; location?: string }> = ({
+const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = ({
   children,
   className,
   location,
@@ -347,6 +450,7 @@ const BaseLayout: React.FC<{ className?: string; location?: string }> = ({
     }
   `)
   let groups = React.useMemo(() => createMenuGroups(pages), [pages])
+
   return (
     <React.Fragment>
       <Helmet>
@@ -370,7 +474,11 @@ const BaseLayout: React.FC<{ className?: string; location?: string }> = ({
                   backgroundColor="white"
                   style={{ paddingLeft: width + 8 }}
                 >
-                  <IconButton iconSize="medium" onClick={toggleOpen}>
+                  <IconButton
+                    iconSize="medium"
+                    onClick={toggleOpen}
+                    label={isOpen ? 'close navigation menu' : 'open navigation menu'}
+                  >
                     {isOpen ? <Close /> : <Menu />}
                   </IconButton>
                 </Header>
@@ -379,7 +487,15 @@ const BaseLayout: React.FC<{ className?: string; location?: string }> = ({
                     <RootLink to="/">
                       <CactusIcon /> Cactus DS
                     </RootLink>
-                    <MenuList menu={groups} />
+                    <Scrollable>
+                      <MenuController location={location}>
+                        <MenuList>
+                          {groups.items.map(item => (
+                            <MenuItem key={item.url} item={item} />
+                          ))}
+                        </MenuList>
+                      </MenuController>
+                    </Scrollable>
                   </InnerSidebar>
                 </OuterSidebar>
                 <WindowBox style={{ marginLeft: hasOverlay ? 0 : width }}>{children}</WindowBox>

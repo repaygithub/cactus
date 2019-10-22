@@ -33,8 +33,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: 'components',
-        path: modulesHelper.resolveModule('cactus-web/src'),
-        ignore: ['!**/*.mdx'],
+        path: modulesHelper.resolveModule('cactus-web/src/'),
+        ignore: ['**/*.ts', '**/*.tsx', '**/*.json', '**/*.snap'],
       },
     },
     'gatsby-transformer-sharp',
