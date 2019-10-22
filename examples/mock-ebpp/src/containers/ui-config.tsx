@@ -2,6 +2,7 @@ import {
   Alert,
   Button,
   CheckBoxField,
+  DateInputField,
   FileInputField,
   Flex,
   RadioButtonField,
@@ -36,6 +37,7 @@ interface State {
     use_cactus_styles: boolean
     select_color: string
     file_input: Array<FileObject> | undefined
+    established_date: string
   }
 
   status: {
@@ -55,6 +57,7 @@ const getInitialState = () => ({
     use_cactus_styles: false,
     select_color: '',
     file_input: undefined,
+    established_date: '2019-10-16',
   },
   status: {
     error: undefined,
@@ -252,6 +255,16 @@ const UIConfig = (props: UIConfigProps) => {
                 label="Use Cactus Styles"
                 my={4}
                 checked={state.formData.use_cactus_styles}
+                onChange={handleChange}
+              />
+
+              <DateInputField
+                label="Established Date"
+                name="established_date"
+                id="established-date"
+                tooltip="The date which the company was established"
+                format="YYYY-MM-dd"
+                value={state.formData.established_date}
                 onChange={handleChange}
               />
 

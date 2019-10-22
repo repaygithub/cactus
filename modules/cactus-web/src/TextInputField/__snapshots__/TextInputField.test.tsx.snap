@@ -9,6 +9,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 }
 
 .c8 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -19,6 +20,11 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   line-height: 28px;
   width: 100%;
   background-color: hsl(0,0%,100%);
+}
+
+.c8 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c8:focus {
@@ -138,6 +144,7 @@ exports[`component: TextInputField should render a TextInputField with a placeho
 }
 
 .c6 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -148,6 +155,11 @@ exports[`component: TextInputField should render a TextInputField with a placeho
   line-height: 28px;
   width: 100%;
   background-color: hsl(0,0%,100%);
+}
+
+.c6 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c6:focus {
@@ -239,6 +251,7 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
 }
 
 .c8 {
+  box-sizing: border-box;
   border: 1px solid hsl(0,0%,90%);
   border-radius: 20px;
   height: 32px;
@@ -248,6 +261,11 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
   font-size: 18px;
   line-height: 28px;
   width: 100%;
+  background-color: hsl(0,0%,100%);
+}
+
+.c8 [disabled] {
+  border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
 }
 
@@ -393,6 +411,7 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
 }
 
 .c6 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -405,6 +424,11 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
   background-color: hsl(0,0%,100%);
   border-color: hsl(145,89%,28%);
   background: hsla(145,89%,28%,0.2);
+}
+
+.c6 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c6:focus {
@@ -485,8 +509,10 @@ exports[`component: TextInputField should render a success TextInputField 1`] = 
     <div
       class="c7 c8"
       id="success-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c9 c10"
         fill="currentcolor"
         height="1em"
@@ -547,6 +573,7 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
 }
 
 .c6 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -559,6 +586,11 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
   background-color: hsl(0,0%,100%);
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
+}
+
+.c6 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c6:focus {
@@ -639,8 +671,10 @@ exports[`component: TextInputField should render a warning TextInputField 1`] = 
     <div
       class="c7 c8"
       id="warn-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c9 c10"
         fill="currentcolor"
         height="1em"
@@ -708,6 +742,7 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
 }
 
 .c6 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -720,6 +755,11 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
   background: hsla(353,84%,44%,0.2);
+}
+
+.c6 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c6:focus {
@@ -800,8 +840,10 @@ exports[`component: TextInputField should render an error TextInputField 1`] = `
     <div
       class="c7 c8"
       id="error-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c9 c10"
         fill="currentcolor"
         height="1em"
@@ -831,6 +873,7 @@ exports[`component: TextInputField should support margin space props 1`] = `
 }
 
 .c6 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -841,6 +884,11 @@ exports[`component: TextInputField should support margin space props 1`] = `
   line-height: 28px;
   width: 100%;
   background-color: hsl(0,0%,100%);
+}
+
+.c6 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c6:focus {

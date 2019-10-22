@@ -105,6 +105,7 @@ const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((pro
 
 export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   display: ${p => p.display || 'inline-flex'};
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
   padding: 1px;

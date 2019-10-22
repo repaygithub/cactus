@@ -10,6 +10,7 @@ Array [
   "Card",
   "CheckBox",
   "CheckBoxField",
+  "DateInput",
   "FieldWrapper",
   "FileInput",
   "FileInputField",
@@ -36,5 +37,6 @@ Array [
   "Text",
   "Span",
   "useId",
+  "DateInputField",
 ]
 `;

@@ -32,6 +32,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -451,8 +452,10 @@ exports[`component: FileInputField should render a file with an error 1`] = `
         </div>
         <div
           class="c18 c19"
+          role="alert"
         >
           <svg
+            aria-hidden="true"
             class="c12 c20"
             fill="currentcolor"
             height="1em"
@@ -534,6 +537,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;

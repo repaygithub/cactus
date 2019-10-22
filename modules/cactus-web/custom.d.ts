@@ -55,7 +55,7 @@ declare module '@reach/rect' {
 
 declare module '@reach/visually-hidden' {
   interface VisuallyHiddenProps {
-    role: string
+    role?: string
     id?: string
   }
 

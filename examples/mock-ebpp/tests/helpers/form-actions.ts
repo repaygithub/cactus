@@ -47,3 +47,9 @@ export const clickByText = async (doc: puppeteer.ElementHandle<Element>, label: 
   const clickable = await getByText(doc, label)
   await clickable.click()
 }
+
+export function getInputValueByLabel(doc: puppeteer.ElementHandle<Element>, label: string) {
+  return getByLabelText(doc, label)
+    .then(i => i.getProperty('value'))
+    .then(h => h.jsonValue())
+}

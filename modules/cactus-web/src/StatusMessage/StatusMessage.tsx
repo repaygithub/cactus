@@ -52,8 +52,8 @@ const StatusMessageBase: React.FC<
     }
   }
   return (
-    <div {...rest} className={className}>
-      <StatusIcon />
+    <div {...rest} role="alert" className={className}>
+      <StatusIcon aria-hidden="true" />
       <span>{children}</span>
     </div>
   )

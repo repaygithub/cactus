@@ -1,0 +1,33 @@
+---
+name: DateInput
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import DateInput from './DateInput'
+
+# DateInput
+
+The `DateInput` component is a cross-browser implementation of an `<input type="date" />` with a built in picker.
+
+If `format` is not provided, the component will default to `YYYY-MM-dd HH:mm` or `YYYY-MM-dd` if time is enabled or not.
+
+When `value` is provided as a prop (i.e. controlled), the value will be raised as a Date or string to match the provided type. For example, `onChange` will be called with a date string when `props.value` is also a string.
+
+<DateInput id="date-input-uncontrolled" name="date" />
+
+## Best practices
+
+TODO - see README for what to include here
+
+## Basic usage
+
+TODO - brief description
+
+```jsx
+<DateInput id="date-input" name="date" />
+```
+
+## Properties
+
+<PropsTable of={DateInput} />
