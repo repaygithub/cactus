@@ -7,17 +7,19 @@ import {
   selectDropdownOption,
   uploadFile,
 } from './helpers/form-actions'
+import { getActiveElement, sleep } from './helpers/wait'
 import { getDocument, queries } from 'pptr-testing-library'
 import puppeteer, { ElementHandle } from 'puppeteer'
 import startStaticServer, { ServerObj } from './helpers/static-server'
 
 const { getByLabelText } = queries
 
-async function getActiveElement(page: puppeteer.Page) {
-  return (page.evaluateHandle(() => document.activeElement) as unknown) as ElementHandle<Element>
-}
+// async function getActiveElement(page: puppeteer.Page) {
+//   return (page.evaluateHandle(() => document.activeElement) as unknown) as ElementHandle<Element>
+// }
 
 async function getActiveAccessibility(page: puppeteer.Page) {
+  await sleep(0.2)
   let activeElHandle = await getActiveElement(page)
   let activeEl = await activeElHandle.asElement()
   if (activeEl === null) {
@@ -72,6 +74,7 @@ describe('UI Config Form', () => {
       terms_and_conditions: 'You must be this tall to test',
       welcome_content: 'Welcome to the integration test app',
       footer_content: 'Powered by coffee and sheer willpower',
+      notification_email: 'dhuber@repay.com',
       allow_customer_login: true,
       use_cactus_styles: true,
       select_color: 'blue',

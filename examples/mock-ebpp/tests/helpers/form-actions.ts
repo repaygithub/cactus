@@ -1,4 +1,5 @@
 import { queries } from 'pptr-testing-library'
+import { waitForDropdownList } from './wait'
 import puppeteer from 'puppeteer'
 
 const { getByLabelText, getByText } = queries
@@ -21,16 +22,10 @@ export const selectDropdownOption = async (
 ) => {
   const selectTrigger = await getByLabelText(doc, label)
   await selectTrigger.click()
-  await page.waitFor(
-    () => document.activeElement && document.activeElement.getAttribute('role') === 'listbox'
-  )
-  await page.evaluate(optionText => {
-    const listItems = Array.from(
-      (document.activeElement as HTMLElement).querySelectorAll('[role="option"]')
-    )
-    const option = listItems.filter(item => item.innerHTML === optionText)[0] as HTMLElement
-    return option.click()
-  }, optionText)
+  const listbox = await waitForDropdownList(page)
+  const option = await getByText(doc, optionText)
+  // console.log(await option.asElement())
+  await option.click()
 }
 
 export const uploadFile = async (

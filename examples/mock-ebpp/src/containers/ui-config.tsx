@@ -33,6 +33,7 @@ interface State {
     terms_and_conditions: string
     welcome_content: string
     footer_content: string
+    notification_email: string
     allow_customer_login: boolean
     use_cactus_styles: boolean
     select_color: string
@@ -53,6 +54,7 @@ const getInitialState = () => ({
     terms_and_conditions: '',
     welcome_content: '',
     footer_content: '',
+    notification_email: '',
     allow_customer_login: false,
     use_cactus_styles: false,
     select_color: '',
@@ -91,7 +93,6 @@ const UIConfig = (props: UIConfigProps) => {
       //@ts-ignore
       const value = formData[key]
 
-      console.log(value === '')
       if (value === '' || (Array.isArray(value) && value.length === 0)) {
         errorFound = true
         setState(state => ({
@@ -194,6 +195,8 @@ const UIConfig = (props: UIConfigProps) => {
                 name="notification_email"
                 width="30%"
                 my={4}
+                onChange={handleChange}
+                value={state.formData.notification_email}
                 tooltip="Select an email to recieve notifications "
               />
 
