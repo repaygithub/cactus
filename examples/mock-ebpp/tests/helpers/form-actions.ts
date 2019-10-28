@@ -23,8 +23,7 @@ export const selectDropdownOption = async (
   const selectTrigger = await getByLabelText(doc, label)
   await selectTrigger.click()
   const listbox = await waitForDropdownList(page)
-  const option = await getByText(doc, optionText)
-  // console.log(await option.asElement())
+  const option = await getByText(listbox, optionText)
   await option.click()
 }
 
