@@ -388,6 +388,7 @@ export class PartialDate implements FormatTokenMap {
       this.period = value < 12 ? 'AM' : 'PM'
     }
   }
+
   get HH() {
     return this.pad(this.hours)
   }
@@ -473,7 +474,18 @@ export class PartialDate implements FormatTokenMap {
   }
 
   setLocale(locale: string) {
+    this._locale = locale
     this._localeFormat = getLocaleFormat(locale, { type: this._type })
+  }
+
+  getType() {
+    return this._type
+  }
+
+  setType(type: DateType, format: string) {
+    this._type = type
+    this._format = format
+    this._localeFormat = getLocaleFormat(this._locale, { type })
   }
 
   private toRender(val: number | undefined, padTo: number) {

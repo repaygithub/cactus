@@ -2,12 +2,7 @@ import React, { Component, Fragment, MouseEventHandler, useMemo } from 'react'
 
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 import {
-  DescriptiveCalendar,
-  NavigationChevronDown,
-  NavigationChevronUp,
-} from '@repay/cactus-icons'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import {
+  DateType,
   formatDate,
   FormatTokenType,
   getLastDayOfMonth,
@@ -17,6 +12,12 @@ import {
   PartialDate,
   TOKEN_SETTERS,
 } from '../helpers/dates'
+import {
+  DescriptiveCalendar,
+  NavigationChevronDown,
+  NavigationChevronUp,
+} from '@repay/cactus-icons'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { Status } from '../StatusMessage/StatusMessage'
 import FocusLock from '../FocusLock/FocusLock'
 import getLocale from '../helpers/locale'
@@ -59,6 +60,15 @@ type DateInputPhrasesType = {
 const portalStyleOptions = { offset: 8 }
 const noop = function() {}
 const ALLOW_DEFAULT = ['Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
+
+function getDefaultFormat(type: DateType) {
+  if (type === 'datetime') {
+    return 'YYYY-MM-dd HH:mm'
+  } else if (type === 'time') {
+    return 'HH:mm'
+  }
+  return 'YYYY-MM-dd'
+}
 
 function isOwnInput(target: any, container: Element): target is HTMLInputElement {
   return (
@@ -591,7 +601,7 @@ interface DateInputProps
   locale?: string
   status?: Status
   /**
-   * adds time inputs
+   * Indicates which fields to display for the user
    */
   type?: 'date' | 'datetime' | 'time'
   /** !important */
@@ -615,6 +625,7 @@ interface DateInputProps
 interface DateInputState {
   value: PartialDate
   locale: string
+  type: DateType
   isOpen: false | 'month-year' | 'calendar'
   // YYYY-MM-dd
   focusDay?: string
@@ -625,16 +636,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     super(props)
 
     const locale = props.locale || getLocale()
-    const type = props.type
-    let format = props.format || 'YYYY-MM-dd'
-    if (type === 'datetime') {
-      format = 'YYYY-MM-dd HH:mm'
-    } else if (type === 'time') {
-      format = 'HH:mm'
-    }
+    const type = props.type || 'date'
+    let format = props.format || getDefaultFormat(type)
 
     this.state = {
       value: PartialDate.from(props.value, { format, locale, type }),
+      type,
       locale,
       isOpen: false,
     }
@@ -691,10 +698,18 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     props: Readonly<DateInputProps>,
     state: Readonly<DateInputState>
   ) {
-    let updates: null | Partial<DateInputState> = {}
+    let updates: null | Partial<DateInputState> = null
+    if (props.type && props.type !== state.value.getType()) {
+      const type = props.type || 'date'
+      updates = updates || {}
+      updates.type = type
+      const format = props.format || getDefaultFormat(type)
+      state.value.setType(type, format)
+    }
     if (props.locale !== state.locale && typeof props.locale === 'string') {
-      state.value.setLocale(props.locale)
+      updates = updates || {}
       updates.locale = props.locale
+      state.value.setLocale(props.locale)
     }
     if (props.value) {
       let value = state.value.clone()
@@ -705,6 +720,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       }
       // only update local value if provided value is a valid date
       if (value.isValid() && !value.equals(state.value)) {
+        updates = updates || {}
         updates.value = value
         if (state.isOpen) {
           updates.focusDay = value.format('YYYY-MM-dd')
