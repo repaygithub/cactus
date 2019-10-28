@@ -620,12 +620,6 @@ interface DateInputState {
   focusDay?: string
 }
 
-/**
- * TODO
- * - update placeholders, dates all lowercase, time all --
- * - ability to disable specific dates
- */
-
 class DateInputBase extends Component<DateInputProps, DateInputState> {
   constructor(props: DateInputProps) {
     super(props)
@@ -638,8 +632,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     } else if (type === 'time') {
       format = 'HH:mm'
     }
-
-    // TODO check if props format matches type
 
     this.state = {
       value: PartialDate.from(props.value, { format, locale, type }),
@@ -662,8 +654,21 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     id: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
     format: function(props: any) {
-      if (typeof props.value === 'string' && !props.format) {
-        return new Error('When `value` a string, `format` must be provided.')
+      if (props.format) {
+        if (typeof props.format !== 'string') {
+          return new Error(`Provided prop 'format' must be a string.`)
+        } else if (typeof props.value === 'string') {
+          let type = props.type || 'date'
+          if (type === 'date' && /[HhmaDy]/.test(props.format)) {
+            return new Error(
+              `Provided format '${props.format}' contains unexpected tokens for type '${type}'.`
+            )
+          } else if (type === 'time' && /[YMdD]/.test(props.format)) {
+            return new Error(
+              `Provided format '${props.format}' contains unexpected tokens for type '${type}'.`
+            )
+          }
+        }
       }
       return null
     },
@@ -916,7 +921,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   handleDayMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { currentTarget } = event
-    console.log('[mouseenter]: ' + currentTarget.dataset.date)
     if (currentTarget.getAttribute('aria-disabled') === 'true') return
     // @ts-ignore
     const focusDay = currentTarget.dataset.date as string
