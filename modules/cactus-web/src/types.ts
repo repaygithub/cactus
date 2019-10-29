@@ -4,4 +4,7 @@ export type FieldOnChangeHandler<ValueType> = (fieldName: string, fieldValue: Va
 
 export type FieldOnFocusHandler = (fieldName: string) => void
 
-export type FieldOnBlurHandler = (fieldName: string) => void
+export type FieldOnBlurHandler<ValueType = undefined> = (
+  fieldName: string,
+  value?: ValueType
+) => void

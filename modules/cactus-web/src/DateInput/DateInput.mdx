@@ -1,0 +1,41 @@
+---
+name: DateInput
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import DateInput from './DateInput'
+
+# DateInput
+
+The `DateInput` component is a cross-browser implementation of an `<input type="date" />` with a built in picker.
+
+If `format` is not provided, the component will default to match the provided type.
+
+| type       | assumed format     |
+| ---------- | ------------------ |
+| `date`     | `YYYY-MM-dd`       |
+| `datetime` | `YYYY-MM-dd HH:mm` |
+| `time`     | `HH:mm`            |
+
+When `value` is provided as a prop (i.e. controlled), the value will be raised as a Date or string to match the provided type. For example, `onChange` will be called with a date string when `props.value` is also a string.
+
+<DateInput id="date-input-uncontrolled" name="date" />
+
+## Best practices
+
+It is idiomatic React to "control" the value as described above.
+
+It is best to use the `DateInputField` component instead of this more atomic level because it comes with accessibility baked in.
+
+One should avoid changing the type on a rendered DateInput after intial render -- if this is necessary we recommend also providing the format.
+
+## Basic usage
+
+```jsx
+<DateInput id="date-input" name="date" />
+```
+
+## Properties
+
+<PropsTable of={DateInput} />

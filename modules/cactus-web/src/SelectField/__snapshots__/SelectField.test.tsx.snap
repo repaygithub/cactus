@@ -669,8 +669,10 @@ exports[`component: SelectField should render an accessible error message 1`] = 
     <div
       class="c13 c14"
       id="for-the-snap-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c15 c16"
         fill="currentcolor"
         height="1em"
@@ -873,8 +875,10 @@ exports[`component: SelectField should render an accessible success message 1`] 
     <div
       class="c13 c14"
       id="for-the-snap-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c15 c16"
         fill="currentcolor"
         height="1em"
@@ -1089,8 +1093,10 @@ exports[`component: SelectField should render an accessible warning message 1`] 
     <div
       class="c13 c14"
       id="for-the-snap-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c15 c16"
         fill="currentcolor"
         height="1em"

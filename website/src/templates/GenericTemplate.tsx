@@ -38,7 +38,7 @@ const GenericTemplate = ({ data }: GenericTemplateProps) => {
 
 export default GenericTemplate
 
-export const pageQuery = graphql`
+export const query = graphql`
   query($slug: String!) {
     mdx(fields: { slug: { eq: $slug } }) {
       body

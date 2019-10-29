@@ -347,6 +347,7 @@ const Option = styled.li`
 
 const ListWrapper = styled.div`
   position: absolute;
+  z-index: 1000;
   box-sizing: border-box;
   border-radius: 8px;
   max-height: 400px;

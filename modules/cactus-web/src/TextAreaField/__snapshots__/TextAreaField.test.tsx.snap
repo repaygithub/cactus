@@ -575,8 +575,10 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
     <div
       class="c9 c10"
       id="darts-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c11 c12"
         fill="currentcolor"
         height="1em"
@@ -766,8 +768,10 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
     <div
       class="c9 c10"
       id="darts-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c11 c12"
         fill="currentcolor"
         height="1em"
@@ -964,8 +968,10 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
     <div
       class="c9 c10"
       id="darts-status"
+      role="alert"
     >
       <svg
+        aria-hidden="true"
         class="c11 c12"
         fill="currentcolor"
         height="1em"

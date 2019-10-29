@@ -50,7 +50,7 @@ const ComponentTemplate = ({ data }: ComponentTemplateProps) => {
 
 export default ComponentTemplate
 
-export const pageQuery = graphql`
+export const query = graphql`
   query($slug: String!) {
     docgenDb {
       id

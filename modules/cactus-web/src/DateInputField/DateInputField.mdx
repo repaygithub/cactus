@@ -1,0 +1,59 @@
+---
+name: DateInputField
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import DateInputField from './DateInputField'
+import cactusTheme from '@repay/cactus-theme'
+
+# DateInputField
+
+This is the field version of the `DateInput` which already has standardized `onFocus`, `onChange`, and `onBlur` events; but in addition it no longer requires the `id` but it still requires `name` and now requires a `label`.
+
+<DateInputField name="date-input-field" label="Example Date Field" />
+
+## Best practices
+
+As a field, it has accessibility built in; so it is best to use this Field instead of the standalone `DateInput` when possible.
+
+Like the `DateInput`, when the provided value is a string, you should be explicit and provide a format; otherwise it defaults to a psuedo ISO format which is missing time zone.
+
+## Basic usage
+
+The `DateInputField` is the standardized
+
+```jsx
+import React from 'react'
+
+function initValues() {
+  return {
+    date_field: '',
+  }
+}
+
+export default function Form() {
+  const [values, setValues] = React.useState(initValues)
+  const handleChange = React.useCallback(
+    (name, value) => {
+      setValues(v => ({ ...v, [name]: value }))
+    },
+    [setValues]
+  )
+
+  return (
+    <form onSubmit={event => event.preventDefault()}>
+      <DateInputField
+        name="date_field"
+        label="Date Field"
+        value={values.date_field}
+        onChange={handleChange}
+      />
+    </form>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={DateInputField} />

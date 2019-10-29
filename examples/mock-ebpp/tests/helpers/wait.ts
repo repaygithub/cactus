@@ -17,13 +17,28 @@ const wait = async (callback: () => Promise<boolean | null>) => {
   })
 }
 
-export const waitForDropdownList: (
-  document: puppeteer.ElementHandle<Element>
-) => Promise<Element | null> = async document => {
-  await wait(async () => {
-    const activeElement = await document.getProperty('activeElement')
-    const role = await activeElement.getProperty('role')
-    return activeElement && role === 'listbox'
+export const sleep = async (seconds: number) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000)
   })
-  return await document.getProperty('activeElement')
+}
+
+export async function getActiveElement(page: puppeteer.Page) {
+  return (page.evaluateHandle(() => document.activeElement) as unknown) as puppeteer.ElementHandle<
+    Element
+  >
+}
+
+export const waitForDropdownList = async (page: puppeteer.Page) => {
+  await wait(async () => {
+    let activeElement: puppeteer.ElementHandle<Element> | null = await getActiveElement(page)
+
+    activeElement = await activeElement.asElement()
+    if (activeElement === null) {
+      return false
+    }
+    const accessibility = await page.accessibility.snapshot({ root: activeElement })
+    return accessibility.role === 'listbox'
+  })
+  return await getActiveElement(page)
 }

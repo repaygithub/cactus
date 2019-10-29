@@ -87,13 +87,13 @@ async function fileExists(filePath) {
 
 function componentTemplate(componentName) {
   return `
+import { margin, MarginProps } from 'styled-system'
 import styled from 'styled-components'
-import { margins, MarginProps } from '../helpers/margins'
 
 interface ${componentName}Props extends MarginProps {}
 
 export const ${componentName} = styled.div<${componentName}Props>\`
-  \${margins}
+  \${margin}
 \`
 
 export default ${componentName}
@@ -103,10 +103,10 @@ export default ${componentName}
 function testTemplate(componentName) {
   return `
 import * as React from 'react'
-import { cleanup, render, fireEvent } from 'react-testing-library'
-import ${componentName} from './${componentName}'
-import cactusTheme from '@repay/cactus-theme'
+
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
+import ${componentName} from './${componentName}'
 
 afterEach(cleanup)
 
@@ -127,6 +127,7 @@ describe('component: ${componentName}', () => {
 function storyTemplate(componentName) {
   return `
 import React from 'react'
+
 import { storiesOf } from '@storybook/react'
 import ${componentName} from './${componentName}'
 
@@ -142,9 +143,12 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import ${componentName} from './${componentName}'
-import cactusTheme from '@repay/cactus-theme'
 
 # ${componentName}
+
+TODO - describe component here
+
+TODO - render component here
 
 ## Best practices
 

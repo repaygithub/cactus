@@ -3,6 +3,7 @@
 exports[`component: TextInput should render a disabled input 1`] = `
 <DocumentFragment>
   .c1 {
+  box-sizing: border-box;
   border: 1px solid hsl(0,0%,90%);
   border-radius: 20px;
   height: 32px;
@@ -12,6 +13,11 @@ exports[`component: TextInput should render a disabled input 1`] = `
   font-size: 18px;
   line-height: 28px;
   width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
 }
 
@@ -57,6 +63,7 @@ exports[`component: TextInput should render a disabled input 1`] = `
 exports[`component: TextInput should render a success input 1`] = `
 <DocumentFragment>
   .c1 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -69,6 +76,11 @@ exports[`component: TextInput should render a success input 1`] = `
   background-color: hsl(0,0%,100%);
   border-color: hsl(145,89%,28%);
   background: hsla(145,89%,28%,0.2);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c1:focus {
@@ -112,6 +124,7 @@ exports[`component: TextInput should render a success input 1`] = `
 exports[`component: TextInput should render a text input 1`] = `
 <DocumentFragment>
   .c1 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -122,6 +135,11 @@ exports[`component: TextInput should render a text input 1`] = `
   line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c1:focus {
@@ -165,6 +183,7 @@ exports[`component: TextInput should render a text input 1`] = `
 exports[`component: TextInput should render an error input 1`] = `
 <DocumentFragment>
   .c1 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -177,6 +196,11 @@ exports[`component: TextInput should render an error input 1`] = `
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
   background: hsla(353,84%,44%,0.2);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c1:focus {
@@ -220,6 +244,7 @@ exports[`component: TextInput should render an error input 1`] = `
 exports[`component: TextInput should render an input with a placeholder 1`] = `
 <DocumentFragment>
   .c1 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -230,6 +255,11 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c1:focus {
@@ -274,6 +304,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
 exports[`component: TextInput should render an warning input 1`] = `
 <DocumentFragment>
   .c1 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -286,6 +317,11 @@ exports[`component: TextInput should render an warning input 1`] = `
   background-color: hsl(0,0%,100%);
   border-color: hsl(47,82%,47%);
   background: hsla(47,82%,47%,0.2);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c1:focus {
@@ -329,6 +365,7 @@ exports[`component: TextInput should render an warning input 1`] = `
 exports[`component: TextInput should support margin space props 1`] = `
 <DocumentFragment>
   .c1 {
+  box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
@@ -339,6 +376,11 @@ exports[`component: TextInput should support margin space props 1`] = `
   line-height: 28px;
   width: auto;
   background-color: hsl(0,0%,100%);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
 }
 
 .c1:focus {

@@ -14,6 +14,7 @@ export interface TextInputProps
       'ref'
     >,
     MarginProps {
+  /** !important */
   disabled?: boolean
   status?: Status | null
 }
@@ -57,6 +58,7 @@ const TextInputBase = (props: TextInputProps) => {
 }
 
 const Input = styled.input<InputProps>`
+  box-sizing: border-box;
   border: 1px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
   border-radius: 20px;
   height: 32px;
@@ -65,7 +67,12 @@ const Input = styled.input<InputProps>`
   padding: 7px 28px 7px 15px;
   ${p => p.theme.textStyles.body};
   width: ${p => p.width || 'auto'};
-  background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
+  background-color: ${p => p.theme.colors.white};
+
+  [disabled] {
+    border-color: ${p => p.theme.colors.lightGray};
+    background-color: ${p => p.theme.colors.lightGray};
+  }
 
   &:focus {
     border-color: ${p => p.theme.colors.callToAction};

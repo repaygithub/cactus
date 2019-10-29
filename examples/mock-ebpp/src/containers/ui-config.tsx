@@ -2,6 +2,7 @@ import {
   Alert,
   Button,
   CheckBoxField,
+  DateInputField,
   FileInputField,
   Flex,
   RadioButtonField,
@@ -32,10 +33,12 @@ interface State {
     terms_and_conditions: string
     welcome_content: string
     footer_content: string
+    notification_email: string
     allow_customer_login: boolean
     use_cactus_styles: boolean
     select_color: string
     file_input: Array<FileObject> | undefined
+    established_date: string
   }
 
   status: {
@@ -51,10 +54,12 @@ const getInitialState = () => ({
     terms_and_conditions: '',
     welcome_content: '',
     footer_content: '',
+    notification_email: '',
     allow_customer_login: false,
     use_cactus_styles: false,
     select_color: '',
     file_input: undefined,
+    established_date: '2019-10-16',
   },
   status: {
     error: undefined,
@@ -88,7 +93,6 @@ const UIConfig = (props: UIConfigProps) => {
       //@ts-ignore
       const value = formData[key]
 
-      console.log(value === '')
       if (value === '' || (Array.isArray(value) && value.length === 0)) {
         errorFound = true
         setState(state => ({
@@ -191,6 +195,8 @@ const UIConfig = (props: UIConfigProps) => {
                 name="notification_email"
                 width="30%"
                 my={4}
+                onChange={handleChange}
+                value={state.formData.notification_email}
                 tooltip="Select an email to recieve notifications "
               />
 
@@ -252,6 +258,16 @@ const UIConfig = (props: UIConfigProps) => {
                 label="Use Cactus Styles"
                 my={4}
                 checked={state.formData.use_cactus_styles}
+                onChange={handleChange}
+              />
+
+              <DateInputField
+                label="Established Date"
+                name="established_date"
+                id="established-date"
+                tooltip="The date which the company was established"
+                format="YYYY-MM-dd"
+                value={state.formData.established_date}
                 onChange={handleChange}
               />
 

@@ -11,6 +11,7 @@ exports[`component: IconButton should default to standard medium icon button 1`]
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -72,6 +73,7 @@ exports[`component: IconButton should render call to action icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -134,6 +136,7 @@ exports[`component: IconButton should render danger icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -195,6 +198,7 @@ exports[`component: IconButton should render disabled variant 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -254,6 +258,7 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -315,6 +320,7 @@ exports[`component: IconButton should render inverse call to action icon button 
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -377,6 +383,7 @@ exports[`component: IconButton should render inverse danger icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -439,6 +446,7 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -498,6 +506,7 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -561,6 +570,7 @@ exports[`component: IconButton should render large icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -622,6 +632,7 @@ exports[`component: IconButton should render small icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -683,6 +694,7 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -744,6 +756,7 @@ exports[`component: IconButton should render tiny icon button 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -805,6 +818,7 @@ exports[`component: IconButton should support margin space props 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  box-sizing: border-box;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
