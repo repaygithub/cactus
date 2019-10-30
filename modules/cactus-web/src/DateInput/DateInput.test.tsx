@@ -53,6 +53,26 @@ describe('component: DateInput', () => {
       expect(getByLabelText('day of month')).toHaveProperty('value', '12')
     })
 
+    test('when initial value = null then a Date is raised', () => {
+      let value = null
+      const handleChange = jest.fn((_, v) => {
+        value = v
+      })
+      let { getByLabelText } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
+        </StyleProvider>
+      )
+
+      userEvent.type(getByLabelText('month'), '2')
+      userEvent.type(getByLabelText('day of month'), '14')
+      userEvent.type(getByLabelText('year'), '2019')
+
+      expect(handleChange).not.toHaveBeenCalledWith('date-input', expect.any(String))
+      expect(handleChange).toHaveBeenLastCalledWith('date-input', expect.any(Date))
+      expect(handleChange).toHaveBeenLastCalledWith('date-input', new Date(2019, 1, 14))
+    })
+
     test('with value as a string', () => {
       let value = new PartialDate('2018-09-30', 'YYYY-MM-dd')
       let { getByLabelText, rerender } = render(
@@ -82,6 +102,26 @@ describe('component: DateInput', () => {
       expect(getByLabelText('year')).toHaveProperty('value', '2018')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
       expect(getByLabelText('day of month')).toHaveProperty('value', '12')
+    })
+
+    test('when initial value = undefined then a string is raised', () => {
+      let value = undefined
+      const handleChange = jest.fn((_, v) => {
+        value = v
+      })
+      let { getByLabelText } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
+        </StyleProvider>
+      )
+
+      userEvent.type(getByLabelText('month'), '2')
+      userEvent.type(getByLabelText('day of month'), '14')
+      userEvent.type(getByLabelText('year'), '2019')
+
+      expect(handleChange).not.toHaveBeenCalledWith('date-input', expect.any(Date))
+      expect(handleChange).toHaveBeenLastCalledWith('date-input', expect.any(String))
+      expect(handleChange).toHaveBeenLastCalledWith('date-input', '2019-02-14')
     })
   })
 
