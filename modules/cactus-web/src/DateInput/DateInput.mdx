@@ -18,7 +18,7 @@ If `format` is not provided, the component will default to match the provided ty
 | `datetime` | `YYYY-MM-dd HH:mm` |
 | `time`     | `HH:mm`            |
 
-When `value` is provided as a prop (i.e. controlled), the value will be raised as a Date or string to match the provided type. For example, `onChange` will be called with a date string when `props.value` is also a string.
+When `value` is provided as a prop (i.e. controlled), the value will be raised as a Date or string to match the provided type. For example, `onChange` will be called with a date string when `props.value` is also a string. Additionally, if `props.value` is `undefined` it will be raised as a string, but if `props.value` is `null` it will be raised as a `Date`.
 
 <DateInput id="date-input-uncontrolled" name="date" />
 

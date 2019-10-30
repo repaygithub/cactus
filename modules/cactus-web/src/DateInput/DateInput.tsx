@@ -1184,7 +1184,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private _convertVal(value: PartialDate) {
     const providedValue = this.props.value
-    const isExpectingDate = providedValue && providedValue instanceof Date
+    const isExpectingDate = providedValue === null || providedValue instanceof Date
     if (value.isValid()) {
       return isExpectingDate ? value.toDate() : value.format()
     } else {
