@@ -11,3 +11,12 @@ export const breakpointOrder: Array<keyof typeof breakpoints> = [
   'large',
   'extraLarge',
 ]
+
+/* Detects if the user is using a mobile/touch device which falls under either the SMALL or TINY breakpoint
+category AND that the site they are on is optimized for a device of that size */
+export const isResponsiveTouchDevice: boolean =
+  typeof window !== 'undefined' &&
+  typeof screen !== 'undefined' &&
+  window.innerWidth < breakpoints.small &&
+  'ontouchstart' in window &&
+  screen.width === window.innerWidth

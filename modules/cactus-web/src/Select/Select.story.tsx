@@ -107,3 +107,48 @@ storiesOf('Select', module)
     ),
     { cactus: { overrides: { overflow: 'hidden' } } }
   )
+  .add(
+    'With ComboBox',
+    () => (
+      <FormHandler
+        onChange={(name, value: string | number | Array<string | number> | null) => value}
+      >
+        {({ value, onChange }) => (
+          <Select
+            options={arizonaCities}
+            name="random"
+            id="select-input"
+            disabled={boolean('disabled', false)}
+            {...eventLoggers}
+            onChange={onChange}
+            value={value}
+            comboBox
+          />
+        )}
+      </FormHandler>
+    ),
+    { cactus: { overrides: { overflow: 'hidden' } } }
+  )
+  .add(
+    'With MultiSelect ComboBox',
+    () => (
+      <FormHandler
+        onChange={(name, value: string | number | Array<string | number> | null) => value}
+      >
+        {({ value, onChange }) => (
+          <Select
+            options={arizonaCities}
+            name="random"
+            id="select-input"
+            disabled={boolean('disabled', false)}
+            {...eventLoggers}
+            onChange={onChange}
+            value={value}
+            comboBox
+            multiple
+          />
+        )}
+      </FormHandler>
+    ),
+    { cactus: { overrides: { overflow: 'hidden' } } }
+  )

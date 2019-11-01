@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 
 import '../helpers/polyfills'
-import { breakpoints } from '../helpers/constants'
+import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
+import { breakpoints, isResponsiveTouchDevice } from '../helpers/constants'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { margin, MarginProps } from 'styled-system'
-import { NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
 import { omitMargins } from '../helpers/omit'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import { width, WidthProps } from 'styled-system'
@@ -41,6 +41,7 @@ export interface SelectProps
   /** !important */
   disabled?: boolean
   multiple?: boolean
+  comboBox?: boolean
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -283,10 +284,38 @@ const SelectTrigger = styled.button`
   }
 `
 
+const ComboInput = styled.input`
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${p => p.theme.colors.darkContrast};
+  text-align: left;
+  outline: none;
+  appearance: none;
+  font-size: 18px;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:focus,
+  &[aria-expanded] {
+    border-color: ${p => p.theme.colors.callToAction};
+  }
+`
+
 const DONE_SECTION_HEIGHT = 52
+let RESPONSIVE_HEIGHT = 0
 
 function responsiveHeight() {
-  return (typeof window !== 'undefined' && window.innerHeight * 0.4 - DONE_SECTION_HEIGHT) || 0
+  return (typeof window !== 'undefined' && window.innerHeight * 0.4) || 0
 }
 
 const StyledList = styled.ul`
@@ -301,11 +330,12 @@ const StyledList = styled.ul`
   overflow-y: auto;
   outline: none;
 
-  @media (max-width: ${breakpoints.medium}px) {
-    height: ${responsiveHeight}px;
+  ${() =>
+    isResponsiveTouchDevice &&
+    `
     margin-bottom: ${DONE_SECTION_HEIGHT}px;
-    padding: 20px 0;
-  }
+    height: calc(100% - ${DONE_SECTION_HEIGHT}px);
+    padding: 20px 0;`}
 `
 
 const Option = styled.li`
@@ -318,23 +348,22 @@ const Option = styled.li`
   box-shadow: none;
   padding: 4px 16px;
 
-  @media (max-width: ${breakpoints.medium}px) {
+  ${p =>
+    isResponsiveTouchDevice &&
+    `
     padding: 6px 16px;
 
     & + & {
-      border-top: 1px solid ${p => p.theme.colors.lightGray};
-    }
-  }
+      border-top: 1px solid ${p.theme.colors.lightGray};
+    }`}
 
-  @media (min-width: ${breakpoints.medium}px) {
-    &.highlighted-option {
-      background-color: ${p => p.theme.colors.callToAction};
-      color: ${p => p.theme.colors.callToActionText};
+  &.highlighted-option {
+    background-color: ${p => p.theme.colors.callToAction};
+    color: ${p => p.theme.colors.callToActionText};
 
-      // haxors
-      ${CheckBox} > input:not(:checked) + span {
-        border-color: white;
-      }
+    // haxors
+    ${CheckBox} > input:not(:checked) + span {
+      border-color: white;
     }
   }
 
@@ -356,7 +385,10 @@ const ListWrapper = styled.div`
     0 3px 9px 0 rgba(7, 61, 232, 0.28), 0 3px 8px 0 rgba(17, 51, 159, 0.07);
   background-color: ${p => p.theme.colors.white};
 
-  @media (max-width: ${breakpoints.medium}px) {
+  ${() =>
+    isResponsiveTouchDevice &&
+    `
+    position: fixed;
     border-radius: 0;
     box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
 
@@ -366,14 +398,17 @@ const ListWrapper = styled.div`
       bottom: 0;
       left: 0;
       right: 0;
-      height: ${responsiveHeight}px;
+      height: calc(100% - ${DONE_SECTION_HEIGHT}px);
       width: 100%;
       content: '';
       pointer-events: none;
       z-index: 100;
-      background: linear-gradient(white, transparent 20% 80%, white);
-    }
-  }
+      background: linear-gradient(
+        rgba(255, 255, 255),
+        rgba(255, 255, 255, 0) 20% 80%,
+        rgba(255, 255, 255)
+      );
+    }`}
 
   ${Flex} {
     bottom: 0;
@@ -387,24 +422,35 @@ const ListWrapper = styled.div`
 
 interface ListProps {
   isOpen: boolean
+  comboBox?: boolean
   options: ExtendedOptionType[]
   multiple?: boolean
+  searchValue: string
   onBlur: (event: React.FocusEvent<HTMLUListElement>) => void
   onClick: (event: React.MouseEvent<HTMLUListElement>) => void
   raiseChange: (active: OptionType | null, noToggle?: boolean) => void
   onClose: () => void
   triggerRect: DOMRect | undefined
+  activeDescendant: string
+  setActiveDescendant?: (activeDescendant: string) => void
+  handleComboInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleComboInputBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 
 interface ListState {
   activeDescendant: string
+  searchValue: string
+  options: ExtendedOptionType[]
 }
 
 class List extends React.Component<ListProps, ListState> {
   state = {
     activeDescendant: '',
+    searchValue: this.props.searchValue,
+    options: this.props.options,
   }
   listRef: HTMLUListElement | null = null
+  mobileInputRef = React.createRef<HTMLInputElement>()
 
   pendingChars: string = ''
   keyClear: number | undefined
@@ -415,14 +461,14 @@ class List extends React.Component<ListProps, ListState> {
   /** Start List event handlers */
 
   handleBlur = (event: React.FocusEvent<HTMLUListElement>) => {
-    this.setState({ activeDescendant: '' })
+    this.setActiveDescendant('')
     this.props.onBlur(event)
   }
 
   handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
     const key = event.which || event.keyCode
     const active = this.getActiveOpt()
-    const options = this.props.options
+    const options = this.state.options
     if (active === null || options.length === 0) {
       return
     }
@@ -439,27 +485,23 @@ class List extends React.Component<ListProps, ListState> {
         }
 
         if (nextIndex <= 0) {
-          this.setState({ activeDescendant: options[0].id })
+          this.setActiveDescendant(options[0].id)
         } else if (nextIndex >= options.length - 1) {
-          this.setState({
-            activeDescendant: options[options.length - 1].id,
-          })
+          this.setActiveDescendant(options[options.length - 1].id)
         } else {
-          this.setState({ activeDescendant: options[nextIndex].id })
+          this.setActiveDescendant(options[nextIndex].id)
         }
 
         break
       }
       case KeyCodes.HOME: {
         event.preventDefault()
-        this.setState({ activeDescendant: options[0].id })
+        this.setActiveDescendant(options[0].id)
         break
       }
       case KeyCodes.END:
         event.preventDefault()
-        this.setState({
-          activeDescendant: options[options.length - 1].id,
-        })
+        this.setActiveDescendant(options[options.length - 1].id)
         break
       case KeyCodes.SPACE:
         event.preventDefault()
@@ -469,14 +511,14 @@ class List extends React.Component<ListProps, ListState> {
         break
       case KeyCodes.RETURN: {
         event.preventDefault()
-        this.setState({ activeDescendant: '' })
+        this.setActiveDescendant('')
         this.props.raiseChange(active, true)
         this.props.onClose()
         break
       }
       case KeyCodes.ESC: {
         event.preventDefault()
-        this.setState({ activeDescendant: '' })
+        this.setActiveDescendant('')
         this.props.onClose()
         break
       }
@@ -484,7 +526,7 @@ class List extends React.Component<ListProps, ListState> {
         // type to search
         const option = this.findOptionToFocus(key)
         if (option !== null) {
-          this.setState({ activeDescendant: option.id })
+          this.setActiveDescendant(option.id)
         }
         break
     }
@@ -494,7 +536,7 @@ class List extends React.Component<ListProps, ListState> {
     const currentTarget = event.currentTarget
     // prevent triggering by automated scrolling
     if (!this.didScroll) {
-      this.setState({ activeDescendant: currentTarget.id as string })
+      this.setActiveDescendant(currentTarget.id as string)
     }
   }
 
@@ -508,19 +550,21 @@ class List extends React.Component<ListProps, ListState> {
   isList = (node: HTMLElement | null) => this.listRef === node
 
   getActiveOpt() {
-    const activeDescendant = this.state.activeDescendant
+    const activeDescendant = this.props.comboBox
+      ? this.props.activeDescendant
+      : this.state.activeDescendant
     if (activeDescendant === '') {
       return null
     }
-    return this.props.options.find(o => o.id === activeDescendant) || null
+    return this.state.options.find(o => o.id === activeDescendant) || null
   }
 
   findOptionToFocus(key: number) {
     const character = String.fromCharCode(key)
-    const options = this.props.options
+    const options = this.state.options
     let selected = this.getActiveOpt()
     if (!this.pendingChars && selected !== null) {
-      this.searchIndex = getSelectedIndex(this.props.options, selected.value)
+      this.searchIndex = getSelectedIndex(this.state.options, selected.value)
     }
     this.pendingChars += character
     let nextMatch = findMatchInRange(
@@ -562,22 +606,91 @@ class List extends React.Component<ListProps, ListState> {
     return activeId
   }
 
+  static filterOptions = (
+    options: ExtendedOptionType[],
+    searchValue: string
+  ): [ExtendedOptionType[], boolean] => {
+    let addOption = true
+    options = options.filter((opt: ExtendedOptionType) => {
+      if (opt.label.toLowerCase() === searchValue.toLowerCase() || searchValue === '') {
+        addOption = false
+      }
+      return opt.label.toLowerCase().includes(searchValue.toLowerCase())
+    })
+    return [options, addOption]
+  }
+
+  setActiveDescendant = (id: string) => {
+    this.props.comboBox && typeof this.props.setActiveDescendant === 'function'
+      ? this.props.setActiveDescendant(id)
+      : this.setState({ activeDescendant: id })
+  }
+
   /** End List helpers */
 
   static getDerivedStateFromProps(props: ListProps, state: ListState) {
-    if (props.isOpen && state.activeDescendant === '') {
-      return { activeDescendant: List.initActiveDescendant(props.options) }
-    } else if (!props.isOpen && state.activeDescendant !== '') {
-      return { activeDescendant: '' }
+    let filteredOptions: ExtendedOptionType[] = props.options
+    let activeDescendant: string = state.activeDescendant
+    let update = false
+
+    if (
+      props.isOpen &&
+      props.comboBox &&
+      (props.searchValue !== state.searchValue || props.options !== state.options)
+    ) {
+      const [filteredOpts, addOption] = List.filterOptions(props.options, props.searchValue)
+      filteredOptions = filteredOpts
+      if (addOption) {
+        const addOpt: ExtendedOptionType = {
+          value: 'create',
+          label: `Create "${props.searchValue}"`,
+          id: `create-${props.searchValue}`,
+          isSelected: false,
+        }
+        filteredOptions.unshift(addOpt)
+      }
+      update = true
+    } else if (!props.comboBox && props.options !== state.options) {
+      update = true
     }
-    return null
+
+    if (props.isOpen && !props.comboBox && state.activeDescendant === '') {
+      activeDescendant = List.initActiveDescendant(filteredOptions)
+      update = true
+    }
+
+    if (!props.isOpen && state.activeDescendant !== '') {
+      activeDescendant = ''
+      update = true
+    }
+
+    return update
+      ? {
+          activeDescendant: activeDescendant,
+          options: filteredOptions,
+          searchValue: props.searchValue,
+        }
+      : null
+  }
+
+  componentDidMount() {
+    RESPONSIVE_HEIGHT = isResponsiveTouchDevice ? responsiveHeight() : 0
   }
 
   componentDidUpdate() {
     if (this.props.isOpen) {
       window.requestAnimationFrame(() => {
         let listEl = this.listRef
-        let activeDescendant = this.state.activeDescendant
+        let activeDescendant = this.props.comboBox
+          ? this.props.activeDescendant
+          : this.state.activeDescendant
+
+        if (
+          this.mobileInputRef.current !== null &&
+          document.activeElement !== this.mobileInputRef.current
+        ) {
+          this.mobileInputRef.current.focus()
+        }
 
         if (listEl === null || activeDescendant === '') {
           return
@@ -607,8 +720,17 @@ class List extends React.Component<ListProps, ListState> {
   }
 
   render() {
-    const { isOpen, multiple, triggerRect, options, onClose } = this.props
-    const { activeDescendant } = this.state
+    const {
+      isOpen,
+      comboBox,
+      multiple,
+      triggerRect,
+      onClose,
+      activeDescendant: selectManagedActiveDescendant,
+    } = this.props
+    const { options, activeDescendant: listManagedActiveDescendant } = this.state
+
+    const activeDescendant = comboBox ? selectManagedActiveDescendant : listManagedActiveDescendant
 
     return (
       <Portal>
@@ -619,7 +741,7 @@ class List extends React.Component<ListProps, ListState> {
               listRef(n)
             }
             return (
-              <ListWrapper style={positionList(isOpen, triggerRect, listRect)}>
+              <ListWrapper style={positionList(isOpen, comboBox, triggerRect, listRect)}>
                 <StyledList
                   onBlur={this.handleBlur}
                   onClick={this.props.onClick}
@@ -645,10 +767,13 @@ class List extends React.Component<ListProps, ListState> {
                         className={activeDescendant === optId ? 'highlighted-option' : undefined}
                         data-value={opt.value}
                         role="option"
+                        data-role={optId.includes('create') ? 'create' : 'option'}
                         aria-selected={ariaSelected}
                         onMouseEnter={this.handleOptionMouseEnter}
                       >
-                        {multiple && (
+                        {optId.includes('create') ? (
+                          <ActionsAdd mr={2} mb={2} />
+                        ) : multiple && !optId.includes('create') ? (
                           <CheckBox
                             id={`multiselect-option-check-${optId}`}
                             aria-hidden="true"
@@ -656,15 +781,27 @@ class List extends React.Component<ListProps, ListState> {
                             readOnly
                             mr={2}
                           />
-                        )}
+                        ) : null}
                         {opt.label}
                       </Option>
                     )
                   })}
                 </StyledList>
-                {typeof window !== 'undefined' && window.innerWidth < breakpoints.medium ? (
-                  <Flex justifyContent="center">
-                    <TextButton onClick={onClose} variant="action">
+                {isResponsiveTouchDevice ? (
+                  <Flex justifyContent={comboBox ? 'space-between' : 'center'}>
+                    {comboBox ? (
+                      <ComboInput
+                        data-role="mobile-search"
+                        type="text"
+                        role="search"
+                        ref={this.mobileInputRef}
+                        value={this.props.searchValue}
+                        onChange={this.props.handleComboInputChange}
+                        onBlur={this.props.handleComboInputBlur}
+                        style={{ width: '40%', marginLeft: '16px' }}
+                      />
+                    ) : null}
+                    <TextButton onClick={onClose} variant="action" mr={comboBox ? 4 : 0}>
                       Done
                     </TextButton>
                   </Flex>
@@ -724,6 +861,7 @@ const OFFSET = 8
 const SCROLLBAR_WIDTH = 10
 function positionList(
   isOpen: boolean,
+  comboBox: boolean | undefined,
   triggerRect: DOMRect | undefined,
   listRect: DOMRect | undefined
 ): React.CSSProperties | undefined {
@@ -734,10 +872,10 @@ function positionList(
   const scrollY = getScrollY()
   const scrollX = getScrollX()
 
-  if (window.innerWidth < breakpoints.medium) {
+  if (isResponsiveTouchDevice) {
     return {
       bottom: 0,
-      height: window.innerHeight * 0.4 + 'px',
+      height: RESPONSIVE_HEIGHT + 'px',
       width: window.innerWidth + 'px',
     }
   }
@@ -764,7 +902,7 @@ function positionList(
 
   if (collisions.bottom && !collisions.top) {
     style.top = scrollY + triggerRect.top - listRect.height - OFFSET + 'px'
-  } else if (collisions.top && collisions.bottom) {
+  } else if (collisions.top && collisions.bottom && !comboBox) {
     style.top = scrollY + 'px'
     style.maxHeight = window.innerHeight - SCROLLBAR_WIDTH + 'px'
   }
@@ -783,12 +921,20 @@ function positionList(
 type SelectState = {
   isOpen: boolean
   value: string | number | Array<number | string> | null
+  searchValue: string
+  activeDescendant: string
+  currentTriggerWidth: number
+  extraOptions: OptionType[]
 }
 
 class SelectBase extends React.Component<SelectProps, SelectState> {
   state = {
     isOpen: false,
     value: this.props.value || null,
+    searchValue: '',
+    activeDescendant: '',
+    currentTriggerWidth: 0,
+    extraOptions: [],
   }
   pendingChars: string = ''
   searchIndex: number = -1
@@ -796,6 +942,24 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   scrollClear: number | undefined
   listRef = React.createRef<List>()
   triggerRef = React.createRef<HTMLButtonElement>()
+  comboInputRef = React.createRef<HTMLInputElement>()
+
+  componentDidMount() {
+    if (this.triggerRef.current !== null) {
+      this.setState({ currentTriggerWidth: this.triggerRef.current.getBoundingClientRect().width })
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.triggerRef.current !== null) {
+      const triggerWidth = this.triggerRef.current.getBoundingClientRect().width
+      if (triggerWidth !== this.state.currentTriggerWidth) {
+        this.setState({
+          currentTriggerWidth: triggerWidth,
+        })
+      }
+    }
+  }
 
   static getDerivedStateFromProps(props: Readonly<SelectProps>, state: Readonly<SelectState>) {
     if (props.value !== undefined && props.value !== state.value) {
@@ -865,6 +1029,15 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   }
 
   handleListBlur = (event: React.FocusEvent<HTMLUListElement>) => {
+    const relatedTarget: Element | null = event.relatedTarget as HTMLElement
+    if (
+      relatedTarget !== null &&
+      (relatedTarget.getAttribute('id') === `${this.props.id}-input` ||
+        relatedTarget.getAttribute('data-role') === 'mobile-search')
+    ) {
+      event.stopPropagation()
+      return
+    }
     this.setState({ isOpen: false })
     const isNotControlledBlur =
       !event.relatedTarget || event.relatedTarget !== this.triggerRef.current
@@ -879,15 +1052,121 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       target = target.closest('[role=option]')
       if (target === null) return
     }
+    if (target.getAttribute('data-role') === 'create') {
+      event.preventDefault()
+      this.createOption()
+      if (!this.props.multiple) {
+        this.closeList()
+        this.setState({ searchValue: '' })
+      }
+      return
+    }
     if (target.getAttribute('role') === 'option') {
       event.preventDefault()
       const activeId = target.id as string
-      const active = this.getExtOptions().find(o => o.id === activeId)
+      let active = this.getExtOptions().find(o => o.id === activeId)
+
       this.raiseChange(active || null)
       if (!this.props.multiple) {
         this.closeList()
+        this.setState({ searchValue: '' })
       }
     }
+  }
+
+  handleComboInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ searchValue: event.target.value, activeDescendant: '' })
+  }
+
+  handleComboInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const relatedTarget: Element | null = event.relatedTarget as HTMLElement
+    if (
+      relatedTarget !== null &&
+      (relatedTarget.getAttribute('data-role') === 'create' ||
+        relatedTarget.getAttribute('data-role') === 'mobile-search')
+    ) {
+      event.preventDefault()
+      return
+    }
+    if (relatedTarget === null || relatedTarget.getAttribute('role') !== 'listbox') {
+      this.closeList()
+      this.setState({ searchValue: '', activeDescendant: '' })
+    }
+  }
+
+  handleComboInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const key = event.which || event.keyCode
+    if (this.state.isOpen && this.listRef.current !== null) {
+      const active = this.listRef.current.getActiveOpt()
+      const options = this.listRef.current.state.options
+      switch (key) {
+        case KeyCodes.UP:
+        case KeyCodes.DOWN: {
+          event.preventDefault()
+
+          if (active === null) {
+            this.setState({
+              activeDescendant: List.initActiveDescendant(options),
+            })
+            return
+          }
+
+          if (active === null) {
+            return
+          }
+          let nextIndex = getSelectedIndex(options, active.value)
+          if (key === KeyCodes.UP) {
+            --nextIndex
+          } else {
+            ++nextIndex
+          }
+
+          if (nextIndex <= 0) {
+            this.setState({ activeDescendant: options[0].id })
+          } else if (nextIndex >= options.length - 1) {
+            this.setState({
+              activeDescendant: options[options.length - 1].id,
+            })
+          } else {
+            this.setState({
+              activeDescendant: options[nextIndex].id,
+            })
+          }
+          break
+        }
+        case KeyCodes.RETURN: {
+          event.preventDefault()
+          if (this.state.activeDescendant === `create-${this.state.searchValue}`) {
+            this.createOption()
+            this.setState({ activeDescendant: '' })
+            break
+          }
+          const multiple = this.props.multiple
+          if (!multiple || event.metaKey) {
+            this.setState({ activeDescendant: '', searchValue: '' })
+            this.closeList()
+          }
+          this.raiseChange(active, event.metaKey)
+          break
+        }
+        case KeyCodes.ESC: {
+          event.preventDefault()
+          this.setState({ activeDescendant: '', searchValue: '' })
+          this.closeList()
+        }
+      }
+    }
+  }
+
+  createOption = () => {
+    const newOption = asOption(this.state.searchValue)
+    const extraOptions = (this.state.extraOptions as OptionType[]).concat(newOption)
+    this.setState({ extraOptions: extraOptions })
+    this.raiseChange(newOption)
+    if (this.comboInputRef.current !== null) {
+      this.comboInputRef.current.focus()
+    }
+    !this.props.multiple && this.closeList()
   }
 
   /** END event handlers */
@@ -925,8 +1204,10 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   openList() {
     this.setState({ isOpen: true })
     window.requestAnimationFrame(() => {
-      if (this.listRef.current !== null) {
+      if (this.listRef.current !== null && !this.props.comboBox) {
         this.listRef.current.focus()
+      } else if (this.comboInputRef.current !== null && this.props.comboBox) {
+        this.comboInputRef.current.focus()
       }
     })
   }
@@ -935,7 +1216,12 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.setState({ isOpen: false })
     window.requestAnimationFrame(() => {
       if (this.triggerRef.current !== null) {
-        this.triggerRef.current.focus()
+        if (this.triggerRef.current.children.length > 0) {
+          const trigger = this.triggerRef.current.children[0] as HTMLButtonElement
+          if (trigger.getAttribute('type') === 'button') {
+            trigger.focus()
+          }
+        }
       }
     })
   }
@@ -984,24 +1270,35 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     ) {
       return this.memoizedExtOptions.memo
     }
+    let memo = this.props.options.map(o => {
+      let opt = asOption(o)
+      return {
+        ...opt,
+        id: getOptionId(selectId, opt),
+        isSelected: this.isSelected(opt),
+      } as ExtendedOptionType
+    })
+    const extraOpts = (this.state.extraOptions as OptionType[]).map(opt => ({
+      ...opt,
+      id: getOptionId(selectId, opt),
+      isSelected: this.isSelected(opt),
+    }))
+    memo = memo.concat(extraOpts)
     this.memoizedExtOptions = {
       id: selectId,
       options: this.props.options,
       value: this.state.value,
-      memo: this.props.options.map(o => {
-        let opt = asOption(o)
-        return {
-          ...opt,
-          id: getOptionId(selectId, opt),
-          isSelected: this.isSelected(opt),
-        } as ExtendedOptionType
-      }),
+      memo: memo,
     }
     return this.memoizedExtOptions.memo
   }
 
   resetMemo = () => {
     this.memoizedExtOptions.memo = []
+  }
+
+  setActiveDescendant = (activeDescendant: string) => {
+    this.setState({ activeDescendant: activeDescendant })
   }
 
   /** END helpers */
@@ -1020,57 +1317,85 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       onBlur,
       onFocus,
       multiple,
+      comboBox,
       extraLabel,
       value: propsValue,
       ...rest
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
-    let { isOpen } = this.state
+    let { isOpen, searchValue, activeDescendant } = this.state
     let options = this.getExtOptions()
 
     return (
       <div className={className}>
         <Rect observe={isOpen}>
           {({ ref: triggerRef, rect: triggerRect }) => (
-            <>
-              <SelectTrigger
-                {...rest}
-                id={id}
-                name={name}
-                onKeyUp={this.handleKeyUp}
-                onClick={this.handleClick}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
-                disabled={disabled}
-                ref={node => {
-                  triggerRef(node)
-                  // @ts-ignore
-                  this.triggerRef.current = node
-                }}
-                type="button"
-                aria-haspopup="listbox"
-                aria-expanded={isOpen || undefined}
-                aria-multiselectable={multiple}
-              >
-                <ValueSwitch
-                  extraLabel={extraLabel || '+{} more'}
-                  options={options}
-                  placeholder={placeholder}
-                  multiple={multiple}
+            <div
+              ref={node => {
+                triggerRef(node)
+                // @ts-ignore
+                this.triggerRef.current = node
+              }}
+            >
+              {isOpen && comboBox ? (
+                <ComboInput
+                  ref={this.comboInputRef}
+                  id={`${id}-input`}
+                  name={name}
+                  autoComplete="off"
+                  autoFocus={isResponsiveTouchDevice ? true : false}
+                  value={searchValue}
+                  style={{ width: `${this.state.currentTriggerWidth}px` }}
+                  onChange={this.handleComboInputChange}
+                  onBlur={this.handleComboInputBlur}
+                  onKeyDown={this.handleComboInputKeyDown}
+                  role="search"
+                  aria-haspopup="listbox"
+                  aria-expanded={isOpen || undefined}
+                  aria-multiselectable={multiple}
+                  aria-activedescendant={activeDescendant ? activeDescendant : undefined}
                 />
-                <NavigationChevronDown iconSize="tiny" />
-              </SelectTrigger>
+              ) : (
+                <SelectTrigger
+                  {...rest}
+                  id={id}
+                  name={name}
+                  onKeyUp={this.handleKeyUp}
+                  onClick={this.handleClick}
+                  onBlur={this.handleBlur}
+                  onFocus={this.handleFocus}
+                  disabled={disabled}
+                  type="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={isOpen || undefined}
+                  aria-multiselectable={multiple}
+                >
+                  <ValueSwitch
+                    extraLabel={extraLabel || '+{} more'}
+                    options={options}
+                    placeholder={placeholder}
+                    multiple={multiple}
+                  />
+                  <NavigationChevronDown iconSize="tiny" />
+                </SelectTrigger>
+              )}
               <List
                 ref={this.listRef}
                 isOpen={isOpen}
+                comboBox={comboBox}
                 options={options}
                 multiple={multiple}
+                searchValue={searchValue}
+                activeDescendant={activeDescendant}
+                setActiveDescendant={comboBox ? this.setActiveDescendant : undefined}
+                handleComboInputChange={comboBox ? this.handleComboInputChange : undefined}
+                handleComboInputBlur={comboBox ? this.handleComboInputBlur : undefined}
                 onBlur={this.handleListBlur}
                 onClick={this.handleListClick}
                 raiseChange={this.raiseChange}
                 onClose={this.closeList}
                 triggerRect={triggerRect}
               />
-            </>
+            </div>
           )}
         </Rect>
       </div>
@@ -1111,6 +1436,7 @@ Select.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   multiple: PropTypes.bool,
+  comboBox: PropTypes.bool,
   extraLabel: PropTypes.string,
   status: StatusPropType,
   onChange: PropTypes.func,
@@ -1121,6 +1447,7 @@ Select.propTypes = {
 Select.defaultProps = {
   placeholder: 'Select an option',
   multiple: false,
+  comboBox: false,
   extraLabel: '+{} more',
 }
 
