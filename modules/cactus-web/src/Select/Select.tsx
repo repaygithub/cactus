@@ -2,10 +2,10 @@ import React, { useLayoutEffect, useRef, useState } from 'react'
 
 import '../helpers/polyfills'
 import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
-import { breakpoints, isResponsiveTouchDevice } from '../helpers/constants'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
+import { isResponsiveTouchDevice } from '../helpers/constants'
 import { margin, MarginProps } from 'styled-system'
 import { omitMargins } from '../helpers/omit'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
@@ -617,6 +617,9 @@ class List extends React.Component<ListProps, ListState> {
       }
       return opt.label.toLowerCase().includes(searchValue.toLowerCase())
     })
+    if (searchValue === '') {
+      addOption = false
+    }
     return [options, addOption]
   }
 
