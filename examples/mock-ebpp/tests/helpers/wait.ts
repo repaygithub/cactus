@@ -42,3 +42,17 @@ export const waitForDropdownList = async (page: puppeteer.Page) => {
   })
   return await getActiveElement(page)
 }
+
+export const waitForComboInput = async (page: puppeteer.Page) => {
+  await wait(async () => {
+    let activeElement: puppeteer.ElementHandle<Element> | null = await getActiveElement(page)
+
+    activeElement = await activeElement.asElement()
+    if (activeElement === null) {
+      return false
+    }
+    const accessibility = await page.accessibility.snapshot({ root: activeElement })
+    return accessibility.role === 'search'
+  })
+  return await getActiveElement(page)
+}

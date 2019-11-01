@@ -1,49 +1,99 @@
 import { queries } from 'pptr-testing-library'
-import { waitForDropdownList } from './wait'
+import { waitForComboInput, waitForDropdownList } from './wait'
 import puppeteer from 'puppeteer'
 
-const { getByLabelText, getByText } = queries
+const { getByLabelText, getByText, getAllByRole } = queries
 
-export const fillTextField = async (
-  doc: puppeteer.ElementHandle<Element>,
-  label: string,
-  text: string
-) => {
-  const field = await getByLabelText(doc, label)
-  await field.click()
-  await field.type(text)
+class FormActions {
+  constructor(doc: puppeteer.ElementHandle<Element>, page: puppeteer.Page) {
+    this.doc = doc
+    this.page = page
+  }
+
+  doc: puppeteer.ElementHandle<Element>
+  page: puppeteer.Page
+
+  fillTextField = async (label: string, text: string) => {
+    const field = await getByLabelText(this.doc, label)
+    await field.click()
+    await field.type(text)
+  }
+
+  selectDropdownOption = async (label: string, optionOrOptions: string | Array<string>) => {
+    const selectTrigger = await getByLabelText(this.doc, label)
+    await selectTrigger.click()
+    const listbox = await waitForDropdownList(this.page)
+    if (typeof optionOrOptions === 'string') {
+      const option = await getByText(listbox, optionOrOptions)
+      await option.click()
+    } else if (Array.isArray(optionOrOptions)) {
+      for (let i = 0; i < optionOrOptions.length; i++) {
+        const option = await getByText(listbox, optionOrOptions[i])
+        await option.click()
+      }
+      await this.page.keyboard.press('Escape')
+    }
+  }
+
+  searchComboBox = async (label: string, optionOrOptions: string | Array<string>) => {
+    const comboTrigger = await getByLabelText(this.doc, label)
+    await comboTrigger.click()
+    await waitForComboInput(this.page)
+    if (typeof optionOrOptions === 'string') {
+      await this.page.keyboard.type(optionOrOptions)
+      await this.page.keyboard.press('ArrowDown')
+      await this.page.keyboard.press('Enter')
+    } else if (Array.isArray(optionOrOptions)) {
+      for (let i = 0; i < optionOrOptions.length; i++) {
+        await this.page.keyboard.type(optionOrOptions[i])
+        await this.page.keyboard.press('ArrowDown')
+        await this.page.keyboard.press('Enter')
+        const optionChars = optionOrOptions[i].split('')
+        for (let j = 0; j < optionChars.length; j++) {
+          await this.page.keyboard.press('Backspace')
+        }
+      }
+      await this.page.keyboard.press('Escape')
+    }
+  }
+
+  selectMobileDropdownOption = async (label: string, optionOrOptions: string | Array<string>) => {
+    const selectTrigger = await getByLabelText(this.doc, label)
+    await this.page.waitFor(1000)
+    await selectTrigger.tap()
+    const listbox = await waitForDropdownList(this.page)
+    if (typeof optionOrOptions === 'string') {
+      const option = await getByText(listbox, optionOrOptions)
+      await option.tap()
+    } else if (Array.isArray(optionOrOptions)) {
+      for (let i = 0; i < optionOrOptions.length; i++) {
+        const option = await getByText(listbox, optionOrOptions[i])
+        await option.tap()
+      }
+      // haxxors
+      await this.page.keyboard.press('Escape')
+    }
+  }
+
+  uploadFile = async (label: string) => {
+    const fileInputButton = await getByLabelText(this.doc, label)
+    const [fileChooser] = await Promise.all([
+      this.page.waitForFileChooser(),
+      fileInputButton.click(),
+    ])
+    fileChooser.accept(['tests/test-data/test-logo.jpg'])
+  }
+
+  clickByText = async (label: string) => {
+    const clickable = await getByText(this.doc, label)
+    await clickable.click()
+  }
+
+  getInputValueByLabel = async (label: string) => {
+    return getByLabelText(this.doc, label)
+      .then(i => i.getProperty('value'))
+      .then(h => h.jsonValue())
+  }
 }
 
-export const selectDropdownOption = async (
-  page: puppeteer.Page,
-  doc: puppeteer.ElementHandle<Element>,
-  label: string,
-  optionText: string
-) => {
-  const selectTrigger = await getByLabelText(doc, label)
-  await selectTrigger.click()
-  const listbox = await waitForDropdownList(page)
-  const option = await getByText(listbox, optionText)
-  await option.click()
-}
-
-export const uploadFile = async (
-  page: puppeteer.Page,
-  doc: puppeteer.ElementHandle<Element>,
-  label: string
-) => {
-  const fileInputButton = await getByLabelText(doc, label)
-  const [fileChooser] = await Promise.all([page.waitForFileChooser(), fileInputButton.click()])
-  fileChooser.accept(['tests/test-data/test-logo.jpg'])
-}
-
-export const clickByText = async (doc: puppeteer.ElementHandle<Element>, label: string) => {
-  const clickable = await getByText(doc, label)
-  await clickable.click()
-}
-
-export function getInputValueByLabel(doc: puppeteer.ElementHandle<Element>, label: string) {
-  return getByLabelText(doc, label)
-    .then(i => i.getProperty('value'))
-    .then(h => h.jsonValue())
-}
+export default FormActions
