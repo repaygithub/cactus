@@ -2,7 +2,6 @@
 
 ## [@repay/cactus-i18n@v0.2.1](https://github.com/repaygithub/cactus/commit/1d5d859613e990a285c8a24ace85afda2d1c2406)
 
-- chore(cactus-i18n): publish @repay/cactus-i18n v0.2.1 [1d5d859](https://github.com/repaygithub/cactus/commit/1d5d859613e990a285c8a24ace85afda2d1c2406)
 - feat(cactus-i18n): allow section language override (#113) [d31f5aa](https://github.com/repaygithub/cactus/commit/d31f5aa4c87362932305c3d5d293340e95d950eb)
 
 ## [@repay/cactus-web@v0.5.4](https://github.com/repaygithub/cactus/commit/fbda5e83406068fb154eb70d730e7c843ee98258)
