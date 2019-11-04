@@ -744,7 +744,10 @@ class List extends React.Component<ListProps, ListState> {
               listRef(n)
             }
             return (
-              <ListWrapper style={positionList(isOpen, comboBox, triggerRect, listRect)}>
+              <ListWrapper
+                style={positionList(isOpen, comboBox, triggerRect, listRect)}
+                role="dialog"
+              >
                 <StyledList
                   onBlur={this.handleBlur}
                   onClick={this.props.onClick}
