@@ -1,15 +1,10 @@
 import * as path from 'path'
 import { ApiData } from '../types'
-import {
-  clickByText,
-  fillTextField,
-  getInputValueByLabel,
-  selectDropdownOption,
-  uploadFile,
-} from './helpers/form-actions'
 import { getActiveElement, sleep } from './helpers/wait'
 import { getDocument, queries } from 'pptr-testing-library'
-import puppeteer, { ElementHandle } from 'puppeteer'
+import devices from 'puppeteer/DeviceDescriptors'
+import FormActions from './helpers/form-actions'
+import puppeteer from 'puppeteer'
 import startStaticServer, { ServerObj } from './helpers/static-server'
 
 const { getByLabelText } = queries
@@ -30,15 +25,20 @@ async function getActiveAccessibility(page: puppeteer.Page) {
 
 describe('UI Config Form', () => {
   let page: puppeteer.Page
+  let mobilePage: puppeteer.Page
   let server: ServerObj
   beforeAll(async () => {
     page = await global.__BROWSER__.newPage()
+    mobilePage = await global.__BROWSER__.newPage()
+    const iPhoneX = devices['iPhone X']
+    mobilePage.emulate(iPhoneX)
     server = startStaticServer({
       directory: path.join(process.cwd(), 'dist'),
       port: 33567,
       singlePageApp: true,
     })
     await page.goto('http://localhost:33567/ui-config')
+    await mobilePage.goto('http://localhost:33567/ui-config')
   })
 
   beforeEach(async () => {
@@ -49,25 +49,30 @@ describe('UI Config Form', () => {
     await server.close()
   })
 
-  it('should be titled "UI Config"', async () => {
+  test('should be titled "UI Config"', async () => {
     await expect(page.title()).resolves.toMatch('UI Config')
   })
 
-  it('should fill out and submit the entire form', async () => {
+  test('should fill out and submit the entire form', async () => {
     const doc = await getDocument(page)
-    await fillTextField(doc, 'Display Name', 'Test Merchant')
-    await fillTextField(doc, 'Merchant Name', 'tst-mrchnt')
-    await fillTextField(doc, 'Terms and Conditions', 'You must be this tall to test')
-    await fillTextField(doc, 'Welcome Content', 'Welcome to the integration test app')
-    await fillTextField(doc, 'Footer Content', 'Powered by coffee and sheer willpower')
-    await selectDropdownOption(page, doc, 'Notification Email', 'dhuber@repay.com')
-    await uploadFile(page, doc, 'Upload Logo')
-    await clickByText(doc, 'Blue')
-    await clickByText(doc, 'Allow Customer Login')
-    await clickByText(doc, 'Use Cactus Styles')
-    await clickByText(doc, 'Submit')
+    const actions = new FormActions(doc, page)
 
-    const apiData: ApiData = await page.evaluate(() => (window as any).apiData)
+    await actions.fillTextField('Display Name', 'Test Merchant')
+    await actions.fillTextField('Merchant Name', 'tst-mrchnt')
+    await actions.fillTextField('Terms and Conditions', 'You must be this tall to test')
+    await actions.fillTextField('Welcome Content', 'Welcome to the integration test app')
+    await actions.fillTextField('Footer Content', 'Powered by coffee and sheer willpower')
+    await actions.selectDropdownOption('Notification Email', 'dhuber@repay.com')
+    await actions.selectDropdownOption('All Locations', ['Tempe', 'Phoenix'])
+    await actions.searchComboBox('Most Popular Location', 'Tempe')
+    await actions.searchComboBox('Card Brands', ['MasterCard', 'FakeBrand'])
+    await actions.uploadFile('Upload Logo')
+    await actions.clickByText('Blue')
+    await actions.clickByText('Allow Customer Login')
+    await actions.clickByText('Use Cactus Styles')
+    await actions.clickByText('Submit')
+
+    const apiData: ApiData = await actions.page.evaluate(() => (window as any).apiData)
     expect(apiData).toMatchObject({
       display_name: 'Test Merchant',
       merchant_name: 'tst-mrchnt',
@@ -75,10 +80,39 @@ describe('UI Config Form', () => {
       welcome_content: 'Welcome to the integration test app',
       footer_content: 'Powered by coffee and sheer willpower',
       notification_email: 'dhuber@repay.com',
+      all_locations: ['Tempe', 'Phoenix'],
+      mp_location: 'Tempe',
+      card_brands: ['MasterCard', 'FakeBrand'],
       allow_customer_login: true,
       use_cactus_styles: true,
       select_color: 'blue',
       file_input: [{ fileName: 'test-logo.jpg', contents: 'data:', status: 'loaded' }],
+    })
+  })
+
+  describe('Mobile Views', () => {
+    describe('<SelectField />', () => {
+      test('should present the mobile view for multiple=false comboBox=false', async () => {
+        const doc = await getDocument(mobilePage)
+        const actions = new FormActions(doc, mobilePage)
+        await actions.selectMobileDropdownOption('Notification Email', 'dhuber@repay.com')
+        const select = await getByLabelText(doc, 'Notification Email')
+        expect(await select.$eval('span', node => (node as HTMLElement).innerText)).toBe(
+          'dhuber@repay.com'
+        )
+      })
+
+      test('should present the mobile view for multiple=true comboBox=false', async () => {
+        const doc = await getDocument(mobilePage)
+        const actions = new FormActions(doc, mobilePage)
+        await actions.selectMobileDropdownOption('All Locations', ['Tempe', 'Phoenix'])
+        const select = await getByLabelText(doc, 'All Locations')
+        expect(await select.$eval('span', node => (node as HTMLElement).innerText)).toBe(
+          'TempePhoenix'
+        )
+      })
+
+      // TODO: Finish mobile combo box tests after we research more on mobile accessibility
     })
   })
 
@@ -136,6 +170,7 @@ describe('UI Config Form', () => {
 
     test('move and select date with keyboard', async () => {
       const doc = await getDocument(page)
+      const actions = new FormActions(doc, page)
 
       const datePickerTrigger = await getByLabelText(doc, 'Open date picker')
       await datePickerTrigger.click()
@@ -169,9 +204,9 @@ describe('UI Config Form', () => {
 
       // select currently focused date
       await page.keyboard.press('Enter')
-      const year = await getInputValueByLabel(doc, 'year')
-      const month = await getInputValueByLabel(doc, 'month')
-      const day = await getInputValueByLabel(doc, 'day of month')
+      const year = await actions.getInputValueByLabel('year')
+      const month = await actions.getInputValueByLabel('month')
+      const day = await actions.getInputValueByLabel('day of month')
       expect(year).toEqual('2019')
       expect(month).toEqual('10')
       expect(day).toEqual('10')

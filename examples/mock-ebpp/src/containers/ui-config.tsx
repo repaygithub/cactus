@@ -34,6 +34,9 @@ interface State {
     welcome_content: string
     footer_content: string
     notification_email: string
+    all_locations: Array<string>
+    mp_location: string
+    card_brands: Array<string>
     allow_customer_login: boolean
     use_cactus_styles: boolean
     select_color: string
@@ -55,6 +58,9 @@ const getInitialState = () => ({
     welcome_content: '',
     footer_content: '',
     notification_email: '',
+    all_locations: [],
+    mp_location: '',
+    card_brands: [],
     allow_customer_login: false,
     use_cactus_styles: false,
     select_color: '',
@@ -124,7 +130,9 @@ const UIConfig = (props: UIConfigProps) => {
     console.log(state.formData.file_input)
   }
 
-  const arr = ['vvyverman@repay.com', 'dhuber@repay.com']
+  const emails = ['vvyverman@repay.com', 'dhuber@repay.com']
+  const cities = ['Tempe', 'Phoenix', 'Tucson', 'Flagstaff', 'Superior']
+  const cardBrands = ['Visa', 'MasterCard', 'Amex', 'Discover']
 
   return (
     <div>
@@ -151,7 +159,6 @@ const UIConfig = (props: UIConfigProps) => {
                 onChange={handleChange}
                 name="display_name"
                 label="Display Name"
-                my={3}
                 value={state.formData.display_name}
                 tooltip="Enter your merchant display name"
               />
@@ -161,11 +168,9 @@ const UIConfig = (props: UIConfigProps) => {
                 name="merchant_name"
                 label="Merchant Name"
                 value={state.formData.merchant_name}
-                my={3}
                 tooltip="Enter your merchant name"
               />
               <TextAreaField
-                my={3}
                 onChange={handleChange}
                 name="terms_and_conditions"
                 label="Terms and Conditions"
@@ -177,7 +182,6 @@ const UIConfig = (props: UIConfigProps) => {
                 onChange={handleChange}
                 name="welcome_content"
                 label="Welcome Content"
-                my={3}
                 value={state.formData.welcome_content}
                 tooltip="Enter content to be displayed on login"
               />
@@ -190,14 +194,41 @@ const UIConfig = (props: UIConfigProps) => {
                 tooltip="Enter content to be displayed in the footer"
               />
               <SelectField
-                options={arr}
+                options={emails}
                 label="Notification Email"
                 name="notification_email"
-                width="30%"
                 my={4}
                 onChange={handleChange}
                 value={state.formData.notification_email}
                 tooltip="Select an email to recieve notifications "
+              />
+              <SelectField
+                options={cities}
+                multiple={true}
+                label="All Locations"
+                name="all_locations"
+                onChange={handleChange}
+                value={state.formData.all_locations}
+                tooltip="Select all store locations"
+              />
+              <SelectField
+                options={cities}
+                comboBox={true}
+                label="Most Popular Location"
+                name="mp_location"
+                onChange={handleChange}
+                value={state.formData.mp_location}
+                tooltip="Select your most popular location"
+              />
+              <SelectField
+                options={cardBrands}
+                multiple={true}
+                comboBox={true}
+                label="Card Brands"
+                name="card_brands"
+                onChange={handleChange}
+                value={state.formData.card_brands}
+                tooltip="Select or create your supported card brands"
               />
 
               <Flex width="50%">

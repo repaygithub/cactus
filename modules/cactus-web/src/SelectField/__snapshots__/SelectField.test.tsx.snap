@@ -122,33 +122,35 @@ exports[`component: SelectField minimal snapshot 1`] = `
     <div
       class="c5 c6"
     >
-      <button
-        aria-describedby=" "
-        aria-haspopup="listbox"
-        aria-multiselectable="false"
-        class="c7"
-        id="prevent-random-id"
-        name="the-test-select-field"
-        type="button"
-      >
-        <span
-          class="c8 c9"
+      <div>
+        <button
+          aria-describedby=" "
+          aria-haspopup="listbox"
+          aria-multiselectable="false"
+          class="c7"
+          id="prevent-random-id"
+          name="the-test-select-field"
+          type="button"
         >
-          Select an option
-        </span>
-        <svg
-          class="c10 c11"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <span
+            class="c8 c9"
+          >
+            Select an option
+          </span>
+          <svg
+            class="c10 c11"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -276,33 +278,35 @@ exports[`component: SelectField render with complex options 1`] = `
     <div
       class="c5 c6"
     >
-      <button
-        aria-describedby=" "
-        aria-haspopup="listbox"
-        aria-multiselectable="false"
-        class="c7"
-        id="prevent-random-id"
-        name="the-test-select-field"
-        type="button"
-      >
-        <span
-          class="c8 c9"
+      <div>
+        <button
+          aria-describedby=" "
+          aria-haspopup="listbox"
+          aria-multiselectable="false"
+          class="c7"
+          id="prevent-random-id"
+          name="the-test-select-field"
+          type="button"
         >
-          Select an option
-        </span>
-        <svg
-          class="c10 c11"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <span
+            class="c8 c9"
+          >
+            Select an option
+          </span>
+          <svg
+            class="c10 c11"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -430,34 +434,36 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
     <div
       class="c5 c6"
     >
-      <button
-        aria-describedby=" "
-        aria-haspopup="listbox"
-        aria-multiselectable="false"
-        class="c7"
-        disabled=""
-        id="prevent-random-id"
-        name="the-test-select-field"
-        type="button"
-      >
-        <span
-          class="c8 c9"
+      <div>
+        <button
+          aria-describedby=" "
+          aria-haspopup="listbox"
+          aria-multiselectable="false"
+          class="c7"
+          disabled=""
+          id="prevent-random-id"
+          name="the-test-select-field"
+          type="button"
         >
-          Select an option
-        </span>
-        <svg
-          class="c10 c11"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <span
+            class="c8 c9"
+          >
+            Select an option
+          </span>
+          <svg
+            class="c10 c11"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -638,33 +644,35 @@ exports[`component: SelectField should render an accessible error message 1`] = 
     <div
       class="c5 c6"
     >
-      <button
-        aria-describedby=" for-the-snap-status"
-        aria-haspopup="listbox"
-        aria-multiselectable="false"
-        class="c7 c8"
-        id="for-the-snap"
-        name="the-test-select-field"
-        type="button"
-      >
-        <span
-          class="c9 c10"
+      <div>
+        <button
+          aria-describedby=" for-the-snap-status"
+          aria-haspopup="listbox"
+          aria-multiselectable="false"
+          class="c7 c8"
+          id="for-the-snap"
+          name="the-test-select-field"
+          type="button"
         >
-          Select an option
-        </span>
-        <svg
-          class="c11 c12"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <span
+            class="c9 c10"
+          >
+            Select an option
+          </span>
+          <svg
+            class="c11 c12"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
     <div
       class="c13 c14"
@@ -844,33 +852,35 @@ exports[`component: SelectField should render an accessible success message 1`] 
     <div
       class="c5 c6"
     >
-      <button
-        aria-describedby=" for-the-snap-status"
-        aria-haspopup="listbox"
-        aria-multiselectable="false"
-        class="c7 c8"
-        id="for-the-snap"
-        name="the-test-select-field"
-        type="button"
-      >
-        <span
-          class="c9 c10"
+      <div>
+        <button
+          aria-describedby=" for-the-snap-status"
+          aria-haspopup="listbox"
+          aria-multiselectable="false"
+          class="c7 c8"
+          id="for-the-snap"
+          name="the-test-select-field"
+          type="button"
         >
-          Select an option
-        </span>
-        <svg
-          class="c11 c12"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <span
+            class="c9 c10"
+          >
+            Select an option
+          </span>
+          <svg
+            class="c11 c12"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
     <div
       class="c13 c14"
@@ -1062,33 +1072,35 @@ exports[`component: SelectField should render an accessible warning message 1`] 
     <div
       class="c5 c6"
     >
-      <button
-        aria-describedby=" for-the-snap-status"
-        aria-haspopup="listbox"
-        aria-multiselectable="false"
-        class="c7 c8"
-        id="for-the-snap"
-        name="the-test-select-field"
-        type="button"
-      >
-        <span
-          class="c9 c10"
+      <div>
+        <button
+          aria-describedby=" for-the-snap-status"
+          aria-haspopup="listbox"
+          aria-multiselectable="false"
+          class="c7 c8"
+          id="for-the-snap"
+          name="the-test-select-field"
+          type="button"
         >
-          Select an option
-        </span>
-        <svg
-          class="c11 c12"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <span
+            class="c9 c10"
+          >
+            Select an option
+          </span>
+          <svg
+            class="c11 c12"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
     <div
       class="c13 c14"
@@ -1265,33 +1277,35 @@ exports[`component: SelectField supports margin props 1`] = `
     <div
       class="c5 c6"
     >
-      <button
-        aria-describedby=" "
-        aria-haspopup="listbox"
-        aria-multiselectable="false"
-        class="c7 c8"
-        id="for-the-snap"
-        name="the-test-select-field"
-        type="button"
-      >
-        <span
-          class="c9 c10"
+      <div>
+        <button
+          aria-describedby=" "
+          aria-haspopup="listbox"
+          aria-multiselectable="false"
+          class="c7 c8"
+          id="for-the-snap"
+          name="the-test-select-field"
+          type="button"
         >
-          Select an option
-        </span>
-        <svg
-          class="c11 c12"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <span
+            class="c9 c10"
+          >
+            Select an option
+          </span>
+          <svg
+            class="c11 c12"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </div>

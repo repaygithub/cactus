@@ -3,6 +3,7 @@ import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import KeyCodes from '../helpers/keyCodes'
 import Select from './Select'
 import StyleProvider from '../StyleProvider/StyleProvider'
+import userEvent from '@testing-library/user-event'
 
 afterEach(cleanup)
 
@@ -875,6 +876,278 @@ describe('component: Select', () => {
       await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'phoenix'])
       expect(document.activeElement).toBe(getByRole('listbox'))
+    })
+  })
+
+  describe('with comboBox=true', () => {
+    test('CLICK should open the list and set focus on the input', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      const trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(getByRole('listbox')).toBeInTheDocument()
+      expect(document.activeElement).toBe(getByRole('search'))
+    })
+
+    test('typing should filter options', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      const trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox = getByRole('search')
+      userEvent.type(searchBox, 'phoe')
+      const list = getByRole('listbox')
+      expect(list).toHaveTextContent('phoenix')
+      expect(list).not.toHaveTextContent('tucson')
+      expect(list).not.toHaveTextContent('flagstaff')
+    })
+
+    test('should be able to add options', async () => {
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox: HTMLElement = document.activeElement as HTMLElement
+      userEvent.type(searchBox, 'camp verde')
+      fireEvent.click(getByText('Create "camp verde"'))
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      trigger = getByRole('button')
+      expect(trigger).toHaveTextContent('camp verde')
+    })
+
+    test('UP/DOWN should set the active descendant', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox: HTMLElement = document.activeElement as HTMLElement
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-phoenix-phoenix')
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-flagstaff-flagstaff')
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson-tucson')
+    })
+
+    test('RETURN should select an option and focus on the trigger', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox: HTMLElement = document.activeElement as HTMLElement
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      trigger = getByRole('button')
+      expect(trigger).toHaveTextContent('phoenix')
+      expect(document.activeElement).toBe(trigger)
+    })
+
+    test('ESC should return focus to the trigger', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox: HTMLElement = document.activeElement as HTMLElement
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.ESC, charCode: KeyCodes.ESC })
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      await animationRender()
+      trigger = getByRole('button')
+      expect(document.activeElement).toBe(trigger)
+    })
+  })
+
+  describe('with multiple=true && comboBox=true', () => {
+    test('CLICK on option should select it and keep the list open', async () => {
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      const flagstaff: HTMLElement = getByText('flagstaff')
+      const phoenix: HTMLElement = getByText('phoenix')
+      fireEvent.click(flagstaff)
+      fireEvent.click(phoenix)
+      expect(flagstaff.getAttribute('aria-selected')).toBe('true')
+      expect(phoenix.getAttribute('aria-selected')).toBe('true')
+      expect(getByRole('listbox')).not.toBeNull()
+    })
+
+    test('RETURN on option should select it and keep the list open', async () => {
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox: HTMLElement = document.activeElement as HTMLElement
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      const phoenix: HTMLElement = getByText('phoenix')
+      const tucson: HTMLElement = getByText('tucson')
+      expect(phoenix.getAttribute('aria-selected')).toBe('true')
+      expect(tucson.getAttribute('aria-selected')).toBe('true')
+      expect(getByRole('listbox')).not.toBeNull()
+    })
+
+    test('RETURN w/ metaKey should select the option and close', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox: HTMLElement = document.activeElement as HTMLElement
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, {
+        keyCode: KeyCodes.RETURN,
+        charCode: KeyCodes.RETURN,
+        metaKey: true,
+      })
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      trigger = getByRole('button')
+      expect(document.activeElement).toBe(trigger)
+      expect(document.activeElement).toHaveTextContent('phoenix')
     })
   })
 })
