@@ -1,8 +1,8 @@
 import { queries } from 'pptr-testing-library'
 import { waitForComboInput, waitForDropdownList } from './wait'
-import puppeteer from 'puppeteer'
+import puppeteer, { ElementHandle } from 'puppeteer'
 
-const { getByLabelText, getByText, getAllByRole } = queries
+const { getByLabelText, getByText, getByRole } = queries
 
 class FormActions {
   constructor(doc: puppeteer.ElementHandle<Element>, page: puppeteer.Page) {
@@ -70,8 +70,11 @@ class FormActions {
         const option = await getByText(listbox, optionOrOptions[i])
         await option.tap()
       }
-      // haxxors
-      await this.page.keyboard.press('Escape')
+      const listWrapper = (await listbox.evaluateHandle(lb =>
+        lb.closest('[role=dialog]')
+      )) as ElementHandle<Element>
+      const doneButton = await getByText(listWrapper, 'Done')
+      await doneButton.tap()
     }
   }
 

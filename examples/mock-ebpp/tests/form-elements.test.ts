@@ -49,7 +49,7 @@ describe('UI Config Form', () => {
     await server.close()
   })
 
-  test('should be testled "UI Config"', async () => {
+  test('should be titled "UI Config"', async () => {
     await expect(page.title()).resolves.toMatch('UI Config')
   })
 
