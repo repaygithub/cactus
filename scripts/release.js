@@ -30,6 +30,7 @@ const prompts = require('prompts')
 
 const errors = []
 const all = []
+const disallowCommitType = ['test', 'style']
 
 const cwd = process.cwd()
 const MODULES = readdirSync(path.join(cwd, 'modules'))
@@ -159,7 +160,7 @@ async function main() {
     let relevantCommits = relevant.slice(0, lastReleaseCommitIndex)
     for (const commit of relevantCommits) {
       let { scope: commitScope } = normalizeScope(commit.scope)
-      if (commitScope === scope) {
+      if (commitScope === scope && !disallowCommitType.includes(commit.type)) {
         content += generateCommit(commit)
       }
     }
