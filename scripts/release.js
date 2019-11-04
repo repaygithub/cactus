@@ -8,6 +8,7 @@ const exec = util.promisify(require('child_process').exec)
 const prompts = require('prompts')
 
 /**
+ * The parsed commit from conventional-commits-parser
  * type Commit = {
  *   type: string
  *   scope: null | string
@@ -157,7 +158,6 @@ async function main() {
             commit.header.includes('publish') &&
             commit.header.includes(scope)
         ) + 1
-    // const lastReleaseCommit = all[lastReleaseCommitIndex]
     let relevantCommits = all.slice(0, lastReleaseCommitIndex)
     for (const commit of relevantCommits) {
       let { scope: commitScope } = normalizeScope(commit.scope)
@@ -174,7 +174,7 @@ async function main() {
     await fsp.writeFile(path.join(process.cwd(), 'CHANGELOG.md'), CHANGELOG)
 
     await exec(`git add CHANGELOG.md`)
-    let gitCommitResult = await exec(`git commit -m "chore(): update changelog"`)
+    let gitCommitResult = await exec(`git commit -m "chore(${scope}): update changelog"`)
     if (gitCommitResult.stderr) {
       throw new Error(`Failed while committing changelog updates.`)
     }
