@@ -26,7 +26,8 @@
     "predocs:publish": "yarn docs build",
     "docs:publish": "gh-pages -d ./website/public",
     "cleanup": "yarn ws run cleanup",
-    "run-full": "yarn cleanup && yarn build && yarn test:ci"
+    "run-full": "yarn cleanup && yarn build && yarn test:ci",
+    "release": "node scripts/release.js"
   },
   "license": "MIT",
   "private": true,
@@ -44,9 +45,12 @@
     "@babel/core": "^7.4.3",
     "@repay/eslint-config": "^1.1.1",
     "babel-eslint": "^10.0.1",
+    "conventional-commits-parser": "^3.0.5",
     "eslint": "^5.16.0",
     "gh-pages": "^2.0.1",
+    "git-raw-commits": "^2.0.2",
     "prettier": "^1.17.0",
+    "prompts": "^2.2.1",
     "typescript-eslint-parser": "^22.0.0"
   },
   "resolutions": {},
