@@ -1,5 +1,18 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.5](https://github.com/repaygithub/cactus/commit/465c3aa07a71c5919e1554d00b13d01d918a7c73)
+
+- feat(cactus-web): Add combobox functionality to select [b8bcb37](https://github.com/repaygithub/cactus/commit/b8bcb3752f4218acfc4e20e4e31f17b3471a8b1f)
+- fix(cactus-web): Apply dialog role to list wrapper [fec7dad](https://github.com/repaygithub/cactus/commit/fec7dadad3f10fd5f234ec57fcbacde135e5304d)
+- fix(cactus-web): Don't show create option if there is no search value [5d9b178](https://github.com/repaygithub/cactus/commit/5d9b178d365272aecaad446d51e531d45c823038)
+- feat(cactus-web): Add combobox functionality to select [6a94cd3](https://github.com/repaygithub/cactus/commit/6a94cd30661e46e54e1e52f993b757550daf3c23)
+- feat(cactus-web): null value to DateInput raises Date (#169) [010d6ec](https://github.com/repaygithub/cactus/commit/010d6ec6f23b2e29c0c3a773cf6a517776a812d7)
+- fix(cactus-web): DateInput listens to changing type [1744f59](https://github.com/repaygithub/cactus/commit/1744f597f9a785cac44125046a32552b5cfc655f)
+- feat(cactus-web): complete DateInput proptypes [005545f](https://github.com/repaygithub/cactus/commit/005545fbe9fb8109554180a2c3a7b6e9e39651ee)
+- docs(cactus-web): finish docs for DateInput(Field) [afd532b](https://github.com/repaygithub/cactus/commit/afd532b060de7c2d0cf8cb77289dc204fae0953d)
+- feat(cactus-web): add DateInput and DateInputField components [225734d](https://github.com/repaygithub/cactus/commit/225734d744e8799ad5eca271487fc6ecf9ed9008)
+- fix(cactus-web): allow ssr [eb55302](https://github.com/repaygithub/cactus/commit/eb553020b92e9216d15eab8669036d6014efd80d)
+
 ## [@repay/cactus-i18n@v0.2.1](https://github.com/repaygithub/cactus/commit/1d5d859613e990a285c8a24ace85afda2d1c2406)
 
 - feat(cactus-i18n): allow section language override (#113) [d31f5aa](https://github.com/repaygithub/cactus/commit/d31f5aa4c87362932305c3d5d293340e95d950eb)
