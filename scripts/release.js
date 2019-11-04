@@ -149,16 +149,14 @@ async function main() {
       })
   }).then(async () => {
     let content = ''
-    const lastReleaseCommitIndex =
-      all
-        .slice(1)
-        .findIndex(
-          commit =>
-            commit.type === 'chore' &&
-            commit.header.includes('publish') &&
-            commit.header.includes(scope)
-        ) + 1
-    let relevantCommits = all.slice(0, lastReleaseCommitIndex)
+    let relevant = all.slice(1)
+    const lastReleaseCommitIndex = relevant.findIndex(
+      commit =>
+        commit.type === 'chore' &&
+        commit.header.includes('publish') &&
+        commit.header.includes(scope)
+    )
+    let relevantCommits = relevant.slice(0, lastReleaseCommitIndex)
     for (const commit of relevantCommits) {
       let { scope: commitScope } = normalizeScope(commit.scope)
       if (commitScope === scope) {
