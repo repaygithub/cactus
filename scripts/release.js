@@ -49,8 +49,8 @@ const RELEASE_RE = /^\d+\.\d+\.\d+$/
 
 async function main() {
   const args = process.argv.slice(2)
-
-  let pkg = args.find(a => RELEVENT_MODULES.hasOwnProperty(a.trim()))
+  const argPkg = args.find(a => RELEVENT_MODULES.hasOwnProperty(a.trim()))
+  let pkg = argPkg ? RELEVENT_MODULES[argPkg] : undefined
   let pkgJson = getPkgJson(pkg)
   let answers = { pkgName: pkg && pkg.pkgName }
   answers.releaseVersion = args.find(a => RELEASE_RE.test(a))
