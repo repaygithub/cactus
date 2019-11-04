@@ -136,3 +136,13 @@ Only builds the TypeScript definition files.
 ```
 yarn <lib> build:types
 ```
+
+### Publishing a release
+
+To publish a release, open Terminal or command prompt and call:
+
+```bash
+yarn release [module] [new version]
+```
+
+Where you can optionally provide the module `[module]` and the version `[new version]` to publish. If you don't provide these values you will be prompted for them instead. The `module` parameter accepts the package name, folder, or short codes listed above. The `new version` parameter accepts any semver value execpt pre-releases since pre-releases are expected to be used rarely and without a changelog at this point.
