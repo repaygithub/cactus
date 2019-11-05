@@ -8,7 +8,7 @@ import {
   NotificationInfo,
   StatusCheck,
 } from '@repay/cactus-icons'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { css, ThemeProps } from 'styled-components'
 
 export type AvatarType = 'alert' | 'feedback'
 export type AvatarStatus = 'error' | 'warning' | 'info' | 'success'
@@ -19,10 +19,10 @@ interface AvatarProps extends MarginProps {
   className?: string
 }
 
-type ColorMap = { [K in AvatarStatus]: FlattenInterpolation<ThemeProps<CactusTheme>> }
-type UsageMap = { [K in AvatarType]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type ColorMap = { [K in AvatarStatus]: ReturnType<typeof css> }
+type UsageMap = { [K in AvatarType]: ReturnType<typeof css> }
 
-const avatar = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+const avatar = (props: AvatarProps): ReturnType<typeof css> | undefined => {
   const { type } = props
   if (type !== undefined) {
     return usageMap[type]
@@ -90,7 +90,7 @@ const colorMap: ColorMap = {
   `,
 }
 
-const variant = (props: AvatarProps): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+const variant = (props: AvatarProps) => {
   const { status } = props
 
   if (status !== undefined) {

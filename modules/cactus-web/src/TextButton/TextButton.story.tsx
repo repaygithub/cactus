@@ -46,7 +46,7 @@ storiesOf('TextButton', module)
   ))
   .add('With Icon', () => {
     const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-    const Icon = icons[iconName]
+    const Icon = icons[iconName] as React.ComponentType<any>
     return (
       <TextButton
         variant={select('variant', textButtonVariants, 'standard')}

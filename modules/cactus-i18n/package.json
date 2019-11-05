@@ -50,7 +50,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "typescript": "^3.4.3"
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "fluent": "^0.12.0",

@@ -5,7 +5,7 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import Avatar from '../Avatar/Avatar'
 import IconButton from '../IconButton/IconButton'
 import PropTypes from 'prop-types'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { css, ThemeProps } from 'styled-components'
 
 import { NavigationClose } from '@repay/cactus-icons'
 
@@ -53,7 +53,7 @@ const borderColor = (props: AlertProps & ThemeProps<CactusTheme>) => {
   }
 }
 
-type TypeMap = { [K in Type]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type TypeMap = { [K in Type]: ReturnType<typeof css> }
 const typeMap: TypeMap = {
   general: css`
     width: 100%;
@@ -64,9 +64,7 @@ const typeMap: TypeMap = {
   `,
 }
 
-const typeVariant = (
-  props: AlertProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+const typeVariant = (props: AlertProps) => {
   const { type } = props
   if (type !== undefined) {
     return typeMap[type]

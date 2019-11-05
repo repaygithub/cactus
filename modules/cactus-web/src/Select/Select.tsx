@@ -17,7 +17,7 @@ import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { css, Interpolation, ThemedStyledProps } from 'styled-components'
 import TextButton from '../TextButton/TextButton'
 
 export type SelectValueType = string | number | Array<string | number> | null
@@ -52,7 +52,7 @@ export interface SelectProps
   onFocus?: FieldOnFocusHandler
 }
 
-type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
@@ -69,9 +69,10 @@ const statusMap: StatusMap = {
   `,
 }
 
-const displayStatus = (props: SelectProps) => {
+// @ts-ignore
+const displayStatus: any = props => {
   if (props.status && !props.disabled) {
-    return statusMap[props.status]
+    return statusMap[props.status as Status]
   }
 }
 
