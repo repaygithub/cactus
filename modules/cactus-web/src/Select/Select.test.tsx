@@ -1024,6 +1024,36 @@ describe('component: Select', () => {
       trigger = getByRole('button')
       expect(document.activeElement).toBe(trigger)
     })
+
+    test('values that are not in options should be added', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value="superior"
+            comboBox
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      expect(trigger).toHaveTextContent('superior')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value="superior"
+            comboBox
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(getByRole('listbox')).toHaveTextContent('superior')
+    })
   })
 
   describe('with multiple=true && comboBox=true', () => {
@@ -1148,6 +1178,38 @@ describe('component: Select', () => {
       trigger = getByRole('button')
       expect(document.activeElement).toBe(trigger)
       expect(document.activeElement).toHaveTextContent('phoenix')
+    })
+
+    test('values that are not in options should be added', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={['boolest']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      expect(trigger).toHaveTextContent('boolest')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={['boolest']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(getByRole('listbox')).toHaveTextContent('boolest')
     })
   })
 })
