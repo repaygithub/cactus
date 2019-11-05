@@ -1,0 +1,107 @@
+---
+name: MenuButton
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import MenuButton from './MenuButton'
+
+# MenuButton
+
+The `MenuButton` is an accessible dropdown which is distinctly different from a `Select` in that it triggers actions such as navigation instead of setting the value on a field.
+
+This implementation is simply a styled wrapper around [@reach/menu-button](https://reacttraining.com/reach-ui/menu-button).
+
+<MenuButton label="Demo">
+  <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Three')}>Action Three</MenuButton.Item>
+</MenuButton>
+
+<MenuButton label="Disabled" disabled marginTop={5}>
+  <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Three')}>Action Three</MenuButton.Item>
+</MenuButton>
+
+## Best practices
+
+The `MenuButton` should always be used when a selection causes an action, not a value. If the `label` does not contain a string describing the actions, then an `aria-label` should be provided to ensure the menu is accessible.
+
+## Basic usage
+
+A menu button will render like a select, but instead we render an `Item` or `Link` as the "options" and they trigger actions of some sort.
+
+```jsx
+import React, { useCallback } from 'react'
+
+const QUICK_ACTIONS = {
+  last_7_days: () => {
+    const now = new Date()
+    const sevenDaysAgo = new Date()
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+    sevenDaysAgo.setHour(0)
+    sevenDaysAgo.setMinute(0)
+    sevenDaysAgo.setSeconds(0)
+    sevenDaysAgo.setMilliseconds(0)
+    return [sevenDaysAgo, now]
+  },
+  this_week: () => {
+    const now = new Date()
+    const startOfWeek = new Date()
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay())
+    startOfWeek.setHour(0)
+    startOfWeek.setMinute(0)
+    startOfWeek.setSeconds(0)
+    startOfWeek.setMilliseconds(0)
+    return [startOfWeek, now]
+  },
+  last_week: () => {
+    const endOfLastWeek = new Date()
+    endOfLastWeek.setDate(endOfLastWeek.getDate() - endOfLastWeek.getDay())
+    endOfLastWeek.setHour(0)
+    endOfLastWeek.setMinute(0)
+    endOfLastWeek.setSeconds(0)
+
+    const startOfLastWeek = new Date(+endOfLastWeek)
+    startOfLastWeek.setMilliseconds(0)
+    startOfLastWeek.setDate(startOfLastWeek.getDate() - 7)
+
+    endOfLastWeek.setMilliseconds(-1)
+    return [startOfLastWeek, endOfLastWeek]
+  },
+}
+
+export default props => {
+  const action = useCallback(event => {
+    const type = event.currentTarget.dataset.action
+    const [start, end] = QUICK_ACTIONS[type]()
+    props.onQuickSelect(start, end)
+  })
+  return (
+    <MenuButton label="Quick Select">
+      <MenuButton.Item onSelect={action} data-action="last_7_days">
+        Last 7 days
+      </MenuButton.Item>
+      <MenuButton.Item onSelect={action} data-action="this_week">
+        This week
+      </MenuButton.Item>
+      <MenuButton.Item onSelect={action} data-action="last_week">
+        Last week
+      </MenuButton.Item>
+    </MenuButton>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={MenuButton} />
+
+## MenuButton Item
+
+<PropsTable of={MenuButton} staticProp="Item" />
+
+## MenuButton Link
+
+<PropsTable of={MenuButton} staticProp="Link" />
