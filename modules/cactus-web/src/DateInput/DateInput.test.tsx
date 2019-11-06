@@ -512,6 +512,34 @@ describe('component: DateInput', () => {
       expect(getByLabelText('Open date picker')).toBeInTheDocument()
     })
 
+    test('input type persists when value is Date and set externally', () => {
+      let value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
+      let { getByLabelText, rerender } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
+        </StyleProvider>
+      )
+      expect(getByLabelText('year')).toHaveProperty('value', '2018')
+      expect(getByLabelText('month')).toHaveProperty('value', '09')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '30')
+      expect(getByLabelText('hours')).toHaveProperty('value', '11')
+      expect(getByLabelText('minutes')).toHaveProperty('value', '34')
+      expect(getByLabelText('time period')).toHaveProperty('value', 'AM')
+
+      value.setDate(20)
+      rerender(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
+        </StyleProvider>
+      )
+      expect(getByLabelText('year')).toHaveProperty('value', '2018')
+      expect(getByLabelText('month')).toHaveProperty('value', '09')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '20')
+      expect(getByLabelText('hours')).toHaveProperty('value', '11')
+      expect(getByLabelText('minutes')).toHaveProperty('value', '34')
+      expect(getByLabelText('time period')).toHaveProperty('value', 'AM')
+    })
+
     test('can open portal with time input', () => {
       const { getByLabelText, getAllByLabelText, getByRole } = render(
         <StyleProvider>
