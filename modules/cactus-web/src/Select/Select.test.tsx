@@ -1220,6 +1220,37 @@ describe('component: Select', () => {
       expect(document.activeElement).toHaveTextContent('phoenix')
     })
 
+    test('blurring the list box to focus on the input should not close the list', async () => {
+      const { getByRole, getByText, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      fireEvent.click(getByText('flagstaff'))
+      fireEvent.click(getByRole('search'))
+      expect(getByRole('listbox')).not.toBeNull()
+    })
+
     test('values that are not in options should be added', async () => {
       const { getByRole, rerender } = render(
         <StyleProvider>
