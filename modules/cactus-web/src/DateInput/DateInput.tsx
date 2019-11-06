@@ -713,8 +713,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
     if (props.value) {
       let value = state.value.clone()
+
       if (props.value instanceof Date) {
-        value = PartialDate.from(props.value)
+        value = PartialDate.from(props.value, { type: value.getType() })
       } else {
         value.parse(props.value, props.format as string)
       }
