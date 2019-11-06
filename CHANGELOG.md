@@ -1,5 +1,12 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.6](https://github.com/repaygithub/cactus/commit/b5ba47871641ba4494afb5037f70c0adb4ffd5a4)
+
+- fix(cactus-web): Detect values that need to be added to options [db2b6d7](https://github.com/repaygithub/cactus/commit/db2b6d72ab55910b93d0b0e889442192484d59ee)
+- fix(cactus-web): Detect values that need to be added to options [38868bb](https://github.com/repaygithub/cactus/commit/38868bbedfefd8a7ec74c1660dfd31338831b727)
+- feat(cactus-web): add MenuButton [2fedd90](https://github.com/repaygithub/cactus/commit/2fedd904d631e84070b3fefb3b8a3b4f0cff4def)
+- chore(cactus-web): update changelog [4acb64e](https://github.com/repaygithub/cactus/commit/4acb64e10227f2dc3b6fffa75e09343b12b4288b)
+
 ## [@repay/cactus-web@v0.5.5](https://github.com/repaygithub/cactus/commit/465c3aa07a71c5919e1554d00b13d01d918a7c73)
 
 - feat(cactus-web): Add combobox functionality to select [b8bcb37](https://github.com/repaygithub/cactus/commit/b8bcb3752f4218acfc4e20e4e31f17b3471a8b1f)
