@@ -28,6 +28,7 @@ const MenuList = styled(ReachMenuList)`
   padding: 8px 0;
   margin-top: 8px;
   border-radius: 0 0 8px 8px;
+  background-color: ${p => p.theme.colors.white};
   box-shadow: 0 3px 6px 0 ${p => p.theme.colors.callToAction};
   outline: none;
 
