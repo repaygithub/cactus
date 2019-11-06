@@ -1040,7 +1040,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   handleListBlur = (event: React.FocusEvent<HTMLUListElement>) => {
     const relatedTarget: Element | null = event.relatedTarget as HTMLElement
     if (
-      relatedTarget !== null &&
+      relatedTarget instanceof HTMLElement &&
       (relatedTarget.getAttribute('id') === `${this.props.id}-input` ||
         relatedTarget.getAttribute('data-role') === 'mobile-search')
     ) {
@@ -1090,14 +1090,17 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   handleComboInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const relatedTarget: Element | null = event.relatedTarget as HTMLElement
     if (
-      relatedTarget !== null &&
+      relatedTarget instanceof HTMLElement &&
       (relatedTarget.getAttribute('data-role') === 'create' ||
         relatedTarget.getAttribute('data-role') === 'mobile-search')
     ) {
       event.preventDefault()
       return
     }
-    if (relatedTarget === null || relatedTarget.getAttribute('role') !== 'listbox') {
+    if (
+      relatedTarget === null ||
+      (relatedTarget instanceof HTMLElement && relatedTarget.getAttribute('role') !== 'listbox')
+    ) {
       this.closeList()
       this.setState({ searchValue: '', activeDescendant: '' })
     }
