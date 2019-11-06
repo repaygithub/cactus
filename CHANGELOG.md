@@ -1,5 +1,13 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.7](https://github.com/repaygithub/cactus/commit/caeda5f352c6e46c05868e650ae9d4e9fc9fdf71)
+
+- fix(cactus-web): css fixes for MenuButton [45f95e8](https://github.com/repaygithub/cactus/commit/45f95e8da6208e54ac7a2d969707d68b0a2c56bc)
+- fix(cactus-web): Check that relatedTarget is HTMLElement before calling any of its functions [af28d64](https://github.com/repaygithub/cactus/commit/af28d64e24b67bd94bd34d771000603a667e7179)
+- fix(cactus-web): disappearing time inputs when new Date provided [c3862c9](https://github.com/repaygithub/cactus/commit/c3862c9691eee1cd6a017b9c94727b3e8544b70e)
+- fix(cactus-web): add background to dropdown list [c731477](https://github.com/repaygithub/cactus/commit/c73147771e1ded59bbd919af093e9d2840bd60aa)
+- chore(cactus-web): update changelog [02a4839](https://github.com/repaygithub/cactus/commit/02a48397e45a0aa2072a0aeaefeea7fb5cf06424)
+
 ## [@repay/cactus-web@v0.5.6](https://github.com/repaygithub/cactus/commit/b5ba47871641ba4494afb5037f70c0adb4ffd5a4)
 
 - fix(cactus-web): Detect values that need to be added to options [db2b6d7](https://github.com/repaygithub/cactus/commit/db2b6d72ab55910b93d0b0e889442192484d59ee)
