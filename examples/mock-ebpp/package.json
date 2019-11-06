@@ -51,7 +51,8 @@
     "jest-puppeteer": "^4.3.0",
     "pptr-testing-library": "^0.4.0",
     "prop-types": "^15.7.2",
-    "puppeteer": "^1.20.0"
+    "puppeteer": "^1.20.0",
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",

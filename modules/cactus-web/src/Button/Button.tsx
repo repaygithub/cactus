@@ -6,7 +6,7 @@ import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export type ButtonVariants = 'standard' | 'action' | 'danger'
 
@@ -24,7 +24,7 @@ interface ButtonProps
   loadingText?: string
 }
 
-type VariantMap = { [K in ButtonVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   action: css`
@@ -97,16 +97,14 @@ const inverseVariantMap: VariantMap = {
   `,
 }
 
-const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
+const disabled = css`
   color: ${p => p.theme.colors.mediumGray};
   background-color: ${p => p.theme.colors.lightGray};
   border-color: ${p => p.theme.colors.lightGray};
   cursor: not-allowed;
 `
 
-const variantOrDisabled = (
-  props: ButtonProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+const variantOrDisabled = (props: ButtonProps) => {
   const map = props.inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
     return disabled

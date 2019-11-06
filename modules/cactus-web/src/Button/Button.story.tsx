@@ -31,7 +31,7 @@ buttonStories.add(
 
 buttonStories.add('With Icon', () => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const Icon = icons[iconName]
+  const Icon = icons[iconName] as React.ComponentType<any>
   return (
     <Button
       variant={select('variant', buttonVariants, 'standard')}

@@ -20,12 +20,7 @@ import handleEvent from '../helpers/eventHandler'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import StatusMessage from '../StatusMessage/StatusMessage'
-import styled, {
-  css,
-  FlattenInterpolation,
-  StyledComponentBase,
-  ThemeProps,
-} from 'styled-components'
+import styled, { css, StyledComponentBase } from 'styled-components'
 
 const FILE_TYPE_ERR = 'FileTypeError'
 const NOT_FOUND_ERR = 'NotFoundError'
@@ -126,7 +121,7 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
   }
 `
 
-type FileBoxMap = { [K in FileStatus]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type FileBoxMap = { [K in FileStatus]: ReturnType<typeof css> }
 
 const fileBoxMap: FileBoxMap = {
   loading: css`
@@ -141,8 +136,8 @@ const fileBoxMap: FileBoxMap = {
     background-color: ${p => p.theme.colors.transparentError};
   `,
 }
-
-const fileStatus = (props: FileBoxProps) => fileBoxMap[props.status]
+// @ts-ignore
+const fileStatus: any = props => fileBoxMap[props.status]
 
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) => {
   const { fileName, className, status, errorMsg, onDelete, labels } = props

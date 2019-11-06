@@ -38,5 +38,6 @@ Array [
   "Span",
   "useId",
   "DateInputField",
+  "MenuButton",
 ]
 `;

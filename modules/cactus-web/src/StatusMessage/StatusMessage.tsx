@@ -2,7 +2,7 @@ import { CactusTheme } from '@repay/cactus-theme'
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export type Status = 'success' | 'warning' | 'error'
 
@@ -12,7 +12,7 @@ interface StatusMessageProps {
   status: Status
 }
 
-type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
@@ -26,9 +26,10 @@ const statusMap: StatusMap = {
   `,
 }
 
-const statusColors = (props: StatusMessageProps) => {
+// @ts-ignore
+const statusColors: any = props => {
   const { status } = props
-  return statusMap[status]
+  return statusMap[status as Status]
 }
 
 const Noop = () => null

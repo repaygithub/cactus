@@ -16,7 +16,7 @@ const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
 storiesOf('IconButton', module)
   .add('Basic Usage', () => {
     const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-    const Icon = icons[iconName]
+    const Icon = icons[iconName] as React.ComponentType<any>
     return (
       <IconButton
         variant={select('variant', iconButtonVariants, 'standard')}
@@ -36,7 +36,7 @@ storiesOf('IconButton', module)
       <Grid justify="center">
         {Object.values(icons)
           .slice(0, Object.keys(icons).length - 2)
-          .map((Icon, ix) => (
+          .map((Icon: React.ComponentType<any>, ix) => (
             <Grid.Item tiny={3} medium={2} large={1} key={ix}>
               <IconButton label={`icb-${ix}`} variant={variantSelection}>
                 <Icon />
