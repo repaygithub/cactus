@@ -1024,6 +1024,76 @@ describe('component: Select', () => {
       trigger = getByRole('button')
       expect(document.activeElement).toBe(trigger)
     })
+
+    test('values that are not in options should be added', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value="superior"
+            comboBox
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      expect(trigger).toHaveTextContent('superior')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value="superior"
+            comboBox
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(getByRole('listbox')).toHaveTextContent('superior')
+    })
+
+    test('values should stay in options even after they are removed from the value', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value="superior"
+            comboBox
+          />
+        </StyleProvider>
+      )
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value="globe"
+            comboBox
+          />
+        </StyleProvider>
+      )
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
+        </StyleProvider>
+      )
+      const listbox = getByRole('listbox')
+      expect(listbox).toHaveTextContent('superior')
+      expect(listbox).toHaveTextContent('globe')
+    })
   })
 
   describe('with multiple=true && comboBox=true', () => {
@@ -1148,6 +1218,38 @@ describe('component: Select', () => {
       trigger = getByRole('button')
       expect(document.activeElement).toBe(trigger)
       expect(document.activeElement).toHaveTextContent('phoenix')
+    })
+
+    test('values that are not in options should be added', async () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={['boolest']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      let trigger: HTMLElement = getByRole('button')
+      expect(trigger).toHaveTextContent('boolest')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value={['boolest']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      expect(getByRole('listbox')).toHaveTextContent('boolest')
     })
   })
 })

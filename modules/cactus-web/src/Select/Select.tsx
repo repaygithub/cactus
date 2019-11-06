@@ -955,6 +955,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (this.triggerRef.current !== null) {
       this.setState({ currentTriggerWidth: this.triggerRef.current.getBoundingClientRect().width })
     }
+    this.detectOptionsFromValue()
   }
 
   componentDidUpdate() {
@@ -966,6 +967,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         })
       }
     }
+    this.detectOptionsFromValue()
   }
 
   static getDerivedStateFromProps(props: Readonly<SelectProps>, state: Readonly<SelectState>) {
@@ -1061,7 +1063,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     if (target.getAttribute('data-role') === 'create') {
       event.preventDefault()
-      this.createOption()
+      this.createOption(this.state.searchValue)
       if (!this.props.multiple) {
         this.closeList()
         this.setState({ searchValue: '' })
@@ -1144,7 +1146,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         case KeyCodes.RETURN: {
           event.preventDefault()
           if (this.state.activeDescendant === `create-${this.state.searchValue}`) {
-            this.createOption()
+            this.createOption(this.state.searchValue)
             this.setState({ activeDescendant: '' })
             break
           }
@@ -1165,11 +1167,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  createOption = () => {
-    const newOption = asOption(this.state.searchValue)
+  createOption = (value: string | number) => {
+    const newOption = asOption(value)
     const extraOptions = (this.state.extraOptions as OptionType[]).concat(newOption)
     this.setState({ extraOptions: extraOptions })
-    this.raiseChange(newOption)
+    this.raiseChange(newOption, true)
     if (this.comboInputRef.current !== null) {
       this.comboInputRef.current.focus()
     }
@@ -1252,6 +1254,27 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       }
     }
     return null
+  }
+
+  optionsMap: { [key: string]: ExtendedOptionType } = {}
+
+  detectOptionsFromValue() {
+    this.getExtOptions().forEach(opt => {
+      this.optionsMap[opt.value] = opt
+    })
+    if (this.props.comboBox && this.props.value) {
+      if (Array.isArray(this.props.value)) {
+        this.props.value.forEach(val => {
+          if (!this.optionsMap[val]) {
+            this.createOption(val)
+          }
+        })
+      } else {
+        if (!this.optionsMap[this.props.value]) {
+          this.createOption(this.props.value)
+        }
+      }
+    }
   }
 
   /** used to reduce rerenders of List and ValueSpan */
