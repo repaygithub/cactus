@@ -8,13 +8,12 @@ exports[`component: MenuButton snapshot 1`] = `
 
 .c0 {
   position: relative;
+  box-sizing: border-box;
   border-radius: 20px;
-  height: 32px;
-  padding: 0 24px 0 14px;
+  padding: 2px 24px 2px 14px;
   border: 2px solid;
   outline: none;
   cursor: pointer;
-  box-sizing: border-box;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -40,7 +39,7 @@ exports[`component: MenuButton snapshot 1`] = `
   display: block;
   position: absolute;
   height: calc(100% + 10px);
-  width: calc(100% + 10px);
+  width: calc(100% + 11px);
   top: -5px;
   left: -5px;
   border: 2px solid hsl(200,96%,35%);
@@ -64,7 +63,7 @@ exports[`component: MenuButton snapshot 1`] = `
 .c0 .c1 {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 12px;
 }
 
 <div>

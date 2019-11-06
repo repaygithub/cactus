@@ -87,13 +87,12 @@ type MenuButtonType = StyledComponent<typeof MenuButtonBase, any, {}, never> & {
 
 const MenuButton = styled(MenuButtonBase)`
   position: relative;
+  box-sizing: border-box;
   border-radius: 20px;
-  height: 32px;
-  padding: 0 24px 0 14px;
+  padding: 2px 24px 2px 14px;
   border: 2px solid;
   outline: none;
   cursor: pointer;
-  box-sizing: border-box;
   appearance: none;
   ${p => p.theme.textStyles.body};
   color: ${p => p.theme.colors.baseText};
@@ -116,7 +115,7 @@ const MenuButton = styled(MenuButtonBase)`
       display: block;
       position: absolute;
       height: calc(100% + 10px);
-      width: calc(100% + 10px);
+      width: calc(100% + 11px);
       top: -5px;
       left: -5px;
       border: 2px solid ${p => p.theme.colors.callToAction};
@@ -141,7 +140,7 @@ const MenuButton = styled(MenuButtonBase)`
   ${NavigationChevronDown} {
     position: absolute;
     right: 10px; // 8 + 2px from border
-    top: 10px;
+    top: 12px;
   }
 
   ${margin}
