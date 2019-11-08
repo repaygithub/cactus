@@ -10,13 +10,15 @@ import styled from 'styled-components'
 import VisuallyHidden from '@reach/visually-hidden'
 
 interface Styles extends DOMRect {
+  top: number
+  left: number
   borderTopLeftRadius?: string
   borderTopRightRadius?: string
   borderBottomRightRadius?: string
   borderBottomLeftRadius?: string
 }
 
-type Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => Styles
+type Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => DOMRect
 
 interface TooltipProps
   extends MarginProps,
@@ -30,22 +32,14 @@ interface TooltipProps
 }
 
 const OFFSET = 8
+// @ts-ignore
 const cactusPosition: Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => {
   const scrollX = getScrollX()
   const scrollY = getScrollY()
-  let styles: Styles = {
+  let styles: Styles = ({
     left: triggerRect.left + scrollX,
     top: triggerRect.top + triggerRect.height + scrollY,
-    right: 0,
-    bottom: 0,
-    height: 0,
-    width: 0,
-    x: 0,
-    y: 0,
-    toJSON: () => {
-      return null
-    },
-  }
+  } as unknown) as DOMRect
 
   if (!tooltipRect) {
     return styles
@@ -81,7 +75,6 @@ const cactusPosition: Position = (triggerRect: DOMRect, tooltipRect: DOMRect | n
       : triggerRect.top + triggerRect.height + scrollY,
     // setting width to itself explicitly prevents "drift"
     width: tooltipRect.width,
-    height: tooltipRect.height,
   }
 }
 
