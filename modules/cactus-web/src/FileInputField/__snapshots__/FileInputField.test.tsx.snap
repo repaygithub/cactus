@@ -374,7 +374,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
       Just Boolin
     </label>
     <span
-      aria-describedby="tooltip:4"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -390,13 +389,13 @@ exports[`component: FileInputField should render a file with an error 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       id="consistent-tip"
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       upload something
-    </div>
+    </span>
     <div
       class="c7 notEmpty"
     >
@@ -831,7 +830,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
       Just Boolin
     </label>
     <span
-      aria-describedby="tooltip:3"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -847,13 +845,13 @@ exports[`component: FileInputField should render a loaded file 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       id="consistent-tip"
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       upload something
-    </div>
+    </span>
     <div
       class="c7 notEmpty"
     >
@@ -1163,7 +1161,6 @@ exports[`component: FileInputField should render a loading file 1`] = `
       Just Boolin
     </label>
     <span
-      aria-describedby="tooltip:2"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -1179,13 +1176,13 @@ exports[`component: FileInputField should render a loading file 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       id="consistent-tip"
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       upload something
-    </div>
+    </span>
     <div
       class="c7 notEmpty"
     >
@@ -1406,7 +1403,6 @@ exports[`component: FileInputField should render file input field 1`] = `
       Just Boolin
     </label>
     <span
-      aria-describedby="tooltip:1"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -1422,13 +1418,13 @@ exports[`component: FileInputField should render file input field 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       id="consistent-tip"
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       upload something
-    </div>
+    </span>
     <div
       class="c7 empty"
     >

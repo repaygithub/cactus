@@ -1,26 +1,24 @@
-import React, { CSSProperties, forwardRef, Fragment, useRef } from 'react'
+import React, { cloneElement } from 'react'
 
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { margin, MarginProps, maxWidth } from 'styled-system'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { Omit } from '../types'
-import { useRect } from '@reach/rect'
-import { useTooltip } from '@reach/tooltip'
-import Portal from '@reach/portal'
+import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import VisuallyHidden from '@reach/visually-hidden'
 
-interface Styles {
-  top: string
-  left: string
+interface Styles extends DOMRect {
+  top: number
+  left: number
   borderTopLeftRadius?: string
   borderTopRightRadius?: string
   borderBottomRightRadius?: string
   borderBottomLeftRadius?: string
 }
 
-type Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => Styles
+type Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => DOMRect
 
 interface TooltipProps
   extends MarginProps,
@@ -33,35 +31,15 @@ interface TooltipProps
   maxWidth?: string
 }
 
-interface TooltipPopupProps
-  extends Omit<
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    'ref'
-  > {
-  triggerRect: DOMRect
-  isVisible: boolean
-  label: string
-  ariaLabel?: string
-  position?: Position
-  maxWidth?: string
-}
-
-interface TooltipContentProps extends React.HTMLProps<HTMLDivElement> {
-  triggerRect: DOMRect
-  isVisible: boolean
-  ariaLabel?: string
-  position?: Position
-  maxWidth?: string
-}
-
 const OFFSET = 8
-const cactusPosition: Position = (triggerRect, tooltipRect) => {
+// @ts-ignore
+const cactusPosition: Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => {
   const scrollX = getScrollX()
   const scrollY = getScrollY()
-  let styles: Styles = {
-    left: `${triggerRect.left + scrollX}px`,
-    top: `${triggerRect.top + triggerRect.height + scrollY}px`,
-  }
+  let styles: Styles = ({
+    left: triggerRect.left + scrollX,
+    top: triggerRect.top + triggerRect.height + scrollY,
+  } as unknown) as DOMRect
 
   if (!tooltipRect) {
     return styles
@@ -90,13 +68,13 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   return {
     ...styles,
     left: directionRight
-      ? `${triggerRect.left + OFFSET + scrollX}px`
-      : `${triggerRect.right - OFFSET - tooltipRect.width + scrollX}px`,
+      ? triggerRect.left + OFFSET + scrollX
+      : triggerRect.right - OFFSET - tooltipRect.width + scrollX,
     top: directionUp
-      ? `${triggerRect.top - tooltipRect.height + scrollY}px`
-      : `${triggerRect.top + triggerRect.height + scrollY}px`,
+      ? triggerRect.top - tooltipRect.height + scrollY
+      : triggerRect.top + triggerRect.height + scrollY,
     // setting width to itself explicitly prevents "drift"
-    width: tooltipRect.width + 'px',
+    width: tooltipRect.width,
   }
 }
 
@@ -104,109 +82,32 @@ const StyledInfo = styled(NotificationInfo)`
   color: ${p => p.theme.colors.callToAction};
 `
 
-/**
- * Stolen from reach/tooltip and adapted to fit our needs
- * https://github.com/reach/reach-ui/tree/master/packages/tooltip
- */
-
 const TooltipBase = (props: TooltipProps) => {
-  const { children, label, ariaLabel, DEBUG_STYLE, className, id, ...rest } = props
-  const [trigger, tooltip] = useTooltip({ DEBUG_STYLE })
+  const { className, label, ariaLabel, id, maxWidth } = props
+  const [trigger, tooltip] = useTooltip()
   return (
-    <Fragment>
-      <span className={className} {...trigger}>
-        <StyledInfo />
-      </span>
-      <TooltipPopup label={label} ariaLabel={ariaLabel} {...tooltip} {...rest} />
+    <>
+      {cloneElement(
+        <span className={className}>
+          <StyledInfo />
+        </span>,
+        trigger
+      )}
+      <TooltipPopup
+        {...tooltip}
+        label={label}
+        ariaLabel={ariaLabel}
+        position={cactusPosition}
+        style={{ maxWidth }}
+      />
       <VisuallyHidden role="tooltip" id={id}>
         {label}
       </VisuallyHidden>
-    </Fragment>
+    </>
   )
 }
 
-export const TooltipPopup = forwardRef<HTMLDivElement, TooltipPopupProps>(function TooltipPopup(
-  {
-    // own props
-    label, // could use children but want to encourage simple strings
-    ariaLabel,
-    position,
-
-    // hook spread props
-    isVisible,
-    id,
-    triggerRect,
-    ...rest
-  },
-  forwardRef
-) {
-  return isVisible ? (
-    <Portal>
-      <TooltipContent
-        label={label}
-        ariaLabel={ariaLabel}
-        position={position}
-        isVisible={isVisible}
-        id={id}
-        triggerRect={triggerRect}
-        ref={forwardRef}
-        {...rest}
-      />
-    </Portal>
-  ) : null
-})
-
-const getStyles = (
-  position: Position,
-  triggerRect: DOMRect,
-  tooltipRect: DOMRect | null
-): Pick<CSSProperties, 'top' | 'left' | 'visibility'> => {
-  const haventMeasuredTooltipYet = !tooltipRect
-  if (haventMeasuredTooltipYet) {
-    return { visibility: 'hidden' }
-  }
-  return position(triggerRect, tooltipRect)
-}
-
-const TooltipContentBase = forwardRef<HTMLDivElement, TooltipContentProps>(function TooltipContent(
-  {
-    label,
-    ariaLabel,
-    position = cactusPosition,
-    isVisible,
-    id,
-    triggerRect,
-    style,
-    maxWidth,
-    ...rest
-  },
-  forwardRef
-) {
-  const useAriaLabel = ariaLabel != null
-  const tooltipRef = useRef<HTMLDivElement | null>(null)
-  const tooltipRect = useRect(tooltipRef, isVisible)
-  return (
-    <div
-      data-reach-tooltip
-      role={useAriaLabel ? undefined : 'tooltip'}
-      id={useAriaLabel ? undefined : id}
-      children={label}
-      style={{
-        ...style,
-        ...getStyles(position, triggerRect, tooltipRect),
-      }}
-      ref={node => {
-        tooltipRef.current = node
-        if (typeof forwardRef === 'function') forwardRef(node)
-      }}
-      {...rest}
-    />
-  )
-})
-
-/** End stolen code */
-
-export const TooltipContent = styled(TooltipContentBase)`
+export const TooltipPopup = styled(ReachTooltipPopup)`
   z-index: 1;
   pointer-events: none;
   position: absolute;
