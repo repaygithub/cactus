@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react'
 
 import '../helpers/polyfills'
 import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { assignRef } from '@reach/utils'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { isResponsiveTouchDevice } from '../helpers/constants'
@@ -17,7 +17,7 @@ import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
-import styled, { css, Interpolation, ThemedStyledProps } from 'styled-components'
+import styled, { css } from 'styled-components'
 import TextButton from '../TextButton/TextButton'
 
 export type SelectValueType = string | number | Array<string | number> | null
@@ -742,7 +742,7 @@ class List extends React.Component<ListProps, ListState> {
           {({ ref: listRef, rect: listRect }) => {
             const mergeRefs = (n: HTMLUListElement | null) => {
               this.listRef = n
-              listRef(n)
+              assignRef(listRef, n)
             }
             return (
               <ListWrapper
@@ -872,7 +872,7 @@ function positionList(
   triggerRect: DOMRect | undefined,
   listRect: DOMRect | undefined
 ): React.CSSProperties | undefined {
-  if (!isOpen || triggerRect === undefined) {
+  if (!isOpen || triggerRect == null) {
     return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
   }
 
@@ -1364,7 +1364,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
           {({ ref: triggerRef, rect: triggerRect }) => (
             <div
               ref={node => {
-                triggerRef(node)
+                assignRef(triggerRef, node)
                 // @ts-ignore
                 this.triggerRef.current = node
               }}

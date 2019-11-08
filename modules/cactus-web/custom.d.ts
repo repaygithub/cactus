@@ -24,43 +24,8 @@ declare module '@storybook/addon-actions' {
   ): { [K in keyof EventNameMap]: HandlerFunction }
 }
 
-declare module '@reach/portal' {
-  interface PortalProps {
-    children: React.ReactNode
-    type?: 'string'
-  }
-
-  const Portal: React.ComponentType<PortalProps>
-
-  export default Portal
-}
-
-declare module '@reach/rect' {
-  import React from 'react'
-
-  type RectProps = {
-    observe?: boolean
-    onChange?: (rect: DOMRect) => void
-    children?: (arg: {
-      ref: (node: HTMLElement | null) => void
-      rect: DOMRect | undefined
-    }) => React.ReactNode
-  }
-
-  const Rect: React.FC<RectProps>
-
-  export default Rect
-  export function useRect<Element>(rect: React.Ref<Element>, observe?: boolean): DOMRect | null
-}
-
-declare module '@reach/visually-hidden' {
-  interface VisuallyHiddenProps {
-    role?: string
-    id?: string
-  }
-
-  const VisuallyHidden: React.SFC<VisuallyHiddenProps>
-  export default VisuallyHidden
+declare module '@reach/utils' {
+  export function assignRef<T = any>(ref: React.Ref<T>, value: any): void
 }
 
 declare module '@repay/scripts' {
