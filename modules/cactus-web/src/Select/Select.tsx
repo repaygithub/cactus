@@ -958,7 +958,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.detectOptionsFromValue()
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: SelectProps) {
     if (this.triggerRef.current !== null) {
       const triggerWidth = this.triggerRef.current.getBoundingClientRect().width
       if (triggerWidth !== this.state.currentTriggerWidth) {
@@ -967,7 +967,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         })
       }
     }
-    this.detectOptionsFromValue()
+    if (JSON.stringify(this.props.value) !== JSON.stringify(prevProps.value)) {
+      this.detectOptionsFromValue()
+    }
   }
 
   static getDerivedStateFromProps(props: Readonly<SelectProps>, state: Readonly<SelectState>) {
@@ -1173,7 +1175,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   createOption = (value: string | number) => {
     const newOption = asOption(value)
     const extraOptions = (this.state.extraOptions as OptionType[]).concat(newOption)
-    this.setState({ extraOptions: extraOptions })
+    this.setState({ extraOptions })
     this.raiseChange(newOption, true)
     if (this.comboInputRef.current !== null) {
       this.comboInputRef.current.focus()
@@ -1266,16 +1268,21 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       this.optionsMap[opt.value] = opt
     })
     if (this.props.comboBox && this.props.value) {
+      const newOptions: OptionType[] = []
+
       if (Array.isArray(this.props.value)) {
         this.props.value.forEach(val => {
           if (!this.optionsMap[val]) {
-            this.createOption(val)
+            newOptions.push(asOption(val))
           }
         })
       } else {
         if (!this.optionsMap[this.props.value]) {
-          this.createOption(this.props.value)
+          newOptions.push(asOption(this.props.value))
         }
+      }
+      if (newOptions.length > 0) {
+        this.setState(state => ({ extraOptions: state.extraOptions.concat(newOptions) }))
       }
     }
   }
