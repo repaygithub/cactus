@@ -100,7 +100,6 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       boolest
     </label>
     <span
-      aria-describedby="tooltip:1"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -116,12 +115,12 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       the boolest dude in the office
-    </div>
+    </span>
     <div
       class="c7"
     >
@@ -237,7 +236,6 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
       boolest
     </label>
     <span
-      aria-describedby="tooltip:3"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -253,12 +251,12 @@ exports[`component: TextAreaField should render a TextAreaField with a placehold
         />
       </svg>
     </span>
-    <div
+    <span
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       the boolest dude in the office
-    </div>
+    </span>
     <div
       class="c7"
     >
@@ -375,7 +373,6 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
       boolest
     </label>
     <span
-      aria-describedby="tooltip:2"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -391,12 +388,12 @@ exports[`component: TextAreaField should render a disabled TextAreaField 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       the boolest dude in the office
-    </div>
+    </span>
     <div
       class="c7"
     >
@@ -539,7 +536,6 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
       master of darts
     </label>
     <span
-      aria-describedby="tooltip:4"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -555,12 +551,12 @@ exports[`component: TextAreaField should render a success TextAreaField 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       the dart master
-    </div>
+    </span>
     <div
       class="c7"
     >
@@ -732,7 +728,6 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
       master of darts
     </label>
     <span
-      aria-describedby="tooltip:5"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -748,12 +743,12 @@ exports[`component: TextAreaField should render a warning TextAreaField 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       the dart master
-    </div>
+    </span>
     <div
       class="c7"
     >
@@ -932,7 +927,6 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
       master of darts
     </label>
     <span
-      aria-describedby="tooltip:6"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -948,12 +942,12 @@ exports[`component: TextAreaField should render an error TextAreaField 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       the dart master
-    </div>
+    </span>
     <div
       class="c7"
     >
@@ -1106,7 +1100,6 @@ exports[`component: TextAreaField should support margin space props 1`] = `
       missing a comma
     </label>
     <span
-      aria-describedby="tooltip:7"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -1122,12 +1115,12 @@ exports[`component: TextAreaField should support margin space props 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       you are missing a comma, sir
-    </div>
+    </span>
     <div
       class="c7"
     >

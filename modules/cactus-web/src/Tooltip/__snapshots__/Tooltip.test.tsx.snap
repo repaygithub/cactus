@@ -8,7 +8,6 @@ exports[`component: Tooltip should render tooltip icon 1`] = `
 
 <div>
   <span
-    aria-describedby="tooltip:1"
     class=""
     data-reach-tooltip-trigger=""
   >
@@ -24,12 +23,12 @@ exports[`component: Tooltip should render tooltip icon 1`] = `
       />
     </svg>
   </span>
-  <div
+  <span
     role="tooltip"
-    style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+    style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
   >
     pitloot
-  </div>
+  </span>
 </div>
 `;
 
@@ -47,15 +46,14 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
   border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
   overflow-wrap: break-word;
-  max-width: 500px;
 }
 
 <div
   class="c0"
   data-reach-tooltip="true"
-  id="tooltip:3"
+  id="tooltip--3"
   role="tooltip"
-  style="left: -8px; top: 0px; border-top-right-radius: 0px; width: 0px;"
+  style="max-width: 500px; left: -8px; top: 0px; right: 0px; bottom: 0px; height: 0px; width: 0px; border-top-right-radius: 0px;"
 >
   This should be displayed
 </div>

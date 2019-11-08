@@ -97,7 +97,6 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
       Enter some text
     </label>
     <span
-      aria-describedby="tooltip:1"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -113,13 +112,13 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
         />
       </svg>
     </span>
-    <div
+    <span
       id="instigate-tip"
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       Go on, do it
-    </div>
+    </span>
     <div
       class="c7"
     >
@@ -339,7 +338,6 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
       Come on, type something
     </label>
     <span
-      aria-describedby="tooltip:2"
       class="c5 "
       data-reach-tooltip-trigger=""
     >
@@ -355,13 +353,13 @@ exports[`component: TextInputField should render a disabled TextInputField 1`] =
         />
       </svg>
     </span>
-    <div
+    <span
       id="trick-tip"
       role="tooltip"
-      style="border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
     >
       Sike!
-    </div>
+    </span>
     <div
       class="c7"
     >
