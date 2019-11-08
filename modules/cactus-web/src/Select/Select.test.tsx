@@ -1037,6 +1037,17 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            value="superior"
+            comboBox
+          />
+        </StyleProvider>
+      )
       let trigger: HTMLElement = getByRole('button')
       expect(trigger).toHaveTextContent('superior')
       fireEvent.click(trigger)
@@ -1257,30 +1268,44 @@ describe('component: Select', () => {
           <Select
             id="test-id"
             name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value={['boolest']}
+            options={[]}
+            value={['boolest', 'coolest']}
+            comboBox
+            multiple
+          />
+        </StyleProvider>
+      )
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={[]}
+            value={['boolest', 'coolest']}
             comboBox
             multiple
           />
         </StyleProvider>
       )
       let trigger: HTMLElement = getByRole('button')
-      expect(trigger).toHaveTextContent('boolest')
+      expect(trigger).toHaveTextContent('boolestcoolest')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
           <Select
             id="test-id"
             name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value={['boolest']}
+            options={[]}
+            value={['boolest', 'coolest']}
             comboBox
             multiple
           />
         </StyleProvider>
       )
       await animationRender()
-      expect(getByRole('listbox')).toHaveTextContent('boolest')
+      const listbox = getByRole('listbox')
+      expect(listbox.childNodes[0]).toHaveTextContent('boolest')
+      expect(listbox.childNodes[1]).toHaveTextContent('coolest')
     })
   })
 })
