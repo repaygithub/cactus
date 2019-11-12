@@ -1,5 +1,16 @@
 # Changelog
 
+## [@repay/cactus-web@v0.5.8](https://github.com/repaygithub/cactus/commit/53fe7776fa1d26829ed9cc07295b5650981feeba)
+
+- fix(cactus-web): Fix how we decide to make an option the create option [021e927](https://github.com/repaygithub/cactus/commit/021e927fc130915fce10eb78f37935418c821eac)
+- fix(cactus-web): Fix how we decide to make an option the create option [cb26b34](https://github.com/repaygithub/cactus/commit/cb26b345ba1bf4251c6ae34cab5eacfd237408f6)
+- refactor(cactus-web): Update types for tooltip position function [39d8c79](https://github.com/repaygithub/cactus/commit/39d8c79f685c38620bf83ccc8a25449d8f4d6d42)
+- fix(cactus-web): Fix options from values displaying in reverse order [3c5743c](https://github.com/repaygithub/cactus/commit/3c5743c75aafcd87f00ca0152276090265c6df19)
+- refactor(cactus-web): Update select to use new @reach/rect refs [1227d52](https://github.com/repaygithub/cactus/commit/1227d5269db132ce2b03dc6f11c5d51d2fab81f0)
+- refactor(cactus-web): Rewrite Tooltip using newest version [0ce354a](https://github.com/repaygithub/cactus/commit/0ce354a260b3ee1008db1d21b362aedd85637c50)
+- chore(cactus-web): upgrade @reach dependencies [ac9aceb](https://github.com/repaygithub/cactus/commit/ac9aceb95ff6096fa5bd0b13cdccaf1740083204)
+- chore(cactus-web): update changelog [16cd286](https://github.com/repaygithub/cactus/commit/16cd286d3ff7783144330487f9ce8eb7f4ea5e1e)
+
 ## [@repay/cactus-web@v0.5.7](https://github.com/repaygithub/cactus/commit/caeda5f352c6e46c05868e650ae9d4e9fc9fdf71)
 
 - fix(cactus-web): css fixes for MenuButton [45f95e8](https://github.com/repaygithub/cactus/commit/45f95e8da6208e54ac7a2d969707d68b0a2c56bc)
