@@ -763,6 +763,7 @@ class List extends React.Component<ListProps, ListState> {
                     let isSelected = opt.isSelected
                     let ariaSelected: boolean | 'true' | 'false' | undefined =
                       isSelected || undefined
+                    let isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
                     // multiselectable should have aria-select©ed on all options
                     if (multiple) {
                       ariaSelected = isSelected ? 'true' : 'false'
@@ -774,13 +775,13 @@ class List extends React.Component<ListProps, ListState> {
                         className={activeDescendant === optId ? 'highlighted-option' : undefined}
                         data-value={opt.value}
                         role="option"
-                        data-role={optId.includes('create') ? 'create' : 'option'}
+                        data-role={isCreateNewOption ? 'create' : 'option'}
                         aria-selected={ariaSelected}
                         onMouseEnter={this.handleOptionMouseEnter}
                       >
-                        {optId.includes('create') ? (
+                        {isCreateNewOption ? (
                           <ActionsAdd mr={2} mb={2} />
-                        ) : multiple && !optId.includes('create') ? (
+                        ) : multiple ? (
                           <CheckBox
                             id={`multiselect-option-check-${optId}`}
                             aria-hidden="true"
