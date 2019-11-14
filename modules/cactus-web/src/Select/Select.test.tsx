@@ -47,17 +47,15 @@ describe('component: Select', () => {
     expect(getByText('Who?')).not.toBeNull()
   })
 
-  test('can receive an empty list of options', async () => {
-    const { getByText, getByRole } = render(
+  test('should set placeholder when options are empty', async () => {
+    const { getByRole } = render(
       <StyleProvider>
         <Select id="empty-options" name="test-empty-options" options={[]} />
       </StyleProvider>
     )
 
-    const trigger = getByText('Select an option')
-    fireEvent.click(trigger)
-    await animationRender()
-    expect(getByRole('listbox').getAttribute('aria-activedescendant')).toBeNull()
+    const trigger = getByRole('button')
+    expect(trigger).toHaveTextContent('Disabled. No options available.')
   })
 
   test('can receive options with number values', async () => {

@@ -50,7 +50,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
 }
 
 .c7:disabled .c8 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c7::-moz-focus-inner {
@@ -206,7 +206,7 @@ exports[`component: SelectField render with complex options 1`] = `
 }
 
 .c7:disabled .c8 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c7::-moz-focus-inner {
@@ -362,7 +362,7 @@ exports[`component: SelectField should render a disabled SelectField 1`] = `
 }
 
 .c7:disabled .c8 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c7::-moz-focus-inner {
@@ -557,7 +557,7 @@ exports[`component: SelectField should render an accessible error message 1`] = 
 }
 
 .c8:disabled .c9 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c8::-moz-focus-inner {
@@ -775,7 +775,7 @@ exports[`component: SelectField should render an accessible success message 1`] 
 }
 
 .c8:disabled .c9 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c8::-moz-focus-inner {
@@ -990,7 +990,7 @@ exports[`component: SelectField should render an accessible warning message 1`] 
 }
 
 .c8:disabled .c9 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c8::-moz-focus-inner {
@@ -1179,7 +1179,7 @@ exports[`component: SelectField supports margin props 1`] = `
 }
 
 .c8:disabled .c9 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c8::-moz-focus-inner {
