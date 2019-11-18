@@ -1414,7 +1414,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                   <ValueSwitch
                     extraLabel={extraLabel || '+{} more'}
                     options={options}
-                    placeholder={noOptsDisable ? 'Disabled. No options available.' : placeholder}
+                    placeholder={noOptsDisable ? 'No options available.' : placeholder}
                     multiple={multiple}
                   />
                   <NavigationChevronDown iconSize="tiny" />
