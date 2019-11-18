@@ -255,7 +255,7 @@ const SelectTrigger = styled.button`
     cursor: not-allowed;
 
     ${Placeholder} {
-      display: none;
+      color: ${p => p.theme.colors.mediumGray};
     }
   }
 
@@ -1365,6 +1365,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
     let { isOpen, searchValue, activeDescendant } = this.state
     let options = this.getExtOptions()
+    let noOptsDisable = !comboBox && options.length === 0
 
     return (
       <div className={className}>
@@ -1404,7 +1405,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                   onClick={this.handleClick}
                   onBlur={this.handleBlur}
                   onFocus={this.handleFocus}
-                  disabled={disabled}
+                  disabled={noOptsDisable ? true : disabled}
                   type="button"
                   aria-haspopup="listbox"
                   aria-expanded={isOpen || undefined}
@@ -1413,7 +1414,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                   <ValueSwitch
                     extraLabel={extraLabel || '+{} more'}
                     options={options}
-                    placeholder={placeholder}
+                    placeholder={noOptsDisable ? 'Disabled. No options available.' : placeholder}
                     multiple={multiple}
                   />
                   <NavigationChevronDown iconSize="tiny" />

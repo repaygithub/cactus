@@ -40,7 +40,7 @@ exports[`component: Select snapshot 1`] = `
 }
 
 .c1:disabled .c2 {
-  display: none;
+  color: hsl(0,0%,70%);
 }
 
 .c1::-moz-focus-inner {
