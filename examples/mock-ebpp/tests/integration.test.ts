@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { ApiData } from '../types'
-import { getActiveElement, sleep } from './helpers/wait'
+import { getActiveElement } from './helpers/wait'
 import { getDocument, queries } from 'pptr-testing-library'
 import Actions from './helpers/actions'
 import devices from 'puppeteer/DeviceDescriptors'
@@ -8,16 +8,6 @@ import puppeteer from 'puppeteer'
 import startStaticServer, { ServerObj } from './helpers/static-server'
 
 const { getByLabelText } = queries
-
-async function getActiveAccessibility(page: puppeteer.Page) {
-  await sleep(0.2)
-  let activeElHandle = await getActiveElement(page)
-  let activeEl = await activeElHandle.asElement()
-  if (activeEl === null) {
-    return
-  }
-  return page.accessibility.snapshot({ root: activeEl })
-}
 
 describe('Integration Tests', () => {
   let page: puppeteer.Page
@@ -139,10 +129,11 @@ describe('Integration Tests', () => {
 
       test('locks focus to date picker', async () => {
         const doc = await getDocument(page)
+        const actions = new Actions(doc, page)
 
         const datePickerTrigger = await getByLabelText(doc, 'Open date picker')
         await datePickerTrigger.click()
-        let dateButtonAccess = await getActiveAccessibility(page)
+        let dateButtonAccess = await actions.getActiveAccessibility()
         expect(dateButtonAccess).toEqual({
           role: 'gridcell',
           name: 'Wednesday, October 16, 2019',
@@ -152,7 +143,7 @@ describe('Integration Tests', () => {
 
         // tab and expect focus to circle back to Month select
         await page.keyboard.press('Tab')
-        let monthSelectAccess = await getActiveAccessibility(page)
+        let monthSelectAccess = await actions.getActiveAccessibility()
         expect(monthSelectAccess).toEqual({
           role: 'button',
           name: 'Click to change month and year',
@@ -162,7 +153,7 @@ describe('Integration Tests', () => {
 
         // tab again should be back at dateButton
         await page.keyboard.press('Tab')
-        let dateButtonAccess2 = await getActiveAccessibility(page)
+        let dateButtonAccess2 = await actions.getActiveAccessibility()
         expect(dateButtonAccess2).toEqual(dateButtonAccess)
       })
 
@@ -172,7 +163,7 @@ describe('Integration Tests', () => {
 
         const datePickerTrigger = await getByLabelText(doc, 'Open date picker')
         await datePickerTrigger.click()
-        let dateButtonAccess = await getActiveAccessibility(page)
+        let dateButtonAccess = await actions.getActiveAccessibility()
         expect(dateButtonAccess).toEqual({
           role: 'gridcell',
           name: 'Wednesday, October 16, 2019',
@@ -182,7 +173,7 @@ describe('Integration Tests', () => {
 
         // move right
         await page.keyboard.press('ArrowRight')
-        dateButtonAccess = await getActiveAccessibility(page)
+        dateButtonAccess = await actions.getActiveAccessibility()
         expect(dateButtonAccess).toEqual({
           role: 'gridcell',
           name: 'Thursday, October 17, 2019',
@@ -192,7 +183,7 @@ describe('Integration Tests', () => {
 
         // move up
         await page.keyboard.press('ArrowUp')
-        dateButtonAccess = await getActiveAccessibility(page)
+        dateButtonAccess = await actions.getActiveAccessibility()
         expect(dateButtonAccess).toEqual({
           role: 'gridcell',
           name: 'Thursday, October 10, 2019',
@@ -238,7 +229,7 @@ describe('Integration Tests', () => {
       await actions.clickByText('Insert Accordion')
       await actions.focusAccordionHeaderByText('Lorem Ipsum?')
       await actions.pressKey('ArrowDown')
-      let accordionAccess = await getActiveAccessibility(actions.page)
+      let accordionAccess = await actions.getActiveAccessibility()
       expect(accordionAccess).toEqual({
         focused: true,
         name: 'What is EBPP?',
@@ -248,7 +239,7 @@ describe('Integration Tests', () => {
       await actions.clickByText('Remove Accordion')
       await actions.focusAccordionHeaderByText('What is EBPP?')
       await actions.pressKey('ArrowDown')
-      accordionAccess = await getActiveAccessibility(actions.page)
+      accordionAccess = await actions.getActiveAccessibility()
       expect(accordionAccess).toEqual({
         focused: true,
         name: 'Why EBPP?',
@@ -263,7 +254,7 @@ describe('Integration Tests', () => {
       await actions.clickByText('Insert Accordion')
       await actions.focusAccordionHeaderByText('Office Ipsum?')
       await actions.pressKey('ArrowUp')
-      let accordionAccess = await getActiveAccessibility(actions.page)
+      let accordionAccess = await actions.getActiveAccessibility()
       expect(accordionAccess).toEqual({
         focused: true,
         name: 'Cat Mojo I Show My Fluffy Belly?',
@@ -273,7 +264,7 @@ describe('Integration Tests', () => {
       await actions.clickByText('Remove Accordion')
       await actions.focusAccordionHeaderByText('Cat Mojo I Show My Fluffy Belly?')
       await actions.pressKey('ArrowUp')
-      accordionAccess = await getActiveAccessibility(actions.page)
+      accordionAccess = await actions.getActiveAccessibility()
       expect(accordionAccess).toEqual({
         focused: true,
         name: 'What is Bill Presentment?',
@@ -288,7 +279,7 @@ describe('Integration Tests', () => {
       await actions.clickByText('Insert Accordion')
       await actions.focusAccordionHeaderByText('Office Ipsum?')
       await actions.pressKey('Home')
-      let accordionAccess = await getActiveAccessibility(actions.page)
+      let accordionAccess = await actions.getActiveAccessibility()
       expect(accordionAccess).toEqual({
         focused: true,
         name: 'Lorem Ipsum?',
@@ -303,7 +294,7 @@ describe('Integration Tests', () => {
       await actions.clickByText('Insert Accordion')
       await actions.focusAccordionHeaderByText('Lorem Ipsum?')
       await actions.pressKey('End')
-      let accordionAccess = await getActiveAccessibility(actions.page)
+      let accordionAccess = await actions.getActiveAccessibility()
       expect(accordionAccess).toEqual({
         focused: true,
         name: 'Office Ipsum?',

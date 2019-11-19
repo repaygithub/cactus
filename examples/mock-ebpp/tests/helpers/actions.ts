@@ -1,5 +1,5 @@
+import { getActiveElement, sleep, waitForComboInput, waitForDropdownList } from './wait'
 import { queries } from 'pptr-testing-library'
-import { waitForComboInput, waitForDropdownList } from './wait'
 import puppeteer, { ElementHandle } from 'puppeteer'
 
 const { getByLabelText, getByText, getByRole } = queries
@@ -108,6 +108,16 @@ class Actions {
 
   pressKey = async (key: string) => {
     await this.page.keyboard.press(key)
+  }
+
+  getActiveAccessibility = async () => {
+    await sleep(0.2)
+    let activeElHandle = await getActiveElement(this.page)
+    let activeEl = await activeElHandle.asElement()
+    if (activeEl === null) {
+      return
+    }
+    return this.page.accessibility.snapshot({ root: activeEl })
   }
 }
 
