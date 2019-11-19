@@ -56,7 +56,11 @@ const ContentBlocks = ({ number }: { number: number }) => {
   }
   let children = []
   for (let i = 0; i < number; ++i) {
-    children.push(<Text key={i}>{textContent}</Text>)
+    children.push(
+      <Text key={i} tabIndex={0}>
+        {textContent}
+      </Text>
+    )
   }
   return <Fragment>{children}</Fragment>
 }
