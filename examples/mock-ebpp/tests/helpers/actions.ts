@@ -4,7 +4,7 @@ import puppeteer, { ElementHandle } from 'puppeteer'
 
 const { getByLabelText, getByText, getByRole } = queries
 
-class FormActions {
+class Actions {
   constructor(doc: puppeteer.ElementHandle<Element>, page: puppeteer.Page) {
     this.doc = doc
     this.page = page
@@ -97,6 +97,18 @@ class FormActions {
       .then(i => i.getProperty('value'))
       .then(h => h.jsonValue())
   }
+
+  focusAccordionHeaderByText = async (headerText: string) => {
+    const accordionSpan = await getByText(this.doc, headerText)
+    const accordionHeader = (await accordionSpan.evaluateHandle(
+      as => as.parentElement
+    )) as ElementHandle<Element>
+    await accordionHeader.focus()
+  }
+
+  pressKey = async (key: string) => {
+    await this.page.keyboard.press(key)
+  }
 }
 
-export default FormActions
+export default Actions
