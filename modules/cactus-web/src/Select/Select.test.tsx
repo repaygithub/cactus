@@ -55,7 +55,7 @@ describe('component: Select', () => {
     )
 
     const trigger = getByRole('button')
-    expect(trigger).toHaveTextContent('Disabled. No options available.')
+    expect(trigger).toHaveTextContent('No options available.')
   })
 
   test('can receive options with number values', async () => {
