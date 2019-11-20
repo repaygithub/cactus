@@ -57,6 +57,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
       aria-controls="accordion-body"
       aria-expanded="false"
       class="c1"
+      data-role="accordion-button"
       id="accordion-header"
       role="button"
     >

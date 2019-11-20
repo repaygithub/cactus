@@ -119,6 +119,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
       {...rest}
       id={headerId}
       className={className}
+      data-role="accordion-button"
       role="button"
       onClick={handleToggle}
       onKeyDown={handleHeaderKeyDown}
@@ -318,8 +319,10 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
 
   const focusById = (id: string) => {
     const focusAccordion = document.getElementById(id)
-    if (focusAccordion && focusAccordion.children[0]) {
-      const toFocus = focusAccordion.children[0] as HTMLElement
+    if (focusAccordion) {
+      const toFocus = focusAccordion.querySelector(
+        'button[data-role="accordion-button"]'
+      ) as HTMLElement
       toFocus.focus()
     }
   }
@@ -381,9 +384,9 @@ const AccordionBase = (props: AccordionProps) => {
     isManaged,
     managedAccordions,
   } = useContext(ProviderContext)
-  const id = useId()
-  const headerId = props.id ? `${props.id}-header` : `${id}-header`
-  const bodyId = props.id ? `${props.id}-body` : `${id}-body`
+  const id = useId(props.id)
+  const headerId = `${id}-header`
+  const bodyId = `${id}-body`
   let isOpen = false
 
   if (isManaged) {
@@ -437,7 +440,7 @@ const AccordionBase = (props: AccordionProps) => {
   const rest = omitMargins(props, 'width', 'maxWidth')
 
   return (
-    <div id={props.id || id} {...rest}>
+    <div id={id} {...rest}>
       <AccordionContext.Provider
         value={{
           isOpen: isManaged ? isOpen : state.isOpen,
