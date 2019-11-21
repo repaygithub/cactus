@@ -1,5 +1,15 @@
 # Changelog
 
+## [@repay/cactus-web@v0.6.0](https://github.com/repaygithub/cactus/commit/f16d3e7b561c1a1f10539498d736b0ba1ddbcd5b)
+
+- refactor(cactus-web): Use data-role attribute for focus mgmt & pass props.id to useId [38d96ab](https://github.com/repaygithub/cactus/commit/38d96aba9b4ffa817b91fff7ffc928c2423c3676)
+- docs(cactus-web): update accordion docs & examples [734c86a](https://github.com/repaygithub/cactus/commit/734c86a3d4dfdbf231cd148d2304676943c37928)
+- fix(cactus-web): BREAKING - Include accessibility features in the accordion [4b5f33e](https://github.com/repaygithub/cactus/commit/4b5f33e81708da5d6d332d6b94e3cc3304105730)
+- refactor(cactus-web): Update wording on no options placeholder [a9efdb4](https://github.com/repaygithub/cactus/commit/a9efdb484443f6eb9cf653aed65dcc4d8f5eb2db)
+- refactor(cactus-web): Update wording on no options placeholder [60f7c0b](https://github.com/repaygithub/cactus/commit/60f7c0bc163e8692de7a08021be45b702c84633d)
+- feat(cactus-web): Disable & provide placeholder when options are empty [035c3fd](https://github.com/repaygithub/cactus/commit/035c3fd40e75142ca29ff3e1f5f63bfcdf2e9d99)
+- chore(cactus-web): update changelog [061e775](https://github.com/repaygithub/cactus/commit/061e775c839cf2f9062019f442a9ab3ce93e6930)
+
 ## [@repay/cactus-web@v0.5.8](https://github.com/repaygithub/cactus/commit/53fe7776fa1d26829ed9cc07295b5650981feeba)
 
 - fix(cactus-web): Fix how we decide to make an option the create option [021e927](https://github.com/repaygithub/cactus/commit/021e927fc130915fce10eb78f37935418c821eac)
