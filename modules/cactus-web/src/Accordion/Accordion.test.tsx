@@ -50,6 +50,19 @@ describe('component: Accordion', () => {
       })
       expect(container).toHaveTextContent('Test Body')
     })
+
+    test('should allow the user to initialize accordions as open', () => {
+      const { container } = render(
+        <StyleProvider>
+          <Accordion open>
+            <Accordion.Header>Test Header</Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(container).toHaveTextContent('Test Body')
+    })
   })
 
   describe('Provider', () => {
@@ -135,6 +148,26 @@ describe('component: Accordion', () => {
       act(() => {
         fireEvent.click(a2Button)
       })
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+    })
+
+    test('should allow the user to initialize accordions as open', () => {
+      const { container } = render(
+        <StyleProvider>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion open>
+              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Body>Should show A1</Accordion.Body>
+            </Accordion>
+            <Accordion open>
+              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Body>Should show A2</Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </StyleProvider>
+      )
+
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
     })
