@@ -1,10 +1,10 @@
+import { getActiveElement, sleep, waitForComboInput, waitForDropdownList } from './wait'
 import { queries } from 'pptr-testing-library'
-import { waitForComboInput, waitForDropdownList } from './wait'
 import puppeteer, { ElementHandle } from 'puppeteer'
 
 const { getByLabelText, getByText, getByRole } = queries
 
-class FormActions {
+class Actions {
   constructor(doc: puppeteer.ElementHandle<Element>, page: puppeteer.Page) {
     this.doc = doc
     this.page = page
@@ -97,6 +97,28 @@ class FormActions {
       .then(i => i.getProperty('value'))
       .then(h => h.jsonValue())
   }
+
+  focusAccordionHeaderByText = async (headerText: string) => {
+    const accordionSpan = await getByText(this.doc, headerText)
+    const accordionHeader = (await accordionSpan.evaluateHandle(
+      as => as.parentElement
+    )) as ElementHandle<Element>
+    await accordionHeader.focus()
+  }
+
+  pressKey = async (key: string) => {
+    await this.page.keyboard.press(key)
+  }
+
+  getActiveAccessibility = async () => {
+    await sleep(0.2)
+    let activeElHandle = await getActiveElement(this.page)
+    let activeEl = await activeElHandle.asElement()
+    if (activeEl === null) {
+      return
+    }
+    return this.page.accessibility.snapshot({ root: activeEl })
+  }
 }
 
-export default FormActions
+export default Actions

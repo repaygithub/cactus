@@ -3,6 +3,7 @@ import * as React from 'react'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Accordion from './Accordion'
+import KeyCodes from '../helpers/keyCodes'
 
 let _requestAnimationFrame = window.requestAnimationFrame
 
@@ -21,7 +22,7 @@ describe('component: Accordion', () => {
     test('Should render Accordion', () => {
       const { container } = render(
         <StyleProvider>
-          <Accordion>
+          <Accordion id="accordion">
             <Accordion.Header>Test Header</Accordion.Header>
             <Accordion.Body>Test Body</Accordion.Body>
           </Accordion>
@@ -69,7 +70,6 @@ describe('component: Accordion', () => {
         fireEvent.click(toggleButton)
       })
       expect(container).toHaveTextContent('Test Body')
-      expect(container).toMatchSnapshot()
     })
 
     test('Should close one Accordion when another opens', () => {
@@ -137,6 +137,159 @@ describe('component: Accordion', () => {
       })
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
+    })
+  })
+
+  describe('Keyboard Interactions', () => {
+    test('DOWN arrow should move focus to the next accordion', () => {
+      const { getByTestId } = render(
+        <StyleProvider>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion data-testid="A1">
+              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Body>A1 Content</Accordion.Body>
+            </Accordion>
+            <Accordion data-testid="A2">
+              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Body>A2 Content</Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </StyleProvider>
+      )
+
+      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(document.activeElement).toBe(getByTestId('A2').querySelector('button'))
+    })
+
+    test('UP arrow should move focus to the previous accordion', () => {
+      const { getByTestId } = render(
+        <StyleProvider>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion data-testid="A1">
+              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Body>A1 Content</Accordion.Body>
+            </Accordion>
+            <Accordion data-testid="A2">
+              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Body>A2 Content</Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </StyleProvider>
+      )
+
+      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      fireEvent.focus(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(document.activeElement).toBe(getByTestId('A1').querySelector('button'))
+    })
+
+    test('UP/DOWN arrows should loop on the accordions', () => {
+      const { getByTestId } = render(
+        <StyleProvider>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion data-testid="A1">
+              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Body>A1 Content</Accordion.Body>
+            </Accordion>
+            <Accordion data-testid="A2">
+              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Body>A2 Content</Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </StyleProvider>
+      )
+
+      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
+      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(document.activeElement).toBe(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(document.activeElement).toBe(a1)
+    })
+
+    test('SPACE should open/close the accordion', () => {
+      const { getByTestId } = render(
+        <StyleProvider>
+          <Accordion data-testid="Accordion">
+            <Accordion.Header>My Accordion</Accordion.Header>
+            <Accordion.Body>My Accordion Content</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      const a = getByTestId('Accordion').querySelector('button') as HTMLButtonElement
+      fireEvent.focus(a)
+      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      expect(a.getAttribute('aria-expanded')).toBe('true')
+      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      expect(a.getAttribute('aria-expanded')).toBe('false')
+    })
+
+    test('RETURN should open/close the accordion', () => {
+      const { getByTestId } = render(
+        <StyleProvider>
+          <Accordion data-testid="Accordion">
+            <Accordion.Header>My Accordion</Accordion.Header>
+            <Accordion.Body>My Accordion Content</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      const a = getByTestId('Accordion').querySelector('button') as HTMLButtonElement
+      fireEvent.focus(a)
+      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      expect(a.getAttribute('aria-expanded')).toBe('true')
+      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      expect(a.getAttribute('aria-expanded')).toBe('false')
+    })
+
+    test('HOME should focus on the first accordion', () => {
+      const { getByTestId } = render(
+        <StyleProvider>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion data-testid="A1">
+              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Body>A1 Content</Accordion.Body>
+            </Accordion>
+            <Accordion data-testid="A2">
+              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Body>A2 Content</Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </StyleProvider>
+      )
+
+      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
+      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      fireEvent.focus(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      expect(document.activeElement).toBe(a1)
+    })
+
+    test('END should focus on the last accordion', () => {
+      const { getByTestId } = render(
+        <StyleProvider>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion data-testid="A1">
+              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Body>A1 Content</Accordion.Body>
+            </Accordion>
+            <Accordion data-testid="A2">
+              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Body>A2 Content</Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </StyleProvider>
+      )
+
+      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
+      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      expect(document.activeElement).toBe(a2)
     })
   })
 })
