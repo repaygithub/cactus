@@ -1,7 +1,7 @@
 function getLocale(): string {
   // server-side rendering
   if (typeof window === 'undefined') {
-    return ''
+    return 'en-US'
   }
   // fallbacks are for IE11 which of course TS doesn't know about -_-
   // @ts-ignore
