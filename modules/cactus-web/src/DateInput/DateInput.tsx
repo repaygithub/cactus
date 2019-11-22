@@ -847,6 +847,21 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
+  handleInputCapture = (event: React.CompositionEvent<HTMLDivElement>) => {
+    const target = event.target
+    let data = event.data || event.nativeEvent.data
+    if (
+      this._inputWrapper.current !== null &&
+      isOwnInput(target, this._inputWrapper.current) &&
+      !event.defaultPrevented &&
+      data
+    ) {
+      data = String(data).substr(-1)
+      let token = target.dataset.token as FormatTokenType
+      this.handleUpdate(token, 'Key', data)
+    }
+  }
+
   handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
     const { relatedTarget } = event
     if (this._isOutside(relatedTarget)) {
@@ -1356,6 +1371,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           aria-describedby={ariaDescribedBy}
           aria-labelledby={ariaLabelledBy}
           onKeyDownCapture={this.handleKeydownCapture}
+          onInputCapture={this.handleInputCapture}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           onClick={this.handleClick}
