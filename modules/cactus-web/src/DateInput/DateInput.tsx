@@ -252,6 +252,11 @@ const InputWrapper = styled.div`
     color: transparent;
     text-shadow: 0 0 0 ${p => p.theme.colors.darkestContrast};
 
+    // hides selection
+    &::selection {
+      background: transparent;
+    }
+
     // hides toggle "spin" buttons on type=number
     appearance: textfield;
     &::-webkit-inner-spin-button,

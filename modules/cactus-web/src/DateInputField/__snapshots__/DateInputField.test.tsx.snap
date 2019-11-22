@@ -138,6 +138,10 @@ exports[`component: DateInputField snapshot 1`] = `
   appearance: textfield;
 }
 
+.c6 input::selection {
+  background: transparent;
+}
+
 .c6 input::-webkit-inner-spin-button,
 .c6 input::-webkit-outer-spin-button {
   -webkit-appearance: none;
