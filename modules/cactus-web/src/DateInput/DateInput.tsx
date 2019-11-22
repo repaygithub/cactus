@@ -61,8 +61,8 @@ type DateInputPhrasesType = {
  * implemented to account for Firefox type=number removing leading and trailing zeros
  * https://bugzilla.mozilla.org/show_bug.cgi?id=1005603
  */
-const NUMBER_INPUT_TYPE =
-  typeof window !== 'undefined' && !window.navigator.userAgent.match(/firefox/i) ? 'number' : 'tel'
+const IS_FIREFOX = typeof window !== 'undefined' && window.navigator.userAgent.match(/firefox/i)
+const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
 
 const portalStyleOptions = { offset: 8 }
 const noop = function() {}
@@ -239,6 +239,7 @@ const InputWrapper = styled.div`
 
   > ${LiteralPunctuation} {
     margin-left: 0;
+    ${IS_FIREFOX && 'align-self: flex-end'}
   }
 
   input {
