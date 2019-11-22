@@ -57,6 +57,13 @@ type DateInputPhrasesType = {
   ariaDisabledDate: (date: string) => string
 }
 
+/**
+ * implemented to account for Firefox type=number removing leading and trailing zeros
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1005603
+ */
+const NUMBER_INPUT_TYPE =
+  typeof window !== 'undefined' && !window.navigator.userAgent.match(/firefox/i) ? 'number' : 'tel'
+
 const portalStyleOptions = { offset: 8 }
 const noop = function() {}
 const ALLOW_DEFAULT = ['Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
@@ -1367,7 +1374,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               return (
                 <input
                   key={key}
-                  type={token === 'aa' ? 'text' : 'number'}
+                  type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
                   id={inputId}
                   data-token={token}
                   aria-label={getInputLabel(token, phrases)}
