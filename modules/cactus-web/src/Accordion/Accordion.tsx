@@ -385,15 +385,12 @@ const AccordionBase = (props: AccordionProps) => {
     if (managedAccordions) {
       managedAccordions[id] = { open: isOpen, order: order++ }
     }
-  }, [id, managedAccordions]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
     return () => {
       if (managedAccordions) {
         delete managedAccordions[id]
       }
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, managedAccordions]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleOpen = () => {
     if (isManaged) {
