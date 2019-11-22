@@ -172,3 +172,27 @@ storiesOf('Accordion', module)
       }}
     </ContentManager>
   ))
+  .add('With Open Initialization', () => (
+    <div style={{ width: '312px' }}>
+      <Accordion.Provider maxOpen={number('maxOpen', 2)}>
+        <Accordion defaultOpen>
+          <Accordion.Header>{text('header 1', 'Accordion 1')}</Accordion.Header>
+          <Accordion.Body>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+            tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+            lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+            euismod augue aliquam vel.
+          </Accordion.Body>
+        </Accordion>
+        <Accordion defaultOpen>
+          <Accordion.Header>{text('header 2', 'Accordion 2')}</Accordion.Header>
+          <Accordion.Body>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+            tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+            lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+            euismod augue aliquam vel.
+          </Accordion.Body>
+        </Accordion>
+      </Accordion.Provider>
+    </div>
+  ))

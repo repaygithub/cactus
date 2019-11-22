@@ -13,7 +13,9 @@ interface AccordionProps
   extends MarginProps,
     MaxWidthProps,
     WidthProps,
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  defaultOpen?: boolean
+}
 
 interface AccordionHeaderProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {}
@@ -37,15 +39,12 @@ interface AccordionProviderProps {
 }
 
 interface AccordionProviderContext {
-  accordions: {
-    [key: string]: { open: boolean }
-  }
   manageOpen: ((name: string, open: boolean) => void) | undefined
   manageFocus: ((id: string, offset: number) => void) | undefined
   focusFirst: (() => void) | undefined
   focusLast: (() => void) | undefined
   isManaged: boolean
-  managedAccordions: Array<string> | undefined
+  managedAccordions: { [key: string]: { open: boolean; order: number } } | undefined
 }
 
 const AccordionContext = createContext<AccordionContext>({
@@ -120,6 +119,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
       id={headerId}
       className={className}
       data-role="accordion-button"
+      type="button"
       role="button"
       onClick={handleToggle}
       onKeyDown={handleHeaderKeyDown}
@@ -246,7 +246,6 @@ export const AccordionBody = styled(AccordionBodyBase)`
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({
-  accordions: {},
   manageOpen: undefined,
   manageFocus: undefined,
   focusFirst: undefined,
@@ -255,42 +254,38 @@ const ProviderContext = createContext<AccordionProviderContext>({
   managedAccordions: undefined,
 })
 
-interface AccordionProviderState {
-  [key: string]: { open: boolean; order: number }
-}
-
 let order = 0
 
 export const AccordionProvider = (props: AccordionProviderProps) => {
   const { maxOpen = 1 } = props
-  const [state, setState] = useState<AccordionProviderState>({})
+  const [update, makeUpdate] = useState<boolean>(false)
 
-  const managedAccordions = useRef<Array<string>>([])
+  const managedAccordions = useRef<{ [key: string]: { open: boolean; order: number } }>({})
 
   const manageOpen = (id: string, open: boolean) => {
-    const newState = { ...state }
-    newState[id] = { open: open, order: order++ }
+    managedAccordions.current[id] = { open: open, order: order++ }
+    const accordions = managedAccordions.current
     if (open) {
-      const allOpen = Object.keys(newState).filter(
-        accordionId => newState[accordionId].open === true
+      const allOpen = Object.keys(accordions).filter(
+        accordionId => accordions[accordionId].open === true
       )
       if (allOpen.length > maxOpen) {
         allOpen.sort((a, b) => {
-          if (newState[a].order < newState[b].order) {
+          if (accordions[a].order < accordions[b].order) {
             return -1
-          } else if (newState[a].order > newState[b].order) {
+          } else if (accordions[a].order > accordions[b].order) {
             return 1
           }
           return 0
         })
-        newState[allOpen[0]].open = false
+        managedAccordions.current[allOpen[0]].open = false
       }
     }
-    setState(newState)
+    makeUpdate(!update)
   }
 
   const manageFocus = (id: string, offset: number) => {
-    if (managedAccordions.current.length > 1) {
+    if (Object.keys(managedAccordions.current).length > 1) {
       const orderedIds = getOrderedIds()
       const currentIndex = orderedIds.indexOf(id)
       let nextIndex = currentIndex + offset
@@ -304,14 +299,14 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
   }
 
   const focusFirst = () => {
-    if (managedAccordions.current.length > 1) {
+    if (Object.keys(managedAccordions.current).length > 1) {
       const orderedIds = getOrderedIds()
       focusById(orderedIds[0])
     }
   }
 
   const focusLast = () => {
-    if (managedAccordions.current.length > 1) {
+    if (Object.keys(managedAccordions.current).length > 1) {
       const orderedIds = getOrderedIds()
       focusById(orderedIds[orderedIds.length - 1])
     }
@@ -328,21 +323,13 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
   }
 
   const getOrderedIds = () =>
-    Array.from(document.querySelectorAll(`#${managedAccordions.current.join(',#')}`)).map(
-      el => el.id
-    )
-
-  const value: { [key: string]: { open: boolean } } = {}
-  Object.keys(state).forEach(accordionId => {
-    value[accordionId] = {
-      open: state[accordionId].open,
-    }
-  })
+    Array.from(
+      document.querySelectorAll(`#${Object.keys(managedAccordions.current).join(',#')}`)
+    ).map(el => el.id)
 
   return (
     <ProviderContext.Provider
       value={{
-        accordions: value,
         manageOpen,
         manageFocus,
         focusFirst,
@@ -376,7 +363,6 @@ interface AccordionState {
 
 const AccordionBase = (props: AccordionProps) => {
   const {
-    accordions,
     manageOpen,
     manageFocus,
     focusFirst,
@@ -384,30 +370,27 @@ const AccordionBase = (props: AccordionProps) => {
     isManaged,
     managedAccordions,
   } = useContext(ProviderContext)
+  const { defaultOpen, ...restProps } = props
   const id = useId(props.id)
   const headerId = `${id}-header`
   const bodyId = `${id}-body`
-  let isOpen = false
+  let isOpen = defaultOpen || false
 
-  if (isManaged) {
-    isOpen = accordions[id] === undefined ? false : accordions[id].open
+  if (isManaged && managedAccordions !== undefined && managedAccordions[id] !== undefined) {
+    isOpen = managedAccordions[id].open
   }
   const [state, setState] = useState<AccordionState>({ isOpen: isOpen })
 
   useEffect(() => {
     if (managedAccordions) {
-      managedAccordions.push(id)
+      managedAccordions[id] = { open: isOpen, order: order++ }
     }
-  }, [id, managedAccordions])
-
-  useEffect(() => {
     return () => {
       if (managedAccordions) {
-        const accordionIndex = managedAccordions.indexOf(id)
-        managedAccordions.splice(accordionIndex, 1)
+        delete managedAccordions[id]
       }
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, managedAccordions]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const toggleOpen = () => {
     if (isManaged) {
@@ -437,7 +420,7 @@ const AccordionBase = (props: AccordionProps) => {
     }
   }
 
-  const rest = omitMargins(props, 'width', 'maxWidth')
+  const rest = omitMargins(restProps, 'width', 'maxWidth')
 
   return (
     <div id={id} {...rest}>
@@ -465,6 +448,14 @@ export const Accordion = styled(AccordionBase)`
   ${width}
   ${maxWidth}
 ` as any
+
+Accordion.defaultProps = {
+  defaultOpen: false,
+}
+
+Accordion.propTypes = {
+  defaultOpen: PropTypes.bool,
+}
 
 Accordion.Header = AccordionHeader
 Accordion.Body = AccordionBody

@@ -58,7 +58,7 @@
     "@reach/router": "^1.2.1",
     "@repay/cactus-icons": "^0.6.1",
     "@repay/cactus-theme": "^0.4.5",
-    "@repay/cactus-web": "^0.5.2",
+    "@repay/cactus-web": "^0.6.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   }

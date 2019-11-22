@@ -60,6 +60,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
       data-role="accordion-button"
       id="accordion-header"
       role="button"
+      type="button"
     >
       <span>
         Test Header
