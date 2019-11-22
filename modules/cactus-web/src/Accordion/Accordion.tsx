@@ -14,7 +14,7 @@ interface AccordionProps
     MaxWidthProps,
     WidthProps,
     React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  open?: boolean
+  defaultOpen?: boolean
 }
 
 interface AccordionHeaderProps
@@ -369,10 +369,11 @@ const AccordionBase = (props: AccordionProps) => {
     isManaged,
     managedAccordions,
   } = useContext(ProviderContext)
+  const { defaultOpen, ...restProps } = props
   const id = useId(props.id)
   const headerId = `${id}-header`
   const bodyId = `${id}-body`
-  let isOpen = props.open || false
+  let isOpen = defaultOpen || false
 
   if (isManaged && managedAccordions !== undefined && managedAccordions[id] !== undefined) {
     isOpen = managedAccordions[id].open
@@ -421,7 +422,7 @@ const AccordionBase = (props: AccordionProps) => {
     }
   }
 
-  const rest = omitMargins(props, 'width', 'maxWidth')
+  const rest = omitMargins(restProps, 'width', 'maxWidth')
 
   return (
     <div id={id} {...rest}>
@@ -451,11 +452,11 @@ export const Accordion = styled(AccordionBase)`
 ` as any
 
 Accordion.defaultProps = {
-  open: false,
+  defaultOpen: false,
 }
 
 Accordion.propTypes = {
-  open: PropTypes.bool,
+  defaultOpen: PropTypes.bool,
 }
 
 Accordion.Header = AccordionHeader

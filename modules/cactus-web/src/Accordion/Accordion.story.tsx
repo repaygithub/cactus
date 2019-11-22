@@ -175,7 +175,7 @@ storiesOf('Accordion', module)
   .add('With Open Initialization', () => (
     <div style={{ width: '312px' }}>
       <Accordion.Provider maxOpen={number('maxOpen', 2)}>
-        <Accordion open>
+        <Accordion defaultOpen>
           <Accordion.Header>{text('header 1', 'Accordion 1')}</Accordion.Header>
           <Accordion.Body>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
@@ -184,7 +184,7 @@ storiesOf('Accordion', module)
             euismod augue aliquam vel.
           </Accordion.Body>
         </Accordion>
-        <Accordion open>
+        <Accordion defaultOpen>
           <Accordion.Header>{text('header 2', 'Accordion 2')}</Accordion.Header>
           <Accordion.Body>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu

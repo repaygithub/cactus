@@ -54,7 +54,7 @@ describe('component: Accordion', () => {
     test('should allow the user to initialize accordions as open', () => {
       const { container } = render(
         <StyleProvider>
-          <Accordion open>
+          <Accordion defaultOpen>
             <Accordion.Header>Test Header</Accordion.Header>
             <Accordion.Body>Test Body</Accordion.Body>
           </Accordion>
@@ -156,11 +156,11 @@ describe('component: Accordion', () => {
       const { container } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
-            <Accordion open>
+            <Accordion defaultOpen>
               <Accordion.Header>Accordion 1</Accordion.Header>
               <Accordion.Body>Should show A1</Accordion.Body>
             </Accordion>
-            <Accordion open>
+            <Accordion defaultOpen>
               <Accordion.Header>Accordion 2</Accordion.Header>
               <Accordion.Body>Should show A2</Accordion.Body>
             </Accordion>
