@@ -119,6 +119,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
       id={headerId}
       className={className}
       data-role="accordion-button"
+      type="button"
       role="button"
       onClick={handleToggle}
       onKeyDown={handleHeaderKeyDown}
