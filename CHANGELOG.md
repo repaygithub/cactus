@@ -1,5 +1,20 @@
 # Changelog
 
+## [@repay/cactus-web@v0.6.1](https://github.com/repaygithub/cactus/commit/65eb1246d476a78753ba6c4e1d73a738c45290ee)
+
+- fix(cactus-web): account for firefox specfic text alignments [3b56da0](https://github.com/repaygithub/cactus/commit/3b56da0e1e1edf951eed76dccee970865a3f87cb)
+- fix(cactus-web): mobile key capture in DateInput [b601145](https://github.com/repaygithub/cactus/commit/b60114508f2f137bbd5e05f7e98da03154d3def4)
+- feat(cactus-web): hide text selection in DateInput [ba4a017](https://github.com/repaygithub/cactus/commit/ba4a0174c365b85f32cce54bee3c74cec00ed595)
+- fix(cactus-web): zero padding for firefox in DateInput [d3ebc83](https://github.com/repaygithub/cactus/commit/d3ebc832e0a565c9374561bd308e03ff2dfc49bc)
+- feat(cactus-web): Allow user to initially render accordions open [b513ae9](https://github.com/repaygithub/cactus/commit/b513ae94d204237610f9f472b3e193fca0d37906)
+- refactor(cactus-web): Combine useEffects in accordion [7c9ca59](https://github.com/repaygithub/cactus/commit/7c9ca5909efe2c1af29b21da7cd686d72e16be6f)
+- fix(cactus-web): Make accordion header button type=button [3b36858](https://github.com/repaygithub/cactus/commit/3b36858023ace65d8494f1b98419553b012d1daa)
+- refactor(cactus-web): Change initially open prop name [9e8b0db](https://github.com/repaygithub/cactus/commit/9e8b0db68fbfad5bf7e0579519db70f3b1fe473f)
+- fix(cactus-web): provide default for ssr in getLocale [1ac5bef](https://github.com/repaygithub/cactus/commit/1ac5befde92a51a5f3a0438a952cdb2de65e8c4c)
+- chore(cactus-web): Upgrade cactus in example app [ac78add](https://github.com/repaygithub/cactus/commit/ac78add8d6d680c1f4ffc091d0b39e632eb22432)
+- feat(cactus-web): Allow user to initially render accordions open [6da99e0](https://github.com/repaygithub/cactus/commit/6da99e02ce47b251dece9540bcee65f35c2099e2)
+- chore(cactus-web): update changelog [a669c2b](https://github.com/repaygithub/cactus/commit/a669c2b3828b2c78d9c36adf1bf745a33b788da8)
+
 ## [@repay/cactus-web@v0.6.0](https://github.com/repaygithub/cactus/commit/f16d3e7b561c1a1f10539498d736b0ba1ddbcd5b)
 
 - refactor(cactus-web): Use data-role attribute for focus mgmt & pass props.id to useId [38d96ab](https://github.com/repaygithub/cactus/commit/38d96aba9b4ffa817b91fff7ffc928c2423c3676)
