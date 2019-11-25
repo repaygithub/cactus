@@ -587,13 +587,15 @@ export class PartialDate implements FormatTokenMap {
   }
 
   toDate(): Date {
-    return new Date(
+    let date = new Date(
       this.getYear(),
       this.getMonth(),
       this.getDate(),
       this.getHours(),
       this.getMinutes()
     )
+    date.setUTCFullYear(this.getYear())
+    return date
   }
 
   isValid(): boolean {

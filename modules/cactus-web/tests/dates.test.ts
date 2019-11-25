@@ -106,6 +106,21 @@ describe('date helpers', () => {
         const pd = new PartialDate('02/29/2020', 'MM/dd/YYYY')
         expect(pd.toDate()).toEqual(new Date(2020, 1, 29))
       })
+
+      test('correctly sets the year when year is less than 100', () => {
+        const pd = new PartialDate('01/02/0004', 'MM/dd/YYYY')
+        let expected = new Date('0004-01-02')
+        expected.setUTCMinutes(new Date().getTimezoneOffset())
+        expect(pd.toDate()).toEqual(expected)
+      })
+
+      test('correctly updates the year when year becomes less than 100', () => {
+        const pd = new PartialDate('01/02/2020', 'MM/dd/YYYY')
+        pd.setYear(38)
+        let expected = new Date('0038-01-02')
+        expected.setUTCMinutes(new Date().getTimezoneOffset())
+        expect(pd.toDate()).toEqual(expected)
+      })
     })
 
     describe('#parse()', () => {
