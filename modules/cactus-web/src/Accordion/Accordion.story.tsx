@@ -67,25 +67,25 @@ const ContentBlocks = ({ number }: { number: number }) => {
 
 storiesOf('Accordion', module)
   .add('Basic Usage', () => (
-    <div style={{ width: '312px' }}>
+    <Box width="312px">
       <Accordion>
         <Accordion.Header>{text('header', 'Accordion')}</Accordion.Header>
         <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
       </Accordion>
-    </div>
+    </Box>
   ))
   .add('Long', () => (
-    <div style={{ width: '960px' }}>
+    <Box width="960px">
       <Accordion>
         <Accordion.Header>{text('header', 'Accordion')}</Accordion.Header>
         <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
       </Accordion>
-    </div>
+    </Box>
   ))
   .add(
     'Provider',
     () => (
-      <div style={{ width: '312px' }}>
+      <Box width="312px">
         <Accordion.Provider maxOpen={number('maxOpen', 1)}>
           <Accordion>
             <Accordion.Header>{text('header 1', 'Accordion 1')}</Accordion.Header>
@@ -124,7 +124,7 @@ storiesOf('Accordion', module)
             </Accordion.Body>
           </Accordion>
         </Accordion.Provider>
-      </div>
+      </Box>
     ),
     { cactus: { overrides: { height: '150vh' } } }
   )
@@ -173,7 +173,7 @@ storiesOf('Accordion', module)
     </ContentManager>
   ))
   .add('With Open Initialization', () => (
-    <div style={{ width: '312px' }}>
+    <Box width="312px">
       <Accordion.Provider maxOpen={number('maxOpen', 2)}>
         <Accordion defaultOpen>
           <Accordion.Header>{text('header 1', 'Accordion 1')}</Accordion.Header>
@@ -194,5 +194,35 @@ storiesOf('Accordion', module)
           </Accordion.Body>
         </Accordion>
       </Accordion.Provider>
-    </div>
+    </Box>
+  ))
+  .add('With Nested Accordions', () => (
+    <Box width="968px">
+      <Accordion>
+        <Accordion.Header>Parent</Accordion.Header>
+        <Accordion.Body mx={4}>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion>
+              <Accordion.Header>Child 1</Accordion.Header>
+              <Accordion.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris
+                eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa.
+                Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis
+                gravida ex, nec euismod augue aliquam vel.
+              </Accordion.Body>
+            </Accordion>
+
+            <Accordion>
+              <Accordion.Header>Child 2</Accordion.Header>
+              <Accordion.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris
+                eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa.
+                Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis
+                gravida ex, nec euismod augue aliquam vel.
+              </Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </Accordion.Body>
+      </Accordion>
+    </Box>
   ))

@@ -3,17 +3,10 @@ import * as React from 'react'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Accordion from './Accordion'
+import animationRender from '../../tests/helpers/animationRender'
 import KeyCodes from '../helpers/keyCodes'
 
-let _requestAnimationFrame = window.requestAnimationFrame
-
-beforeEach(() => {
-  _requestAnimationFrame = window.requestAnimationFrame
-  window.requestAnimationFrame = (cb: Function) => cb()
-})
-
 afterEach(() => {
-  window.requestAnimationFrame = _requestAnimationFrame
   cleanup()
 })
 
@@ -34,7 +27,7 @@ describe('component: Accordion', () => {
       expect(container).toMatchSnapshot()
     })
 
-    test('Should open Accordion when button is clicked', () => {
+    test('Should open Accordion when button is clicked', async () => {
       const { container } = render(
         <StyleProvider>
           <Accordion>
@@ -45,8 +38,9 @@ describe('component: Accordion', () => {
       )
 
       const toggleButton = container.querySelector('button') as HTMLButtonElement
-      act(() => {
+      await act(async () => {
         fireEvent.click(toggleButton)
+        await animationRender()
       })
       expect(container).toHaveTextContent('Test Body')
     })
@@ -63,10 +57,42 @@ describe('component: Accordion', () => {
 
       expect(container).toHaveTextContent('Test Body')
     })
+
+    test('should support nested accordions', async () => {
+      const { container, getByTestId } = render(
+        <StyleProvider>
+          <Accordion data-testid="parent">
+            <Accordion.Header>Parent</Accordion.Header>
+            <Accordion.Body>
+              <Accordion data-testid="child">
+                <Accordion.Header>Child</Accordion.Header>
+                <Accordion.Body>Child Content</Accordion.Body>
+              </Accordion>
+            </Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      const parentAccordion = getByTestId('parent')
+      const parentButton = parentAccordion.querySelector('button') as HTMLElement
+      await act(async () => {
+        fireEvent.click(parentButton)
+        await animationRender()
+      })
+      expect(container).toHaveTextContent('Child')
+
+      const childAccordion = getByTestId('child')
+      const childButton = childAccordion.querySelector('button') as HTMLElement
+      await act(async () => {
+        fireEvent.click(childButton)
+        await animationRender()
+      })
+      expect(container).toHaveTextContent('Child Content')
+    })
   })
 
   describe('Provider', () => {
-    test('Should manage Accordion state', () => {
+    test('Should manage Accordion state', async () => {
       const { container } = render(
         <StyleProvider>
           <Accordion.Provider>
@@ -79,13 +105,14 @@ describe('component: Accordion', () => {
       )
 
       const toggleButton = container.querySelector('button') as HTMLButtonElement
-      act(() => {
+      await act(async () => {
         fireEvent.click(toggleButton)
+        await animationRender()
       })
       expect(container).toHaveTextContent('Test Body')
     })
 
-    test('Should close one Accordion when another opens', () => {
+    test('Should close one Accordion when another opens', async () => {
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider>
@@ -104,24 +131,25 @@ describe('component: Accordion', () => {
       const a1Accordion = getByTestId('A1')
       const a1Button = a1Accordion.querySelector('button') as HTMLButtonElement
       const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
-      act(() => {
+      await act(async () => {
         fireEvent.click(a1Button)
+        await animationRender()
       })
       expect(container).toHaveTextContent('Should show first and not second')
       expect(container).not.toHaveTextContent('Should show second and not first')
 
-      act(() => {
+      await act(async () => {
         fireEvent.click(a2Button)
-      })
-      act(() => {
+        await animationRender()
         // @ts-ignore
         fireEvent.transitionEnd(a1Accordion.childNodes[1])
+        await animationRender()
       })
       expect(container).toHaveTextContent('Should show second and not first')
       expect(container).not.toHaveTextContent('Should show first and not second')
     })
 
-    test('Should allow two Accordions to be open at the same time', () => {
+    test('Should allow two Accordions to be open at the same time', async () => {
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -139,14 +167,16 @@ describe('component: Accordion', () => {
 
       const a1Button = getByTestId('A1').querySelector('button') as HTMLButtonElement
       const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
-      act(() => {
+      await act(async () => {
         fireEvent.click(a1Button)
+        await animationRender()
       })
       expect(container).toHaveTextContent('Should show A1')
       expect(container).not.toHaveTextContent('Should show A2')
 
-      act(() => {
+      await act(async () => {
         fireEvent.click(a2Button)
+        await animationRender()
       })
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
