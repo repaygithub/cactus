@@ -1,19 +1,12 @@
 import * as React from 'react'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import animationRender from '../../tests/helpers/animationRender'
 import KeyCodes from '../helpers/keyCodes'
 import Select from './Select'
 import StyleProvider from '../StyleProvider/StyleProvider'
 import userEvent from '@testing-library/user-event'
 
 afterEach(cleanup)
-
-function animationRender() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      window.requestAnimationFrame(resolve)
-    }, 0)
-  })
-}
 
 function getActiveValue(): string {
   // @ts-ignore
