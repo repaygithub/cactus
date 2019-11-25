@@ -57,6 +57,13 @@ type DateInputPhrasesType = {
   ariaDisabledDate: (date: string) => string
 }
 
+/**
+ * implemented to account for Firefox type=number removing leading and trailing zeros
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1005603
+ */
+const IS_FIREFOX = typeof window !== 'undefined' && window.navigator.userAgent.match(/firefox/i)
+const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
+
 const portalStyleOptions = { offset: 8 }
 const noop = function() {}
 const ALLOW_DEFAULT = ['Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
@@ -232,6 +239,7 @@ const InputWrapper = styled.div`
 
   > ${LiteralPunctuation} {
     margin-left: 0;
+    ${IS_FIREFOX && 'align-self: flex-end'}
   }
 
   input {
@@ -244,6 +252,11 @@ const InputWrapper = styled.div`
     // hides cursor
     color: transparent;
     text-shadow: 0 0 0 ${p => p.theme.colors.darkestContrast};
+
+    // hides selection
+    &::selection {
+      background: transparent;
+    }
 
     // hides toggle "spin" buttons on type=number
     appearance: textfield;
@@ -835,6 +848,21 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
+  handleInputCapture = (event: React.CompositionEvent<HTMLDivElement>) => {
+    const target = event.target
+    let data = event.data || event.nativeEvent.data
+    if (
+      this._inputWrapper.current !== null &&
+      isOwnInput(target, this._inputWrapper.current) &&
+      !event.defaultPrevented &&
+      data
+    ) {
+      data = String(data).substr(-1)
+      let token = target.dataset.token as FormatTokenType
+      this.handleUpdate(token, 'Key', data)
+    }
+  }
+
   handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
     const { relatedTarget } = event
     if (this._isOutside(relatedTarget)) {
@@ -1344,6 +1372,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           aria-describedby={ariaDescribedBy}
           aria-labelledby={ariaLabelledBy}
           onKeyDownCapture={this.handleKeydownCapture}
+          onInputCapture={this.handleInputCapture}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           onClick={this.handleClick}
@@ -1367,7 +1396,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               return (
                 <input
                   key={key}
-                  type={token === 'aa' ? 'text' : 'number'}
+                  type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
                   id={inputId}
                   data-token={token}
                   aria-label={getInputLabel(token, phrases)}
