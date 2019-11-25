@@ -1,11 +1,13 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
+import { assignRef } from '@reach/utils'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { NavigationChevronDown, NavigationChevronLeft } from '@repay/cactus-icons'
 import { omitMargins } from '../helpers/omit'
 import KeyCodes from '../helpers/keyCodes'
 import PropTypes from 'prop-types'
+import Rect from '@reach/rect'
 import styled, { StyledComponentBase } from 'styled-components'
 import useId from '../helpers/useId'
 
@@ -21,7 +23,8 @@ interface AccordionHeaderProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {}
 
 interface AccordionBodyProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+  extends MarginProps,
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 interface AccordionContext {
   isOpen: boolean
@@ -186,7 +189,7 @@ const getDuration = (delta: number) => Math.min(Math.max(Math.abs(delta / 2) + 1
 type AnimationStateType = 'open' | 'animating' | 'closed'
 
 const AccordionBodyBase = (props: AccordionBodyProps) => {
-  const { className, children, ...rest } = props
+  const { className, children, ...restProps } = props
   const { isOpen, bodyId, headerId } = useContext(AccordionContext)
   const previousIsOpen = useRef(isOpen)
   const [state, setState] = useState<AnimationStateType>(isOpen ? 'open' : 'closed')
@@ -194,17 +197,21 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
   const [height, setHeight] = useState(0)
 
   useEffect(() => {
+    let isSubscribed = true
     window.requestAnimationFrame(() => {
-      if (previousIsOpen.current !== isOpen) {
+      if (previousIsOpen.current !== isOpen && isSubscribed) {
         setState('animating')
       }
       previousIsOpen.current = isOpen
 
       const currentHeight = getHeight(innerRef.current)
-      if (currentHeight !== height) {
+      if (currentHeight !== height && isSubscribed) {
         setHeight(currentHeight)
       }
     })
+    return () => {
+      isSubscribed = false
+    }
   })
 
   const handleTransitionEnd = useCallback(
@@ -218,8 +225,15 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
     [setState]
   )
 
+  const handleRectChange = (rect: DOMRect) => {
+    if (rect.height !== height) {
+      setHeight(rect.height)
+    }
+  }
+
   const outerHeight = (isOpen && state === 'animating') || state === 'open' ? height : 0
   const transitionDuration = state === 'animating' ? getDuration(getHeight(innerRef.current)) : 0
+  const rest = omitMargins(restProps, 'width', 'maxWidth')
   return state !== 'closed' ? (
     <div
       {...rest}
@@ -234,7 +248,15 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
       role="region"
       aria-labelledby={headerId}
     >
-      <AccordionBodyInner ref={innerRef}>{children}</AccordionBodyInner>
+      <Rect observe={state === 'open'} onChange={handleRectChange}>
+        {({ ref }) => {
+          const mergeRefs = (n: HTMLDivElement | null) => {
+            innerRef.current = n
+            assignRef(ref, n)
+          }
+          return <AccordionBodyInner ref={mergeRefs}>{children}</AccordionBodyInner>
+        }}
+      </Rect>
     </div>
   ) : null
 }
@@ -243,6 +265,7 @@ export const AccordionBody = styled(AccordionBodyBase)`
   box-sizing: border-box;
   overflow: hidden;
   transition: all 200ms ease-in;
+  ${margin}
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({
