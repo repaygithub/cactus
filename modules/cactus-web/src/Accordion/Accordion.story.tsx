@@ -196,3 +196,33 @@ storiesOf('Accordion', module)
       </Accordion.Provider>
     </div>
   ))
+  .add('With Nested Accordions', () => (
+    <div style={{ width: '968px' }}>
+      <Accordion>
+        <Accordion.Header>Parent</Accordion.Header>
+        <Accordion.Body mx={4}>
+          <Accordion.Provider maxOpen={2}>
+            <Accordion>
+              <Accordion.Header>Child 1</Accordion.Header>
+              <Accordion.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris
+                eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa.
+                Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis
+                gravida ex, nec euismod augue aliquam vel.
+              </Accordion.Body>
+            </Accordion>
+
+            <Accordion>
+              <Accordion.Header>Child 2</Accordion.Header>
+              <Accordion.Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris
+                eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa.
+                Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis
+                gravida ex, nec euismod augue aliquam vel.
+              </Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </Accordion.Body>
+      </Accordion>
+    </div>
+  ))
