@@ -1,5 +1,14 @@
 # Changelog
 
+## [@repay/cactus-web@v0.6.2](https://github.com/repaygithub/cactus/commit/2802e630763539c7a8a90ce107a00b08ca3745cf)
+
+- fix(cactus-web): Date objects to have correct year when less than 100 (#186) [c239a3a](https://github.com/repaygithub/cactus/commit/c239a3a0e8353628cdd5f2853f0312806026a497)
+- fix(cactus-web): Handle nested accordions [a2c15b4](https://github.com/repaygithub/cactus/commit/a2c15b4255cc0f839398ae3d479d213da734c718)
+- chore(cactus-web): Swap divs for Boxes in accordion stories [abe4d28](https://github.com/repaygithub/cactus/commit/abe4d289f26b81b237e3e8b3a9b3d11e9c705638)
+- chore(cactus-web): Add nested accordion story [1e87d3b](https://github.com/repaygithub/cactus/commit/1e87d3bf1e8d2a9d1a72e7f5bba31284290fd175)
+- fix(cactus-web): Handle nested accordions [4cda52c](https://github.com/repaygithub/cactus/commit/4cda52c8d9cab097e494b27067faa6db02f8f54c)
+- chore(cactus-web): update changelog [4499ac4](https://github.com/repaygithub/cactus/commit/4499ac4163ba0566137437780b6db32838b01f45)
+
 ## [@repay/cactus-web@v0.6.1](https://github.com/repaygithub/cactus/commit/65eb1246d476a78753ba6c4e1d73a738c45290ee)
 
 - fix(cactus-web): account for firefox specfic text alignments [3b56da0](https://github.com/repaygithub/cactus/commit/3b56da0e1e1edf951eed76dccee970865a3f87cb)
