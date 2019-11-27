@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { actions } from '@storybook/addon-actions'
+import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import { text } from '@storybook/addon-knobs'
 import DateInput from './DateInput'
 import FormHandler from '../storySupport/FormHandler'
 
@@ -24,6 +24,7 @@ storiesOf('DateInput', module)
           <DateInput
             id="date-input-1"
             name={text('name', 'date-input')}
+            type={select('type', ['date', 'datetime', 'time'], 'date')}
             value={value}
             onChange={onChange}
           />
