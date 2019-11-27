@@ -1,3 +1,4 @@
+export { AccessibleField, useAccessibleField } from './AccessibleField/AccessibleField'
 export { Accordion } from './Accordion/Accordion'
 export { Alert } from './Alert/Alert'
 export { Avatar } from './Avatar/Avatar'

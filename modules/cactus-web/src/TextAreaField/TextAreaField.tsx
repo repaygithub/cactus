@@ -1,17 +1,13 @@
-import React, { useRef } from 'react'
+import React from 'react'
 
+import { AccessibleField } from '../AccessibleField/AccessibleField'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { margin, MarginProps } from 'styled-system'
 import { omitMargins } from '../helpers/omit'
-import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
-import Label from '../Label/Label'
 import PropTypes from 'prop-types'
-import StatusMessage from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
-import TextArea, { Status, TextAreaProps } from '../TextArea/TextArea'
-import Tooltip from '../Tooltip/Tooltip'
-import useId from '../helpers/useId'
+import TextArea, { TextAreaProps } from '../TextArea/TextArea'
 
 interface TextAreaFieldProps
   extends MarginProps,
@@ -45,25 +41,6 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
     ...textAreaProps
   } = omitMargins(props) as Omit<TextAreaFieldProps, keyof MarginProps>
 
-  const ref = useRef<HTMLDivElement | null>(null)
-  let containerWidth = undefined
-  if (ref.current) {
-    containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
-  }
-
-  let status: Status | null = null
-  if (success && !warning && !error) {
-    status = 'success'
-  } else if (warning && !success && !error) {
-    status = 'warning'
-  } else if (error && !success && !warning) {
-    status = 'error'
-  }
-
-  const textAreaId = useId(id)
-  const statusId = status ? `${textAreaId}-status` : ''
-  const tipId = tooltip ? `${textAreaId}-tip` : ''
-
   const handleChange = React.useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (typeof onChange === 'function') {
@@ -83,62 +60,37 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
   }
 
   return (
-    <FieldWrapper className={className} ref={ref}>
-      <Label htmlFor={textAreaId} {...labelProps}>
-        {label}
-      </Label>
-      {tooltip && <Tooltip label={tooltip} maxWidth={containerWidth} />}
-      <TextArea
-        id={textAreaId}
-        width="100%"
-        status={status}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        aria-describedby={`${tipId} ${statusId}`}
-        name={name}
-        {...textAreaProps}
-      />
-      {status === 'success' && (
-        <StatusMessage status="success" id={statusId}>
-          <span>{success}</span>
-        </StatusMessage>
+    <AccessibleField
+      id={id}
+      name={name}
+      label={label}
+      labelProps={labelProps}
+      className={className}
+      success={success}
+      warning={warning}
+      error={error}
+      tooltip={tooltip}
+    >
+      {({ fieldId, status, ariaDescribedBy }) => (
+        <TextArea
+          id={fieldId}
+          width="100%"
+          status={status}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          aria-describedby={ariaDescribedBy}
+          name={name}
+          {...textAreaProps}
+        />
       )}
-      {status === 'warning' && (
-        <StatusMessage status="warning" id={statusId}>
-          <span>{warning}</span>
-        </StatusMessage>
-      )}
-      {status === 'error' && (
-        <StatusMessage status="error" id={statusId}>
-          <span>{error}</span>
-        </StatusMessage>
-      )}
-    </FieldWrapper>
+    </AccessibleField>
   )
 }
 
 export const TextAreaField = styled(TextAreaFieldBase)`
   position: relative;
   width: ${p => p.width || 'auto'};
-
-  ${Label} {
-    position: relative;
-    bottom: 4px;
-    padding-left: 16px;
-  }
-
-  ${Tooltip} {
-    position: absolute;
-    right: 8px
-    font-size: 16px;
-  }
-
-  ${StatusMessage} {
-    margin-left: 16px;
-    margin-top: 4px;
-  }
-
   ${margin}
 `
 

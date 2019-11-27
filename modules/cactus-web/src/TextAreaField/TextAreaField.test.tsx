@@ -1,10 +1,8 @@
 import * as React from 'react'
-import { cleanup, render } from '@testing-library/react'
-import { StyleProvider } from '@repay/cactus-web'
+import { render } from '@testing-library/react'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextAreaField from './TextAreaField'
 import userEvent from '@testing-library/user-event'
-
-afterEach(cleanup)
 
 describe('component: TextAreaField', () => {
   test('should render a TextAreaField', () => {
@@ -23,7 +21,7 @@ describe('component: TextAreaField', () => {
   })
 
   test('should render a disabled TextAreaField', () => {
-    const { container } = render(
+    const { getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
           id="boolest"
@@ -35,11 +33,11 @@ describe('component: TextAreaField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('boolest')).toBeDisabled()
   })
 
   test('should render a TextAreaField with a placeholder', () => {
-    const { container } = render(
+    const { getByPlaceholderText } = render(
       <StyleProvider>
         <TextAreaField
           id="boolest"
@@ -51,11 +49,11 @@ describe('component: TextAreaField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByPlaceholderText('no question about it')).toBeInTheDocument()
   })
 
   test('should render a success TextAreaField', () => {
-    const { container } = render(
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
           id="darts"
@@ -67,11 +65,13 @@ describe('component: TextAreaField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('master of darts').getAttribute('aria-describedby')).toContain(
+      getByText('undoubtedly').id
+    )
   })
 
   test('should render a warning TextAreaField', () => {
-    const { container } = render(
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
           id="darts"
@@ -83,11 +83,13 @@ describe('component: TextAreaField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('master of darts').getAttribute('aria-describedby')).toContain(
+      getByText('undoubtedly').id
+    )
   })
 
   test('should render an error TextAreaField', () => {
-    const { container } = render(
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
           id="darts"
@@ -99,7 +101,9 @@ describe('component: TextAreaField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('master of darts').getAttribute('aria-describedby')).toContain(
+      getByText('undoubtedly').id
+    )
   })
 
   test('should support margin space props', () => {
@@ -115,7 +119,7 @@ describe('component: TextAreaField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(container.firstElementChild).toHaveStyle('margin-left: 8px')
   })
 
   test('should trigger onChange handler', () => {

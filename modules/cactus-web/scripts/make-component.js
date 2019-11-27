@@ -160,12 +160,14 @@ TODO - brief description
 
 \`\`\`jsx
 import React from 'react'
+import { ${componentName} } from '@repay/cactus-web'
 
 <${componentName} />
 \`\`\`
 
 \`\`\`tsx
 import * as React from 'react'
+import { ${componentName} } from '@repay/cactus-web'
 
 <${componentName} />
 \`\`\`

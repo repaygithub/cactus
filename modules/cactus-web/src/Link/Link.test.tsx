@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cleanup, render } from '@testing-library/react'
-import { StyleProvider } from '@repay/cactus-web'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Link from './Link'
 
 afterEach(cleanup)

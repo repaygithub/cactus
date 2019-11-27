@@ -4,13 +4,10 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
 import DateInput from '../DateInput/DateInput'
-import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
-import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
-import Tooltip from '../Tooltip/Tooltip'
-import useId from '../helpers/useId'
+import AccessibleField from '../AccessibleField/AccessibleField'
 
 interface DateInputFieldProps
   extends MarginProps,
@@ -45,78 +42,38 @@ function DateInputFieldBase(props: DateInputFieldProps) {
     ...rest
   } = omitMargins(props) as Omit<DateInputFieldProps, keyof MarginProps>
 
-  let status: Status | undefined
-  let statusContent: string | undefined
-  if (error) {
-    status = 'error'
-    statusContent = error
-  } else if (warning) {
-    status = 'warning'
-    statusContent = warning
-  } else if (success) {
-    status = 'success'
-    statusContent = success
-  }
-
-  const ref = React.useRef<HTMLDivElement | null>(null)
-  let containerWidth = undefined
-  if (ref.current) {
-    containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
-  }
-
-  const inputId = useId(id, name)
-  const labelId = `${inputId}-label`
-  const statusId = status ? `${inputId}-status` : ''
-  const tipId = tooltip ? `${inputId}-tip` : ''
-
   return (
-    <FieldWrapper className={className} ref={ref}>
-      <Label {...labelProps} id={labelId} htmlFor={inputId}>
-        {label}
-      </Label>
-      {tooltip && <Tooltip label={tooltip} id={tipId} maxWidth={containerWidth} />}
-      <DateInput
-        name={name}
-        id={inputId}
-        {...rest}
-        status={status}
-        aria-labeledby={labelId}
-        aria-describedby={`${tipId} ${statusId}`}
-      />
-      {typeof status !== 'undefined' && (
-        <StatusMessage status={status} id={statusId}>
-          {statusContent}
-        </StatusMessage>
+    <AccessibleField
+      className={className}
+      id={id}
+      name={name}
+      label={label}
+      labelProps={labelProps}
+      tooltip={tooltip}
+      error={error}
+      warning={warning}
+      success={success}
+    >
+      {({ fieldId, status, labelId, ariaDescribedBy }) => (
+        <DateInput
+          {...rest}
+          name={name}
+          id={fieldId}
+          status={status}
+          aria-labelledby={labelId}
+          aria-describedby={ariaDescribedBy}
+        />
       )}
-    </FieldWrapper>
+    </AccessibleField>
   )
 }
 
 export const DateInputField = styled(DateInputFieldBase)`
-  position: relative;
   ${margin}
   ${width}
 
-  ${Label} {
-    box-sizing: border-box;
-    padding-left: 16px;
-    padding-right: 28px;
-  }
-
-  ${Tooltip}  {
-    position: absolute;
-    right: 8px
-    top: 2px;
-    font-size: 16px;
-  }
-
   ${DateInput} {
     width: 100%;
-  }
-
-  ${StatusMessage} {
-    margin-left: 16px;
-    margin-top: 4px;
   }
 `
 

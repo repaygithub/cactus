@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { cleanup, fireEvent, render } from '@testing-library/react'
-import { StyleProvider } from '@repay/cactus-web'
-import cactusTheme from '@repay/cactus-theme'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Card from './Card'
 
 afterEach(cleanup)

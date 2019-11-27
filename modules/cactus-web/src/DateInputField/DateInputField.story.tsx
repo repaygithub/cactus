@@ -12,6 +12,7 @@ storiesOf('DateInputField', module)
       label={text('label', 'Date Input Field')}
       name={text('name', 'date_input_field')}
       type={select('type?', dateInputTypes, 'date')}
+      width="350px"
     />
   ))
   .add('extended props', () => (

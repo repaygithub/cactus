@@ -1,0 +1,112 @@
+---
+name: AccessibleField
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import AccessibleField from './AccessibleField'
+
+# AccessibleField
+
+The `<AccessibleField />` is intendend as a wrapper with a single child which acts like an html input. This child must accept `id` and `aria-describedby` and place them on the actual input in order to be properly accessible.
+
+### How it looks
+
+<AccessibleField
+  label="Accessible Field"
+  tooltip="Additional messaging on what the field means or does and is accessible by default"
+>
+  <input status={undefined} />
+</AccessibleField>
+
+Here it is rendered with status messaging:
+
+<AccessibleField
+  label="Accessible Field"
+  warning="Here we have added a warning message which is rendered as a status and is accessibly tied to the provided child."
+>
+  <input style={{ minWidth: '300px' }} />
+</AccessibleField>
+
+## Best practices
+
+Ideally, the provided child will also accept a `name` and `status` -- `status` should change the look of the input based on the value and is defined as:
+
+```ts
+type Status = 'success' | 'warning' | 'error'
+```
+
+### Status message props
+
+When it comes to status messages, it can accept a status message as a string but will display only one message using the `error`, `warning`, or `success` in that order to determine which status takes priority. For example, if both `error` and `success` are provided, the field will display with `status="error"` and render the error message only.
+
+## Basic usage
+
+```jsx
+import React from 'react'
+import { AccessibleField } from '@repay/cactus-web'
+
+export default props => {
+  const { name, error, label, tooltip, className, ...rest } = props
+
+  return (
+    <AccessibleField
+      className={className}
+      name={name}
+      error={error}
+      label={label}
+      tooltip={tooltip}
+    >
+      <input {...rest} />
+    </AccessibleField>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={AccessibleField} />
+
+# `useAccessibleField` hook
+
+The `useAccessibleField` hook can receive the same props as an `AccessibleField` and will provide some properties to create the associations between an input, label, tooltip, and status message. This helps a screen reader know what information on the page is useful for the user to know when trying to fill this input.
+
+The example below uses all of the possible associations including an error and tooltip, however many fields won't have a tooltip and as such it is not necessary to render one. We are just ensuring that the id's exist in case they are needed.
+
+There is also a provided `labelId` in case the field refers to an element which is not ["labelable"](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Form_labelable): in this situation the labelId can be applied to the field using the `aria-labelledby` attribute in order to create the necessary association.
+
+```jsx
+import * as React from 'react'
+import { useAccessibleField } from '@repay/cactus-web'
+import { ErrorMessage, CustomFieldWrapper } from './some/internal/source'
+
+export default props => {
+  const {
+    fieldId,
+    ariaDescribedBy,
+    labelId,
+    name,
+    statusId,
+    tooltipId,
+    status,
+    statusMessage,
+  } = useAccessibleField({ name: props.name, error: props.error })
+
+  return (
+    <CustomFieldWrapper>
+      <label id={labelId} htmlFor={fieldId}>
+        {props.label}
+      </label>
+      <small id={tooltipId}>{props.note}</small>
+      <input
+        id={fieldId}
+        name={name}
+        aria-describedby={ariaDescribedBy}
+        value={props.value}
+        onChange={props.onChange}
+      />
+      {status === 'error' && <ErrorMessage id={statusId}>{statusMessage}</ErrorMessage>}
+    </CustomFieldWrapper>
+  )
+}
+```
