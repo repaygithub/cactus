@@ -20,13 +20,13 @@ You can use a single Accordion by itself:
 
 ```jsx
 import React from 'react'
-import { Accordion } from '@repay/cactus-web'
+import { Accordion, Text } from '@repay/cactus-web'
 
 const SingleAccordion = props => {
   return (
     <Accordion>
       <Accordion.Header>
-        My Header
+        <Text as="h3">My Header</Text>
       </Accordion.Header>
       <Accordion.Body>
         Accordion Content Goes Here
@@ -42,14 +42,14 @@ When using `Accordion.Provider`, you can set the maximum number of Accordions th
 
 ```jsx
 import React from 'react'
-import { Accordion } from '@repay/cactus-web'
+import { Accordion, Text } from '@repay/cactus-web'
 
 const MultipleAccordions = props => {
   return (
     <Accordion.Provider maxOpen={2}>
       <Accordion>
         <Accordion.Header>
-          My Header 1
+          <Text as="h3">My Header 1</Text>
         </Accordion.Header>
         <Accordion.Body>
           Accordion Content Goes Here
@@ -57,7 +57,7 @@ const MultipleAccordions = props => {
       </Accordion>
       <Accordion>
         <Accordion.Header>
-          My Header 2
+          <Text as="h3">My Header 2</Text>
         </Accordion.Header>
         <Accordion.Body>
           Accordion Content Goes Here
@@ -65,7 +65,7 @@ const MultipleAccordions = props => {
       </Accordion>
       <Accordion>
         <Accordion.Header>
-          My Header 3
+          <Text as="h3">>My Header 3</Text
         </Accordion.Header>
         <Accordion.Body>
           Accordion Content Goes Here

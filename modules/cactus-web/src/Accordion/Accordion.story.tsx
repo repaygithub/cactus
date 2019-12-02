@@ -69,7 +69,9 @@ storiesOf('Accordion', module)
   .add('Basic Usage', () => (
     <Box width="312px">
       <Accordion>
-        <Accordion.Header>{text('header', 'Accordion')}</Accordion.Header>
+        <Accordion.Header>
+          <Text as="h3">{text('header', 'Accordion')}</Text>
+        </Accordion.Header>
         <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
       </Accordion>
     </Box>
@@ -77,7 +79,9 @@ storiesOf('Accordion', module)
   .add('Long', () => (
     <Box width="960px">
       <Accordion>
-        <Accordion.Header>{text('header', 'Accordion')}</Accordion.Header>
+        <Accordion.Header>
+          <Text as="h3">{text('header', 'Accordion')}</Text>
+        </Accordion.Header>
         <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
       </Accordion>
     </Box>
@@ -88,7 +92,9 @@ storiesOf('Accordion', module)
       <Box width="312px">
         <Accordion.Provider maxOpen={number('maxOpen', 1)}>
           <Accordion>
-            <Accordion.Header>{text('header 1', 'Accordion 1')}</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
+            </Accordion.Header>
             <Accordion.Body>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
               tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
@@ -97,7 +103,9 @@ storiesOf('Accordion', module)
             </Accordion.Body>
           </Accordion>
           <Accordion>
-            <Accordion.Header>{text('header 2', 'Accordion 2')}</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
+            </Accordion.Header>
             <Accordion.Body>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
               tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
@@ -106,7 +114,9 @@ storiesOf('Accordion', module)
             </Accordion.Body>
           </Accordion>
           <Accordion>
-            <Accordion.Header>{text('header 3', 'Accordion 3')}</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">{text('header 3', 'Accordion 3')}</Text>
+            </Accordion.Header>
             <Accordion.Body>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
               tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
@@ -115,7 +125,9 @@ storiesOf('Accordion', module)
             </Accordion.Body>
           </Accordion>
           <Accordion>
-            <Accordion.Header>{text('header 4', 'Accordion 4')}</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">{text('header 4', 'Accordion 4')}</Text>
+            </Accordion.Header>
             <Accordion.Body>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
               tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
@@ -141,7 +153,9 @@ storiesOf('Accordion', module)
                   let group = index
                   blocks.push(
                     <Accordion key={group}>
-                      <Accordion.Header>{group} Accordion</Accordion.Header>
+                      <Accordion.Header>
+                        <Text as="h3">{group} Accordion</Text>
+                      </Accordion.Header>
                       <Accordion.Body>
                         {(!state[group] || state[group] < 10) && (
                           <Text>
@@ -176,7 +190,9 @@ storiesOf('Accordion', module)
     <Box width="312px">
       <Accordion.Provider maxOpen={number('maxOpen', 2)}>
         <Accordion defaultOpen>
-          <Accordion.Header>{text('header 1', 'Accordion 1')}</Accordion.Header>
+          <Accordion.Header>
+            <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
+          </Accordion.Header>
           <Accordion.Body>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
             tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
@@ -185,7 +201,9 @@ storiesOf('Accordion', module)
           </Accordion.Body>
         </Accordion>
         <Accordion defaultOpen>
-          <Accordion.Header>{text('header 2', 'Accordion 2')}</Accordion.Header>
+          <Accordion.Header>
+            <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
+          </Accordion.Header>
           <Accordion.Body>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
             tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
@@ -194,35 +212,5 @@ storiesOf('Accordion', module)
           </Accordion.Body>
         </Accordion>
       </Accordion.Provider>
-    </Box>
-  ))
-  .add('With Nested Accordions', () => (
-    <Box width="968px">
-      <Accordion>
-        <Accordion.Header>Parent</Accordion.Header>
-        <Accordion.Body mx={4}>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion>
-              <Accordion.Header>Child 1</Accordion.Header>
-              <Accordion.Body>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris
-                eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa.
-                Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis
-                gravida ex, nec euismod augue aliquam vel.
-              </Accordion.Body>
-            </Accordion>
-
-            <Accordion>
-              <Accordion.Header>Child 2</Accordion.Header>
-              <Accordion.Body>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris
-                eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa.
-                Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis
-                gravida ex, nec euismod augue aliquam vel.
-              </Accordion.Body>
-            </Accordion>
-          </Accordion.Provider>
-        </Accordion.Body>
-      </Accordion>
     </Box>
   ))
