@@ -99,11 +99,11 @@ class Actions {
   }
 
   focusAccordionHeaderByText = async (headerText: string) => {
-    const accordionSpan = await getByText(this.doc, headerText)
-    const accordionHeader = (await accordionSpan.evaluateHandle(
-      as => as.parentElement
+    const accordionHeader = await getByText(this.doc, headerText)
+    const accordionHeaderButton = (await accordionHeader.evaluateHandle(as =>
+      as.parentElement.querySelector('button')
     )) as ElementHandle<Element>
-    await accordionHeader.focus()
+    await accordionHeaderButton.focus()
   }
 
   pressKey = async (key: string) => {

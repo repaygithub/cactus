@@ -120,7 +120,9 @@ const Faq = (props: FaqProps) => {
             <Accordion.Provider maxOpen={2}>
               {accordions.map((accordion, index) => (
                 <Accordion key={index}>
-                  <Accordion.Header>{accordion.header}</Accordion.Header>
+                  <Accordion.Header>
+                    <Text as="h3">{accordion.header}</Text>
+                  </Accordion.Header>
                   <Accordion.Body>{accordion.body}</Accordion.Body>
                 </Accordion>
               ))}
