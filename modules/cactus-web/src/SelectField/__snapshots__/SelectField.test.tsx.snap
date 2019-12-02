@@ -1,9 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: SelectField minimal snapshot 1`] = `
+.c3 + .c2 {
+  margin-top: 16px;
+}
+
+.c5 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
 .c12 {
   font-size: 8px;
   vertical-align: middle;
+}
+
+.c1 {
+  position: relative;
+}
+
+.c1 .c4 {
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c1 .c13 {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  font-size: 16px;
+}
+
+.c1 .c14 {
+  display: block;
+  margin-left: 16px;
+  margin-top: 4px;
 }
 
 .c10 {
@@ -70,41 +105,6 @@ exports[`component: SelectField minimal snapshot 1`] = `
 
 .c7 {
   max-width: 100%;
-}
-
-.c3 + .c2 {
-  margin-top: 16px;
-}
-
-.c5 {
-  font-size: 18px;
-  line-height: 28px;
-  font-weight: 600;
-  color: hsl(200,10%,20%);
-}
-
-.c1 {
-  position: relative;
-}
-
-.c1 .c4 {
-  display: block;
-  box-sizing: border-box;
-  padding-left: 16px;
-  padding-right: 28px;
-}
-
-.c1 .c14 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
-  font-size: 16px;
-}
-
-.c1 .c13 {
-  display: block;
-  margin-left: 16px;
-  margin-top: 4px;
 }
 
 .c0 {

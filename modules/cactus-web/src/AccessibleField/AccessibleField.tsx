@@ -42,7 +42,7 @@ export function useAccessibleField({
   error,
   warning,
   success,
-}: AccessibleFieldProps): AccessibleProps {
+}: Partial<AccessibleFieldProps>): AccessibleProps {
   const fieldId = useId(id, name)
   const labelId = `${fieldId}-label`
   const statusId = `${fieldId}-status`
@@ -66,7 +66,7 @@ export function useAccessibleField({
     ariaDescribedBy: `${tooltipId} ${statusId}`,
     labelId,
     statusId,
-    name,
+    name: name || '',
     status,
     statusMessage,
     tooltipId,
