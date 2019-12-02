@@ -3,11 +3,11 @@ import React from 'react'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
+import AccessibleField from '../AccessibleField/AccessibleField'
 import DateInput from '../DateInput/DateInput'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import AccessibleField from '../AccessibleField/AccessibleField'
 
 interface DateInputFieldProps
   extends MarginProps,

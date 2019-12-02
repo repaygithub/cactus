@@ -59,7 +59,7 @@ describe('component: SelectField', () => {
       </StyleProvider>
     )
 
-    expect(getByLabelText("Requires a label")).toBeDisabled()
+    expect(getByLabelText('Requires a label')).toBeDisabled()
   })
 
   test('should render an attached label', () => {

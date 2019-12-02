@@ -47,4 +47,3 @@ describe('component: AccessibleField', () => {
     )
   })
 })
-

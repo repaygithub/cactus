@@ -3,10 +3,10 @@ import React from 'react'
 import { FieldOnChangeHandler, Omit } from '../types'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import { omitMargins } from '../helpers/omit'
+import AccessibleField from '../AccessibleField/AccessibleField'
 import PropTypes from 'prop-types'
 import Select, { OptionType, SelectProps, SelectValueType } from '../Select/Select'
 import styled from 'styled-components'
-import AccessibleField from '../AccessibleField/AccessibleField'
 
 interface SelectFieldProps
   extends MarginProps,

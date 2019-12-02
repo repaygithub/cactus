@@ -1,7 +1,7 @@
 import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import { Label } from '../Label/Label'
-import { Tooltip } from '../Tooltip/Tooltip'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { Tooltip } from '../Tooltip/Tooltip'
 import PropTypes from 'prop-types'
 import React from 'react'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
