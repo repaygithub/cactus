@@ -132,7 +132,11 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
         aria-controls={bodyId}
         aria-labelledby={headerId}
       >
-        {isOpen ? <NavigationChevronDown /> : <NavigationChevronLeft />}
+        {isOpen ? (
+          <NavigationChevronDown aria-hidden="true" />
+        ) : (
+          <NavigationChevronLeft aria-hidden="true" />
+        )}
       </IconButton>
     </div>
   )

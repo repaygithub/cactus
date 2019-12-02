@@ -112,6 +112,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
         variant="standard"
       >
         <svg
+          aria-hidden="true"
           class="c3"
           fill="currentcolor"
           height="1em"
