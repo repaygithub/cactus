@@ -17,13 +17,15 @@ describe('component: DateInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('accessible label points to month', () => {
-    const { getByLabelText } = render(
+  test('accessible label points to div[role=group] and month input', () => {
+    const { getAllByLabelText } = render(
       <StyleProvider>
         <DateInputField name="date_field" label="Date Field" />
       </StyleProvider>
     )
-    expect(getByLabelText('Date Field')).toHaveAttribute('aria-label', 'month')
+    const [input, group] = getAllByLabelText('Date Field')
+    expect(group).toHaveAttribute('role', 'group')
+    expect(input).toHaveAttribute('aria-label', 'month')
   })
 
   test('provides accessible tooltip', () => {

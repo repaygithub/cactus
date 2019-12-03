@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cleanup, fireEvent, render } from '@testing-library/react'
-import { StyleProvider } from '@repay/cactus-web'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import SelectField from './SelectField'
 
 afterEach(cleanup)
@@ -32,7 +32,7 @@ describe('component: SelectField', () => {
   })
 
   test('render with complex options', () => {
-    const { container } = render(
+    const { getByLabelText } = render(
       <StyleProvider>
         <SelectField
           label="Requires a label"
@@ -43,11 +43,11 @@ describe('component: SelectField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('Requires a label')).not.toBeNull()
   })
 
   test('should render a disabled SelectField', () => {
-    const { container } = render(
+    const { getByLabelText } = render(
       <StyleProvider>
         <SelectField
           label="Requires a label"
@@ -59,7 +59,7 @@ describe('component: SelectField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('Requires a label')).toBeDisabled()
   })
 
   test('should render an attached label', () => {
@@ -127,7 +127,6 @@ describe('component: SelectField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
     let statusEl = getByText(`You're GREAT!`) as HTMLElement
     let select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
@@ -146,7 +145,6 @@ describe('component: SelectField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
     let statusEl = getByText(`You got a ridiculous warning`) as HTMLElement
     let select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
@@ -165,14 +163,13 @@ describe('component: SelectField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
     let statusEl = getByText(`You've done this incorrectly`) as HTMLElement
     let select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
   })
 
   test('supports margin props', () => {
-    const { container, getByText, getByLabelText } = render(
+    const { container } = render(
       <StyleProvider>
         <SelectField
           label="Requires a label"
@@ -184,7 +181,7 @@ describe('component: SelectField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(container).not.toBeNull()
   })
 
   describe('should accept form event', () => {

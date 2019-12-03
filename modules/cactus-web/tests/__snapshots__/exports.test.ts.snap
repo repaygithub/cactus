@@ -2,6 +2,8 @@
 
 exports[`library exports should match previous exported names 1`] = `
 Array [
+  "AccessibleField",
+  "useAccessibleField",
   "Accordion",
   "Alert",
   "Avatar",
@@ -32,6 +34,7 @@ Array [
   "Select",
   "SelectField",
   "Spinner",
+  "StatusMessage",
   "StepAvatar",
   "StyleProvider",
   "Text",

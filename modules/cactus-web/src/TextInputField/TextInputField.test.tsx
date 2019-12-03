@@ -1,12 +1,9 @@
 import * as React from 'react'
 
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import cactusTheme from '@repay/cactus-theme'
 import TextInputField from './TextInputField'
 import userEvent from '@testing-library/user-event'
-
-afterEach(cleanup)
 
 describe('component: TextInputField', () => {
   test('should render a TextInputField', () => {
@@ -25,7 +22,7 @@ describe('component: TextInputField', () => {
   })
 
   test('should render a disabled TextInputField', () => {
-    const { container } = render(
+    const { getByLabelText } = render(
       <StyleProvider>
         <TextInputField
           id="trick"
@@ -37,11 +34,11 @@ describe('component: TextInputField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('Come on, type something')).toBeDisabled()
   })
 
   test('should render a TextInputField with a placeholder', () => {
-    const { container } = render(
+    const { getByPlaceholderText } = render(
       <StyleProvider>
         <TextInputField
           id="promise"
@@ -52,11 +49,11 @@ describe('component: TextInputField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByPlaceholderText(`I won't disable it again, promise`)).toBeInTheDocument()
   })
 
   test('should render a success TextInputField', () => {
-    const { container } = render(
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextInputField
           id="success"
@@ -67,11 +64,13 @@ describe('component: TextInputField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(
+      getByLabelText('No seriously, type something').getAttribute('aria-describedby')
+    ).toContain(getByText('Great! you typed something!').id)
   })
 
   test('should render a warning TextInputField', () => {
-    const { container } = render(
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextInputField
           id="warn"
@@ -82,11 +81,13 @@ describe('component: TextInputField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('Do it again').getAttribute('aria-describedby')).toContain(
+      getByText(`Really? That's all you got?`).id
+    )
   })
 
   test('should render an error TextInputField', () => {
-    const { container } = render(
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextInputField
           id="error"
@@ -97,7 +98,9 @@ describe('component: TextInputField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByLabelText('Try again').getAttribute('aria-describedby')).toContain(
+      getByText(`That's it, we're done here`).id
+    )
   })
 
   test('should support margin space props', () => {
@@ -112,7 +115,7 @@ describe('component: TextInputField', () => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(container.firstElementChild).toHaveStyle('margin: 8px')
   })
 
   test('should trigger onChange handler', () => {
