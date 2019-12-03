@@ -588,9 +588,9 @@ export class PartialDate implements FormatTokenMap {
 
   toDate(): Date {
     let date = new Date()
+    const modernOffset = date.getTimezoneOffset()
     date.setFullYear(this.getYear(), this.getMonth(), this.getDate())
-    date.setHours(this.getHours())
-    date.setUTCMinutes(this.getMinutes(), 0, 0)
+    date.setUTCHours(this.getHours(), this.getMinutes() + modernOffset, 0, 0)
     return date
   }
 
