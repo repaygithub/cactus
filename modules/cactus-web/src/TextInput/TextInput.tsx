@@ -47,15 +47,17 @@ const displayStatus = (props: TextInputProps) => {
   }
 }
 
-const TextInputBase = (props: TextInputProps) => {
-  const { className, ...rest } = omitMargins(props)
+const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
+  (props: TextInputProps, forwardRef) => {
+    const { className, ...rest } = omitMargins(props)
 
-  return (
-    <div className={className}>
-      <Input {...rest} />
-    </div>
-  )
-}
+    return (
+      <div className={className}>
+        <Input ref={forwardRef} {...rest} />
+      </div>
+    )
+  }
+)
 
 const Input = styled.input<InputProps>`
   box-sizing: border-box;
