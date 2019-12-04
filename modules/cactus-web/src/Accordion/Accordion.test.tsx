@@ -5,6 +5,7 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Accordion from './Accordion'
 import animationRender from '../../tests/helpers/animationRender'
 import KeyCodes from '../helpers/keyCodes'
+import Text from '../Text/Text'
 
 afterEach(() => {
   cleanup()
@@ -16,7 +17,9 @@ describe('component: Accordion', () => {
       const { container } = render(
         <StyleProvider>
           <Accordion id="accordion">
-            <Accordion.Header>Test Header</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
             <Accordion.Body>Test Body</Accordion.Body>
           </Accordion>
         </StyleProvider>
@@ -31,7 +34,9 @@ describe('component: Accordion', () => {
       const { container } = render(
         <StyleProvider>
           <Accordion>
-            <Accordion.Header>Test Header</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
             <Accordion.Body>Test Body</Accordion.Body>
           </Accordion>
         </StyleProvider>
@@ -49,7 +54,9 @@ describe('component: Accordion', () => {
       const { container } = render(
         <StyleProvider>
           <Accordion defaultOpen>
-            <Accordion.Header>Test Header</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
             <Accordion.Body>Test Body</Accordion.Body>
           </Accordion>
         </StyleProvider>
@@ -62,10 +69,14 @@ describe('component: Accordion', () => {
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion data-testid="parent">
-            <Accordion.Header>Parent</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">Parent</Text>
+            </Accordion.Header>
             <Accordion.Body>
               <Accordion data-testid="child">
-                <Accordion.Header>Child</Accordion.Header>
+                <Accordion.Header>
+                  <Text as="h4">Child</Text>
+                </Accordion.Header>
                 <Accordion.Body>Child Content</Accordion.Body>
               </Accordion>
             </Accordion.Body>
@@ -97,7 +108,9 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider>
             <Accordion>
-              <Accordion.Header>Test Header</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Test Header</Text>
+              </Accordion.Header>
               <Accordion.Body>Test Body</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -117,11 +130,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider>
             <Accordion data-testid="A1">
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>Should show first and not second</Accordion.Body>
             </Accordion>
             <Accordion data-testid="A2">
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>Should show second and not first</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -154,11 +171,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
             <Accordion data-testid="A1">
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>Should show A1</Accordion.Body>
             </Accordion>
             <Accordion data-testid="A2">
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>Should show A2</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -187,11 +208,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
             <Accordion defaultOpen>
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>Should show A1</Accordion.Body>
             </Accordion>
             <Accordion defaultOpen>
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>Should show A2</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -209,11 +234,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
             <Accordion data-testid="A1">
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>A1 Content</Accordion.Body>
             </Accordion>
             <Accordion data-testid="A2">
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>A2 Content</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -231,11 +260,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
             <Accordion data-testid="A1">
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>A1 Content</Accordion.Body>
             </Accordion>
             <Accordion data-testid="A2">
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>A2 Content</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -253,11 +286,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
             <Accordion data-testid="A1">
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>A1 Content</Accordion.Body>
             </Accordion>
             <Accordion data-testid="A2">
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>A2 Content</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -295,7 +332,9 @@ describe('component: Accordion', () => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion data-testid="Accordion">
-            <Accordion.Header>My Accordion</Accordion.Header>
+            <Accordion.Header>
+              <Text as="h3">My Accordion</Text>
+            </Accordion.Header>
             <Accordion.Body>My Accordion Content</Accordion.Body>
           </Accordion>
         </StyleProvider>
@@ -314,11 +353,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
             <Accordion data-testid="A1">
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>A1 Content</Accordion.Body>
             </Accordion>
             <Accordion data-testid="A2">
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>A2 Content</Accordion.Body>
             </Accordion>
           </Accordion.Provider>
@@ -337,11 +380,15 @@ describe('component: Accordion', () => {
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
             <Accordion data-testid="A1">
-              <Accordion.Header>Accordion 1</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
               <Accordion.Body>A1 Content</Accordion.Body>
             </Accordion>
             <Accordion data-testid="A2">
-              <Accordion.Header>Accordion 2</Accordion.Header>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
               <Accordion.Body>A2 Content</Accordion.Body>
             </Accordion>
           </Accordion.Provider>

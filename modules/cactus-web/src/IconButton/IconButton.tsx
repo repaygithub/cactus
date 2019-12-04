@@ -132,7 +132,30 @@ IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
   variant: PropTypes.oneOf(['standard', 'action', 'danger']),
   disabled: PropTypes.bool,
-  label: PropTypes.string.isRequired,
+  label: (props: IconButtonProps, propName: string, componentName: string) => {
+    if (!props.label && !props['aria-labelledby']) {
+      return new Error(
+        `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
+      )
+    } else if (props.label !== undefined && typeof props.label !== 'string') {
+      return new Error(
+        `Invalid prop 'label' of type '${typeof props.label}' supplied to '${componentName}', expected 'string'.`
+      )
+    }
+  },
+  'aria-labelledby': (props: IconButtonProps, propName: string, componentName: string) => {
+    if (!props['aria-labelledby'] && !props.label) {
+      return new Error(
+        `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
+      )
+    } else if (props['aria-labelledby'] && typeof props['aria-labelledby'] !== 'string') {
+      return new Error(
+        `Invalid prop 'aria-labelledby' of type '${typeof props[
+          'aria-labelledby'
+        ]}' supplied to '${componentName}', expected 'string'.`
+      )
+    }
+  },
   display: PropTypes.oneOf(['flex', 'inline-flex']),
   inverse: PropTypes.bool,
 }

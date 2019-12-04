@@ -5,6 +5,7 @@ import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { NavigationChevronDown, NavigationChevronLeft } from '@repay/cactus-icons'
 import { omitMargins } from '../helpers/omit'
+import IconButton from '../IconButton/IconButton'
 import KeyCodes from '../helpers/keyCodes'
 import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
@@ -20,7 +21,7 @@ interface AccordionProps
 }
 
 interface AccordionHeaderProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {}
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 interface AccordionBodyProps
   extends MarginProps,
@@ -117,26 +118,27 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
   }
 
   return (
-    <button
-      {...rest}
-      id={headerId}
-      className={className}
-      data-role="accordion-button"
-      type="button"
-      role="button"
-      onClick={handleToggle}
-      onKeyDown={handleHeaderKeyDown}
-      onKeyUp={handleHeaderKeyUp}
-      aria-expanded={isOpen}
-      aria-controls={bodyId}
-    >
-      <span>{children}</span>
-      {isOpen ? (
-        <NavigationChevronDown iconSize="small" mx="16px" aria-hidden="true" />
-      ) : (
-        <NavigationChevronLeft iconSize="small" mx="16px" aria-hidden="true" />
-      )}
-    </button>
+    <div {...rest} id={headerId} className={className} onClick={handleToggle}>
+      {children}
+      <IconButton
+        iconSize="small"
+        mx="16px"
+        onKeyDown={handleHeaderKeyDown}
+        onKeyUp={handleHeaderKeyUp}
+        data-role="accordion-button"
+        type="button"
+        role="button"
+        aria-expanded={isOpen}
+        aria-controls={bodyId}
+        aria-labelledby={headerId}
+      >
+        {isOpen ? (
+          <NavigationChevronDown aria-hidden="true" />
+        ) : (
+          <NavigationChevronLeft aria-hidden="true" />
+        )}
+      </IconButton>
+    </div>
   )
 }
 
@@ -158,12 +160,13 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
     border: 0;
   }
 
-  &:focus {
-    border: 2px solid ${p => p.theme.colors.callToAction};
-    border-radius: 5px;
+  p,
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
   }
-
-  ${p => p.theme.textStyles.h3};
 `
 
 const AccordionBodyInner = styled.div`
@@ -467,6 +470,9 @@ const AccordionBase = (props: AccordionProps) => {
 export const Accordion = styled(AccordionBase)`
   width: 100%;
   border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
+  &:first-of-type {
+    border-top: 2px solid ${p => p.theme.colors.lightContrast};
+  }
   ${margin}
   ${width}
   ${maxWidth}
