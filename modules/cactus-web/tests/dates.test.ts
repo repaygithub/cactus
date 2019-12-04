@@ -121,6 +121,39 @@ describe('date helpers', () => {
         expected.setUTCMinutes(new Date().getTimezoneOffset())
         expect(pd.toDate()).toEqual(expected)
       })
+
+      describe('with mocked Date', () => {
+        // Date is mocked to produce a consistent test which fails when the
+        // minutes are close to the end of the hour and then the year changes
+        // dramatically
+        let _Date = global.Date
+        class MockDate extends Date {
+          constructor() {
+            super()
+            this.setHours(11, 53)
+          }
+        }
+
+        beforeAll(() => {
+          // @ts-ignore
+          global.Date = MockDate
+        })
+
+        afterAll(() => {
+          global.Date = _Date
+        })
+
+        test('leaves time stable during large year changes', () => {
+          const pd = new PartialDate('01/02/2020 11:53', {
+            format: 'MM/dd/YYYY HH:mm',
+            type: 'datetime',
+          })
+          pd.setYear(2)
+          let expected = new _Date('0002-01-02T11:53:00.000Z')
+          expected.setUTCMinutes(new _Date().getTimezoneOffset() + 53)
+          expect(pd.toDate()).toEqual(expected)
+        })
+      })
     })
 
     describe('#parse()', () => {
