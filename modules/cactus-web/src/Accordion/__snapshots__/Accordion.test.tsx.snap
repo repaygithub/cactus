@@ -53,7 +53,6 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  font-weight: 600;
   cursor: pointer;
   background: none;
   border: 2px transparent;

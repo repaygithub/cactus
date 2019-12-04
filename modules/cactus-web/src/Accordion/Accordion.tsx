@@ -148,7 +148,6 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   min-height: 48px;
   display: flex;
   align-items: center;
-  font-weight: 600;
   cursor: pointer;
   background: none;
   border: 2px transparent;
