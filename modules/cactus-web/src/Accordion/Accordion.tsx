@@ -3,7 +3,7 @@ import React, { createContext, useCallback, useContext, useEffect, useRef, useSt
 import { assignRef } from '@reach/utils'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
-import { NavigationChevronDown, NavigationChevronLeft } from '@repay/cactus-icons'
+import { NavigationChevronDown, NavigationChevronRight } from '@repay/cactus-icons'
 import { omitMargins } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
 import KeyCodes from '../helpers/keyCodes'
@@ -119,10 +119,9 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
 
   return (
     <div {...rest} id={headerId} className={className} onClick={handleToggle}>
-      {children}
       <IconButton
         iconSize="small"
-        mx="16px"
+        mr={4}
         onKeyDown={handleHeaderKeyDown}
         onKeyUp={handleHeaderKeyUp}
         data-role="accordion-button"
@@ -135,9 +134,10 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
         {isOpen ? (
           <NavigationChevronDown aria-hidden="true" />
         ) : (
-          <NavigationChevronLeft aria-hidden="true" />
+          <NavigationChevronRight aria-hidden="true" />
         )}
       </IconButton>
+      {children}
     </div>
   )
 }
@@ -146,10 +146,8 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   box-sizing: border-box;
   width: 100%;
   min-height: 48px;
-  padding-left: 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   font-weight: 600;
   cursor: pointer;
   background: none;
