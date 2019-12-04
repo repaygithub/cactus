@@ -1,5 +1,20 @@
 # Changelog
 
+## [@repay/cactus-web@v0.6.3](https://github.com/repaygithub/cactus/commit/13fee680f823d5bf01cb80d66004022650a7a90d)
+
+- refactor(cactus-web): Move accordion arrow to the left side [6d3d8b9](https://github.com/repaygithub/cactus/commit/6d3d8b90fd0438c7b2179bb65f59957197541f01)
+- refactor(cactus-web): Move accordion arrow to the left side [ecd0f11](https://github.com/repaygithub/cactus/commit/ecd0f11c8fed372ae6227ee945f58726d09e1e11)
+- fix(cactus-web): Provide more space for elements in accordion header [43374d4](https://github.com/repaygithub/cactus/commit/43374d4ffb7ec810974f289f37e24d5a2f29fa5d)
+- fix(cactus-web): stabilize time on large year changes in DateInput [dae9cf9](https://github.com/repaygithub/cactus/commit/dae9cf9acf82a6c45507b07f6579844b92bed10d)
+- feat(cactus-web): allow refs on TextInput for focus control [6d7de41](https://github.com/repaygithub/cactus/commit/6d7de41c7a7e22e9c2b5fda52a91540d5c13104f)
+- feat(cactus-web): adds AccessibleField component and hook (#188) [435a3b0](https://github.com/repaygithub/cactus/commit/435a3b0f29abd6bc8f454a3e69cb244f3146a42e)
+- fix(cactus-web): Set aria-disabled='true' on accordion arrow icons [b755f21](https://github.com/repaygithub/cactus/commit/b755f21159fb2da363cf3107c8c4c6e7edf47a39)
+- fix(cactus-web): date input changes time with large year changes (#189) [7dd76f0](https://github.com/repaygithub/cactus/commit/7dd76f0b70b04ef81577f88db9daeba28025129f)
+- feat(cactus-web): Require label OR aria-labelledby prop on IconButton [ef63006](https://github.com/repaygithub/cactus/commit/ef630063b2d0e24217f8f4fbf5ad35cebc7b5378)
+- docs(cactus-web): Update Accordion docs & stories [9aee63f](https://github.com/repaygithub/cactus/commit/9aee63fbce7dae79b1a5813ebb477c99c7ebfb37)
+- feat(cactus-web): BREAKING - Provide more space for content in accordion headers. Make header containers divs instead of buttons [7886d43](https://github.com/repaygithub/cactus/commit/7886d43a55722eea6636e0a3173ddc8321d4969d)
+- chore(cactus-web): update changelog [d88a889](https://github.com/repaygithub/cactus/commit/d88a889e72276e5d78c18da5675e6ebd76795c8e)
+
 ## [@repay/cactus-web@v0.6.2](https://github.com/repaygithub/cactus/commit/2802e630763539c7a8a90ce107a00b08ca3745cf)
 
 - fix(cactus-web): Date objects to have correct year when less than 100 (#186) [c239a3a](https://github.com/repaygithub/cactus/commit/c239a3a0e8353628cdd5f2853f0312806026a497)
