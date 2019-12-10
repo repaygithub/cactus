@@ -1,5 +1,12 @@
 # Changelog
 
+## [@repay/cactus-web@v0.6.4](https://github.com/repaygithub/cactus/commit/4629f11a46051430c1fa671fe695e780315c6e54)
+
+- fix(cactus-web): firefox differences in timezone offsets (#193) [4ee1263](https://github.com/repaygithub/cactus/commit/4ee1263646e28c36fd7e63eac9c4c2fe953ebd7a)
+- fix(cactus-web): Remove 600 font weight in accordion header [692b6af](https://github.com/repaygithub/cactus/commit/692b6af42bcdae7a83ffedce2eb200225076c51c)
+- fix(cactus-web): Remove 600 font weight in accordion header [1f21686](https://github.com/repaygithub/cactus/commit/1f21686ff364fcfe4f049d963145da73c44eb11a)
+- chore(cactus-web): update changelog [c7e606e](https://github.com/repaygithub/cactus/commit/c7e606ece3e93ee662895cb318f5d32b233f1485)
+
 ## [@repay/cactus-web@v0.6.3](https://github.com/repaygithub/cactus/commit/13fee680f823d5bf01cb80d66004022650a7a90d)
 
 - refactor(cactus-web): Move accordion arrow to the left side [6d3d8b9](https://github.com/repaygithub/cactus/commit/6d3d8b90fd0438c7b2179bb65f59957197541f01)
