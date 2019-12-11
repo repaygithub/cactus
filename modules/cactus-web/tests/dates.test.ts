@@ -1,4 +1,10 @@
-import { formatDate, getLocaleFormat, parseDate, PartialDate } from '../src/helpers/dates'
+import {
+  formatDate,
+  getDefaultFormat,
+  getLocaleFormat,
+  parseDate,
+  PartialDate,
+} from '../src/helpers/dates'
 
 describe('date helpers', () => {
   describe('getLocalFormat()', () => {
@@ -22,6 +28,14 @@ describe('date helpers', () => {
     test.skip('can parse es locale', () => {
       const format = getLocaleFormat('es')
       expect(format).toEqual('dd/MM/YYYY, H:mm')
+    })
+  })
+
+  describe('getDefaultFormat()', () => {
+    test('default formats changes are a breaking change', () => {
+      expect(getDefaultFormat('date')).toBe('YYYY-MM-dd')
+      expect(getDefaultFormat('datetime')).toBe('YYYY-MM-dd HH:mm')
+      expect(getDefaultFormat('time')).toBe('HH:mm')
     })
   })
 
@@ -69,7 +83,7 @@ describe('date helpers', () => {
     describe('constructor()', () => {
       test('constructor can receive blank string and will return all placeholders', () => {
         const pd = new PartialDate('')
-        expect(pd.format()).toEqual('##/##/####')
+        expect(pd.format()).toEqual('####-##-##')
       })
 
       test('constructor can receive a partial date string and will return a partial date', () => {
@@ -79,7 +93,7 @@ describe('date helpers', () => {
 
       test('can be given a DateType', () => {
         const pd = new PartialDate('', { type: 'time' })
-        expect(pd.format()).toEqual('#:## ##')
+        expect(pd.format()).toEqual('##:##')
       })
 
       test('constructed with 24 hour time will set period', () => {
@@ -170,6 +184,12 @@ describe('date helpers', () => {
         const pd = new PartialDate('01/14/2018, 1:24 AM', 'MM/dd/YYYY, h:mm aa')
         pd.parse('2019-02-14', 'YYYY-MM-dd')
         expect(pd.format()).toEqual('02/14/2019, 1:24 AM')
+      })
+
+      test('uses internal format when not provided', () => {
+        const pd = new PartialDate('2019-12-01 12:00', { type: 'datetime' })
+        pd.parse('2019-12-17 12:00')
+        expect(pd.toLocaleFormat()).toEqual('12/17/2019, 12:00 PM')
       })
     })
 

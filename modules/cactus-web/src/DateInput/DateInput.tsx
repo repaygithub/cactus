@@ -5,6 +5,7 @@ import {
   DateType,
   formatDate,
   FormatTokenType,
+  getDefaultFormat,
   getLastDayOfMonth,
   isToken,
   parseDate,
@@ -67,15 +68,6 @@ const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
 const portalStyleOptions = { offset: 8 }
 const noop = function() {}
 const ALLOW_DEFAULT = ['Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
-
-function getDefaultFormat(type: DateType) {
-  if (type === 'datetime') {
-    return 'YYYY-MM-dd HH:mm'
-  } else if (type === 'time') {
-    return 'HH:mm'
-  }
-  return 'YYYY-MM-dd'
-}
 
 function isOwnInput(target: any, container: Element): target is HTMLInputElement {
   return (
@@ -730,7 +722,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       if (props.value instanceof Date) {
         value = PartialDate.from(props.value, { type: value.getType() })
       } else {
-        value.parse(props.value, props.format as string)
+        value.parse(props.value, props.format)
       }
       // only update local value if provided value is a valid date
       if (value.isValid() && !value.equals(state.value)) {
