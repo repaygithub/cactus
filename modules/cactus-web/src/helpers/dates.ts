@@ -168,6 +168,15 @@ export function getLocaleFormat(locale?: string, options: GetLocaleformatOpt = {
   return formatArray.join('')
 }
 
+export function getDefaultFormat(type: DateType) {
+  if (type === 'datetime') {
+    return 'YYYY-MM-ddTHH:mm'
+  } else if (type === 'time') {
+    return 'HH:mm'
+  }
+  return 'YYYY-MM-dd'
+}
+
 export function formatDate(date: Date, format: string) {
   let breakup = parseFormat(format)
   return breakup
@@ -246,7 +255,7 @@ function asOptions(formatOrOpts?: string | Partial<PartialDateOpts>): PartialDat
       let format = result.format
       if (format.includes('YYYY') || format.includes('dd')) {
         result.type = 'date'
-        if (format.includes('h')) {
+        if (format.includes('h') || format.includes('H')) {
           result.type += 'time'
         }
       } else {
@@ -257,7 +266,7 @@ function asOptions(formatOrOpts?: string | Partial<PartialDateOpts>): PartialDat
     }
   }
   if (!result.format) {
-    result.format = getLocaleFormat(result.locale, { type: result.type as DateType })
+    result.format = getDefaultFormat(result.type as DateType)
   }
   return result as PartialDateOpts
 }
@@ -502,7 +511,7 @@ export class PartialDate implements FormatTokenMap {
     return val === undefined ? '' : ('0' + val).slice(-2)
   }
 
-  parse(dateStr: string, format: string) {
+  parse(dateStr: string, format: string = this._format) {
     let parsedFormat = parseFormat(format)
     let cursor = 0
     for (const token of parsedFormat) {

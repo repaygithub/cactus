@@ -1,4 +1,10 @@
-import { formatDate, getLocaleFormat, parseDate, PartialDate } from '../src/helpers/dates'
+import {
+  formatDate,
+  getDefaultFormat,
+  getLocaleFormat,
+  parseDate,
+  PartialDate,
+} from '../src/helpers/dates'
 
 describe('date helpers', () => {
   describe('getLocalFormat()', () => {
@@ -25,6 +31,14 @@ describe('date helpers', () => {
     })
   })
 
+  describe('getDefaultFormat()', () => {
+    test('default formats changes are a breaking change', () => {
+      expect(getDefaultFormat('date')).toBe('YYYY-MM-dd')
+      expect(getDefaultFormat('datetime')).toBe('YYYY-MM-ddTHH:mm')
+      expect(getDefaultFormat('time')).toBe('HH:mm')
+    })
+  })
+
   describe('formatDate()', () => {
     test('YYYY-MM-dd', () => {
       expect(formatDate(new Date(2018, 7, 12), 'YYYY-MM-dd')).toEqual('2018-08-12')
@@ -35,7 +49,7 @@ describe('date helpers', () => {
     })
 
     test('YYYY-MM-dd H:mm', () => {
-      expect(formatDate(new Date(2018, 7, 12, 5, 23), 'YYYY-MM-dd H:mm')).toEqual('2018-08-12 5:23')
+      expect(formatDate(new Date(2018, 7, 12, 5, 23), 'YYYY-MM-ddTH:mm')).toEqual('2018-08-12T5:23')
     })
 
     test('YYYY-MM-dd h:mm aa', () => {
@@ -69,7 +83,7 @@ describe('date helpers', () => {
     describe('constructor()', () => {
       test('constructor can receive blank string and will return all placeholders', () => {
         const pd = new PartialDate('')
-        expect(pd.format()).toEqual('##/##/####')
+        expect(pd.format()).toEqual('####-##-##')
       })
 
       test('constructor can receive a partial date string and will return a partial date', () => {
@@ -79,7 +93,7 @@ describe('date helpers', () => {
 
       test('can be given a DateType', () => {
         const pd = new PartialDate('', { type: 'time' })
-        expect(pd.format()).toEqual('#:## ##')
+        expect(pd.format()).toEqual('##:##')
       })
 
       test('constructed with 24 hour time will set period', () => {
@@ -146,8 +160,8 @@ describe('date helpers', () => {
         })
 
         test('leaves time stable during large year changes', () => {
-          const pd = new PartialDate('01/02/2020 11:53', {
-            format: 'MM/dd/YYYY HH:mm',
+          const pd = new PartialDate('01/02/2020T11:53', {
+            format: 'MM/dd/YYYYTHH:mm',
             type: 'datetime',
           })
           pd.setYear(2)
@@ -170,6 +184,12 @@ describe('date helpers', () => {
         const pd = new PartialDate('01/14/2018, 1:24 AM', 'MM/dd/YYYY, h:mm aa')
         pd.parse('2019-02-14', 'YYYY-MM-dd')
         expect(pd.format()).toEqual('02/14/2019, 1:24 AM')
+      })
+
+      test('uses internal format when not provided', () => {
+        const pd = new PartialDate('2019-12-01 12:00', { type: 'datetime' })
+        pd.parse('2019-12-17 12:00')
+        expect(pd.toLocaleFormat()).toEqual('12/17/2019, 12:00 PM')
       })
     })
 
