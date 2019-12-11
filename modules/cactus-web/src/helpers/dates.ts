@@ -170,7 +170,7 @@ export function getLocaleFormat(locale?: string, options: GetLocaleformatOpt = {
 
 export function getDefaultFormat(type: DateType) {
   if (type === 'datetime') {
-    return 'YYYY-MM-dd HH:mm'
+    return 'YYYY-MM-ddTHH:mm'
   } else if (type === 'time') {
     return 'HH:mm'
   }

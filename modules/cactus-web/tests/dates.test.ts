@@ -34,7 +34,7 @@ describe('date helpers', () => {
   describe('getDefaultFormat()', () => {
     test('default formats changes are a breaking change', () => {
       expect(getDefaultFormat('date')).toBe('YYYY-MM-dd')
-      expect(getDefaultFormat('datetime')).toBe('YYYY-MM-dd HH:mm')
+      expect(getDefaultFormat('datetime')).toBe('YYYY-MM-ddTHH:mm')
       expect(getDefaultFormat('time')).toBe('HH:mm')
     })
   })
@@ -49,7 +49,7 @@ describe('date helpers', () => {
     })
 
     test('YYYY-MM-dd H:mm', () => {
-      expect(formatDate(new Date(2018, 7, 12, 5, 23), 'YYYY-MM-dd H:mm')).toEqual('2018-08-12 5:23')
+      expect(formatDate(new Date(2018, 7, 12, 5, 23), 'YYYY-MM-ddTH:mm')).toEqual('2018-08-12T5:23')
     })
 
     test('YYYY-MM-dd h:mm aa', () => {
@@ -160,8 +160,8 @@ describe('date helpers', () => {
         })
 
         test('leaves time stable during large year changes', () => {
-          const pd = new PartialDate('01/02/2020 11:53', {
-            format: 'MM/dd/YYYY HH:mm',
+          const pd = new PartialDate('01/02/2020T11:53', {
+            format: 'MM/dd/YYYYTHH:mm',
             type: 'datetime',
           })
           pd.setYear(2)
