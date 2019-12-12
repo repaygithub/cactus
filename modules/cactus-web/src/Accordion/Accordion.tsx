@@ -9,8 +9,12 @@ import IconButton from '../IconButton/IconButton'
 import KeyCodes from '../helpers/keyCodes'
 import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
-import styled, { StyledComponentBase } from 'styled-components'
+import styled, { css, StyledComponentBase } from 'styled-components'
 import useId from '../helpers/useId'
+
+type AccordionVariants = 'simple' | 'outline'
+
+type VariantMap = { [K in AccordionVariants]: ReturnType<typeof css> }
 
 interface AccordionProps
   extends MarginProps,
@@ -18,10 +22,13 @@ interface AccordionProps
     WidthProps,
     React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   defaultOpen?: boolean
+  variant?: AccordionVariants
 }
 
 interface AccordionHeaderProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  render?: (opts: { isOpen: boolean; headerId: string }) => JSX.Element
+}
 
 interface AccordionBodyProps
   extends MarginProps,
@@ -29,6 +36,7 @@ interface AccordionBodyProps
 
 interface AccordionContext {
   isOpen: boolean
+  variant: string | undefined
   bodyId: string | undefined
   headerId: string | undefined
   handleToggle: (() => void) | undefined
@@ -53,6 +61,7 @@ interface AccordionProviderContext {
 
 const AccordionContext = createContext<AccordionContext>({
   isOpen: false,
+  variant: undefined,
   bodyId: undefined,
   headerId: undefined,
   handleToggle: undefined,
@@ -62,10 +71,17 @@ const AccordionContext = createContext<AccordionContext>({
 })
 
 const AccordionHeaderBase = (props: AccordionHeaderProps) => {
-  const { className, children, ...rest } = props
-  const { isOpen, bodyId, headerId, handleToggle, handleFocus, focusFirst, focusLast } = useContext(
-    AccordionContext
-  )
+  const { className, children, render, ...rest } = props
+  const {
+    isOpen,
+    variant,
+    bodyId,
+    headerId,
+    handleToggle,
+    handleFocus,
+    focusFirst,
+    focusLast,
+  } = useContext(AccordionContext)
 
   // Used to prevent default behavior/propagation
   const handleHeaderKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -118,7 +134,14 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
   }
 
   return (
-    <div {...rest} id={headerId} className={className} onClick={handleToggle}>
+    <div
+      {...rest}
+      id={typeof render !== 'function' ? headerId : undefined}
+      className={`${className} ${variant === 'outline' ? 'outline-variant' : ''} ${
+        isOpen ? 'is-open' : ''
+      }`}
+      onClick={handleToggle}
+    >
       <IconButton
         iconSize="small"
         mr={4}
@@ -137,7 +160,9 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
           <NavigationChevronRight aria-hidden="true" />
         )}
       </IconButton>
-      {children}
+      {typeof render === 'function' && headerId !== undefined
+        ? render({ isOpen, headerId })
+        : children}
     </div>
   )
 }
@@ -164,12 +189,26 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   h4 {
     margin: 0;
   }
+
+  &.outline-variant {
+    padding-left: 16px;
+    padding-right: 16px;
+
+    &.is-open {
+      border-bottom: 1px solid ${p => p.theme.colors.lightContrast};
+    }
+  }
 `
 
 const AccordionBodyInner = styled.div`
   box-sizing: border-box;
   padding-top: 24px;
   padding-bottom: 40px;
+
+  &.pad-x {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
 `
 
 const getHeight = (element: Element | null) => {
@@ -190,7 +229,7 @@ type AnimationStateType = 'open' | 'animating' | 'closed'
 
 const AccordionBodyBase = (props: AccordionBodyProps) => {
   const { className, children, ...restProps } = props
-  const { isOpen, bodyId, headerId } = useContext(AccordionContext)
+  const { isOpen, variant, bodyId, headerId } = useContext(AccordionContext)
   const previousIsOpen = useRef(isOpen)
   const [state, setState] = useState<AnimationStateType>(isOpen ? 'open' : 'closed')
   const innerRef = useRef<HTMLDivElement | null>(null)
@@ -254,7 +293,14 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
             innerRef.current = n
             assignRef(ref, n)
           }
-          return <AccordionBodyInner ref={mergeRefs}>{children}</AccordionBodyInner>
+          return (
+            <AccordionBodyInner
+              className={`${variant === 'outline' ? 'pad-x' : ''}`}
+              ref={mergeRefs}
+            >
+              {children}
+            </AccordionBodyInner>
+          )
         }}
       </Rect>
     </div>
@@ -393,7 +439,7 @@ const AccordionBase = (props: AccordionProps) => {
     isManaged,
     managedAccordions,
   } = useContext(ProviderContext)
-  const { defaultOpen, ...restProps } = props
+  const { defaultOpen, variant, className, ...restProps } = props
   const id = useId(props.id)
   const headerId = `${id}-header`
   const bodyId = `${id}-body`
@@ -403,6 +449,12 @@ const AccordionBase = (props: AccordionProps) => {
     isOpen = managedAccordions[id].open
   }
   const [state, setState] = useState<AccordionState>({ isOpen: isOpen })
+
+  useEffect(() => {
+    if (isManaged && typeof manageOpen === 'function') {
+      manageOpen(id, defaultOpen || false)
+    }
+  }, [defaultOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (managedAccordions) {
@@ -444,12 +496,18 @@ const AccordionBase = (props: AccordionProps) => {
   }
 
   const rest = omitMargins(restProps, 'width', 'maxWidth')
+  const open = isManaged ? isOpen : state.isOpen
 
   return (
-    <div id={id} {...rest}>
+    <div
+      id={id}
+      className={`${className} ${open && variant === 'outline' ? 'box-shadow' : ''}`}
+      {...rest}
+    >
       <AccordionContext.Provider
         value={{
-          isOpen: isManaged ? isOpen : state.isOpen,
+          isOpen: open,
+          variant: variant || 'simple',
           bodyId,
           headerId,
           handleToggle: toggleOpen,
@@ -464,12 +522,38 @@ const AccordionBase = (props: AccordionProps) => {
   )
 }
 
-export const Accordion = styled(AccordionBase)`
-  width: 100%;
-  border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
-  &:first-of-type {
-    border-top: 2px solid ${p => p.theme.colors.lightContrast};
+const accordionVariantMap: VariantMap = {
+  simple: css`
+    border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
+    &:first-of-type {
+      border-top: 2px solid ${p => p.theme.colors.lightContrast};
+    }
+  `,
+  outline: css`
+    border: 2px solid ${p => p.theme.colors.lightContrast};
+    border-radius: 8px;
+    & + & {
+      margin-top: 8px;
+    }
+  `,
+}
+
+const variantStyles = (props: AccordionProps) => {
+  if (props.variant !== undefined) {
+    return accordionVariantMap[props.variant]
   }
+}
+
+export const Accordion = styled(AccordionBase)`
+  box-sizing: border-box;
+  width: 100%;
+
+  &.box-shadow {
+    border: 0px;
+    box-shadow: 0 3px 8px ${p => p.theme.colors.callToAction};
+  }
+
+  ${variantStyles}
   ${margin}
   ${width}
   ${maxWidth}
@@ -477,10 +561,12 @@ export const Accordion = styled(AccordionBase)`
 
 Accordion.defaultProps = {
   defaultOpen: false,
+  variant: 'simple',
 }
 
 Accordion.propTypes = {
   defaultOpen: PropTypes.bool,
+  variant: PropTypes.oneOf(['simple', 'outline']),
 }
 
 Accordion.Header = AccordionHeader
