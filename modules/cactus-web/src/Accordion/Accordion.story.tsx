@@ -1,9 +1,12 @@
 import React, { Fragment, useCallback, useState } from 'react'
 
+import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { number, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Accordion from './Accordion'
 import Box from '../Box/Box'
+import Flex from '../Flex/Flex'
+import IconButton from '../IconButton/IconButton'
 import Text from '../Text/Text'
 import TextButton from '../TextButton/TextButton'
 
@@ -63,6 +66,112 @@ const ContentBlocks = ({ number }: { number: number }) => {
     )
   }
   return <Fragment>{children}</Fragment>
+}
+
+const ReorderAccordions = () => {
+  const [accordionHeaders, setAccordionHeaders] = useState([
+    'First Accordion',
+    'Second Accordion',
+    'Third Accordion',
+    'Fourth Accordion',
+    'Fifth Accordion',
+  ])
+
+  const handleUpClick = (index: number) => {
+    const headersCopy = [...accordionHeaders]
+    const temp = headersCopy[index - 1]
+    headersCopy[index - 1] = headersCopy[index]
+    headersCopy[index] = temp
+    setAccordionHeaders(headersCopy)
+  }
+
+  const handleDownClick = (index: number) => {
+    const headersCopy = [...accordionHeaders]
+    const temp = headersCopy[index + 1]
+    headersCopy[index + 1] = headersCopy[index]
+    headersCopy[index] = temp
+    setAccordionHeaders(headersCopy)
+  }
+
+  const handleDelete = (index: number) => {
+    const headersCopy = [...accordionHeaders]
+    headersCopy.splice(index, 1)
+    setAccordionHeaders(headersCopy)
+  }
+
+  return (
+    <Box width="968px">
+      <Accordion.Provider>
+        {accordionHeaders.map((header, index) => (
+          <Accordion variant="outline" key={header}>
+            <Accordion.Header
+              render={({ isOpen, headerId }) => {
+                return (
+                  <Flex alignItems="center" width="100%">
+                    <Text as="h3" id={headerId}>
+                      {header}
+                    </Text>
+                    {isOpen && (
+                      <IconButton
+                        iconSize="medium"
+                        variant="danger"
+                        ml="auto"
+                        mr={4}
+                        label={`Delete ${header}`}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          handleDelete(index)
+                          e.stopPropagation()
+                        }}
+                      >
+                        <ActionsDelete aria-hidden="true" />
+                      </IconButton>
+                    )}
+                    <Flex
+                      alignItems="center"
+                      ml={isOpen ? 0 : 'auto'}
+                      pl={4}
+                      borderLeft="1px solid"
+                      borderLeftColor="lightContrast"
+                    >
+                      <IconButton
+                        iconSize="medium"
+                        mr={1}
+                        label={`Move ${header} down`}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          handleDownClick(index)
+                          e.stopPropagation()
+                        }}
+                        disabled={index === accordionHeaders.length - 1}
+                      >
+                        <NavigationCircleDown aria-hidden="true" />
+                      </IconButton>
+                      <IconButton
+                        iconSize="medium"
+                        label={`Move ${header} up`}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          handleUpClick(index)
+                          e.stopPropagation()
+                        }}
+                        disabled={index === 0}
+                      >
+                        <NavigationCircleUp aria-hidden="true" />
+                      </IconButton>
+                    </Flex>
+                  </Flex>
+                )
+              }}
+            />
+            <Accordion.Body>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+              tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+              lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
+              nec euismod augue aliquam vel.
+            </Accordion.Body>
+          </Accordion>
+        ))}
+      </Accordion.Provider>
+    </Box>
+  )
 }
 
 storiesOf('Accordion', module)
@@ -214,3 +323,4 @@ storiesOf('Accordion', module)
       </Accordion.Provider>
     </Box>
   ))
+  .add('With Outline', () => <ReorderAccordions />)

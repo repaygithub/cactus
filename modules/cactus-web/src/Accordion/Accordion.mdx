@@ -36,6 +36,8 @@ const SingleAccordion = props => {
 }
 ```
 
+### Accordion Provider
+
 You can also use `Accordion.Provider` to display multiple Accordions at the same time, and the Provider will manage their open/closed states for you:
 
 When using `Accordion.Provider`, you can set the maximum number of Accordions that can be open at the same time using the `maxOpen` prop, which defaults to 1.
@@ -71,6 +73,138 @@ const MultipleAccordions = props => {
           Accordion Content Goes Here
         </Accordion.Body>
       </Accordion>
+    </Accordion.Provider>
+  )
+}
+```
+
+### Outline Variant
+
+We have included an `outline` variant which can be used to better depict hierarchical structures as well as separations in the page.
+
+Usage:
+
+```jsx
+import React from 'react'
+import { Accordion, Text } from '@repay/cactus-web'
+
+const OutlineAccordion = props => {
+  return (
+    <Accordion variant="outline">
+      <Accordion.Header>
+        <Text as="h3">Example Header</Text>
+      </Accordion.Header>
+      <Accordion.Body>
+        Example Content
+      </Accordion.Body>
+    </Accordion>
+  )
+}
+```
+
+### Render Prop
+
+To allow further customization of the accordions, we've provided the option to pass a render function to the header. This function receives an object
+which includes a variable indicating whether or not the accordion is open, as well as an id that can be placed on whichever element describes the accordion.
+
+Usage:
+
+```jsx
+import React, { useState } from 'react'
+import { Accordion, IconButton, Text } from '@repay/cactus-web'
+import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
+
+const initialAccordions = [
+  {
+    header: 'Header 1',
+    body: 'Body 1'
+  },
+  {
+    header: 'Header 2'
+    body: 'Body 2'
+  }
+]
+
+const CustomAccordions = props => {
+  const [accordions, setAccordions] = useState(initialAccordions)
+
+  const handleUpClick = index => {
+    accordionsCopy = [...accordions]
+    const temp = accordionsCopy[index - 1]
+    accordionsCopy[index - 1] = accordionsCopy[index]
+    accordionsCopy[index] = temp
+    setAccordions(accordionsCopy)
+  }
+
+  const handleDownClick = index => {
+    accordionsCopy = [...accordions]
+    const temp = accordionsCopy[index + 1]
+    accordionsCopy[index + 1] = accordionsCopy[index]
+    accordionsCopy[index] = temp
+    setAccordions(accordionsCopy)
+  }
+
+  const handleDelete = index => {
+    const accordionsCopy = [...accordions]
+    accordionsCopy.splice(index, 1)
+    setAccordions(accordionsCopy)
+  }
+
+  return (
+    <Accordion.Provider>
+      {accordions.map((acc, index) => (
+        <Accordion variant="outline" key={acc.header}> render={({ isOpen, headerId }) => (
+          <Flex alignItems="center" width="100%>
+            <Text as="h3" id={headerId}>{acc.header}</Text>
+            {isOpen && (
+              <IconButton
+                iconSize="medium"
+                variant="danger"
+                ml="auto"
+                mr={4}
+                label={`Delete ${acc.header}`}
+                onClick={e => {
+                  handleDelete(index)
+                  e.stopPropagation()
+                }}
+              >
+                <ActionsDelete aria-hidden="true" />
+              </IconButton>
+            )}
+            <Flex
+              alignItems="center"
+              ml={isOpen ? 0 : 'auto'}
+              pl={4}
+              borderLeft="1px solid"
+              borderLeftColor="lightContrast"
+            >
+              <IconButton
+                iconSize="medium"
+                mr={1}
+                label={`Move ${acc.header} down`}
+                disabled={index === accordions.length - 1}
+                onClick={e => {
+                  handleDownClick(index)
+                  e.stopPropagation()
+                }}
+              >
+                <NavigationCircleDown aria-hidden="true" />
+              </IconButton>
+              <IconButton
+                iconSize="medium"
+                label={`Move ${acc.header} up`}
+                disabled={index === accordions.length - 1}
+                onClick={e => {
+                  handleUpClick(index)
+                  e.stopPropagation()
+                }}
+              >
+                <NavigationCircleUp aria-hidden="true" />
+              </IconButton>
+            </Flex>
+          </Flex>
+        )} />
+      ))}
     </Accordion.Provider>
   )
 }
