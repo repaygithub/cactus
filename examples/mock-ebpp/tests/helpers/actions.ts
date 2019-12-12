@@ -119,6 +119,15 @@ class Actions {
     }
     return this.page.accessibility.snapshot({ root: activeEl })
   }
+
+  clickByQuerySelector = async (selector: string) => {
+    const clickable = await this.page.$(selector)
+    if (clickable !== null) {
+      await clickable.click()
+    } else {
+      console.warn(`Unable to find element using selector ${selector}`)
+    }
+  }
 }
 
 export default Actions
