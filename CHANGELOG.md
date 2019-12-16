@@ -1,5 +1,14 @@
 # Changelog
 
+## [@repay/cactus-web@v0.7.1](https://github.com/repaygithub/cactus/commit/a95959a304d9c5819354f62b66bfc66d094e5770)
+
+- feat(cactus-web): Add outline variant & render prop to accordion [3da2323](https://github.com/repaygithub/cactus/commit/3da2323f7d60a504c877616cf01bf9124bdd071a)
+- docs(cactus-web): add accordion variant to basic story [d1682e1](https://github.com/repaygithub/cactus/commit/d1682e1feb8ac087046076c787afc48d6b4f00aa)
+- chore(cactus-web): Add example rules page with new accordions to example app [62ee9f9](https://github.com/repaygithub/cactus/commit/62ee9f99ded8bf195c51ab4270e11289f637cb76)
+- docs(cactus-web): Update accordion docs & stories [567362f](https://github.com/repaygithub/cactus/commit/567362fde3b7eb9a21e34accf7c9b32bc7cdc686)
+- feat(cactus-web): Add outline variant and render prop to accordion [c3e9ae3](https://github.com/repaygithub/cactus/commit/c3e9ae39cd5aa9ccafad53426727d91c6d8d383d)
+- chore(cactus-web): update changelog [16eaea8](https://github.com/repaygithub/cactus/commit/16eaea892d5bd5cafad5f705f49a827ca359a9f4)
+
 ## [@repay/cactus-web@v0.7.0](https://github.com/repaygithub/cactus/commit/6bf9b4ef24c391c67f7d8e7b84af560faad995bb)
 
 - feat(cactus-web): default datetime format includes T separator for ISO [78bd19f](https://github.com/repaygithub/cactus/commit/78bd19f94f4292c8003210b0be91ffec86da7614)
