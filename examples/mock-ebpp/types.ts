@@ -4,7 +4,7 @@ interface FileObj {
   status: string
 }
 
-export interface ApiData {
+export interface UIConfigData {
   display_name: string
   merchant_name: string
   terms_and_conditions: string
@@ -15,3 +15,9 @@ export interface ApiData {
   select_color: string
   file_input: Array<FileObj>
 }
+
+export type RulesData = Array<{
+  key: string
+  conditions: Array<{ key: string; variable: string; operator: string; value: string }>
+  actions: Array<{ key: string; action: string }>
+}>

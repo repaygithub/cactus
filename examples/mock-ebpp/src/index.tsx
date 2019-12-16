@@ -1,5 +1,5 @@
-import { Box, Flex, IconButton, StyleProvider, Text } from '@repay/cactus-web'
 import { DescriptiveHome } from '@repay/cactus-icons'
+import { Flex, StyleProvider, Text } from '@repay/cactus-web'
 import { Helmet } from 'react-helmet'
 import { RouteComponentProps, Router } from '@reach/router'
 import Accounts from './containers/accounts'
@@ -9,6 +9,7 @@ import Link from './components/Link'
 import PaymentHistoryReport from './containers/payment-history-report'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Rules from './containers/rules'
 import UIConfig from './containers/ui-config'
 
 const appRoot = document.createElement('div')
@@ -50,6 +51,9 @@ const AppContainer = (props: ContainerProps) => {
             <Link to="/faq" style={{ fontSize: '30px' }}>
               FAQ
             </Link>
+            <Link to="/rules" style={{ fontSize: '30px' }}>
+              Rules
+            </Link>
           </Flex>
 
           {children}
@@ -73,6 +77,7 @@ const App = () => {
           <Accounts path="/accounts" />
           <UIConfig path="/ui-config" />
           <Faq path="/faq" />
+          <Rules path="/rules" />
         </AppContainer>
       </Router>
     </div>

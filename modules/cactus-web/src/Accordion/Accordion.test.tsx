@@ -1,9 +1,12 @@
 import * as React from 'react'
 
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Accordion from './Accordion'
 import animationRender from '../../tests/helpers/animationRender'
+import Flex from '../Flex/Flex'
+import IconButton from '../IconButton/IconButton'
 import KeyCodes from '../helpers/keyCodes'
 import Text from '../Text/Text'
 
@@ -17,6 +20,23 @@ describe('component: Accordion', () => {
       const { container } = render(
         <StyleProvider>
           <Accordion id="accordion">
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(container).toHaveTextContent('Test Header')
+      expect(container).not.toHaveTextContent('Test Body')
+      expect(container).toMatchSnapshot()
+    })
+
+    test('Should render outline accordion', () => {
+      const { container } = render(
+        <StyleProvider>
+          <Accordion id="accordion" variant="outline">
             <Accordion.Header>
               <Text as="h3">Test Header</Text>
             </Accordion.Header>
@@ -400,6 +420,75 @@ describe('component: Accordion', () => {
       fireEvent.focus(a1)
       fireEvent.keyUp(a1, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
       expect(document.activeElement).toBe(a2)
+    })
+  })
+
+  describe('Render Prop', () => {
+    let suppliedHeaderId: string
+    const noop = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation()
+    }
+    test('should allow developer to customize content in header', async () => {
+      const { getByTestId, getByText } = render(
+        <StyleProvider>
+          <Accordion data-testid="accordion" variant="outline">
+            <Accordion.Header
+              render={({ isOpen, headerId }) => {
+                suppliedHeaderId = headerId
+                return (
+                  <Flex alignItems="center" width="100%">
+                    <Text as="h3" id={headerId}>
+                      Test Header
+                    </Text>
+                    {isOpen && (
+                      <IconButton
+                        iconSize="medium"
+                        variant="danger"
+                        ml="auto"
+                        mr={4}
+                        label="Delete"
+                        onClick={noop}
+                      >
+                        <ActionsDelete aria-hidden="true" />
+                      </IconButton>
+                    )}
+                    <Flex
+                      alignItems="center"
+                      ml={isOpen ? 0 : 'auto'}
+                      pl={4}
+                      borderLeft="1px solid"
+                      borderLeftColor="lightContrast"
+                    >
+                      <IconButton iconSize="medium" mr={1} label="Move Down" onClick={noop}>
+                        <NavigationCircleDown aria-hidden="true" />
+                      </IconButton>
+                      <IconButton iconSize="medium" label="Move Up" onClick={noop}>
+                        <NavigationCircleUp aria-hidden="true" />
+                      </IconButton>
+                    </Flex>
+                  </Flex>
+                )
+              }}
+            />
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(getByText('Test Header').getAttribute('id')).toEqual(suppliedHeaderId)
+      const accordion = getByTestId('accordion')
+      expect(accordion.querySelector('button[aria-label="Move Down"]')).toBeInTheDocument()
+      expect(accordion.querySelector('button[aria-label="Move Up"]')).toBeInTheDocument()
+      expect(accordion.querySelector('button[aria-label=Delete]')).not.toBeInTheDocument()
+
+      await act(async () => {
+        fireEvent.click(accordion.querySelector(
+          'button[data-role="accordion-button"]'
+        ) as HTMLButtonElement)
+        await animationRender()
+      })
+
+      expect(accordion.querySelector('button[aria-label=Delete]')).toBeInTheDocument()
     })
   })
 })

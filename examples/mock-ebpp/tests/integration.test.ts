@@ -1,7 +1,7 @@
 import * as path from 'path'
-import { ApiData } from '../types'
-import { getActiveElement } from './helpers/wait'
+import { getActiveElement, sleep } from './helpers/wait'
 import { getDocument, queries } from 'pptr-testing-library'
+import { RulesData, UIConfigData } from '../types'
 import Actions from './helpers/actions'
 import devices from 'puppeteer/DeviceDescriptors'
 import puppeteer from 'puppeteer'
@@ -60,7 +60,7 @@ describe('Integration Tests', () => {
       await actions.clickByText('Use Cactus Styles')
       await actions.clickByText('Submit')
 
-      const apiData: ApiData = await actions.page.evaluate(() => (window as any).apiData)
+      const apiData: UIConfigData = await actions.page.evaluate(() => (window as any).apiData)
       expect(apiData).toMatchObject({
         display_name: 'Test Merchant',
         merchant_name: 'tst-mrchnt',
@@ -300,6 +300,93 @@ describe('Integration Tests', () => {
         name: 'Office Ipsum?',
         role: 'button',
       })
+    })
+  })
+
+  describe('Rules', () => {
+    beforeAll(async () => {
+      page = await global.__BROWSER__.newPage()
+      server = startStaticServer({
+        directory: path.join(process.cwd(), 'dist'),
+        port: 33567,
+        singlePageApp: true,
+      })
+      await page.goto('http://localhost:33567/rules')
+    })
+
+    afterAll(async () => {
+      await server.close()
+    })
+
+    test('should be titled "FAQ"', async () => {
+      await expect(page.title()).resolves.toMatch('Rules')
+    })
+
+    test('fill out and submit the form sequentially', async () => {
+      const doc = await getDocument(page)
+      const actions = new Actions(doc, page)
+
+      await actions.clickByText('Add Rule')
+      await actions.clickByText('Add Condition')
+      await actions.selectDropdownOption('Name', 'A variable')
+      await actions.selectDropdownOption('Operator', 'Greater than')
+      await actions.selectDropdownOption('Value', '-1')
+      await actions.clickByText('Condition #1')
+      await sleep(1)
+      await actions.clickByText('Add Action')
+      await actions.selectDropdownOption('Name', 'Do the thing')
+      await actions.clickByText('Submit')
+
+      const apiData: RulesData = await actions.page.evaluate(() => (window as any).apiData)
+      expect(apiData).toMatchObject([
+        {
+          key: 'rule-0',
+          conditions: [
+            { key: 'condition-0', variable: 'A variable', operator: 'Greater than', value: '-1' },
+          ],
+          actions: [{ key: 'action-0', action: 'Do the thing' }],
+        },
+      ])
+    })
+
+    test('fill out and submit the form with deleting and reordering', async () => {
+      const doc = await getDocument(page)
+      const actions = new Actions(doc, page)
+
+      await actions.clickByText('Add Rule')
+      await actions.clickByText('Add Condition')
+      await actions.selectDropdownOption('Name', 'A variable')
+      await actions.selectDropdownOption('Operator', 'Greater than')
+      await actions.selectDropdownOption('Value', '-1')
+      await actions.clickByText('Add Condition')
+      await sleep(1)
+      await actions.selectDropdownOption('Name', 'Another variable')
+      await actions.selectDropdownOption('Operator', 'Less than')
+      await actions.selectDropdownOption('Value', '0')
+      await actions.clickByText('Condition #1')
+      await sleep(1)
+      await actions.clickByQuerySelector('button[aria-label="Delete Condition #1"]')
+      await actions.clickByText('Add Action')
+      await actions.selectDropdownOption('Name', 'Do the thing')
+      await actions.clickByText('Add Action')
+      await sleep(1)
+      await actions.selectDropdownOption('Name', 'Do another thing')
+      await actions.clickByQuerySelector('button[aria-label="Move Action #1 down"]')
+      await actions.clickByText('Submit')
+
+      const apiData: RulesData = await actions.page.evaluate(() => (window as any).apiData)
+      expect(apiData).toMatchObject([
+        {
+          key: 'rule-0',
+          conditions: [
+            { key: 'condition-1', variable: 'Another variable', operator: 'Less than', value: '0' },
+          ],
+          actions: [
+            { key: 'action-1', action: 'Do another thing' },
+            { key: 'action-0', action: 'Do the thing' },
+          ],
+        },
+      ])
     })
   })
 })

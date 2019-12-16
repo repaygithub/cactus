@@ -54,7 +54,7 @@
     "typescript": "^3.7.2",
     "typescript-eslint-parser": "^22.0.0"
   },
-  "resolutions": {},
+  "resolutions": {"**/webpack-dev-server": "^3.9.0"},
   "dependencies": {
     "core-js": "^3.3.2"
   }
