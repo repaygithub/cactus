@@ -12,7 +12,7 @@ import Rect from '@reach/rect'
 import styled, { css, StyledComponentBase } from 'styled-components'
 import useId from '../helpers/useId'
 
-type AccordionVariants = 'simple' | 'outline'
+export type AccordionVariants = 'simple' | 'outline'
 
 type VariantMap = { [K in AccordionVariants]: ReturnType<typeof css> }
 

@@ -1,9 +1,9 @@
 import React, { Fragment, useCallback, useState } from 'react'
 
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
-import { number, text } from '@storybook/addon-knobs'
+import { number, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import Accordion from './Accordion'
+import Accordion, { AccordionVariants } from './Accordion'
 import Box from '../Box/Box'
 import Flex from '../Flex/Flex'
 import IconButton from '../IconButton/IconButton'
@@ -17,6 +17,8 @@ interface ContentManagerState {
 type ContentManagerParams = ContentManagerState & {
   changeContent: (group: number, increase?: boolean) => void
 }
+
+const accordionVariants: AccordionVariants[] = ['simple', 'outline']
 
 const initializeContent = () => {
   let number = 4
@@ -177,7 +179,7 @@ const ReorderAccordions = () => {
 storiesOf('Accordion', module)
   .add('Basic Usage', () => (
     <Box width="312px">
-      <Accordion>
+      <Accordion variant={select('variant', accordionVariants, 'simple')}>
         <Accordion.Header>
           <Text as="h3">{text('header', 'Accordion')}</Text>
         </Accordion.Header>
