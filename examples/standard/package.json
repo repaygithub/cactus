@@ -7,9 +7,9 @@
     "start": "yarn dev",
     "dev": "repay-scripts dev --config webpack.config.js -p 3435 src/index.tsx",
     "build": "repay-scripts build src/index.tsx",
-    "test": "yarn test:types",
-    "test:ci": "yarn test",
-    "test:local": "yarn test",
+    "test": "yarn build && yarn jest --config jest.config.js",
+    "test:ci": "yarn test:local --maxWorkers=2",
+    "test:local": "yarn test:types && yarn test",
     "test:types": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
@@ -23,11 +23,22 @@
     "react-dom": "^16.10.2"
   },
   "devDependencies": {
+    "@repay/babel-preset": "^0.3.0",
     "@repay/scripts": "^0.3.1",
+    "@types/expect-puppeteer": "^3.3.3",
+    "@types/jest-environment-puppeteer": "^4.3.1",
+    "@types/node": "^12.12.21",
+    "@types/puppeteer": "^2.0.0",
     "@types/reach__router": "^1.2.4",
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.2",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "jest": "^24.9.0",
+    "jest-puppeteer": "^4.4.0",
+    "pptr-testing-library": "^0.4.0",
     "prop-types": "^15.7.2",
+    "puppeteer": "^2.0.0",
     "typescript": "^3.7.2"
   }
 }
