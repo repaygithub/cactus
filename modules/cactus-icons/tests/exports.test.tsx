@@ -1,4 +1,4 @@
-import * as icons from '../i'
+import * as icons from '@repay/cactus-icons'
 import { cleanup } from '@testing-library/react'
 
 afterEach(cleanup)
