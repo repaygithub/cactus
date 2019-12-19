@@ -42,7 +42,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
+    "@babel/core": "^7.7.5",
     "@repay/eslint-config": "^1.1.1",
     "babel-eslint": "^10.0.1",
     "conventional-commits-parser": "^3.0.5",
@@ -54,7 +54,6 @@
     "typescript": "^3.7.2",
     "typescript-eslint-parser": "^22.0.0"
   },
-  "resolutions": {"**/webpack-dev-server": "^3.9.0"},
   "dependencies": {
     "core-js": "^3.3.2"
   }

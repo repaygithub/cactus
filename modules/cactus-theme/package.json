@@ -20,7 +20,7 @@
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@repay/scripts": "^0.3.1",
+    "@repay/scripts": "^0.3.2",
     "typescript": "^3.7.2"
   }
 }

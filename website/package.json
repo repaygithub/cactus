@@ -20,7 +20,7 @@
     "test:local": "yarn test"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
+    "@babel/core": "^7.7.5",
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
     "@reach/rect": "^0.5.0",

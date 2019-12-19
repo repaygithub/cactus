@@ -1,6 +1,5 @@
-import { FluentBundle } from 'fluent'
-import { FluentMessage, FluentNode } from 'fluent'
-import { negotiateLanguages } from 'fluent-langneg'
+import { FluentBundle, FluentResource } from '@fluent/bundle/compat'
+import { negotiateLanguages } from '@fluent/langneg'
 import { ResourceDefinition } from './types'
 
 interface Dictionary {
@@ -45,10 +44,6 @@ interface I18nControllerOptions {
 }
 
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
-
-function isFluentNode(message: FluentMessage): message is FluentNode {
-  return typeof message !== 'string' && !Array.isArray(message)
-}
 
 export default abstract class BaseI18nController {
   lang: string = ''
@@ -100,7 +95,7 @@ export default abstract class BaseI18nController {
       )
     }
     const bundle = new FluentBundle(lang)
-    const errors = bundle.addMessages(ftl)
+    const errors = bundle.addResource(new FluentResource(ftl))
     if (Array.isArray(errors) && errors.length) {
       console.error(`Errors found in resource for section ${section} ${lang}`)
       console.log(errors)
@@ -159,13 +154,20 @@ export default abstract class BaseI18nController {
         return [null, {}]
       }
       const message = bundle.getMessage(id)
-      const attrs: { [key: string]: string } = {}
-      if (isFluentNode(message) && message.attrs !== null) {
-        Object.entries(message.attrs).forEach(([attr, value]) => {
-          attrs[attr] = bundle.format(value, args)
+      let text: string | null = null
+      let attrs: { [key: string]: string } = {}
+      let errors: any[] = []
+      if (message.attributes) {
+        Object.entries(message.attributes).forEach(([attr, value]) => {
+          attrs[attr] = bundle.formatPattern(value, args || {}, errors)
         })
       }
-      let text = bundle.format(message, args)
+      if (message.value) {
+        text = bundle.formatPattern(message.value, args || {}, errors)
+      }
+      if (errors.length) {
+        return [null, {}]
+      }
       return [text, attrs]
     }
     if (
