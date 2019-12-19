@@ -1,5 +1,10 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.2.2](https://github.com/repaygithub/cactus/commit/e54664d0c27fbe374b01d8242771baafa806907a)
+
+- feat(cactus-i18n): upgrade project fluent libraries [84f04f1](https://github.com/repaygithub/cactus/commit/84f04f152c0b37267ac156d093d4b42e236bc21a)
+- chore(cactus-i18n): update changelog [23e9ceb](https://github.com/repaygithub/cactus/commit/23e9ceb13b345c03c0ef4ecf4e5928b1d448c6c4)
+
 ## [@repay/cactus-web@v0.7.1](https://github.com/repaygithub/cactus/commit/a95959a304d9c5819354f62b66bfc66d094e5770)
 
 - feat(cactus-web): Add outline variant & render prop to accordion [3da2323](https://github.com/repaygithub/cactus/commit/3da2323f7d60a504c877616cf01bf9124bdd071a)
