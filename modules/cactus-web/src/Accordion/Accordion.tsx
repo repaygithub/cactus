@@ -83,6 +83,20 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
     focusLast,
   } = useContext(AccordionContext)
 
+  const handleHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement
+    if (
+      handleToggle &&
+      typeof handleToggle === 'function' &&
+      target.tagName !== 'svg' &&
+      target.tagName !== 'path' &&
+      target.tagName !== 'BUTTON' &&
+      target.getAttribute('data-role') !== 'accordion-button'
+    ) {
+      handleToggle()
+    }
+  }
+
   // Used to prevent default behavior/propagation
   const handleHeaderKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     const key = event.which || event.keyCode
@@ -140,13 +154,14 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
       className={`${className} ${variant === 'outline' ? 'outline-variant' : ''} ${
         isOpen ? 'is-open' : ''
       }`}
-      onClick={handleToggle}
+      onClick={handleHeaderClick}
     >
       <IconButton
         iconSize="small"
         mr={4}
         onKeyDown={handleHeaderKeyDown}
         onKeyUp={handleHeaderKeyUp}
+        onClick={handleToggle}
         data-role="accordion-button"
         type="button"
         role="button"
