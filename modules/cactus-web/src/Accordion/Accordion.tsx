@@ -84,15 +84,12 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
   } = useContext(AccordionContext)
 
   const handleHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement
-    if (
-      handleToggle &&
-      typeof handleToggle === 'function' &&
-      target.tagName !== 'svg' &&
-      target.tagName !== 'path' &&
-      target.tagName !== 'BUTTON' &&
-      target.getAttribute('data-role') !== 'accordion-button'
-    ) {
+    let element: HTMLElement | null = event.target as HTMLElement
+    do {
+      if (element.tagName === 'BUTTON') return
+      element = element.parentElement
+    } while (element !== null && element !== event.currentTarget)
+    if (handleToggle && typeof handleToggle === 'function') {
       handleToggle()
     }
   }
