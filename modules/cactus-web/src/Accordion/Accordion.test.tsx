@@ -490,5 +490,41 @@ describe('component: Accordion', () => {
 
       expect(accordion.querySelector('button[aria-label=Delete]')).toBeInTheDocument()
     })
+
+    test('clicking icon buttons inside header should not trigger opening/closing', async () => {
+      const noop = jest.fn()
+      const { getByTestId, container } = render(
+        <StyleProvider>
+          <Accordion>
+            <Accordion.Header
+              render={() => (
+                <Flex alignItems="center" width="100%">
+                  <Text as="h3">Test Header</Text>
+                  <IconButton
+                    iconSize="medium"
+                    variant="danger"
+                    ml="auto"
+                    label="Delete"
+                    onClick={noop}
+                    data-testid="delete"
+                  >
+                    <ActionsDelete aria-hidden="true" />
+                  </IconButton>
+                </Flex>
+              )}
+            />
+            <Accordion.Body>test</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      const deleteButton = getByTestId('delete')
+      await act(async () => {
+        fireEvent.click(deleteButton)
+        await animationRender()
+      })
+      expect(noop).toHaveBeenCalled()
+      expect(container).not.toHaveTextContent('Should not show')
+    })
   })
 })
