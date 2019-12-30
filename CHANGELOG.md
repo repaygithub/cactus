@@ -1,5 +1,12 @@
 # Changelog
 
+## [@repay/cactus-web@v0.7.2](https://github.com/repaygithub/cactus/commit/c3b00bc6115c9b6601a2aed59a409f7627424c4d)
+
+- fix(cactus-web): Fix buttons in header toggling accordion [d6a77de](https://github.com/repaygithub/cactus/commit/d6a77de4892d7fd1aad602f47d6c4e69b41dabd1)
+- fix(cactus-web): Use a do while loop to determine if the accordion should toggle [591cd25](https://github.com/repaygithub/cactus/commit/591cd251283db29424c7928d1bc7b077762cd2d5)
+- fix(cactus-web): Fix buttons in header toggling accordion [770b877](https://github.com/repaygithub/cactus/commit/770b8771b15d97661dc7367e5a39b56e996f4cf0)
+- chore(cactus-web): update changelog [0499f3d](https://github.com/repaygithub/cactus/commit/0499f3d01f03bfbfbddf1cc39a29e162e1af30ec)
+
 ## [@repay/cactus-i18n@v0.2.2](https://github.com/repaygithub/cactus/commit/e54664d0c27fbe374b01d8242771baafa806907a)
 
 - feat(cactus-i18n): upgrade project fluent libraries [84f04f1](https://github.com/repaygithub/cactus/commit/84f04f152c0b37267ac156d093d4b42e236bc21a)
