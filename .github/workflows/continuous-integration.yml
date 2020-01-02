@@ -1,0 +1,44 @@
+name: CI Pipeline
+on: push
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Cache Dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          restore-keys: |
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - name: NodeJS Version
+        run: node --version
+
+      - name: Install Packages
+        run: yarn install --frozen-lockfile
+
+      - name: Build cactus-fwk
+        run: yarn fwk build
+
+      - name: Build cactus-theme
+        run: yarn theme build
+
+      - name: Build cactus-i18n
+        run: yarn i18n build
+
+      - name: Build cactus-icons
+        run: yarn icons build
+
+      - name: Build cactus-web
+        run: yarn web build
+
+      - name: Test Packages
+        run: yarn run test:ci
