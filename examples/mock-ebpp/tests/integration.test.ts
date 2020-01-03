@@ -387,6 +387,6 @@ describe('Integration Tests', () => {
           ],
         },
       ])
-    })
+    }, 8000)
   })
 })
