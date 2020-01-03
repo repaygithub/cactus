@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { getActiveElement, sleep } from './helpers/wait'
-import { getDocument, queries } from 'pptr-testing-library'
+import { getDocument, queries, wait } from 'pptr-testing-library'
 import { RulesData, UIConfigData } from '../types'
 import Actions from './helpers/actions'
 import devices from 'puppeteer/DeviceDescriptors'
@@ -38,7 +38,7 @@ describe('Integration Tests', () => {
     })
 
     test('should be titled "UI Config"', async () => {
-      await expect(page.title()).resolves.toMatch('UI Config')
+      await wait(() => expect(page.title()).resolves.toMatch('UI Config'))
     })
 
     test('should fill out and submit the entire form', async () => {
@@ -219,7 +219,7 @@ describe('Integration Tests', () => {
     })
 
     test('should be titled "FAQ"', async () => {
-      await expect(page.title()).resolves.toMatch('FAQ')
+      await wait(() => expect(page.title()).resolves.toMatch('FAQ'))
     })
 
     test('use the DOWN arrow key to navigate even after the order changes', async () => {
@@ -318,8 +318,8 @@ describe('Integration Tests', () => {
       await server.close()
     })
 
-    test('should be titled "FAQ"', async () => {
-      await expect(page.title()).resolves.toMatch('Rules')
+    test('should be titled "Rules"', async () => {
+      await wait(() => expect(page.title()).resolves.toMatch('Rules'))
     })
 
     test('fill out and submit the form sequentially', async () => {
