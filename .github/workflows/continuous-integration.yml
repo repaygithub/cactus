@@ -9,15 +9,16 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Cache Dependencies
-        uses: actions/cache@v1
+      - name: Get Yarn Cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
         with:
-          path: node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            ${{ runner.os }}-yarn-
 
       - name: NodeJS Version
         run: node --version
