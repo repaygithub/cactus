@@ -6,5 +6,8 @@ cookies = cookies
 chips = chips
 fruit = fruit
 carrots = carrots
-go-to-snack = Visit { $snack } page
+go-to-cookies = Go to { cookies } page
+go-to-chips = Go to { chips } page
+go-to-fruit = Go to { fruit } page
+go-to-carrots = Go to { carrots } page
 `
