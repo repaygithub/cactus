@@ -1,4 +1,4 @@
 export default `
-header = All about fruit!
-description = Fruit is amazing, especially when it's perfectly ripe.
+fruit__header = All about fruit!
+fruit__description = Fruit is amazing, especially when it's perfectly ripe.
 `

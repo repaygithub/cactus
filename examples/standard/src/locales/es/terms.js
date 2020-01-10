@@ -1,5 +1,5 @@
 export default `
-terms-and-conditions =
+terms__terms-and-conditions =
   Al navegar a esta aplicación, usted acepta
   absolutamente nada. No se hacen suposiciones
   en su nombre sin su consentimiento. Solo te preguntamos

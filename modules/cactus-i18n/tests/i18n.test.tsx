@@ -182,7 +182,7 @@ key-for-no-people = blah blah blue stew`
         })
         expect(i18nController.get({ id: 'bogogo' })).toEqual([null, {}])
         expect(console.warn).toHaveBeenCalledWith(
-          `The requested id bogogo for section global does not exist in these translations: es, en`
+          `The requested message bogogo does not exist in these translations: es, en`
         )
       })
 
@@ -196,7 +196,7 @@ key-for-no-people = blah blah blue stew`
         })
         expect(i18nController.get({ section: 'foobar', id: 'bogogo' })).toEqual([null, {}])
         expect(console.warn).toHaveBeenCalledWith(
-          `The requested section foobar does not exist when requesting id bogogo`
+          `The requested message foobar__bogogo does not exist in these translations: en`
         )
       })
 
@@ -239,7 +239,7 @@ key-for-no-people = blah blah blue stew`
         const sectionPromise = MockPromise.resolve([
           {
             lang: 'en-US',
-            ftl: `runny-nose = This text should render`,
+            ftl: `kleenex__runny-nose = This text should render`,
           },
         ])
         //@ts-ignore
@@ -267,7 +267,7 @@ key-for-no-people = blah blah blue stew`
           global: `runny-nose = WRONG KEY`,
         })
         const globalPromise = MockPromise.resolve([{ lang: 'en', ftl: `runny-nose = WRONG KEY` }])
-        const sectionPromise = MockPromise.resolve([
+        const esGlobalPromise = MockPromise.resolve([
           {
             lang: 'es',
             ftl: `runny-nose = This text should render`,
@@ -275,7 +275,7 @@ key-for-no-people = blah blah blue stew`
         ])
         //@ts-ignore
         controller.load = jest.fn(({ section, lang }) =>
-          lang === 'en' ? globalPromise : sectionPromise
+          lang === 'en' ? globalPromise : esGlobalPromise
         )
         const { container } = render(
           <I18nProvider controller={controller}>
@@ -286,7 +286,7 @@ key-for-no-people = blah blah blue stew`
         )
         act(() => {
           globalPromise._call()
-          sectionPromise._call()
+          esGlobalPromise._call()
         })
         expect(container).toHaveTextContent('This text should render')
       })
@@ -328,7 +328,7 @@ key-for-no-people = blah blah blue stew`
         supportedLangs: ['en-US'],
         global,
       })
-      controller.setDict('en-US', 'kleenex', `key_for_the_people = We are NOT the people!`)
+      controller.setDict('en-US', 'kleenex', `kleenex__key_for_the_people = We are NOT the people!`)
       let container
       act(() => {
         let tester = render(
@@ -516,7 +516,7 @@ key-for-the-group = We are the { $groupName }!
 
     test('allows overriding section for text', () => {
       const global = `key-for-the-group= We are the { $groupName }!`
-      const simple = `key-for-the-group = We are the simple people!`
+      const simple = `simple__key-for-the-group = We are the simple people!`
       const controller = new I18nController({
         defaultLang: 'en-US',
         supportedLangs: ['en-US'],
@@ -589,7 +589,7 @@ key-for-the-group= We are the { $groupName }!
         supportedLangs: ['en-US'],
         global,
       })
-      controller.setDict('en-US', 'other', 'key-for-the-group = We are the OTHER people!')
+      controller.setDict('en-US', 'other', 'other__key-for-the-group = We are the OTHER people!')
       const TestI18nResource = () => {
         const [text, attrs] = useI18nResource('key-for-the-group', undefined, 'other')
         return (

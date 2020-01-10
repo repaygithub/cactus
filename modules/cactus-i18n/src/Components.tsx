@@ -15,6 +15,7 @@ const I18nProvider: React.FC<I18nProviderProps> = props => {
   if (!(controller instanceof BaseI18nController)) {
     throw Error('I18nProvider must be given a controller which extends BaseI18nController')
   }
+  // TODO remove reference to navigator.language to make platform agnostic
   const lang = props.lang || navigator.language
   let i18nContext: I18nContextType | null = null
   let [loadingState, setLoading] = useState({})
