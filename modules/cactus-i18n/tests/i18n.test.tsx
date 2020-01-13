@@ -157,6 +157,23 @@ key-for-no-people = blah blah blue stew`
       expect(controller.getText({ id: 'key_for_the_people' })).toBe('Nosotros somos personas!')
     })
 
+    test('should only attempt to load supported languages', () => {
+      const global = `
+key_for_the_people = We are the people!
+  .aria-label=anything { $value }
+  .name=test
+key-for-no-people = blah blah blue stew`
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'es'],
+        global,
+      })
+      // @ts-ignore
+      controller.load = jest.fn(args => MockPromise.resolve([{ lang: 'en', ftl: global }]))
+      controller._load({ lang: 'de-DE', section: 'global' })
+      expect(controller.load).not.toBeCalled()
+    })
+
     describe('with mocked console.error and console.warn', () => {
       let _error: any
       let _warn: any

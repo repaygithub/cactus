@@ -201,15 +201,15 @@ export default abstract class BaseI18nController {
     return message
   }
 
-  _load(args: { lang: string; section: string }): void {
-    const { lang, section } = args
+  _load({ lang: requestedLang, section }: { lang: string; section: string }): void {
+    const [lang] = this.negotiateLang(requestedLang)
     const loadingKey = `${section}/${lang}`
     if (this._loadingState[loadingKey] !== undefined) {
       return
     }
 
     this._loadingState[loadingKey] = 'loading'
-    this.load(args)
+    this.load({ lang, section })
       .then(resourceDefs => {
         resourceDefs.forEach(resDef => {
           this.setDict(resDef.lang, section, resDef.ftl)
