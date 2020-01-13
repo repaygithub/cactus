@@ -250,12 +250,10 @@ key-for-no-people = blah blah blue stew`
           supportedLangs: ['en', 'en-US'],
           global: `runny-nose = WRONG KEY`,
         })
-        const globalPromise = MockPromise.resolve([
-          { lang: 'en-US', ftl: `runny-nose = WRONG KEY` },
-        ])
+        const globalPromise = MockPromise.resolve([{ lang: 'en', ftl: `runny-nose = WRONG KEY` }])
         const sectionPromise = MockPromise.resolve([
           {
-            lang: 'en-US',
+            lang: 'en',
             ftl: `kleenex__runny-nose = This text should render`,
           },
         ])

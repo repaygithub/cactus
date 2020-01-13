@@ -96,6 +96,29 @@ return (
 )
 ```
 
+In the browser, it is recommended to use the user provided language by default but also allow the user to change as desired.
+
+```jsx
+// App.js
+import React, { useState } from 'react'
+import I18nProvider from '@repay/cactus-i18n'
+import i18nController from './I18nController'
+
+function App(props) {
+  const [lang, setLang] = useState(navigator.language)
+
+  return (
+    <I18nProvider controller={i18nController} lang={lang}>
+      <select name="lang" onChange={event => setLang(event.currentTarget.value)}>
+        ...
+        <option value="es">Español</option>
+      </select>
+      ...
+    </I18nProvider>
+  )
+}
+```
+
 ## I18nSection
 
 The `<I18nSection />` component was designed to allow the translations to be broken up into separate sections and loaded only when a specific section is needed. A section component alone will not render anything; it must be used with other internationalization components like `I18nText` or `I18nElement` in order to render any actual translations. This component is really there to tell any of its children i18n components where to look for translated text. It can also be used to manually change the rendered language in cases where a user wants to present information to another person.
@@ -152,12 +175,23 @@ const section = () => {
     </I18nSection>
   )
 }
-// Section overridden; translations for "my-section" will be loaded instead
+// Section overridden; translation for "my-section__translation-key" will be rendered instead
+// NOTE: the "my-section" should be loaded separately because the text element will not trigger a load
 const override = () => {
   return (
     <I18nSection name="example">
       ...
       <I18nText get="translation-key" section="my-section" args={{ groupName: "example" }} />
+    </I18nSection>
+  )
+}
+
+// The developer may also write the entire key out while providing the section as "global"
+const alsoOverride = () => {
+  return (
+    <I18nSection name="example">
+      ...
+      <I18nText get="my-section__translation-key" section="global" args={{ groupName: "example" }} />
     </I18nSection>
   )
 }

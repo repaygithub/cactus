@@ -15,10 +15,17 @@ const I18nProvider: React.FC<I18nProviderProps> = props => {
   if (!(controller instanceof BaseI18nController)) {
     throw Error('I18nProvider must be given a controller which extends BaseI18nController')
   }
-  // TODO remove reference to navigator.language to make platform agnostic
-  const lang = props.lang || navigator.language
-  let i18nContext: I18nContextType | null = null
+  if (typeof props.lang === 'string') {
+    controller.setLang(props.lang)
+  }
+  const lang = controller.lang
   let [loadingState, setLoading] = useState({})
+  let i18nContext: I18nContextType | null = {
+    controller: controller,
+    lang,
+    section: 'global',
+    loadingState,
+  }
   useEffect(() => {
     if (controller instanceof BaseI18nController) {
       controller.addListener(setLoading)
@@ -30,15 +37,6 @@ const I18nProvider: React.FC<I18nProviderProps> = props => {
       controller._load({ lang, section: 'global' })
     }
   }, [controller, lang])
-  if (controller instanceof BaseI18nController) {
-    controller.setLang(lang)
-    i18nContext = {
-      controller: controller,
-      lang,
-      section: 'global',
-      loadingState,
-    }
-  }
   return (
     <I18nContext.Provider value={i18nContext}>
       <React.Fragment>{props.children}</React.Fragment>
