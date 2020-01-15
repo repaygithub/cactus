@@ -224,6 +224,8 @@ const ValueSpan = styled.span`
   font-size: ${p => p.theme.fontSizes.p}px;
   white-space: nowrap;
   max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const Placeholder = styled.span`
