@@ -72,15 +72,17 @@ storiesOf('Select', module)
       onChange={(name, value: string | number | Array<string | number> | null) => value}
     >
       {({ value, onChange }) => (
-        <Select
-          options={longOptions}
-          name="random"
-          id="select-input"
-          disabled={boolean('disabled', false)}
-          {...eventLoggers}
-          onChange={onChange}
-          value={value}
-        />
+        <div style={{ width: '194px' }}>
+          <Select
+            options={longOptions}
+            name="random"
+            id="select-input"
+            disabled={boolean('disabled', false)}
+            {...eventLoggers}
+            onChange={onChange}
+            value={value}
+          />
+        </div>
       )}
     </FormHandler>
   ))
