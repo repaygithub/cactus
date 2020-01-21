@@ -94,6 +94,31 @@ function createMenuGroups(pages: Edges<Markdown>) {
         ],
       },
       {
+        title: 'Visual Hierarchy',
+        url: '/visual-hierarchy/general-guidelines',
+        order: 60,
+        items: [
+          {
+            title: 'General Guidelines',
+            url: '/visual-hierarchy/general-guidelines/',
+            order: 70,
+            items: [],
+          },
+          {
+            title: 'Decision Tree',
+            url: '/visual-hierarchy/decision-tree/',
+            order: 80,
+            items: [],
+          },
+          {
+            title: 'Channels Case Study',
+            url: '/visual-hierarchy/channels-case-study/',
+            order: 90,
+            items: [],
+          },
+        ],
+      },
+      {
         title: 'Storybooks',
         url: '/stories/',
         // always last
