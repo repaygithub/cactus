@@ -13,7 +13,7 @@ import useId from '../helpers/useId'
 
 interface FileInputFieldProps extends FileInputProps, MarginProps {
   className?: string
-  label: string
+  label: React.ReactNode
   labelProps?: object
   tooltip?: string
 }
@@ -64,7 +64,7 @@ export const FileInputField = styled(FileInputFieldBase)`
 
 // @ts-ignore
 FileInputField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   tooltip: PropTypes.string,
   name: PropTypes.string.isRequired,

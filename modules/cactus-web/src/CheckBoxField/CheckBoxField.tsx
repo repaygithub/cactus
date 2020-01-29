@@ -14,7 +14,7 @@ import useId from '../helpers/useId'
 interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'onBlur' | 'onFocus' | 'disabled'>,
     MarginProps {
-  label: string
+  label: React.ReactNode
   labelProps?: object
   id?: string
   name: string
@@ -89,7 +89,7 @@ export const CheckBoxField = styled(CheckBoxFieldBase)`
 
 // @ts-ignore
 CheckBoxField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   id: PropTypes.string,
   name: PropTypes.string.isRequired,

@@ -24,7 +24,7 @@ type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
 interface AccessibleFieldProps extends MarginProps, WidthProps {
   id?: string
   name: string
-  label: string
+  label: React.ReactNode
   labelProps?: Omit<React.ComponentPropsWithoutRef<typeof Label>, 'children'>
   tooltip?: string
   error?: string
@@ -147,7 +147,7 @@ export const AccessibleField = styled(AccessibleFieldBase)`
 `
 
 AccessibleField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   name: PropTypes.string.isRequired,
   className: PropTypes.string,

@@ -14,7 +14,7 @@ import useId from '../helpers/useId'
 export interface ToggleFieldProps
   extends MarginProps,
     Omit<ToggleProps, 'id' | 'onChange' | 'onFocus' | 'onBlur'> {
-  label: string
+  label: React.ReactNode
   /** props to be passed to the Label element (available for accessibility considerations) */
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
@@ -99,7 +99,7 @@ export const ToggleField = styled(ToggleFieldBase)`
 
 // @ts-ignore
 ToggleField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   id: PropTypes.string,
   name: PropTypes.string.isRequired,

@@ -14,7 +14,7 @@ import useId from '../helpers/useId'
 export interface RadioButtonFieldProps
   extends Omit<RadioButtonProps, 'id' | 'onChange' | 'onFocus' | 'onBlur'>,
     MarginProps {
-  label: string
+  label: React.ReactNode
   name: string
   labelProps?: object
   id?: string
@@ -87,7 +87,7 @@ export const RadioButtonField = styled(RadioButtonFieldBase)`
 
 // @ts-ignore
 RadioButtonField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
   id: PropTypes.string,
