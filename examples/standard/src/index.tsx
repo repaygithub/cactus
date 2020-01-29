@@ -16,7 +16,7 @@ appRoot.className = 'app-root'
 document.body.appendChild(appRoot)
 
 class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsObject }> {
-  state = { lang: '', features: {} }
+  state = { lang: navigator.language, features: {} }
 
   handleLangChange = (event: ChangeEvent<HTMLSelectElement>) =>
     this.setState({ lang: event.target.value })

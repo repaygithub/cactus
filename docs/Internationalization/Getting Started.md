@@ -24,7 +24,7 @@ welcome-message = Welcome, { $user }!`
 
 // en/accounts.js
 export default `
-welcome-message = Welcome to the accounts page, { $user }!`
+accounts__welcome-message = Welcome to the accounts page, { $user }!`
 
 // es/global.js
 export default `
@@ -32,11 +32,11 @@ welcome-message = ¡Bienvenido, { $user }!`
 
 // es/accounts.js
 export default `
-welcome-message =
-¡Bienvenido a la página de cuentas, { $user }!`
+accounts__welcome-message =
+  ¡Bienvenido a la página de cuentas, { $user }!`
 ```
 
-Notice that we put translations in two separate folders; one for English and one for Spanish. We also made `global.js` and `accounts.js`. This is because of how the i18n framework utilizes sections for organizations and efficiency. We'll discuss that more later. For now, let's move on to extending the `BaseI18nController` class.
+Notice that we put translations in two separate folders; one for English and one for Spanish. We also made `global.js` and `accounts.js`. This is because of how the i18n framework utilizes sections for organization and efficiency. We'll discuss that more later. For now, let's move on to extending the `BaseI18nController` class.
 
 ## Extending `BaseI18nController`
 
@@ -116,7 +116,7 @@ const mainComponent = () => {
 } // Welcome to the accounts page, CS Human!
 ```
 
-Notice that we used the same `get` value on `I18nText`, but by making the `I18nText` component as a child of `I18nSection`, we told the controller that we should be loading translations for the "accounts" section, instead of global. What if we wanted to load translations for a different language, though? To do so, we'll just need to change the `lang` prop on `I18nProvider`:
+Notice that we used the same `get` value on `I18nText`, but by making the `I18nText` component as a child of `I18nSection`, we told the controller that we should be loading translations for the "accounts" section, instead of global, the library then merges the section name and the get key to find the scopped message under `accounts__welcome-message`. What if we wanted to load translations for a different language, though? To do so, we'll just need to change the `lang` prop on `I18nProvider`:
 
 ```jsx
 // index.js

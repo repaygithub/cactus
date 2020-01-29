@@ -20,13 +20,6 @@ const Snacks: React.FC<RouteComponentProps> = () => {
   const [includesCarrots] = useFeatureFlags('include_carrot_snacks')
   const snackKeys = includesCarrots ? snackKeysWithCarrots : snackKeysNoCarrots
 
-  // We always get all translations to ensure hooks order
-  const snackTranslationMap: { [k: string]: string | null } = {
-    cookies: useI18nText('cookies', undefined, 'snacks'),
-    chips: useI18nText('chips', undefined, 'snacks'),
-    fruit: useI18nText('fruit', undefined, 'snacks'),
-    carrots: useI18nText('carrots', undefined, 'snacks'),
-  }
   // memoize expensive calculation
   const snackList = useMemo(() => fillSnackList(snackKeys), [snackKeys])
   return (
@@ -38,7 +31,7 @@ const Snacks: React.FC<RouteComponentProps> = () => {
         {snackKeys.map((k, i) => (
           <li key={`${k}-${i}`}>
             <Link to={k}>
-              <I18nText get="go-to-snack" args={{ snack: snackTranslationMap[k] }} />
+              <I18nText get={`go-to-${k}`} />
             </Link>
           </li>
         ))}
@@ -48,7 +41,11 @@ const Snacks: React.FC<RouteComponentProps> = () => {
       </div>
       <ul>
         {snackList.map((item, ix) => {
-          return <li key={ix}>{snackTranslationMap[item]}</li>
+          return (
+            <li key={ix}>
+              <I18nText get={item} />
+            </li>
+          )
         })}
       </ul>
     </I18nSection>

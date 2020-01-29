@@ -4,9 +4,9 @@ import { ResourceDefinition } from './types'
 
 interface Dictionary {
   /**
-   * Dictionary containing fluent bundles for each section
+   * Dictionary containing fluent bundles for each language with currently loaded sections
    */
-  [section: string]: { [lang: string]: FluentBundle }
+  [lang: string]: FluentBundle
 }
 
 export interface LoadingState {
@@ -71,7 +71,14 @@ export default abstract class BaseI18nController {
     this._supportedLangs = options.supportedLangs
     this.defaultLang = options.defaultLang
     this.setLang(options.lang || this.defaultLang)
-    _dictionaries.set(this, { global: {} })
+    const bundles = this._supportedLangs.reduce(
+      (memo, lang) => {
+        memo[lang] = new FluentBundle(lang)
+        return memo
+      },
+      {} as Dictionary
+    )
+    _dictionaries.set(this, bundles)
     this._debugMode = Boolean(options.debugMode)
 
     if (options.global === undefined) {
@@ -94,18 +101,18 @@ export default abstract class BaseI18nController {
           `Ignore this message if you have just updated the requested language.`
       )
     }
-    const bundle = new FluentBundle(lang)
+    const bundle = this._getDict()[lang]
+    if (!bundle) {
+      console.error(
+        `Attempting to set dictionary for unsupported language: ${lang} and section: ${section}`
+      )
+      return
+    }
     const errors = bundle.addResource(new FluentResource(ftl))
     if (Array.isArray(errors) && errors.length) {
       console.error(`Errors found in resource for section ${section} ${lang}`)
       console.log(errors)
     }
-    const _dict = this._getDict()
-    if (!_dict[section]) {
-      _dict[section] = {}
-    }
-    _dict[section][lang] = bundle
-
     this._loadingState[`${section}/${lang}`] = 'loaded'
   }
 
@@ -132,14 +139,14 @@ export default abstract class BaseI18nController {
     id: string
     lang?: string
   }): [(string | null), object] {
-    const _dict = this._getDict()
-    const bundles = _dict[section]
+    const bundles = this._getDict()
+    const key = section === 'global' ? id : `${section}__${id}`
     if (bundles !== undefined) {
       let languages = this._languages
       if (typeof overrideLang === 'string') {
         languages = this.negotiateLang(overrideLang)
       }
-      const lang = languages.find(l => bundles[l] && bundles[l].hasMessage(id))
+      const lang = languages.find(l => bundles[l] && bundles[l].hasMessage(key))
       const bundle = lang && bundles[lang]
       if (!bundle) {
         if (
@@ -147,13 +154,13 @@ export default abstract class BaseI18nController {
           (section !== 'global' || this._loadingState[`global/${this.defaultLang}`] === 'loaded')
         ) {
           console.warn(
-            `The requested id ${id} for section ${section} does not exist` +
+            `The requested message ${key} does not exist` +
               ` in these translations: ${this._languages.join(', ')}`
           )
         }
         return [null, {}]
       }
-      const message = bundle.getMessage(id)
+      const message = bundle.getMessage(key)
       let text: string | null = null
       let attrs: { [key: string]: string } = {}
       let errors: any[] = []
@@ -194,15 +201,15 @@ export default abstract class BaseI18nController {
     return message
   }
 
-  _load(args: { lang: string; section: string }): void {
-    const { lang, section } = args
+  _load({ lang: requestedLang, section }: { lang: string; section: string }): void {
+    const [lang] = this.negotiateLang(requestedLang)
     const loadingKey = `${section}/${lang}`
     if (this._loadingState[loadingKey] !== undefined) {
       return
     }
 
     this._loadingState[loadingKey] = 'loading'
-    this.load(args)
+    this.load({ lang, section })
       .then(resourceDefs => {
         resourceDefs.forEach(resDef => {
           this.setDict(resDef.lang, section, resDef.ftl)

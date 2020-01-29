@@ -1,4 +1,4 @@
 export default `
-header = All about chips!
-description = We like lays, doritos, and potato chips.
+chips__header = All about chips!
+chips__description = We like lays, doritos, and potato chips.
 `
