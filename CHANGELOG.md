@@ -1,5 +1,18 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.0](https://github.com/repaygithub/cactus/commit/ac18a3afc5c594376dbbe2ed61cd012788b557f1)
+
+- feat(cactus-i18n): make i18n library platform agnostic [ea68ede](https://github.com/repaygithub/cactus/commit/ea68edeec9ab7a035fb0c989f006ef832b1e29c6)
+  - 🧨 BREAKING: The I18nProvider will no longer use navigator.language internally to
+ensure cross platform usage. Therefore, any DOM usage should provide the
+navigator.language as the initial value for I18nProvider lang prop.
+- feat(cactus-i18n): only load supported languages [859a998](https://github.com/repaygithub/cactus/commit/859a9987023f39f97b9d3d6f3eaeddefecc46bc7)
+- feat(cactus-i18n): merge sections into a single bundle per language [27d778a](https://github.com/repaygithub/cactus/commit/27d778ab5f2bc9ecd44799f8cf4f210aaffb4af1)
+  - 🧨 BREAKING: all keys in a given section must be prefixed with the pattern:
+<section>__<id> so that there are no conflicts when merging the resources into
+the single bundle.
+- chore(cactus-i18n): update changelog [77c017b](https://github.com/repaygithub/cactus/commit/77c017b45d0c3acae469a76f5487bdcf178c80c2)
+
 ## [@repay/cactus-web@v0.7.2](https://github.com/repaygithub/cactus/commit/c3b00bc6115c9b6601a2aed59a409f7627424c4d)
 
 - fix(cactus-web): Fix buttons in header toggling accordion [d6a77de](https://github.com/repaygithub/cactus/commit/d6a77de4892d7fd1aad602f47d6c4e69b41dabd1)
