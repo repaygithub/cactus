@@ -1,5 +1,5 @@
 import { FluentBundle, FluentResource } from '@fluent/bundle/compat'
-import { negotiateLanguages } from '@fluent/langneg'
+import { negotiateLanguages } from '@fluent/langneg/compat'
 import { ResourceDefinition } from './types'
 
 interface Dictionary {
