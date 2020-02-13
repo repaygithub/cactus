@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.1](https://github.com/repaygithub/cactus/commit/d441d9973494c606941cc66cad0955a95bce3f86)
+
+- fix(cactus-i18n): use compat version of langneg lib [604acd2](https://github.com/repaygithub/cactus/commit/604acd2f76782faa19d743e84ded6584bb046da3)
+- fix(cactus-i18n): use compat version of langneg lib [20df999](https://github.com/repaygithub/cactus/commit/20df9999c486c0ffa121fa17e230e01b3e3098f6)
+- chore(cactus-i18n): update changelog [7a823be](https://github.com/repaygithub/cactus/commit/7a823be0bca850ac9770c4fd5ed98979b22bec41)
+
 ## [@repay/cactus-i18n@v0.3.0](https://github.com/repaygithub/cactus/commit/ac18a3afc5c594376dbbe2ed61cd012788b557f1)
 
 - feat(cactus-i18n): make i18n library platform agnostic [ea68ede](https://github.com/repaygithub/cactus/commit/ea68edeec9ab7a035fb0c989f006ef832b1e29c6)
