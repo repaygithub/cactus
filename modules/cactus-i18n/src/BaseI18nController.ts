@@ -1,4 +1,4 @@
-import { FluentBundle, FluentResource } from '@fluent/bundle/compat'
+import { FluentBundle, FluentResource } from '@fluent/bundle'
 import { negotiateLanguages } from '@fluent/langneg/compat'
 import { ResourceDefinition } from './types'
 
