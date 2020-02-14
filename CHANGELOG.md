@@ -1,5 +1,13 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.4](https://github.com/repaygithub/cactus/commit/d2cec267e9c5d52356ab70470b963b4417b2fde7)
+
+- fix(cactus-i18n): Remove /compat from fluent bundle import [e1fa1e4](https://github.com/repaygithub/cactus/commit/e1fa1e4ca465f3a9fa7c2977826ec1325b3b1b49)
+- docs(cactus-i18n): add documentation around transpiling fluent [ece24bb](https://github.com/repaygithub/cactus/commit/ece24bbe2ff9e714f637ffccfd41dac41c625565)
+- fix(cactus-i18n): Remove /compat from fluent langneg [7672a45](https://github.com/repaygithub/cactus/commit/7672a4559dec231eb1c4695e3a1fa5adc1951138)
+- fix(cactus-i18n): Remove /compat from fluent bundle import [c8e21ff](https://github.com/repaygithub/cactus/commit/c8e21ff8cc50e5b6181e3b9a6c1f920c73e4fbb2)
+- chore(cactus-i18n): update changelog [31d513e](https://github.com/repaygithub/cactus/commit/31d513e1befe09840a643ffcaf2b005185478ce2)
+
 ## [@repay/cactus-i18n@v0.3.1](https://github.com/repaygithub/cactus/commit/d441d9973494c606941cc66cad0955a95bce3f86)
 
 - fix(cactus-i18n): use compat version of langneg lib [604acd2](https://github.com/repaygithub/cactus/commit/604acd2f76782faa19d743e84ded6584bb046da3)
