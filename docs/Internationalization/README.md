@@ -23,6 +23,35 @@ Because we make use of Fluent's tools to make internationalization possible, our
 
 Getting started with the internationalization tools that are available with the Cactus Framework is easy, and we have a quick guide for setting up a project to achieve internationalization, along with a working example to check out. To find out more about what you need to do to get started, go [here](./Getting%20Started.md).
 
+1. Install this library
+
+```bash
+yarn add @repay/cactus-i18n
+```
+
+2. Add transpiling to the Fluent packages for cross-browser support
+
+```js
+// webpack.config.js
+module.exports = {
+  // ... other config definitions
+  module: {
+    rules: [
+      // add this rule
+      {
+        test: /@fluent.*\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            // babel config / presets
+          },
+        },
+      },
+    ],
+  },
+}
+```
+
 ## API Documentation
 
 We have detailed documentation on each of the classes, functions and components you'll need to integrate internationalization into your application [here](./API%20Documentation.md).
