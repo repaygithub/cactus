@@ -6,6 +6,8 @@ A React library to implement i18n using Fluent.
 
 Documentation is available in the [root of the repository](https://github.com/repaygithub/cactus/tree/master/docs/Internationalization/).
 
+Note, the `@fluent` libraries used here are not transpiled, therefore any necessary compatibility must be provided and the `@fluent` libraries should be transpiled as described under [Internationalization - Getting Started](https://github.com/repaygithub/cactus/tree/master/docs/Internationalization/)
+
 ## Contributing
 
 Use the example applications for implementation testing and UAT.
