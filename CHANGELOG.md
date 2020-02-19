@@ -1,5 +1,10 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.5](https://github.com/repaygithub/cactus/commit/fd736f5a6ba51bb1fa4780d34983c44ec79f848f)
+
+- feat(cactus-i18n): allow choosing to use isolating char (#207) [6fa5ca4](https://github.com/repaygithub/cactus/commit/6fa5ca4b047180e6854c03a6f7a556d4b00325d2)
+- chore(cactus-i18n): update changelog [197e293](https://github.com/repaygithub/cactus/commit/197e2931e07810b696583078b6fe4d4390e8732f)
+
 ## [@repay/cactus-i18n@v0.3.4](https://github.com/repaygithub/cactus/commit/d2cec267e9c5d52356ab70470b963b4417b2fde7)
 
 - fix(cactus-i18n): Remove /compat from fluent bundle import [e1fa1e4](https://github.com/repaygithub/cactus/commit/e1fa1e4ca465f3a9fa7c2977826ec1325b3b1b49)
