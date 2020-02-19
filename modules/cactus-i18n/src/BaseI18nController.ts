@@ -41,6 +41,12 @@ interface I18nControllerOptions {
 
   /** Flag for displaying error messages. Default is false */
   debugMode?: boolean
+
+  /**
+   * Flag to disable bidi isolating unicode characters.
+   * @default = true
+   */
+  useIsolating?: boolean
 }
 
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
@@ -68,12 +74,15 @@ export default abstract class BaseI18nController {
       throw new Error('The default language provided is not a supported language')
     }
 
+    const useIsolating = options.hasOwnProperty('useIsolating')
+      ? Boolean(options.useIsolating)
+      : true
     this._supportedLangs = options.supportedLangs
     this.defaultLang = options.defaultLang
     this.setLang(options.lang || this.defaultLang)
     const bundles = this._supportedLangs.reduce(
       (memo, lang) => {
-        memo[lang] = new FluentBundle(lang)
+        memo[lang] = new FluentBundle(lang, { useIsolating })
         return memo
       },
       {} as Dictionary

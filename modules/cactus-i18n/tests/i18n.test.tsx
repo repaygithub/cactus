@@ -157,6 +157,31 @@ key-for-no-people = blah blah blue stew`
       expect(controller.getText({ id: 'key_for_the_people' })).toBe('Nosotros somos personas!')
     })
 
+    test('defaults to use bidi isolating', () => {
+      const global = `for-all-to-see = You can't see why this fails { $foo }`
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'es'],
+        global,
+      })
+      expect(controller.getText({ id: 'for-all-to-see', args: { foo: 'bar' } })).toBe(
+        `You can't see why this fails \u2068bar\u2069`
+      )
+    })
+
+    test('can disabled bidi isolating characters', () => {
+      const global = `for-all-to-see = No hidden characters here { $foo }`
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'es'],
+        global,
+        useIsolating: false,
+      })
+      expect(controller.getText({ id: 'for-all-to-see', args: { foo: 'bar' } })).toBe(
+        'No hidden characters here bar'
+      )
+    })
+
     test('should only attempt to load supported languages', () => {
       const global = `
 key_for_the_people = We are the people!
