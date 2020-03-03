@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
 import { ReactComponent as Cactus } from '../assets/cactus.svg'
+import { CactusProvider, CactusThemeWidget } from './CactusProvider'
 import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
 import { Location, WindowLocation } from '@reach/router'
 import { Motion, spring } from 'react-motion'
@@ -484,7 +485,7 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
           content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2.00"
         />
       </Helmet>
-      <StyleProvider global>
+      <CactusProvider>
         <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
           {({ width }) => {
             return (
@@ -524,12 +525,13 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
                   </InnerSidebar>
                 </OuterSidebar>
                 <WindowBox style={{ marginLeft: hasOverlay ? 0 : width }}>{children}</WindowBox>
+                <CactusThemeWidget />
                 {hasOverlay && isOpen && <Overlay onClick={toggleOpen} />}
               </div>
             )
           }}
         </Motion>
-      </StyleProvider>
+      </CactusProvider>
     </React.Fragment>
   )
 }

@@ -22,7 +22,7 @@ const Table = styled.table`
     padding: 0;
     font-size: 1.2em;
     text-align: left;
-    color: ${p => p.theme.colors.baseText};
+    color: ${p => p.theme.colors.white};
   }
 
   th {
