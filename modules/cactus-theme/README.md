@@ -16,6 +16,10 @@ Running tests
 
 `yarn test`
 
+Running tests in watch mode
+
+`yarn tdd`
+
 Building the repository
 
 `yarn build`
