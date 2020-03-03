@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`@repay/cactus-i18n should match snapshot of exports 1`] = `
+Array [
+  "generateTheme",
+  "default",
+]
+`;

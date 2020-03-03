@@ -1,0 +1,3 @@
+{
+  "presets": ["@repay/babel-preset"],
+}
