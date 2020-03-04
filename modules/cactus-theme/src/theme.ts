@@ -111,6 +111,12 @@ export type CactusColor = Exclude<keyof CactusTheme['colors'], 'status'>
 
 export type ColorVariant = keyof CactusTheme['colorStyles']
 
+/** Neutrals */
+let white = `hsl(0, 0%, 100%)`
+let lightGray = `hsl(0, 0%, 90%)`
+let mediumGray = `hsl(0, 0%, 70%)`
+let darkGray = `hsl(0, 0%, 50%)`
+
 type HueGeneratorOptions = {
   primaryHue: number
 }
@@ -130,12 +136,6 @@ function fromHue({
   let mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
   let darkContrast = `hsl(${primaryHue}, 9%, 35%)`
   let darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
-
-  /** Neutrals */
-  let white = `hsl(0, 0%, 100%)`
-  let lightGray = `hsl(0, 0%, 90%)`
-  let mediumGray = `hsl(0, 0%, 70%)`
-  let darkGray = `hsl(0, 0%, 50%)`
 
   /** Notification Colors */
   let success = `hsl(145, 89%, 28%)`
@@ -246,12 +246,6 @@ function fromTwoColor({
   const secondaryRgb = hexToRgb(secondary)
   let [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
   let [secondaryHue, secondarySaturation, secondaryLightness] = rgbToHsl(...secondaryRgb)
-
-  /** Neutrals */
-  let white = `hsl(0, 0%, 100%)`
-  let lightGray = `hsl(0, 0%, 90%)`
-  let mediumGray = `hsl(0, 0%, 70%)`
-  let darkGray = `hsl(0, 0%, 50%)`
 
   /** Notification Colors */
   // TODO determine colors to contrast with CTA hue
