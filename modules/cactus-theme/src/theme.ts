@@ -246,6 +246,7 @@ function fromTwoColor({
   const secondaryRgb = hexToRgb(secondary)
   let [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
   let [secondaryHue, secondarySaturation, secondaryLightness] = rgbToHsl(...secondaryRgb)
+  const isSecondaryWhite = secondaryLightness === 100
 
   /** Notification Colors */
   // TODO determine colors to contrast with CTA hue
@@ -271,7 +272,7 @@ function fromTwoColor({
   }
 
   // both colors are undefined or white
-  if (primaryLightness === 100 && secondaryLightness === 100) {
+  if (primaryLightness === 100 && isSecondaryWhite) {
     /** Contrasts */
     let lightContrast = `hsl(${primaryHue}, 29%, 90%)`
     let mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
@@ -354,16 +355,17 @@ function fromTwoColor({
     ]
   }
 
-  // primary is non-black but secondary is white
-  if (secondaryLightness === 100) {
+  // primary is non-black and secondary is light or white
+  if (isSecondaryWhite || !isDark(...secondaryRgb)) {
     /** Core colors */
     let base = `hsl(${primaryHue}, ${primarySaturation}%, ${primaryLightness}%)`
+    let contrastHue = isSecondaryWhite ? primaryHue : secondaryHue
 
     /** Contrasts */
-    let lightContrast = `hsl(${primaryHue}, 29%, 90%)`
-    let mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
-    let darkContrast = `hsl(${primaryHue}, 9%, 35%)`
-    let darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
+    let lightContrast = `hsl(${contrastHue}, 29%, 90%)`
+    let mediumContrast = `hsl(${contrastHue}, 18%, 45%)`
+    let darkContrast = `hsl(${contrastHue}, 9%, 35%)`
+    let darkestContrast = `hsl(${contrastHue}, 10%, 20%)`
 
     let baseText = isDark(...primaryRgb) ? white : darkestContrast
 
@@ -462,7 +464,6 @@ function fromTwoColor({
   let baseText = isDark(...primaryRgb) ? white : darkestContrast
 
   let callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
-  // TODO text color generator
   let callToActionText = isDark(...secondaryRgb) ? white : darkestContrast
   let transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.25)`
 

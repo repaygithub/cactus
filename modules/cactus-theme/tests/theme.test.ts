@@ -4,29 +4,34 @@ import Color from 'color'
 
 function themeAccessibility(themeName: string, theme: CactusTheme) {
   describe(`${themeName} meets basic accessibility contrast thresholds`, () => {
-    test('color base', () => {
+    test('baseText on base', () => {
       expect(
-        new Color(cactusTheme.colors.base).contrast(new Color(cactusTheme.colors.baseText))
+        new Color(theme.colors.base).contrast(new Color(theme.colors.baseText))
       ).toBeGreaterThanOrEqual(4.5)
     })
 
-    test('color callToAction', () => {
+    test('callToActionText on callToAction', () => {
       expect(
-        new Color(cactusTheme.colors.callToAction).contrast(
-          new Color(cactusTheme.colors.callToActionText)
-        )
+        new Color(theme.colors.callToAction).contrast(new Color(theme.colors.callToActionText))
       ).toBeGreaterThanOrEqual(4.5)
     })
 
-    // @ts-ignore
-    Object.keys(cactusTheme.colorStyles).forEach((name: keyof CactusTheme['colorStyles']) => {
-      test(`colorStyle ${name}`, () => {
-        expect(
-          new Color(cactusTheme.colorStyles[name].backgroundColor).contrast(
-            new Color(cactusTheme.colorStyles[name].color)
-          )
-        ).toBeGreaterThanOrEqual(4.5)
-      })
+    test('callToAction on white', () => {
+      expect(
+        new Color(theme.colors.callToAction).contrast(new Color('#FFFFFF'))
+      ).toBeGreaterThanOrEqual(4.5)
+    })
+
+    Object.keys(theme.colorStyles).forEach((name: keyof typeof theme['colorStyles']) => {
+      if (typeof name === 'string') {
+        test(`colorStyle ${name}`, () => {
+          expect(
+            new Color(theme.colorStyles[name].backgroundColor).contrast(
+              new Color(theme.colorStyles[name].color)
+            )
+          ).toBeGreaterThanOrEqual(4.5)
+        })
+      }
     })
   })
 }
