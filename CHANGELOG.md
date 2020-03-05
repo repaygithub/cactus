@@ -1,5 +1,13 @@
 # Changelog
 
+## [@repay/cactus-theme@v0.4.6](https://github.com/repaygithub/cactus/commit/78a175a3b1906601e9bc89cfd1c98880018dae45)
+
+- feat(cactus-theme): adds option to generate theme from hex colors [4a0c41e](https://github.com/repaygithub/cactus/commit/4a0c41e26f49f055bd307f1c4b02aa647f6fa01a)
+- feat(cactus-theme): improve accessibility when secondary is light [52507f7](https://github.com/repaygithub/cactus/commit/52507f7e39ebc338e965bf81264b041bed782346)
+- refactor(cactus-theme): move common variables to higher scope [045007f](https://github.com/repaygithub/cactus/commit/045007f4bd1797d2484b451b18b12ff5c3c0b1a4)
+- docs(cactus-theme): include hex color theme generation option [5e419b1](https://github.com/repaygithub/cactus/commit/5e419b116299fd33cab48766f2da1fc9bc98a71f)
+- feat(cactus-theme): adds option to generate theme from hex colors [dbaf80c](https://github.com/repaygithub/cactus/commit/dbaf80c67705389c80f87fb421295515def7f347)
+
 ## [@repay/cactus-i18n@v0.3.5](https://github.com/repaygithub/cactus/commit/fd736f5a6ba51bb1fa4780d34983c44ec79f848f)
 
 - feat(cactus-i18n): allow choosing to use isolating char (#207) [6fa5ca4](https://github.com/repaygithub/cactus/commit/6fa5ca4b047180e6854c03a6f7a556d4b00325d2)
