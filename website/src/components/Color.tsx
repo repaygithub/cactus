@@ -24,6 +24,7 @@ import {
 } from 'styled-system'
 import { Box, Flex } from '@repay/cactus-web'
 import { Span } from './Text'
+import { useCactusTheme } from './CactusProvider'
 import cactusTheme, { CactusColor, ColorVariant } from '@repay/cactus-theme'
 import Color from 'color'
 
@@ -40,15 +41,17 @@ type ColorDisplayProps = {
   textColor?: CactusColor | string
 }
 
+const cactusColors = Object.keys(cactusTheme.colors)
 function isCactusColor(color: string): color is CactusColor {
-  return cactusTheme.colors.hasOwnProperty(color)
+  return cactusColors.includes(color)
 }
 
 function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
+  const theme = useCactusTheme()
   const hasDisplayName = Boolean(displayName)
   let hslaStr: string
   if (isCactusColor(color)) {
-    hslaStr = cactusTheme.colors[color]
+    hslaStr = theme.colors[color]
   } else {
     hslaStr = color
   }
@@ -66,7 +69,7 @@ function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
       bg={color}
       borderWidth="1px"
       borderStyle="solid"
-      borderColor={isWhite ? cactusTheme.colors.mediumGray : color}
+      borderColor={isWhite ? theme.colors.mediumGray : color}
       borderRadius="4px"
       style={extraStyles}
     >
@@ -92,8 +95,9 @@ type ColorBoxProps = {
 }
 
 export function ColorBox({ name, title, children }: ColorBoxProps) {
+  const theme = useCactusTheme()
   let displayName = title || upperCaseFirst(name)
-  let variant = cactusTheme.colorStyles[name]
+  let variant = theme.colorStyles[name]
   return (
     <Box px={4} py={3} width="240px">
       <ColorDisplay
@@ -122,6 +126,7 @@ export function PaletteBox({ colors, title, children }: PaletteBoxProps) {
     <Box px={4} py={3} width="240px">
       {colors.map((item, index) => (
         <ColorDisplay
+          key={item.bg}
           displayName={index === colors.length ? title : undefined}
           color={item.bg}
           textColor={item.color}
@@ -261,7 +266,6 @@ tr:first-child {
 `
 
 const whiteColor = new Color(cactusTheme.colors.white)
-const darkestContrastColor = new Color(cactusTheme.colors.darkestContrast)
 
 type AccessibilityLevel = 'AA' | 'AAA' | 'interface'
 type AccessibilityTextSize = 'normal' | 'large'
@@ -340,13 +344,14 @@ interface AccessibilityBoxProps {
 }
 
 export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps) {
+  const theme = useCactusTheme()
   const compareColor: CactusColor = isDark ? 'white' : 'darkestContrast'
-  const borderColor = cactusTheme.colors[compareColor]
+  const borderColor = theme.colors[compareColor]
   const borderStyle = `1px solid ${borderColor}`
-  const hslaStr = cactusTheme.colors[color]
+  const hslaStr = theme.colors[color]
   let thisColor = new Color(hslaStr)
   const contrastToWhite = thisColor.contrast(whiteColor)
-  const contrastToDarkestContrast = thisColor.contrast(darkestContrastColor)
+  const contrastToDarkestContrast = thisColor.contrast(new Color(theme.colors.darkestContrast))
   return (
     <AccessibilityFlex
       p={4}

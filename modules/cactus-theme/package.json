@@ -4,23 +4,41 @@
   "description": "The theme for the Cactus design-system at REPAY",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-theme",
   "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/theme.cjs.js",
+  "module": "dist/theme.esm.js",
+  "types": "dist/theme.d.ts",
   "sideEffects": false,
   "scripts": {
     "cleanup": "rm -rf dist",
-    "test": "echo no unit tests implemented for @repay/cactus-theme",
+    "test": "jest",
+    "tdd": "jest --watch",
     "test:local": " yarn test:types && yarn test",
     "test:ci": "yarn test:local --maxWorkers=2",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
-    "dev": "repay-scripts dev --lib index.ts",
+    "dev": "repay-scripts dev --lib src/theme.ts",
     "prebuild": "yarn build:types",
-    "build": "repay-scripts build --lib index.ts",
+    "build": "repay-scripts build --lib src/theme.ts",
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
+    "@repay/babel-preset": "^0.3.0",
     "@repay/scripts": "^0.3.2",
+    "color": "^3.1.2",
     "typescript": "^3.7.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": "tests/.*\\.test\\.(jsx?|tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ]
   }
 }
