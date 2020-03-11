@@ -281,6 +281,37 @@ key-for-no-people = blah blah blue stew`
       expect(container).toHaveTextContent('This is the default content.')
     })
 
+    test('passed extra data to load()', () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+        global: `runny-nose = WRONG KEY`,
+      })
+      const sectionPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `kleenex__runny-nose = This text should render`,
+        },
+      ])
+      //@ts-ignore
+      controller.load = jest.fn(() => sectionPromise)
+
+      render(
+        <I18nProvider controller={controller}>
+          <I18nSection name="kleenex" dynamic>
+            <I18nText get="runny-nose" />
+          </I18nSection>
+        </I18nProvider>
+      )
+      act(() => {
+        sectionPromise._call()
+      })
+      expect(controller.load).toHaveBeenCalledWith(
+        { section: 'kleenex', lang: 'en' },
+        { dynamic: true }
+      )
+    })
+
     describe('should override', () => {
       test('section name', () => {
         const controller = new I18nController({
@@ -343,6 +374,47 @@ key-for-no-people = blah blah blue stew`
         })
         expect(container).toHaveTextContent('This text should render')
       })
+    })
+
+    test('will load extra dependencies', () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+        global: `runny-nose = WRONG KEY`,
+      })
+      const kleenexPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `kleenex__runny-nose = { needed__runny-nose }`,
+        },
+      ])
+      const neededPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `needed__runny-nose = This text should render`,
+        },
+      ])
+      //@ts-ignore
+      controller.load = jest.fn(({ section }) =>
+        section === 'needed' ? neededPromise : kleenexPromise
+      )
+
+      const { container } = render(
+        <I18nProvider controller={controller}>
+          <I18nSection name="kleenex" dependencies={['needed']}>
+            <I18nText get="runny-nose" />
+          </I18nSection>
+        </I18nProvider>
+      )
+      act(() => {
+        kleenexPromise._call()
+      })
+      // should not render until 'needed' section is also loaded
+      expect(container).toHaveTextContent('')
+      act(() => {
+        neededPromise._call()
+      })
+      expect(container).toHaveTextContent('This text should render')
     })
   })
 

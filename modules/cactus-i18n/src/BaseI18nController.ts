@@ -97,7 +97,10 @@ export default abstract class BaseI18nController {
     }
   }
 
-  abstract load({ lang, section }: { lang: string; section: string }): Promise<ResourceDefinition[]>
+  abstract load(
+    { lang, section }: { lang: string; section: string },
+    extra: { [key: string]: any }
+  ): Promise<ResourceDefinition[]>
 
   _getDict(): Dictionary {
     return _dictionaries.get(this) || {}
@@ -210,7 +213,10 @@ export default abstract class BaseI18nController {
     return message
   }
 
-  _load({ lang: requestedLang, section }: { lang: string; section: string }): void {
+  _load(
+    { lang: requestedLang, section }: { lang: string; section: string },
+    extra: { [key: string]: any } = {}
+  ): void {
     const [lang] = this.negotiateLang(requestedLang)
     const loadingKey = `${section}/${lang}`
     if (this._loadingState[loadingKey] !== undefined) {
@@ -218,7 +224,7 @@ export default abstract class BaseI18nController {
     }
 
     this._loadingState[loadingKey] = 'loading'
-    this.load({ lang, section })
+    this.load({ lang, section }, extra)
       .then(resourceDefs => {
         resourceDefs.forEach(resDef => {
           this.setDict(resDef.lang, section, resDef.ftl)
