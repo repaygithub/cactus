@@ -416,6 +416,43 @@ key-for-no-people = blah blah blue stew`
       })
       expect(container).toHaveTextContent('This text should render')
     })
+
+    test('will load extra dependencies with custom props', () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+        global: `runny-nose = WRONG KEY`,
+      })
+      const kleenexPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `kleenex__runny-nose = { needed__runny-nose }`,
+        },
+      ])
+      const neededPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `needed__runny-nose = This text should render`,
+        },
+      ])
+      //@ts-ignore
+      controller.load = jest.fn(({ section }) =>
+        section === 'needed' ? neededPromise : kleenexPromise
+      )
+
+      const i18nDependencies = [{ section: 'needed', extra: 'data', for: 'load function' }]
+      const { container } = render(
+        <I18nProvider controller={controller}>
+          <I18nSection name="kleenex" dependencies={i18nDependencies}>
+            <I18nText get="runny-nose" />
+          </I18nSection>
+        </I18nProvider>
+      )
+      expect(controller.load).toHaveBeenCalledWith(
+        { section: 'needed', lang: 'en' },
+        { extra: 'data', for: 'load function' }
+      )
+    })
   })
 
   describe('<I18nText />', () => {
