@@ -25,18 +25,3 @@ export const useI18nResource = (
   const { controller, section, lang } = context
   return controller.get({ args, section: sectionOverride || section, id, lang })
 }
-
-export const useI18nContext = (section?: string, lang?: string) => {
-  const context = useContext(I18nContext)
-  if (context === null) {
-    return null
-  }
-  const newContext = { ...context }
-  if (section) {
-    newContext.section = section
-  }
-  if (lang) {
-    newContext.lang = lang
-  }
-  return newContext
-}

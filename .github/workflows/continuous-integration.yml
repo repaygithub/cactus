@@ -41,5 +41,19 @@ jobs:
       - name: Build cactus-web
         run: yarn web build
 
-      - name: Test Packages
-        run: yarn run test:ci
+      - name: Test Modules
+        run: |
+          yarn theme test:ci
+          yarn fwk test:ci
+          yarn i18n test:ci
+          yarn icons test:ci
+          yarn web test:ci
+
+      - name: Integration Tests
+        run: |
+          yarn w standard test:ci
+          yarn w theme-components test:ci
+          yarn w mock-ebpp test:ci
+
+      - name: Test Docs Website
+        run: yarn docs test:ci

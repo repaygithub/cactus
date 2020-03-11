@@ -97,7 +97,10 @@ export default abstract class BaseI18nController {
     }
   }
 
-  abstract load({ lang, section }: { lang: string; section: string }): Promise<ResourceDefinition[]>
+  abstract load(
+    { lang, section }: { lang: string; section: string },
+    extra: { [key: string]: any }
+  ): Promise<ResourceDefinition[]>
 
   _getDict(): Dictionary {
     return _dictionaries.get(this) || {}
@@ -111,14 +114,14 @@ export default abstract class BaseI18nController {
       )
     }
     const bundle = this._getDict()[lang]
-    if (!bundle) {
+    if (this._debugMode && !bundle) {
       console.error(
         `Attempting to set dictionary for unsupported language: ${lang} and section: ${section}`
       )
       return
     }
     const errors = bundle.addResource(new FluentResource(ftl))
-    if (Array.isArray(errors) && errors.length) {
+    if (this._debugMode && Array.isArray(errors) && errors.length) {
       console.error(`Errors found in resource for section ${section} ${lang}`)
       console.log(errors)
     }
@@ -210,7 +213,10 @@ export default abstract class BaseI18nController {
     return message
   }
 
-  _load({ lang: requestedLang, section }: { lang: string; section: string }): void {
+  _load(
+    { lang: requestedLang, section }: { lang: string; section: string },
+    extra: { [key: string]: any } = {}
+  ): void {
     const [lang] = this.negotiateLang(requestedLang)
     const loadingKey = `${section}/${lang}`
     if (this._loadingState[loadingKey] !== undefined) {
@@ -218,7 +224,7 @@ export default abstract class BaseI18nController {
     }
 
     this._loadingState[loadingKey] = 'loading'
-    this.load({ lang, section })
+    this.load({ lang, section }, extra)
       .then(resourceDefs => {
         resourceDefs.forEach(resDef => {
           this.setDict(resDef.lang, section, resDef.ftl)
@@ -232,6 +238,24 @@ export default abstract class BaseI18nController {
           console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
         }
       })
+  }
+
+  hasText({
+    section = 'global',
+    id,
+    lang,
+  }: {
+    section?: string
+    id: string
+    lang?: string
+  }): boolean {
+    const key = section === 'global' ? id : `${section}__${id}`
+    const bundles = this._getDict()
+    let languages = this._languages
+    if (typeof lang === 'string') {
+      languages = this.negotiateLang(lang)
+    }
+    return languages.some(l => bundles[l] && bundles[l].hasMessage(key))
   }
 
   hasLoaded(section: string, lang?: string) {

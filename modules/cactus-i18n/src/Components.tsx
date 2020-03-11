@@ -1,6 +1,12 @@
-import React, { ComponentProps, JSXElementConstructor, useEffect, useState } from 'react'
+import React, {
+  ComponentProps,
+  JSXElementConstructor,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
-import { I18nContext, useI18nContext, useI18nResource, useI18nText } from './hooks'
+import { I18nContext, useI18nResource, useI18nText } from './hooks'
 import { I18nContextType } from './types'
 import BaseI18nController from './BaseI18nController'
 import PropTypes from 'prop-types'
@@ -51,29 +57,82 @@ I18nProvider.propTypes = {
   lang: PropTypes.string,
 }
 
+interface DependencyLoadType {
+  section: string
+  [key: string]: any
+}
+
 interface I18nSectionProps {
   name: string
   lang?: string
+  dependencies?: (string | DependencyLoadType)[]
+  [key: string]: any
 }
 
-const I18nSection: React.FC<I18nSectionProps> = props => {
-  const sectionContext = useI18nContext(props.name, props.lang)
+function hasLoadedAll(
+  controller: BaseI18nController,
+  section: string,
+  lang?: string,
+  dependencies?: (string | DependencyLoadType)[]
+) {
+  if (!controller.hasLoaded(section, lang)) {
+    return false
+  }
+  if (!Array.isArray(dependencies) || dependencies.length === 0) {
+    return true
+  }
+  return dependencies.every(dep => {
+    if (typeof dep === 'string') {
+      return controller.hasLoaded(dep, lang)
+    }
+    return controller.hasLoaded(dep.section, lang)
+  })
+}
+
+const I18nSection: React.FC<I18nSectionProps> = ({
+  name,
+  lang,
+  dependencies,
+  children,
+  ...extra
+}) => {
+  const context = useContext(I18nContext)
+  const sectionContext = context === null ? null : { ...context }
+  if (sectionContext !== null) {
+    sectionContext.section = name
+    if (lang) {
+      sectionContext.lang = lang
+    }
+  }
   useEffect(() => {
     if (sectionContext !== null) {
-      const { lang, section } = sectionContext
-      sectionContext.controller._load({ lang, section })
+      const { lang, section, controller } = sectionContext
+      controller._load({ lang, section }, extra)
+      if (Array.isArray(dependencies)) {
+        dependencies.forEach(dep => {
+          if (!dep) return
+          let section: string
+          let extra: { [key: string]: any } | undefined
+          if (typeof dep === 'string') {
+            section = dep
+          } else {
+            ;({ section, ...extra } = dep)
+          }
+          controller._load({ lang, section }, extra)
+        })
+      }
     }
   })
   // wait to render until section is loaded
   if (
     sectionContext !== null &&
-    !sectionContext.controller.hasLoaded(sectionContext.section, props.lang)
+    !hasLoadedAll(sectionContext.controller, name, lang, dependencies)
   ) {
     return null
   }
   return (
     <I18nContext.Provider value={sectionContext}>
-      <React.Fragment>{props.children}</React.Fragment>
+      <React.Fragment>{children}</React.Fragment>
     </I18nContext.Provider>
   )
 }

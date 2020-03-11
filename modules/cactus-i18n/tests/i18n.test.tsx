@@ -242,6 +242,19 @@ key-for-no-people = blah blah blue stew`
         )
       })
 
+      test('can check for existing messages', () => {
+        const global = `this_is_the_key = This should render`
+        const i18nController = new I18nController({
+          defaultLang: 'en',
+          supportedLangs: ['en'],
+          global,
+          debugMode: true,
+        })
+        expect(i18nController.hasText({ id: 'this_is_the_key' })).toEqual(true)
+        expect(i18nController.hasText({ section: 'other', id: 'not' })).toEqual(false)
+        expect(console.warn).not.toHaveBeenCalled()
+      })
+
       test('keeps track of failed resources', () => {
         const globalPromise = MockPromise.reject(Error('failed to load requested resource'))
         const mockLoad = jest.fn((...args) => globalPromise)
@@ -266,6 +279,37 @@ key-for-no-people = blah blah blue stew`
         </I18nSection>
       )
       expect(container).toHaveTextContent('This is the default content.')
+    })
+
+    test('passed extra data to load()', () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+        global: `runny-nose = WRONG KEY`,
+      })
+      const sectionPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `kleenex__runny-nose = This text should render`,
+        },
+      ])
+      //@ts-ignore
+      controller.load = jest.fn(() => sectionPromise)
+
+      render(
+        <I18nProvider controller={controller}>
+          <I18nSection name="kleenex" dynamic>
+            <I18nText get="runny-nose" />
+          </I18nSection>
+        </I18nProvider>
+      )
+      act(() => {
+        sectionPromise._call()
+      })
+      expect(controller.load).toHaveBeenCalledWith(
+        { section: 'kleenex', lang: 'en' },
+        { dynamic: true }
+      )
     })
 
     describe('should override', () => {
@@ -330,6 +374,84 @@ key-for-no-people = blah blah blue stew`
         })
         expect(container).toHaveTextContent('This text should render')
       })
+    })
+
+    test('will load extra dependencies', () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+        global: `runny-nose = WRONG KEY`,
+      })
+      const kleenexPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `kleenex__runny-nose = { needed__runny-nose }`,
+        },
+      ])
+      const neededPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `needed__runny-nose = This text should render`,
+        },
+      ])
+      //@ts-ignore
+      controller.load = jest.fn(({ section }) =>
+        section === 'needed' ? neededPromise : kleenexPromise
+      )
+
+      const { container } = render(
+        <I18nProvider controller={controller}>
+          <I18nSection name="kleenex" dependencies={['needed']}>
+            <I18nText get="runny-nose" />
+          </I18nSection>
+        </I18nProvider>
+      )
+      act(() => {
+        kleenexPromise._call()
+      })
+      // should not render until 'needed' section is also loaded
+      expect(container).toHaveTextContent('')
+      act(() => {
+        neededPromise._call()
+      })
+      expect(container).toHaveTextContent('This text should render')
+    })
+
+    test('will load extra dependencies with custom props', () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+        global: `runny-nose = WRONG KEY`,
+      })
+      const kleenexPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `kleenex__runny-nose = { needed__runny-nose }`,
+        },
+      ])
+      const neededPromise = MockPromise.resolve([
+        {
+          lang: 'en',
+          ftl: `needed__runny-nose = This text should render`,
+        },
+      ])
+      //@ts-ignore
+      controller.load = jest.fn(({ section }) =>
+        section === 'needed' ? neededPromise : kleenexPromise
+      )
+
+      const i18nDependencies = [{ section: 'needed', extra: 'data', for: 'load function' }]
+      const { container } = render(
+        <I18nProvider controller={controller}>
+          <I18nSection name="kleenex" dependencies={i18nDependencies}>
+            <I18nText get="runny-nose" />
+          </I18nSection>
+        </I18nProvider>
+      )
+      expect(controller.load).toHaveBeenCalledWith(
+        { section: 'needed', lang: 'en' },
+        { extra: 'data', for: 'load function' }
+      )
     })
   })
 
