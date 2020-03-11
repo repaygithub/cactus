@@ -111,14 +111,14 @@ export default abstract class BaseI18nController {
       )
     }
     const bundle = this._getDict()[lang]
-    if (!bundle) {
+    if (this._debugMode && !bundle) {
       console.error(
         `Attempting to set dictionary for unsupported language: ${lang} and section: ${section}`
       )
       return
     }
     const errors = bundle.addResource(new FluentResource(ftl))
-    if (Array.isArray(errors) && errors.length) {
+    if (this._debugMode && Array.isArray(errors) && errors.length) {
       console.error(`Errors found in resource for section ${section} ${lang}`)
       console.log(errors)
     }
@@ -232,6 +232,24 @@ export default abstract class BaseI18nController {
           console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
         }
       })
+  }
+
+  hasText({
+    section = 'global',
+    id,
+    lang,
+  }: {
+    section?: string
+    id: string
+    lang?: string
+  }): boolean {
+    const key = section === 'global' ? id : `${section}__${id}`
+    const bundles = this._getDict()
+    let languages = this._languages
+    if (typeof lang === 'string') {
+      languages = this.negotiateLang(lang)
+    }
+    return languages.some(l => bundles[l] && bundles[l].hasMessage(key))
   }
 
   hasLoaded(section: string, lang?: string) {

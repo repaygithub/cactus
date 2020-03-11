@@ -242,6 +242,19 @@ key-for-no-people = blah blah blue stew`
         )
       })
 
+      test('can check for existing messages', () => {
+        const global = `this_is_the_key = This should render`
+        const i18nController = new I18nController({
+          defaultLang: 'en',
+          supportedLangs: ['en'],
+          global,
+          debugMode: true,
+        })
+        expect(i18nController.hasText({ id: 'this_is_the_key' })).toEqual(true)
+        expect(i18nController.hasText({ section: 'other', id: 'not' })).toEqual(false)
+        expect(console.warn).not.toHaveBeenCalled()
+      })
+
       test('keeps track of failed resources', () => {
         const globalPromise = MockPromise.reject(Error('failed to load requested resource'))
         const mockLoad = jest.fn((...args) => globalPromise)
