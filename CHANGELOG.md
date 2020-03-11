@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.6](https://github.com/repaygithub/cactus/commit/42719cb107ed051ad962b6ab6420b07b6243b3bb)
+
+- feat(cactus-i18n): provide extra params to load() [bba0a4d](https://github.com/repaygithub/cactus/commit/bba0a4dc2c07fdc7e9f8dd5e4e6f4076c0ff38b3)
+- feat(cactus-i18n): restrict logging to debugMode only [c7d0ca8](https://github.com/repaygithub/cactus/commit/c7d0ca8696cfa13a26683c9d0a0873e4a1ccc236)
+- chore(cactus-i18n): update changelog [8887658](https://github.com/repaygithub/cactus/commit/8887658b1328fb4651dd9c7171868abbc70b2a92)
+
 ## [@repay/cactus-theme@v0.4.6](https://github.com/repaygithub/cactus/commit/78a175a3b1906601e9bc89cfd1c98880018dae45)
 
 - feat(cactus-theme): adds option to generate theme from hex colors [4a0c41e](https://github.com/repaygithub/cactus/commit/4a0c41e26f49f055bd307f1c4b02aa647f6fa01a)
