@@ -62,3 +62,17 @@ The style is based on the [Angular Repository](https://github.com/angular/angula
   - Jira tags (e.g. `[CACTUS-#]`)
 - `footer`
   - add `BREAKING:` and then the rest of the message is used to describe the break.
+
+##### Example commit
+
+You've written a new Modal component for @repay/cactus-web and now you would like commit your code. Here is an example commit message.
+
+```bash
+feat(cactus-web): added Modal component #type, package name, subject of commit
+
+# Additional information about commit
+Added a Modal component which can be used to render
+information to users which we want them to focus on.
+
+[CACTUS-240] # JIRA story code
+```

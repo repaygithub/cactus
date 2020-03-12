@@ -37,6 +37,14 @@ You will need to install [Node.js](https://nodejs.org/en/) runtime and [Yarn](ht
 yarn install
 ```
 
+Next we should build all the modules locally by running the following command in the terminal:
+
+```
+yarn build
+```
+
+Now you are ready to start developing on the modules, examples, or documentation website.
+
 We use [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) to help manage the dependencies for the monorepository; however, this also means you should initiate commands on individual modules from the root directory. We've added some aliases in the base package.json to ease the typing burden. `yarn w` is equivalent to `yarn workspace` and `yarn ws` is equivalent to `yarn workspaces`
 
 ```
