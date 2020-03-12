@@ -95,7 +95,7 @@ const MenuButton = styled(MenuButtonBase)`
   cursor: pointer;
   appearance: none;
   ${p => p.theme.textStyles.body};
-  color: ${p => p.theme.colors.baseText};
+  color: ${p => p.theme.colors.white};
   background-color: ${p => p.theme.colors.darkContrast};
   border-color: ${p => p.theme.colors.darkContrast};
 
