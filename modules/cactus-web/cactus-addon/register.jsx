@@ -10,8 +10,21 @@ const ScrollArea = styled('div')({ height: '100%', width: '100%', overflowY: 'au
 
 const SectionTitle = styled('h2')({ padding: '8px 0', margin: '0 16px' })
 
+const THEME_TYPES = {
+  use_hue: 'use_hue',
+  use_colors: 'use_colors',
+}
+
 class Panel extends React.Component {
-  state = { values: { primaryHue: 210 }, backgroundInverse: false }
+  state = {
+    values: {
+      primaryHue: 200,
+      type: THEME_TYPES.use_hue,
+      primary: '#96D35F',
+      secondary: '#FFFFFF',
+    },
+    backgroundInverse: false,
+  }
 
   componentDidMount() {
     this.props.channel.on(DECORATOR_LISTENING, this.handleDecoratorListening)
@@ -28,7 +41,13 @@ class Panel extends React.Component {
   }
 
   emitThemeChange = () => {
-    this.props.channel.emit(THEME_CHANGE, this.state.values)
+    const { values } = this.state
+    this.props.channel.emit(
+      THEME_CHANGE,
+      values.type === THEME_TYPES.use_hue
+        ? { primaryHue: values.primaryHue }
+        : { primary: values.primary, secondary: values.secondary }
+    )
   }
 
   handleDecoratorListening = () => {
@@ -44,37 +63,94 @@ class Panel extends React.Component {
     this.setState(s => ({ values: { ...s.values, [name]: value } }), this.emitThemeChange)
   }
 
+  handleSimpleThemeChange = ({ currentTarget }) =>
+    this.handleThemeChange(currentTarget.name, currentTarget.value)
+
   render() {
     const { active } = this.props
+    const { values } = this.state
 
     return active ? (
       <ScrollArea>
         <Form>
           <SectionTitle>Theme</SectionTitle>
           <Form.Field>
-            <label htmlFor="primaryHue">primary hue</label>
-            <input
-              type="range"
-              id="primaryHue"
-              name="primaryHue"
-              min="0"
-              max="360"
-              value={this.state.values.primaryHue}
-              onChange={({ currentTarget }) =>
-                this.handleThemeChange(currentTarget.name, currentTarget.value)
-              }
-            />
-            <input
-              type="text"
-              id="primaryHue-text"
-              name="primaryHue"
-              value={this.state.values.primaryHue}
-              onChange={({ currentTarget }) =>
-                this.handleThemeChange('primaryHue', parseInt(currentTarget.value))
-              }
-              style={{ width: '32px', marginLeft: '8px' }}
-            />
+            <div>
+              <label id="selectionTypeLabel" style={{ display: 'block' }}>
+                Selection Type
+              </label>
+              <div role="section" aria-labelledby="selectionTypeLabel">
+                <label style={{ display: 'block' }}>
+                  <input
+                    type="radio"
+                    name="type"
+                    value={THEME_TYPES.use_hue}
+                    checked={values.type === THEME_TYPES.use_hue}
+                    onChange={this.handleSimpleThemeChange}
+                  />
+                  Select Primary Hue
+                </label>
+                <label style={{ display: 'block' }}>
+                  <input
+                    type="radio"
+                    name="type"
+                    value={THEME_TYPES.use_colors}
+                    checked={values.type === THEME_TYPES.use_colors}
+                    onChange={this.handleSimpleThemeChange}
+                  />
+                  Choose Colors
+                </label>
+              </div>
+            </div>
           </Form.Field>
+          {values.type === THEME_TYPES.use_hue ? (
+            <Form.Field>
+              <label htmlFor="primaryHue">primary hue</label>
+              <input
+                type="range"
+                id="primaryHue"
+                name="primaryHue"
+                min="0"
+                max="360"
+                value={values.primaryHue}
+                onChange={this.handleSimpleThemeChange}
+              />
+              <input
+                type="text"
+                id="primaryHue-text"
+                name="primaryHue"
+                value={values.primaryHue}
+                onChange={({ currentTarget }) =>
+                  this.handleThemeChange('primaryHue', parseInt(currentTarget.value))
+                }
+                style={{ width: '32px', marginLeft: '8px' }}
+              />
+            </Form.Field>
+          ) : (
+            <React.Fragment>
+              <Form.Field>
+                <label htmlFor="primary-color">primary color</label>
+                <input
+                  type="color"
+                  id="primary-color"
+                  name="primary"
+                  value={values.primary}
+                  onChange={this.handleSimpleThemeChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="secondary-color">secondary color</label>
+                <input
+                  type="color"
+                  id="secondary-color"
+                  name="secondary"
+                  value={values.secondary}
+                  onChange={this.handleSimpleThemeChange}
+                />
+              </Form.Field>
+            </React.Fragment>
+          )}
+
           <SectionTitle>Background</SectionTitle>
           <Form.Field>
             <input
