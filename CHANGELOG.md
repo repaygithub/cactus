@@ -1,5 +1,15 @@
 # Changelog
 
+## [@repay/cactus-web@v0.7.3](https://github.com/repaygithub/cactus/commit/1819b12156821ced25a3931dcb47aad553ecba4e)
+
+- fix(cactus-web): MenuButton text color for light themes [a03801a](https://github.com/repaygithub/cactus/commit/a03801aa94f0ac7d1c36b9f0bc5516ec164a14aa)
+- docs(cactus-web): add two color option to storybook addon [fbc679e](https://github.com/repaygithub/cactus/commit/fbc679e300766b55272e5ec2d670b47d4a42aef1)
+- fix(cactus-web): Add overflow ellipsis to select [fc63c0e](https://github.com/repaygithub/cactus/commit/fc63c0ef95a9aa1db2bd1ee5c522dc124f94a689)
+- docs(cactus-web): Update select story so we can demonstrate the overflow ellipsis [1ae6213](https://github.com/repaygithub/cactus/commit/1ae621349e35cc13479a865bc5d1d377165a1efb)
+- fix(cactus-web): Add overflow ellipsis to select [ff927a1](https://github.com/repaygithub/cactus/commit/ff927a1924470d52000be74c0e15e54a427b0e0c)
+- fix(cactus-web): Get page title using wait() in integration tests [d073ae9](https://github.com/repaygithub/cactus/commit/d073ae9e0bde8462f1aececdd17628dbfc28943c)
+- chore(cactus-web): update changelog [30927ca](https://github.com/repaygithub/cactus/commit/30927ca70cb6c208d856b622aa0a83af3ee5cfe4)
+
 ## [@repay/cactus-i18n@v0.3.6](https://github.com/repaygithub/cactus/commit/42719cb107ed051ad962b6ab6420b07b6243b3bb)
 
 - feat(cactus-i18n): provide extra params to load() [bba0a4d](https://github.com/repaygithub/cactus/commit/bba0a4dc2c07fdc7e9f8dd5e4e6f4076c0ff38b3)
