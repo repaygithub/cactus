@@ -15,7 +15,7 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "@repay/cactus-fwk": "^0.4.0",
-    "@repay/cactus-i18n": "^0.2.0",
+    "@repay/cactus-i18n": "^0.3.6",
     "@repay/cactus-icons": "^0.6.1",
     "@repay/cactus-theme": "^0.4.5",
     "@repay/cactus-web": "^0.7.0",
