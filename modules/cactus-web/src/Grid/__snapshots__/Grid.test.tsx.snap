@@ -9,7 +9,11 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
 
 .c0 {
   box-sizing: border-box;
-  width: 100% display:flex;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -97,7 +101,11 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  width: 100% display:flex;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -191,7 +199,11 @@ exports[`component: Grid should render tiny viewport design 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  width: 100% display:flex;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
