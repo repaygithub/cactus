@@ -30,7 +30,13 @@ const alignOptions = [
 
 const directionOptions = ['unset', 'row', 'row-reverse', 'column', 'column-reverse']
 
-const flexWrapOptions = ['unset', 'initial', 'wrap', 'nowrap', 'wrap-reverse']
+const flexWrapOptions = [
+  'unset',
+  'initial',
+  'wrap',
+  'nowrap',
+  'wrap-reverse',
+] as React.CSSProperties['flexWrap'][]
 
 storiesOf('Flex', module).add(
   'Basic Usage',

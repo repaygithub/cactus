@@ -4,7 +4,7 @@ import Box from './Box'
 import cactusTheme from '@repay/cactus-theme'
 import React from 'react'
 
-const positionOptions = {
+const positionOptions: { [key: string]: React.CSSProperties['position'] } = {
   initial: 'initial',
   static: 'static',
   relative: 'relative',
@@ -34,7 +34,6 @@ const textStyles = Object.keys(cactusTheme.textStyles)
 storiesOf('Box', module)
   .add('Basic Usage with theme build-in values', () => (
     <Box
-      // @ts-ignore
       position={select('position', positionOptions, 'initial')}
       display={select('display', displayOptions, 'initial')}
       top={text('top', '')}

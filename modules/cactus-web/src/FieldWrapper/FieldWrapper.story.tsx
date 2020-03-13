@@ -190,7 +190,7 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }) => {
         minWidth="350px"
         margin="0 auto"
         py={5}
-        onSubmit={event => event.preventDefault()}
+        onSubmit={(event: any) => event.preventDefault()}
       >
         {fields.map(field => {
           const Field = fieldTypeMap[field.type]
