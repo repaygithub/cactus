@@ -306,9 +306,9 @@ const MenuList = styled('ul')`
 
 const Scrollable = styled.div`
   box-sizing: border-box;
-  padding-top: 64px;
   overflow-y: scroll;
   max-height: 100vh;
+  margin-top: 43px;
 `
 
 const InnerSidebar = styled.nav`
