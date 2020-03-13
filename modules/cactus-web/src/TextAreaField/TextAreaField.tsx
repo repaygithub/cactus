@@ -12,7 +12,7 @@ import TextArea, { TextAreaProps } from '../TextArea/TextArea'
 interface TextAreaFieldProps
   extends MarginProps,
     Omit<TextAreaProps, 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
-  label: string
+  label: React.ReactNode
   name: string
   labelProps?: object
   success?: string
@@ -96,7 +96,7 @@ export const TextAreaField = styled(TextAreaFieldBase)`
 
 // @ts-ignore
 TextAreaField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
   success: PropTypes.string,

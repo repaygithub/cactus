@@ -7,7 +7,10 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export interface RadioButtonProps
-  extends Omit<React.HTMLProps<HTMLInputElement>, 'ref' | 'as'>,
+  extends Omit<
+      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+      'ref'
+    >,
     MarginProps {
   id: string
   name: string

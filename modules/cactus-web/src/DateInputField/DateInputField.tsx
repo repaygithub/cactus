@@ -16,7 +16,7 @@ interface DateInputFieldProps
       React.ComponentPropsWithoutRef<typeof DateInput>,
       'id' | 'status' | keyof MarginProps | keyof WidthProps
     > {
-  label: string
+  label: React.ReactNode
   labelProps?: Omit<React.ComponentPropsWithoutRef<typeof Label>, 'children'>
   name: string
   className?: string
@@ -78,7 +78,7 @@ export const DateInputField = styled(DateInputFieldBase)`
 `
 
 DateInputField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   name: PropTypes.string.isRequired,
   className: PropTypes.string,

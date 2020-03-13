@@ -13,7 +13,7 @@ import styled from 'styled-components'
 interface TextInputFieldProps
   extends MarginProps,
     Omit<TextInputProps, 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
-  label: string
+  label: React.ReactNode
   name: string
   labelProps?: LabelProps
   success?: string
@@ -97,7 +97,7 @@ export const TextInputField = styled(TextInputFieldBase)`
 
 // @ts-ignore
 TextInputField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
   success: PropTypes.string,

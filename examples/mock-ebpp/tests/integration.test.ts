@@ -86,7 +86,8 @@ describe('Integration Tests', () => {
           let activeEl
           const datePickerTrigger = await getByLabelText(doc, 'Open date picker')
           await datePickerTrigger.click()
-          await page.keyboard.press('Tab')
+          await sleep(0.3)
+          await page.keyboard.press('Tab', { delay: 50 })
           activeEl = await getActiveElement(page)
           let monthSelect = (await activeEl.asElement()) || undefined
           let monthSelectAccess = await page.accessibility.snapshot({ root: monthSelect })

@@ -12,7 +12,7 @@ interface SelectFieldProps
   extends MarginProps,
     WidthProps,
     Omit<SelectProps, 'id' | 'onChange' | keyof MarginProps | keyof WidthProps> {
-  label: string
+  label: React.ReactNode
   labelProps?: object
   name: string
   options: Array<OptionType | string>
@@ -80,7 +80,7 @@ export const SelectField = styled(SelectFieldBase)`
 
 // @ts-ignore
 SelectField.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   name: PropTypes.string.isRequired,
   // @ts-ignore
