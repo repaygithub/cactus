@@ -49,7 +49,7 @@
   "peerDependencies": {
     "prop-types": ">=15.0.0",
     "react": "^16.8.3",
-    "styled-components": "^4.1.2"
+    "styled-components": "^4.1.2 | ^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
@@ -63,19 +63,19 @@
     "@testing-library/react": "^9.3.0",
     "@types/node": "^12.12.21",
     "@types/storybook__react": "^4.0.2",
-    "@types/styled-system": "^5.1.2",
+    "@types/styled-system": "^5.1.9",
     "babel-jest": "^24.7.1",
     "fast-glob": "^2.2.6",
     "jest": "^24.7.1",
-    "jest-styled-components": "^6.2.1",
+    "jest-styled-components": "^7.0.0",
     "prettier": "^1.17.0",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "styled-components": "^4.1.2",
+    "styled-components": "^5.0.1",
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "styled-system": "^5.1.1"
+    "styled-system": "^5.1.5"
   }
 }
