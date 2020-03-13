@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: TextAreaField should render a TextAreaField 1`] = `
-.c3 + .c2 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -17,25 +17,24 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c1 {
+.c2 {
   position: relative;
 }
 
-.c1 .c4 {
+.c2 .c4 {
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
   padding-right: 28px;
 }
 
-.c1 .c6 {
+.c2 .c6 {
   position: absolute;
-  right: 8px;
-  top: 2px;
+  right: 8px top:2px;
   font-size: 16px;
 }
 
-.c1 .c10 {
+.c2 .sc-pReKu {
   display: block;
   margin-left: 16px;
   margin-top: 4px;
@@ -91,7 +90,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   display: block;
 }
 
-.c0 {
+.c3 {
   position: relative;
   width: auto;
 }
@@ -112,7 +111,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="c7"
+        class="sc-fzpdbB c7"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

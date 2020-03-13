@@ -7,35 +7,9 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
   width: calc(25% - 16px);
 }
 
-.c3 > .c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c4 > .c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-}
-
 .c0 {
   box-sizing: border-box;
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  width: 100% display:flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -61,23 +35,23 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
   }
 }
 
+@media (min-width:1025px) {
+
+}
+
+@media (min-width:1201px) {
+
+}
+
+@media (min-width:1441px) {
+
+}
+
 @supports (display:grid) {
   .c2 {
     grid-column: span 3;
     width: auto;
     margin: 0;
-  }
-}
-
-@supports (display:grid) {
-  .c3 > .c1 {
-    display: block;
-  }
-}
-
-@supports (display:grid) {
-  .c4 > .c1 {
-    display: block;
   }
 }
 
@@ -123,11 +97,7 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  width: 100% display:flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -145,6 +115,18 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+}
+
+@media (min-width:769px) {
+
+}
+
+@media (min-width:1025px) {
+
+}
+
+@media (min-width:1201px) {
+
 }
 
 @media (min-width:1441px) {
@@ -207,24 +189,9 @@ exports[`component: Grid should render tiny viewport design 1`] = `
   width: calc(25% - 16px);
 }
 
-.c3 > .c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
 .c0 {
   box-sizing: border-box;
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  width: 100% display:flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -244,17 +211,27 @@ exports[`component: Grid should render tiny viewport design 1`] = `
   justify-content: flex-end;
 }
 
+@media (min-width:769px) {
+
+}
+
+@media (min-width:1025px) {
+
+}
+
+@media (min-width:1201px) {
+
+}
+
+@media (min-width:1441px) {
+
+}
+
 @supports (display:grid) {
   .c2 {
     grid-column: span 3;
     width: auto;
     margin: 0;
-  }
-}
-
-@supports (display:grid) {
-  .c3 > .c1 {
-    display: block;
   }
 }
 

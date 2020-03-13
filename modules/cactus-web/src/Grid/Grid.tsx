@@ -96,7 +96,7 @@ interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridProp
 
 export const Grid = styled.div<GridProps>`
   box-sizing: border-box;
-  width: 100%
+  width: 100%;
 
   display: flex;
   flex-direction: row;

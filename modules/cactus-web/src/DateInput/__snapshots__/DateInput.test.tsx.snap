@@ -187,7 +187,7 @@ exports[`component: DateInput snapshot 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 "
     role="group"
   >
     <button

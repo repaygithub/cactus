@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: SelectField minimal snapshot 1`] = `
-.c3 + .c2 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -17,25 +17,24 @@ exports[`component: SelectField minimal snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c1 {
+.c2 {
   position: relative;
 }
 
-.c1 .c4 {
+.c2 .c4 {
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
   padding-right: 28px;
 }
 
-.c1 .c13 {
+.c2 .sc-pJkiN {
   position: absolute;
-  right: 8px;
-  top: 2px;
+  right: 8px top:2px;
   font-size: 16px;
 }
 
-.c1 .c14 {
+.c2 .sc-pReKu {
   display: block;
   margin-left: 16px;
   margin-top: 4px;
@@ -107,11 +106,11 @@ exports[`component: SelectField minimal snapshot 1`] = `
   max-width: 100%;
 }
 
-.c0 {
+.c3 {
   position: relative;
 }
 
-.c0 .c6 {
+.c3 .c6 {
   width: 100%;
 }
 

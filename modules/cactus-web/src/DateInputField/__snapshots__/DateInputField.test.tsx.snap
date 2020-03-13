@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: DateInputField snapshot 1`] = `
-.c3 + .c2 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -24,25 +24,24 @@ exports[`component: DateInputField snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c1 {
+.c2 {
   position: relative;
 }
 
-.c1 .c4 {
+.c2 .c4 {
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
   padding-right: 28px;
 }
 
-.c1 .c17 {
+.c2 .sc-pJkiN {
   position: absolute;
-  right: 8px;
-  top: 2px;
+  right: 8px top:2px;
   font-size: 16px;
 }
 
-.c1 .c18 {
+.c2 .sc-pReKu {
   display: block;
   margin-left: 16px;
   margin-top: 4px;
@@ -121,7 +120,7 @@ exports[`component: DateInputField snapshot 1`] = `
   cursor: pointer;
 }
 
-.c7 {
+.c6 {
   position: relative;
   color: hsl(200,9%,35%);
   box-sizing: border-box;
@@ -152,15 +151,15 @@ exports[`component: DateInputField snapshot 1`] = `
   line-height: 28px;
 }
 
-.c7:focus-within {
+.c6:focus-within {
   border-color: hsl(200,96%,35%);
 }
 
-.c7 > .c11 {
+.c6 > .c11 {
   margin-left: 0;
 }
 
-.c7 input {
+.c6 input {
   border: none;
   background-color: transparent;
   width: 1.75em;
@@ -173,54 +172,54 @@ exports[`component: DateInputField snapshot 1`] = `
   appearance: textfield;
 }
 
-.c7 input::selection {
+.c6 input::selection {
   background: transparent;
 }
 
-.c7 input::-webkit-inner-spin-button,
-.c7 input::-webkit-outer-spin-button {
+.c6 input::-webkit-inner-spin-button,
+.c6 input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   margin: 0;
 }
 
-.c7 input:focus {
+.c6 input:focus {
   outline: none;
   background-color: hsla(200,96%,35%,0.25);
 }
 
-.c7 input::-webkit-input-placeholder {
+.c6 input::-webkit-input-placeholder {
   color: hsl(200,18%,45%);
 }
 
-.c7 input::-moz-placeholder {
+.c6 input::-moz-placeholder {
   color: hsl(200,18%,45%);
 }
 
-.c7 input:-ms-input-placeholder {
+.c6 input:-ms-input-placeholder {
   color: hsl(200,18%,45%);
 }
 
-.c7 input::placeholder {
+.c6 input::placeholder {
   color: hsl(200,18%,45%);
 }
 
-.c7 input[data-token='YYYY'] {
+.c6 input[data-token='YYYY'] {
   width: 3em;
 }
 
-.c7 .c8 {
+.c6 .c8 {
   font-size: 16px;
   margin-right: 8px;
 }
 
-.c7 .c13 {
+.c6 .c13 {
   margin-right: -2px;
   margin-left: auto;
 }
 
-.c0 .c6 {
+.c3 .c7 {
   width: 100%;
 }
 
@@ -238,7 +237,7 @@ exports[`component: DateInputField snapshot 1`] = `
     <div
       aria-describedby="not-random-tip not-random-status"
       aria-labelledby="not-random-label"
-      class="c6 c7"
+      class="c6 c7 "
       role="group"
     >
       <button

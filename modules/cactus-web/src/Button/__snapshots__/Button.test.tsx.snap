@@ -39,7 +39,7 @@ exports[`component: Button should default to standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -70,8 +70,8 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   .c2 {
   font-size: 16px;
   vertical-align: middle;
-  -webkit-animation: iVXCSc 0.75s linear infinite;
-  animation: iVXCSc 0.75s linear infinite;
+  -webkit-animation: bKPVWD 0.75s linear infinite;
+  animation: bKPVWD 0.75s linear infinite;
 }
 
 .c0 {
@@ -125,62 +125,6 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   border-color: hsl(200,96%,11%);
 }
 
-.c3 .c1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c4 .c1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c5 .c1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c6 .c1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c7 .c1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c8 .c1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c9 .c1 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
 <button
     aria-live="assertive"
     class="c0"
@@ -195,7 +139,7 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
     </span>
     <svg
       aria-label="loading"
-      class="c1 c2"
+      class="sc-qYiqT c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -249,7 +193,7 @@ exports[`component: Button should render call to action variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -314,7 +258,7 @@ exports[`component: Button should render danger variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -380,7 +324,7 @@ exports[`component: Button should render disabled variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -440,7 +384,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -505,7 +449,7 @@ exports[`component: Button should render inverse danger variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -570,7 +514,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -630,7 +574,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -695,7 +639,7 @@ exports[`component: Button should render standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -761,7 +705,7 @@ exports[`component: Button should support margin space props 1`] = `
   margin-top: -4px;
 }
 
-.c0 .c1 {
+.c0 .sc-psCJM {
   position: absolute;
   left: 50%;
   top: 50%;
