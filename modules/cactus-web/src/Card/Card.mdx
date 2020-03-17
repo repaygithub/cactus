@@ -9,6 +9,39 @@ import cactusTheme from '@repay/cactus-theme'
 
 # Card
 
+### How it looks
+
+<Card margin="40px">
+  <h2 style={{ margin: 0 }}>Title</h2>
+  <h4 style={{ margin: 0, fontWeight: 400, fontSize: '12px' }}>Subtitle</h4>
+  <table style={{ fontSize: '15px', borderCollapse: 'collapse' }}>
+    <tbody>
+      <tr>
+        <th style={{ textAlign: 'left', padding: '0 60px 0 0', fontSize: '12px' }}>
+          Total Amount Due
+        </th>
+        <td>
+          <span style={{ textAlign: 'right', fontWeight: 600, fontSize: '25.92px' }}>
+            $350.20
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}> Due Date </th>
+        <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>
+          {new Date().toLocaleDateString('en-US')}
+        </td>
+      </tr>
+      <tr>
+        <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}>
+          Minimum Amount Due
+        </th>
+        <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>$127.00</td>
+      </tr>
+    </tbody>
+    </table>
+  </Card>
+
 ## Basic usage
 
 Cards are box containers used to organize content. Content and actions used for cards regard one topic. Cards can have any height or width.

@@ -6,10 +6,21 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import Toggle from './Toggle'
 import cactusTheme from '@repay/cactus-theme'
+import React, { useState } from 'react'
 
 # Toggle
 
 The `Toggle` component can be useful for boolean fields.
+
+### How it loooks
+
+export const Wrapper = () => {
+  const [state, setState]=useState(true)
+  return <Toggle value={state}  onClick={()=> setState(!state)}/>
+}
+
+<Wrapper />
+
 
 ## Best practices
 

@@ -9,6 +9,9 @@ import cactusTheme from '@repay/cactus-theme'
 
 # Avatars
 
+### How it looks
+<Avatar type="feedback" status="error" />
+
 ## Basic usage
 
 The `Avatar` component are small, circular, figures used to give additional feedback to users. The avatars have two usage options, feedback and alert, which alter the opacity of the background. `Avatar` have a type, which is the icon that provides feedback to the user. The types are: error, warning, info, and success.
@@ -17,5 +20,5 @@ The `Avatar` component are small, circular, figures used to give additional feed
 import Avatar from '@repay/cactus-web'
 import React from 'react'
 
-export default () => <Avatar avatarUsage="feedBack" avatarType="warning" />
+export default () => <Avatar avatarUsage="error" avatarType="warning" />
 ```
