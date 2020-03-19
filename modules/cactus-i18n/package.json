@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-i18n",
-  "version": "0.3.6",
+  "version": "0.3.8",
   "description": "I18n library for React using Fluent",
   "main": "dist/cactus-i18n.cjs.js",
   "module": "dist/cactus-i18n.js",
@@ -55,7 +55,8 @@
   },
   "dependencies": {
     "@fluent/bundle": "^0.14.0",
-    "@fluent/langneg": "^0.3.0"
+    "@fluent/langneg": "^0.3.0",
+    "intl-pluralrules": "^1.1.2"
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",

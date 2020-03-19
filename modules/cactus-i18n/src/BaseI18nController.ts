@@ -1,6 +1,7 @@
 import { FluentBundle, FluentResource } from '@fluent/bundle'
 import { negotiateLanguages } from '@fluent/langneg'
 import { ResourceDefinition } from './types'
+import 'intl-pluralrules'
 
 interface Dictionary {
   /**
