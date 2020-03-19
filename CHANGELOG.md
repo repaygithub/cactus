@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.9](https://github.com/repaygithub/cactus/commit/4f62cf2f2f8043665437c46af3ba0a6a643e291f)
+
+- fix(cactus-i18n): Add plural rules polyfill to support IE11 [77c51e9](https://github.com/repaygithub/cactus/commit/77c51e9ccdc6ef157b3bba5a6a5033ef51d56a65)
+- fix(cactus-i18n): Add plural rules polyfill to support IE11 [c9652cd](https://github.com/repaygithub/cactus/commit/c9652cd7b7df75a282a74367d81b02124241fb7e)
+- chore(cactus-i18n): update changelog [25e9a6b](https://github.com/repaygithub/cactus/commit/25e9a6bc8508010127793156e203597f50b98c5d)
+
 ## [@repay/cactus-web@v0.7.3](https://github.com/repaygithub/cactus/commit/1819b12156821ced25a3931dcb47aad553ecba4e)
 
 - fix(cactus-web): MenuButton text color for light themes [a03801a](https://github.com/repaygithub/cactus/commit/a03801aa94f0ac7d1c36b9f0bc5516ec164a14aa)
