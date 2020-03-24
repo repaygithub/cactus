@@ -6,8 +6,25 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import ToggleField from './ToggleField'
 import cactusTheme from '@repay/cactus-theme'
+import React, { useState } from 'react'
 
 # ToggleField
+
+### How it looks
+
+export const Wrapper = () => {
+  const [state, setState]=useState(true)
+  return(
+  <ToggleField
+    name="enabled"
+    label={state?"On":"Off"}
+    value={state}
+    onClick={()=>setState(!state)}
+  />
+  )
+}
+
+<Wrapper />
 
 The ToggleField is a Field component to be used in a Form, is composed of a [`Toggle`](../Toggle.mdx) and a `Label` and requires a `name` and `label`. It also implements our standardized `FieldChangeHandler` interface defined as:
 
@@ -34,7 +51,7 @@ export default function Form() {
       setValues(state => setValues({ ...state, [name]: value }))
     },
     [setValues]
-  )
+  );
   const onSubmit = useCallback(
     event => {
       event.preventDefault()

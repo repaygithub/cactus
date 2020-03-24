@@ -6,10 +6,17 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import IconButton from './IconButton'
 import cactusTheme from '@repay/cactus-theme'
+import { ActionsAdd } from '@repay/cactus-icons'
 
 # IconButton
 
 The `IconButton` allows you to turn icons into buttons, and it was designed to allow the use of icons from any library.
+
+### How it looks
+
+<IconButton label="add">
+  <ActionsAdd />
+</IconButton>
 
 ## Best practices
 
@@ -19,8 +26,8 @@ The `IconButton` allows you to turn icons into buttons, and it was designed to a
 ## Basic usage
 
 ```jsx
-import { IconButton } from '@repay/cactus-web
-import { StatusCheck } from '@repay/cactus-icons
+import { IconButton } from '@repay/cactus-web'
+import { StatusCheck } from '@repay/cactus-icons'
 ...
 // Basic usage
 <IconButton>

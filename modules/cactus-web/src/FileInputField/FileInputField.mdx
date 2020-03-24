@@ -9,6 +9,20 @@ import cactusTheme from '@repay/cactus-theme'
 
 # FileInputField
 
+### How it looks
+
+<FileInputField
+  name="file-input"
+  label="Upload a new files"
+  tooltip="Upload some files"
+  accept={['.txt', '.doc']}
+  labels={{ delete: 'delete file', retry: 'retry file upload', loading: 'loading', loaded: 'successful' }}
+  prompt="Drag files here or"
+  buttonText="Select Files..."
+  rawFiles={false}
+  multiple={true}
+/>
+
 The file input field is a form field that can be used to upload files. It includes a label, a tooltip, and some accessibility features
 
 ## Best practices
