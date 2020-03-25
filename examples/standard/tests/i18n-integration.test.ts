@@ -66,4 +66,30 @@ describe('I18n Integration tests', () => {
       ).not.toBeNull()
     })
   })
+
+  describe('when browser language is es-MX', () => {
+    puppeteer.launch({
+      args: ['--lang=es-MX']
+    });
+    beforeAll(async () => {
+      page = await global.__BROWSER__.newPage()
+      page.setExtraHTTPHeaders  ({
+        'Accept-Language': 'es-MX'
+      })
+    })
+    beforeEach(async () => {
+      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
+      await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
+    })
+
+    test('we can see the rendered content', async () => {
+      const doc = await getDocument(page)
+      expect(
+        await getByText(
+          doc,
+          'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
+        )
+      ).not.toBeNull()
+    })
+  })
 })
