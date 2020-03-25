@@ -9,18 +9,19 @@ const { getByText } = queries
 function getLangJs(lang: string, languages: Array<string> = [lang]) {
   // overwrite the navigator.languages properties to use a custom getter
   return `
-Object.defineProperties(navigator, {
-  "languages": {
-    get() {
-      return ${JSON.stringify(languages)};
+    Object.defineProperties(navigator, {
+      "languages": {
+        get() {
+          return ${JSON.stringify(languages)};
+        }
+      },
+      "language": {
+        get() {
+          return ${JSON.stringify(lang)};
+        }
+      }
     }
-  },
-  "language": {
-    get() {
-      return ${JSON.stringify(lang)};
-    }
-  }
-});`
+  );`
 }
 
 describe('I18n Integration tests', () => {
