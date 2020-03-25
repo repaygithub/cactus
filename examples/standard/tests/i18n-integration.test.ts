@@ -72,11 +72,11 @@ describe('I18n Integration tests', () => {
       page = await global.__BROWSER__.newPage()
     })
     beforeEach(async () => {
-      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
       await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
     })
 
     test('we can see the rendered content', async () => {
+      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
       const doc = await getDocument(page)
       expect(
         await getByText(
