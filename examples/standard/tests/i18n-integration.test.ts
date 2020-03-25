@@ -2,6 +2,7 @@ import * as path from 'path'
 import { getDocument, queries } from 'pptr-testing-library'
 import puppeteer from 'puppeteer'
 import startStaticServer, { ServerObj } from './helpers/static-server'
+import { doesNotReject } from 'assert'
 
 const { getByText } = queries
 
@@ -68,12 +69,9 @@ describe('I18n Integration tests', () => {
   })
 
   describe('when browser language is es-MX', () => {
-    puppeteer.launch({
-      args: ['--lang=es-MX']
-    });
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
-      page.setExtraHTTPHeaders  ({
+      await page.setExtraHTTPHeaders  ({
         'Accept-Language': 'es-MX'
       })
     })
