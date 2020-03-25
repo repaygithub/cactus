@@ -57,7 +57,6 @@ describe('I18n Integration tests', () => {
     })
 
     test('we can set the language manually', async () => {
-      await page.select('select', 'es-MX')
       await page.setExtraHTTPHeaders  ({
         'Accept-Language': 'es-MX'
       })
