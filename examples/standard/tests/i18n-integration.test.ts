@@ -57,9 +57,8 @@ describe('I18n Integration tests', () => {
     })
 
     test('we can set the language manually', async () => {
-      await page.setExtraHTTPHeaders  ({
-        'Accept-Language': 'es-MX'
-      })
+      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
+      await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
       const doc = await getDocument(page)
       expect(
         await getByText(
@@ -73,9 +72,6 @@ describe('I18n Integration tests', () => {
   describe('when browser language is es-MX', () => {
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
-      await page.setExtraHTTPHeaders  ({
-        'Accept-Language': 'es-MX'
-      })
     })
     beforeEach(async () => {
       await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
