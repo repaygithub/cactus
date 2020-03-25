@@ -1,9 +1,9 @@
 import * as path from 'path'
-import { getDocument, queries, wait } from 'pptr-testing-library'
+import { getDocument, queries } from 'pptr-testing-library'
 import puppeteer from 'puppeteer'
 import startStaticServer, { ServerObj } from './helpers/static-server'
 
-const { getByText, queryByText } = queries
+const { getByText } = queries
 
 function getLangJs(lang: string, languages: Array<string> = [lang]) {
   // overwrite the navigator.languages properties to use a custom getter
