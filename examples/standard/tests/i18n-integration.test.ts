@@ -57,13 +57,11 @@ describe('I18n Integration tests', () => {
     })
 
     test('we can set the language manually', async () => {
-      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
-      await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
       const doc = await getDocument(page)
       expect(
         await getByText(
           doc,
-          'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
+          'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
         )
       ).not.toBeNull()
     })
