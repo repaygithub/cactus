@@ -66,6 +66,22 @@ describe('I18n Integration tests', () => {
     })
   })
 
+  describe("when navigator.language is en-US, change to es-MX", ()=>{
+    beforeAll(async () => {
+      page = await global.__BROWSER__.newPage()
+      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
+      await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
+    })
+      test('we can see the rendered content', async () => {
+        const doc = await getDocument(page)
+        expect(
+          await getByText(
+            doc,
+            'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
+          )
+        ).not.toBeNull()
+    })
+  })
   describe('when browser language is es-MX', () => {
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
