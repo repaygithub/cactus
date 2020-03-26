@@ -48,8 +48,14 @@ describe('I18n Integration tests', () => {
     })
 
     test('we can see the rendered content', async () => {
+      beforeEach(async ()=>{
+        await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
+        await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
+      })
       const doc = await getDocument(page)
-      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
+      await page.setExtraHTTPHeaders({
+        'Accept-Language': 'es-MX'
+      });
       expect(
         await getByText(
           doc,
