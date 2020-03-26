@@ -1,27 +1,25 @@
 import * as path from 'path'
-import { getDocument, queries } from 'pptr-testing-library'
+import { getDocument, queries, wait } from 'pptr-testing-library'
 import puppeteer from 'puppeteer'
 import startStaticServer, { ServerObj } from './helpers/static-server'
-import { doesNotReject } from 'assert'
 
-const { getByText } = queries
+const { getByText, queryByText } = queries
 
 function getLangJs(lang: string, languages: Array<string> = [lang]) {
   // overwrite the navigator.languages properties to use a custom getter
   return `
-    Object.defineProperties(navigator, {
-      "languages": {
-        get() {
-          return ${JSON.stringify(languages)};
-        }
-      },
-      "language": {
-        get() {
-          return ${JSON.stringify(lang)};
-        }
-      }
+Object.defineProperties(navigator, {
+  "languages": {
+    get() {
+      return ${JSON.stringify(languages)};
     }
-  );`
+  },
+  "language": {
+    get() {
+      return ${JSON.stringify(lang)};
+    }
+  }
+});`
 }
 
 describe('I18n Integration tests', () => {
@@ -48,18 +46,22 @@ describe('I18n Integration tests', () => {
     })
 
     test('we can see the rendered content', async () => {
-      beforeEach(async ()=>{
-        await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
-        await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
-      })
       const doc = await getDocument(page)
-      await page.setExtraHTTPHeaders({
-        'Accept-Language': 'es-MX'
-      });
       expect(
         await getByText(
           doc,
-          'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
+          'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
+        )
+      ).not.toBeNull()
+    })
+
+    test('we can set the language manually', async () => {
+      await page.select('select', 'es-MX')
+      const doc = await getDocument(page)
+      expect(
+        await getByText(
+          doc,
+          'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
         )
       ).not.toBeNull()
     })
