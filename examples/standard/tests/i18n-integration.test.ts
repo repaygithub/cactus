@@ -60,7 +60,7 @@ describe('I18n Integration tests', () => {
       expect(
         await getByText(
           doc,
-          'Welcome to the standard applicatio using `@repay/cactus-i18n` demonstrating the basic usages,'
+          'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
         )
       ).not.toBeNull()
     })
