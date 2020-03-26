@@ -56,16 +56,6 @@ describe('I18n Integration tests', () => {
         )
       ).not.toBeNull()
     })
-
-    test('we can set the language manually', async () => {
-      const doc = await getDocument(page)
-      expect(
-        await getByText(
-          doc,
-          'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
-        )
-      ).not.toBeNull()
-    })
   })
 
   describe('when browser language is es-MX', () => {
