@@ -49,10 +49,11 @@ describe('I18n Integration tests', () => {
 
     test('we can see the rendered content', async () => {
       const doc = await getDocument(page)
+      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
       expect(
         await getByText(
           doc,
-          'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
+          'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
         )
       ).not.toBeNull()
     })
