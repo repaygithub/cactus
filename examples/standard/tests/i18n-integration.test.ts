@@ -39,12 +39,12 @@ describe('I18n Integration tests', () => {
     await server.close()
   })
 
-  describe('when navigator.language is en-US', () => {
+  describe('when navigator.language is en-US', async () => {
     beforeEach(async () => {
-      await page.evaluateOnNewDocument(getLangJs('en-US', ['en-US', 'en']))
       await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
     })
 
+    await page.evaluateOnNewDocument(getLangJs('en-US', ['en-US', 'en']))
     test('we can see the rendered content', async () => {
       const doc = await getDocument(page)
       expect(
@@ -55,33 +55,22 @@ describe('I18n Integration tests', () => {
       ).not.toBeNull()
     })
 
+    page = await global.__BROWSER__.newPage()
+    await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
+    await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
+
     test('we can set the language manually', async () => {
+      await page.select('select', 'es-MX')
       const doc = await getDocument(page)
       expect(
         await getByText(
           doc,
-          'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
+          'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
         )
       ).not.toBeNull()
     })
   })
 
-  describe("when navigator.language is en-US, change to es-MX", ()=>{
-    beforeAll(async () => {
-      page = await global.__BROWSER__.newPage()
-      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
-      await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
-    })
-      test('we can see the rendered content', async () => {
-        const doc = await getDocument(page)
-        expect(
-          await getByText(
-            doc,
-            'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
-          )
-        ).not.toBeNull()
-    })
-  })
   describe('when browser language is es-MX', () => {
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
@@ -90,7 +79,6 @@ describe('I18n Integration tests', () => {
       await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
       await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
     })
-
     test('we can see the rendered content', async () => {
       const doc = await getDocument(page)
       expect(
