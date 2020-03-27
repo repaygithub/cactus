@@ -12,6 +12,9 @@ capabilities to provide translations for an application. There are a few pieces 
 
 - The [load](#Load) function
 - The [setDict](#SetDict) function
+- The [get](#Get) function
+- The [getText](#GetText) function
+- the [hasText](#HasText) function
 - The [constructor](#Constructor)
 
 ### Load
@@ -37,6 +40,68 @@ The `setDict` function can be used to load a specific translation resource into 
 | `section` | String | Y        | The section of the app that the translation is being loaded for |
 | `ftl`     | String | Y        | The actual ftl-formatted translation                            |
 
+### Get
+
+The `get` function will search language bundles for the requested message, then return the message and an object of attached attributes.
+
+#### Params
+
+The `get()` function accepts one argument which is an object with the following properties.
+
+| Attr      | Type   | Required | Description                                                                        |
+| --------- | ------ | -------- | ---------------------------------------------------------------------------------- |
+| `lang`    | String | N        | Override the currently selected language                                           |
+| `section` | String | N        | The section where the id resides, defaults to `global`                             |
+| `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
+
+#### Returns
+
+The `get()` function will always return a tuple but if the requested message doesn't exist the first value will be `null` and if there are no associated attributes with the message the second argument will be an empty object.
+
+```ts
+type GetReturn = [string | null, { [key: string]: string }]
+```
+
+### GetText
+
+The `getText` function will search language bundles for the requested message, then return the message only.
+
+#### Params
+
+The `getText(params)` function accepts one argument which is an object with the following properties.
+
+| Attr      | Type   | Required | Description                                                                        |
+| --------- | ------ | -------- | ---------------------------------------------------------------------------------- |
+| `lang`    | String | N        | Override the currently selected language                                           |
+| `section` | String | N        | The section where the id resides, defaults to `global`                             |
+| `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
+
+#### Returns
+
+The `getText(params)` function will return either a string or null.
+
+```ts
+type GetTextReturn = null | string
+```
+
+### HasText
+
+The `hasText` function will search language bundles for the requested message, then return a boolean signifying it was found or not.
+
+#### Params
+
+The `hasText(params)` function accepts one argument which is an object with the following properties.
+
+| Attr      | Type   | Required | Description                                                                        |
+| --------- | ------ | -------- | ---------------------------------------------------------------------------------- |
+| `lang`    | String | N        | Override the currently selected language                                           |
+| `section` | String | N        | The section where the id resides, defaults to `global`                             |
+| `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
+
+#### Returns
+
+The `hasText(params)` function will return either `true` if the message exists or `false` if it does not.
+
 ### Constructor
 
 The `BaseI18nController` constructor accepts a single options object with the following attributes:
@@ -53,6 +118,8 @@ The `BaseI18nController` constructor accepts a single options object with the fo
 
 ```js
 class I18nController extends BaseI18nController {
+  // This is the minimum implementation, load() must be implemented or
+  // the constructor will throw
   load(args) {
     const { lang, section } = args
     // Load ftl translations from the source
@@ -70,6 +137,29 @@ const controller = new I18nController({
   global: enGlobalFTL,
 })
 export default controller
+```
+
+You may also want to extend other functions based on your needs. This can be done by also using the `super` keyword to refer to the original method.
+
+```js
+export const missingKeys = new Set()
+
+class I18nController extends BaseI18nController {
+  load(args) {
+    // code to load translations
+  }
+
+  get(args) {
+    const tuple = super.get(args)
+    if (tuple[0] === null) {
+      const key = args.section === 'global' ? args.id : `${args.section}__${args.id}`
+      if (!missingKeys.has(key)) {
+        missingKeys.add(key)
+      }
+    }
+    return tuple
+  }
+}
 ```
 
 ## I18nProvider
@@ -125,10 +215,11 @@ The `<I18nSection />` component was designed to allow the translations to be bro
 
 ### Props
 
-| Prop   | Type   | Required | Description                                                  |
-| ------ | ------ | -------- | ------------------------------------------------------------ |
-| `name` | String | Y        | Used for telling the component which section is to be loaded |
-| `lang` | String | N        | Used to override the globally selected language              |
+| Prop           | Type                | Required | Description                                                                                                                 |
+| -------------- | ------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `name`         | String              | Y        | Used for telling the component which section is to be loaded                                                                |
+| `lang`         | String              | N        | Used to override the globally selected language                                                                             |
+| `dependencies` | Array<String \| {}> | N        | Used to provide additional section dependencies that will not become the default `section` for components lower in the tree |
 
 ### Example Usage
 
@@ -138,6 +229,20 @@ import { I18nSection } from '@repay/cactus-i18n'
 const sectionComponent = () => {
   return (
     <I18nSection name="example">
+      ...
+    </I18nSection>
+  )
+}
+```
+
+Example with additional section dependencies
+
+```jsx
+import { I18nSection } from '@repay/cactus-i18n'
+...
+const Page = () => {
+  return (
+    <I18nSection name="pageSpecificTranslations" dependencies={['someExtraGlobalTranslations']}>
       ...
     </I18nSection>
   )

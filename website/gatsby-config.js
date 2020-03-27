@@ -87,7 +87,6 @@ module.exports = {
     },
     // TODO review and add the following if desired
     // 'gatsby-plugin-lunr',
-    // 'gatsby-plugin-feed',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
