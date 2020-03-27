@@ -1,6 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Card should support margin space props 1`] = `
+.c2 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c2 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
 .c1 {
   box-sizing: border-box;
   margin: 4px;

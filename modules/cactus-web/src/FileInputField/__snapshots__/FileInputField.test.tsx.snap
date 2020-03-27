@@ -105,6 +105,10 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   margin-right: 4px;
 }
 
+.c26 .c12 {
+  padding-bottom: 4px;
+}
+
 .c11 {
   box-sizing: border-box;
   width: 40px;
@@ -144,10 +148,58 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 .c19 .c12,
-.c19 .sc-fzqOul,
-.c19 .sc-oTbqq {
+.c19 .sc-feJyhm,
+.c19 .c29 {
   margin-right: 4px;
   vertical-align: -2px;
+}
+
+.c27 .c10 {
+  height: 24px;
+  width: 24px;
+}
+
+.c27 .c10 .c12 {
+  height: 16px;
+  width: 16px;
+}
+
+.c27 .c10 .c29 {
+  height: 18px;
+  width: 18px;
+}
+
+.c27 .c14 {
+  margin-left: auto;
+}
+
+.c27 .c16 {
+  height: 12px;
+  width: 12px;
+}
+
+.c28 .c10 {
+  height: 24px;
+  width: 24px;
+}
+
+.c28 .c10 .c12 {
+  height: 16px;
+  width: 16px;
+}
+
+.c28 .c10 .c29 {
+  height: 18px;
+  width: 18px;
+}
+
+.c28 .c14 {
+  margin-left: auto;
+}
+
+.c28 .c16 {
+  height: 12px;
+  width: 12px;
 }
 
 .c9 {
@@ -191,12 +243,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c9 .c10 .sc-oTbqq {
+.c9 .c10 .c29 {
   height: 18px;
   width: 18px;
 }
 
-.c9 .sc-pJkiN {
+.c9 .c30 {
   height: 12px;
   width: 12px;
 }
@@ -307,7 +359,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 .c2 .c5 {
   position: absolute;
   top: -2px;
-  right: 8px font-size:16px;
+  right: 8px;
+  font-size: 16px;
 }
 
 <div>
@@ -325,7 +378,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="sc-fzoPby c6"
+        class="c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -577,8 +630,32 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c11 .sc-fzoCCn {
+.c11 .c23 {
   padding-bottom: 4px;
+}
+
+.c21 .c10 {
+  height: 24px;
+  width: 24px;
+}
+
+.c21 .c10 .c23 {
+  height: 16px;
+  width: 16px;
+}
+
+.c21 .c10 .c12 {
+  height: 18px;
+  width: 18px;
+}
+
+.c21 .c14 {
+  margin-left: auto;
+}
+
+.c21 .c16 {
+  height: 12px;
+  width: 12px;
 }
 
 .c9 {
@@ -617,7 +694,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c9 .c10 .sc-fzoCCn {
+.c9 .c10 .c23 {
   height: 16px;
   width: 16px;
 }
@@ -627,7 +704,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c9 .sc-pJkiN {
+.c9 .c24 {
   height: 12px;
   width: 12px;
 }
@@ -645,24 +722,24 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c8 .sc-pReKu {
+.c8 .c25 {
   position: relative;
   margin-top: 4px;
   width: 100%;
 }
 
-.c8 .sc-pReKu span {
+.c8 .c25 span {
   padding-right: 15px;
 }
 
-.c8 .sc-pReKu .c14 {
+.c8 .c25 .c14 {
   position: absolute;
   right: 11px;
   top: 14px;
   color: hsl(0,0%,100%);
 }
 
-.c8 .sc-pReKu .sc-fzpans {
+.c8 .c25 .c22 {
   height: 12px;
   width: 12px;
 }
@@ -738,7 +815,8 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 .c2 .c5 {
   position: absolute;
   top: -2px;
-  right: 8px font-size:16px;
+  right: 8px;
+  font-size: 16px;
 }
 
 <div>
@@ -756,7 +834,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="sc-fzoPby c6"
+        class="c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -908,8 +986,8 @@ exports[`component: FileInputField should render a loading file 1`] = `
 .c11 {
   vertical-align: middle;
   font-size: 40px;
-  -webkit-animation: bKPVWD 0.75s linear infinite;
-  animation: bKPVWD 0.75s linear infinite;
+  -webkit-animation: iVXCSc 0.75s linear infinite;
+  animation: iVXCSc 0.75s linear infinite;
 }
 
 .c9 {
@@ -942,17 +1020,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   line-height: 28px;
 }
 
-.c9 .sc-pBolk {
+.c9 .c20 {
   height: 24px;
   width: 24px;
 }
 
-.c9 .sc-pBolk .sc-fzoCCn {
+.c9 .c20 .c17 {
   height: 16px;
   width: 16px;
 }
 
-.c9 .sc-pBolk .sc-oTbqq {
+.c9 .c20 .c18 {
   height: 18px;
   width: 18px;
 }
@@ -962,11 +1040,11 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 12px;
 }
 
-.c9 .sc-qQxXP {
+.c9 .c19 {
   margin-left: auto;
 }
 
-.c9 .sc-fzoMdx {
+.c9 .c16 {
   height: 12px;
   width: 12px;
 }
@@ -975,24 +1053,24 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 100%;
 }
 
-.c8 .sc-pReKu {
+.c8 .c21 {
   position: relative;
   margin-top: 4px;
   width: 100%;
 }
 
-.c8 .sc-pReKu span {
+.c8 .c21 span {
   padding-right: 15px;
 }
 
-.c8 .sc-pReKu .sc-qQxXP {
+.c8 .c21 .c19 {
   position: absolute;
   right: 11px;
   top: 14px;
   color: hsl(0,0%,100%);
 }
 
-.c8 .sc-pReKu .sc-fzpans {
+.c8 .c21 .c15 {
   height: 12px;
   width: 12px;
 }
@@ -1068,7 +1146,8 @@ exports[`component: FileInputField should render a loading file 1`] = `
 .c2 .c5 {
   position: absolute;
   top: -2px;
-  right: 8px font-size:16px;
+  right: 8px;
+  font-size: 16px;
 }
 
 <div>
@@ -1086,7 +1165,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="sc-fzoPby c6"
+        class="c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -1124,7 +1203,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
             boolest.txt
           </span>
           <svg
-            class="sc-pAZqv c10 c11"
+            class="c10 c11"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -1309,7 +1388,8 @@ exports[`component: FileInputField should render file input field 1`] = `
 .c2 .c5 {
   position: absolute;
   top: -2px;
-  right: 8px font-size:16px;
+  right: 8px;
+  font-size: 16px;
 }
 
 <div>
@@ -1327,7 +1407,7 @@ exports[`component: FileInputField should render file input field 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="sc-fzoPby c6"
+        class="c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

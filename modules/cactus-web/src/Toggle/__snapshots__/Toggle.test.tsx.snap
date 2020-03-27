@@ -87,6 +87,26 @@ exports[`component: Toggle should initialize value to true 1`] = `
   opacity: 0.5;
 }
 
+.c5[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c5[aria-checked='true'] .c3 {
+  opacity: 1;
+}
+
+.c5 .c1 {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c5 .c3 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
 <button
     aria-checked="true"
     class="c0"
@@ -95,7 +115,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="sc-fzoxnE c1 c2"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -107,7 +127,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="sc-pZBmh c3 c4"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -141,6 +161,26 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   top: 4px;
   left: 5px;
   color: hsl(0,0%,100%);
+}
+
+.c5[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c5[aria-checked='true'] .c3 {
+  opacity: 1;
+}
+
+.c5 .c1 {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c5 .c3 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 
 .c0 {
@@ -217,7 +257,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="sc-fzoxnE c1 c2"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -229,7 +269,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="sc-pZBmh c3 c4"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -338,7 +378,7 @@ exports[`component: Toggle should render a toggle 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="sc-fzoxnE c1 c2"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -350,7 +390,7 @@ exports[`component: Toggle should render a toggle 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="sc-pZBmh c3 c4"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -384,6 +424,46 @@ exports[`component: Toggle should support margin space props 1`] = `
   top: 4px;
   left: 5px;
   color: hsl(0,0%,100%);
+}
+
+.c5[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c5[aria-checked='true'] .c3 {
+  opacity: 1;
+}
+
+.c5 .c1 {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c5 .c3 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c6[aria-checked='true'] .c1 {
+  opacity: 0;
+}
+
+.c6[aria-checked='true'] .c3 {
+  opacity: 1;
+}
+
+.c6 .c1 {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+.c6 .c3 {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 
 .c0 {
@@ -460,7 +540,7 @@ exports[`component: Toggle should support margin space props 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="sc-fzoxnE c1 c2"
+      class="c1 c2"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -472,7 +552,7 @@ exports[`component: Toggle should support margin space props 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="sc-pZBmh c3 c4"
+      class="c3 c4"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"

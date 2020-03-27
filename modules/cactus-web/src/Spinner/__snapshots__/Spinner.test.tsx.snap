@@ -4,13 +4,13 @@ exports[`component: Spinner snapshot 1`] = `
 .c0 {
   vertical-align: middle;
   font-size: 40px;
-  -webkit-animation: bKPVWD 0.75s linear infinite;
-  animation: bKPVWD 0.75s linear infinite;
+  -webkit-animation: iVXCSc 0.75s linear infinite;
+  animation: iVXCSc 0.75s linear infinite;
 }
 
 <div>
   <svg
-    class="sc-qYiqT c0"
+    class="c0"
     fill="currentcolor"
     height="1em"
     viewBox="0 0 24 24"

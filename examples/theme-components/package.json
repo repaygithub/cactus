@@ -28,7 +28,7 @@
     "@repay/cactus-web": "^0.7.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "styled-components": "^5.0.1"
+    "styled-components": "^4.1.2"
   },
   "resolutions": {
     "styled-components": "^4.1.2"

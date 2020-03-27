@@ -27,7 +27,7 @@ exports[`component: Flex should accept basic built-in props 1`] = `
 
 <div>
   <div
-    class="sc-AxjAm c0"
+    class="c0"
     color="white"
     display="block"
     height="120px"
@@ -89,15 +89,15 @@ exports[`component: Flex should accept flex props 1`] = `
 
 <div>
   <div
-    class="sc-AxjAm c0"
+    class="c0"
     display="flex"
   >
     <div
-      class="sc-AxjAm c1"
+      class="c1"
       display="flex"
     />
     <div
-      class="sc-AxjAm c2"
+      class="c2"
       display="flex"
     />
   </div>
@@ -118,7 +118,7 @@ exports[`component: Flex snapshot with no props 1`] = `
 
 <div>
   <div
-    class="sc-AxjAm c0"
+    class="c0"
     display="flex"
   />
 </div>
