@@ -20,6 +20,7 @@ The design system starts by defining the [design language](https://repaygithub.g
 
 - [Standard Example](../examples/standard/) - generic implementations of features
 - [Theme Components](../examples/theme-components) - using the `@repay/cactus-web` module with a theme
+- [Mock Web Application](../examples/mock-ebpp/) - A mock web application containing functionality which are common in Repay products.
 
 ## Installation
 

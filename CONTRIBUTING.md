@@ -14,6 +14,8 @@ This is a set of guidelines (not rules) for contributing to Cactus and the libra
 - [Markdown](#markdown)
 - [Git Commit Messages](#git-commit-messages)
 
+Also see the documentation for [Coding Best Practices](./docs/Coding%20Best%20Practices/README.md).
+
 ## Code of Conduct
 
 This project and everyone participating in it is governed by the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to @JamesNimlos.

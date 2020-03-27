@@ -13,6 +13,9 @@ const digest = str =>
     .update(str)
     .digest('hex')
 
+/**
+ * Queries for any sourced markdown files and turns them into pages
+ */
 exports.createPages = ({ actions, graphql }) => {
   const { createPage, createRedirect } = actions
 
@@ -94,6 +97,9 @@ function getTitle({ node, getNode }) {
   return title
 }
 
+/**
+ * Adds extra fields to sourced nodes so that we can access their title, route slug, or know when they were a component docs page.
+ */
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
@@ -121,7 +127,9 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
+        // used to ensure only a single versions of styled-components is loaded
         'styled-components': path.resolve('../node_modules/styled-components'),
+        // used to reference website components from inside mdx files, such as those in cactus-web
         'website-src': path.resolve('./src'),
       },
     },
@@ -133,12 +141,12 @@ exports.onCreateBabelConfig = ({ actions }) => {
    * Required to match individual component files to their docgen data.
    * Adds a __filemeta property to all react components
    */
-
   actions.setBabelPlugin({
     name: 'babel-plugin-export-metadata',
   })
 }
 
+// creates a typescript server to compile files in cactus web
 const docgen = reactDocgenTs.withCustomConfig(
   modulesHelper.resolveModule('cactus-web/tsconfig.json'),
   []
@@ -158,7 +166,7 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
   ]
 
   /**
-   * docgenData = DocItem[] where DocItem = { key: filepath, value: ComponentDoc }
+   * docgenData = DocItem[] where DocItem = { key: filepath, value: ComponentDoc, hashed: <file hash> }
    */
   let docgenData = await cache.get(DOCGEN_CACHE_KEY)
   if (!Array.isArray(docgenData)) {
@@ -174,9 +182,11 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
         const key = path.relative(__dirname, filePath)
         const hashed = digest(await fs.readFile(filePath, 'utf8'))
         let previousData = docgenData.find(d => d.key === key)
+        // file content has not changed and doesn't need to be updated
         if (previousData && previousData.hashed === hashed) {
           updatedDocgenData.push(previousData)
         } else {
+          // content has updated, reparse and push the new data
           const doc = docgen.parse(filePath)
           updatedDocgenData.push({ key, value: doc, hashed })
         }
