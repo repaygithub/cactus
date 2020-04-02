@@ -42,5 +42,6 @@ Array [
   "useId",
   "DateInputField",
   "MenuButton",
+  "Modal",
 ]
 `;

@@ -1,0 +1,137 @@
+---
+name: Modal
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import React, { useState } from 'react'
+import Modal from './Modal'
+import Button from '../Button/Button'
+import TextInput from '../TextInput/TextInput'
+import Grid from '../Grid/Grid'
+import cactusTheme from '@repay/cactus-theme'
+import { DescriptiveEnvelope } from '@repay/cactus-icons/'
+
+# Modal
+
+The `Modal` component is usefull when an action from the user is required, and no other interaction
+on the web page is permited until the modal is closed.
+
+### How it looks
+
+export const Wrapper = () => {
+  const [open, setOpen] = useState(false)
+  return open ? (
+    <Modal
+      modalTitle="Modal Title"
+      description="Modal Description"
+      variant="action"
+      isOpen={open}
+      closeModal={() => setOpen(false)}
+      buttonText="Confirm Button"
+      icon={DescriptiveEnvelope}
+      modalLabel="Modal Label"
+      closeLabel="Close Label"
+      onClick={() => setOpen(false)}
+    />
+  ) : (
+    <Button variant="action" onClick={() => setOpen(true)}>
+      Open Modal
+    </Button>
+  )
+}
+
+export const Wrapper2 = () => {
+  const [open, setOpen] = useState(false)
+  return open ? (
+    <Modal
+      modalTitle="Modal Title"
+      description="Modal Description"
+      variant="action"
+      isOpen={open}
+      closeModal={() => setOpen(false)}
+      buttonText="Confirm Button"
+      icon={DescriptiveEnvelope}
+      modalLabel="Modal Label"
+      closeLabel="Close Label"
+      onClick={() => setOpen(false)}
+    >
+      <TextInput width="70%" placeholder="placeholder" />
+    </Modal>
+  ) : (
+    <Button variant="action" onClick={() => setOpen(true)}>
+      With TextInput
+    </Button>
+  )
+}
+
+<Grid>
+  <Grid.Item tiny={2}>
+    <Wrapper />
+  </Grid.Item>
+  <Grid.Item tiny={2}>
+    <Wrapper2 />
+  </Grid.Item>
+</Grid>
+
+## Best practices
+
+The `Modal` component locks all other user interactions on the web page until the user takes an action.
+These actions are one two: Cancel what is requested to do or confirm it. After any of
+those actions is performed, the modal closes. You can also render children inside the modal, for example a `TextInput`, to capture users data.
+Also, the modal has two variants, danger and action. Danger is useful when the user should confirm something that cannot be undone, and thus a double confirmation is requested.
+Action is useful when the user is requested to confirm an action that is not harmful, or when additional data is needed.
+
+## Basic usage
+
+A basic modal has A title, descriptive text,variant, an `Icon` and two buttons to confirm or cancel the action. The labels are for accesibility.
+
+```jsx
+import { Modal } from '@repay/cactus-web'
+import { DescriptiveEnvelope } from '@repay/cactus-icons/'
+
+
+const ComponentWithModal = () =>{
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Modal
+      modalTitle='Modal Title'
+      description='Modal Description'
+      variant='action'
+      isOpen={open}
+      closeModal={() => setOpen(false)}
+      buttonText='Confirm Button'
+      icon={DescriptiveEnvelope}
+      modalLabel='Modal Label'
+      closeLabel='Close Label'
+      onClick={() => confirmAction()}
+    />
+
+
+    // With TextInput Child
+    <Modal
+      modalTitle='Modal Title'
+      description='Modal Description'
+      variant='action'
+      isOpen={open}
+      closeModal={() => setOpen(false)}
+      buttonText='Confirm Button'
+      icon={DescriptiveEnvelope}
+      modalLabel='Modal Label'
+      closeLabel='Close Label'
+      onClick={() => confirmAction()}
+    >
+      <TextInput width="70%" placeholder="placeholder" />
+    </Modal>
+  )
+}
+
+
+
+
+```
+
+## Properties
+
+<PropsTable of={Modal} />
