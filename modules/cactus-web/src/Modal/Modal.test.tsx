@@ -6,6 +6,7 @@ import { DescriptiveEnvelope } from '@repay/cactus-icons/'
 import Modal from './Modal'
 import TextInput from '../TextInput/TextInput'
 
+const Icon = DescriptiveEnvelope as React.FunctionComponent
 afterEach(cleanup)
 
 describe('Modal is open when isOpen=true', () => {
@@ -13,7 +14,7 @@ describe('Modal is open when isOpen=true', () => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
-          icon={DescriptiveEnvelope}
+          icon={Icon}
           modalTitle="Modal Title"
           description="Modal Description"
           variant="action"
@@ -33,7 +34,7 @@ describe('Modal is closed when isOpen=false', () => {
   test('snapshot', () => {
     const { baseElement } = render(
       <StyleProvider>
-        <Modal icon={DescriptiveEnvelope} isOpen={false} />
+        <Modal icon={Icon} isOpen={false} />
       </StyleProvider>
     )
 
@@ -46,12 +47,7 @@ describe('Aria-labels applied correctly', () => {
   test('snapshot', () => {
     const { baseElement } = render(
       <StyleProvider>
-        <Modal
-          icon={DescriptiveEnvelope}
-          isOpen={true}
-          modalLabel="Modal Label"
-          closeLabel="Close Label"
-        />
+        <Modal icon={Icon} isOpen={true} modalLabel="Modal Label" closeLabel="Close Label" />
       </StyleProvider>
     )
 
@@ -65,7 +61,7 @@ describe('Can render content as children', () => {
     const { getByTestId } = render(
       <StyleProvider>
         <Modal
-          icon={DescriptiveEnvelope}
+          icon={Icon}
           modalTitle="Modal Title"
           description="Modal Description"
           variant="action"
