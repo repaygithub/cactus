@@ -1,0 +1,53 @@
+---
+name: Breadcrumb
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Breadcrumb from './Breadcrumb'
+
+# Breadcrumb
+
+The `Breadcrumb` comopnent allows you to render a navigation of your previusly visited sites, including the current one
+
+### How it looks
+
+<Breadcrumb>
+  <Breadcrumb.Item label={text('Label 1', 'Account')} linkTo="/" />
+  <Breadcrumb.Item label={text('Label 2', 'Make a Payment')} linkTo="/" active />
+</Breadcrumb>
+## Best practices
+
+The Breadcrumb component consists of two parts: The `Breadcrumb` which works as a wrapper for the navigation links.
+And a `Breadcrumb.Item` which represents a single Breadrumb or link. the label and linkTo should be passed as props,
+and if it's the last navigation Breadcrumb, an active prop should be passed as well.
+
+## Basic usage
+
+```jsx
+import React from 'react'
+import { Breadcrumb } from '@repay/cactus-web'
+
+// Basic usage
+ <Breadcrumb>
+    <Breadcrumb.Item label={text('Label 1', 'Account')} linkTo="/" />
+    <Breadcrumb.Item label={text('Label 2', 'Make a Payment')} linkTo="/"/>
+</Breadcrumb>
+
+
+// With dynimic links and labels
+const values={Label: 'link', Label2: 'link2'}
+  {Object.values(values).map((e, i, arr) =>
+    arr.length - 1 === i ? (
+      <Breadcrumb.Item label={e[0]} linkTo="/" active key={i}/>
+    ) : (
+      <Breadcrumb.Item label={e[0]} linkTo={e[1]} key={i}/>
+    )
+  )}
+</Breadcrumb>
+
+```
+
+## Properties
+
+<PropsTable of={Breadcrumb} />

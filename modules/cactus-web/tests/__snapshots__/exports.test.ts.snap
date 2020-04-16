@@ -43,5 +43,6 @@ Array [
   "DateInputField",
   "MenuButton",
   "Modal",
+  "Breadcrumb",
 ]
 `;
