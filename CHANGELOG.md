@@ -1,5 +1,12 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.11](https://github.com/repaygithub/cactus/commit/241aeb830a4fd4e2c6b69b71a538f8410f002378)
+
+- fix(cactus-i18n): Import locales needed for intl & intl-pluralrules [2a1408b](https://github.com/repaygithub/cactus/commit/2a1408b80ac7330183c34b703b4d4f6289718ebe)
+- fix(cactus-i18n): Import locales needed for intl & intl-pluralrules [035ddee](https://github.com/repaygithub/cactus/commit/035ddee67cecf828a2a8c22a41dad8882a911e9a)
+- docs(cactus-i18n): documentation for new features [6c32eac](https://github.com/repaygithub/cactus/commit/6c32eac8a2179706dc1a6a5f2d11e36600c22c28)
+- chore(cactus-i18n): update changelog [0c5520c](https://github.com/repaygithub/cactus/commit/0c5520ca746c888549536608d72f95792269f430)
+
 ## [@repay/cactus-i18n@v0.3.9](https://github.com/repaygithub/cactus/commit/4f62cf2f2f8043665437c46af3ba0a6a643e291f)
 
 - fix(cactus-i18n): Add plural rules polyfill to support IE11 [77c51e9](https://github.com/repaygithub/cactus/commit/77c51e9ccdc6ef157b3bba5a6a5033ef51d56a65)
