@@ -42,6 +42,7 @@ describe('Integration Tests', () => {
       })
 
       test('should fill out and submit the entire form', async () => {
+        jest.setTimeout(25000)
         const doc = await getDocument(page)
         const actions = new Actions(doc, page)
 
