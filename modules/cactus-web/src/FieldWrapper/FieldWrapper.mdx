@@ -6,14 +6,15 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import FieldWrapper from './FieldWrapper'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # FieldWrapper
 
 The FieldWrapper component is mainly used internally to wrap our field components to help with spacing.
 
-
 ### How it looks
-<form>
+
+export const code = `<form>
   <FieldWrapper>
     <label>Input 1</label>
     <input />
@@ -26,7 +27,13 @@ The FieldWrapper component is mainly used internally to wrap our field component
     <label>Input 3</label>
     <input />
   </FieldWrapper>
-</form>
+</form>`
+
+<LiveProvider code={code} scope={{ FieldWrapper }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
@@ -53,7 +60,6 @@ const MyInput = props => {
 
 export default MyInput
 
-
 // Form.js
 import React, { useCallback, useState } from 'react'
 import MyInput from './MyInput'
@@ -66,17 +72,24 @@ const Form = () => {
       event.preventDefault()
       const data = { ...state }
       // Send data to api
-  }, [state])
+    },
+    [state]
+  )
 
   return (
     <form onSubmit={handleSubmit}>
       // Siblings will have 16px of padding between them
-      <MyInput label="Input 1" onChange={(e) => setState(state => ({ ...state, field_1: e.target.value }))} />
-      <MyInput label="Input 2" onChange={(e) => setState(state => ({ ...state, field_2: e.target.value }))} />
+      <MyInput
+        label="Input 1"
+        onChange={e => setState(state => ({ ...state, field_1: e.target.value }))}
+      />
+      <MyInput
+        label="Input 2"
+        onChange={e => setState(state => ({ ...state, field_2: e.target.value }))}
+      />
     </form>
   )
 }
-
 ```
 
 ## Properties

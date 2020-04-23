@@ -6,12 +6,13 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import Box from './Box'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Box
 
 ### How it looks
 
-<Box
+export const code = `<Box
   display='initial'
   margin={3}
   padding={4}
@@ -24,7 +25,15 @@ import cactusTheme from '@repay/cactus-theme'
   borderStyle='solid'
   >
   Example Content
-</Box>    
+</Box>`
+
+<LiveProvider code={code} scope={{ Box }}>
+  <LiveEditor />
+  <LiveError />
+  <div style={{ marginTop: '50px' }}>
+    <LivePreview />
+  </div>
+</LiveProvider>
 
 ## Best practices
 

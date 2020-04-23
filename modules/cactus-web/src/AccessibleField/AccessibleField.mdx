@@ -5,6 +5,7 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import AccessibleField from './AccessibleField'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # AccessibleField
 
@@ -12,21 +13,21 @@ The `<AccessibleField />` is intendend as a wrapper with a single child which ac
 
 ### How it looks
 
-<AccessibleField
-  label="Accessible Field"
-  tooltip="Additional messaging on what the field means or does and is accessible by default"
->
-  <input status={undefined} />
-</AccessibleField>
-
-Here it is rendered with status messaging:
-
+export const scope = { AccessibleField }
+export const code = `
 <AccessibleField
   label="Accessible Field"
   warning="Here we have added a warning message which is rendered as a status and is accessibly tied to the provided child."
 >
   <input style={{ minWidth: '300px' }} />
-</AccessibleField>
+</AccessibleField\
+`
+
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

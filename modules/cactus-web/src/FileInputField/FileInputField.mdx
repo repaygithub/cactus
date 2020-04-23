@@ -6,12 +6,13 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import FileInputField from './FileInputField'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # FileInputField
 
 ### How it looks
 
-<FileInputField
+export const code = `<FileInputField
   name="file-input"
   label="Upload a new files"
   tooltip="Upload some files"
@@ -21,7 +22,13 @@ import cactusTheme from '@repay/cactus-theme'
   buttonText="Select Files..."
   rawFiles={false}
   multiple={true}
-/>
+/>`
+
+<LiveProvider code={code} scope={{ FileInputField }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 The file input field is a form field that can be used to upload files. It includes a label, a tooltip, and some accessibility features
 
@@ -29,7 +36,7 @@ The file input field is a form field that can be used to upload files. It includ
 
 - Make sure to pass meaningful messages in the `labels` object. These labels will be passed to the `aria-label` prop on some buttons which will make them accessible.
 - Use the `onError` prop to pass an error handling function. This function should return a string describing the error. The `accept` parameter will
-always be present if the error is of type `FileTypeError`.
+  always be present if the error is of type `FileTypeError`.
 - The `labels`, `prompt`, and `buttonText` props can and should all be used to support multiple languages; you can pass translated strings to do this.
 
 ## Basic usage

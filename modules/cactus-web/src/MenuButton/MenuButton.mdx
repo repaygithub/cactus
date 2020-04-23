@@ -5,6 +5,7 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import MenuButton from './MenuButton'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # MenuButton
 
@@ -14,17 +15,24 @@ This implementation is simply a styled wrapper around [@reach/menu-button](https
 
 ### How it looks
 
-<MenuButton label="Demo">
-  <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Three')}>Action Three</MenuButton.Item>
-</MenuButton>
+export const code = `
+<MenuButton label="Demo" marginTop={5}>
+  <MenuButton.Item onSelect={() => console.log('Action One')}>
+    Action One
+  </MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Two')}>
+    Action Two
+  </MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Three')}>
+    Action Three
+  </MenuButton.Item>
+</MenuButton>`
 
-<MenuButton label="Disabled" disabled marginTop={5}>
-  <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Three')}>Action Three</MenuButton.Item>
-</MenuButton>
+<LiveProvider code={code} scope={{ MenuButton }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

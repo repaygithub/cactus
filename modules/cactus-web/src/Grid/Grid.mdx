@@ -7,6 +7,7 @@ import PropsTable from 'website-src/components/PropsTable'
 import Grid from './Grid'
 import Box from '../Box/Box'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Grid
 
@@ -16,7 +17,7 @@ A responsive grid component designed to help lay out items on a page based on sc
 
 In order to see the behavior of the Grid component, we invite you to resize your window to multiple screen sizes.
 
-<Grid>
+export const code = `<Grid>
   <Grid.Item tiny={4} medium={6} large={8}>
     <Box width="100%" height="25px">
       Column 1
@@ -25,19 +26,25 @@ In order to see the behavior of the Grid component, we invite you to resize your
   <Grid.Item tiny={4} medium={6} large={8}>
     <Box width="100%" height="25px">
       Column 2
-    </Box>{' '}
+    </Box>
   </Grid.Item>
   <Grid.Item tiny={4} medium={6} large={8}>
     <Box width="100%" height="25px">
       Column 3
-    </Box>{' '}
+    </Box>
   </Grid.Item>
   <Grid.Item tiny={4} medium={6} large={8}>
     <Box width="100%" height="25px">
       Column 4
-    </Box>{' '}
+    </Box>
   </Grid.Item>
-</Grid>
+</Grid>`
+
+<LiveProvider code={code} scope={{ Grid, Box }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

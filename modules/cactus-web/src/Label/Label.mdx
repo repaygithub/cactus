@@ -6,12 +6,19 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import Label from './Label'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Label
 
 ### How it looks
 
-<Label>You know nothing, Jon Snow</Label>
+export const code = `<Label>You know nothing, Jon Snow</Label>`
+
+<LiveProvider code={code} scope={{ Label }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Basic usage
 

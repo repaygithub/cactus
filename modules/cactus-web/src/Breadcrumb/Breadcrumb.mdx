@@ -5,6 +5,7 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import Breadcrumb from './Breadcrumb'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Breadcrumb
 
@@ -12,10 +13,17 @@ The `Breadcrumb` comopnent allows you to render a navigation of your previusly v
 
 ### How it looks
 
-<Breadcrumb>
-  <Breadcrumb.Item label={text('Label 1', 'Account')} linkTo="/" />
-  <Breadcrumb.Item label={text('Label 2', 'Make a Payment')} linkTo="/" active />
-</Breadcrumb>
+export const code = `<Breadcrumb>
+  <Breadcrumb.Item label='Account' linkTo="/" />
+  <Breadcrumb.Item label='Make a Payment' linkTo="/" active />
+</Breadcrumb>`
+
+<LiveProvider code={code} scope={{ Breadcrumb }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
 ## Best practices
 
 The Breadcrumb component consists of two parts: The `Breadcrumb` which works as a wrapper for the navigation links.
@@ -30,8 +38,8 @@ import { Breadcrumb } from '@repay/cactus-web'
 
 // Basic usage
  <Breadcrumb>
-    <Breadcrumb.Item label={text('Label 1', 'Account')} linkTo="/" />
-    <Breadcrumb.Item label={text('Label 2', 'Make a Payment')} linkTo="/"/>
+    <Breadcrumb.Item label='Account' linkTo="/" />
+    <Breadcrumb.Item label='Make a Payment'linkTo="/"/>
 </Breadcrumb>
 
 

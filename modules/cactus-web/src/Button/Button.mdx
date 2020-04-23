@@ -6,20 +6,29 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import Button from './Button'
 import cactusTheme from '@repay/cactus-theme'
+import Link from '../Link/Link'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Button
 
 ### How it looks
 
-<Button variant ='action'>Take Some Action</Button>
+export const code = `<Button variant='action' margin={20}>Take Some Action</Button>`
 
+<LiveProvider code={code} scope={{ Button,Link }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 ## Best practices
 
 - `Button` components typically should not be used for navigation between pages.
 - If you want to make a link look like a button, there are a couple of solutions, depending on whether or not you are using Typescript. However, this will modify the button's styles.
   - JSX Solution:
   ```jsx
-  <Button as={Link} to='/path/to/something'>Go Somewhere!</Button>
+  <Button as={Link} to="/path/to/something">
+    Go Somewhere!
+  </Button>
   ```
   - TSX Solution:
   ```tsx

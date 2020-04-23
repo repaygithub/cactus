@@ -6,11 +6,20 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import Avatar from './Avatar'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Avatars
 
 ### How it looks
-<Avatar type="feedback" status="error" />
+
+export const code = `
+<Avatar type="feedback" status="error" />`
+
+<LiveProvider code={code} scope={{ Avatar }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Basic usage
 

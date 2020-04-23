@@ -1,6 +1,6 @@
----
 name: Modal
 menu: Components
+
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
@@ -64,8 +64,7 @@ export const Wrapper2 = () => {
     </Button>
   )
 }
-
-<Grid>
+;<Grid>
   <Grid.Item tiny={2}>
     <Wrapper />
   </Grid.Item>
@@ -89,11 +88,8 @@ A basic modal has A title, descriptive text,variant, an `Icon` and two buttons t
 ```jsx
 import { Modal } from '@repay/cactus-web'
 import { DescriptiveEnvelope } from '@repay/cactus-icons/'
-
-
 const ComponentWithModal = () =>{
   const [open, setOpen] = useState(false)
-
   return (
     <Modal
       modalTitle='Modal Title'
@@ -107,8 +103,6 @@ const ComponentWithModal = () =>{
       closeLabel='Close Label'
       onClick={() => confirmAction()}
     />
-
-
     // With TextInput Child
     <Modal
       modalTitle='Modal Title'
@@ -126,10 +120,6 @@ const ComponentWithModal = () =>{
     </Modal>
   )
 }
-
-
-
-
 ```
 
 ## Properties

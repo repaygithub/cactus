@@ -6,6 +6,7 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import Alert from './Alert'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Alert
 
@@ -13,9 +14,13 @@ The `Alert` component is designed to provide user feedback. The alert is a recta
 
 ### How it looks
 
-<Alert status="success" type="general">
-    Message
-</Alert>
+export const code = `<Alert status="success" type="general"> Message</Alert>`
+
+<LiveProvider code={code} scope={{ Alert }}>
+  <LiveEditor />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
