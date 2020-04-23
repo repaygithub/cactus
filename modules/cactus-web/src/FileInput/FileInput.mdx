@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import FileInput from './FileInput'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
@@ -12,7 +13,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 The file input can be used to drag & drop or select files to upload.
 
-### How it looks
+### Try it out
 
 export const code = `<FileInput
   name="file-input"
@@ -25,7 +26,7 @@ export const code = `<FileInput
 />`
 
 <LiveProvider code={code} scope={{ FileInput }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

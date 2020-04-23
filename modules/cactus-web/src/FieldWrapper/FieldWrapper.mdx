@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import FieldWrapper from './FieldWrapper'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
@@ -12,7 +13,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 The FieldWrapper component is mainly used internally to wrap our field components to help with spacing.
 
-### How it looks
+### Try it out
 
 export const code = `<form>
   <FieldWrapper>
@@ -30,7 +31,7 @@ export const code = `<form>
 </form>`
 
 <LiveProvider code={code} scope={{ FieldWrapper }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

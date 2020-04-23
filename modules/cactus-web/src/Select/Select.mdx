@@ -4,21 +4,28 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Select from './Select'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Select
 
 This component is to be used in place of a `<select></select>` tag.
 
+### Try it out
 
-### How it looks
-
-<Select
+export const code = `<Select
   name="smashmouth"
   id="smashed-mouth-select"
   options={['somebody', 'once', 'told me', 'the world', 'was', 'gonna', 'roll me']}
-/>
+/>`
+
+<LiveProvider code={code} scope={{ Select }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

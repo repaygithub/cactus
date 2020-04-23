@@ -108,7 +108,7 @@ const TooltipBase = (props: TooltipProps) => {
 }
 
 export const TooltipPopup = styled(ReachTooltipPopup)`
-  z-index: 1;
+  z-index: 100;
   pointer-events: none;
   position: absolute;
   padding: 16px;

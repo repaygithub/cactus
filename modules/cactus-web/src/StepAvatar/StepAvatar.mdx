@@ -4,18 +4,30 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import StepAvatar from './StepAvatar'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # StepAvatar
 
 The `Step Avatar` is an Avatar used to convey the amount of steps in a task.
 
-### How it looks
+### Try it out
 
-<StepAvatar status="done" margin={3}>1</StepAvatar>
-<StepAvatar status="inProcess" margin={3}>2</StepAvatar>
-<StepAvatar status="notDone" margin={3}>3</StepAvatar>
+export const code = `
+<div>
+  <StepAvatar status="done" margin={3}>1</StepAvatar>
+  <StepAvatar status="notDone" margin={3}>2</StepAvatar>
+  <StepAvatar status="inProcess" margin={3}>3</StepAvatar>
+</div>
+`
+
+<LiveProvider code={code} scope={{ StepAvatar }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Basic usage
 

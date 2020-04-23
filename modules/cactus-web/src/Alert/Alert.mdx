@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Alert from './Alert'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
@@ -12,12 +13,12 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 The `Alert` component is designed to provide user feedback. The alert is a rectangular shape providing the user a current status based on the icon and background color.
 
-### How it looks
+### Try it out
 
 export const code = `<Alert status="success" type="general"> Message</Alert>`
 
 <LiveProvider code={code} scope={{ Alert }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

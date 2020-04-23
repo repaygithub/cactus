@@ -4,19 +4,24 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import TextInputField from './TextInputField'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # TextInputField
 
 The `TextInputField` is a combination of `TextInput`, `Label`, and some handy tools to make integrating this filed into a form easier.
 
-### How it looks
+### Try it out
 
-<TextInputField
-  name="input"
-  label="Input"
-/>
+export const code = `<TextInputField name="input" label="Input" />`
+
+<LiveProvider code={code} scope={{ TextInputField }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
@@ -25,7 +30,6 @@ The `TextInputField` is a combination of `TextInput`, `Label`, and some handy to
 - Make use of the `success`, `warning`, and `error` message props when appropriate to make the validity of inputs obvious to the user.
 
 ## Basic usage
-
 
 ```jsx
 import React, { useState } from 'react'
@@ -50,19 +54,13 @@ export default function Form() {
 
   return (
     <form onSubmit={onSubmit}>
-      <TextInputField
-        name="input"
-        label="Input"
-        onChange={handleChange}
-        value={values.input}
-      />
+      <TextInputField name="input" label="Input" onChange={handleChange} value={values.input} />
       <Button type="submit" variant="action">
         Submit
       </Button>
     </form>
   )
 }
-
 ```
 
 ## Properties

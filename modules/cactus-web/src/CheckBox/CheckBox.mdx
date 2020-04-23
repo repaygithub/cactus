@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import CheckBox from './CheckBox'
 import Label from '../Label/Label'
 import cactusTheme from '@repay/cactus-theme'
@@ -11,12 +12,12 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # CheckBox
 
-### How it looks
+### Try it out
 
 export const code = `<CheckBox id="cb" />`
 
 <LiveProvider code={code} scope={{ CheckBox, Label }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

@@ -4,13 +4,14 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Box from './Box'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Box
 
-### How it looks
+### Try it out
 
 export const code = `<Box
   display='initial'
@@ -28,7 +29,7 @@ export const code = `<Box
 </Box>`
 
 <LiveProvider code={code} scope={{ Box }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <div style={{ marginTop: '50px' }}>
     <LivePreview />

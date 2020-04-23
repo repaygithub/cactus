@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Button from './Button'
 import cactusTheme from '@repay/cactus-theme'
 import Link from '../Link/Link'
@@ -11,15 +12,16 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Button
 
-### How it looks
+### Try it out
 
 export const code = `<Button variant='action' margin={20}>Take Some Action</Button>`
 
-<LiveProvider code={code} scope={{ Button,Link }}>
-  <LiveEditor />
+<LiveProvider code={code} scope={{ Button, Link }}>
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>
+
 ## Best practices
 
 - `Button` components typically should not be used for navigation between pages.

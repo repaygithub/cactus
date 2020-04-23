@@ -5,6 +5,11 @@ export const breakpoints = {
   extraLarge: 1440,
 }
 
+export const livePreviewStyle = {
+  border: '1px solid red',
+  marginBottom: '10px',
+}
+
 export const breakpointOrder: Array<keyof typeof breakpoints> = [
   'small',
   'medium',

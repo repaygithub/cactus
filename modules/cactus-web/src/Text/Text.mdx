@@ -4,18 +4,26 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Text from './Text'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Text
 
-### How it looks
+### Try it out
 
-<Text textAlign="right" fontStyle="italic" margin="0 auto">
+export const code = `<Text textAlign="right" fontStyle="italic" margin="0 auto">
   Stilton fondue stilton. Hard cheese port-salut manchego stinking bishop monterey jack edam
   lancashire camembert de normandie. Paneer cheese on toast cheesy feet halloumi cheesecake cheese
   strings who moved my cheese when the cheese comes out everybody's happy. Bavarian bergkase.
-</Text>
+</Text>`
+
+<LiveProvider code={code} scope={{ Text }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

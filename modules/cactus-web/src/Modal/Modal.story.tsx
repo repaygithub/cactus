@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
-import { storiesOf } from '@storybook/react'
-import { actions } from '@storybook/addon-actions'
 import * as icons from '@repay/cactus-icons/i'
+import { actions } from '@storybook/addon-actions'
+import { select, text } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
+import Button from '../Button/Button'
 import Modal, { ModalType } from './Modal'
 import TextInput from '../TextInput/TextInput'
-import Button from '../Button/Button'
-import { select, text } from '@storybook/addon-knobs'
 
 const modalSotries = storiesOf('Modal', module)
 const eventLoggers = actions('onChange')

@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import AccessibleField from './AccessibleField'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
@@ -11,7 +12,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 The `<AccessibleField />` is intendend as a wrapper with a single child which acts like an html input. This child must accept `id` and `aria-describedby` and place them on the actual input in order to be properly accessible.
 
-### How it looks
+### Try it out
 
 export const scope = { AccessibleField }
 export const code = `
@@ -20,11 +21,11 @@ export const code = `
   warning="Here we have added a warning message which is rendered as a status and is accessibly tied to the provided child."
 >
   <input style={{ minWidth: '300px' }} />
-</AccessibleField\
+</AccessibleField>
 `
 
 <LiveProvider code={code} scope={scope}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

@@ -4,20 +4,21 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Link from './Link'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Link
 
-### How it looks
+### Try it out
 
 export const code = `<Link to="https://google.com">
   Go to google
 </Link>`
 
 <LiveProvider code={code} scope={{ Link }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

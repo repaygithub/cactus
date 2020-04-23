@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import DateInputField from './DateInputField'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
@@ -12,10 +13,12 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 This is the field version of the `DateInput` which already has standardized `onFocus`, `onChange`, and `onBlur` events; but in addition it no longer requires the `id` but it still requires `name` and now requires a `label`.
 
+### Try it out
+
 export const code = `<DateInputField name="date-input-field" label="Date with error" error="Here is an example error message" />`
 
 <LiveProvider code={code} scope={{ DateInputField }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

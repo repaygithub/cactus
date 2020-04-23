@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import DateInput from './DateInput'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
@@ -21,10 +22,12 @@ If `format` is not provided, the component will default to match the provided ty
 
 When `value` is provided as a prop (i.e. controlled), the value will be raised as a Date or string to match the provided type. For example, `onChange` will be called with a date string when `props.value` is also a string. Additionally, if `props.value` is `undefined` it will be raised as a string, but if `props.value` is `null` it will be raised as a `Date`.
 
+### Try it out
+
 export const code = `<DateInput id="date-input-uncontrolled" name="date" onChange={(name,value)=> console.log(name, value)}/>`
 
 <LiveProvider code={code} scope={{ DateInput }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

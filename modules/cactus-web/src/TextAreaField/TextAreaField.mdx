@@ -4,19 +4,24 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import TextAreaField from './TextAreaField'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # TextAreaField
 
 The `TextAreaField` is a combination of `TextArea`, `Label` and some setup for tooltips, status messages, and tooling around accessibility.
 
-### How it looks
+### Try it out
 
-<TextAreaField
-  name="textArea"
-  label="Type Something"
-/>
+export const code = `<TextAreaField name="textArea" label="Type Something" />`
+
+<LiveProvider code={code} scope={{ TextAreaField }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
@@ -38,13 +43,11 @@ export default function Form() {
     },
     [setValues]
   )
-  const onSubmit = useCallback(
-    event => {
-      event.preventDefault()
-      const data = { ...values }
-      // send data to api
-    }
-  )
+  const onSubmit = useCallback(event => {
+    event.preventDefault()
+    const data = { ...values }
+    // send data to api
+  })
 
   return (
     <form onSubmit={handleSubmit}>

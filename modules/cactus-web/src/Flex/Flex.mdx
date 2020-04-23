@@ -4,6 +4,7 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Flex from './Flex'
 import Button from '../Button/Button'
 import cactusTheme from '@repay/cactus-theme'
@@ -11,7 +12,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Flex
 
-### How it looks
+### Try it out
 
 export const code = `<Flex ph={1} justifyContent="space-between">
   <Button variant="standard">Cancel</Button>
@@ -19,7 +20,7 @@ export const code = `<Flex ph={1} justifyContent="space-between">
 </Flex>`
 
 <LiveProvider code={code} scope={{ Flex, Button }}>
-  <LiveEditor />
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

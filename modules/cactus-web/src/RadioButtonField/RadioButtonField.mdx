@@ -4,25 +4,25 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import RadioButtonField from './RadioButtonField'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # RadioButtonField
 
-### How it looks
+### Try it out
 
-<form>
-  <RadioButtonField
-    name="radiobuttonfield"
-    label="option a"
-    value="option_a"
-  />
-  <RadioButtonField
-    name="radiobuttonfield"
-    label="option b"
-    value="option_b"
-  />
-</form>
+export const code = `<form>
+  <RadioButtonField name="radiobuttonfield" label="option a" value="option_a" />
+  <RadioButtonField name="radiobuttonfield" label="option b" value="option_b" />
+</form>`
+
+<LiveProvider code={code} scope={{ RadioButtonField }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 The `RadioButton` is a combination of `RadioButton` and `Label`, along with some accessibility features that are taken care of for you.
 
