@@ -10,6 +10,7 @@ import { NavigationClose } from '@repay/cactus-icons'
 import Text from '../Text/Text'
 import Button from '../Button/Button'
 import TextButton from '../TextButton/TextButton'
+import '@reach/dialog/styles.css'
 
 export type ModalType = 'action' | 'danger'
 export type IconProps = { iconSize: 'tiny' | 'small' | 'medium' | 'large' }
