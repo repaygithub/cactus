@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react'
 
-import styled, { ThemeProps } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
-import PropTypes from 'prop-types'
-import { DialogOverlay, DialogContent } from '@reach/dialog'
-import IconButton from '../IconButton/IconButton'
-import Flex from '../Flex/Flex'
+import { DialogContent, DialogOverlay } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
-import Text from '../Text/Text'
 import Button from '../Button/Button'
+import Flex from '../Flex/Flex'
+import IconButton from '../IconButton/IconButton'
+import PropTypes from 'prop-types'
+import styled, { ThemeProps } from 'styled-components'
+import Text from '../Text/Text'
 import TextButton from '../TextButton/TextButton'
 
 export type ModalType = 'action' | 'danger'
@@ -102,6 +102,13 @@ const Modalbase: FunctionComponent<ModalProps & IconComponentProps> = props => {
 }
 
 export const ModalPopUp = styled(DialogOverlay)<ModalProps>`
+  background: hsla(0, 0%, 0%, 0.33);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
   z-index: 52;
   > h1 {
     margin-block-end: 0;
@@ -116,6 +123,9 @@ export const ModalPopUp = styled(DialogOverlay)<ModalProps>`
     }
   }
   > [data-reach-dialog-content] {
+    margin: 10vh auto;
+    background: white;
+    outline: none;
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0px 9px 24px rgba(3, 118, 176, 0.348704);

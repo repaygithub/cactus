@@ -4,17 +4,24 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Spinner from './Spinner'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Spinner
 
 Used to represent some action is happening in the background.
 
+### Try it out
 
-### How it looks
+export const code = `<Spinner />`
 
-<Spinner />
+<LiveProvider code={code} scope={{ Spinner }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

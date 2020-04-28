@@ -4,7 +4,9 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import MenuButton from './MenuButton'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # MenuButton
 
@@ -12,19 +14,26 @@ The `MenuButton` is an accessible dropdown which is distinctly different from a 
 
 This implementation is simply a styled wrapper around [@reach/menu-button](https://reacttraining.com/reach-ui/menu-button).
 
-### How it looks
+### Try it out
 
-<MenuButton label="Demo">
-  <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Three')}>Action Three</MenuButton.Item>
-</MenuButton>
+export const code = `
+<MenuButton label="Demo" marginTop={5}>
+  <MenuButton.Item onSelect={() => console.log('Action One')}>
+    Action One
+  </MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Two')}>
+    Action Two
+  </MenuButton.Item>
+  <MenuButton.Item onSelect={() => console.log('Action Three')}>
+    Action Three
+  </MenuButton.Item>
+</MenuButton>`
 
-<MenuButton label="Disabled" disabled marginTop={5}>
-  <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
-  <MenuButton.Item onSelect={() => console.log('Action Three')}>Action Three</MenuButton.Item>
-</MenuButton>
+<LiveProvider code={code} scope={{ MenuButton }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

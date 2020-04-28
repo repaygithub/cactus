@@ -1,8 +1,8 @@
-import React from 'react'
-import styled, { StyledComponentBase } from 'styled-components'
 import { CactusTheme } from '@repay/cactus-theme'
 import { NavigationChevronRight } from '@repay/cactus-icons'
 import Link from '../Link/Link'
+import React from 'react'
+import styled, { StyledComponentBase } from 'styled-components'
 
 interface BreadcrumbItemProps {
   label: string

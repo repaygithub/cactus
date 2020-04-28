@@ -4,22 +4,29 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import CheckBox from './CheckBox'
 import Label from '../Label/Label'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # CheckBox
 
-### How it looks
+### Try it out
 
-<CheckBox id="cb" />
-<Label htmlFor="cb">Winter is Coming</Label> 
+export const code = `<CheckBox id="cb" />`
+
+<LiveProvider code={code} scope={{ CheckBox, Label }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
 - Each `CheckBox` component must have a unique `id`.
 - When pairing a `CheckBox` with a label, you should connect your label to the checkbox using the `htmlFor` prop. This is paramount for making
-a checkbox accessible.
+  a checkbox accessible.
   - Example:
   ```jsx
   <CheckBox id="cb" />

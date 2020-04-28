@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 import { cleanup, render } from '@testing-library/react'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import { DescriptiveEnvelope } from '@repay/cactus-icons/'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Modal from './Modal'
 import TextInput from '../TextInput/TextInput'
 

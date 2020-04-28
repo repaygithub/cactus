@@ -4,40 +4,42 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Grid from './Grid'
 import Box from '../Box/Box'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Grid
 
 A responsive grid component designed to help lay out items on a page based on screen size breakpoints.
 
-### How it looks
+### Try it out
 
 In order to see the behavior of the Grid component, we invite you to resize your window to multiple screen sizes.
 
+export const code = `
 <Grid>
-  <Grid.Item tiny={4} medium={6} large={8}>
-    <Box width="100%" height="25px">
-      Column 1
-    </Box>
+  <Grid.Item tiny={4} medium={4} large={3}>
+    <Box width="100%" height="25px" backgroundColor="red" />
   </Grid.Item>
-  <Grid.Item tiny={4} medium={6} large={8}>
-    <Box width="100%" height="25px">
-      Column 2
-    </Box>{' '}
+  <Grid.Item tiny={4} medium={4} large={3}>
+    <Box width="100%" height="25px" backgroundColor="green" />
   </Grid.Item>
-  <Grid.Item tiny={4} medium={6} large={8}>
-    <Box width="100%" height="25px">
-      Column 3
-    </Box>{' '}
+  <Grid.Item tiny={4} medium={4} large={3}>
+    <Box width="100%" height="25px" backgroundColor="blue" />
   </Grid.Item>
-  <Grid.Item tiny={4} medium={6} large={8}>
-    <Box width="100%" height="25px">
-      Column 4
-    </Box>{' '}
+  <Grid.Item tiny={4} medium={4} large={3}>
+    <Box width="100%" height="25px" backgroundColor="black" />
   </Grid.Item>
 </Grid>
+`
+
+<LiveProvider code={code} scope={{ Grid, Box }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

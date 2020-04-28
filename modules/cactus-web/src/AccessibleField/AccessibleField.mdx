@@ -4,29 +4,31 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import AccessibleField from './AccessibleField'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # AccessibleField
 
 The `<AccessibleField />` is intendend as a wrapper with a single child which acts like an html input. This child must accept `id` and `aria-describedby` and place them on the actual input in order to be properly accessible.
 
-### How it looks
+### Try it out
 
-<AccessibleField
-  label="Accessible Field"
-  tooltip="Additional messaging on what the field means or does and is accessible by default"
->
-  <input status={undefined} />
-</AccessibleField>
-
-Here it is rendered with status messaging:
-
+export const scope = { AccessibleField }
+export const code = `
 <AccessibleField
   label="Accessible Field"
   warning="Here we have added a warning message which is rendered as a status and is accessibly tied to the provided child."
 >
   <input style={{ minWidth: '300px' }} />
 </AccessibleField>
+`
+
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

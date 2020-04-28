@@ -34,7 +34,7 @@ exports[`component: Tooltip should render tooltip icon 1`] = `
 
 exports[`component: Tooltip should render tooltip on hover 1`] = `
 .c0 {
-  z-index: 1;
+  z-index: 100;
   pointer-events: none;
   position: absolute;
   padding: 16px;

@@ -4,14 +4,22 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import TextInput from './TextInput'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # TextInput
 
-### How it looks
+### Try it out
 
-<TextInput />
+export const code = `<TextInput placeholder="Winter is Coming" status="success"/>`
+
+<LiveProvider code={code} scope={{ TextInput }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Basic usage
 

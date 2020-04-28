@@ -4,22 +4,26 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import SelectField from './SelectField'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # SelectField
 
 The `SelectField` is a pre-built Select field control that requires a label and handles accessibility internally.
 
-### How it looks
+### Try it out
 
-<form>
-  <SelectField
-    label="What's that in the sky?"
-    name="ufo"
-    options={['bird', 'plane', 'superman']}
-  />
-</form>
+export const code = `<form>
+  <SelectField label="What's that in the sky?" name="ufo" options={['bird', 'plane', 'superman']} />
+</form>`
+
+<LiveProvider code={code} scope={{ SelectField }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

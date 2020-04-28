@@ -4,16 +4,24 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import CheckBoxField from './CheckBoxField'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # CheckBoxField
 
 The `CheckBoxField` is a combination of `CheckBox` and `Label`, along with some accessibility features that are taken care of for you.
 
-### How it looks 
+### Try it out
 
-<CheckBoxField name="checkboxfield" label="Is Checked"/>
+export const code = `<CheckBoxField name="checkboxfield" label="Is Checked"/>`
+
+<LiveProvider code={code} scope={{ CheckBoxField }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

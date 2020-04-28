@@ -98,6 +98,7 @@
     "@repay/cactus-icons": "^0.6.1",
     "@repay/cactus-theme": "^0.4.5",
     "lodash": "^4.17.15",
+    "react-live": "^2.2.2",
     "styled-system": "^5.1.1"
   }
 }

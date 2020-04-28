@@ -1,6 +1,6 @@
----
 name: Modal
 menu: Components
+
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
@@ -10,17 +10,20 @@ import Button from '../Button/Button'
 import TextInput from '../TextInput/TextInput'
 import Grid from '../Grid/Grid'
 import cactusTheme from '@repay/cactus-theme'
-import { DescriptiveEnvelope } from '@repay/cactus-icons/'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import * as icons from '@repay/cactus-icons/i'
+import { livePreviewStyle } from '../helpers/constants'
 
 # Modal
 
 The `Modal` component is usefull when an action from the user is required, and no other interaction
 on the web page is permited until the modal is closed.
 
-### How it looks
+### Try it out
 
-export const Wrapper = () => {
-  const [open, setOpen] = useState(false)
+export const code = ` () => {
+  const [open, setOpen] = React.useState(false)
+  const Icon = icons['DescriptiveEnvelope']
   return open ? (
     <Modal
       modalTitle="Modal Title"
@@ -29,50 +32,27 @@ export const Wrapper = () => {
       isOpen={open}
       closeModal={() => setOpen(false)}
       buttonText="Confirm Button"
-      icon={DescriptiveEnvelope}
+      icon={Icon}
       modalLabel="Modal Label"
       closeLabel="Close Label"
       onClick={() => setOpen(false)}
-    />
-  ) : (
-    <Button variant="action" onClick={() => setOpen(true)}>
-      Open Modal
-    </Button>
-  )
-}
-
-export const Wrapper2 = () => {
-  const [open, setOpen] = useState(false)
-  return open ? (
-    <Modal
-      modalTitle="Modal Title"
-      description="Modal Description"
-      variant="action"
-      isOpen={open}
-      closeModal={() => setOpen(false)}
-      buttonText="Confirm Button"
-      icon={DescriptiveEnvelope}
-      modalLabel="Modal Label"
-      closeLabel="Close Label"
-      onClick={() => setOpen(false)}
+      width={'30%'}
+      height={'30%'}
     >
       <TextInput width="70%" placeholder="placeholder" />
     </Modal>
   ) : (
     <Button variant="action" onClick={() => setOpen(true)}>
-      With TextInput
+      Open Modal
     </Button>
   )
-}
+}`
 
-<Grid>
-  <Grid.Item tiny={2}>
-    <Wrapper />
-  </Grid.Item>
-  <Grid.Item tiny={2}>
-    <Wrapper2 />
-  </Grid.Item>
-</Grid>
+<LiveProvider code={code} scope={{ Modal, Button, TextInput, icons }}>
+  <LiveEditor style={livePreviewStyle} style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
@@ -89,11 +69,8 @@ A basic modal has A title, descriptive text,variant, an `Icon` and two buttons t
 ```jsx
 import { Modal } from '@repay/cactus-web'
 import { DescriptiveEnvelope } from '@repay/cactus-icons/'
-
-
 const ComponentWithModal = () =>{
   const [open, setOpen] = useState(false)
-
   return (
     <Modal
       modalTitle='Modal Title'
@@ -107,8 +84,6 @@ const ComponentWithModal = () =>{
       closeLabel='Close Label'
       onClick={() => confirmAction()}
     />
-
-
     // With TextInput Child
     <Modal
       modalTitle='Modal Title'
@@ -126,10 +101,6 @@ const ComponentWithModal = () =>{
     </Modal>
   )
 }
-
-
-
-
 ```
 
 ## Properties

@@ -4,21 +4,29 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import RadioButton from './RadioButton'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # RadioButton
 
-### How it looks
+### Try it out
 
-<RadioButton id="rb-1" name="rb-group" />
+export const code = `<RadioButton id="rb-1" name="rb-group" />`
+
+<LiveProvider code={code} scope={{ RadioButton }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
 - Each `RadioButton` must have a unique `id`.
 - The `name` prop should be used to create a group of radio buttons by providing them with the same name.
 - When pairing a `RadioButton` with a label, you should connect your label to the radio button using the `htmlFor` prop.
-This is paramount for making a checkbox accessible.
+  This is paramount for making a checkbox accessible.
   - Example:
   ```jsx
   <RadioButton id="rb" name="rb-group"/>

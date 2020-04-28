@@ -4,14 +4,22 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import TextArea from './TextArea'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # TextArea
 
-### How it looks
+### Try it out
 
-<TextArea id="my-id" name="textArea" />
+export const code = `<TextArea id="my-id" name="textArea" />`
+
+<LiveProvider code={code} scope={{ TextArea }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
@@ -25,18 +33,14 @@ import { Button, TextArea, Label } from '@repay/cactus-web'
 
 export default function Form() {
   const [values, setValues] = useState({ textArea: '' })
-  const handleChange = useCallback(
-    event => {
-      setValues({ ...values, [event.target.name]: event.target.value })
-    }
-  )
-  const handleSubmit = useCallback(
-    event => {
-      event.preventDefault()
-      const data = { ...values }
-      // send data to api
-    }
-  )
+  const handleChange = useCallback(event => {
+    setValues({ ...values, [event.target.name]: event.target.value })
+  })
+  const handleSubmit = useCallback(event => {
+    event.preventDefault()
+    const data = { ...values }
+    // send data to api
+  })
   return (
     <form onSubmit={handleSubmit}>
       <Label htmlFor="my-id">Enter some text</Label>

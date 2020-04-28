@@ -4,16 +4,22 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Tooltip from './Tooltip'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Tooltip
 
+### Try it out
 
-### How it loooks
+export const code = `<Tooltip label="Type something!" />`
 
-<Tooltip label="Type something!" />
-
+<LiveProvider code={code} scope={{ Tooltip }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 The `Tooltip` component can be used to provide helpful tips to end users.
 

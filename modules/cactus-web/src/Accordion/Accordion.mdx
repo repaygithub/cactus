@@ -4,26 +4,33 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Accordion from './Accordion'
+import Text from '../Text/Text'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Accordion
 
-### How it looks
+### Try it out
 
-<Accordion>
+export const code = `<Accordion>
   <Accordion.Header>
     <Text as="h3"> My header</Text>
   </Accordion.Header>
-  <Accordion.Body>
-    Accordion Content Goes Here
-  </Accordion.Body>  
-</Accordion>
+  <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
+</Accordion>`
+
+<LiveProvider code={code} scope={{ Accordion, Text }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
 - If you need to group accordions together, make sure to place them inside the `Accordion.Provider` component, as it provides the keyboard accessibility features
-for groups of accordions.
+  for groups of accordions.
 
 ## Basic usage
 
@@ -39,9 +46,7 @@ const SingleAccordion = props => {
       <Accordion.Header>
         <Text as="h3">My Header</Text>
       </Accordion.Header>
-      <Accordion.Body>
-        Accordion Content Goes Here
-      </Accordion.Body>
+      <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
     </Accordion>
   )
 }
@@ -64,25 +69,19 @@ const MultipleAccordions = props => {
         <Accordion.Header>
           <Text as="h3">My Header 1</Text>
         </Accordion.Header>
-        <Accordion.Body>
-          Accordion Content Goes Here
-        </Accordion.Body>
+        <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
       </Accordion>
       <Accordion>
         <Accordion.Header>
           <Text as="h3">My Header 2</Text>
         </Accordion.Header>
-        <Accordion.Body>
-          Accordion Content Goes Here
-        </Accordion.Body>
+        <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
       </Accordion>
       <Accordion>
         <Accordion.Header>
-          <Text as="h3">>My Header 3</Text
+          <Text as="h3">My Header 3</Text>
         </Accordion.Header>
-        <Accordion.Body>
-          Accordion Content Goes Here
-        </Accordion.Body>
+        <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
       </Accordion>
     </Accordion.Provider>
   )
@@ -105,9 +104,7 @@ const OutlineAccordion = props => {
       <Accordion.Header>
         <Text as="h3">Example Header</Text>
       </Accordion.Header>
-      <Accordion.Body>
-        Example Content
-      </Accordion.Body>
+      <Accordion.Body>Example Content</Accordion.Body>
     </Accordion>
   )
 }
@@ -221,17 +218,20 @@ const CustomAccordions = props => {
 }
 ```
 
-
 ## Properties
 
 ## Accordion
+
 <PropsTable of={Accordion} />
 
 ## Accordion Header
+
 <PropsTable of={Accordion} staticProp="AccordionHeader" />
 
 ## Accordion Body
+
 <PropsTable of={Accordion} staticProp="AccordionBody" />
 
 ## Accordion Provider
+
 <PropsTable of={Accordion} staticProp="AccordionProvider" />

@@ -4,14 +4,16 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Card from './Card'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Card
 
-### How it looks
+### Try it out
 
-<Card margin="40px">
+export const code = `<Card margin="40px" width="fit-content">
   <h2 style={{ margin: 0 }}>Title</h2>
   <h4 style={{ margin: 0, fontWeight: 400, fontSize: '12px' }}>Subtitle</h4>
   <table style={{ fontSize: '15px', borderCollapse: 'collapse' }}>
@@ -40,7 +42,13 @@ import cactusTheme from '@repay/cactus-theme'
       </tr>
     </tbody>
     </table>
-  </Card>
+  </Card>`
+
+<LiveProvider code={code} scope={{ Card }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Basic usage
 

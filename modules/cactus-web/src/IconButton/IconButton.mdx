@@ -4,19 +4,27 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import IconButton from './IconButton'
 import cactusTheme from '@repay/cactus-theme'
 import { ActionsAdd } from '@repay/cactus-icons'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # IconButton
 
 The `IconButton` allows you to turn icons into buttons, and it was designed to allow the use of icons from any library.
 
-### How it looks
+### Try it out
 
-<IconButton label="add">
+export const code = `<IconButton label="add">
   <ActionsAdd />
-</IconButton>
+</IconButton>`
+
+<LiveProvider code={code} scope={{ IconButton, ActionsAdd }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 

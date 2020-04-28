@@ -4,16 +4,18 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import FileInput from './FileInput'
 import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # FileInput
 
 The file input can be used to drag & drop or select files to upload.
 
-### How it looks
+### Try it out
 
-<FileInput
+export const code = `<FileInput
   name="file-input"
   accept={['.txt', '.doc']}
   labels={{ delete: 'delete file', retry: 'retry file upload', loading: 'loading', loaded: 'successful' }}
@@ -21,15 +23,20 @@ The file input can be used to drag & drop or select files to upload.
   buttonText="Select Files..."
   rawFiles={false}
   multiple={true}
-/>
+/>`
+
+<LiveProvider code={code} scope={{ FileInput }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
 - Make sure to pass meaningful messages in the `labels` object. These labels will be passed to the `aria-label` prop on some buttons which will make them accessible.
 - Use the `onError` prop to pass an error handling function. This function should return a string describing the error. The `accept` parameter will
-always be present if the error is of type `FileTypeError`.
+  always be present if the error is of type `FileTypeError`.
 - The `labels`, `prompt`, and `buttonText` props can and should all be used to support multiple languages; you can pass translated strings to do this.
-
 
 ## Basic usage
 

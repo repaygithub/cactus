@@ -4,23 +4,28 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Toggle from './Toggle'
 import cactusTheme from '@repay/cactus-theme'
 import React, { useState } from 'react'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Toggle
 
 The `Toggle` component can be useful for boolean fields.
 
-### How it loooks
+### Try it out
 
-export const Wrapper = () => {
-  const [state, setState]=useState(true)
-  return <Toggle value={state}  onClick={()=> setState(!state)}/>
-}
+export const code = ` () => {
+  const [state, setState] = useState(true)
+  return <Toggle value={state} onClick={() => setState(!state)} />
+}`
 
-<Wrapper />
-
+<LiveProvider code={code} scope={{ Toggle, useState }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Best practices
 
