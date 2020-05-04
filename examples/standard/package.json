@@ -6,7 +6,7 @@
     "cleanup": "rm -rf dist",
     "start": "yarn dev",
     "dev": "repay-scripts dev --config webpack.config.js -p 3435 src/index.tsx",
-    "build": "repay-scripts build src/index.tsx",
+    "build": "repay-scripts build src/index.tsx --config webpack.config.js",
     "test": "yarn build && yarn jest --config jest.config.js",
     "test:ci": "yarn test:local --maxWorkers=2",
     "test:local": "yarn test:types && yarn test",
