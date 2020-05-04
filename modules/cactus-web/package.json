@@ -48,7 +48,10 @@
       "src/**/*.{ts,tsx}",
       "!src/**/*.story.{ts,tsx}",
       "!src/storySupport/**"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",

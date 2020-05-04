@@ -1,3 +1,4 @@
+import '@reach/menu-button/styles.css'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { Omit } from '../types'
