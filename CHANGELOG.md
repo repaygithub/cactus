@@ -1,5 +1,21 @@
 # Changelog
 
+## [@repay/cactus-web@v0.7.4](https://github.com/repaygithub/cactus/commit/12696a58c04344f8a9b7e0e8410662d3638f68df)
+
+- fix(cactus-web): Add @reach/menu-button styles [77cd9b1](https://github.com/repaygithub/cactus/commit/77cd9b1f743251304c449c9acf44514dd30628e1)
+- chore(cactus-web): Add css loaders & jest css mocks for packages that need it [227e62b](https://github.com/repaygithub/cactus/commit/227e62b469aca1e17785b8e955ecc4200f3b21c4)
+- fix(cactus-web): Add @reach/menu-button styles [1d0beb5](https://github.com/repaygithub/cactus/commit/1d0beb5702a9c7c7e22edeae68f2c173cea3439f)
+- fix(cactus-web): Fixed tootltip z-index [c41b0c3](https://github.com/repaygithub/cactus/commit/c41b0c3d61d15d6643aa125a8bddd6616b6f3309)
+- fix(cactus-web): Fixed modal [a613b4b](https://github.com/repaygithub/cactus/commit/a613b4b474ee345e8332e1719a471650f68bfd7e)
+- feat(cactus-web): Added in-browser coding examples [454b6aa](https://github.com/repaygithub/cactus/commit/454b6aa86ad5a61a23f0d92571acf8650eeeb1ea)
+- feat(cactus-web): Added Breadcrumb component [308c07e](https://github.com/repaygithub/cactus/commit/308c07e8b287589f8855f3eeb34c114f744392c4)
+- feat(cactus-web): Added rendered components to docs pages. [CACTUS-236] [2f7e10b](https://github.com/repaygithub/cactus/commit/2f7e10bd51d4fc64d83e1951d3119a7190f9b609)
+- feat(cactus-web): Added rendered components to docs pages. [CACTUS-236] [21f209b](https://github.com/repaygithub/cactus/commit/21f209b4c9efdef61d78b6d8fae06559ccf9fdd1)
+- fix(cactus-web): Fix overlay issue in sidebar [2159278](https://github.com/repaygithub/cactus/commit/215927874cd4985c26bbe6b92e1653052e391337)
+- fix(cactus-web): Fix overlay issue in sidebar [fd44a1a](https://github.com/repaygithub/cactus/commit/fd44a1a8469c03282fe98ffbf6cf76df2c40f281)
+- feat(cactus-web): allow ReactNode for label prop on Fields [6b50ffc](https://github.com/repaygithub/cactus/commit/6b50ffce24cc4defa179e1dc78c5d1e5d636b48c)
+- chore(cactus-web): update changelog [dd3a913](https://github.com/repaygithub/cactus/commit/dd3a91348647ecf0937f3c37b4128174b14e486e)
+
 ## [@repay/cactus-i18n@v0.3.11](https://github.com/repaygithub/cactus/commit/241aeb830a4fd4e2c6b69b71a538f8410f002378)
 
 - fix(cactus-i18n): Import locales needed for intl & intl-pluralrules [2a1408b](https://github.com/repaygithub/cactus/commit/2a1408b80ac7330183c34b703b4d4f6289718ebe)
