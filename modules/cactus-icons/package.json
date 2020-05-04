@@ -44,7 +44,10 @@
       "lcov",
       "text",
       "json-summary"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",
