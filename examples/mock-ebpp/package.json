@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "repay-scripts dev src/index.tsx --config webpack.config.js -p 3437",
-    "dev": "repay-scripts dev src/index.tsx --config webpack.config.js -p 3437",
-    "build": "repay-scripts build src/index.tsx --config webpack.config.js",
+    "start": "repay-scripts dev src/index.tsx -p 3437",
+    "dev": "repay-scripts dev src/index.tsx -p 3437",
+    "build": "repay-scripts build src/index.tsx",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "test:ci": "yarn test:local --maxWorkers=2",
     "cleanup": "rm -rf dist",
