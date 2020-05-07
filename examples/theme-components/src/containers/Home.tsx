@@ -5,6 +5,29 @@ import { RouteComponentProps } from '@reach/router'
 import Link from '../components/Link'
 
 class Home extends Component<RouteComponentProps> {
+  data = {
+    Buttons: '/Buttons/Standard',
+    AccessibleField: 'AccessibleField',
+    'Inverse Buttons': 'Buttons/Inverse',
+    'Form Elements': 'FormElements',
+    Icons: 'Icons',
+    Modal: 'Modal',
+    Breadcrumb: 'Breadcrumb',
+    Accordion: 'Accordion',
+    Alert: 'Alert',
+    Avatar: 'Avatar',
+    DateInput: 'DateInput',
+    DateInputField: 'DateInputField',
+    FieldWrapper: 'FieldWrapper',
+    FileInput: 'FileInput',
+    FileInputField: 'FileInputField',
+    Flex: 'Flex',
+    Grid: 'Grid',
+    IconButton: 'IconButton',
+    MenuButton: 'MenuButton',
+    StepAvatar: 'StepAvatar',
+  }
+
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
@@ -33,30 +56,16 @@ class Home extends Component<RouteComponentProps> {
                   <strong>Navigate</strong>
                 </td>
               </tr>
-              <tr>
-                <td>Buttons</td>
-                <td>
-                  <Link to="/Buttons/Standard">Go!</Link>
-                </td>
-              </tr>
-              <tr>
-                <td>Inverse Buttons</td>
-                <td>
-                  <Link to="/Buttons/Inverse">Go!</Link>
-                </td>
-              </tr>
-              <tr>
-                <td>Form Elements</td>
-                <td>
-                  <Link to="/FormElements">Go!</Link>
-                </td>
-              </tr>
-              <tr>
-                <td>Icons</td>
-                <td>
-                  <Link to="/Icons">Go!</Link>
-                </td>
-              </tr>
+              {Object.entries(this.data)
+                .sort()
+                .map(e => (
+                  <tr key={e[0]}>
+                    <td>{e[0]}</td>
+                    <td>
+                      <Link to={e[1]}>Go!</Link>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Box>
         </div>
