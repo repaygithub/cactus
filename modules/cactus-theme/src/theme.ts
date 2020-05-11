@@ -43,6 +43,12 @@ export type TextStyle = {
   lineHeight: string
 }
 
+type BorderSize = 'thin' | 'thick'
+
+type Shape = 'square' | 'intermediate' | 'round'
+
+type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
+
 export interface CactusTheme {
   breakpoints?: Array<String>
   mediaQueries?: {
@@ -105,6 +111,10 @@ export interface CactusTheme {
     warning: ColorStyle
     disable: ColorStyle
   }
+  border: BorderSize
+  shape: Shape
+  font: String
+  boxShadows: Boolean
 }
 
 export type CactusColor = Exclude<keyof CactusTheme['colors'], 'status'>
@@ -117,7 +127,14 @@ let lightGray = `hsl(0, 0%, 90%)`
 let mediumGray = `hsl(0, 0%, 70%)`
 let darkGray = `hsl(0, 0%, 50%)`
 
-type HueGeneratorOptions = {
+type SharedGeneratorOptions = {
+  border?: BorderSize
+  shape?: Shape
+  font?: Font
+  boxShadows?: Boolean
+}
+
+interface HueGeneratorOptions extends SharedGeneratorOptions {
   primaryHue: number
 }
 
@@ -233,7 +250,7 @@ function fromHue({
   ]
 }
 
-type TwoColorGeneratorOptions = {
+interface TwoColorGeneratorOptions extends SharedGeneratorOptions {
   primary: string
   secondary?: string
 }
@@ -547,7 +564,13 @@ function isHue(options: GeneratorOptions): options is HueGeneratorOptions {
   return (options as HueGeneratorOptions).primaryHue != null
 }
 
-const repayOptions: GeneratorOptions = { primaryHue: 200 }
+const repayOptions: GeneratorOptions = {
+  primaryHue: 200,
+  border: 'thick',
+  shape: 'round',
+  font: 'Helvetica',
+  boxShadows: true,
+}
 
 export function generateTheme(options: GeneratorOptions = repayOptions): CactusTheme {
   const [colors, colorStyles] = isHue(options) ? fromHue(options) : fromTwoColor(options)
@@ -566,12 +589,23 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
   iconSizes.medium = iconSizes[2]
   iconSizes.large = iconSizes[3]
 
+  const { border = 'thick', shape = 'round', font = 'Helvetica', boxShadows = true } = options
+  const fontOptions: Font[] = ['Helvetica', 'Helvetica Neue', 'Arial']
+
+  fontOptions.sort((x: Font, y: Font) => {
+    return x === font ? -1 : y === font ? 1 : 0
+  })
+
   return {
     colors,
     colorStyles,
     space: [0, 2, 4, 8, 16, 24, 32, 40],
     fontSizes,
     iconSizes,
+    border,
+    shape,
+    font: `${fontOptions.join(', ')}, sans-serif`,
+    boxShadows,
     textStyles: {
       tiny: {
         fontSize: '12.5px',

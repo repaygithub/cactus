@@ -90,4 +90,36 @@ describe('@repay/cactus-theme', () => {
   )
 
   themeAccessibility('two dark colors', generateTheme({ primary: '#133337', secondary: '#AC101D' }))
+
+  test('can generate a theme with custom borders', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+    expect(theme).toMatchObject({
+      ...cactusTheme,
+      border: 'thin',
+    })
+  })
+
+  test('can generate a theme with custom shape', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+    expect(theme).toMatchObject({
+      ...cactusTheme,
+      shape: 'square',
+    })
+  })
+
+  test('can generate a theme with custom font', () => {
+    const theme = generateTheme({ primaryHue: 200, font: 'Arial' })
+    expect(theme).toMatchObject({
+      ...cactusTheme,
+      font: 'Arial, Helvetica, Helvetica Neue, sans-serif',
+    })
+  })
+
+  test('can generate a theme with no box-shadow', () => {
+    const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+    expect(theme).toMatchObject({
+      ...cactusTheme,
+      boxShadows: false,
+    })
+  })
 })

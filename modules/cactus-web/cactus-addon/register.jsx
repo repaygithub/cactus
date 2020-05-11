@@ -22,6 +22,10 @@ class Panel extends React.Component {
       type: THEME_TYPES.use_hue,
       primary: '#96D35F',
       secondary: '#FFFFFF',
+      border: 'thick',
+      shape: 'round',
+      font: 'Helvetica',
+      boxShadows: true,
     },
     backgroundInverse: false,
   }
@@ -42,12 +46,17 @@ class Panel extends React.Component {
 
   emitThemeChange = () => {
     const { values } = this.state
-    this.props.channel.emit(
-      THEME_CHANGE,
+    const colors =
       values.type === THEME_TYPES.use_hue
         ? { primaryHue: values.primaryHue }
         : { primary: values.primary, secondary: values.secondary }
-    )
+    this.props.channel.emit(THEME_CHANGE, {
+      border: values.border,
+      shape: values.shape,
+      font: values.font,
+      boxShadows: values.boxShadows,
+      ...colors,
+    })
   }
 
   handleDecoratorListening = () => {
@@ -150,6 +159,73 @@ class Panel extends React.Component {
               </Form.Field>
             </React.Fragment>
           )}
+          <Form.Field>
+            <label htmlFor="border" style={{ display: 'block' }}>
+              Border Width
+            </label>
+            <select
+              id="border"
+              name="border"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('border', currentTarget.value)
+              }}
+              value={values.border}
+              style={{ marginLeft: '8px' }}
+            >
+              <option value="thin">Thin</option>
+              <option value="thick">Thick</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Component Shape
+            </label>
+            <select
+              id="shape"
+              name="shape"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('shape', currentTarget.value)
+              }}
+              value={values.shape}
+              style={{ marginLeft: '8px' }}
+            >
+              <option value="square">Square</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="round">Round</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Font
+            </label>
+            <select
+              id="font"
+              name="font"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('font', currentTarget.value)
+              }}
+              value={values.font}
+              style={{ marginLeft: '8px' }}
+            >
+              <option value="Helvetica Neue">Helvetica Neue</option>
+              <option value="Helvetica">Helvetica</option>
+              <option value="Arial">Arial</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <input
+              id="boxShadows"
+              name="boxShadows"
+              type="checkbox"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('boxShadows', currentTarget.checked)
+              }}
+              checked={values.boxShadows}
+            />
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Box Shadows
+            </label>
+          </Form.Field>
 
           <SectionTitle>Background</SectionTitle>
           <Form.Field>
