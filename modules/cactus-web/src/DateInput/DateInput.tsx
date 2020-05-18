@@ -1,5 +1,6 @@
 import React, { Component, Fragment, MouseEventHandler, useMemo } from 'react'
 
+import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 import {
   DateType,
@@ -28,7 +29,7 @@ import Portal from '@reach/portal'
 import positionPortal from '../helpers/positionPortal'
 import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export type IsValidDateFunc = (date: Date) => boolean
 export type ParseDateFunc = (dateStr: string) => Date
@@ -206,6 +207,30 @@ const marginAndWidth = compose(
   width
 )
 
+const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+
+const inputShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+
+const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
+const getInputShape = (shape: Shape) => inputShapeMap[shape]
+
 const InputWrapper = styled.div`
   position: relative;
   color: ${p => p.theme.colors.darkContrast};
@@ -213,8 +238,9 @@ const InputWrapper = styled.div`
   display: inline-flex;
   flex-wrap: nowrap;
   align-items: center;
-  border: 1px solid ${p => p.theme.colors.darkestContrast};
-  border-radius: 20px;
+  ${p => getBorder(p.theme.border)}
+  border-color: ${p => p.theme.colors.darkestContrast};
+  ${p => getInputShape(p.theme.shape)}
   background-color: ${p => p.theme.colors.white};
   height: 36px;
   outline: none;
@@ -283,13 +309,37 @@ const InputWrapper = styled.div`
   }
 `
 
+const popupShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 0 8px 4px 4px;
+  `,
+  intermediate: css`
+    border-radius: 0 20px 10px 10px;
+  `,
+  round: css`
+    border-radius: 0 32px 16px 16px;
+  `,
+}
+
+const getPopupShape = (shape: Shape) => popupShapeMap[shape]
+const getPopupBoxShadowStyles = (theme: CactusTheme) => {
+  return theme.boxShadows
+    ? css`
+        box-shadow: 0 3px 9px 0 ${theme.colors.callToAction};
+      `
+    : css`
+        ${borderMap[theme.border]}
+        border-color: ${theme.colors.lightContrast};
+      `
+}
+
 const CalendarPopup = styled.div`
   box-sizing: border-box;
   position: absolute;
   z-index: 1000;
   background-color: ${p => p.theme.colors.white};
-  border-radius: 0 32px 16px 16px;
-  box-shadow: 0 3px 9px 0 ${p => p.theme.colors.callToAction};
+  ${p => getPopupShape(p.theme.shape)}
+  ${p => getPopupBoxShadowStyles(p.theme)}
   overflow: hidden;
 `
 

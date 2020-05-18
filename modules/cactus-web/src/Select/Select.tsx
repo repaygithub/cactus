@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react'
 import '../helpers/polyfills'
 import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
 import { assignRef } from '@reach/utils'
+import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { isResponsiveTouchDevice } from '../helpers/constants'
@@ -234,6 +235,30 @@ const Placeholder = styled.span`
   font-size: ${p => p.theme.fontSizes.p}px;
 `
 
+const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
+  thin: css`
+    border-width: 1px;
+  `,
+  thick: css`
+    border-width: 2px;
+  `,
+}
+
+const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+
+const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
+const getShape = (shape: Shape) => shapeMap[shape]
+
 const SelectTrigger = styled.button`
   position: relative;
   box-sizing: border-box;
@@ -242,8 +267,8 @@ const SelectTrigger = styled.button`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  border-radius: 20px;
-  border-width: 1px;
+  ${p => getShape(p.theme.shape)}
+  ${p => getBorder(p.theme.border)}
   border-style: solid;
   border-color: ${p => p.theme.colors.darkContrast};
   text-align: left;
@@ -321,6 +346,28 @@ function responsiveHeight() {
   return (typeof window !== 'undefined' && window.innerHeight * 0.4) || 0
 }
 
+const listShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 4px;
+  `,
+  round: css`
+    border-radius: 8px;
+  `,
+}
+
+const getListShape = (shape: Shape) => listShapeMap[shape]
+const getListBoxShadowStyles = (theme: CactusTheme) => {
+  return theme.boxShadows
+    ? css`
+        border: 0px;
+      `
+    : css`${borderMap[theme.border]}
+  border-color: ${theme.colors.lightContrast};`
+}
+
 const StyledList = styled.ul`
   position: relative;
   box-sizing: border-box;
@@ -332,6 +379,9 @@ const StyledList = styled.ul`
   margin-bottom: 0;
   overflow-y: auto;
   outline: none;
+  ${p => getListShape(p.theme.shape)}
+  ${p => getListBoxShadowStyles(p.theme)}
+  border-style: solid;
 
   ${() =>
     isResponsiveTouchDevice &&
@@ -381,11 +431,10 @@ const ListWrapper = styled.div`
   position: absolute;
   z-index: 1000;
   box-sizing: border-box;
-  border-radius: 8px;
+  ${p => getListShape(p.theme.shape)}
   max-height: 400px;
   max-width: 100vw;
-  box-shadow: 0 3px 9px 0 rgba(7, 61, 232, 0.28), 0 3px 8px 0 rgba(17, 51, 159, 0.07),
-    0 3px 9px 0 rgba(7, 61, 232, 0.28), 0 3px 8px 0 rgba(17, 51, 159, 0.07);
+  ${p => p.theme.boxShadows && `box-shadow: 0 3px 9px 0 ${p.theme.colors.callToAction};`}
   background-color: ${p => p.theme.colors.white};
 
   ${() =>
