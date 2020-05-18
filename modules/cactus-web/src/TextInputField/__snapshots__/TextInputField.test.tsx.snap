@@ -3,7 +3,8 @@
 exports[`component: TextInputField should render a TextInputField 1`] = `
 .c9 {
   box-sizing: border-box;
-  border: 1px solid hsl(200,9%,35%);
+  border: 2px solid;
+  border-color: hsl(200,9%,35%);
   border-radius: 20px;
   height: 32px;
   outline: none;
