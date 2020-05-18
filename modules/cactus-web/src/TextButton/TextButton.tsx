@@ -100,7 +100,8 @@ export const TextButton = styled.button<TextButtonProps>`
       width: 100%;
       top: 0px;
       left: 0px;
-      ${p => `${getBorder(p.theme.border)} ${p.theme.colors.callToAction}`};
+      ${p => getBorder(p.theme.border)};
+      border-color: ${p => p.theme.colors.callToAction};
       border-radius: 20px;
     }
   }
