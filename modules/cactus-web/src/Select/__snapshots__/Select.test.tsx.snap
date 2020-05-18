@@ -107,3 +107,624 @@ exports[`component: Select snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`component: Select with theme customization should have 1px border 1`] = `
+<DocumentFragment>
+  .c5 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c3 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c6:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c6:focus .c4,
+.c6[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c6[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c1 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: hsl(200,9%,35%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c1:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c1:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c1::-moz-focus-inner {
+  border: 0;
+}
+
+.c1:focus,
+.c1[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1:focus .c4,
+.c1[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c1[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c1 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c0 {
+  max-width: 100%;
+}
+
+<div
+    class="c0"
+  >
+    <div>
+      <button
+        aria-haspopup="listbox"
+        aria-multiselectable="false"
+        class="c1"
+        id="test-id"
+        name="customize"
+        type="button"
+      >
+        <span
+          class="c2 c3"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c4 c5"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+            transform="rotate(-90 12 12)"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: Select with theme customization should match intermediate shape styles 1`] = `
+<DocumentFragment>
+  .c5 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c3 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c6:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c6:focus .c4,
+.c6[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c6[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c7:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c7:focus .c4,
+.c7[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c7[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c7 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c1 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,9%,35%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c1:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c1:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c1::-moz-focus-inner {
+  border: 0;
+}
+
+.c1:focus,
+.c1[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1:focus .c4,
+.c1[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c1[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c1 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c0 {
+  max-width: 100%;
+}
+
+<div
+    class="c0"
+  >
+    <div>
+      <button
+        aria-haspopup="listbox"
+        aria-multiselectable="false"
+        class="c1"
+        id="test-id"
+        name="customize"
+        type="button"
+      >
+        <span
+          class="c2 c3"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c4 c5"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+            transform="rotate(-90 12 12)"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: Select with theme customization should match square shape styles 1`] = `
+<DocumentFragment>
+  .c5 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c3 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c6:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c6:focus .c4,
+.c6[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c6[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c7:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c7:focus .c4,
+.c7[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c7[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c7 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c8:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c8:focus .c4,
+.c8[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c8[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c8 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c1 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 1px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,9%,35%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c1:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c1:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c1::-moz-focus-inner {
+  border: 0;
+}
+
+.c1:focus,
+.c1[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1:focus .c4,
+.c1[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c1[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c1 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c0 {
+  max-width: 100%;
+}
+
+<div
+    class="c0"
+  >
+    <div>
+      <button
+        aria-haspopup="listbox"
+        aria-multiselectable="false"
+        class="c1"
+        id="test-id"
+        name="customize"
+        type="button"
+      >
+        <span
+          class="c2 c3"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c4 c5"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+            transform="rotate(-90 12 12)"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: Select with theme customization should not have box shadows set 1`] = `
+<DocumentFragment>
+  .c5 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c3 {
+  font-style: italic;
+  color: hsl(200,9%,35%);
+  font-size: 18px;
+}
+
+.c1 {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 194px;
+  width: 100%;
+  height: 32px;
+  padding: 0 24px 0 16px;
+  background-color: transparent;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: hsl(200,9%,35%);
+  text-align: left;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c1:disabled {
+  border-color: hsl(0,0%,70%);
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c1:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c1::-moz-focus-inner {
+  border: 0;
+}
+
+.c1:focus,
+.c1[aria-expanded] {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1:focus .c4,
+.c1[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c1[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c1 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c6:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c6:focus .c4,
+.c6[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c6[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c7:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c7:focus .c4,
+.c7[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c7[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c7 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c8:disabled .c2 {
+  color: hsl(0,0%,70%);
+}
+
+.c8:focus .c4,
+.c8[aria-expanded] .c4 {
+  color: hsl(200,96%,35%);
+}
+
+.c8[aria-expanded] .c4 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c8 .c4 {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+}
+
+.c0 {
+  max-width: 100%;
+}
+
+<div
+    class="c0"
+  >
+    <div>
+      <button
+        aria-haspopup="listbox"
+        aria-multiselectable="false"
+        class="c1"
+        id="test-id"
+        name="customize"
+        type="button"
+      >
+        <span
+          class="c2 c3"
+        >
+          Select an option
+        </span>
+        <svg
+          class="c4 c5"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+            transform="rotate(-90 12 12)"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

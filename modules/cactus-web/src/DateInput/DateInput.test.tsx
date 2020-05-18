@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { PartialDate } from '../helpers/dates'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DateInput from './DateInput'
@@ -639,6 +640,52 @@ describe('component: DateInput', () => {
         </StyleProvider>
       )
       expect(() => getByLabelText('Open date picker')).toThrow()
+    })
+  })
+
+  describe('with theme customization', () => {
+    test('should have 1px border', () => {
+      const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <DateInput name="thin" id="not-thicc" />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should match intermediate shape styles', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <DateInput name="intermediate" id="not-round" />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should match square shape styles', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <DateInput name="square" id="not-round" />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should not have box shadows set', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <DateInput name="shadows" id="none-of-em" />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
     })
   })
 })

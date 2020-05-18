@@ -449,3 +449,192 @@ exports[`component: TextArea should support margin space props 1`] = `
   </div>
 </div>
 `;
+
+exports[`component: TextArea with theme customization should have 1px border 1`] = `
+<DocumentFragment>
+  .c1 {
+  border: 1px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 8px;
+  min-height: 100px;
+  min-width: 336px;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 8px 16px;
+  outline: none;
+  background-color: hsl(0,0%,100%);
+  height: auto;
+  width: auto;
+  display: block;
+  resize: none;
+}
+
+.c1:first-line {
+  padding-right: 15px;
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c0 {
+  position: relative;
+  display: block;
+}
+
+<div
+    class="c0"
+  >
+    <textarea
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextArea with theme customization should have 1px border radius 1`] = `
+<DocumentFragment>
+  .c1 {
+  border: 2px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 1px;
+  min-height: 100px;
+  min-width: 336px;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 8px 16px;
+  outline: none;
+  background-color: hsl(0,0%,100%);
+  height: auto;
+  width: auto;
+  display: block;
+  resize: none;
+}
+
+.c1:first-line {
+  padding-right: 15px;
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c0 {
+  position: relative;
+  display: block;
+}
+
+<div
+    class="c0"
+  >
+    <textarea
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextArea with theme customization should have 8px border radius 1`] = `
+<DocumentFragment>
+  .c1 {
+  border: 2px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 4px;
+  min-height: 100px;
+  min-width: 336px;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 8px 16px;
+  outline: none;
+  background-color: hsl(0,0%,100%);
+  height: auto;
+  width: auto;
+  display: block;
+  resize: none;
+}
+
+.c1:first-line {
+  padding-right: 15px;
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c0 {
+  position: relative;
+  display: block;
+}
+
+<div
+    class="c0"
+  >
+    <textarea
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;

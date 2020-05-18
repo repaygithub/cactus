@@ -428,3 +428,183 @@ exports[`component: TextInput should support margin space props 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`component: TextInput with theme customization should have 1px border 1`] = `
+<DocumentFragment>
+  .c1 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  line-height: 28px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c0 {
+  box-sizing: border-box;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput with theme customization should have 1px border radius 1`] = `
+<DocumentFragment>
+  .c1 {
+  box-sizing: border-box;
+  border: 2px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 1px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  line-height: 28px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c0 {
+  box-sizing: border-box;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;
+
+exports[`component: TextInput with theme customization should have 8px border radius 1`] = `
+<DocumentFragment>
+  .c1 {
+  box-sizing: border-box;
+  border: 2px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 8px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  line-height: 28px;
+  width: auto;
+  background-color: hsl(0,0%,100%);
+}
+
+.c1 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
+}
+
+.c1:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c1::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c0 {
+  box-sizing: border-box;
+}
+
+<div
+    class="c0"
+  >
+    <input
+      class="c1"
+    />
+  </div>
+</DocumentFragment>
+`;

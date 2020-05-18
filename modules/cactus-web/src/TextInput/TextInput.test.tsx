@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 import { cleanup, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import cactusTheme from '@repay/cactus-theme'
 import TextInput from './TextInput'
 import userEvent from '@testing-library/user-event'
 
@@ -89,5 +89,40 @@ describe('component: TextInput', () => {
 
     userEvent.type(getByPlaceholderText('get this'), 'typing...')
     expect(onChange).toHaveBeenCalled()
+  })
+
+  describe('with theme customization', () => {
+    test('should have 1px border', () => {
+      const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <TextInput />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should have 8px border radius', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <TextInput />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should have 1px border radius', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <TextInput />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
   })
 })

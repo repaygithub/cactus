@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import cactusTheme from '@repay/cactus-theme'
 import CheckBox from './CheckBox'
 import userEvent from '@testing-library/user-event'
 
@@ -97,5 +97,29 @@ describe('component: CheckBox', () => {
 
     userEvent.click(getByTestId('will-not-check'))
     expect(onFocus).not.toHaveBeenCalled()
+  })
+
+  describe('with theme customization', () => {
+    test('should have 1px border', () => {
+      const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <CheckBox id="theme" />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should not have box shadow on focus', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <CheckBox id="theme" />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
   })
 })

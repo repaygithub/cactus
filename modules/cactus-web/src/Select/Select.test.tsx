@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import animationRender from '../../tests/helpers/animationRender'
 import KeyCodes from '../helpers/keyCodes'
 import Select from './Select'
@@ -1297,6 +1298,52 @@ describe('component: Select', () => {
       const listbox = getByRole('listbox')
       expect(listbox.childNodes[0]).toHaveTextContent('boolest')
       expect(listbox.childNodes[1]).toHaveTextContent('coolest')
+    })
+  })
+
+  describe('with theme customization', () => {
+    test('should have 1px border', () => {
+      const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Select id="test-id" name="customize" options={['thin', 'thick']} />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should match intermediate shape styles', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Select id="test-id" name="customize" options={['shape', 'border']} />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should match square shape styles', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Select id="test-id" name="customize" options={['shape', 'border']} />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should not have box shadows set', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Select id="test-id" name="customize" options={['shape', 'border']} />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
     })
   })
 })
