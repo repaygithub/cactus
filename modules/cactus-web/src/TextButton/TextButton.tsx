@@ -1,3 +1,4 @@
+import { BorderSize } from '@repay/cactus-theme/src/theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
@@ -32,6 +33,16 @@ const variantMap: VariantMap = {
     color: ${p => p.theme.colors.error};
   `,
 }
+
+const borderMap = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+const getBorder = (size: BorderSize) => borderMap[size]
 
 const inverseVariantMap: VariantMap = {
   action: css`
@@ -89,7 +100,7 @@ export const TextButton = styled.button<TextButtonProps>`
       width: 100%;
       top: 0px;
       left: 0px;
-      border: 2px solid ${p => p.theme.colors.callToAction};
+      ${p => `${getBorder(p.theme.border)} ${p.theme.colors.callToAction}`};
       border-radius: 20px;
     }
   }

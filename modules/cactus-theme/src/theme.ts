@@ -43,11 +43,11 @@ export type TextStyle = {
   lineHeight: string
 }
 
-type BorderSize = 'thin' | 'thick'
+export type BorderSize = 'thin' | 'thick'
 
-type Shape = 'square' | 'intermediate' | 'round'
+export type Shape = 'square' | 'intermediate' | 'round'
 
-type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
+export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
 export interface CactusTheme {
   breakpoints?: Array<String>
@@ -113,7 +113,7 @@ export interface CactusTheme {
   }
   border: BorderSize
   shape: Shape
-  font: String
+  font: string
   boxShadows: Boolean
 }
 

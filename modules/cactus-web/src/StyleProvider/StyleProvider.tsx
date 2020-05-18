@@ -36,7 +36,7 @@ const queries = {
 const GlobalStyle = createGlobalStyle`
 html,
 body {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: ${p => p.theme.font};
   ${p => p.theme.textStyles.body};
   font-weight: 400;
   color: ${p => p.theme.colors.darkestContrast};

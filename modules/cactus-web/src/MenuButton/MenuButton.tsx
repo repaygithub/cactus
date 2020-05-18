@@ -1,3 +1,7 @@
+import React from 'react'
+
+import { BorderSize, Shape } from '@repay/cactus-theme/src/theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { Omit } from '../types'
@@ -10,8 +14,36 @@ import {
   MenuList as ReachMenuList,
 } from '@reach/menu-button'
 import PropTypes from 'prop-types'
-import React from 'react'
-import styled, { createGlobalStyle, StyledComponent } from 'styled-components'
+import styled, { createGlobalStyle, css, StyledComponent } from 'styled-components'
+
+const borderMap = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+
+const shapeMap = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+
+const getShape = (shape: Shape) => shapeMap[shape]
+
+const getBorder = (size: BorderSize) => borderMap[size]
+
+const getBoxShadow = (val: CactusTheme) => {
+  return val.boxShadows ? `0 3px 6px 0 ${val.colors.callToAction}` : {}
+}
 
 const MenuButtonStyles = createGlobalStyle`
   :root {
@@ -27,9 +59,7 @@ const MenuButtonStyles = createGlobalStyle`
 const MenuList = styled(ReachMenuList)`
   padding: 8px 0;
   margin-top: 8px;
-  border-radius: 0 0 8px 8px;
   background-color: ${p => p.theme.colors.white};
-  box-shadow: 0 3px 6px 0 ${p => p.theme.colors.callToAction};
   outline: none;
 
   [data-reach-menu-item] {
@@ -88,9 +118,10 @@ type MenuButtonType = StyledComponent<typeof MenuButtonBase, any, {}, never> & {
 const MenuButton = styled(MenuButtonBase)`
   position: relative;
   box-sizing: border-box;
-  border-radius: 20px;
+  ${p => getShape(p.theme.shape)};
+  ${p => getBorder(p.theme.border)};
+  box-shadow: ${p => getBoxShadow(p.theme)};
   padding: 2px 24px 2px 14px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   appearance: none;
