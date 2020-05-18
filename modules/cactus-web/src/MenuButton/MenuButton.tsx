@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { BorderSize, Shape } from '@repay/cactus-theme/src/theme'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'

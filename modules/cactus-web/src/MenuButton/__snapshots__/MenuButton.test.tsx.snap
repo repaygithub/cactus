@@ -10,8 +10,9 @@ exports[`component: MenuButton snapshot 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 20px;
-  padding: 2px 24px 2px 14px;
   border: 2px solid;
+  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+  padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
   -webkit-appearance: none;

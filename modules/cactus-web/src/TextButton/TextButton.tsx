@@ -1,4 +1,4 @@
-import { BorderSize } from '@repay/cactus-theme/src/theme'
+import { BorderSize } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'

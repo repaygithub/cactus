@@ -4,14 +4,14 @@ exports[`component: Button should default to standard variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -29,9 +29,9 @@ exports[`component: Button should default to standard variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -76,14 +76,14 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
 
 .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -101,9 +101,9 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -214,14 +214,14 @@ exports[`component: Button should render call to action variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
@@ -239,9 +239,9 @@ exports[`component: Button should render call to action variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -279,14 +279,14 @@ exports[`component: Button should render danger variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(0,0%,100%);
   background-color: hsl(353,84%,44%);
   border-color: hsl(353,84%,44%);
@@ -304,9 +304,9 @@ exports[`component: Button should render danger variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -344,14 +344,14 @@ exports[`component: Button should render disabled variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
@@ -370,9 +370,9 @@ exports[`component: Button should render disabled variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -405,14 +405,14 @@ exports[`component: Button should render inverse call to action variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
@@ -430,9 +430,9 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -470,14 +470,14 @@ exports[`component: Button should render inverse danger variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(353,84%,44%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
@@ -495,9 +495,9 @@ exports[`component: Button should render inverse danger variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -534,14 +534,14 @@ exports[`component: Button should render inverse disabled variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
   border-color: hsl(0,0%,90%);
@@ -560,9 +560,9 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -595,14 +595,14 @@ exports[`component: Button should render inverse standard variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
   border-color: hsl(0,0%,100%);
@@ -620,9 +620,9 @@ exports[`component: Button should render inverse standard variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -660,14 +660,14 @@ exports[`component: Button should render standard variant 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -685,9 +685,9 @@ exports[`component: Button should render standard variant 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {
@@ -725,14 +725,14 @@ exports[`component: Button should support margin space props 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   margin-top: 24px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
@@ -751,9 +751,9 @@ exports[`component: Button should support margin space props 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .c0 svg {

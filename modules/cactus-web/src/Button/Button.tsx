@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { BorderSize, Shape } from '@repay/cactus-theme/src/theme'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
