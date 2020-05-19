@@ -182,9 +182,10 @@ export const Button = styled(ButtonBase)`
       width: calc(100% + 10px);
       top: -5px;
       left: -5px;
+      ${p => getBorder(p.theme.border)};
+      ${p => getShape(p.theme.shape)};
       border-color: ${p => p.theme.colors.callToAction};
       box-sizing: border-box;
-      ${p => getShape(p.theme.shape)}
     }
   }
 

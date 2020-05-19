@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import MenuButton from './MenuButton'
 import userEvent from '@testing-library/user-event'
@@ -72,5 +73,49 @@ describe('component: MenuButton', () => {
       expect(actionOne).not.toHaveBeenCalled()
       expect(actionTwo).toHaveBeenCalled()
     })
+  })
+})
+
+describe('With theme changes ', () => {
+  test('Should have rounded borders', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'round' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <MenuButton label="Demo">
+          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Link href="#">Action Three</MenuButton.Link>
+        </MenuButton>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  test('Dropdown should have box-shadows', () => {
+    const theme = generateTheme({ primaryHue: 200, boxShadows: true })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <MenuButton label="Demo">
+          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Link href="#">Action Three</MenuButton.Link>
+        </MenuButton>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  test('Border should be 2px', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thick' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <MenuButton label="Demo">
+          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Link href="#">Action Three</MenuButton.Link>
+        </MenuButton>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
   })
 })

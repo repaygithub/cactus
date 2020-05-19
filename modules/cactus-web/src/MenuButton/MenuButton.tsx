@@ -39,13 +39,13 @@ const shapeMap = {
 
 const dropShapeMap = {
   square: css`
-    border-radius: 1px;
+    border-radius: 0 0 1px 1px;
   `,
   intermediate: css`
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
   `,
   round: css`
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
   `,
 }
 
@@ -66,6 +66,10 @@ const getDropDownBorder = (theme: CactusTheme) => {
       border-color: ${theme.colors.lightContrast};
       ${getDropShape(theme.shape)};
     `
+  } else {
+    return css`
+      ${getDropShape(theme.shape)};
+    `
   }
 }
 
@@ -83,16 +87,16 @@ const MenuButtonStyles = createGlobalStyle`
 const MenuList = styled(ReachMenuList)`
   padding: 8px 0;
   margin-top: 8px;
-  background-color: ${p => p.theme.colors.red};
   outline: none;
-  box-shadow: ${p => getBoxShadow(p.theme)};
   ${p => getDropDownBorder(p.theme)};
+  box-shadow: ${p => getBoxShadow(p.theme)};
 
   [data-reach-menu-item] {
     position: relative;
     display: block;
     cursor: pointer;
     text-decoration: none;
+
     ${p => p.theme.textStyles.small};
     color: ${p => p.theme.colors.darkestContrast};
     outline: none;
@@ -146,7 +150,6 @@ const MenuButton = styled(MenuButtonBase)`
   box-sizing: border-box;
   ${p => getShape(p.theme.shape)};
   ${p => getBorder(p.theme.border)};
-  box-shadow: ${p => getBoxShadow(p.theme)};
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;

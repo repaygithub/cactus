@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StatusCheck } from '@repay/cactus-icons'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import cactusTheme from '@repay/cactus-theme'
 import TextButton from './TextButton'
 
 afterEach(cleanup)
@@ -157,5 +157,27 @@ describe('component: TextButton', () => {
     )
 
     expect(textIconButton.asFragment()).toMatchSnapshot()
+  })
+})
+
+describe('With theme changes ', () => {
+  test('Should have 1px border', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <TextButton>Click me!</TextButton>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  test('Should have square shape', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <TextButton>Click me!</TextButton>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
   })
 })
