@@ -44,9 +44,10 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
+  border: 2px solid;
+  border-radius: 20px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
-  border-radius: 20px;
 }
 
 .c11 svg {
@@ -178,8 +179,8 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   top: 0px;
   left: 0px;
   border: 2px solid;
-  border-color: hsl(200,96%,35%);
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c12::-moz-focus-inner {

@@ -92,8 +92,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   top: 0px;
   left: 0px;
   border: 2px solid;
-  border-color: hsl(200,96%,35%);
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c24::-moz-focus-inner {
@@ -597,8 +597,8 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   top: 0px;
   left: 0px;
   border: 2px solid;
-  border-color: hsl(200,96%,35%);
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c19::-moz-focus-inner {
@@ -972,8 +972,8 @@ exports[`component: FileInputField should render a loading file 1`] = `
   top: 0px;
   left: 0px;
   border: 2px solid;
-  border-color: hsl(200,96%,35%);
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c13::-moz-focus-inner {
@@ -1288,8 +1288,8 @@ exports[`component: FileInputField should render file input field 1`] = `
   top: 0px;
   left: 0px;
   border: 2px solid;
-  border-color: hsl(200,96%,35%);
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c12::-moz-focus-inner {
