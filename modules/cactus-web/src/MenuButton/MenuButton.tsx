@@ -37,12 +37,36 @@ const shapeMap = {
   `,
 }
 
+const dropShapeMap = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 4px;
+  `,
+  round: css`
+    border-radius: 8px;
+  `,
+}
+
 const getShape = (shape: Shape) => shapeMap[shape]
 
 const getBorder = (size: BorderSize) => borderMap[size]
 
-const getBoxShadow = (val: CactusTheme) => {
-  return val.boxShadows ? `0 3px 6px 0 ${val.colors.callToAction}` : {}
+const getDropShape = (shape: Shape) => dropShapeMap[shape]
+
+const getBoxShadow = (theme: CactusTheme) => {
+  return theme.boxShadows ? `0 3px 6px 0 ${theme.colors.callToAction}` : {}
+}
+
+const getDropDownBorder = (theme: CactusTheme) => {
+  if (!theme.boxShadows) {
+    return css`
+      ${getBorder(theme.border)};
+      border-color: ${theme.colors.lightContrast};
+      ${getDropShape(theme.shape)};
+    `
+  }
 }
 
 const MenuButtonStyles = createGlobalStyle`
@@ -59,8 +83,10 @@ const MenuButtonStyles = createGlobalStyle`
 const MenuList = styled(ReachMenuList)`
   padding: 8px 0;
   margin-top: 8px;
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${p => p.theme.colors.red};
   outline: none;
+  box-shadow: ${p => getBoxShadow(p.theme)};
+  ${p => getDropDownBorder(p.theme)};
 
   [data-reach-menu-item] {
     position: relative;
@@ -150,8 +176,8 @@ const MenuButton = styled(MenuButtonBase)`
       top: -5px;
       left: -5px;
       border: 2px solid ${p => p.theme.colors.callToAction};
-      border-radius: 20px;
       box-sizing: border-box;
+      ${p => getShape(p.theme.shape)};
     }
   }
 
