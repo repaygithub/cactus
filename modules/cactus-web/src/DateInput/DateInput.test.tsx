@@ -644,8 +644,8 @@ describe('component: DateInput', () => {
   })
 
   describe('with theme customization', () => {
-    test('should have 1px border', () => {
-      const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+    test('should have 2px border', () => {
+      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
           <DateInput name="thin" id="not-thicc" />

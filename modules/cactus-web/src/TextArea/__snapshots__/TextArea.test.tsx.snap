@@ -450,12 +450,12 @@ exports[`component: TextArea should support margin space props 1`] = `
 </div>
 `;
 
-exports[`component: TextArea with theme customization should have 1px border 1`] = `
+exports[`component: TextArea with theme customization should have 1px border radius 1`] = `
 <DocumentFragment>
   .c1 {
   border: 1px solid;
   border-color: hsl(200,9%,35%);
-  border-radius: 8px;
+  border-radius: 1px;
   min-height: 100px;
   min-width: 336px;
   box-sizing: border-box;
@@ -513,12 +513,12 @@ exports[`component: TextArea with theme customization should have 1px border 1`]
 </DocumentFragment>
 `;
 
-exports[`component: TextArea with theme customization should have 1px border radius 1`] = `
+exports[`component: TextArea with theme customization should have 2px border 1`] = `
 <DocumentFragment>
   .c1 {
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,9%,35%);
-  border-radius: 1px;
+  border-radius: 8px;
   min-height: 100px;
   min-width: 336px;
   box-sizing: border-box;

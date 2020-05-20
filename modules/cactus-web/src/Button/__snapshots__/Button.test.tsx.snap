@@ -198,7 +198,7 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
 </DocumentFragment>
 `;
 
-exports[`With theme changes  should have 1px border 1`] = `
+exports[`With theme changes  should have 2px border 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
@@ -208,7 +208,7 @@ exports[`With theme changes  should have 1px border 1`] = `
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
-  border: 1px solid;
+  border: 2px solid;
   border-radius: 20px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
@@ -227,7 +227,7 @@ exports[`With theme changes  should have 1px border 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 1px solid;
+  border: 2px solid;
   border-radius: 20px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;

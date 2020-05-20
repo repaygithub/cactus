@@ -429,13 +429,13 @@ exports[`component: TextInput should support margin space props 1`] = `
 </DocumentFragment>
 `;
 
-exports[`component: TextInput with theme customization should have 1px border 1`] = `
+exports[`component: TextInput with theme customization should have 1px border radius 1`] = `
 <DocumentFragment>
   .c1 {
   box-sizing: border-box;
   border: 1px solid;
   border-color: hsl(200,9%,35%);
-  border-radius: 20px;
+  border-radius: 1px;
   height: 32px;
   outline: none;
   box-sizing: border-box;
@@ -489,13 +489,13 @@ exports[`component: TextInput with theme customization should have 1px border 1`
 </DocumentFragment>
 `;
 
-exports[`component: TextInput with theme customization should have 1px border radius 1`] = `
+exports[`component: TextInput with theme customization should have 2px border 1`] = `
 <DocumentFragment>
   .c1 {
   box-sizing: border-box;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,9%,35%);
-  border-radius: 1px;
+  border-radius: 20px;
   height: 32px;
   outline: none;
   box-sizing: border-box;

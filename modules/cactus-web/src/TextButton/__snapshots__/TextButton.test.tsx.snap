@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`With theme changes  Should have 1px border 1`] = `
+exports[`With theme changes  Should have 2px border 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
@@ -31,7 +31,7 @@ exports[`With theme changes  Should have 1px border 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 1px solid;
+  border: 2px solid;
   border-radius: 20px;
   border-color: hsl(200,96%,35%);
 }
