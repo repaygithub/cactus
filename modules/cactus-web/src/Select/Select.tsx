@@ -95,12 +95,26 @@ const ValueTagBase = React.forwardRef<
   )
 })
 
+const valueShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 4px;
+  `,
+  round: css`
+    border-radius: 8px;
+  `,
+}
+
+const getValueShape = (shape: Shape) => valueShapeMap[shape]
+
 const ValueTag = styled(ValueTagBase)`
   box-sizing: border-box;
   ${p => p.theme.textStyles.small};
   padding: 0 8px 0 8px;
-  border: 1px solid ${p => p.theme.colors.lightGray};
-  border-radius: 7px;
+  border: 1px solid ${p => p.theme.colors.lightContrast};
+  ${p => getValueShape(p.theme.shape)}
   margin-right: 2px;
   display: inline-block;
   height: 24px;
@@ -320,9 +334,8 @@ const ComboInput = styled.input`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  border-radius: 20px;
-  border-width: 1px;
-  border-style: solid;
+  ${p => getShape(p.theme.shape)}
+  ${p => getBorder(p.theme.border)}
   border-color: ${p => p.theme.colors.darkContrast};
   text-align: left;
   outline: none;
