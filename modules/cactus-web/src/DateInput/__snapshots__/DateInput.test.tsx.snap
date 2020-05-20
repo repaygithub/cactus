@@ -101,7 +101,7 @@ exports[`component: DateInput snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,10%,20%);
   border-radius: 20px;
   background-color: hsl(0,0%,100%);
@@ -369,20 +369,6 @@ exports[`component: DateInput with theme customization should have 1px border 1`
   appearance: none;
   border: none;
   cursor: pointer;
-}
-
-.c10 > .c4 {
-  margin-left: 0;
-}
-
-.c10 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c10 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
 }
 
 .c0 {
@@ -683,20 +669,6 @@ exports[`component: DateInput with theme customization should match intermediate
   margin-left: auto;
 }
 
-.c11 > .c4 {
-  margin-left: 0;
-}
-
-.c11 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c11 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
 .c0 {
   position: relative;
   color: hsl(200,9%,35%);
@@ -712,7 +684,7 @@ exports[`component: DateInput with theme customization should match intermediate
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,10%,20%);
   border-radius: 8px;
   background-color: hsl(0,0%,100%);
@@ -1009,20 +981,6 @@ exports[`component: DateInput with theme customization should match square shape
   margin-left: auto;
 }
 
-.c12 > .c4 {
-  margin-left: 0;
-}
-
-.c12 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c12 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
 .c0 {
   position: relative;
   color: hsl(200,9%,35%);
@@ -1038,7 +996,7 @@ exports[`component: DateInput with theme customization should match square shape
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,10%,20%);
   border-radius: 1px;
   background-color: hsl(0,0%,100%);
@@ -1322,7 +1280,7 @@ exports[`component: DateInput with theme customization should not have box shado
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,10%,20%);
   border-radius: 20px;
   background-color: hsl(0,0%,100%);
@@ -1431,20 +1389,6 @@ exports[`component: DateInput with theme customization should not have box shado
 }
 
 .c11 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
-.c12 > .c4 {
-  margin-left: 0;
-}
-
-.c12 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c12 .c6 {
   margin-right: -2px;
   margin-left: auto;
 }
