@@ -311,7 +311,7 @@ const InputWrapper = styled.div`
 
 const popupShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
   square: css`
-    border-radius: 0 8px 4px 4px;
+    border-radius: 0 2px 1px 1px;
   `,
   intermediate: css`
     border-radius: 0 20px 10px 10px;
@@ -563,6 +563,20 @@ const TimeInputWrapper = styled.div`
   padding: 16px;
 `
 
+const yearShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-bottom-right-radius: 2px;
+  `,
+  intermediate: css`
+    border-bottom-right-radius: 8px;
+  `,
+  round: css`
+    border-bottom-right-radius: 14px;
+  `,
+}
+
+const getYearShape = (shape: Shape) => yearShapeMap[shape]
+
 const MonthYearListWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -593,7 +607,7 @@ const MonthYearListWrapper = styled.div`
     background-color: white;
 
     ul {
-      border-bottom-right-radius: 16px;
+      ${p => getYearShape(p.theme.shape)}
     }
   }
 
