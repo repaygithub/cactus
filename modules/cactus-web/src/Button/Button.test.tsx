@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { ActionsDelete } from '@repay/cactus-icons'
 import { cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Button from './Button'
 
@@ -161,5 +162,45 @@ describe('component: Button', () => {
 
     fireEvent.click(getByTestId('not-clicked'))
     expect(onClick).not.toHaveBeenCalled()
+  })
+})
+
+describe('With theme changes ', () => {
+  test('should have 1px border', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <Button>Click me!</Button>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  test('Should have intermediate border radius', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <Button>Click me!</Button>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+  test('Should have square border radius', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <Button>Click me!</Button>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+  test('Should not have box shadows applied', () => {
+    const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <Button>Click me!</Button>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
   })
 })

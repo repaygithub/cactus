@@ -1,5 +1,170 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`With theme changes  Should have 1px border 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border: 1px solid;
+  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+<button
+    class="c0"
+    type="button"
+  >
+    Click me!
+  </button>
+</DocumentFragment>
+`;
+
+exports[`With theme changes  Should have intermediate shape 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border: 2px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+<button
+    class="c0"
+    type="button"
+  >
+    Click me!
+  </button>
+</DocumentFragment>
+`;
+
+exports[`With theme changes  Should have square shape 1`] = `
+<DocumentFragment>
+  .c0 {
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: hsl(200,96%,11%);
+}
+
+.c0:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border: 2px solid;
+  border-radius: 1px;
+  border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+<button
+    class="c0"
+    type="button"
+  >
+    Click me!
+  </button>
+</DocumentFragment>
+`;
+
 exports[`component: TextButton should default to standard variant 1`] = `
 <DocumentFragment>
   .c0 {
@@ -31,8 +196,9 @@ exports[`component: TextButton should default to standard variant 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -89,8 +255,9 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -158,8 +325,9 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -223,8 +391,9 @@ exports[`component: TextButton should render call to action variant 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -277,8 +446,9 @@ exports[`component: TextButton should render danger variant 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -327,8 +497,9 @@ exports[`component: TextButton should render disabled variant 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -383,8 +554,9 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -433,8 +605,9 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -488,8 +661,9 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -542,8 +716,9 @@ exports[`component: TextButton should render standard variant 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {
@@ -597,8 +772,9 @@ exports[`component: TextButton should support space props 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0::-moz-focus-inner {

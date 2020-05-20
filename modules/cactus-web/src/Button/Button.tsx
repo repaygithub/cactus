@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CactusTheme } from '@repay/cactus-theme'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
@@ -104,6 +104,30 @@ const disabled = css`
   cursor: not-allowed;
 `
 
+const borderMap = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+
+const shapeMap = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+const getShape = (shape: Shape) => shapeMap[shape]
+
+const getBorder = (size: BorderSize) => borderMap[size]
+
 const variantOrDisabled = (props: ButtonProps) => {
   const map = props.inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
@@ -137,13 +161,13 @@ const ButtonBase: React.FC<ButtonProps> = ({
 
 export const Button = styled(ButtonBase)`
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   ${p => p.theme.textStyles.body};
+  ${p => getBorder(p.theme.border)};
+  ${p => getShape(p.theme.shape)};
 
   &::-moz-focus-inner {
     border: 0;
@@ -158,8 +182,9 @@ export const Button = styled(ButtonBase)`
       width: calc(100% + 10px);
       top: -5px;
       left: -5px;
-      border: 2px solid ${p => p.theme.colors.callToAction};
-      border-radius: 20px;
+      ${p => getBorder(p.theme.border)};
+      ${p => getShape(p.theme.shape)};
+      border-color: ${p => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
   }

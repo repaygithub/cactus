@@ -1,3 +1,7 @@
+import React from 'react'
+
+import { BorderSize, Shape } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { Omit } from '../types'
@@ -10,8 +14,64 @@ import {
   MenuList as ReachMenuList,
 } from '@reach/menu-button'
 import PropTypes from 'prop-types'
-import React from 'react'
-import styled, { createGlobalStyle, StyledComponent } from 'styled-components'
+import styled, { createGlobalStyle, css, StyledComponent } from 'styled-components'
+
+const borderMap = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+
+const shapeMap = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+
+const dropShapeMap = {
+  square: css`
+    border-radius: 0 0 1px 1px;
+  `,
+  intermediate: css`
+    border-radius: 0 0 4px 4px;
+  `,
+  round: css`
+    border-radius: 0 0 8px 8px;
+  `,
+}
+
+const getShape = (shape: Shape) => shapeMap[shape]
+
+const getBorder = (size: BorderSize) => borderMap[size]
+
+const getDropShape = (shape: Shape) => dropShapeMap[shape]
+
+const getBoxShadow = (theme: CactusTheme) => {
+  return theme.boxShadows ? `0 3px 6px 0 ${theme.colors.callToAction}` : {}
+}
+
+const getDropDownBorder = (theme: CactusTheme) => {
+  if (!theme.boxShadows) {
+    return css`
+      ${getBorder(theme.border)};
+      border-color: ${theme.colors.lightContrast};
+      ${getDropShape(theme.shape)};
+    `
+  } else {
+    return css`
+      ${getDropShape(theme.shape)};
+    `
+  }
+}
 
 const MenuButtonStyles = createGlobalStyle`
   :root {
@@ -27,16 +87,16 @@ const MenuButtonStyles = createGlobalStyle`
 const MenuList = styled(ReachMenuList)`
   padding: 8px 0;
   margin-top: 8px;
-  border-radius: 0 0 8px 8px;
-  background-color: ${p => p.theme.colors.white};
-  box-shadow: 0 3px 6px 0 ${p => p.theme.colors.callToAction};
   outline: none;
+  ${p => getDropDownBorder(p.theme)};
+  box-shadow: ${p => getBoxShadow(p.theme)};
 
   [data-reach-menu-item] {
     position: relative;
     display: block;
     cursor: pointer;
     text-decoration: none;
+
     ${p => p.theme.textStyles.small};
     color: ${p => p.theme.colors.darkestContrast};
     outline: none;
@@ -88,9 +148,9 @@ type MenuButtonType = StyledComponent<typeof MenuButtonBase, any, {}, never> & {
 const MenuButton = styled(MenuButtonBase)`
   position: relative;
   box-sizing: border-box;
-  border-radius: 20px;
+  ${p => getShape(p.theme.shape)};
+  ${p => getBorder(p.theme.border)};
   padding: 2px 24px 2px 14px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   appearance: none;
@@ -118,9 +178,10 @@ const MenuButton = styled(MenuButtonBase)`
       width: calc(100% + 11px);
       top: -5px;
       left: -5px;
-      border: 2px solid ${p => p.theme.colors.callToAction};
-      border-radius: 20px;
       box-sizing: border-box;
+      ${p => getShape(p.theme.shape)};
+      ${p => getBorder(p.theme.border)};
+      border-color: ${p => p.theme.colors.callToAction};
     }
   }
 

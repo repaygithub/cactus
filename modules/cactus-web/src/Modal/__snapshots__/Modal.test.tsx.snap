@@ -18,14 +18,14 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
 
 .c11 {
   position: relative;
-  border-radius: 20px;
   padding: 2px 30px;
-  border: 2px solid;
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
+  border: 2px solid;
+  border-radius: 20px;
   margin-right: 16px;
   color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
@@ -44,8 +44,9 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   width: calc(100% + 10px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
 
@@ -177,8 +178,9 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c12::-moz-focus-inner {

@@ -40,8 +40,9 @@ exports[`component: FileInput should render a file input 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c5::-moz-focus-inner {
@@ -253,8 +254,9 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c17::-moz-focus-inner {
@@ -688,8 +690,9 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c12::-moz-focus-inner {
@@ -993,8 +996,9 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
   top: 0px;
   left: 0px;
-  border: 2px solid hsl(200,96%,35%);
+  border: 2px solid;
   border-radius: 20px;
+  border-color: hsl(200,96%,35%);
 }
 
 .c6::-moz-focus-inner {
