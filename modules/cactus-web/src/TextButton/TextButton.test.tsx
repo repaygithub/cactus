@@ -180,4 +180,13 @@ describe('With theme changes ', () => {
     )
     expect(asFragment()).toMatchSnapshot()
   })
+  test('Should have intermediate shape', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <TextButton>Click me!</TextButton>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
 })

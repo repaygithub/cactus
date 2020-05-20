@@ -77,8 +77,21 @@ describe('component: MenuButton', () => {
 })
 
 describe('With theme changes ', () => {
-  test('Should have rounded borders', () => {
-    const theme = generateTheme({ primaryHue: 200, shape: 'round' })
+  test('Should have square borders', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <MenuButton label="Demo">
+          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Link href="#">Action Three</MenuButton.Link>
+        </MenuButton>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+  test('Should have intermediate borders', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
@@ -91,8 +104,8 @@ describe('With theme changes ', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('Dropdown should have box-shadows', () => {
-    const theme = generateTheme({ primaryHue: 200, boxShadows: true })
+  test('Dropdown should not have box-shadows', () => {
+    const theme = generateTheme({ primaryHue: 200, boxShadows: false })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
@@ -105,8 +118,8 @@ describe('With theme changes ', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('Border should be 2px', () => {
-    const theme = generateTheme({ primaryHue: 200, border: 'thick' })
+  test('Border should be 1px', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thin' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">

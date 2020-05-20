@@ -163,12 +163,11 @@ describe('component: Button', () => {
     fireEvent.click(getByTestId('not-clicked'))
     expect(onClick).not.toHaveBeenCalled()
   })
-  test
 })
 
 describe('With theme changes ', () => {
-  test('should have 2px border', () => {
-    const theme = generateTheme({ primaryHue: 200, border: 'thick' })
+  test('should have 1px border', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thin' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <Button>Click me!</Button>
@@ -179,6 +178,24 @@ describe('With theme changes ', () => {
 
   test('Should have intermediate border radius', () => {
     const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <Button>Click me!</Button>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+  test('Should have square border radius', () => {
+    const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+    const { asFragment } = render(
+      <StyleProvider theme={theme}>
+        <Button>Click me!</Button>
+      </StyleProvider>
+    )
+    expect(asFragment()).toMatchSnapshot()
+  })
+  test('Should not have box shadows applied', () => {
+    const theme = generateTheme({ primaryHue: 200, boxShadows: false })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <Button>Click me!</Button>

@@ -178,9 +178,10 @@ const MenuButton = styled(MenuButtonBase)`
       width: calc(100% + 11px);
       top: -5px;
       left: -5px;
-      border: 2px solid ${p => p.theme.colors.callToAction};
       box-sizing: border-box;
       ${p => getShape(p.theme.shape)};
+      ${p => getBorder(p.theme.border)};
+      border-color: ${p => p.theme.colors.callToAction};
     }
   }
 

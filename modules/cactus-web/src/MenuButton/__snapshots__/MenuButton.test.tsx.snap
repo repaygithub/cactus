@@ -1,6 +1,136 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`With theme changes  Border should be 2px 1`] = `
+exports[`With theme changes  Border should be 1px 1`] = `
+<DocumentFragment>
+  .c2 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c3[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c3 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.c4[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c4 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.c5[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c5 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.c0 {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid;
+  padding: 2px 24px 2px 14px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0,0%,100%);
+  background-color: hsl(200,9%,35%);
+  border-color: hsl(200,9%,35%);
+}
+
+.c0:hover,
+.c0[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+  border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 11px);
+  top: -5px;
+  left: -5px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid;
+  border-color: hsl(200,96%,35%);
+}
+
+.c0:disabled {
+  color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  border-color: hsl(0,0%,90%);
+  cursor: not-allowed;
+}
+
+.c0[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c0 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+<button
+    aria-expanded="false"
+    aria-haspopup="menu"
+    class="c0"
+    data-reach-menu-button="true"
+    id="button-7"
+    type="button"
+  >
+    Demo
+    <svg
+      aria-hidden="true"
+      class="c1 c2"
+      fill="currentcolor"
+      height="1em"
+      viewBox="0 0 24 24"
+      width="1em"
+    >
+      <path
+        d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+        transform="rotate(-90 12 12)"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
 <DocumentFragment>
   .c2 {
   font-size: 8px;
@@ -43,9 +173,10 @@ exports[`With theme changes  Border should be 2px 1`] = `
   width: calc(100% + 11px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
   border-radius: 20px;
+  border: 2px solid;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0:disabled {
@@ -62,6 +193,30 @@ exports[`With theme changes  Border should be 2px 1`] = `
 }
 
 .c0 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.c3[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c3 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.c4[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c4 .c1 {
   position: absolute;
   right: 10px;
   top: 12px;
@@ -93,17 +248,41 @@ exports[`With theme changes  Border should be 2px 1`] = `
 </DocumentFragment>
 `;
 
-exports[`With theme changes  Dropdown should have box-shadows 1`] = `
+exports[`With theme changes  Should have intermediate borders 1`] = `
 <DocumentFragment>
   .c2 {
   font-size: 8px;
   vertical-align: middle;
 }
 
+.c3[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c3 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.c4[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c4 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
 .c0 {
   position: relative;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 8px;
   border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -136,9 +315,10 @@ exports[`With theme changes  Dropdown should have box-shadows 1`] = `
   width: calc(100% + 11px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 8px;
+  border: 2px solid;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0:disabled {
@@ -186,17 +366,29 @@ exports[`With theme changes  Dropdown should have box-shadows 1`] = `
 </DocumentFragment>
 `;
 
-exports[`With theme changes  Should have rounded borders 1`] = `
+exports[`With theme changes  Should have square borders 1`] = `
 <DocumentFragment>
   .c2 {
   font-size: 8px;
   vertical-align: middle;
 }
 
+.c3[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c3 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
 .c0 {
   position: relative;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 1px;
   border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -229,9 +421,10 @@ exports[`With theme changes  Should have rounded borders 1`] = `
   width: calc(100% + 11px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 1px;
+  border: 2px solid;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0:disabled {
@@ -321,9 +514,10 @@ exports[`component: MenuButton snapshot 1`] = `
   width: calc(100% + 11px);
   top: -5px;
   left: -5px;
-  border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
   border-radius: 20px;
+  border: 2px solid;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0:disabled {

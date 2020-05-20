@@ -66,7 +66,73 @@ exports[`With theme changes  Should have intermediate border radius 1`] = `
 </DocumentFragment>
 `;
 
-exports[`With theme changes  should have 2px border 1`] = `
+exports[`With theme changes  Should have square border radius 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  padding: 2px 30px;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  border: 2px solid;
+  border-radius: 1px;
+  color: hsl(200,96%,11%);
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(200,96%,11%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 2px solid;
+  border-radius: 1px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c0 .c1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c0:hover {
+  color: hsl(0,0%,100%);
+  background-color: hsl(200,96%,11%);
+  border-color: hsl(200,96%,11%);
+}
+
+<button
+    aria-live="assertive"
+    class="c0"
+    type="button"
+  >
+    <span>
+      Click me!
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`With theme changes  Should not have box shadows applied 1`] = `
 <DocumentFragment>
   .c0 {
   position: relative;
@@ -96,6 +162,72 @@ exports[`With theme changes  should have 2px border 1`] = `
   top: -5px;
   left: -5px;
   border: 2px solid;
+  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c0 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c0 .c1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c0:hover {
+  color: hsl(0,0%,100%);
+  background-color: hsl(200,96%,11%);
+  border-color: hsl(200,96%,11%);
+}
+
+<button
+    aria-live="assertive"
+    class="c0"
+    type="button"
+  >
+    <span>
+      Click me!
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`With theme changes  should have 1px border 1`] = `
+<DocumentFragment>
+  .c0 {
+  position: relative;
+  padding: 2px 30px;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  border: 1px solid;
+  border-radius: 20px;
+  color: hsl(200,96%,11%);
+  background-color: hsl(0,0%,100%);
+  border-color: hsl(200,96%,11%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
+}
+
+.c0:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 1px solid;
   border-radius: 20px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
