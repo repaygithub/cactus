@@ -9,7 +9,7 @@ The Cactus Design System contains a set of icons as React components to use with
 
 ## Quick Links
 
-- [Available Icons](./Available%20Icons.md)
+- [Available Icons](/icons/available-icons)
 - [Source Code](../../modules/cactus-icons)
 
 ## Getting Started

@@ -200,7 +200,6 @@ const MenuController: React.FC<{ location: WindowLocation }> = ({ children, loca
 const useMenu = (path: string) => {
   const context = React.useContext(MenuContext)
   const isOpen = context.state.includes(path)
-
   return {
     isOpen,
     toggle: () => (isOpen ? context.close(path) : context.open(path)),
@@ -247,7 +246,9 @@ const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }) => {
       {isStorybookUrl(item.url) ? (
         <StyledA href={item.url}>{item.title}</StyledA>
       ) : (
-        <StyledLink to={item.url}>{item.title}</StyledLink>
+        <StyledLink to={item.url} onClick={toggle}>
+          {item.title}
+        </StyledLink>
       )}
       {hasChildren && (
         <>

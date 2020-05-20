@@ -6,4 +6,4 @@ title: API Docs
 
 ## Features
 
-- [Feature Flags](./Feature%20Flags.md)
+- [Feature Flags](/framework/api/feature-flags/)

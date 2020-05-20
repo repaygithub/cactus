@@ -9,10 +9,10 @@ The Cactus I18n library implements i18n using the core technologies developed by
 
 ## Quick Links
 
-- [Fluent Syntax](./Fluent%20Syntax.md)
-- [Getting Started](./Getting%20Started.md)
-- [API Documentation](./API%20Documentation.md)
-- [Why Project Fluent?](./Project%20Fluent.md)
+- [Fluent Syntax](/internationalization/fluent-syntax/)
+- [Getting Started](/internationalization/getting-started/)
+- [API Documentation](/internationalization/api-documentation/)
+- [Why Project Fluent?](/internationalization/project-fluent/)
 - [Source Code](../../modules/cactus-i18n/)
 
 ## Fluent Syntax
