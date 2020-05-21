@@ -127,7 +127,7 @@ function createMenuGroups(pages: Edges<Markdown>) {
         items: storybooks.map(story => ({
           title: story.name,
           // withPrefix because it's not a gatsby link
-          url: withPrefix(`/stories/${story.dirname}/`),
+          url: `https://repaygithub.github.io/cactus/stories/${story.dirname}/`,
           order: 1,
           items: [],
         })),
