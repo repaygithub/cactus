@@ -27,7 +27,8 @@
     "docs:publish": "gh-pages -d ./website/public",
     "cleanup": "yarn ws run cleanup",
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
-    "release": "node scripts/release.js"
+    "release": "node scripts/release.js",
+    "commit": "git-cz"
   },
   "license": "MIT",
   "private": true,
@@ -45,7 +46,9 @@
     "@babel/core": "^7.7.5",
     "@repay/eslint-config": "^1.1.1",
     "babel-eslint": "^10.0.1",
+    "commitizen": "^4.1.2",
     "conventional-commits-parser": "^3.0.5",
+    "cz-conventional-changelog": "3.2.0",
     "eslint": "^5.16.0",
     "gh-pages": "^2.0.1",
     "git-raw-commits": "^2.0.2",
@@ -56,5 +59,10 @@
   },
   "dependencies": {
     "core-js": "^3.3.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
