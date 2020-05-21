@@ -18,7 +18,7 @@ import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import PropTypes from 'prop-types'
 import Rect from '@reach/rect'
-import styled, { css } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import TextButton from '../TextButton/TextButton'
 
 export type SelectValueType = string | number | Array<string | number> | null
@@ -95,13 +95,26 @@ const ValueTagBase = React.forwardRef<
   )
 })
 
+const valueShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 4px;
+  `,
+  round: css`
+    border-radius: 8px;
+  `,
+}
+
+const getValueShape = (shape: Shape) => valueShapeMap[shape]
+
 const ValueTag = styled(ValueTagBase)`
   box-sizing: border-box;
   ${p => p.theme.textStyles.small};
   padding: 0 8px 0 8px;
   border: 1px solid ${p => p.theme.colors.lightContrast};
-  border-radius: ${p =>
-    p.theme.shape === 'square' ? '1px' : p.theme.shape === 'intermediate' ? '4px' : '8px'};
+  ${p => getValueShape(p.theme.shape as Shape)}
   margin-right: 2px;
   display: inline-block;
   height: 24px;
