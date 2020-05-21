@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 import { assignRef } from '@reach/utils'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { NavigationChevronDown, NavigationChevronRight } from '@repay/cactus-icons'
@@ -534,16 +535,55 @@ const AccordionBase = (props: AccordionProps) => {
   )
 }
 
-const accordionVariantMap: VariantMap = {
-  simple: css`
-    border-bottom: 2px solid ${p => p.theme.colors.lightContrast};
+const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 4px;
+  `,
+  round: css`
+    border-radius: 8px;
+  `,
+}
+
+const outlineBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+
+const simpleBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
+  thin: css`
+    border-bottom: 1px solid;
+    &:first-of-type {
+      border-top: 1px solid ${p => p.theme.colors.lightContrast};
+    }
+  `,
+  thick: css`
+    border-bottom: 2px solid;
     &:first-of-type {
       border-top: 2px solid ${p => p.theme.colors.lightContrast};
     }
   `,
+}
+
+const getShape = (shape: Shape) => shapeMap[shape]
+const getOutlineBorder = (borderSize: BorderSize) => outlineBorderMap[borderSize]
+const getSimpleBorder = (borderSize: BorderSize) => simpleBorderMap[borderSize]
+
+const accordionVariantMap: VariantMap = {
+  simple: css`
+  ${p => getSimpleBorder(p.theme.border)}
+    border-color: ${p => p.theme.colors.lightContrast};
+  `,
   outline: css`
-    border: 2px solid ${p => p.theme.colors.lightContrast};
-    border-radius: 8px;
+    ${p => getOutlineBorder(p.theme.border)}
+    border-color: ${p => p.theme.colors.lightContrast};
+    ${p => getShape(p.theme.shape)}
     & + & {
       margin-top: 8px;
     }
@@ -560,10 +600,14 @@ export const Accordion = styled(AccordionBase)`
   box-sizing: border-box;
   width: 100%;
 
-  &.box-shadow {
+  ${p =>
+    p.theme.boxShadows &&
+    `&.box-shadow {
     border: 0px;
-    box-shadow: 0 3px 8px ${p => p.theme.colors.callToAction};
-  }
+    box-shadow: 0 3px 8px ${p.theme.colors.callToAction};
+  }`}
+
+
 
   ${variantStyles}
   ${margin}
