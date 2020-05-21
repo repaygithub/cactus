@@ -83,7 +83,8 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 .c0 {
   box-sizing: border-box;
   width: 100%;
-  border-bottom: 2px solid hsl(200,29%,90%);
+  border-bottom: 2px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c0.box-shadow {
@@ -221,7 +222,8 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  border: 2px solid hsl(200,29%,90%);
+  border: 2px solid;
+  border-color: hsl(200,29%,90%);
   border-radius: 8px;
 }
 
