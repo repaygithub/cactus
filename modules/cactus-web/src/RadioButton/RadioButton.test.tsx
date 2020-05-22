@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import cactusTheme from '@repay/cactus-theme'
 import RadioButton from './RadioButton'
 
 afterEach(cleanup)
@@ -76,4 +76,17 @@ describe('component: RadioButton', () => {
   /* TODO: fireEvent.click and userEvent.click on a disabled radio button fall victim to the same problem that affects
   the checkboxes; it's a bug in @testing-library/react and/or user-event. If/when that issue is fixed, we should add
   tests to ensure that no events are triggered when the radio button is disabled. */
+
+  describe('with theme customization', () => {
+    test('should not have box shadows on focus', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <RadioButton name="customize" id="themability" />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+  })
 })

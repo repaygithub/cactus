@@ -220,3 +220,72 @@ exports[`component: RadioButton should support margin space props 1`] = `
   </label>
 </DocumentFragment>
 `;
+
+exports[`component: RadioButton with theme customization should not have box shadows on focus 1`] = `
+<DocumentFragment>
+  .c1 {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  margin: 0;
+  position: absolute;
+}
+
+.c2 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 2px solid hsl(200,96%,11%);
+}
+
+.c2:after {
+  position: absolute;
+  content: '';
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: hsl(200,96%,35%);
+  margin: 2px 2px;
+  box-sizing: border-box;
+}
+
+.c0 {
+  position: relative;
+  display: inline-block;
+  vertical-align: -1px;
+  line-height: 16px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.c0 input:checked ~ span {
+  border-color: hsl(200,96%,35%);
+  background-color: transparent;
+}
+
+.c0 input:checked ~ span:after {
+  display: block;
+}
+
+<label
+    class="c0"
+    for="themability"
+  >
+    <input
+      class="c1"
+      id="themability"
+      name="customize"
+      type="radio"
+    />
+    <span
+      aria-hidden="true"
+      class="c2"
+    />
+  </label>
+</DocumentFragment>
+`;

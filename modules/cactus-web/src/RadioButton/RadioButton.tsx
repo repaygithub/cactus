@@ -81,7 +81,7 @@ export const RadioButton = styled(RadioButtonBase)`
   }
 
   input:focus ~ span {
-    box-shadow: 0 0 8px ${p => p.theme.colors.callToAction};
+    ${p => p.theme.boxShadows && `box-shadow: 0 0 8px ${p.theme.colors.callToAction};`}
   }
 
   ${margin}

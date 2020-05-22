@@ -118,8 +118,8 @@ describe('With theme changes ', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('Border should be 1px', () => {
-    const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+  test('Border should be 2px', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thick' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">

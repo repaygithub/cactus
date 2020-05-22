@@ -22,7 +22,7 @@ class Panel extends React.Component {
       type: THEME_TYPES.use_hue,
       primary: '#96D35F',
       secondary: '#FFFFFF',
-      border: 'thick',
+      border: 'thin',
       shape: 'round',
       font: 'Helvetica',
       boxShadows: true,
