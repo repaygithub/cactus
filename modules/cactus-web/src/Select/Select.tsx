@@ -336,6 +336,7 @@ const ComboInput = styled.input`
   background-color: transparent;
   ${p => getShape(p.theme.shape)}
   ${p => getBorder(p.theme.border)}
+  border-style: solid;
   border-color: ${p => p.theme.colors.darkContrast};
   text-align: left;
   outline: none;
