@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { cleanup, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Card from './Card'
 
@@ -23,5 +24,40 @@ describe('component: Card', () => {
     )
 
     expect(container).toMatchSnapshot()
+  })
+
+  describe('with theme customization', () => {
+    test('should have no box shadow & 2px borders', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false, border: 'thick' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Card />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should have 4px border radius', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Card />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('should have 1px border radius', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Card />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
   })
 })
