@@ -4,6 +4,7 @@
 **/coverage
 .cache
 .DS_Store
+local.env
 
 .vscode/*
 !.vscode/tasks.json

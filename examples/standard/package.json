@@ -7,15 +7,16 @@
     "start": "yarn dev",
     "dev": "repay-scripts dev --config webpack.config.js -p 3435 src/index.tsx",
     "build": "repay-scripts build src/index.tsx --config webpack.config.js",
-    "test": "yarn build && yarn jest --config jest.config.js",
-    "test:ci": "yarn test:local --maxWorkers=2",
+    "test": "yarn build && node ./run-ete-tests.js",
+    "test:ci": "yarn test:types && yarn test -b 'browserstack:IE@11:Windows 10, browserstack:Chrome:Windows 10'",
     "test:local": "yarn test:types && yarn test",
-    "test:types": "tsc -p ./tsconfig.json --noEmit"
+    "test:types": "tsc -p ./tsconfig.json --noEmit",
+    "list-testcafe-browsers": "testcafe -b"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
     "@repay/cactus-fwk": "^0.4.0",
-    "@repay/cactus-i18n": "^0.2.0",
+    "@repay/cactus-i18n": "^0.3.11",
     "@repay/cactus-icons": "^0.6.1",
     "@repay/cactus-theme": "^0.4.5",
     "@repay/cactus-web": "^0.7.0",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@repay/babel-preset": "^0.3.0",
     "@repay/scripts": "^0.4.0",
+    "@testing-library/testcafe": "^4.1.0",
     "@types/node": "^12.12.21",
     "@types/puppeteer": "^2.0.0",
     "@types/reach__router": "^1.2.4",
@@ -32,10 +34,14 @@
     "@types/react-dom": "^16.9.2",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
+    "commander": "^5.1.0",
+    "dotenv": "^8.2.0",
     "jest": "^24.9.0",
     "pptr-testing-library": "^0.4.0",
     "prop-types": "^15.7.2",
     "puppeteer": "^2.0.0",
-    "typescript": "^3.7.2"
+    "testcafe": "^1.8.4",
+    "testcafe-browser-provider-browserstack": "^1.12.0",
+    "typescript": "^3.9.3"
   }
 }
