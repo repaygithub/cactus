@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@repay/babel-preset": "^0.3.0",
-    "@repay/scripts": "^0.3.2",
+    "@repay/scripts": "^0.4.0",
     "@types/node": "^12.12.21",
     "@types/puppeteer": "^2.0.0",
     "@types/reach__router": "^1.2.4",

@@ -2230,10 +2230,10 @@
     eslint-plugin-react-hooks "^1.5.1"
     eslint-plugin-sort-imports-es6-autofix "^0.4.0"
 
-"@repay/scripts@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@repay/scripts/-/scripts-0.3.2.tgz#f6dbb15918e469b81a45a1dedac92b511c3861bd"
-  integrity sha512-NJk4NGydZJg6YXqOy/0KsOpTMGU/TEhkysDYNqF+9JyHyastr61Rymdfr6xvwxDtFh682vNUh/FDB+AnulkNww==
+"@repay/scripts@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@repay/scripts/-/scripts-0.4.0.tgz#7c32b0d92134d62fc286b2b93a5b8f00614a1b0e"
+  integrity sha512-dxmMRN+3B8jdMgaUehWCtFulxeecTNbNOOP44jj6g31Jf+cyDqNs5UTtjWSjh8mlURfOJhkxdg7q87KtgnyFaA==
   dependencies:
     "@babel/core" "^7.5.5"
     "@repay/babel-preset" "^0.3.0"
