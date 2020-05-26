@@ -180,6 +180,17 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
   )
 }
 
+const headerBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
+  thin: css`
+    border-bottom: 1px solid;
+  `,
+  thick: css`
+    border-bottom: 2px solid;
+  `,
+}
+
+const getHeaderBorder = (borderSize: BorderSize) => headerBorderMap[borderSize]
+
 export const AccordionHeader = styled(AccordionHeaderBase)`
   box-sizing: border-box;
   width: 100%;
@@ -208,7 +219,8 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
     padding-right: 16px;
 
     &.is-open {
-      border-bottom: 1px solid ${p => p.theme.colors.lightContrast};
+      ${p => getHeaderBorder(p.theme.border)}
+      border-color: ${p => p.theme.colors.lightContrast};
     }
   }
 `
