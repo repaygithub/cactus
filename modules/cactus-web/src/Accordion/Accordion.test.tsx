@@ -546,6 +546,22 @@ describe('component: Accordion', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
+    test('outline accordion should not have box shadows when open', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Accordion id="accordion" variant="outline">
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
     test('outline accordion should have 2px border', () => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
