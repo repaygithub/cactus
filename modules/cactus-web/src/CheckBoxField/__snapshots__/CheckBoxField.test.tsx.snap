@@ -19,9 +19,14 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid;
+  border-color: hsl(200,10%,20%);
   background: none;
   border-radius: 1px;
+}
+
+.c6 svg {
+  margin: 1px;
 }
 
 .c6 svg {
@@ -134,9 +139,14 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: 2px solid hsl(0,0%,90%);
+  border: 1px solid;
+  border-color: hsl(0,0%,90%);
   background: hsl(0,0%,90%);
   border-radius: 1px;
+}
+
+.c6 svg {
+  margin: 1px;
 }
 
 .c6 svg {
@@ -255,9 +265,14 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: 2px solid hsl(200,10%,20%);
+  border: 1px solid;
+  border-color: hsl(200,10%,20%);
   background: none;
   border-radius: 1px;
+}
+
+.c6 svg {
+  margin: 1px;
 }
 
 .c6 svg {

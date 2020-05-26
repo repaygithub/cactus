@@ -161,8 +161,8 @@ describe('component: TextButton', () => {
 })
 
 describe('With theme changes ', () => {
-  test('Should have 1px border', () => {
-    const theme = generateTheme({ primaryHue: 200, border: 'thin' })
+  test('Should have 2px border', () => {
+    const theme = generateTheme({ primaryHue: 200, border: 'thick' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <TextButton>Click me!</TextButton>

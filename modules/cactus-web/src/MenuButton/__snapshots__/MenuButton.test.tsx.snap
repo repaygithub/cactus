@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`With theme changes  Border should be 1px 1`] = `
+exports[`With theme changes  Border should be 2px 1`] = `
 <DocumentFragment>
   .c2 {
   font-size: 8px;
@@ -47,7 +47,7 @@ exports[`With theme changes  Border should be 1px 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 1px solid;
+  border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -81,7 +81,7 @@ exports[`With theme changes  Border should be 1px 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,96%,35%);
 }
 
@@ -141,7 +141,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 2px solid;
+  border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -175,7 +175,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,96%,35%);
 }
 
@@ -283,7 +283,7 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 8px;
-  border: 2px solid;
+  border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -317,7 +317,7 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 8px;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,96%,35%);
 }
 
@@ -389,7 +389,7 @@ exports[`With theme changes  Should have square borders 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 1px;
-  border: 2px solid;
+  border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -423,7 +423,7 @@ exports[`With theme changes  Should have square borders 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 1px;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,96%,35%);
 }
 
@@ -482,7 +482,7 @@ exports[`component: MenuButton snapshot 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 2px solid;
+  border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -516,7 +516,7 @@ exports[`component: MenuButton snapshot 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,96%,35%);
 }
 

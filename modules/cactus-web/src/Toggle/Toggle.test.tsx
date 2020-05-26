@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { cleanup, fireEvent, render } from '@testing-library/react'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Toggle from './Toggle'
 
@@ -69,5 +70,18 @@ describe('component: Toggle', () => {
 
     fireEvent.click(getByTestId('will-not-click'))
     expect(onClick).not.toHaveBeenCalled()
+  })
+
+  describe('with theme customization', () => {
+    test('should not have box shadows on focus', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Toggle />
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
   })
 })
