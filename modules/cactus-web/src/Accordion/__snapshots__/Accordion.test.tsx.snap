@@ -77,7 +77,8 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 }
 
 .c1.outline-variant.is-open {
-  border-bottom: 1px solid hsl(200,29%,90%);
+  border-bottom: 1px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c0 {
@@ -216,7 +217,8 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 1px solid hsl(200,29%,90%);
+  border-bottom: 1px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c1 {
@@ -357,7 +359,8 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 1px solid hsl(200,29%,90%);
+  border-bottom: 1px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c5 + .c0 {
@@ -513,7 +516,8 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 1px solid hsl(200,29%,90%);
+  border-bottom: 2px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c5 + .c0 {
@@ -661,7 +665,8 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 1px solid hsl(200,29%,90%);
+  border-bottom: 1px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c5 + .c0 {
@@ -813,7 +818,8 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 1px solid hsl(200,29%,90%);
+  border-bottom: 1px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c5 + .c0 {
@@ -952,7 +958,8 @@ exports[`component: Accordion with theme customization simple accordion should h
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 1px solid hsl(200,29%,90%);
+  border-bottom: 2px solid;
+  border-color: hsl(200,29%,90%);
 }
 
 .c5 + .c0 {
