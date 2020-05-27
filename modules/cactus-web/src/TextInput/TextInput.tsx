@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CactusTheme } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
@@ -59,10 +59,35 @@ const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
   }
 )
 
+const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+
+const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+
+const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
+const getShape = (shape: Shape) => shapeMap[shape]
+
 const Input = styled.input<InputProps>`
   box-sizing: border-box;
-  border: 1px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
-  border-radius: 20px;
+  ${p => getBorder(p.theme.border)}
+  border-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
+  ${p => getShape(p.theme.shape)}
   height: 32px;
   outline: none;
   box-sizing: border-box;

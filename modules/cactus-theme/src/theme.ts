@@ -566,7 +566,7 @@ function isHue(options: GeneratorOptions): options is HueGeneratorOptions {
 
 const repayOptions: GeneratorOptions = {
   primaryHue: 200,
-  border: 'thick',
+  border: 'thin',
   shape: 'round',
   font: 'Helvetica',
   boxShadows: true,
@@ -589,7 +589,7 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
   iconSizes.medium = iconSizes[2]
   iconSizes.large = iconSizes[3]
 
-  const { border = 'thick', shape = 'round', font = 'Helvetica', boxShadows = true } = options
+  const { border = 'thin', shape = 'round', font = 'Helvetica', boxShadows = true } = options
   const fontOptions: Font[] = ['Helvetica', 'Helvetica Neue', 'Arial']
 
   fontOptions.sort((x: Font, y: Font) => {
