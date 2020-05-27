@@ -74,3 +74,183 @@ exports[`component: Card snapshot 1`] = `
   />
 </div>
 `;
+
+exports[`component: Card with theme customization should have 1px border radius 1`] = `
+<DocumentFragment>
+  .c2 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c2 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c3 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c3 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c4 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c4 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c5 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c5 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c1 {
+  box-sizing: border-box;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  border-radius: 1px;
+  padding: 16px;
+  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+}
+
+.c1:hover {
+  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+}
+
+.c1 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c1 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+<div
+    class="c0 c1"
+  />
+</DocumentFragment>
+`;
+
+exports[`component: Card with theme customization should have 4px border radius 1`] = `
+<DocumentFragment>
+  .c2 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c2 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c3 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c3 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c4 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c4 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c1 {
+  box-sizing: border-box;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  border-radius: 4px;
+  padding: 16px;
+  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+}
+
+.c1:hover {
+  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+}
+
+.c1 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c1 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+<div
+    class="c0 c1"
+  />
+</DocumentFragment>
+`;
+
+exports[`component: Card with theme customization should have no box shadow & 2px borders 1`] = `
+<DocumentFragment>
+  .c2 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c2 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c3 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c3 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+.c1 {
+  box-sizing: border-box;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  border-radius: 8px;
+  padding: 16px;
+  border: 2px solid;
+  border-color: hsl(200,29%,90%);
+}
+
+.c1 > .c0 {
+  padding: 24px;
+  color: pink;
+}
+
+.c1 > .c0 > .c0 {
+  padding: 32px;
+  color: blue;
+}
+
+<div
+    class="c0 c1"
+  />
+</DocumentFragment>
+`;

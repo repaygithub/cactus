@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
+import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Accordion from './Accordion'
 import animationRender from '../../tests/helpers/animationRender'
@@ -525,6 +526,88 @@ describe('component: Accordion', () => {
       })
       expect(noop).toHaveBeenCalled()
       expect(container).not.toHaveTextContent('Should not show')
+    })
+  })
+
+  describe('with theme customization', () => {
+    test('simple accordion should have 2px border', () => {
+      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Accordion id="accordion">
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('outline accordion should not have box shadows when open', () => {
+      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Accordion id="accordion" variant="outline">
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('outline accordion should have 2px border', () => {
+      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Accordion id="accordion" variant="outline">
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('outline accordion should have 4px border-radius', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Accordion id="accordion" variant="outline">
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
+    })
+
+    test('outline accordion should have 1px border-radius', () => {
+      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
+      const { asFragment } = render(
+        <StyleProvider theme={theme}>
+          <Accordion id="accordion" variant="outline">
+            <Accordion.Header>
+              <Text as="h3">Test Header</Text>
+            </Accordion.Header>
+            <Accordion.Body>Test Body</Accordion.Body>
+          </Accordion>
+        </StyleProvider>
+      )
+
+      expect(asFragment()).toMatchSnapshot()
     })
   })
 })
