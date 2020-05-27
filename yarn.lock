@@ -19415,7 +19415,7 @@ test-exclude@^5.2.3:
     read-pkg-up "^4.0.0"
     require-main-filename "^2.0.0"
 
-testcafe-browser-provider-browserstack@^1.12.0:
+testcafe-browser-provider-browserstack@^1.12.0, testcafe-browser-provider-browserstack@^1.13.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/testcafe-browser-provider-browserstack/-/testcafe-browser-provider-browserstack-1.13.0.tgz#c115fd88b9e5878682b0accb6ed2a8464bd93af9"
   integrity sha512-c7DtCIHSwXGqzyWo0UEhkaBDwaCMT3hiHPcvvJLfkoWAgoCXuWUT4DZW1/0sgIes/R2XC1Z0C6ChkcQfH1XKYg==
@@ -19527,7 +19527,7 @@ testcafe-reporter-xunit@^2.1.0:
   resolved "https://registry.yarnpkg.com/testcafe-reporter-xunit/-/testcafe-reporter-xunit-2.1.0.tgz#e6d66c572ce15af266706af0fd610b2a841dd443"
   integrity sha1-5tZsVyzhWvJmcGrw/WELKoQd1EM=
 
-testcafe@^1.8.4:
+testcafe@^1.8.4, testcafe@^1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/testcafe/-/testcafe-1.8.5.tgz#049496b20e3a70f3286afc23ddd88c50507b7bb5"
   integrity sha512-qLoiQRip2fk5ldIzPYRC2yztjAhihpxhQyPtNomDEYTnSyovCADAMP3Ok+Pc6HNkA7sC1tAi2yGaCW1QbmXwOw==
