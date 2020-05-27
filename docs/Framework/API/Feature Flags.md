@@ -1,12 +1,5 @@
 # Feature Flags
 
-## TOC
-
-- [Set up the context](#set-up-the-context)
-- [Access using the hook](#access-using-the-hook)
-- [Using a higher order component](#using-a-higher-order-component)
-- [Using render props](#using-render-props)
-
 ## Set up the context
 
 Import the `AppRoot` component and use it near the top level of your application. Then provide your feature flag object as the `featureFlags` prop.
