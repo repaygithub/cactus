@@ -68,7 +68,6 @@
     "fast-glob": "^2.2.6",
     "jest": "^24.7.1",
     "jest-styled-components": "^6.2.1",
-    "prettier": "^1.17.0",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",

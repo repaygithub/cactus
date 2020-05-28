@@ -52,7 +52,7 @@
     "eslint": "^5.16.0",
     "gh-pages": "^2.0.1",
     "git-raw-commits": "^2.0.2",
-    "prettier": "^1.17.0",
+    "prettier": "^2.0.5",
     "prompts": "^2.2.1",
     "typescript": "^3.7.2",
     "typescript-eslint-parser": "^22.0.0"
