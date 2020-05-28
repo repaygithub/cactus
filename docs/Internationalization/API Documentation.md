@@ -10,13 +10,6 @@ order: 3
 The `BaseI18nController` class is designed to control the internationalization by loading resources for a given language, and utilizing Project Fluent's formatting
 capabilities to provide translations for an application. There are a few pieces of the `BaseI18nController` class to take note of here:
 
-- The [load](#Load) function
-- The [setDict](#SetDict) function
-- The [get](#Get) function
-- The [getText](#GetText) function
-- the [hasText](#HasText) function
-- The [constructor](#Constructor)
-
 ### Load
 
 The `load` function is what will load your translations into the controller. You must extend this class because the `load` function should be overridden to provide the correct translations.

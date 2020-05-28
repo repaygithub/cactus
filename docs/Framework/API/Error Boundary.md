@@ -2,15 +2,6 @@
 
 The `ErrorBoundary` component will catch and handle uncaught errors in its children.
 
-## TOC
-
-- [Using the Error Boundary Component](#using-the-error-boundary-component)
-  - [Props](#props)
-  - [Example](#example)
-- [Global Error Handling](#global-error-handling)
-  - [Props for Global Error Handling](#props-for-global-error-handling)
-  - [Global Example](#global-example)
-
 ## Using the Error Boundary Component
 
 ### Props
@@ -59,7 +50,6 @@ These props can be passed to `AppRoot` to get the most out of the global error h
 | ----------------- | -------- | ----------------------------------------------------- | ------------- |
 | `onError`         | N        | Function of the form `(error, info) => void`          | noop function |
 | `globalErrorView` | N        | Function of the form `(error, info) => React.Element` | `undefined`   |
-
 
 ### Global Example
 

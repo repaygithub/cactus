@@ -7,12 +7,6 @@ order: -100
 
 Each component discussed here should be a child of the `ThemeProvider` component provided by [styled-components](https://www.npmjs.com/package/styled-components). If you are not familiar with `ThemeProvider` or how it should be used, check out their documentation and our examples in [@repay/cactus-theme](../Theme/README.md).
 
-## Table of Contents
-
-- [Common Aspects](#Common-Aspects)
-  - [Variants](#Variants)
-  - [Inverse Components](#Inverse-Components)
-
 ## Common Aspects
 
 There are some common ideas that can be seen in several places throughout this documentation, so before we dive into each component and how they're used, we should go over those concepts.

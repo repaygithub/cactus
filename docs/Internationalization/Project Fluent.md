@@ -6,13 +6,15 @@ order: 4
 
 There are other tools to aide in solving internationalization problems, so why did we choose Project Fluent? Well, let's compare Fluent to some other similar tools available.
 
-|                                           | Project Fluent        | ICU MessageFormat                | GetText        |
-| ----------------------------------------- | --------------------- | -------------------------------- | -------------- |
-| [API Design Target](#api-design-target)   | Web                   | C++ & Java                       | C-based        |
-| [Message Identifier](#message-identifier) | Keyed IDs             | Keyed IDs                        | Source String  |
-| [Formatters](#formatters)                 | Built-in & extensible | Built-in & limited extensibility | None           |
-| [BiDi Support](#bidirectional-support)    | Supported             | Not supported                    | Not supported  |
-| Comments                                  | Supported             | Not supported                    | None or hax 🤬 |
+
+
+|                    | Project Fluent        | ICU MessageFormat                | GetText        |
+|--------------------|-----------------------|----------------------------------|----------------|
+| API Design Target  | Web                   | C++ & Java                       | C-based        |
+| Message Identifier | Keyed IDs             | Keyed IDs                        | Source String  |
+| Formatters         | Built-in & extensible | Built-in & limited extensibility | None           |
+| BiDi Support       | Supported             | Not supported                    | Not supported  |
+| Comments           | Supported             | Not supported                    | None or hax 🤬 |
 
 ### API Design Target
 

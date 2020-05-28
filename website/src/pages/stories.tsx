@@ -13,7 +13,9 @@ export default () => (
     <ul>
       {storybookConfig.map(story => (
         <li key={story.name}>
-          <Link to={`/stories/${story.dirname}/`}>{story.name}</Link>
+          <Link to={`https://repaygithub.github.io/cactus/stories/${story.dirname}/`}>
+            {story.name}
+          </Link>
         </li>
       ))}
     </ul>

@@ -9,7 +9,7 @@ The `@repay/cactus-web` component library provides several components that can b
 ## Quick Links
 
 - [Theming](../Theme/README.md)
-- [API Documentation](./API%20Documentation.md)
+- [API Documentation](/components/api-documentation/)
 - [Source Code](../../modules/cactus-web/)
 
 ## Theming

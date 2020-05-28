@@ -127,7 +127,7 @@ function createMenuGroups(pages: Edges<Markdown>) {
         items: storybooks.map(story => ({
           title: story.name,
           // withPrefix because it's not a gatsby link
-          url: withPrefix(`/stories/${story.dirname}/`),
+          url: `https://repaygithub.github.io/cactus/stories/${story.dirname}/`,
           order: 1,
           items: [],
         })),
@@ -200,7 +200,6 @@ const MenuController: React.FC<{ location: WindowLocation }> = ({ children, loca
 const useMenu = (path: string) => {
   const context = React.useContext(MenuContext)
   const isOpen = context.state.includes(path)
-
   return {
     isOpen,
     toggle: () => (isOpen ? context.close(path) : context.open(path)),
@@ -247,7 +246,9 @@ const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }) => {
       {isStorybookUrl(item.url) ? (
         <StyledA href={item.url}>{item.title}</StyledA>
       ) : (
-        <StyledLink to={item.url}>{item.title}</StyledLink>
+        <StyledLink to={item.url} onClick={toggle}>
+          {item.title}
+        </StyledLink>
       )}
       {hasChildren && (
         <>
