@@ -41,8 +41,6 @@
     "@repay/scripts": "^0.4.0",
     "@testing-library/react": "^9.1.4",
     "@testing-library/testcafe": "^4.1.0",
-    "@types/node": "^12.12.21",
-    "@types/puppeteer": "^2.0.0",
     "@types/reach__router": "^1.2.4",
     "@types/rimraf": "^2.0.2",
     "babel-jest": "^24.9.0",
@@ -50,10 +48,7 @@
     "commander": "^5.1.0",
     "css-loader": "^3.5.3",
     "dotenv": "^8.2.0",
-    "jest": "^24.9.0",
-    "pptr-testing-library": "^0.4.0",
     "prop-types": "^15.7.2",
-    "puppeteer": "^2.0.0",
     "testcafe": "^1.8.5",
     "testcafe-browser-provider-browserstack": "^1.13.0",
     "typescript": "^3.9.3"
@@ -61,8 +56,8 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "@repay/cactus-icons": "^0.6.1",
-    "@repay/cactus-theme": "^0.4.5",
-    "@repay/cactus-web": "^0.7.0",
+    "@repay/cactus-theme": "^0.4.6",
+    "@repay/cactus-web": "^0.7.4",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   }

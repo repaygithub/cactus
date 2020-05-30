@@ -28,7 +28,8 @@
     "cleanup": "yarn ws run cleanup",
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
     "release": "node scripts/release.js",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "postinstall": "patch-package"
   },
   "license": "MIT",
   "private": true,
@@ -52,6 +53,8 @@
     "eslint": "^5.16.0",
     "gh-pages": "^2.0.1",
     "git-raw-commits": "^2.0.2",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.0.5",
     "prompts": "^2.2.1",
     "typescript": "^3.7.2",
