@@ -34,7 +34,7 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "website/",
+      "website",
       "modules/*",
       "examples/*"
     ],
