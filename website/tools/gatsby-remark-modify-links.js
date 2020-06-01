@@ -22,6 +22,7 @@ module.exports = ({ markdownAST, markdownNode }, { repoBase, repoUrl }) => {
       let dirname = path.dirname(markdownNode.fileAbsolutePath)
       // all docs are converted to pages
       if (isInDocs(node.url, dirname)) {
+        node.url = node.url.replace(/^\.\//, '')
         node.url = toSlug(node.url)
       } else {
         // reference to repository url
