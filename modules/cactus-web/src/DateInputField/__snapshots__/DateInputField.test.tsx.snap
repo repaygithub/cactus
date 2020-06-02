@@ -136,7 +136,7 @@ exports[`component: DateInputField snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,10%,20%);
   border-radius: 20px;
   background-color: hsl(0,0%,100%);

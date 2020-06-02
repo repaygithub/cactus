@@ -42,7 +42,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 }
 
 .c9 {
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;

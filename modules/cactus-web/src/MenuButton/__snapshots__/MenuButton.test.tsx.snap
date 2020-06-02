@@ -7,42 +7,6 @@ exports[`With theme changes  Border should be 2px 1`] = `
   vertical-align: middle;
 }
 
-.c3[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c3 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
-.c4[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c4 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
-.c5[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c5 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
 .c0 {
   position: relative;
   box-sizing: border-box;
@@ -104,6 +68,30 @@ exports[`With theme changes  Border should be 2px 1`] = `
   top: 12px;
 }
 
+.c3[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c3 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
+.c4[aria-expanded='true'] .c1 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c4 .c1 {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+
 <button
     aria-expanded="false"
     aria-haspopup="menu"
@@ -141,7 +129,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 1px solid;
+  border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -175,7 +163,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,96%,35%);
 }
 
@@ -283,7 +271,7 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 8px;
-  border: 1px solid;
+  border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -317,7 +305,7 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 8px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,96%,35%);
 }
 
@@ -389,7 +377,7 @@ exports[`With theme changes  Should have square borders 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 1px;
-  border: 1px solid;
+  border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -423,7 +411,7 @@ exports[`With theme changes  Should have square borders 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 1px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,96%,35%);
 }
 
@@ -482,7 +470,7 @@ exports[`component: MenuButton snapshot 1`] = `
   position: relative;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 1px solid;
+  border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
@@ -516,7 +504,7 @@ exports[`component: MenuButton snapshot 1`] = `
   left: -5px;
   box-sizing: border-box;
   border-radius: 20px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,96%,35%);
 }
 

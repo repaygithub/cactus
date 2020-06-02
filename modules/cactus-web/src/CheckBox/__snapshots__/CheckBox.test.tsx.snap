@@ -19,14 +19,10 @@ exports[`component: CheckBox should render a checkbox 1`] = `
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,10%,20%);
   background: none;
   border-radius: 1px;
-}
-
-.c2 svg {
-  margin: 1px;
 }
 
 .c2 svg {
@@ -108,14 +104,10 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(0,0%,90%);
   background: hsl(0,0%,90%);
   border-radius: 1px;
-}
-
-.c2 svg {
-  margin: 1px;
 }
 
 .c2 svg {
@@ -194,14 +186,10 @@ exports[`component: CheckBox should support margin space props 1`] = `
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,10%,20%);
   background: none;
   border-radius: 1px;
-}
-
-.c2 svg {
-  margin: 1px;
 }
 
 .c2 svg {
@@ -369,14 +357,10 @@ exports[`component: CheckBox with theme customization should not have box shadow
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: 1px solid;
+  border: 2px solid;
   border-color: hsl(200,10%,20%);
   background: none;
   border-radius: 1px;
-}
-
-.c2 svg {
-  margin: 1px;
 }
 
 .c2 svg {

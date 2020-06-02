@@ -22,7 +22,7 @@ exports[`component: Select snapshot 1`] = `
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 20px;
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
   text-align: left;
@@ -119,27 +119,6 @@ exports[`component: Select with theme customization should have 2px border 1`] =
   font-style: italic;
   color: hsl(200,9%,35%);
   font-size: 18px;
-}
-
-.c6:disabled .c2 {
-  color: hsl(0,0%,70%);
-}
-
-.c6:focus .c4,
-.c6[aria-expanded] .c4 {
-  color: hsl(200,96%,35%);
-}
-
-.c6[aria-expanded] .c4 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c6 .c4 {
-  position: absolute;
-  right: 14px;
-  top: 10px;
 }
 
 .c1 {
@@ -271,27 +250,6 @@ exports[`component: Select with theme customization should match intermediate sh
   top: 10px;
 }
 
-.c7:disabled .c2 {
-  color: hsl(0,0%,70%);
-}
-
-.c7:focus .c4,
-.c7[aria-expanded] .c4 {
-  color: hsl(200,96%,35%);
-}
-
-.c7[aria-expanded] .c4 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c7 .c4 {
-  position: absolute;
-  right: 14px;
-  top: 10px;
-}
-
 .c1 {
   position: relative;
   box-sizing: border-box;
@@ -301,7 +259,7 @@ exports[`component: Select with theme customization should match intermediate sh
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 8px;
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
   text-align: left;
@@ -442,27 +400,6 @@ exports[`component: Select with theme customization should match square shape st
   top: 10px;
 }
 
-.c8:disabled .c2 {
-  color: hsl(0,0%,70%);
-}
-
-.c8:focus .c4,
-.c8[aria-expanded] .c4 {
-  color: hsl(200,96%,35%);
-}
-
-.c8[aria-expanded] .c4 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c8 .c4 {
-  position: absolute;
-  right: 14px;
-  top: 10px;
-}
-
 .c1 {
   position: relative;
   box-sizing: border-box;
@@ -472,7 +409,7 @@ exports[`component: Select with theme customization should match square shape st
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 1px;
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
   text-align: left;
@@ -580,7 +517,7 @@ exports[`component: Select with theme customization should not have box shadows 
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 20px;
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
   text-align: left;
@@ -664,27 +601,6 @@ exports[`component: Select with theme customization should not have box shadows 
 }
 
 .c7 .c4 {
-  position: absolute;
-  right: 14px;
-  top: 10px;
-}
-
-.c8:disabled .c2 {
-  color: hsl(0,0%,70%);
-}
-
-.c8:focus .c4,
-.c8[aria-expanded] .c4 {
-  color: hsl(200,96%,35%);
-}
-
-.c8[aria-expanded] .c4 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c8 .c4 {
   position: absolute;
   right: 14px;
   top: 10px;
