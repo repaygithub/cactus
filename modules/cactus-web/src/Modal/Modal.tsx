@@ -67,6 +67,7 @@ const Modalbase: FunctionComponent<ModalProps & IconComponentProps> = props => {
     icon,
     ...rest
   } = props
+  const hasChildren = variant === 'action' && !!React.Children.count(children)
 
   return (
     <ModalPopUp
@@ -80,7 +81,7 @@ const Modalbase: FunctionComponent<ModalProps & IconComponentProps> = props => {
         <IconButton iconSize="small" onClick={closeModal} label={closeLabel}>
           <NavigationClose />
         </IconButton>
-        <Flex flexDirection="column" alignItems="center" height="100%">
+        <Flex flexDirection="column" flexWrap="nowrap" alignItems="center" height="100%">
           <Icon variant={variant} icon={icon} />
           <Text as="h1" marginBottom="0">
             {modalTitle}
@@ -88,8 +89,8 @@ const Modalbase: FunctionComponent<ModalProps & IconComponentProps> = props => {
           <Text as="h3" fontWeight="normal" margin="0">
             {description}
           </Text>
-          <div className="children">{variant === 'action' && children}</div>
-          <Flex justifyContent="center" width="90%" marginTop="auto">
+          {hasChildren && <div className="children">{children}</div>}
+          <Flex justifyContent="center" width="90%" marginTop="16px">
             <Button variant={variant} onClick={onClick} marginRight="16px">
               {buttonText}
             </Button>
@@ -133,9 +134,10 @@ export const ModalPopUp = styled(DialogOverlay)<ModalProps>`
     border: 1px solid ${baseColor};
     display: block;
     min-width: 30%;
-    min-height: 40%;
+    min-height: 20%;
     width: ${p => p.width};
     height: ${p => p.height};
+    overflow: auto;
   }
   ${IconButton} {
     position: absolute;
@@ -151,6 +153,7 @@ const Icon = styled(IconBase)`
   box-sizing: border-box;
   width: 60px;
   height: 60px;
+  min-height: 60px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -184,7 +187,6 @@ Modal.defaultProps = {
   modalLabel: 'Modal Label',
   closeLabel: 'Close Label',
   width: '30%',
-  height: '30%',
   isOpen: false,
 }
 export default Modal
