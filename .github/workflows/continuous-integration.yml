@@ -3,8 +3,7 @@ on: push
 
 jobs:
   build:
-
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -50,10 +49,10 @@ jobs:
           yarn web test:ci
 
       - name: Integration Tests
-        run: |
-          yarn w standard test:ci
-          yarn w theme-components test:ci
-          yarn w mock-ebpp test:ci
+        uses: ./actions/integration-tests
+        env:
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
 
       - name: Test Docs Website
         run: yarn docs test:ci

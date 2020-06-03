@@ -1,0 +1,9 @@
+name: 'Integration Tests'
+description: 'Run integration tests for Cactus'
+inputs:
+  args:
+    description: 'Command to run'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

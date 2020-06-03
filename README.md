@@ -154,3 +154,27 @@ yarn release [module] [new version]
 ```
 
 Where you can optionally provide the module `[module]` and the version `[new version]` to publish. If you don't provide these values you will be prompted for them instead. The `module` parameter accepts the package name, folder, or short codes listed above. The `new version` parameter accepts any semver value execpt pre-releases since pre-releases are expected to be used rarely and without a changelog at this point.
+
+### Integration Testing
+
+We have developed three [example apps](/examples/) that double as vehicles to run integrations tests.
+We use [TestCafe](https://devexpress.github.io/testcafe/) along with the
+[TestCafe BrowserStack Plugin](https://www.npmjs.com/package/testcafe-browser-provider-browserstack)
+to run integration tests against these applications on both Chrome and IE11. While not everything
+needs an integration test, we should try to keep the coverage relatively high so that we can automatically
+catch cross-browser issues.
+
+To run integration tests locally, first create a `local.env` file in the folder of the app for which
+you want to run tests (i.e. `standard` or `mock-ebpp`). In that file, you'll need to add:
+
+```
+BROWSERSTACK_USERNAME=<SOMETHING>
+BROWSERSTACK_ACCESS_KEY=<SOMETHING ELSE>
+```
+
+To obtain the actual value of those secrets, you can get in touch with a member of the UI team, who
+will send them to you via onetimesecret.
+
+```bash
+yarn w <app-name...i.e. mock-ebpp> test:local -b "Chrome -incognito"
+```

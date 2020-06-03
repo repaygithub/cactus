@@ -19,7 +19,11 @@ class App extends Component<RouteComponentProps<AppProps>> {
     return (
       <>
         <Flex>
-          <select onChange={this.props.onLangChange} value={this.props.lang}>
+          <select
+            onChange={this.props.onLangChange}
+            value={this.props.lang}
+            data-testid="select-language"
+          >
             <option value="">Use Browser</option>
             <option value="en-US">🇺🇸 English</option>
             <option value="es-MX">🇲🇽 Español</option>

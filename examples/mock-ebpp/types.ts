@@ -14,6 +14,11 @@ export interface UIConfigData {
   use_cactus_styles: boolean
   select_color: string
   file_input: Array<FileObj>
+  notification_email: string
+  all_locations: string[]
+  mp_location: string
+  card_brands: string[]
+  established_date: string
 }
 
 export type RulesData = Array<{

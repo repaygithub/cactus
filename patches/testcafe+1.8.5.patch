@@ -1,0 +1,13 @@
+diff --git a/node_modules/testcafe/ts-defs/index.d.ts b/node_modules/testcafe/ts-defs/index.d.ts
+index 4e68771..6bb44b7 100644
+--- a/node_modules/testcafe/ts-defs/index.d.ts
++++ b/node_modules/testcafe/ts-defs/index.d.ts
+@@ -1313,7 +1313,7 @@ declare module 'testcafe' {
+             (
+                 init:
+                     | string
+-                    | ((...args: any[]) => Node | Node[] | NodeList | HTMLCollection)
++                    | ((...args: any[]) => Node | Node[] | NodeList | HTMLCollection | null)
+                     | Selector
+                     | NodeSnapshot
+                     | SelectorPromise,
