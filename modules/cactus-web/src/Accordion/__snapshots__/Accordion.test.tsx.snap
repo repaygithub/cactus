@@ -77,14 +77,14 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 }
 
 .c1.outline-variant.is-open {
-  border-bottom: 2px solid;
+  border-bottom: 1px solid;
   border-color: hsl(200,29%,90%);
 }
 
 .c0 {
   box-sizing: border-box;
   width: 100%;
-  border-bottom: 2px solid;
+  border-bottom: 1px solid;
   border-color: hsl(200,29%,90%);
 }
 
@@ -94,7 +94,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 }
 
 .c0:first-of-type {
-  border-top: 2px solid hsl(200,29%,90%);
+  border-top: 1px solid hsl(200,29%,90%);
 }
 
 <div>
@@ -217,14 +217,14 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 2px solid;
+  border-bottom: 1px solid;
   border-color: hsl(200,29%,90%);
 }
 
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,29%,90%);
   border-radius: 8px;
 }
@@ -359,7 +359,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 2px solid;
+  border-bottom: 1px solid;
   border-color: hsl(200,29%,90%);
 }
 
@@ -375,10 +375,14 @@ exports[`component: Accordion with theme customization outline accordion should 
   margin-top: 8px;
 }
 
+.c8 + .c0 {
+  margin-top: 8px;
+}
+
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,29%,90%);
   border-radius: 1px;
 }
@@ -516,6 +520,14 @@ exports[`component: Accordion with theme customization outline accordion should 
   border-color: hsl(200,29%,90%);
 }
 
+.c5 + .c0 {
+  margin-top: 8px;
+}
+
+.c6 + .c0 {
+  margin-top: 8px;
+}
+
 .c1 {
   box-sizing: border-box;
   width: 100%;
@@ -530,10 +542,6 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c1 + .c0 {
-  margin-top: 8px;
-}
-
-.c5 + .c0 {
   margin-top: 8px;
 }
 
@@ -657,7 +665,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 2px solid;
+  border-bottom: 1px solid;
   border-color: hsl(200,29%,90%);
 }
 
@@ -669,10 +677,14 @@ exports[`component: Accordion with theme customization outline accordion should 
   margin-top: 8px;
 }
 
+.c7 + .c0 {
+  margin-top: 8px;
+}
+
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,29%,90%);
   border-radius: 4px;
 }
@@ -806,7 +818,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2.outline-variant.is-open {
-  border-bottom: 2px solid;
+  border-bottom: 1px solid;
   border-color: hsl(200,29%,90%);
 }
 
@@ -817,7 +829,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 .c1 {
   box-sizing: border-box;
   width: 100%;
-  border: 2px solid;
+  border: 1px solid;
   border-color: hsl(200,29%,90%);
   border-radius: 8px;
 }
@@ -950,6 +962,10 @@ exports[`component: Accordion with theme customization simple accordion should h
   border-color: hsl(200,29%,90%);
 }
 
+.c5 + .c0 {
+  margin-top: 8px;
+}
+
 .c1 {
   box-sizing: border-box;
   width: 100%;
@@ -964,10 +980,6 @@ exports[`component: Accordion with theme customization simple accordion should h
 
 .c1:first-of-type {
   border-top: 2px solid hsl(200,29%,90%);
-}
-
-.c5 + .c0 {
-  margin-top: 8px;
 }
 
 <div

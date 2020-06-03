@@ -56,7 +56,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   padding: 0 24px 0 16px;
   background-color: transparent;
   border-radius: 20px;
-  border-width: 2px;
+  border-width: 1px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
   text-align: left;
