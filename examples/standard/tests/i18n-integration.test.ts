@@ -1,89 +1,56 @@
+import { Selector } from 'testcafe'
+import startStaticServer from './helpers/static-server'
 import * as path from 'path'
-import { getDocument, queries, wait } from 'pptr-testing-library'
-import puppeteer from 'puppeteer'
-import startStaticServer, { ServerObj } from './helpers/static-server'
+import { queryAllByText, queryByTestId, queryByText } from '@testing-library/testcafe'
 
-const { getByText, queryByText } = queries
-
-function getLangJs(lang: string, languages: Array<string> = [lang]) {
-  // overwrite the navigator.languages properties to use a custom getter
-  return `
-Object.defineProperties(navigator, {
-  "languages": {
-    get() {
-      return ${JSON.stringify(languages)};
-    }
-  },
-  "language": {
-    get() {
-      return ${JSON.stringify(lang)};
-    }
-  }
-});`
-}
-
-describe('I18n Integration tests', () => {
-  let page: puppeteer.Page
-  let server: ServerObj
-
-  beforeAll(async () => {
-    page = await global.__BROWSER__.newPage()
-    server = startStaticServer({
+fixture('I18n Integration tests')
+  .before(async ctx => {
+    ctx.server = startStaticServer({
       directory: path.join(process.cwd(), 'dist'),
       port: 33567,
       singlePageApp: true,
     })
   })
-
-  afterAll(async () => {
-    await server.close()
+  .after(async ctx => {
+    await ctx.server.close()
   })
 
-  describe('when navigator.language is en-US', () => {
-    beforeEach(async () => {
-      await page.evaluateOnNewDocument(getLangJs('en-US', ['en-US', 'en']))
-      await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
-    })
-
-    test('we can see the rendered content', async () => {
-      const doc = await getDocument(page)
-      expect(
-        await getByText(
-          doc,
+test.page('http://localhost:33567?lang=en-US')(
+  'we can see the rendered content when navigator.language is en-US',
+  async t => {
+    await t
+      .expect(
+        queryByText(
           'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
         )
-      ).not.toBeNull()
-    })
+      )
+      .ok('Could not find translated text')
+  }
+)
 
-    test('we can set the language manually', async () => {
-      await page.select('select', 'es-MX')
-      const doc = await getDocument(page)
-      expect(
-        await getByText(
-          doc,
+test.page('http://localhost:33567?lang=en-US')(
+  'we can set the language manually when navigator.language is en-US',
+  async t => {
+    await t.click(queryByTestId('select-language')).click(queryAllByText(/Español/).nth(0))
+    await t
+      .expect(
+        queryByText(
           'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
         )
-      ).not.toBeNull()
-    })
-  })
+      )
+      .ok('Could not find Spanish translation')
+  }
+)
 
-  describe('when browser language is es-MX', () => {
-    beforeAll(async () => {
-      page = await global.__BROWSER__.newPage()
-    })
-    beforeEach(async () => {
-      await page.evaluateOnNewDocument(getLangJs('es-MX', ['es-MX', 'es']))
-      await page.goto('http://localhost:33567', { waitUntil: 'domcontentloaded' })
-    })
-
-    test('we can see the rendered content', async () => {
-      const doc = await getDocument(page)
-      expect(
-        await getByText(
-          doc,
+test.page('http://localhost:33567?lang=es-MX')(
+  'we can see the rendered content when browser language is es-MX',
+  async t => {
+    await t
+      .expect(
+        queryByText(
           'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
         )
-      ).not.toBeNull()
-    })
-  })
-})
+      )
+      .ok('Could not find translated text')
+  }
+)

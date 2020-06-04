@@ -15,8 +15,13 @@ const appRoot = document.createElement('div')
 appRoot.className = 'app-root'
 document.body.appendChild(appRoot)
 
+const getInitialLang = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  return urlParams.get('lang') || 'en-US'
+}
+
 class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsObject }> {
-  state = { lang: navigator.language, features: {} }
+  state = { lang: getInitialLang(), features: {} }
 
   handleLangChange = (event: ChangeEvent<HTMLSelectElement>) =>
     this.setState({ lang: event.target.value })
