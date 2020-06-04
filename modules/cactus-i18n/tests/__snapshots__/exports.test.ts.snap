@@ -10,6 +10,7 @@ Array [
   "I18nText",
   "useI18nText",
   "useI18nResource",
+  "I18nContext",
   "BaseI18nController",
 ]
 `;
