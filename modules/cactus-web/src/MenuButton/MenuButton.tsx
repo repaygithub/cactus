@@ -2,6 +2,8 @@ import React from 'react'
 
 import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
+import { getScrollX } from '../helpers/scrollOffset'
+import { getTopPosition } from '../helpers/positionPopover'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { Omit } from '../types'
@@ -10,8 +12,9 @@ import {
   Menu as ReachMenu,
   MenuButton as ReachMenuButton,
   MenuItem as ReachMenuItem,
+  MenuItems as ReachMenuItems,
   MenuLink as ReachMenuLink,
-  MenuList as ReachMenuList,
+  MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
 import PropTypes from 'prop-types'
 import styled, { createGlobalStyle, css, StyledComponent } from 'styled-components'
@@ -84,7 +87,7 @@ const MenuButtonStyles = createGlobalStyle`
   }
 `
 
-const MenuList = styled(ReachMenuList)`
+const MenuList = styled(ReachMenuItems)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
@@ -132,7 +135,23 @@ function MenuButtonBase(props: MenuButtonProps) {
         {label}
         <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
       </ReachMenuButton>
-      <MenuList>{children}</MenuList>
+      <ReachMenuPopover
+        position={(targetRect, popoverRect) => {
+          if (!targetRect || !popoverRect) {
+            return {}
+          }
+
+          const scrollX = getScrollX()
+
+          return {
+            width: targetRect.width > popoverRect.width ? targetRect.width : popoverRect.width,
+            left: targetRect.left + scrollX,
+            ...getTopPosition(targetRect, popoverRect),
+          }
+        }}
+      >
+        <MenuList>{children}</MenuList>
+      </ReachMenuPopover>
     </ReachMenu>
   )
 }

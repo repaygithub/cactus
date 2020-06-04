@@ -39,28 +39,28 @@ const Table = styled('table')`
   }
 
   @media only screen and (max-width: 500px) {
-    table, thead, tbody, th, td { 
-      display: block; 
+    table, thead, tbody, th, td {
+      display: block;
       align: left;
     }
 
-    thead tr { 
-    display: none; 
+    thead tr {
+    display: none;
     }
-    td  { 
+    td  {
       border: none;
       position: relative;
-      border-bottom: 1px solid #eee; 
+      border-bottom: 1px solid #eee;
       padding: 2px 0 10px 225px;
     }
     
-    td:before { 
+    td:before {
     position: absolute;
     text-align: left;
     top: 2px;
     left: 2px;
     }
-    
+
     td:nth-of-type(1):before { content: "Breaking Points"; }
     td:nth-of-type(2):before { content: "Responsive Sizes"; }
     td:nth-of-type(3):before { content: "Content Size"; }
@@ -278,7 +278,7 @@ export default () => {
         <tbody>
           <tr>
             <td>mini</td>
-            <td> >320px</td>
+            <td> &gt;320px</td>
             <td> 320</td>
             <td> 64</td>
             <td> 4</td>
@@ -288,7 +288,7 @@ export default () => {
 
           <tr>
             <td>small</td>
-            <td> >768px</td>
+            <td> &gt;768px</td>
             <td> 708</td>
             <td> 102</td>
             <td> 6</td>
@@ -298,7 +298,7 @@ export default () => {
 
           <tr>
             <td>medium</td>
-            <td> >1024px</td>
+            <td> &gt;1024px</td>
             <td> 964</td>
             <td> 104</td>
             <td> 8</td>
@@ -308,7 +308,7 @@ export default () => {
 
           <tr>
             <td>large</td>
-            <td> >1200px</td>
+            <td> &gt;1200px</td>
             <td> 1140</td>
             <td> 79</td>
             <td> 12</td>
@@ -318,7 +318,7 @@ export default () => {
 
           <tr>
             <td>extra large</td>
-            <td> >1440px</td>
+            <td> &gt;1440px</td>
             <td> 1380</td>
             <td> 99</td>
             <td> 12</td>

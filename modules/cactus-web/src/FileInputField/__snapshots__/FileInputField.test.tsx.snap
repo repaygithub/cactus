@@ -393,7 +393,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
     <span
       id="consistent-tip"
       role="tooltip"
-      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
     >
       upload something
     </span>
@@ -850,7 +850,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
     <span
       id="consistent-tip"
       role="tooltip"
-      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
     >
       upload something
     </span>
@@ -1182,7 +1182,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
     <span
       id="consistent-tip"
       role="tooltip"
-      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
     >
       upload something
     </span>
@@ -1425,7 +1425,7 @@ exports[`component: FileInputField should render file input field 1`] = `
     <span
       id="consistent-tip"
       role="tooltip"
-      style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
     >
       upload something
     </span>

@@ -9,7 +9,7 @@ import { omitMargins } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
 import KeyCodes from '../helpers/keyCodes'
 import PropTypes from 'prop-types'
-import Rect from '@reach/rect'
+import Rect, { PRect } from '@reach/rect'
 import styled, { css, StyledComponentBase } from 'styled-components'
 import useId from '../helpers/useId'
 
@@ -289,7 +289,7 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
     [setState]
   )
 
-  const handleRectChange = (rect: DOMRect) => {
+  const handleRectChange = (rect: PRect) => {
     if (rect.height !== height) {
       setHeight(rect.height)
     }

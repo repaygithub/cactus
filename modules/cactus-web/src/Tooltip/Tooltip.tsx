@@ -4,6 +4,7 @@ import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { margin, MarginProps, maxWidth } from 'styled-system'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { Omit } from '../types'
+import { PRect } from '@reach/rect'
 import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -18,7 +19,10 @@ interface Styles extends DOMRect {
   borderBottomLeftRadius?: string
 }
 
-type Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => DOMRect
+type Position = (
+  triggerRect: PRect | null | undefined,
+  tooltipRect: PRect | null | undefined
+) => DOMRect
 
 interface TooltipProps
   extends MarginProps,
@@ -33,7 +37,13 @@ interface TooltipProps
 
 const OFFSET = 8
 // @ts-ignore
-const cactusPosition: Position = (triggerRect: DOMRect, tooltipRect: DOMRect | null) => {
+const cactusPosition: Position = (
+  triggerRect: PRect | null | undefined,
+  tooltipRect: PRect | null | undefined
+) => {
+  if (!triggerRect || !tooltipRect) {
+    return {}
+  }
   const scrollX = getScrollX()
   const scrollY = getScrollY()
   let styles: Styles = ({

@@ -25,7 +25,7 @@ exports[`component: Tooltip should render tooltip icon 1`] = `
   </span>
   <span
     role="tooltip"
-    style="display: block; border: 0px; height: 1px; width: 1px; margin: -1px; padding: 0px; overflow: hidden; position: absolute;"
+    style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
   >
     pitloot
   </span>
@@ -51,7 +51,7 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
 <div
   class="c0"
   data-reach-tooltip="true"
-  id="tooltip--3"
+  id="tooltip--5"
   role="tooltip"
   style="max-width: 500px; left: -8px; top: 0px; border-top-right-radius: 0px; width: 0px;"
 >

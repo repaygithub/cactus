@@ -14,7 +14,9 @@ export default () => {
         </li>
         <li>Try to avoid exceeding 3 levels of nested cards/accordions if possible</li>
         <li>No need for cards/segments at the top level</li>
-        <li>Use proper header tags (h1 -> h2 -> h3 -> h4) and don't skip any header sizes.</li>
+        <li>
+          Use proper header tags (h1 -&gt; h2 -&gt; h3 -&gt; h4) and don't skip any header sizes.
+        </li>
         <li>
           Use more margin on top of section headers than on bottom. This creates a distinction
           between content above and associates content below with the header.

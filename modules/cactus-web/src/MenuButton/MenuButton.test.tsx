@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import MenuButton from './MenuButton'
@@ -32,7 +32,7 @@ describe('component: MenuButton', () => {
   })
 
   describe('mouse usage', () => {
-    test('can select an action', () => {
+    test('can select an action', async () => {
       const actionOne = jest.fn()
       const { getByText } = render(
         <StyleProvider>
@@ -44,8 +44,13 @@ describe('component: MenuButton', () => {
         </StyleProvider>
       )
 
-      userEvent.click(getByText('Demo'))
-      userEvent.click(getByText('Action One'))
+      await act(async () => {
+        userEvent.click(getByText('Demo'))
+        await animationRender()
+      })
+      act(() => {
+        userEvent.click(getByText('Action One'))
+      })
       expect(actionOne).toHaveBeenCalled()
     })
   })
@@ -54,7 +59,7 @@ describe('component: MenuButton', () => {
     test('can select an action', async () => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
-      const { getByText } = render(
+      const { getByText, rerender } = render(
         <StyleProvider>
           <MenuButton label="Demo">
             <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
@@ -64,12 +69,28 @@ describe('component: MenuButton', () => {
         </StyleProvider>
       )
 
-      userEvent.click(getByText('Demo'))
-      await animationRender()
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'Enter' })
+      await act(async () => {
+        userEvent.click(getByText('Demo'))
+        await animationRender()
+      })
+      await act(async () => {
+        // @ts-ignore
+        fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+        await animationRender()
+      })
+      rerender(
+        <StyleProvider>
+          <MenuButton label="Demo">
+            <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
+            <MenuButton.Item onSelect={actionTwo}>Action Two</MenuButton.Item>
+            <MenuButton.Link href="#">Action Three</MenuButton.Link>
+          </MenuButton>
+        </StyleProvider>
+      )
+      act(() => {
+        // @ts-ignore
+        fireEvent.keyDown(document.activeElement, { key: 'Enter' })
+      })
       expect(actionOne).not.toHaveBeenCalled()
       expect(actionTwo).toHaveBeenCalled()
     })
