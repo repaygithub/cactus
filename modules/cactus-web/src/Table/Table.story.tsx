@@ -7,14 +7,15 @@ import Table from './Table'
 storiesOf('Table', module).add('Header', () => (
   <Table>
     <Table.Header>
-      <Table.Cell type="label">Header</Table.Cell>
-      <Table.Cell type="label">Header2</Table.Cell>
-      <Table.Cell type="label">Header</Table.Cell>
-      <Table.Cell type="label">Header2</Table.Cell>
-      <Table.Cell type="label">Header</Table.Cell>
-      <Table.Cell type="label">Header2</Table.Cell>
-      <Table.Cell type="label">Header</Table.Cell>
-      <Table.Cell type="label">Header2</Table.Cell>
+      <Table.Cell cellType="th" align="center">
+        Header
+      </Table.Cell>
+      <Table.Cell cellType="th" align="center">
+        Header
+      </Table.Cell>
+      <Table.Cell cellType="th" align="center">
+        Header
+      </Table.Cell>
     </Table.Header>
   </Table>
 ))
@@ -34,37 +35,39 @@ const amount = [
 
 storiesOf('Table', module).add('Row', () => (
   <Table>
-    <Table.Row>
-      <>
-        {arr.map((e, i) => (
-          <Table.Cell type="label" key={i}>
-            Cell {e}
+    <Table.Body>
+      <Table.Row>
+        <>
+          {arr.map((e, i) => (
+            <Table.Cell cellType="td" align="left" key={i}>
+              Cell {e}
+            </Table.Cell>
+          ))}
+          <Table.Cell cellType="td" align="center">
+            Label
+            <DescriptiveEnvelope />
+          </Table.Cell>
+        </>
+      </Table.Row>
+      <Table.Row>
+        {amount.map((e, i) => (
+          <Table.Cell cellType="td" align="right" key={i}>
+            {e}
           </Table.Cell>
         ))}
-        <Table.Cell type="label">
-          Label
-          <DescriptiveEnvelope />
-        </Table.Cell>
-      </>
-    </Table.Row>
-    <Table.Row>
-      {amount.map((e, i) => (
-        <Table.Cell type="amount" key={i}>
-          {e}
-        </Table.Cell>
-      ))}
-    </Table.Row>
-    <Table.Row>
-      <>
-        <Table.Cell type="icon">
-          <DescriptiveEnvelope />
-        </Table.Cell>
-        {arr.map((e, i) => (
-          <Table.Cell type="label" key={i}>
-            Cell {e}
+      </Table.Row>
+      <Table.Row>
+        <>
+          <Table.Cell cellType="td" align="center">
+            <DescriptiveEnvelope />
           </Table.Cell>
-        ))}
-      </>
-    </Table.Row>
+          {arr.map((e, i) => (
+            <Table.Cell cellType="td" align="left" key={i}>
+              Cell {e}
+            </Table.Cell>
+          ))}
+        </>
+      </Table.Row>
+    </Table.Body>
   </Table>
 ))

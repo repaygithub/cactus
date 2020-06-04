@@ -1,11 +1,11 @@
 import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
-import Flex from '../Flex/Flex'
 import React, { FunctionComponent } from 'react'
-import styled, { css, StyledComponentBase, ThemeProps } from 'styled-components'
-import Text from '../Text/Text'
+import styled, { css, StyledComponentBase } from 'styled-components'
 
-const BASE_WIDTH = 160
+type cellAlignment = 'center' | 'right' | 'left'
+
+type cellType = 'th' | 'td'
 
 interface TableProps {
   className?: string
@@ -16,10 +16,14 @@ interface TableHeaderProps {
 }
 interface TableCellProps {
   className?: string
-  type: string
+  align: cellAlignment
+  cellType: cellType
 }
 
 interface TableRowProps {
+  className?: string
+}
+interface TableBodyProps {
   className?: string
 }
 
@@ -34,6 +38,18 @@ const shapeMap = {
     border-radius: 8px;
   `,
 }
+
+const doubleBorder = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 7px;
+  `,
+  round: css`
+    border-radius: 11px;
+  `,
+}
 const borderMap = {
   thin: css`
     border: 1px solid;
@@ -44,34 +60,22 @@ const borderMap = {
 }
 
 const getShape = (shape: Shape) => shapeMap[shape]
+const getDoubleBorder = (shape: Shape) => doubleBorder[shape]
 const getBorder = (size: BorderSize) => borderMap[size]
 
 const Tablebase: FunctionComponent<TableProps> = props => {
   const { children, className } = props
 
-  return <div className={className}>{children}</div>
+  return <table className={className}>{children}</table>
 }
 
-const getCellAlignment = (type: string) => {
-  switch (type) {
-    case 'label':
-      return `flex-start`
-    case 'amount':
-      return 'flex-end'
-    case 'icon':
-      return 'center'
-    default:
-      return 'flex-start'
-  }
-}
-
-const TableCellBase: FunctionComponent<TableCellProps & ThemeProps<CactusTheme>> = props => {
-  const { children, className, type } = props
+const TableCellBase: FunctionComponent<TableCellProps> = props => {
+  const { children, className, cellType: Type } = props
 
   return (
-    <Flex className={className} padding="23px 16px">
-      <Flex justifyContent={getCellAlignment(type)}>{children}</Flex>
-    </Flex>
+    <Type className={className} align="left">
+      {children}
+    </Type>
   )
 }
 
@@ -79,9 +83,9 @@ const TableHeaderBase: FunctionComponent<TableHeaderProps> = props => {
   const { children, className } = props
 
   return (
-    <Flex height="70px" width="auto" className={className}>
-      {children}
-    </Flex>
+    <thead className={className}>
+      <tr>{React.Children.map(children, child => child)}</tr>
+    </thead>
   )
 }
 
@@ -89,16 +93,15 @@ const TableRowBase: FunctionComponent<TableRowProps> = props => {
   const { children, className } = props
 
   return (
-    <Flex
-      height="70px"
-      width="auto"
-      className={`${className} row`}
-      tabIndex={0}
-      justifyContent="space-evenly"
-    >
+    <tr className={className} tabIndex={0}>
       {children}
-    </Flex>
+    </tr>
   )
+}
+
+const TableBodyBase: FunctionComponent<TableBodyProps> = props => {
+  const { children, className } = props
+  return <tbody className={className}>{children}</tbody>
 }
 
 export const TableHeader = styled(TableHeaderBase)`
@@ -107,22 +110,29 @@ export const TableHeader = styled(TableHeaderBase)`
   ${p => getBorder(p.theme.border)};
   ${p => getShape(p.theme.shape)};
   margin-bottom: 4px;
-  div > div {
+  tr > th {
     color: white;
     font-weight: bold;
     text-transform: uppercase;
   }
 `
+
+export const TableBody = styled(TableBodyBase)`
+  display: flex;
+  flex-direction: column;
+`
 export const TableCell = styled(TableCellBase)`
-  > div {
-    width: 100%;
-    align-items: center;
-    color: ${p => p.theme.colors.darkestContrast};
-    font-size: 15px;
-    > svg {
-      margin: 0 5px;
-    }
+  max-width: 160px;
+  align-items: center;
+  padding: 23px 16px;
+  color: ${p => p.theme.colors.darkestContrast};
+  font-size: 15px;
+  font-weight: normal;
+  > svg {
+    vertical-align: text-top;
+    margin: 1px 10px;
   }
+
   ${p => p.theme.mediaQueries.medium} {
     width: calc(160px * 0.7125);
   }
@@ -143,7 +153,7 @@ export const TableRow = styled(TableRowBase)`
   ${p => getShape(p.theme.shape)};
   ${p => getBorder(p.theme.border)};
   border-color: #dee8ed;
-  :nth-child(2n + 1) {
+  :nth-of-type(even) {
     background-color: ${p => p.theme.colors.lightContrast};
     ${p => getShape(p.theme.shape)};
     ${p => getBorder(p.theme.border)};
@@ -159,11 +169,9 @@ export const TableRow = styled(TableRowBase)`
   }
   :hover {
     fill: ${p => p.theme.colors.callToAction};
-    fill-opacity: 0.17;
     cursor: pointer;
     background-color: #d5e8f2;
     border: 1px solid;
-    fill-opacity: 0.17;
     border-color: ${p => p.theme.colors.callToAction};
     box-shadow: 0px 9px 24px rgba(3, 118, 176, 0.35);
   }
@@ -177,7 +185,7 @@ export const TableRow = styled(TableRowBase)`
       top: -5px;
       left: -5px;
       border: 1px solid;
-      ${p => getShape(p.theme.shape)};
+      ${p => getDoubleBorder(p.theme.shape)};
       border-color: ${p => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
@@ -186,7 +194,8 @@ export const TableRow = styled(TableRowBase)`
 
 export const Table = styled(Tablebase)`
   display: flex;
-  flex-direction: column;
+  overflow-x: auto;
+  white-space: nowrap;
   margin: 0 16px;
 ` as any
 
@@ -194,10 +203,12 @@ interface TableComponent extends StyledComponentBase<'div', CactusTheme, TablePr
   Header: React.ComponentType<TableHeaderProps>
   Cell: React.ComponentType<TableCellProps>
   Row: React.ComponentType<TableRowProps>
+  Body: React.ComponentType<TableBodyProps>
 }
 
 Table.Header = TableHeader
 Table.Cell = TableCell
 Table.Row = TableRow
+Table.Body = TableBody
 
 export default Table as TableComponent

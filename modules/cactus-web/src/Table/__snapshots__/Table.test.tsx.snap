@@ -13,7 +13,7 @@ exports[`component: Table snapshot 1`] = `
 }
 
 <div>
-  <div
+  <table
     class="c0"
   />
 </div>
