@@ -30,7 +30,7 @@ const ModalWithState = () => {
   const variant = select('variant', statusOptions, statusOptions.action)
   const buttonText = text('Button Text', 'Confirm')
   const width = text('Width', '30%')
-  const height = text('Height', '55%')
+  const height = text('Height', '')
   const modalLabel = text('Modal Label', 'Modal Label')
   const closeLabel = text('Close icon label', 'Close Label')
 
@@ -63,7 +63,7 @@ const ModalWithTextInput = () => {
   const variant = select('variant', statusOptions, statusOptions.action)
   const buttonText = text('Button Text', 'Confirm')
   const width = text('Width', '30%')
-  const height = text('Height', '55%')
+  const height = text('Height', '')
   const modalLabel = text('Modal Label', 'Modal Label')
   const closeLabel = text('Close icon label', 'Close Label')
 

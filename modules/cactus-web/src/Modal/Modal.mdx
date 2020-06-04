@@ -16,7 +16,7 @@ import { livePreviewStyle } from '../helpers/constants'
 
 # Modal
 
-The `Modal` component is usefull when an action from the user is required, and no other interaction
+The `Modal` component is useful when an action from the user is required, and no other interaction
 on the web page is permited until the modal is closed.
 
 ### Try it out
@@ -61,6 +61,8 @@ These actions are one two: Cancel what is requested to do or confirm it. After a
 those actions is performed, the modal closes. You can also render children inside the modal, for example a `TextInput`, to capture users data.
 Also, the modal has two variants, danger and action. Danger is useful when the user should confirm something that cannot be undone, and thus a double confirmation is requested.
 Action is useful when the user is requested to confirm an action that is not harmful, or when additional data is needed.
+
+Using the `height` prop is not recommended, especially as a percentage, since it can look strange on small screens. The `width` prop is a little more forgiving, but you should still take care to ensure your content can look good on your users' devices.
 
 ## Basic usage
 
