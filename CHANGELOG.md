@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-i18n@v0.3.12](https://github.com/repaygithub/cactus/commit/cf4a156c1a814130866436b4896fafd77bcfa95f)
+
+- feat(cactus-i18n): i18nContext importable from @repay/cactus-i18n [9ef3bf5](https://github.com/repaygithub/cactus/commit/9ef3bf5eeb07c8adc03e0ddd8369a876481928cc)
+- feat(cactus-i18n): i18nContext importable from @repay/cactus-i18n [31a3d67](https://github.com/repaygithub/cactus/commit/31a3d67992c419aa294832423f95898d55b6cf76)
+- chore(cactus-i18n): update changelog [d8981c8](https://github.com/repaygithub/cactus/commit/d8981c811e1a850df15c45bf095a2a74d85f96ed)
+
 ## [@repay/cactus-web@v0.8.0](https://github.com/repaygithub/cactus/commit/4bd12b5ead02919bf9833479be58d3a7c0e2186b)
 
 - build(cactus-web): upgrade cactus-theme dependency [f636468](https://github.com/repaygithub/cactus/commit/f636468f8695a66989906bfe68f0c3ae880b17c9)
