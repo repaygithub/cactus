@@ -56,7 +56,7 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "@repay/cactus-icons": "^0.6.1",
-    "@repay/cactus-theme": "^0.4.6",
+    "@repay/cactus-theme": "^0.5.0",
     "@repay/cactus-web": "^0.7.4",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
