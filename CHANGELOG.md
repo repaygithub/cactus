@@ -1,5 +1,28 @@
 # Changelog
 
+## [@repay/cactus-web@v0.8.0](https://github.com/repaygithub/cactus/commit/4bd12b5ead02919bf9833479be58d3a7c0e2186b)
+
+- build(cactus-web): upgrade cactus-theme dependency [f636468](https://github.com/repaygithub/cactus/commit/f636468f8695a66989906bfe68f0c3ae880b17c9)
+- fix(cactus-web): fix issue where contents render outside modal [27d8e55](https://github.com/repaygithub/cactus/commit/27d8e5549354b69066db7757c67df7e58446c42e)
+- feat(cactus-web): update bottom border on outline accordion header to match theme border [551bf54](https://github.com/repaygithub/cactus/commit/551bf54d159315ab9528d9afaf91f1b89cbf4241)
+- feat(cactus-web): Fix weird two color border in combobox input [083e41e](https://github.com/repaygithub/cactus/commit/083e41e355798d5b88150fe17dac532a2d1d5b1e)
+- feat(cactus-web): apply theme customization to cards & accordions [9cac4e8](https://github.com/repaygithub/cactus/commit/9cac4e85986343a6b58aebd22f27b3e69ef071ea)
+- chore(cactus-web): Use map for value tag shapes [4fa917e](https://github.com/repaygithub/cactus/commit/4fa917ebb772555cacf01c4a0b90e07b87e622b3)
+- chore(cactus-web): Change how value tag shapes are applied to make typescript happy [be42f4d](https://github.com/repaygithub/cactus/commit/be42f4d026277f7c5977495239f0651f83b5d2bb)
+- feat(cactus-web): Apply theme customization to combo input & multiselect tags [702c9e5](https://github.com/repaygithub/cactus/commit/702c9e5e5f8c5123a81f0b5572ba3adfb6811e7e)
+- chore(cactus-web): Update snapshots for switching to 1px default border [42647cf](https://github.com/repaygithub/cactus/commit/42647cfbe92fb2b9a89d909732d910c7676abbf6)
+- feat(cactus-web): Update shape of date input dropdown to be more square [43f062b](https://github.com/repaygithub/cactus/commit/43f062bb0cda73d5e3e1ab8fabae24a86e8a5484)
+- chore(cactus-web): Update form element snapshots [4b5498e](https://github.com/repaygithub/cactus/commit/4b5498ee17811a5d4aa5eaa09722b5782074fd94)
+- feat(cactus-web): Apply theme customization to applicable form elements [ec7fa43](https://github.com/repaygithub/cactus/commit/ec7fa43b249e4160bdde5385f255ab1e20b3f3f8)
+- feat(cactus-web): Component theme changes phase one [6cd3937](https://github.com/repaygithub/cactus/commit/6cd3937c747258862060d252ab59f37a57f2dba5)
+- fix(cactus-web):  More covergae in Buttons tests [c5bf9de](https://github.com/repaygithub/cactus/commit/c5bf9de1abb8597234849a879d28ce5d4d0d2f74)
+- fix(cactus-web): Fixed borders and shape on Buttons [a38eda2](https://github.com/repaygithub/cactus/commit/a38eda22fa2a39894cafae04e1e3ea79a6ef792a)
+- feate(cactus-web): Component theme changes phase one [4617c92](https://github.com/repaygithub/cactus/commit/4617c92a10715306a6b40e865aea3e5ef1f4ac02)
+- feat(cactus-web): Form Elements Documentation [f7facbb](https://github.com/repaygithub/cactus/commit/f7facbbc386427a9ca0bb678e041d0f93a3ddda3)
+- feat(cactus-web): Form Elements Documentation [785300c](https://github.com/repaygithub/cactus/commit/785300c80f220e873b3cc7a66113c5d78a31ea3d)
+- chore(cactus-web): Update theme widget for storybook to handle new theme properties [a08082d](https://github.com/repaygithub/cactus/commit/a08082dadb67c8a9cb5c2d181629f6101fe85a24)
+- chore(cactus-web): update changelog [313c09b](https://github.com/repaygithub/cactus/commit/313c09b9df47d1e6d0b2929c247832f9674133bb)
+
 ## [@repay/cactus-theme@v0.5.0](https://github.com/repaygithub/cactus/commit/b9245e055454a23078c16c3678199944d188fdc7)
 
 - feat(cactus-theme): Default theme border to thin [c5bd1d2](https://github.com/repaygithub/cactus/commit/c5bd1d2f2b143485544eeaa1000ee82e960faceb)
