@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-theme@v0.5.0](https://github.com/repaygithub/cactus/commit/b9245e055454a23078c16c3678199944d188fdc7)
+
+- feat(cactus-theme): Default theme border to thin [c5bd1d2](https://github.com/repaygithub/cactus/commit/c5bd1d2f2b143485544eeaa1000ee82e960faceb)
+- feat(cactus-theme): Add border, shape, font & box-shadow customization to theme [2430d59](https://github.com/repaygithub/cactus/commit/2430d59d51511c04dca4e564aeb0daac62c1d8ec)
+- chore(cactus-theme): update changelog [6441f6f](https://github.com/repaygithub/cactus/commit/6441f6f08de103c474e8ccfc4bf8dc52b06f266a)
+
 ## [@repay/cactus-web@v0.7.4](https://github.com/repaygithub/cactus/commit/12696a58c04344f8a9b7e0e8410662d3638f68df)
 
 - fix(cactus-web): Add @reach/menu-button styles [77cd9b1](https://github.com/repaygithub/cactus/commit/77cd9b1f743251304c449c9acf44514dd30628e1)
