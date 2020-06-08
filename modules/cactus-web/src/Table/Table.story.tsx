@@ -7,15 +7,9 @@ import Table from './Table'
 storiesOf('Table', module).add('Header', () => (
   <Table>
     <Table.Header>
-      <Table.Cell cellType="th" align="center">
-        Header
-      </Table.Cell>
-      <Table.Cell cellType="th" align="center">
-        Header
-      </Table.Cell>
-      <Table.Cell cellType="th" align="center">
-        Header
-      </Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
     </Table.Header>
   </Table>
 ))
@@ -39,11 +33,11 @@ storiesOf('Table', module).add('Row', () => (
       <Table.Row>
         <>
           {arr.map((e, i) => (
-            <Table.Cell cellType="td" align="left" key={i}>
+            <Table.Cell align="left" key={i}>
               Cell {e}
             </Table.Cell>
           ))}
-          <Table.Cell cellType="td" align="center">
+          <Table.Cell align="center">
             Label
             <DescriptiveEnvelope />
           </Table.Cell>
@@ -51,18 +45,67 @@ storiesOf('Table', module).add('Row', () => (
       </Table.Row>
       <Table.Row>
         {amount.map((e, i) => (
-          <Table.Cell cellType="td" align="right" key={i}>
+          <Table.Cell align="right" key={i}>
             {e}
           </Table.Cell>
         ))}
       </Table.Row>
       <Table.Row>
         <>
-          <Table.Cell cellType="td" align="center">
+          <Table.Cell align="center">
             <DescriptiveEnvelope />
           </Table.Cell>
           {arr.map((e, i) => (
-            <Table.Cell cellType="td" align="left" key={i}>
+            <Table.Cell align="left" key={i}>
+              Cell {e}
+            </Table.Cell>
+          ))}
+        </>
+      </Table.Row>
+    </Table.Body>
+  </Table>
+))
+
+storiesOf('Table', module).add('Row and header', () => (
+  <Table>
+    <Table.Header>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row>
+        <>
+          {arr.map((e, i) => (
+            <Table.Cell align="left" key={i}>
+              Cell {e}
+            </Table.Cell>
+          ))}
+          <Table.Cell align="center">
+            Label
+            <DescriptiveEnvelope />
+          </Table.Cell>
+        </>
+      </Table.Row>
+      <Table.Row>
+        {amount.map((e, i) => (
+          <Table.Cell align="right" key={i}>
+            {e}
+          </Table.Cell>
+        ))}
+      </Table.Row>
+      <Table.Row>
+        <>
+          <Table.Cell align="center">
+            <DescriptiveEnvelope />
+          </Table.Cell>
+          {arr.map((e, i) => (
+            <Table.Cell align="left" key={i}>
               Cell {e}
             </Table.Cell>
           ))}

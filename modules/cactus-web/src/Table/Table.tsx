@@ -1,11 +1,15 @@
 import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
-import React, { FunctionComponent } from 'react'
+import React, { createContext, FunctionComponent, useContext } from 'react'
 import styled, { css, StyledComponentBase } from 'styled-components'
 
 type cellAlignment = 'center' | 'right' | 'left'
 
 type cellType = 'th' | 'td'
+
+interface TableContext {
+  cellType: cellType
+}
 
 interface TableProps {
   className?: string
@@ -17,7 +21,6 @@ interface TableHeaderProps {
 interface TableCellProps {
   className?: string
   align: cellAlignment
-  cellType: cellType
 }
 
 interface TableRowProps {
@@ -26,6 +29,10 @@ interface TableRowProps {
 interface TableBodyProps {
   className?: string
 }
+
+const TableContext = createContext<TableContext>({
+  cellType: 'td',
+})
 
 const shapeMap = {
   square: css`
@@ -70,10 +77,11 @@ const Tablebase: FunctionComponent<TableProps> = props => {
 }
 
 const TableCellBase: FunctionComponent<TableCellProps> = props => {
-  const { children, className, cellType: Type } = props
+  const { children, className, align } = props
+  const { cellType: Type } = useContext(TableContext)
 
   return (
-    <Type className={className} align="left">
+    <Type className={className} align={align}>
       {children}
     </Type>
   )
@@ -83,9 +91,11 @@ const TableHeaderBase: FunctionComponent<TableHeaderProps> = props => {
   const { children, className } = props
 
   return (
-    <thead className={className}>
-      <tr>{React.Children.map(children, child => child)}</tr>
-    </thead>
+    <TableContext.Provider value={{ cellType: 'th' }}>
+      <thead className={className}>
+        <tr>{React.Children.map(children, child => child)}</tr>
+      </thead>
+    </TableContext.Provider>
   )
 }
 
@@ -101,19 +111,26 @@ const TableRowBase: FunctionComponent<TableRowProps> = props => {
 
 const TableBodyBase: FunctionComponent<TableBodyProps> = props => {
   const { children, className } = props
-  return <tbody className={className}>{children}</tbody>
+  return (
+    <TableContext.Provider value={{ cellType: 'td' }}>
+      <tbody className={className}>{children}</tbody>
+    </TableContext.Provider>
+  )
 }
 
 export const TableHeader = styled(TableHeaderBase)`
-  border-color: ${p => p.theme.colors.base};
-  background-color: ${p => p.theme.colors.base};
-  ${p => getBorder(p.theme.border)};
-  ${p => getShape(p.theme.shape)};
-  margin-bottom: 4px;
+  tr {
+    display: flex;
+    margin: 0 4px 4px 4px;
+    border-color: ${p => p.theme.colors.base};
+    background-color: ${p => p.theme.colors.base};
+    ${p => getBorder(p.theme.border)};
+    ${p => getShape(p.theme.shape)};
+    text-transform: uppercase;
+  }
   tr > th {
     color: white;
     font-weight: bold;
-    text-transform: uppercase;
   }
 `
 
@@ -147,8 +164,9 @@ export const TableCell = styled(TableCellBase)`
 
 export const TableRow = styled(TableRowBase)`
   position: relative;
-  margin: 4px 0;
+  margin: 4px 4px;
   outline: 0;
+  display: flex;
   background-color: ${p => p.theme.colors.white};
   ${p => getShape(p.theme.shape)};
   ${p => getBorder(p.theme.border)};
@@ -171,9 +189,9 @@ export const TableRow = styled(TableRowBase)`
     fill: ${p => p.theme.colors.callToAction};
     cursor: pointer;
     background-color: #d5e8f2;
-    border: 1px solid;
+    ${p => getBorder(p.theme.border)}
     border-color: ${p => p.theme.colors.callToAction};
-    box-shadow: 0px 9px 24px rgba(3, 118, 176, 0.35);
+    box-shadow: -1px 6px 4px 0px rgba(3, 118, 176, 0.35);
   }
   :focus {
     ::after {
@@ -184,7 +202,7 @@ export const TableRow = styled(TableRowBase)`
       width: calc(100% + 10px);
       top: -5px;
       left: -5px;
-      border: 1px solid;
+      ${p => getBorder(p.theme.border)}
       ${p => getDoubleBorder(p.theme.shape)};
       border-color: ${p => p.theme.colors.callToAction};
       box-sizing: border-box;
@@ -197,6 +215,8 @@ export const Table = styled(Tablebase)`
   overflow-x: auto;
   white-space: nowrap;
   margin: 0 16px;
+  justify-content: center;
+  flex-direction: column;
 ` as any
 
 interface TableComponent extends StyledComponentBase<'div', CactusTheme, TableProps> {
