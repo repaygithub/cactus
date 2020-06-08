@@ -36,8 +36,6 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 }
 
 .c1 .c10 {
-  display: block;
-  margin-left: 16px;
   margin-top: 4px;
 }
 

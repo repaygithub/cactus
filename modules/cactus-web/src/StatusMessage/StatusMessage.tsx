@@ -1,4 +1,3 @@
-import { CactusTheme } from '@repay/cactus-theme'
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -9,25 +8,24 @@ export type Status = 'success' | 'warning' | 'error'
 export const StatusPropType = PropTypes.oneOf(['success', 'warning', 'error'])
 
 interface StatusMessageProps {
-  status: Status
+  status: string
 }
 
 type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
-    border-color: ${p => p.theme.colors.success};
+    background-color: ${p => p.theme.colors.status.avatar.success};
   `,
   warning: css`
-    border-color: ${p => p.theme.colors.warning};
+    background-color: ${p => p.theme.colors.status.avatar.warning};
   `,
   error: css`
-    border-color: ${p => p.theme.colors.error};
+    background-color: ${p => p.theme.colors.status.avatar.error};
   `,
 }
 
-// @ts-ignore
-const statusColors: any = props => {
+const statusColors: any = (props: StatusMessageProps) => {
   const { status } = props
   return statusMap[status as Status]
 }
@@ -61,13 +59,11 @@ const StatusMessageBase: React.FC<
 }
 
 const StatusMessage = styled(StatusMessageBase)`
-  border-radius: 0 8px 8px 8px;
-  padding: 8px 16px 8px 16px;
+  padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
-  border: 2px solid;
   ${p => p.theme.textStyles.small};
   ${statusColors}
 
@@ -77,7 +73,6 @@ const StatusMessage = styled(StatusMessageBase)`
   }
 `
 
-// @ts-ignore
 StatusMessage.propTypes = {
   status: StatusPropType.isRequired,
 }

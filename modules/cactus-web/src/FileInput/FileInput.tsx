@@ -252,16 +252,9 @@ const FileInfo = styled(FileInfoBase)`
   ${StatusMessage} {
     position: relative;
     margin-top: 4px;
-    width: 100%;
-
-    span {
-      padding-right: 15px;
-    }
 
     ${IconButton} {
-      position: absolute;
-      right: 11px;
-      top: 14px;
+      margin-left: 10px;
       color: ${p => p.theme.colors.white};
     }
 

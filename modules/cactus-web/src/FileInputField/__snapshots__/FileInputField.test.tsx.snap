@@ -136,16 +136,14 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 .c19 {
-  border-radius: 0 8px 8px 8px;
-  padding: 8px 16px 8px 16px;
+  padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
-  border: 2px solid;
   font-size: 15px;
   line-height: 23px;
-  border-color: hsl(353,84%,44%);
+  background-color: hsla(353,84%,44%,0.3);
 }
 
 .c19 .c12,
@@ -270,17 +268,10 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 .c8 .c18 {
   position: relative;
   margin-top: 4px;
-  width: 100%;
-}
-
-.c8 .c18 span {
-  padding-right: 15px;
 }
 
 .c8 .c18 .c14 {
-  position: absolute;
-  right: 11px;
-  top: 14px;
+  margin-left: 10px;
   color: hsl(0,0%,100%);
 }
 
@@ -727,17 +718,10 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 .c8 .c25 {
   position: relative;
   margin-top: 4px;
-  width: 100%;
-}
-
-.c8 .c25 span {
-  padding-right: 15px;
 }
 
 .c8 .c25 .c14 {
-  position: absolute;
-  right: 11px;
-  top: 14px;
+  margin-left: 10px;
   color: hsl(0,0%,100%);
 }
 
@@ -1059,17 +1043,10 @@ exports[`component: FileInputField should render a loading file 1`] = `
 .c8 .c21 {
   position: relative;
   margin-top: 4px;
-  width: 100%;
-}
-
-.c8 .c21 span {
-  padding-right: 15px;
 }
 
 .c8 .c21 .c19 {
-  position: absolute;
-  right: 11px;
-  top: 14px;
+  margin-left: 10px;
   color: hsl(0,0%,100%);
 }
 

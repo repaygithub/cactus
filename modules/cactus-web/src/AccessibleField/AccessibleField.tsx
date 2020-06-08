@@ -140,8 +140,6 @@ export const AccessibleField = styled(AccessibleFieldBase)`
   }
 
   ${StatusMessage} {
-    display: block;
-    margin-left: 16px;
     margin-top: 4px;
   }
 `
