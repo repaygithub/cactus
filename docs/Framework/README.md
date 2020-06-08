@@ -8,8 +8,8 @@ The Cactus Framework implements a set of common front-end necessities at a top l
 
 ## Quick Links
 
-- [API Documentation](/framework/api)
-  - [Feature Flags](/framework/api/feature-flags/)
+- [API Documentation](./API/README.md)
+  - [Feature Flags](./API/Feature%20Flags.md)
 - [Source Code](../../modules/cactus-fwk/)
 
 ## Getting Started
@@ -41,7 +41,7 @@ export default () => {
   useEffect(() => {
     /** fetchFeatureFlags returns a Promise<FeatureFlagsObject>
      */
-    fetchFeatureFlags().then(featuresData => setFeatures(featuresData))
+    fetchFeatureFlags().then((featuresData) => setFeatures(featuresData))
     // You should catch errors here but the example is not going to address that
   }, [setFeatures])
 
@@ -68,7 +68,7 @@ interface Props {
   customWelcomeMessage?: string
 }
 
-const Home: React.FC<Props> = props => {
+const Home: React.FC<Props> = (props) => {
   const [customWelcomeEnabled] = useFeatureFlags('custom_welcome_message')
 
   return (

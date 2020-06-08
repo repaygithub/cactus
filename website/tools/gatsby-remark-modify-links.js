@@ -3,6 +3,12 @@ const visit = require('unist-util-visit')
 
 const isInDocs = (url, dirname) => path.resolve(dirname, url).includes('/docs/')
 
+const prependRelativePath = (url, dirname) => {
+  const regex = new RegExp(/\/docs\/([\w\/]+)/)
+  const match = regex.exec(dirname)
+  return match.length === 2 ? `${match[1]}/${url}` : url
+}
+
 const toSlug = filePath =>
   filePath
     .toLowerCase()
@@ -22,6 +28,8 @@ module.exports = ({ markdownAST, markdownNode }, { repoBase, repoUrl }) => {
       let dirname = path.dirname(markdownNode.fileAbsolutePath)
       // all docs are converted to pages
       if (isInDocs(node.url, dirname)) {
+        node.url = node.url.replace(/^\.\//, '')
+        node.url = prependRelativePath(node.url, dirname)
         node.url = toSlug(node.url)
       } else {
         // reference to repository url
