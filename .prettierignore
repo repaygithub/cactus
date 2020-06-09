@@ -4,6 +4,7 @@ node_modules/
 package-lock.json
 yarn.lock
 package.json
+**/testing-library-client-scripts
 
 modules/cactus-icons/i/
 modules/cactus-icons/ts/
