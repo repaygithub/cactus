@@ -5,6 +5,7 @@ website/public
 .git
 .cache
 !**/.storybook
+**/testing-library-client-scripts
 
 modules/cactus-icons/i/
 modules/cactus-icons/ts/
