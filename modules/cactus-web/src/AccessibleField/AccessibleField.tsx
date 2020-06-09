@@ -112,9 +112,11 @@ function AccessibleFieldBase(props: AccessibleFieldProps) {
           status,
         })}
       {status !== undefined && (
-        <StatusMessage status={status} id={statusId}>
-          {statusMessage}
-        </StatusMessage>
+        <div>
+          <StatusMessage status={status} id={statusId}>
+            {statusMessage}
+          </StatusMessage>
+        </div>
       )}
     </FieldWrapper>
   )
