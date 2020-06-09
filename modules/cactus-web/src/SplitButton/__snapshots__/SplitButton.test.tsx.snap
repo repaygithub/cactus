@@ -1,0 +1,726 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: SplitButton snapshot 1`] = `
+.c6 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c2 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 20px 1px 1px 20px;
+  background-color: hsl(0,0%,100%);
+  height: 32px;
+  outline: none;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400px;
+  cursor: pointer;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.c2 svg {
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.c2.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c2.dd-closed:hover,
+.c2.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c2.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4 {
+  box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
+  height: 32px;
+  width: 36px;
+  border-radius: 1px 20px 20px 1px;
+  margin-left: 1px;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+}
+
+.c4 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c4:hover,
+.c4:focus {
+  background-color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.c0 .c3[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+}
+
+.c0 .c3[aria-expanded='true'] .c5 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c0 .c3[aria-expanded='true'] + .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <button
+      class="dd-closed c1 c2"
+      type="button"
+    >
+      Test
+    </button>
+    <button
+      aria-expanded="false"
+      aria-haspopup="menu"
+      class="c3 c4"
+      data-reach-menu-button=""
+      id="menu-button--1"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="c5 c6"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`component: SplitButton with theme customization dropdown should not have box shadows 1`] = `
+.c6 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c2 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 20px 1px 1px 20px;
+  background-color: hsl(0,0%,100%);
+  height: 32px;
+  outline: none;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400px;
+  cursor: pointer;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.c2 svg {
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.c2.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c2.dd-closed:hover,
+.c2.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c2.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4 {
+  box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
+  height: 32px;
+  width: 36px;
+  border-radius: 1px 20px 20px 1px;
+  margin-left: 1px;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+}
+
+.c4 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c4:hover,
+.c4:focus {
+  background-color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c7 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c7[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c8 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c8[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c9 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c9[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.c0 .c3[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+}
+
+.c0 .c3[aria-expanded='true'] .c5 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c0 .c3[aria-expanded='true'] + .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <button
+      class="dd-closed c1 c2"
+      type="button"
+    >
+      Test
+    </button>
+    <button
+      aria-expanded="false"
+      aria-haspopup="menu"
+      class="c3 c4"
+      data-reach-menu-button=""
+      id="menu-button--28"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="c5 c6"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`component: SplitButton with theme customization should have 2px borders 1`] = `
+.c6 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c2 {
+  box-sizing: border-box;
+  border: 2px solid;
+  border-radius: 20px 1px 1px 20px;
+  background-color: hsl(0,0%,100%);
+  height: 32px;
+  outline: none;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400px;
+  cursor: pointer;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.c2 svg {
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.c2.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c2.dd-closed:hover,
+.c2.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c2.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4 {
+  box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
+  height: 32px;
+  width: 36px;
+  border-radius: 1px 20px 20px 1px;
+  margin-left: 1px;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+}
+
+.c4 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c4:hover,
+.c4:focus {
+  background-color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c7 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c7[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c8 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c8[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c9 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c9[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.c0 .c3[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+}
+
+.c0 .c3[aria-expanded='true'] .c5 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c0 .c3[aria-expanded='true'] + .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <button
+      class="dd-closed c1 c2"
+      type="button"
+    >
+      Test
+    </button>
+    <button
+      aria-expanded="false"
+      aria-haspopup="menu"
+      class="c3 c4"
+      data-reach-menu-button=""
+      id="menu-button--30"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="c5 c6"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`component: SplitButton with theme customization should have intermediate shape 1`] = `
+.c6 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c2 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 8px 1px 1px 8px;
+  background-color: hsl(0,0%,100%);
+  height: 32px;
+  outline: none;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400px;
+  cursor: pointer;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.c2 svg {
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.c2.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c2.dd-closed:hover,
+.c2.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c2.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c7 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c7[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c8 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c8[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c9 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c9[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4 {
+  box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
+  height: 32px;
+  width: 36px;
+  border-radius: 1px 8px 8px 1px;
+  margin-left: 1px;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+}
+
+.c4 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c4:hover,
+.c4:focus {
+  background-color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.c0 .c3[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+}
+
+.c0 .c3[aria-expanded='true'] .c5 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c0 .c3[aria-expanded='true'] + .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <button
+      class="dd-closed c1 c2"
+      type="button"
+    >
+      Test
+    </button>
+    <button
+      aria-expanded="false"
+      aria-haspopup="menu"
+      class="c3 c4"
+      data-reach-menu-button=""
+      id="menu-button--26"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="c5 c6"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`component: SplitButton with theme customization should have square shape 1`] = `
+.c6 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
+.c2 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 1px;
+  background-color: hsl(0,0%,100%);
+  height: 32px;
+  outline: none;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400px;
+  cursor: pointer;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.c2 svg {
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.c2.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c2.dd-closed:hover,
+.c2.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c2.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c7 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c7[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c8 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c8[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c4 {
+  box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
+  height: 32px;
+  width: 36px;
+  border-radius: 1px;
+  margin-left: 1px;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+}
+
+.c4 .c5 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c4:hover,
+.c4:focus {
+  background-color: hsl(200,96%,35%);
+}
+
+.c4[aria-expanded='true'] ~ .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c0 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.c0 .c3[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+}
+
+.c0 .c3[aria-expanded='true'] .c5 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c0 .c3[aria-expanded='true'] + .c1 {
+  border-color: hsl(200,96%,35%);
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <button
+      class="dd-closed c1 c2"
+      type="button"
+    >
+      Test
+    </button>
+    <button
+      aria-expanded="false"
+      aria-haspopup="menu"
+      class="c3 c4"
+      data-reach-menu-button=""
+      id="menu-button--24"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="c5 c6"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;
