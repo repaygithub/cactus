@@ -7,30 +7,47 @@ type cellAlignment = 'center' | 'right' | 'left'
 
 type cellType = 'th' | 'td'
 
-interface TableContext {
+interface TableContextProps {
   cellType: cellType
 }
 
-interface TableProps {
+interface TableProps
+  extends React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement> {
   className?: string
 }
 
-interface TableHeaderProps {
+interface TableHeaderProps
+  extends React.DetailedHTMLProps<
+    React.TableHTMLAttributes<HTMLTableSectionElement>,
+    HTMLTableSectionElement
+  > {
   className?: string
 }
-interface TableCellProps {
+interface TableCellProps
+  extends React.DetailedHTMLProps<
+    React.TableHTMLAttributes<HTMLTableDataCellElement & HTMLTableHeaderCellElement>,
+    HTMLTableDataCellElement & HTMLTableHeaderCellElement
+  > {
   className?: string
-  align: cellAlignment
+  align?: cellAlignment
 }
 
-interface TableRowProps {
+interface TableRowProps
+  extends React.DetailedHTMLProps<
+    React.TableHTMLAttributes<HTMLTableRowElement>,
+    HTMLTableRowElement
+  > {
   className?: string
 }
-interface TableBodyProps {
+interface TableBodyProps
+  extends React.DetailedHTMLProps<
+    React.TableHTMLAttributes<HTMLTableSectionElement>,
+    HTMLTableSectionElement
+  > {
   className?: string
 }
 
-const TableContext = createContext<TableContext>({
+const TableContext = createContext<TableContextProps>({
   cellType: 'td',
 })
 
@@ -69,8 +86,10 @@ const borderMap = {
 const getShape = (shape: Shape) => shapeMap[shape]
 const getDoubleBorder = (shape: Shape) => doubleBorder[shape]
 const getBorder = (size: BorderSize) => borderMap[size]
-
-const Tablebase: FunctionComponent<TableProps> = props => {
+const getBoxShadow = (theme: CactusTheme) => {
+  return theme.boxShadows ? `-1px 6px 4px 0px rgba(3, 118, 176, 0.35)` : {}
+}
+const TableBase: FunctionComponent<TableProps> = props => {
   const { children, className } = props
 
   return <table className={className}>{children}</table>
@@ -81,7 +100,7 @@ const TableCellBase: FunctionComponent<TableCellProps> = props => {
   const { cellType: Type } = useContext(TableContext)
 
   return (
-    <Type className={className} align={align}>
+    <Type className={className} align={align || 'left'}>
       {children}
     </Type>
   )
@@ -93,7 +112,7 @@ const TableHeaderBase: FunctionComponent<TableHeaderProps> = props => {
   return (
     <TableContext.Provider value={{ cellType: 'th' }}>
       <thead className={className}>
-        <tr>{React.Children.map(children, child => child)}</tr>
+        <tr>{children}</tr>
       </thead>
     </TableContext.Provider>
   )
@@ -170,28 +189,30 @@ export const TableRow = styled(TableRowBase)`
   background-color: ${p => p.theme.colors.white};
   ${p => getShape(p.theme.shape)};
   ${p => getBorder(p.theme.border)};
-  border-color: #dee8ed;
-  :nth-of-type(even) {
-    background-color: ${p => p.theme.colors.lightContrast};
-    ${p => getShape(p.theme.shape)};
-    ${p => getBorder(p.theme.border)};
-    border-color: #5f7a88;
-    :hover {
-      background-color: #d5e8f2;
-      border-color: ${p => p.theme.colors.callToAction};
-    }
-  }
+  border-color: ${p => p.theme.colors.lightContrast};
 
   & small {
     color: ${p => p.theme.colors.darkestContrast};
   }
+
   :hover {
-    fill: ${p => p.theme.colors.callToAction};
     cursor: pointer;
-    background-color: #d5e8f2;
+    background-color: ${p => p.theme.colors.transparentCTA};
     ${p => getBorder(p.theme.border)}
     border-color: ${p => p.theme.colors.callToAction};
-    box-shadow: -1px 6px 4px 0px rgba(3, 118, 176, 0.35);
+    box-shadow: ${p => getBoxShadow(p.theme)};
+
+  }
+
+  :nth-of-type(even) {
+    background-color: ${p => p.theme.colors.lightContrast};
+    ${p => getShape(p.theme.shape)};
+    ${p => getBorder(p.theme.border)};
+    border-color: ${p => p.theme.colors.mediumContrast};
+    :hover {
+      background-color: ${p => p.theme.colors.transparentCTA};
+      border-color: ${p => p.theme.colors.callToAction};
+    }
   }
   :focus {
     ::after {
@@ -210,7 +231,7 @@ export const TableRow = styled(TableRowBase)`
   }
 `
 
-export const Table = styled(Tablebase)`
+export const Table = styled(TableBase)`
   display: flex;
   overflow-x: auto;
   white-space: nowrap;

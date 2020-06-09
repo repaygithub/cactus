@@ -7,14 +7,14 @@ import Table from './Table'
 storiesOf('Table', module).add('Header', () => (
   <Table>
     <Table.Header>
-      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell>Header</Table.Cell>
       <Table.Cell align="left">Header</Table.Cell>
       <Table.Cell align="left">Header</Table.Cell>
     </Table.Header>
   </Table>
 ))
 
-const arr = [1, 2, 3, 4, 5, 6, 7]
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const amount = [
   '$ 123.00',
@@ -25,6 +25,8 @@ const amount = [
   '$ 23.00',
   '$ 3000.00',
   '$ 123.231.00',
+  '$ 123.00',
+  '$ 123.00',
 ]
 
 storiesOf('Table', module).add('Row', () => (
@@ -69,6 +71,8 @@ storiesOf('Table', module).add('Row', () => (
 storiesOf('Table', module).add('Row and header', () => (
   <Table>
     <Table.Header>
+      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align="left">Header</Table.Cell>
       <Table.Cell align="left">Header</Table.Cell>
       <Table.Cell align="left">Header</Table.Cell>
       <Table.Cell align="left">Header</Table.Cell>

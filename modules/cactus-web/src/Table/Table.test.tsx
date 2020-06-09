@@ -10,7 +10,16 @@ describe('component: Table', () => {
   test('snapshot', () => {
     const { container } = render(
       <StyleProvider>
-        <Table />
+        <Table>
+          <Table.Header>
+            <Table.Cell>Header Cell</Table.Cell>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
       </StyleProvider>
     )
 
