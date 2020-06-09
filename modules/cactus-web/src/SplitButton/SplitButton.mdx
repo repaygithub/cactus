@@ -1,0 +1,42 @@
+---
+name: SplitButton
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import SplitButton from './SplitButton'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# SplitButton
+
+The `SplitButton` component is a combination of a button and a dropdown and it is useful for providing a user with
+some actions to take. It consists of a main action button and any number of other actions that can be displayed by the dropdown.
+
+## Try It Out
+
+export const code = `
+<SplitButton onSelectMainAction={() => console.log('Main Action')} mainActionLabel="Main Action">
+  <SplitButton.Action onSelect={() => console.log('Action 1')}>Action 1</SplitButton.Action>
+  <SplitButton.Action onSelect={() => console.log('Action 2')}>Action 2</SplitButton.Action>
+</SplitButton>
+`
+
+<LiveProvider code={code} scope={{ SplitButton }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- If applicable, pass icons to provide a visual representation of each action to the user.
+
+## Properties
+
+### SplitButton
+
+<PropsTable of={SplitButton} />
+
+### SplitButton Action
+
+<PropsTable of={SplitButton} staticProp="SplitButtonAction" />
