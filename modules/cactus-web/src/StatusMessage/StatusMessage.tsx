@@ -5,10 +5,10 @@ import styled, { css } from 'styled-components'
 
 export type Status = 'success' | 'warning' | 'error'
 
-export const StatusPropType = PropTypes.oneOf(['success', 'warning', 'error'])
+export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
 
 interface StatusMessageProps {
-  status: string
+  status: Status
 }
 
 type StatusMap = { [K in Status]: ReturnType<typeof css> }
