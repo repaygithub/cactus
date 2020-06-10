@@ -7,8 +7,6 @@ import Select from './Select'
 import StyleProvider from '../StyleProvider/StyleProvider'
 import userEvent from '@testing-library/user-event'
 
-afterEach(cleanup)
-
 function getActiveValue(): string {
   // @ts-ignore
   return document.getElementById(document.activeElement.getAttribute('aria-activedescendant'))
@@ -72,9 +70,7 @@ describe('component: Select', () => {
     // @ts-ignore
     const trigger: HTMLElement = getByText('Select an option')
     fireEvent.click(trigger)
-    await act(async () => {
-      await animationRender()
-    })
+    await animationRender()
     let topOption = getByText('yum')
     expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(topOption.id)
   })
@@ -104,11 +100,9 @@ describe('component: Select', () => {
         />
       </StyleProvider>
     )
-    await act(async () => {
-      await animationRender()
-      fireEvent.click(getByText('one'))
-      await animationRender()
-    })
+    await animationRender()
+    fireEvent.click(getByText('one'))
+    await animationRender()
     rerender(
       <StyleProvider>
         <Select
@@ -153,9 +147,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toEqual('phoenix')
@@ -175,9 +167,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toEqual('phoenix')
@@ -197,9 +187,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toEqual('phoenix')
@@ -219,17 +207,13 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       fireEvent.keyDown(getByRole('listbox'), { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(getByRole('listbox'), {
         keyCode: KeyCodes.RETURN,
         charCode: KeyCodes.RETURN,
       })
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       rerender(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
@@ -252,14 +236,12 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-        fireEvent.keyDown(getByRole('listbox'), {
-          keyCode: KeyCodes.ESC,
-          charCode: KeyCodes.ESC,
-        })
-        await animationRender()
+      await animationRender()
+      fireEvent.keyDown(getByRole('listbox'), {
+        keyCode: KeyCodes.ESC,
+        charCode: KeyCodes.ESC,
       })
+      await animationRender()
       rerender(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
@@ -282,9 +264,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let list = getByRole('listbox')
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       // @ts-ignore
@@ -316,9 +296,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let list = getByRole('listbox')
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -326,9 +304,7 @@ describe('component: Select', () => {
         keyCode: KeyCodes.RETURN,
         charCode: KeyCodes.RETURN,
       })
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', 'flagstaff')
     })
 
@@ -347,9 +323,7 @@ describe('component: Select', () => {
             <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
           </StyleProvider>
         )
-        await act(async () => {
-          await animationRender()
-        })
+        await animationRender()
         let list = getByRole('listbox')
         // keycode 84 = t
         fireEvent.keyDown(list, { keyCode: 84, charCode: 84 })
@@ -378,9 +352,7 @@ describe('component: Select', () => {
             />
           </StyleProvider>
         )
-        await act(async () => {
-          await animationRender()
-        })
+        await animationRender()
         let list = getByRole('listbox')
         // keycode 84 = t
         fireEvent.keyDown(list, { keyCode: 84, charCode: 84 })
@@ -406,11 +378,9 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-        fireEvent.click(getByText('flagstaff'))
-        await animationRender()
-      })
+      await animationRender()
+      fireEvent.click(getByText('flagstaff'))
+      await animationRender()
       rerender(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
@@ -446,11 +416,9 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-        fireEvent.click(getByText('flagstaff'))
-        await animationRender()
-      })
+      await animationRender()
+      fireEvent.click(getByText('flagstaff'))
+      await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', 'flagstaff')
     })
 
@@ -469,14 +437,10 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" placeholder="Click me!" options={cities} />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let bensonOption = getByText('Benson')
       fireEvent.mouseEnter(bensonOption)
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(bensonOption.id)
     })
   })
@@ -533,9 +497,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(document.activeElement).toBe(getByRole('listbox'))
       expect(onBlur).not.toHaveBeenCalled()
     })
@@ -576,9 +538,7 @@ describe('component: Select', () => {
           </React.Fragment>
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       getByText('lose focus').focus()
       expect(onBlur).toHaveBeenCalledWith('city')
     })
@@ -634,9 +594,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onFocus).toHaveBeenCalledWith('city')
       onFocus.mockReset()
       act(() => {
@@ -657,9 +615,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onFocus).not.toHaveBeenCalled()
     })
   })
@@ -698,10 +654,8 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        fireEvent.click(getByRole('button'))
-        await animationRender()
-      })
+      fireEvent.click(getByRole('button'))
+      await animationRender()
       let options = getAllByRole('option')
       options.forEach(o => {
         expect(o.getAttribute('aria-selected')).toBe(
@@ -736,9 +690,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const phoenixCheckbox = document.querySelector('input[type=checkbox]') as Element
       fireEvent.click(phoenixCheckbox)
       rerender(
@@ -752,9 +704,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', ['phoenix'])
     })
 
@@ -788,16 +738,12 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('flagstaff', { selector: '[role="option"]' }))
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'flagstaff'])
     })
 
@@ -831,16 +777,12 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       let list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('tucson', { selector: '[role="option"]' }))
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', [])
     })
 
@@ -874,17 +816,13 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(getActiveValue()).toBe('tucson')
       fireEvent.keyDown(getByRole('listbox'), {
         keyCode: KeyCodes.SPACE,
         charCode: KeyCodes.SPACE,
       })
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', [])
       expect(document.activeElement).toBe(getByRole('listbox'))
     })
@@ -919,14 +857,10 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('phoenix'))
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'phoenix'])
       expect(document.activeElement).toBe(getByRole('listbox'))
     })
@@ -946,9 +880,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(getByRole('listbox')).toBeInTheDocument()
       expect(document.activeElement).toBe(getByRole('search'))
     })
@@ -966,9 +898,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const searchBox = getByRole('search')
       userEvent.type(searchBox, 'phoe')
       const list = getByRole('listbox')
@@ -990,9 +920,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       userEvent.type(searchBox, 'camp verde')
       fireEvent.click(getByText('Create "camp verde"'))
@@ -1001,9 +929,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       trigger = getByRole('button')
       expect(trigger).toHaveTextContent('camp verde')
     })
@@ -1021,9 +947,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-phoenix-phoenix')
@@ -1047,9 +971,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
@@ -1058,9 +980,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       trigger = getByRole('button')
       expect(trigger).toHaveTextContent('phoenix')
       expect(document.activeElement).toBe(trigger)
@@ -1079,9 +999,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.ESC, charCode: KeyCodes.ESC })
       rerender(
@@ -1089,9 +1007,7 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       trigger = getByRole('button')
       expect(document.activeElement).toBe(trigger)
     })
@@ -1133,9 +1049,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       expect(getByRole('listbox')).toHaveTextContent('superior')
     })
 
@@ -1206,9 +1120,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const flagstaff: HTMLElement = getByText('flagstaff')
       const phoenix: HTMLElement = getByText('phoenix')
       fireEvent.click(flagstaff)
@@ -1243,9 +1155,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
@@ -1283,9 +1193,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, {
@@ -1304,9 +1212,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       trigger = getByRole('button')
       expect(document.activeElement).toBe(trigger)
       expect(document.activeElement).toHaveTextContent('phoenix')
@@ -1337,9 +1243,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       fireEvent.click(getByText('flagstaff'))
       fireEvent.click(getByRole('search'))
       expect(getByRole('listbox')).not.toBeNull()
@@ -1385,9 +1289,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       const listbox = getByRole('listbox')
       expect(listbox.childNodes[0]).toHaveTextContent('boolest')
       expect(listbox.childNodes[1]).toHaveTextContent('coolest')

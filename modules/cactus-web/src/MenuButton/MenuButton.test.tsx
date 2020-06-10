@@ -1,20 +1,11 @@
 import * as React from 'react'
 
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
+import animationRender from '../../tests/helpers/animationRender'
 import MenuButton from './MenuButton'
 import userEvent from '@testing-library/user-event'
-
-afterEach(cleanup)
-
-function animationRender() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      window.requestAnimationFrame(resolve)
-    }, 0)
-  })
-}
 
 describe('component: MenuButton', () => {
   test('snapshot', () => {
@@ -44,13 +35,9 @@ describe('component: MenuButton', () => {
         </StyleProvider>
       )
 
-      await act(async () => {
-        userEvent.click(getByText('Demo'))
-        await animationRender()
-      })
-      act(() => {
-        userEvent.click(getByText('Action One'))
-      })
+      userEvent.click(getByText('Demo'))
+      await animationRender()
+      userEvent.click(getByText('Action One'))
       expect(actionOne).toHaveBeenCalled()
     })
   })
@@ -69,15 +56,11 @@ describe('component: MenuButton', () => {
         </StyleProvider>
       )
 
-      await act(async () => {
-        userEvent.click(getByText('Demo'))
-        await animationRender()
-      })
-      await act(async () => {
-        // @ts-ignore
-        fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
-        await animationRender()
-      })
+      userEvent.click(getByText('Demo'))
+      await animationRender()
+      // @ts-ignore
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+      await animationRender()
       rerender(
         <StyleProvider>
           <MenuButton label="Demo">
@@ -87,10 +70,8 @@ describe('component: MenuButton', () => {
           </MenuButton>
         </StyleProvider>
       )
-      act(() => {
-        // @ts-ignore
-        fireEvent.keyDown(document.activeElement, { key: 'Enter' })
-      })
+      // @ts-ignore
+      fireEvent.keyDown(document.activeElement, { key: 'Enter' })
       expect(actionOne).not.toHaveBeenCalled()
       expect(actionTwo).toHaveBeenCalled()
     })

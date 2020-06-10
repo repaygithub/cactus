@@ -3,18 +3,9 @@ import * as React from 'react'
 import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
+import animationRender from '../../tests/helpers/animationRender'
 import SplitButton from './SplitButton'
 import userEvent from '@testing-library/user-event'
-
-afterEach(cleanup)
-
-function animationRender() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      window.requestAnimationFrame(resolve)
-    }, 0)
-  })
-}
 
 describe('component: SplitButton', () => {
   test('snapshot', () => {
@@ -96,14 +87,10 @@ describe('component: SplitButton', () => {
 
       const dropdownButton = document.querySelector('[aria-haspopup=menu]') as HTMLButtonElement
       userEvent.click(dropdownButton)
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
-      await act(async () => {
-        await animationRender()
-      })
+      await animationRender()
       rerender(
         <StyleProvider>
           <SplitButton mainActionLabel="Main Action" onSelectMainAction={jest.fn()}>
