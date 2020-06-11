@@ -29,6 +29,10 @@ export const code = `
 
 ## Best practices
 
+- The `SplitButton` should be used when there are many distinct possible actions, but only one primary action which
+is likely to be used the most, as opposed to the `MenuButton`, which is used to offer multiple ways of carrying out a
+single action.
+- Pass `aria-label` to `SplitButton` to provide the dropdown trigger with an accessible label.
 - If applicable, pass icons to provide a visual representation of each action to the user.
 
 ## Properties
