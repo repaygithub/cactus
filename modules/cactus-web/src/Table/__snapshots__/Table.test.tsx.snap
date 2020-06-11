@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Table snapshot 1`] = `
+.c1 tr {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 4px 4px 4px;
+  border-color: hsl(200,96%,11%);
+  background-color: hsl(200,96%,11%);
+  border: 1px solid;
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+
+.c1 tr > th {
+  color: white;
+  font-weight: bold;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c2 {
+  max-width: 160px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 23px 16px;
+  color: hsl(200,10%,20%);
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.c2 > svg {
+  vertical-align: text-top;
+  margin: 1px 10px;
+}
+
+.c4 {
+  position: relative;
+  margin: 4px 4px;
+  outline: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: hsl(0,0%,100%);
+  border-radius: 8px;
+  border: 1px solid;
+  border-color: hsl(200,29%,90%);
+}
+
+.c4 small {
+  color: hsl(200,10%,20%);
+}
+
+.c4:hover {
+  cursor: pointer;
+  background-color: hsla(200,96%,35%,0.25);
+  border: 1px solid;
+  border-color: hsl(200,96%,35%);
+  box-shadow: -1px 6px 4px 0px rgba(3,118,176,0.35);
+}
+
+.c4:nth-of-type(even) {
+  background-color: hsl(200,29%,90%);
+  border-radius: 8px;
+  border: 1px solid;
+  border-color: hsl(200,18%,45%);
+}
+
+.c4:nth-of-type(even):hover {
+  background-color: hsla(200,96%,35%,0.25);
+  border-color: hsl(200,96%,35%);
+}
+
+.c4:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 1px solid;
+  border-radius: 11px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin: 0 16px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@media screen and (min-width:1024px) {
+  .c2 {
+    width: calc(160px * 0.7125);
+  }
+}
+
+@media screen and (min-width:1200px) {
+  .c2 {
+    width: calc(160px * 0.875);
+  }
+}
+
+@media screen and (min-width:1440px) {
+  .c2 {
+    width: 160px;
+  }
+}
+
+<div>
+  <table
+    class="c0"
+  >
+    <thead
+      class="c1"
+    >
+      <tr>
+        <th
+          align="left"
+          class="c2"
+        >
+          Header Cell
+        </th>
+      </tr>
+    </thead>
+    <tbody
+      class="c3"
+    >
+      <tr
+        class="c4"
+        tabindex="0"
+      >
+        <td
+          align="left"
+          class="c2"
+        >
+          Data cell
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
