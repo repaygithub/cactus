@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
+import React, { MutableRefObject, useRef, useState } from 'react'
 
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
 import { getScrollX } from '../helpers/scrollOffset'
@@ -32,7 +32,9 @@ interface SplitButtonProps
   disabled?: boolean
 }
 
-interface SplitButtonActionProps extends MenuItemImplProps {
+interface SplitButtonActionProps extends Omit<MenuItemImplProps, 'onSelect'> {
+  // !important
+  onSelect: () => any
   icon?: React.FunctionComponent<IconProps>
 }
 
@@ -281,17 +283,15 @@ const SplitButtonActionBase = (props: SplitButtonActionProps) => {
   )
 }
 
-const SplitButtonAction = styled(SplitButtonActionBase)`
+export const SplitButtonAction = styled(SplitButtonActionBase)`
   svg {
     margin-right: 4px;
     margin-bottom: 3px;
   }
 `
 
-SplitButtonBase.Action = SplitButtonAction
-
-type SplitButtonType = StyledComponent<typeof SplitButtonBase, any, {}, never> & {
-  Action: typeof SplitButtonBase['Action']
+type SplitButtonType = StyledComponent<typeof SplitButtonBase, CactusTheme, SplitButtonProps> & {
+  Action: React.ComponentType<SplitButtonActionProps>
 }
 
 export const SplitButton = styled(SplitButtonBase)`
@@ -309,7 +309,7 @@ export const SplitButton = styled(SplitButtonBase)`
   ${DropdownButton}[aria-expanded='true'] + ${MainActionButton} {
     border-color: ${p => p.theme.colors.callToAction};
   }
-` as SplitButtonType
+` as any
 
 SplitButton.propTypes = {
   mainActionLabel: PropTypes.string.isRequired,
@@ -318,4 +318,6 @@ SplitButton.propTypes = {
   disabled: PropTypes.bool,
 }
 
-export default SplitButton
+SplitButton.Action = SplitButtonAction
+
+export default SplitButton as SplitButtonType

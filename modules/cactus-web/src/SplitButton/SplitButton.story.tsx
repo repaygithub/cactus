@@ -56,17 +56,22 @@ storiesOf('SplitButton', module)
   .add(
     'With Collisions',
     () => (
-      <SplitButton
-        onSelectMainAction={() => console.log('Main Action')}
-        mainActionLabel="Main Action"
-      >
-        <SplitButton.Action onSelect={() => console.log('Action One')}>
-          Action One
-        </SplitButton.Action>
-        <SplitButton.Action onSelect={() => console.log('Action Two')}>
-          Action Two
-        </SplitButton.Action>
-      </SplitButton>
+      <React.Fragment>
+        <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
+          Scroll down and to the right
+        </div>
+        <SplitButton
+          onSelectMainAction={() => console.log('Main Action')}
+          mainActionLabel="Main Action"
+        >
+          <SplitButton.Action onSelect={() => console.log('Action One')}>
+            Action One
+          </SplitButton.Action>
+          <SplitButton.Action onSelect={() => console.log('Action Two')}>
+            Action Two
+          </SplitButton.Action>
+        </SplitButton>
+      </React.Fragment>
     ),
     { cactus: { overrides: { height: '220vh', width: '220vw' } } }
   )
