@@ -26,6 +26,10 @@ exports[`component: SplitButton snapshot 1`] = `
   margin-bottom: 3px;
 }
 
+.c2::-moz-focus-inner {
+  border: 0;
+}
+
 .c2.dd-closed {
   border-color: hsl(200,10%,20%);
 }
@@ -148,6 +152,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 .c2 svg {
   margin-right: 4px;
   margin-bottom: 3px;
+}
+
+.c2::-moz-focus-inner {
+  border: 0;
 }
 
 .c2.dd-closed {
@@ -304,6 +312,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
   margin-bottom: 3px;
 }
 
+.c2::-moz-focus-inner {
+  border: 0;
+}
+
 .c2.dd-closed {
   border-color: hsl(200,10%,20%);
 }
@@ -458,6 +470,10 @@ exports[`component: SplitButton with theme customization should have intermediat
   margin-bottom: 3px;
 }
 
+.c2::-moz-focus-inner {
+  border: 0;
+}
+
 .c2.dd-closed {
   border-color: hsl(200,10%,20%);
 }
@@ -610,6 +626,10 @@ exports[`component: SplitButton with theme customization should have square shap
 .c2 svg {
   margin-right: 4px;
   margin-bottom: 3px;
+}
+
+.c2::-moz-focus-inner {
+  border: 0;
 }
 
 .c2.dd-closed {
