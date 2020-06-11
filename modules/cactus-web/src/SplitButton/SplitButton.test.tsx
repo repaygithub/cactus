@@ -40,7 +40,7 @@ describe('component: SplitButton', () => {
 
     test('can select an action from the dropdown', async () => {
       const onAction1Select = jest.fn()
-      const { getByText } = render(
+      const { getByText, getByLabelText } = render(
         <StyleProvider>
           <SplitButton mainActionLabel="Main Action" onSelectMainAction={jest.fn()}>
             <SplitButton.Action onSelect={onAction1Select}>One Action</SplitButton.Action>
@@ -49,7 +49,7 @@ describe('component: SplitButton', () => {
         </StyleProvider>
       )
 
-      const dropdownButton = document.querySelector('[aria-haspopup=menu]') as HTMLButtonElement
+      const dropdownButton = getByLabelText('Action List') as HTMLButtonElement
       userEvent.click(dropdownButton)
       const action1 = getByText('One Action')
       userEvent.click(action1)

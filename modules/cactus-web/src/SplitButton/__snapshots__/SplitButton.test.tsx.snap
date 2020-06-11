@@ -100,6 +100,7 @@ exports[`component: SplitButton snapshot 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="menu"
+      aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
       id="menu-button--1"
@@ -253,6 +254,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
     <button
       aria-expanded="false"
       aria-haspopup="menu"
+      aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
       id="menu-button--28"
@@ -406,6 +408,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
     <button
       aria-expanded="false"
       aria-haspopup="menu"
+      aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
       id="menu-button--30"
@@ -559,6 +562,7 @@ exports[`component: SplitButton with theme customization should have intermediat
     <button
       aria-expanded="false"
       aria-haspopup="menu"
+      aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
       id="menu-button--26"
@@ -702,6 +706,7 @@ exports[`component: SplitButton with theme customization should have square shap
     <button
       aria-expanded="false"
       aria-haspopup="menu"
+      aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
       id="menu-button--24"

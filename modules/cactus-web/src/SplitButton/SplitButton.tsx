@@ -24,12 +24,17 @@ import styled, {
 export type IconProps = { iconSize: 'tiny' | 'small' | 'medium' | 'large' }
 
 interface SplitButtonProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  extends Omit<
+      React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+      'aria-label'
+    >,
     MarginProps {
   mainActionLabel: string
   onSelectMainAction: (event: React.MouseEvent<HTMLButtonElement>) => void
   mainActionIcon?: React.FunctionComponent<IconProps>
   disabled?: boolean
+  // Aria label for the dropdown trigger. Defaults to "Action List"
+  'aria-label'?: string
 }
 
 interface SplitButtonActionProps extends Omit<MenuItemImplProps, 'onSelect'> {
@@ -78,6 +83,10 @@ const MainActionButton = styled.button`
   svg {
     margin-right: 4px;
     margin-bottom: 3px;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
   }
 
   ${p =>
@@ -221,6 +230,7 @@ const SplitButtonBase = (props: SplitButtonProps) => {
     onSelectMainAction,
     disabled,
     children,
+    'aria-label': ariaLabel = 'Action List',
     ...rest
   } = props
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -243,7 +253,7 @@ const SplitButtonBase = (props: SplitButtonProps) => {
           return (
             <React.Fragment>
               <SplitButtonStyles />
-              <DropdownButton disabled={disabled}>
+              <DropdownButton disabled={disabled} aria-label={ariaLabel}>
                 <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
               </DropdownButton>
               <ReachMenuPopover
