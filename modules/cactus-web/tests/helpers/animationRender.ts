@@ -1,7 +1,12 @@
+import { act } from '@testing-library/react'
+
 export default function animationRender() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      window.requestAnimationFrame(resolve)
-    }, 0)
-  })
+  return act(
+    async () =>
+      new Promise<void>(resolve => {
+        setTimeout(() => {
+          window.requestAnimationFrame(() => resolve())
+        }, 0)
+      })
+  )
 }

@@ -7,8 +7,6 @@ import Select from './Select'
 import StyleProvider from '../StyleProvider/StyleProvider'
 import userEvent from '@testing-library/user-event'
 
-afterEach(cleanup)
-
 function getActiveValue(): string {
   // @ts-ignore
   return document.getElementById(document.activeElement.getAttribute('aria-activedescendant'))
@@ -215,7 +213,6 @@ describe('component: Select', () => {
         keyCode: KeyCodes.RETURN,
         charCode: KeyCodes.RETURN,
       })
-      await animationRender()
       await animationRender()
       rerender(
         <StyleProvider>
@@ -627,7 +624,7 @@ describe('component: Select', () => {
     test('trigger is rendered with aria-multiselectable=true', async () => {
       const startingValue = ['tucson']
       const onChange = jest.fn()
-      const { getByRole } = render(
+      render(
         <StyleProvider>
           <Select
             id="test-id"
@@ -657,9 +654,7 @@ describe('component: Select', () => {
           />
         </StyleProvider>
       )
-      act(() => {
-        fireEvent.click(getByRole('button'))
-      })
+      fireEvent.click(getByRole('button'))
       await animationRender()
       let options = getAllByRole('option')
       options.forEach(o => {

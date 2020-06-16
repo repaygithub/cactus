@@ -17,7 +17,7 @@ import handleEvent from '../helpers/eventHandler'
 import KeyCodes from '../helpers/keyCodes'
 import Portal from '@reach/portal'
 import PropTypes from 'prop-types'
-import Rect from '@reach/rect'
+import Rect, { PRect } from '@reach/rect'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import TextButton from '../TextButton/TextButton'
 
@@ -496,7 +496,7 @@ interface ListProps {
   onClick: (event: React.MouseEvent<HTMLUListElement>) => void
   raiseChange: (active: OptionType | null, noToggle?: boolean) => void
   onClose: () => void
-  triggerRect: DOMRect | undefined
+  triggerRect: PRect | null
   activeDescendant: string
   setActiveDescendant?: (activeDescendant: string) => void
   handleComboInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -935,9 +935,12 @@ const SCROLLBAR_WIDTH = 10
 function positionList(
   isOpen: boolean,
   comboBox: boolean | undefined,
-  triggerRect: DOMRect | undefined,
-  listRect: DOMRect | undefined
+  triggerRect: PRect | null,
+  listRect: PRect | null
 ): React.CSSProperties | undefined {
+  if (!listRect) {
+    return {}
+  }
   if (!isOpen || triggerRect == null) {
     return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
   }

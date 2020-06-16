@@ -1,20 +1,11 @@
 import * as React from 'react'
 
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { generateTheme } from '@repay/cactus-theme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
+import animationRender from '../../tests/helpers/animationRender'
 import MenuButton from './MenuButton'
 import userEvent from '@testing-library/user-event'
-
-afterEach(cleanup)
-
-function animationRender() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      window.requestAnimationFrame(resolve)
-    }, 0)
-  })
-}
 
 describe('component: MenuButton', () => {
   test('snapshot', () => {
@@ -32,7 +23,7 @@ describe('component: MenuButton', () => {
   })
 
   describe('mouse usage', () => {
-    test('can select an action', () => {
+    test('can select an action', async () => {
       const actionOne = jest.fn()
       const { getByText } = render(
         <StyleProvider>
@@ -45,6 +36,7 @@ describe('component: MenuButton', () => {
       )
 
       userEvent.click(getByText('Demo'))
+      await animationRender()
       userEvent.click(getByText('Action One'))
       expect(actionOne).toHaveBeenCalled()
     })
@@ -54,7 +46,7 @@ describe('component: MenuButton', () => {
     test('can select an action', async () => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
-      const { getByText } = render(
+      const { getByText, rerender } = render(
         <StyleProvider>
           <MenuButton label="Demo">
             <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
@@ -68,6 +60,16 @@ describe('component: MenuButton', () => {
       await animationRender()
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+      await animationRender()
+      rerender(
+        <StyleProvider>
+          <MenuButton label="Demo">
+            <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
+            <MenuButton.Item onSelect={actionTwo}>Action Two</MenuButton.Item>
+            <MenuButton.Link href="#">Action Three</MenuButton.Link>
+          </MenuButton>
+        </StyleProvider>
+      )
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'Enter' })
       expect(actionOne).not.toHaveBeenCalled()

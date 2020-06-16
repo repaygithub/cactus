@@ -37,7 +37,9 @@ export const code = `
 
 ## Best practices
 
-The `MenuButton` should always be used when a selection causes an action, not a value. If the `label` does not contain a string describing the actions, then an `aria-label` should be provided to ensure the menu is accessible.
+- The `MenuButton` should be used when there are multiple ways to carry out one action, as opposed to the `SplitButton`,
+which should be used when there are many distinct possible actions, but one main action.
+- The `MenuButton` should always be used when a selection causes an action, not a value. If the `label` does not contain a string describing the actions, then an `aria-label` should be provided to ensure the menu is accessible.
 
 ## Basic usage
 

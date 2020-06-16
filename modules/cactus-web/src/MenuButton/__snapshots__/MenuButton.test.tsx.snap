@@ -108,8 +108,8 @@ exports[`With theme changes  Border should be 2px 1`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     class="c0"
-    data-reach-menu-button="true"
-    id="button-7"
+    data-reach-menu-button=""
+    id="menu-button--24"
     type="button"
   >
     Demo
@@ -226,8 +226,8 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     class="c0"
-    data-reach-menu-button="true"
-    id="button-6"
+    data-reach-menu-button=""
+    id="menu-button--22"
     type="button"
   >
     Demo
@@ -344,8 +344,8 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     class="c0"
-    data-reach-menu-button="true"
-    id="button-5"
+    data-reach-menu-button=""
+    id="menu-button--20"
     type="button"
   >
     Demo
@@ -450,8 +450,8 @@ exports[`With theme changes  Should have square borders 1`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     class="c0"
-    data-reach-menu-button="true"
-    id="button-4"
+    data-reach-menu-button=""
+    id="menu-button--18"
     type="button"
   >
     Demo
@@ -544,8 +544,8 @@ exports[`component: MenuButton snapshot 1`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     class="c0"
-    data-reach-menu-button="true"
-    id="button-1"
+    data-reach-menu-button=""
+    id="menu-button--1"
     type="button"
   >
     Demo

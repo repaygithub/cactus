@@ -156,7 +156,9 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
       return {}
     }
     let value = docItem.value
-    let doc: ComponentDoc | undefined = value[0]
+    let doc: ComponentDoc | undefined = value.find(
+      item => item.displayName === component.displayName
+    )
     if (staticProp) {
       doc = value.find(item => item.displayName === staticProp)
     }
