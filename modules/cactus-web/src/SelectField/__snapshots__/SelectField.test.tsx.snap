@@ -36,8 +36,6 @@ exports[`component: SelectField minimal snapshot 1`] = `
 }
 
 .c1 .c14 {
-  display: block;
-  margin-left: 16px;
   margin-top: 4px;
 }
 

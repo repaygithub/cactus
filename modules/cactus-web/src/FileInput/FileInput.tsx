@@ -42,12 +42,12 @@ type FileStatus = 'loading' | 'loaded' | 'error'
 
 export interface FileInputProps
   extends MarginProps,
-    MaxWidthProps,
-    WidthProps,
-    Omit<
-      React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-      'onChange' | 'onError' | 'onFocus' | 'onBlur' | 'ref'
-    > {
+  MaxWidthProps,
+  WidthProps,
+  Omit<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  'onChange' | 'onError' | 'onFocus' | 'onBlur' | 'ref'
+  > {
   name: string
   accept?: string[]
   labels?: { delete?: string; retry?: string; loading?: string; loaded?: string }
@@ -159,16 +159,16 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) 
       {status === 'error' ? (
         <Avatar type="alert" status="error" />
       ) : (
-        status === 'loaded' && <Avatar type="alert" status="success" />
-      )}
+          status === 'loaded' && <Avatar type="alert" status="success" />
+        )}
       <span>{fileName}</span>
       {status === 'loading' ? (
         <Spinner />
       ) : (
-        <IconButton onClick={onClick} label={labels.delete}>
-          <NavigationClose />
-        </IconButton>
-      )}
+          <IconButton onClick={onClick} label={labels.delete}>
+            <NavigationClose />
+          </IconButton>
+        )}
     </div>
   )
 })
@@ -252,16 +252,9 @@ const FileInfo = styled(FileInfoBase)`
   ${StatusMessage} {
     position: relative;
     margin-top: 4px;
-    width: 100%;
-
-    span {
-      padding-right: 15px;
-    }
 
     ${IconButton} {
-      position: absolute;
-      right: 11px;
-      top: 14px;
+      margin-left: 10px;
       color: ${p => p.theme.colors.white};
     }
 
@@ -571,32 +564,32 @@ const FileInputBase = (props: FileInputProps) => {
           </TextButton>
         </React.Fragment>
       ) : (
-        <React.Fragment>
-          {state.files.map((file, index) => (
-            <FileInfo
-              key={file.fileName}
-              fileName={file.fileName}
-              onDelete={handleDelete}
-              onRetry={handleRetry}
-              status={file.status}
-              errorMsg={file.errorMsg}
-              labels={labels}
-              boxRef={index === 0 ? topFileBox : undefined}
-            />
-          ))}
-          <TextButton
-            variant="action"
-            id={id}
-            aria-describedby={describedBy}
-            onClick={handleOpenFileSelect}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-          >
-            <BatchstatusOpen iconSize="small" />
-            {buttonText}
-          </TextButton>
-        </React.Fragment>
-      )}
+          <React.Fragment>
+            {state.files.map((file, index) => (
+              <FileInfo
+                key={file.fileName}
+                fileName={file.fileName}
+                onDelete={handleDelete}
+                onRetry={handleRetry}
+                status={file.status}
+                errorMsg={file.errorMsg}
+                labels={labels}
+                boxRef={index === 0 ? topFileBox : undefined}
+              />
+            ))}
+            <TextButton
+              variant="action"
+              id={id}
+              aria-describedby={describedBy}
+              onClick={handleOpenFileSelect}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+            >
+              <BatchstatusOpen iconSize="small" />
+              {buttonText}
+            </TextButton>
+          </React.Fragment>
+        )}
     </div>
   )
 }
@@ -646,9 +639,9 @@ FileInput.defaultErrorHandler = defaultErrorHandler
 
 interface FileInputComponent
   extends StyledComponentBase<
-    React.FunctionComponent<FileInputProps>,
-    CactusTheme,
-    FileInputProps
+  React.FunctionComponent<FileInputProps>,
+  CactusTheme,
+  FileInputProps
   > {
   defaultErrorHandler: (type: ErrorType, accept?: string[]) => string
 }

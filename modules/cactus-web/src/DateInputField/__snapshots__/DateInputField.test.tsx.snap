@@ -43,8 +43,6 @@ exports[`component: DateInputField snapshot 1`] = `
 }
 
 .c1 .c18 {
-  display: block;
-  margin-left: 16px;
   margin-top: 4px;
 }
 
