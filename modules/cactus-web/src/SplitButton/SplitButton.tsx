@@ -147,6 +147,7 @@ const SplitButtonList = styled(ReachMenuItems)`
   ${p => getDropdownShape(p.theme.shape)}
   box-shadow: ${p => getBoxShadow(p.theme)};
   z-index: 1000;
+  background-color: ${p => p.theme.colors.white};
 
   ${p =>
     !p.theme.boxShadows &&
