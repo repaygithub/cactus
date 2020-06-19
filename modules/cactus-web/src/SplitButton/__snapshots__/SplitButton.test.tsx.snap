@@ -96,7 +96,7 @@ exports[`component: SplitButton snapshot 1`] = `
     class="c0"
   >
     <button
-      class="dd-closed c1 c2"
+      class="c1 c2 dd-closed"
       type="button"
     >
       Test
@@ -254,7 +254,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
     class="c0"
   >
     <button
-      class="dd-closed c1 c2"
+      class="c1 c2 dd-closed"
       type="button"
     >
       Test
@@ -412,7 +412,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
     class="c0"
   >
     <button
-      class="dd-closed c1 c2"
+      class="c1 c2 dd-closed"
       type="button"
     >
       Test
@@ -570,7 +570,7 @@ exports[`component: SplitButton with theme customization should have intermediat
     class="c0"
   >
     <button
-      class="dd-closed c1 c2"
+      class="c1 c2 dd-closed"
       type="button"
     >
       Test
@@ -718,7 +718,7 @@ exports[`component: SplitButton with theme customization should have square shap
     class="c0"
   >
     <button
-      class="dd-closed c1 c2"
+      class="c1 c2 dd-closed"
       type="button"
     >
       Test

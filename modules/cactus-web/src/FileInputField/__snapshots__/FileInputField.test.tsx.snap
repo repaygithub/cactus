@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: FileInputField should render a file with an error 1`] = `
-.c2 + .c1 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -337,18 +337,18 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
+.c2 {
   position: relative;
 }
 
-.c0 .c3 {
+.c2 .c3 {
   display: block;
   position: relative;
   bottom: 4px;
   padding-left: 16px;
 }
 
-.c0 .c5 {
+.c2 .c5 {
   position: absolute;
   top: -2px;
   right: 8px;
@@ -505,7 +505,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 `;
 
 exports[`component: FileInputField should render a loaded file 1`] = `
-.c2 + .c1 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -787,18 +787,18 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
+.c2 {
   position: relative;
 }
 
-.c0 .c3 {
+.c2 .c3 {
   display: block;
   position: relative;
   bottom: 4px;
   padding-left: 16px;
 }
 
-.c0 .c5 {
+.c2 .c5 {
   position: absolute;
   top: -2px;
   right: 8px;
@@ -917,7 +917,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 `;
 
 exports[`component: FileInputField should render a loading file 1`] = `
-.c2 + .c1 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -1112,18 +1112,18 @@ exports[`component: FileInputField should render a loading file 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
+.c2 {
   position: relative;
 }
 
-.c0 .c3 {
+.c2 .c3 {
   display: block;
   position: relative;
   bottom: 4px;
   padding-left: 16px;
 }
 
-.c0 .c5 {
+.c2 .c5 {
   position: absolute;
   top: -2px;
   right: 8px;
@@ -1221,7 +1221,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
 `;
 
 exports[`component: FileInputField should render file input field 1`] = `
-.c2 + .c1 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -1355,18 +1355,18 @@ exports[`component: FileInputField should render file input field 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
+.c2 {
   position: relative;
 }
 
-.c0 .c3 {
+.c2 .c3 {
   display: block;
   position: relative;
   bottom: 4px;
   padding-left: 16px;
 }
 
-.c0 .c5 {
+.c2 .c5 {
   position: absolute;
   top: -2px;
   right: 8px;

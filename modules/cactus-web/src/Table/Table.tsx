@@ -1,7 +1,6 @@
 import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme } from '@repay/cactus-theme'
 import React, { createContext, FunctionComponent, useContext } from 'react'
-import styled, { css, StyledComponentBase } from 'styled-components'
+import styled, { css, DefaultTheme, StyledComponentType } from 'styled-components'
 
 type cellAlignment = 'center' | 'right' | 'left'
 
@@ -86,7 +85,7 @@ const borderMap = {
 const getShape = (shape: Shape) => shapeMap[shape]
 const getDoubleBorder = (shape: Shape) => doubleBorder[shape]
 const getBorder = (size: BorderSize) => borderMap[size]
-const getBoxShadow = (theme: CactusTheme) => {
+const getBoxShadow = (theme: DefaultTheme) => {
   return theme.boxShadows ? `-1px 6px 4px 0px rgba(3, 118, 176, 0.35)` : {}
 }
 const TableBase: FunctionComponent<TableProps> = props => {
@@ -169,19 +168,21 @@ export const TableCell = styled(TableCellBase)`
     margin: 1px 10px;
   }
 
-  ${p => p.theme.mediaQueries.medium} {
+  ${p => p.theme.mediaQueries && `${p.theme.mediaQueries.medium} {
     width: calc(160px * 0.7125);
-  }
-  ${p => p.theme.mediaQueries.large} {
+  }`}
+  ${p => p.theme.mediaQueries && `${p.theme.mediaQueries.large} {
     width: calc(160px * 0.875);
-  }
+  }`}
 
-  ${p => p.theme.mediaQueries.extraLarge} {
+  ${p => p.theme.mediaQueries && `${p.theme.mediaQueries.extraLarge} {
     width: 160px;
-  }
+  }`}
+
+  ${p => !p.theme.mediaQueries && 'width: 160px;'}
 `
 
-export const TableRow = styled(TableRowBase)`
+const TableRow = styled(TableRowBase)`
   position: relative;
   margin: 4px 4px;
   outline: 0;
@@ -231,25 +232,25 @@ export const TableRow = styled(TableRowBase)`
   }
 `
 
-export const Table = styled(TableBase)`
+type TableComponentType = StyledComponentType<TableProps>  & {
+  Header: StyledComponentType<TableHeaderProps>
+  Cell: StyledComponentType<TableCellProps>
+  Row: StyledComponentType<TableRowProps>
+  Body: StyledComponentType<TableBodyProps>
+}
+
+const Table = styled(TableBase)`
   display: flex;
   overflow-x: auto;
   white-space: nowrap;
   margin: 0 16px;
   justify-content: center;
   flex-direction: column;
-` as any
-
-interface TableComponent extends StyledComponentBase<'div', CactusTheme, TableProps> {
-  Header: React.ComponentType<TableHeaderProps>
-  Cell: React.ComponentType<TableCellProps>
-  Row: React.ComponentType<TableRowProps>
-  Body: React.ComponentType<TableBodyProps>
-}
+` as TableComponentType
 
 Table.Header = TableHeader
 Table.Cell = TableCell
 Table.Row = TableRow
 Table.Body = TableBody
 
-export default Table as TableComponent
+export default Table

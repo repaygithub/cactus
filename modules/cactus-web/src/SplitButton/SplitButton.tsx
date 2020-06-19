@@ -1,6 +1,6 @@
 import React, { MutableRefObject, useRef, useState } from 'react'
 
-import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import { getScrollX } from '../helpers/scrollOffset'
 import { getTopPosition } from '../helpers/positionPopover'
 import { margin, MarginProps } from 'styled-system'
@@ -17,6 +17,7 @@ import PropTypes from 'prop-types'
 import styled, {
   createGlobalStyle,
   css,
+  DefaultTheme,
   FlattenSimpleInterpolation,
   StyledComponent,
 } from 'styled-components'
@@ -136,7 +137,7 @@ const dropdownShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
 }
 
 const getDropdownShape = (shape: Shape) => dropdownShapeMap[shape]
-const getBoxShadow = (theme: CactusTheme) => {
+const getBoxShadow = (theme: DefaultTheme) => {
   return theme.boxShadows ? `0 3px 6px 0 ${theme.colors.callToAction}` : {}
 }
 
@@ -301,7 +302,7 @@ export const SplitButtonAction = styled(SplitButtonActionBase)`
   }
 `
 
-type SplitButtonType = StyledComponent<typeof SplitButtonBase, CactusTheme, SplitButtonProps> & {
+type SplitButtonType = StyledComponent<typeof SplitButtonBase, DefaultTheme, SplitButtonProps> & {
   Action: React.ComponentType<SplitButtonActionProps>
 }
 

@@ -1,13 +1,12 @@
 import * as React from 'react'
 
 import { cleanup, render } from '@testing-library/react'
-import { Theme } from 'styled-system'
-import { withTheme } from 'styled-components'
+import { DefaultTheme, withTheme } from 'styled-components'
 import cactusTheme from '@repay/cactus-theme'
 import StyleProvider from './StyleProvider'
 
 interface TestComponentProps {
-  theme: Theme
+  theme: DefaultTheme
 }
 
 const TestComponentBase = (props: TestComponentProps) => {
