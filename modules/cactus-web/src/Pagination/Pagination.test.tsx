@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
 import Pagination from './Pagination'
@@ -85,7 +86,7 @@ describe('component: Pagination', () => {
         <ManagedPagination size={11} start={1} />
       </StyleProvider>
     )
-    fireEvent.click(getByLabelText('Go to page 5'))
+    userEvent.click(getByLabelText('Go to page 5'))
     assertPages(getAllByRole('link'), 11, 5, [1, 2, 9, 10])
   })
 
@@ -95,7 +96,7 @@ describe('component: Pagination', () => {
         <ManagedPagination size={11} start={5} />
       </StyleProvider>
     )
-    fireEvent.click(getByLabelText('Go to next page, 6'))
+    userEvent.click(getByLabelText('Go to next page, 6'))
     assertPages(getAllByRole('link'), 11, 6, [1, 2, 3])
   })
 
@@ -105,7 +106,7 @@ describe('component: Pagination', () => {
         <ManagedPagination size={11} start={5} />
       </StyleProvider>
     )
-    fireEvent.click(getByLabelText('Go to previous page, 4'))
+    userEvent.click(getByLabelText('Go to previous page, 4'))
     assertPages(getAllByRole('link'), 11, 4, [8, 9, 10])
   })
 
@@ -115,7 +116,7 @@ describe('component: Pagination', () => {
         <ManagedPagination size={11} start={5} />
       </StyleProvider>
     )
-    fireEvent.click(getByLabelText('Go to page 1'))
+    userEvent.click(getByLabelText('Go to page 1'))
     assertPages(getAllByRole('link'), 11, 1, [8, 9, 10])
   })
 
@@ -125,7 +126,7 @@ describe('component: Pagination', () => {
         <ManagedPagination size={11} start={5} />
       </StyleProvider>
     )
-    fireEvent.click(getByLabelText('Go to last page, 11'))
+    userEvent.click(getByLabelText('Go to last page, 11'))
     assertPages(getAllByRole('link'), 11, 11, [1, 2, 3])
   })
 
@@ -136,7 +137,7 @@ describe('component: Pagination', () => {
       </StyleProvider>
     )
     assertPages(getAllByRole('link'), 9, 1, [])
-    fireEvent.click(getByLabelText('Go to last page, 9'))
+    userEvent.click(getByLabelText('Go to last page, 9'))
     assertPages(getAllByRole('link'), 9, 9, [])
   })
 
@@ -151,13 +152,13 @@ describe('component: Pagination', () => {
 
     const links = getAllByRole('link')
     for (let link of links.slice(0, 3)) {
-      fireEvent.click(link)
+      userEvent.click(link)
     }
     expect(func).not.toHaveBeenCalled()
-    fireEvent.click(links[3])
+    userEvent.click(links[3])
     expect(func).toHaveBeenCalledWith(2)
     for (let link of getAllByRole('link').slice(3)) {
-      fireEvent.click(link)
+      userEvent.click(link)
     }
     expect(func).toHaveBeenCalledTimes(1)
   })
