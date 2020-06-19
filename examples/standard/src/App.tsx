@@ -1,33 +1,39 @@
-import React, { ChangeEvent, Component, CSSProperties } from 'react'
+import React, { Component } from 'react'
 
-import { Box, Flex, ToggleField } from '@repay/cactus-web'
+import { Box, Flex, MenuButton, ToggleField } from '@repay/cactus-web'
 import { I18nResource, I18nText } from '@repay/cactus-i18n'
 import { Link, RouteComponentProps } from '@reach/router'
 import { withFeatureFlags } from '@repay/cactus-fwk'
 import Heart from '@repay/cactus-icons/i/status-like'
 
-type AppProps = {
-  onLangChange: (event: ChangeEvent<HTMLSelectElement>) => void
+interface AppProps extends RouteComponentProps {
+  onLangChange: (lang: string) => void
   onChangeFeature: (name: string, enabled: boolean) => void
   lang: string
   include_carrot_snacks?: boolean
   children?: React.ReactNode
 }
 
-class App extends Component<RouteComponentProps<AppProps>> {
+class App extends Component<AppProps> {
   render() {
     return (
-      <>
+      <div style={{ paddingTop: '8px' }}>
         <Flex>
-          <select
-            onChange={this.props.onLangChange}
-            value={this.props.lang}
-            data-testid="select-language"
-          >
-            <option value="">Use Browser</option>
-            <option value="en-US">🇺🇸 English</option>
-            <option value="es-MX">🇲🇽 Español</option>
-          </select>
+          <I18nResource get="language-label">
+            {label => (
+              <MenuButton label={label} ml={2} mr={2} data-testid="select-language">
+                <MenuButton.Item onSelect={() => this.props.onLangChange('en-US')}>
+                  🇺🇸 English
+                </MenuButton.Item>
+                <MenuButton.Item
+                  onSelect={() => this.props.onLangChange('es-US')}
+                  data-testid="spanish-option"
+                >
+                  🇲🇽 Español
+                </MenuButton.Item>
+              </MenuButton>
+            )}
+          </I18nResource>
           <Link to="/">
             <Heart />
             <I18nText get="home-link" />
@@ -57,7 +63,7 @@ class App extends Component<RouteComponentProps<AppProps>> {
             </I18nResource>
           </div>
         </Box>
-      </>
+      </div>
     )
   }
 }

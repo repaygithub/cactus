@@ -23,8 +23,7 @@ const getInitialLang = () => {
 class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsObject }> {
   state = { lang: getInitialLang(), features: {} }
 
-  handleLangChange = (event: ChangeEvent<HTMLSelectElement>) =>
-    this.setState({ lang: event.target.value })
+  handleLangChange = (lang: string) => this.setState({ lang })
 
   handleChangeFeature = (name: string, enabled: boolean) => {
     this.setState(s => ({ features: { ...s.features, [name]: enabled } }))
