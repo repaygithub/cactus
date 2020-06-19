@@ -26,6 +26,10 @@ export const fetchAccounts = () => {
   return accounts
 }
 
+export const fetchAccount = (id: string) => {
+  return accounts.find(acct => acct.id === id)
+}
+
 export const fetchPaymentHistory = () => {
   let payments: Array<PaymentData> = []
 

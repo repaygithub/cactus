@@ -1,0 +1,76 @@
+import { fetchAccount } from '../api'
+import { Flex, Text } from '@repay/cactus-web'
+import { Helmet } from 'react-helmet'
+import { RouteComponentProps } from '@reach/router'
+import React, { useEffect, useState } from 'react'
+
+interface AccountProps extends RouteComponentProps {
+  accountId?: string
+}
+
+interface State {
+  firstName: string
+  lastName: string
+  cardLastFour: string
+  dob: string
+  id: string
+  payments: Array<{ pnref: string; date: string }>
+}
+
+const Account = (props: AccountProps) => {
+  const [account, setAccount] = useState<State | null>(null)
+
+  useEffect(() => {
+    // @ts-ignore
+    setAccount(fetchAccount(props.accountId))
+  }, [props.accountId])
+
+  return account === null ? null : (
+    <div>
+      <Helmet>
+        <title>Account {account.id}</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicon.ico" />
+      </Helmet>
+
+      <Flex justifyContent="center">
+        <Flex width="90%" backgroundColor="base" alignItems="center" paddingLeft="10px">
+          <Text color="white" textStyle="h2">
+            Account {account.id}
+          </Text>
+        </Flex>
+
+        <Flex
+          borderColor="base"
+          borderWidth="2px"
+          borderStyle="solid"
+          width="90%"
+          justifyContent="center"
+        >
+          <table
+            style={{
+              width: '90%',
+              borderCollapse: 'collapse',
+              marginBottom: '20px',
+              marginTop: '20px',
+            }}
+          >
+            <tbody>
+              {(Object.keys(account) as Array<keyof typeof account>).map(key => {
+                return (
+                  key !== 'payments' && (
+                    <tr key={key}>
+                      <th>{key}</th>
+                      <td>{account[key]}</td>
+                    </tr>
+                  )
+                )
+              })}
+            </tbody>
+          </table>
+        </Flex>
+      </Flex>
+    </div>
+  )
+}
+
+export default Account

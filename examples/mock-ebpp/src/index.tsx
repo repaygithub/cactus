@@ -2,6 +2,7 @@ import { DescriptiveHome } from '@repay/cactus-icons'
 import { Flex, StyleProvider, Text } from '@repay/cactus-web'
 import { Helmet } from 'react-helmet'
 import { RouteComponentProps, Router } from '@reach/router'
+import Account from './containers/account'
 import Accounts from './containers/accounts'
 import Faq from './containers/faq'
 import Home from './containers/home'
@@ -78,6 +79,7 @@ const App = () => {
           <UIConfig path="/ui-config" />
           <Faq path="/faq" />
           <Rules path="/rules" />
+          <Account path="/account/:accountId" />
         </AppContainer>
       </Router>
     </div>
