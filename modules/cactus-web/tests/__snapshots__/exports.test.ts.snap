@@ -21,6 +21,7 @@ Array [
   "IconButton",
   "Label",
   "Link",
+  "Pagination",
   "RadioButton",
   "RadioButtonField",
   "TextArea",
