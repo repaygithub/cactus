@@ -101,11 +101,8 @@ const Accounts = (props: AccountsProps) => {
                         mainActionLabel="View Account"
                         onSelectMainAction={goToAccountPage}
                       >
-                        <SplitButton.Action
-                          onSelect={deleteAccount}
-                          data-testid={`delete-acct-${account.id}`}
-                        >
-                          Delete Acount
+                        <SplitButton.Action onSelect={deleteAccount}>
+                          Delete Account
                         </SplitButton.Action>
                       </SplitButton>
                     </td>
