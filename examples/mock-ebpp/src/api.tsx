@@ -26,7 +26,7 @@ export const fetchAccounts = () => {
   return accounts
 }
 
-export const fetchAccount = (id: string) => {
+export const fetchAccount = (id: string | undefined) => {
   return accounts.find(acct => acct.id === id)
 }
 

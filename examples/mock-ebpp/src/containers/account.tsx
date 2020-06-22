@@ -18,14 +18,13 @@ interface State {
 }
 
 const Account = (props: AccountProps) => {
-  const [account, setAccount] = useState<State | null>(null)
+  const [account, setAccount] = useState<State | undefined>(undefined)
 
   useEffect(() => {
-    // @ts-ignore
     setAccount(fetchAccount(props.accountId))
   }, [props.accountId])
 
-  return account === null ? null : (
+  return account === undefined ? null : (
     <div>
       <Helmet>
         <title>Account {account.id}</title>
