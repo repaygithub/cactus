@@ -93,6 +93,7 @@ const MenuList = styled(ReachMenuItems)`
   outline: none;
   ${p => getDropDownBorder(p.theme)};
   box-shadow: ${p => getBoxShadow(p.theme)};
+  background-color: ${p => p.theme.colors.white};
 
   [data-reach-menu-item] {
     position: relative;

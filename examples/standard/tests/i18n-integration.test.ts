@@ -1,7 +1,7 @@
-import { Selector } from 'testcafe'
-import startStaticServer from './helpers/static-server'
 import * as path from 'path'
 import { queryAllByText, queryByTestId, queryByText } from '@testing-library/testcafe'
+import { Selector } from 'testcafe'
+import startStaticServer from './helpers/static-server'
 
 fixture('I18n Integration tests')
   .before(async ctx => {
@@ -31,7 +31,7 @@ test.page('http://localhost:33567?lang=en-US')(
 test.page('http://localhost:33567?lang=en-US')(
   'we can set the language manually when navigator.language is en-US',
   async t => {
-    await t.click(queryByTestId('select-language')).click(queryAllByText(/Español/).nth(0))
+    await t.click(queryByTestId('select-language')).click(queryByTestId('spanish-option'))
     await t
       .expect(
         queryByText(

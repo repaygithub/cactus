@@ -1,21 +1,22 @@
 import { Account, fetchAccounts } from '../api'
-import { Box, Flex, Text } from '@repay/cactus-web'
+import { Alert, Flex, SplitButton, Text } from '@repay/cactus-web'
 import { Helmet } from 'react-helmet'
-import { RouteComponentProps } from '@reach/router'
+import { navigate, RouteComponentProps } from '@reach/router'
 import React, { useEffect, useState } from 'react'
 
 interface AccountsProps extends RouteComponentProps {}
 
 interface State {
   accounts: Array<Account>
+  alert: string
 }
 
 const Accounts = (props: AccountsProps) => {
-  const [state, setState] = useState<State>({ accounts: [] })
+  const [state, setState] = useState<State>({ accounts: [], alert: '' })
 
   useEffect(() => {
     const accounts = fetchAccounts()
-    setState({ accounts: accounts })
+    setState({ accounts: accounts, alert: '' })
   }, [])
 
   return (
@@ -24,6 +25,14 @@ const Accounts = (props: AccountsProps) => {
         <title> Accounts </title>
         <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicon.ico" />
       </Helmet>
+
+      {state.alert && (
+        <Flex justifyContent="center" mt={4} mb={4}>
+          <Alert status="success" onClose={() => setState({ ...state, alert: '' })} width="60%">
+            {state.alert}
+          </Alert>
+        </Flex>
+      )}
 
       <Flex justifyContent="center">
         <Flex width="90%" backgroundColor="base" alignItems="center" paddingLeft="10px">
@@ -54,6 +63,7 @@ const Accounts = (props: AccountsProps) => {
                 <th> Date of Birth</th>
                 <th> Last Four</th>
                 <th> ID </th>
+                <th />
               </tr>
             </thead>
 
@@ -61,8 +71,20 @@ const Accounts = (props: AccountsProps) => {
               {state.accounts.map((account: Account, index: number) => {
                 const color = index % 2 === 1 ? 'lightgrey' : 'white'
 
+                const goToAccountPage = () => {
+                  navigate(`/account/${account.id}`)
+                }
+
+                const deleteAccount = () => {
+                  setState({
+                    accounts: state.accounts.filter((acct: Account) => acct.id !== account.id),
+                    alert: `Account ${account.id} deleted successfully`,
+                  })
+                }
+
                 return (
                   <tr
+                    key={account.id}
                     style={{
                       backgroundColor: `${color}`,
                       border: '2px solid black',
@@ -74,6 +96,16 @@ const Accounts = (props: AccountsProps) => {
                     <td> {account.dob} </td>
                     <td> {account.cardLastFour} </td>
                     <td> {account.id} </td>
+                    <td>
+                      <SplitButton
+                        mainActionLabel="View Account"
+                        onSelectMainAction={goToAccountPage}
+                      >
+                        <SplitButton.Action onSelect={deleteAccount}>
+                          Delete Account
+                        </SplitButton.Action>
+                      </SplitButton>
+                    </td>
                   </tr>
                 )
               })}
