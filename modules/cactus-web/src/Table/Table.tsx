@@ -149,6 +149,7 @@ export const TableHeader = styled(TableHeaderBase)`
   tr > th {
     color: white;
     font-weight: bold;
+    display: block;
   }
 `
 
@@ -157,6 +158,7 @@ export const TableBody = styled(TableBodyBase)`
   flex-direction: column;
 `
 export const TableCell = styled(TableCellBase)`
+  display: block;
   max-width: 160px;
   align-items: center;
   padding: 16px;
@@ -183,7 +185,6 @@ export const TableCell = styled(TableCellBase)`
 `
 
 const TableRow = styled(TableRowBase)`
-  position: relative;
   outline: 0;
   display: flex;
   background-color: ${p => p.theme.colors.white};
