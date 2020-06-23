@@ -85,8 +85,8 @@ describe('component: SplitButton', () => {
         </StyleProvider>
       )
 
-      const dropdownButton = document.querySelector('[aria-haspopup=menu]') as HTMLButtonElement
-      userEvent.click(dropdownButton)
+      const dropdownButton = document.querySelector('[aria-haspopup=true]') as HTMLButtonElement
+      fireEvent.keyDown(dropdownButton, { key: 'Enter' })
       await animationRender()
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })

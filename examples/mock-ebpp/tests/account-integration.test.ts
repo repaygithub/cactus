@@ -23,6 +23,6 @@ test('navigate to account page using SplitButton', async (t: TestController) => 
 
 test('delete account with using SplitButton', async (t: TestController) => {
   await t.click(Selector('button').withAttribute('data-reach-menu-button').nth(0))
-  await t.click(queryByText('Delete Account'))
+  await t.pressKey('down enter')
   await t.expect(queryByText('Account 85963 deleted successfully').exists).ok()
 })

@@ -105,11 +105,11 @@ exports[`With theme changes  Border should be 2px 1`] = `
 }
 
 <button
-    aria-expanded="false"
-    aria-haspopup="menu"
+    aria-controls="menu--39"
+    aria-haspopup="true"
     class="c0"
     data-reach-menu-button=""
-    id="menu-button--24"
+    id="menu-button--menu--39"
     type="button"
   >
     Demo
@@ -223,11 +223,11 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
 }
 
 <button
-    aria-expanded="false"
-    aria-haspopup="menu"
+    aria-controls="menu--34"
+    aria-haspopup="true"
     class="c0"
     data-reach-menu-button=""
-    id="menu-button--22"
+    id="menu-button--menu--34"
     type="button"
   >
     Demo
@@ -341,11 +341,11 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
 }
 
 <button
-    aria-expanded="false"
-    aria-haspopup="menu"
+    aria-controls="menu--29"
+    aria-haspopup="true"
     class="c0"
     data-reach-menu-button=""
-    id="menu-button--20"
+    id="menu-button--menu--29"
     type="button"
   >
     Demo
@@ -447,11 +447,11 @@ exports[`With theme changes  Should have square borders 1`] = `
 }
 
 <button
-    aria-expanded="false"
-    aria-haspopup="menu"
+    aria-controls="menu--24"
+    aria-haspopup="true"
     class="c0"
     data-reach-menu-button=""
-    id="menu-button--18"
+    id="menu-button--menu--24"
     type="button"
   >
     Demo
@@ -541,11 +541,11 @@ exports[`component: MenuButton snapshot 1`] = `
 
 <div>
   <button
-    aria-expanded="false"
-    aria-haspopup="menu"
+    aria-controls="menu--1"
+    aria-haspopup="true"
     class="c0"
     data-reach-menu-button=""
-    id="menu-button--1"
+    id="menu-button--menu--1"
     type="button"
   >
     Demo
