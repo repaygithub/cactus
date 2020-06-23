@@ -80,11 +80,6 @@ const MenuButtonStyles = createGlobalStyle`
   :root {
     --reach-menu-button: 1;
   }
-
-  [data-reach-menu] {
-    display: block;
-    position: absolute;
-  }
 `
 
 const MenuList = styled(ReachMenuItems)`
@@ -107,7 +102,7 @@ const MenuList = styled(ReachMenuItems)`
     padding: 4px 16px;
     text-align: center;
 
-    &:focus {
+    &[data-selected] {
       background-color: ${p => p.theme.colors.callToAction};
       color: ${p => p.theme.colors.callToActionText};
     }

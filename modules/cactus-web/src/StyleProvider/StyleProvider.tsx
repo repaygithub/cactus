@@ -24,6 +24,10 @@ const DebugStyle = createGlobalStyle`
   body {
     --reach-tooltip: 1;
   }
+
+  :root {
+    --reach-dialog: 1;
+  }
 `
 
 const queries = {

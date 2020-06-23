@@ -8,7 +8,7 @@ import Button from '../Button/Button'
 import Modal, { ModalType } from './Modal'
 import TextInput from '../TextInput/TextInput'
 
-const modalSotries = storiesOf('Modal', module)
+const modalStories = storiesOf('Modal', module)
 const eventLoggers = actions('onChange')
 
 type StatusOptions = { [k in ModalType]: ModalType }
@@ -89,6 +89,6 @@ const ModalWithTextInput = () => {
     </Button>
   )
 }
-modalSotries.add('Basic Usage', () => <ModalWithState />)
+modalStories.add('Basic Usage', () => <ModalWithState />)
 
-modalSotries.add('With TextInput', () => <ModalWithTextInput />)
+modalStories.add('With TextInput', () => <ModalWithTextInput />)
