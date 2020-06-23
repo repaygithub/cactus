@@ -1,6 +1,7 @@
 import { BorderSize, Shape } from '@repay/cactus-theme'
 import React, { createContext, FunctionComponent, useContext } from 'react'
 import styled, { css, StyledComponentType } from 'styled-components'
+import PropTypes from 'prop-types'
 
 type cellAlignment = 'center' | 'right' | 'left'
 
@@ -13,6 +14,7 @@ interface TableContextProps {
 interface TableProps
   extends React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement> {
   className?: string
+  fullWidth?: boolean
 }
 
 interface TableHeaderProps
@@ -234,6 +236,10 @@ const Table = styled(TableBase)`
   border-color: ${p => p.theme.colors.lightContrast};
   ${p => p.fullWidth && 'min-width: 100%'};
 ` as TableComponentType
+
+Table.propTypes = {
+  fullWidth: PropTypes.bool,
+}
 
 Table.Header = TableHeader
 Table.Cell = TableCell

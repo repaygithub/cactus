@@ -3,9 +3,10 @@ import React from 'react'
 import { DescriptiveEnvelope } from '@repay/cactus-icons'
 import { storiesOf } from '@storybook/react'
 import Table from './Table'
+import { boolean } from '@storybook/addon-knobs'
 
 storiesOf('Table', module).add('Header', () => (
-  <Table>
+  <Table fullWidth={boolean('fullWidth', true)}>
     <Table.Header>
       <Table.Cell>Header</Table.Cell>
       <Table.Cell align="left">Header</Table.Cell>
@@ -30,7 +31,7 @@ const amount = [
 ]
 
 storiesOf('Table', module).add('Row', () => (
-  <Table>
+  <Table fullWidth={boolean('fullWidth', true)}>
     <Table.Body>
       <Table.Row>
         <>
@@ -69,7 +70,7 @@ storiesOf('Table', module).add('Row', () => (
 ))
 
 storiesOf('Table', module).add('Row and header', () => (
-  <Table>
+  <Table fullWidth={boolean('fullWidth', true)}>
     <Table.Header>
       <Table.Cell align="left">Header</Table.Cell>
       <Table.Cell align="left">Header</Table.Cell>
@@ -114,6 +115,74 @@ storiesOf('Table', module).add('Row and header', () => (
             </Table.Cell>
           ))}
         </>
+      </Table.Row>
+    </Table.Body>
+  </Table>
+))
+
+storiesOf('Table', module).add('2-cell table', () => (
+  <Table fullWidth={boolean('fullWidth', true)}>
+    <Table.Header>
+      <Table.Cell>Header</Table.Cell>
+      <Table.Cell>Header</Table.Cell>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>
+          Foo
+        </Table.Cell>
+        <Table.Cell>
+          Bar
+        </Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>
+          Fizz
+        </Table.Cell>
+        <Table.Cell>
+          Buzz
+        </Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table>
+))
+
+storiesOf('Table', module).add('4-cell table', () => (
+  <Table fullWidth={boolean('fullWidth', true)}>
+    <Table.Header>
+      <Table.Cell>Header</Table.Cell>
+      <Table.Cell>Header</Table.Cell>
+      <Table.Cell>Header</Table.Cell>
+      <Table.Cell>Header</Table.Cell>
+    </Table.Header>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>
+          One
+        </Table.Cell>
+        <Table.Cell>
+          Two
+        </Table.Cell>
+        <Table.Cell>
+          Three
+        </Table.Cell>
+        <Table.Cell>
+          Four
+        </Table.Cell>
+      </Table.Row>
+      <Table.Row>
+      <Table.Cell>
+          Five
+        </Table.Cell>
+        <Table.Cell>
+          Six
+        </Table.Cell>
+        <Table.Cell>
+          Seven
+        </Table.Cell>
+        <Table.Cell>
+          Eight
+        </Table.Cell>
       </Table.Row>
     </Table.Body>
   </Table>
