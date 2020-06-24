@@ -99,7 +99,7 @@ const TableCellBase: FunctionComponent<TableCellProps> = props => {
   const { cellType: Type } = useContext(TableContext)
 
   return (
-    <Type className={className} align={align || 'left'}>
+    <Type className={className}>
       {children}
     </Type>
   )
@@ -165,6 +165,7 @@ export const TableCell = styled(TableCellBase)`
   color: ${p => p.theme.colors.darkestContrast};
   font-size: 15px;
   font-weight: normal;
+  text-align: ${p => p.align || 'left'};
   > svg {
     vertical-align: text-top;
     margin: 1px 10px;

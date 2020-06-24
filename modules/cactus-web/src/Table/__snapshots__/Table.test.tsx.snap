@@ -49,6 +49,7 @@ exports[`component: Table snapshot 1`] = `
   color: hsl(200,10%,20%);
   font-size: 15px;
   font-weight: normal;
+  text-align: left;
 }
 
 .c3 > svg {
@@ -142,7 +143,6 @@ exports[`component: Table snapshot 1`] = `
         tabindex="0"
       >
         <th
-          align="left"
           class="c3"
         >
           Header Cell
@@ -157,7 +157,6 @@ exports[`component: Table snapshot 1`] = `
         tabindex="0"
       >
         <td
-          align="left"
           class="c3"
         >
           Data cell
