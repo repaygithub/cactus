@@ -147,7 +147,7 @@ function MenuButtonBase(props: MenuButtonProps) {
           const scrollX = getScrollX()
 
           return {
-            width: targetRect.width > popoverRect.width ? targetRect.width : popoverRect.width,
+            width: targetRect.width,
             left: targetRect.left + scrollX,
             ...getTopPosition(targetRect, popoverRect),
           }
