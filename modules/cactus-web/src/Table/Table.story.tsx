@@ -3,14 +3,24 @@ import React from 'react'
 import { DescriptiveEnvelope } from '@repay/cactus-icons'
 import { storiesOf } from '@storybook/react'
 import Table from './Table'
-import { boolean } from '@storybook/addon-knobs'
+import { boolean, select } from '@storybook/addon-knobs'
+
+type CellAlignment = 'left' | 'right' | 'center'
+const alignOptions = {
+  left: 'left',
+  right: 'right',
+  center: 'center',
+  undefined: '',
+}
+
+const createAlignKnob = () => select('align (prop on Table.Cell)', alignOptions, 'left') as CellAlignment
 
 storiesOf('Table', module).add('Header', () => (
   <Table fullWidth={boolean('fullWidth', true)}>
     <Table.Header>
-      <Table.Cell>Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
     </Table.Header>
   </Table>
 ))
@@ -36,11 +46,11 @@ storiesOf('Table', module).add('Row', () => (
       <Table.Row>
         <>
           {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
+            <Table.Cell align={createAlignKnob()} key={i}>
               Cell {e}
             </Table.Cell>
           ))}
-          <Table.Cell align="center">
+          <Table.Cell align={createAlignKnob()}>
             Label
             <DescriptiveEnvelope />
           </Table.Cell>
@@ -48,18 +58,18 @@ storiesOf('Table', module).add('Row', () => (
       </Table.Row>
       <Table.Row>
         {amount.map((e, i) => (
-          <Table.Cell align="right" key={i}>
+          <Table.Cell align={createAlignKnob()} key={i}>
             {e}
           </Table.Cell>
         ))}
       </Table.Row>
       <Table.Row>
         <>
-          <Table.Cell align="center">
+          <Table.Cell align={createAlignKnob()}>
             <DescriptiveEnvelope />
           </Table.Cell>
           {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
+            <Table.Cell align={createAlignKnob()} key={i}>
               Cell {e}
             </Table.Cell>
           ))}
@@ -72,26 +82,26 @@ storiesOf('Table', module).add('Row', () => (
 storiesOf('Table', module).add('Row and header', () => (
   <Table fullWidth={boolean('fullWidth', true)}>
     <Table.Header>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
+      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
     </Table.Header>
     <Table.Body>
       <Table.Row>
         <>
           {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
+            <Table.Cell align={createAlignKnob()} key={i}>
               Cell {e}
             </Table.Cell>
           ))}
-          <Table.Cell align="center">
+          <Table.Cell align={createAlignKnob()}>
             Label
             <DescriptiveEnvelope />
           </Table.Cell>
@@ -99,18 +109,18 @@ storiesOf('Table', module).add('Row and header', () => (
       </Table.Row>
       <Table.Row>
         {amount.map((e, i) => (
-          <Table.Cell align="right" key={i}>
+          <Table.Cell align={createAlignKnob()} key={i}>
             {e}
           </Table.Cell>
         ))}
       </Table.Row>
       <Table.Row>
         <>
-          <Table.Cell align="center">
+          <Table.Cell align={createAlignKnob()}>
             <DescriptiveEnvelope />
           </Table.Cell>
           {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
+            <Table.Cell align={createAlignKnob()} key={i}>
               Cell {e}
             </Table.Cell>
           ))}
