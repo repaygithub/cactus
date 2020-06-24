@@ -62,14 +62,14 @@ const StyledCheckBox = styled.span<StyledCheckBoxProps>`
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  ${p => getBorder(p.theme.border)}
-  border-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
-  background: ${p => (p.disabled ? p.theme.colors.lightGray : 'none')};
+  ${(p) => getBorder(p.theme.border)}
+  border-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
+  background: ${(p) => (p.disabled ? p.theme.colors.lightGray : 'none')};
   border-radius: 1px;
   svg {
     visibility: hidden;
     display: block;
-    color: ${p => p.theme.colors.white};
+    color: ${(p) => p.theme.colors.white};
     width: 12px;
     height: 12px;
   }
@@ -82,10 +82,10 @@ export const CheckBox = styled(CheckBoxBase)`
   width: 16px;
   height: 16px;
   line-height: 16px;
-  cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
+  cursor: ${(p) => (p.disabled ? 'cursor' : 'pointer')};
   input:checked ~ span {
-    border-color: ${p => !p.disabled && p.theme.colors.callToAction};
-    background-color: ${p => !p.disabled && p.theme.colors.callToAction};
+    border-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
+    background-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
   }
 
   input:checked ~ span {
@@ -95,7 +95,7 @@ export const CheckBox = styled(CheckBoxBase)`
   }
 
   input:focus ~ span {
-    ${p => p.theme.boxShadows && `box-shadow: 0 0 8px ${p.theme.colors.callToAction};`}
+    ${(p) => p.theme.boxShadows && `box-shadow: 0 0 8px ${p.theme.colors.callToAction};`}
   }
 
   ${margin}

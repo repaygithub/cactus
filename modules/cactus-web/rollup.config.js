@@ -1,6 +1,6 @@
 const commonjs = require('rollup-plugin-commonjs')
 
-module.exports = config => {
+module.exports = (config) => {
   config.plugins.splice(
     1,
     1,

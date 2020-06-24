@@ -12,8 +12,8 @@ const Code = styled.code`
 `
 
 const Pre = styled.pre`
-  padding: ${p => p.theme.space[4]}px;
-  background-color: ${p => p.theme.colors.lightGray};
+  padding: ${(p) => p.theme.space[4]}px;
+  background-color: ${(p) => p.theme.colors.lightGray};
   white-space: pre-line;
 `
 
@@ -57,7 +57,7 @@ export default () => (
       See below for the list of available icons and the names and paths by which they can be
       referenced.
     </Text>
-    {categories.map(cat => {
+    {categories.map((cat) => {
       const iconList = iconsCategoryMap[cat]
       return (
         <React.Fragment key={cat}>

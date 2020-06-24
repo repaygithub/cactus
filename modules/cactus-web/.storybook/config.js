@@ -50,7 +50,7 @@ addDecorator(withKnobs)
 addDecorator(CactusAddon)
 
 function requireAll(req) {
-  req.keys().forEach(filename => req(filename))
+  req.keys().forEach((filename) => req(filename))
 }
 
 const componentStories = require.context('../src', true, /\.(story|stories)\.(j|t)sx?$/)

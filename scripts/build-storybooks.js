@@ -18,8 +18,8 @@ function hasStorybook(dirname) {
 async function main() {
   // gather module metadata
   const moduleDirs = await fs.readdir(resolveModule())
-  const packagesPromises = moduleDirs.map(dirname => {
-    return fs.readFile(resolveModule(dirname, 'package.json')).then(json => JSON.parse(json))
+  const packagesPromises = moduleDirs.map((dirname) => {
+    return fs.readFile(resolveModule(dirname, 'package.json')).then((json) => JSON.parse(json))
   })
   const packages = await Promise.all(packagesPromises)
   console.log('found modules:')
@@ -32,8 +32,8 @@ async function main() {
 
   // start building storybook
   const storybookBuilds = modules
-    .filter(m => m.hasStorybook)
-    .map(pkg => exec('yarn build:stories --quiet', { cwd: resolveModule(pkg.dirname) }))
+    .filter((m) => m.hasStorybook)
+    .map((pkg) => exec('yarn build:stories --quiet', { cwd: resolveModule(pkg.dirname) }))
 
   const prettierConfig = await prettier.resolveConfig(__dirname)
 
@@ -52,7 +52,7 @@ async function main() {
       <ul>
       ${(() =>
         modules
-          .map(pkg => {
+          .map((pkg) => {
             if (pkg.hasStorybook) {
               return `<li>
             <a href="/cactus/stories/${pkg.dirname}/">
@@ -87,7 +87,7 @@ async function main() {
       <ul>
       ${(() =>
         modules
-          .map(pkg => {
+          .map((pkg) => {
             if (pkg.hasStorybook) {
               return `<li>
             <a href="/cactus/stories/${pkg.dirname}/">
@@ -132,7 +132,7 @@ async function main() {
   console.log('')
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error(error)
   process.exit(1)
 })

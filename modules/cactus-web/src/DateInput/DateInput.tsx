@@ -67,7 +67,7 @@ const IS_FIREFOX = typeof window !== 'undefined' && window.navigator.userAgent.m
 const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
 
 const portalStyleOptions = { offset: 8 }
-const noop = function() {}
+const noop = function () {}
 const ALLOW_DEFAULT = ['Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
 
 function isOwnInput(target: any, container: Element): target is HTMLInputElement {
@@ -202,10 +202,7 @@ const ToggleButtons = styled.div`
   }
 `
 
-const marginAndWidth = compose(
-  margin,
-  width
-)
+const marginAndWidth = compose(margin, width)
 
 const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   thin: css`
@@ -233,26 +230,26 @@ const getInputShape = (shape: Shape) => inputShapeMap[shape]
 
 const InputWrapper = styled.div`
   position: relative;
-  color: ${p => p.theme.colors.darkContrast};
+  color: ${(p) => p.theme.colors.darkContrast};
   box-sizing: border-box;
   display: inline-flex;
   flex-wrap: nowrap;
   align-items: center;
-  ${p => getBorder(p.theme.border)}
-  border-color: ${p => p.theme.colors.darkestContrast};
-  ${p => getInputShape(p.theme.shape)}
-  background-color: ${p => p.theme.colors.white};
+  ${(p) => getBorder(p.theme.border)}
+  border-color: ${(p) => p.theme.colors.darkestContrast};
+  ${(p) => getInputShape(p.theme.shape)}
+  background-color: ${(p) => p.theme.colors.white};
   height: 36px;
   outline: none;
   overflow: hidden;
   padding: 0 16px 0 12px;
   user-select: none;
   min-width: 106px;
-  ${p => p.theme.textStyles.body};
+  ${(p) => p.theme.textStyles.body};
   ${marginAndWidth}
 
   &:focus-within {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 
   > ${LiteralPunctuation} {
@@ -269,7 +266,7 @@ const InputWrapper = styled.div`
 
     // hides cursor
     color: transparent;
-    text-shadow: 0 0 0 ${p => p.theme.colors.darkestContrast};
+    text-shadow: 0 0 0 ${(p) => p.theme.colors.darkestContrast};
 
     // hides selection
     &::selection {
@@ -286,11 +283,11 @@ const InputWrapper = styled.div`
 
     &:focus {
       outline: none;
-      background-color: ${p => p.theme.colors.transparentCTA};
+      background-color: ${(p) => p.theme.colors.transparentCTA};
     }
 
     &::placeholder {
-      color: ${p => p.theme.colors.mediumContrast};
+      color: ${(p) => p.theme.colors.mediumContrast};
     }
 
     &[data-token='YYYY'] {
@@ -337,9 +334,9 @@ const CalendarPopup = styled.div`
   box-sizing: border-box;
   position: absolute;
   z-index: 1000;
-  background-color: ${p => p.theme.colors.white};
-  ${p => getPopupShape(p.theme.shape)}
-  ${p => getPopupBoxShadowStyles(p.theme)}
+  background-color: ${(p) => p.theme.colors.white};
+  ${(p) => getPopupShape(p.theme.shape)}
+  ${(p) => getPopupBoxShadowStyles(p.theme)}
   overflow: hidden;
 `
 
@@ -349,7 +346,7 @@ const MonthYearSelect = styled.button`
   background-color: transparent;
   border: none;
   padding: 16px;
-  ${p => p.theme.textStyles.h4};
+  ${(p) => p.theme.textStyles.h4};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -371,7 +368,7 @@ const CalendarDayBase = styled.button`
   height: 40px;
   border-radius: 50%;
   flex: 0 0 40px;
-  ${p => p.theme.textStyles.small};
+  ${(p) => p.theme.textStyles.small};
 
   &:focus {
     outline: none;
@@ -383,7 +380,7 @@ const CalendarDayBase = styled.button`
 
   &[aria-disabled='true'] {
     cursor: default;
-    color: ${p => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.mediumContrast};
   }
 
   &[role='columnheader'] {
@@ -391,25 +388,25 @@ const CalendarDayBase = styled.button`
   }
 
   &.outside-date {
-    color: ${p => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.mediumContrast};
 
     &.selected-date {
-      color: ${p => p.theme.colors.darkContrast};
-      background-color: ${p => p.theme.colors.transparentCTA};
+      color: ${(p) => p.theme.colors.darkContrast};
+      background-color: ${(p) => p.theme.colors.transparentCTA};
     }
   }
 
   &.focused-date {
-    background-color: ${p => p.theme.colors.transparentCTA};
+    background-color: ${(p) => p.theme.colors.transparentCTA};
 
     &[aria-disabled='true'] {
-      background-color: ${p => p.theme.colors.transparentError};
+      background-color: ${(p) => p.theme.colors.transparentError};
     }
   }
 
   &.selected-date:not(.outside-date) {
-    background-color: ${p => p.theme.colors.callToAction};
-    color: ${p => p.theme.colors.white};
+    background-color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.white};
   }
 
   span {
@@ -472,7 +469,7 @@ function CalendarBase(props: CalendarProps) {
     ...rest
   } = props
   const daysMatrix: CalendarDayDataType[][] = useMemo(
-    function() {
+    function () {
       let weekIndex = 0
       let dayIndex = 0
       let matrix: CalendarDayDataType[][] = []
@@ -547,7 +544,7 @@ function CalendarBase(props: CalendarProps) {
 }
 
 const Calendar = styled(CalendarBase)`
-  background-color: ${p => p.theme.colors.lightGray};
+  background-color: ${(p) => p.theme.colors.lightGray};
   padding: 0 10px;
 
   > [role='row'] {
@@ -582,7 +579,7 @@ const MonthYearListWrapper = styled.div`
   display: flex;
   height: 240px;
   width: 300px;
-  background-color: ${p => p.theme.colors.lightGray};
+  background-color: ${(p) => p.theme.colors.lightGray};
   padding: 0;
   justify-content: space-between;
   align-items: start;
@@ -607,7 +604,7 @@ const MonthYearListWrapper = styled.div`
     background-color: white;
 
     ul {
-      ${p => getYearShape(p.theme.shape)}
+      ${(p) => getYearShape(p.theme.shape)}
     }
   }
 
@@ -620,10 +617,10 @@ const MonthYearListWrapper = styled.div`
     margin: 0;
     outline: none;
     box-sizing: border-box;
-    border: 2px solid ${p => p.theme.colors.lightGray};
+    border: 2px solid ${(p) => p.theme.colors.lightGray};
 
     &:focus {
-      border-color: ${p => p.theme.colors.callToAction};
+      border-color: ${(p) => p.theme.colors.callToAction};
     }
   }
 
@@ -639,12 +636,12 @@ const MonthYearListWrapper = styled.div`
     }
 
     &:hover > span {
-      background-color: ${p => p.theme.colors.transparentCTA};
+      background-color: ${(p) => p.theme.colors.transparentCTA};
     }
 
     &[aria-selected='true'] > span {
-      background-color: ${p => p.theme.colors.callToAction};
-      color: ${p => p.theme.colors.callToActionText};
+      background-color: ${(p) => p.theme.colors.callToAction};
+      color: ${(p) => p.theme.colors.callToActionText};
     }
   }
 `
@@ -729,7 +726,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
-    format: function(props: any) {
+    format: function (props: any) {
       if (props.format) {
         if (typeof props.format !== 'string') {
           return new Error(`Provided prop 'format' must be a string.`)
@@ -999,7 +996,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     ) {
       const dateStr = target.dataset.date
       const { type } = this.props
-      this.setState(state => {
+      this.setState((state) => {
         let value = state.value.clone()
         value.parse(dateStr, 'YYYY-MM-dd')
         this.raiseChange(value)
@@ -1114,7 +1111,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (target instanceof HTMLLIElement) {
       const name = currentTarget.dataset.name as 'setYear' | 'setMonth'
       const value = Number(target.dataset.value)
-      this.setState(state => {
+      this.setState((state) => {
         let { focusDay } = state
         let pd = PartialDate.from(focusDay, 'YYYY-MM-dd')
         pd[name](value)
@@ -1282,14 +1279,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const _portal = this._portal.current
     return (
       !(el instanceof Node) ||
-      (!_input ||
-        !_input.contains(el) ||
-        (this.state.isOpen && (!_portal || !_portal.contains(el))))
+      !_input ||
+      !_input.contains(el) ||
+      (this.state.isOpen && (!_portal || !_portal.contains(el)))
     )
   }
 
   private togglePortalView() {
-    this.setState(state => {
+    this.setState((state) => {
       const toggleToCal = state.isOpen === 'month-year'
       let updates: Pick<DateInputState, 'isOpen' | 'focusDay'> = toggleToCal
         ? { isOpen: 'calendar' }
@@ -1372,7 +1369,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         pickerLabel: 'Open date picker',
         showMonthYear: 'Click to change month and year',
         showCalendar: 'Click to use calendar picker',
-        ariaDisabledDate: function(date) {
+        ariaDisabledDate: function (date) {
           return `${date} can't be selected.`
         },
         ...this.props.phrases,
@@ -1529,7 +1526,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                             isValidDate={isValidDate}
                           >
                             <div role="row">
-                              {phrases.weekdays.map(weekday => (
+                              {phrases.weekdays.map((weekday) => (
                                 <CalendarDay
                                   key={weekday.long}
                                   role="columnheader"

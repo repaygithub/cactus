@@ -57,10 +57,10 @@ type TypeMap = { [K in Type]: ReturnType<typeof css> }
 const typeMap: TypeMap = {
   general: css`
     width: 100%;
-    padding: ${p => p.theme.space[4]}px;
+    padding: ${(p) => p.theme.space[4]}px;
   `,
   push: css`
-    padding: 10px ${p => p.theme.space[4]}px;
+    padding: 10px ${(p) => p.theme.space[4]}px;
   `,
 }
 
@@ -98,7 +98,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   background: ${backgroundColor};
   border: 2px solid ${borderColor};
   ${typeVariant}
-  box-shadow: ${p => p.shadow && `0 9px 24px ${p.theme.colors.callToAction};`};
+  box-shadow: ${(p) => p.shadow && `0 9px 24px ${p.theme.colors.callToAction};`};
   border-radius: 8px;
   ${margin}
   ${width}

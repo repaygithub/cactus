@@ -16,11 +16,11 @@ const DateInputFieldExample: React.FC<RouteComponentProps> = () => {
   const [values, setValues] = React.useState(initValues)
   const handleChange = React.useCallback((name, value) => {
     if (new Date() < new Date(value)) {
-      setValues(v => ({ ...v, isValid: true }))
+      setValues((v) => ({ ...v, isValid: true }))
     } else {
-      setValues(v => ({ ...v, isValid: false }))
+      setValues((v) => ({ ...v, isValid: false }))
     }
-    setValues(v => ({ ...v, [name]: value }))
+    setValues((v) => ({ ...v, [name]: value }))
   }, [])
 
   return (
@@ -33,7 +33,7 @@ const DateInputFieldExample: React.FC<RouteComponentProps> = () => {
         DateInputField
       </Text>
       <Flex width="100%" justifyContent="center">
-        <form onSubmit={event => event.preventDefault()}>
+        <form onSubmit={(event) => event.preventDefault()}>
           <DateInputField
             name="date_field"
             label="Date Field"

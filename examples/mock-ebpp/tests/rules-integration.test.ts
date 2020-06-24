@@ -1,9 +1,9 @@
-import { ClientFunction } from 'testcafe'
-import makeActions from './helpers/actions'
-import startStaticServer from './helpers/static-server'
 import * as path from 'path'
+import { ClientFunction } from 'testcafe'
 import { queryByLabelText, queryByText } from '@testing-library/testcafe'
 import { RulesData } from '../types'
+import makeActions from './helpers/actions'
+import startStaticServer from './helpers/static-server'
 
 const getApiData = ClientFunction(() => (window as any).apiData)
 

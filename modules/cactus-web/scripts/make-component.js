@@ -26,7 +26,7 @@ async function main() {
     if (includesAny(args, '--force', '-f')) {
       console.log('component already exists, removing directory')
       const files = await fs.readdir(componentDir)
-      await Promise.all(files.map(f => fs.unlink(path.join(componentDir, f))))
+      await Promise.all(files.map((f) => fs.unlink(path.join(componentDir, f))))
       await fs.rmdir(componentDir)
     } else {
       throw new Error(`${componentName} already exists.`)
@@ -67,13 +67,13 @@ async function main() {
   console.log(`Successfully created ${componentName}.`)
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error('[ERR]', error.stack)
   process.exit(1)
 })
 
 function includesAny(arr, ...values) {
-  return values.some(v => arr.includes(v))
+  return values.some((v) => arr.includes(v))
 }
 
 async function fileExists(filePath) {

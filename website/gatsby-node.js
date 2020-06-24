@@ -7,11 +7,7 @@ const { createFilePath } = require('gatsby-source-filesystem')
 const chokidar = require('chokidar')
 const modulesHelper = require('./tools/modules-helper')
 
-const digest = str =>
-  crypto
-    .createHash('md5')
-    .update(str)
-    .digest('hex')
+const digest = (str) => crypto.createHash('md5').update(str).digest('hex')
 
 /**
  * Queries for any sourced markdown files and turns them into pages
@@ -50,7 +46,7 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then(result => {
+  `).then((result) => {
     if (result.errors) {
       return Promise.reject(result.errors)
     }
@@ -173,7 +169,7 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
     docgenData = []
   }
 
-  const createComponentDb = async filePath => {
+  const createComponentDb = async (filePath) => {
     // initial sourcing
     if (filePath === undefined) {
       const componentPaths = await fg(componentGlobs.slice())
@@ -181,7 +177,7 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
       for (const filePath of componentPaths) {
         const key = path.relative(__dirname, filePath)
         const hashed = digest(await fs.readFile(filePath, 'utf8'))
-        let previousData = docgenData.find(d => d.key === key)
+        let previousData = docgenData.find((d) => d.key === key)
         // file content has not changed and doesn't need to be updated
         if (previousData && previousData.hashed === hashed) {
           updatedDocgenData.push(previousData)
@@ -195,7 +191,7 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
     } else {
       const relativePath = path.relative(__dirname, filePath)
       const doc = docgen.parse(filePath)
-      const previous = docgenData.find(d => d.key === relativePath)
+      const previous = docgenData.find((d) => d.key === relativePath)
       if (!previous) {
         docgenData.push({ key: relativePath, value: doc })
       } else {
@@ -203,7 +199,7 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
       }
     }
 
-    const dataWithoutHash = docgenData.map(d => ({ key: d.key, value: d.value }))
+    const dataWithoutHash = docgenData.map((d) => ({ key: d.key, value: d.value }))
     const stringified = JSON.stringify(dataWithoutHash)
     const contentDigest = digest(stringified)
 
@@ -225,6 +221,6 @@ exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
   // add watcher for reloading
   chokidar
     .watch(componentGlobs.slice(), { ignoreInitial: true })
-    .on('change', path => createComponentDb(path))
-    .on('add', path => createComponentDb(path))
+    .on('change', (path) => createComponentDb(path))
+    .on('add', (path) => createComponentDb(path))
 }

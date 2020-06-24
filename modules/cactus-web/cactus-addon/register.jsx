@@ -69,7 +69,7 @@ class Panel extends React.Component {
   }
 
   handleThemeChange = (name, value) => {
-    this.setState(s => ({ values: { ...s.values, [name]: value } }), this.emitThemeChange)
+    this.setState((s) => ({ values: { ...s.values, [name]: value } }), this.emitThemeChange)
   }
 
   handleSimpleThemeChange = ({ currentTarget }) =>
@@ -247,7 +247,7 @@ class Panel extends React.Component {
 }
 
 // Register the addon with a unique name.
-addons.register(NAME, api => {
+addons.register(NAME, (api) => {
   const channel = addons.getChannel()
   addons.addPanel(`${NAME}/panel`, {
     title: 'Cactus Theme',

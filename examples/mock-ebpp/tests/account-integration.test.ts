@@ -4,14 +4,14 @@ import { Selector } from 'testcafe'
 import startStaticServer from './helpers/static-server'
 
 fixture('Account Integration Tests')
-  .before(async ctx => {
+  .before(async (ctx) => {
     ctx.server = startStaticServer({
       directory: path.join(process.cwd(), 'dist'),
       port: 33567,
       singlePageApp: true,
     })
   })
-  .after(async ctx => {
+  .after(async (ctx) => {
     await ctx.server.close()
   })
   .page('http://localhost:33567/accounts')

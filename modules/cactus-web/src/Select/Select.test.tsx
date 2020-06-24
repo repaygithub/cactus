@@ -51,7 +51,11 @@ describe('component: Select', () => {
   })
 
   test('can receive options with number values', async () => {
-    const options = [{ label: '1', value: 1 }, { label: 'two', value: 2 }, { label: '3', value: 3 }]
+    const options = [
+      { label: '1', value: 1 },
+      { label: 'two', value: 2 },
+      { label: '3', value: 3 },
+    ]
     const { getByText } = render(
       <StyleProvider>
         <Select id="test-numbers" name="test-number-options" options={options} />
@@ -657,7 +661,7 @@ describe('component: Select', () => {
       fireEvent.click(getByRole('button'))
       await animationRender()
       let options = getAllByRole('option')
-      options.forEach(o => {
+      options.forEach((o) => {
         expect(o.getAttribute('aria-selected')).toBe(
           String(o.getAttribute('data-value') === 'tucson')
         )

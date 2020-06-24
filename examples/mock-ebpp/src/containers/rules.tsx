@@ -226,11 +226,11 @@ const Rules = (props: RouteComponentProps) => {
                             key={condition.key}
                             index={conditionIndex}
                             header={`Condition #${conditionIndex + 1}`}
-                            onDelete={cIndex => handleDeleteCondition(ruleIndex, cIndex)}
-                            onUpClick={cIndex => handleConditionUpClick(ruleIndex, cIndex)}
-                            onDownClick={cIndex => handleConditionDownClick(ruleIndex, cIndex)}
+                            onDelete={(cIndex) => handleDeleteCondition(ruleIndex, cIndex)}
+                            onUpClick={(cIndex) => handleConditionUpClick(ruleIndex, cIndex)}
+                            onDownClick={(cIndex) => handleConditionDownClick(ruleIndex, cIndex)}
                             disableUp={disableUp}
-                            disableDown={cIndex => disableConditionDown(ruleIndex, cIndex)}
+                            disableDown={(cIndex) => disableConditionDown(ruleIndex, cIndex)}
                             defaultOpen={condition.key === newestCondition}
                           >
                             <SelectField
@@ -316,11 +316,11 @@ const Rules = (props: RouteComponentProps) => {
                           key={action.key}
                           index={actionIndex}
                           header={`Action #${actionIndex + 1}`}
-                          onDelete={aIndex => handleDeleteAction(ruleIndex, aIndex)}
-                          onUpClick={aIndex => handleActionUpClick(ruleIndex, aIndex)}
-                          onDownClick={aIndex => handleActionDownClick(ruleIndex, aIndex)}
+                          onDelete={(aIndex) => handleDeleteAction(ruleIndex, aIndex)}
+                          onUpClick={(aIndex) => handleActionUpClick(ruleIndex, aIndex)}
+                          onDownClick={(aIndex) => handleActionDownClick(ruleIndex, aIndex)}
                           disableUp={disableUp}
-                          disableDown={aIndex => disableActionDown(ruleIndex, aIndex)}
+                          disableDown={(aIndex) => disableActionDown(ruleIndex, aIndex)}
                           defaultOpen={action.key === newestAction}
                         >
                           <SelectField

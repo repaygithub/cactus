@@ -20,7 +20,7 @@ class App extends Component<AppProps> {
       <div style={{ paddingTop: '8px' }}>
         <Flex>
           <I18nResource get="language-label">
-            {label => (
+            {(label) => (
               <MenuButton label={label} ml={2} mr={2} data-testid="select-language">
                 <MenuButton.Item onSelect={() => this.props.onLangChange('en-US')}>
                   🇺🇸 English
@@ -51,7 +51,7 @@ class App extends Component<AppProps> {
         >
           <div>
             <I18nResource get="feature-carrots-label">
-              {label => (
+              {(label) => (
                 <ToggleField
                   name="include_carrot_snacks"
                   id="feature-include-carrots"

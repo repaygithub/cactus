@@ -46,8 +46,8 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: ${p => (p.disabled ? p.theme.colors.lightGray : 'transparent')};
-  border: 2px solid ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
+  background-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : 'transparent')};
+  border: 2px solid ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
 
   :after {
     position: absolute;
@@ -56,7 +56,8 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.callToAction)};
+    background-color: ${(p) =>
+      p.disabled ? p.theme.colors.lightGray : p.theme.colors.callToAction};
     margin: 2px 2px;
     box-sizing: border-box;
   }
@@ -69,10 +70,10 @@ export const RadioButton = styled(RadioButtonBase)`
   line-height: 16px;
   width: 16px;
   height: 16px;
-  cursor: ${p => (p.disabled ? 'cursor' : 'pointer')};
+  cursor: ${(p) => (p.disabled ? 'cursor' : 'pointer')};
 
   input:checked ~ span {
-    border-color: ${p => !p.disabled && p.theme.colors.callToAction};
+    border-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
     background-color: transparent;
   }
 
@@ -81,7 +82,7 @@ export const RadioButton = styled(RadioButtonBase)`
   }
 
   input:focus ~ span {
-    ${p => p.theme.boxShadows && `box-shadow: 0 0 8px ${p.theme.colors.callToAction};`}
+    ${(p) => p.theme.boxShadows && `box-shadow: 0 0 8px ${p.theme.colors.callToAction};`}
   }
 
   ${margin}

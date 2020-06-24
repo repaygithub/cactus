@@ -1,5 +1,5 @@
 // Stolen from attr-accept https://github.com/okonet/attr-accept
-export default function(file: File, acceptedFiles: string | string[]) {
+export default function (file: File, acceptedFiles: string | string[]) {
   if (file && acceptedFiles) {
     const acceptedFilesArray = Array.isArray(acceptedFiles)
       ? acceptedFiles
@@ -8,7 +8,7 @@ export default function(file: File, acceptedFiles: string | string[]) {
     const mimeType = file.type || ''
     const baseMimeType = mimeType.replace(/\/.*$/, '')
 
-    return acceptedFilesArray.some(type => {
+    return acceptedFilesArray.some((type) => {
       const validType = type.trim()
       if (validType.charAt(0) === '.') {
         return fileName.toLowerCase().endsWith(validType.toLowerCase())

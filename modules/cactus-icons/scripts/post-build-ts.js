@@ -5,8 +5,8 @@ const convertKebabToPascal = require('./helpers/kebabToPascal')
 async function main() {
   let icons = await fs.readdir(path.join(__dirname, '..', 'ts'))
   icons = icons
-    .filter(i => i !== 'index.ts' && i.endsWith('.tsx'))
-    .map(i => {
+    .filter((i) => i !== 'index.ts' && i.endsWith('.tsx'))
+    .map((i) => {
       let base = path.basename(i, '.tsx')
       return [convertKebabToPascal(base), base]
     })

@@ -12,7 +12,7 @@ interface ShadowBoxProps extends React.ComponentPropsWithRef<typeof Flex> {
 }
 
 const ShadowBox = styled<React.FC<ShadowBoxProps>>(Flex)`
-  box-shadow: ${p => `${p.shadow} ${p.theme.colors.callToAction}`};
+  box-shadow: ${(p) => `${p.shadow} ${p.theme.colors.callToAction}`};
 `
 
 ShadowBox.defaultProps = {

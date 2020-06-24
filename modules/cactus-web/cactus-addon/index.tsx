@@ -35,9 +35,9 @@ const StyledContainer = styled(StyledContainerBase)`
   height: 100vh;
   display: flex;
   overflow-y: auto;
-  ${p => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
-  ${p => alignmentMap[p.align]};
-  ${p => p.overrides}
+  ${(p) => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
+  ${(p) => alignmentMap[p.align]};
+  ${(p) => p.overrides}
 `
 
 StyledContainer.defaultProps = {

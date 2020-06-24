@@ -34,7 +34,7 @@ interface AccessibleFieldProps extends MarginProps, WidthProps {
   children: JSX.Element | RenderFunc
 }
 
-export interface ExtAccessibleFieldProps extends Omit<AccessibleFieldProps, 'children'> { }
+export interface ExtAccessibleFieldProps extends Omit<AccessibleFieldProps, 'children'> {}
 
 export function useAccessibleField({
   id,
@@ -106,11 +106,11 @@ function AccessibleFieldBase(props: AccessibleFieldProps) {
       {typeof props.children === 'function'
         ? props.children(accessibility)
         : React.cloneElement(React.Children.only(props.children), {
-          id: fieldId,
-          name,
-          'aria-describedby': ariaDescribedBy,
-          status,
-        })}
+            id: fieldId,
+            name,
+            'aria-describedby': ariaDescribedBy,
+            status,
+          })}
       {status !== undefined && (
         <div>
           <StatusMessage status={status} id={statusId}>

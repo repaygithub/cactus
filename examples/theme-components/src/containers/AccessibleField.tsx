@@ -60,7 +60,7 @@ const AccessibleFieldComponent: React.FC<RouteComponentProps> = () => {
               style={{ minWidth: '300px' }}
               value={value}
               placeholder="name@example.com"
-              onChange={e => setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value)}
             />
           </AccessibleField>
         </Box>

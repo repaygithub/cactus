@@ -110,7 +110,7 @@ describe('feature flags', () => {
       const TestComp = () => {
         return (
           <FeatureFlag feature="option_a">
-            {enabled =>
+            {(enabled) =>
               enabled ? (
                 <span>Should not render this section of text</span>
               ) : (
@@ -130,7 +130,7 @@ describe('feature flags', () => {
       const TestComp = () => {
         return (
           <FeatureFlag feature="featureA">
-            {enabled =>
+            {(enabled) =>
               enabled ? (
                 <span>This text is expected to render second.</span>
               ) : (

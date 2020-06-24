@@ -7,7 +7,7 @@ import { supportedLanguages } from '../i18nController'
 
 const languageOptions = [
   { value: '', label: 'use default' },
-  ...supportedLanguages.map(l => ({ value: l.code, label: l.label })),
+  ...supportedLanguages.map((l) => ({ value: l.code, label: l.label })),
 ]
 
 const Home: React.FC<RouteComponentProps> = () => {

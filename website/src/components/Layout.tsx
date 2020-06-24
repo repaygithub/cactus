@@ -62,13 +62,13 @@ function addNode(group: MenuGroup, node: MenuItem) {
     })
   } else {
     const route = node.routes.shift() + '/'
-    const parent = group.items.find(g => g.url.endsWith(route))
+    const parent = group.items.find((g) => g.url.endsWith(route))
     if (parent !== undefined) {
       addNode(parent, node)
     } else {
       console.error(`Could not find group for: `, node)
       console.log(`${route} not found among:`)
-      group.items.forEach(g => console.log('\t' + g.url))
+      group.items.forEach((g) => console.log('\t' + g.url))
     }
   }
 }
@@ -124,7 +124,7 @@ function createMenuGroups(pages: Edges<Markdown>) {
         url: '/stories/',
         // always last
         order: 1000,
-        items: storybooks.map(story => ({
+        items: storybooks.map((story) => ({
           title: story.name,
           // withPrefix because it's not a gatsby link
           url: `https://repaygithub.github.io/cactus/stories/${story.dirname}/`,
@@ -150,7 +150,7 @@ function createMenuGroups(pages: Edges<Markdown>) {
       })
     )
     .sort((a, b) => a.routes.length - b.routes.length)
-    .forEach(item => {
+    .forEach((item) => {
       addNode(group, item)
     })
 
@@ -178,14 +178,14 @@ const initialize = (location: WindowLocation) => () => {
 const MenuController: React.FC<{ location: WindowLocation }> = ({ children, location }) => {
   const [state, setState] = React.useState(initialize(location))
   const open = React.useCallback(
-    path => {
-      setState(s => [...s, path])
+    (path) => {
+      setState((s) => [...s, path])
     },
     [setState]
   )
   const close = React.useCallback(
-    path => {
-      setState(s => s.filter(p => p !== path))
+    (path) => {
+      setState((s) => s.filter((p) => p !== path))
     },
     [setState]
   )
@@ -209,20 +209,20 @@ const useMenu = (path: string) => {
 const StyledLink = styled(Link)`
   display: block;
   padding: 8px;
-  color: ${p => p.theme.colors.base};
+  color: ${(p) => p.theme.colors.base};
   text-decoration: none;
 
   &[aria-current='page'] {
-    background-color: ${p => p.theme.colors.mediumContrast};
-    color: ${p => p.theme.colors.white};
+    background-color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.white};
   }
 
   &:hover {
-    background-color: ${p => p.theme.colors.base};
-    color: ${p => p.theme.colors.baseText};
+    background-color: ${(p) => p.theme.colors.base};
+    color: ${(p) => p.theme.colors.baseText};
 
     ~ ${IconButton} {
-      color: ${p => p.theme.colors.baseText};
+      color: ${(p) => p.theme.colors.baseText};
     }
   }
 `
@@ -255,7 +255,7 @@ const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }) => {
           <NavToggle aria-expanded={isOpen ? 'true' : 'false'} toggle={toggle} />
           {isOpen && (
             <MenuList>
-              {item.items.map(item => (
+              {item.items.map((item) => (
                 <MenuItem item={item} key={item.url} />
               ))}
             </MenuList>
@@ -317,8 +317,8 @@ const InnerSidebar = styled.nav`
   float: right;
   min-width: 200px;
   height: 100%;
-  background-color: ${p => p.theme.colors.lightContrast};
-  border-right: 2px solid ${p => p.theme.colors.base};
+  background-color: ${(p) => p.theme.colors.lightContrast};
+  border-right: 2px solid ${(p) => p.theme.colors.base};
 `
 const OuterSidebar = styled.div`
   position: fixed;
@@ -327,7 +327,7 @@ const OuterSidebar = styled.div`
   top: 0;
   bottom: 0;
   overflow: hidden;
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.white};
 
   ::after {
     content: '';
@@ -351,16 +351,16 @@ const RootLink = styled(Link)`
   left: 0;
   right: 0;
   display: block;
-  padding: ${p => p.theme.space[3]}px;
+  padding: ${(p) => p.theme.space[3]}px;
   text-decoration: none;
-  color: ${p => p.theme.colors.base};
-  background-color: ${p => p.theme.colors.base};
-  color: ${p => p.theme.colors.baseText};
+  color: ${(p) => p.theme.colors.base};
+  background-color: ${(p) => p.theme.colors.base};
+  color: ${(p) => p.theme.colors.baseText};
   font-weight: 600;
 
   &:hover,
   &:focus {
-    color: ${p => p.theme.colors.lightContrast};
+    color: ${(p) => p.theme.colors.lightContrast};
   }
 `
 
@@ -389,7 +389,7 @@ const Header = styled<{ isOverlayed?: boolean }>(Box)`
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: ${p => p.theme.colors.base};
+        background-color: ${(p) => p.theme.colors.base};
         opacity: 0.5;
       }
     `}
@@ -414,7 +414,7 @@ const Overlay = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: ${p => p.theme.colors.base};
+    background-color: ${(p) => p.theme.colors.base};
     opacity: 0.5;
   }
 `
@@ -517,7 +517,7 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
                     <Scrollable>
                       <MenuController location={location}>
                         <MenuList>
-                          {groups.items.map(item => (
+                          {groups.items.map((item) => (
                             <MenuItem key={item.url} item={item} />
                           ))}
                         </MenuList>
@@ -537,6 +537,6 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
   )
 }
 
-export default styled(props => (
+export default styled((props) => (
   <Location>{({ location }) => <BaseLayout {...props} location={location} />}</Location>
 ))``

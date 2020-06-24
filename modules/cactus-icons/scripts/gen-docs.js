@@ -8,12 +8,9 @@ const CWD = process.cwd()
 async function main() {
   let svgs = await fg(['./svgs/**/*.svg'])
   svgs.sort()
-  let icons = svgs.map(filePath => {
+  let icons = svgs.map((filePath) => {
     filePath = filePath.replace('./svgs/', '').replace('.svg', '')
-    let fileName = filePath
-      .split('/')
-      .join('-')
-      .toLowerCase()
+    let fileName = filePath.split('/').join('-').toLowerCase()
     // [icon component name, fileName, filePath]
     return [convertKebabToPascal(fileName), fileName, filePath]
   })
@@ -40,7 +37,7 @@ async function main() {
   await fs.writeFile(path.join(CWD, '../..', 'docs/Icons/Available Icons.md'), markdown, 'utf8')
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error(error)
   process.exit(1)
 })

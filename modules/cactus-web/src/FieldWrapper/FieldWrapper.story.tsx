@@ -27,7 +27,8 @@ type FieldTypeObjects = {
   | { type: 'select'; options: OptionType[] | string[] }
   | { type: 'file'; accept?: string[] }
   | { type: 'checkbox'; value?: string | number }
-  | { type: 'radio'; value: string })
+  | { type: 'radio'; value: string }
+)
 
 const fieldTypeMap: { [k in FieldTypes]: React.ComponentType<any> } = {
   text: TextInputField,
@@ -141,7 +142,7 @@ const formReducer = (state: FormState, action: FormAction) => {
       }
     }
     case 'blur': {
-      const field = fields.find(f => f.name === action.name)
+      const field = fields.find((f) => f.name === action.name)
       if (field && typeof field.validator === 'function') {
         return {
           ...state,
@@ -168,7 +169,7 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }) => {
   )
 
   const handleBlur = useCallback(
-    name => {
+    (name) => {
       console.log(`onBlur(${name})`)
       dispatch({ type: 'blur', name })
     },
@@ -190,9 +191,9 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }) => {
         minWidth="350px"
         margin="0 auto"
         py={5}
-        onSubmit={event => event.preventDefault()}
+        onSubmit={(event) => event.preventDefault()}
       >
-        {fields.map(field => {
+        {fields.map((field) => {
           const Field = fieldTypeMap[field.type]
           let { validator, ...rest } = field
           let props = rest as React.ComponentPropsWithoutRef<typeof Field>

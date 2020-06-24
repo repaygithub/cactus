@@ -36,17 +36,7 @@ export const Box = styled('div')<BoxProps>(
   {
     boxSizing: 'border-box',
   },
-  compose(
-    position,
-    display,
-    layout,
-    space,
-    colorStyle,
-    color,
-    typography,
-    textStyle,
-    border
-  )
+  compose(position, display, layout, space, colorStyle, color, typography, textStyle, border)
 )
 
 export default Box

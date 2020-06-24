@@ -30,9 +30,9 @@ const getShape = (shape: Shape) => shapeMap[shape]
 const getBoxShadow = (theme: CactusTheme) => {
   return theme.boxShadows
     ? css`
-        box-shadow: 0 3px 6px 0 ${p => p.theme.colors.callToAction};
+        box-shadow: 0 3px 6px 0 ${(p) => p.theme.colors.callToAction};
         :hover {
-          box-shadow: 0 4px 8px 0 ${p => p.theme.colors.callToAction};
+          box-shadow: 0 4px 8px 0 ${(p) => p.theme.colors.callToAction};
         }
       `
     : css`
@@ -45,17 +45,17 @@ export const Card = styled.div<CardProps>`
   box-sizing: border-box;
   ${margin}
   ${width}
-  ${p => p.theme.colorStyles.standard};
-  ${p => getShape(p.theme.shape)}
-  padding: ${p => p.theme.space[4]}px;
-  ${p => getBoxShadow(p.theme)}
+  ${(p) => p.theme.colorStyles.standard};
+  ${(p) => getShape(p.theme.shape)}
+  padding: ${(p) => p.theme.space[4]}px;
+  ${(p) => getBoxShadow(p.theme)}
 
   & > & {
-    padding: ${p => p.theme.space[5]}px;
+    padding: ${(p) => p.theme.space[5]}px;
     color: pink;
   }
   & > & > & {
-    padding: ${p => p.theme.space[6]}px;
+    padding: ${(p) => p.theme.space[6]}px;
     color: blue;
   }
 `
