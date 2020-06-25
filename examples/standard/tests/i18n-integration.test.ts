@@ -31,7 +31,7 @@ test.page('http://localhost:33567?lang=en-US')(
 test.page('http://localhost:33567?lang=en-US')(
   'we can set the language manually when navigator.language is en-US',
   async (t) => {
-    await t.click(queryByTestId('select-language')).click(queryByTestId('spanish-option'))
+    await t.click(queryByTestId('select-language')).pressKey('down down enter')
     await t
       .expect(
         queryByText(
