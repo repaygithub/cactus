@@ -320,7 +320,7 @@ export const SplitButton = styled(SplitButtonBase)`
 SplitButton.propTypes = {
   mainActionLabel: PropTypes.string.isRequired,
   onSelectMainAction: PropTypes.func.isRequired,
-  mainActionIcon: PropTypes.func,
+  mainActionIcon: PropTypes.elementType,
   disabled: PropTypes.bool,
 }
 
