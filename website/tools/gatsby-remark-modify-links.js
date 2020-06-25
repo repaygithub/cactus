@@ -9,7 +9,7 @@ const prependRelativePath = (url, dirname) => {
   return match.length === 2 ? `${match[1]}/${url}` : url
 }
 
-const toSlug = filePath =>
+const toSlug = (filePath) =>
   filePath
     .toLowerCase()
     .replace(/(\s|%20)/, '-')
@@ -17,7 +17,7 @@ const toSlug = filePath =>
     .replace(/readme\/$/, '')
 
 module.exports = ({ markdownAST, markdownNode }, { repoBase, repoUrl }) => {
-  visit(markdownAST, `link`, node => {
+  visit(markdownAST, `link`, (node) => {
     if (
       node.url &&
       // relative path

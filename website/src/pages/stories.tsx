@@ -11,7 +11,7 @@ export default () => (
       links below to experiment with the libraries and adjust props.
     </p>
     <ul>
-      {storybookConfig.map(story => (
+      {storybookConfig.map((story) => (
         <li key={story.name}>
           <Link to={`https://repaygithub.github.io/cactus/stories/${story.dirname}/`}>
             {story.name}

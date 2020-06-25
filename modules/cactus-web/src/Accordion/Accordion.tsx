@@ -219,8 +219,8 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
     padding-right: 16px;
 
     &.is-open {
-      ${p => getHeaderBorder(p.theme.border)}
-      border-color: ${p => p.theme.colors.lightContrast};
+      ${(p) => getHeaderBorder(p.theme.border)}
+      border-color: ${(p) => p.theme.colors.lightContrast};
     }
   }
 `
@@ -361,7 +361,7 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
     const accordions = managedAccordions.current
     if (open) {
       const allOpen = Object.keys(accordions).filter(
-        accordionId => accordions[accordionId].open === true
+        (accordionId) => accordions[accordionId].open === true
       )
       if (allOpen.length > maxOpen) {
         allOpen.sort((a, b) => {
@@ -419,7 +419,7 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
   const getOrderedIds = () =>
     Array.from(
       document.querySelectorAll(`#${Object.keys(managedAccordions.current).join(',#')}`)
-    ).map(el => el.id)
+    ).map((el) => el.id)
 
   return (
     <ProviderContext.Provider
@@ -498,7 +498,7 @@ const AccordionBase = (props: AccordionProps) => {
         manageOpen(id, !isOpen)
       }
     } else {
-      setState(state => ({ ...state, isOpen: !state.isOpen }))
+      setState((state) => ({ ...state, isOpen: !state.isOpen }))
     }
   }
 
@@ -572,13 +572,13 @@ const simpleBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   thin: css`
     border-bottom: 1px solid;
     &:first-of-type {
-      border-top: 1px solid ${p => p.theme.colors.lightContrast};
+      border-top: 1px solid ${(p) => p.theme.colors.lightContrast};
     }
   `,
   thick: css`
     border-bottom: 2px solid;
     &:first-of-type {
-      border-top: 2px solid ${p => p.theme.colors.lightContrast};
+      border-top: 2px solid ${(p) => p.theme.colors.lightContrast};
     }
   `,
 }
@@ -589,13 +589,13 @@ const getSimpleBorder = (borderSize: BorderSize) => simpleBorderMap[borderSize]
 
 const accordionVariantMap: VariantMap = {
   simple: css`
-  ${p => getSimpleBorder(p.theme.border)}
-    border-color: ${p => p.theme.colors.lightContrast};
+  ${(p) => getSimpleBorder(p.theme.border)}
+    border-color: ${(p) => p.theme.colors.lightContrast};
   `,
   outline: css`
-    ${p => getOutlineBorder(p.theme.border)}
-    border-color: ${p => p.theme.colors.lightContrast};
-    ${p => getShape(p.theme.shape)}
+    ${(p) => getOutlineBorder(p.theme.border)}
+    border-color: ${(p) => p.theme.colors.lightContrast};
+    ${(p) => getShape(p.theme.shape)}
     & + & {
       margin-top: 8px;
     }
@@ -612,7 +612,7 @@ export const Accordion = styled(AccordionBase)`
   box-sizing: border-box;
   width: 100%;
 
-  ${p =>
+  ${(p) =>
     p.theme.boxShadows &&
     `&.box-shadow {
     border: 0px;

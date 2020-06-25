@@ -14,7 +14,7 @@ export function getFocusable(root?: any) {
     searchFrom = document
   }
   let result = Array.from(searchFrom.querySelectorAll(FOCUS_SELECTOR))
-  return result.filter(el => {
+  return result.filter((el) => {
     // @ts-ignore
     if (el.hasAttribute('tabindex') && el.tabIndex < 0) {
       return false

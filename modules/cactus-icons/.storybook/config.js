@@ -11,7 +11,7 @@ addParameters({
   },
 })
 addDecorator(withKnobs)
-addDecorator(story => (
+addDecorator((story) => (
   <div
     style={{
       fontFamily: 'Helvetica, Arial, sans serif',

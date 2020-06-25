@@ -52,7 +52,7 @@ const IconBase = (props: IconComponentProps & ModalProps) => {
   )
 }
 
-const Modalbase: FunctionComponent<ModalProps & IconComponentProps> = props => {
+const Modalbase: FunctionComponent<ModalProps & IconComponentProps> = (props) => {
   const {
     variant,
     modalTitle,
@@ -135,8 +135,8 @@ export const ModalPopUp = styled(DialogOverlay)<ModalProps>`
     display: block;
     min-width: 30%;
     min-height: 20%;
-    width: ${p => p.width};
-    height: ${p => p.height};
+    width: ${(p) => p.width};
+    height: ${(p) => p.height};
     overflow: auto;
   }
   ${IconButton} {

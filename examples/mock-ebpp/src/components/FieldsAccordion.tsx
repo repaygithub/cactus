@@ -15,7 +15,7 @@ interface FieldsAccordionProps {
   disableDown: (index: number) => boolean
 }
 
-const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = props => {
+const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props) => {
   const {
     index,
     header,

@@ -49,11 +49,11 @@ const RELEASE_RE = /^\d+\.\d+\.\d+$/
 
 async function main() {
   const args = process.argv.slice(2)
-  const argPkg = args.find(a => RELEVENT_MODULES.hasOwnProperty(a.trim()))
+  const argPkg = args.find((a) => RELEVENT_MODULES.hasOwnProperty(a.trim()))
   let pkg = argPkg ? RELEVENT_MODULES[argPkg] : undefined
   let pkgJson = getPkgJson(pkg)
   let answers = { pkgName: pkg && pkg.pkgName }
-  answers.releaseVersion = args.find(a => RELEASE_RE.test(a))
+  answers.releaseVersion = args.find((a) => RELEASE_RE.test(a))
 
   if (!answers.pkgName || !answers.releaseVersion) {
     prompts.override(answers)
@@ -63,19 +63,19 @@ async function main() {
           type: 'select',
           name: 'pkgName',
           message: 'Package to publish?',
-          choices: MODULES.map(m => ({ title: `@repay/${m}`, value: m })),
+          choices: MODULES.map((m) => ({ title: `@repay/${m}`, value: m })),
         },
         {
           type: 'text',
           name: 'releaseVersion',
-          message: prev => {
+          message: (prev) => {
             if (!pkg) {
               pkg = RELEVENT_MODULES[prev]
               pkgJson = getPkgJson(pkg)
             }
             return `Release Version (current = ${pkgJson.version})?`
           },
-          validate: value =>
+          validate: (value) =>
             RELEASE_RE.test(value) ||
             `invalid version ${value} -- must be in semver format and ` +
               `pre-release is not supported with this command.`,
@@ -134,13 +134,13 @@ async function main() {
         })
       )
       .on('error', getErrorHandler('conventional-commits-parser'))
-      .on('data', commit => {
+      .on('data', (commit) => {
         all.push(commit)
       })
       .on('error', getErrorHandler('main'))
       .on('end', () => {
         if (errors.length) {
-          errors.forEach(err => {
+          errors.forEach((err) => {
             console.error(err)
           })
           reject(new Error('Something went wrong; see above errors for details.'))
@@ -152,7 +152,7 @@ async function main() {
     let content = ''
     let relevant = all.slice(1)
     const lastReleaseCommitIndex = relevant.findIndex(
-      commit =>
+      (commit) =>
         commit.type === 'chore' &&
         commit.header.includes('publish') &&
         commit.header.includes(scope)
@@ -191,7 +191,7 @@ function getPkgJson(pkg) {
 }
 
 function getErrorHandler(scope) {
-  return function(error) {
+  return function (error) {
     error.message = `[${scope}] :: ${error.message}`
     errors.push(error)
   }
@@ -206,11 +206,9 @@ function normalizeScope(rawScope) {
 
 function generateCommit(commit) {
   let shortHash = commit.hash.slice(0, 7)
-  let content = `- ${commit.header} [${shortHash}](https://github.com/repaygithub/cactus/commit/${
-    commit.hash
-  })\n`
+  let content = `- ${commit.header} [${shortHash}](https://github.com/repaygithub/cactus/commit/${commit.hash})\n`
   if (Array.isArray(commit.notes)) {
-    commit.notes.forEach(note => {
+    commit.notes.forEach((note) => {
       if (note.title.includes('BREAKING')) {
         content += '  - 🧨 BREAKING: ' + note.text + '\n'
       }
@@ -220,12 +218,10 @@ function generateCommit(commit) {
 }
 
 function generateReleaseHeader(pkg, releaseVersion, commit) {
-  return `## [${pkg.pkgName}@v${releaseVersion}](https://github.com/repaygithub/cactus/commit/${
-    commit.hash
-  })\n\n`
+  return `## [${pkg.pkgName}@v${releaseVersion}](https://github.com/repaygithub/cactus/commit/${commit.hash})\n\n`
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error(error)
   process.exit(1)
 })

@@ -16,15 +16,15 @@ async function main() {
     await fs.mkdir(path.resolve(__dirname, '../ts'))
   }
 
-  await fg(['./src/**/*.ts']).then(extraSources =>
+  await fg(['./src/**/*.ts']).then((extraSources) =>
     Promise.all(
-      extraSources.map(f =>
+      extraSources.map((f) =>
         fs.copyFile(path.join(CWD, f), path.join(CWD, 'ts', f.replace('./src/', '')))
       )
     )
   )
 
-  const allFiles = svgFiles.map(async svgFile => {
+  const allFiles = svgFiles.map(async (svgFile) => {
     // Extract the code from all of the files
     const svgCode = await fs.readFile(path.join(__dirname, '..', svgFile))
     const tsxFileName = svgFile
@@ -44,7 +44,7 @@ async function main() {
   await Promise.all(allFiles)
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.log(err)
   process.exit(1)
 })

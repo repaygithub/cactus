@@ -38,7 +38,10 @@ describe('component: SelectField', () => {
           label="Requires a label"
           name="the-test-select-field"
           id="prevent-random-id"
-          options={[{ label: 'Complex', value: 'complex' }, { label: 'Options', value: 'options' }]}
+          options={[
+            { label: 'Complex', value: 'complex' },
+            { label: 'Options', value: 'options' },
+          ]}
         />
       </StyleProvider>
     )
@@ -53,7 +56,10 @@ describe('component: SelectField', () => {
           label="Requires a label"
           name="the-test-select-field"
           id="prevent-random-id"
-          options={[{ label: 'Complex', value: 'complex' }, { label: 'Options', value: 'options' }]}
+          options={[
+            { label: 'Complex', value: 'complex' },
+            { label: 'Options', value: 'options' },
+          ]}
           disabled
         />
       </StyleProvider>
@@ -92,7 +98,7 @@ describe('component: SelectField', () => {
     )
 
     let tooltipTextEl = getByText('This is some information')
-    let tooltipEl = closest(tooltipTextEl, el => el.getAttribute('role') === 'tooltip')
+    let tooltipEl = closest(tooltipTextEl, (el) => el.getAttribute('role') === 'tooltip')
     expect(tooltipEl).not.toBeNull()
 
     let select = getByLabelText('Requires a label')

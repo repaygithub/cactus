@@ -194,7 +194,7 @@ key-for-no-people = blah blah blue stew`
         global,
       })
       // @ts-ignore
-      controller.load = jest.fn(args => MockPromise.resolve([{ lang: 'en', ftl: global }]))
+      controller.load = jest.fn((args) => MockPromise.resolve([{ lang: 'en', ftl: global }]))
       controller._load({ lang: 'de-DE', section: 'global' })
       expect(controller.load).not.toBeCalled()
     })
@@ -567,7 +567,7 @@ key-for-the-group= We are the people!
   describe('<I18nResource />', () => {
     test('renders get key when message not found', () => {
       const { container } = render(
-        <I18nResource get="this_is_my_key">{message => <span>{message}</span>}</I18nResource>
+        <I18nResource get="this_is_my_key">{(message) => <span>{message}</span>}</I18nResource>
       )
       expect(container).toHaveTextContent('this_is_my_key')
     })

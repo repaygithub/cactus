@@ -31,43 +31,43 @@ export const Item = styled.div<ItemProps>`
   box-sizing: border-box;
 
   margin: ${GUTTER_WIDTH / 2}px ${GUTTER_WIDTH / 2}px;
-  width: ${p => calculateFlexItemSize(p.tiny)};
+  width: ${(p) => calculateFlexItemSize(p.tiny)};
 
   @media (min-width: 769px) {
-    width: ${p => (p.small ? calculateFlexItemSize(p.small) : undefined)};
+    width: ${(p) => (p.small ? calculateFlexItemSize(p.small) : undefined)};
   }
 
   @media (min-width: 1025px) {
-    width: ${p => (p.medium ? calculateFlexItemSize(p.medium) : undefined)};
+    width: ${(p) => (p.medium ? calculateFlexItemSize(p.medium) : undefined)};
   }
 
   @media (min-width: 1201px) {
-    width: ${p => (p.large ? calculateFlexItemSize(p.large) : undefined)};
+    width: ${(p) => (p.large ? calculateFlexItemSize(p.large) : undefined)};
   }
 
   @media (min-width: 1441px) {
-    width: ${p => (p.extraLarge ? calculateFlexItemSize(p.extraLarge) : undefined)};
+    width: ${(p) => (p.extraLarge ? calculateFlexItemSize(p.extraLarge) : undefined)};
   }
 
   @supports (display: grid) {
-    grid-column: span ${p => p.tiny};
+    grid-column: span ${(p) => p.tiny};
     width: auto;
     margin: 0;
 
     @media (min-width: 769px) {
-      grid-column: span ${p => p.small};
+      grid-column: span ${(p) => p.small};
     }
 
     @media (min-width: 1025px) {
-      grid-column: span ${p => p.medium};
+      grid-column: span ${(p) => p.medium};
     }
 
     @media (min-width: 1201px) {
-      grid-column: span ${p => p.large};
+      grid-column: span ${(p) => p.large};
     }
 
     @media (min-width: 1441px) {
-      grid-column: span ${p => p.extraLarge};
+      grid-column: span ${(p) => p.extraLarge};
     }
   }
 `
@@ -104,14 +104,14 @@ export const Grid = styled.div<GridProps>`
 
   > ${Item} {
     display: flex;
-    justify-content: ${p => (p.justify ? flexJustifyMap[p.justify] : 'flex-start')};
+    justify-content: ${(p) => (p.justify ? flexJustifyMap[p.justify] : 'flex-start')};
   }
 
   @supports (display: grid) {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-gap: ${GUTTER_WIDTH}px;
-    justify-items: ${p => (p.justify ? p.justify : 'normal')};
+    justify-items: ${(p) => (p.justify ? p.justify : 'normal')};
 
     > ${Item} {
       display: block;

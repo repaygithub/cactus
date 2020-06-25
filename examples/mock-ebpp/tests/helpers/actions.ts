@@ -1,5 +1,5 @@
+import { ClientFunction, Selector } from 'testcafe'
 import { queryByLabelText, queryByText, within } from '@testing-library/testcafe'
-import { Selector, ClientFunction } from 'testcafe'
 
 const getDropdown = Selector(() => {
   if (document.activeElement && document.activeElement.getAttribute('role') === 'listbox') {

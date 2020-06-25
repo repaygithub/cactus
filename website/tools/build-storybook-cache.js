@@ -6,7 +6,7 @@ const { promises: fs } = require('fs')
 
 async function main() {
   const modules = storybookHelper.find()
-  const storybooks = modules.map(m => {
+  const storybooks = modules.map((m) => {
     return {
       name: m.name,
       dirname: m.dirname,

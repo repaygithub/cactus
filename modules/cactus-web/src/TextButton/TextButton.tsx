@@ -24,13 +24,13 @@ type VariantMap = { [K in TextButtonVariants]: FlattenInterpolation<ThemeProps<C
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToAction};
   `,
   standard: css`
-    color: ${p => p.theme.colors.base};
+    color: ${(p) => p.theme.colors.base};
   `,
   danger: css`
-    color: ${p => p.theme.colors.error};
+    color: ${(p) => p.theme.colors.error};
   `,
 }
 
@@ -61,16 +61,16 @@ const getBorder = (size: BorderSize) => borderMap[size]
 const inverseVariantMap: VariantMap = {
   action: css`
     font-weight: 700;
-    color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToAction};
   `,
   standard: css`
-    color: ${p => p.theme.colors.white};
+    color: ${(p) => p.theme.colors.white};
   `,
   danger: css``,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
-  color: ${p => p.theme.colors.mediumGray};
+  color: ${(p) => p.theme.colors.mediumGray};
   cursor: not-allowed;
 `
 
@@ -90,7 +90,7 @@ const variantOrDisabled = (
 }
 
 export const TextButton = styled.button<TextButtonProps>`
-  ${p => p.theme.textStyles.body};
+  ${(p) => p.theme.textStyles.body};
   position: relative;
   border: none;
   padding: 4px;
@@ -101,7 +101,7 @@ export const TextButton = styled.button<TextButtonProps>`
   box-sizing: border-box;
 
   &:hover {
-    text-decoration: ${p => !p.disabled && 'underline'};
+    text-decoration: ${(p) => !p.disabled && 'underline'};
   }
 
   &:focus {
@@ -114,9 +114,9 @@ export const TextButton = styled.button<TextButtonProps>`
       width: 100%;
       top: 0px;
       left: 0px;
-      ${p => getBorder(p.theme.border)};
-      ${p => getShape(p.theme.shape)};
-      border-color: ${p => p.theme.colors.callToAction};
+      ${(p) => getBorder(p.theme.border)};
+      ${(p) => getShape(p.theme.shape)};
+      border-color: ${(p) => p.theme.colors.callToAction};
     }
   }
 

@@ -40,11 +40,11 @@ const queries = {
 const GlobalStyle = createGlobalStyle`
 html,
 body {
-  font-family: ${p =>
+  font-family: ${(p) =>
     p.theme.font as styledComponents.Interpolation<styledComponents.ThemeProps<CactusTheme>>};
-  ${p => p.theme.textStyles.body};
+  ${(p) => p.theme.textStyles.body};
   font-weight: 400;
-  color: ${p => p.theme.colors.darkestContrast};
+  color: ${(p) => p.theme.colors.darkestContrast};
   font-style: normal;
   font-stretch: normal;
   line-height: 1.54;
@@ -53,23 +53,23 @@ body {
 }
 
 small {
-  ${p => p.theme.textStyles.small}
+  ${(p) => p.theme.textStyles.small}
 }
 
 h1 {
-  ${p => p.theme.textStyles.h1};
+  ${(p) => p.theme.textStyles.h1};
 }
 
 h2 {
-  ${p => p.theme.textStyles.h2};
+  ${(p) => p.theme.textStyles.h2};
 }
 
 h3 {
-  ${p => p.theme.textStyles.h3};
+  ${(p) => p.theme.textStyles.h3};
 }
 
 h4, h5, h6 {
-  ${p => p.theme.textStyles.h4};
+  ${(p) => p.theme.textStyles.h4};
 }
 `
 
@@ -89,11 +89,11 @@ interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<an
   global?: boolean
 }
 
-export const StyleProvider: React.FC<StyleProviderProps> = props => {
+export const StyleProvider: React.FC<StyleProviderProps> = (props) => {
   const { global, children, theme: providedTheme, ...themeProviderProps } = props
   shouldCheckTheme && checkThemeProperties(providedTheme || cactusTheme)
   const theme = providedTheme ? providedTheme : cactusTheme
-  theme.breakpoints = breakpointOrder.map(bp => breakpoints[bp].toString())
+  theme.breakpoints = breakpointOrder.map((bp) => breakpoints[bp].toString())
   theme.mediaQueries = queries
 
   return (

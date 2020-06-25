@@ -37,7 +37,7 @@ const ContentManager = ({
   const [state, setState] = useState<ContentManagerState>(initializeContent)
   const changeContent = useCallback(
     (group: number, increase?: boolean) =>
-      setState(s => {
+      setState((s) => {
         let value = s[group] || 0
         if (increase) {
           ++value

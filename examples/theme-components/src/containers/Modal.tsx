@@ -14,7 +14,7 @@ const ModalComponent: React.FC<RouteComponentProps> = () => {
   const [variant, setVariant] = useState<ModalType>('action')
 
   type IconName = keyof typeof icons
-  const iconNames: IconName[] = Object.keys(icons).filter(e => e !== 'iconSizes') as IconName[]
+  const iconNames: IconName[] = Object.keys(icons).filter((e) => e !== 'iconSizes') as IconName[]
   const Icon = icons[icon] as React.FunctionComponent
   const setIconName = (value: any) => {
     const name: IconName = value

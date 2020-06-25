@@ -16,6 +16,6 @@ module.exports = {
     if (!Array.isArray(packages) || packages.length === 0) {
       packages = modulesHelper.getModules()
     }
-    return packages.filter(p => p.hasStorybook)
+    return packages.filter((p) => p.hasStorybook)
   },
 }

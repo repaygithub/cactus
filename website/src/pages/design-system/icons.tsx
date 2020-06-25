@@ -27,7 +27,7 @@ export default () => (
     <Text>
       To learn how to use the icons see the <Link href="/icons/">Icons documentation</Link>.
     </Text>
-    {categories.map(cat => {
+    {categories.map((cat) => {
       const iconList = iconsCategoryMap[cat]
       return (
         <React.Fragment key={cat}>

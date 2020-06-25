@@ -23,7 +23,7 @@ const withFeatureFlags = <FeatureFlags extends string[], Props extends any>(
 ) => {
   return (props: Props) => (
     <FeatureFlagContext.Consumer>
-      {featureFlags => {
+      {(featureFlags) => {
         const flags: FeatureFlagsObject = {}
         if (featureFlags === null) {
           for (const key of features) {

@@ -9,7 +9,7 @@ import styled from 'styled-components'
 const Em = styled.em`
   font-style: normal;
   font-weight: 600;
-  color: ${p => p.theme.colors.callToAction};
+  color: ${(p) => p.theme.colors.callToAction};
 `
 
 export default () => {

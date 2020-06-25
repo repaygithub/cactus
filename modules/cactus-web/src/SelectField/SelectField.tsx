@@ -26,7 +26,7 @@ interface SelectFieldProps
   onChange?: FieldOnChangeHandler<SelectValueType>
 }
 
-const SelectFieldBase: React.FC<SelectFieldProps> = props => {
+const SelectFieldBase: React.FC<SelectFieldProps> = (props) => {
   const {
     className,
     id,

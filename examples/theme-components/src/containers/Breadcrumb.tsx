@@ -8,7 +8,7 @@ interface BreadProps {
   path: string
 }
 
-const BreadcrumbExample: React.FC<RouteComponentProps & BreadProps> = props => {
+const BreadcrumbExample: React.FC<RouteComponentProps & BreadProps> = (props) => {
   const { path } = props
   const [value, setValue] = useState('')
   const [paths, setPaths] = useState<string[]>([])
@@ -30,7 +30,7 @@ const BreadcrumbExample: React.FC<RouteComponentProps & BreadProps> = props => {
       <Flex flexDirection="column" alignItems="center" justifyContent="flex-start" height="100vh">
         <Breadcrumb>
           <Breadcrumb.Item label="Home" linkTo="/" />
-          {paths.map(e => (
+          {paths.map((e) => (
             <Breadcrumb.Item label={e} linkTo="/" key={e} />
           ))}
           <Breadcrumb.Item label={path.substring(1)} linkTo={path} active />

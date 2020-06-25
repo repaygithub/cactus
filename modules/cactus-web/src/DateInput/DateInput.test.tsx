@@ -11,7 +11,7 @@ import userEvent from '@testing-library/user-event'
 afterEach(cleanup)
 
 function animationRender() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       window.requestAnimationFrame(resolve)
     }, 0)

@@ -12,9 +12,9 @@ export interface LabelProps
     MarginProps {}
 
 export const Label = styled.label<LabelProps>`
-  ${p => p.theme.textStyles.body};
+  ${(p) => p.theme.textStyles.body};
   font-weight: 600;
-  color: ${p => p.theme.colors.darkestContrast};
+  color: ${(p) => p.theme.colors.darkestContrast};
 
   ${margin}
 `
