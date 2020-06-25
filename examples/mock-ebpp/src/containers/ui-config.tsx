@@ -77,7 +77,7 @@ const formatKey = (key: string) => {
   const words = key.replace('_', ' ').split(' ')
   let newWords: Array<string> = []
 
-  words.forEach(word => {
+  words.forEach((word) => {
     newWords.push(word.charAt(0).toUpperCase() + word.slice(1))
   })
   return newWords.join(' ')
@@ -87,7 +87,7 @@ const UIConfig = (props: UIConfigProps) => {
   const [state, setState] = useState<State>(getInitialState())
 
   const handleChange = (name: string, value: any) => {
-    setState(state => ({
+    setState((state) => ({
       formData: { ...state.formData, [name]: value },
       status: { ...state.status },
     }))
@@ -95,13 +95,13 @@ const UIConfig = (props: UIConfigProps) => {
 
   const validate = (formData: typeof state.formData) => {
     let errorFound = false
-    Object.keys(formData).forEach(key => {
+    Object.keys(formData).forEach((key) => {
       //@ts-ignore
       const value = formData[key]
 
       if (value === '' || (Array.isArray(value) && value.length === 0)) {
         errorFound = true
-        setState(state => ({
+        setState((state) => ({
           formData: { ...state.formData },
           status: { error: true, message: `${formatKey(key)} is empty.` },
         }))
@@ -110,7 +110,7 @@ const UIConfig = (props: UIConfigProps) => {
     })
 
     if (errorFound === false) {
-      setState(state => ({
+      setState((state) => ({
         formData: { ...state.formData },
         status: { error: false, message: `Form successfully submitted` },
       }))

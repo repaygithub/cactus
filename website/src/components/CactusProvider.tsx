@@ -48,7 +48,7 @@ export function CactusThemeWidget(props: React.Props<{}>) {
     secondary: '',
   })
   const handleOnChange = (name: string, value: any) => {
-    setValues(v => ({ ...v, [name]: value }))
+    setValues((v) => ({ ...v, [name]: value }))
   }
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export function CactusThemeWidget(props: React.Props<{}>) {
         <IconButton
           label="Update Theme"
           iconSize="medium"
-          onClick={() => setIsClosed(closed => !closed)}
+          onClick={() => setIsClosed((closed) => !closed)}
         >
           <ActionsGear aria-hidden="true" />
         </IconButton>
@@ -137,7 +137,7 @@ export function CactusThemeWidget(props: React.Props<{}>) {
                     min="0"
                     max="360"
                     value={values.primaryHue}
-                    onChange={e => handleOnChange(e.currentTarget.name, e.currentTarget.value)}
+                    onChange={(e) => handleOnChange(e.currentTarget.name, e.currentTarget.value)}
                   />
                 </AccessibleField>
                 <Box

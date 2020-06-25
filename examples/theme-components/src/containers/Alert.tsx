@@ -20,7 +20,7 @@ const AlertComponent: React.FC<RouteComponentProps> = () => {
       </Text>
       <Flex flexDirection="column" alignItems="center" width="100%">
         <Label> General</Label>
-        {status.map(e => (
+        {status.map((e) => (
           <Alert status={e} type="general" my="10px" key={e} width="50%">
             <Text textAlign="center">{e} Message</Text>
           </Alert>

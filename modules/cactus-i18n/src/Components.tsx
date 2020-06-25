@@ -16,7 +16,7 @@ interface I18nProviderProps {
   lang?: string
 }
 
-const I18nProvider: React.FC<I18nProviderProps> = props => {
+const I18nProvider: React.FC<I18nProviderProps> = (props) => {
   const controller = props.controller
   if (!(controller instanceof BaseI18nController)) {
     throw Error('I18nProvider must be given a controller which extends BaseI18nController')
@@ -81,7 +81,7 @@ function hasLoadedAll(
   if (!Array.isArray(dependencies) || dependencies.length === 0) {
     return true
   }
-  return dependencies.every(dep => {
+  return dependencies.every((dep) => {
     if (typeof dep === 'string') {
       return controller.hasLoaded(dep, lang)
     }
@@ -109,7 +109,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
       const { lang, section, controller } = sectionContext
       controller._load({ lang, section }, extra)
       if (Array.isArray(dependencies)) {
-        dependencies.forEach(dep => {
+        dependencies.forEach((dep) => {
           if (!dep) return
           let section: string
           let extra: { [key: string]: any } | undefined
@@ -148,7 +148,7 @@ interface I18nTextProps {
   section?: string
 }
 
-const I18nText: React.FC<I18nTextProps> = props => {
+const I18nText: React.FC<I18nTextProps> = (props) => {
   const text = useI18nText(props.get, props.args, props.section)
   return <React.Fragment>{text || props.children || props.get}</React.Fragment>
 }
@@ -166,7 +166,7 @@ type I18nElementProps<Elem extends TagNameOrReactComp> = {
 } & Partial<ComponentProps<Elem>> &
   I18nTextProps
 
-const I18nElement = function<Elem extends TagNameOrReactComp>(props: I18nElementProps<Elem>) {
+const I18nElement = function <Elem extends TagNameOrReactComp>(props: I18nElementProps<Elem>) {
   const { get, args = {}, section, as, ...rest } = props
   const [message, attrs] = useI18nResource(get, args, section)
   const elemProps = { ...rest, ...attrs }
@@ -185,7 +185,7 @@ interface I18nResourceProps extends I18nTextProps {
   children?: (message: string, attributes?: object | null) => React.ReactNode
 }
 
-const I18nResource: React.FC<I18nResourceProps> = props => {
+const I18nResource: React.FC<I18nResourceProps> = (props) => {
   const [message, attrs] = useI18nResource(props.get, props.args, props.section)
   let renderer = null
   if (typeof props.children === 'function') {
@@ -213,7 +213,7 @@ interface I18nFormattedProps extends I18nTextProps {
   formatter: (message: string) => React.ReactNode
 }
 
-const I18nFormatted: React.FC<I18nFormattedProps> = props => {
+const I18nFormatted: React.FC<I18nFormattedProps> = (props) => {
   const text = useI18nText(props.get, props.args, props.section)
   return <React.Fragment>{text !== null ? props.formatter(text) : props.get}</React.Fragment>
 }

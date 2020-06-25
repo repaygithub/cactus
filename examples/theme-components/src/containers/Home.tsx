@@ -58,7 +58,7 @@ class Home extends Component<RouteComponentProps> {
               </tr>
               {Object.entries(this.data)
                 .sort()
-                .map(e => (
+                .map((e) => (
                   <tr key={e[0]}>
                     <td>{e[0]}</td>
                     <td>

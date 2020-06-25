@@ -27,7 +27,7 @@ export const fetchAccounts = () => {
 }
 
 export const fetchAccount = (id: string | undefined) => {
-  return accounts.find(acct => acct.id === id)
+  return accounts.find((acct) => acct.id === id)
 }
 
 export const fetchPaymentHistory = () => {

@@ -5,7 +5,7 @@ function debounce<Func extends (...args: any[]) => any>(func: Func, wait: number
     lastThis = this
 
     if (timerId === undefined) {
-      timerId = setTimeout(function() {
+      timerId = setTimeout(function () {
         result = func.apply(lastThis, lastArgs)
         timerId = lastArgs = lastThis = undefined
       }, wait)

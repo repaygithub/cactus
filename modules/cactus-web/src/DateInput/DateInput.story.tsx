@@ -60,7 +60,7 @@ storiesOf('DateInput', module)
         type="date"
         id="date-with-blackouts"
         name="date_with_blackouts"
-        isValidDate={date => {
+        isValidDate={(date) => {
           const day = date.getDay()
           return day !== 0 && day !== 6
         }}

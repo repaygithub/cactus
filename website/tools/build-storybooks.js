@@ -10,7 +10,7 @@ async function main() {
   const storybooks = storybookHelper.find(modules)
   console.log('building storybook for modules:')
   // start building storybook
-  const storybookBuilds = storybooks.map(pkg => {
+  const storybookBuilds = storybooks.map((pkg) => {
     console.log(`\t${pkg.name}`)
     return storybookHelper.build(pkg)
   })

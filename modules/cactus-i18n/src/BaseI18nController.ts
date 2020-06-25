@@ -84,13 +84,10 @@ export default abstract class BaseI18nController {
     this._supportedLangs = options.supportedLangs
     this.defaultLang = options.defaultLang
     this.setLang(options.lang || this.defaultLang)
-    const bundles = this._supportedLangs.reduce(
-      (memo, lang) => {
-        memo[lang] = new FluentBundle(lang, { useIsolating })
-        return memo
-      },
-      {} as Dictionary
-    )
+    const bundles = this._supportedLangs.reduce((memo, lang) => {
+      memo[lang] = new FluentBundle(lang, { useIsolating })
+      return memo
+    }, {} as Dictionary)
     _dictionaries.set(this, bundles)
     this._debugMode = Boolean(options.debugMode)
 
@@ -154,7 +151,7 @@ export default abstract class BaseI18nController {
     section?: string
     id: string
     lang?: string
-  }): [(string | null), object] {
+  }): [string | null, object] {
     const bundles = this._getDict()
     const key = section === 'global' ? id : `${section}__${id}`
     if (bundles !== undefined) {
@@ -162,7 +159,7 @@ export default abstract class BaseI18nController {
       if (typeof overrideLang === 'string') {
         languages = this.negotiateLang(overrideLang)
       }
-      const lang = languages.find(l => bundles[l] && bundles[l].hasMessage(key))
+      const lang = languages.find((l) => bundles[l] && bundles[l].hasMessage(key))
       const bundle = lang && bundles[lang]
       if (!bundle) {
         if (
@@ -229,14 +226,14 @@ export default abstract class BaseI18nController {
 
     this._loadingState[loadingKey] = 'loading'
     this.load({ lang, section }, extra)
-      .then(resourceDefs => {
-        resourceDefs.forEach(resDef => {
+      .then((resourceDefs) => {
+        resourceDefs.forEach((resDef) => {
           this.setDict(resDef.lang, section, resDef.ftl)
         })
         const updatedLoadingState = { ...this._loadingState }
-        this._listeners.forEach(l => l(updatedLoadingState))
+        this._listeners.forEach((l) => l(updatedLoadingState))
       })
-      .catch(error => {
+      .catch((error) => {
         this._loadingState[loadingKey] = 'failed'
         if (this._debugMode) {
           console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
@@ -259,7 +256,7 @@ export default abstract class BaseI18nController {
     if (typeof lang === 'string') {
       languages = this.negotiateLang(lang)
     }
-    return languages.some(l => bundles[l] && bundles[l].hasMessage(key))
+    return languages.some((l) => bundles[l] && bundles[l].hasMessage(key))
   }
 
   hasLoaded(section: string, lang?: string) {
@@ -267,7 +264,7 @@ export default abstract class BaseI18nController {
     if (lang !== undefined) {
       languages = this.negotiateLang(lang)
     }
-    return languages.some(l => this._loadingState[`${section}/${l}`] === 'loaded')
+    return languages.some((l) => this._loadingState[`${section}/${l}`] === 'loaded')
   }
 
   addListener(listener: LoadingStateListener): void {
@@ -276,6 +273,6 @@ export default abstract class BaseI18nController {
   }
 
   removeListener(listener: LoadingStateListener): void {
-    this._listeners = this._listeners.filter(l => l !== listener)
+    this._listeners = this._listeners.filter((l) => l !== listener)
   }
 }

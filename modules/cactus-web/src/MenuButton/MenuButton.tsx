@@ -91,9 +91,9 @@ const MenuList = styled(ReachMenuItems)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
-  ${p => getDropDownBorder(p.theme)};
-  box-shadow: ${p => getBoxShadow(p.theme)};
-  background-color: ${p => p.theme.colors.white};
+  ${(p) => getDropDownBorder(p.theme)};
+  box-shadow: ${(p) => getBoxShadow(p.theme)};
+  background-color: ${(p) => p.theme.colors.white};
 
   [data-reach-menu-item] {
     position: relative;
@@ -101,17 +101,17 @@ const MenuList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    background-color: ${p => p.theme.colors.white};
+    background-color: ${(p) => p.theme.colors.white};
 
-    ${p => p.theme.textStyles.small};
-    color: ${p => p.theme.colors.darkestContrast};
+    ${(p) => p.theme.textStyles.small};
+    color: ${(p) => p.theme.colors.darkestContrast};
     outline: none;
     padding: 4px 16px;
     text-align: center;
 
     &:focus {
-      background-color: ${p => p.theme.colors.callToAction};
-      color: ${p => p.theme.colors.callToActionText};
+      background-color: ${(p) => p.theme.colors.callToAction};
+      color: ${(p) => p.theme.colors.callToActionText};
     }
   }
 `
@@ -170,21 +170,21 @@ type MenuButtonType = StyledComponent<typeof MenuButtonBase, any, {}, never> & {
 const MenuButton = styled(MenuButtonBase)`
   position: relative;
   box-sizing: border-box;
-  ${p => getShape(p.theme.shape)};
-  ${p => getBorder(p.theme.border)};
+  ${(p) => getShape(p.theme.shape)};
+  ${(p) => getBorder(p.theme.border)};
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
   appearance: none;
-  ${p => p.theme.textStyles.body};
-  color: ${p => p.theme.colors.white};
-  background-color: ${p => p.theme.colors.darkContrast};
-  border-color: ${p => p.theme.colors.darkContrast};
+  ${(p) => p.theme.textStyles.body};
+  color: ${(p) => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.darkContrast};
+  border-color: ${(p) => p.theme.colors.darkContrast};
 
   &:hover,
   &[aria-expanded='true'] {
-    background-color: ${p => p.theme.colors.callToAction};
-    border-color: ${p => p.theme.colors.callToAction};
+    background-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 
   &::-moz-focus-inner {
@@ -201,16 +201,16 @@ const MenuButton = styled(MenuButtonBase)`
       top: -5px;
       left: -5px;
       box-sizing: border-box;
-      ${p => getShape(p.theme.shape)};
-      ${p => getBorder(p.theme.border)};
-      border-color: ${p => p.theme.colors.callToAction};
+      ${(p) => getShape(p.theme.shape)};
+      ${(p) => getBorder(p.theme.border)};
+      border-color: ${(p) => p.theme.colors.callToAction};
     }
   }
 
   &:disabled {
-    color: ${p => p.theme.colors.mediumGray};
-    background-color: ${p => p.theme.colors.lightGray};
-    border-color: ${p => p.theme.colors.lightGray};
+    color: ${(p) => p.theme.colors.mediumGray};
+    background-color: ${(p) => p.theme.colors.lightGray};
+    border-color: ${(p) => p.theme.colors.lightGray};
     cursor: not-allowed;
   }
 

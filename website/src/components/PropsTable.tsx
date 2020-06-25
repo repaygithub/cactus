@@ -17,12 +17,12 @@ const Table = styled.table`
   margin-bottom: 2em;
 
   thead {
-    background-color: ${p => p.theme.colors.darkContrast};
+    background-color: ${(p) => p.theme.colors.darkContrast};
     border: none;
     padding: 0;
     font-size: 1.2em;
     text-align: left;
-    color: ${p => p.theme.colors.white};
+    color: ${(p) => p.theme.colors.white};
   }
 
   th {
@@ -33,14 +33,14 @@ const Table = styled.table`
   }
 
   tbody {
-    color: ${p => p.theme.colors.text};
+    color: ${(p) => p.theme.colors.text};
 
     & tr:nth-child(odd) {
-      background-color: ${p => p.theme.colors.white};
+      background-color: ${(p) => p.theme.colors.white};
     }
 
     & tr:nth-child(even) {
-      background-color: ${p => p.theme.colors.lightContrast};
+      background-color: ${(p) => p.theme.colors.lightContrast};
     }
   }
 
@@ -149,7 +149,7 @@ type PropsTableProps = {
 const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) => {
   const data = useDocgen()
   const fileName = component.__filemeta && component.__filemeta.filename
-  const docItem = data.find(doc => doc.key === fileName)
+  const docItem = data.find((doc) => doc.key === fileName)
 
   const { ownProps, styledSystemProps } = React.useMemo(() => {
     if (docItem === undefined) {
@@ -157,10 +157,10 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
     }
     let value = docItem.value
     let doc: ComponentDoc | undefined = value.find(
-      item => item.displayName === component.displayName
+      (item) => item.displayName === component.displayName
     )
     if (staticProp) {
-      doc = value.find(item => item.displayName === staticProp)
+      doc = value.find((item) => item.displayName === staticProp)
     }
     const componentName = doc && doc.displayName
     const props = Object.values((doc && doc.props) || {})
@@ -217,7 +217,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
               </tr>
             </thead>
             <tbody>
-              {ownProps.map(prop => (
+              {ownProps.map((prop) => (
                 <tr key={prop.name}>
                   <td>
                     <code>{prop.name}</code>
@@ -249,7 +249,7 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
                 </tr>
               </thead>
               <tbody>
-                {styledSystemProps.map(prop => (
+                {styledSystemProps.map((prop) => (
                   <tr key={prop.name}>
                     <td>
                       <code>{prop.name}</code>

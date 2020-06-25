@@ -15,25 +15,25 @@ const BreakpointBox = styled(Box)`
   height: 50px;
   border-radius: 15%
 
-  ${p => p.theme.mediaQueries.small} {
+  ${(p) => p.theme.mediaQueries.small} {
     max-width: 708px;
     width: 75px;
     height 75px;
     border-radius: 25%;
   }
-  ${p => p.theme.mediaQueries.medium} {
+  ${(p) => p.theme.mediaQueries.medium} {
     max-width: 964px;
     width: 100px;
     height: 100px;
     border-radius: 35%;
   }
-  ${p => p.theme.mediaQueries.large} {
+  ${(p) => p.theme.mediaQueries.large} {
     max-width: 1140px;
     width: 150px;
     height: 150px;
     border-radius: 45%;
   }
-  ${p => p.theme.mediaQueries.extraLarge} {
+  ${(p) => p.theme.mediaQueries.extraLarge} {
     max-width: 1380px;
     width: 200px;
     height: 200px;

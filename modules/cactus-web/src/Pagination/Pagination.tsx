@@ -140,7 +140,7 @@ const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps) => {
   )
 }
 
-export const Pagination: React.FC<PaginationProps> = props => {
+export const Pagination: React.FC<PaginationProps> = (props) => {
   const { pageCount, currentPage, label, className, onPageChange, linkAs } = props
   const pageChangeHandler = React.useCallback(
     (page: number) => {
@@ -298,16 +298,16 @@ const PageItem = styled.li`
 
   &,
   :link {
-    color: ${p => p.theme.colors.darkestContrast};
-    ${p => p.theme.textStyles.small};
+    color: ${(p) => p.theme.colors.darkestContrast};
+    ${(p) => p.theme.textStyles.small};
     line-height: 18px;
     text-decoration: none;
   }
 
-  border-left: ${p => border(p.theme, 'lightContrast')};
+  border-left: ${(p) => border(p.theme, 'lightContrast')};
 
   &:last-child {
-    border-right: ${p => border(p.theme, 'lightContrast')};
+    border-right: ${(p) => border(p.theme, 'lightContrast')};
   }
 
   svg {
@@ -326,7 +326,7 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
   border-radius: 8px;
 
   &:visited {
-    color: ${p => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.mediumContrast};
   }
 
   // For styling active links, and overriding the :visited color.
@@ -334,7 +334,7 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
   color: inherit;
 
   &:hover {
-    color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToAction};
   }
 
   &:active,
@@ -342,7 +342,7 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
     // Re-stated to prevent a small shift when the button is clicked in Firefox
     padding: 3px;
     outline: none;
-    ${p => p.theme.colorStyles.callToAction};
+    ${(p) => p.theme.colorStyles.callToAction};
   }
 
   // Just in case they want to use a button for 'linkAs'
@@ -355,12 +355,12 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
 
   &[disabled],
   &[aria-disabled='true'] {
-    color: ${p => p.theme.colors.lightGray};
+    color: ${(p) => p.theme.colors.lightGray};
     background-color: transparent;
     cursor: default;
   }
 
   &[aria-current='page'] {
-    ${p => p.theme.colorStyles.base};
+    ${(p) => p.theme.colorStyles.base};
   }
 `

@@ -54,7 +54,7 @@ const Account = (props: AccountProps) => {
             }}
           >
             <tbody>
-              {(Object.keys(account) as Array<keyof typeof account>).map(key => {
+              {(Object.keys(account) as Array<keyof typeof account>).map((key) => {
                 return (
                   key !== 'payments' && (
                     <tr key={key}>

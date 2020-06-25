@@ -27,20 +27,20 @@ export const Link = styled(LinkBase)`
   position: relative;
 
   :link {
-    color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToAction};
   }
 
   :visited {
-    color: ${p => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.mediumContrast};
   }
 
   :hover {
-    color: ${p => p.theme.colors.base};
+    color: ${(p) => p.theme.colors.base};
   }
 
   :focus {
-    color: ${p => p.theme.colors.callToAction};
-    background-color: ${p => p.theme.colors.transparentCTA};
+    color: ${(p) => p.theme.colors.callToAction};
+    background-color: ${(p) => p.theme.colors.transparentCTA};
   }
 
   ${margin};
