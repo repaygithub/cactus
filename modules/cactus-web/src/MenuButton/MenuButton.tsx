@@ -100,6 +100,8 @@ const MenuList = styled(ReachMenuItems)`
     display: block;
     cursor: pointer;
     text-decoration: none;
+    overflow-wrap: break-word;
+    background-color: ${p => p.theme.colors.white};
 
     ${p => p.theme.textStyles.small};
     color: ${p => p.theme.colors.darkestContrast};
@@ -145,7 +147,7 @@ function MenuButtonBase(props: MenuButtonProps) {
           const scrollX = getScrollX()
 
           return {
-            width: targetRect.width > popoverRect.width ? targetRect.width : popoverRect.width,
+            width: targetRect.width,
             left: targetRect.left + scrollX,
             ...getTopPosition(targetRect, popoverRect),
           }
