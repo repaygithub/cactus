@@ -7,7 +7,7 @@ import Table from './Table'
 afterEach(cleanup)
 
 describe('component: Table', () => {
-  test('snapshot', () => {
+  test('regular table', () => {
     const { container } = render(
       <StyleProvider>
         <Table>
@@ -15,6 +15,60 @@ describe('component: Table', () => {
             <Table.Cell>Header Cell</Table.Cell>
           </Table.Header>
           <Table.Body>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('table with no header', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Table>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('table with caption', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Table>
+          <caption>I'm a caption</caption>
+          <Table.Header>
+            <Table.Cell>Header Cell</Table.Cell>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
             <Table.Row>
               <Table.Cell>Data cell</Table.Cell>
             </Table.Row>

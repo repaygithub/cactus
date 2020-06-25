@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { boolean, select } from '@storybook/addon-knobs'
-import { DescriptiveEnvelope } from '@repay/cactus-icons'
+import { boolean, number, select, text } from '@storybook/addon-knobs'
+import { DefaultTheme, StyledComponent } from 'styled-components'
 import { storiesOf } from '@storybook/react'
 import Table from './Table'
 
@@ -16,161 +16,41 @@ const alignOptions = {
 const createAlignKnob = () =>
   select('align (prop on Table.Cell)', alignOptions, 'left') as CellAlignment
 
-storiesOf('Table', module).add('Header', () => (
-  <Table fullWidth={boolean('fullWidth', true)}>
-    <Table.Header>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-    </Table.Header>
-  </Table>
-))
+storiesOf('Table', module).add('Layout', () => {
+  const fullWidth = boolean('fullWidth', true)
+  const captionText = text('Caption', '')
+  const hasHeader = boolean('Has Header', true)
+  const headerText = text('Header Text', 'Header')
+  const cellText = text('Cell Text', 'Cell')
+  const colCount = number('# Columns', 4)
+  const rowCount = number('# Rows', 3)
+  const alignment = createAlignKnob()
+  const hasBody = boolean('Has tbody', true)
 
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const makeRow = (
+    content: string,
+    index: number,
+    Row: StyledComponent<any, DefaultTheme, {}, never> = Table.Row
+  ) => {
+    const cols = []
+    for (let i = 0; i < colCount; i++) {
+      cols.push(<Table.Cell align={alignment} key={i}>{`${content} ${i}`}</Table.Cell>)
+    }
+    return <Row key={index}>{cols}</Row>
+  }
 
-const amount = [
-  '$ 123.00',
-  '$ 123.00',
-  '$ 123.00',
-  '$ 123.00',
-  '$ 123.000.00',
-  '$ 23.00',
-  '$ 3000.00',
-  '$ 123.231.00',
-  '$ 123.00',
-  '$ 123.00',
-]
+  const header = hasHeader ? makeRow(headerText, 0, Table.Header) : null
+  const Body = hasBody ? Table.Body : React.Fragment
+  const rows = []
+  for (let i = 0; i < rowCount; i++) {
+    rows.push(makeRow(cellText, i + 1))
+  }
 
-storiesOf('Table', module).add('Row', () => (
-  <Table fullWidth={boolean('fullWidth', true)}>
-    <Table.Body>
-      <Table.Row>
-        <>
-          {arr.map((e, i) => (
-            <Table.Cell align={createAlignKnob()} key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-          <Table.Cell align={createAlignKnob()}>
-            Label
-            <DescriptiveEnvelope />
-          </Table.Cell>
-        </>
-      </Table.Row>
-      <Table.Row>
-        {amount.map((e, i) => (
-          <Table.Cell align={createAlignKnob()} key={i}>
-            {e}
-          </Table.Cell>
-        ))}
-      </Table.Row>
-      <Table.Row>
-        <>
-          <Table.Cell align={createAlignKnob()}>
-            <DescriptiveEnvelope />
-          </Table.Cell>
-          {arr.map((e, i) => (
-            <Table.Cell align={createAlignKnob()} key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-        </>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-))
-
-storiesOf('Table', module).add('Row and header', () => (
-  <Table fullWidth={boolean('fullWidth', true)}>
-    <Table.Header>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-      <Table.Cell align={createAlignKnob()}>Header</Table.Cell>
-    </Table.Header>
-    <Table.Body>
-      <Table.Row>
-        <>
-          {arr.map((e, i) => (
-            <Table.Cell align={createAlignKnob()} key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-          <Table.Cell align={createAlignKnob()}>
-            Label
-            <DescriptiveEnvelope />
-          </Table.Cell>
-        </>
-      </Table.Row>
-      <Table.Row>
-        {amount.map((e, i) => (
-          <Table.Cell align={createAlignKnob()} key={i}>
-            {e}
-          </Table.Cell>
-        ))}
-      </Table.Row>
-      <Table.Row>
-        <>
-          <Table.Cell align={createAlignKnob()}>
-            <DescriptiveEnvelope />
-          </Table.Cell>
-          {arr.map((e, i) => (
-            <Table.Cell align={createAlignKnob()} key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-        </>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-))
-
-storiesOf('Table', module).add('2-cell table', () => (
-  <Table fullWidth={boolean('fullWidth', true)}>
-    <Table.Header>
-      <Table.Cell>Header</Table.Cell>
-      <Table.Cell>Header</Table.Cell>
-    </Table.Header>
-    <Table.Body>
-      <Table.Row>
-        <Table.Cell>Foo</Table.Cell>
-        <Table.Cell>Bar</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Fizz</Table.Cell>
-        <Table.Cell>Buzz</Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-))
-
-storiesOf('Table', module).add('4-cell table', () => (
-  <Table fullWidth={boolean('fullWidth', true)}>
-    <Table.Header>
-      <Table.Cell>Header</Table.Cell>
-      <Table.Cell>Header</Table.Cell>
-      <Table.Cell>Header</Table.Cell>
-      <Table.Cell>Header</Table.Cell>
-    </Table.Header>
-    <Table.Body>
-      <Table.Row>
-        <Table.Cell>One</Table.Cell>
-        <Table.Cell>Two</Table.Cell>
-        <Table.Cell>Three</Table.Cell>
-        <Table.Cell>Four</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Five</Table.Cell>
-        <Table.Cell>Six</Table.Cell>
-        <Table.Cell>Seven</Table.Cell>
-        <Table.Cell>Eight</Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-))
+  return (
+    <Table fullWidth={fullWidth}>
+      {captionText && <caption>{captionText}</caption>}
+      {header}
+      <Body>{rows}</Body>
+    </Table>
+  )
+})
