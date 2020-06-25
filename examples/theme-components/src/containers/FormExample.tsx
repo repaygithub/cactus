@@ -65,7 +65,7 @@ const FormExample: React.FC<RouteComponentProps> = () => {
 
   const onChange = React.useCallback(
     (name: string, value: any) => {
-      setValues(s => ({
+      setValues((s) => ({
         ...s,
         data: { ...s.data, [name]: value },
         status: { ...s.status },
@@ -85,7 +85,7 @@ const FormExample: React.FC<RouteComponentProps> = () => {
     const words = key.replace('_', ' ').split(' ')
     let newWords: Array<string> = []
 
-    words.forEach(word => {
+    words.forEach((word) => {
       newWords.push(word.charAt(0).toUpperCase() + word.slice(1))
     })
     return newWords.join(' ')
@@ -95,13 +95,13 @@ const FormExample: React.FC<RouteComponentProps> = () => {
     let errorFound = false
     Object.keys(formData)
       .reverse()
-      .forEach(key => {
+      .forEach((key) => {
         //@ts-ignore
         const value = formData[key]
 
         if (value === '') {
           errorFound = true
-          setValues(state => ({
+          setValues((state) => ({
             data: { ...state.data },
             status: { error: true, message: `${formatKey(key)} is empty.` },
           }))
@@ -110,7 +110,7 @@ const FormExample: React.FC<RouteComponentProps> = () => {
       })
 
     if (errorFound === false) {
-      setValues(state => ({
+      setValues((state) => ({
         data: { ...state.data },
         status: { error: false, message: `Form successfully submitted` },
       }))

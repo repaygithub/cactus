@@ -11,17 +11,17 @@ type StepColor = { [K in AvatarStep]: FlattenInterpolation<ThemeProps<DefaultThe
 
 const stepColorMap: StepColor = {
   notDone: css`
-    background: ${p => p.theme.colors.lightContrast};
-    color: ${p => p.theme.colors.darkestContrast};
+    background: ${(p) => p.theme.colors.lightContrast};
+    color: ${(p) => p.theme.colors.darkestContrast};
   `,
   inProcess: css`
-    background: ${p => p.theme.colors.callToAction};
-    color: ${p => p.theme.colors.white};
-    box-shadow: 0px 2px 5px 4px ${p => p.theme.colors.lightContrast};
+    background: ${(p) => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.white};
+    box-shadow: 0px 2px 5px 4px ${(p) => p.theme.colors.lightContrast};
   `,
   done: css`
-    background: ${p => p.theme.colors.base};
-    color: ${p => p.theme.colors.white};
+    background: ${(p) => p.theme.colors.base};
+    color: ${(p) => p.theme.colors.white};
   `,
 }
 
@@ -39,7 +39,7 @@ export const StepAvatar = styled.div<StepAvatarProps>`
   width: 48px;
   height: 48px;
   line-height: 49px;
-  font-size: ${p => p.theme.textStyles.h2.fontSize};
+  font-size: ${(p) => p.theme.textStyles.h2.fontSize};
   font-weight: 400;
   text-align: center;
   appearance: none;

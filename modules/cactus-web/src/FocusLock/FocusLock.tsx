@@ -7,7 +7,7 @@ function handleGuardFocus(event: React.FocusEvent<HTMLDivElement>) {
   const root = currentTarget.parentElement || currentTarget.parentNode
   if (root instanceof HTMLDivElement) {
     const focusableList = getFocusable(root).filter(
-      el => !el.hasAttribute('data-cactus-focus-guard')
+      (el) => !el.hasAttribute('data-cactus-focus-guard')
     )
     if (focusableList.length) {
       const guardType = currentTarget.getAttribute('data-cactus-focus-guard')
@@ -23,7 +23,7 @@ function handleGuardFocus(event: React.FocusEvent<HTMLDivElement>) {
 }
 
 export const FocusLock = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>(
-  function(props, forwardRef) {
+  function (props, forwardRef) {
     const { children, ...rest } = props
     return (
       <div ref={forwardRef} {...rest}>

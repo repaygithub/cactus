@@ -56,7 +56,7 @@ describe('component: MenuButton', () => {
         </StyleProvider>
       )
 
-      userEvent.click(getByText('Demo'))
+      fireEvent.keyDown(getByText('Demo'), { key: 'Enter' })
       await animationRender()
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })

@@ -86,7 +86,7 @@ export const ToggleField = styled(ToggleFieldBase)`
   ${margin}
 
   ${Label} {
-    cursor: ${p => (p.disabled ? 'not-allowed' : 'pointer')};
+    cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
     margin-left: 8px;
     line-height: 26px;
     vertical-align: -2px;

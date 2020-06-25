@@ -44,7 +44,7 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
   const indexPath = path.resolve(directory, 'index.html')
 
   const server = http
-    .createServer(function(request, response) {
+    .createServer(function (request, response) {
       let url = request.url as string
       let filePath = path.join(directory, url)
       if (isForbidden(filePath)) {
@@ -59,11 +59,11 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
       let contentType = mimeTypes[extname as ExtName] || 'application/octet-stream'
 
       fs.readFile(filePath)
-        .then(content => {
+        .then((content) => {
           response.writeHead(200, { 'Content-Type': contentType })
           response.end(content, 'utf-8')
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.code === 'ENOENT') {
             if (singlePageApp) {
               fs.readFile(indexPath)
@@ -71,14 +71,14 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
                   () =>
                     'Not Found: you must provide an index.html file when singlePageApp is set to true.'
                 )
-                .then(content => {
+                .then((content) => {
                   response.writeHead(200, { 'Content-Type': mimeTypes['.html'] })
                   response.end(content, 'utf-8')
                 })
             } else {
               fs.readFile(notFoundPath)
                 .catch(() => 'Not Found')
-                .then(content => {
+                .then((content) => {
                   response.writeHead(404, { 'Content-Type': mimeTypes['.html'] })
                   response.end(content, 'utf-8')
                 })
@@ -95,7 +95,7 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
     server,
     close() {
       return new Promise((resolve, reject) => {
-        server.close(error => {
+        server.close((error) => {
           if (error) {
             reject(error)
           } else {

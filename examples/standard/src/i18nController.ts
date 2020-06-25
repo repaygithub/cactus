@@ -21,5 +21,5 @@ export const supportedLanguages = [
 
 export default new I18nController({
   defaultLang: 'en',
-  supportedLangs: supportedLanguages.map(l => l.code),
+  supportedLangs: supportedLanguages.map((l) => l.code),
 })

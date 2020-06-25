@@ -30,16 +30,16 @@ type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> 
 
 const statusMap: StatusMap = {
   success: css`
-    border-color: ${p => p.theme.colors.success};
-    background: ${p => p.theme.colors.transparentSuccess};
+    border-color: ${(p) => p.theme.colors.success};
+    background: ${(p) => p.theme.colors.transparentSuccess};
   `,
   warning: css`
-    border-color: ${p => p.theme.colors.warning};
-    background: ${p => p.theme.colors.transparentWarning};
+    border-color: ${(p) => p.theme.colors.warning};
+    background: ${(p) => p.theme.colors.transparentWarning};
   `,
   error: css`
-    border-color: ${p => p.theme.colors.error};
-    background: ${p => p.theme.colors.transparentError};
+    border-color: ${(p) => p.theme.colors.error};
+    background: ${(p) => p.theme.colors.transparentError};
   `,
 }
 
@@ -74,30 +74,30 @@ const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
 const getShape = (shape: Shape) => shapeMap[shape]
 
 const Area = styled.textarea<TextAreaProps>`
-  ${p => getBorder(p.theme.border)}
-  border-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
-  ${p => getShape(p.theme.shape)}
+  ${(p) => getBorder(p.theme.border)}
+  border-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
+  ${(p) => getShape(p.theme.shape)}
   min-height: 100px;
   min-width: 336px;
   box-sizing: border-box;
-  ${p => p.theme.textStyles.body}
+  ${(p) => p.theme.textStyles.body}
   padding: 8px 16px;
   outline: none;
-  background-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
-  height: ${p => p.height || 'auto'};
-  width: ${p => p.width || 'auto'};
+  background-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};
+  height: ${(p) => p.height || 'auto'};
+  width: ${(p) => p.width || 'auto'};
   display: block;
-  resize: ${p => (p.resize ? 'vertical' : 'none')};
+  resize: ${(p) => (p.resize ? 'vertical' : 'none')};
   &:first-line {
     padding-right: 15px;
   }
 
   &:focus {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 
   &::placeholder {
-    color: ${p => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.mediumContrast};
     font-style: oblique;
   }
 

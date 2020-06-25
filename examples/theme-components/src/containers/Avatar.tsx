@@ -20,8 +20,8 @@ const AvatarComponent: React.FC<RouteComponentProps> = () => {
         Avatar
       </Text>
       <Grid ml="40px" mt="50px">
-        {types.map(t =>
-          status.map(s => (
+        {types.map((t) =>
+          status.map((s) => (
             <Grid.Item tiny={3} key={`${t}${s}`}>
               <Label>{`${t} ${s}`}</Label>
               <Avatar type={t} status={s} />

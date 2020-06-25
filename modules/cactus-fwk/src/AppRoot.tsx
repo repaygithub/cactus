@@ -22,7 +22,7 @@ interface AppRootProps {
 
 const noop = (error: Error, info: React.ErrorInfo) => {}
 
-const AppRoot: React.FC<AppRootProps> = props => {
+const AppRoot: React.FC<AppRootProps> = (props) => {
   return (
     <ErrorBoundary onError={props.onError || noop} errorView={props.globalErrorView}>
       <FeatureFlagContext.Provider value={props.featureFlags || null}>

@@ -91,7 +91,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
 
 export const TextInputField = styled(TextInputFieldBase)`
   position: relative;
-  width: ${p => p.width || 'auto'};
+  width: ${(p) => p.width || 'auto'};
   ${margin}
 `
 

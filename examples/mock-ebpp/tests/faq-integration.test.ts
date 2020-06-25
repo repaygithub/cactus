@@ -1,8 +1,8 @@
+import * as path from 'path'
+import { queryByText } from '@testing-library/testcafe'
 import { Selector } from 'testcafe'
 import makeActions from './helpers/actions'
 import startStaticServer from './helpers/static-server'
-import * as path from 'path'
-import { queryByText } from '@testing-library/testcafe'
 
 fixture('FAQ Integration Tests')
   .before(async (ctx) => {

@@ -57,21 +57,21 @@ type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
-    border-color: ${p => p.theme.colors.success};
-    background: ${p => p.theme.colors.transparentSuccess};
+    border-color: ${(p) => p.theme.colors.success};
+    background: ${(p) => p.theme.colors.transparentSuccess};
   `,
   warning: css`
-    border-color: ${p => p.theme.colors.warning};
-    background: ${p => p.theme.colors.transparentWarning};
+    border-color: ${(p) => p.theme.colors.warning};
+    background: ${(p) => p.theme.colors.transparentWarning};
   `,
   error: css`
-    border-color: ${p => p.theme.colors.error};
-    background: ${p => p.theme.colors.transparentError};
+    border-color: ${(p) => p.theme.colors.error};
+    background: ${(p) => p.theme.colors.transparentError};
   `,
 }
 
 // @ts-ignore
-const displayStatus: any = props => {
+const displayStatus: any = (props) => {
   if (props.status && !props.disabled) {
     return statusMap[props.status as Status]
   }
@@ -111,14 +111,14 @@ const getValueShape = (shape: Shape) => valueShapeMap[shape]
 
 const ValueTag = styled(ValueTagBase)`
   box-sizing: border-box;
-  ${p => p.theme.textStyles.small};
+  ${(p) => p.theme.textStyles.small};
   padding: 0 8px 0 8px;
-  border: 1px solid ${p => p.theme.colors.lightContrast};
-  ${p => getValueShape(p.theme.shape as Shape)}
+  border: 1px solid ${(p) => p.theme.colors.lightContrast};
+  ${(p) => getValueShape(p.theme.shape as Shape)}
   margin-right: 2px;
   display: inline-block;
   height: 24px;
-  ${p => (p.hidden ? { visibility: 'hidden' } : undefined)}
+  ${(p) => (p.hidden ? { visibility: 'hidden' } : undefined)}
 
   ${NavigationClose} {
     appearance: none;
@@ -154,7 +154,7 @@ const ValueSwitch = (props: {
   extraLabel: string
   multiple?: boolean
 }) => {
-  const selected = props.options.filter(o => o.isSelected)
+  const selected = props.options.filter((o) => o.isSelected)
   const numSelected = selected.length
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
@@ -209,7 +209,7 @@ const ValueSwitch = (props: {
     if (numSelected > 1) {
       return (
         <ValueSpan ref={spanRef}>
-          {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(opt => (
+          {selected.slice(0, shouldRenderAll ? undefined : numToRender).map((opt) => (
             <ValueTag id={`value-tag::${opt.id}`} closeOption key={opt.value + opt.label}>
               {opt.label}
             </ValueTag>
@@ -236,7 +236,7 @@ const ValueSwitch = (props: {
 
 const ValueSpan = styled.span`
   display: inline-block;
-  font-size: ${p => p.theme.fontSizes.p}px;
+  font-size: ${(p) => p.theme.fontSizes.p}px;
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
@@ -245,8 +245,8 @@ const ValueSpan = styled.span`
 
 const Placeholder = styled.span`
   font-style: italic;
-  color: ${p => p.theme.colors.darkContrast};
-  font-size: ${p => p.theme.fontSizes.p}px;
+  color: ${(p) => p.theme.colors.darkContrast};
+  font-size: ${(p) => p.theme.fontSizes.p}px;
 `
 
 const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
@@ -281,22 +281,22 @@ const SelectTrigger = styled.button`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  ${p => getShape(p.theme.shape)}
-  ${p => getBorder(p.theme.border)}
+  ${(p) => getShape(p.theme.shape)}
+  ${(p) => getBorder(p.theme.border)}
   border-style: solid;
-  border-color: ${p => p.theme.colors.darkContrast};
+  border-color: ${(p) => p.theme.colors.darkContrast};
   text-align: left;
   outline: none;
   appearance: none;
   cursor: pointer;
 
   :disabled {
-    border-color: ${p => p.theme.colors.mediumGray};
-    color: ${p => p.theme.colors.mediumGray};
+    border-color: ${(p) => p.theme.colors.mediumGray};
+    color: ${(p) => p.theme.colors.mediumGray};
     cursor: not-allowed;
 
     ${Placeholder} {
-      color: ${p => p.theme.colors.mediumGray};
+      color: ${(p) => p.theme.colors.mediumGray};
     }
   }
 
@@ -306,10 +306,10 @@ const SelectTrigger = styled.button`
 
   &:focus,
   &[aria-expanded] {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
 
     ${NavigationChevronDown} {
-      color: ${p => p.theme.colors.callToAction};
+      color: ${(p) => p.theme.colors.callToAction};
     }
   }
 
@@ -334,10 +334,10 @@ const ComboInput = styled.input`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  ${p => getShape(p.theme.shape)}
-  ${p => getBorder(p.theme.border)}
+  ${(p) => getShape(p.theme.shape)}
+  ${(p) => getBorder(p.theme.border)}
   border-style: solid;
-  border-color: ${p => p.theme.colors.darkContrast};
+  border-color: ${(p) => p.theme.colors.darkContrast};
   text-align: left;
   outline: none;
   appearance: none;
@@ -349,7 +349,7 @@ const ComboInput = styled.input`
 
   &:focus,
   &[aria-expanded] {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 `
 
@@ -393,8 +393,8 @@ const StyledList = styled.ul`
   margin-bottom: 0;
   overflow-y: auto;
   outline: none;
-  ${p => getListShape(p.theme.shape)}
-  ${p => getListBoxShadowStyles(p.theme)}
+  ${(p) => getListShape(p.theme.shape)}
+  ${(p) => getListBoxShadowStyles(p.theme)}
   border-style: solid;
 
   ${() =>
@@ -410,12 +410,13 @@ const Option = styled.li`
   display: list-item;
   border: none;
   height: auto;
-  ${p => p.theme.textStyles.small};
+  ${(p) => p.theme.textStyles.small};
   text-align: left;
   box-shadow: none;
   padding: 4px 16px;
+  overflow-wrap: break-word;
 
-  ${p =>
+  ${(p) =>
     isResponsiveTouchDevice &&
     `
     padding: 6px 16px;
@@ -425,8 +426,8 @@ const Option = styled.li`
     }`}
 
   &.highlighted-option {
-    background-color: ${p => p.theme.colors.callToAction};
-    color: ${p => p.theme.colors.callToActionText};
+    background-color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToActionText};
 
     // haxors
     ${CheckBox} > input:not(:checked) + span {
@@ -445,11 +446,11 @@ const ListWrapper = styled.div`
   position: absolute;
   z-index: 1000;
   box-sizing: border-box;
-  ${p => getListShape(p.theme.shape)}
+  ${(p) => getListShape(p.theme.shape)}
   max-height: 400px;
   max-width: 100vw;
-  ${p => p.theme.boxShadows && `box-shadow: 0 3px 9px 0 ${p.theme.colors.callToAction};`}
-  background-color: ${p => p.theme.colors.white};
+  ${(p) => p.theme.boxShadows && `box-shadow: 0 3px 9px 0 ${p.theme.colors.callToAction};`}
+  background-color: ${(p) => p.theme.colors.white};
 
   ${() =>
     isResponsiveTouchDevice &&
@@ -480,7 +481,7 @@ const ListWrapper = styled.div`
     bottom: 0;
     position: fixed;
     height: ${DONE_SECTION_HEIGHT}px;
-    border-top: 1px solid ${p => p.theme.colors.lightGray};
+    border-top: 1px solid ${(p) => p.theme.colors.lightGray};
     width: 100%;
     padding: 8px 0;
   }
@@ -622,7 +623,7 @@ class List extends React.Component<ListProps, ListState> {
     if (activeDescendant === '') {
       return null
     }
-    return this.state.options.find(o => o.id === activeDescendant) || null
+    return this.state.options.find((o) => o.id === activeDescendant) || null
   }
 
   findOptionToFocus(key: number) {
@@ -663,7 +664,7 @@ class List extends React.Component<ListProps, ListState> {
 
   static initActiveDescendant(options: ExtendedOptionType[]) {
     let activeId = ''
-    const selected = options.find(o => o.isSelected)
+    const selected = options.find((o) => o.isSelected)
     if (selected) {
       activeId = selected.id
     } else if (options.length) {
@@ -823,7 +824,7 @@ class List extends React.Component<ListProps, ListState> {
                   ref={mergeRefs}
                   aria-activedescendant={activeDescendant || undefined}
                 >
-                  {options.map(opt => {
+                  {options.map((opt) => {
                     let optId = opt.id
                     let isSelected = opt.isSelected
                     let ariaSelected: boolean | 'true' | 'false' | undefined =
@@ -1100,7 +1101,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       if (optId) {
         optId = optId.split('::')[1]
       }
-      const option = this.getExtOptions().find(opt => opt.id === optId)
+      const option = this.getExtOptions().find((opt) => opt.id === optId)
       this.raiseChange(option || null)
     } else {
       handleEvent(this.props.onFocus, this.props.name)
@@ -1144,7 +1145,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (target.getAttribute('role') === 'option') {
       event.preventDefault()
       const activeId = target.id as string
-      let active = this.getExtOptions().find(o => o.id === activeId)
+      let active = this.getExtOptions().find((o) => o.id === activeId)
 
       this.raiseChange(active || null)
       if (!this.props.multiple) {
@@ -1269,7 +1270,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       }
       if (value.includes(option.value)) {
         if (!onlyAdd) {
-          value = value.filter(v => v !== option.value)
+          value = value.filter((v) => v !== option.value)
         }
       } else {
         value.push(option.value)
@@ -1333,14 +1334,14 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   optionsMap: { [key: string]: ExtendedOptionType } = {}
 
   detectOptionsFromValue() {
-    this.getExtOptions().forEach(opt => {
+    this.getExtOptions().forEach((opt) => {
       this.optionsMap[opt.value] = opt
     })
     if (this.props.comboBox && this.props.value) {
       const newOptions: OptionType[] = []
 
       if (Array.isArray(this.props.value)) {
-        this.props.value.forEach(val => {
+        this.props.value.forEach((val) => {
           if (!this.optionsMap[val]) {
             newOptions.push(asOption(val))
           }
@@ -1351,7 +1352,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         }
       }
       if (newOptions.length > 0) {
-        this.setState(state => ({ extraOptions: state.extraOptions.concat(newOptions) }))
+        this.setState((state) => ({ extraOptions: state.extraOptions.concat(newOptions) }))
       }
     }
   }
@@ -1379,7 +1380,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     ) {
       return this.memoizedExtOptions.memo
     }
-    let memo = this.props.options.map(o => {
+    let memo = this.props.options.map((o) => {
       let opt = asOption(o)
       return {
         ...opt,
@@ -1387,7 +1388,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         isSelected: this.isSelected(opt),
       } as ExtendedOptionType
     })
-    const extraOpts = (this.state.extraOptions as OptionType[]).map(opt => ({
+    const extraOpts = (this.state.extraOptions as OptionType[]).map((opt) => ({
       ...opt,
       id: getOptionId(selectId, opt),
       isSelected: this.isSelected(opt),
@@ -1440,7 +1441,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         <Rect observe={isOpen}>
           {({ ref: triggerRef, rect: triggerRect }) => (
             <div
-              ref={node => {
+              ref={(node) => {
                 assignRef(triggerRef, node)
                 // @ts-ignore
                 this.triggerRef.current = node

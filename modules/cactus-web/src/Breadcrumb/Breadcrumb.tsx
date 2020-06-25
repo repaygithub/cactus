@@ -44,14 +44,14 @@ export const BreadCrumbItem = styled(BreadcrumbItemBase)`
   font-style: normal;
   a:visited,
   a:link {
-    color: ${p => (p.active ? '#2E3538' : '#5F7A88')};
+    color: ${(p) => (p.active ? '#2E3538' : '#5F7A88')};
     font-style: normal;
     font-size: 15px;
     text-decoration: none;
   }
 
   & > svg {
-    color: ${p => (p.active ? '#2E3538' : '#5F7A88')};
+    color: ${(p) => (p.active ? '#2E3538' : '#5F7A88')};
     margin: 0 3px;
     font-size: 10px;
   }

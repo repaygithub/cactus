@@ -483,9 +483,9 @@ describe('component: Accordion', () => {
       expect(accordion.querySelector('button[aria-label=Delete]')).not.toBeInTheDocument()
 
       await act(async () => {
-        fireEvent.click(accordion.querySelector(
-          'button[data-role="accordion-button"]'
-        ) as HTMLButtonElement)
+        fireEvent.click(
+          accordion.querySelector('button[data-role="accordion-button"]') as HTMLButtonElement
+        )
         await animationRender()
       })
 

@@ -1,7 +1,7 @@
 import { BorderSize, Shape } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
 import React, { createContext, FunctionComponent, useContext } from 'react'
 import styled, { css, StyledComponentType } from 'styled-components'
-import PropTypes from 'prop-types'
 
 type cellAlignment = 'center' | 'right' | 'left'
 
@@ -88,24 +88,20 @@ const borderMap = {
 const getShape = (shape: Shape) => shapeMap[shape]
 const getLastRowShape = (shape: Shape) => lastRowShapeMap[shape]
 const getBorder = (size: BorderSize) => borderMap[size]
-const TableBase: FunctionComponent<TableProps> = props => {
+const TableBase: FunctionComponent<TableProps> = (props) => {
   const { children, className } = props
 
   return <table className={className}>{children}</table>
 }
 
-const TableCellBase: FunctionComponent<TableCellProps> = props => {
+const TableCellBase: FunctionComponent<TableCellProps> = (props) => {
   const { children, className, align } = props
   const { cellType: Type } = useContext(TableContext)
 
-  return (
-    <Type className={className}>
-      {children}
-    </Type>
-  )
+  return <Type className={className}>{children}</Type>
 }
 
-const TableHeaderBase: FunctionComponent<TableHeaderProps> = props => {
+const TableHeaderBase: FunctionComponent<TableHeaderProps> = (props) => {
   const { children, className } = props
 
   return (
@@ -117,7 +113,7 @@ const TableHeaderBase: FunctionComponent<TableHeaderProps> = props => {
   )
 }
 
-const TableRowBase: FunctionComponent<TableRowProps> = props => {
+const TableRowBase: FunctionComponent<TableRowProps> = (props) => {
   const { children, className } = props
 
   return (
@@ -127,7 +123,7 @@ const TableRowBase: FunctionComponent<TableRowProps> = props => {
   )
 }
 
-const TableBodyBase: FunctionComponent<TableBodyProps> = props => {
+const TableBodyBase: FunctionComponent<TableBodyProps> = (props) => {
   const { children, className } = props
   return (
     <TableContext.Provider value={{ cellType: 'td' }}>
@@ -141,9 +137,9 @@ export const TableHeader = styled(TableHeaderBase)`
   flex-direction: column;
   tr {
     display: flex;
-    border-color: ${p => p.theme.colors.base};
-    background-color: ${p => p.theme.colors.base};
-    ${p => getBorder(p.theme.border)};
+    border-color: ${(p) => p.theme.colors.base};
+    background-color: ${(p) => p.theme.colors.base};
+    ${(p) => getBorder(p.theme.border)};
     text-transform: uppercase;
   }
   tr > th {
@@ -162,65 +158,71 @@ export const TableCell = styled(TableCellBase)`
   max-width: 160px;
   align-items: center;
   padding: 16px;
-  color: ${p => p.theme.colors.darkestContrast};
+  color: ${(p) => p.theme.colors.darkestContrast};
   font-size: 15px;
   font-weight: normal;
-  text-align: ${p => p.align || 'left'};
+  text-align: ${(p) => p.align || 'left'};
   > svg {
     vertical-align: text-top;
     margin: 1px 10px;
   }
 
-  ${p => p.theme.mediaQueries && `${p.theme.mediaQueries.medium} {
+  ${(p) =>
+    p.theme.mediaQueries &&
+    `${p.theme.mediaQueries.medium} {
     width: calc(160px * 0.7125);
   }`}
-  ${p => p.theme.mediaQueries && `${p.theme.mediaQueries.large} {
+  ${(p) =>
+    p.theme.mediaQueries &&
+    `${p.theme.mediaQueries.large} {
     width: calc(160px * 0.875);
   }`}
 
-  ${p => p.theme.mediaQueries && `${p.theme.mediaQueries.extraLarge} {
+  ${(p) =>
+    p.theme.mediaQueries &&
+    `${p.theme.mediaQueries.extraLarge} {
     width: 160px;
   }`}
 
-  ${p => !p.theme.mediaQueries && 'width: 160px;'}
+  ${(p) => !p.theme.mediaQueries && 'width: 160px;'}
 `
 
 const TableRow = styled(TableRowBase)`
   outline: 0;
   display: flex;
-  background-color: ${p => p.theme.colors.white};
-  ${p => getBorder(p.theme.border)};
-  border-color: ${p => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.white};
+  ${(p) => getBorder(p.theme.border)};
+  border-color: ${(p) => p.theme.colors.white};
 
   & small {
-    color: ${p => p.theme.colors.darkestContrast};
+    color: ${(p) => p.theme.colors.darkestContrast};
   }
 
   ${TableBody} > &:nth-of-type(even) {
-    background-color: ${p => p.theme.colors.lightContrast};
-    ${p => getBorder(p.theme.border)};
-    border-color: ${p => p.theme.colors.lightContrast};
+    background-color: ${(p) => p.theme.colors.lightContrast};
+    ${(p) => getBorder(p.theme.border)};
+    border-color: ${(p) => p.theme.colors.lightContrast};
   }
 
   ${TableBody} > &:last-of-type {
-    ${p => getLastRowShape(p.theme.shape)};
+    ${(p) => getLastRowShape(p.theme.shape)};
   }
 
   ${TableBody} > &:hover {
     cursor: pointer;
-    ${p => getBorder(p.theme.border)}
-    border-color: ${p => p.theme.colors.callToAction};
+    ${(p) => getBorder(p.theme.border)}
+    border-color: ${(p) => p.theme.colors.callToAction};
 
   }
 
   ${TableBody} > &:focus {
-    background-color: ${p => p.theme.colors.transparentCTA};
-    ${p => getBorder(p.theme.border)}
-    border-color: ${p => p.theme.colors.callToAction};
+    background-color: ${(p) => p.theme.colors.transparentCTA};
+    ${(p) => getBorder(p.theme.border)}
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 `
 
-type TableComponentType = StyledComponentType<TableProps>  & {
+type TableComponentType = StyledComponentType<TableProps> & {
   Header: StyledComponentType<TableHeaderProps>
   Cell: StyledComponentType<TableCellProps>
   Row: StyledComponentType<TableRowProps>
@@ -233,10 +235,10 @@ const Table = styled(TableBase)`
   white-space: nowrap;
   justify-content: center;
   flex-direction: column;
-  ${p => getShape(p.theme.shape)};
-  ${p => getBorder(p.theme.border)};
-  border-color: ${p => p.theme.colors.lightContrast};
-  ${p => p.fullWidth && 'min-width: 100%'};
+  ${(p) => getShape(p.theme.shape)};
+  ${(p) => getBorder(p.theme.border)};
+  border-color: ${(p) => p.theme.colors.lightContrast};
+  ${(p) => p.fullWidth && 'min-width: 100%'};
 ` as TableComponentType
 
 Table.propTypes = {

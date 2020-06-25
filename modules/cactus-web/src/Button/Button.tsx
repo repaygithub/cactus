@@ -28,79 +28,79 @@ type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${p => p.theme.colors.callToActionText};
-    background-color: ${p => p.theme.colors.callToAction};
-    border-color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToActionText};
+    background-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
 
     &:hover {
-      color: ${p => p.theme.colors.baseText};
-      background-color: ${p => p.theme.colors.base};
-      border-color: ${p => p.theme.colors.base};
+      color: ${(p) => p.theme.colors.baseText};
+      background-color: ${(p) => p.theme.colors.base};
+      border-color: ${(p) => p.theme.colors.base};
     }
   `,
   standard: css`
-    color: ${p => p.theme.colors.base};
-    background-color: ${p => p.theme.colors.white};
-    border-color: ${p => p.theme.colors.base};
+    color: ${(p) => p.theme.colors.base};
+    background-color: ${(p) => p.theme.colors.white};
+    border-color: ${(p) => p.theme.colors.base};
 
     &:hover {
-      color: ${p => p.theme.colors.baseText};
-      background-color: ${p => p.theme.colors.base};
-      border-color: ${p => p.theme.colors.base};
+      color: ${(p) => p.theme.colors.baseText};
+      background-color: ${(p) => p.theme.colors.base};
+      border-color: ${(p) => p.theme.colors.base};
     }
   `,
   danger: css`
-    color: ${p => p.theme.colors.white};
-    background-color: ${p => p.theme.colors.error};
-    border-color: ${p => p.theme.colors.error};
+    color: ${(p) => p.theme.colors.white};
+    background-color: ${(p) => p.theme.colors.error};
+    border-color: ${(p) => p.theme.colors.error};
 
     &:hover {
-      color: ${p => p.theme.colors.white};
-      background-color: ${p => p.theme.colors.errorDark};
-      border-color: ${p => p.theme.colors.errorDark};
+      color: ${(p) => p.theme.colors.white};
+      background-color: ${(p) => p.theme.colors.errorDark};
+      border-color: ${(p) => p.theme.colors.errorDark};
     }
   `,
 }
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    color: ${p => p.theme.colors.callToActionText};
-    background-color: ${p => p.theme.colors.callToAction};
-    border-color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToActionText};
+    background-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
 
     &:hover {
-      color: ${p => p.theme.colors.callToAction};
-      background-color: ${p => p.theme.colors.white};
-      border-color: ${p => p.theme.colors.white};
+      color: ${(p) => p.theme.colors.callToAction};
+      background-color: ${(p) => p.theme.colors.white};
+      border-color: ${(p) => p.theme.colors.white};
     }
   `,
   standard: css`
-    color: ${p => p.theme.colors.white};
-    background-color: ${p => p.theme.colors.base};
-    border-color: ${p => p.theme.colors.white};
+    color: ${(p) => p.theme.colors.white};
+    background-color: ${(p) => p.theme.colors.base};
+    border-color: ${(p) => p.theme.colors.white};
 
     &:hover {
-      color: ${p => p.theme.colors.base};
-      background-color: ${p => p.theme.colors.white};
-      border-color: ${p => p.theme.colors.white};
+      color: ${(p) => p.theme.colors.base};
+      background-color: ${(p) => p.theme.colors.white};
+      border-color: ${(p) => p.theme.colors.white};
     }
   `,
   danger: css`
-    color: ${p => p.theme.colors.error};
-    background-color: ${p => p.theme.colors.white};
-    border-color: ${p => p.theme.colors.error};
+    color: ${(p) => p.theme.colors.error};
+    background-color: ${(p) => p.theme.colors.white};
+    border-color: ${(p) => p.theme.colors.error};
 
     &:hover {
-      color: ${p => p.theme.colors.white};
-      background-color: ${p => p.theme.colors.error};
+      color: ${(p) => p.theme.colors.white};
+      background-color: ${(p) => p.theme.colors.error};
     }
   `,
 }
 
 const disabled = css`
-  color: ${p => p.theme.colors.mediumGray};
-  background-color: ${p => p.theme.colors.lightGray};
-  border-color: ${p => p.theme.colors.lightGray};
+  color: ${(p) => p.theme.colors.mediumGray};
+  background-color: ${(p) => p.theme.colors.lightGray};
+  border-color: ${(p) => p.theme.colors.lightGray};
   cursor: not-allowed;
 `
 
@@ -165,9 +165,9 @@ export const Button = styled(ButtonBase)`
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
-  ${p => p.theme.textStyles.body};
-  ${p => getBorder(p.theme.border)};
-  ${p => getShape(p.theme.shape)};
+  ${(p) => p.theme.textStyles.body};
+  ${(p) => getBorder(p.theme.border)};
+  ${(p) => getShape(p.theme.shape)};
 
   &::-moz-focus-inner {
     border: 0;
@@ -182,9 +182,9 @@ export const Button = styled(ButtonBase)`
       width: calc(100% + 10px);
       top: -5px;
       left: -5px;
-      ${p => getBorder(p.theme.border)};
-      ${p => getShape(p.theme.shape)};
-      border-color: ${p => p.theme.colors.callToAction};
+      ${(p) => getBorder(p.theme.border)};
+      ${(p) => getShape(p.theme.shape)};
+      border-color: ${(p) => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
   }

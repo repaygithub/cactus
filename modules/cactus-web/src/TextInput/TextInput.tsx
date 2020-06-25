@@ -28,16 +28,16 @@ type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> 
 
 const statusMap: StatusMap = {
   success: css`
-    border-color: ${p => p.theme.colors.success};
-    background: ${p => p.theme.colors.transparentSuccess};
+    border-color: ${(p) => p.theme.colors.success};
+    background: ${(p) => p.theme.colors.transparentSuccess};
   `,
   warning: css`
-    border-color: ${p => p.theme.colors.warning};
-    background: ${p => p.theme.colors.transparentWarning};
+    border-color: ${(p) => p.theme.colors.warning};
+    background: ${(p) => p.theme.colors.transparentWarning};
   `,
   error: css`
-    border-color: ${p => p.theme.colors.error};
-    background: ${p => p.theme.colors.transparentError};
+    border-color: ${(p) => p.theme.colors.error};
+    background: ${(p) => p.theme.colors.transparentError};
   `,
 }
 
@@ -85,28 +85,28 @@ const getShape = (shape: Shape) => shapeMap[shape]
 
 const Input = styled.input<InputProps>`
   box-sizing: border-box;
-  ${p => getBorder(p.theme.border)}
-  border-color: ${p => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
-  ${p => getShape(p.theme.shape)}
+  ${(p) => getBorder(p.theme.border)}
+  border-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
+  ${(p) => getShape(p.theme.shape)}
   height: 32px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
-  ${p => p.theme.textStyles.body};
-  width: ${p => p.width || 'auto'};
-  background-color: ${p => p.theme.colors.white};
+  ${(p) => p.theme.textStyles.body};
+  width: ${(p) => p.width || 'auto'};
+  background-color: ${(p) => p.theme.colors.white};
 
   [disabled] {
-    border-color: ${p => p.theme.colors.lightGray};
-    background-color: ${p => p.theme.colors.lightGray};
+    border-color: ${(p) => p.theme.colors.lightGray};
+    background-color: ${(p) => p.theme.colors.lightGray};
   }
 
   &:focus {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 
   &::placeholder {
-    color: ${p => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.mediumContrast};
     font-style: oblique;
   }
 

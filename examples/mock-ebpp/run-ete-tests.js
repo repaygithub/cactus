@@ -4,7 +4,7 @@ dotenv.config({ path: 'local.env' })
 const { program } = require('commander')
 const createTestCafe = require('testcafe')
 
-const listProcessor = value => value.split(/,\s?/)
+const listProcessor = (value) => value.split(/,\s?/)
 
 program.option(
   '--src <file-or-glob>',

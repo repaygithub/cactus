@@ -42,12 +42,12 @@ type FileStatus = 'loading' | 'loaded' | 'error'
 
 export interface FileInputProps
   extends MarginProps,
-  MaxWidthProps,
-  WidthProps,
-  Omit<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-  'onChange' | 'onError' | 'onFocus' | 'onBlur' | 'ref'
-  > {
+    MaxWidthProps,
+    WidthProps,
+    Omit<
+      React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+      'onChange' | 'onError' | 'onFocus' | 'onBlur' | 'ref'
+    > {
   name: string
   accept?: string[]
   labels?: { delete?: string; retry?: string; loading?: string; loaded?: string }
@@ -110,14 +110,14 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
     position: absolute;
     top: 30%;
     left: 15%;
-    color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToAction};
   }
 
   span {
     position: absolute;
     top: 20%;
     left: 37%;
-    color: ${p => p.theme.colors.darkGray};
+    color: ${(p) => p.theme.colors.darkGray};
   }
 `
 
@@ -125,19 +125,19 @@ type FileBoxMap = { [K in FileStatus]: ReturnType<typeof css> }
 
 const fileBoxMap: FileBoxMap = {
   loading: css`
-    background-color: ${P => P.theme.colors.lightContrast};
+    background-color: ${(P) => P.theme.colors.lightContrast};
   `,
   loaded: css`
-    border: 2px solid ${p => p.theme.colors.success};
-    background-color: ${p => p.theme.colors.transparentSuccess};
+    border: 2px solid ${(p) => p.theme.colors.success};
+    background-color: ${(p) => p.theme.colors.transparentSuccess};
   `,
   error: css`
-    border: 2px solid ${p => p.theme.colors.error};
-    background-color: ${p => p.theme.colors.transparentError};
+    border: 2px solid ${(p) => p.theme.colors.error};
+    background-color: ${(p) => p.theme.colors.transparentError};
   `,
 }
 // @ts-ignore
-const fileStatus: any = props => fileBoxMap[props.status]
+const fileStatus: any = (props) => fileBoxMap[props.status]
 
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) => {
   const { fileName, className, status, errorMsg, onDelete, labels } = props
@@ -159,16 +159,16 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) 
       {status === 'error' ? (
         <Avatar type="alert" status="error" />
       ) : (
-          status === 'loaded' && <Avatar type="alert" status="success" />
-        )}
+        status === 'loaded' && <Avatar type="alert" status="success" />
+      )}
       <span>{fileName}</span>
       {status === 'loading' ? (
         <Spinner />
       ) : (
-          <IconButton onClick={onClick} label={labels.delete}>
-            <NavigationClose />
-          </IconButton>
-        )}
+        <IconButton onClick={onClick} label={labels.delete}>
+          <NavigationClose />
+        </IconButton>
+      )}
     </div>
   )
 })
@@ -183,12 +183,12 @@ const FileBox = styled(FileBoxBase)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${p => p.theme.colors.darkestContrast};
+  color: ${(p) => p.theme.colors.darkestContrast};
 
   span {
     margin-left: 8px;
     margin-right: 8px;
-    ${p => p.theme.textStyles.body};
+    ${(p) => p.theme.textStyles.body};
   }
 
   ${Avatar} {
@@ -255,7 +255,7 @@ const FileInfo = styled(FileInfoBase)`
 
     ${IconButton} {
       margin-left: 10px;
-      color: ${p => p.theme.colors.white};
+      color: ${(p) => p.theme.colors.white};
     }
 
     ${ActionsRefresh} {
@@ -344,24 +344,24 @@ const FileInputBase = (props: FileInputProps) => {
 
   useEffect(() => {
     if (value && value !== state.files) {
-      setState(state => ({ ...state, files: value }))
+      setState((state) => ({ ...state, files: value }))
     }
   }, [state.files, value])
 
   const saveFiles = (files: FileList | null) => {
     if (files && files.length > 0) {
       const loadingFiles = Array.from(files).map(
-        file => ({ fileName: file.name, contents: null, status: 'loading' } as FileObject)
+        (file) => ({ fileName: file.name, contents: null, status: 'loading' } as FileObject)
       )
       if (state.isRetrying) {
-        setState(state => ({ ...state, files: [...state.files, ...loadingFiles] }))
+        setState((state) => ({ ...state, files: [...state.files, ...loadingFiles] }))
       } else {
-        setState(state => ({ ...state, files: loadingFiles }))
+        setState((state) => ({ ...state, files: loadingFiles }))
       }
 
-      const promises = Array.from(files).map(file => {
+      const promises = Array.from(files).map((file) => {
         if (accept && !accepts(file, accept)) {
-          return new Promise<FileObject>(resolve => {
+          return new Promise<FileObject>((resolve) => {
             const errorMsg = onError(FILE_TYPE_ERR, accept)
             resolve({
               fileName: file.name,
@@ -381,7 +381,7 @@ const FileInputBase = (props: FileInputProps) => {
         } else {
           const reader = new FileReader()
 
-          return new Promise<FileObject>(resolve => {
+          return new Promise<FileObject>((resolve) => {
             reader.onload = () => {
               let dataURL = reader.result as string
               if (file.size > 250000000 && dataURL === '') {
@@ -432,18 +432,18 @@ const FileInputBase = (props: FileInputProps) => {
         }
       })
 
-      Promise.all(promises).then(results => {
+      Promise.all(promises).then((results) => {
         if (isMounted.current === true) {
           if (state.isRetrying) {
-            setState(state => {
-              const final = state.files.map(file => {
-                const updated = results.find(f => f.fileName === file.fileName)
+            setState((state) => {
+              const final = state.files.map((file) => {
+                const updated = results.find((f) => f.fileName === file.fileName)
                 return updated ? updated : file
               })
               return { ...state, files: final, isRetrying: false }
             })
           } else {
-            setState(state => ({ ...state, files: results }))
+            setState((state) => ({ ...state, files: results }))
           }
           if (typeof onChange === 'function') {
             onChange(name, results)
@@ -477,7 +477,7 @@ const FileInputBase = (props: FileInputProps) => {
   }
 
   const handleDelete = (fileName: string) => {
-    const files = state.files.filter(file => file.fileName !== fileName)
+    const files = state.files.filter((file) => file.fileName !== fileName)
     setState({ files: files, inputKey: Math.random().toString(36), isRetrying: false })
     if (isMounted.current === true) {
       if (typeof onChange === 'function') {
@@ -487,11 +487,11 @@ const FileInputBase = (props: FileInputProps) => {
   }
 
   const handleRetry = (fileName: string) => {
-    const files = state.files.filter(file => file.fileName !== fileName)
-    const promise = new Promise<State>(resolve => {
+    const files = state.files.filter((file) => file.fileName !== fileName)
+    const promise = new Promise<State>((resolve) => {
       resolve({ files: files, inputKey: Math.random().toString(36), isRetrying: true })
     })
-    promise.then(result => {
+    promise.then((result) => {
       setState(result)
       if (isMounted.current === true) {
         if (typeof onChange === 'function') {
@@ -564,32 +564,32 @@ const FileInputBase = (props: FileInputProps) => {
           </TextButton>
         </React.Fragment>
       ) : (
-          <React.Fragment>
-            {state.files.map((file, index) => (
-              <FileInfo
-                key={file.fileName}
-                fileName={file.fileName}
-                onDelete={handleDelete}
-                onRetry={handleRetry}
-                status={file.status}
-                errorMsg={file.errorMsg}
-                labels={labels}
-                boxRef={index === 0 ? topFileBox : undefined}
-              />
-            ))}
-            <TextButton
-              variant="action"
-              id={id}
-              aria-describedby={describedBy}
-              onClick={handleOpenFileSelect}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-            >
-              <BatchstatusOpen iconSize="small" />
-              {buttonText}
-            </TextButton>
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          {state.files.map((file, index) => (
+            <FileInfo
+              key={file.fileName}
+              fileName={file.fileName}
+              onDelete={handleDelete}
+              onRetry={handleRetry}
+              status={file.status}
+              errorMsg={file.errorMsg}
+              labels={labels}
+              boxRef={index === 0 ? topFileBox : undefined}
+            />
+          ))}
+          <TextButton
+            variant="action"
+            id={id}
+            aria-describedby={describedBy}
+            onClick={handleOpenFileSelect}
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+          >
+            <BatchstatusOpen iconSize="small" />
+            {buttonText}
+          </TextButton>
+        </React.Fragment>
+      )}
     </div>
   )
 }
@@ -598,7 +598,7 @@ export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
   border-radius: 8px;
   border: 2px dotted;
-  border-color: ${p => p.theme.colors.darkestContrast};
+  border-color: ${(p) => p.theme.colors.darkestContrast};
   min-width: 300px;
   min-height: 100px;
   position: relative;
@@ -616,7 +616,7 @@ export const FileInput = styled(FileInputBase)`
 
   &.notEmpty {
     flex-direction: column;
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
     padding: 0 8px;
 
     ${TextButton} {
@@ -638,9 +638,9 @@ FileInput.defaultErrorHandler = defaultErrorHandler
 
 interface FileInputComponent
   extends StyledComponentBase<
-  React.FunctionComponent<FileInputProps>,
-  CactusTheme,
-  FileInputProps
+    React.FunctionComponent<FileInputProps>,
+    CactusTheme,
+    FileInputProps
   > {
   defaultErrorHandler: (type: ErrorType, accept?: string[]) => string
 }

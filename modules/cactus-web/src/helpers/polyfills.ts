@@ -4,7 +4,7 @@ if (typeof window !== 'undefined' && !(window as any).Element.prototype.matches)
 }
 
 if (typeof window !== 'undefined' && !(window as any).Element.prototype.closest) {
-  Element.prototype.closest = function(s: string) {
+  Element.prototype.closest = function (s: string) {
     var el: Element | (Node & ParentNode) | null = this
 
     do {

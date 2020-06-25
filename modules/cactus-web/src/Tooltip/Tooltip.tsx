@@ -89,7 +89,7 @@ const cactusPosition: Position = (
 }
 
 const StyledInfo = styled(NotificationInfo)`
-  color: ${p => p.theme.colors.callToAction};
+  color: ${(p) => p.theme.colors.callToAction};
 `
 
 const TooltipBase = (props: TooltipProps) => {
@@ -123,11 +123,11 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   position: absolute;
   padding: 16px;
   border-radius: 8px 8px 8px 8px;
-  box-shadow: 0 9px 24px -8px ${p => p.theme.colors.callToAction};
+  box-shadow: 0 9px 24px -8px ${(p) => p.theme.colors.callToAction};
   font-size: 15px;
-  background: ${p => p.theme.colors.white};
-  color: ${p => p.theme.colors.darkestContrast};
-  border: 2px solid ${p => p.theme.colors.callToAction};
+  background: ${(p) => p.theme.colors.white};
+  color: ${(p) => p.theme.colors.darkestContrast};
+  border: 2px solid ${(p) => p.theme.colors.callToAction};
   box-sizing: border-box;
   overflow-wrap: break-word;
 

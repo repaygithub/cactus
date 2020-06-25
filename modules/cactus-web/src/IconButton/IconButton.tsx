@@ -25,59 +25,59 @@ type VariantMap = { [K in IconButtonVariants]: FlattenInterpolation<ThemeProps<C
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToAction};
 
     &:hover,
     &:focus {
-      color: ${p => p.theme.colors.base};
+      color: ${(p) => p.theme.colors.base};
     }
   `,
   standard: css`
-    color: ${p => p.theme.colors.base};
+    color: ${(p) => p.theme.colors.base};
 
     &:hover {
-      color: ${p => p.theme.colors.callToAction};
+      color: ${(p) => p.theme.colors.callToAction};
     }
   `,
   danger: css`
-    color: ${p => p.theme.colors.error};
+    color: ${(p) => p.theme.colors.error};
 
     &:hover {
-      color: ${p => p.theme.colors.errorDark};
+      color: ${(p) => p.theme.colors.errorDark};
     }
   `,
 }
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    color: ${p => p.theme.colors.callToAction};
+    color: ${(p) => p.theme.colors.callToAction};
 
     &:hover,
     &:focus {
-      color: ${p => p.theme.colors.white};
+      color: ${(p) => p.theme.colors.white};
     }
   `,
   standard: css`
-    color: ${p => p.theme.colors.white};
+    color: ${(p) => p.theme.colors.white};
 
     &:hover,
     &:focus {
-      color: ${p => p.theme.colors.base};
-      background: ${p => p.theme.colors.white};
+      color: ${(p) => p.theme.colors.base};
+      background: ${(p) => p.theme.colors.white};
     }
   `,
   danger: css`
-    color: ${p => p.theme.colors.error};
+    color: ${(p) => p.theme.colors.error};
 
     &:hover,
     &:focus {
-      color: ${p => p.theme.colors.white};
+      color: ${(p) => p.theme.colors.white};
     }
   `,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
-  color: ${p => p.theme.colors.mediumGray};
+  color: ${(p) => p.theme.colors.mediumGray};
   cursor: not-allowed;
 `
 
@@ -104,7 +104,7 @@ const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((pro
 })
 
 export const IconButton = styled(IconButtonBase)<IconButtonProps>`
-  display: ${p => p.display || 'inline-flex'};
+  display: ${(p) => p.display || 'inline-flex'};
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -119,7 +119,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   }
 
   &:focus {
-    background-color: ${p => p.theme.colors.transparentCTA};
+    background-color: ${(p) => p.theme.colors.transparentCTA};
   }
 
   ${variantOrDisabled}

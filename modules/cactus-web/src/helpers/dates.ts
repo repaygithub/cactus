@@ -161,7 +161,7 @@ export function getLocaleFormat(locale?: string, options: GetLocaleformatOpt = {
       timeZone: 'UTC',
     })
 
-    formatArray = matchAll(/(\d+|PM|[^0-9PM]+)/g, testDateString).map(m =>
+    formatArray = matchAll(/(\d+|PM|[^0-9PM]+)/g, testDateString).map((m) =>
       TOKEN_MATCHERS.hasOwnProperty(m) ? TOKEN_MATCHERS[m] : m
     )
   }
@@ -180,7 +180,7 @@ export function getDefaultFormat(type: DateType) {
 export function formatDate(date: Date, format: string) {
   let breakup = parseFormat(format)
   return breakup
-    .map(token => {
+    .map((token) => {
       if (TOKEN_FORMATTERS.hasOwnProperty(token)) {
         return TOKEN_FORMATTERS[token as FormatTokenType](date)
       }

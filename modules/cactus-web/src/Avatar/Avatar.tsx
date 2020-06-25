@@ -68,7 +68,7 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
 
 const usageMap: UsageMap = {
   alert: css`
-    color: ${p => p.theme.colors.darkestContrast};
+    color: ${(p) => p.theme.colors.darkestContrast};
   `,
   feedback: css`
     color: ${iconColor};

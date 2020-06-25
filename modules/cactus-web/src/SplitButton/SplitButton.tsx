@@ -70,12 +70,12 @@ const getMainShape = (shape: Shape) => mainShapeMap[shape]
 
 const MainActionButton = styled.button`
   box-sizing: border-box;
-  ${p => getBorder(p.theme.border)}
-  ${p => getMainShape(p.theme.shape)}
-  background-color: ${p => p.theme.colors.white};
+  ${(p) => getBorder(p.theme.border)}
+  ${(p) => getMainShape(p.theme.shape)}
+  background-color: ${(p) => p.theme.colors.white};
   height: 32px;
   outline: none;
-  ${p => p.theme.textStyles.body};
+  ${(p) => p.theme.textStyles.body};
   font-weight: 400px;
   cursor: pointer;
   padding-left: 12px;
@@ -90,7 +90,7 @@ const MainActionButton = styled.button`
     border: 0;
   }
 
-  ${p =>
+  ${(p) =>
     p.disabled &&
     `
   color: ${p.theme.colors.mediumGray};
@@ -100,27 +100,22 @@ const MainActionButton = styled.button`
   `}
 
   &.dd-closed {
-    border-color: ${p => p.theme.colors.darkestContrast};
+    border-color: ${(p) => p.theme.colors.darkestContrast};
 
     &:hover,
     &:focus {
-      border-color: ${p => p.theme.colors.callToAction};
+      border-color: ${(p) => p.theme.colors.callToAction};
     }
   }
 
   &.dd-open {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 `
 
 const SplitButtonStyles = createGlobalStyle`
   :root {
     --reach-menu-button: 1;
-  }
-
-  [data-reach-menu] {
-    display: block;
-    position: absolute;
   }
 `
 
@@ -145,12 +140,12 @@ const SplitButtonList = styled(ReachMenuItems)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
-  ${p => getDropdownShape(p.theme.shape)}
-  box-shadow: ${p => getBoxShadow(p.theme)};
+  ${(p) => getDropdownShape(p.theme.shape)}
+  box-shadow: ${(p) => getBoxShadow(p.theme)};
   z-index: 1000;
-  background-color: ${p => p.theme.colors.white};
+  background-color: ${(p) => p.theme.colors.white};
 
-  ${p =>
+  ${(p) =>
     !p.theme.boxShadows &&
     `${getBorder(p.theme.border)};
     border-color: ${p.theme.colors.lightContrast};`}
@@ -160,17 +155,18 @@ const SplitButtonList = styled(ReachMenuItems)`
     display: block;
     cursor: pointer;
     text-decoration: none;
-    background-color: ${p => p.theme.colors.white};
+    background-color: ${(p) => p.theme.colors.white};
+    overflow-wrap: break-word;
 
-    ${p => p.theme.textStyles.small};
-    color: ${p => p.theme.colors.darkestContrast};
+    ${(p) => p.theme.textStyles.small};
+    color: ${(p) => p.theme.colors.darkestContrast};
     outline: none;
     padding: 4px 16px;
     text-align: center;
 
-    &:focus {
-      background-color: ${p => p.theme.colors.callToAction};
-      color: ${p => p.theme.colors.callToActionText};
+    &[data-selected] {
+      background-color: ${(p) => p.theme.colors.callToAction};
+      color: ${(p) => p.theme.colors.callToActionText};
     }
   }
 `
@@ -191,16 +187,16 @@ const getDropdownButtonShape = (shape: Shape) => dropdownButtonShapeMap[shape]
 
 const DropdownButton = styled(ReachMenuButton)`
   box-sizing: border-box;
-  background-color: ${p => p.theme.colors.darkestContrast};
+  background-color: ${(p) => p.theme.colors.darkestContrast};
   height: 32px;
   width: 36px;
-  ${p => getDropdownButtonShape(p.theme.shape)}
+  ${(p) => getDropdownButtonShape(p.theme.shape)}
   margin-left: 1px;
   border: 0px;
   outline: none;
   cursor: pointer;
 
-  ${p =>
+  ${(p) =>
     p.disabled &&
     `
   color: ${p.theme.colors.mediumGray};
@@ -211,16 +207,16 @@ const DropdownButton = styled(ReachMenuButton)`
   ${NavigationChevronDown} {
     width: 10px;
     height: 10px;
-    color: ${p => p.theme.colors.white};
+    color: ${(p) => p.theme.colors.white};
   }
 
   &:hover,
   &:focus {
-    background-color: ${p => !p.disabled && p.theme.colors.callToAction};
+    background-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
   }
 
   &[aria-expanded='true'] ~ ${MainActionButton} {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 `
 
@@ -315,18 +311,18 @@ export const SplitButton = styled(SplitButtonBase)`
       transform: rotate3d(1, 0, 0, 180deg);
     }
 
-    background-color: ${p => p.theme.colors.callToAction};
+    background-color: ${(p) => p.theme.colors.callToAction};
   }
 
   ${DropdownButton}[aria-expanded='true'] + ${MainActionButton} {
-    border-color: ${p => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
   }
 ` as any
 
 SplitButton.propTypes = {
   mainActionLabel: PropTypes.string.isRequired,
   onSelectMainAction: PropTypes.func.isRequired,
-  mainActionIcon: PropTypes.func,
+  mainActionIcon: PropTypes.elementType,
   disabled: PropTypes.bool,
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
 
+import { boolean, select } from '@storybook/addon-knobs'
 import { DescriptiveEnvelope } from '@repay/cactus-icons'
 import { storiesOf } from '@storybook/react'
 import Table from './Table'
-import { boolean, select } from '@storybook/addon-knobs'
 
 type CellAlignment = 'left' | 'right' | 'center'
 const alignOptions = {
@@ -13,7 +13,8 @@ const alignOptions = {
   undefined: '',
 }
 
-const createAlignKnob = () => select('align (prop on Table.Cell)', alignOptions, 'left') as CellAlignment
+const createAlignKnob = () =>
+  select('align (prop on Table.Cell)', alignOptions, 'left') as CellAlignment
 
 storiesOf('Table', module).add('Header', () => (
   <Table fullWidth={boolean('fullWidth', true)}>
@@ -138,20 +139,12 @@ storiesOf('Table', module).add('2-cell table', () => (
     </Table.Header>
     <Table.Body>
       <Table.Row>
-        <Table.Cell>
-          Foo
-        </Table.Cell>
-        <Table.Cell>
-          Bar
-        </Table.Cell>
+        <Table.Cell>Foo</Table.Cell>
+        <Table.Cell>Bar</Table.Cell>
       </Table.Row>
       <Table.Row>
-        <Table.Cell>
-          Fizz
-        </Table.Cell>
-        <Table.Cell>
-          Buzz
-        </Table.Cell>
+        <Table.Cell>Fizz</Table.Cell>
+        <Table.Cell>Buzz</Table.Cell>
       </Table.Row>
     </Table.Body>
   </Table>
@@ -167,32 +160,16 @@ storiesOf('Table', module).add('4-cell table', () => (
     </Table.Header>
     <Table.Body>
       <Table.Row>
-        <Table.Cell>
-          One
-        </Table.Cell>
-        <Table.Cell>
-          Two
-        </Table.Cell>
-        <Table.Cell>
-          Three
-        </Table.Cell>
-        <Table.Cell>
-          Four
-        </Table.Cell>
+        <Table.Cell>One</Table.Cell>
+        <Table.Cell>Two</Table.Cell>
+        <Table.Cell>Three</Table.Cell>
+        <Table.Cell>Four</Table.Cell>
       </Table.Row>
       <Table.Row>
-      <Table.Cell>
-          Five
-        </Table.Cell>
-        <Table.Cell>
-          Six
-        </Table.Cell>
-        <Table.Cell>
-          Seven
-        </Table.Cell>
-        <Table.Cell>
-          Eight
-        </Table.Cell>
+        <Table.Cell>Five</Table.Cell>
+        <Table.Cell>Six</Table.Cell>
+        <Table.Cell>Seven</Table.Cell>
+        <Table.Cell>Eight</Table.Cell>
       </Table.Row>
     </Table.Body>
   </Table>

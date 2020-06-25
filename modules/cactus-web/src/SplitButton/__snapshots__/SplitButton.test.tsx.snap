@@ -102,12 +102,12 @@ exports[`component: SplitButton snapshot 1`] = `
       Test
     </button>
     <button
-      aria-expanded="false"
-      aria-haspopup="menu"
+      aria-controls="menu--1"
+      aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--1"
+      id="menu-button--menu--1"
       type="button"
     >
       <svg
@@ -260,12 +260,12 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       Test
     </button>
     <button
-      aria-expanded="false"
-      aria-haspopup="menu"
+      aria-controls="menu--48"
+      aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--28"
+      id="menu-button--menu--48"
       type="button"
     >
       <svg
@@ -418,12 +418,12 @@ exports[`component: SplitButton with theme customization should have 2px borders
       Test
     </button>
     <button
-      aria-expanded="false"
-      aria-haspopup="menu"
+      aria-controls="menu--53"
+      aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--30"
+      id="menu-button--menu--53"
       type="button"
     >
       <svg
@@ -576,12 +576,12 @@ exports[`component: SplitButton with theme customization should have intermediat
       Test
     </button>
     <button
-      aria-expanded="false"
-      aria-haspopup="menu"
+      aria-controls="menu--43"
+      aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--26"
+      id="menu-button--menu--43"
       type="button"
     >
       <svg
@@ -724,12 +724,12 @@ exports[`component: SplitButton with theme customization should have square shap
       Test
     </button>
     <button
-      aria-expanded="false"
-      aria-haspopup="menu"
+      aria-controls="menu--38"
+      aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--24"
+      id="menu-button--menu--38"
       type="button"
     >
       <svg
