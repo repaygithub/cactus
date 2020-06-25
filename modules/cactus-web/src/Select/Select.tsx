@@ -414,6 +414,7 @@ const Option = styled.li`
   text-align: left;
   box-shadow: none;
   padding: 4px 16px;
+  overflow-wrap: break-word;
 
   ${(p) =>
     isResponsiveTouchDevice &&

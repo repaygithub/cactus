@@ -160,6 +160,7 @@ const SplitButtonList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     background-color: ${(p) => p.theme.colors.white};
+    overflow-wrap: break-word;
 
     ${(p) => p.theme.textStyles.small};
     color: ${(p) => p.theme.colors.darkestContrast};
