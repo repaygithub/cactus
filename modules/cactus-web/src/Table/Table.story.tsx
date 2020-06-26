@@ -1,120 +1,56 @@
 import React from 'react'
 
-import { DescriptiveEnvelope } from '@repay/cactus-icons'
+import { boolean, number, select, text } from '@storybook/addon-knobs'
+import { DefaultTheme, StyledComponent } from 'styled-components'
 import { storiesOf } from '@storybook/react'
 import Table from './Table'
 
-storiesOf('Table', module).add('Header', () => (
-  <Table>
-    <Table.Header>
-      <Table.Cell>Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-    </Table.Header>
-  </Table>
-))
+type CellAlignment = 'left' | 'right' | 'center'
+const alignOptions = {
+  left: 'left',
+  right: 'right',
+  center: 'center',
+  undefined: '',
+}
 
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const createAlignKnob = () =>
+  select('align (prop on Table.Cell)', alignOptions, 'left') as CellAlignment
 
-const amount = [
-  '$ 123.00',
-  '$ 123.00',
-  '$ 123.00',
-  '$ 123.00',
-  '$ 123.000.00',
-  '$ 23.00',
-  '$ 3000.00',
-  '$ 123.231.00',
-  '$ 123.00',
-  '$ 123.00',
-]
+storiesOf('Table', module).add('Layout', () => {
+  const fullWidth = boolean('fullWidth', true)
+  const captionText = text('Caption', '')
+  const hasHeader = boolean('Has Header', true)
+  const headerText = text('Header Text', 'Header')
+  const cellText = text('Cell Text', 'Cell')
+  const colCount = number('# Columns', 4)
+  const rowCount = number('# Rows', 3)
+  const alignment = createAlignKnob()
+  const hasBody = boolean('Has tbody', true)
 
-storiesOf('Table', module).add('Row', () => (
-  <Table>
-    <Table.Body>
-      <Table.Row>
-        <>
-          {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-          <Table.Cell align="center">
-            Label
-            <DescriptiveEnvelope />
-          </Table.Cell>
-        </>
-      </Table.Row>
-      <Table.Row>
-        {amount.map((e, i) => (
-          <Table.Cell align="right" key={i}>
-            {e}
-          </Table.Cell>
-        ))}
-      </Table.Row>
-      <Table.Row>
-        <>
-          <Table.Cell align="center">
-            <DescriptiveEnvelope />
-          </Table.Cell>
-          {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-        </>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-))
+  const makeRow = (
+    content: string,
+    index: number,
+    Row: StyledComponent<any, DefaultTheme, {}, never> = Table.Row
+  ) => {
+    const cols = []
+    for (let i = 0; i < colCount; i++) {
+      cols.push(<Table.Cell align={alignment} key={i}>{`${content} ${i}`}</Table.Cell>)
+    }
+    return <Row key={index}>{cols}</Row>
+  }
 
-storiesOf('Table', module).add('Row and header', () => (
-  <Table>
-    <Table.Header>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-      <Table.Cell align="left">Header</Table.Cell>
-    </Table.Header>
-    <Table.Body>
-      <Table.Row>
-        <>
-          {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-          <Table.Cell align="center">
-            Label
-            <DescriptiveEnvelope />
-          </Table.Cell>
-        </>
-      </Table.Row>
-      <Table.Row>
-        {amount.map((e, i) => (
-          <Table.Cell align="right" key={i}>
-            {e}
-          </Table.Cell>
-        ))}
-      </Table.Row>
-      <Table.Row>
-        <>
-          <Table.Cell align="center">
-            <DescriptiveEnvelope />
-          </Table.Cell>
-          {arr.map((e, i) => (
-            <Table.Cell align="left" key={i}>
-              Cell {e}
-            </Table.Cell>
-          ))}
-        </>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-))
+  const header = hasHeader ? makeRow(headerText, 0, Table.Header) : null
+  const Body = hasBody ? Table.Body : React.Fragment
+  const rows = []
+  for (let i = 0; i < rowCount; i++) {
+    rows.push(makeRow(cellText, i + 1))
+  }
+
+  return (
+    <Table fullWidth={fullWidth}>
+      {captionText && <caption>{captionText}</caption>}
+      {header}
+      <Body>{rows}</Body>
+    </Table>
+  )
+})

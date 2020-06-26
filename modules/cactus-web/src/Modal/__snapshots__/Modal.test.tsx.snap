@@ -117,7 +117,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
       <div>
         <div
           aria-label="Modal Label"
-          class="c0"
+          class="c0 "
           data-reach-dialog-overlay=""
           variant="default"
         >

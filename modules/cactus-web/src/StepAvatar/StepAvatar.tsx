@@ -1,6 +1,5 @@
-import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 export type AvatarStep = 'notDone' | 'inProcess' | 'done'
 
@@ -8,7 +7,7 @@ interface StepAvatarProps extends MarginProps {
   status?: AvatarStep
 }
 
-type StepColor = { [K in AvatarStep]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type StepColor = { [K in AvatarStep]: FlattenInterpolation<ThemeProps<DefaultTheme>> }
 
 const stepColorMap: StepColor = {
   notDone: css`
@@ -28,7 +27,7 @@ const stepColorMap: StepColor = {
 
 const variant = (
   props: StepAvatarProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+): FlattenInterpolation<ThemeProps<DefaultTheme>> | undefined => {
   const { status: stepType } = props
   //@ts-ignore
   return stepColorMap[stepType]

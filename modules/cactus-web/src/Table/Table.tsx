@@ -1,11 +1,14 @@
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme } from '@repay/cactus-theme'
+import { border } from '../helpers/theme'
+import { Shape } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
 import React, { createContext, FunctionComponent, useContext } from 'react'
-import styled, { css, StyledComponentBase } from 'styled-components'
+import styled, { StyledComponentType } from 'styled-components'
 
 type cellAlignment = 'center' | 'right' | 'left'
 
 type cellType = 'th' | 'td'
+
+type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
 interface TableContextProps {
   cellType: cellType
@@ -14,6 +17,7 @@ interface TableContextProps {
 interface TableProps
   extends React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement> {
   className?: string
+  fullWidth?: boolean
 }
 
 interface TableHeaderProps
@@ -52,58 +56,35 @@ const TableContext = createContext<TableContextProps>({
 })
 
 const shapeMap = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
+  square: '1px',
+  intermediate: '4px',
+  round: '8px',
 }
 
-const doubleBorder = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 7px;
-  `,
-  round: css`
-    border-radius: 11px;
-  `,
-}
-const borderMap = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
+const getShape = (shape: Shape, location: BorderCorner) =>
+  `border-${location}-radius: ${shapeMap[shape]}`
 
-const getShape = (shape: Shape) => shapeMap[shape]
-const getDoubleBorder = (shape: Shape) => doubleBorder[shape]
-const getBorder = (size: BorderSize) => borderMap[size]
-const getBoxShadow = (theme: CactusTheme) => {
-  return theme.boxShadows ? `-1px 6px 4px 0px rgba(3, 118, 176, 0.35)` : {}
-}
+const Wrapper = styled.div<TableProps>`
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0px 16px;
+  ${(p) => p.fullWidth && 'min-width: calc(100% - 32px)'};
+`
 const TableBase: FunctionComponent<TableProps> = (props) => {
-  const { children, className } = props
+  const { children, className, fullWidth } = props
 
-  return <table className={className}>{children}</table>
+  return (
+    <Wrapper fullWidth={fullWidth}>
+      <table className={className}>{children}</table>
+    </Wrapper>
+  )
 }
 
 const TableCellBase: FunctionComponent<TableCellProps> = (props) => {
   const { children, className, align } = props
   const { cellType: Type } = useContext(TableContext)
 
-  return (
-    <Type className={className} align={align || 'left'}>
-      {children}
-    </Type>
-  )
+  return <Type className={className}>{children}</Type>
 }
 
 const TableHeaderBase: FunctionComponent<TableHeaderProps> = (props) => {
@@ -112,7 +93,7 @@ const TableHeaderBase: FunctionComponent<TableHeaderProps> = (props) => {
   return (
     <TableContext.Provider value={{ cellType: 'th' }}>
       <thead className={className}>
-        <tr>{children}</tr>
+        <Table.Row>{children}</Table.Row>
       </thead>
     </TableContext.Provider>
   )
@@ -138,113 +119,139 @@ const TableBodyBase: FunctionComponent<TableBodyProps> = (props) => {
 }
 
 export const TableHeader = styled(TableHeaderBase)`
-  tr {
-    display: flex;
-    margin: 0 4px 4px 4px;
-    border-color: ${(p) => p.theme.colors.base};
-    background-color: ${(p) => p.theme.colors.base};
-    ${(p) => getBorder(p.theme.border)};
-    ${(p) => getShape(p.theme.shape)};
+  // Lots of specificity to override the first/last row border colors.
+  &&&&& th,
+  &&&&& td {
     text-transform: uppercase;
+    border: ${(p) => border(p.theme, 'base')};
+    ${(p) => p.theme.colorStyles.base};
   }
-  tr > th {
-    color: white;
+`
+
+export const TableBody = styled(TableBodyBase)``
+export const TableCell = styled(TableCellBase)`
+  text-align: ${(p) => p.align || 'left'};
+  padding: 16px;
+  min-width: calc(160px * 0.7125);
+
+  ${(p) =>
+    p.theme.mediaQueries &&
+    `${p.theme.mediaQueries.large} {
+    min-width: calc(160px * 0.875);
+  }`}
+
+  ${(p) =>
+    p.theme.mediaQueries &&
+    `${p.theme.mediaQueries.extraLarge} {
+    min-width: 160px;
+  }`}
+`
+
+const TableRow = styled(TableRowBase)``
+
+type TableComponentType = StyledComponentType<TableProps> & {
+  Header: StyledComponentType<TableHeaderProps>
+  Cell: StyledComponentType<TableCellProps>
+  Row: StyledComponentType<TableRowProps>
+  Body: StyledComponentType<TableBodyProps>
+}
+
+const Table = styled(TableBase)`
+  ${(p) => p.fullWidth && 'min-width: 100%'};
+  border-spacing: 0;
+  color: ${(p) => p.theme.colors.darkestContrast};
+  ${(p) => p.theme.textStyles.small};
+
+  th {
     font-weight: bold;
   }
-`
 
-export const TableBody = styled(TableBodyBase)`
-  display: flex;
-  flex-direction: column;
-`
-export const TableCell = styled(TableCellBase)`
-  max-width: 160px;
-  align-items: center;
-  padding: 23px 16px;
-  color: ${(p) => p.theme.colors.darkestContrast};
-  font-size: 15px;
-  font-weight: normal;
-  > svg {
-    vertical-align: text-top;
-    margin: 1px 10px;
+  td,
+  th {
+    background-color: ${(p) => p.theme.colors.white};
+    border-top: ${(p) => border(p.theme, 'transparent')};
+    border-bottom: ${(p) => border(p.theme, 'transparent')};
+    :first-child {
+      border-left: ${(p) => border(p.theme, 'lightContrast')};
+    }
+    :last-child {
+      border-right: ${(p) => border(p.theme, 'lightContrast')};
+    }
   }
 
-  ${(p) => p.theme.mediaQueries.medium} {
-    width: calc(160px * 0.7125);
-  }
-  ${(p) => p.theme.mediaQueries.large} {
-    width: calc(160px * 0.875);
-  }
-
-  ${(p) => p.theme.mediaQueries.extraLarge} {
-    width: 160px;
-  }
-`
-
-export const TableRow = styled(TableRowBase)`
-  position: relative;
-  margin: 4px 4px;
-  outline: 0;
-  display: flex;
-  background-color: ${(p) => p.theme.colors.white};
-  ${(p) => getShape(p.theme.shape)};
-  ${(p) => getBorder(p.theme.border)};
-  border-color: ${(p) => p.theme.colors.lightContrast};
-
-  & small {
-    color: ${(p) => p.theme.colors.darkestContrast};
+  tr:nth-of-type(even) {
+    td,
+    th {
+      background-color: ${(p) => p.theme.colors.lightContrast};
+    }
   }
 
-  :hover {
+  &&& tr:hover {
     cursor: pointer;
-    background-color: ${(p) => p.theme.colors.transparentCTA};
-    ${(p) => getBorder(p.theme.border)}
-    border-color: ${(p) => p.theme.colors.callToAction};
-    box-shadow: ${(p) => getBoxShadow(p.theme)};
-
+    th,
+    td {
+      border-color: ${(p) => p.theme.colors.callToAction};
+    }
   }
 
-  :nth-of-type(even) {
-    background-color: ${(p) => p.theme.colors.lightContrast};
-    ${(p) => getShape(p.theme.shape)};
-    ${(p) => getBorder(p.theme.border)};
-    border-color: ${(p) => p.theme.colors.mediumContrast};
-    :hover {
+  &&& tr:focus {
+    outline: 0;
+    td,
+    th {
       background-color: ${(p) => p.theme.colors.transparentCTA};
       border-color: ${(p) => p.theme.colors.callToAction};
     }
   }
-  :focus {
-    ::after {
-      content: '';
-      display: block;
-      position: absolute;
-      height: calc(100% + 10px);
-      width: calc(100% + 10px);
-      top: -5px;
-      left: -5px;
-      ${(p) => getBorder(p.theme.border)}
-      ${(p) => getDoubleBorder(p.theme.shape)};
-      border-color: ${(p) => p.theme.colors.callToAction};
-      box-sizing: border-box;
+
+  // first row
+  & > tr:first-of-type,
+  tbody > tr:first-child,
+  thead > tr:first-child {
+    th,
+    td {
+      border-top-color: ${(p) => p.theme.colors.lightContrast};
+      :first-child {
+        ${(p) => getShape(p.theme.shape, 'top-left')};
+      }
+      :last-child {
+        ${(p) => getShape(p.theme.shape, 'top-right')};
+      }
     }
   }
-`
 
-export const Table = styled(TableBase)`
-  display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
-  margin: 0 16px;
-  justify-content: center;
-  flex-direction: column;
-` as any
+  // first row false positives
+  && > thead + tr:first-of-type,
+  && > thead + tbody > tr:first-child {
+    th,
+    td {
+      border-top-color: transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+  }
 
-interface TableComponent extends StyledComponentBase<'div', CactusTheme, TableProps> {
-  Header: React.ComponentType<TableHeaderProps>
-  Cell: React.ComponentType<TableCellProps>
-  Row: React.ComponentType<TableRowProps>
-  Body: React.ComponentType<TableBodyProps>
+  // last row
+  &,
+  tbody:last-child,
+  thead:last-child,
+  tfoot:last-child {
+    & > tr:last-child {
+      th,
+      td {
+        border-bottom-color: ${(p) => p.theme.colors.lightContrast};
+        :first-child {
+          ${(p) => getShape(p.theme.shape, 'bottom-left')};
+        }
+        :last-child {
+          ${(p) => getShape(p.theme.shape, 'bottom-right')};
+        }
+      }
+    }
+  }
+` as TableComponentType
+
+Table.propTypes = {
+  fullWidth: PropTypes.bool,
 }
 
 Table.Header = TableHeader
@@ -252,4 +259,4 @@ Table.Cell = TableCell
 Table.Row = TableRow
 Table.Body = TableBody
 
-export default Table as TableComponent
+export default Table
