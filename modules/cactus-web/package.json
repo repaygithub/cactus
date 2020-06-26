@@ -8,7 +8,8 @@
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-web",
   "license": "MIT",
   "sideEffects": [
-    "./dist/helpers/polyfills.js"
+    "./dist/helpers/polyfills.js",
+    "./cactus-addon/register.jsx"
   ],
   "scripts": {
     "cleanup": "rm -rf dist coverage .storybook/dist",
