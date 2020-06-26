@@ -1,8 +1,8 @@
 import { CactusColor, CactusTheme, ColorStyle } from '@repay/cactus-theme'
 
-export const border = (theme: CactusTheme, color: CactusColor) => {
+export const border = (theme: CactusTheme, color: string) => {
   const thickness = theme.border === 'thick' ? '2px' : '1px'
-  return `${thickness} solid ${theme.colors[color]}`
+  return `${thickness} solid ${theme.colors[color as CactusColor] || color}`
 }
 
 export const invertColors = (style: ColorStyle) => {

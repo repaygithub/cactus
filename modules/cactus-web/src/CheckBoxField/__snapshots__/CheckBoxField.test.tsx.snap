@@ -60,7 +60,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c3 + .c2 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -71,11 +71,11 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c1 + .c0 {
+.c3 + .c2 {
   margin-top: 8px;
 }
 
-.c1 .c8 {
+.c3 .c8 {
   cursor: pointer;
   padding-left: 8px;
 }
@@ -175,7 +175,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c3 + .c2 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -186,7 +186,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   color: hsl(200,10%,20%);
 }
 
-.c10 + .c0 {
+.c10 + .c2 {
   margin-top: 8px;
 }
 
@@ -195,11 +195,11 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
   padding-left: 8px;
 }
 
-.c1 + .c0 {
+.c3 + .c2 {
   margin-top: 8px;
 }
 
-.c1 .c8 {
+.c3 .c8 {
   cursor: not-allowed;
   padding-left: 8px;
 }
@@ -306,7 +306,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   box-shadow: 0 0 8px hsl(200,96%,35%);
 }
 
-.c3 + .c2 {
+.c1 + .c0 {
   margin-top: 16px;
 }
 
@@ -317,7 +317,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c10 + .c0 {
+.c10 + .c2 {
   margin-top: 8px;
 }
 
@@ -326,7 +326,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   padding-left: 8px;
 }
 
-.c11 + .c0 {
+.c11 + .c2 {
   margin-top: 8px;
 }
 
@@ -335,15 +335,15 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
   padding-left: 8px;
 }
 
-.c1 {
+.c3 {
   margin-right: 8px;
 }
 
-.c1 + .c0 {
+.c3 + .c2 {
   margin-top: 8px;
 }
 
-.c1 .c8 {
+.c3 .c8 {
   cursor: pointer;
   padding-left: 8px;
 }
