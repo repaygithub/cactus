@@ -1,0 +1,65 @@
+import * as React from 'react'
+
+import { render } from '@testing-library/react'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
+import PrevNext from './PrevNext'
+import userEvent from '@testing-library/user-event'
+
+describe('component: PrevNext', () => {
+  test('basic usage', () => {
+    const { container } = render(
+      <StyleProvider>
+        <PrevNext />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('provided link text', () => {
+    const { container } = render(
+      <StyleProvider>
+        <PrevNext prevText="Go Back" nextText="Go Forward" />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('disable prev', () => {
+    const { container } = render(
+      <StyleProvider>
+        <PrevNext disablePrev={true} />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('disable next', () => {
+    const { container } = render(
+      <StyleProvider>
+        <PrevNext disableNext={true} />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('it calls the onNavigate handler correctly', () => {
+    const mockNavigate = jest.fn()
+    const { getByText } = render(
+      <StyleProvider>
+        <PrevNext onNavigate={mockNavigate} />
+      </StyleProvider>
+    )
+
+    expect(mockNavigate).not.toHaveBeenCalled()
+    userEvent.click(getByText('Prev'))
+    expect(mockNavigate).toHaveBeenCalledTimes(1)
+    expect(mockNavigate).toHaveBeenLastCalledWith('prev')
+    userEvent.click(getByText('Next'))
+    expect(mockNavigate).toHaveBeenCalledTimes(2)
+    expect(mockNavigate).toHaveBeenLastCalledWith('next')
+  })
+})

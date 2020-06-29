@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: PrevNext basic usage 1`] = `
+.c0 {
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 23px;
+  line-height: 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c0:focus {
+  outline: none;
+  color: hsl(200,96%,35%);
+}
+
+.c0:last-child {
+  border-left: 1px solid hsl(200,29%,90%);
+}
+
+.c0[aria-disabled='true'] {
+  color: hsl(0,0%,90%);
+  cursor: default;
+}
+
+<div>
+  <a
+    aria-disabled="false"
+    class="c0"
+    role="link"
+    tabindex="0"
+  >
+    Prev
+  </a>
+  <a
+    aria-disabled="false"
+    class="c0"
+    role="link"
+    tabindex="0"
+  >
+    Next
+  </a>
+</div>
+`;
+
+exports[`component: PrevNext disable next 1`] = `
+.c0 {
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 23px;
+  line-height: 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c0:focus {
+  outline: none;
+  color: hsl(200,96%,35%);
+}
+
+.c0:last-child {
+  border-left: 1px solid hsl(200,29%,90%);
+}
+
+.c0[aria-disabled='true'] {
+  color: hsl(0,0%,90%);
+  cursor: default;
+}
+
+<div>
+  <a
+    aria-disabled="false"
+    class="c0"
+    role="link"
+    tabindex="0"
+  >
+    Prev
+  </a>
+  <a
+    aria-disabled="true"
+    class="c0"
+    role="link"
+  >
+    Next
+  </a>
+</div>
+`;
+
+exports[`component: PrevNext disable prev 1`] = `
+.c0 {
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 23px;
+  line-height: 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c0:focus {
+  outline: none;
+  color: hsl(200,96%,35%);
+}
+
+.c0:last-child {
+  border-left: 1px solid hsl(200,29%,90%);
+}
+
+.c0[aria-disabled='true'] {
+  color: hsl(0,0%,90%);
+  cursor: default;
+}
+
+<div>
+  <a
+    aria-disabled="true"
+    class="c0"
+    role="link"
+  >
+    Prev
+  </a>
+  <a
+    aria-disabled="false"
+    class="c0"
+    role="link"
+    tabindex="0"
+  >
+    Next
+  </a>
+</div>
+`;
+
+exports[`component: PrevNext provided link text 1`] = `
+.c0 {
+  cursor: pointer;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 23px;
+  line-height: 20px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c0:focus {
+  outline: none;
+  color: hsl(200,96%,35%);
+}
+
+.c0:last-child {
+  border-left: 1px solid hsl(200,29%,90%);
+}
+
+.c0[aria-disabled='true'] {
+  color: hsl(0,0%,90%);
+  cursor: default;
+}
+
+<div>
+  <a
+    aria-disabled="false"
+    class="c0"
+    role="link"
+    tabindex="0"
+  >
+    Go Back
+  </a>
+  <a
+    aria-disabled="false"
+    class="c0"
+    role="link"
+    tabindex="0"
+  >
+    Go Forward
+  </a>
+</div>
+`;
