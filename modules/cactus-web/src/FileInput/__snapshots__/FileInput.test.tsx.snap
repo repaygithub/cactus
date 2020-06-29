@@ -168,11 +168,7 @@ exports[`component: FileInput should render a file input 1`] = `
 `;
 
 exports[`component: FileInput should render a file with an error 1`] = `
-.c15 {
-  vertical-align: middle;
-}
-
-.c18 {
+.c16 {
   font-size: 16px;
   vertical-align: middle;
 }
@@ -225,7 +221,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c17 {
+.c15 {
   font-size: 18px;
   line-height: 28px;
   position: relative;
@@ -240,12 +236,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c17:hover {
+.c15:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c17:focus::after {
+.c15:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -259,17 +255,17 @@ exports[`component: FileInput should render a file with an error 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c17::-moz-focus-inner {
+.c15::-moz-focus-inner {
   border: 0;
 }
 
-.c17 svg {
+.c15 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c19 .c5 {
+.c17 .c5 {
   padding-bottom: 4px;
 }
 
@@ -311,55 +307,55 @@ exports[`component: FileInput should render a file with an error 1`] = `
 
 .c12 .c5,
 .c12 .sc-kafWEX,
-.c12 .c22 {
+.c12 .c21 {
   margin-right: 4px;
   vertical-align: -2px;
 }
 
-.c20 .c3 {
+.c18 .c3 {
   height: 24px;
   width: 24px;
 }
 
-.c20 .c3 .c5 {
+.c18 .c3 .c5 {
   height: 16px;
   width: 16px;
 }
 
-.c20 .c3 .c22 {
+.c18 .c3 .c21 {
   height: 18px;
   width: 18px;
 }
 
-.c20 .c7 {
+.c18 .c7 {
   margin-left: auto;
 }
 
-.c20 .c9 {
+.c18 .c9 {
   height: 12px;
   width: 12px;
 }
 
-.c21 .c3 {
+.c19 .c3 {
   height: 24px;
   width: 24px;
 }
 
-.c21 .c3 .c5 {
+.c19 .c3 .c5 {
   height: 16px;
   width: 16px;
 }
 
-.c21 .c3 .c22 {
+.c19 .c3 .c21 {
   height: 18px;
   width: 18px;
 }
 
-.c21 .c7 {
+.c19 .c7 {
   margin-left: auto;
 }
 
-.c21 .c9 {
+.c19 .c9 {
   height: 12px;
   width: 12px;
 }
@@ -405,12 +401,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c2 .c3 .c22 {
+.c2 .c3 .c21 {
   height: 18px;
   width: 18px;
 }
 
-.c2 .c23 {
+.c2 .c22 {
   height: 12px;
   width: 12px;
 }
@@ -438,7 +434,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c1 .c11 .c14 {
+.c1 .c11 .c20 {
   height: 12px;
   width: 12px;
 }
@@ -465,7 +461,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   align-items: center;
 }
 
-.c0.empty .c16 {
+.c0.empty .c14 {
   position: absolute;
   left: 35%;
   bottom: 15%;
@@ -479,7 +475,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   padding: 0 8px;
 }
 
-.c0.notEmpty .c16 {
+.c0.notEmpty .c14 {
   position: relative;
   margin: 16px 0 16px 0;
 }
@@ -560,33 +556,15 @@ exports[`component: FileInput should render a file with an error 1`] = `
         </svg>
         <span>
           You must not be bool
-          <button
-            aria-label="give it another try"
-            class="c7 c8"
-            type="button"
-            variant="standard"
-          >
-            <svg
-              class="c14 c15"
-              fill="currentcolor"
-              height="1em"
-              viewBox="0 0 24 24"
-              width="1em"
-            >
-              <path
-                d="M20.4992503,17.9548596 L18.3156404,17.9595766 C17.7633569,17.9607696 17.3146756,17.5140225 17.3134826,16.9617391 C17.3122895,16.4094556 17.7590366,15.9607743 18.3113201,15.9595812 L22.6073616,15.9503011 C23.1633559,15.9491001 23.6135718,16.4016508 23.6094949,16.9576314 L23.5781544,21.2316126 C23.5741047,21.7838825 23.1231185,22.2283028 22.5708486,22.2242531 C22.0185787,22.2202034 21.5741584,21.7692172 21.5782082,21.2169473 L21.5883807,19.8296924 C19.3899413,22.4868842 15.9196811,24 12,24 C5.372583,24 -4.4408921e-15,18.627417 -4.4408921e-15,12 C-4.4408921e-15,11.4477153 0.44771525,11 1,11 C1.55228475,11 2,11.4477153 2,12 C2,17.5228475 6.4771525,22 12,22 C15.6334532,22 18.742791,20.5088813 20.4992503,17.9548596 Z M3.94244786,6.07548022 L5.72868198,6.07162168 C6.28096544,6.07042866 6.72964678,6.51717573 6.7308398,7.06945919 C6.73203282,7.62174265 6.28528575,8.07042399 5.73300228,8.07161701 L1.43696072,8.08089714 C0.880966415,8.08209818 0.430750527,7.62954747 0.434827455,7.07356681 L0.466167957,2.79958562 C0.470217674,2.24731572 0.921203832,1.80289545 1.47347373,1.80694517 C2.02574364,1.81099489 2.47016391,2.26198104 2.46611419,2.81425095 L2.4520725,4.72914997 C4.68891657,1.79264134 8.18849203,0 12,0 C18.627417,0 24,5.372583 24,12 C24,12.5522847 23.5522847,13 23,13 C22.4477153,13 22,12.5522847 22,12 C22,6.4771525 17.5228475,2 12,2 C8.76545467,2 5.80179644,3.54797813 3.94244786,6.07548022 Z"
-              />
-            </svg>
-          </button>
         </span>
       </div>
     </div>
     <button
-      class="c16 c17"
+      class="c14 c15"
       type="button"
     >
       <svg
-        class="c18"
+        class="c16"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
