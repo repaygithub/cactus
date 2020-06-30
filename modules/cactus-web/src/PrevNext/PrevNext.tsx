@@ -1,5 +1,4 @@
 import { border } from '../helpers/theme'
-import { jsx } from '@storybook/theming'
 import { margin, MarginProps } from 'styled-system'
 import PropTypes from 'prop-types'
 import React from 'react'
