@@ -1,5 +1,4 @@
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
 import { DialogContent, DialogOverlay, DialogProps } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
 import Flex from '../Flex/Flex'
@@ -113,7 +112,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
       top: 24px;
       width: 16px;
     }
-    ${(p) => p.theme.mediaQueries.medium} {
+    ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
       padding: 40px 88px;
       ${IconButton} {
         height: 24px;
