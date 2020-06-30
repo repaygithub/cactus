@@ -49,7 +49,7 @@ describe('Aria-labels applied correctly', () => {
     )
 
     expect(baseElement.querySelector('div[aria-label="Modal Label"]')).toBeInTheDocument()
-    expect(baseElement.querySelector('div[aria-label="Modal Label-content"]')).toBeInTheDocument()
+    expect(baseElement.querySelector('div[aria-modal="true"]')).toBeInTheDocument()
   })
 })
 
