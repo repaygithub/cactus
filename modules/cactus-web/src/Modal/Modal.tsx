@@ -70,7 +70,7 @@ const Modalbase: FunctionComponent<ModalProps> = (props) => {
       variant={variant}
       {...rest}
     >
-      <DialogContent aria-label={`${modalLabel}-content`}>
+      <DialogContent aria-label={modalLabel}>
         <IconButton onClick={onClose} label={closeLabel}>
           <NavigationClose />
         </IconButton>
@@ -99,7 +99,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     ${(p) => getShape(p.theme.shape)};
     background: white;
     border-color: ${baseColor};
-    box-shadow: ${(p) => p.theme.boxShadows && '0px 9px 24px rgba(3, 118, 176, 0.348704)'};
+    box-shadow: ${(p) => p.theme.boxShadows && `0px 9px 24px ${p.theme.colors.transparentCTA}`};
     margin: auto;
     max-width: 90%;
     outline: none;
