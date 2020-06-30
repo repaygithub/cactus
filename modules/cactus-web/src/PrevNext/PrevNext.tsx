@@ -1,4 +1,5 @@
 import { border } from '../helpers/theme'
+import { keyPressAsClick } from '../helpers/a11y'
 import { margin, MarginProps } from 'styled-system'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -16,8 +17,10 @@ interface PrevNextProps extends MarginProps {
   nextText?: string
 }
 
-interface PrevNextLinkProps extends React.ComponentProps<'a'> {
+interface PrevNextLinkProps {
+  className?: string
   disabled: boolean
+  onClick?: () => void
 }
 
 const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
@@ -31,6 +34,7 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
     aria-disabled={disabled ? 'true' : 'false'}
     className={className}
     onClick={onClick}
+    onKeyPress={onClick && keyPressAsClick(onClick)}
     tabIndex={disabled ? undefined : 0}
   >
     {children}
