@@ -29,7 +29,6 @@ const prompts = require('prompts')
  */
 
 const errors = []
-const all = []
 const disallowCommitType = ['test', 'style']
 
 const cwd = process.cwd()
@@ -55,9 +54,8 @@ async function main() {
   let answers = { pkgName: pkg && pkg.pkgName }
   answers.releaseVersion = args.find((a) => RELEASE_RE.test(a))
 
-  if (!answers.pkgName || !answers.releaseVersion) {
-    prompts.override(answers)
-    answers = await prompts(
+  if (!answers.pkgName) {
+    let { pkgName } = await prompts(
       [
         {
           type: 'select',
@@ -65,16 +63,41 @@ async function main() {
           message: 'Package to publish?',
           choices: MODULES.map((m) => ({ title: `@repay/${m}`, value: m })),
         },
+      ],
+      { onCancel: () => process.exit(0) }
+    )
+    answers.pkgName = pkgName
+  }
+
+  if (!pkg) {
+    pkg = RELEVENT_MODULES[answers.pkgName]
+    pkgJson = getPkgJson(pkg)
+  }
+
+  let { pkgName, scope, short } = pkg
+
+  // GET COMMIT MESSAGES
+  const relevantCommits = await getRelevantCommits(scope)
+
+  if (!answers.releaseVersion) {
+    console.log('\nIncluded commits:\n')
+    relevantCommits.forEach((ci) => {
+      console.log(`* ${ci.header}`)
+      if (Array.isArray(ci.notes)) {
+        ci.notes.forEach((note) => {
+          if (note.title.includes('BREAKING')) {
+            console.log('  - BREAKING: ' + note.text)
+          }
+        })
+      }
+    })
+    console.log()
+    let { releaseVersion } = await prompts(
+      [
         {
           type: 'text',
           name: 'releaseVersion',
-          message: (prev) => {
-            if (!pkg) {
-              pkg = RELEVENT_MODULES[prev]
-              pkgJson = getPkgJson(pkg)
-            }
-            return `Release Version (current = ${pkgJson.version})?`
-          },
+          message: `Release Version (current = ${pkgJson.version})?`,
           validate: (value) =>
             RELEASE_RE.test(value) ||
             `invalid version ${value} -- must be in semver format and ` +
@@ -83,11 +106,9 @@ async function main() {
       ],
       { onCancel: () => process.exit(0) }
     )
+    answers.releaseVersion = releaseVersion
   }
-
   let { releaseVersion } = answers
-  let { pkgName, scope, short } = pkg
-
   console.log(`\n** Releasing ${pkgName} v${releaseVersion} **\n`)
 
   let cleanupResult = await exec(`yarn ${short} cleanup`, { cwd, encoding: 'utf-8' })
@@ -112,15 +133,48 @@ async function main() {
     throw publishResult.error || new Error(`Failed to publish ${pkgName}`)
   }
   await exec(`git add modules/${scope}/package.json`)
-  let gitCommitResult = await exec(
+  let gitPublishCommitResult = await exec(
     `git commit -m "chore(${scope}): publish ${pkgName} v${releaseVersion}"`
   )
-  if (gitCommitResult.stderr) {
+  if (gitPublishCommitResult.stderr) {
     throw new Error(`Failed while committing publish updates.`)
   }
 
+  // build and edit changelog
   let CHANGELOG = await fsp.readFile(path.join(process.cwd(), 'CHANGELOG.md'), 'utf-8')
+  let content = ''
+  for (const commit of relevantCommits) {
+    if (!disallowCommitType.includes(commit.type)) {
+      content += generateCommit(commit)
+    }
+  }
+  const publishCommit = getRelevantCommits()[0]
+  content = generateReleaseHeader(pkg, releaseVersion, publishCommit) + content + '\n'
 
+  let where = CHANGELOG.indexOf('## ')
+  CHANGELOG = CHANGELOG.substring(0, where) + content + CHANGELOG.substring(where)
+
+  await fsp.writeFile(path.join(process.cwd(), 'CHANGELOG.md'), CHANGELOG)
+
+  await exec(`git add CHANGELOG.md`)
+  let gitChangelogCommitResult = await exec(`git commit -m "chore(${scope}): update changelog"`)
+  if (gitChangelogCommitResult.stderr) {
+    throw new Error(`Failed while committing changelog updates.`)
+  }
+  await exec(`git push`)
+
+  console.log(`\n\n** Successfully published and updated the changelog **\n\n`)
+}
+
+function getPkgJson(pkg) {
+  if (!pkg) {
+    return
+  }
+  return require(path.join(cwd, 'modules', pkg.scope, 'package.json'))
+}
+
+function getRelevantCommits(scope) {
+  let all = []
   return new Promise((resolve, reject) => {
     gitRawCommits({
       format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
@@ -148,46 +202,20 @@ async function main() {
           resolve(all)
         }
       })
-  }).then(async () => {
-    let content = ''
-    let relevant = all.slice(1)
-    const lastReleaseCommitIndex = relevant.findIndex(
-      (commit) =>
-        commit.type === 'chore' &&
-        commit.header.includes('publish') &&
-        commit.header.includes(scope)
-    )
-    let relevantCommits = relevant.slice(0, lastReleaseCommitIndex)
-    for (const commit of relevantCommits) {
-      let { scope: commitScope } = normalizeScope(commit.scope)
-      if (commitScope === scope && !disallowCommitType.includes(commit.type)) {
-        content += generateCommit(commit)
-      }
+  }).then(() => {
+    if (scope) {
+      const lastReleaseCommitIndex = all.findIndex(
+        (commit) =>
+          commit.type === 'chore' &&
+          commit.header.includes('publish') &&
+          commit.header.includes(scope)
+      )
+      return all
+        .slice(0, lastReleaseCommitIndex)
+        .filter((ci) => normalizeScope(ci.scope).scope === scope)
     }
-
-    content = generateReleaseHeader(pkg, releaseVersion, all[0]) + content + '\n'
-
-    let where = CHANGELOG.indexOf('## ')
-    CHANGELOG = CHANGELOG.substring(0, where) + content + CHANGELOG.substring(where)
-
-    await fsp.writeFile(path.join(process.cwd(), 'CHANGELOG.md'), CHANGELOG)
-
-    await exec(`git add CHANGELOG.md`)
-    let gitCommitResult = await exec(`git commit -m "chore(${scope}): update changelog"`)
-    if (gitCommitResult.stderr) {
-      throw new Error(`Failed while committing changelog updates.`)
-    }
-    await exec(`git push`)
-
-    console.log(`\n\n** Successfully published and updated the changelog **\n\n`)
+    return all
   })
-}
-
-function getPkgJson(pkg) {
-  if (!pkg) {
-    return
-  }
-  return require(path.join(cwd, 'modules', pkg.scope, 'package.json'))
 }
 
 function getErrorHandler(scope) {
