@@ -27,6 +27,11 @@ export { TextInputField } from './TextInputField/TextInputField'
 export { Toggle } from './Toggle/Toggle'
 export { ToggleField } from './ToggleField/ToggleField'
 export { Tooltip } from './Tooltip/Tooltip'
+export {
+  ScreenSizeContext,
+  ScreenSizeProvider,
+  SIZES,
+} from './ScreenSizeProvider/ScreenSizeProvider'
 export { Select } from './Select/Select'
 export { SelectField } from './SelectField/SelectField'
 export { Spinner } from './Spinner/Spinner'
