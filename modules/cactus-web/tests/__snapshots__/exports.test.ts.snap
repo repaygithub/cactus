@@ -24,6 +24,7 @@ Array [
   "Pagination",
   "RadioButton",
   "RadioButtonField",
+  "Table",
   "TextArea",
   "TextAreaField",
   "TextButton",

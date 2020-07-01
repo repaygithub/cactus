@@ -5,34 +5,67 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import Table from './Table'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Table
 
-TODO - describe component here
+Essentially just a table with styling to match the theme. Any valid HTML table layout should work, with a couple of exceptions:
 
-TODO - render component here
+- `rowSpan` is not really supported (but `colSpan` _is_ supported)
+- Using multiple `tbody` elements is supported but because rows have odd-even styling, a `tbody` with an odd number of rows followed by another `tbody` will put two odd-styled rows next to each other.
 
-## Best practices
+## Basic Usage
 
-TODO - see README for what to include here
+The `Table` component has a few helpful sub-components:
+- `Table.Cell` - a `td` element by default, but `as="th"` can be used to change that. It also has an `align` prop which directly translates to the CSS `text-align` property.
+- `Table.Header` - a `thead` with a single row; because the row is included in the element, the direct children should be table cells. Within the `Header` the default cell type switches from `td` to `th`, but can still be overridden using `<Table.Cell as="td">`.
+- `Table.Row` - a `tr` element.
+- `Table.Body` - a `tbody` element.
 
-## Basic usage
+The table's `fullWidth` prop can be used to force the table to take up the full width of its parent container. By default, it is also wrapped in a `div` that adds some margins and a horizontal scrollbar if the table is wider than its parent. You can get rid of the div and just have the bare styled table by using `<Table as="table">`, but that's not recommended for most situations.
 
-TODO - brief description
+### Card Carousel
+
+In addition to the default styling, there is another style of table that is more suitable for mobile devices. In this mode each row is rendered as a "card", where the cells are rendered as rows within the card. The cards are arranged horizontally and can be scrolled (or swiped) side-to-side.
+
+There are two ways of controlling card carousel mode: using the `variant` prop, or the `cardBreakpoint` prop. `variant` has the highest precedence: if passed as `variant="table"`, the card carousel will never be used; if passed as `variant="card"`, it will always be used. The `cardBreakpoint` prop can be used to transition between table mode and card mode at one of the theme's CSS media queries, but it will only work if the app is using a `ScreenSizeProvider`. For example, the following table would be in card mode for "tiny" or "small" screen sizes, and table mode for anything larger:
 
 ```jsx
-import React from 'react'
-import { Table } from '@repay/cactus-web'
-
-;<Table />
+<ScreenSizeProvider>
+  <Table cardBreakpoint="small">
+    ...
+  </Table>
+</ScreenSizeProvider>
 ```
 
-```tsx
-import * as React from 'react'
-import { Table } from '@repay/cactus-web'
+If a `Table.Header` is used, card mode will also render the headers in each cell/row so the user doesn't have to remember which header lines up with which cell.
 
-;<Table />
-```
+### Try it out
+
+export const code = `
+<Table>
+  <Table.Header>
+    <Table.Cell colSpan="2">Spanned Header</Table.Cell>
+    <Table.Cell>Another Column</Table.Cell>
+  </Table.Header>
+  <Table.Row>
+    <Table.Cell as="th">SubHeader</Table.Cell>
+    <Table.Cell>SubValue</Table.Cell>
+    <Table.Cell align="right">Another Value</Table.Cell>
+  </Table.Row>
+  <Table.Row>
+    <Table.Cell align="center" colSpan="2">Spanned SubHeader</Table.Cell>
+    <Table.Cell align="right">That One Value</Table.Cell>
+  </Table.Row>
+</Table>
+`
+
+<LiveProvider code={code} scope={{ Table }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Properties
 
