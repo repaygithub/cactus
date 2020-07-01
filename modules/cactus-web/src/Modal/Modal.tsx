@@ -93,6 +93,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
   position: fixed;
   right: 0;
   top: 0;
+  align-items: center;
   z-index: 52;
   > [data-reach-dialog-content] {
     ${(p) => getBorder(p.theme.border)};
