@@ -6,6 +6,8 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import React, { useState } from 'react'
 import Modal from './Modal'
+import Text from '../Text/Text'
+import Button from '../Button/Button'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import { livePreviewStyle } from '../helpers/constants'
@@ -19,7 +21,6 @@ on the web page is permited until the modal is closed.
 
 export const code = ` () => {
   const [open, setOpen] = React.useState(false)
-  const Icon = icons['DescriptiveEnvelope']
   return open ? (
     <Modal
       variant="default"
@@ -37,7 +38,7 @@ export const code = ` () => {
   )
 }`
 
-<LiveProvider code={code} scope={{ Modal, Button, TextInput, icons }}>
+<LiveProvider code={code} scope={{ Modal, Button, Text }}>
   <LiveEditor style={livePreviewStyle} style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
