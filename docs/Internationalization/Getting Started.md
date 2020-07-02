@@ -52,7 +52,7 @@ class I18nController extends BaseI18nController {
  async load(args) {
     const { lang, section } = args
     // load ftl translations from the source
-    const {defaults:ftl} = await import(`./locales/${lang}/${section}.ftl`)
+    const { default: ftl } = await import(`./locales/${lang}/${section}.ftl`)
     
     return [{ lang, ftl }]
     
