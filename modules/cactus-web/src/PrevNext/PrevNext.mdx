@@ -1,0 +1,48 @@
+---
+name: PrevNext
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import PrevNext from './PrevNext'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# PrevNext
+
+The `PrevNext` component is similar to [Pagination](/components/pagination), but is used when it is unknown how many pages
+there are.  This component simply renders two links: one to go to the previous page, and another to
+go to the next page.  The caller controls what action is taken when the links are clicked and when
+the links should be disabled.  In addition, the caller can pass in custom text for the links to
+support use cases such as internationalization.
+
+### Try it out
+
+export const code = `<PrevNext
+  disablePrev={false}
+  disableNext={false}
+  onNavigate={(direction) => console.log(direction)}
+  prevText="Prev"
+  nextText="Next"
+/>`
+
+<LiveProvider code={code} scope={{ PrevNext }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+In general, you can use this component as is.  However, for more complex use cases where you need to,
+for example, change the URL when clicking a prev/next link, then you can pass a component (or HTML
+element) into the `linkAs` prop.  This component will receive the following props:
+- `children`: this will simply be the text of the link
+- `className`: for styling
+- `disabled`: boolean indicating whether or not the link should be disabled
+- `onClick`: click handler to be called when the element is clicked; this will be a no-op if no
+  `onNavigate` handler was passed in or if the link is disabled.
+
+## Properties
+
+<PropsTable of={PrevNext} />
