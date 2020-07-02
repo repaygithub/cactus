@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@repay/babel-preset": "^0.3.0",
-    "@repay/scripts": "^0.5.0",
+    "@repay/scripts": "^1.0.0",
     "color": "^3.1.2",
     "typescript": "^3.7.2"
   },
