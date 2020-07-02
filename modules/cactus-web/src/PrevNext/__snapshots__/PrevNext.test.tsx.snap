@@ -30,22 +30,26 @@ exports[`component: PrevNext basic usage 1`] = `
 }
 
 <div>
-  <a
-    aria-disabled="false"
-    class="c0"
-    role="link"
-    tabindex="0"
+  <div
+    class=""
   >
-    Prev
-  </a>
-  <a
-    aria-disabled="false"
-    class="c0"
-    role="link"
-    tabindex="0"
-  >
-    Next
-  </a>
+    <a
+      aria-disabled="false"
+      class="c0"
+      role="link"
+      tabindex="0"
+    >
+      Prev
+    </a>
+    <a
+      aria-disabled="false"
+      class="c0"
+      role="link"
+      tabindex="0"
+    >
+      Next
+    </a>
+  </div>
 </div>
 `;
 
@@ -79,21 +83,25 @@ exports[`component: PrevNext disable next 1`] = `
 }
 
 <div>
-  <a
-    aria-disabled="false"
-    class="c0"
-    role="link"
-    tabindex="0"
+  <div
+    class=""
   >
-    Prev
-  </a>
-  <a
-    aria-disabled="true"
-    class="c0"
-    role="link"
-  >
-    Next
-  </a>
+    <a
+      aria-disabled="false"
+      class="c0"
+      role="link"
+      tabindex="0"
+    >
+      Prev
+    </a>
+    <a
+      aria-disabled="true"
+      class="c0"
+      role="link"
+    >
+      Next
+    </a>
+  </div>
 </div>
 `;
 
@@ -127,21 +135,25 @@ exports[`component: PrevNext disable prev 1`] = `
 }
 
 <div>
-  <a
-    aria-disabled="true"
-    class="c0"
-    role="link"
+  <div
+    class=""
   >
-    Prev
-  </a>
-  <a
-    aria-disabled="false"
-    class="c0"
-    role="link"
-    tabindex="0"
-  >
-    Next
-  </a>
+    <a
+      aria-disabled="true"
+      class="c0"
+      role="link"
+    >
+      Prev
+    </a>
+    <a
+      aria-disabled="false"
+      class="c0"
+      role="link"
+      tabindex="0"
+    >
+      Next
+    </a>
+  </div>
 </div>
 `;
 
@@ -175,21 +187,25 @@ exports[`component: PrevNext provided link text 1`] = `
 }
 
 <div>
-  <a
-    aria-disabled="false"
-    class="c0"
-    role="link"
-    tabindex="0"
+  <div
+    class=""
   >
-    Go Back
-  </a>
-  <a
-    aria-disabled="false"
-    class="c0"
-    role="link"
-    tabindex="0"
-  >
-    Go Forward
-  </a>
+    <a
+      aria-disabled="false"
+      class="c0"
+      role="link"
+      tabindex="0"
+    >
+      Go Back
+    </a>
+    <a
+      aria-disabled="false"
+      class="c0"
+      role="link"
+      tabindex="0"
+    >
+      Go Forward
+    </a>
+  </div>
 </div>
 `;

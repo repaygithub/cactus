@@ -68,6 +68,7 @@ const PrevNextLink = styled(PrevNextLinkBase)`
 `
 
 const PrevNextBase: React.FC<PrevNextProps> = ({
+  className,
   disablePrev = false,
   disableNext = false,
   linkAs,
@@ -75,7 +76,7 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   prevText,
   nextText,
 }) => (
-  <>
+  <div className={className}>
     <PrevNextLink
       as={linkAs}
       disabled={disablePrev}
@@ -90,7 +91,7 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
     >
       {nextText}
     </PrevNextLink>
-  </>
+  </div>
 )
 
 export const PrevNext = styled(PrevNextBase)`
