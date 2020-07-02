@@ -137,9 +137,9 @@ Modal.propTypes = {
 }
 
 Modal.defaultProps = {
-  closeLabel: 'Close Label',
+  closeLabel: 'Close Modal',
   isOpen: false,
-  modalLabel: 'Modal Label',
+  modalLabel: 'Modal',
   variant: 'default',
 }
 export default Modal
