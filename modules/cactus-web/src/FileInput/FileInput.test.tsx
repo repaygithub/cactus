@@ -20,6 +20,21 @@ describe('component: FileInput', () => {
     expect(container).toMatchSnapshot()
   })
 
+  test('should render a disabled file input', () => {
+    const { container } = render(
+      <StyleProvider>
+        <FileInput
+          name="throatpunch"
+          accept={['.tsx']}
+          labels={{ delete: 'ejecto seato cuz', retry: 'give it another try' }}
+          disabled={true}
+        />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
   test('should render a loading file', () => {
     const { container } = render(
       <StyleProvider>

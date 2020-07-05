@@ -60,6 +60,7 @@ export interface FileInputProps
   rawFiles?: boolean
   multiple?: boolean
   value?: FileObject[]
+  disabled?: boolean
 }
 
 interface EmptyPromptsProps {
@@ -82,7 +83,7 @@ interface FileInfoProps extends FileBoxProps {
   boxRef?: MutableRefObject<HTMLDivElement | null>
 }
 
-interface FileObject {
+export interface FileObject {
   fileName: string
   contents: File | string | null
   status: FileStatus
@@ -234,11 +235,7 @@ const FileInfoBase = (props: FileInfoProps) => {
   return (
     <div className={className}>
       <FileBox errorMsg={errorMsg} labels={fileBoxLabels} ref={boxRef} {...rest} />
-      {errorMsg && (
-        <StatusMessage status="error">
-          {errorMsg}
-        </StatusMessage>
-      )}
+      {errorMsg && <StatusMessage status="error">{errorMsg}</StatusMessage>}
     </div>
   )
 }
@@ -312,6 +309,7 @@ const FileInputBase = (props: FileInputProps) => {
     multiple,
     value,
     id,
+    disabled = false,
     'aria-describedby': describedBy,
     ...fileInputProps
   } = omitMargins(props, 'width', 'maxWidth') as Omit<
@@ -524,8 +522,7 @@ const FileInputBase = (props: FileInputProps) => {
     handleEvent(onBlur, name)
   }
 
-  const emptyClassName =
-    state === undefined ? 'empty' : state.files.length === 0 ? 'empty' : 'notEmpty'
+  const emptyClassName = disabled ? 'empty' : state.files.length === 0 ? 'empty' : 'notEmpty'
 
   return (
     <div
@@ -544,8 +541,9 @@ const FileInputBase = (props: FileInputProps) => {
         name={name}
         multiple={multiple}
         onChange={handleFileSelect}
+        disabled={disabled}
       />
-      {state === undefined ? null : state.files.length === 0 ? (
+      {disabled ? null : state.files.length === 0 ? (
         <React.Fragment>
           <EmptyPrompts prompt={prompt} />
           <TextButton
@@ -594,7 +592,7 @@ const FileInputBase = (props: FileInputProps) => {
 export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
   border-radius: 8px;
-  border: 2px dotted;
+  border: ${(p) => (p.disabled ? 'none' : '2px dotted')};
   border-color: ${(p) => p.theme.colors.darkestContrast};
   min-width: 300px;
   min-height: 100px;
@@ -602,6 +600,7 @@ export const FileInput = styled(FileInputBase)`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  ${(p) => p.disabled && `background-color: ${p.theme.colors.lightGray};`}
 
   &.empty {
     ${TextButton} {
@@ -642,10 +641,10 @@ interface FileInputComponent
   defaultErrorHandler: (type: ErrorType, accept?: string[]) => string
 }
 
-// @ts-ignore
 FileInput.propTypes = {
   name: PropTypes.string.isRequired,
   accept: PropTypes.arrayOf(PropTypes.string),
+  disabled: PropTypes.bool,
   labels: PropTypes.shape({
     delete: PropTypes.string,
     retry: PropTypes.string,
@@ -671,6 +670,7 @@ FileInput.propTypes = {
 }
 
 FileInput.defaultProps = {
+  disabled: false,
   rawFiles: false,
   multiple: false,
   labels: {

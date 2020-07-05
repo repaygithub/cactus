@@ -9,6 +9,7 @@ storiesOf('FileInput', module).add('Basic Usage', () => {
   return (
     <FileInput
       name="my-file-loader"
+      disabled={boolean('disabled', false)}
       rawFiles={boolean('rawFiles', false)}
       multiple={boolean('multiple', true)}
       accept={fileTypes}

@@ -1,5 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`component: FileInput should render a disabled file input 1`] = `
+.c0 {
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: none;
+  border-color: hsl(200,10%,20%);
+  min-width: 300px;
+  min-height: 100px;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: hsl(0,0%,90%);
+}
+
+.c0.empty .c1 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c0.notEmpty {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-color: hsl(200,96%,35%);
+  padding: 0 8px;
+}
+
+.c0.notEmpty .c1 {
+  position: relative;
+  margin: 16px 0 16px 0;
+}
+
+.c0 input {
+  display: none;
+}
+
+<div>
+  <div
+    class="c0 empty"
+  >
+    <input
+      accept=".tsx"
+      disabled=""
+      name="throatpunch"
+      type="file"
+    />
+  </div>
+</div>
+`;
+
 exports[`component: FileInput should render a file input 1`] = `
 .c3 {
   font-size: 40px;
@@ -307,7 +368,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
 
 .c12 .c5,
 .c12 .sc-kafWEX,
-.c12 .c21 {
+.c12 .c22 {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -322,7 +383,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c18 .c3 .c21 {
+.c18 .c3 .c22 {
   height: 18px;
   width: 18px;
 }
@@ -346,7 +407,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c19 .c3 .c21 {
+.c19 .c3 .c22 {
   height: 18px;
   width: 18px;
 }
@@ -401,12 +462,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c2 .c3 .c21 {
+.c2 .c3 .c22 {
   height: 18px;
   width: 18px;
 }
 
-.c2 .c22 {
+.c2 .c23 {
   height: 12px;
   width: 12px;
 }
@@ -434,7 +495,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c1 .c11 .c20 {
+.c1 .c11 .c21 {
   height: 12px;
   width: 12px;
 }
@@ -482,6 +543,17 @@ exports[`component: FileInput should render a file with an error 1`] = `
 
 .c0 input {
   display: none;
+}
+
+.c20.empty .c14 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c20.notEmpty .c14 {
+  position: relative;
+  margin: 16px 0 16px 0;
 }
 
 <div>
@@ -695,7 +767,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c4 .c16 {
+.c4 .c17 {
   padding-bottom: 4px;
 }
 
@@ -704,7 +776,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c14 .c3 .c16 {
+.c14 .c3 .c17 {
   height: 16px;
   width: 16px;
 }
@@ -759,7 +831,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c2 .c3 .c16 {
+.c2 .c3 .c17 {
   height: 16px;
   width: 16px;
 }
@@ -769,7 +841,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c2 .c17 {
+.c2 .c18 {
   height: 12px;
   width: 12px;
 }
@@ -787,17 +859,17 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .c18 {
+.c1 .c19 {
   position: relative;
   margin-top: 4px;
 }
 
-.c1 .c18 .c7 {
+.c1 .c19 .c7 {
   margin-left: 10px;
   color: hsl(0,0%,100%);
 }
 
-.c1 .c18 .c15 {
+.c1 .c19 .c16 {
   height: 12px;
   width: 12px;
 }
@@ -845,6 +917,17 @@ exports[`component: FileInput should render a loaded file 1`] = `
 
 .c0 input {
   display: none;
+}
+
+.c15.empty .c11 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c15.notEmpty .c11 {
+  position: relative;
+  margin: 16px 0 16px 0;
 }
 
 <div>
@@ -1010,17 +1093,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   line-height: 28px;
 }
 
-.c2 .c13 {
+.c2 .c14 {
   height: 24px;
   width: 24px;
 }
 
-.c2 .c13 .c10 {
+.c2 .c14 .c11 {
   height: 16px;
   width: 16px;
 }
 
-.c2 .c13 .c11 {
+.c2 .c14 .c12 {
   height: 18px;
   width: 18px;
 }
@@ -1030,11 +1113,11 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .c12 {
+.c2 .c13 {
   margin-left: auto;
 }
 
-.c2 .c9 {
+.c2 .c10 {
   height: 12px;
   width: 12px;
 }
@@ -1043,17 +1126,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .c14 {
+.c1 .c15 {
   position: relative;
   margin-top: 4px;
 }
 
-.c1 .c14 .c12 {
+.c1 .c15 .c13 {
   margin-left: 10px;
   color: hsl(0,0%,100%);
 }
 
-.c1 .c14 .c8 {
+.c1 .c15 .c9 {
   height: 12px;
   width: 12px;
 }
@@ -1101,6 +1184,17 @@ exports[`component: FileInput should render a loading file 1`] = `
 
 .c0 input {
   display: none;
+}
+
+.c8.empty .c5 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c8.notEmpty .c5 {
+  position: relative;
+  margin: 16px 0 16px 0;
 }
 
 <div>

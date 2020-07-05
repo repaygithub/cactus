@@ -7,6 +7,7 @@ import FileInputField from './FileInputField'
 storiesOf('FileInputField', module).add('Basic Usage', () => (
   <FileInputField
     label={text('label', 'File Input Field')}
+    disabled={boolean('disabled', false)}
     accept={['.md', '.txt']}
     name="input-field"
     tooltip={text('tooltip', 'Upload files from your system')}

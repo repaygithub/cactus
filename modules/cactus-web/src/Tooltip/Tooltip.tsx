@@ -33,6 +33,7 @@ interface TooltipProps
   DEBUG_STYLE?: boolean
   position?: Position
   maxWidth?: string
+  disabled?: boolean
 }
 
 const OFFSET = 8
@@ -88,31 +89,39 @@ const cactusPosition: Position = (
   }
 }
 
-const StyledInfo = styled(NotificationInfo)`
-  color: ${(p) => p.theme.colors.callToAction};
+interface StyledInfoProps {
+  disabled?: boolean
+}
+
+const StyledInfo = styled(NotificationInfo)<StyledInfoProps>`
+  color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
 `
 
 const TooltipBase = (props: TooltipProps) => {
-  const { className, label, ariaLabel, id, maxWidth } = props
+  const { className, disabled, label, ariaLabel, id, maxWidth } = props
   const [trigger, tooltip] = useTooltip()
   return (
     <>
       {cloneElement(
         <span className={className}>
-          <StyledInfo />
+          <StyledInfo disabled={disabled} />
         </span>,
         trigger
       )}
-      <TooltipPopup
-        {...tooltip}
-        label={label}
-        ariaLabel={ariaLabel}
-        position={cactusPosition}
-        style={{ maxWidth }}
-      />
-      <VisuallyHidden role="tooltip" id={id}>
-        {label}
-      </VisuallyHidden>
+      {!disabled && (
+        <>
+          <TooltipPopup
+            {...tooltip}
+            label={label}
+            ariaLabel={ariaLabel}
+            position={cactusPosition}
+            style={{ maxWidth }}
+          />
+          <VisuallyHidden role="tooltip" id={id}>
+            {label}
+          </VisuallyHidden>
+        </>
+      )}
     </>
   )
 }
@@ -138,12 +147,12 @@ export const Tooltip = styled(TooltipBase)`
   ${margin}
 `
 
-// @ts-ignore
 Tooltip.propTypes = {
   label: PropTypes.string.isRequired,
   ariaLabel: PropTypes.string,
   position: PropTypes.func,
   maxWidth: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 Tooltip.defaultProps = {
