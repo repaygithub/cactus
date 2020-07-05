@@ -118,7 +118,7 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
     position: absolute;
     top: 20%;
     left: 37%;
-    color: ${(p) => p.theme.colors.darkGray};
+    color: ${(p) => p.theme.colors.mediumContrast};
   }
 `
 

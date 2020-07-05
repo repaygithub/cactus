@@ -132,7 +132,7 @@ exports[`component: FileInput should render a file input 1`] = `
   position: absolute;
   top: 20%;
   left: 37%;
-  color: hsl(0,0%,50%);
+  color: hsl(200,18%,45%);
 }
 
 .c0 {
