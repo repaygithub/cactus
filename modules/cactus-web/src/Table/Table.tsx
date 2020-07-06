@@ -1,8 +1,6 @@
 import { border, boxShadow } from '../helpers/theme'
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme } from '@repay/cactus-theme'
-import { Omit } from '../types'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 import styled, { css, StyledComponentType } from 'styled-components'
@@ -85,7 +83,14 @@ const Wrapper = styled.div<TableProps>`
   ${(p) => p.fullWidth && 'min-width: calc(100% - 32px)'};
 `
 
-export const Table: React.FC<TableProps> = ({ children, cardBreakpoint, ...props }) => {
+type TableComponentType = React.FC<TableProps> & {
+  Header: React.FC<TableHeaderProps>
+  Cell: React.FC<TableCellProps>
+  Row: React.FC<TableRowProps>
+  Body: React.ReactType<TableBodyProps>
+}
+
+export const Table: TableComponentType = ({ children, cardBreakpoint, ...props }) => {
   const size = useContext(ScreenSizeContext)
   const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
   if (props.variant) {
@@ -158,40 +163,30 @@ export const TableRow: React.FC<TableRowProps> = ({ children, ...props }) => {
 
 export const TableBody = 'tbody'
 
-const TSWorkaround = Table as any
-TSWorkaround.Header = TableHeader
-TSWorkaround.Cell = TableCell
-TSWorkaround.Row = TableRow
-TSWorkaround.Body = TableBody
+Table.Header = TableHeader
+Table.Cell = TableCell
+Table.Row = TableRow
+Table.Body = TableBody
 
-interface TableComponent extends React.FC<TableProps> {
-  Header: React.ComponentType<TableHeaderProps>
-  Cell: React.ComponentType<TableCellProps>
-  Row: React.ComponentType<TableRowProps>
-  Body: React.ComponentType<TableBodyProps>
-}
-
-//@ts-ignore
 TableCell.propTypes = {
   align: PropTypes.oneOf<CellAlignment>(['center', 'right', 'left']),
-  as: PropTypes.elementType,
+  as: PropTypes.oneOf<CellType>(['th', 'td']),
 }
 
 Table.displayName = 'Table'
 
-//@ts-ignore
 Table.propTypes = {
   fullWidth: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card']),
-  as: PropTypes.elementType,
+  as: PropTypes.elementType as PropTypes.Validator<React.ElementType>,
 }
 
 Table.defaultProps = {
   cardBreakpoint: 'tiny',
 }
 
-export default Table as TableComponent
+export default Table
 
 const shapeMap = {
   square: '1px',
