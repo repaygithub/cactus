@@ -39,7 +39,7 @@
   "devDependencies": {
     "@repay/babel-preset": "^0.3.0",
     "@repay/scripts": "^1.0.0",
-    "@testing-library/react": "^9.1.4",
+    "@testing-library/react": "^10.4.3",
     "@testing-library/testcafe": "^4.1.0",
     "@types/reach__router": "^1.2.4",
     "@types/rimraf": "^2.0.2",

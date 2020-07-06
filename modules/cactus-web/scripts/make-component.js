@@ -104,11 +104,9 @@ function testTemplate(componentName) {
   return `
 import * as React from 'react'
 
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import ${componentName} from './${componentName}'
-
-afterEach(cleanup)
 
 describe('component: ${componentName}', () => {
   test('snapshot', () => {
