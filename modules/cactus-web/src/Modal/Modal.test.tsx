@@ -14,14 +14,11 @@ describe('Modal is open when isOpen=true', () => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
-          icon={Icon}
-          modalTitle="Modal Title"
-          description="Modal Description"
-          variant="action"
+          variant="default"
           isOpen={true}
-          buttonText="Confirm Button"
           modalLabel="Modal Label"
           closeLabel="Close Label"
+          onClose={() => {}}
         />
       </StyleProvider>
     )
@@ -34,7 +31,7 @@ describe('Modal is closed when isOpen=false', () => {
   test('snapshot', () => {
     const { baseElement } = render(
       <StyleProvider>
-        <Modal icon={Icon} isOpen={false} />
+        <Modal isOpen={false} onClose={() => {}} />
       </StyleProvider>
     )
 
@@ -47,12 +44,12 @@ describe('Aria-labels applied correctly', () => {
   test('snapshot', () => {
     const { baseElement } = render(
       <StyleProvider>
-        <Modal icon={Icon} isOpen={true} modalLabel="Modal Label" closeLabel="Close Label" />
+        <Modal isOpen={true} modalLabel="Modal Label" closeLabel="Close Label" onClose={() => {}} />
       </StyleProvider>
     )
 
     expect(baseElement.querySelector('div[aria-label="Modal Label"]')).toBeInTheDocument()
-    expect(baseElement.querySelector('div[aria-label="Modal Label-content"]')).toBeInTheDocument()
+    expect(baseElement.querySelector('div[aria-modal="true"]')).toBeInTheDocument()
   })
 })
 
@@ -61,14 +58,11 @@ describe('Can render content as children', () => {
     const { getByTestId } = render(
       <StyleProvider>
         <Modal
-          icon={Icon}
-          modalTitle="Modal Title"
-          description="Modal Description"
-          variant="action"
+          variant="default"
           isOpen={true}
-          buttonText="Confirm Button"
           modalLabel="Modal Label"
           closeLabel="Close Label"
+          onClose={() => {}}
         >
           <TextInput placeholder="placeHolder" data-testid="child" />
         </Modal>

@@ -6,12 +6,10 @@ menu: Components
 import PropsTable from 'website-src/components/PropsTable'
 import React, { useState } from 'react'
 import Modal from './Modal'
+import Text from '../Text/Text'
 import Button from '../Button/Button'
-import TextInput from '../TextInput/TextInput'
-import Grid from '../Grid/Grid'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
-import * as icons from '@repay/cactus-icons/i'
 import { livePreviewStyle } from '../helpers/constants'
 
 # Modal
@@ -23,23 +21,15 @@ on the web page is permited until the modal is closed.
 
 export const code = ` () => {
   const [open, setOpen] = React.useState(false)
-  const Icon = icons['DescriptiveEnvelope']
   return open ? (
     <Modal
-      modalTitle="Modal Title"
-      description="Modal Description"
-      variant="action"
+      variant="default"
       isOpen={open}
-      closeModal={() => setOpen(false)}
-      buttonText="Confirm Button"
-      icon={Icon}
+      onClose={() => setOpen(false)}
       modalLabel="Modal Label"
       closeLabel="Close Label"
-      onClick={() => setOpen(false)}
-      width={'30%'}
-      height={'30%'}
     >
-      <TextInput width="70%" placeholder="placeholder" />
+      <Text as="h1">This is a Modal</Text>
     </Modal>
   ) : (
     <Button variant="action" onClick={() => setOpen(true)}>
@@ -48,7 +38,7 @@ export const code = ` () => {
   )
 }`
 
-<LiveProvider code={code} scope={{ Modal, Button, TextInput, icons }}>
+<LiveProvider code={code} scope={{ Modal, Button, Text }}>
   <LiveEditor style={livePreviewStyle} style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
@@ -57,50 +47,26 @@ export const code = ` () => {
 ## Best practices
 
 The `Modal` component locks all other user interactions on the web page until the user takes an action.
-These actions are one two: Cancel what is requested to do or confirm it. After any of
-those actions is performed, the modal closes. You can also render children inside the modal, for example a `TextInput`, to capture users data.
-Also, the modal has two variants, danger and action. Danger is useful when the user should confirm something that cannot be undone, and thus a double confirmation is requested.
-Action is useful when the user is requested to confirm an action that is not harmful, or when additional data is needed.
+It acts as a container that can contain any children the developer wants to put in it.
 
-Using the `height` prop is not recommended, especially as a percentage, since it can look strange on small screens. The `width` prop is a little more forgiving, but you should still take care to ensure your content can look good on your users' devices.
+It also has `modalLabel` and `closeLabel` props which act as aria-labels for the modal and close icon.
 
 ## Basic usage
 
-A basic modal has A title, descriptive text,variant, an `Icon` and two buttons to confirm or cancel the action. The labels are for accesibility.
+A basic modal is just an empty container. In this example it has a `Text` component as the only child
 
 ```jsx
 import { Modal } from '@repay/cactus-web'
-import { DescriptiveEnvelope } from '@repay/cactus-icons/'
-const ComponentWithModal = () =>{
+const ComponentWithModal = () => {
   const [open, setOpen] = useState(false)
   return (
     <Modal
-      modalTitle='Modal Title'
-      description='Modal Description'
-      variant='action'
+      variant="default"
       isOpen={open}
-      closeModal={() => setOpen(false)}
-      buttonText='Confirm Button'
-      icon={DescriptiveEnvelope}
-      modalLabel='Modal Label'
-      closeLabel='Close Label'
-      onClick={() => confirmAction()}
+      onClose={() => setOpen(false)}
+      modalLabel="Modal Label"
+      closeLabel="Close Label"
     />
-    // With TextInput Child
-    <Modal
-      modalTitle='Modal Title'
-      description='Modal Description'
-      variant='action'
-      isOpen={open}
-      closeModal={() => setOpen(false)}
-      buttonText='Confirm Button'
-      icon={DescriptiveEnvelope}
-      modalLabel='Modal Label'
-      closeLabel='Close Label'
-      onClick={() => confirmAction()}
-    >
-      <TextInput width="70%" placeholder="placeholder" />
-    </Modal>
   )
 }
 ```

@@ -7,102 +7,8 @@ exports[`Modal is closed when isOpen=false snapshot 1`] = `
 `;
 
 exports[`Modal is open when isOpen=true snapshot 1`] = `
-.c6 {
-  font-size: 24px;
-  vertical-align: middle;
-}
-
 .c3 {
   vertical-align: middle;
-}
-
-.c11 {
-  position: relative;
-  padding: 2px 30px;
-  outline: none;
-  cursor: pointer;
-  box-sizing: border-box;
-  font-size: 18px;
-  line-height: 28px;
-  border: 1px solid;
-  border-radius: 20px;
-  margin-right: 16px;
-  color: hsl(0,0%,100%);
-  background-color: hsl(200,96%,35%);
-  border-color: hsl(200,96%,35%);
-}
-
-.c11::-moz-focus-inner {
-  border: 0;
-}
-
-.c11:focus::after {
-  content: '';
-  display: block;
-  position: absolute;
-  height: calc(100% + 10px);
-  width: calc(100% + 10px);
-  top: -5px;
-  left: -5px;
-  border: 1px solid;
-  border-radius: 20px;
-  border-color: hsl(200,96%,35%);
-  box-sizing: border-box;
-}
-
-.c11 svg {
-  display: inline-block;
-  margin-top: -4px;
-}
-
-.c11 .c13 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c11:hover {
-  color: hsl(0,0%,100%);
-  background-color: hsl(200,96%,11%);
-  border-color: hsl(200,96%,11%);
-}
-
-.c4 {
-  box-sizing: border-box;
-  height: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c9 {
-  box-sizing: border-box;
-  width: 90%;
-  margin-top: 16px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
 }
 
 .c2 {
@@ -125,7 +31,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   outline: none;
   cursor: pointer;
   color: hsl(200,96%,11%);
-  font-size: 16px;
+  font-size: 24px;
 }
 
 .c2::-moz-focus-inner {
@@ -140,137 +46,58 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c7 {
-  margin-bottom: 0;
-}
-
-.c8 {
-  margin: 0;
-  font-weight: normal;
-}
-
-.c12 {
-  font-size: 18px;
-  line-height: 28px;
-  position: relative;
-  border: none;
-  padding: 4px;
-  outline: none;
-  background-color: transparent;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  box-sizing: border-box;
-  color: hsl(200,96%,11%);
-}
-
-.c12:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c12:focus::after {
-  content: '';
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0px;
-  left: 0px;
-  border: 1px solid;
-  border-radius: 20px;
-  border-color: hsl(200,96%,35%);
-}
-
-.c12::-moz-focus-inner {
-  border: 0;
-}
-
-.c12 svg {
-  display: inline-block;
-  margin-top: -4px;
-  margin-right: 4px;
-}
-
 .c0 {
-  background: hsla(0,0%,0%,0.33);
-  position: fixed;
-  top: 0;
-  right: 0;
+  background: rgba(46,53,56,0.33);
   bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   left: 0;
   overflow: auto;
-  z-index: 52;
-}
-
-.c0 > h1 {
-  margin-block-end: 0;
-}
-
-.c0 div.children {
-  margin-top: 16px;
-  width: 100%;
-}
-
-.c0 div.children > div {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.c0 > [data-reach-dialog-content] {
-  margin: 10vh auto;
-  background: white;
-  outline: none;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0px 9px 24px rgba(3,118,176,0.348704);
-  position: relative;
-  border: 1px solid hsl(200,96%,35%);
-  display: block;
-  min-width: 30%;
-  min-height: 20%;
-  width: 30%;
-  overflow: auto;
-}
-
-.c0 .c1 {
-  position: absolute;
-  right: 40px;
-  top: 40px;
-}
-
-.c0 .c10 {
-  min-width: 166px;
-}
-
-.c5 {
-  box-sizing: border-box;
-  width: 60px;
-  height: 60px;
-  min-height: 60px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  position: fixed;
+  right: 0;
+  top: 0;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: white;
-  background: hsl(200,96%,35%);
+  z-index: 52;
+}
+
+.c0 > [data-reach-dialog-content] {
+  border: 1px solid;
+  border-radius: 20px;
+  background: white;
+  border-color: hsl(200,96%,35%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
+  margin: auto;
+  max-width: 90%;
+  outline: none;
+  padding: 64px 24px 40px 24px;
+  position: relative;
+}
+
+.c0 > [data-reach-dialog-content] .c1 {
+  height: 16px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 16px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 > [data-reach-dialog-content] {
+    padding: 40px 88px;
+  }
+
+  .c0 > [data-reach-dialog-content] .c1 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
 }
 
 <body>
@@ -296,11 +123,10 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
           aria-label="Modal Label"
           class="c0 "
           data-reach-dialog-overlay=""
-          variant="action"
-          width="30%"
+          variant="default"
         >
           <div
-            aria-label="Modal Label-content"
+            aria-label="Modal Label"
             aria-modal="true"
             data-reach-dialog-content=""
             role="dialog"
@@ -324,59 +150,6 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
                 />
               </svg>
             </button>
-            <div
-              class="c4"
-              display="flex"
-              height="100%"
-            >
-              <div
-                class="c5"
-              >
-                <svg
-                  class="c6"
-                  fill="currentcolor"
-                  height="1em"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                >
-                  <path
-                    d="M21.5,7.68062485 L12.624695,14.7808688 C12.2594764,15.0730437 11.7405236,15.0730437 11.375305,14.7808688 L2.5,7.68062485 L2.5,18 C2.5,18.2757153 2.72428475,18.5 3,18.5 L21,18.5 C21.2757153,18.5 21.5,18.2757153 21.5,18 L21.5,7.68062485 Z M19.7742189,6.5 L4.22578106,6.5 L12,12.7193752 L19.7742189,6.5 Z M23.5,18 C23.5,19.3802847 22.3802847,20.5 21,20.5 L3,20.5 C1.61971525,20.5 0.5,19.3802847 0.5,18 L0.5,7 C0.5,5.61895744 1.61947285,4.5 3,4.5 L21,4.5 C22.3805272,4.5 23.5,5.61895744 23.5,7 L23.5,18 Z"
-                  />
-                </svg>
-              </div>
-              <h1
-                class="c7"
-              >
-                Modal Title
-              </h1>
-              <h3
-                class="c8"
-                font-weight="normal"
-              >
-                Modal Description
-              </h3>
-              <div
-                class="c9"
-                display="flex"
-                width="90%"
-              >
-                <button
-                  aria-live="assertive"
-                  class="c10 c11"
-                  type="button"
-                >
-                  <span>
-                    Confirm Button
-                  </span>
-                </button>
-                <button
-                  class="c12"
-                  type="button"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
