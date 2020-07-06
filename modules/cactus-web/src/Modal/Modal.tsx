@@ -1,192 +1,145 @@
-import React, { FunctionComponent } from 'react'
-
-import { CactusTheme } from '@repay/cactus-theme'
-import { DialogContent, DialogOverlay } from '@reach/dialog'
+import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { DialogContent, DialogOverlay, DialogProps } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
-import Button from '../Button/Button'
 import Flex from '../Flex/Flex'
 import IconButton from '../IconButton/IconButton'
 import PropTypes from 'prop-types'
-import styled, { ThemeProps } from 'styled-components'
-import Text from '../Text/Text'
-import TextButton from '../TextButton/TextButton'
+import React, { FunctionComponent } from 'react'
+import styled, { css, ThemeProps } from 'styled-components'
 
-export type ModalType = 'action' | 'danger'
-export type IconProps = { iconSize: 'tiny' | 'small' | 'medium' | 'large' }
+export type ModalType = 'default' | 'danger' | 'warning' | 'success'
 
-interface IconComponentProps {
-  icon: React.FunctionComponent<IconProps>
-}
 interface ModalProps {
-  buttonText?: string
   className?: string
   closeLabel?: string
-  closeModal?: () => void
-  description?: string
-  height?: string
-  isOpen?: boolean
+  isOpen: boolean
   modalLabel?: string
-  modalTitle?: string
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onClose: () => void
   variant?: ModalType
-  width?: string
+}
+interface ModalPopupProps extends DialogProps {
+  variant: ModalType
 }
 
-const baseColor = (props: ModalProps & ThemeProps<CactusTheme>) => {
-  const { variant } = props
+const baseColor = ({ variant, theme }: ModalPopupProps & ThemeProps<CactusTheme>) => {
   switch (variant) {
-    case 'action':
-      return props.theme.colors.callToAction
+    case 'default':
+      return theme.colors.callToAction
     case 'danger':
-      return props.theme.colors.error
+      return theme.colors.error
+    case 'success':
+      return theme.colors.success
+    case 'warning':
+      return theme.colors.warning
   }
 }
 
-const IconBase = (props: IconComponentProps & ModalProps) => {
-  const { className, icon: Icon } = props
-
-  return (
-    <div className={className}>
-      <Icon iconSize="medium" />
-    </div>
-  )
+const borderMap = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
 }
 
-const Modalbase: FunctionComponent<ModalProps & IconComponentProps> = (props) => {
-  const {
-    variant,
-    modalTitle,
-    description,
-    buttonText,
-    onClick,
-    children,
-    isOpen,
-    closeModal,
-    modalLabel,
-    closeLabel,
-    icon,
-    ...rest
-  } = props
-  const hasChildren = variant === 'action' && !!React.Children.count(children)
+const shapeMap = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+const getShape = (shape: Shape) => shapeMap[shape]
+
+const getBorder = (size: BorderSize) => borderMap[size]
+
+const Modalbase: FunctionComponent<ModalProps> = (props) => {
+  const { variant = 'default', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
+  const hasChildren = !!React.Children.count(children)
 
   return (
     <ModalPopUp
       aria-label={modalLabel}
       isOpen={isOpen}
-      onDismiss={closeModal}
+      onDismiss={onClose}
       variant={variant}
       {...rest}
     >
-      <DialogContent aria-label={`${modalLabel}-content`}>
-        <IconButton iconSize="small" onClick={closeModal} label={closeLabel}>
+      <DialogContent aria-label={modalLabel}>
+        <IconButton onClick={onClose} label={closeLabel}>
           <NavigationClose />
         </IconButton>
-        <Flex flexDirection="column" flexWrap="nowrap" alignItems="center" height="100%">
-          <Icon variant={variant} icon={icon} />
-          <Text as="h1" marginBottom="0">
-            {modalTitle}
-          </Text>
-          <Text as="h3" fontWeight="normal" margin="0">
-            {description}
-          </Text>
-          {hasChildren && <div className="children">{children}</div>}
-          <Flex justifyContent="center" width="90%" marginTop="16px">
-            <Button variant={variant} onClick={onClick} marginRight="16px">
-              {buttonText}
-            </Button>
-            <TextButton onClick={closeModal}>Cancel</TextButton>
+        {hasChildren && (
+          <Flex flexDirection="column" alignItems="center">
+            {children}
           </Flex>
-        </Flex>
+        )}
       </DialogContent>
     </ModalPopUp>
   )
 }
 
-export const ModalPopUp = styled(DialogOverlay)<ModalProps>`
-  background: hsla(0, 0%, 0%, 0.33);
-  position: fixed;
-  top: 0;
-  right: 0;
+export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
+  background: rgba(46, 53, 56, 0.33);
   bottom: 0;
+  display: flex;
   left: 0;
   overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  align-items: center;
   z-index: 52;
-  > h1 {
-    margin-block-end: 0;
-  }
-  & div.children {
-    margin-top: 16px;
-    width: 100%;
-    > div {
-      display: flex;
-      justify-content: center;
-      width: 100%;
+  > [data-reach-dialog-content] {
+    ${(p) => getBorder(p.theme.border)};
+    ${(p) => getShape(p.theme.shape)};
+    background: white;
+    border-color: ${baseColor};
+    box-shadow: ${(p) => p.theme.boxShadows && `0px 9px 24px ${p.theme.colors.transparentCTA}`};
+    margin: auto;
+    max-width: 90%;
+    outline: none;
+    padding: 64px 24px 40px 24px;
+    position: relative;
+    ${IconButton} {
+      height: 16px;
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      width: 16px;
+    }
+    ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+      padding: 40px 88px;
+      ${IconButton} {
+        height: 24px;
+        position: absolute;
+        right: 40px;
+        top: 40px;
+        width: 24px;
+      }
     }
   }
-  > [data-reach-dialog-content] {
-    margin: 10vh auto;
-    background: white;
-    outline: none;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0px 9px 24px rgba(3, 118, 176, 0.348704);
-    position: relative;
-    border: 1px solid ${baseColor};
-    display: block;
-    min-width: 30%;
-    min-height: 20%;
-    width: ${(p) => p.width};
-    height: ${(p) => p.height};
-    overflow: auto;
-  }
-  ${IconButton} {
-    position: absolute;
-    right: 40px;
-    top: 40px;
-  }
-  ${Button} {
-    min-width: 166px;
-  }
 `
-
-const Icon = styled(IconBase)`
-  box-sizing: border-box;
-  width: 60px;
-  height: 60px;
-  min-height: 60px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  background: ${baseColor};
-`
-
 export const Modal = styled(Modalbase)``
 
 Modal.propTypes = {
-  buttonText: PropTypes.string,
   className: PropTypes.string,
   closeLabel: PropTypes.string,
-  closeModal: PropTypes.func,
-  description: PropTypes.string,
-  height: PropTypes.string,
-  isOpen: PropTypes.bool,
+  isOpen: PropTypes.bool.isRequired,
   modalLabel: PropTypes.string,
-  onClick: PropTypes.func,
-  modalTitle: PropTypes.string,
-  variant: PropTypes.oneOf(['action', 'danger']),
-  width: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+  variant: PropTypes.oneOf(['default', 'danger', 'warning', 'success']),
 }
 
 Modal.defaultProps = {
-  variant: 'action',
-  modalTitle: 'Modal Title',
-  description: 'Modal description',
-  buttonText: 'Confirm',
-  modalLabel: 'Modal Label',
-  closeLabel: 'Close Label',
-  width: '30%',
+  closeLabel: 'Close Modal',
   isOpen: false,
+  modalLabel: 'Modal',
+  variant: 'default',
 }
 export default Modal
