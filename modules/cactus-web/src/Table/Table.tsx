@@ -23,10 +23,7 @@ interface TableContextProps {
 }
 
 interface TableProps
-  extends Omit<
-    React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement>,
-    'ref'
-  > {
+  extends React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement> {
   fullWidth?: boolean
   cardBreakpoint?: Size
   variant?: TableVariant
@@ -34,24 +31,18 @@ interface TableProps
 }
 
 interface TableHeaderProps
-  extends Omit<
-    React.DetailedHTMLProps<
-      React.TableHTMLAttributes<HTMLTableSectionElement>,
-      HTMLTableSectionElement
-    >,
-    'ref'
+  extends React.DetailedHTMLProps<
+    React.TableHTMLAttributes<HTMLTableSectionElement>,
+    HTMLTableSectionElement
   > {
   variant?: TableVariant
 }
 
 interface TableCellProps
-  extends Omit<
-    React.DetailedHTMLProps<
-      React.TdHTMLAttributes<HTMLTableDataCellElement> &
-        React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
-      HTMLTableDataCellElement & HTMLTableHeaderCellElement
-    >,
-    'ref'
+  extends React.DetailedHTMLProps<
+    React.TdHTMLAttributes<HTMLTableDataCellElement> &
+      React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
+    HTMLTableDataCellElement & HTMLTableHeaderCellElement
   > {
   variant?: TableVariant
   align?: CellAlignment
@@ -83,71 +74,78 @@ const Wrapper = styled.div<TableProps>`
   ${(p) => p.fullWidth && 'min-width: calc(100% - 32px)'};
 `
 
-type TableComponentType = React.FC<TableProps> & {
-  Header: React.FC<TableHeaderProps>
-  Cell: React.FC<TableCellProps>
-  Row: React.FC<TableRowProps>
-  Body: React.ReactType<TableBodyProps>
-}
-
-export const Table: TableComponentType = ({ children, cardBreakpoint, ...props }) => {
-  const size = useContext(ScreenSizeContext)
-  const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
-  if (props.variant) {
-    context.variant = props.variant
-  } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
-    context.variant = 'card'
-  }
-  props.variant = context.variant
-  return (
-    <TableContext.Provider value={context}>
-      {props.as ? (
-        <StyledTable {...props}>{children}</StyledTable>
-      ) : (
-        <Wrapper fullWidth={props.fullWidth}>
-          <StyledTable {...props}>{children}</StyledTable>
-        </Wrapper>
-      )}
-    </TableContext.Provider>
-  )
-}
-
-export const TableCell: React.FC<TableCellProps> = ({ children, ...props }) => {
-  const context = useContext<TableContextProps>(TableContext)
-  if (context.cellType && !props.as) {
-    props.as = context.cellType
-  }
-  const colSpan = parseInt((props.colSpan as any) || '1')
-
-  if (context.inHeader && context.headers) {
-    context.headers[context.cellIndex] = children
-    context.cellIndex += colSpan
-  } else if (context.variant === 'card') {
-    const headerContent = context.headers && context.headers[context.cellIndex]
-    context.cellIndex += colSpan
-    props.variant = 'card'
+export const Table = React.forwardRef<HTMLTableElement, TableProps>(
+  ({ children, cardBreakpoint, ...props }, ref) => {
+    const size = useContext(ScreenSizeContext)
+    const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
+    if (props.variant) {
+      context.variant = props.variant
+    } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
+      context.variant = 'card'
+    }
+    props.variant = context.variant
     return (
-      <StyledCell {...props}>
-        {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
-        <ContentBox>{children}</ContentBox>
+      <TableContext.Provider value={context}>
+        {props.as ? (
+          <StyledTable {...props} ref={ref}>
+            {children}
+          </StyledTable>
+        ) : (
+          <Wrapper fullWidth={props.fullWidth}>
+            <StyledTable {...props} ref={ref}>
+              {children}
+            </StyledTable>
+          </Wrapper>
+        )}
+      </TableContext.Provider>
+    )
+  }
+)
+
+export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
+  ({ children, ...props }, ref) => {
+    const context = useContext<TableContextProps>(TableContext)
+    if (context.cellType && !props.as) {
+      props.as = context.cellType
+    }
+    const colSpan = parseInt((props.colSpan as any) || '1')
+
+    if (context.inHeader && context.headers) {
+      context.headers[context.cellIndex] = children
+      context.cellIndex += colSpan
+    } else if (context.variant === 'card') {
+      const headerContent = context.headers && context.headers[context.cellIndex]
+      context.cellIndex += colSpan
+      props.variant = 'card'
+      return (
+        <StyledCell {...props} ref={ref}>
+          {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
+          <ContentBox>{children}</ContentBox>
+        </StyledCell>
+      )
+    }
+
+    props.variant = 'table'
+    return (
+      <StyledCell {...props} ref={ref}>
+        {children}
       </StyledCell>
     )
   }
+)
 
-  props.variant = 'table'
-  return <StyledCell {...props}>{children}</StyledCell>
-}
-
-export const TableHeader: React.FC<TableHeaderProps> = ({ children, ...props }) => {
-  const context = useContext<TableContextProps>(TableContext)
-  return (
-    <TableContext.Provider value={{ ...context, inHeader: true, cellType: 'th', cellIndex: 0 }}>
-      <StyledHeader {...props} variant={context.variant}>
-        <tr>{children}</tr>
-      </StyledHeader>
-    </TableContext.Provider>
-  )
-}
+export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeaderProps>(
+  ({ children, ...props }, ref) => {
+    const context = useContext<TableContextProps>(TableContext)
+    return (
+      <TableContext.Provider value={{ ...context, inHeader: true, cellType: 'th', cellIndex: 0 }}>
+        <StyledHeader {...props} variant={context.variant} ref={ref}>
+          <tr>{children}</tr>
+        </StyledHeader>
+      </TableContext.Provider>
+    )
+  }
+)
 
 export const TableRow: React.FC<TableRowProps> = ({ children, ...props }) => {
   const context = useContext<TableContextProps>(TableContext)
@@ -163,10 +161,22 @@ export const TableRow: React.FC<TableRowProps> = ({ children, ...props }) => {
 
 export const TableBody = 'tbody'
 
-Table.Header = TableHeader
-Table.Cell = TableCell
-Table.Row = TableRow
-Table.Body = TableBody
+type ForwardRefComponent<T, P> = React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<P> & React.RefAttributes<T>
+>
+
+type TableComponentType = ForwardRefComponent<HTMLTableElement, TableProps> & {
+  Header: ForwardRefComponent<HTMLTableSectionElement, TableHeaderProps>
+  Cell: ForwardRefComponent<HTMLTableDataCellElement, TableCellProps>
+  Row: React.FC<TableRowProps>
+  Body: React.ReactType<TableBodyProps>
+}
+
+const DefaultTable = Table as TableComponentType
+DefaultTable.Header = TableHeader
+DefaultTable.Cell = TableCell
+DefaultTable.Row = TableRow
+DefaultTable.Body = TableBody
 
 TableCell.propTypes = {
   align: PropTypes.oneOf<CellAlignment>(['center', 'right', 'left']),
@@ -186,7 +196,7 @@ Table.defaultProps = {
   cardBreakpoint: 'tiny',
 }
 
-export default Table
+export default DefaultTable
 
 const shapeMap = {
   square: '1px',
