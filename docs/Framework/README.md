@@ -9,6 +9,7 @@ The Cactus Framework implements a set of common front-end necessities at a top l
 ## Quick Links
 
 - [API Documentation](./API/README.md)
+  - [Error Boundary](./API/Error%20Boundary.md)
   - [Feature Flags](./API/Feature%20Flags.md)
 - [Source Code](../../modules/cactus-fwk/)
 
