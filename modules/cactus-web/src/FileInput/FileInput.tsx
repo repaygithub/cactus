@@ -20,7 +20,14 @@ import handleEvent from '../helpers/eventHandler'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import StatusMessage from '../StatusMessage/StatusMessage'
-import styled, { css, StyledComponentBase } from 'styled-components'
+import styled, {
+  css,
+  DefaultTheme,
+  FlattenInterpolation,
+  StyledComponentBase,
+  ThemedStyledProps,
+  ThemeProps,
+} from 'styled-components'
 
 const FILE_TYPE_ERR = 'FileTypeError'
 const NOT_FOUND_ERR = 'NotFoundError'
@@ -122,23 +129,27 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
   }
 `
 
-type FileBoxMap = { [K in FileStatus]: ReturnType<typeof css> }
+type FileBoxPropsWithForwardRef = ThemedStyledProps<
+  FileBoxProps & React.RefAttributes<HTMLDivElement>,
+  DefaultTheme
+>
+type FileBoxMap = { [K in FileStatus]: FlattenInterpolation<FileBoxPropsWithForwardRef> }
 
 const fileBoxMap: FileBoxMap = {
-  loading: css`
+  loading: css<FileBoxPropsWithForwardRef>`
     background-color: ${(P) => P.theme.colors.lightContrast};
   `,
-  loaded: css`
+  loaded: css<FileBoxPropsWithForwardRef>`
     border: 2px solid ${(p) => p.theme.colors.success};
     background-color: ${(p) => p.theme.colors.transparentSuccess};
   `,
-  error: css`
+  error: css<FileBoxPropsWithForwardRef>`
     border: 2px solid ${(p) => p.theme.colors.error};
     background-color: ${(p) => p.theme.colors.transparentError};
   `,
 }
-// @ts-ignore
-const fileStatus: any = (props) => fileBoxMap[props.status]
+
+const fileStatus = (props: FileBoxPropsWithForwardRef) => fileBoxMap[props.status]
 
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) => {
   const { fileName, className, status, errorMsg, onDelete, labels } = props
