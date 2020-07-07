@@ -1,7 +1,6 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 
 import {
-  ActionsRefresh,
   ActionsUpload,
   BatchstatusOpen,
   NavigationClose,
@@ -57,7 +56,7 @@ export interface FileInputProps
     > {
   name: string
   accept?: string[]
-  labels?: { delete?: string; retry?: string; loading?: string; loaded?: string }
+  labels?: { delete?: string; loading?: string; loaded?: string }
   buttonText?: string
   prompt?: string
   onChange?: FieldOnChangeHandler<FileObject[]>
@@ -85,8 +84,7 @@ interface FileBoxProps {
 }
 
 interface FileInfoProps extends FileBoxProps {
-  labels: { delete?: string; retry?: string; loading?: string; loaded?: string }
-  onRetry: (fileName: string) => void
+  labels: { delete?: string; loading?: string; loaded?: string }
   boxRef?: MutableRefObject<HTMLDivElement | null>
 }
 
@@ -100,7 +98,6 @@ export interface FileObject {
 interface State {
   files: FileObject[]
   inputKey: string
-  isRetrying: boolean
 }
 
 const EmptyPromptsBase = (props: EmptyPromptsProps) => (
@@ -236,16 +233,11 @@ const FileBox = styled(FileBoxBase)`
 `
 
 const FileInfoBase = (props: FileInfoProps) => {
-  const { className, onRetry, errorMsg, labels, boxRef, ...rest } = props
-  const { retry, ...fileBoxLabels } = labels
-
-  const onClick = () => {
-    onRetry(rest.fileName)
-  }
+  const { className, errorMsg, labels, boxRef, ...rest } = props
 
   return (
     <div className={className}>
-      <FileBox errorMsg={errorMsg} labels={fileBoxLabels} ref={boxRef} {...rest} />
+      <FileBox errorMsg={errorMsg} labels={labels} ref={boxRef} {...rest} />
       {errorMsg && <StatusMessage status="error">{errorMsg}</StatusMessage>}
     </div>
   )
@@ -257,16 +249,6 @@ const FileInfo = styled(FileInfoBase)`
   ${StatusMessage} {
     position: relative;
     margin-top: 4px;
-
-    ${IconButton} {
-      margin-left: 10px;
-      color: ${(p) => p.theme.colors.white};
-    }
-
-    ${ActionsRefresh} {
-      height: 12px;
-      width: 12px;
-    }
   }
 `
 
@@ -311,7 +293,6 @@ const FileInputBase = (props: FileInputProps) => {
     accept,
     labels = {
       delete: 'Delete File',
-      retry: 'Retry Upload',
       loading: 'Loading',
       loaded: 'Successful',
     },
@@ -330,7 +311,6 @@ const FileInputBase = (props: FileInputProps) => {
   const [state, setState] = useState<State>({
     files: value || [],
     inputKey: Math.random().toString(36),
-    isRetrying: false,
   })
   const isMounted = useRef(true)
   const fileSelector = useRef<HTMLInputElement | null>(null)
@@ -359,11 +339,7 @@ const FileInputBase = (props: FileInputProps) => {
       const loadingFiles = Array.from(files).map(
         (file) => ({ fileName: file.name, contents: null, status: 'loading' } as FileObject)
       )
-      if (state.isRetrying) {
-        setState((state) => ({ ...state, files: [...state.files, ...loadingFiles] }))
-      } else {
-        setState((state) => ({ ...state, files: loadingFiles }))
-      }
+      setState((state) => ({ ...state, files: loadingFiles }))
 
       const promises = Array.from(files).map((file) => {
         if (accept && !accepts(file, accept)) {
@@ -440,17 +416,7 @@ const FileInputBase = (props: FileInputProps) => {
 
       Promise.all(promises).then((results) => {
         if (isMounted.current === true) {
-          if (state.isRetrying) {
-            setState((state) => {
-              const final = state.files.map((file) => {
-                const updated = results.find((f) => f.fileName === file.fileName)
-                return updated ? updated : file
-              })
-              return { ...state, files: final, isRetrying: false }
-            })
-          } else {
-            setState((state) => ({ ...state, files: results }))
-          }
+          setState((state) => ({ ...state, files: results }))
           if (typeof onChange === 'function') {
             onChange(name, results)
           }
@@ -486,30 +452,12 @@ const FileInputBase = (props: FileInputProps) => {
 
   const handleDelete = (fileName: string) => {
     const files = state.files.filter((file) => file.fileName !== fileName)
-    setState({ files: files, inputKey: Math.random().toString(36), isRetrying: false })
+    setState({ files: files, inputKey: Math.random().toString(36) })
     if (isMounted.current === true) {
       if (typeof onChange === 'function') {
         onChange(name, files)
       }
     }
-  }
-
-  const handleRetry = (fileName: string) => {
-    const files = state.files.filter((file) => file.fileName !== fileName)
-    const promise = new Promise<State>((resolve) => {
-      resolve({ files: files, inputKey: Math.random().toString(36), isRetrying: true })
-    })
-    promise.then((result) => {
-      setState(result)
-      if (isMounted.current === true) {
-        if (typeof onChange === 'function') {
-          onChange(name, result.files)
-        }
-      }
-      if (fileSelector.current) {
-        fileSelector.current.click()
-      }
-    })
   }
 
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
@@ -578,7 +526,6 @@ const FileInputBase = (props: FileInputProps) => {
               key={file.fileName}
               fileName={file.fileName}
               onDelete={handleDelete}
-              onRetry={handleRetry}
               status={file.status}
               errorMsg={file.errorMsg}
               labels={labels}
@@ -660,7 +607,6 @@ FileInput.propTypes = {
   disabled: PropTypes.bool,
   labels: PropTypes.shape({
     delete: PropTypes.string,
-    retry: PropTypes.string,
     loading: PropTypes.string,
     loaded: PropTypes.string,
   }),
@@ -688,7 +634,6 @@ FileInput.defaultProps = {
   multiple: false,
   labels: {
     delete: 'Delete File',
-    retry: 'Retry Upload',
     loading: 'Loading',
     loaded: 'Successful',
   },

@@ -15,7 +15,6 @@ storiesOf('FileInputField', module).add('Basic Usage', () => (
     multiple={boolean('multiple', true)}
     labels={{
       delete: text('delete label', 'Click to delete file'),
-      retry: text('retry label', 'Click to retry file upload'),
       loading: text('loading label', 'File uploading'),
       loaded: text('loaded label', 'File uploaded successfully'),
     }}
