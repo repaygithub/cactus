@@ -448,13 +448,15 @@ const FileInputBase = (props: FileInputProps) => {
     }
   }
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (disabled: boolean) => (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
     event.stopPropagation()
 
-    saveFiles(event.dataTransfer.files)
-    if (fileSelector.current) {
-      fileSelector.current.files = event.dataTransfer.files
+    if (!disabled) {
+      saveFiles(event.dataTransfer.files)
+      if (fileSelector.current) {
+        fileSelector.current.files = event.dataTransfer.files
+      }
     }
   }
 
@@ -531,7 +533,7 @@ const FileInputBase = (props: FileInputProps) => {
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
-      onDrop={handleDrop}
+      onDrop={handleDrop(disabled)}
     >
       <input
         type="file"
