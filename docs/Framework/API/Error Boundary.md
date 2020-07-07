@@ -9,7 +9,7 @@ The `ErrorBoundary` component will catch and handle uncaught errors in its child
 | Prop        | Required | Type                                                  | Default Value |
 | ----------- | -------- | ----------------------------------------------------- | ------------- |
 | `onError`   | Y        | Function of the form `(error, info) => void`          | N/A           |
-| `errorView` | N        | Function of the form `(error, info) => React.Element` | `undefined`   |
+| `errorView` | N        | Function of the form `({ error, info }) => React.Element` | `undefined`   |
 
 ### Example
 
@@ -23,7 +23,7 @@ export default function Container() {
     // Send error to Sentry/another API to record it
   }
 
-  const errorView = (error, info) => (
+  const errorView = ({ error, info }) => (
     <div>
       <h2>Whoops! Something went wrong on this page.</h2>
       <span>{error.message}</span>
@@ -49,7 +49,7 @@ These props can be passed to `AppRoot` to get the most out of the global error h
 | Prop              | Required | Type                                                  | Default Value |
 | ----------------- | -------- | ----------------------------------------------------- | ------------- |
 | `onError`         | N        | Function of the form `(error, info) => void`          | noop function |
-| `globalErrorView` | N        | Function of the form `(error, info) => React.Element` | `undefined`   |
+| `globalErrorView` | N        | Function of the form `({ error, info }) => React.Element` | `undefined`   |
 
 ### Global Example
 
@@ -62,7 +62,7 @@ export default function MainContainer() {
     // Send error to Sentry/another API to record it
   }
 
-  const errorView = (error, info) => (
+  const errorView = ({ error, info }) => (
     <div>
       <h2>Whoops! Something went wrong with our app.</h2>
       <span>{error.message}</span>

@@ -93,7 +93,7 @@ export const StyleProvider: React.FC<StyleProviderProps> = (props) => {
   const { global, children, theme: providedTheme, ...themeProviderProps } = props
   shouldCheckTheme && checkThemeProperties(providedTheme || cactusTheme)
   const theme = providedTheme ? providedTheme : cactusTheme
-  theme.breakpoints = breakpointOrder.map((bp) => breakpoints[bp].toString())
+  theme.breakpoints = breakpointOrder.map((bp) => `${breakpoints[bp]}px`)
   theme.mediaQueries = queries
 
   return (
