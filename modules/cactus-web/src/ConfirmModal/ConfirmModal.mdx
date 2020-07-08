@@ -1,0 +1,78 @@
+---
+name: ConfirmModal
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import ConfirmModal from './ConfirmModal'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from '../helpers/constants'
+import Text from '../Text/Text'
+import Button from '../Button/Button'
+
+# ConfirmModal
+
+The `ConfirmModal` is an implementation of the simple `Modal`, in which you can collect data from the user and/or confirm some action that could be dangerous.
+It also allows to pass an Icon as prop, that can be large or medium
+
+### Try it out
+
+export const code = `() => {
+  const [open, setOpen] = React.useState(false)
+   return open?( 
+     <ConfirmModal
+      isOpen={open}
+      onClose={() => setOpen(false)}
+      variant='default'
+      onConfirm={() => setOpen(false)}
+      confirmButtonText='Confirm'
+      cancelButtonText="Cancel"
+      iconName="DescriptiveEnvelope"
+      iconSize='medium'
+    >
+      <Text as="h4" fontWeight="normal">
+        Description text
+      </Text>
+    </ConfirmModal>
+  ) : (
+    <Button variant="action" onClick={() => setOpen(true)}>
+      Open Modal
+    </Button>
+  )
+}`
+
+<LiveProvider code={code} scope={{ ConfirmModal, Button, Text }}>
+  <LiveEditor style={livePreviewStyle} style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Basic usage
+
+```jsx
+import React from 'react'
+import { ConfirmModal, Text} from '@repay/cactus-web'
+const ConfriModalExample = () => {
+const [open, setOpen] = React.useState(false)
+return(
+  <ConfirmModal
+    isOpen={open}
+    onClose={() => setOpen(false)}
+    variant='warning'
+    onConfirm={() => setOpen(false)}
+    confirmButtonText='Confrim'
+    cancelButtonText='Cancel'
+    iconName="DescriptiveEnvelope"
+    iconSize="Medium"
+  >
+    <Text as="h4" fontWeight="normal">
+      Description text goes here
+    </Text>
+  </ConfirmModal>
+)
+```
+
+## Properties
+
+<PropsTable of={ConfirmModal} />

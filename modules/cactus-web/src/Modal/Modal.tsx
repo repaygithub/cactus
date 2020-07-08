@@ -9,7 +9,7 @@ import styled, { css, ThemeProps } from 'styled-components'
 
 export type ModalType = 'default' | 'danger' | 'warning' | 'success'
 
-interface ModalProps {
+export interface ModalProps {
   className?: string
   closeLabel?: string
   isOpen: boolean
@@ -102,7 +102,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     border-color: ${baseColor};
     box-shadow: ${(p) => p.theme.boxShadows && `0px 9px 24px ${p.theme.colors.transparentCTA}`};
     margin: auto;
-    max-width: 90%;
+    max-width: 80%;
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
@@ -115,6 +115,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     }
     ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
       padding: 40px 88px;
+      max-width: 30%;
       ${IconButton} {
         height: 24px;
         position: absolute;

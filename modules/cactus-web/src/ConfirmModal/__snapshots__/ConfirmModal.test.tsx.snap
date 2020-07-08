@@ -1,0 +1,885 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal renders TextInput and Description snapshot 1`] = `
+<body>
+  <div
+    aria-hidden="true"
+  />
+  .c4 {
+  vertical-align: middle;
+}
+
+.c13 {
+  position: relative;
+  padding: 2px 30px;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  border: 1px solid;
+  border-radius: 20px;
+  margin-right: 24px;
+  color: hsl(0,0%,100%);
+  background-color: hsl(353,84%,44%);
+  border-color: hsl(353,84%,44%);
+}
+
+.c13::-moz-focus-inner {
+  border: 0;
+}
+
+.c13:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 1px solid;
+  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c13 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c13 .c17 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c13:hover {
+  color: hsl(0,0%,100%);
+  background-color: hsl(353,96%,11%);
+  border-color: hsl(353,96%,11%);
+}
+
+.c5 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c6 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c8 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c12 {
+  box-sizing: border-box;
+  margin-top: 40px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c3 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  box-sizing: border-box;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 1px;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+  font-size: 24px;
+}
+
+.c3::-moz-focus-inner {
+  border: 0;
+}
+
+.c3:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c3:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c15 > [data-reach-dialog-content] .c2 {
+  height: 16px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 16px;
+}
+
+.c16 > [data-reach-dialog-content] .c2 {
+  height: 16px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 16px;
+}
+
+.c0 {
+  background: rgba(46,53,56,0.33);
+  bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  z-index: 52;
+}
+
+.c0 > [data-reach-dialog-content] {
+  border: 1px solid;
+  border-radius: 20px;
+  background: white;
+  border-color: hsl(353,84%,44%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
+  margin: auto;
+  max-width: 80%;
+  outline: none;
+  padding: 64px 24px 40px 24px;
+  position: relative;
+}
+
+.c0 > [data-reach-dialog-content] .c2 {
+  height: 16px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 16px;
+}
+
+.c7 {
+  margin: 0;
+}
+
+.c9 {
+  font-weight: normal;
+}
+
+.c14 {
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: hsl(200,96%,11%);
+}
+
+.c14:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c14:focus::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border: 1px solid;
+  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
+}
+
+.c14::-moz-focus-inner {
+  border: 0;
+}
+
+.c14 svg {
+  display: inline-block;
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+.c1 .title-icon {
+  text-align: center;
+  margin: 0;
+}
+
+.c1 .children > :first-child {
+  word-break: break-all;
+  text-align: center;
+  margin: 0;
+}
+
+.c1 .children > div {
+  text-align: center;
+  width: 100%;
+  margin: 16px 0 0 0;
+}
+
+.c11 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  line-height: 28px;
+  width: 90%;
+  background-color: hsl(0,0%,100%);
+}
+
+.c11 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
+}
+
+.c11:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c11::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c11::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c11:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c11::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c10 {
+  box-sizing: border-box;
+}
+
+@media screen and (min-width:1024px) {
+  .c15 > [data-reach-dialog-content] .c2 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c16 > [data-reach-dialog-content] .c2 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c0 > [data-reach-dialog-content] {
+    padding: 40px 88px;
+    max-width: 30%;
+  }
+
+  .c0 > [data-reach-dialog-content] .c2 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+<reach-portal>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="1"
+    />
+    <div
+      data-focus-lock-disabled="false"
+    >
+      <div>
+        <div
+          aria-label="Modal"
+          class="c0 c1"
+          data-reach-dialog-overlay=""
+          variant="danger"
+        >
+          <div
+            aria-label="Modal"
+            aria-modal="true"
+            data-reach-dialog-content=""
+            role="dialog"
+            tabindex="-1"
+          >
+            <button
+              aria-label="Close Modal"
+              class="c2 c3"
+              type="button"
+              variant="standard"
+            >
+              <svg
+                class="c4"
+                fill="currentcolor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+              >
+                <path
+                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
+                />
+              </svg>
+            </button>
+            <div
+              class="c5"
+              display="flex"
+            >
+              <div
+                class="c6 title-icon"
+                display="flex"
+              >
+                <h1
+                  class="c7"
+                >
+                  Modal Title
+                </h1>
+              </div>
+              <div
+                class="c8 children"
+                display="flex"
+              >
+                <h4
+                  class="c9"
+                  data-testid="description"
+                  font-weight="normal"
+                >
+                  Description text
+                </h4>
+                <div
+                  class="c10"
+                >
+                  <input
+                    class="c11"
+                    data-testid="input"
+                    placeholder="Placeholder"
+                    width="90%"
+                  />
+                </div>
+              </div>
+              <div
+                class="c12"
+                display="flex"
+              >
+                <button
+                  aria-live="assertive"
+                  class="c13"
+                  type="button"
+                >
+                  <span>
+                    Confirm
+                  </span>
+                </button>
+                <button
+                  class="c14"
+                  type="button"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+  </reach-portal>
+</body>
+`;
+
+exports[`Modal variant is warning snapshot 1`] = `
+.c4 {
+  vertical-align: middle;
+}
+
+.c10 {
+  position: relative;
+  padding: 2px 30px;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+  border: 1px solid;
+  border-radius: 20px;
+  margin-right: 24px;
+  color: hsl(0,0%,100%);
+  background-color: hsl(47,82%,47%);
+  border-color: hsl(47,82%,47%);
+}
+
+.c10::-moz-focus-inner {
+  border: 0;
+}
+
+.c10:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 1px solid;
+  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c10 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c10 .c12 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c10:hover {
+  color: hsl(0,0%,100%);
+  background-color: hsl(200,96%,11%);
+  border-color: hsl(200,96%,11%);
+}
+
+.c5 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c6 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c8 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c9 {
+  box-sizing: border-box;
+  margin-top: 40px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c3 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  box-sizing: border-box;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 1px;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  color: hsl(200,96%,11%);
+  font-size: 24px;
+}
+
+.c3::-moz-focus-inner {
+  border: 0;
+}
+
+.c3:focus {
+  background-color: hsla(200,96%,35%,0.25);
+}
+
+.c3:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c0 {
+  background: rgba(46,53,56,0.33);
+  bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  z-index: 52;
+}
+
+.c0 > [data-reach-dialog-content] {
+  border: 1px solid;
+  border-radius: 20px;
+  background: white;
+  border-color: hsl(47,82%,47%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
+  margin: auto;
+  max-width: 80%;
+  outline: none;
+  padding: 64px 24px 40px 24px;
+  position: relative;
+}
+
+.c0 > [data-reach-dialog-content] .c2 {
+  height: 16px;
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  width: 16px;
+}
+
+.c7 {
+  margin: 0;
+}
+
+.c11 {
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: hsl(200,96%,11%);
+}
+
+.c11:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c11:focus::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border: 1px solid;
+  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
+}
+
+.c11::-moz-focus-inner {
+  border: 0;
+}
+
+.c11 svg {
+  display: inline-block;
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+.c1 .title-icon {
+  text-align: center;
+  margin: 0;
+}
+
+.c1 .children > :first-child {
+  word-break: break-all;
+  text-align: center;
+  margin: 0;
+}
+
+.c1 .children > div {
+  text-align: center;
+  width: 100%;
+  margin: 16px 0 0 0;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 > [data-reach-dialog-content] {
+    padding: 40px 88px;
+    max-width: 30%;
+  }
+
+  .c0 > [data-reach-dialog-content] .c2 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+<body>
+  <div
+    aria-hidden="true"
+  />
+  <reach-portal>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="1"
+    />
+    <div
+      data-focus-lock-disabled="false"
+    >
+      <div>
+        <div
+          aria-label="Modal"
+          class="c0 c1"
+          data-reach-dialog-overlay=""
+          variant="warning"
+        >
+          <div
+            aria-label="Modal"
+            aria-modal="true"
+            data-reach-dialog-content=""
+            role="dialog"
+            tabindex="-1"
+          >
+            <button
+              aria-label="Close Modal"
+              class="c2 c3"
+              type="button"
+              variant="standard"
+            >
+              <svg
+                class="c4"
+                fill="currentcolor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+              >
+                <path
+                  d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
+                />
+              </svg>
+            </button>
+            <div
+              class="c5"
+              display="flex"
+            >
+              <div
+                class="c6 title-icon"
+                display="flex"
+              >
+                <h1
+                  class="c7"
+                >
+                  Modal Title
+                </h1>
+              </div>
+              <div
+                class="c8 children"
+                display="flex"
+              />
+              <div
+                class="c9"
+                display="flex"
+              >
+                <button
+                  aria-live="assertive"
+                  class="c10"
+                  type="button"
+                >
+                  <span>
+                    Confirm
+                  </span>
+                </button>
+                <button
+                  class="c11"
+                  type="button"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+  </reach-portal>
+</body>
+`;

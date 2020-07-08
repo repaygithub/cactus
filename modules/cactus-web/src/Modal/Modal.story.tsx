@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-
-import * as icons from '@repay/cactus-icons/i'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Button from '../Button/Button'
 import Modal, { ModalType } from './Modal'
+import React, { useState } from 'react'
 import Text from '../Text/Text'
 
 const modalStories = storiesOf('Modal', module)
