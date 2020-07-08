@@ -79,4 +79,29 @@ describe('component: Table', () => {
 
     expect(container).toMatchSnapshot()
   })
+
+  test('card carousel', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Table variant="card">
+          <Table.Header>
+            <Table.Cell>Header Cell</Table.Cell>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
 })

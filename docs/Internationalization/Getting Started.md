@@ -49,12 +49,13 @@ Let's see what this might look like:
 import { BaseI18nController } from '@repay/cactus-i18n'
 
 class I18nController extends BaseI18nController {
-  load(args) {
+ async load(args) {
     const { lang, section } = args
     // load ftl translations from the source
-    import(`./locales/${lang}/${section}.js`).then(({ default: ftl }) => {
-      return [{ lang, ftl }]
-    })
+    const { default: ftl } = await import(`./locales/${lang}/${section}.ftl`)
+    
+    return [{ lang, ftl }]
+    
   }
 }
 
