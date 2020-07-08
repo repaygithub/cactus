@@ -1,5 +1,3 @@
-import get from 'lodash/get'
-
 // This is heavily based on `@styled-system/variant`; their version only supported
 // objects as possible variant values, but I needed something that would allow the
 // full range of values supported by `styled-components`. By the time I trimmed

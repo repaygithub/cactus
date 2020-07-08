@@ -1,0 +1,61 @@
+---
+name: MenuBar
+menu: Components
+---
+
+import MenuBar from './MenuBar'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# MenuBar
+
+Component that represents a web site's main navigation menu. It's designed to be used horizontally near the top of the page (or on smaller screen sizes, vertically to the left).
+
+## Basic Usage
+
+The `MenuBar` component has two sub-components:
+- `MenuBar.List` - a drop-down sub-menu; it can be nested multiple times
+- `MenuBar.Item` - a `button` that can have an `onClick` handler to control behavior; also takes an `as` prop that can be used to change it to a link
+
+### Try it out
+
+export const code = `
+<MenuBar>
+  <MenuBar.Item onClick={() => alert('Clicked First')}>First</MenuBar.Item>
+  <MenuBar.List title="Submenu">
+    <MenuBar.Item as="a" href="https://repaygithub.github.io/cactus/">Cactus Docs</MenuBar.Item>
+    <MenuBar.List title="Nested Submenu">
+      <MenuBar.Item>Submenu Item</MenuBar.Item>
+    </MenuBar.List>
+  </MenuBar.List>
+</MenuBar>
+`
+
+<LiveProvider code={code} scope={{ MenuBar }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Properties
+
+All props are optional except for `MenuBar.List.title`.
+
+### MenuBar
+
+- `ref` - attaches a React ref to the DOM `nav` element
+- `aria-label` - defaults to "Main Menu"
+
+### MenuBar.List
+
+- `ref` - attaches a React ref to the `button` element that toggles the submenu; the submenu itself is the DOM tree starting from `button.nextElementSibling`
+- `title` - the contents of the button (equivalent to `MenuBar.Item`'s children)
+- `aria-current=true` - when used at the top level, adds some extra styling to indicate to the user which page the user is on; the menubar does _not_ keep track of that for the dev
+
+### MenuBar.Item
+
+- `ref` - attaches a React ref to the `button` element
+- `aria-current=true` - when used at the top level, adds some extra styling to indicate to the user which page the user is on; the menubar does _not_ keep track of that for the dev
+- `as` - pass an element/component type to change the behavior while keeping the styling
+- any other props accepted by the underlying component type (e.g. `href` if you pass `as="a"`)
+- it does _not_ accept `tabIndex` or `role` because they have values that cannot be overridden ("-1" and "menuitem", respectively)
