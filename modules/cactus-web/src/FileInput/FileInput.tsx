@@ -71,6 +71,7 @@ export interface FileInputProps
 
 interface EmptyPromptsProps {
   prompt: string
+  disabled?: boolean
   className?: string
 }
 
@@ -81,6 +82,7 @@ interface FileBoxProps {
   labels: { delete?: string; loading?: string; loaded?: string }
   className?: string
   errorMsg?: string
+  disabled?: boolean
 }
 
 interface FileInfoProps extends FileBoxProps {
@@ -115,14 +117,14 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
     position: absolute;
     top: 30%;
     left: 15%;
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
   }
 
   span {
     position: absolute;
     top: 20%;
     left: 37%;
-    color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.mediumContrast)};
   }
 `
 
@@ -130,7 +132,9 @@ type FileBoxPropsWithForwardRef = ThemedStyledProps<
   FileBoxProps & React.RefAttributes<HTMLDivElement>,
   DefaultTheme
 >
-type FileBoxMap = { [K in FileStatus]: FlattenInterpolation<FileBoxPropsWithForwardRef> }
+type FileBoxMap = {
+  [K in FileStatus | 'disabled']: FlattenInterpolation<FileBoxPropsWithForwardRef>
+}
 
 const fileBoxMap: FileBoxMap = {
   loading: css<FileBoxPropsWithForwardRef>`
@@ -144,12 +148,17 @@ const fileBoxMap: FileBoxMap = {
     border: 2px solid ${(p) => p.theme.colors.error};
     background-color: ${(p) => p.theme.colors.transparentError};
   `,
+  disabled: css<FileBoxPropsWithForwardRef>`
+    border: 2px solid ${(p) => p.theme.colors.mediumGray};
+    background-color: ${(p) => p.theme.colors.lightGray};
+  `,
 }
 
-const fileStatus = (props: FileBoxPropsWithForwardRef) => fileBoxMap[props.status]
+const fileStatus = (props: FileBoxPropsWithForwardRef) =>
+  props.disabled ? fileBoxMap.disabled : fileBoxMap[props.status]
 
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) => {
-  const { fileName, className, status, errorMsg, onDelete, labels } = props
+  const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
   const onClick = () => {
     onDelete(fileName)
   }
@@ -164,17 +173,17 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) 
   }
 
   return (
-    <div className={className} tabIndex={0} aria-label={label} ref={ref}>
+    <div className={className} tabIndex={0} aria-label={label} aria-disabled={disabled} ref={ref}>
       {status === 'error' ? (
-        <Avatar type="alert" status="error" />
+        <Avatar type="alert" status="error" disabled={disabled} />
       ) : (
-        status === 'loaded' && <Avatar type="alert" status="success" />
+        status === 'loaded' && <Avatar type="alert" status="success" disabled={disabled} />
       )}
       <span>{fileName}</span>
       {status === 'loading' ? (
         <Spinner />
       ) : (
-        <IconButton onClick={onClick} label={labels.delete}>
+        <IconButton onClick={onClick} label={labels.delete} disabled={disabled}>
           <NavigationClose />
         </IconButton>
       )}
@@ -192,7 +201,7 @@ const FileBox = styled(FileBoxBase)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${(p) => p.theme.colors.darkestContrast};
+  color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast)};
 
   span {
     margin-left: 8px;
@@ -233,12 +242,12 @@ const FileBox = styled(FileBoxBase)`
 `
 
 const FileInfoBase = (props: FileInfoProps) => {
-  const { className, errorMsg, labels, boxRef, ...rest } = props
+  const { className, errorMsg, labels, boxRef, disabled, ...rest } = props
 
   return (
     <div className={className}>
-      <FileBox errorMsg={errorMsg} labels={labels} ref={boxRef} {...rest} />
-      {errorMsg && <StatusMessage status="error">{errorMsg}</StatusMessage>}
+      <FileBox errorMsg={errorMsg} labels={labels} ref={boxRef} disabled={disabled} {...rest} />
+      {errorMsg && !disabled && <StatusMessage status="error">{errorMsg}</StatusMessage>}
     </div>
   )
 }
@@ -483,7 +492,7 @@ const FileInputBase = (props: FileInputProps) => {
     handleEvent(onBlur, name)
   }
 
-  const emptyClassName = disabled ? 'empty' : state.files.length === 0 ? 'empty' : 'notEmpty'
+  const emptyClassName = state.files.length === 0 ? 'empty' : 'notEmpty'
 
   return (
     <div
@@ -504,13 +513,14 @@ const FileInputBase = (props: FileInputProps) => {
         onChange={handleFileSelect}
         disabled={disabled}
       />
-      {disabled ? null : state.files.length === 0 ? (
+      {state.files.length === 0 ? (
         <React.Fragment>
-          <EmptyPrompts prompt={prompt} />
+          <EmptyPrompts prompt={prompt} disabled={disabled} />
           <TextButton
             variant="action"
             id={id}
             aria-describedby={describedBy}
+            disabled={disabled}
             onClick={handleOpenFileSelect}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
@@ -530,12 +540,14 @@ const FileInputBase = (props: FileInputProps) => {
               errorMsg={file.errorMsg}
               labels={labels}
               boxRef={index === 0 ? topFileBox : undefined}
+              disabled={disabled}
             />
           ))}
           <TextButton
             variant="action"
             id={id}
             aria-describedby={describedBy}
+            disabled={disabled}
             onClick={handleOpenFileSelect}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
