@@ -141,7 +141,7 @@ const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps) => {
 }
 
 export const Pagination: React.FC<PaginationProps> = (props) => {
-  const { pageCount, currentPage, label, className, onPageChange, linkAs } = props
+  const { pageCount, currentPage, label, className, onPageChange, linkAs, ...rest } = props
   const pageChangeHandler = React.useCallback(
     (page: number) => {
       if (onPageChange) {
@@ -171,7 +171,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
   const marginProps = pick(props, margin.propNames as Array<string>)
 
   return (
-    <Nav className={className} aria-label={label} {...marginProps}>
+    <Nav className={className} aria-label={label} {...marginProps} {...rest}>
       <PageList role="list">
         <PageButton {...commonProps} page={1} aria-label={makeLinkLabel(1)}>
           <NavigationFirst />
