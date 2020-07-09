@@ -1,15 +1,274 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`component: FileInputField should render a disabled file input field 1`] = `
+.c1 + .c0 {
+  margin-top: 16px;
+}
+
+.c10 {
+  font-size: 40px;
+  vertical-align: middle;
+}
+
+.c13 {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.c12 {
+  font-size: 18px;
+  line-height: 28px;
+  position: relative;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: hsl(0,0%,70%);
+  cursor: not-allowed;
+}
+
+.c12:focus::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border: 1px solid;
+  border-radius: 20px;
+  border-color: hsl(200,96%,35%);
+}
+
+.c12::-moz-focus-inner {
+  border: 0;
+}
+
+.c12 svg {
+  display: inline-block;
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+.c14 .c9 {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  color: hsl(200,96%,35%);
+}
+
+.c8 {
+  width: 300px;
+  height: 100px;
+}
+
+.c8 .c9 {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  color: hsl(0,0%,70%);
+}
+
+.c8 span {
+  position: absolute;
+  top: 20%;
+  left: 37%;
+  color: hsl(0,0%,70%);
+}
+
+.c15.empty .c11 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c15.notEmpty .c11 {
+  position: relative;
+  margin: 16px 0 16px 0;
+}
+
+.c7 {
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: none;
+  border-color: hsl(200,10%,20%);
+  min-width: 300px;
+  min-height: 100px;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: hsl(0,0%,90%);
+}
+
+.c7.empty .c11 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c7.notEmpty {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-color: hsl(200,96%,35%);
+  padding: 0 8px;
+}
+
+.c7.notEmpty .c11 {
+  position: relative;
+  margin: 16px 0 16px 0;
+}
+
+.c7 input {
+  display: none;
+}
+
+.c4 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
+.c6 {
+  vertical-align: middle;
+  color: hsl(0,0%,70%);
+}
+
+.c16 .c3 {
+  display: block;
+  position: relative;
+  bottom: 4px;
+  padding-left: 16px;
+}
+
+.c16 .c5 {
+  position: absolute;
+  top: -2px;
+  right: 8px;
+  font-size: 16px;
+}
+
+.c2 {
+  position: relative;
+}
+
+.c2 .c3 {
+  display: block;
+  position: relative;
+  bottom: 4px;
+  padding-left: 16px;
+  color: hsl(0,0%,70%);
+}
+
+.c2 .c5 {
+  position: absolute;
+  top: -2px;
+  right: 8px;
+  font-size: 16px;
+  color: hsl(0,0%,70%);
+}
+
+<div>
+  <div
+    class="c0 c1 c2"
+  >
+    <label
+      class="c3 c4"
+      for="consistent"
+    >
+      Just Boolin
+    </label>
+    <span
+      class="c5 "
+      data-reach-tooltip-trigger=""
+    >
+      <svg
+        class="c6"
+        disabled=""
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+        />
+      </svg>
+    </span>
+    <div
+      class="c7 empty"
+    >
+      <input
+        accept=".txt"
+        disabled=""
+        name="bears"
+        type="file"
+      />
+      <div
+        class="c8"
+      >
+        <svg
+          class="c9 c10"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M13,4.41421356 L13,17.108 C13,17.6602847 12.5522847,18.108 12,18.108 C11.4477153,18.108 11,17.6602847 11,17.108 L11,4.41421356 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6834175,0.902368927 12.3165825,0.902368927 12.7071068,1.29289322 L17.7071068,6.29289322 C18.0976311,6.68341751 18.0976311,7.31658249 17.7071068,7.70710678 C17.3165825,8.09763107 16.6834175,8.09763107 16.2928932,7.70710678 L13,4.41421356 Z M21,17 C21,16.4477153 21.4477153,16 22,16 C22.5522847,16 23,16.4477153 23,17 L23,19.0002091 C23,21.1800298 21.4176187,23 19.3918182,23 L4.60818182,23 C2.58172509,23 1,21.1803466 1,19.0002091 L1,17 C1,16.4477153 1.44771525,16 2,16 C2.55228475,16 3,16.4477153 3,17 L3,19.0002091 C3,20.1332156 3.75344824,21 4.60818182,21 L19.3918182,21 C20.2460177,21 21,20.13281 21,19.0002091 L21,17 Z"
+          />
+        </svg>
+        <span>
+          Drag files here or
+        </span>
+      </div>
+      <button
+        aria-describedby="consistent-tip"
+        class="c11 c12"
+        disabled=""
+        id="consistent"
+        type="button"
+      >
+        <svg
+          class="c13"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,9 L3,2 C3,1.44771525 3.44771525,1 4,1 L8.86956522,1 C9.13300396,1 9.38580138,1.10395302 9.57303415,1.28927399 L10.6720803,2.37709802 L20,2.37709802 C20.5522847,2.37709802 21,2.82481327 21,3.37709802 L21,9 L22,9 C22.6077887,9 23.0750324,9.5377097 22.9902149,10.1395511 L21.2857687,22.2338171 C21.2162209,22.7273084 20.7939217,23.094266 20.2955538,23.094266 L3.92354726,23.094266 C3.43189906,23.094266 3.01318427,22.7368835 2.9359601,22.251338 L1.01241285,10.157072 C0.915823617,9.5497691 1.38506399,9 2,9 L3,9 Z M4,11 L3.17161508,11 L4.7770699,21.094266 L19.4266021,21.094266 L20.8491881,11 L20,11 L4,11 Z M19,9 L19,4.37709802 L10.2608696,4.37709802 C9.99743082,4.37709802 9.7446334,4.27314501 9.55740063,4.08782403 L8.45835446,3 L5,3 L5,9 L19,9 Z"
+          />
+        </svg>
+        Select Files...
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`component: FileInputField should render a file with an error 1`] = `
 .c1 + .c0 {
   margin-top: 16px;
 }
 
-.c22 {
-  vertical-align: middle;
-}
-
-.c25 {
+.c23 {
   font-size: 16px;
   vertical-align: middle;
 }
@@ -62,7 +321,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c24 {
+.c22 {
   font-size: 18px;
   line-height: 28px;
   position: relative;
@@ -77,12 +336,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c24:hover {
+.c22:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c24:focus::after {
+.c22:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -96,17 +355,17 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c24::-moz-focus-inner {
+.c22::-moz-focus-inner {
   border: 0;
 }
 
-.c24 svg {
+.c22 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c26 .c12 {
+.c24 .c12 {
   padding-bottom: 4px;
 }
 
@@ -153,50 +412,50 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   vertical-align: -2px;
 }
 
-.c27 .c10 {
+.c25 .c10 {
   height: 24px;
   width: 24px;
 }
 
-.c27 .c10 .c12 {
+.c25 .c10 .c12 {
   height: 16px;
   width: 16px;
 }
 
-.c27 .c10 .c29 {
+.c25 .c10 .c29 {
   height: 18px;
   width: 18px;
 }
 
-.c27 .c14 {
+.c25 .c14 {
   margin-left: auto;
 }
 
-.c27 .c16 {
+.c25 .c16 {
   height: 12px;
   width: 12px;
 }
 
-.c28 .c10 {
+.c26 .c10 {
   height: 24px;
   width: 24px;
 }
 
-.c28 .c10 .c12 {
+.c26 .c10 .c12 {
   height: 16px;
   width: 16px;
 }
 
-.c28 .c10 .c29 {
+.c26 .c10 .c29 {
   height: 18px;
   width: 18px;
 }
 
-.c28 .c14 {
+.c26 .c14 {
   margin-left: auto;
 }
 
-.c28 .c16 {
+.c26 .c16 {
   height: 12px;
   width: 12px;
 }
@@ -270,16 +529,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   margin-top: 4px;
 }
 
-.c8 .c18 .c14 {
-  margin-left: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c8 .c18 .c21 {
-  height: 12px;
-  width: 12px;
-}
-
 .c7 {
   box-sizing: border-box;
   border-radius: 8px;
@@ -302,7 +551,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   align-items: center;
 }
 
-.c7.empty .c23 {
+.c7.empty .c21 {
   position: absolute;
   left: 35%;
   bottom: 15%;
@@ -316,13 +565,24 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   padding: 0 8px;
 }
 
-.c7.notEmpty .c23 {
+.c7.notEmpty .c21 {
   position: relative;
   margin: 16px 0 16px 0;
 }
 
 .c7 input {
   display: none;
+}
+
+.c27.empty .c21 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c27.notEmpty .c21 {
+  position: relative;
+  margin: 16px 0 16px 0;
 }
 
 .c4 {
@@ -353,6 +613,22 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   top: -2px;
   right: 8px;
   font-size: 16px;
+}
+
+.c28 .c3 {
+  display: block;
+  position: relative;
+  bottom: 4px;
+  padding-left: 16px;
+  color: hsl(0,0%,70%);
+}
+
+.c28 .c5 {
+  position: absolute;
+  top: -2px;
+  right: 8px;
+  font-size: 16px;
+  color: hsl(0,0%,70%);
 }
 
 <div>
@@ -400,6 +676,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
         class="c8"
       >
         <div
+          aria-disabled="false"
           aria-label="boolest.txt, Get it together, man"
           class="c9"
           tabindex="0"
@@ -459,35 +736,17 @@ exports[`component: FileInputField should render a file with an error 1`] = `
           </svg>
           <span>
             Get it together, man
-            <button
-              aria-label="Retry Upload"
-              class="c14 c15"
-              type="button"
-              variant="standard"
-            >
-              <svg
-                class="c21 c22"
-                fill="currentcolor"
-                height="1em"
-                viewBox="0 0 24 24"
-                width="1em"
-              >
-                <path
-                  d="M20.4992503,17.9548596 L18.3156404,17.9595766 C17.7633569,17.9607696 17.3146756,17.5140225 17.3134826,16.9617391 C17.3122895,16.4094556 17.7590366,15.9607743 18.3113201,15.9595812 L22.6073616,15.9503011 C23.1633559,15.9491001 23.6135718,16.4016508 23.6094949,16.9576314 L23.5781544,21.2316126 C23.5741047,21.7838825 23.1231185,22.2283028 22.5708486,22.2242531 C22.0185787,22.2202034 21.5741584,21.7692172 21.5782082,21.2169473 L21.5883807,19.8296924 C19.3899413,22.4868842 15.9196811,24 12,24 C5.372583,24 -4.4408921e-15,18.627417 -4.4408921e-15,12 C-4.4408921e-15,11.4477153 0.44771525,11 1,11 C1.55228475,11 2,11.4477153 2,12 C2,17.5228475 6.4771525,22 12,22 C15.6334532,22 18.742791,20.5088813 20.4992503,17.9548596 Z M3.94244786,6.07548022 L5.72868198,6.07162168 C6.28096544,6.07042866 6.72964678,6.51717573 6.7308398,7.06945919 C6.73203282,7.62174265 6.28528575,8.07042399 5.73300228,8.07161701 L1.43696072,8.08089714 C0.880966415,8.08209818 0.430750527,7.62954747 0.434827455,7.07356681 L0.466167957,2.79958562 C0.470217674,2.24731572 0.921203832,1.80289545 1.47347373,1.80694517 C2.02574364,1.81099489 2.47016391,2.26198104 2.46611419,2.81425095 L2.4520725,4.72914997 C4.68891657,1.79264134 8.18849203,0 12,0 C18.627417,0 24,5.372583 24,12 C24,12.5522847 23.5522847,13 23,13 C22.4477153,13 22,12.5522847 22,12 C22,6.4771525 17.5228475,2 12,2 C8.76545467,2 5.80179644,3.54797813 3.94244786,6.07548022 Z"
-                />
-              </svg>
-            </button>
           </span>
         </div>
       </div>
       <button
         aria-describedby="consistent-tip"
-        class="c23 c24"
+        class="c21 c22"
         id="consistent"
         type="button"
       >
         <svg
-          class="c25"
+          class="c23"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -623,7 +882,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c11 .c23 {
+.c11 .c24 {
   padding-bottom: 4px;
 }
 
@@ -632,7 +891,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c21 .c10 .c23 {
+.c21 .c10 .c24 {
   height: 16px;
   width: 16px;
 }
@@ -687,7 +946,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c9 .c10 .c23 {
+.c9 .c10 .c24 {
   height: 16px;
   width: 16px;
 }
@@ -697,7 +956,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c9 .c24 {
+.c9 .c25 {
   height: 12px;
   width: 12px;
 }
@@ -715,19 +974,9 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c8 .c25 {
+.c8 .c26 {
   position: relative;
   margin-top: 4px;
-}
-
-.c8 .c25 .c14 {
-  margin-left: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c8 .c25 .c22 {
-  height: 12px;
-  width: 12px;
 }
 
 .c7 {
@@ -775,6 +1024,17 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   display: none;
 }
 
+.c22.empty .c18 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c22.notEmpty .c18 {
+  position: relative;
+  margin: 16px 0 16px 0;
+}
+
 .c4 {
   font-size: 18px;
   line-height: 28px;
@@ -803,6 +1063,22 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   top: -2px;
   right: 8px;
   font-size: 16px;
+}
+
+.c23 .c3 {
+  display: block;
+  position: relative;
+  bottom: 4px;
+  padding-left: 16px;
+  color: hsl(0,0%,70%);
+}
+
+.c23 .c5 {
+  position: absolute;
+  top: -2px;
+  right: 8px;
+  font-size: 16px;
+  color: hsl(0,0%,70%);
 }
 
 <div>
@@ -850,6 +1126,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
         class="c8"
       >
         <div
+          aria-disabled="false"
           aria-label="boolest.txt, Successful"
           class="c9"
           tabindex="0"
@@ -1007,17 +1284,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   line-height: 28px;
 }
 
-.c9 .c20 {
+.c9 .c21 {
   height: 24px;
   width: 24px;
 }
 
-.c9 .c20 .c17 {
+.c9 .c21 .c18 {
   height: 16px;
   width: 16px;
 }
 
-.c9 .c20 .c18 {
+.c9 .c21 .c19 {
   height: 18px;
   width: 18px;
 }
@@ -1027,11 +1304,11 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 12px;
 }
 
-.c9 .c19 {
+.c9 .c20 {
   margin-left: auto;
 }
 
-.c9 .c16 {
+.c9 .c17 {
   height: 12px;
   width: 12px;
 }
@@ -1040,19 +1317,9 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 100%;
 }
 
-.c8 .c21 {
+.c8 .c22 {
   position: relative;
   margin-top: 4px;
-}
-
-.c8 .c21 .c19 {
-  margin-left: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c8 .c21 .c15 {
-  height: 12px;
-  width: 12px;
 }
 
 .c7 {
@@ -1100,6 +1367,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   display: none;
 }
 
+.c15.empty .c12 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c15.notEmpty .c12 {
+  position: relative;
+  margin: 16px 0 16px 0;
+}
+
 .c4 {
   font-size: 18px;
   line-height: 28px;
@@ -1128,6 +1406,22 @@ exports[`component: FileInputField should render a loading file 1`] = `
   top: -2px;
   right: 8px;
   font-size: 16px;
+}
+
+.c16 .c3 {
+  display: block;
+  position: relative;
+  bottom: 4px;
+  padding-left: 16px;
+  color: hsl(0,0%,70%);
+}
+
+.c16 .c5 {
+  position: absolute;
+  top: -2px;
+  right: 8px;
+  font-size: 16px;
+  color: hsl(0,0%,70%);
 }
 
 <div>
@@ -1175,6 +1469,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
         class="c8"
       >
         <div
+          aria-disabled="false"
           aria-label="boolest.txt, Loading"
           class="c9"
           tabindex="0"
@@ -1295,7 +1590,7 @@ exports[`component: FileInputField should render file input field 1`] = `
   position: absolute;
   top: 20%;
   left: 37%;
-  color: hsl(0,0%,50%);
+  color: hsl(200,18%,45%);
 }
 
 .c7 {

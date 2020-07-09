@@ -1,4 +1,4 @@
-import { select } from '@storybook/addon-knobs'
+import { boolean, select } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Avatar, { AvatarStatus, AvatarType } from './Avatar'
 import React from 'react'
@@ -11,6 +11,7 @@ storiesOf('Avatar', module).add('Basic Usage', () => {
     <Avatar
       type={select('usage', avatarUse, 'feedback')}
       status={select('icon', avatarIcon, 'error')}
+      disabled={boolean('disabled', false)}
     />
   )
 })

@@ -7,6 +7,7 @@ import FileInputField from './FileInputField'
 storiesOf('FileInputField', module).add('Basic Usage', () => (
   <FileInputField
     label={text('label', 'File Input Field')}
+    disabled={boolean('disabled', false)}
     accept={['.md', '.txt']}
     name="input-field"
     tooltip={text('tooltip', 'Upload files from your system')}
@@ -14,7 +15,6 @@ storiesOf('FileInputField', module).add('Basic Usage', () => (
     multiple={boolean('multiple', true)}
     labels={{
       delete: text('delete label', 'Click to delete file'),
-      retry: text('retry label', 'Click to retry file upload'),
       loading: text('loading label', 'File uploading'),
       loaded: text('loaded label', 'File uploaded successfully'),
     }}

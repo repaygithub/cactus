@@ -1,15 +1,15 @@
 import React from 'react'
 
+import { boolean, text } from '@storybook/addon-knobs'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { storiesOf } from '@storybook/react'
-import { text } from '@storybook/addon-knobs'
 import Tooltip from './Tooltip'
 
 const tooltipStories = storiesOf('Tooltip', module)
 
 tooltipStories
   .add('Basic Usage', () => (
-    <Tooltip label={text('label', 'Some tooltip text here')}>
+    <Tooltip label={text('label', 'Some tooltip text here')} disabled={boolean('disabled', false)}>
       <NotificationInfo />
     </Tooltip>
   ))
