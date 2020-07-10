@@ -210,13 +210,13 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border: 1px solid;
   border-radius: 20px;
   background: white;
-  border-color: hsl(353,84%,44%);
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
   margin: auto;
   max-width: 80%;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
+  border-color: hsl(353,84%,44%);
 }
 
 .c0 > [data-reach-dialog-content] .c2 {
@@ -284,16 +284,9 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children > :first-child {
-  word-break: break-all;
-  text-align: center;
-  margin: 0;
-}
-
-.c1 .children > div {
+.c1 .children {
   text-align: center;
   width: 100%;
-  margin: 16px 0 0 0;
 }
 
 .c11 {
@@ -549,8 +542,8 @@ exports[`Modal variant is warning snapshot 1`] = `
 
 .c10:hover {
   color: hsl(0,0%,100%);
-  background-color: hsl(200,96%,11%);
-  border-color: hsl(200,96%,11%);
+  background-color: hsl(47,96%,11%);
+  border-color: hsl(47,96%,11%);
 }
 
 .c5 {
@@ -685,13 +678,13 @@ exports[`Modal variant is warning snapshot 1`] = `
   border: 1px solid;
   border-radius: 20px;
   background: white;
-  border-color: hsl(47,82%,47%);
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
   margin: auto;
   max-width: 80%;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
+  border-color: hsl(47,82%,47%);
 }
 
 .c0 > [data-reach-dialog-content] .c2 {
@@ -755,16 +748,9 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children > :first-child {
-  word-break: break-all;
-  text-align: center;
-  margin: 0;
-}
-
-.c1 .children > div {
+.c1 .children {
   text-align: center;
   width: 100%;
-  margin: 16px 0 0 0;
 }
 
 @media screen and (min-width:1024px) {

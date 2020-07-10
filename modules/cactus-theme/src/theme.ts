@@ -85,6 +85,8 @@ export interface CactusTheme {
     transparentWarning: string
     transparentError: string
     errorDark: string
+    warningDark: string
+    successDark: string
 
     status: StatusColors
   }
@@ -162,6 +164,8 @@ function fromHue({
   let transparentError = `hsla(353, 84%, 44%, 0.2)`
   let transparentWarning = `hsla(47, 82%, 47%, 0.2)`
   let errorDark = `hsl(353, 96%, 11%)`
+  let warningDark = `hsl(47, 96%, 11%)`
+  let successDark = `hsl(145, 96%, 11%)`
 
   const status: StatusColors = {
     background: {
@@ -205,6 +209,8 @@ function fromHue({
       transparentError,
       transparentWarning,
       errorDark,
+      warningDark,
+      successDark,
 
       /** Status Colors */
       status,
@@ -274,6 +280,8 @@ function fromTwoColor({
   let transparentError = `hsla(353, 84%, 44%, 0.2)`
   let transparentWarning = `hsla(47, 82%, 47%, 0.2)`
   let errorDark = `hsl(353, 96%, 11%)`
+  let warningDark = `hsl(47, 96%, 11%)`
+  let successDark = `hsl(145, 96%, 11%)`
 
   const status: StatusColors = {
     background: {
@@ -327,6 +335,8 @@ function fromTwoColor({
         transparentError,
         transparentWarning,
         errorDark,
+        warningDark,
+        successDark,
 
         /** Status Colors */
         status,
@@ -423,6 +433,8 @@ function fromTwoColor({
         transparentError,
         transparentWarning,
         errorDark,
+        warningDark,
+        successDark,
 
         /** Status Colors */
         status,
@@ -513,6 +525,8 @@ function fromTwoColor({
       transparentError,
       transparentWarning,
       errorDark,
+      warningDark,
+      successDark,
 
       /** Status Colors */
       status,

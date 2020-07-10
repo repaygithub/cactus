@@ -67,8 +67,8 @@ const variantMap: VariantMap = {
 
     &:hover {
       color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.base};
-      border-color: ${(p) => p.theme.colors.base};
+      background-color: ${(p) => p.theme.colors.warningDark};
+      border-color: ${(p) => p.theme.colors.warningDark};
     }
   `,
   success: css`
@@ -78,8 +78,8 @@ const variantMap: VariantMap = {
 
     &:hover {
       color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.base};
-      border-color: ${(p) => p.theme.colors.base};
+      background-color: ${(p) => p.theme.colors.successDark};
+      border-color: ${(p) => p.theme.colors.successDark};
     }
   `,
 }
@@ -190,6 +190,7 @@ const ButtonBase: React.FC<ButtonProps> = ({
   loadingText,
   ...rest
 }) => {
+  console.log(variant)
   const props = omitMargins(rest)
   let spanProps = null
   if (loading === true) {

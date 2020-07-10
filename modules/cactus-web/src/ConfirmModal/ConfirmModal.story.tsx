@@ -14,7 +14,7 @@ const iconNames: IconName[] = Object.keys(icons) as IconName[]
 
 type StatusOptions = { [k in ModalType]: ModalType }
 const statusOptions: StatusOptions = {
-  default: 'default',
+  action: 'action',
   danger: 'danger',
   warning: 'warning',
   success: 'success',
@@ -25,7 +25,7 @@ const ConfirmModalExample = () => {
   const confirmText = text('Confirm Button Text', 'Confirm')
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const iconSize = select('Icon size', ['medium', 'large'], 'medium')
-  const variant = select('variant', statusOptions, statusOptions.default)
+  const variant = select('variant', statusOptions, statusOptions.action)
   const descrpitionText = text(
     'Description text',
     'Your actions can override past setting causing unintended consecuences.'
@@ -59,7 +59,7 @@ const ConfirmModalExample2 = () => {
   const confirmText = text('Confirm Button Text', 'Confirm')
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const iconSize = select('Icon size', ['medium', 'large'], 'medium')
-  const variant = select('variant', statusOptions, statusOptions.default)
+  const variant = select('variant', statusOptions, statusOptions.action)
   const descrpitionText = text(
     'Description text',
     'Your actions can override past setting causing unintended consecuences.'
@@ -76,7 +76,7 @@ const ConfirmModalExample2 = () => {
       iconName={iconName}
       iconSize={iconSize}
     >
-      <Text as="h4" fontWeight="normal">
+      <Text as="h4" fontWeight="normal" margin="0 0 16px 0">
         {descrpitionText}
       </Text>
       <TextInput placeholder="Placeholder" width="90%" />

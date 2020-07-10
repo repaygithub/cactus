@@ -6,8 +6,9 @@ import IconButton from '../IconButton/IconButton'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
+import variant from '../helpers/variant'
 
-export type ModalType = 'default' | 'danger' | 'warning' | 'success'
+export type ModalType = 'action' | 'danger' | 'warning' | 'success'
 
 export interface ModalProps {
   className?: string
@@ -23,7 +24,7 @@ interface ModalPopupProps extends DialogProps {
 
 const baseColor = ({ variant, theme }: ModalPopupProps & ThemeProps<CactusTheme>) => {
   switch (variant) {
-    case 'default':
+    case 'action':
       return theme.colors.callToAction
     case 'danger':
       return theme.colors.error
@@ -59,7 +60,7 @@ const getShape = (shape: Shape) => shapeMap[shape]
 const getBorder = (size: BorderSize) => borderMap[size]
 
 const Modalbase: FunctionComponent<ModalProps> = (props) => {
-  const { variant = 'default', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
+  const { variant = 'action', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
   const hasChildren = !!React.Children.count(children)
 
   return (
@@ -99,13 +100,26 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     ${(p) => getBorder(p.theme.border)};
     ${(p) => getShape(p.theme.shape)};
     background: white;
-    border-color: ${baseColor};
     box-shadow: ${(p) => p.theme.boxShadows && `0px 9px 24px ${p.theme.colors.transparentCTA}`};
     margin: auto;
     max-width: 80%;
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
+    ${variant({
+      action: css`
+        border-color: ${(p) => p.theme.colors.callToAction};
+      `,
+      warning: css`
+        border-color: ${(p) => p.theme.colors.warning};
+      `,
+      success: css`
+        border-color: ${(p) => p.theme.colors.success};
+      `,
+      danger: css`
+        border-color: ${(p) => p.theme.colors.error};
+      `,
+    })}
     ${IconButton} {
       height: 16px;
       position: absolute;
@@ -134,13 +148,13 @@ Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   modalLabel: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['default', 'danger', 'warning', 'success']),
+  variant: PropTypes.oneOf(['action', 'danger', 'warning', 'success']),
 }
 
 Modal.defaultProps = {
   closeLabel: 'Close Modal',
   isOpen: false,
   modalLabel: 'Modal',
-  variant: 'default',
+  variant: 'action',
 }
 export default Modal

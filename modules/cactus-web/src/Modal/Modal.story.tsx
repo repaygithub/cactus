@@ -10,7 +10,7 @@ const modalStories = storiesOf('Modal', module)
 type StatusOptions = { [k in ModalType]: ModalType }
 
 const statusOptions: StatusOptions = {
-  default: 'default',
+  action: 'action',
   danger: 'danger',
   warning: 'warning',
   success: 'success',
@@ -18,7 +18,7 @@ const statusOptions: StatusOptions = {
 
 const ModalWithState = () => {
   const [open, setOpen] = useState(true)
-  const variant = select('variant', statusOptions, statusOptions.default)
+  const variant = select('variant', statusOptions, statusOptions.action)
   const modalLabel = text('Modal Label', 'Modal Label')
   const closeLabel = text('Close icon label', 'Close Label')
 
