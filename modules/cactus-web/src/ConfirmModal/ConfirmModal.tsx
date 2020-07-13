@@ -58,7 +58,6 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
   title,
   ...props
 }) => {
-  console.log(variant)
   return (
     <Modal variant={variant} onClose={onClose} {...props}>
       <Flex

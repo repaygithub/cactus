@@ -190,7 +190,6 @@ const ButtonBase: React.FC<ButtonProps> = ({
   loadingText,
   ...rest
 }) => {
-  console.log(variant)
   const props = omitMargins(rest)
   let spanProps = null
   if (loading === true) {
