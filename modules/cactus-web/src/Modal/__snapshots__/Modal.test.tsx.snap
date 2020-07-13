@@ -75,6 +75,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0 > [data-reach-dialog-content] .c1 {
@@ -123,7 +124,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
           aria-label="Modal Label"
           class="c0 "
           data-reach-dialog-overlay=""
-          variant="default"
+          variant="action"
         >
           <div
             aria-label="Modal Label"
