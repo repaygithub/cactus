@@ -17,6 +17,16 @@ describe('component: Tooltip', () => {
     expect(container).toMatchSnapshot()
   })
 
+  test('should render a disabled tooltip', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Tooltip label="pitloot" disabled={true} />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
   test('should not render portal without mouseenter event', () => {
     render(
       <StyleProvider>

@@ -25,7 +25,6 @@ const FileInputFieldExample: React.FC<RouteComponentProps> = () => {
           multiple={true}
           labels={{
             delete: 'Click to delete file',
-            retry: 'Click to retry file upload',
             loading: 'File uploading',
             loaded: 'File uploaded successfully',
           }}

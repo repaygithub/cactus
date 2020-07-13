@@ -240,7 +240,6 @@ const UIConfig = (props: UIConfigProps) => {
                   accept={['.jpg', '.png']}
                   labels={{
                     delete: 'delete file',
-                    retry: 'retry file upload',
                     loading: 'loading',
                     loaded: 'successful',
                   }}
