@@ -22,7 +22,7 @@ export const code = ` () => {
   const [open, setOpen] = React.useState(false)
   return open ? (
     <Modal
-      variant="default"
+      variant="action"
       isOpen={open}
       onClose={() => setOpen(false)}
       modalLabel="Modal Label"
@@ -60,7 +60,7 @@ const ComponentWithModal = () => {
   const [open, setOpen] = useState(false)
   return (
     <Modal
-      variant="default"
+      variant="action"
       isOpen={open}
       onClose={() => setOpen(false)}
       modalLabel="Modal Label"
