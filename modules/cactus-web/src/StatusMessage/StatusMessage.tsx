@@ -15,13 +15,13 @@ type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
-    background-color: ${(p) => p.theme.colors.status.avatar.success};
+    ${(p) => p.theme.colorStyles.success};
   `,
   warning: css`
-    background-color: ${(p) => p.theme.colors.status.avatar.warning};
+    ${(p) => p.theme.colorStyles.warning};
   `,
   error: css`
-    background-color: ${(p) => p.theme.colors.status.avatar.error};
+    ${(p) => p.theme.colorStyles.error}
   `,
 }
 
@@ -58,7 +58,7 @@ const StatusMessageBase: React.FC<
   )
 }
 
-const StatusMessage = styled(StatusMessageBase)`
+const StatusMessage = styled(StatusMessageBase)<StatusMessageProps>`
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;

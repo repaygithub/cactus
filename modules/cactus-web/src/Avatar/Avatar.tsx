@@ -62,13 +62,13 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
   } else if (type === 'feedback') {
     switch (status) {
       case 'error':
-        return props.theme.colors.error
+        return props.theme.colorStyles.error
       case 'warning':
-        return props.theme.colors.warning
+        return props.theme.colorStyles.warning
       case 'info':
-        return props.theme.colors.lightContrast
+        return props.theme.colorStyles.lightContrast
       case 'success':
-        return props.theme.colors.success
+        return props.theme.colorStyles.success
     }
   }
 }
@@ -83,11 +83,15 @@ const usageMap: UsageMap = {
 }
 
 const variant = (props: AvatarProps) => {
-  const { status } = props
+  const { status, type } = props
 
-  if (status !== undefined) {
+  if (status !== undefined && type === 'alert') {
     return css`
       background: ${avaColor};
+    `
+  } else if (status !== undefined && type === 'feedback') {
+    return css`
+      ${avaColor}
     `
   }
 }

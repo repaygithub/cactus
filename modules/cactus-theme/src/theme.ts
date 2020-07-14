@@ -146,7 +146,7 @@ function fromHue({
   let baseText = `hsl(0, 0%, 100%)`
   let callToAction = `hsl(${primaryHue}, 96%, 35%)`
   let callToActionText = `hsl(0, 0%, 100%)`
-  let transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.25)`
+  let transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.3)`
 
   /** Contrasts */
   let lightContrast = `hsl(${primaryHue}, 29%, 90%)`
@@ -158,21 +158,21 @@ function fromHue({
   let success = `hsl(145, 89%, 28%)`
   let error = `hsl(353, 84%, 44%)`
   let warning = `hsl(47, 82%, 47%)`
-  let transparentSuccess = `hsla(145, 89%, 28%, 0.2)`
-  let transparentError = `hsla(353, 84%, 44%, 0.2)`
-  let transparentWarning = `hsla(47, 82%, 47%, 0.2)`
+  let transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
+  let transparentError = `hsla(353, 84%, 44%, 0.3)`
+  let transparentWarning = `hsla(47, 82%, 47%, 0.3)`
   let errorDark = `hsl(353, 96%, 11%)`
 
   const status: StatusColors = {
     background: {
-      success: `hsla(145, 89%, 28%, 0.2)`,
-      warning: `hsla(47, 82%, 47%, 0.2)`,
-      error: `hsla(353, 84%, 44%, 0.2)`,
+      success: transparentSuccess,
+      warning: transparentWarning,
+      error: transparentError,
     },
     avatar: {
-      success: `hsla(145, 89%, 28%, 0.3)`,
-      warning: `hsla(47, 82%, 47%, 0.3)`,
-      error: `hsla(353, 84%, 44%, 0.3)`,
+      success: transparentSuccess,
+      warning: transparentWarning,
+      error: transparentError,
     },
   }
 
@@ -270,9 +270,9 @@ function fromTwoColor({
   let success = `hsl(145, 89%, 28%)`
   let error = `hsl(353, 84%, 44%)`
   let warning = `hsl(47, 82%, 47%)`
-  let transparentSuccess = `hsla(145, 89%, 28%, 0.2)`
-  let transparentError = `hsla(353, 84%, 44%, 0.2)`
-  let transparentWarning = `hsla(47, 82%, 47%, 0.2)`
+  let transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
+  let transparentError = `hsla(353, 84%, 44%, 0.3)`
+  let transparentWarning = `hsla(47, 82%, 47%, 0.3)`
   let errorDark = `hsl(353, 96%, 11%)`
 
   const status: StatusColors = {
@@ -305,7 +305,7 @@ function fromTwoColor({
         baseText: darkestContrast,
         callToAction: callToAction,
         callToActionText: white,
-        transparentCTA: `hsla(244, 48%, 26%, 0.25)`,
+        transparentCTA: `hsla(244, 48%, 26%, 0.3)`,
 
         /** Contrasts */
         lightContrast,
@@ -392,7 +392,7 @@ function fromTwoColor({
     secondaryLightness = primaryLightness > 21 ? 10 : 35
     let callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
     let callToActionText = white
-    let transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.25)`
+    let transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
 
     return [
       {
@@ -482,7 +482,7 @@ function fromTwoColor({
 
   let callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
   let callToActionText = isDark(...secondaryRgb) ? white : darkestContrast
-  let transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.25)`
+  let transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
 
   return [
     {

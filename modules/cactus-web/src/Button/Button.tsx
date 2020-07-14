@@ -28,13 +28,11 @@ type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${(p) => p.theme.colors.callToActionText};
-    background-color: ${(p) => p.theme.colors.callToAction};
+    ${(p) => p.theme.colorStyles.callToAction}
     border-color: ${(p) => p.theme.colors.callToAction};
 
     &:hover {
-      color: ${(p) => p.theme.colors.baseText};
-      background-color: ${(p) => p.theme.colors.base};
+      ${(p) => p.theme.colorStyles.base}
       border-color: ${(p) => p.theme.colors.base};
     }
   `,
@@ -50,8 +48,7 @@ const variantMap: VariantMap = {
     }
   `,
   danger: css`
-    color: ${(p) => p.theme.colors.white};
-    background-color: ${(p) => p.theme.colors.error};
+    ${(p) => p.theme.colorStyles.error}
     border-color: ${(p) => p.theme.colors.error};
 
     &:hover {
@@ -159,7 +156,7 @@ const ButtonBase: React.FC<ButtonProps> = ({
   )
 }
 
-export const Button = styled(ButtonBase)`
+export const Button = styled(ButtonBase)<ButtonProps>`
   position: relative;
   padding: 2px 30px;
   outline: none;
