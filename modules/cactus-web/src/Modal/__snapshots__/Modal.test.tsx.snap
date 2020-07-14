@@ -66,6 +66,10 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
 }
 
 .c0 > [data-reach-dialog-content] {
+  -webkit-flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  width: 100%;
   border: 1px solid;
   border-radius: 20px;
   background: white;

@@ -28,13 +28,11 @@ type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${(p) => p.theme.colors.callToActionText};
-    background-color: ${(p) => p.theme.colors.callToAction};
+    ${(p) => p.theme.colorStyles.callToAction}
     border-color: ${(p) => p.theme.colors.callToAction};
 
     &:hover {
-      color: ${(p) => p.theme.colors.baseText};
-      background-color: ${(p) => p.theme.colors.base};
+      ${(p) => p.theme.colorStyles.base}
       border-color: ${(p) => p.theme.colors.base};
     }
   `,
@@ -44,14 +42,12 @@ const variantMap: VariantMap = {
     border-color: ${(p) => p.theme.colors.base};
 
     &:hover {
-      color: ${(p) => p.theme.colors.baseText};
-      background-color: ${(p) => p.theme.colors.base};
+      ${(p) => p.theme.colorStyles.base}
       border-color: ${(p) => p.theme.colors.base};
     }
   `,
   danger: css`
-    color: ${(p) => p.theme.colors.white};
-    background-color: ${(p) => p.theme.colors.error};
+    ${(p) => p.theme.colorStyles.error}
     border-color: ${(p) => p.theme.colors.error};
 
     &:hover {
@@ -61,8 +57,7 @@ const variantMap: VariantMap = {
     }
   `,
   warning: css`
-    color: ${(p) => p.theme.colors.white};
-    background-color: ${(p) => p.theme.colors.warning};
+    ${(p) => p.theme.colorStyles.warning}
     border-color: ${(p) => p.theme.colors.warning};
 
     &:hover {
@@ -72,8 +67,7 @@ const variantMap: VariantMap = {
     }
   `,
   success: css`
-    color: ${(p) => p.theme.colors.white};
-    background-color: ${(p) => p.theme.colors.success};
+    ${(p) => p.theme.colorStyles.success}
     border-color: ${(p) => p.theme.colors.success};
 
     &:hover {
@@ -250,7 +244,6 @@ export const Button = styled(ButtonBase)<ButtonProps>`
   ${variantOrDisabled}
 `
 
-// @ts-ignore
 Button.propTypes = {
   variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success']),
   disabled: PropTypes.bool,

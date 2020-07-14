@@ -1,10 +1,11 @@
 import * as icons from '@repay/cactus-icons'
+import { CactusTheme } from '@repay/cactus-theme'
 import Button from '../Button/Button'
 import Flex from '../Flex/Flex'
 import Modal, { ModalProps } from '../Modal/Modal'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, ThemeProps } from 'styled-components'
 import Text from '../Text/Text'
 import TextButton from '../TextButton/TextButton'
 import variant from '../helpers/variant'
@@ -46,6 +47,9 @@ const getIconWidthAndHeight = ({ iconSize }: IconProps) => {
   }
 }
 
+const getFlexDirection = ({ iconSize }: ConfirmModalProps & ThemeProps<CactusTheme>) =>
+  iconSize === 'medium' ? 'row' : 'column'
+
 const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
   cancelButtonText,
   children,
@@ -60,11 +64,7 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
 }) => {
   return (
     <Modal variant={variant} onClose={onClose} {...props}>
-      <Flex
-        flexDirection={iconSize === 'medium' ? 'row' : 'column'}
-        alignItems="center"
-        className="title-icon"
-      >
+      <Flex alignItems="center" className="title-icon">
         {iconName && (
           <Icon iconSize={iconSize} iconName={iconName} variant={variant} className="icon" />
         )}
@@ -87,6 +87,10 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
 
 export const ConfirmModal = styled(ConfirmModalBase)`
   .title-icon {
+    flex-direction: column;
+    ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+      flex-direction: ${getFlexDirection};
+    }
     text-align: center;
     margin: ${(p) => (p.iconName && p.iconSize === 'medium' ? '0 0 24px 0' : 0)};
     > h1 {
@@ -97,6 +101,9 @@ export const ConfirmModal = styled(ConfirmModalBase)`
   .children {
     text-align: center;
     width: 100%;
+    > * {
+      width: 100%;
+    }
   }
 `
 
@@ -126,20 +133,26 @@ const Icon = styled(IconBase)<IconProps>`
 `
 ConfirmModal.propTypes = {
   cancelButtonText: PropTypes.string,
+  className: PropTypes.string,
+  closeLabel: PropTypes.string,
   confirmButtonText: PropTypes.string,
   description: PropTypes.string,
+  iconName: PropTypes.oneOf([...iconNames]),
+  iconSize: PropTypes.oneOf(['medium', 'large']),
+  isOpen: PropTypes.bool.isRequired,
+  modalLabel: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   title: PropTypes.string,
-  iconSize: PropTypes.oneOf(['medium', 'large']),
-  iconName: PropTypes.oneOf([...iconNames]),
+  variant: PropTypes.oneOf(['action', 'danger', 'warning', 'success']),
 }
 
 ConfirmModal.defaultProps = {
   cancelButtonText: 'Cancel',
   confirmButtonText: 'Confirm',
   description: undefined,
-  title: 'Modal Title',
   iconName: undefined,
   iconSize: 'medium',
+  title: 'Modal Title',
 }
 export default ConfirmModal

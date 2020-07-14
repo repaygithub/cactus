@@ -79,7 +79,7 @@ const ConfirmModalExample2 = () => {
       <Text as="h4" fontWeight="normal" margin="0 0 16px 0">
         {descrpitionText}
       </Text>
-      <TextInput placeholder="Placeholder" width="90%" />
+      <TextInput placeholder="Placeholder" width="60%" />
     </ConfirmModal>
   ) : (
     <Button variant="action" onClick={() => setOpen(true)}>

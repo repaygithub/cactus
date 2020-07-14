@@ -49,8 +49,8 @@ exports[`With theme changes  Should have intermediate border radius 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -115,8 +115,8 @@ exports[`With theme changes  Should have square border radius 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -181,8 +181,8 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -247,8 +247,8 @@ exports[`With theme changes  should have 2px border 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -313,8 +313,8 @@ exports[`component: Button should default to standard variant 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -386,8 +386,8 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -488,8 +488,8 @@ exports[`component: Button should render call to action variant 1`] = `
   line-height: 28px;
   border: 1px solid;
   border-radius: 20px;
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,35%);
 }
 
@@ -525,8 +525,8 @@ exports[`component: Button should render call to action variant 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -554,8 +554,8 @@ exports[`component: Button should render danger variant 1`] = `
   line-height: 28px;
   border: 1px solid;
   border-radius: 20px;
-  color: hsl(0,0%,100%);
   background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
 }
 
@@ -978,8 +978,8 @@ exports[`component: Button should render standard variant 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
@@ -1045,8 +1045,8 @@ exports[`component: Button should support margin space props 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 

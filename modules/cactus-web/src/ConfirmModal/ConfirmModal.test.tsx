@@ -17,7 +17,6 @@ describe('Modal variant is warning', () => {
     )
 
     expect(baseElement).toMatchSnapshot()
-    expect(baseElement.querySelector('div[variant=warning')).toBeInTheDocument()
   })
 })
 describe('Modal variant is success', () => {
@@ -28,7 +27,7 @@ describe('Modal variant is success', () => {
       </StyleProvider>
     )
 
-    expect(baseElement.querySelector('div[variant=success')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
   })
 })
 describe('Modal variant is danger', () => {
@@ -39,7 +38,7 @@ describe('Modal variant is danger', () => {
       </StyleProvider>
     )
 
-    expect(baseElement.querySelector('div[variant=danger')).toBeInTheDocument()
+    expect(baseElement).toMatchSnapshot()
   })
 })
 
