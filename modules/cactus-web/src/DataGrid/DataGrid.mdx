@@ -5,35 +5,194 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import DataGrid from './DataGrid'
+import SplitButton from '../SplitButton/SplitButton'
+import { Component } from 'react'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # DataGrid
 
-TODO - describe component here
-
-TODO - render component here
+The `DataGrid` is a wrapper for `Table` that allows you to easily define table columns using the API and provides sorting & pagination capabilities.
 
 ## Best practices
 
-TODO - see README for what to include here
+- It is the responsibility of the developer to save changes to `sortOptions` & `paginationOptions` and pass the updated values back
+  through the props; the `DataGrid` component does not manage those values internally.
+- Use `paginationProps` and `prevNextProps` to manage labels & text for the `Pagination` and `PrevNext` components, respectively. This
+  makes features such as internationalization possible.
+- Just like the `Table`, the `DataGrid` should be rendered as a child of `ScreenSizeProvider` to take advantage of the card carousel feature.
+- If `pageSizeOptions` is omitted from `paginationOptions`, the component will not render the selection of page sizes to choose from.
+- If `pageCount` is omitted from `paginationOptions`, `DataGrid` will render the `PrevNext` component to handle pagination instead of the `Pagination` component.
+- You can provide text describing how many rows are displayed using the `resultsCountText` prop. It will display this text above the `DataGrid`.
+- The `DataGrid.DataColumn` exposes an `as` prop which can be used to render a column's cells using a certain component. The component rendered will
+  receive a single `value` prop which is the data value to be rendered in the cell.
 
 ## Basic usage
 
-TODO - brief description
+The `DataGrid` component has two sub-components to help define your grid structure:
+  - `DataGrid.DataColumn` - Receives an `id` prop and renders data from the `data` prop when the key matches `id`. Requires no children.
+  - `DataGrid.Column` - Receives a child render function which will be to render anything in this column's cells. The column will not
+    have a title, and can be used to render components that allow you to take some action for a given row.
 
-```jsx
-import React from 'react'
-import { DataGrid } from '@repay/cactus-web'
+### Try It Out
 
-;<DataGrid />
-```
+export const code = `
+const BoolComponent = ({ value }) => (<div>{value ? 'YES' : 'NO'}</div>)
+class DataGridContainer extends React.Component {
+  constructor(props) {
+    const INITIAL_DATA = [
+      {
+        name: 'Config 1',
+        created: '4/13/2020',
+        active: true,
+      },
+      {
+        name: 'Config 2',
+        created: '5/25/2019',
+        active: true,
+      },
+      {
+        name: 'Config 3',
+        created: '8/16/2019',
+        active: false,
+      },
+      {
+        name: 'Config 4',
+        created: '2/20/2019',
+        active: true,
+      },
+      {
+        name: 'Config 5',
+        created: '5/16/2019',
+        active: false,
+      },
+      {
+        name: 'Config 6',
+        created: '10/31/2019',
+        active: true,
+      },
+      {
+        name: 'Config 7',
+        created: '11/23/2019',
+        active: true,
+      },
+      {
+        name: 'Config 8',
+        created: '3/20/2020',
+        active: false,
+      },
+      {
+        name: 'Config 9',
+        created: '6/13/2020',
+        active: false,
+      },
+      {
+        name: 'Config 10',
+        created: '7/1/2020',
+        active: true,
+      },
+      {
+        name: 'Config 11',
+        created: '3/3/2020',
+        active: true,
+      },
+    ]
+    super(props)
+    this.state = {
+      data: INITIAL_DATA,
+      sortOptions: [{ id: 'created', sortAscending: false }],
+      paginationOptions: { currentPage: 1, pageCount: 3, pageSize: 4, pageSizeOptions: [4, 6, 12] },
+    }
+    this.paginateData = this.paginateData.bind(this)
+    this.onSort = this.onSort.bind(this)
+    this.onPageChange = this.onPageChange.bind(this)
+  }
+  paginateData() {
+    const index1 = (this.state.paginationOptions.currentPage - 1) * this.state.paginationOptions.pageSize
+    const index2 = index1 + this.state.paginationOptions.pageSize
+    return this.state.data.slice(index1, index2)
+  }
+  onSort(newSortOptions) {
+    const sortId = newSortOptions[0].id
+    const sortAscending = newSortOptions[0].sortAscending
+    const dataCopy = JSON.parse(JSON.stringify(this.state.data))
+    if (sortId === 'created') {
+      if (sortAscending) {
+        dataCopy.sort((a, b) => {
+          return (new Date(a.created)) - (new Date(b.created))
+        })
+      } else {
+        dataCopy.sort((a, b) => {
+          return (new Date(b.created)) - (new Date(a.created))
+        })
+      }
+    } else if (sortId === 'active') {
+      if (sortAscending) {
+        dataCopy.sort((a, b) => {
+          return a.active === b.active ? 0 : a.active ? 1 : -1
+        })
+      } else {
+        dataCopy.sort((a, b) => {
+          return a.active === b.active ? 0 : a.active ? -1 : 1
+        })
+      }
+    }
+    this.setState(state => ({
+      ...state,
+      data: dataCopy,
+      sortOptions: newSortOptions,
+    }))
+  }
+  onPageChange(newPaginationOptions) {
+    if (newPaginationOptions.pageSize !== this.state.paginationOptions.pageSize) {
+      newPaginationOptions.pageCount = Math.ceil(this.state.data.length / newPaginationOptions.pageSize)
+    }
+    this.setState(state => ({
+      ...state,
+      paginationOptions: newPaginationOptions,
+    }))
+  }
+  render() {
+    return (
+      <DataGrid
+        data={this.paginateData()}
+        paginationOptions={this.state.paginationOptions}
+        sortOptions={this.state.sortOptions}
+        onSort={this.onSort}
+        onPageChange={this.onPageChange}
+      >
+        <DataGrid.DataColumn id="name" title="Name" />
+        <DataGrid.DataColumn id="created" title="Created" sortable={true} />
+        <DataGrid.DataColumn id="active" title="Active" sortable={true} as={BoolComponent} />
+        <DataGrid.Column>
+          {(rowData) => (
+            <SplitButton onSelectMainAction={() => {}} mainActionLabel="Edit">
+              <SplitButton.Action
+                onSelect={() => {}}
+              >
+                Clone
+              </SplitButton.Action>
+              <SplitButton.Action onSelect={() => {}}>Delete</SplitButton.Action>
+            </SplitButton>
+          )}
+        </DataGrid.Column>
+      </DataGrid>
+    )
+  }
+}
+render(<DataGridContainer />)
+`
 
-```tsx
-import * as React from 'react'
-import { DataGrid } from '@repay/cactus-web'
-
-;<DataGrid />
-```
+<LiveProvider code={code} scope={{ DataGrid, SplitButton }} noInline={true}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Properties
 
+### DataGrid
 <PropsTable of={DataGrid} />
+
+### DataGrid.DataColumn
+<PropsTable of={DataGrid} staticProp="DataColumn" />
