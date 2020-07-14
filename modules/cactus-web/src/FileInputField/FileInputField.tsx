@@ -4,7 +4,7 @@ import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import FileInput, { FileInputProps } from '../FileInput/FileInput'
+import FileInput, { FileInputProps, FileObject } from '../FileInput/FileInput'
 import Label from '../Label/Label'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -19,7 +19,7 @@ interface FileInputFieldProps extends FileInputProps, MarginProps {
 }
 
 const FileInputFieldBase = (props: FileInputFieldProps) => {
-  const { className, label, labelProps, id, tooltip, ...fileInputProps } = omitMargins(
+  const { className, disabled, label, labelProps, id, tooltip, ...fileInputProps } = omitMargins(
     props
   ) as Omit<FileInputFieldProps, keyof MarginProps>
   const inputId = useId(id, 'file-input')
@@ -36,8 +36,10 @@ const FileInputFieldBase = (props: FileInputFieldProps) => {
       <Label htmlFor={inputId} {...labelProps}>
         {label}
       </Label>
-      {tooltip && <Tooltip id={tipId} label={tooltip} maxWidth={tooltipWidth} />}
-      <FileInput id={inputId} aria-describedby={tipId} {...fileInputProps} />
+      {tooltip && (
+        <Tooltip id={tipId} label={tooltip} maxWidth={tooltipWidth} disabled={disabled} />
+      )}
+      <FileInput id={inputId} aria-describedby={tipId} disabled={disabled} {...fileInputProps} />
     </FieldWrapper>
   )
 }
@@ -50,6 +52,7 @@ export const FileInputField = styled(FileInputFieldBase)`
     position: relative;
     bottom: 4px;
     padding-left: 16px;
+    ${(p) => p.disabled && `color: ${p.theme.colors.mediumGray};`}
   }
 
   ${Tooltip} {
@@ -57,18 +60,18 @@ export const FileInputField = styled(FileInputFieldBase)`
     top: -2px;
     right: 8px
     font-size: 16px;
+    ${(p) => p.disabled && `color: ${p.theme.colors.mediumGray};`}
   }
 
   ${margin}
 `
 
-// @ts-ignore
 FileInputField.propTypes = {
   label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   tooltip: PropTypes.string,
   name: PropTypes.string.isRequired,
-  accept: PropTypes.arrayOf(PropTypes.string),
+  accept: PropTypes.arrayOf(PropTypes.string) as PropTypes.Validator<string[] | undefined>,
   labels: PropTypes.shape({
     delete: PropTypes.string,
     retry: PropTypes.string,
@@ -81,6 +84,7 @@ FileInputField.propTypes = {
   onError: PropTypes.func,
   rawFiles: PropTypes.bool,
   multiple: PropTypes.bool,
+  disabled: PropTypes.bool,
   value: PropTypes.arrayOf(
     PropTypes.shape({
       fileName: PropTypes.string.isRequired,
@@ -88,7 +92,7 @@ FileInputField.propTypes = {
       status: PropTypes.oneOf(['loading', 'loaded', 'error']),
       errorMsg: PropTypes.string,
     })
-  ),
+  ) as PropTypes.Validator<FileObject[] | undefined>,
 }
 
 export default FileInputField

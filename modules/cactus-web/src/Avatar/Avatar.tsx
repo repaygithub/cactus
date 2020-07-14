@@ -8,6 +8,7 @@ import {
   NotificationInfo,
   StatusCheck,
 } from '@repay/cactus-icons'
+import PropTypes from 'prop-types'
 import styled, { css, ThemeProps } from 'styled-components'
 
 export type AvatarType = 'alert' | 'feedback'
@@ -16,15 +17,19 @@ export type AvatarStatus = 'error' | 'warning' | 'info' | 'success'
 interface AvatarProps extends MarginProps {
   type?: AvatarType
   status?: AvatarStatus
+  disabled?: boolean
   className?: string
 }
 
-type ColorMap = { [K in AvatarStatus]: ReturnType<typeof css> }
 type UsageMap = { [K in AvatarType]: ReturnType<typeof css> }
 
 const avatar = (props: AvatarProps): ReturnType<typeof css> | undefined => {
-  const { type } = props
-  if (type !== undefined) {
+  const { type, disabled } = props
+  if (disabled) {
+    return css`
+      color: ${(p) => p.theme.colors.white};
+    `
+  } else if (type !== undefined) {
     return usageMap[type]
   }
 }
@@ -39,9 +44,11 @@ const iconColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
 }
 
 const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
-  const { type, status } = props
+  const { type, status, disabled } = props
 
-  if (type === 'alert') {
+  if (disabled) {
+    return props.theme.colors.mediumGray
+  } else if (type === 'alert') {
     switch (status) {
       case 'error':
         return props.theme.colors.status.avatar.error
@@ -75,26 +82,13 @@ const usageMap: UsageMap = {
   `,
 }
 
-const colorMap: ColorMap = {
-  error: css`
-    background: ${avaColor};
-  `,
-  warning: css`
-    background: ${avaColor};
-  `,
-  info: css`
-    background: ${avaColor};
-  `,
-  success: css`
-    background: ${avaColor};
-  `,
-}
-
 const variant = (props: AvatarProps) => {
   const { status } = props
 
   if (status !== undefined) {
-    return colorMap[status]
+    return css`
+      background: ${avaColor};
+    `
   }
 }
 
@@ -130,15 +124,22 @@ export const Avatar = styled(AvatarBase)<AvatarProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   ${NotificationError} {
     padding-bottom: 4px;
   }
-  
+
   ${margin}
   ${variant}
   ${avatar}
 `
+
+Avatar.propTypes = {
+  type: PropTypes.oneOf(['alert', 'feedback']),
+  status: PropTypes.oneOf(['error', 'warning', 'info', 'success']),
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+}
 
 Avatar.defaultProps = {
   type: 'feedback',

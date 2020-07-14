@@ -23,6 +23,23 @@ describe('component: FileInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
+  test('should render a disabled file input field', () => {
+    const { container } = render(
+      <StyleProvider>
+        <FileInputField
+          name="bears"
+          id="consistent"
+          label="Just Boolin"
+          accept={['.txt']}
+          tooltip="upload something"
+          disabled={true}
+        />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
   test('should render a loading file', () => {
     const { container } = render(
       <StyleProvider>

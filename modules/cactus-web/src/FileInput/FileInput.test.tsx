@@ -9,10 +9,21 @@ describe('component: FileInput', () => {
   test('should render a file input', () => {
     const { container } = render(
       <StyleProvider>
+        <FileInput name="throatpunch" accept={['.tsx']} labels={{ delete: 'ejecto seato cuz' }} />
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('should render a disabled file input', () => {
+    const { container } = render(
+      <StyleProvider>
         <FileInput
           name="throatpunch"
           accept={['.tsx']}
-          labels={{ delete: 'ejecto seato cuz', retry: 'give it another try' }}
+          labels={{ delete: 'ejecto seato cuz' }}
+          disabled={true}
         />
       </StyleProvider>
     )
@@ -26,7 +37,7 @@ describe('component: FileInput', () => {
         <FileInput
           name="throatpunch"
           accept={['.md']}
-          labels={{ delete: 'ejecto seato cuz', retry: 'give it another try' }}
+          labels={{ delete: 'ejecto seato cuz' }}
           value={[{ fileName: 'boolest.md', contents: 'bickin back bein bool', status: 'loading' }]}
         />
       </StyleProvider>
@@ -41,7 +52,7 @@ describe('component: FileInput', () => {
         <FileInput
           name="throatpunch"
           accept={['.md']}
-          labels={{ delete: 'ejecto seato cuz', retry: 'give it another try' }}
+          labels={{ delete: 'ejecto seato cuz' }}
           value={[{ fileName: 'boolest.md', contents: 'bickin back bein bool', status: 'loaded' }]}
         />
       </StyleProvider>
@@ -56,7 +67,7 @@ describe('component: FileInput', () => {
         <FileInput
           name="throatpunch"
           accept={['.md']}
-          labels={{ delete: 'ejecto seato cuz', retry: 'give it another try' }}
+          labels={{ delete: 'ejecto seato cuz' }}
           value={[
             {
               fileName: 'boolest.md',
