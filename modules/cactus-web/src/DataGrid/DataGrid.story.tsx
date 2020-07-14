@@ -193,6 +193,11 @@ const DataGridContainer = () => {
           nextPageLabel: text('Pagination: nextPageLabel', ''),
           lastPageLabel: text('Pagination: lastPageLabel', ''),
         }}
+        prevNextProps={{
+          prevText: text('PrevNext: prevText', ''),
+          nextText: text('PrevNext: nextText', ''),
+          disableNext: boolean('PrevNext: disableNext', false),
+        }}
       >
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
