@@ -96,7 +96,6 @@ const DataGridContainer = () => {
 
   const deleteRow = (rowData: { [key: string]: any }) => {
     const deleteIndex = data.findIndex((datum) => datum.name === rowData.name)
-    console.log(deleteIndex)
     setData((currentData) => {
       const newData = [...currentData]
       newData.splice(deleteIndex, 1)
@@ -194,8 +193,8 @@ const DataGridContainer = () => {
           lastPageLabel: text('Pagination: lastPageLabel', ''),
         }}
         prevNextProps={{
-          prevText: text('PrevNext: prevText', ''),
-          nextText: text('PrevNext: nextText', ''),
+          prevText: text('PrevNext: prevText', 'Prev'),
+          nextText: text('PrevNext: nextText', 'Next'),
           disableNext: boolean('PrevNext: disableNext', false),
         }}
       >

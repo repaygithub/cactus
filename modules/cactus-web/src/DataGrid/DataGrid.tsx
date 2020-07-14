@@ -244,12 +244,12 @@ const DataGridBase = (props: DataGridProps) => {
                   : paginationOptions.currentPage + 1,
             })
           }}
-          {...prevNextProps}
           disableNext={
             prevNextProps
               ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
               : data.length < paginationOptions.pageSize
           }
+          {...prevNextProps}
         />
       )}
     </div>
@@ -328,7 +328,7 @@ const ResultsViewSectionBase = (props: ResultsViewSectionProps) => {
 }
 
 const IEStyles = () => {
-  if (/MSIE|Trident/.test(window.navigator.userAgent)) {
+  if (typeof window !== 'undefined' && /MSIE|Trident/.test(window.navigator.userAgent)) {
     return css`
       width: 100%;
     `
@@ -462,7 +462,7 @@ const PageSizeSelect = styled(PageSizeSelectBase)`
   }
 `
 
-const DataColumn = (props: DataColumnProps) => {
+export const DataColumn = (props: DataColumnProps) => {
   const { id, title, sortable = false, as: asComponent } = props
   const { addDataColumn } = useContext(DataGridContext)
   useEffect(() => {
@@ -513,18 +513,18 @@ DataGrid.propTypes = {
     lastPageLabel: PropTypes.string,
     makeLinkLabel: PropTypes.func,
   }),
-  prevNextProps: {
+  prevNextProps: PropTypes.shape({
     prevText: PropTypes.string,
     nextText: PropTypes.string,
     disableNext: PropTypes.bool,
-  },
+  }),
 }
 
 DataColumn.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   sortable: PropTypes.bool,
-  as: PropTypes.element,
+  as: PropTypes.elementType,
 }
 
 Column.propTypes = {
