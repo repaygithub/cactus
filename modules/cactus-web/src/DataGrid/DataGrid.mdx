@@ -20,7 +20,7 @@ The `DataGrid` is a wrapper for `Table` that allows you to easily define table c
   through the props; the `DataGrid` component does not manage those values internally.
 - Use `paginationProps` and `prevNextProps` to manage labels & text for the `Pagination` and `PrevNext` components, respectively. This
   makes features such as internationalization possible.
-- Just like the `Table`, the `DataGrid` should be rendered as a child of `ScreenSizeProvider` to take advantage of the card carousel feature.
+- Just like the `Table`, the `DataGrid` should be rendered as a descendant of `ScreenSizeProvider` to take advantage of the card carousel feature.
 - If `pageSizeOptions` is omitted from `paginationOptions`, the component will not render the selection of page sizes to choose from.
 - If `pageCount` is omitted from `paginationOptions`, `DataGrid` will render the `PrevNext` component to handle pagination instead of the `Pagination` component.
 - You can provide text describing how many rows are displayed using the `resultsCountText` prop. It will display this text above the `DataGrid`.
@@ -31,8 +31,7 @@ The `DataGrid` is a wrapper for `Table` that allows you to easily define table c
 
 The `DataGrid` component has two sub-components to help define your grid structure:
   - `DataGrid.DataColumn` - Receives an `id` prop and renders data from the `data` prop when the key matches `id`. Requires no children.
-  - `DataGrid.Column` - Receives a child render function which will be to render anything in this column's cells. The column will not
-    have a title, and can be used to render components that allow you to take some action for a given row.
+  - `DataGrid.Column` - Receives a child render function which will be to render anything in this column's cells.
 
 ### Try It Out
 
