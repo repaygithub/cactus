@@ -78,6 +78,9 @@ const DataGridContainer = () => {
   const showResultsCount = boolean('Show Results Count', true)
   const providePageSizeOptions = boolean('Provide Page Size Options', true)
   const providePageCount = boolean('Provide Page Count', true)
+  const prevText = text('PrevNext: prevText', 'Prev')
+  const nextText = text('PrevNext: nextText', 'Next')
+  const disableNext = boolean('PrevNext: disableNext', false)
 
   const [data, setData] = useState<Array<{ [key: string]: any }>>(INITIAL_DATA)
   const [sortOptions, setSortOptions] = useState<Array<{ id: string; sortAscending: boolean }>>([])
@@ -190,11 +193,18 @@ const DataGridContainer = () => {
           nextPageLabel: text('Pagination: nextPageLabel', ''),
           lastPageLabel: text('Pagination: lastPageLabel', ''),
         }}
-        prevNextProps={{
-          prevText: text('PrevNext: prevText', 'Prev'),
-          nextText: text('PrevNext: nextText', 'Next'),
-          disableNext: boolean('PrevNext: disableNext', false),
-        }}
+        prevNextProps={
+          disableNext
+            ? {
+                prevText,
+                nextText,
+                disableNext,
+              }
+            : {
+                prevText,
+                nextText,
+              }
+        }
       >
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
