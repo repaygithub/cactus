@@ -86,7 +86,7 @@ exports[`component: Table card carousel 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   font-size: 12.5px;
-  line-height: 18px;
+  line-height: 1.44;
   overflow-wrap: break-word;
 }
 
@@ -271,7 +271,7 @@ exports[`component: Table regular table 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 
@@ -474,7 +474,7 @@ exports[`component: Table table with caption 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 
@@ -672,7 +672,7 @@ exports[`component: Table table with no header 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 

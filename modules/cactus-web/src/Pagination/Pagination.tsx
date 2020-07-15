@@ -299,7 +299,7 @@ const PageItem = styled.li`
   &,
   :link {
     color: ${(p) => p.theme.colors.darkestContrast};
-    ${(p) => p.theme.textStyles.small};
+    font-size: ${(p) => p.theme.fontSizes.small}px;
     line-height: 18px;
     text-decoration: none;
   }

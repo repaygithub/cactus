@@ -17,7 +17,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 
 .c12 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -140,7 +140,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 
 .c4 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -323,7 +323,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 
 .c22 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -401,7 +401,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   overflow-wrap: break-word;
   display: inline-block;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   background-color: hsla(353,84%,44%,0.3);
 }
 
@@ -488,7 +488,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c9 .c10 {
@@ -587,7 +587,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 
 .c4 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -819,7 +819,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 
 .c19 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -938,7 +938,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c9 .c10 {
@@ -1037,7 +1037,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 
 .c4 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -1205,7 +1205,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
 
 .c13 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -1281,7 +1281,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c9 .c21 {
@@ -1380,7 +1380,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
 
 .c4 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -1532,7 +1532,7 @@ exports[`component: FileInputField should render file input field 1`] = `
 
 .c12 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -1640,7 +1640,7 @@ exports[`component: FileInputField should render file input field 1`] = `
 
 .c4 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }

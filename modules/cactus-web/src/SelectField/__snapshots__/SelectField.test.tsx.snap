@@ -7,7 +7,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
 
 .c5 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }

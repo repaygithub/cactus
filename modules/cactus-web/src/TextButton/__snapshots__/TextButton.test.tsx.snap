@@ -4,7 +4,7 @@ exports[`With theme changes  Should have 2px border 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -59,7 +59,7 @@ exports[`With theme changes  Should have intermediate shape 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -114,7 +114,7 @@ exports[`With theme changes  Should have square shape 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -169,7 +169,7 @@ exports[`component: TextButton should default to standard variant 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -228,7 +228,7 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
 
 .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -298,7 +298,7 @@ exports[`component: TextButton should render a text+icon button 1`] = `
 
 .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -364,7 +364,7 @@ exports[`component: TextButton should render call to action variant 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -419,7 +419,7 @@ exports[`component: TextButton should render danger variant 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -474,7 +474,7 @@ exports[`component: TextButton should render disabled variant 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -526,7 +526,7 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -582,7 +582,7 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -634,7 +634,7 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -689,7 +689,7 @@ exports[`component: TextButton should render standard variant 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -744,7 +744,7 @@ exports[`component: TextButton should support space props 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;

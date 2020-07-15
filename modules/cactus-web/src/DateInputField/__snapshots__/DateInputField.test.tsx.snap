@@ -7,7 +7,7 @@ exports[`component: DateInputField snapshot 1`] = `
 
 .c5 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -148,7 +148,7 @@ exports[`component: DateInputField snapshot 1`] = `
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c6:focus-within {

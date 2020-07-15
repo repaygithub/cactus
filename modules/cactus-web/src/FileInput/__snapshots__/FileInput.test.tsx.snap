@@ -13,7 +13,7 @@ exports[`component: FileInput should render a disabled file input 1`] = `
 
 .c5 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -197,7 +197,7 @@ exports[`component: FileInput should render a file input 1`] = `
 
 .c5 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -407,7 +407,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
 
 .c15 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -485,7 +485,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   overflow-wrap: break-word;
   display: inline-block;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   background-color: hsla(353,84%,44%,0.3);
 }
 
@@ -572,7 +572,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c2 .c3 {
@@ -818,7 +818,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
 
 .c12 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -937,7 +937,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c2 .c3 {
@@ -1119,7 +1119,7 @@ exports[`component: FileInput should render a loading file 1`] = `
 
 .c6 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   position: relative;
   border: none;
   padding: 4px;
@@ -1195,7 +1195,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c2 .c13 {

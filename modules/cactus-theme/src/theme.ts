@@ -624,31 +624,31 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     textStyles: {
       tiny: {
         fontSize: '12.5px',
-        lineHeight: '18px',
+        lineHeight: '1.44',
       },
       small: {
         fontSize: '15px',
-        lineHeight: '23px',
+        lineHeight: '1.6',
       },
       body: {
         fontSize: '18px',
-        lineHeight: '28px',
+        lineHeight: '1.5',
       },
       h4: {
         fontSize: '21.6px',
-        lineHeight: '32px',
+        lineHeight: '1.5',
       },
       h3: {
         fontSize: '25.92px',
-        lineHeight: '40px',
+        lineHeight: '1.5',
       },
       h2: {
         fontSize: '31.104px',
-        lineHeight: '48px',
+        lineHeight: '1.5',
       },
       h1: {
         fontSize: '37.325px',
-        lineHeight: '56px',
+        lineHeight: '1.5',
       },
     },
   }

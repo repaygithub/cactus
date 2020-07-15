@@ -49,7 +49,6 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
 .c1:link {
   color: hsl(200,10%,20%);
   font-size: 15px;
-  line-height: 23px;
   line-height: 18px;
   -webkit-text-decoration: none;
   text-decoration: none;

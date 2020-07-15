@@ -48,7 +48,6 @@ exports[`component: DataGrid snapshot 1`] = `
 .c17:link {
   color: hsl(200,10%,20%);
   font-size: 15px;
-  line-height: 23px;
   line-height: 18px;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -135,7 +134,7 @@ exports[`component: DataGrid snapshot 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 
@@ -380,7 +379,6 @@ exports[`component: DataGrid snapshot 1`] = `
 .c2 .page-option a {
   color: hsl(200,10%,20%);
   font-size: 15px;
-  line-height: 23px;
   line-height: 18px;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -423,7 +421,7 @@ exports[`component: DataGrid snapshot 1`] = `
   height: 32px;
   outline: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 400px;
   cursor: pointer;
   padding-left: 12px;

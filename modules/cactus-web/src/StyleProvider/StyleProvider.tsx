@@ -47,7 +47,6 @@ body {
   color: ${(p) => p.theme.colors.darkestContrast};
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.54;
   letter-spacing: normal;
   margin: 0;
 }

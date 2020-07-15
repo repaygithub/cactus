@@ -14,7 +14,7 @@ exports[`component: SplitButton snapshot 1`] = `
   height: 32px;
   outline: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 400px;
   cursor: pointer;
   padding-left: 12px;
@@ -142,7 +142,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   height: 32px;
   outline: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 400px;
   cursor: pointer;
   padding-left: 12px;
@@ -300,7 +300,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
   height: 32px;
   outline: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 400px;
   cursor: pointer;
   padding-left: 12px;
@@ -458,7 +458,7 @@ exports[`component: SplitButton with theme customization should have intermediat
   height: 32px;
   outline: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 400px;
   cursor: pointer;
   padding-left: 12px;
@@ -616,7 +616,7 @@ exports[`component: SplitButton with theme customization should have square shap
   height: 32px;
   outline: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 400px;
   cursor: pointer;
   padding-left: 12px;

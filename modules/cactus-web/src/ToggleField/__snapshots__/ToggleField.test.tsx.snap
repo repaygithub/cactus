@@ -7,7 +7,7 @@ exports[`component: ToggleField snapshot 1`] = `
 
 .c10 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -162,7 +162,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
 
 .c10 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -349,7 +349,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
 
 .c10 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }

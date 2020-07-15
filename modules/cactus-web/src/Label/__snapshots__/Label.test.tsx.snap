@@ -4,7 +4,7 @@ exports[`component: Label should render a label component 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -21,7 +21,7 @@ exports[`component: Label should support margin space props 1`] = `
 <DocumentFragment>
   .c0 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
   margin-left: 4px;

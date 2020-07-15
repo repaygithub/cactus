@@ -44,7 +44,7 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
 const PrevNextLink = styled(PrevNextLinkBase)`
   cursor: pointer;
   padding: 0 10px;
-  ${(p) => p.theme.textStyles.small};
+  font-size: ${(p) => p.theme.fontSizes.small}px;
   line-height: 20px;
   text-decoration: none;
 

@@ -115,7 +115,7 @@ exports[`component: DateInput snapshot 1`] = `
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -414,7 +414,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -726,7 +726,7 @@ exports[`component: DateInput with theme customization should match intermediate
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -1052,7 +1052,7 @@ exports[`component: DateInput with theme customization should match square shape
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -1336,7 +1336,7 @@ exports[`component: DateInput with theme customization should not have box shado
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
