@@ -51,5 +51,6 @@ Array [
   "ToggleField",
   "Tooltip",
   "useId",
+  "ConfirmModal",
 ]
 `;

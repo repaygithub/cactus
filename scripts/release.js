@@ -148,7 +148,8 @@ async function main() {
       content += generateCommit(commit)
     }
   }
-  const publishCommit = getRelevantCommits()[0]
+  const updatedCommits = await getRelevantCommits()
+  const publishCommit = updatedCommits[0]
   content = generateReleaseHeader(pkg, releaseVersion, publishCommit) + content + '\n'
 
   let where = CHANGELOG.indexOf('## ')

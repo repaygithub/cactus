@@ -14,7 +14,7 @@ describe('Modal is open when isOpen=true', () => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
-          variant="default"
+          variant="action"
           isOpen={true}
           modalLabel="Modal Label"
           closeLabel="Close Label"
@@ -58,7 +58,7 @@ describe('Can render content as children', () => {
     const { getByTestId } = render(
       <StyleProvider>
         <Modal
-          variant="default"
+          variant="action"
           isOpen={true}
           modalLabel="Modal Label"
           closeLabel="Close Label"

@@ -8,7 +8,7 @@ import Button, { ButtonVariants } from './Button'
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
-const buttonVariants: ButtonVariants[] = ['standard', 'action', 'danger']
+const buttonVariants: ButtonVariants[] = ['standard', 'action', 'danger', 'warning', 'success']
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
 const buttonStories = storiesOf('Button', module)
 
