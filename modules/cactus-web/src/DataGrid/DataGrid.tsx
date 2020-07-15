@@ -170,12 +170,9 @@ const DataGridBase = (props: DataGridProps) => {
                           : 'none'
                         : undefined
                     }
-                    tabIndex={!column.sortable ? -1 : undefined}
                   >
                     {column.sortable ? (
-                      <span
-                        role="button"
-                        tabIndex={0}
+                      <HeaderButton
                         onClick={() => {
                           const { sortAscending: currentSortAscending } = sortOptions[0] || {}
                           const newOptions = [
@@ -187,7 +184,7 @@ const DataGridBase = (props: DataGridProps) => {
                         {column.title}
 
                         {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
-                      </span>
+                      </HeaderButton>
                     ) : (
                       column.title
                     )}
@@ -303,6 +300,16 @@ export const DataGrid = styled(DataGridBase)`
     margin-top: 40px;
   }
 ` as any
+
+const HeaderButton = styled.button`
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+`
 
 const ResultsViewSectionBase = (props: ResultsViewSectionProps) => {
   const {

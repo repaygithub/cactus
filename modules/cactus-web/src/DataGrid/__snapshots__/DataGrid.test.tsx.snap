@@ -1,16 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: DataGrid snapshot 1`] = `
-.c8 {
+.c9 {
   vertical-align: middle;
 }
 
-.c14 {
+.c15 {
   font-size: 8px;
-  vertical-align: middle;
-}
-
-.c18 {
   vertical-align: middle;
 }
 
@@ -18,7 +14,11 @@ exports[`component: DataGrid snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c15 {
+.c20 {
+  vertical-align: middle;
+}
+
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -31,7 +31,7 @@ exports[`component: DataGrid snapshot 1`] = `
   padding: 0;
 }
 
-.c16 {
+.c17 {
   min-width: 15px;
   height: 24px;
   text-align: center;
@@ -44,8 +44,8 @@ exports[`component: DataGrid snapshot 1`] = `
   border-left: 1px solid hsl(200,29%,90%);
 }
 
-.c16,
-.c16:link {
+.c17,
+.c17:link {
   color: hsl(200,10%,20%);
   font-size: 15px;
   line-height: 23px;
@@ -54,17 +54,17 @@ exports[`component: DataGrid snapshot 1`] = `
   text-decoration: none;
 }
 
-.c16:last-child {
+.c17:last-child {
   border-right: 1px solid hsl(200,29%,90%);
 }
 
-.c16 svg {
+.c17 svg {
   width: 15px;
   height: 15px;
   vertical-align: middle;
 }
 
-.c17 {
+.c18 {
   cursor: pointer;
   padding: 3px;
   vertical-align: middle;
@@ -79,34 +79,34 @@ exports[`component: DataGrid snapshot 1`] = `
   font: inherit;
 }
 
-.c17:visited {
+.c18:visited {
   color: hsl(200,18%,45%);
 }
 
-.c17:hover {
+.c18:hover {
   color: hsl(200,96%,35%);
 }
 
-.c17:active,
-.c17:focus {
+.c18:active,
+.c18:focus {
   padding: 3px;
   outline: none;
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c17::-moz-focus-inner {
+.c18::-moz-focus-inner {
   border: none;
 }
 
-.c17[disabled],
-.c17[aria-disabled='true'] {
+.c18[disabled],
+.c18[aria-disabled='true'] {
   color: hsl(0,0%,90%);
   background-color: transparent;
   cursor: default;
 }
 
-.c17[aria-current='page'] {
+.c18[aria-current='page'] {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
 }
@@ -275,11 +275,11 @@ exports[`component: DataGrid snapshot 1`] = `
   cursor: pointer;
 }
 
-.c0 th .c7 {
+.c0 th .c8 {
   margin-left: 8px;
 }
 
-.c0 .flip-chevron .c7 {
+.c0 .flip-chevron .c8 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
@@ -288,6 +288,16 @@ exports[`component: DataGrid snapshot 1`] = `
 .c0 .pagination {
   margin-right: 16px;
   margin-top: 40px;
+}
+
+.c7 {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  font-weight: inherit;
+  cursor: pointer;
 }
 
 .c1 {
@@ -388,7 +398,7 @@ exports[`component: DataGrid snapshot 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c11 {
+.c12 {
   box-sizing: border-box;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
@@ -403,29 +413,29 @@ exports[`component: DataGrid snapshot 1`] = `
   padding-right: 12px;
 }
 
-.c11 svg {
+.c12 svg {
   margin-right: 4px;
   margin-bottom: 3px;
 }
 
-.c11::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c11.dd-closed {
+.c12.dd-closed {
   border-color: hsl(200,10%,20%);
 }
 
-.c11.dd-closed:hover,
-.c11.dd-closed:focus {
+.c12.dd-closed:hover,
+.c12.dd-closed:focus {
   border-color: hsl(200,96%,35%);
 }
 
-.c11.dd-open {
+.c12.dd-open {
   border-color: hsl(200,96%,35%);
 }
 
-.c13 {
+.c14 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
   height: 32px;
@@ -437,39 +447,39 @@ exports[`component: DataGrid snapshot 1`] = `
   cursor: pointer;
 }
 
-.c13 .c7 {
+.c14 .c8 {
   width: 10px;
   height: 10px;
   color: hsl(0,0%,100%);
 }
 
-.c13:hover,
-.c13:focus {
+.c14:hover,
+.c14:focus {
   background-color: hsl(200,96%,35%);
 }
 
-.c13[aria-expanded='true'] ~ .c10 {
+.c14[aria-expanded='true'] ~ .c11 {
   border-color: hsl(200,96%,35%);
 }
 
-.c9 {
+.c10 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
 }
 
-.c9 .c12[aria-expanded='true'] {
+.c10 .c13[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
 }
 
-.c9 .c12[aria-expanded='true'] .c7 {
+.c10 .c13[aria-expanded='true'] .c8 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c9 .c12[aria-expanded='true'] + .c10 {
+.c10 .c13[aria-expanded='true'] + .c11 {
   border-color: hsl(200,96%,35%);
 }
 
@@ -591,7 +601,6 @@ exports[`component: DataGrid snapshot 1`] = `
           <tr>
             <th
               class="c6 table-cell  "
-              tabindex="-1"
             >
               Name
             </th>
@@ -599,14 +608,13 @@ exports[`component: DataGrid snapshot 1`] = `
               aria-sort="descending"
               class="c6 table-cell  cursor-pointer"
             >
-              <span
-                role="button"
-                tabindex="0"
+              <button
+                class="c7"
               >
                 Created
                 <svg
                   aria-hidden="true"
-                  class="c7 c8"
+                  class="c8 c9"
                   fill="currentcolor"
                   height="1em"
                   viewBox="0 0 24 24"
@@ -617,18 +625,17 @@ exports[`component: DataGrid snapshot 1`] = `
                     transform="rotate(-90 12 12)"
                   />
                 </svg>
-              </span>
+              </button>
             </th>
             <th
               aria-sort="none"
               class="c6 table-cell  cursor-pointer"
             >
-              <span
-                role="button"
-                tabindex="0"
+              <button
+                class="c7"
               >
                 Active
-              </span>
+              </button>
             </th>
             <th
               class="c6"
@@ -660,10 +667,10 @@ exports[`component: DataGrid snapshot 1`] = `
               class="c6"
             >
               <div
-                class="c9"
+                class="c10"
               >
                 <button
-                  class="c10 c11 dd-closed"
+                  class="c11 c12 dd-closed"
                   type="button"
                 >
                   Edit
@@ -672,14 +679,14 @@ exports[`component: DataGrid snapshot 1`] = `
                   aria-controls="menu--1"
                   aria-haspopup="true"
                   aria-label="Action List"
-                  class="c12 c13"
+                  class="c13 c14"
                   data-reach-menu-button=""
                   id="menu-button--menu--1"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="c7 c14"
+                    class="c8 c15"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -718,10 +725,10 @@ exports[`component: DataGrid snapshot 1`] = `
               class="c6"
             >
               <div
-                class="c9"
+                class="c10"
               >
                 <button
-                  class="c10 c11 dd-closed"
+                  class="c11 c12 dd-closed"
                   type="button"
                 >
                   Edit
@@ -730,14 +737,14 @@ exports[`component: DataGrid snapshot 1`] = `
                   aria-controls="menu--2"
                   aria-haspopup="true"
                   aria-label="Action List"
-                  class="c12 c13"
+                  class="c13 c14"
                   data-reach-menu-button=""
                   id="menu-button--menu--2"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="c7 c14"
+                    class="c8 c15"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -776,10 +783,10 @@ exports[`component: DataGrid snapshot 1`] = `
               class="c6"
             >
               <div
-                class="c9"
+                class="c10"
               >
                 <button
-                  class="c10 c11 dd-closed"
+                  class="c11 c12 dd-closed"
                   type="button"
                 >
                   Edit
@@ -788,14 +795,14 @@ exports[`component: DataGrid snapshot 1`] = `
                   aria-controls="menu--3"
                   aria-haspopup="true"
                   aria-label="Action List"
-                  class="c12 c13"
+                  class="c13 c14"
                   data-reach-menu-button=""
                   id="menu-button--menu--3"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="c7 c14"
+                    class="c8 c15"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -834,10 +841,10 @@ exports[`component: DataGrid snapshot 1`] = `
               class="c6"
             >
               <div
-                class="c9"
+                class="c10"
               >
                 <button
-                  class="c10 c11 dd-closed"
+                  class="c11 c12 dd-closed"
                   type="button"
                 >
                   Edit
@@ -846,14 +853,14 @@ exports[`component: DataGrid snapshot 1`] = `
                   aria-controls="menu--4"
                   aria-haspopup="true"
                   aria-label="Action List"
-                  class="c12 c13"
+                  class="c13 c14"
                   data-reach-menu-button=""
                   id="menu-button--menu--4"
                   type="button"
                 >
                   <svg
                     aria-hidden="true"
-                    class="c7 c14"
+                    class="c8 c15"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -876,16 +883,16 @@ exports[`component: DataGrid snapshot 1`] = `
       class="pagination"
     >
       <ol
-        class="c15"
+        class="c16"
         role="list"
       >
         <li
-          class="c16"
+          class="c17"
         >
           <a
             aria-disabled="true"
             aria-label="Go to page 1"
-            class="c17"
+            class="c18"
             role="link"
           >
             <svg
@@ -902,17 +909,17 @@ exports[`component: DataGrid snapshot 1`] = `
           </a>
         </li>
         <li
-          class="c16"
+          class="c17"
         >
           <a
             aria-disabled="true"
             aria-label="Go to previous page, 0"
-            class="c17"
+            class="c18"
             rel="prev"
             role="link"
           >
             <svg
-              class="c18"
+              class="c19"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -925,24 +932,24 @@ exports[`component: DataGrid snapshot 1`] = `
           </a>
         </li>
         <li
-          class="c16"
+          class="c17"
         >
           <a
             aria-current="page"
             aria-disabled="true"
             aria-label="Current page, 1"
-            class="c17"
+            class="c18"
             role="link"
           >
             1
           </a>
         </li>
         <li
-          class="c16"
+          class="c17"
         >
           <a
             aria-label="Go to page 2"
-            class="c17"
+            class="c18"
             role="link"
             tabindex="0"
           >
@@ -950,11 +957,11 @@ exports[`component: DataGrid snapshot 1`] = `
           </a>
         </li>
         <li
-          class="c16"
+          class="c17"
         >
           <a
             aria-label="Go to page 3"
-            class="c17"
+            class="c18"
             role="link"
             tabindex="0"
           >
@@ -962,17 +969,17 @@ exports[`component: DataGrid snapshot 1`] = `
           </a>
         </li>
         <li
-          class="c16"
+          class="c17"
         >
           <a
             aria-label="Go to next page, 2"
-            class="c17"
+            class="c18"
             rel="next"
             role="link"
             tabindex="0"
           >
             <svg
-              class="c19"
+              class="c20"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -986,11 +993,11 @@ exports[`component: DataGrid snapshot 1`] = `
           </a>
         </li>
         <li
-          class="c16"
+          class="c17"
         >
           <a
             aria-label="Go to last page, 3"
-            class="c17"
+            class="c18"
             role="link"
             tabindex="0"
           >
