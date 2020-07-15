@@ -11,7 +11,7 @@ import useId from '../helpers/useId'
 
 interface DataGridContextType {
   addDataColumn: (dataColumn: DataColumn) => void
-  addColumnFn: (fnKey: string, columnFn: ColumnFn) => void
+  addColumn: (key: string, columnFn: ColumnFn, title?: string) => void
 }
 
 type ColumnFn = (rowData: { [key: string]: any }) => React.ReactNode
@@ -25,7 +25,7 @@ interface DataColumn {
 
 const DataGridContext = createContext<DataGridContextType>({
   addDataColumn: () => {},
-  addColumnFn: () => {},
+  addColumn: () => {},
 })
 
 interface DataGridProps extends MarginProps {
@@ -93,6 +93,18 @@ interface DataColumnProps {
 
 interface ColumnProps {
   children: ColumnFn
+  title?: string
+}
+
+interface DataColumnObject {
+  title: string
+  sortable: boolean
+  asComponent?: React.ComponentType<any>
+}
+
+interface ColumnObject {
+  columnFn: ColumnFn
+  title?: string
 }
 
 const DataGridBase = (props: DataGridProps) => {
@@ -111,12 +123,7 @@ const DataGridBase = (props: DataGridProps) => {
     paginationProps,
     prevNextProps,
   } = props
-  const [columns, setColumns] = useState(
-    new Map<
-      string,
-      { title: string; sortable: boolean; asComponent?: React.ComponentType<any> } | ColumnFn
-    >()
-  )
+  const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
 
   useEffect(() => {
     if (sortOptions.length > 0 && typeof onSort === 'function') {
@@ -128,13 +135,13 @@ const DataGridBase = (props: DataGridProps) => {
     setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
   }
 
-  const addColumnFn = (fnKey: string, columnFn: ColumnFn) => {
-    setColumns(new Map(columns.set(fnKey, columnFn)))
+  const addColumn = (key: string, columnFn: ColumnFn, title?: string) => {
+    setColumns(new Map(columns.set(key, { columnFn, title })))
   }
 
   return (
     <div className={className}>
-      <DataGridContext.Provider value={{ addDataColumn, addColumnFn }}>
+      <DataGridContext.Provider value={{ addDataColumn, addColumn }}>
         {children}
         <ResultsViewSection
           onPageChange={onPageChange}
@@ -146,8 +153,9 @@ const DataGridBase = (props: DataGridProps) => {
         <Table fullWidth={fullWidth}>
           <Table.Header>
             {[...columns.keys()].map((key) => {
-              const column = columns.get(key)
-              if (typeof column === 'object') {
+              let column = columns.get(key)
+              if (column && column.hasOwnProperty('sortable')) {
+                column = column as DataColumnObject
                 let sortOpt: SortOption | undefined = undefined
                 if (column.sortable) {
                   sortOpt = sortOptions.find((opt: SortOption) => opt.id === key)
@@ -192,7 +200,8 @@ const DataGridBase = (props: DataGridProps) => {
                   </Table.Cell>
                 )
               } else {
-                return <Table.Cell key={`col-${key}`}></Table.Cell>
+                column = column as ColumnObject
+                return <Table.Cell key={`col-${key}`}>{column.title || ''}</Table.Cell>
               }
             })}
           </Table.Header>
@@ -200,8 +209,9 @@ const DataGridBase = (props: DataGridProps) => {
             {data.map((datum, datumIndex) => (
               <Table.Row key={`row-${datumIndex}`}>
                 {[...columns.keys()].map((key, keyIndex) => {
-                  const column = columns.get(key)
-                  if (typeof column === 'object') {
+                  let column = columns.get(key)
+                  if (column && column.hasOwnProperty('sortable')) {
+                    column = column as DataColumnObject
                     const AsComponent = column.asComponent
                     return (
                       <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
@@ -209,9 +219,10 @@ const DataGridBase = (props: DataGridProps) => {
                       </Table.Cell>
                     )
                   } else {
+                    column = column as ColumnObject
                     return (
                       <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
-                        {column && column(datum)}
+                        {column && column.columnFn(datum)}
                       </Table.Cell>
                     )
                   }
@@ -235,7 +246,7 @@ const DataGridBase = (props: DataGridProps) => {
         <PrevNext
           className="pagination"
           disablePrev={paginationOptions.currentPage === 1}
-          onNavigate={(direction) => {
+          onNavigate={(direction: 'prev' | 'next') => {
             onPageChange({
               ...paginationOptions,
               currentPage:
@@ -472,12 +483,12 @@ export const DataColumn = (props: DataColumnProps) => {
 }
 
 const Column = (props: ColumnProps) => {
-  const { children } = props
-  const { addColumnFn } = useContext(DataGridContext)
+  const { children, title } = props
+  const { addColumn } = useContext(DataGridContext)
   const fnKey = useId()
   useEffect(() => {
     if (children && typeof children === 'function') {
-      addColumnFn(fnKey, children)
+      addColumn(fnKey, children, title)
     }
   }, [children]) // eslint-disable-line react-hooks/exhaustive-deps
   return <React.Fragment />
