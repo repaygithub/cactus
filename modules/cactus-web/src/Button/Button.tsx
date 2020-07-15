@@ -202,6 +202,7 @@ export const Button = styled(ButtonBase)<ButtonProps>`
   padding: 2px 30px;
   outline: none;
   cursor: pointer;
+  overflow: visible;
   box-sizing: border-box;
   ${(p) => p.theme.textStyles.body};
   ${(p) => getBorder(p.theme.border)};
