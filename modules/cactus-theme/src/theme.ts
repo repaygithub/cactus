@@ -19,16 +19,17 @@ export type StatusColors = {
 }
 
 export interface FontSizeObject extends Array<number> {
-  h1?: number
-  h2?: number
-  h3?: number
-  h4?: number
-  body?: number
+  h1: number
+  h2: number
+  h3: number
+  h4: number
+  body: number
   /**
    * Alias for body
    */
-  p?: number
-  small?: number
+  p: number
+  small: number
+  tiny: number
 }
 
 export interface IconSizeObject extends Array<number> {
@@ -590,13 +591,14 @@ const repayOptions: GeneratorOptions = {
 export function generateTheme(options: GeneratorOptions = repayOptions): CactusTheme {
   const [colors, colorStyles] = isHue(options) ? fromHue(options) : fromTwoColor(options)
 
-  const fontSizes: FontSizeObject = [15, 18, 21.6, 25.92, 31.104, 37.325]
-  fontSizes.h1 = fontSizes[5]
-  fontSizes.h2 = fontSizes[4]
-  fontSizes.h3 = fontSizes[3]
-  fontSizes.h4 = fontSizes[2]
-  fontSizes.body = fontSizes.p = fontSizes[1]
-  fontSizes.small = fontSizes[0]
+  const fontSizes = [12.5, 15, 18, 21.6, 25.92, 31.104, 37.325] as FontSizeObject
+  fontSizes.h1 = fontSizes[6]
+  fontSizes.h2 = fontSizes[5]
+  fontSizes.h3 = fontSizes[4]
+  fontSizes.h4 = fontSizes[3]
+  fontSizes.body = fontSizes.p = fontSizes[2]
+  fontSizes.small = fontSizes[1]
+  fontSizes.tiny = fontSizes[0]
 
   const iconSizes: IconSizeObject = [8, 16, 24, 40]
   iconSizes.tiny = iconSizes[0]
@@ -623,31 +625,31 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     boxShadows,
     textStyles: {
       tiny: {
-        fontSize: '12.5px',
+        fontSize: `${fontSizes.tiny}px`,
         lineHeight: '1.44',
       },
       small: {
-        fontSize: '15px',
+        fontSize: `${fontSizes.small}px`,
         lineHeight: '1.6',
       },
       body: {
-        fontSize: '18px',
+        fontSize: `${fontSizes.body}px`,
         lineHeight: '1.5',
       },
       h4: {
-        fontSize: '21.6px',
+        fontSize: `${fontSizes.h4}px`,
         lineHeight: '1.5',
       },
       h3: {
-        fontSize: '25.92px',
+        fontSize: `${fontSizes.h3}px`,
         lineHeight: '1.5',
       },
       h2: {
-        fontSize: '31.104px',
+        fontSize: `${fontSizes.h2}px`,
         lineHeight: '1.5',
       },
       h1: {
-        fontSize: '37.325px',
+        fontSize: `${fontSizes.h1}px`,
         lineHeight: '1.5',
       },
     },
