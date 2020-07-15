@@ -14,8 +14,7 @@ import { livePreviewStyle } from '../helpers/constants'
 
 # Modal
 
-The `Modal` component is useful when an action from the user is required, and no other interaction
-on the web page is permited until the modal is closed.
+The `Modal` component acts just as a container, and is usefull when no action from the user is required.
 
 ### Try it out
 
@@ -23,7 +22,7 @@ export const code = ` () => {
   const [open, setOpen] = React.useState(false)
   return open ? (
     <Modal
-      variant="default"
+      variant="action"
       isOpen={open}
       onClose={() => setOpen(false)}
       modalLabel="Modal Label"
@@ -61,7 +60,7 @@ const ComponentWithModal = () => {
   const [open, setOpen] = useState(false)
   return (
     <Modal
-      variant="default"
+      variant="action"
       isOpen={open}
       onClose={() => setOpen(false)}
       modalLabel="Modal Label"

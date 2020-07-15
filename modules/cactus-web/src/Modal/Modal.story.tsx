@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-
-import * as icons from '@repay/cactus-icons/i'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Button from '../Button/Button'
 import Modal, { ModalType } from './Modal'
+import React, { useState } from 'react'
 import Text from '../Text/Text'
 
 const modalStories = storiesOf('Modal', module)
@@ -12,7 +10,7 @@ const modalStories = storiesOf('Modal', module)
 type StatusOptions = { [k in ModalType]: ModalType }
 
 const statusOptions: StatusOptions = {
-  default: 'default',
+  action: 'action',
   danger: 'danger',
   warning: 'warning',
   success: 'success',
@@ -20,7 +18,7 @@ const statusOptions: StatusOptions = {
 
 const ModalWithState = () => {
   const [open, setOpen] = useState(true)
-  const variant = select('variant', statusOptions, statusOptions.default)
+  const variant = select('variant', statusOptions, statusOptions.action)
   const modalLabel = text('Modal Label', 'Modal Label')
   const closeLabel = text('Close icon label', 'Close Label')
 

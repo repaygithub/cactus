@@ -66,16 +66,20 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
 }
 
 .c0 > [data-reach-dialog-content] {
+  -webkit-flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  width: 100%;
   border: 1px solid;
   border-radius: 20px;
   background: white;
-  border-color: hsl(200,96%,35%);
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
   margin: auto;
-  max-width: 90%;
+  max-width: 80%;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
+  border-color: hsl(200,96%,35%);
 }
 
 .c0 > [data-reach-dialog-content] .c1 {
@@ -89,6 +93,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
 @media screen and (min-width:1024px) {
   .c0 > [data-reach-dialog-content] {
     padding: 40px 88px;
+    max-width: 30%;
   }
 
   .c0 > [data-reach-dialog-content] .c1 {
@@ -123,7 +128,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
           aria-label="Modal Label"
           class="c0 "
           data-reach-dialog-overlay=""
-          variant="default"
+          variant="action"
         >
           <div
             aria-label="Modal Label"

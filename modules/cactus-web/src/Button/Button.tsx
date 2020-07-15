@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import styled, { css } from 'styled-components'
 
-export type ButtonVariants = 'standard' | 'action' | 'danger'
+export type ButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
 
 interface ButtonProps
   extends Omit<
@@ -28,13 +28,11 @@ type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${(p) => p.theme.colors.callToActionText};
-    background-color: ${(p) => p.theme.colors.callToAction};
+    ${(p) => p.theme.colorStyles.callToAction}
     border-color: ${(p) => p.theme.colors.callToAction};
 
     &:hover {
-      color: ${(p) => p.theme.colors.baseText};
-      background-color: ${(p) => p.theme.colors.base};
+      ${(p) => p.theme.colorStyles.base}
       border-color: ${(p) => p.theme.colors.base};
     }
   `,
@@ -44,20 +42,38 @@ const variantMap: VariantMap = {
     border-color: ${(p) => p.theme.colors.base};
 
     &:hover {
-      color: ${(p) => p.theme.colors.baseText};
-      background-color: ${(p) => p.theme.colors.base};
+      ${(p) => p.theme.colorStyles.base}
       border-color: ${(p) => p.theme.colors.base};
     }
   `,
   danger: css`
-    color: ${(p) => p.theme.colors.white};
-    background-color: ${(p) => p.theme.colors.error};
+    ${(p) => p.theme.colorStyles.error}
     border-color: ${(p) => p.theme.colors.error};
 
     &:hover {
       color: ${(p) => p.theme.colors.white};
       background-color: ${(p) => p.theme.colors.errorDark};
       border-color: ${(p) => p.theme.colors.errorDark};
+    }
+  `,
+  warning: css`
+    ${(p) => p.theme.colorStyles.warning}
+    border-color: ${(p) => p.theme.colors.warning};
+
+    &:hover {
+      color: ${(p) => p.theme.colors.white};
+      background-color: ${(p) => p.theme.colors.warningDark};
+      border-color: ${(p) => p.theme.colors.warningDark};
+    }
+  `,
+  success: css`
+    ${(p) => p.theme.colorStyles.success}
+    border-color: ${(p) => p.theme.colors.success};
+
+    &:hover {
+      color: ${(p) => p.theme.colors.white};
+      background-color: ${(p) => p.theme.colors.successDark};
+      border-color: ${(p) => p.theme.colors.successDark};
     }
   `,
 }
@@ -93,6 +109,28 @@ const inverseVariantMap: VariantMap = {
     &:hover {
       color: ${(p) => p.theme.colors.white};
       background-color: ${(p) => p.theme.colors.error};
+    }
+  `,
+  warning: css`
+    color: ${(p) => p.theme.colors.warning};
+    background-color: ${(p) => p.theme.colors.white};
+    border-color: ${(p) => p.theme.colors.warning};
+
+    &:hover {
+      color: ${(p) => p.theme.colors.white};
+      background-color: ${(p) => p.theme.colors.warning};
+      border-color: ${(p) => p.theme.colors.warning};
+    }
+  `,
+  success: css`
+    color: ${(p) => p.theme.colors.success};
+    background-color: ${(p) => p.theme.colors.white};
+    border-color: ${(p) => p.theme.colors.success};
+
+    &:hover {
+      color: ${(p) => p.theme.colors.white};
+      background-color: ${(p) => p.theme.colors.success};
+      border-color: ${(p) => p.theme.colors.success};
     }
   `,
 }
@@ -159,7 +197,7 @@ const ButtonBase: React.FC<ButtonProps> = ({
   )
 }
 
-export const Button = styled(ButtonBase)`
+export const Button = styled(ButtonBase)<ButtonProps>`
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -206,9 +244,8 @@ export const Button = styled(ButtonBase)`
   ${variantOrDisabled}
 `
 
-// @ts-ignore
 Button.propTypes = {
-  variant: PropTypes.oneOf(['standard', 'action', 'danger']),
+  variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success']),
   disabled: PropTypes.bool,
   inverse: PropTypes.bool,
   loading: PropTypes.bool,

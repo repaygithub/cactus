@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 
 const ModalComponent: React.FC<RouteComponentProps> = () => {
   const [open, setOpen] = useState(false)
-  const [variant, setVariant] = useState<ModalType>('default')
+  const [variant, setVariant] = useState<ModalType>('action')
 
   const setVariantName = (value: any) => {
     const name: ModalType = value
