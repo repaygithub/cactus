@@ -77,7 +77,7 @@ const MainActionButton = styled.button`
   height: 32px;
   outline: none;
   ${(p) => p.theme.textStyles.body};
-  font-weight: 400px;
+  font-weight: 400;
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;

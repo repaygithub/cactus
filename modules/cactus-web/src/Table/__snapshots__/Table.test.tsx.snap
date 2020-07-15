@@ -9,7 +9,7 @@ exports[`component: Table card carousel 1`] = `
 
 .c6 {
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
   text-align: left;
   max-width: 100%;
   -webkit-box-flex: 1;
@@ -91,7 +91,7 @@ exports[`component: Table card carousel 1`] = `
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1,
@@ -276,7 +276,7 @@ exports[`component: Table regular table 1`] = `
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1 td,
@@ -479,7 +479,7 @@ exports[`component: Table table with caption 1`] = `
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1 td,
@@ -677,7 +677,7 @@ exports[`component: Table table with no header 1`] = `
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1 td,

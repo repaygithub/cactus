@@ -209,7 +209,7 @@ const getShape = (shape: Shape, location: BorderCorner) =>
 
 const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
   text-align: left;
   max-width: 100%;
   flex-grow: 1;
@@ -426,7 +426,7 @@ const StyledTable = styled.table<TableProps>`
   color: ${(p) => p.theme.colors.darkestContrast};
 
   th {
-    font-weight: bold;
+    font-weight: 600;
   }
 
   ${variant({ table, card })};

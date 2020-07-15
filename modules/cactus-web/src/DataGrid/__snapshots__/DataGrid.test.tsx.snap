@@ -139,7 +139,7 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 .c4 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c4 td,
@@ -422,7 +422,7 @@ exports[`component: DataGrid snapshot 1`] = `
   outline: none;
   font-size: 18px;
   line-height: 1.5;
-  font-weight: 400px;
+  font-weight: 400;
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;

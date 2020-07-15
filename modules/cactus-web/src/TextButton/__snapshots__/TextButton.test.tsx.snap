@@ -536,7 +536,7 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   text-decoration: none;
   cursor: pointer;
   box-sizing: border-box;
-  font-weight: 700;
+  font-weight: 600;
   color: hsl(200,96%,35%);
 }
 

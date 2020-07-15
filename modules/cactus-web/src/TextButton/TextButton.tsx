@@ -60,7 +60,7 @@ const getBorder = (size: BorderSize) => borderMap[size]
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    font-weight: 700;
+    font-weight: 600;
     color: ${(p) => p.theme.colors.callToAction};
   `,
   standard: css`
