@@ -47,7 +47,7 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
   const { type, status, disabled } = props
 
   if (disabled) {
-    return props.theme.colors.mediumGray
+    return props.theme.colorStyles.disable
   } else if (type === 'alert') {
     switch (status) {
       case 'error':
@@ -93,7 +93,7 @@ const variant = (props: AvatarProps) => {
     return css`
       ${avaColor}
     `
-  }
+  } else return
 }
 
 const getIcon = (status: AvatarStatus = 'info') => {

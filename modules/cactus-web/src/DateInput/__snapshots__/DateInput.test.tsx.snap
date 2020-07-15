@@ -41,7 +41,7 @@ exports[`component: DateInput snapshot 1`] = `
 }
 
 .c2:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c2:hover {
@@ -153,7 +153,7 @@ exports[`component: DateInput snapshot 1`] = `
 
 .c0 input:focus {
   outline: none;
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0 input::-webkit-input-placeholder {
@@ -326,7 +326,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
 }
 
 .c2:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c2:hover {
@@ -452,7 +452,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
 
 .c0 input:focus {
   outline: none;
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0 input::-webkit-input-placeholder {
@@ -624,7 +624,7 @@ exports[`component: DateInput with theme customization should match intermediate
 }
 
 .c2:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c2:hover {
@@ -764,7 +764,7 @@ exports[`component: DateInput with theme customization should match intermediate
 
 .c0 input:focus {
   outline: none;
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0 input::-webkit-input-placeholder {
@@ -936,7 +936,7 @@ exports[`component: DateInput with theme customization should match square shape
 }
 
 .c2:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c2:hover {
@@ -1090,7 +1090,7 @@ exports[`component: DateInput with theme customization should match square shape
 
 .c0 input:focus {
   outline: none;
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0 input::-webkit-input-placeholder {
@@ -1262,7 +1262,7 @@ exports[`component: DateInput with theme customization should not have box shado
 }
 
 .c2:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c2:hover {
@@ -1374,7 +1374,7 @@ exports[`component: DateInput with theme customization should not have box shado
 
 .c0 input:focus {
   outline: none;
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0 input::-webkit-input-placeholder {

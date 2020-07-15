@@ -314,7 +314,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 .c15:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c15:hover {
@@ -402,7 +402,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   display: inline-block;
   font-size: 15px;
   line-height: 23px;
-  background-color: hsla(353,84%,44%,0.3);
+  background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
 }
 
 .c19 .c12,
@@ -481,7 +482,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   align-items: center;
   color: hsl(200,10%,20%);
   border: 2px solid hsl(353,84%,44%);
-  background-color: hsla(353,84%,44%,0.2);
+  background-color: hsla(353,84%,44%,0.3);
 }
 
 .c9 span {
@@ -810,7 +811,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 }
 
 .c15:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c15:hover {
@@ -931,7 +932,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   align-items: center;
   color: hsl(200,10%,20%);
   border: 2px solid hsl(145,89%,28%);
-  background-color: hsla(145,89%,28%,0.2);
+  background-color: hsla(145,89%,28%,0.3);
 }
 
 .c9 span {

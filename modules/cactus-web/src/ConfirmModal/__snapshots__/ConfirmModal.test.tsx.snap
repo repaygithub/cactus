@@ -161,7 +161,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -211,7 +211,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border: 1px solid;
   border-radius: 20px;
   background: white;
-  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
   outline: none;
@@ -665,7 +665,7 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -715,7 +715,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   border: 1px solid;
   border-radius: 20px;
   background: white;
-  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
   outline: none;
@@ -1099,7 +1099,7 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -1141,7 +1141,7 @@ exports[`Modal variant is success snapshot 1`] = `
   border: 1px solid;
   border-radius: 20px;
   background: white;
-  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
   outline: none;
@@ -1511,7 +1511,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -1545,7 +1545,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   border: 1px solid;
   border-radius: 20px;
   background: white;
-  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.25);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
   outline: none;
