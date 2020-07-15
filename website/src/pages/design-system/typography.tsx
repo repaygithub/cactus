@@ -17,37 +17,37 @@ const Table = styled('table')`
   }
 
   @media only screen and (max-width: 500px){
-    table, thead, tbody, th, td { 
-      display: block; 
+    table, thead, tbody, th, td {
+      display: block;
       align: left;
     }
 
-    thead  { 
-    display: none; 
+    thead  {
+    display: none;
     }
     
-    td { 
+    td {
       border: none;
       position: relative;
       padding: 0 10% 10% 35%;
-      border-bottom: 1px solid #eee; 
+      border-bottom: 1px solid #eee;
       overflow-x:auto;
     }
     
-    td:before { 
+    td:before {
       position: absolute;
       top: 2px;
       left: 2px;
-      width: 30%; 
+      width: 30%;
     }
-    
+
     td:nth-of-type(1):before { content: " Scale"; }
     td:nth-of-type(2):before { content: " Rem"; }
     td:nth-of-type(3):before { content: "PX"; }
     td:nth-of-type(4):before { content: "Line Height";  }
-    
+
     td:nth-of-type(5) { border-bottom: 2px solid #131313; }
-  
+
   }
 `
 const WeightFlex = styled(Flex)`
@@ -110,9 +110,9 @@ export default () => {
             <td>
               <Span fontSize="h1">H1</Span>
             </td>
-            <td>{(cactusTheme.fontSizes[5] / 18).toFixed(3)} em</td>
-            <td>{cactusTheme.fontSizes[5]} px</td>
-            <td>{Math.round(cactusTheme.fontSizes[5] * 1.5)} px</td>
+            <td>{(cactusTheme.fontSizes.h1 / 18).toFixed(3)} em</td>
+            <td>{cactusTheme.fontSizes.h1} px</td>
+            <td>{cactusTheme.textStyles.h1.lineHeight}</td>
             <td>
               <Span fontSize="h1">The quick brown fox...</Span>
             </td>
@@ -121,9 +121,9 @@ export default () => {
             <td>
               <Span fontSize="h2">H2</Span>
             </td>
-            <td>{(cactusTheme.fontSizes[4] / 18).toFixed(3)} em</td>
-            <td>{cactusTheme.fontSizes[4]} px</td>
-            <td>{Math.round(cactusTheme.fontSizes[4] * 1.54)} px</td>
+            <td>{(cactusTheme.fontSizes.h2 / 18).toFixed(3)} em</td>
+            <td>{cactusTheme.fontSizes.h2} px</td>
+            <td>{cactusTheme.textStyles.h2.lineHeight}</td>
             <td>
               <Span fontSize="h2">The quick brown fox jumps...</Span>
             </td>
@@ -132,9 +132,9 @@ export default () => {
             <td>
               <Span fontSize="h3">H3</Span>
             </td>
-            <td>{(cactusTheme.fontSizes[3] / 18).toFixed(2)} em</td>
-            <td>{cactusTheme.fontSizes[3]} px</td>
-            <td>{Math.round(cactusTheme.fontSizes[3] * 1.54)} px</td>
+            <td>{(cactusTheme.fontSizes.h3 / 18).toFixed(2)} em</td>
+            <td>{cactusTheme.fontSizes.h3} px</td>
+            <td>{cactusTheme.textStyles.h3.lineHeight}</td>
             <td>
               <Span fontSize="h3">The quick brown fox jumps over...</Span>
             </td>
@@ -143,9 +143,9 @@ export default () => {
             <td>
               <Span fontSize="h4">H4</Span>
             </td>
-            <td>{(cactusTheme.fontSizes[2] / 18).toFixed(1)} em</td>
-            <td>{cactusTheme.fontSizes[2]} px</td>
-            <td>{Math.round(cactusTheme.fontSizes[2] * 1.5)} px</td>
+            <td>{(cactusTheme.fontSizes.h4 / 18).toFixed(1)} em</td>
+            <td>{cactusTheme.fontSizes.h4} px</td>
+            <td>{cactusTheme.textStyles.h4.lineHeight}</td>
             <td>
               <Span fontSize="h4">The quick brown fox jumps over the...</Span>
             </td>
@@ -154,9 +154,9 @@ export default () => {
             <td>
               <Span fontSize="p">P</Span>
             </td>
-            <td>{(cactusTheme.fontSizes[1] / 18).toFixed(1)} em</td>
-            <td>{cactusTheme.fontSizes[1]} px</td>
-            <td>{Math.round(cactusTheme.fontSizes[1] * 1.54)} px</td>
+            <td>{(cactusTheme.fontSizes.p / 18).toFixed(1)} em</td>
+            <td>{cactusTheme.fontSizes.p} px</td>
+            <td>{cactusTheme.textStyles.body.lineHeight}</td>
             <td>
               <Span fontSize="p">The quick brown fox jumps over the lazy dog.</Span>
             </td>
@@ -165,11 +165,22 @@ export default () => {
             <td>
               <Span fontSize="small">small</Span>
             </td>
-            <td>{(cactusTheme.fontSizes[0] / 18).toFixed(1)} em</td>
-            <td>{cactusTheme.fontSizes[0]} px</td>
-            <td>{Math.round(cactusTheme.fontSizes[0] * 1.54)} px</td>
+            <td>{(cactusTheme.fontSizes.small / 18).toFixed(1)} em</td>
+            <td>{cactusTheme.fontSizes.small} px</td>
+            <td>{cactusTheme.textStyles.small.lineHeight}</td>
             <td>
               <Span fontSize="small">The quick brown fox jumps over the lazy dog.</Span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Span fontSize="tiny">tiny</Span>
+            </td>
+            <td>{(cactusTheme.fontSizes.tiny / 18).toFixed(1)} em</td>
+            <td>{cactusTheme.fontSizes.tiny} px</td>
+            <td>{cactusTheme.textStyles.tiny.lineHeight}</td>
+            <td>
+              <Span fontSize="tiny">The quick brown fox jumps over the lazy dog.</Span>
             </td>
           </tr>
         </tbody>
