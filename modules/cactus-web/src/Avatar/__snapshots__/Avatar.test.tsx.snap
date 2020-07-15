@@ -73,7 +73,7 @@ exports[`component: Avatars Alert Avatar, Alert, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: background-color:hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
   color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
 }
@@ -174,7 +174,7 @@ exports[`component: Avatars Alert Avatar, Check, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: background-color:hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
   color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
 }
@@ -306,10 +306,6 @@ exports[`component: Avatars Alert Avatar, Error, disabled 1`] = `
   padding-bottom: 4px;
 }
 
-.c11 .c1 {
-  padding-bottom: 4px;
-}
-
 .c0 {
   box-sizing: border-box;
   width: 40px;
@@ -327,7 +323,7 @@ exports[`component: Avatars Alert Avatar, Error, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: background-color:hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
   color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
 }
@@ -428,7 +424,7 @@ exports[`component: Avatars Alert Avatar, Information, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: background-color:hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
   color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
 }

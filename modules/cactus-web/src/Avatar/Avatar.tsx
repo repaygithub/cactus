@@ -83,17 +83,20 @@ const usageMap: UsageMap = {
 }
 
 const variant = (props: AvatarProps) => {
-  const { status, type } = props
+  const { status, type, disabled } = props
 
-  if (status !== undefined && type === 'alert') {
-    return css`
-      background: ${avaColor};
-    `
-  } else if (status !== undefined && type === 'feedback') {
-    return css`
-      ${avaColor}
-    `
-  } else return
+  if (status !== undefined) {
+    if (disabled) return avaColor
+
+    switch (type) {
+      case 'alert':
+        return css`
+          background: ${avaColor};
+        `
+      case 'feedback':
+        return avaColor
+    }
+  }
 }
 
 const getIcon = (status: AvatarStatus = 'info') => {
