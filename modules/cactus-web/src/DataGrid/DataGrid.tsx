@@ -1,4 +1,5 @@
 import { border } from '../helpers/theme'
+import { keyPressAsClick } from '../helpers/a11y'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import Pagination from '../Pagination/Pagination'
@@ -389,6 +390,9 @@ const PageSizeSelectBase = (props: PageSizeSelectProps) => {
                   onClick={() => {
                     onPageChange({ ...paginationOptions, pageSize: pageSize })
                   }}
+                  onKeyPress={keyPressAsClick(() => {
+                    onPageChange({ ...paginationOptions, pageSize: pageSize })
+                  })}
                   tabIndex={isCurrentPageSize ? undefined : 0}
                   aria-label={makePageSizeLabel(pageSize)}
                 >
@@ -541,6 +545,7 @@ DataColumn.propTypes = {
 
 Column.propTypes = {
   children: PropTypes.func.isRequired,
+  title: PropTypes.string,
 }
 
 type DataGridType = StyledComponent<typeof DataGridBase, DefaultTheme, DataGridProps> & {
