@@ -269,9 +269,9 @@ describe('component: DataGrid', () => {
     const page2Button = getByLabelText('Go to page 2')
     fireEvent.click(page2Button)
     // First result on page 2
-    expect(getByText('Config 11')).toBeInTheDocument()
+    expect(getByText('Config 5')).toBeInTheDocument()
     // Last result on page 2
-    expect(getByText('Config 3')).toBeInTheDocument()
+    expect(getByText('Config 8')).toBeInTheDocument()
   })
 
   test('should be able to change the page using PrevNext', () => {
@@ -284,9 +284,9 @@ describe('component: DataGrid', () => {
     const nextPageButton = getByText('Next')
     fireEvent.click(nextPageButton)
     // First result on page 2
-    expect(getByText('Config 11')).toBeInTheDocument()
+    expect(getByText('Config 5')).toBeInTheDocument()
     // Last result on page 2
-    expect(getByText('Config 3')).toBeInTheDocument()
+    expect(getByText('Config 8')).toBeInTheDocument()
   })
 
   test('should render content from Column component', () => {

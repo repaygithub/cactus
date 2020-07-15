@@ -80,9 +80,7 @@ const DataGridContainer = () => {
   const providePageCount = boolean('Provide Page Count', true)
 
   const [data, setData] = useState<Array<{ [key: string]: any }>>(INITIAL_DATA)
-  const [sortOptions, setSortOptions] = useState<Array<{ id: string; sortAscending: boolean }>>([
-    { id: 'created', sortAscending: false },
-  ])
+  const [sortOptions, setSortOptions] = useState<Array<{ id: string; sortAscending: boolean }>>([])
   const [paginationOptions, setPaginationOptions] = useState<{
     currentPage: number
     pageSize: number

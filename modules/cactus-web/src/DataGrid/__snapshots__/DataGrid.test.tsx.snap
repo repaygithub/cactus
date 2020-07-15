@@ -642,12 +642,12 @@ exports[`component: DataGrid snapshot 1`] = `
             <td
               class="c6"
             >
-              Config 10
+              Config 1
             </td>
             <td
               class="c6"
             >
-              7/1/2020
+              4/13/2020
             </td>
             <td
               class="c6"
@@ -700,18 +700,18 @@ exports[`component: DataGrid snapshot 1`] = `
             <td
               class="c6"
             >
-              Config 9
+              Config 2
             </td>
             <td
               class="c6"
             >
-              6/13/2020
+              5/25/2019
             </td>
             <td
               class="c6"
             >
               <div>
-                NO
+                YES
               </div>
             </td>
             <td
@@ -758,18 +758,18 @@ exports[`component: DataGrid snapshot 1`] = `
             <td
               class="c6"
             >
-              Config 1
+              Config 3
             </td>
             <td
               class="c6"
             >
-              4/13/2020
+              8/16/2019
             </td>
             <td
               class="c6"
             >
               <div>
-                YES
+                NO
               </div>
             </td>
             <td
@@ -816,18 +816,18 @@ exports[`component: DataGrid snapshot 1`] = `
             <td
               class="c6"
             >
-              Config 8
+              Config 4
             </td>
             <td
               class="c6"
             >
-              3/20/2020
+              2/20/2019
             </td>
             <td
               class="c6"
             >
               <div>
-                NO
+                YES
               </div>
             </td>
             <td

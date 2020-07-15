@@ -125,12 +125,6 @@ const DataGridBase = (props: DataGridProps) => {
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
 
-  useEffect(() => {
-    if (sortOptions.length > 0 && typeof onSort === 'function') {
-      onSort(sortOptions)
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
   const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn) => {
     setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
   }
@@ -183,7 +177,7 @@ const DataGridBase = (props: DataGridProps) => {
                         role="button"
                         tabIndex={0}
                         onClick={() => {
-                          const { sortAscending: currentSortAscending } = sortOptions[0]
+                          const { sortAscending: currentSortAscending } = sortOptions[0] || {}
                           const newOptions = [
                             { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
                           ]
