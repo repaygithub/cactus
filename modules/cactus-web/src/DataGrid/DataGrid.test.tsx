@@ -245,8 +245,7 @@ describe('component: DataGrid', () => {
 
     const createdHeader = getByText('Created')
     fireEvent.click(createdHeader)
-    const headerEl = createdHeader.parentElement ? createdHeader.parentElement.parentElement : null
-    expect(headerEl).toHaveAttribute('aria-sort', 'ascending')
+    expect(createdHeader.parentElement).toHaveAttribute('aria-sort', 'ascending')
   })
 
   test('should render using as prop', () => {

@@ -172,21 +172,19 @@ const DataGridBase = (props: DataGridProps) => {
                     }
                   >
                     {column.sortable && sortOptions !== undefined ? (
-                      <ButtonContainer>
-                        <HeaderButton
-                          onClick={() => {
-                            const { sortAscending: currentSortAscending } = sortOptions[0] || {}
-                            const newOptions = [
-                              { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
-                            ]
-                            onSort(newOptions)
-                          }}
-                        >
-                          {column.title}
+                      <HeaderButton
+                        onClick={() => {
+                          const { sortAscending: currentSortAscending } = sortOptions[0] || {}
+                          const newOptions = [
+                            { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
+                          ]
+                          onSort(newOptions)
+                        }}
+                      >
+                        {column.title}
 
-                          {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
-                        </HeaderButton>
-                      </ButtonContainer>
+                        {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
+                      </HeaderButton>
                     ) : (
                       column.title
                     )}
@@ -303,11 +301,6 @@ export const DataGrid = styled(DataGridBase)`
   }
 ` as any
 
-const ButtonContainer = styled.div`
-  position: relative;
-  display: inline;
-`
-
 const borderMap = {
   thin: css`
     border: 1px solid;
@@ -341,6 +334,7 @@ const HeaderButton = styled.button`
   font-weight: inherit;
   padding: 0;
   cursor: pointer;
+  position: relative;
 
   &:focus {
     outline: none;
