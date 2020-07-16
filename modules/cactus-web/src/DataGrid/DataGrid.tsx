@@ -1,4 +1,5 @@
 import { border } from '../helpers/theme'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import { keyPressAsClick } from '../helpers/a11y'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
@@ -171,19 +172,21 @@ const DataGridBase = (props: DataGridProps) => {
                     }
                   >
                     {column.sortable && sortOptions !== undefined ? (
-                      <HeaderButton
-                        onClick={() => {
-                          const { sortAscending: currentSortAscending } = sortOptions[0] || {}
-                          const newOptions = [
-                            { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
-                          ]
-                          onSort(newOptions)
-                        }}
-                      >
-                        {column.title}
+                      <ButtonContainer>
+                        <HeaderButton
+                          onClick={() => {
+                            const { sortAscending: currentSortAscending } = sortOptions[0] || {}
+                            const newOptions = [
+                              { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
+                            ]
+                            onSort(newOptions)
+                          }}
+                        >
+                          {column.title}
 
-                        {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
-                      </HeaderButton>
+                          {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
+                        </HeaderButton>
+                      </ButtonContainer>
                     ) : (
                       column.title
                     )}
@@ -300,6 +303,35 @@ export const DataGrid = styled(DataGridBase)`
   }
 ` as any
 
+const ButtonContainer = styled.div`
+  position: relative;
+  display: inline;
+`
+
+const borderMap = {
+  thin: css`
+    border: 1px solid;
+  `,
+  thick: css`
+    border: 2px solid;
+  `,
+}
+
+const shapeMap = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+const getShape = (shape: Shape) => shapeMap[shape]
+
+const getBorder = (size: BorderSize) => borderMap[size]
+
 const HeaderButton = styled.button`
   background: none;
   border: none;
@@ -309,6 +341,23 @@ const HeaderButton = styled.button`
   font-weight: inherit;
   padding: 0;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+
+    &:after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      height: calc(100% + 8px);
+      width: calc(100% + 16px);
+      bottom: -4px;
+      right: -8px;
+      border-color: ${(p) => p.theme.colors.lightContrast};
+      ${(p) => getShape(p.theme.shape)}
+      ${(p) => getBorder(p.theme.border)}
+    }
+  }
 `
 
 const ResultsViewSectionBase = (props: ResultsViewSectionProps) => {
