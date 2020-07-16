@@ -305,6 +305,7 @@ function fromTwoColor({
     let darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
 
     let callToAction = `hsl(244, 48%, 26%)`
+    let callToActionText = white
 
     return [
       {
@@ -348,7 +349,7 @@ function fromTwoColor({
         },
         callToAction: {
           backgroundColor: callToAction,
-          color: white,
+          color: callToActionText,
         },
         standard: {
           backgroundColor: white,

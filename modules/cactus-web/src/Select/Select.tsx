@@ -426,8 +426,7 @@ const Option = styled.li`
     }`}
 
   &.highlighted-option {
-    background-color: ${(p) => p.theme.colors.callToAction};
-    color: ${(p) => p.theme.colors.callToActionText};
+    ${(p) => p.theme.colorStyles.callToAction};
 
     // haxors
     ${CheckBox} > input:not(:checked) + span {

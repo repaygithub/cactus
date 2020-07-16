@@ -134,8 +134,7 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   border-radius: 8px 8px 8px 8px;
   box-shadow: 0 9px 24px -8px ${(p) => p.theme.colors.callToAction};
   font-size: 15px;
-  background: ${(p) => p.theme.colors.white};
-  color: ${(p) => p.theme.colors.darkestContrast};
+  ${(p) => p.theme.colorStyles.standard};
   border: 2px solid ${(p) => p.theme.colors.callToAction};
   box-sizing: border-box;
   overflow-wrap: break-word;

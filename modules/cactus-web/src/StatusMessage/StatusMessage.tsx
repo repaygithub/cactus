@@ -15,13 +15,13 @@ type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
-    ${(p) => p.theme.colorStyles.success};
+    background-color: ${(p) => p.theme.colors.status.avatar.success};
   `,
   warning: css`
-    ${(p) => p.theme.colorStyles.warning};
+    background-color: ${(p) => p.theme.colors.status.avatar.warning};
   `,
   error: css`
-    ${(p) => p.theme.colorStyles.error}
+    background-color: ${(p) => p.theme.colors.status.avatar.error};
   `,
 }
 

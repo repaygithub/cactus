@@ -96,17 +96,14 @@ const MenuList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    background-color: ${(p) => p.theme.colors.white};
-
     ${(p) => p.theme.textStyles.small};
-    color: ${(p) => p.theme.colors.darkestContrast};
+    ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
     text-align: center;
 
     &[data-selected] {
-      background-color: ${(p) => p.theme.colors.callToAction};
-      color: ${(p) => p.theme.colors.callToActionText};
+      ${(p) => p.theme.colorStyles.callToAction};
     }
   }
 `

@@ -21,81 +21,29 @@ interface AvatarProps extends MarginProps {
   className?: string
 }
 
-type UsageMap = { [K in AvatarType]: ReturnType<typeof css> }
-
-const avatar = (props: AvatarProps): ReturnType<typeof css> | undefined => {
-  const { type, disabled } = props
-  if (disabled) {
-    return css`
-      color: ${(p) => p.theme.colors.white};
-    `
-  } else if (type !== undefined) {
-    return usageMap[type]
-  }
-}
-
-const iconColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
-  const { status, type } = props
-  if (type === 'feedback' && (status === 'error' || status === 'success')) {
-    return props.theme.colors.white
-  } else {
-    return props.theme.colors.darkestContrast
-  }
-}
-
 const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
   const { type, status, disabled } = props
 
-  if (disabled) {
-    return props.theme.colorStyles.disable
-  } else if (type === 'alert') {
-    switch (status) {
-      case 'error':
-        return props.theme.colors.status.avatar.error
-      case 'warning':
-        return props.theme.colors.status.avatar.warning
-      case 'info':
-        return props.theme.colors.lightContrast
-      case 'success':
-        return props.theme.colors.status.avatar.success
-    }
-  } else if (type === 'feedback') {
-    switch (status) {
-      case 'error':
-        return props.theme.colorStyles.error
-      case 'warning':
-        return props.theme.colorStyles.warning
-      case 'info':
-        return props.theme.colorStyles.lightContrast
-      case 'success':
-        return props.theme.colorStyles.success
-    }
-  }
-}
-
-const usageMap: UsageMap = {
-  alert: css`
-    color: ${(p) => p.theme.colors.darkestContrast};
-  `,
-  feedback: css`
-    color: ${iconColor};
-  `,
-}
-
-const variant = (props: AvatarProps) => {
-  const { status, type, disabled } = props
-
   if (status !== undefined) {
-    if (disabled) return avaColor
-
-    switch (type) {
-      case 'alert':
-        return css`
-          background: ${avaColor};
-        `
-      case 'feedback':
-        return avaColor
-    }
+    if (disabled) {
+      return css`
+        color: ${props.theme.colors.white};
+        background-color: ${props.theme.colors.mediumGray};
+      `
+    } else
+      switch (type) {
+        case 'alert':
+          return status === 'info'
+            ? props.theme.colorStyles.lightContrast
+            : css`
+                color: ${props.theme.colors.darkestContrast};
+                background-color: ${props.theme.colors.status.avatar[status]};
+              `
+        case 'feedback':
+          return status === 'info'
+            ? props.theme.colorStyles.lightContrast
+            : props.theme.colorStyles[status]
+      }
   }
 }
 
@@ -137,8 +85,7 @@ export const Avatar = styled(AvatarBase)<AvatarProps>`
   }
 
   ${margin}
-  ${variant}
-  ${avatar}
+  ${avaColor}
 `
 
 Avatar.propTypes = {
