@@ -228,4 +228,8 @@ const DataGridContainer = () => {
   )
 }
 
-storiesOf('DataGrid', module).add('Basic Usage', () => <DataGridContainer />)
+storiesOf('DataGrid', module).add('Basic Usage', () => <DataGridContainer />, {
+  cactus: {
+    overrides: { display: 'block', textAlign: 'center', paddingTop: '16px', paddingBottom: '16px' },
+  },
+})

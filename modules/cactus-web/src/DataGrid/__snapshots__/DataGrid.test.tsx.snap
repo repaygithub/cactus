@@ -250,14 +250,7 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  display: inline;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -286,6 +279,14 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 .c0 .pagination {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   margin-right: 16px;
   margin-top: 40px;
 }
@@ -497,14 +498,19 @@ exports[`component: DataGrid snapshot 1`] = `
 
 @media screen and (min-width:1024px) {
   .c0 {
-    -webkit-align-items: unset;
-    -webkit-box-align: unset;
-    -ms-flex-align: unset;
-    align-items: unset;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
   }
+}
 
+@media screen and (min-width:1024px) {
   .c0 .pagination {
-    margin-left: auto;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
   }
 }
 
@@ -878,144 +884,148 @@ exports[`component: DataGrid snapshot 1`] = `
         </tbody>
       </table>
     </div>
-    <nav
-      aria-label="Pages"
+    <div
       class="pagination"
     >
-      <ol
-        class="c16"
-        role="list"
+      <nav
+        aria-label="Pages"
+        class=""
       >
-        <li
-          class="c17"
+        <ol
+          class="c16"
+          role="list"
         >
-          <a
-            aria-disabled="true"
-            aria-label="Go to page 1"
-            class="c18"
-            role="link"
+          <li
+            class="c17"
           >
-            <svg
-              fill="currentcolor"
-              height="16"
-              viewBox="0 0 16 16"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
+            <a
+              aria-disabled="true"
+              aria-label="Go to page 1"
+              class="c18"
+              role="link"
             >
-              <path
-                d="M2.66671 1.33335C2.66671 0.965164 2.36823 0.666687 2.00004 0.666687C1.63185 0.666687 1.33337 0.965164 1.33337 1.33335V14.6667C1.33337 15.0349 1.63185 15.3334 2.00004 15.3334C2.36823 15.3334 2.66671 15.0349 2.66671 14.6667L2.66671 1.33335ZM13.5286 0.861949C13.789 0.6016 14.2111 0.6016 14.4714 0.861949C14.7318 1.1223 14.7318 1.54441 14.4714 1.80476L8.27618 8.00002L14.4714 14.1953C14.7318 14.4556 14.7318 14.8777 14.4714 15.1381C14.2111 15.3984 13.789 15.3984 13.5286 15.1381L6.86197 8.47142C6.60162 8.21107 6.60162 7.78897 6.86197 7.52862L13.5286 0.861949Z"
-              />
-            </svg>
-          </a>
-        </li>
-        <li
-          class="c17"
-        >
-          <a
-            aria-disabled="true"
-            aria-label="Go to previous page, 0"
-            class="c18"
-            rel="prev"
-            role="link"
+              <svg
+                fill="currentcolor"
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.66671 1.33335C2.66671 0.965164 2.36823 0.666687 2.00004 0.666687C1.63185 0.666687 1.33337 0.965164 1.33337 1.33335V14.6667C1.33337 15.0349 1.63185 15.3334 2.00004 15.3334C2.36823 15.3334 2.66671 15.0349 2.66671 14.6667L2.66671 1.33335ZM13.5286 0.861949C13.789 0.6016 14.2111 0.6016 14.4714 0.861949C14.7318 1.1223 14.7318 1.54441 14.4714 1.80476L8.27618 8.00002L14.4714 14.1953C14.7318 14.4556 14.7318 14.8777 14.4714 15.1381C14.2111 15.3984 13.789 15.3984 13.5286 15.1381L6.86197 8.47142C6.60162 8.21107 6.60162 7.78897 6.86197 7.52862L13.5286 0.861949Z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li
+            class="c17"
           >
-            <svg
-              class="c19"
-              fill="currentcolor"
-              height="1em"
-              viewBox="0 0 24 24"
-              width="1em"
+            <a
+              aria-disabled="true"
+              aria-label="Go to previous page, 0"
+              class="c18"
+              rel="prev"
+              role="link"
             >
-              <path
-                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-              />
-            </svg>
-          </a>
-        </li>
-        <li
-          class="c17"
-        >
-          <a
-            aria-current="page"
-            aria-disabled="true"
-            aria-label="Current page, 1"
-            class="c18"
-            role="link"
+              <svg
+                class="c19"
+                fill="currentcolor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+              >
+                <path
+                  d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                />
+              </svg>
+            </a>
+          </li>
+          <li
+            class="c17"
           >
-            1
-          </a>
-        </li>
-        <li
-          class="c17"
-        >
-          <a
-            aria-label="Go to page 2"
-            class="c18"
-            role="link"
-            tabindex="0"
-          >
-            2
-          </a>
-        </li>
-        <li
-          class="c17"
-        >
-          <a
-            aria-label="Go to page 3"
-            class="c18"
-            role="link"
-            tabindex="0"
-          >
-            3
-          </a>
-        </li>
-        <li
-          class="c17"
-        >
-          <a
-            aria-label="Go to next page, 2"
-            class="c18"
-            rel="next"
-            role="link"
-            tabindex="0"
-          >
-            <svg
-              class="c20"
-              fill="currentcolor"
-              height="1em"
-              viewBox="0 0 24 24"
-              width="1em"
+            <a
+              aria-current="page"
+              aria-disabled="true"
+              aria-label="Current page, 1"
+              class="c18"
+              role="link"
             >
-              <path
-                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                transform="matrix(-1 0 0 1 24 0)"
-              />
-            </svg>
-          </a>
-        </li>
-        <li
-          class="c17"
-        >
-          <a
-            aria-label="Go to last page, 3"
-            class="c18"
-            role="link"
-            tabindex="0"
+              1
+            </a>
+          </li>
+          <li
+            class="c17"
           >
-            <svg
-              fill="currentcolor"
-              height="16"
-              viewBox="0 0 16 16"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
+            <a
+              aria-label="Go to page 2"
+              class="c18"
+              role="link"
+              tabindex="0"
             >
-              <path
-                d="M14.6667 1.33335C14.6667 0.965164 14.3682 0.666687 14 0.666687C13.6319 0.666687 13.3334 0.965164 13.3334 1.33335L13.3334 14.6667C13.3334 15.0349 13.6318 15.3334 14 15.3334C14.3682 15.3334 14.6667 15.0349 14.6667 14.6667L14.6667 1.33335ZM1.52864 0.861949C1.26829 1.1223 1.26829 1.54441 1.52864 1.80476L7.7239 8.00002L1.52864 14.1953C1.26829 14.4556 1.26829 14.8777 1.52864 15.1381C1.78899 15.3984 2.2111 15.3984 2.47144 15.1381L9.13811 8.47142C9.39846 8.21107 9.39846 7.78897 9.13811 7.52862L2.47144 0.861949C2.2111 0.6016 1.78899 0.6016 1.52864 0.861949Z"
-              />
-            </svg>
-          </a>
-        </li>
-      </ol>
-    </nav>
+              2
+            </a>
+          </li>
+          <li
+            class="c17"
+          >
+            <a
+              aria-label="Go to page 3"
+              class="c18"
+              role="link"
+              tabindex="0"
+            >
+              3
+            </a>
+          </li>
+          <li
+            class="c17"
+          >
+            <a
+              aria-label="Go to next page, 2"
+              class="c18"
+              rel="next"
+              role="link"
+              tabindex="0"
+            >
+              <svg
+                class="c20"
+                fill="currentcolor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+              >
+                <path
+                  d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                  transform="matrix(-1 0 0 1 24 0)"
+                />
+              </svg>
+            </a>
+          </li>
+          <li
+            class="c17"
+          >
+            <a
+              aria-label="Go to last page, 3"
+              class="c18"
+              role="link"
+              tabindex="0"
+            >
+              <svg
+                fill="currentcolor"
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.6667 1.33335C14.6667 0.965164 14.3682 0.666687 14 0.666687C13.6319 0.666687 13.3334 0.965164 13.3334 1.33335L13.3334 14.6667C13.3334 15.0349 13.6318 15.3334 14 15.3334C14.3682 15.3334 14.6667 15.0349 14.6667 14.6667L14.6667 1.33335ZM1.52864 0.861949C1.26829 1.1223 1.26829 1.54441 1.52864 1.80476L7.7239 8.00002L1.52864 14.1953C1.26829 14.4556 1.26829 14.8777 1.52864 15.1381C1.78899 15.3984 2.2111 15.3984 2.47144 15.1381L9.13811 8.47142C9.39846 8.21107 9.39846 7.78897 9.13811 7.52862L2.47144 0.861949C2.2111 0.6016 1.78899 0.6016 1.52864 0.861949Z"
+                />
+              </svg>
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
   </div>
 </div>
 `;

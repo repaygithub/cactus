@@ -224,54 +224,50 @@ const DataGridBase = (props: DataGridProps) => {
           </Table.Body>
         </Table>
       </DataGridContext.Provider>
-      {paginationOptions.pageCount ? (
-        <Pagination
-          className="pagination"
-          currentPage={paginationOptions.currentPage}
-          pageCount={paginationOptions.pageCount}
-          onPageChange={(page: number) => {
-            onPageChange({ ...paginationOptions, currentPage: page })
-          }}
-          {...paginationProps}
-        />
-      ) : (
-        <PrevNext
-          className="pagination"
-          disablePrev={paginationOptions.currentPage === 1}
-          onNavigate={(direction: 'prev' | 'next') => {
-            onPageChange({
-              ...paginationOptions,
-              currentPage:
-                direction === 'prev'
-                  ? paginationOptions.currentPage - 1
-                  : paginationOptions.currentPage + 1,
-            })
-          }}
-          disableNext={
-            prevNextProps
-              ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
-              : data.length < paginationOptions.pageSize
-          }
-          {...prevNextProps}
-        />
-      )}
+      <div className="pagination">
+        {paginationOptions.pageCount ? (
+          <Pagination
+            currentPage={paginationOptions.currentPage}
+            pageCount={paginationOptions.pageCount}
+            onPageChange={(page: number) => {
+              onPageChange({ ...paginationOptions, currentPage: page })
+            }}
+            {...paginationProps}
+          />
+        ) : (
+          <PrevNext
+            disablePrev={paginationOptions.currentPage === 1}
+            onNavigate={(direction: 'prev' | 'next') => {
+              onPageChange({
+                ...paginationOptions,
+                currentPage:
+                  direction === 'prev'
+                    ? paginationOptions.currentPage - 1
+                    : paginationOptions.currentPage + 1,
+              })
+            }}
+            disableNext={
+              prevNextProps
+                ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
+                : data.length < paginationOptions.pageSize
+            }
+            {...prevNextProps}
+          />
+        )}
+      </div>
     </div>
   )
 }
 
 export const DataGrid = styled(DataGridBase)`
-  display: inline-flex;
-  align-items: center;
+  display: inline;
   flex-direction: column;
   width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
   overflow-x: auto;
   ${margin}
 
   ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
-    align-items: unset;
-    .pagination {
-      margin-left: auto;
-    }
+    display: inline-flex;
   }
 
   .results-count {
@@ -297,8 +293,14 @@ export const DataGrid = styled(DataGridBase)`
   }
 
   .pagination {
+    display: flex;
+    justify-content: center;
     margin-right: 16px;
     margin-top: 40px;
+
+    ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+      justify-content: flex-end;
+    }
   }
 ` as any
 
@@ -340,14 +342,6 @@ const ResultsViewSectionBase = (props: ResultsViewSectionProps) => {
   }
 }
 
-const IEStyles = () => {
-  if (typeof window !== 'undefined' && /MSIE|Trident/.test(window.navigator.userAgent)) {
-    return css`
-      width: 100%;
-    `
-  }
-}
-
 const ResultsViewSection = styled(ResultsViewSectionBase)`
   display: flex;
   flex-direction: column;
@@ -362,8 +356,6 @@ const ResultsViewSection = styled(ResultsViewSectionBase)`
   ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
     flex-direction: row;
     align-items: flex-start;
-
-    ${IEStyles()}
 
     .results-count-text: {
       margin-bottom: 0;
