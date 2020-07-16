@@ -386,8 +386,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(353,84%,44%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(353,84%,44%,0.3);
 }
 
 .c11 .c12 {
@@ -402,8 +402,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   display: inline-block;
   font-size: 15px;
   line-height: 23px;
-  background-color: hsl(353,84%,44%);
-  color: hsl(0,0%,100%);
+  background-color: hsla(353,84%,44%,0.3);
 }
 
 .c19 .c12,
@@ -879,8 +878,8 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(145,89%,28%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(145,89%,28%,0.3);
 }
 
 .c11 .c24 {

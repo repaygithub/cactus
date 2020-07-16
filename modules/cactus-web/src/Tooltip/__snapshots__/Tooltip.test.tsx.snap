@@ -68,7 +68,7 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
   border-radius: 8px 8px 8px 8px;
   box-shadow: 0 9px 24px -8px hsl(200,96%,35%);
   font-size: 15px;
-  background: hsl(0,0%,100%);
+  background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   border: 2px solid hsl(200,96%,35%);
   box-sizing: border-box;
