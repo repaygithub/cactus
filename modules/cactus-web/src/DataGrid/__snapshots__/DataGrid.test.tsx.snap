@@ -264,10 +264,6 @@ exports[`component: DataGrid snapshot 1`] = `
   margin-right: auto;
 }
 
-.c0 .cursor-pointer {
-  cursor: pointer;
-}
-
 .c0 th .c8 {
   margin-left: 8px;
 }
@@ -298,6 +294,7 @@ exports[`component: DataGrid snapshot 1`] = `
   font-size: inherit;
   text-transform: inherit;
   font-weight: inherit;
+  padding: 0;
   cursor: pointer;
 }
 
@@ -606,13 +603,13 @@ exports[`component: DataGrid snapshot 1`] = `
         >
           <tr>
             <th
-              class="c6 table-cell  "
+              class="c6 table-cell "
             >
               Name
             </th>
             <th
               aria-sort="descending"
-              class="c6 table-cell  cursor-pointer"
+              class="c6 table-cell "
             >
               <button
                 class="c7"
@@ -635,7 +632,7 @@ exports[`component: DataGrid snapshot 1`] = `
             </th>
             <th
               aria-sort="none"
-              class="c6 table-cell  cursor-pointer"
+              class="c6 table-cell "
             >
               <button
                 class="c7"

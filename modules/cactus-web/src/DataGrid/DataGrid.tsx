@@ -31,8 +31,8 @@ const DataGridContext = createContext<DataGridContextType>({
 
 interface DataGridProps extends MarginProps {
   data: Array<{ [key: string]: any }>
-  paginationOptions: PaginationOptions
-  sortOptions: Array<SortOption>
+  paginationOptions?: PaginationOptions
+  sortOptions?: Array<SortOption>
   onPageChange: (newPageOptions: PaginationOptions) => void
   onSort: (newSortOptions: Array<SortOption>) => void
   children: React.ReactNode
@@ -70,7 +70,7 @@ interface SortOption {
 
 interface ResultsViewSectionProps {
   resultsCountText?: string
-  paginationOptions: PaginationOptions
+  paginationOptions?: PaginationOptions
   onPageChange: (newPageOptions: PaginationOptions) => void
   makePageSizeLabel?: (pageSize: number) => string
   pageSizeSelectLabel?: string
@@ -152,15 +152,13 @@ const DataGridBase = (props: DataGridProps) => {
               if (column && column.hasOwnProperty('sortable')) {
                 column = column as DataColumnObject
                 let sortOpt: SortOption | undefined = undefined
-                if (column.sortable) {
+                if (column.sortable && sortOptions !== undefined) {
                   sortOpt = sortOptions.find((opt: SortOption) => opt.id === key)
                 }
                 const flipChevron = sortOpt !== undefined && sortOpt.sortAscending === true
                 return (
                   <Table.Cell
-                    className={`table-cell ${flipChevron ? 'flip-chevron' : ''} ${
-                      column.sortable ? 'cursor-pointer' : ''
-                    }`}
+                    className={`table-cell ${flipChevron ? 'flip-chevron' : ''}`}
                     key={key}
                     aria-sort={
                       column.sortable
@@ -172,7 +170,7 @@ const DataGridBase = (props: DataGridProps) => {
                         : undefined
                     }
                   >
-                    {column.sortable ? (
+                    {column.sortable && sortOptions !== undefined ? (
                       <HeaderButton
                         onClick={() => {
                           const { sortAscending: currentSortAscending } = sortOptions[0] || {}
@@ -225,35 +223,37 @@ const DataGridBase = (props: DataGridProps) => {
         </Table>
       </DataGridContext.Provider>
       <div className="pagination">
-        {paginationOptions.pageCount ? (
-          <Pagination
-            currentPage={paginationOptions.currentPage}
-            pageCount={paginationOptions.pageCount}
-            onPageChange={(page: number) => {
-              onPageChange({ ...paginationOptions, currentPage: page })
-            }}
-            {...paginationProps}
-          />
-        ) : (
-          <PrevNext
-            disablePrev={paginationOptions.currentPage === 1}
-            onNavigate={(direction: 'prev' | 'next') => {
-              onPageChange({
-                ...paginationOptions,
-                currentPage:
-                  direction === 'prev'
-                    ? paginationOptions.currentPage - 1
-                    : paginationOptions.currentPage + 1,
-              })
-            }}
-            disableNext={
-              prevNextProps
-                ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
-                : data.length < paginationOptions.pageSize
-            }
-            {...prevNextProps}
-          />
-        )}
+        {paginationOptions !== undefined ? (
+          paginationOptions.pageCount ? (
+            <Pagination
+              currentPage={paginationOptions.currentPage}
+              pageCount={paginationOptions.pageCount}
+              onPageChange={(page: number) => {
+                onPageChange({ ...paginationOptions, currentPage: page })
+              }}
+              {...paginationProps}
+            />
+          ) : (
+            <PrevNext
+              disablePrev={paginationOptions.currentPage === 1}
+              onNavigate={(direction: 'prev' | 'next') => {
+                onPageChange({
+                  ...paginationOptions,
+                  currentPage:
+                    direction === 'prev'
+                      ? paginationOptions.currentPage - 1
+                      : paginationOptions.currentPage + 1,
+                })
+              }}
+              disableNext={
+                prevNextProps
+                  ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
+                  : data.length < paginationOptions.pageSize
+              }
+              {...prevNextProps}
+            />
+          )
+        ) : null}
       </div>
     </div>
   )
@@ -274,10 +274,6 @@ export const DataGrid = styled(DataGridBase)`
     margin-bottom: 40px;
     margin-left: 16px;
     margin-right: auto;
-  }
-
-  .cursor-pointer {
-    cursor: pointer;
   }
 
   th {
@@ -311,6 +307,7 @@ const HeaderButton = styled.button`
   font-size: inherit;
   text-transform: inherit;
   font-weight: inherit;
+  padding: 0;
   cursor: pointer;
 `
 
@@ -320,18 +317,21 @@ const ResultsViewSectionBase = (props: ResultsViewSectionProps) => {
     resultsCountText,
     pageSizeSelectLabel,
     makePageSizeLabel,
-    paginationOptions: { pageSizeOptions },
+    paginationOptions,
     className,
   } = props
-  if (!resultsCountText && !pageSizeOptions) {
+  if (
+    !resultsCountText &&
+    (!paginationOptions || (paginationOptions && !paginationOptions.pageSizeOptions))
+  ) {
     return null
   } else {
     return (
       <div className={className}>
         {resultsCountText && <span className="results-count-text">{resultsCountText}</span>}
-        {pageSizeOptions && (
+        {paginationOptions !== undefined && paginationOptions.pageSizeOptions && (
           <PageSizeSelect
-            paginationOptions={props.paginationOptions}
+            paginationOptions={paginationOptions}
             pageSizeSelectLabel={pageSizeSelectLabel}
             makePageSizeLabel={makePageSizeLabel}
             onPageChange={onPageChange}
@@ -502,10 +502,10 @@ DataGrid.propTypes = {
     pageSize: PropTypes.number.isRequired,
     pageCount: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
-  }).isRequired,
+  }),
   sortOptions: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.string.isRequired, sortAscending: PropTypes.bool.isRequired })
-  ).isRequired,
+  ),
   onPageChange: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
