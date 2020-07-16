@@ -34,7 +34,7 @@ exports[`component: IconButton should default to standard medium icon button 1`]
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {
@@ -96,7 +96,7 @@ exports[`component: IconButton should render call to action icon button 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover,
@@ -159,7 +159,7 @@ exports[`component: IconButton should render danger icon button 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {
@@ -222,7 +222,7 @@ exports[`component: IconButton should render disabled variant 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 <button
@@ -281,7 +281,7 @@ exports[`component: IconButton should render icon button with aria-label 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {
@@ -343,7 +343,7 @@ exports[`component: IconButton should render inverse call to action icon button 
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover,
@@ -406,7 +406,7 @@ exports[`component: IconButton should render inverse danger icon button 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover,
@@ -470,7 +470,7 @@ exports[`component: IconButton should render inverse disabled variant 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 <button
@@ -529,7 +529,7 @@ exports[`component: IconButton should render inverse standard icon button 1`] = 
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover,
@@ -593,7 +593,7 @@ exports[`component: IconButton should render large icon button 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {
@@ -655,7 +655,7 @@ exports[`component: IconButton should render small icon button 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {
@@ -717,7 +717,7 @@ exports[`component: IconButton should render standard medium icon button 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {
@@ -779,7 +779,7 @@ exports[`component: IconButton should render tiny icon button 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {
@@ -842,7 +842,7 @@ exports[`component: IconButton should support margin space props 1`] = `
 }
 
 .c0:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c0:hover {

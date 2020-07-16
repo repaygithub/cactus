@@ -118,16 +118,16 @@ const Icon = styled(IconBase)<IconProps>`
   color: white;
   ${variant({
     action: css`
-      background-color: ${(p) => p.theme.colors.callToAction};
+      ${(p) => p.theme.colorStyles.callToAction};
     `,
     warning: css`
-      background-color: ${(p) => p.theme.colors.warning};
+      ${(p) => p.theme.colorStyles.warning};
     `,
     success: css`
-      background-color: ${(p) => p.theme.colors.success};
+      ${(p) => p.theme.colorStyles.success};
     `,
     danger: css`
-      background-color: ${(p) => p.theme.colors.error};
+      ${(p) => p.theme.colorStyles.error};
     `,
   })}
 `

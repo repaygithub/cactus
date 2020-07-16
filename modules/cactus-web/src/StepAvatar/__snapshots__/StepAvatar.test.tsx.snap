@@ -15,7 +15,7 @@ exports[`component: StepAvatar Default Step 1`] = `
   appearance: none;
   padding: 0px;
   border: none;
-  background: hsl(200,29%,90%);
+  background-color: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
 }
 
@@ -41,7 +41,7 @@ exports[`component: StepAvatar Step Avatar, Done 1`] = `
   appearance: none;
   padding: 0px;
   border: none;
-  background: hsl(200,96%,11%);
+  background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
 }
 
@@ -67,7 +67,7 @@ exports[`component: StepAvatar Step Avatar, In Process 1`] = `
   appearance: none;
   padding: 0px;
   border: none;
-  background: hsl(200,96%,35%);
+  background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
   box-shadow: 0px 2px 5px 4px hsl(200,29%,90%);
 }
@@ -94,7 +94,7 @@ exports[`component: StepAvatar Step Avatar, Not Done 1`] = `
   appearance: none;
   padding: 0px;
   border: none;
-  background: hsl(200,29%,90%);
+  background-color: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
 }
 

@@ -58,7 +58,7 @@ const StatusMessageBase: React.FC<
   )
 }
 
-const StatusMessage = styled(StatusMessageBase)`
+const StatusMessage = styled(StatusMessageBase)<StatusMessageProps>`
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;

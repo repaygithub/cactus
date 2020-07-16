@@ -27,8 +27,8 @@ exports[`component: Alert should render general error alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(353,84%,44%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(353,84%,44%,0.3);
 }
 
 .c1 .c2 {
@@ -130,7 +130,7 @@ exports[`component: Alert should render general info alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsl(200,29%,90%);
+  background-color: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
 }
 
@@ -233,8 +233,8 @@ exports[`component: Alert should render general success alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(145,89%,28%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(145,89%,28%,0.3);
 }
 
 .c1 .c3 {
@@ -336,8 +336,8 @@ exports[`component: Alert should render general warning alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(47,82%,47%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(47,82%,47%,0.3);
 }
 
 .c1 .c3 {
@@ -443,8 +443,8 @@ exports[`component: Alert should render push notification error alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(353,84%,44%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(353,84%,44%,0.3);
 }
 
 .c1 .c2 {
@@ -553,7 +553,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsl(200,29%,90%);
+  background-color: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
 }
 
@@ -655,8 +655,8 @@ exports[`component: Alert should render push notification success alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(145,89%,28%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(145,89%,28%,0.3);
 }
 
 .c1 .c3 {
@@ -757,8 +757,8 @@ exports[`component: Alert should render push notification warning alert 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsla(47,82%,47%,0.3);
   color: hsl(200,10%,20%);
+  background-color: hsla(47,82%,47%,0.3);
 }
 
 .c1 .c3 {
@@ -859,7 +859,7 @@ exports[`component: Alert should render the default props, general info alert 1`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background: hsl(200,29%,90%);
+  background-color: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
 }
 

@@ -34,7 +34,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 }
 
 .c2:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c2:hover {
@@ -174,7 +174,7 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -316,7 +316,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -473,7 +473,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -622,7 +622,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -775,7 +775,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {
@@ -915,7 +915,7 @@ exports[`component: Accordion with theme customization simple accordion should h
 }
 
 .c3:focus {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
 }
 
 .c3:hover {

@@ -11,17 +11,14 @@ type StepColor = { [K in AvatarStep]: FlattenInterpolation<ThemeProps<DefaultThe
 
 const stepColorMap: StepColor = {
   notDone: css`
-    background: ${(p) => p.theme.colors.lightContrast};
-    color: ${(p) => p.theme.colors.darkestContrast};
+    ${(p) => p.theme.colorStyles.lightContrast};
   `,
   inProcess: css`
-    background: ${(p) => p.theme.colors.callToAction};
-    color: ${(p) => p.theme.colors.white};
+    ${(p) => p.theme.colorStyles.callToAction};
     box-shadow: 0px 2px 5px 4px ${(p) => p.theme.colors.lightContrast};
   `,
   done: css`
-    background: ${(p) => p.theme.colors.base};
-    color: ${(p) => p.theme.colors.white};
+    ${(p) => p.theme.colorStyles.base};
   `,
 }
 
