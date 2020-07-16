@@ -313,7 +313,7 @@ function fromTwoColor({
         base: white,
         baseText: darkestContrast,
         callToAction: callToAction,
-        callToActionText: white,
+        callToActionText: callToActionText,
         transparentCTA: `hsla(244, 48%, 26%, 0.3)`,
 
         /** Contrasts */
