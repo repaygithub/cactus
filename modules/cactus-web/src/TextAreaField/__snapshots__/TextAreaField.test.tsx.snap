@@ -44,7 +44,6 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
   line-height: 28px;
@@ -93,6 +92,12 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 .c3 {
   position: relative;
   width: auto;
+}
+
+@media screen and (min-width:768px) {
+  .c9 {
+    min-width: 336px;
+  }
 }
 
 <div>
