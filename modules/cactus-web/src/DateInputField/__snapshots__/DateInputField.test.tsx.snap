@@ -74,7 +74,7 @@ exports[`component: DateInputField snapshot 1`] = `
 }
 
 .c9:focus {
-  background-color: hsla(200,96%,35%,0.3);
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 .c9:hover {
@@ -186,7 +186,7 @@ exports[`component: DateInputField snapshot 1`] = `
 
 .c6 input:focus {
   outline: none;
-  background-color: hsla(200,96%,35%,0.3);
+  background-color: hsla(200,96%,35%,0.25);
 }
 
 .c6 input::-webkit-input-placeholder {

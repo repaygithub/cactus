@@ -82,7 +82,7 @@ exports[`component: TextArea should render a success textarea 1`] = `
   display: block;
   resize: none;
   border-color: hsl(145,89%,28%);
-  background: hsla(145,89%,28%,0.3);
+  background: hsla(145,89%,28%,0.2);
 }
 
 .c1:first-line {
@@ -274,7 +274,7 @@ exports[`component: TextArea should render a warning textarea 1`] = `
   display: block;
   resize: none;
   border-color: hsl(47,82%,47%);
-  background: hsla(47,82%,47%,0.3);
+  background: hsla(47,82%,47%,0.2);
 }
 
 .c1:first-line {
@@ -339,7 +339,7 @@ exports[`component: TextArea should render an error textarea 1`] = `
   display: block;
   resize: none;
   border-color: hsl(353,84%,44%);
-  background: hsla(353,84%,44%,0.3);
+  background: hsla(353,84%,44%,0.2);
 }
 
 .c1:first-line {

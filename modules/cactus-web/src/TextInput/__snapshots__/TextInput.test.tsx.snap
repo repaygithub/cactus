@@ -77,7 +77,7 @@ exports[`component: TextInput should render a success input 1`] = `
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(145,89%,28%);
-  background: hsla(145,89%,28%,0.3);
+  background: hsla(145,89%,28%,0.2);
 }
 
 .c1 [disabled] {
@@ -199,7 +199,7 @@ exports[`component: TextInput should render an error input 1`] = `
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
-  background: hsla(353,84%,44%,0.3);
+  background: hsla(353,84%,44%,0.2);
 }
 
 .c1 [disabled] {
@@ -322,7 +322,7 @@ exports[`component: TextInput should render an warning input 1`] = `
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(47,82%,47%);
-  background: hsla(47,82%,47%,0.3);
+  background: hsla(47,82%,47%,0.2);
 }
 
 .c1 [disabled] {
