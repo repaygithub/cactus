@@ -335,6 +335,7 @@ const HeaderButton = styled.button`
   padding: 0;
   cursor: pointer;
   position: relative;
+  overflow: visible;
 
   &:focus {
     outline: none;
