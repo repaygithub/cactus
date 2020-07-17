@@ -4,6 +4,7 @@ import '../helpers/polyfills'
 import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
 import { assignRef } from '@reach/utils'
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { boxShadow } from '../helpers/theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { isResponsiveTouchDevice } from '../helpers/constants'
@@ -448,7 +449,7 @@ const ListWrapper = styled.div`
   ${(p) => getListShape(p.theme.shape)}
   max-height: 400px;
   max-width: 100vw;
-  ${(p) => p.theme.boxShadows && `box-shadow: 0 3px 9px 0 ${p.theme.colors.callToAction};`}
+  ${(p) => boxShadow(p.theme, 1)};
   background-color: ${(p) => p.theme.colors.white};
 
   ${() =>

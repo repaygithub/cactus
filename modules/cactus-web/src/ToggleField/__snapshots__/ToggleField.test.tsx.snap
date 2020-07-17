@@ -44,7 +44,7 @@ exports[`component: ToggleField snapshot 1`] = `
 }
 
 .c4:focus {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c4::after {
@@ -219,7 +219,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
 }
 
 .c4:focus {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c4::after {
@@ -386,7 +386,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
 }
 
 .c4:focus {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c4::after {

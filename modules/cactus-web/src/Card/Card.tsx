@@ -1,4 +1,5 @@
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { boxShadow } from '../helpers/theme'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import styled, { css } from 'styled-components'
 
@@ -30,10 +31,10 @@ const getShape = (shape: Shape) => shapeMap[shape]
 const getBoxShadow = (theme: CactusTheme) => {
   return theme.boxShadows
     ? css`
-        box-shadow: 0 3px 6px 0 ${(p) => p.theme.colors.callToAction};
+        ${(p) => `${boxShadow(p.theme, 1)};
         :hover {
-          box-shadow: 0 4px 8px 0 ${(p) => p.theme.colors.callToAction};
-        }
+          ${boxShadow(p.theme, 2)};
+        }`}
       `
     : css`
     ${getBorder(theme.border)}

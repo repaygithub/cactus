@@ -1,6 +1,7 @@
 import React, { Component, Fragment, MouseEventHandler, useMemo } from 'react'
 
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { boxShadow } from '../helpers/theme'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 import {
   DateType,
@@ -322,7 +323,7 @@ const getPopupShape = (shape: Shape) => popupShapeMap[shape]
 const getPopupBoxShadowStyles = (theme: CactusTheme) => {
   return theme.boxShadows
     ? css`
-        box-shadow: 0 3px 9px 0 ${theme.colors.callToAction};
+        ${(p) => boxShadow(p.theme, 1)};
       `
     : css`
         ${borderMap[theme.border]}

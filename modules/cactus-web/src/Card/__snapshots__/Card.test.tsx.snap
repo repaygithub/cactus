@@ -18,11 +18,11 @@ exports[`component: Card should support margin space props 1`] = `
   color: hsl(200,10%,20%);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1:hover {
-  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
 }
 
 .c1 > .c0 {
@@ -51,11 +51,11 @@ exports[`component: Card snapshot 1`] = `
   color: hsl(200,10%,20%);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1:hover {
-  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
 }
 
 .c1 > .c0 {
@@ -123,11 +123,11 @@ exports[`component: Card with theme customization should have 1px border radius 
   color: hsl(200,10%,20%);
   border-radius: 1px;
   padding: 16px;
-  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1:hover {
-  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
 }
 
 .c1 > .c0 {
@@ -184,11 +184,11 @@ exports[`component: Card with theme customization should have 4px border radius 
   color: hsl(200,10%,20%);
   border-radius: 4px;
   padding: 16px;
-  box-shadow: 0 3px 6px 0 hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1:hover {
-  box-shadow: 0 4px 8px 0 hsl(200,96%,35%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
 }
 
 .c1 > .c0 {

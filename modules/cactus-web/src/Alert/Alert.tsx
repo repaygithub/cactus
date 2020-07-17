@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { boxShadow } from '../helpers/theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import Avatar from '../Avatar/Avatar'
@@ -98,7 +99,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   background: ${backgroundColor};
   border: 2px solid ${borderColor};
   ${typeVariant}
-  box-shadow: ${(p) => p.shadow && `0 9px 24px ${p.theme.colors.callToAction};`};
+  ${(p) => p.shadow && boxShadow(p.theme, 2)};
   border-radius: 8px;
   ${margin}
   ${width}

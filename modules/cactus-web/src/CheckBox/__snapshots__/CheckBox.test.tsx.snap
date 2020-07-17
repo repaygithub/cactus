@@ -57,7 +57,7 @@ exports[`component: CheckBox should render a checkbox 1`] = `
 }
 
 .c0 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 <label
@@ -141,7 +141,7 @@ exports[`component: CheckBox should render a disabled checkbox 1`] = `
 }
 
 .c0 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 <label
@@ -233,7 +233,7 @@ exports[`component: CheckBox should support margin space props 1`] = `
 }
 
 .c0 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 <label
@@ -318,7 +318,7 @@ exports[`component: CheckBox with theme customization should have 2px border 1`]
 }
 
 .c0 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 <label
