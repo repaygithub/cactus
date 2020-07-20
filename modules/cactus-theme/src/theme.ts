@@ -39,6 +39,16 @@ export interface IconSizeObject extends Array<number> {
   large?: number
 }
 
+export type TextStyleCollection = {
+  tiny: TextStyle
+  small: TextStyle
+  body: TextStyle
+  h4: TextStyle
+  h3: TextStyle
+  h2: TextStyle
+  h1: TextStyle
+}
+
 export type TextStyle = {
   fontSize: string
   lineHeight: string
@@ -93,16 +103,10 @@ export interface CactusTheme {
   }
   space: number[]
   fontSizes: FontSizeObject
+  mobileFontSizes: FontSizeObject
   iconSizes: IconSizeObject
-  textStyles: {
-    tiny: TextStyle
-    small: TextStyle
-    body: TextStyle
-    h4: TextStyle
-    h3: TextStyle
-    h2: TextStyle
-    h1: TextStyle
-  }
+  textStyles: TextStyleCollection
+  mobileTextStyles: TextStyleCollection
   colorStyles: {
     base: ColorStyle
     callToAction: ColorStyle
@@ -588,6 +592,37 @@ const repayOptions: GeneratorOptions = {
   boxShadows: true,
 }
 
+const makeTextStyles = (fontSizes: FontSizeObject) => ({
+  tiny: {
+    fontSize: `${fontSizes.tiny}px`,
+    lineHeight: '1.44',
+  },
+  small: {
+    fontSize: `${fontSizes.small}px`,
+    lineHeight: '1.6',
+  },
+  body: {
+    fontSize: `${fontSizes.body}px`,
+    lineHeight: '1.5',
+  },
+  h4: {
+    fontSize: `${fontSizes.h4}px`,
+    lineHeight: '1.5',
+  },
+  h3: {
+    fontSize: `${fontSizes.h3}px`,
+    lineHeight: '1.5',
+  },
+  h2: {
+    fontSize: `${fontSizes.h2}px`,
+    lineHeight: '1.5',
+  },
+  h1: {
+    fontSize: `${fontSizes.h1}px`,
+    lineHeight: '1.5',
+  },
+})
+
 export function generateTheme(options: GeneratorOptions = repayOptions): CactusTheme {
   const [colors, colorStyles] = isHue(options) ? fromHue(options) : fromTwoColor(options)
 
@@ -599,6 +634,15 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
   fontSizes.body = fontSizes.p = fontSizes[2]
   fontSizes.small = fontSizes[1]
   fontSizes.tiny = fontSizes[0]
+
+  const mobileFontSizes = [12.5, 15, 18, 18, 21.6, 25.92, 31.1] as FontSizeObject
+  mobileFontSizes.h1 = mobileFontSizes[6]
+  mobileFontSizes.h2 = mobileFontSizes[5]
+  mobileFontSizes.h3 = mobileFontSizes[4]
+  mobileFontSizes.h4 = mobileFontSizes[3]
+  mobileFontSizes.body = mobileFontSizes.p = mobileFontSizes[2]
+  mobileFontSizes.small = mobileFontSizes[1]
+  mobileFontSizes.tiny = mobileFontSizes[0]
 
   const iconSizes: IconSizeObject = [8, 16, 24, 40]
   iconSizes.tiny = iconSizes[0]
@@ -618,41 +662,14 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     colorStyles,
     space: [0, 2, 4, 8, 16, 24, 32, 40],
     fontSizes,
+    mobileFontSizes,
     iconSizes,
     border,
     shape,
     font: `${fontOptions.join(', ')}, sans-serif`,
     boxShadows,
-    textStyles: {
-      tiny: {
-        fontSize: `${fontSizes.tiny}px`,
-        lineHeight: '1.44',
-      },
-      small: {
-        fontSize: `${fontSizes.small}px`,
-        lineHeight: '1.6',
-      },
-      body: {
-        fontSize: `${fontSizes.body}px`,
-        lineHeight: '1.5',
-      },
-      h4: {
-        fontSize: `${fontSizes.h4}px`,
-        lineHeight: '1.5',
-      },
-      h3: {
-        fontSize: `${fontSizes.h3}px`,
-        lineHeight: '1.5',
-      },
-      h2: {
-        fontSize: `${fontSizes.h2}px`,
-        lineHeight: '1.5',
-      },
-      h1: {
-        fontSize: `${fontSizes.h1}px`,
-        lineHeight: '1.5',
-      },
-    },
+    textStyles: makeTextStyles(fontSizes),
+    mobileTextStyles: makeTextStyles(mobileFontSizes),
   }
 }
 
