@@ -186,6 +186,13 @@ exports[`component: DateInput snapshot 1`] = `
   margin-left: auto;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 "
@@ -483,6 +490,13 @@ exports[`component: DateInput with theme customization should have 2px border 1`
 .c0 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -795,6 +809,13 @@ exports[`component: DateInput with theme customization should match intermediate
 .c0 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -1123,6 +1144,13 @@ exports[`component: DateInput with theme customization should match square shape
   margin-left: auto;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0 "
     role="group"
@@ -1447,6 +1475,13 @@ exports[`component: DateInput with theme customization should not have box shado
 .c12 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div

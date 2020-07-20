@@ -28,6 +28,12 @@ exports[`component: PrevNext basic usage 1`] = `
   cursor: default;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+  }
+}
+
 <div>
   <div
     class=""
@@ -78,6 +84,12 @@ exports[`component: PrevNext disable next 1`] = `
 .c0[aria-disabled='true'] {
   color: hsl(0,0%,90%);
   cursor: default;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+  }
 }
 
 <div>
@@ -131,6 +143,12 @@ exports[`component: PrevNext disable prev 1`] = `
   cursor: default;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+  }
+}
+
 <div>
   <div
     class=""
@@ -180,6 +198,12 @@ exports[`component: PrevNext provided link text 1`] = `
 .c0[aria-disabled='true'] {
   color: hsl(0,0%,90%);
   cursor: default;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+  }
 }
 
 <div>

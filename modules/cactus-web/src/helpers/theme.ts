@@ -1,4 +1,5 @@
-import { CactusColor, CactusTheme, ColorStyle } from '@repay/cactus-theme'
+import { CactusColor, CactusTheme, ColorStyle, TextStyleCollection } from '@repay/cactus-theme'
+import { css } from 'styled-components'
 
 export const border = (theme: CactusTheme, color: string) => {
   const thickness = theme.border === 'thick' ? '2px' : '1px'
@@ -22,4 +23,32 @@ export const boxShadow = (theme: CactusTheme, shadowType: number) => {
   if (theme.boxShadows) {
     return `box-shadow: ${shadowTypes[shadowType]} ${theme.colors.transparentCTA}`
   }
+}
+
+type FontSize = 'h1' | 'h2' | 'h3' | 'h4' | 'body' | 'p' | 'small' | 'tiny'
+
+export const fontSize = (theme: CactusTheme, size: FontSize) => {
+  if (theme.mediaQueries) {
+    return `
+      font-size: ${theme.mobileFontSizes[size]}px;
+      ${theme.mediaQueries.medium} {
+        font-size: ${theme.fontSizes[size]}px;
+      }
+    `
+  }
+
+  return `font-size: ${theme.fontSizes[size]}px;`
+}
+
+export const textStyle = (theme: CactusTheme, size: keyof TextStyleCollection) => {
+  if (theme.mediaQueries) {
+    return css`
+      ${theme.mobileTextStyles[size]}
+      ${theme.mediaQueries.medium} {
+        ${theme.textStyles[size]}
+      }
+    `
+  }
+
+  return theme.textStyles[size]
 }

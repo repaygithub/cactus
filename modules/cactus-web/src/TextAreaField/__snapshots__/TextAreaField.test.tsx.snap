@@ -95,6 +95,20 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   width: auto;
 }
 
+@media screen and (min-width:1024px) {
+  .c5 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c9 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2 c3"

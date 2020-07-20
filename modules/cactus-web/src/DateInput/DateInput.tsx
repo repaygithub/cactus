@@ -1,7 +1,7 @@
 import React, { Component, Fragment, MouseEventHandler, useMemo } from 'react'
 
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, textStyle } from '../helpers/theme'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 import {
   DateType,
@@ -246,7 +246,7 @@ const InputWrapper = styled.div`
   padding: 0 16px 0 12px;
   user-select: none;
   min-width: 106px;
-  ${(p) => p.theme.textStyles.body};
+  ${(p) => textStyle(p.theme, 'body')};
   ${marginAndWidth}
 
   &:focus-within {
@@ -347,7 +347,7 @@ const MonthYearSelect = styled.button`
   background-color: transparent;
   border: none;
   padding: 16px;
-  ${(p) => p.theme.textStyles.h4};
+  ${(p) => textStyle(p.theme, 'h4')};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -369,7 +369,7 @@ const CalendarDayBase = styled.button`
   height: 40px;
   border-radius: 50%;
   flex: 0 0 40px;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => textStyle(p.theme, 'small')};
 
   &:focus {
     outline: none;

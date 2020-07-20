@@ -111,6 +111,13 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
   color: hsl(0,0%,100%);
 }
 
+@media screen and (min-width:1024px) {
+  .c1,
+  .c1:link {
+    font-size: 15px;
+  }
+}
+
 <div>
   <nav
     aria-label="Pages"

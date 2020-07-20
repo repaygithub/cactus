@@ -1,7 +1,7 @@
 import { select, text } from '@storybook/addon-knobs'
 import { Span, Text } from './Text'
 import { storiesOf } from '@storybook/react'
-import cactusTheme, { CactusColor } from '@repay/cactus-theme'
+import cactusTheme, { CactusColor, TextStyleCollection } from '@repay/cactus-theme'
 import React from 'react'
 
 const COLOR_STYLES = Object.keys(cactusTheme.colorStyles) as CactusColor[]
@@ -27,7 +27,7 @@ storiesOf('Text', module)
         fontStyle={text('fontStyle', 'italic')}
         // @ts-ignore
         textAlign={text('textAlign', 'left')}
-        textStyle={select('textStyle', TEXT_STYLES, 'small')}
+        textStyle={select('textStyle', TEXT_STYLES, 'small') as keyof TextStyleCollection}
       >
         {text('children', sampleText)}
       </Text>
@@ -46,7 +46,7 @@ storiesOf('Text', module)
         fontStyle={text('fontStyle', 'italic')}
         // @ts-ignore
         textAlign={text('textAlign', 'left')}
-        textStyle={select('textStyle', TEXT_STYLES, 'small')}
+        textStyle={select('textStyle', TEXT_STYLES, 'small') as keyof TextStyleCollection}
       >
         {text('children', sampleText)}
       </Span>

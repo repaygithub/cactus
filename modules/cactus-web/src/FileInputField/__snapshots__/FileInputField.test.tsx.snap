@@ -184,6 +184,20 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   color: hsl(0,0%,70%);
 }
 
+@media screen and (min-width:1024px) {
+  .c12 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2"
@@ -629,6 +643,34 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   right: 8px;
   font-size: 16px;
   color: hsl(0,0%,70%);
+}
+
+@media screen and (min-width:1024px) {
+  .c22 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c19 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c9 span {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -1081,6 +1123,27 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   color: hsl(0,0%,70%);
 }
 
+@media screen and (min-width:1024px) {
+  .c19 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c9 span {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2"
@@ -1424,6 +1487,27 @@ exports[`component: FileInputField should render a loading file 1`] = `
   color: hsl(0,0%,70%);
 }
 
+@media screen and (min-width:1024px) {
+  .c13 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c9 span {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2"
@@ -1666,6 +1750,20 @@ exports[`component: FileInputField should render file input field 1`] = `
   top: -2px;
   right: 8px;
   font-size: 16px;
+}
+
+@media screen and (min-width:1024px) {
+  .c12 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>

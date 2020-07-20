@@ -347,6 +347,13 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
+  .c13 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
   .c15 > [data-reach-dialog-content] .c2 {
     height: 24px;
     position: absolute;
@@ -382,10 +389,24 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
+  .c14 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
   .c1 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c11 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -800,6 +821,13 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
   .c12 > [data-reach-dialog-content] .c2 {
     height: 24px;
     position: absolute;
@@ -831,6 +859,13 @@ exports[`Modal variant is danger snapshot 1`] = `
     right: 40px;
     top: 40px;
     width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c11 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -1227,6 +1262,13 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
   .c12 > [data-reach-dialog-content] .c2 {
     height: 24px;
     position: absolute;
@@ -1248,6 +1290,13 @@ exports[`Modal variant is success snapshot 1`] = `
     right: 40px;
     top: 40px;
     width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c11 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -1632,6 +1681,13 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
   .c0 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
@@ -1643,6 +1699,13 @@ exports[`Modal variant is warning snapshot 1`] = `
     right: 40px;
     top: 40px;
     width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c11 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 

@@ -82,6 +82,13 @@ exports[`component: RadioButtonField should render a disabled radio button field
   padding-left: 8px;
 }
 
+@media screen and (min-width:1024px) {
+  .c8 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2 c3"
@@ -185,6 +192,13 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 .c3 .c7 {
   cursor: pointer;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c8 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -310,6 +324,13 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 .c3 .c7 {
   cursor: pointer;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c8 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>

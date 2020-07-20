@@ -113,6 +113,19 @@ exports[`component: SelectField minimal snapshot 1`] = `
   width: 100%;
 }
 
+@media screen and (min-width:1024px) {
+  .c5 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2 c3"

@@ -1,4 +1,4 @@
-import { border } from '../helpers/theme'
+import { border, fontSize } from '../helpers/theme'
 import { BorderSize, Shape } from '@repay/cactus-theme'
 import { keyPressAsClick } from '../helpers/a11y'
 import { margin, MarginProps } from 'styled-system'
@@ -479,7 +479,7 @@ const PageSizeSelect = styled(PageSizeSelectBase)`
     &,
     a {
       color: ${(p) => p.theme.colors.darkestContrast};
-      font-size: ${(p) => p.theme.fontSizes.small}px;
+      ${(p) => fontSize(p.theme, 'small')};
       line-height: 18px;
       text-decoration: none;
     }

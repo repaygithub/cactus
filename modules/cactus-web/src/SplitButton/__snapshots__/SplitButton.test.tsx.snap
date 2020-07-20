@@ -91,6 +91,13 @@ exports[`component: SplitButton snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
+@media screen and (min-width:1024px) {
+  .c2 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -247,6 +254,13 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 
 .c0 .c3[aria-expanded='true'] + .c1 {
   border-color: hsl(200,96%,35%);
+}
+
+@media screen and (min-width:1024px) {
+  .c2 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -407,6 +421,13 @@ exports[`component: SplitButton with theme customization should have 2px borders
   border-color: hsl(200,96%,35%);
 }
 
+@media screen and (min-width:1024px) {
+  .c2 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -565,6 +586,13 @@ exports[`component: SplitButton with theme customization should have intermediat
   border-color: hsl(200,96%,35%);
 }
 
+@media screen and (min-width:1024px) {
+  .c2 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -711,6 +739,13 @@ exports[`component: SplitButton with theme customization should have square shap
 
 .c0 .c3[aria-expanded='true'] + .c1 {
   border-color: hsl(200,96%,35%);
+}
+
+@media screen and (min-width:1024px) {
+  .c2 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>

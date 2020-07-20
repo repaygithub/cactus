@@ -108,6 +108,13 @@ exports[`component: ToggleField snapshot 1`] = `
   vertical-align: middle;
 }
 
+@media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2"
@@ -294,6 +301,13 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   vertical-align: middle;
 }
 
+@media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 c1 c2"
@@ -448,6 +462,13 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
 
 .c2 .c3 {
   vertical-align: middle;
+}
+
+@media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>

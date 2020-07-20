@@ -1,4 +1,4 @@
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, fontSize } from '../helpers/theme'
 import { margin, MarginProps } from 'styled-system'
 import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -37,7 +37,7 @@ export const StepAvatar = styled.div<StepAvatarProps>`
   width: 48px;
   height: 48px;
   line-height: 49px;
-  font-size: ${(p) => p.theme.textStyles.h2.fontSize};
+  ${(p) => fontSize(p.theme, 'h2')}
   font-weight: 400;
   text-align: center;
   appearance: none;

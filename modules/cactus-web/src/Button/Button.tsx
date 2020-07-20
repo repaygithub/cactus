@@ -4,6 +4,7 @@ import { BorderSize, Shape } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
+import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
 import styled, { css } from 'styled-components'
@@ -204,7 +205,7 @@ export const Button = styled(ButtonBase)<ButtonProps>`
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
-  ${(p) => p.theme.textStyles.body};
+  ${(p) => textStyle(p.theme, 'body')};
   ${(p) => getBorder(p.theme.border)};
   ${(p) => getShape(p.theme.shape)};
 

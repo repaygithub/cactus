@@ -134,6 +134,13 @@ exports[`component: FileInput should render a disabled file input 1`] = `
   display: none;
 }
 
+@media screen and (min-width:1024px) {
+  .c5 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 empty"
@@ -301,6 +308,13 @@ exports[`component: FileInput should render a file input 1`] = `
 
 .c0 input {
   display: none;
+}
+
+@media screen and (min-width:1024px) {
+  .c5 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -669,6 +683,27 @@ exports[`component: FileInput should render a file with an error 1`] = `
   margin: 16px 0 16px 0;
 }
 
+@media screen and (min-width:1024px) {
+  .c15 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c12 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 span {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 notEmpty"
@@ -1034,6 +1069,20 @@ exports[`component: FileInput should render a loaded file 1`] = `
   margin: 16px 0 16px 0;
 }
 
+@media screen and (min-width:1024px) {
+  .c12 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 span {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0 notEmpty"
@@ -1290,6 +1339,20 @@ exports[`component: FileInput should render a loading file 1`] = `
 .c8.notEmpty .c5 {
   position: relative;
   margin: 16px 0 16px 0;
+}
+
+@media screen and (min-width:1024px) {
+  .c6 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 span {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>

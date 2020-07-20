@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { BorderSize, Shape } from '@repay/cactus-theme'
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, textStyle } from '../helpers/theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { getScrollX } from '../helpers/scrollOffset'
 import { getTopPosition } from '../helpers/positionPopover'
@@ -93,7 +93,7 @@ const MenuList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p) => p.theme.textStyles.small};
+    ${(p) => textStyle(p.theme, 'small')};
     ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
@@ -165,7 +165,7 @@ const MenuButton = styled(MenuButtonBase)`
   outline: none;
   cursor: pointer;
   appearance: none;
-  ${(p) => p.theme.textStyles.body};
+  ${(p) => textStyle(p.theme, 'body')};
   color: ${(p) => p.theme.colors.white};
   background-color: ${(p) => p.theme.colors.darkContrast};
   border-color: ${(p) => p.theme.colors.darkContrast};

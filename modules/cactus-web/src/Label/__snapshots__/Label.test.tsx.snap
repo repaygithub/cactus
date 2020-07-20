@@ -9,6 +9,13 @@ exports[`component: Label should render a label component 1`] = `
   color: hsl(200,10%,20%);
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <label
     class="c0"
   >
@@ -25,6 +32,13 @@ exports[`component: Label should support margin space props 1`] = `
   font-weight: 600;
   color: hsl(200,10%,20%);
   margin-left: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <label

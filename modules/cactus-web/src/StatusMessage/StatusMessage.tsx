@@ -1,4 +1,5 @@
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
+import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
@@ -64,7 +65,7 @@ const StatusMessage = styled(StatusMessageBase)<StatusMessageProps>`
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => textStyle(p.theme, 'small')};
   ${statusColors}
 
   ${NotificationError}, ${NotificationAlert}, ${StatusCheck} {

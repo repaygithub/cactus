@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useRef, useState } from 'react'
 
 import { BorderSize, Shape } from '@repay/cactus-theme'
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, textStyle } from '../helpers/theme'
 import { getScrollX } from '../helpers/scrollOffset'
 import { getTopPosition } from '../helpers/positionPopover'
 import { margin, MarginProps } from 'styled-system'
@@ -76,7 +76,7 @@ const MainActionButton = styled.button`
   background-color: ${(p) => p.theme.colors.white};
   height: 32px;
   outline: none;
-  ${(p) => p.theme.textStyles.body};
+  ${(p) => textStyle(p.theme, 'body')};
   font-weight: 400;
   cursor: pointer;
   padding-left: 12px;
@@ -154,7 +154,7 @@ const SplitButtonList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p) => p.theme.textStyles.small};
+    ${(p) => textStyle(p.theme, 'small')};
     ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;

@@ -4,7 +4,7 @@ import '../helpers/polyfills'
 import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
 import { assignRef } from '@reach/utils'
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, fontSize, textStyle } from '../helpers/theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { isResponsiveTouchDevice } from '../helpers/constants'
@@ -112,7 +112,7 @@ const getValueShape = (shape: Shape) => valueShapeMap[shape]
 
 const ValueTag = styled(ValueTagBase)`
   box-sizing: border-box;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => textStyle(p.theme, 'small')};
   padding: 0 8px 0 8px;
   border: 1px solid ${(p) => p.theme.colors.lightContrast};
   ${(p) => getValueShape(p.theme.shape as Shape)}
@@ -237,7 +237,7 @@ const ValueSwitch = (props: {
 
 const ValueSpan = styled.span`
   display: inline-block;
-  font-size: ${(p) => p.theme.fontSizes.p}px;
+  ${(p) => fontSize(p.theme, 'p')};
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
@@ -247,7 +247,7 @@ const ValueSpan = styled.span`
 const Placeholder = styled.span`
   font-style: italic;
   color: ${(p) => p.theme.colors.darkContrast};
-  font-size: ${(p) => p.theme.fontSizes.p}px;
+  ${(p) => fontSize(p.theme, 'p')};
 `
 
 const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
@@ -411,7 +411,7 @@ const Option = styled.li`
   display: list-item;
   border: none;
   height: auto;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => textStyle(p.theme, 'small')};
   text-align: left;
   box-shadow: none;
   padding: 4px 16px;

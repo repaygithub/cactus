@@ -14,11 +14,11 @@ import {
   PositionProps,
   space,
   SpaceProps,
-  textStyle,
-  TextStyleProps,
   typography,
   TypographyProps,
 } from 'styled-system'
+import { textStyle } from '../helpers/theme'
+import { TextStyleCollection } from '@repay/cactus-theme'
 import styled from 'styled-components'
 
 export interface BoxProps
@@ -29,14 +29,14 @@ export interface BoxProps
     ColorStyleProps,
     DisplayProps,
     TypographyProps,
-    TextStyleProps,
-    BorderProps {}
+    BorderProps {
+  textStyle?: keyof TextStyleCollection
+}
 
-export const Box = styled('div')<BoxProps>(
-  {
-    boxSizing: 'border-box',
-  },
-  compose(position, display, layout, space, colorStyle, color, typography, textStyle, border)
-)
+export const Box = styled('div')<BoxProps>`
+  box-sizing: border-box;
+  ${compose(position, display, layout, space, colorStyle, color, typography, border)}
+  ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
+`
 
 export default Box

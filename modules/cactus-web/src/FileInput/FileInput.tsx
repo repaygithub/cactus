@@ -13,6 +13,7 @@ import { IconButton } from '../IconButton/IconButton'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { omitMargins } from '../helpers/omit'
 import { TextButton } from '../TextButton/TextButton'
+import { textStyle } from '../helpers/theme'
 import accepts from '../helpers/accept'
 import Avatar from '../Avatar/Avatar'
 import handleEvent from '../helpers/eventHandler'
@@ -206,7 +207,7 @@ const FileBox = styled(FileBoxBase)`
   span {
     margin-left: 8px;
     margin-right: 8px;
-    ${(p) => p.theme.textStyles.body};
+    ${(p) => textStyle(p.theme, 'body')};
   }
 
   ${Avatar} {

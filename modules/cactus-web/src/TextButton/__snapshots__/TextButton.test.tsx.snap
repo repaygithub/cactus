@@ -46,6 +46,13 @@ exports[`With theme changes  Should have 2px border 1`] = `
   margin-right: 4px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     class="c0"
     type="button"
@@ -99,6 +106,13 @@ exports[`With theme changes  Should have intermediate shape 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -156,6 +170,13 @@ exports[`With theme changes  Should have square shape 1`] = `
   margin-right: 4px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     class="c0"
     type="button"
@@ -209,6 +230,13 @@ exports[`component: TextButton should default to standard variant 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -268,6 +296,13 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -340,6 +375,13 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   margin-right: 4px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     class="c0"
     type="button"
@@ -406,6 +448,13 @@ exports[`component: TextButton should render call to action variant 1`] = `
   margin-right: 4px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     class="c0"
     type="button"
@@ -461,6 +510,13 @@ exports[`component: TextButton should render danger variant 1`] = `
   margin-right: 4px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     class="c0"
     type="button"
@@ -510,6 +566,13 @@ exports[`component: TextButton should render disabled variant 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -569,6 +632,13 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   margin-right: 4px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     class="c0"
     type="button"
@@ -618,6 +688,13 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -676,6 +753,13 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   margin-right: 4px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     class="c0"
     type="button"
@@ -729,6 +813,13 @@ exports[`component: TextButton should render standard variant 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -785,6 +876,13 @@ exports[`component: TextButton should support space props 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
