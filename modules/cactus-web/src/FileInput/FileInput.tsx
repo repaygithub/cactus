@@ -7,6 +7,7 @@ import {
   NotificationError,
   StatusCheck,
 } from '@repay/cactus-icons'
+import { border } from '../helpers/theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { IconButton } from '../IconButton/IconButton'
@@ -141,15 +142,15 @@ const fileBoxMap: FileBoxMap = {
     background-color: ${(P) => P.theme.colors.lightContrast};
   `,
   loaded: css<FileBoxPropsWithForwardRef>`
-    border: 2px solid ${(p) => p.theme.colors.success};
+    border: ${(p) => border(p.theme, p.theme.colors.success)};
     background-color: ${(p) => p.theme.colors.transparentSuccess};
   `,
   error: css<FileBoxPropsWithForwardRef>`
-    border: 2px solid ${(p) => p.theme.colors.error};
+    border: ${(p) => border(p.theme, p.theme.colors.error)};
     background-color: ${(p) => p.theme.colors.transparentError};
   `,
   disabled: css<FileBoxPropsWithForwardRef>`
-    border: 2px solid ${(p) => p.theme.colors.mediumGray};
+    border: ${(p) => border(p.theme, p.theme.colors.mediumGray)};
     background-color: ${(p) => p.theme.colors.lightGray};
   `,
 }
