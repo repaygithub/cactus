@@ -1,5 +1,6 @@
 import React, { cloneElement } from 'react'
 
+import { boxShadow } from '../helpers/theme'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { margin, MarginProps, maxWidth } from 'styled-system'
 import { NotificationInfo } from '@repay/cactus-icons'
@@ -132,7 +133,7 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   position: absolute;
   padding: 16px;
   border-radius: 8px 8px 8px 8px;
-  box-shadow: 0 9px 24px -8px ${(p) => p.theme.colors.callToAction};
+  ${(p) => boxShadow(p.theme, 2)};
   font-size: 15px;
   ${(p) => p.theme.colorStyles.standard};
   border: 2px solid ${(p) => p.theme.colors.callToAction};

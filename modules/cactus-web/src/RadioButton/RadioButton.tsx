@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { boxShadow } from '../helpers/theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
@@ -82,7 +83,7 @@ export const RadioButton = styled(RadioButtonBase)`
   }
 
   input:focus ~ span {
-    ${(p) => p.theme.boxShadows && `box-shadow: 0 0 8px ${p.theme.colors.callToAction};`}
+    ${(p) => boxShadow(p.theme, 1)}
   }
 
   ${margin}

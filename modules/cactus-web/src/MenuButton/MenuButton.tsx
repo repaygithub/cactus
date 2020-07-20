@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { BorderSize, Shape } from '@repay/cactus-theme'
+import { boxShadow } from '../helpers/theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { getScrollX } from '../helpers/scrollOffset'
 import { getTopPosition } from '../helpers/positionPopover'
@@ -58,10 +59,6 @@ const getBorder = (size: BorderSize) => borderMap[size]
 
 const getDropShape = (shape: Shape) => dropShapeMap[shape]
 
-const getBoxShadow = (theme: CactusTheme) => {
-  return theme.boxShadows ? `0 3px 6px 0 ${theme.colors.callToAction}` : {}
-}
-
 const getDropDownBorder = (theme: CactusTheme) => {
   if (!theme.boxShadows) {
     return css`
@@ -87,7 +84,7 @@ const MenuList = styled(ReachMenuItems)`
   margin-top: 8px;
   outline: none;
   ${(p) => getDropDownBorder(p.theme)};
-  box-shadow: ${(p) => getBoxShadow(p.theme)};
+  ${(p) => boxShadow(p.theme, 1)};
   background-color: ${(p) => p.theme.colors.white};
 
   [data-reach-menu-item] {
