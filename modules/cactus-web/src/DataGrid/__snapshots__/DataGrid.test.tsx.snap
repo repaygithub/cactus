@@ -176,7 +176,7 @@ exports[`component: DataGrid snapshot 1`] = `
 
 .c4.c4.c4 tr:focus td,
 .c4.c4.c4 tr:focus th {
-  background-color: hsla(200,96%,35%,0.25);
+  background-color: hsla(200,96%,35%,0.3);
   border-color: hsl(200,96%,35%);
 }
 
