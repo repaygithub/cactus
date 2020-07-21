@@ -21,7 +21,7 @@ describe('component: Flex', () => {
       <StyleProvider>
         <Flex justifyContent="end" alignItems="center" flexWrap="nowrap" flexDirection="column">
           <Flex alignSelf="end" />
-          <Flex justifySelf="center" />
+          <Flex />
         </Flex>
       </StyleProvider>
     )
