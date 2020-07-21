@@ -79,7 +79,10 @@ const Area = styled.textarea<TextAreaProps>`
   border-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
   ${(p) => getShape(p.theme.shape)}
   min-height: 100px;
-  min-width: 336px;
+  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small}{
+    min-width: 336px;
+
+  }
   box-sizing: border-box;
   ${(p) => textStyle(p.theme, 'body')}
   padding: 8px 16px;
