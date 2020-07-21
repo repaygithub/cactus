@@ -5,8 +5,64 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   <div
     aria-hidden="true"
   />
-  .c4 {
+  .c7 {
+  margin: 0;
+}
+
+.c9 {
+  font-weight: normal;
+}
+
+.c4 {
   vertical-align: middle;
+}
+
+.c11 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-color: hsl(200,9%,35%);
+  border-radius: 20px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 7px 28px 7px 15px;
+  font-size: 18px;
+  line-height: 1.5;
+  width: 90%;
+  background-color: hsl(0,0%,100%);
+}
+
+.c11 [disabled] {
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
+}
+
+.c11:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c11::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c11::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c11:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c11::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c10 {
+  box-sizing: border-box;
 }
 
 .c13 {
@@ -229,14 +285,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   width: 16px;
 }
 
-.c7 {
-  margin: 0;
-}
-
-.c9 {
-  font-weight: normal;
-}
-
 .c14 {
   font-size: 18px;
   line-height: 1.5;
@@ -298,52 +346,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   width: 100%;
 }
 
-.c11 {
-  box-sizing: border-box;
-  border: 1px solid;
-  border-color: hsl(200,9%,35%);
-  border-radius: 20px;
-  height: 32px;
-  outline: none;
-  box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
-  font-size: 18px;
-  line-height: 1.5;
-  width: 90%;
-  background-color: hsl(0,0%,100%);
-}
-
-.c11 [disabled] {
-  border-color: hsl(0,0%,90%);
-  background-color: hsl(0,0%,90%);
-}
-
-.c11:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c11::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c11::-moz-placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c11:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c11::placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c10 {
-  box-sizing: border-box;
+@media screen and (min-width:1024px) {
+  .c11 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 @media screen and (min-width:1024px) {
@@ -400,13 +407,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c11 {
-    font-size: 18px;
-    line-height: 1.5;
   }
 }
 
@@ -531,7 +531,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   <div
     aria-hidden="true"
   />
-  .c4 {
+  .c7 {
+  margin: 0;
+}
+
+.c4 {
   vertical-align: middle;
 }
 
@@ -755,10 +759,6 @@ exports[`Modal variant is danger snapshot 1`] = `
   width: 16px;
 }
 
-.c7 {
-  margin: 0;
-}
-
 .c11 {
   font-size: 18px;
   line-height: 1.5;
@@ -980,7 +980,11 @@ exports[`Modal variant is success snapshot 1`] = `
   <div
     aria-hidden="true"
   />
-  .c4 {
+  .c7 {
+  margin: 0;
+}
+
+.c4 {
   vertical-align: middle;
 }
 
@@ -1196,10 +1200,6 @@ exports[`Modal variant is success snapshot 1`] = `
   width: 16px;
 }
 
-.c7 {
-  margin: 0;
-}
-
 .c11 {
   font-size: 18px;
   line-height: 1.5;
@@ -1407,6 +1407,10 @@ exports[`Modal variant is success snapshot 1`] = `
 `;
 
 exports[`Modal variant is warning snapshot 1`] = `
+.c7 {
+  margin: 0;
+}
+
 .c4 {
   vertical-align: middle;
 }
@@ -1613,10 +1617,6 @@ exports[`Modal variant is warning snapshot 1`] = `
   right: 24px;
   top: 24px;
   width: 16px;
-}
-
-.c7 {
-  margin: 0;
 }
 
 .c11 {

@@ -28,14 +28,14 @@ exports[`component: SelectField minimal snapshot 1`] = `
   padding-right: 28px;
 }
 
-.c2 .c13 {
+.c2 .c14 {
   position: absolute;
   right: 8px;
   top: 2px;
   font-size: 16px;
 }
 
-.c2 .c14 {
+.c2 .c13 {
   margin-top: 4px;
 }
 
