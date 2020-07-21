@@ -2,6 +2,7 @@ import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
+import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -60,7 +61,7 @@ const getBorder = (size: BorderSize) => borderMap[size]
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    font-weight: 700;
+    font-weight: 600;
     color: ${(p) => p.theme.colors.callToAction};
   `,
   standard: css`
@@ -90,7 +91,7 @@ const variantOrDisabled = (
 }
 
 export const TextButton = styled.button<TextButtonProps>`
-  ${(p) => p.theme.textStyles.body};
+  ${(p) => textStyle(p.theme, 'body')};
   position: relative;
   border: none;
   padding: 4px;

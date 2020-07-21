@@ -7,7 +7,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
 
 .c5 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -111,6 +111,19 @@ exports[`component: SelectField minimal snapshot 1`] = `
 
 .c3 .c6 {
   width: 100%;
+}
+
+@media screen and (min-width:1024px) {
+  .c5 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c10 {
+    font-size: 18px;
+  }
 }
 
 <div>

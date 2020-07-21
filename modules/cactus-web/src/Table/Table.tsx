@@ -1,4 +1,4 @@
-import { border, boxShadow } from '../helpers/theme'
+import { border, boxShadow, textStyle } from '../helpers/theme'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -209,7 +209,7 @@ const getShape = (shape: Shape, location: BorderCorner) =>
 
 const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
   text-align: left;
   max-width: 100%;
   flex-grow: 1;
@@ -291,7 +291,7 @@ const StyledHeader = styled.thead<TableHeaderProps>`
 
 const table = css`
   display: table;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => textStyle(p.theme, 'small')};
   border-spacing: 0;
 
   td,
@@ -378,7 +378,7 @@ const table = css`
 `
 
 const card = css`
-  ${(p) => p.theme.textStyles.tiny};
+  ${(p) => textStyle(p.theme, 'tiny')};
   overflow-wrap: break-word;
 
   &,
@@ -426,7 +426,7 @@ const StyledTable = styled.table<TableProps>`
   color: ${(p) => p.theme.colors.darkestContrast};
 
   th {
-    font-weight: bold;
+    font-weight: 600;
   }
 
   ${variant({ table, card })};

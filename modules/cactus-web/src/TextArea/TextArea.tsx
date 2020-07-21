@@ -5,6 +5,7 @@ import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
 import { StatusPropType } from '../StatusMessage/StatusMessage'
+import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -83,7 +84,7 @@ const Area = styled.textarea<TextAreaProps>`
 
   }
   box-sizing: border-box;
-  ${(p) => p.theme.textStyles.body}
+  ${(p) => textStyle(p.theme, 'body')}
   padding: 8px 16px;
   outline: none;
   background-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.white)};

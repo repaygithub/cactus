@@ -3,6 +3,7 @@ import React from 'react'
 import * as styledComponents from 'styled-components'
 import { breakpointOrder, breakpoints } from '../helpers/constants'
 import { Omit } from '../types'
+import { textStyle } from '../helpers/theme'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 
@@ -42,34 +43,33 @@ html,
 body {
   font-family: ${(p) =>
     p.theme.font as styledComponents.Interpolation<styledComponents.ThemeProps<CactusTheme>>};
-  ${(p) => p.theme.textStyles.body};
+  ${(p) => textStyle(p.theme, 'body')};
   font-weight: 400;
   color: ${(p) => p.theme.colors.darkestContrast};
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.54;
   letter-spacing: normal;
   margin: 0;
 }
 
 small {
-  ${(p) => p.theme.textStyles.small}
+  ${(p) => textStyle(p.theme, 'small')}
 }
 
 h1 {
-  ${(p) => p.theme.textStyles.h1};
+  ${(p) => textStyle(p.theme, 'h1')};
 }
 
 h2 {
-  ${(p) => p.theme.textStyles.h2};
+  ${(p) => textStyle(p.theme, 'h2')};
 }
 
 h3 {
-  ${(p) => p.theme.textStyles.h3};
+  ${(p) => textStyle(p.theme, 'h3')};
 }
 
 h4, h5, h6 {
-  ${(p) => p.theme.textStyles.h4};
+  ${(p) => textStyle(p.theme, 'h4')};
 }
 `
 

@@ -10,7 +10,7 @@ exports[`With theme changes  Should have intermediate border radius 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 8px;
   color: hsl(200,96%,11%);
@@ -53,6 +53,13 @@ exports[`With theme changes  Should have intermediate border radius 1`] = `
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -77,7 +84,7 @@ exports[`With theme changes  Should have square border radius 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 1px;
   color: hsl(200,96%,11%);
@@ -120,6 +127,13 @@ exports[`With theme changes  Should have square border radius 1`] = `
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -144,7 +158,7 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(200,96%,11%);
@@ -187,6 +201,13 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -211,7 +232,7 @@ exports[`With theme changes  should have 2px border 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 2px solid;
   border-radius: 20px;
   color: hsl(200,96%,11%);
@@ -254,6 +275,13 @@ exports[`With theme changes  should have 2px border 1`] = `
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -278,7 +306,7 @@ exports[`component: Button should default to standard variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(200,96%,11%);
@@ -321,6 +349,13 @@ exports[`component: Button should default to standard variant 1`] = `
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -352,7 +387,7 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(200,96%,11%);
@@ -453,6 +488,13 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   margin-top: -8px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -492,7 +534,7 @@ exports[`component: Button should render call to action variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   background-color: hsl(200,96%,35%);
@@ -537,6 +579,13 @@ exports[`component: Button should render call to action variant 1`] = `
   border-color: hsl(200,96%,11%);
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -559,7 +608,7 @@ exports[`component: Button should render danger variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   background-color: hsl(353,84%,44%);
@@ -604,6 +653,13 @@ exports[`component: Button should render danger variant 1`] = `
   border-color: hsl(353,96%,11%);
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -626,7 +682,7 @@ exports[`component: Button should render disabled variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(0,0%,70%);
@@ -666,6 +722,13 @@ exports[`component: Button should render disabled variant 1`] = `
   margin-top: -8px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -689,7 +752,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(0,0%,100%);
@@ -734,6 +797,13 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   border-color: hsl(0,0%,100%);
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -756,7 +826,7 @@ exports[`component: Button should render inverse danger variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(353,84%,44%);
@@ -800,6 +870,13 @@ exports[`component: Button should render inverse danger variant 1`] = `
   background-color: hsl(353,84%,44%);
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -822,7 +899,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(0,0%,70%);
@@ -862,6 +939,13 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   margin-top: -8px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -885,7 +969,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(0,0%,100%);
@@ -928,6 +1012,13 @@ exports[`component: Button should render inverse standard variant 1`] = `
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(0,0%,100%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -952,7 +1043,7 @@ exports[`component: Button should render standard variant 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   color: hsl(200,96%,11%);
@@ -997,6 +1088,13 @@ exports[`component: Button should render standard variant 1`] = `
   border-color: hsl(200,96%,11%);
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-live="assertive"
     class="c0"
@@ -1019,7 +1117,7 @@ exports[`component: Button should support margin space props 1`] = `
   overflow: visible;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
   margin-top: 24px;
@@ -1063,6 +1161,13 @@ exports[`component: Button should support margin space props 1`] = `
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button

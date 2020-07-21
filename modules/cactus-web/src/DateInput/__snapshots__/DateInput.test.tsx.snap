@@ -115,7 +115,7 @@ exports[`component: DateInput snapshot 1`] = `
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -184,6 +184,13 @@ exports[`component: DateInput snapshot 1`] = `
 .c0 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -414,7 +421,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -483,6 +490,13 @@ exports[`component: DateInput with theme customization should have 2px border 1`
 .c0 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -726,7 +740,7 @@ exports[`component: DateInput with theme customization should match intermediate
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -795,6 +809,13 @@ exports[`component: DateInput with theme customization should match intermediate
 .c0 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -1052,7 +1073,7 @@ exports[`component: DateInput with theme customization should match square shape
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -1121,6 +1142,13 @@ exports[`component: DateInput with theme customization should match square shape
 .c0 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -1336,7 +1364,7 @@ exports[`component: DateInput with theme customization should not have box shado
   user-select: none;
   min-width: 106px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
 }
 
 .c0:focus-within {
@@ -1447,6 +1475,13 @@ exports[`component: DateInput with theme customization should not have box shado
 .c12 .c6 {
   margin-right: -2px;
   margin-left: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div

@@ -13,9 +13,9 @@ import {
   SpaceProps,
   textAlign,
   TextAlignProps,
-  textStyle,
-  TextStyleProps,
 } from 'styled-system'
+import { textStyle } from '../helpers/theme'
+import { TextStyleCollection } from '@repay/cactus-theme'
 import styled from 'styled-components'
 
 interface TextProps
@@ -25,19 +25,20 @@ interface TextProps
     FontFamilyProps,
     FontWeightProps,
     TextAlignProps,
-    FontStyleProps,
-    TextStyleProps {}
+    FontStyleProps {
+  textStyle?: keyof TextStyleCollection
+}
 
-export const Text = styled('p')<TextProps>(
-  space,
-  color,
-  colorStyle,
-  fontFamily,
-  fontWeight,
-  textAlign,
-  fontStyle,
-  textStyle
-)
+export const Text = styled('p')<TextProps>`
+  ${space}
+  ${color}
+  ${colorStyle}
+  ${fontFamily}
+  ${fontWeight}
+  ${textAlign}
+  ${fontStyle}
+  ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
+`
 
 export const Span = Text.withComponent('span')
 

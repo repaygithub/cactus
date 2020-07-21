@@ -8,7 +8,7 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,90%);
@@ -57,6 +57,13 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
   }
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -77,7 +84,7 @@ exports[`component: TextArea should render a success textarea 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -128,6 +135,13 @@ exports[`component: TextArea should render a success textarea 1`] = `
   }
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -147,7 +161,7 @@ exports[`component: TextArea should render a textarea 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -196,6 +210,13 @@ exports[`component: TextArea should render a textarea 1`] = `
   }
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -215,7 +236,7 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -261,6 +282,13 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
 @media screen and (min-width:768px) {
   .c1 {
     min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -284,7 +312,7 @@ exports[`component: TextArea should render a warning textarea 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -335,6 +363,13 @@ exports[`component: TextArea should render a warning textarea 1`] = `
   }
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -354,7 +389,7 @@ exports[`component: TextArea should render an error textarea 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -405,6 +440,13 @@ exports[`component: TextArea should render an error textarea 1`] = `
   }
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -424,7 +466,7 @@ exports[`component: TextArea should support margin space props 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -474,6 +516,13 @@ exports[`component: TextArea should support margin space props 1`] = `
   }
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -494,7 +543,7 @@ exports[`component: TextArea with theme customization should have 1px border rad
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -540,6 +589,13 @@ exports[`component: TextArea with theme customization should have 1px border rad
 @media screen and (min-width:768px) {
   .c1 {
     min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -562,7 +618,7 @@ exports[`component: TextArea with theme customization should have 2px border 1`]
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -611,6 +667,13 @@ exports[`component: TextArea with theme customization should have 2px border 1`]
   }
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -630,7 +693,7 @@ exports[`component: TextArea with theme customization should have 8px border rad
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -676,6 +739,13 @@ exports[`component: TextArea with theme customization should have 8px border rad
 @media screen and (min-width:768px) {
   .c1 {
     min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 

@@ -9,7 +9,7 @@ exports[`component: Table card carousel 1`] = `
 
 .c6 {
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
   text-align: left;
   max-width: 100%;
   -webkit-box-flex: 1;
@@ -86,12 +86,12 @@ exports[`component: Table card carousel 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   font-size: 12.5px;
-  line-height: 18px;
+  line-height: 1.44;
   overflow-wrap: break-word;
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1,
@@ -161,6 +161,13 @@ exports[`component: Table card carousel 1`] = `
 @media screen and (min-width:1440px) {
   .c3 {
     min-width: 160px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 12.5px;
+    line-height: 1.44;
   }
 }
 
@@ -271,12 +278,12 @@ exports[`component: Table regular table 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1 td,
@@ -394,6 +401,13 @@ exports[`component: Table regular table 1`] = `
 @media screen and (min-width:1440px) {
   .c3 {
     min-width: 160px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 
@@ -474,12 +488,12 @@ exports[`component: Table table with caption 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1 td,
@@ -597,6 +611,13 @@ exports[`component: Table table with caption 1`] = `
 @media screen and (min-width:1440px) {
   .c3 {
     min-width: 160px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 
@@ -672,12 +693,12 @@ exports[`component: Table table with no header 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 
 .c1 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c1 td,
@@ -795,6 +816,13 @@ exports[`component: Table table with no header 1`] = `
 @media screen and (min-width:1440px) {
   .c2 {
     min-width: 160px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 

@@ -5,6 +5,7 @@ import { margin, MarginProps } from 'styled-system'
 import { Omit } from '../types'
 import { omitMargins } from '../helpers/omit'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
+import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -92,7 +93,7 @@ const Input = styled.input<InputProps>`
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
-  ${(p) => p.theme.textStyles.body};
+  ${(p) => textStyle(p.theme, 'body')};
   width: ${(p) => p.width || 'auto'};
   background-color: ${(p) => p.theme.colors.white};
 

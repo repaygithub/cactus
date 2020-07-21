@@ -48,7 +48,6 @@ exports[`component: DataGrid snapshot 1`] = `
 .c17:link {
   color: hsl(200,10%,20%);
   font-size: 15px;
-  line-height: 23px;
   line-height: 18px;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -135,12 +134,12 @@ exports[`component: DataGrid snapshot 1`] = `
   color: hsl(200,10%,20%);
   display: table;
   font-size: 15px;
-  line-height: 23px;
+  line-height: 1.6;
   border-spacing: 0;
 }
 
 .c4 th {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .c4 td,
@@ -380,7 +379,6 @@ exports[`component: DataGrid snapshot 1`] = `
 .c2 .page-option a {
   color: hsl(200,10%,20%);
   font-size: 15px;
-  line-height: 23px;
   line-height: 18px;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -423,8 +421,8 @@ exports[`component: DataGrid snapshot 1`] = `
   height: 32px;
   outline: none;
   font-size: 18px;
-  line-height: 28px;
-  font-weight: 400px;
+  line-height: 1.5;
+  font-weight: 400;
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
@@ -500,6 +498,13 @@ exports[`component: DataGrid snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
+@media screen and (min-width:1024px) {
+  .c17,
+  .c17:link {
+    font-size: 15px;
+  }
+}
+
 @media screen and (min-width:1200px) {
   .c6 {
     min-width: calc(160px * 0.875);
@@ -509,6 +514,13 @@ exports[`component: DataGrid snapshot 1`] = `
 @media screen and (min-width:1440px) {
   .c6 {
     min-width: 160px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 
@@ -549,6 +561,20 @@ exports[`component: DataGrid snapshot 1`] = `
 @media screen and (min-width:1024px) {
   .c2 {
     margin-left: auto;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 .page-option,
+  .c2 .page-option a {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c12 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 

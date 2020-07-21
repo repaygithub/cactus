@@ -12,7 +12,7 @@ exports[`component: TextInput should render a disabled input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -50,6 +50,13 @@ exports[`component: TextInput should render a disabled input 1`] = `
   box-sizing: border-box;
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -73,7 +80,7 @@ exports[`component: TextInput should render a success input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(145,89%,28%);
@@ -113,6 +120,13 @@ exports[`component: TextInput should render a success input 1`] = `
   box-sizing: border-box;
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -135,7 +149,7 @@ exports[`component: TextInput should render a text input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -173,6 +187,13 @@ exports[`component: TextInput should render a text input 1`] = `
   box-sizing: border-box;
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -195,7 +216,7 @@ exports[`component: TextInput should render an error input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
@@ -235,6 +256,13 @@ exports[`component: TextInput should render an error input 1`] = `
   box-sizing: border-box;
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -257,7 +285,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -295,6 +323,13 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   box-sizing: border-box;
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -318,7 +353,7 @@ exports[`component: TextInput should render an warning input 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
   border-color: hsl(47,82%,47%);
@@ -358,6 +393,13 @@ exports[`component: TextInput should render an warning input 1`] = `
   box-sizing: border-box;
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -380,7 +422,7 @@ exports[`component: TextInput should support margin space props 1`] = `
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -419,6 +461,13 @@ exports[`component: TextInput should support margin space props 1`] = `
   margin-top: 16px;
 }
 
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div
     class="c0"
   >
@@ -441,7 +490,7 @@ exports[`component: TextInput with theme customization should have 1px border ra
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -477,6 +526,13 @@ exports[`component: TextInput with theme customization should have 1px border ra
 
 .c0 {
   box-sizing: border-box;
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -501,7 +557,7 @@ exports[`component: TextInput with theme customization should have 2px border 1`
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -537,6 +593,13 @@ exports[`component: TextInput with theme customization should have 2px border 1`
 
 .c0 {
   box-sizing: border-box;
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -561,7 +624,7 @@ exports[`component: TextInput with theme customization should have 8px border ra
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   width: auto;
   background-color: hsl(0,0%,100%);
 }
@@ -597,6 +660,13 @@ exports[`component: TextInput with theme customization should have 8px border ra
 
 .c0 {
   box-sizing: border-box;
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div

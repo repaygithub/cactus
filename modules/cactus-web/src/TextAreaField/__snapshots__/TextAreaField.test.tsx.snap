@@ -7,7 +7,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 
 .c5 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -46,7 +46,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -94,9 +94,23 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   width: auto;
 }
 
+@media screen and (min-width:1024px) {
+  .c5 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 @media screen and (min-width:768px) {
   .c9 {
     min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c9 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
