@@ -55,7 +55,7 @@ exports[`With theme changes  Border should be 2px 1`] = `
   -moz-appearance: none;
   appearance: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   color: hsl(0,0%,100%);
   background-color: hsl(200,9%,35%);
   border-color: hsl(200,9%,35%);
@@ -104,6 +104,13 @@ exports[`With theme changes  Border should be 2px 1`] = `
   top: 12px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-controls="menu--39"
     aria-haspopup="true"
@@ -149,7 +156,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   -moz-appearance: none;
   appearance: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   color: hsl(0,0%,100%);
   background-color: hsl(200,9%,35%);
   border-color: hsl(200,9%,35%);
@@ -220,6 +227,13 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   position: absolute;
   right: 10px;
   top: 12px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -291,7 +305,7 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   -moz-appearance: none;
   appearance: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   color: hsl(0,0%,100%);
   background-color: hsl(200,9%,35%);
   border-color: hsl(200,9%,35%);
@@ -338,6 +352,13 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   position: absolute;
   right: 10px;
   top: 12px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <button
@@ -397,7 +418,7 @@ exports[`With theme changes  Should have square borders 1`] = `
   -moz-appearance: none;
   appearance: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   color: hsl(0,0%,100%);
   background-color: hsl(200,9%,35%);
   border-color: hsl(200,9%,35%);
@@ -446,6 +467,13 @@ exports[`With theme changes  Should have square borders 1`] = `
   top: 12px;
 }
 
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <button
     aria-controls="menu--24"
     aria-haspopup="true"
@@ -490,7 +518,7 @@ exports[`component: MenuButton snapshot 1`] = `
   -moz-appearance: none;
   appearance: none;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   color: hsl(0,0%,100%);
   background-color: hsl(200,9%,35%);
   border-color: hsl(200,9%,35%);
@@ -537,6 +565,13 @@ exports[`component: MenuButton snapshot 1`] = `
   position: absolute;
   right: 10px;
   top: 12px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>

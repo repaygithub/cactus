@@ -1,6 +1,7 @@
 import React, { MutableRefObject, useRef, useState } from 'react'
 
 import { BorderSize, Shape } from '@repay/cactus-theme'
+import { boxShadow, textStyle } from '../helpers/theme'
 import { getScrollX } from '../helpers/scrollOffset'
 import { getTopPosition } from '../helpers/positionPopover'
 import { margin, MarginProps } from 'styled-system'
@@ -75,8 +76,8 @@ const MainActionButton = styled.button`
   background-color: ${(p) => p.theme.colors.white};
   height: 32px;
   outline: none;
-  ${(p) => p.theme.textStyles.body};
-  font-weight: 400px;
+  ${(p) => textStyle(p.theme, 'body')};
+  font-weight: 400;
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
@@ -132,16 +133,13 @@ const dropdownShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
 }
 
 const getDropdownShape = (shape: Shape) => dropdownShapeMap[shape]
-const getBoxShadow = (theme: DefaultTheme) => {
-  return theme.boxShadows ? `0 3px 6px 0 ${theme.colors.callToAction}` : {}
-}
 
 const SplitButtonList = styled(ReachMenuItems)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
   ${(p) => getDropdownShape(p.theme.shape)}
-  box-shadow: ${(p) => getBoxShadow(p.theme)};
+  ${(p) => boxShadow(p.theme, 1)};
   z-index: 1000;
   background-color: ${(p) => p.theme.colors.white};
 
@@ -156,14 +154,14 @@ const SplitButtonList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p) => p.theme.textStyles.small};
+    ${(p) => textStyle(p.theme, 'small')};
     ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
     text-align: center;
 
     &[data-selected] {
-    ${(p) => p.theme.colorStyles.callToAction};
+      ${(p) => p.theme.colorStyles.callToAction};
     }
   }
 `

@@ -7,7 +7,7 @@ exports[`component: StepAvatar Default Step 1`] = `
   width: 48px;
   height: 48px;
   line-height: 49px;
-  font-size: 31.104px;
+  font-size: 25.92px;
   font-weight: 400;
   text-align: center;
   -webkit-appearance: none;
@@ -17,6 +17,12 @@ exports[`component: StepAvatar Default Step 1`] = `
   border: none;
   background-color: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 31.104px;
+  }
 }
 
 <div>
@@ -33,7 +39,7 @@ exports[`component: StepAvatar Step Avatar, Done 1`] = `
   width: 48px;
   height: 48px;
   line-height: 49px;
-  font-size: 31.104px;
+  font-size: 25.92px;
   font-weight: 400;
   text-align: center;
   -webkit-appearance: none;
@@ -43,6 +49,12 @@ exports[`component: StepAvatar Step Avatar, Done 1`] = `
   border: none;
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 31.104px;
+  }
 }
 
 <div>
@@ -59,7 +71,7 @@ exports[`component: StepAvatar Step Avatar, In Process 1`] = `
   width: 48px;
   height: 48px;
   line-height: 49px;
-  font-size: 31.104px;
+  font-size: 25.92px;
   font-weight: 400;
   text-align: center;
   -webkit-appearance: none;
@@ -69,7 +81,13 @@ exports[`component: StepAvatar Step Avatar, In Process 1`] = `
   border: none;
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
-  box-shadow: 0px 2px 5px 4px hsl(200,29%,90%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 31.104px;
+  }
 }
 
 <div>
@@ -86,7 +104,7 @@ exports[`component: StepAvatar Step Avatar, Not Done 1`] = `
   width: 48px;
   height: 48px;
   line-height: 49px;
-  font-size: 31.104px;
+  font-size: 25.92px;
   font-weight: 400;
   text-align: center;
   -webkit-appearance: none;
@@ -96,6 +114,12 @@ exports[`component: StepAvatar Step Avatar, Not Done 1`] = `
   border: none;
   background-color: hsl(200,29%,90%);
   color: hsl(200,10%,20%);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 31.104px;
+  }
 }
 
 <div>

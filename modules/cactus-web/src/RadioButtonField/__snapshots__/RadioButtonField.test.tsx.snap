@@ -7,7 +7,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
 
 .c8 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -61,7 +61,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
 }
 
 .c4 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c9 + .c2 {
@@ -80,6 +80,13 @@ exports[`component: RadioButtonField should render a disabled radio button field
 .c3 .c7 {
   cursor: not-allowed;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c8 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -120,7 +127,7 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 
 .c8 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -175,7 +182,7 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 }
 
 .c4 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c3 + .c2 {
@@ -185,6 +192,13 @@ exports[`component: RadioButtonField should render a radio button field 1`] = `
 .c3 .c7 {
   cursor: pointer;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c8 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -223,7 +237,7 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 
 .c8 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -278,7 +292,7 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 }
 
 .c4 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c9 + .c2 {
@@ -310,6 +324,13 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 .c3 .c7 {
   cursor: pointer;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c8 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>

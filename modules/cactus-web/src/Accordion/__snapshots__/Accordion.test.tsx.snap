@@ -90,7 +90,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 
 .c0.box-shadow {
   border: 0px;
-  box-shadow: 0 3px 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c0:first-of-type {
@@ -231,7 +231,7 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
 
 .c1.box-shadow {
   border: 0px;
-  box-shadow: 0 3px 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1 + .c0 {
@@ -389,7 +389,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 
 .c1.box-shadow {
   border: 0px;
-  box-shadow: 0 3px 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1 + .c0 {
@@ -538,7 +538,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 
 .c1.box-shadow {
   border: 0px;
-  box-shadow: 0 3px 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1 + .c0 {
@@ -691,7 +691,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 
 .c1.box-shadow {
   border: 0px;
-  box-shadow: 0 3px 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1 + .c0 {
@@ -832,6 +832,10 @@ exports[`component: Accordion with theme customization outline accordion should 
   border: 1px solid;
   border-color: hsl(200,29%,90%);
   border-radius: 8px;
+}
+
+.c1.box-shadow {
+  border: 0px;
 }
 
 .c1 + .c0 {
@@ -975,7 +979,7 @@ exports[`component: Accordion with theme customization simple accordion should h
 
 .c1.box-shadow {
   border: 0px;
-  box-shadow: 0 3px 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1:first-of-type {

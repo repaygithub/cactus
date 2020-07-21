@@ -7,12 +7,14 @@ import {
   NotificationError,
   StatusCheck,
 } from '@repay/cactus-icons'
+import { border } from '../helpers/theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 import { IconButton } from '../IconButton/IconButton'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { omitMargins } from '../helpers/omit'
 import { TextButton } from '../TextButton/TextButton'
+import { textStyle } from '../helpers/theme'
 import accepts from '../helpers/accept'
 import Avatar from '../Avatar/Avatar'
 import handleEvent from '../helpers/eventHandler'
@@ -141,15 +143,15 @@ const fileBoxMap: FileBoxMap = {
     background-color: ${(P) => P.theme.colors.lightContrast};
   `,
   loaded: css<FileBoxPropsWithForwardRef>`
-    border: 2px solid ${(p) => p.theme.colors.success};
+    border: ${(p) => border(p.theme, p.theme.colors.success)};
     background-color: ${(p) => p.theme.colors.transparentSuccess};
   `,
   error: css<FileBoxPropsWithForwardRef>`
-    border: 2px solid ${(p) => p.theme.colors.error};
+    border: ${(p) => border(p.theme, p.theme.colors.error)};
     background-color: ${(p) => p.theme.colors.transparentError};
   `,
   disabled: css<FileBoxPropsWithForwardRef>`
-    border: 2px solid ${(p) => p.theme.colors.mediumGray};
+    border: ${(p) => border(p.theme, p.theme.colors.mediumGray)};
     background-color: ${(p) => p.theme.colors.lightGray};
   `,
 }
@@ -206,7 +208,7 @@ const FileBox = styled(FileBoxBase)`
   span {
     margin-left: 8px;
     margin-right: 8px;
-    ${(p) => p.theme.textStyles.body};
+    ${(p) => textStyle(p.theme, 'body')};
   }
 
   ${Avatar} {

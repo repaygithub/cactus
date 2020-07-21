@@ -1,4 +1,4 @@
-import { border } from '../helpers/theme'
+import { border, fontSize } from '../helpers/theme'
 import { keyPressAsClick } from '../helpers/a11y'
 import { margin, MarginProps } from 'styled-system'
 import PropTypes from 'prop-types'
@@ -44,7 +44,7 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
 const PrevNextLink = styled(PrevNextLinkBase)`
   cursor: pointer;
   padding: 0 10px;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => fontSize(p.theme, 'small')};
   line-height: 20px;
   text-decoration: none;
 

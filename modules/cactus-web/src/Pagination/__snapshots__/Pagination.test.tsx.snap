@@ -49,7 +49,6 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
 .c1:link {
   color: hsl(200,10%,20%);
   font-size: 15px;
-  line-height: 23px;
   line-height: 18px;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -110,6 +109,13 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
 .c2[aria-current='page'] {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
+}
+
+@media screen and (min-width:1024px) {
+  .c1,
+  .c1:link {
+    font-size: 15px;
+  }
 }
 
 <div>

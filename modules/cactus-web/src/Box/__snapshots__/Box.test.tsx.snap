@@ -20,6 +20,15 @@ exports[`component: Box should accept built-in props 1`] = `
   border-radius: 20px;
   border-style: solid;
   z-index: 100;
+  font-size: 31.1px;
+  line-height: 1.5;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 37.325px;
+    line-height: 1.5;
+  }
 }
 
 <div>

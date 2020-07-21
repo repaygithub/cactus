@@ -1,3 +1,4 @@
+import { boxShadow, fontSize } from '../helpers/theme'
 import { margin, MarginProps } from 'styled-system'
 import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
 
@@ -15,7 +16,7 @@ const stepColorMap: StepColor = {
   `,
   inProcess: css`
     ${(p) => p.theme.colorStyles.callToAction};
-    box-shadow: 0px 2px 5px 4px ${(p) => p.theme.colors.lightContrast};
+    ${(p) => boxShadow(p.theme, 1)};
   `,
   done: css`
     ${(p) => p.theme.colorStyles.base};
@@ -36,7 +37,7 @@ export const StepAvatar = styled.div<StepAvatarProps>`
   width: 48px;
   height: 48px;
   line-height: 49px;
-  font-size: ${(p) => p.theme.textStyles.h2.fontSize};
+  ${(p) => fontSize(p.theme, 'h2')}
   font-weight: 400;
   text-align: center;
   appearance: none;

@@ -1,4 +1,4 @@
-import { border } from '../helpers/theme'
+import { border, fontSize } from '../helpers/theme'
 import { keyPressAsClick } from '../helpers/a11y'
 import { margin, MarginProps } from 'styled-system'
 import {
@@ -299,7 +299,7 @@ const PageItem = styled.li`
   &,
   :link {
     color: ${(p) => p.theme.colors.darkestContrast};
-    ${(p) => p.theme.textStyles.small};
+    ${(p) => fontSize(p.theme, 'small')};
     line-height: 18px;
     text-decoration: none;
   }

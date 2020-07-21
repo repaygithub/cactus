@@ -6,10 +6,9 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
   border-color: hsl(0,0%,90%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,90%);
@@ -52,6 +51,19 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
   display: block;
 }
 
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -70,10 +82,9 @@ exports[`component: TextArea should render a success textarea 1`] = `
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -118,6 +129,19 @@ exports[`component: TextArea should render a success textarea 1`] = `
   display: block;
 }
 
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -135,10 +159,9 @@ exports[`component: TextArea should render a textarea 1`] = `
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -179,6 +202,19 @@ exports[`component: TextArea should render a textarea 1`] = `
 .c0 {
   position: relative;
   display: block;
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -198,10 +234,9 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -242,6 +277,19 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
 .c0 {
   position: relative;
   display: block;
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div>
@@ -262,10 +310,9 @@ exports[`component: TextArea should render a warning textarea 1`] = `
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -310,6 +357,19 @@ exports[`component: TextArea should render a warning textarea 1`] = `
   display: block;
 }
 
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -327,10 +387,9 @@ exports[`component: TextArea should render an error textarea 1`] = `
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -375,6 +434,19 @@ exports[`component: TextArea should render an error textarea 1`] = `
   display: block;
 }
 
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -392,10 +464,9 @@ exports[`component: TextArea should support margin space props 1`] = `
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -439,6 +510,19 @@ exports[`component: TextArea should support margin space props 1`] = `
   margin-left: 24px;
 }
 
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
 <div>
   <div
     class="c0"
@@ -457,10 +541,9 @@ exports[`component: TextArea with theme customization should have 1px border rad
   border-color: hsl(200,9%,35%);
   border-radius: 1px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -501,6 +584,19 @@ exports[`component: TextArea with theme customization should have 1px border rad
 .c0 {
   position: relative;
   display: block;
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -520,10 +616,9 @@ exports[`component: TextArea with theme customization should have 2px border 1`]
   border-color: hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -564,6 +659,19 @@ exports[`component: TextArea with theme customization should have 2px border 1`]
 .c0 {
   position: relative;
   display: block;
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -583,10 +691,9 @@ exports[`component: TextArea with theme customization should have 8px border rad
   border-color: hsl(200,9%,35%);
   border-radius: 4px;
   min-height: 100px;
-  min-width: 336px;
   box-sizing: border-box;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   padding: 8px 16px;
   outline: none;
   background-color: hsl(0,0%,100%);
@@ -627,6 +734,19 @@ exports[`component: TextArea with theme customization should have 8px border rad
 .c0 {
   position: relative;
   display: block;
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    min-width: 336px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div

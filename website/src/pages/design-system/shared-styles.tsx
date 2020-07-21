@@ -277,16 +277,6 @@ export default () => {
         </thead>
         <tbody>
           <tr>
-            <td>mini</td>
-            <td> &gt;320px</td>
-            <td> 320</td>
-            <td> 64</td>
-            <td> 4</td>
-            <td> 8</td>
-            <td> 16</td>
-          </tr>
-
-          <tr>
             <td>small</td>
             <td> &gt;768px</td>
             <td> 708</td>

@@ -73,6 +73,12 @@ exports[`component: Select snapshot 1`] = `
   max-width: 100%;
 }
 
+@media screen and (min-width:1024px) {
+  .c3 {
+    font-size: 18px;
+  }
+}
+
 <div
     class="c0"
   >
@@ -200,6 +206,12 @@ exports[`component: Select with theme customization should have 2px border 1`] =
 
 .c0 {
   max-width: 100%;
+}
+
+@media screen and (min-width:1024px) {
+  .c3 {
+    font-size: 18px;
+  }
 }
 
 <div
@@ -350,6 +362,12 @@ exports[`component: Select with theme customization should match intermediate sh
 
 .c0 {
   max-width: 100%;
+}
+
+@media screen and (min-width:1024px) {
+  .c3 {
+    font-size: 18px;
+  }
 }
 
 <div
@@ -523,6 +541,12 @@ exports[`component: Select with theme customization should match square shape st
   max-width: 100%;
 }
 
+@media screen and (min-width:1024px) {
+  .c3 {
+    font-size: 18px;
+  }
+}
+
 <div
     class="c0"
   >
@@ -692,6 +716,12 @@ exports[`component: Select with theme customization should not have box shadows 
 
 .c0 {
   max-width: 100%;
+}
+
+@media screen and (min-width:1024px) {
+  .c3 {
+    font-size: 18px;
+  }
 }
 
 <div

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { boxShadow } from '../helpers/theme'
 import { margin, MarginProps } from 'styled-system'
 import { NavigationClose, StatusCheck } from '@repay/cactus-icons'
 import { Omit } from '../types'
@@ -57,7 +58,7 @@ export const Toggle = styled(ToggleBase)`
   cursor: ${(p) => (p.disabled ? 'cursor' : 'pointer')};
 
   &:focus {
-    ${(p) => p.theme.boxShadows && `box-shadow: 0 0 8px ${p.theme.colors.callToAction};`}
+    ${(p) => boxShadow(p.theme, 1)};
   }
 
   ::after {

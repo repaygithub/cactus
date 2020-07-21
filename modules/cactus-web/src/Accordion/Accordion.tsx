@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useRef, useSt
 
 import { assignRef } from '@reach/utils'
 import { BorderSize, Shape } from '@repay/cactus-theme'
+import { boxShadow } from '../helpers/theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 import { NavigationChevronDown, NavigationChevronRight } from '@repay/cactus-icons'
@@ -612,12 +613,10 @@ export const Accordion = styled(AccordionBase)`
   box-sizing: border-box;
   width: 100%;
 
-  ${(p) =>
-    p.theme.boxShadows &&
-    `&.box-shadow {
+  &.box-shadow {
     border: 0px;
-    box-shadow: 0 3px 8px ${p.theme.colors.callToAction};
-  }`}
+    ${(p) => boxShadow(p.theme, 1)};
+  }
 
 
 

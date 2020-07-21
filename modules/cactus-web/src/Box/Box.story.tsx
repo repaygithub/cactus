@@ -1,7 +1,7 @@
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import Box from './Box'
-import cactusTheme from '@repay/cactus-theme'
+import cactusTheme, { TextStyleCollection } from '@repay/cactus-theme'
 import React from 'react'
 
 const positionOptions = {
@@ -55,7 +55,7 @@ storiesOf('Box', module)
       borderWidth={text('borderWidth', '2px')}
       borderRadius={text('borderRadius', '')}
       borderStyle={text('borderStyle', 'solid')}
-      textStyle={select('textStyle', textStyles, 'body')}
+      textStyle={select('textStyle', textStyles, 'body') as keyof TextStyleCollection}
       // @ts-ignore
       zIndex={text('zIndex', '')}
     >
@@ -74,7 +74,7 @@ storiesOf('Box', module)
       borderWidth={text('borderWidth', '')}
       borderRadius={text('borderRadius', '')}
       borderStyle={text('borderStyle', '')}
-      textStyle={select('textStyle', textStyles, 'body')}
+      textStyle={select('textStyle', textStyles, 'body') as keyof TextStyleCollection}
     >
       {text('children', 'Example Content')}
     </Box>

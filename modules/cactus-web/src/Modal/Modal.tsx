@@ -1,4 +1,5 @@
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { boxShadow } from '../helpers/theme'
 import { DialogContent, DialogOverlay, DialogProps } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
 import Flex from '../Flex/Flex'
@@ -102,7 +103,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     ${(p) => getBorder(p.theme.border)};
     ${(p) => getShape(p.theme.shape)};
     background: white;
-    box-shadow: ${(p) => p.theme.boxShadows && `0px 9px 24px ${p.theme.colors.transparentCTA}`};
+    ${(p) => boxShadow(p.theme, 2)};
     margin: auto;
     max-width: 80%;
     outline: none;

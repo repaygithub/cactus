@@ -19,16 +19,17 @@ export type StatusColors = {
 }
 
 export interface FontSizeObject extends Array<number> {
-  h1?: number
-  h2?: number
-  h3?: number
-  h4?: number
-  body?: number
+  h1: number
+  h2: number
+  h3: number
+  h4: number
+  body: number
   /**
    * Alias for body
    */
-  p?: number
-  small?: number
+  p: number
+  small: number
+  tiny: number
 }
 
 export interface IconSizeObject extends Array<number> {
@@ -36,6 +37,16 @@ export interface IconSizeObject extends Array<number> {
   small?: number
   medium?: number
   large?: number
+}
+
+export type TextStyleCollection = {
+  tiny: TextStyle
+  small: TextStyle
+  body: TextStyle
+  h4: TextStyle
+  h3: TextStyle
+  h2: TextStyle
+  h1: TextStyle
 }
 
 export type TextStyle = {
@@ -92,16 +103,10 @@ export interface CactusTheme {
   }
   space: number[]
   fontSizes: FontSizeObject
+  mobileFontSizes: FontSizeObject
   iconSizes: IconSizeObject
-  textStyles: {
-    tiny: TextStyle
-    small: TextStyle
-    body: TextStyle
-    h4: TextStyle
-    h3: TextStyle
-    h2: TextStyle
-    h1: TextStyle
-  }
+  textStyles: TextStyleCollection
+  mobileTextStyles: TextStyleCollection
   colorStyles: {
     base: ColorStyle
     callToAction: ColorStyle
@@ -587,16 +592,57 @@ const repayOptions: GeneratorOptions = {
   boxShadows: true,
 }
 
+const makeTextStyles = (fontSizes: FontSizeObject) => ({
+  tiny: {
+    fontSize: `${fontSizes.tiny}px`,
+    lineHeight: '1.44',
+  },
+  small: {
+    fontSize: `${fontSizes.small}px`,
+    lineHeight: '1.6',
+  },
+  body: {
+    fontSize: `${fontSizes.body}px`,
+    lineHeight: '1.5',
+  },
+  h4: {
+    fontSize: `${fontSizes.h4}px`,
+    lineHeight: '1.5',
+  },
+  h3: {
+    fontSize: `${fontSizes.h3}px`,
+    lineHeight: '1.5',
+  },
+  h2: {
+    fontSize: `${fontSizes.h2}px`,
+    lineHeight: '1.5',
+  },
+  h1: {
+    fontSize: `${fontSizes.h1}px`,
+    lineHeight: '1.5',
+  },
+})
+
 export function generateTheme(options: GeneratorOptions = repayOptions): CactusTheme {
   const [colors, colorStyles] = isHue(options) ? fromHue(options) : fromTwoColor(options)
 
-  const fontSizes: FontSizeObject = [15, 18, 21.6, 25.92, 31.104, 37.325]
-  fontSizes.h1 = fontSizes[5]
-  fontSizes.h2 = fontSizes[4]
-  fontSizes.h3 = fontSizes[3]
-  fontSizes.h4 = fontSizes[2]
-  fontSizes.body = fontSizes.p = fontSizes[1]
-  fontSizes.small = fontSizes[0]
+  const fontSizes = [12.5, 15, 18, 21.6, 25.92, 31.104, 37.325] as FontSizeObject
+  fontSizes.h1 = fontSizes[6]
+  fontSizes.h2 = fontSizes[5]
+  fontSizes.h3 = fontSizes[4]
+  fontSizes.h4 = fontSizes[3]
+  fontSizes.body = fontSizes.p = fontSizes[2]
+  fontSizes.small = fontSizes[1]
+  fontSizes.tiny = fontSizes[0]
+
+  const mobileFontSizes = [12.5, 15, 18, 18, 21.6, 25.92, 31.1] as FontSizeObject
+  mobileFontSizes.h1 = mobileFontSizes[6]
+  mobileFontSizes.h2 = mobileFontSizes[5]
+  mobileFontSizes.h3 = mobileFontSizes[4]
+  mobileFontSizes.h4 = mobileFontSizes[3]
+  mobileFontSizes.body = mobileFontSizes.p = mobileFontSizes[2]
+  mobileFontSizes.small = mobileFontSizes[1]
+  mobileFontSizes.tiny = mobileFontSizes[0]
 
   const iconSizes: IconSizeObject = [8, 16, 24, 40]
   iconSizes.tiny = iconSizes[0]
@@ -616,41 +662,14 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     colorStyles,
     space: [0, 2, 4, 8, 16, 24, 32, 40],
     fontSizes,
+    mobileFontSizes,
     iconSizes,
     border,
     shape,
     font: `${fontOptions.join(', ')}, sans-serif`,
     boxShadows,
-    textStyles: {
-      tiny: {
-        fontSize: '12.5px',
-        lineHeight: '18px',
-      },
-      small: {
-        fontSize: '15px',
-        lineHeight: '23px',
-      },
-      body: {
-        fontSize: '18px',
-        lineHeight: '28px',
-      },
-      h4: {
-        fontSize: '21.6px',
-        lineHeight: '32px',
-      },
-      h3: {
-        fontSize: '25.92px',
-        lineHeight: '40px',
-      },
-      h2: {
-        fontSize: '31.104px',
-        lineHeight: '48px',
-      },
-      h1: {
-        fontSize: '37.325px',
-        lineHeight: '56px',
-      },
-    },
+    textStyles: makeTextStyles(fontSizes),
+    mobileTextStyles: makeTextStyles(mobileFontSizes),
   }
 }
 

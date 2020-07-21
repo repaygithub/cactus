@@ -37,6 +37,7 @@ describe('component: Box', () => {
           borderRadius="20px"
           borderStyle="solid"
           zIndex={100}
+          textStyle="h1"
         >
           Content
         </Box>

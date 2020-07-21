@@ -57,7 +57,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 }
 
 .c4 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1 + .c0 {
@@ -66,7 +66,7 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 
 .c9 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -78,6 +78,13 @@ exports[`component: CheckBoxField should render a checkbox field 1`] = `
 .c3 .c8 {
   cursor: pointer;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c9 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -172,7 +179,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 }
 
 .c4 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1 + .c0 {
@@ -181,7 +188,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 
 .c9 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -202,6 +209,13 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 .c3 .c8 {
   cursor: not-allowed;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c9 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
@@ -303,7 +317,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 }
 
 .c4 input:focus ~ span {
-  box-shadow: 0 0 8px hsl(200,96%,35%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
 .c1 + .c0 {
@@ -312,7 +326,7 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 
 .c9 {
   font-size: 18px;
-  line-height: 28px;
+  line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
@@ -346,6 +360,13 @@ exports[`component: CheckBoxField should support margin space props 1`] = `
 .c3 .c8 {
   cursor: pointer;
   padding-left: 8px;
+}
+
+@media screen and (min-width:1024px) {
+  .c9 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 <div
