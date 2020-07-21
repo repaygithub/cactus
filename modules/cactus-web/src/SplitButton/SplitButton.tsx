@@ -1,20 +1,15 @@
-import React, { MutableRefObject, useRef, useState } from 'react'
-
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { boxShadow, textStyle } from '../helpers/theme'
-import { getScrollX } from '../helpers/scrollOffset'
-import { getTopPosition } from '../helpers/positionPopover'
-import { margin, MarginProps } from 'styled-system'
 import {
-  MenuItemImplProps,
   Menu as ReachMenu,
   MenuButton as ReachMenuButton,
   MenuItem as ReachMenuItem,
+  MenuItemImplProps,
   MenuItems as ReachMenuItems,
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
+import React, { MutableRefObject, useRef, useState } from 'react'
 import styled, {
   createGlobalStyle,
   css,
@@ -22,6 +17,11 @@ import styled, {
   FlattenSimpleInterpolation,
   StyledComponent,
 } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { getTopPosition } from '../helpers/positionPopover'
+import { getScrollX } from '../helpers/scrollOffset'
+import { boxShadow, textStyle } from '../helpers/theme'
 
 export type IconProps = { iconSize: 'tiny' | 'small' | 'medium' | 'large' }
 

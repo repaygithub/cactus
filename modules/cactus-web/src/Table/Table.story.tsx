@@ -1,8 +1,8 @@
-import React from 'react'
-
 import { boolean, number, select, text } from '@storybook/addon-knobs'
-import { DefaultTheme, StyledComponent } from 'styled-components'
 import { storiesOf } from '@storybook/react'
+import React from 'react'
+import { DefaultTheme, StyledComponent } from 'styled-components'
+
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import Table from './Table'
 

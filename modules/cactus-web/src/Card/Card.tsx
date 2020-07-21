@@ -1,7 +1,8 @@
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
-import { boxShadow } from '../helpers/theme'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import styled, { css } from 'styled-components'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
+
+import { boxShadow } from '../helpers/theme'
 
 interface CardProps extends MarginProps, WidthProps {}
 

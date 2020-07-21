@@ -1,11 +1,11 @@
-import React from 'react'
-
-import { storiesOf } from '@storybook/react'
-import Box from '../Box/Box'
 import cactusTheme from '@repay/cactus-theme'
-import ScreenSizeProvider, { ScreenSizeContext } from './ScreenSizeProvider'
+import { storiesOf } from '@storybook/react'
+import React from 'react'
 import styled from 'styled-components'
+
+import Box from '../Box/Box'
 import StyleProvider from '../StyleProvider/StyleProvider'
+import ScreenSizeProvider, { ScreenSizeContext } from './ScreenSizeProvider'
 
 const BreakpointBox = styled(Box)`
   max-width: 320px;

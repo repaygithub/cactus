@@ -1,8 +1,8 @@
+import cactusTheme from '@repay/cactus-theme'
+import { cleanup, render } from '@testing-library/react'
 import * as React from 'react'
 
-import { cleanup, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import cactusTheme from '@repay/cactus-theme'
 import Label from './Label'
 
 afterEach(cleanup)

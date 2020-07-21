@@ -1,9 +1,9 @@
-import { AccessibleField, Box, Button, Flex, Text } from '@repay/cactus-web'
 import { RouteComponentProps } from '@reach/router'
-import Link from '../components/Link'
 import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
-
+import { AccessibleField, Box, Button, Flex, Text } from '@repay/cactus-web'
 import React, { useState } from 'react'
+
+import Link from '../components/Link'
 
 const AccessibleFieldComponent: React.FC<RouteComponentProps> = () => {
   const [value, setValue] = useState('')

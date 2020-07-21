@@ -1,11 +1,11 @@
+import { storiesOf } from '@storybook/react'
 import React, { useCallback, useReducer } from 'react'
 
-import { OptionType } from '../Select/Select'
-import { storiesOf } from '@storybook/react'
 import Box from '../Box/Box'
 import CheckBoxField from '../CheckBoxField/CheckBoxField'
 import FileInputField from '../FileInputField/FileInputField'
 import RadioButtonField from '../RadioButtonField/RadioButtonField'
+import { OptionType } from '../Select/Select'
 import SelectField from '../SelectField/SelectField'
 import TextAreaField from '../TextAreaField/TextAreaField'
 import TextInputField from '../TextInputField/TextInputField'

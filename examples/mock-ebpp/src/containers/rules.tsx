@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-
-import { Accordion, Button, Flex, SelectField, Text, TextButton } from '@repay/cactus-web'
-import { ActionsAdd } from '@repay/cactus-icons'
-import { Helmet } from 'react-helmet'
-import { post } from '../api'
 import { RouteComponentProps } from '@reach/router'
+import { ActionsAdd } from '@repay/cactus-icons'
+import { Accordion, Button, Flex, SelectField, Text, TextButton } from '@repay/cactus-web'
+import React, { useState } from 'react'
+import { Helmet } from 'react-helmet'
+
+import { post } from '../api'
 import FieldsAccordion from '../components/FieldsAccordion'
 
 let ruleKeyIndex = 0

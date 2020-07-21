@@ -1,9 +1,9 @@
+import { fireEvent, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { fireEvent, render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import PrevNext from './PrevNext'
-import userEvent from '@testing-library/user-event'
 
 describe('component: PrevNext', () => {
   test('basic usage', () => {

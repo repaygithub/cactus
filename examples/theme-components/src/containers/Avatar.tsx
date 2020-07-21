@@ -1,10 +1,10 @@
-import React from 'react'
-
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { Avatar, Grid, Label, Text } from '@repay/cactus-web'
 import { AvatarStatus, AvatarType } from '@repay/cactus-web/src/Avatar/Avatar'
-import { RouteComponentProps } from '@reach/router'
+import React from 'react'
+
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 const types: AvatarType[] = ['alert', 'feedback']
 const status: AvatarStatus[] = ['error', 'warning', 'info', 'success']

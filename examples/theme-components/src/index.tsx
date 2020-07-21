@@ -1,10 +1,9 @@
-import React, { Component, Suspense } from 'react'
-import ReactDOM from 'react-dom'
-
-import * as styledComponents from 'styled-components'
-import { Flex, Spinner, StyleProvider } from '@repay/cactus-web'
 import { Router } from '@reach/router'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import { Flex, Spinner, StyleProvider } from '@repay/cactus-web'
+import React, { Component, Suspense } from 'react'
+import ReactDOM from 'react-dom'
+import * as styledComponents from 'styled-components'
 
 const ButtonsPage = React.lazy(() =>
   import(/* webpackChunkName: "Buttons" */ './containers/Buttons')

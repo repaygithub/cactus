@@ -1,6 +1,7 @@
-import * as path from 'path'
 import { queryByText } from '@testing-library/testcafe'
+import * as path from 'path'
 import { Selector } from 'testcafe'
+
 import makeActions from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 

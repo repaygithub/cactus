@@ -1,8 +1,9 @@
-import { CactusTheme } from '@repay/cactus-theme'
 import { NavigationChevronRight } from '@repay/cactus-icons'
-import Link from '../Link/Link'
+import { CactusTheme } from '@repay/cactus-theme'
 import React from 'react'
 import styled, { StyledComponentBase } from 'styled-components'
+
+import Link from '../Link/Link'
 
 interface BreadcrumbItemProps {
   label: string

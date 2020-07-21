@@ -1,9 +1,9 @@
-import * as React from 'react'
-
-import { Omit } from '../types'
 import { StatusSpinner as SpinnerBase } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
+import * as React from 'react'
 import styled, { keyframes } from 'styled-components'
+
+import { Omit } from '../types'
 
 const rotate = keyframes`
   from {

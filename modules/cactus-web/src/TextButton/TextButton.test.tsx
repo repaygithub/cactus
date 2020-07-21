@@ -1,8 +1,8 @@
+import { StatusCheck } from '@repay/cactus-icons'
+import { generateTheme } from '@repay/cactus-theme'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
-import { cleanup, fireEvent, render } from '@testing-library/react'
-import { generateTheme } from '@repay/cactus-theme'
-import { StatusCheck } from '@repay/cactus-icons'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextButton from './TextButton'
 

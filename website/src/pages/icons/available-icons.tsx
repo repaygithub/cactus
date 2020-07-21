@@ -1,10 +1,10 @@
-import * as React from 'react'
-
-import { categories, iconsCategoryMap } from '../../helpers/iconGroups'
 import { Flex } from '@repay/cactus-web'
+import * as React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+
 import Text from '../../components/Text'
+import { categories, iconsCategoryMap } from '../../helpers/iconGroups'
 
 const Code = styled.code`
   white-space: nowrap;

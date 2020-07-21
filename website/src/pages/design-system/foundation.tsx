@@ -1,10 +1,9 @@
-import * as React from 'react'
-
 import { Box, Flex } from '@repay/cactus-web'
-import { color, ColorProps, textAlign, TextAlignProps } from 'styled-system'
 import { Link } from 'gatsby'
+import * as React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+import { color, ColorProps, textAlign, TextAlignProps } from 'styled-system'
 
 const CenteredList = styled.ul`
   list-style: none;

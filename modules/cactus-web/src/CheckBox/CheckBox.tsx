@@ -1,13 +1,13 @@
-import React from 'react'
-
-import { BorderSize } from '@repay/cactus-theme'
-import { boxShadow } from '../helpers/theme'
-import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
-import { omitMargins } from '../helpers/omit'
 import { StatusCheck } from '@repay/cactus-icons'
+import { BorderSize } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled, { css } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { omitMargins } from '../helpers/omit'
+import { boxShadow } from '../helpers/theme'
+import { Omit } from '../types'
 
 export interface CheckBoxProps
   extends Omit<

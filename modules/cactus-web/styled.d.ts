@@ -1,4 +1,5 @@
 import 'styled-components'
+
 import { CactusTheme } from '@repay/cactus-theme'
 
 declare module 'styled-components' {

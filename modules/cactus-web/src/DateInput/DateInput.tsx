@@ -1,8 +1,17 @@
-import React, { Component, Fragment, MouseEventHandler, useMemo } from 'react'
-
+import Portal from '@reach/portal'
+import Rect from '@reach/rect'
+import {
+  DescriptiveCalendar,
+  NavigationChevronDown,
+  NavigationChevronUp,
+} from '@repay/cactus-icons'
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
-import { boxShadow, textStyle } from '../helpers/theme'
+import PropTypes from 'prop-types'
+import React, { Component, Fragment, MouseEventHandler, useMemo } from 'react'
+import styled, { css } from 'styled-components'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
+
+import FocusLock from '../FocusLock/FocusLock'
 import {
   DateType,
   formatDate,
@@ -15,22 +24,13 @@ import {
   PartialDate,
   TOKEN_SETTERS,
 } from '../helpers/dates'
-import {
-  DescriptiveCalendar,
-  NavigationChevronDown,
-  NavigationChevronUp,
-} from '@repay/cactus-icons'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import { Status } from '../StatusMessage/StatusMessage'
-import FocusLock from '../FocusLock/FocusLock'
-import getLocale from '../helpers/locale'
-import IconButton from '../IconButton/IconButton'
 import KeyCodes from '../helpers/keyCodes'
-import Portal from '@reach/portal'
+import getLocale from '../helpers/locale'
 import positionPortal from '../helpers/positionPortal'
-import PropTypes from 'prop-types'
-import Rect from '@reach/rect'
-import styled, { css } from 'styled-components'
+import { boxShadow, textStyle } from '../helpers/theme'
+import IconButton from '../IconButton/IconButton'
+import { Status } from '../StatusMessage/StatusMessage'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 export type IsValidDateFunc = (date: Date) => boolean
 export type ParseDateFunc = (dateStr: string) => Date

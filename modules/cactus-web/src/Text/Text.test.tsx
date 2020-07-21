@@ -1,7 +1,8 @@
-import * as React from 'react'
 import { cleanup, fireEvent, render } from '@testing-library/react'
-import { Span, Text } from './Text'
+import * as React from 'react'
+
 import { StyleProvider } from '../StyleProvider/StyleProvider'
+import { Span, Text } from './Text'
 
 afterEach(cleanup)
 

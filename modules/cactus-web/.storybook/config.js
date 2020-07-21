@@ -1,6 +1,7 @@
-import { addDecorator, addParameters, configure } from '@storybook/react'
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { withKnobs } from '@storybook/addon-knobs'
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { addDecorator, addParameters, configure } from '@storybook/react'
+
 import CactusAddon from '../cactus-addon'
 import storybookTheme from './theme'
 

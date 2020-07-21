@@ -1,6 +1,6 @@
 import { CactusTheme } from '@repay/cactus-theme'
-import { ThemeContext } from 'styled-components'
 import React from 'react'
+import { ThemeContext } from 'styled-components'
 
 type MediaQuery = keyof Required<CactusTheme>['mediaQueries']
 

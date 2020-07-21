@@ -1,9 +1,9 @@
+import { fireEvent, render } from '@testing-library/react'
 import React, { useState } from 'react'
 
-import { fireEvent, render } from '@testing-library/react'
+import SplitButton from '../SplitButton/SplitButton'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DataGrid from './DataGrid'
-import SplitButton from '../SplitButton/SplitButton'
 
 const TEST_DATA = [
   {

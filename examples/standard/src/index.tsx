@@ -1,15 +1,15 @@
+import { Router } from '@reach/router'
+import AppRoot, { FeatureFlagsObject } from '@repay/cactus-fwk'
+import I18nProvider from '@repay/cactus-i18n'
+import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import { StyleProvider } from '@repay/cactus-web'
 import React, { ChangeEvent, Component } from 'react'
 import ReactDOM from 'react-dom'
-
 import * as styledComponents from 'styled-components'
-import { Coffee, Home, Snack, Snacks } from './containers/index'
-import { Router } from '@reach/router'
-import { StyleProvider } from '@repay/cactus-web'
+
 import App from './App'
-import AppRoot, { FeatureFlagsObject } from '@repay/cactus-fwk'
-import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import { Coffee, Home, Snack, Snacks } from './containers/index'
 import i18nController from './i18nController'
-import I18nProvider from '@repay/cactus-i18n'
 
 const appRoot = document.createElement('div')
 appRoot.className = 'app-root'

@@ -1,13 +1,13 @@
+import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 import { AccessibleField } from '../AccessibleField/AccessibleField'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import { margin, MarginProps } from 'styled-system'
-import { omitMargins } from '../helpers/omit'
 import handleEvent from '../helpers/eventHandler'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import { omitMargins } from '../helpers/omit'
 import TextArea, { TextAreaProps } from '../TextArea/TextArea'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 interface TextAreaFieldProps
   extends MarginProps,

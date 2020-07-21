@@ -1,8 +1,9 @@
-import { fetchPaymentHistory, PaymentData } from '../api'
-import { Flex, Grid, Text } from '@repay/cactus-web'
-import { Helmet } from 'react-helmet'
 import { RouteComponentProps } from '@reach/router'
+import { Flex, Grid, Text } from '@repay/cactus-web'
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
+
+import { fetchPaymentHistory, PaymentData } from '../api'
 
 interface PaymentHistoryProps extends RouteComponentProps {}
 

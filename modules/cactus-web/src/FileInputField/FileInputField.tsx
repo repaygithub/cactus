@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types'
 import React, { useRef } from 'react'
-
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
-import { omitMargins } from '../helpers/omit'
+
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import FileInput, { FileInputProps, FileObject } from '../FileInput/FileInput'
-import Label from '../Label/Label'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import Tooltip from '../Tooltip/Tooltip'
+import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
+import Label from '../Label/Label'
+import Tooltip from '../Tooltip/Tooltip'
+import { Omit } from '../types'
 
 interface FileInputFieldProps extends FileInputProps, MarginProps {
   className?: string

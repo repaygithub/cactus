@@ -1,8 +1,8 @@
-import React from 'react'
-
+import cactusTheme from '@repay/cactus-theme'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import cactusTheme from '@repay/cactus-theme'
+import React from 'react'
+
 import Spinner from './Spinner'
 
 type IconSize = 'tiny' | 'small' | 'medium' | 'large'
