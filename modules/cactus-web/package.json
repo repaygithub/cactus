@@ -52,7 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
+    "@babel/core": "^7.10.5",
     "@repay/scripts": "^2.0.0",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-knobs": "^5.3.19",
@@ -71,8 +71,8 @@
     "@types/styled-components": "^5.1.1",
     "@types/styled-system": "^5.1.2",
     "@types/user-event": "^4.1.0",
-    "babel-jest": "^24.7.1",
-    "babel-loader": "^8.0.5",
+    "babel-jest": "^26.1.0",
+    "babel-loader": "^8.1.0",
     "csstype": "^2.6.11",
     "jest": "^24.7.1",
     "jest-styled-components": "^7.0.2",

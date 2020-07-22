@@ -29,7 +29,7 @@
     "@types/react-helmet": "^5.0.8",
     "@types/react-motion": "^0.0.29",
     "@types/styled-components": "^5.1.1",
-    "babel-plugin-export-metadata": "^1.2.0",
+    "babel-plugin-export-metadata": "^2.3.0",
     "babel-plugin-styled-components": "^1.10.6",
     "chokidar": "^2.1.5",
     "cpy": "^7.2.0",

@@ -21,11 +21,11 @@
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
+    "@babel/core": "^7.10.5",
     "@repay/babel-preset": "^1.0.0",
     "@repay/scripts": "^2.0.0",
     "@types/jest": "^24.9.1",
-    "babel-jest": "^24.7.1",
+    "babel-jest": "^26.1.0",
     "typescript": "^3.9.7"
   },
   "jest": {
