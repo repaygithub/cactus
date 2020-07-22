@@ -25,7 +25,6 @@
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
-    "@repay/babel-preset": "^1.0.0",
     "@repay/scripts": "^2.0.0",
     "@testing-library/testcafe": "^4.1.0",
     "@types/reach__router": "^1.2.4",

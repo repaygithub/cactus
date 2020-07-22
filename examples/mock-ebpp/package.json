@@ -18,36 +18,12 @@
     "cleanup": "rm -rf dist",
     "list-testcafe-browsers": "testcafe -b"
   },
-  "jest": {
-    "transform": {
-      "^.+\\.(t|j)sx?$": "babel-jest"
-    },
-    "testRegex": ".*\\.test\\.(tsx?)$",
-    "verbose": true,
-    "coverageReporters": [
-      "lcov",
-      "text",
-      "json-summary"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}"
-    ],
-    "globalSetup": "./tests/config/setup.ts",
-    "globalTeardown": "./tests/config/teardown.ts",
-    "testEnvironment": "./tests/config/puppeteer-environment.js"
-  },
   "devDependencies": {
-    "@repay/babel-preset": "^1.0.0",
     "@repay/scripts": "^2.0.0",
-    "@testing-library/react": "^10.4.3",
     "@testing-library/testcafe": "^4.1.0",
     "@types/reach__router": "^1.2.4",
-    "@types/rimraf": "^2.0.2",
     "@types/styled-components": "^5.1.1",
-    "babel-jest": "^24.9.0",
-    "babel-loader": "^8.0.6",
     "commander": "^5.1.0",
-    "css-loader": "^3.5.3",
     "dotenv": "^8.2.0",
     "prop-types": "^15.7.2",
     "testcafe": "^1.8.5",
@@ -61,6 +37,7 @@
     "@repay/cactus-web": "^1.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-helmet": "^5.2.0",
     "styled-components": "^5.1.1"
   }
 }
