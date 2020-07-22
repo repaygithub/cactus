@@ -1,8 +1,9 @@
-import { Account, fetchAccounts } from '../api'
-import { Alert, Flex, SplitButton, Text } from '@repay/cactus-web'
-import { Helmet } from 'react-helmet'
 import { navigate, RouteComponentProps } from '@reach/router'
+import { Alert, Flex, SplitButton, Text } from '@repay/cactus-web'
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
+
+import { Account, fetchAccounts } from '../api'
 
 interface AccountsProps extends RouteComponentProps {}
 

@@ -1,12 +1,13 @@
 import * as icons from '@repay/cactus-icons/i'
-import { ModalType } from '../Modal/Modal'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import Button from '../Button/Button'
-import ConfirmModal from './ConfirmModal'
 import React, { useState } from 'react'
+
+import Button from '../Button/Button'
+import { ModalType } from '../Modal/Modal'
 import Text from '../Text/Text'
 import TextInput from '../TextInput/TextInput'
+import ConfirmModal from './ConfirmModal'
 
 const confirmModalStories = storiesOf('ConfirmModal', module)
 type IconName = keyof typeof icons

@@ -1,10 +1,10 @@
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
+import { Alert, Flex, Label, Text } from '@repay/cactus-web'
+import { Status } from '@repay/cactus-web/src/Alert/Alert'
 import React from 'react'
 
-import { Alert, Flex, Label, Text } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
-import { Status } from '@repay/cactus-web/src/Alert/Alert'
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 

@@ -1,5 +1,5 @@
-import React from 'react'
-
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import {
   Alert,
   Box,
@@ -15,9 +15,9 @@ import {
   TextInputField,
   ToggleField,
 } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
+import React from 'react'
+
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 interface FieldsTypes {
   data: {

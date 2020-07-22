@@ -1,7 +1,7 @@
-import * as React from 'react'
 import { cleanup, render } from '@testing-library/react'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import * as React from 'react'
 
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import StepAvatar from './StepAvatar'
 
 afterEach(cleanup)

@@ -1,6 +1,7 @@
-import { boxShadow, fontSize } from '../helpers/theme'
-import { margin, MarginProps } from 'styled-system'
 import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { boxShadow, fontSize } from '../helpers/theme'
 
 export type AvatarStep = 'notDone' | 'inProcess' | 'done'
 

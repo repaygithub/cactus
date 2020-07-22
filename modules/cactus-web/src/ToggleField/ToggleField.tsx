@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types'
 import * as React from 'react'
-
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
-import { omitMargins } from '../helpers/omit'
+
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
-import Label, { LabelProps } from '../Label/Label'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import Toggle, { ToggleProps } from '../Toggle/Toggle'
+import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
+import Label, { LabelProps } from '../Label/Label'
+import Toggle, { ToggleProps } from '../Toggle/Toggle'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 export interface ToggleFieldProps
   extends MarginProps,

@@ -1,10 +1,10 @@
-import React from 'react'
-
 import { actions } from '@storybook/addon-actions'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import DateInput from './DateInput'
+import React from 'react'
+
 import FormHandler from '../storySupport/FormHandler'
+import DateInput from './DateInput'
 
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 

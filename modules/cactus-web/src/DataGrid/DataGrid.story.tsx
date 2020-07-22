@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import DataGrid from './DataGrid'
+import React, { useState } from 'react'
+
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
+import DataGrid from './DataGrid'
 
 interface Datum {
   name: string

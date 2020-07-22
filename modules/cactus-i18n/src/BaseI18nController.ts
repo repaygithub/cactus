@@ -1,9 +1,11 @@
 import 'intl'
 import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/es.js'
-import 'intl-pluralrules' // eslint-disable-line sort-imports-es6-autofix/sort-imports-es6
+import 'intl-pluralrules' // eslint-disable-line simple-import-sort/sort
+
 import { FluentBundle, FluentResource } from '@fluent/bundle'
 import { negotiateLanguages } from '@fluent/langneg'
+
 import { ResourceDefinition } from './types'
 
 interface Dictionary {

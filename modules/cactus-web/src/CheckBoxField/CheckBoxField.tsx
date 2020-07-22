@@ -1,15 +1,15 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
-import { omitMargins } from '../helpers/omit'
+
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
-import Label from '../Label/Label'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
+import Label from '../Label/Label'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'onBlur' | 'onFocus' | 'disabled'>,

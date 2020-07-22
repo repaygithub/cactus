@@ -1,11 +1,10 @@
-import * as React from 'react'
-
 import { Box } from '@repay/cactus-web'
+import * as React from 'react'
 import { ComponentDoc, PropItem } from 'react-docgen-typescript'
-import { useDocgen } from './DocgenProvider'
-
 // TODO maybe move as outside component
 import styled from 'styled-components'
+
+import { useDocgen } from './DocgenProvider'
 
 const Table = styled.table`
   border-radius: 8px;

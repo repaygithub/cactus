@@ -1,10 +1,10 @@
-import * as React from 'react'
-
-import { BACKGROUND_CHANGE, DECORATOR_LISTENING, NAME, PROP_NAME, THEME_CHANGE } from './constants'
-import { StyleProvider } from '../src/StyleProvider/StyleProvider'
-import addons, { makeDecorator } from '@storybook/addons'
 import cactusTheme, { generateTheme } from '@repay/cactus-theme'
+import addons, { makeDecorator } from '@storybook/addons'
+import * as React from 'react'
 import styled, { CSSObject } from 'styled-components'
+
+import { StyleProvider } from '../src/StyleProvider/StyleProvider'
+import { BACKGROUND_CHANGE, DECORATOR_LISTENING, NAME, PROP_NAME, THEME_CHANGE } from './constants'
 
 type AlignmentTypes = 'center' | 'left' | 'right' | 'bottom' | 'top'
 

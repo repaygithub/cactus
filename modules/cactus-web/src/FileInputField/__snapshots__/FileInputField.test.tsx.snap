@@ -300,6 +300,35 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   vertical-align: middle;
 }
 
+.c24 .c12 {
+  padding-bottom: 4px;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: hsl(200,10%,20%);
+  background-color: hsla(353,84%,44%,0.3);
+}
+
+.c11 .c12 {
+  padding-bottom: 4px;
+}
+
 .c15 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -333,6 +362,24 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 
 .c15:hover {
   color: hsl(200,96%,35%);
+}
+
+.c19 {
+  padding: 2px 4px;
+  position: relative;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsla(353,84%,44%,0.3);
+}
+
+.c19 .c12,
+.c19 .sc-feJyhm,
+.c19 .c29 {
+  margin-right: 4px;
+  vertical-align: -2px;
 }
 
 .c22 {
@@ -377,53 +424,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
-}
-
-.c24 .c12 {
-  padding-bottom: 4px;
-}
-
-.c11 {
-  box-sizing: border-box;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  color: hsl(200,10%,20%);
-  background-color: hsla(353,84%,44%,0.3);
-}
-
-.c11 .c12 {
-  padding-bottom: 4px;
-}
-
-.c19 {
-  padding: 2px 4px;
-  position: relative;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  display: inline-block;
-  font-size: 15px;
-  line-height: 1.6;
-  background-color: hsla(353,84%,44%,0.3);
-}
-
-.c19 .c12,
-.c19 .sc-feJyhm,
-.c19 .c29 {
-  margin-right: 4px;
-  vertical-align: -2px;
 }
 
 .c25 .c10 {
@@ -646,16 +646,16 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c22 {
-    font-size: 18px;
-    line-height: 1.5;
+  .c19 {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c19 {
-    font-size: 15px;
-    line-height: 1.6;
+  .c22 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -824,6 +824,31 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   vertical-align: middle;
 }
 
+.c11 {
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: hsl(200,10%,20%);
+  background-color: hsla(145,89%,28%,0.3);
+}
+
+.c11 .c24 {
+  padding-bottom: 4px;
+}
+
 .c15 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -901,31 +926,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
-}
-
-.c11 {
-  box-sizing: border-box;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  color: hsl(200,10%,20%);
-  background-color: hsla(145,89%,28%,0.3);
-}
-
-.c11 .c24 {
-  padding-bottom: 4px;
 }
 
 .c21 .c10 {
@@ -1266,6 +1266,13 @@ exports[`component: FileInputField should render a loading file 1`] = `
   vertical-align: middle;
 }
 
+.c11 {
+  vertical-align: middle;
+  font-size: 40px;
+  -webkit-animation: iVXCSc 0.75s linear infinite;
+  animation: iVXCSc 0.75s linear infinite;
+}
+
 .c13 {
   font-size: 18px;
   line-height: 1.5;
@@ -1310,13 +1317,6 @@ exports[`component: FileInputField should render a loading file 1`] = `
   margin-right: 4px;
 }
 
-.c11 {
-  vertical-align: middle;
-  font-size: 40px;
-  -webkit-animation: iVXCSc 0.75s linear infinite;
-  animation: iVXCSc 0.75s linear infinite;
-}
-
 .c9 {
   box-sizing: border-box;
   width: 100%;
@@ -1347,17 +1347,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   line-height: 1.5;
 }
 
-.c9 .c21 {
+.c9 .c20 {
   height: 24px;
   width: 24px;
 }
 
-.c9 .c21 .c18 {
+.c9 .c20 .c18 {
   height: 16px;
   width: 16px;
 }
 
-.c9 .c21 .c19 {
+.c9 .c20 .c19 {
   height: 18px;
   width: 18px;
 }
@@ -1367,7 +1367,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 12px;
 }
 
-.c9 .c20 {
+.c9 .c21 {
   margin-left: auto;
 }
 

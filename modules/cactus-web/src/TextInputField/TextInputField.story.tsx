@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-
 import { actions } from '@storybook/addon-actions'
 import { boolean, text } from '@storybook/addon-knobs'
-import { Status } from '../StatusMessage/StatusMessage'
 import { storiesOf } from '@storybook/react'
+import React, { useState } from 'react'
+
+import { Status } from '../StatusMessage/StatusMessage'
 import TextInputField from './TextInputField'
 
 const textInputFieldStories = storiesOf('TextInputField', module)

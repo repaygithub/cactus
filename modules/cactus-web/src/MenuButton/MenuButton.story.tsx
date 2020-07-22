@@ -1,8 +1,8 @@
-import React from 'react'
-
 import { action } from '@storybook/addon-actions'
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
+import React from 'react'
+
 import MenuButton from './MenuButton'
 
 const stopNav = (e: Event) => e.preventDefault()

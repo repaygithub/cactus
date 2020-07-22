@@ -384,6 +384,35 @@ exports[`component: FileInput should render a file with an error 1`] = `
   vertical-align: middle;
 }
 
+.c17 .c5 {
+  padding-bottom: 4px;
+}
+
+.c4 {
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: hsl(200,10%,20%);
+  background-color: hsla(353,84%,44%,0.3);
+}
+
+.c4 .c5 {
+  padding-bottom: 4px;
+}
+
 .c8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -417,6 +446,24 @@ exports[`component: FileInput should render a file with an error 1`] = `
 
 .c8:hover {
   color: hsl(200,96%,35%);
+}
+
+.c12 {
+  padding: 2px 4px;
+  position: relative;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsla(353,84%,44%,0.3);
+}
+
+.c12 .c5,
+.c12 .sc-kafWEX,
+.c12 .c21 {
+  margin-right: 4px;
+  vertical-align: -2px;
 }
 
 .c15 {
@@ -461,53 +508,6 @@ exports[`component: FileInput should render a file with an error 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
-}
-
-.c17 .c5 {
-  padding-bottom: 4px;
-}
-
-.c4 {
-  box-sizing: border-box;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  color: hsl(200,10%,20%);
-  background-color: hsla(353,84%,44%,0.3);
-}
-
-.c4 .c5 {
-  padding-bottom: 4px;
-}
-
-.c12 {
-  padding: 2px 4px;
-  position: relative;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  display: inline-block;
-  font-size: 15px;
-  line-height: 1.6;
-  background-color: hsla(353,84%,44%,0.3);
-}
-
-.c12 .c5,
-.c12 .sc-kafWEX,
-.c12 .c21 {
-  margin-right: 4px;
-  vertical-align: -2px;
 }
 
 .c18 .c3 {
@@ -684,16 +684,16 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c15 {
-    font-size: 18px;
-    line-height: 1.5;
+  .c12 {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c12 {
-    font-size: 15px;
-    line-height: 1.6;
+  .c15 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -816,6 +816,31 @@ exports[`component: FileInput should render a loaded file 1`] = `
   vertical-align: middle;
 }
 
+.c4 {
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: hsl(200,10%,20%);
+  background-color: hsla(145,89%,28%,0.3);
+}
+
+.c4 .c16 {
+  padding-bottom: 4px;
+}
+
 .c8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -893,31 +918,6 @@ exports[`component: FileInput should render a loaded file 1`] = `
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
-}
-
-.c4 {
-  box-sizing: border-box;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  color: hsl(200,10%,20%);
-  background-color: hsla(145,89%,28%,0.3);
-}
-
-.c4 .c16 {
-  padding-bottom: 4px;
 }
 
 .c14 .c3 {
@@ -1166,6 +1166,13 @@ exports[`component: FileInput should render a loading file 1`] = `
   vertical-align: middle;
 }
 
+.c4 {
+  vertical-align: middle;
+  font-size: 40px;
+  -webkit-animation: iVXCSc 0.75s linear infinite;
+  animation: iVXCSc 0.75s linear infinite;
+}
+
 .c6 {
   font-size: 18px;
   line-height: 1.5;
@@ -1210,13 +1217,6 @@ exports[`component: FileInput should render a loading file 1`] = `
   margin-right: 4px;
 }
 
-.c4 {
-  vertical-align: middle;
-  font-size: 40px;
-  -webkit-animation: iVXCSc 0.75s linear infinite;
-  animation: iVXCSc 0.75s linear infinite;
-}
-
 .c2 {
   box-sizing: border-box;
   width: 100%;
@@ -1247,17 +1247,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   line-height: 1.5;
 }
 
-.c2 .c13 {
+.c2 .c12 {
   height: 24px;
   width: 24px;
 }
 
-.c2 .c13 .c10 {
+.c2 .c12 .c10 {
   height: 16px;
   width: 16px;
 }
 
-.c2 .c13 .c11 {
+.c2 .c12 .c11 {
   height: 18px;
   width: 18px;
 }
@@ -1267,7 +1267,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .c12 {
+.c2 .c13 {
   margin-left: auto;
 }
 

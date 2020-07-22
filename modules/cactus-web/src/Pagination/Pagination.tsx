@@ -1,6 +1,3 @@
-import { border, fontSize } from '../helpers/theme'
-import { keyPressAsClick } from '../helpers/a11y'
-import { margin, MarginProps } from 'styled-system'
 import {
   NavigationChevronLeft,
   NavigationChevronRight,
@@ -10,6 +7,10 @@ import pick from 'lodash/pick'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { keyPressAsClick } from '../helpers/a11y'
+import { border, fontSize } from '../helpers/theme'
 
 export interface PageLinkProps {
   'aria-label': string

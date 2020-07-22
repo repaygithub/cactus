@@ -1,15 +1,15 @@
-import React, { cloneElement } from 'react'
-
-import { boxShadow } from '../helpers/theme'
-import { getScrollX, getScrollY } from '../helpers/scrollOffset'
-import { margin, MarginProps, maxWidth } from 'styled-system'
-import { NotificationInfo } from '@repay/cactus-icons'
-import { Omit } from '../types'
 import { PRect } from '@reach/rect'
 import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import VisuallyHidden from '@reach/visually-hidden'
+import { NotificationInfo } from '@repay/cactus-icons'
+import PropTypes from 'prop-types'
+import React, { cloneElement } from 'react'
+import styled from 'styled-components'
+import { margin, MarginProps, maxWidth } from 'styled-system'
+
+import { getScrollX, getScrollY } from '../helpers/scrollOffset'
+import { boxShadow } from '../helpers/theme'
+import { Omit } from '../types'
 
 interface Styles extends DOMRect {
   top: number

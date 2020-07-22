@@ -1,6 +1,5 @@
-import React, { ComponentType, ErrorInfo, Fragment } from 'react'
-
 import PropTypes from 'prop-types'
+import React, { ComponentType, ErrorInfo, Fragment } from 'react'
 
 export type ErrorView = ComponentType<ErrorViewProps>
 export type OnError = (error: Error, info: ErrorInfo) => void

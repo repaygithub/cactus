@@ -1,9 +1,9 @@
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
+import { Box, Flex, Grid, SelectField, Text } from '@repay/cactus-web'
 import React, { useCallback, useState } from 'react'
 
-import { Box, Flex, Grid, SelectField, Text } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 const columns = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 

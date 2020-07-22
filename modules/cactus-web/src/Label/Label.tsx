@@ -1,9 +1,9 @@
 import React from 'react'
-
-import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
-import { textStyle } from '../helpers/theme'
 import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { textStyle } from '../helpers/theme'
+import { Omit } from '../types'
 
 export interface LabelProps
   extends Omit<

@@ -1,14 +1,15 @@
 import * as icons from '@repay/cactus-icons'
 import { CactusTheme } from '@repay/cactus-theme'
-import Button from '../Button/Button'
-import Flex from '../Flex/Flex'
-import Modal, { ModalProps } from '../Modal/Modal'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
+
+import Button from '../Button/Button'
+import Flex from '../Flex/Flex'
+import variant from '../helpers/variant'
+import Modal, { ModalProps } from '../Modal/Modal'
 import Text from '../Text/Text'
 import TextButton from '../TextButton/TextButton'
-import variant from '../helpers/variant'
 
 export type IconSizes = 'medium' | 'large'
 export type IconNames = keyof typeof icons

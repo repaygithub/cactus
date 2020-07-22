@@ -1,5 +1,5 @@
-import { Link as GatsbyLink } from 'gatsby'
 import { Link as RepayLink } from '@repay/cactus-web'
+import { Link as GatsbyLink } from 'gatsby'
 import React from 'react'
 
 const LocalLink = RepayLink.withComponent(GatsbyLink)

@@ -1,10 +1,11 @@
 import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
-import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
-import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { textStyle } from '../helpers/theme'
+import { Omit } from '../types'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger'
 

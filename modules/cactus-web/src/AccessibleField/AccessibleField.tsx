@@ -1,12 +1,13 @@
-import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
-import { Label } from '../Label/Label'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
-import { Tooltip } from '../Tooltip/Tooltip'
 import PropTypes from 'prop-types'
 import React from 'react'
-import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import styled from 'styled-components'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
+
+import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import useId from '../helpers/useId'
+import { Label } from '../Label/Label'
+import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
+import { Tooltip } from '../Tooltip/Tooltip'
 
 interface AccessibleProps {
   name: string
