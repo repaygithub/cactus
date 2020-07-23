@@ -3,7 +3,7 @@ import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/es.js'
 import 'intl-pluralrules' // eslint-disable-line simple-import-sort/sort
 
-import { FluentBundle, FluentResource } from '@fluent/bundle'
+import { FluentBundle, FluentResource, FluentVariable } from '@fluent/bundle'
 import { negotiateLanguages } from '@fluent/langneg'
 
 import { ResourceDefinition } from './types'
@@ -149,7 +149,7 @@ export default abstract class BaseI18nController {
     id,
     lang: overrideLang = this.lang,
   }: {
-    args?: object
+    args?: Record<string, FluentVariable>
     section?: string
     id: string
     lang?: string
@@ -179,13 +179,13 @@ export default abstract class BaseI18nController {
       let text: string | null = null
       let attrs: { [key: string]: string } = {}
       let errors: any[] = []
-      if (message.attributes) {
+      if (message?.attributes) {
         Object.entries(message.attributes).forEach(([attr, value]) => {
-          attrs[attr] = bundle.formatPattern(value, args || {}, errors)
+          attrs[attr] = bundle.formatPattern(value, args, errors)
         })
       }
-      if (message.value) {
-        text = bundle.formatPattern(message.value, args || {}, errors)
+      if (message?.value) {
+        text = bundle.formatPattern(message.value, args, errors)
       }
       if (errors.length) {
         return [null, {}]
@@ -207,7 +207,7 @@ export default abstract class BaseI18nController {
     id,
     lang,
   }: {
-    args?: object
+    args?: Record<string, FluentVariable>
     section?: string
     id: string
     lang?: string

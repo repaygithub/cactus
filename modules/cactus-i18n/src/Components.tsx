@@ -1,3 +1,4 @@
+import { FluentVariable } from '@fluent/bundle'
 import PropTypes from 'prop-types'
 import React, {
   ComponentProps,
@@ -144,7 +145,7 @@ I18nSection.propTypes = {
 
 interface I18nTextProps {
   get: string
-  args?: object
+  args?: Record<string, FluentVariable>
   section?: string
 }
 
@@ -155,7 +156,7 @@ const I18nText: React.FC<I18nTextProps> = (props) => {
 
 I18nText.propTypes = {
   get: PropTypes.string.isRequired,
-  args: PropTypes.object,
+  args: PropTypes.object as PropTypes.Validator<Record<string, FluentVariable>>,
   section: PropTypes.string,
 }
 
@@ -203,7 +204,7 @@ const I18nResource: React.FC<I18nResourceProps> = (props) => {
 
 I18nResource.propTypes = {
   get: PropTypes.string.isRequired,
-  args: PropTypes.object,
+  args: PropTypes.object as PropTypes.Validator<Record<string, FluentVariable>>,
   section: PropTypes.string,
   render: PropTypes.func,
   children: PropTypes.func,
@@ -220,7 +221,7 @@ const I18nFormatted: React.FC<I18nFormattedProps> = (props) => {
 
 I18nFormatted.propTypes = {
   get: PropTypes.string.isRequired,
-  args: PropTypes.object,
+  args: PropTypes.object as PropTypes.Validator<Record<string, FluentVariable>>,
   section: PropTypes.string,
   formatter: PropTypes.func.isRequired,
 }
