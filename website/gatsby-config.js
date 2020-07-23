@@ -59,17 +59,6 @@ module.exports = {
             },
           },
           {
-            // styling for code blocks
-            resolve: 'gatsby-remark-prismjs',
-            options: {
-              classPrefix: 'language-',
-              inlineCodeMarker: {
-                tsx: 'tsx',
-              },
-              aliases: {},
-            },
-          },
-          {
             // copy over image files and optimize
             resolve: 'gatsby-remark-images',
             options: {
