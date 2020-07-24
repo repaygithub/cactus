@@ -1,6 +1,14 @@
+import {
+  NavigationChevronDown,
+  NavigationChevronLeft,
+  NavigationChevronRight,
+} from '@repay/cactus-icons'
+import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
 
 import { border, boxShadow, radius } from '../helpers/theme'
+import { Omit } from '../types'
 import {
   ITEM_SELECTOR,
   menuKeyHandler,
@@ -8,14 +16,6 @@ import {
   useSubmenuKeyHandler,
   useSubmenuToggle,
 } from './scroll'
-import {
-  NavigationChevronDown,
-  NavigationChevronLeft,
-  NavigationChevronRight,
-} from '@repay/cactus-icons'
-import { Omit } from '../types'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
 
 interface MenuItemProps
   extends Omit<React.AllHTMLAttributes<HTMLElement>, 'as' | 'tabIndex' | 'role'> {
@@ -195,7 +195,9 @@ const killEvent = (event: React.FocusEvent<HTMLElement>) => {
 
 const ScrollButton = styled.div.attrs({ tabIndex: -1, 'aria-hidden': true })<{ show?: boolean }>`
   ${(p) => p.theme.colorStyles.standard};
-  display: ${(p) => (p.show ? 'block' : 'none')};
+  display: ${(p) => (p.show ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
   flex-shrink: 0;
   cursor: pointer;
   background-color: transparent;
@@ -205,11 +207,8 @@ const ScrollButton = styled.div.attrs({ tabIndex: -1, 'aria-hidden': true })<{ s
     color: ${(p) => p.theme.colors.callToAction};
   }
   svg {
-    position: relative;
     width: 18px;
     height: 18px;
-    vertical-align: top;
-    top: calc(50% - 17px);
     margin: 8px;
   }
 `

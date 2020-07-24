@@ -30,6 +30,14 @@ exports[`component: MenuBar typechecks 1`] = `
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   display: none;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -44,11 +52,8 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 .c1 svg {
-  position: relative;
   width: 18px;
   height: 18px;
-  vertical-align: top;
-  top: calc(50% - 17px);
   margin: 8px;
 }
 

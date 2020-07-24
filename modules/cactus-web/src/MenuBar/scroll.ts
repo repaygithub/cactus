@@ -234,13 +234,26 @@ export const useScrollButtons: (o: Orientation) => [Scroll, MenuRef] = (orientat
             offset -= itemWidth
           }
         }
-        const showBack = scroll.current > 0
         const wrapper = menu.parentElement as HTMLElement
         const parentRect = wrapper.getBoundingClientRect()
-        const menuBack = parentRect[back] + (showBack ? BUTTON_WIDTH : 0)
+        const showBack = scroll.current > 0
+        const backButton = showBack ? BUTTON_WIDTH : 0
+        const menuBack = parentRect[back] + backButton
         const menuFore = menuBack + menuWidth
         const showFore =
           scroll.current < items.length - 1 && greaterThan(menuFore + offset, parentRect[fore])
+        const foreButton = showFore ? BUTTON_WIDTH : 0
+
+        // This is a fix for an IE bug, but it doesn't hurt other browsers.
+        const actualWidth = menu.getBoundingClientRect()[width]
+        const availableWidth = parentRect[width] - backButton - foreButton
+        if (availableWidth > 0 && greaterThan(actualWidth, availableWidth)) {
+          menu.style.flexBasis = `${Math.floor(availableWidth)}px`
+        } else if (menu.style.flexBasis) {
+          menu.style.flexBasis = ''
+        }
+
+        // If the offset/button state is unchanged, don't update the state.
         if (showFore === scroll.showFore && equals(scroll[back], offset)) {
           return scroll
         }
