@@ -30,7 +30,7 @@
     "@types/react-dom": "^16.9.2",
     "@types/react-helmet": "^5.0.8",
     "@types/react-motion": "^0.0.29",
-    "@types/styled-components": "^4.1.14",
+    "@types/styled-components": "^5.1.1",
     "babel-plugin-export-metadata": "^1.2.0",
     "babel-plugin-styled-components": "^1.10.6",
     "chokidar": "^2.1.5",
@@ -65,6 +65,6 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "^5.1.1"
   }
 }

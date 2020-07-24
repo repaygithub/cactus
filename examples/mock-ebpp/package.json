@@ -43,6 +43,7 @@
     "@testing-library/testcafe": "^4.1.0",
     "@types/reach__router": "^1.2.4",
     "@types/rimraf": "^2.0.2",
+    "@types/styled-components": "^5.1.1",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "commander": "^5.1.0",
@@ -59,6 +60,7 @@
     "@repay/cactus-theme": "^0.5.0",
     "@repay/cactus-web": "^0.9.1",
     "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "react-dom": "^16.10.2",
+    "styled-components": "^5.1.1"
   }
 }
