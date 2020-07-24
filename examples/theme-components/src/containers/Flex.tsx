@@ -1,6 +1,7 @@
 import { RouteComponentProps } from '@reach/router'
 import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { Flex, SelectField, Text } from '@repay/cactus-web'
+import { FlexDirectionProperty, FlexWrapProperty } from 'csstype'
 import React, { useCallback, useState } from 'react'
 
 import Link from '../components/Link'
@@ -71,10 +72,8 @@ const FlexExample: React.FC<RouteComponentProps> = () => {
         border="1px solid red"
         justifyContent={state.justifyOptions}
         alignItems={state.alignOptions}
-        // @ts-ignore
-        flexWrap={state.flexWrapOptions}
-        // @ts-ignore
-        flexDirection={state.directionOptions}
+        flexWrap={state.flexWrapOptions as FlexWrapProperty}
+        flexDirection={state.directionOptions as FlexDirectionProperty}
       >
         {[...Array(state.items > 0 ? state.items : 2)].map((_, i) => (
           <Flex p={5} colors={colors[i]} height="100px" width="100px" key={i} />

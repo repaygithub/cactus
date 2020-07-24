@@ -1,6 +1,7 @@
 import cactusTheme, { TextStyleCollection } from '@repay/cactus-theme'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
+import { PositionProperty, ZIndexProperty } from 'csstype'
 import React from 'react'
 
 import Box from './Box'
@@ -35,8 +36,7 @@ const textStyles = Object.keys(cactusTheme.textStyles)
 storiesOf('Box', module)
   .add('Basic Usage with theme build-in values', () => (
     <Box
-      // @ts-ignore
-      position={select('position', positionOptions, 'initial')}
+      position={select('position', positionOptions, 'initial') as PositionProperty}
       display={select('display', displayOptions, 'initial')}
       top={text('top', '')}
       right={text('right', '')}
@@ -57,8 +57,7 @@ storiesOf('Box', module)
       borderRadius={text('borderRadius', '')}
       borderStyle={text('borderStyle', 'solid')}
       textStyle={select('textStyle', textStyles, 'body') as keyof TextStyleCollection}
-      // @ts-ignore
-      zIndex={text('zIndex', '')}
+      zIndex={text('zIndex', '') as ZIndexProperty}
     >
       {text('children', 'Example Content')}
     </Box>
@@ -66,7 +65,6 @@ storiesOf('Box', module)
   .add('Using colorStyles for color and background', () => (
     <Box
       colors={select('colors', colorStyles, 'callToAction')}
-      // @ts-ignore
       margin={select('margin', sizes, 0)}
       padding={select('padding', sizes, 4)}
       width={text('width', '100px')}

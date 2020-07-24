@@ -953,7 +953,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
     type="button"
   >
     <span>
-      }&gt;Click me!
+      Click me!
     </span>
   </button>
 </DocumentFragment>

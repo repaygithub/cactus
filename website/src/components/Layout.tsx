@@ -3,8 +3,8 @@ import { Location, WindowLocation } from '@reach/router'
 import { NavigationChevronLeft } from '@repay/cactus-icons'
 import Close from '@repay/cactus-icons/i/navigation-close'
 import Menu from '@repay/cactus-icons/i/navigation-hamburger'
-import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
-import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
+import { Box, IconButton } from '@repay/cactus-web'
+import { graphql, Link, useStaticQuery } from 'gatsby'
 import * as React from 'react'
 import Helmet from 'react-helmet'
 import { Motion, spring } from 'react-motion'
@@ -371,8 +371,7 @@ const CactusIcon = styled(Cactus).attrs({
   vertical-align: -1px;
 `
 
-// @ts-ignore
-const Header = styled<{ isOverlayed?: boolean }>(Box)`
+const Header = styled(Box)<{ isOverlayed?: boolean }>`
   position: fixed;
 
   ${(p: any) =>

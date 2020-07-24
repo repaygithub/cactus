@@ -73,10 +73,9 @@ FileInputField.propTypes = {
   name: PropTypes.string.isRequired,
   accept: PropTypes.arrayOf(PropTypes.string) as PropTypes.Validator<string[] | undefined>,
   labels: PropTypes.shape({
-    delete: PropTypes.string,
-    retry: PropTypes.string,
-    loading: PropTypes.string,
-    loaded: PropTypes.string,
+    delete: PropTypes.string as PropTypes.Validator<string | undefined>,
+    loading: PropTypes.string as PropTypes.Validator<string | undefined>,
+    loaded: PropTypes.string as PropTypes.Validator<string | undefined>,
   }),
   buttonText: PropTypes.string,
   prompt: PropTypes.string,

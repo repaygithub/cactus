@@ -1525,8 +1525,8 @@ export const Select = styled(SelectBase)`
   }
 `
 
-// @ts-ignore
 Select.propTypes = {
+  // @ts-ignore
   options: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
@@ -1539,6 +1539,7 @@ Select.propTypes = {
   ]).isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  // @ts-ignore
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
