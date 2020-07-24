@@ -137,7 +137,7 @@ export const AccessibleField = styled(AccessibleFieldBase)`
 
   ${Tooltip}  {
     position: absolute;
-    right: 8px
+    right: 8px;
     top: 2px;
     font-size: 16px;
   }

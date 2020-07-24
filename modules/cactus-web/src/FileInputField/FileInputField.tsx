@@ -58,7 +58,7 @@ export const FileInputField = styled(FileInputFieldBase)`
   ${Tooltip} {
     position: absolute;
     top: -2px;
-    right: 8px
+    right: 8px;
     font-size: 16px;
     ${(p) => p.disabled && `color: ${p.theme.colors.mediumGray};`}
   }

@@ -129,7 +129,7 @@ exports[`component: ToggleField snapshot 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="sc-fzoWqW c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -141,7 +141,7 @@ exports[`component: ToggleField snapshot 1`] = `
       </svg>
       <svg
         aria-hidden="true"
-        class="c7 c8"
+        class="sc-paXsP c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -192,26 +192,6 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   top: 4px;
   left: 5px;
   color: hsl(0,0%,100%);
-}
-
-.c11[aria-checked='true'] .c5 {
-  opacity: 0;
-}
-
-.c11[aria-checked='true'] .c7 {
-  opacity: 1;
-}
-
-.c11 .c5 {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c11 .c7 {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
 }
 
 .c4 {
@@ -279,17 +259,6 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   opacity: 0.5;
 }
 
-.c12 .c9 {
-  cursor: pointer;
-  margin-left: 8px;
-  line-height: 26px;
-  vertical-align: -2px;
-}
-
-.c12 .c3 {
-  vertical-align: middle;
-}
-
 .c2 .c9 {
   cursor: not-allowed;
   margin-left: 8px;
@@ -323,7 +292,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="sc-fzoWqW c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -335,7 +304,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
       </svg>
       <svg
         aria-hidden="true"
-        class="c7 c8"
+        class="sc-paXsP c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -485,7 +454,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="sc-fzoWqW c5 c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -497,7 +466,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
       </svg>
       <svg
         aria-hidden="true"
-        class="c7 c8"
+        class="sc-paXsP c7 c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

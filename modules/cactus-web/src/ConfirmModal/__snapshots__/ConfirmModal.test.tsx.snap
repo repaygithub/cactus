@@ -2,7 +2,27 @@
 
 exports[`Modal renders TextInput and Description snapshot 1`] = `
 <body>
-  <div
+  @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+<div
     aria-hidden="true"
   />
   .c7 {
@@ -105,7 +125,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c13 .c17 {
+.c13 .sc-pReKu {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -223,22 +243,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 
 .c3:hover {
   color: hsl(200,96%,35%);
-}
-
-.c15 > [data-reach-dialog-content] .c2 {
-  height: 16px;
-  position: absolute;
-  right: 24px;
-  top: 24px;
-  width: 16px;
-}
-
-.c16 > [data-reach-dialog-content] .c2 {
-  height: 16px;
-  position: absolute;
-  right: 24px;
-  top: 24px;
-  width: 16px;
 }
 
 .c0 {
@@ -361,26 +365,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c15 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c16 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
-}
-
-@media screen and (min-width:1024px) {
   .c0 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
@@ -457,11 +441,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5"
+              class="sc-oTBUA c5"
               display="flex"
             >
               <div
-                class="c6 title-icon"
+                class="sc-oTBUA c6 title-icon"
                 display="flex"
               >
                 <h1
@@ -471,7 +455,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                 </h1>
               </div>
               <div
-                class="c8 children"
+                class="sc-oTBUA c8 children"
                 display="flex"
               >
                 <h4
@@ -493,7 +477,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="c12"
+                class="sc-oTBUA c12"
                 display="flex"
               >
                 <button
@@ -528,7 +512,23 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 
 exports[`Modal variant is danger snapshot 1`] = `
 <body>
-  <div
+  @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+<div
     aria-hidden="true"
   />
   .c7 {
@@ -579,7 +579,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c10 .c14 {
+.c10 .sc-pReKu {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -699,22 +699,6 @@ exports[`Modal variant is danger snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c12 > [data-reach-dialog-content] .c2 {
-  height: 16px;
-  position: absolute;
-  right: 24px;
-  top: 24px;
-  width: 16px;
-}
-
-.c13 > [data-reach-dialog-content] .c2 {
-  height: 16px;
-  position: absolute;
-  right: 24px;
-  top: 24px;
-  width: 16px;
-}
-
 .c0 {
   background: rgba(46,53,56,0.33);
   bottom: 0;
@@ -828,26 +812,6 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c12 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c13 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
-}
-
-@media screen and (min-width:1024px) {
   .c0 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
@@ -924,11 +888,11 @@ exports[`Modal variant is danger snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5"
+              class="sc-oTBUA c5"
               display="flex"
             >
               <div
-                class="c6 title-icon"
+                class="sc-oTBUA c6 title-icon"
                 display="flex"
               >
                 <h1
@@ -938,11 +902,11 @@ exports[`Modal variant is danger snapshot 1`] = `
                 </h1>
               </div>
               <div
-                class="c8 children"
+                class="sc-oTBUA c8 children"
                 display="flex"
               />
               <div
-                class="c9"
+                class="sc-oTBUA c9"
                 display="flex"
               >
                 <button
@@ -977,7 +941,23 @@ exports[`Modal variant is danger snapshot 1`] = `
 
 exports[`Modal variant is success snapshot 1`] = `
 <body>
-  <div
+  @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+<div
     aria-hidden="true"
   />
   .c7 {
@@ -1028,7 +1008,7 @@ exports[`Modal variant is success snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c10 .c13 {
+.c10 .sc-pReKu {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1148,14 +1128,6 @@ exports[`Modal variant is success snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c12 > [data-reach-dialog-content] .c2 {
-  height: 16px;
-  position: absolute;
-  right: 24px;
-  top: 24px;
-  width: 16px;
-}
-
 .c0 {
   background: rgba(46,53,56,0.33);
   bottom: 0;
@@ -1269,16 +1241,6 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c12 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
-}
-
-@media screen and (min-width:1024px) {
   .c0 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
@@ -1355,11 +1317,11 @@ exports[`Modal variant is success snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5"
+              class="sc-oTBUA c5"
               display="flex"
             >
               <div
-                class="c6 title-icon"
+                class="sc-oTBUA c6 title-icon"
                 display="flex"
               >
                 <h1
@@ -1369,11 +1331,11 @@ exports[`Modal variant is success snapshot 1`] = `
                 </h1>
               </div>
               <div
-                class="c8 children"
+                class="sc-oTBUA c8 children"
                 display="flex"
               />
               <div
-                class="c9"
+                class="sc-oTBUA c9"
                 display="flex"
               >
                 <button
@@ -1455,7 +1417,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c10 .c12 {
+.c10 .sc-pReKu {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1768,11 +1730,11 @@ exports[`Modal variant is warning snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5"
+              class="sc-oTBUA c5"
               display="flex"
             >
               <div
-                class="c6 title-icon"
+                class="sc-oTBUA c6 title-icon"
                 display="flex"
               >
                 <h1
@@ -1782,11 +1744,11 @@ exports[`Modal variant is warning snapshot 1`] = `
                 </h1>
               </div>
               <div
-                class="c8 children"
+                class="sc-oTBUA c8 children"
                 display="flex"
               />
               <div
-                class="c9"
+                class="sc-oTBUA c9"
                 display="flex"
               >
                 <button
