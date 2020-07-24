@@ -1,8 +1,8 @@
-import React from 'react'
-
 import * as icons from '@repay/cactus-icons/i'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
+import React from 'react'
+
 import SplitButton, { IconProps } from './SplitButton'
 
 type IconName = keyof typeof icons | 'None'

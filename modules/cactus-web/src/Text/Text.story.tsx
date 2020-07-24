@@ -1,8 +1,9 @@
-import { select, text } from '@storybook/addon-knobs'
-import { Span, Text } from './Text'
-import { storiesOf } from '@storybook/react'
 import cactusTheme, { CactusColor, TextStyleCollection } from '@repay/cactus-theme'
+import { select, text } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import React from 'react'
+
+import { Span, Text } from './Text'
 
 const COLOR_STYLES = Object.keys(cactusTheme.colorStyles) as CactusColor[]
 const TEXT_STYLES = Object.keys(cactusTheme.textStyles)

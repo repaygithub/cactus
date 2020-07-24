@@ -1,7 +1,7 @@
-import { Card, Flex, Grid, Text } from '@repay/cactus-web'
 import { RouteComponentProps } from '@reach/router'
-import Helmet from 'react-helmet'
+import { Card, Flex, Grid, Text } from '@repay/cactus-web'
 import React from 'react'
+import Helmet from 'react-helmet'
 
 interface HomeProps extends RouteComponentProps {}
 

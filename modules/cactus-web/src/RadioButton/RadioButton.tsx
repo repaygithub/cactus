@@ -1,11 +1,11 @@
-import React from 'react'
-
-import { boxShadow } from '../helpers/theme'
-import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
-import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { omitMargins } from '../helpers/omit'
+import { boxShadow } from '../helpers/theme'
+import { Omit } from '../types'
 
 export interface RadioButtonProps
   extends Omit<

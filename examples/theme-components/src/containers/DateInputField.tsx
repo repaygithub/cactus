@@ -1,9 +1,9 @@
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
+import { DateInputField, Flex, Text } from '@repay/cactus-web'
 import React from 'react'
 
-import { DateInputField, Flex, Text } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 function initValues() {
   return {

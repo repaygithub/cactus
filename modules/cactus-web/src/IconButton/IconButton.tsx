@@ -1,11 +1,11 @@
-import React from 'react'
-
-import { CactusTheme } from '@repay/cactus-theme'
 import { iconSizes } from '@repay/cactus-icons'
-import { margin, MarginProps } from 'styled-system'
-import { omitMargins } from '../helpers/omit'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { omitMargins } from '../helpers/omit'
 
 export type IconButtonVariants = 'standard' | 'action' | 'danger'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'

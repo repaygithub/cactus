@@ -1,9 +1,9 @@
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
+import { Button, Flex, Grid, StepAvatar, Text } from '@repay/cactus-web'
 import React from 'react'
 
-import { Button, Flex, Grid, StepAvatar, Text } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 const StepAvatarExample: React.FC<RouteComponentProps> = () => {
   const StepManager = (props: {

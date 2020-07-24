@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { DateInput, Flex, Label, SelectField, Text } from '@repay/cactus-web'
 import { DateType } from '@repay/cactus-web/src/helpers/dates'
-import { RouteComponentProps } from '@reach/router'
 import FormHandler from '@repay/cactus-web/src/storySupport/FormHandler'
+import React, { useState } from 'react'
+
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 const DateInputExample: React.FC<RouteComponentProps> = () => {
   const [type, setType] = useState<DateType>('date')

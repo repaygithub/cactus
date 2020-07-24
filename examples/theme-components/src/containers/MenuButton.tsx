@@ -1,9 +1,9 @@
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
+import { Flex, MenuButton, Text } from '@repay/cactus-web'
 import React, { useState } from 'react'
 
-import { Flex, MenuButton, Text } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 const MenuButtonExample: React.FC<RouteComponentProps> = () => {
   const [action, setAction] = useState('')

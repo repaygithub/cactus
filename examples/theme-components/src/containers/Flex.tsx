@@ -1,9 +1,9 @@
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
+import { Flex, SelectField, Text } from '@repay/cactus-web'
 import React, { useCallback, useState } from 'react'
 
-import { Flex, SelectField, Text } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
 import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 
 const justifyOptions = [
   'normal',

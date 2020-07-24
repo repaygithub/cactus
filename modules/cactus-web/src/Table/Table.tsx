@@ -1,10 +1,11 @@
-import { border, boxShadow, textStyle } from '../helpers/theme'
-import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 import styled, { css, StyledComponentType } from 'styled-components'
+
+import { border, boxShadow, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
+import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 type CellAlignment = 'center' | 'right' | 'left'
 

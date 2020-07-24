@@ -1,13 +1,14 @@
-import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
-import { boxShadow } from '../helpers/theme'
 import { DialogContent, DialogOverlay, DialogProps } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
-import Flex from '../Flex/Flex'
-import IconButton from '../IconButton/IconButton'
+import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
+
+import Flex from '../Flex/Flex'
+import { boxShadow } from '../helpers/theme'
 import variant from '../helpers/variant'
+import IconButton from '../IconButton/IconButton'
 
 export type ModalType = 'action' | 'danger' | 'warning' | 'success'
 

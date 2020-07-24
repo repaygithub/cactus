@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from 'react'
-
-import { Accordion, Flex, IconButton, Text } from '@repay/cactus-web'
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
+import { Accordion, Flex, IconButton, Text } from '@repay/cactus-web'
+import React, { FunctionComponent } from 'react'
 
 interface FieldsAccordionProps {
   index: number

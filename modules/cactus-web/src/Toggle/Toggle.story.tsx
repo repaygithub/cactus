@@ -1,7 +1,7 @@
-import React from 'react'
-
 import { boolean } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
+import React from 'react'
+
 import Toggle from './Toggle'
 
 const toggleStories = storiesOf('Toggle', module)

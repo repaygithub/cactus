@@ -1,9 +1,8 @@
-import React from 'react'
-
 import { CactusTheme } from '@repay/cactus-theme'
-import { margin, MarginProps } from 'styled-system'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled, { css, StyledComponentBase } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 const GUTTER_WIDTH = 16
 

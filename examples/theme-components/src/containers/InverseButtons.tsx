@@ -1,9 +1,9 @@
+import { RouteComponentProps } from '@reach/router'
+import { ActionsAdd, NavigationChevronLeft } from '@repay/cactus-icons'
+import cactusTheme from '@repay/cactus-theme'
+import { Box, Button, Grid, IconButton, TextButton } from '@repay/cactus-web'
 import React, { Component, CSSProperties } from 'react'
 
-import { ActionsAdd, NavigationChevronLeft } from '@repay/cactus-icons'
-import { Box, Button, Grid, IconButton, TextButton } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
-import cactusTheme from '@repay/cactus-theme'
 import Link from '../components/Link'
 
 const tableStyle: CSSProperties = {

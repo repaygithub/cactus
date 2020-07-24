@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, {
   ComponentProps,
   JSXElementConstructor,
@@ -6,10 +7,9 @@ import React, {
   useState,
 } from 'react'
 
+import BaseI18nController from './BaseI18nController'
 import { I18nContext, useI18nResource, useI18nText } from './hooks'
 import { I18nContextType } from './types'
-import BaseI18nController from './BaseI18nController'
-import PropTypes from 'prop-types'
 
 interface I18nProviderProps {
   controller: BaseI18nController

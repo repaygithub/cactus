@@ -1,9 +1,10 @@
 import { actions } from '@storybook/addon-actions'
 import { array, boolean, text } from '@storybook/addon-knobs'
-import { SelectValueType } from '../Select/Select'
 import { storiesOf } from '@storybook/react'
-import FormHandler from '../storySupport/FormHandler'
 import React from 'react'
+
+import { SelectValueType } from '../Select/Select'
+import FormHandler from '../storySupport/FormHandler'
 import SelectField from './SelectField'
 
 storiesOf('SelectField', module)

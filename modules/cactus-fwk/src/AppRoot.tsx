@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types'
 import React, { WeakValidationMap } from 'react'
 
 import { ErrorBoundary, ErrorView, OnError } from './ErrorBoundary'
 import { FeatureFlagContext } from './featureFlags'
 import { FeatureFlagsObject } from './types'
-import PropTypes from 'prop-types'
 
 interface AppRootProps {
   /**

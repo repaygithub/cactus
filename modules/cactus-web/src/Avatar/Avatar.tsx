@@ -1,15 +1,14 @@
-import React from 'react'
-
-import { CactusTheme } from '@repay/cactus-theme'
-import { margin, MarginProps } from 'styled-system'
 import {
   NotificationAlert,
   NotificationError,
   NotificationInfo,
   StatusCheck,
 } from '@repay/cactus-icons'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 export type AvatarType = 'alert' | 'feedback'
 export type AvatarStatus = 'error' | 'warning' | 'info' | 'success'

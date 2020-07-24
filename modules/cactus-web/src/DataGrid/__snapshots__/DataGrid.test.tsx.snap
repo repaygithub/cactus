@@ -18,6 +18,91 @@ exports[`component: DataGrid snapshot 1`] = `
   vertical-align: middle;
 }
 
+.c12 {
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 20px 1px 1px 20px;
+  background-color: hsl(0,0%,100%);
+  height: 32px;
+  outline: none;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  cursor: pointer;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.c12 svg {
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.c12::-moz-focus-inner {
+  border: 0;
+}
+
+.c12.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c12.dd-closed:hover,
+.c12.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c12.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c14 {
+  box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
+  height: 32px;
+  width: 36px;
+  border-radius: 1px 20px 20px 1px;
+  margin-left: 1px;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+}
+
+.c14 .c8 {
+  width: 10px;
+  height: 10px;
+  color: hsl(0,0%,100%);
+}
+
+.c14:hover,
+.c14:focus {
+  background-color: hsl(200,96%,35%);
+}
+
+.c14[aria-expanded='true'] ~ .c11 {
+  border-color: hsl(200,96%,35%);
+}
+
+.c10 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.c10 .c13[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+}
+
+.c10 .c13[aria-expanded='true'] .c8 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
+}
+
+.c10 .c13[aria-expanded='true'] + .c11 {
+  border-color: hsl(200,96%,35%);
+}
+
 .c16 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -413,89 +498,11 @@ exports[`component: DataGrid snapshot 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c12 {
-  box-sizing: border-box;
-  border: 1px solid;
-  border-radius: 20px 1px 1px 20px;
-  background-color: hsl(0,0%,100%);
-  height: 32px;
-  outline: none;
-  font-size: 18px;
-  line-height: 1.5;
-  font-weight: 400;
-  cursor: pointer;
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.c12 svg {
-  margin-right: 4px;
-  margin-bottom: 3px;
-}
-
-.c12::-moz-focus-inner {
-  border: 0;
-}
-
-.c12.dd-closed {
-  border-color: hsl(200,10%,20%);
-}
-
-.c12.dd-closed:hover,
-.c12.dd-closed:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c12.dd-open {
-  border-color: hsl(200,96%,35%);
-}
-
-.c14 {
-  box-sizing: border-box;
-  background-color: hsl(200,10%,20%);
-  height: 32px;
-  width: 36px;
-  border-radius: 1px 20px 20px 1px;
-  margin-left: 1px;
-  border: 0px;
-  outline: none;
-  cursor: pointer;
-}
-
-.c14 .c8 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c14:hover,
-.c14:focus {
-  background-color: hsl(200,96%,35%);
-}
-
-.c14[aria-expanded='true'] ~ .c11 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c10 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-}
-
-.c10 .c13[aria-expanded='true'] {
-  background-color: hsl(200,96%,35%);
-}
-
-.c10 .c13[aria-expanded='true'] .c8 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c10 .c13[aria-expanded='true'] + .c11 {
-  border-color: hsl(200,96%,35%);
+@media screen and (min-width:1024px) {
+  .c12 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
 }
 
 @media screen and (min-width:1024px) {
@@ -568,13 +575,6 @@ exports[`component: DataGrid snapshot 1`] = `
   .c2 .page-option,
   .c2 .page-option a {
     font-size: 15px;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c12 {
-    font-size: 18px;
-    line-height: 1.5;
   }
 }
 

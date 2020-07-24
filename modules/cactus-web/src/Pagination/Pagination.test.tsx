@@ -1,9 +1,10 @@
-import * as React from 'react'
-import { render } from '@testing-library/react'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
-import Pagination from './Pagination'
+import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import * as React from 'react'
+
+import { StyleProvider } from '../StyleProvider/StyleProvider'
+import Pagination from './Pagination'
 
 function ManagedPagination({ size, start, onClick }: any) {
   const [current, setCurrent] = React.useState(start)

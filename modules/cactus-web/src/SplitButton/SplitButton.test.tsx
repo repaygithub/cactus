@@ -1,11 +1,11 @@
+import { generateTheme } from '@repay/cactus-theme'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
-import { generateTheme } from '@repay/cactus-theme'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import animationRender from '../../tests/helpers/animationRender'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import SplitButton from './SplitButton'
-import userEvent from '@testing-library/user-event'
 
 describe('component: SplitButton', () => {
   test('snapshot', () => {

@@ -1,3 +1,5 @@
+import { ActionsGear } from '@repay/cactus-icons'
+import cactusTheme, { CactusTheme, generateTheme, GeneratorOptions } from '@repay/cactus-theme'
 import {
   AccessibleField,
   Box,
@@ -8,8 +10,6 @@ import {
   StyleProvider,
   TextInputField,
 } from '@repay/cactus-web'
-import { ActionsGear } from '@repay/cactus-icons'
-import cactusTheme, { CactusTheme, generateTheme, GeneratorOptions } from '@repay/cactus-theme'
 import React, { FormEvent, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 const themeArgsTypes = ['use_hue', 'two_colors']

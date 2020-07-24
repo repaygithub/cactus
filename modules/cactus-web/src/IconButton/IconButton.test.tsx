@@ -1,9 +1,9 @@
+import { StatusCheck } from '@repay/cactus-icons'
+import cactusTheme from '@repay/cactus-theme'
+import { cleanup, fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
-import { cleanup, fireEvent, render } from '@testing-library/react'
-import { StatusCheck } from '@repay/cactus-icons'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import cactusTheme from '@repay/cactus-theme'
 import IconButton from './IconButton'
 
 afterEach(cleanup)

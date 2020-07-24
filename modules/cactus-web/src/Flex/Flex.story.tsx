@@ -1,8 +1,8 @@
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import Flex from './Flex'
-
 import React from 'react'
+
+import Flex from './Flex'
 
 const justifyOptions = [
   'normal',

@@ -1,8 +1,9 @@
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
-import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
+
+import { textStyle } from '../helpers/theme'
 
 export type Status = 'success' | 'warning' | 'error'
 

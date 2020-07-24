@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
-
-import { Box, Flex, MenuButton, ToggleField } from '@repay/cactus-web'
-import { I18nResource, I18nText } from '@repay/cactus-i18n'
 import { Link, RouteComponentProps } from '@reach/router'
 import { withFeatureFlags } from '@repay/cactus-fwk'
+import { I18nResource, I18nText } from '@repay/cactus-i18n'
 import Heart from '@repay/cactus-icons/i/status-like'
+import { Box, Flex, MenuButton, ToggleField } from '@repay/cactus-web'
+import React, { Component } from 'react'
 
 interface AppProps extends RouteComponentProps {
   onLangChange: (lang: string) => void
