@@ -24,7 +24,7 @@
     "@babel/core": "^7.10.5",
     "@repay/babel-preset": "^1.0.0",
     "@repay/scripts": "^2.0.0",
-    "@types/jest": "^24.9.1",
+    "@types/jest": "^26.0.7",
     "babel-jest": "^26.1.0",
     "typescript": "^3.9.7"
   },

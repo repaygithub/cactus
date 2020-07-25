@@ -20,13 +20,13 @@
   },
   "devDependencies": {
     "@repay/scripts": "^2.0.0",
-    "@testing-library/testcafe": "^4.1.0",
+    "@testing-library/testcafe": "^4.2.0",
     "@types/reach__router": "^1.2.4",
     "@types/styled-components": "^5.1.1",
     "commander": "^5.1.0",
     "dotenv": "^8.2.0",
     "prop-types": "^15.7.2",
-    "testcafe": "^1.8.5",
+    "testcafe": "^1.8.8",
     "testcafe-browser-provider-browserstack": "^1.13.0",
     "typescript": "^3.9.7"
   },
