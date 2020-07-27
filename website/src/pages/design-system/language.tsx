@@ -1,10 +1,10 @@
-import * as React from 'react'
-
 import { Flex } from '@repay/cactus-web'
-import Grid from '../../../../modules/cactus-web/src/Grid/Grid'
+import * as React from 'react'
 import Helmet from 'react-helmet'
-import Link from '../../components/Link'
 import styled from 'styled-components'
+
+import Grid from '../../../../modules/cactus-web/src/Grid/Grid'
+import Link from '../../components/Link'
 
 const Em = styled.em`
   font-style: normal;

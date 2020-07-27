@@ -1,9 +1,10 @@
 import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
-import { Flex } from '../index'
 import { storiesOf } from '@storybook/react'
-import Alert, { Status, Type } from './Alert'
 import React from 'react'
+
+import { Flex } from '../index'
+import Alert, { Status, Type } from './Alert'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 const type: Type[] = ['general', 'push']

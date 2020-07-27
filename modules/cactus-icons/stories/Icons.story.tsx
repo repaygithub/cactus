@@ -1,9 +1,9 @@
+import cactusTheme, { CactusTheme, generateTheme } from '@repay/cactus-theme'
+import { number, select } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
 import React from 'react'
 
 import * as icons from '../i'
-import { number, select } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
-import cactusTheme, { CactusTheme, generateTheme } from '@repay/cactus-theme'
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]

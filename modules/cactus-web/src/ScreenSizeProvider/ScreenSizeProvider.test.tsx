@@ -1,8 +1,8 @@
+import { act, render } from '@testing-library/react'
 import * as React from 'react'
 
-import { act, render } from '@testing-library/react'
-import { ScreenSizeContext, ScreenSizeProvider, SIZES } from './ScreenSizeProvider'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
+import { ScreenSizeContext, ScreenSizeProvider, SIZES } from './ScreenSizeProvider'
 
 const Size: React.FC = (props) => {
   return (

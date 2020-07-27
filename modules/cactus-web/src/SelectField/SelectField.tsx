@@ -1,12 +1,12 @@
-import React from 'react'
-
-import { FieldOnChangeHandler, Omit } from '../types'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
-import { omitMargins } from '../helpers/omit'
-import AccessibleField from '../AccessibleField/AccessibleField'
 import PropTypes from 'prop-types'
-import Select, { OptionType, SelectProps, SelectValueType } from '../Select/Select'
+import React from 'react'
 import styled from 'styled-components'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
+
+import AccessibleField from '../AccessibleField/AccessibleField'
+import { omitMargins } from '../helpers/omit'
+import Select, { OptionType, SelectProps, SelectValueType } from '../Select/Select'
+import { FieldOnChangeHandler, Omit } from '../types'
 
 interface SelectFieldProps
   extends MarginProps,

@@ -1,9 +1,8 @@
-import * as React from 'react'
-
-import * as icons from '@repay/cactus-icons'
-import { Box, Flex, Grid, SelectField, Text } from '@repay/cactus-web'
-import { CactusColor, CactusTheme } from '@repay/cactus-theme'
 import { RouteComponentProps } from '@reach/router'
+import * as icons from '@repay/cactus-icons'
+import { CactusColor, CactusTheme } from '@repay/cactus-theme'
+import { Box, Flex, Grid, SelectField, Text } from '@repay/cactus-web'
+import * as React from 'react'
 import { withTheme } from 'styled-components'
 
 type IconSize = 'tiny' | 'small' | 'medium' | 'large'

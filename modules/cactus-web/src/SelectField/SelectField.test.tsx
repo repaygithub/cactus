@@ -1,5 +1,6 @@
-import * as React from 'react'
 import { cleanup, fireEvent, render } from '@testing-library/react'
+import * as React from 'react'
+
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import SelectField from './SelectField'
 

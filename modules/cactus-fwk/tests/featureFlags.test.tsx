@@ -1,6 +1,6 @@
+import { render } from '@testing-library/react'
 import React from 'react'
 
-import { render } from '@testing-library/react'
 import AppRoot, { FeatureFlag, useFeatureFlags, withFeatureFlags } from '../src/index'
 
 describe('feature flags', () => {

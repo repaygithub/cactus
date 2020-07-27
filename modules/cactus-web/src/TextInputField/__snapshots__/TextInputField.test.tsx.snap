@@ -1,6 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: TextInputField should render a TextInputField 1`] = `
+.c1 + .c0 {
+  margin-top: 16px;
+}
+
+.c5 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
+.c7 {
+  vertical-align: middle;
+  color: hsl(200,96%,35%);
+}
+
+.c2 {
+  position: relative;
+}
+
+.c2 .c4 {
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c2 .c6 {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  font-size: 16px;
+}
+
+.c2 .c10 {
+  margin-top: 4px;
+}
+
 .c9 {
   box-sizing: border-box;
   border: 1px solid;
@@ -49,58 +87,20 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   box-sizing: border-box;
 }
 
-.c1 + .c0 {
-  margin-top: 16px;
-}
-
-.c5 {
-  font-size: 18px;
-  line-height: 1.5;
-  font-weight: 600;
-  color: hsl(200,10%,20%);
-}
-
-.c7 {
-  vertical-align: middle;
-  color: hsl(200,96%,35%);
-}
-
-.c2 {
-  position: relative;
-}
-
-.c2 .c4 {
-  display: block;
-  box-sizing: border-box;
-  padding-left: 16px;
-  padding-right: 28px;
-}
-
-.c2 .c6 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
-  font-size: 16px;
-}
-
-.c2 .c10 {
-  margin-top: 4px;
-}
-
 .c3 {
   position: relative;
   width: auto;
 }
 
 @media screen and (min-width:1024px) {
-  .c9 {
+  .c5 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c5 {
+  .c9 {
     font-size: 18px;
     line-height: 1.5;
   }

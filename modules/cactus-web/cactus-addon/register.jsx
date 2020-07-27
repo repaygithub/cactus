@@ -1,10 +1,10 @@
 // must be js or jsx because we can't modify the browser webpack config
+import addons from '@storybook/addons'
+import { Form } from '@storybook/components'
+import { styled } from '@storybook/theming'
 import * as React from 'react'
 
 import { BACKGROUND_CHANGE, DECORATOR_LISTENING, NAME, THEME_CHANGE } from './constants'
-import { Form } from '@storybook/components'
-import { styled } from '@storybook/theming'
-import addons from '@storybook/addons'
 
 const ScrollArea = styled('div')({ height: '100%', width: '100%', overflowY: 'auto' })
 

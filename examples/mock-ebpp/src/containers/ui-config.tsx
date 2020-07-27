@@ -1,3 +1,4 @@
+import { RouteComponentProps } from '@reach/router'
 import {
   Alert,
   Button,
@@ -12,10 +13,10 @@ import {
   TextInputField,
   ToggleField,
 } from '@repay/cactus-web'
-import { Helmet } from 'react-helmet'
-import { post } from '../api'
-import { RouteComponentProps } from '@reach/router'
 import React, { useState } from 'react'
+import { Helmet } from 'react-helmet'
+
+import { post } from '../api'
 
 interface UIConfigProps extends RouteComponentProps {}
 

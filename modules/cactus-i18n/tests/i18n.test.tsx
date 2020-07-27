@@ -1,7 +1,6 @@
+import { act, cleanup, fireEvent, render, RenderResult } from '@testing-library/react'
 import * as React from 'react'
 
-import { act, cleanup, fireEvent, render, RenderResult } from '@testing-library/react'
-import { ResourceDefinition } from '../src/types'
 import I18nProvider, {
   BaseI18nController,
   I18nElement,
@@ -12,6 +11,7 @@ import I18nProvider, {
   useI18nResource,
   useI18nText,
 } from '../src/index'
+import { ResourceDefinition } from '../src/types'
 import MockPromise from './helpers/MockPromise'
 
 class I18nController extends BaseI18nController {

@@ -1,8 +1,9 @@
-import * as React from 'react'
 import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import * as React from 'react'
+
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextAreaField from './TextAreaField'
-import userEvent from '@testing-library/user-event'
 
 describe('component: TextAreaField', () => {
   test('should render a TextAreaField', () => {

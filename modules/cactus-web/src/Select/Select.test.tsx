@@ -1,11 +1,12 @@
-import * as React from 'react'
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { generateTheme } from '@repay/cactus-theme'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import * as React from 'react'
+
 import animationRender from '../../tests/helpers/animationRender'
 import KeyCodes from '../helpers/keyCodes'
-import Select from './Select'
 import StyleProvider from '../StyleProvider/StyleProvider'
-import userEvent from '@testing-library/user-event'
+import Select from './Select'
 
 function getActiveValue(): string {
   // @ts-ignore

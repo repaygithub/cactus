@@ -1,14 +1,54 @@
-import { Box, BoxProps } from '../Box/Box'
+import PropTypes from 'prop-types'
+import styled, { css } from 'styled-components'
 import { flexbox, FlexboxProps } from 'styled-system'
-import styled from 'styled-components'
 
-interface FlexBoxProps extends BoxProps, FlexboxProps {}
+import { Box, BoxProps } from '../Box/Box'
 
-export const Flex = styled(Box)<FlexBoxProps>(flexbox)
+interface FlexBoxProps extends BoxProps, Omit<FlexboxProps, 'justifySelf'> {}
+
+export const Flex = styled(Box)<FlexBoxProps>`
+  ${flexbox}
+
+  ${(p) => {
+    if (p.justifyContent === 'space-evenly' && /MSIE|Trident/.test(window.navigator.userAgent)) {
+      return css`
+        justify-content: space-between;
+        &:before,
+        &:after {
+          content: '';
+          display: block;
+        }
+      `
+    }
+  }}
+`
 
 Flex.defaultProps = {
   display: 'flex',
   flexWrap: 'wrap',
+}
+
+Flex.propTypes = {
+  justifyContent: PropTypes.oneOf([
+    'unset',
+    'flex-start',
+    'flex-end',
+    'center',
+    'space-between',
+    'space-around',
+    'space-evenly',
+  ]),
+  alignItems: PropTypes.oneOf(['unset', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']),
+  alignSelf: PropTypes.oneOf(['unset', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']),
+  flexWrap: PropTypes.oneOf(['unset', 'inherit', 'wrap', 'nowrap', 'wrap-reverse']),
+  flexDirection: PropTypes.oneOf([
+    'unset',
+    'inherit',
+    'row',
+    'row-reverse',
+    'column',
+    'column-reverse',
+  ]),
 }
 
 export default Flex

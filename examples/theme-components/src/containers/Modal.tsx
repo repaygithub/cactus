@@ -1,9 +1,10 @@
+import { RouteComponentProps } from '@reach/router'
+import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { Button, Flex, Modal, SelectField, Text } from '@repay/cactus-web'
 import { ModalType } from '@repay/cactus-web/dist/Modal/Modal'
-import { RouteComponentProps } from '@reach/router'
-import Link from '../components/Link'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import React, { useState } from 'react'
+
+import Link from '../components/Link'
 
 const ModalComponent: React.FC<RouteComponentProps> = () => {
   const [open, setOpen] = useState(false)

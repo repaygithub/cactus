@@ -1,14 +1,13 @@
-import * as React from 'react'
-
-import { Flex } from '@repay/cactus-web'
 import cactusTheme from '@repay/cactus-theme'
+import { Flex } from '@repay/cactus-web'
+import * as React from 'react'
 import Helmet from 'react-helmet'
-import Link from '../../components/Link'
 import styled from 'styled-components'
-import Text, { Span } from '../../components/Text'
 
 import ArialExample from '../../assets/font-arial.png'
 import HelveticaExample from '../../assets/font-helvetica.png'
+import Link from '../../components/Link'
+import Text, { Span } from '../../components/Text'
 
 const Table = styled('table')`
   th,

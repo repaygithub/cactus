@@ -1,8 +1,8 @@
+import { Link, RouteComponentProps } from '@reach/router'
+import { I18nSection, I18nText } from '@repay/cactus-i18n'
+import { Box, SelectField, Text } from '@repay/cactus-web'
 import React, { useState } from 'react'
 
-import { Box, SelectField, Text } from '@repay/cactus-web'
-import { I18nSection, I18nText } from '@repay/cactus-i18n'
-import { Link, RouteComponentProps } from '@reach/router'
 import { supportedLanguages } from '../i18nController'
 
 const languageOptions = [

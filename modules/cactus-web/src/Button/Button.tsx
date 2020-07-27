@@ -1,13 +1,13 @@
-import React from 'react'
-
 import { BorderSize, Shape } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
+
 import { omitMargins } from '../helpers/omit'
 import { textStyle } from '../helpers/theme'
-import PropTypes from 'prop-types'
 import Spinner from '../Spinner/Spinner'
-import styled, { css } from 'styled-components'
+import { Omit } from '../types'
 
 export type ButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
 

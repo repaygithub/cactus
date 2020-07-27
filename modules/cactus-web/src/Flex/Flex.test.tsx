@@ -1,5 +1,6 @@
-import * as React from 'react'
 import { cleanup, render } from '@testing-library/react'
+import * as React from 'react'
+
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Flex from './Flex'
 
@@ -19,9 +20,14 @@ describe('component: Flex', () => {
   test('should accept flex props', () => {
     const { container } = render(
       <StyleProvider>
-        <Flex justifyContent="end" alignItems="center" flexWrap="nowrap" flexDirection="column">
-          <Flex alignSelf="end" />
-          <Flex justifySelf="center" />
+        <Flex
+          justifyContent="flex-end"
+          alignItems="center"
+          flexWrap="nowrap"
+          flexDirection="column"
+        >
+          <Flex alignSelf="flex-end" />
+          <Flex />
         </Flex>
       </StyleProvider>
     )

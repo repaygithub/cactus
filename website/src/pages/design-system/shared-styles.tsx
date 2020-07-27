@@ -1,11 +1,11 @@
-import * as React from 'react'
-
 import { Box, Flex } from '@repay/cactus-web'
-import ColumnImage from '../design-system/grid-columns.png'
-import GridImage from '../design-system/grid-numbered.png'
+import * as React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
+
 import Text, { Span } from '../../components/Text'
+import ColumnImage from '../design-system/grid-columns.png'
+import GridImage from '../design-system/grid-numbered.png'
 
 interface ShadowBoxProps extends React.ComponentPropsWithRef<typeof Flex> {
   shadow: string

@@ -1,7 +1,7 @@
+import { RouteComponentProps } from '@reach/router'
+import { Box } from '@repay/cactus-web'
 import React, { Component } from 'react'
 
-import { Box } from '@repay/cactus-web'
-import { RouteComponentProps } from '@reach/router'
 import Link from '../components/Link'
 
 class Home extends Component<RouteComponentProps> {

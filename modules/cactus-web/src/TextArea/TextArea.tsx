@@ -1,13 +1,13 @@
-import React from 'react'
-
 import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
-import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
-import { omitMargins } from '../helpers/omit'
-import { StatusPropType } from '../StatusMessage/StatusMessage'
-import { textStyle } from '../helpers/theme'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { omitMargins } from '../helpers/omit'
+import { textStyle } from '../helpers/theme'
+import { StatusPropType } from '../StatusMessage/StatusMessage'
+import { Omit } from '../types'
 
 export type Status = 'success' | 'warning' | 'error'
 

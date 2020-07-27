@@ -1,10 +1,10 @@
+import { DescriptiveEnvelope } from '@repay/cactus-icons/'
+import { cleanup, render } from '@testing-library/react'
 import * as React from 'react'
 
-import { cleanup, render } from '@testing-library/react'
-import { DescriptiveEnvelope } from '@repay/cactus-icons/'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
-import Modal from './Modal'
 import TextInput from '../TextInput/TextInput'
+import Modal from './Modal'
 
 const Icon = DescriptiveEnvelope as React.FunctionComponent
 afterEach(cleanup)

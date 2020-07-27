@@ -1,5 +1,3 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
-
 import {
   ActionsUpload,
   BatchstatusOpen,
@@ -7,20 +5,9 @@ import {
   NotificationError,
   StatusCheck,
 } from '@repay/cactus-icons'
-import { border } from '../helpers/theme'
 import { CactusTheme } from '@repay/cactus-theme'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
-import { IconButton } from '../IconButton/IconButton'
-import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
-import { omitMargins } from '../helpers/omit'
-import { TextButton } from '../TextButton/TextButton'
-import { textStyle } from '../helpers/theme'
-import accepts from '../helpers/accept'
-import Avatar from '../Avatar/Avatar'
-import handleEvent from '../helpers/eventHandler'
 import PropTypes from 'prop-types'
-import Spinner from '../Spinner/Spinner'
-import StatusMessage from '../StatusMessage/StatusMessage'
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import styled, {
   css,
   DefaultTheme,
@@ -29,6 +16,19 @@ import styled, {
   ThemedStyledProps,
   ThemeProps,
 } from 'styled-components'
+import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
+
+import Avatar from '../Avatar/Avatar'
+import accepts from '../helpers/accept'
+import handleEvent from '../helpers/eventHandler'
+import { omitMargins } from '../helpers/omit'
+import { border } from '../helpers/theme'
+import { textStyle } from '../helpers/theme'
+import { IconButton } from '../IconButton/IconButton'
+import Spinner from '../Spinner/Spinner'
+import StatusMessage from '../StatusMessage/StatusMessage'
+import { TextButton } from '../TextButton/TextButton'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 const FILE_TYPE_ERR = 'FileTypeError'
 const NOT_FOUND_ERR = 'NotFoundError'

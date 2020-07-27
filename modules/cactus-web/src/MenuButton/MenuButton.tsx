@@ -1,14 +1,3 @@
-import React from 'react'
-
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { boxShadow, textStyle } from '../helpers/theme'
-import { CactusTheme } from '@repay/cactus-theme'
-import { getScrollX } from '../helpers/scrollOffset'
-import { getTopPosition } from '../helpers/positionPopover'
-import { margin, MarginProps } from 'styled-system'
-import { NavigationChevronDown } from '@repay/cactus-icons'
-import { Omit } from '../types'
-import { omitMargins } from '../helpers/omit'
 import {
   Menu as ReachMenu,
   MenuButton as ReachMenuButton,
@@ -17,8 +6,19 @@ import {
   MenuLink as ReachMenuLink,
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
+import { NavigationChevronDown } from '@repay/cactus-icons'
+import { BorderSize, Shape } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled, { createGlobalStyle, css, StyledComponent } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { omitMargins } from '../helpers/omit'
+import { getTopPosition } from '../helpers/positionPopover'
+import { getScrollX } from '../helpers/scrollOffset'
+import { boxShadow, textStyle } from '../helpers/theme'
+import { Omit } from '../types'
 
 const borderMap = {
   thin: css`

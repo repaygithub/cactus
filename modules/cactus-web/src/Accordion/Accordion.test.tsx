@@ -1,15 +1,15 @@
-import * as React from 'react'
-
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { generateTheme } from '@repay/cactus-theme'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
-import Accordion from './Accordion'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import * as React from 'react'
+
 import animationRender from '../../tests/helpers/animationRender'
 import Flex from '../Flex/Flex'
-import IconButton from '../IconButton/IconButton'
 import KeyCodes from '../helpers/keyCodes'
+import IconButton from '../IconButton/IconButton'
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Text from '../Text/Text'
+import Accordion from './Accordion'
 
 afterEach(() => {
   cleanup()
