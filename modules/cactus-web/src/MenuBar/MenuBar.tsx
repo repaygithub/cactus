@@ -54,12 +54,12 @@ const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
 
     const closeOnBlur = React.useCallback(
       (event) => {
-        // IE 11 doesn't seem to properly support `relatedTarget`, but to make up
-        // for that it sets `activeElement` before other browsers.
-        const target = event.relatedTarget || document.activeElement
-        if (!event.currentTarget.contains(target)) {
-          toggle(null, false)
-        }
+        const target = event.currentTarget
+        setTimeout(() => {
+          if (!target.contains(document.activeElement)) {
+            toggle(null, false)
+          }
+        })
       },
       [toggle]
     )
@@ -102,10 +102,10 @@ const TextWrapper = styled.div`
 `
 
 const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
-  const [scroll, menuRef] = useScrollButtons('vertical')
+  const [scroll, menuRef] = useScrollButtons('vertical', expanded)
   return (
-    <MenuWrapper expanded={expanded}>
-      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack} onBlur={killEvent}>
+    <MenuWrapper expanded={expanded} tabIndex={-1}>
+      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
       <MenuList
@@ -117,7 +117,7 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
       >
         {children}
       </MenuList>
-      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore} onBlur={killEvent}>
+      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
         <NavigationChevronRight />
       </ScrollButton>
     </MenuWrapper>
@@ -145,10 +145,10 @@ const exitNavFocus = (event: React.FocusEvent<HTMLElement>) => {
 }
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
-  const [scroll, menuRef] = useScrollButtons('horizontal')
+  const [scroll, menuRef] = useScrollButtons('horizontal', true)
   return (
     <Nav {...props} ref={ref} tabIndex={0} onFocus={enterNavFocus} onBlur={exitNavFocus}>
-      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack} onBlur={killEvent}>
+      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
       <MenuList
@@ -160,7 +160,7 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
       >
         {children}
       </MenuList>
-      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore} onBlur={killEvent}>
+      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
         <NavigationChevronRight />
       </ScrollButton>
     </Nav>
@@ -184,16 +184,7 @@ export { MenuBar, MenuBarList, MenuBarItem }
 
 export default DefaultMenuBar
 
-const killEvent = (event: React.FocusEvent<HTMLElement>) => {
-  // Prevent blur event from propagating if the button disappears.
-  if (!event.currentTarget.offsetWidth) {
-    event.stopPropagation()
-    event.preventDefault()
-    return false
-  }
-}
-
-const ScrollButton = styled.div.attrs({ tabIndex: -1, 'aria-hidden': true })<{ show?: boolean }>`
+const ScrollButton = styled.div.attrs({ 'aria-hidden': true })<{ show?: boolean }>`
   ${(p) => p.theme.colorStyles.standard};
   display: ${(p) => (p.show ? 'flex' : 'none')};
   justify-content: center;
@@ -247,6 +238,7 @@ const MenuWrapper = styled.div<{ expanded: boolean }>`
   position: absolute;
   top: 100%;
   left: 0;
+  outline: none;
   border: ${(p) => border(p.theme, 'lightContrast')};
   border-radius: ${radius};
   ${(p) => boxShadow(p.theme, 1)};

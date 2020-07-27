@@ -204,25 +204,31 @@ interface Scroll {
   current: number
 }
 
+const DEFAULT_SCROLL: Scroll = { left: 0, top: 0, current: 0 }
+
 interface MenuWithScroll extends HTMLUListElement {
   scrollToMenuItem?: (a: HTMLElement[], b: number) => void
 }
 
 type MenuRef = (m: MenuWithScroll | null) => void
 
-export const useScrollButtons: (o: Orientation) => [Scroll, MenuRef] = (orientation) => {
-  let back: 'left' | 'top' = 'left'
-  let fore: 'right' | 'bottom' = 'right'
-  let width: 'width' | 'height' = 'width'
-  if (orientation === 'vertical') {
-    back = 'top'
-    fore = 'bottom'
-    width = 'height'
-  }
+type ScrollButtonHook = (o: Orientation, e: boolean) => [Scroll, MenuRef]
+
+export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
   const [menu, menuRef] = React.useState<MenuWithScroll | null>(null)
-  const [scroll, setScroll] = React.useState<Scroll>({ left: 0, top: 0, current: 0 })
+  const [scroll, setScroll] = React.useState<Scroll>(DEFAULT_SCROLL)
   React.useEffect(() => {
-    if (menu) {
+    if (!expanded) {
+      setScroll(() => DEFAULT_SCROLL)
+    } else if (menu) {
+      let back: 'left' | 'top' = 'left'
+      let fore: 'right' | 'bottom' = 'right'
+      let width: 'width' | 'height' = 'width'
+      if (orientation === 'vertical') {
+        back = 'top'
+        fore = 'bottom'
+        width = 'height'
+      }
       const updateScrollState: (s: Scroll) => Scroll = (scroll) => {
         const items = getMenuItems(menu)
         let offset = 0
@@ -324,6 +330,6 @@ export const useScrollButtons: (o: Orientation) => [Scroll, MenuRef] = (orientat
       observer.observe()
       return () => observer.unobserve()
     }
-  }, [back, fore, menu, orientation, width])
+  }, [expanded, menu, orientation])
   return [scroll, menuRef]
 }

@@ -105,6 +105,7 @@ exports[`component: MenuBar typechecks 1`] = `
   position: absolute;
   top: 100%;
   left: 0;
+  outline: none;
   border: 1px solid hsl(200,29%,90%);
   border-radius: 8px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
@@ -279,7 +280,6 @@ exports[`component: MenuBar typechecks 1`] = `
     <div
       aria-hidden="true"
       class="c1"
-      tabindex="-1"
     >
       <svg
         class="c2 c3"
@@ -336,11 +336,11 @@ exports[`component: MenuBar typechecks 1`] = `
         </button>
         <div
           class="c10"
+          tabindex="-1"
         >
           <div
             aria-hidden="true"
             class="c1"
-            tabindex="-1"
           >
             <svg
               class="c2 c3"
@@ -406,11 +406,11 @@ exports[`component: MenuBar typechecks 1`] = `
               </button>
               <div
                 class="c10"
+                tabindex="-1"
               >
                 <div
                   aria-hidden="true"
                   class="c1"
-                  tabindex="-1"
                 >
                   <svg
                     class="c2 c3"
@@ -444,7 +444,6 @@ exports[`component: MenuBar typechecks 1`] = `
                 <div
                   aria-hidden="true"
                   class="c1"
-                  tabindex="-1"
                 >
                   <svg
                     class="c12 c13"
@@ -465,7 +464,6 @@ exports[`component: MenuBar typechecks 1`] = `
           <div
             aria-hidden="true"
             class="c1"
-            tabindex="-1"
           >
             <svg
               class="c12 c13"
@@ -511,7 +509,6 @@ exports[`component: MenuBar typechecks 1`] = `
     <div
       aria-hidden="true"
       class="c1"
-      tabindex="-1"
     >
       <svg
         class="c12 c13"
