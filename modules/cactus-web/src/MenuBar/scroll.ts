@@ -1,6 +1,8 @@
 import observeRect from '@reach/observe-rect'
 import React from 'react'
 
+import { isActionKey } from '../helpers/a11y'
+
 type Orientation = 'horizontal' | 'vertical'
 
 const PRINTABLE = /^\S$/
@@ -87,43 +89,57 @@ export function useSubmenuToggle(): [boolean, ToggleSubmenu] {
   return [expanded, toggle]
 }
 
-export function useSubmenuKeyHandler(toggle: ToggleSubmenu) {
-  return React.useCallback(
+const isExpanded = (button: HTMLElement) => button.getAttribute('aria-expanded') === 'true'
+const openKey = (orientation: any) => (orientation === 'vertical' ? 'ArrowRight' : 'ArrowDown')
+const closeKey = (orientation: any) => (orientation === 'vertical' ? 'ArrowLeft' : 'ArrowUp')
+const getOrientation = (element: HTMLElement) => {
+  const menu = getMenu(element)
+  return menu && menu.getAttribute('aria-orientation')
+}
+
+export function useSubmenuKeyHandlers(toggle: ToggleSubmenu) {
+  const handleToggle = React.useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
-      const parentMenu = getMenu(event.currentTarget)
-      const orientation = parentMenu && parentMenu.getAttribute('aria-orientation')
-      const openKey = orientation === 'vertical' ? 'ArrowRight' : 'ArrowDown'
-      const closeKey = orientation === 'vertical' ? 'ArrowLeft' : 'ArrowUp'
+      const menuButton = event.currentTarget
+      const orientation = getOrientation(menuButton)
+      if (isActionKey(event)) {
+        event.preventDefault()
+        event.stopPropagation()
+        toggle(menuButton, undefined, true)
+      } else if (!isExpanded(menuButton) && event.key === openKey(orientation)) {
+        event.stopPropagation()
+        toggle(menuButton, true, true)
+      }
+    },
+    [toggle]
+  )
+  const handleSubmenu = React.useCallback(
+    (event: React.KeyboardEvent<HTMLElement>) => {
       const menuButton = event.currentTarget.querySelector(ITEM_SELECTOR) as HTMLElement
-      const isExpanded = menuButton.getAttribute('aria-expanded') === 'true'
-      switch (event.key) {
-        case 'Enter':
-        case ' ':
-        case openKey:
-          if (!isExpanded) {
-            toggle(menuButton, true, true)
-          } else if (event.key === openKey) {
+      if (isExpanded(menuButton)) {
+        const orientation = getOrientation(event.currentTarget)
+        switch (event.key) {
+          case 'Escape':
+          case closeKey(orientation):
+            toggle(menuButton, false)
+            menuButton.focus()
+            break
+          case openKey(orientation):
             const menu = event.currentTarget.querySelector('[role="menu"]')
             const items = getMenuItems(menu as HTMLElement)
             const currentFocus = items.indexOf(document.activeElement as HTMLElement)
             items[(currentFocus + 1) % items.length].focus()
-          }
-          break
-        case closeKey:
-        case 'Escape':
-          if (isExpanded) {
-            toggle(menuButton, false)
-            menuButton.focus()
             break
-          }
-        default:
-          return
+          default:
+            return
+        }
+        event.stopPropagation()
+        event.preventDefault()
       }
-      event.stopPropagation()
-      event.preventDefault()
     },
     [toggle]
   )
+  return [handleToggle, handleSubmenu]
 }
 
 export const menuKeyHandler = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -153,8 +169,7 @@ export const menuKeyHandler = (event: React.KeyboardEvent<HTMLElement>) => {
     case 'Enter':
     case ' ':
       event.stopPropagation()
-      event.preventDefault()
-      break
+      return
     case 'Home':
     case 'PageUp': // TODO Once the scrolling is implemented, I'll want to shift this to approximately one page-worth of links up
       focusIndex = 0

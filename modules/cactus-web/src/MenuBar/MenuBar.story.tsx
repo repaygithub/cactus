@@ -1,4 +1,3 @@
-import { action } from '@storybook/addon-actions'
 import { boolean, number, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
@@ -7,7 +6,7 @@ import MenuBar from './MenuBar'
 
 const LABELS = [
   'Ready!',
-  'And..action!',
+  'And...action!',
   'Cookies',
   'Crumble',
   'There was an old lady',
@@ -31,9 +30,13 @@ const LABELS = [
 
 const getLabel = () => LABELS[Math.floor(Math.random() * LABELS.length)]
 
+function action(msg: string) {
+  return () => console.log('ITEM CLICKED:', msg)
+}
+
 storiesOf('MenuBar', module).add('Basic Usage', () => {
   const breadth = number('Breadth', 8)
-  const depth = number('Depth', 2)
+  const totalDepth = number('Depth', 2)
 
   const makeList = (
     depth: number,
@@ -47,7 +50,7 @@ storiesOf('MenuBar', module).add('Basic Usage', () => {
         items.push(makeList(depth - 1, { title: getLabel() }, i))
       } else {
         items.push(
-          <MenuBar.Item key={i} onClick={action(`x: ${i}, y: ${depth}`)}>
+          <MenuBar.Item key={i} onClick={action(`x: ${i}, y: ${totalDepth - depth}`)}>
             {getLabel()}
           </MenuBar.Item>
         )
@@ -60,5 +63,5 @@ storiesOf('MenuBar', module).add('Basic Usage', () => {
     )
   }
 
-  return makeList(depth, {}, 0, MenuBar)
+  return makeList(totalDepth, {}, 0, MenuBar)
 })

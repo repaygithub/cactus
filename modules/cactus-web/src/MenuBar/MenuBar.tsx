@@ -2,18 +2,20 @@ import {
   NavigationChevronDown,
   NavigationChevronLeft,
   NavigationChevronRight,
+  NavigationChevronUp,
 } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 
+import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { border, boxShadow, radius } from '../helpers/theme'
 import { Omit } from '../types'
 import {
   ITEM_SELECTOR,
   menuKeyHandler,
   useScrollButtons,
-  useSubmenuKeyHandler,
+  useSubmenuKeyHandlers,
   useSubmenuToggle,
 } from './scroll'
 
@@ -38,19 +40,38 @@ interface MenuBarProps {
   'aria-label'?: string
 }
 
+const preventAction = (event: React.KeyboardEvent<HTMLElement>) => {
+  if (isActionKey(event)) {
+    event.preventDefault()
+  }
+}
+
 // The `as any` here is to enable proper use of link substition,
 // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
-const MenuBarItem = React.forwardRef<HTMLElement, MenuItemProps>((props, ref) => (
-  <li role="none">
-    <MenuButton ref={ref as any} {...(props as any)} />
-  </li>
-))
+const MenuBarItem = React.forwardRef<HTMLElement, MenuItemProps>((props, ref) => {
+  const propsCopy = { ...props } as any
+  if (props.onClick && !props.onKeyPress) {
+    propsCopy.onKeyPress = keyPressAsClick(propsCopy.onClick)
+    const original = props.onKeyUp
+    propsCopy.onKeyUp = !original
+      ? preventAction
+      : (e: React.KeyboardEvent<HTMLElement>) => {
+          original(e)
+          preventAction(e)
+        }
+  }
+  return (
+    <li role="none">
+      <MenuButton ref={ref as any} {...propsCopy} />
+    </li>
+  )
+})
 
 const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {
     const [expanded, toggle] = useSubmenuToggle()
 
-    const onKeyDown = useSubmenuKeyHandler(toggle)
+    const [toggleOnKey, handleSubmenu] = useSubmenuKeyHandlers(toggle)
 
     const closeOnBlur = React.useCallback(
       (event) => {
@@ -70,13 +91,15 @@ const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
       [toggle]
     )
     return (
-      <li role="none" onKeyDown={onKeyDown} onBlur={closeOnBlur}>
+      <li role="none" onKeyDown={handleSubmenu} onBlur={closeOnBlur}>
         <MenuButton
           {...props}
           ref={ref}
           aria-haspopup="menu"
           aria-expanded={expanded}
           onClick={toggleOnClick}
+          onKeyDown={toggleOnKey}
+          onKeyUp={preventAction}
         >
           <TextWrapper>{title}</TextWrapper>
           <IconWrapper aria-hidden>
@@ -106,7 +129,7 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
   return (
     <MenuWrapper expanded={expanded} tabIndex={-1}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
-        <NavigationChevronLeft />
+        <NavigationChevronUp />
       </ScrollButton>
       <MenuList
         role="menu"
@@ -118,7 +141,7 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
         {children}
       </MenuList>
       <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
-        <NavigationChevronRight />
+        <NavigationChevronDown />
       </ScrollButton>
     </MenuWrapper>
   )
@@ -254,15 +277,12 @@ const MenuWrapper = styled.div<{ expanded: boolean }>`
     width: 100%;
   }
 
-  ${NavigationChevronLeft}, ${NavigationChevronRight} {
-    transform: rotateZ(90deg);
-  }
-  ${NavigationChevronDown} {
-    transform: rotateZ(-90deg);
-  }
-
   [role='menuitem'] {
     padding: 4px 8px;
+
+    ${NavigationChevronDown} {
+      transform: rotateZ(-90deg);
+    }
     &[aria-expanded='true'] {
       background-color: ${(p) => p.theme.colors.lightContrast};
       ${NavigationChevronDown} {

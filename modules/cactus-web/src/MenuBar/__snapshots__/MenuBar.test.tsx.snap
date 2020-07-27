@@ -1,25 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: MenuBar typechecks 1`] = `
-.c9 {
+.c8 {
   vertical-align: middle;
 }
 
-.c3 {
+.c2 {
   vertical-align: middle;
 }
 
-.c13 {
+.c12 {
   vertical-align: middle;
 }
 
-.c7 {
+.c10 {
+  vertical-align: middle;
+}
+
+.c6 {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c6 {
+.c5 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -98,7 +102,7 @@ exports[`component: MenuBar typechecks 1`] = `
   font-weight: bold;
 }
 
-.c10 {
+.c9 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   display: none;
@@ -123,47 +127,40 @@ exports[`component: MenuBar typechecks 1`] = `
   z-index: 1;
 }
 
-.c10 ul {
+.c9 ul {
   width: 100%;
 }
 
-.c10 .c2,
-.c10 .c12 {
-  -webkit-transform: rotateZ(90deg);
-  -ms-transform: rotateZ(90deg);
-  transform: rotateZ(90deg);
+.c9 [role='menuitem'] {
+  padding: 4px 8px;
 }
 
-.c10 .c8 {
+.c9 [role='menuitem'] .c7 {
   -webkit-transform: rotateZ(-90deg);
   -ms-transform: rotateZ(-90deg);
   transform: rotateZ(-90deg);
 }
 
-.c10 [role='menuitem'] {
-  padding: 4px 8px;
-}
-
-.c10 [role='menuitem'][aria-expanded='true'] {
+.c9 [role='menuitem'][aria-expanded='true'] {
   background-color: hsl(200,29%,90%);
 }
 
-.c10 [role='menuitem'][aria-expanded='true'] .c8 {
+.c9 [role='menuitem'][aria-expanded='true'] .c7 {
   -webkit-transform: rotateZ(90deg);
   -ms-transform: rotateZ(90deg);
   transform: rotateZ(90deg);
 }
 
-.c10 [role='menuitem']:hover {
+.c9 [role='menuitem']:hover {
   color: hsl(200,96%,35%);
 }
 
-.c10 [role='menuitem']:focus {
+.c9 [role='menuitem']:focus {
   background-color: hsl(200,29%,90%);
   color: hsl(200,96%,35%);
 }
 
-.c4 {
+.c3 {
   list-style: none;
   display: -webkit-box;
   display: -webkit-flex;
@@ -192,7 +189,7 @@ exports[`component: MenuBar typechecks 1`] = `
   overflow: hidden;
 }
 
-.c4 > li > [role='menuitem'] {
+.c3 > li > [role='menuitem'] {
   position: relative;
   top: 0px;
   left: 0px;
@@ -233,7 +230,7 @@ exports[`component: MenuBar typechecks 1`] = `
   left: 0px;
 }
 
-.c5 {
+.c4 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -256,16 +253,16 @@ exports[`component: MenuBar typechecks 1`] = `
   align-items: center;
 }
 
-.c5:active,
-.c5:focus {
+.c4:active,
+.c4:focus {
   outline: none;
 }
 
-.c5::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: none;
 }
 
-.c5 .c8 {
+.c4 .c7 {
   width: 8px;
   height: 8px;
   margin-left: 16px;
@@ -282,7 +279,7 @@ exports[`component: MenuBar typechecks 1`] = `
       class="c1"
     >
       <svg
-        class="c2 c3"
+        class="c2"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -295,7 +292,7 @@ exports[`component: MenuBar typechecks 1`] = `
     </div>
     <ul
       aria-orientation="horizontal"
-      class="c4"
+      class="c3"
       role="menubar"
     >
       <li
@@ -305,12 +302,12 @@ exports[`component: MenuBar typechecks 1`] = `
           aria-current="true"
           aria-expanded="false"
           aria-haspopup="menu"
-          class="c5"
+          class="c4"
           role="menuitem"
           tabindex="-1"
         >
           <div
-            class="c6"
+            class="c5"
           >
             <em>
               Emphasized
@@ -318,10 +315,10 @@ exports[`component: MenuBar typechecks 1`] = `
           </div>
           <div
             aria-hidden="true"
-            class="c7"
+            class="c6"
           >
             <svg
-              class="c8 c9"
+              class="c7 c8"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -335,7 +332,7 @@ exports[`component: MenuBar typechecks 1`] = `
           </div>
         </button>
         <div
-          class="c10"
+          class="c9"
           tabindex="-1"
         >
           <div
@@ -343,7 +340,7 @@ exports[`component: MenuBar typechecks 1`] = `
             class="c1"
           >
             <svg
-              class="c2 c3"
+              class="c10"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -351,6 +348,7 @@ exports[`component: MenuBar typechecks 1`] = `
             >
               <path
                 d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                transform="matrix(0 1 1 0 0 0)"
               />
             </svg>
           </div>
@@ -363,7 +361,7 @@ exports[`component: MenuBar typechecks 1`] = `
               role="none"
             >
               <a
-                class="c5"
+                class="c4"
                 href="#"
                 role="menuitem"
                 tabindex="-1"
@@ -377,21 +375,21 @@ exports[`component: MenuBar typechecks 1`] = `
               <button
                 aria-expanded="false"
                 aria-haspopup="menu"
-                class="c5"
+                class="c4"
                 role="menuitem"
                 tabindex="-1"
               >
                 <div
-                  class="c6"
+                  class="c5"
                 >
                   Nested
                 </div>
                 <div
                   aria-hidden="true"
-                  class="c7"
+                  class="c6"
                 >
                   <svg
-                    class="c8 c9"
+                    class="c7 c8"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -405,7 +403,7 @@ exports[`component: MenuBar typechecks 1`] = `
                 </div>
               </button>
               <div
-                class="c10"
+                class="c9"
                 tabindex="-1"
               >
                 <div
@@ -413,7 +411,7 @@ exports[`component: MenuBar typechecks 1`] = `
                   class="c1"
                 >
                   <svg
-                    class="c2 c3"
+                    class="c10"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -421,6 +419,7 @@ exports[`component: MenuBar typechecks 1`] = `
                   >
                     <path
                       d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="matrix(0 1 1 0 0 0)"
                     />
                   </svg>
                 </div>
@@ -433,7 +432,7 @@ exports[`component: MenuBar typechecks 1`] = `
                     role="none"
                   >
                     <button
-                      class="c5"
+                      class="c4"
                       role="menuitem"
                       tabindex="-1"
                     >
@@ -446,7 +445,7 @@ exports[`component: MenuBar typechecks 1`] = `
                   class="c1"
                 >
                   <svg
-                    class="c12 c13"
+                    class="c7 c8"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -454,7 +453,7 @@ exports[`component: MenuBar typechecks 1`] = `
                   >
                     <path
                       d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                      transform="matrix(-1 0 0 1 24 0)"
+                      transform="rotate(-90 12 12)"
                     />
                   </svg>
                 </div>
@@ -466,7 +465,7 @@ exports[`component: MenuBar typechecks 1`] = `
             class="c1"
           >
             <svg
-              class="c12 c13"
+              class="c7 c8"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -474,7 +473,7 @@ exports[`component: MenuBar typechecks 1`] = `
             >
               <path
                 d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                transform="matrix(-1 0 0 1 24 0)"
+                transform="rotate(-90 12 12)"
               />
             </svg>
           </div>
@@ -485,7 +484,7 @@ exports[`component: MenuBar typechecks 1`] = `
       >
         <button
           aria-current="true"
-          class="c5"
+          class="c4"
           role="menuitem"
           tabindex="-1"
         >
@@ -498,7 +497,7 @@ exports[`component: MenuBar typechecks 1`] = `
         role="none"
       >
         <a
-          class="c5"
+          class="c4"
           role="menuitem"
           tabindex="-1"
         >
@@ -511,7 +510,7 @@ exports[`component: MenuBar typechecks 1`] = `
       class="c1"
     >
       <svg
-        class="c12 c13"
+        class="c12"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
