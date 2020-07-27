@@ -1,9 +1,10 @@
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import Button from '../Button/Button'
-import Modal, { ModalType } from './Modal'
 import React, { useState } from 'react'
+
+import Button from '../Button/Button'
 import Text from '../Text/Text'
+import Modal, { ModalType } from './Modal'
 
 const modalStories = storiesOf('Modal', module)
 

@@ -1,8 +1,9 @@
 import { date, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
+import React from 'react'
+
 import Box from '../Box/Box'
 import Card from './Card'
-import React from 'react'
 
 storiesOf('Card', module)
   .add('Basic Usage', () => (

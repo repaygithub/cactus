@@ -1,6 +1,7 @@
-import * as path from 'path'
 import { queryAllByText, queryByTestId, queryByText } from '@testing-library/testcafe'
+import * as path from 'path'
 import { Selector } from 'testcafe'
+
 import startStaticServer from './helpers/static-server'
 
 fixture('I18n Integration tests')

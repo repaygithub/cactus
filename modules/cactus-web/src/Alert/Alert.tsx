@@ -1,14 +1,13 @@
-import React from 'react'
-
-import { boxShadow } from '../helpers/theme'
-import { CactusTheme } from '@repay/cactus-theme'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
-import Avatar from '../Avatar/Avatar'
-import IconButton from '../IconButton/IconButton'
-import PropTypes from 'prop-types'
-import styled, { css, ThemeProps } from 'styled-components'
-
 import { NavigationClose } from '@repay/cactus-icons'
+import { CactusTheme } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
+import React from 'react'
+import styled, { css, ThemeProps } from 'styled-components'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
+
+import Avatar from '../Avatar/Avatar'
+import { boxShadow } from '../helpers/theme'
+import IconButton from '../IconButton/IconButton'
 
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'

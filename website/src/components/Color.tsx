@@ -1,5 +1,10 @@
+import StatusX from '@repay/cactus-icons/i/navigation-close'
+import StatusCheck from '@repay/cactus-icons/i/status-check'
+import cactusTheme, { CactusColor, ColorVariant } from '@repay/cactus-theme'
+import { Box, Flex } from '@repay/cactus-web'
+import Color from 'color'
 import * as React from 'react'
-
+import styled from 'styled-components'
 import {
   border,
   borderBottom,
@@ -22,15 +27,9 @@ import {
   textAlign,
   TextAlignProps,
 } from 'styled-system'
-import { Box, Flex } from '@repay/cactus-web'
-import { Span } from './Text'
-import { useCactusTheme } from './CactusProvider'
-import cactusTheme, { CactusColor, ColorVariant } from '@repay/cactus-theme'
-import Color from 'color'
 
-import StatusCheck from '@repay/cactus-icons/i/status-check'
-import StatusX from '@repay/cactus-icons/i/navigation-close'
-import styled from 'styled-components'
+import { useCactusTheme } from './CactusProvider'
+import { Span } from './Text'
 
 const upperCaseFirst = (word: string) => word.charAt(0).toUpperCase() + word.slice(1)
 const extraStyles: React.CSSProperties = { textAlign: 'right' }

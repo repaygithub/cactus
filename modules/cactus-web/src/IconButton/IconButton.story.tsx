@@ -1,9 +1,9 @@
-import React from 'react'
-
 import * as icons from '@repay/cactus-icons/i'
 import { actions } from '@storybook/addon-actions'
 import { boolean, select } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
+import React from 'react'
+
 import Grid from '../Grid/Grid'
 import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 

@@ -1,6 +1,7 @@
+import Color from 'color'
+
 import { CactusTheme } from '../dist'
 import cactusTheme, { generateTheme } from '../src/theme'
-import Color from 'color'
 
 function themeAccessibility(themeName: string, theme: CactusTheme) {
   describe(`${themeName} meets basic accessibility contrast thresholds`, () => {

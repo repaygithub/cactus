@@ -1,19 +1,19 @@
-import * as React from 'react'
-
-import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
-import { ReactComponent as Cactus } from '../assets/cactus.svg'
-import { CactusProvider, CactusThemeWidget } from './CactusProvider'
-import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
-import { Location, WindowLocation } from '@reach/router'
-import { Motion, spring } from 'react-motion'
-import { NavigationChevronLeft } from '@repay/cactus-icons'
 import { useRect } from '@reach/rect'
+import { Location, WindowLocation } from '@reach/router'
+import { NavigationChevronLeft } from '@repay/cactus-icons'
 import Close from '@repay/cactus-icons/i/navigation-close'
-import debounce from '../helpers/debounce'
-import Helmet from 'react-helmet'
 import Menu from '@repay/cactus-icons/i/navigation-hamburger'
-import storybooks from '../storybook-config.json'
+import { Box, IconButton, StyleProvider } from '@repay/cactus-web'
+import { graphql, Link, useStaticQuery, withPrefix } from 'gatsby'
+import * as React from 'react'
+import Helmet from 'react-helmet'
+import { Motion, spring } from 'react-motion'
 import styled, { css } from 'styled-components'
+
+import { ReactComponent as Cactus } from '../assets/cactus.svg'
+import debounce from '../helpers/debounce'
+import storybooks from '../storybook-config.json'
+import { CactusProvider, CactusThemeWidget } from './CactusProvider'
 
 interface MenuGroup {
   title: string

@@ -1,15 +1,16 @@
-import { border, fontSize } from '../helpers/theme'
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { keyPressAsClick } from '../helpers/a11y'
-import { margin, MarginProps } from 'styled-system'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import Pagination from '../Pagination/Pagination'
-import PrevNext from '../PrevNext/PrevNext'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import styled, { css, DefaultTheme, StyledComponent } from 'styled-components'
-import Table from '../Table/Table'
+import { margin, MarginProps } from 'styled-system'
+
+import { keyPressAsClick } from '../helpers/a11y'
+import { border, fontSize } from '../helpers/theme'
 import useId from '../helpers/useId'
+import Pagination from '../Pagination/Pagination'
+import PrevNext from '../PrevNext/PrevNext'
+import Table from '../Table/Table'
 
 interface DataGridContextType {
   addDataColumn: (dataColumn: DataColumn) => void

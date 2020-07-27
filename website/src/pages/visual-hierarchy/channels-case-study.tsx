@@ -1,11 +1,11 @@
 import * as React from 'react'
+import Helmet from 'react-helmet'
 
 import blfConfig1 from './blf-config-1.png'
 import blfConfig2 from './blf-config-2.png'
 import blfConfig3 from './blf-config-3.png'
 import blfConfigOld1 from './blf-config-old-1.png'
 import blfConfigOld2 from './blf-config-old-2.png'
-import Helmet from 'react-helmet'
 
 export default () => {
   return (

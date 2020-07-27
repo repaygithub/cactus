@@ -1,7 +1,8 @@
-import { Box, BoxProps } from '../Box/Box'
-import { flexbox, FlexboxProps } from 'styled-system'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
+import { flexbox, FlexboxProps } from 'styled-system'
+
+import { Box, BoxProps } from '../Box/Box'
 
 interface FlexBoxProps extends BoxProps, Omit<FlexboxProps, 'justifySelf'> {}
 

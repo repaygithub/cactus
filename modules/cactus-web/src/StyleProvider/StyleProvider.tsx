@@ -1,11 +1,11 @@
-import React from 'react'
-
-import * as styledComponents from 'styled-components'
-import { breakpointOrder, breakpoints } from '../helpers/constants'
-import { Omit } from '../types'
-import { textStyle } from '../helpers/theme'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
+import React from 'react'
+import * as styledComponents from 'styled-components'
+
+import { breakpointOrder, breakpoints } from '../helpers/constants'
+import { textStyle } from '../helpers/theme'
+import { Omit } from '../types'
 
 interface Env {
   NODE_ENV: string

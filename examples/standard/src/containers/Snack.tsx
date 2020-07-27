@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-
-import { I18nSection, I18nText } from '@repay/cactus-i18n'
 import { RouteComponentProps } from '@reach/router'
+import { I18nSection, I18nText } from '@repay/cactus-i18n'
+import React, { Component } from 'react'
 
 type SnackProps = RouteComponentProps<{ snack: string }>
 

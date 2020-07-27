@@ -1,10 +1,10 @@
-import React from 'react'
-
-import { margin, MarginProps } from 'styled-system'
-import { Omit } from '../types'
-import { omitMargins } from '../helpers/omit'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
+
+import { omitMargins } from '../helpers/omit'
+import { Omit } from '../types'
 
 interface LinkProps
   extends MarginProps,

@@ -1,8 +1,9 @@
+import cactusTheme, { TextStyleCollection } from '@repay/cactus-theme'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import Box from './Box'
-import cactusTheme, { TextStyleCollection } from '@repay/cactus-theme'
 import React from 'react'
+
+import Box from './Box'
 
 const positionOptions = {
   initial: 'initial',

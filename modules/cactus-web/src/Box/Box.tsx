@@ -1,3 +1,5 @@
+import { TextStyleCollection } from '@repay/cactus-theme'
+import styled from 'styled-components'
 import {
   border,
   BorderProps,
@@ -17,9 +19,8 @@ import {
   typography,
   TypographyProps,
 } from 'styled-system'
+
 import { textStyle } from '../helpers/theme'
-import { TextStyleCollection } from '@repay/cactus-theme'
-import styled from 'styled-components'
 
 export interface BoxProps
   extends PositionProps,

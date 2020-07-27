@@ -1,7 +1,8 @@
-import * as React from 'react'
-import { cleanup, fireEvent, render } from '@testing-library/react'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import cactusTheme from '@repay/cactus-theme'
+import { cleanup, fireEvent, render } from '@testing-library/react'
+import * as React from 'react'
+
+import { StyleProvider } from '../StyleProvider/StyleProvider'
 import FileInputField from './FileInputField'
 
 afterEach(cleanup)

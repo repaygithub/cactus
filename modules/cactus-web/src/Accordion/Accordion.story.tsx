@@ -1,14 +1,14 @@
-import React, { Fragment, useCallback, useState } from 'react'
-
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { number, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import Accordion, { AccordionVariants } from './Accordion'
+import React, { Fragment, useCallback, useState } from 'react'
+
 import Box from '../Box/Box'
 import Flex from '../Flex/Flex'
 import IconButton from '../IconButton/IconButton'
 import Text from '../Text/Text'
 import TextButton from '../TextButton/TextButton'
+import Accordion, { AccordionVariants } from './Accordion'
 
 interface ContentManagerState {
   [group: number]: number

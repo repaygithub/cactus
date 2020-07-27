@@ -1,8 +1,8 @@
-import * as React from 'react'
-
-import { addDecorator, addParameters, configure } from '@storybook/react'
 import { StyleProvider } from '@repay/cactus-web'
 import { withKnobs } from '@storybook/addon-knobs'
+import { addDecorator, addParameters, configure } from '@storybook/react'
+import * as React from 'react'
+
 import storybookTheme from './theme'
 
 addParameters({

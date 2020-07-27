@@ -1,6 +1,7 @@
+import { queryByLabelText, queryByText } from '@testing-library/testcafe'
 import * as path from 'path'
 import { ClientFunction } from 'testcafe'
-import { queryByLabelText, queryByText } from '@testing-library/testcafe'
+
 import { RulesData } from '../types'
 import makeActions from './helpers/actions'
 import startStaticServer from './helpers/static-server'

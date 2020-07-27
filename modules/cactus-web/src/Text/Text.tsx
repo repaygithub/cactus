@@ -1,3 +1,5 @@
+import { TextStyleCollection } from '@repay/cactus-theme'
+import styled from 'styled-components'
 import {
   color,
   ColorProps,
@@ -14,9 +16,8 @@ import {
   textAlign,
   TextAlignProps,
 } from 'styled-system'
+
 import { textStyle } from '../helpers/theme'
-import { TextStyleCollection } from '@repay/cactus-theme'
-import styled from 'styled-components'
 
 interface TextProps
   extends SpaceProps,
