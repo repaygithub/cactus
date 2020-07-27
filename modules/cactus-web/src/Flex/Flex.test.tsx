@@ -20,9 +20,14 @@ describe('component: Flex', () => {
   test('should accept flex props', () => {
     const { container } = render(
       <StyleProvider>
-        <Flex justifyContent="end" alignItems="center" flexWrap="nowrap" flexDirection="column">
-          <Flex alignSelf="end" />
-          <Flex justifySelf="center" />
+        <Flex
+          justifyContent="flex-end"
+          alignItems="center"
+          flexWrap="nowrap"
+          flexDirection="column"
+        >
+          <Flex alignSelf="flex-end" />
+          <Flex />
         </Flex>
       </StyleProvider>
     )
