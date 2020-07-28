@@ -24,8 +24,8 @@
     "react-dom": "^16.10.2"
   },
   "devDependencies": {
-    "@repay/babel-preset": "^0.3.0",
-    "@repay/scripts": "^1.0.0",
+    "@repay/babel-preset": "^1.0.0",
+    "@repay/scripts": "^2.0.0",
     "@testing-library/testcafe": "^4.1.0",
     "@types/reach__router": "^1.2.4",
     "@types/react": "^16.9.5",
