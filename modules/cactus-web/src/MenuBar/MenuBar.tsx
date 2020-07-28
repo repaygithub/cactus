@@ -4,9 +4,10 @@ import {
   NavigationChevronRight,
   NavigationChevronUp,
 } from '@repay/cactus-icons'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProps } from 'styled-components'
 
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { border, boxShadow, radius } from '../helpers/theme'
@@ -227,6 +228,12 @@ const ScrollButton = styled.div.attrs({ 'aria-hidden': true })<{ show?: boolean 
   }
 `
 
+const calcPadding = (props: ThemeProps<CactusTheme>) => {
+  const borderOffset = props.theme.border === 'thick' ? 2 : 1
+  const horizontal = 8 + borderOffset
+  return `${20 + borderOffset}px ${horizontal}px 20px ${horizontal}px`
+}
+
 const Nav = styled.nav`
   width: 100%;
   display: flex;
@@ -238,8 +245,7 @@ const Nav = styled.nav`
 
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
-    padding: 20px 8px;
-    border: ${(p) => border(p.theme, 'transparent')};
+    padding: ${calcPadding};
     border-bottom: ${(p) => border(p.theme, 'lightContrast')};
     &:hover,
     &[aria-expanded='true'] {
@@ -248,6 +254,7 @@ const Nav = styled.nav`
     }
     &:focus {
       border: ${(p) => border(p.theme, 'callToAction')};
+      padding: 20px 8px;
     }
     &[aria-current='true'] {
       font-weight: bold;

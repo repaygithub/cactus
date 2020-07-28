@@ -83,8 +83,7 @@ exports[`component: MenuBar typechecks 1`] = `
 
 .c0 [role='menubar'] > li > [role='menuitem'] {
   white-space: nowrap;
-  padding: 20px 8px;
-  border: 1px solid transparent;
+  padding: 21px 9px 20px 9px;
   border-bottom: 1px solid hsl(200,29%,90%);
 }
 
@@ -96,6 +95,7 @@ exports[`component: MenuBar typechecks 1`] = `
 
 .c0 [role='menubar'] > li > [role='menuitem']:focus {
   border: 1px solid hsl(200,96%,35%);
+  padding: 20px 8px;
 }
 
 .c0 [role='menubar'] > li > [role='menuitem'][aria-current='true'] {
