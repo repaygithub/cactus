@@ -100,6 +100,7 @@ export const ConfirmModal = styled(ConfirmModalBase)`
     }
   }
   .children {
+    word-break: break-word;
     text-align: center;
     width: 100%;
     > * {
