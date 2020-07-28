@@ -5,7 +5,7 @@ import {
   NotificationError,
   StatusCheck,
 } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import styled, {
@@ -563,9 +563,22 @@ const FileInputBase = (props: FileInputProps) => {
   )
 }
 
+const shapeMap: Record<Shape, string> = {
+  square: `
+    border-radius: 1px;
+  `,
+  intermediate: `
+    border-radius: 4px;
+  `,
+  round: `
+    border-radius: 8px;
+  `,
+}
+const getShape = (shape: Shape) => shapeMap[shape]
+
 export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
-  border-radius: 8px;
+  ${(p) => getShape(p.theme.shape)}
   border: ${(p) => (p.disabled ? 'none' : '2px dotted')};
   border-color: ${(p) => p.theme.colors.darkestContrast};
   min-width: 300px;
