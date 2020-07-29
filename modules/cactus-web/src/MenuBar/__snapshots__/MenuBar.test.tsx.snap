@@ -9,7 +9,7 @@ exports[`component: MenuBar typechecks 1`] = `
   vertical-align: middle;
 }
 
-.c12 {
+.c13 {
   vertical-align: middle;
 }
 
@@ -56,6 +56,40 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 .c1 svg {
+  width: 18px;
+  height: 18px;
+  margin: 8px;
+}
+
+.c12 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: center;
+  outline: none;
+}
+
+.c12:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c12 svg {
   width: 18px;
   height: 18px;
   margin: 8px;
@@ -508,10 +542,10 @@ exports[`component: MenuBar typechecks 1`] = `
     </ul>
     <div
       aria-hidden="true"
-      class="c1"
+      class="c12"
     >
       <svg
-        class="c12"
+        class="c13"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

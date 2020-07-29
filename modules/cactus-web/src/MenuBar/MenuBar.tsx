@@ -139,7 +139,6 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
         ref={menuRef}
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
-        top={scroll.top}
       >
         {children}
       </MenuList>
@@ -184,7 +183,6 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
         ref={menuRef}
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
-        left={scroll.left}
       >
         {children}
       </MenuList>
@@ -326,8 +324,8 @@ const MenuList = styled.ul<{ top?: number; left?: number }>`
 
   & > li > [role='menuitem'] {
     position: relative;
-    top: ${(p) => p.top || 0}px;
-    left: ${(p) => p.left || 0}px;
+    top: 0px;
+    left: 0px;
   }
 `
 

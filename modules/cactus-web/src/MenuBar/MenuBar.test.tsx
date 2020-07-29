@@ -5,10 +5,11 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import MenuBar from './MenuBar'
 
+// @ts-ignore
 global.MutationObserver = class {
-  constructor(callback) {}
+  constructor(callback: any) {}
   disconnect() {}
-  observe(element, initObject) {}
+  observe(element: any, initObject: any) {}
 }
 
 describe('component: MenuBar', () => {
