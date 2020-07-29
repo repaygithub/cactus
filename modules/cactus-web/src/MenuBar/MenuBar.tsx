@@ -13,6 +13,7 @@ import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { border, boxShadow, radius } from '../helpers/theme'
 import { Omit } from '../types'
 import {
+  focusMenu,
   ITEM_SELECTOR,
   menuKeyHandler,
   useScrollButtons,
@@ -118,7 +119,7 @@ MenuBarList.propTypes = {
 }
 
 const IconWrapper = styled.div`
-  flex-shrink: 0;
+  flex-shrink: 1;
 `
 
 const TextWrapper = styled.div`
@@ -136,6 +137,7 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
         role="menu"
         aria-orientation="vertical"
         ref={menuRef}
+        onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
         top={scroll.top}
       >
@@ -148,30 +150,31 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
   )
 }
 
-const enterNavFocus = (event: React.FocusEvent<HTMLElement>) => {
-  if (event.currentTarget === event.target) {
-    const firstItem = event.target.querySelector(ITEM_SELECTOR)
-    if (firstItem) {
-      ;(firstItem as HTMLElement).focus()
-    }
-  }
-  // TODO Doesn't work quite right on IE, but it's close enough; if I end up adding a context
-  // for the sidebar styling, I may be able to fix it with an alternate implementation.
-  if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-    event.currentTarget.tabIndex = -1
-  }
-}
-
-const exitNavFocus = (event: React.FocusEvent<HTMLElement>) => {
-  if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-    event.currentTarget.tabIndex = 0
-  }
-}
-
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
-  const [scroll, menuRef] = useScrollButtons('horizontal', true)
+  const [scroll, menuRef, menu] = useScrollButtons('horizontal', true)
+  React.useEffect(() => {
+    if (menu) {
+      // There doesn't seem to be any way in React to consistently identify the
+      // first descendent of a particular type, so instead we'll use this event
+      // to ensure that even if elements are dynamically added or removed, the
+      // first menuitem will always get tab focus for the whole component.
+      const mutationCallback = () => {
+        const menuItems = menu.querySelectorAll(ITEM_SELECTOR)
+        if (menuItems.length) {
+          ;(menuItems[0] as HTMLElement).tabIndex = 0
+          for (let i = 1; i < menuItems.length; i++) {
+            ;(menuItems[i] as HTMLElement).tabIndex = -1
+          }
+        }
+      }
+      const observer = new MutationObserver(mutationCallback)
+      observer.observe(menu, { childList: true, subtree: true })
+      mutationCallback()
+      return () => observer.disconnect()
+    }
+  }, [menu])
   return (
-    <Nav {...props} ref={ref} tabIndex={0} onFocus={enterNavFocus} onBlur={exitNavFocus}>
+    <Nav {...props} ref={ref} tabIndex={-1}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
@@ -179,6 +182,7 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
         role="menubar"
         aria-orientation="horizontal"
         ref={menuRef}
+        onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
         left={scroll.left}
       >
@@ -240,6 +244,7 @@ const Nav = styled.nav`
   flex-flow: row nowrap;
   align-items: stretch;
   position: relative;
+  outline: none;
   ${(p) => p.theme.textStyles.small};
   ${(p) => p.theme.colorStyles.standard};
 
@@ -326,7 +331,7 @@ const MenuList = styled.ul<{ top?: number; left?: number }>`
   }
 `
 
-const MenuButton = styled.button.attrs({ tabIndex: -1, role: 'menuitem' })`
+const MenuButton = styled.button.attrs({ role: 'menuitem' })`
   cursor: pointer;
   border: none;
   outline: none;

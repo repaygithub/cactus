@@ -18,9 +18,9 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 .c6 {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
 }
 
 .c5 {
@@ -75,6 +75,7 @@ exports[`component: MenuBar typechecks 1`] = `
   -ms-flex-align: stretch;
   align-items: stretch;
   position: relative;
+  outline: none;
   font-size: 15px;
   line-height: 1.6;
   background-color: hsl(0,0%,100%);
@@ -272,7 +273,7 @@ exports[`component: MenuBar typechecks 1`] = `
   <nav
     aria-label="Menu of Main-ness"
     class="c0"
-    tabindex="0"
+    tabindex="-1"
   >
     <div
       aria-hidden="true"
@@ -304,7 +305,7 @@ exports[`component: MenuBar typechecks 1`] = `
           aria-haspopup="menu"
           class="c4"
           role="menuitem"
-          tabindex="-1"
+          tabindex="0"
         >
           <div
             class="c5"

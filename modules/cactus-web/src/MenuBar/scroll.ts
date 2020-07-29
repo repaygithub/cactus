@@ -225,12 +225,14 @@ interface MenuWithScroll extends HTMLUListElement {
   scrollToMenuItem?: (a: HTMLElement[], b: number) => void
 }
 
-type MenuRef = (m: MenuWithScroll | null) => void
+type MenuElement = MenuWithScroll | null
 
-type ScrollButtonHook = (o: Orientation, e: boolean) => [Scroll, MenuRef]
+type MenuRef = (m: MenuElement) => void
+
+type ScrollButtonHook = (o: Orientation, e: boolean) => [Scroll, MenuRef, MenuElement]
 
 export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
-  const [menu, menuRef] = React.useState<MenuWithScroll | null>(null)
+  const [menu, menuRef] = React.useState<MenuElement>(null)
   const [scroll, setScroll] = React.useState<Scroll>(DEFAULT_SCROLL)
   React.useEffect(() => {
     if (!expanded) {
@@ -346,5 +348,15 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
       return () => observer.unobserve()
     }
   }, [expanded, menu, orientation])
-  return [scroll, menuRef]
+  return [scroll, menuRef, menu]
+}
+
+export const focusMenu = (event: React.FocusEvent<HTMLElement>) => {
+  if (event.target.matches(ITEM_SELECTOR)) {
+    const menu = event.currentTarget as MenuWithScroll
+    if (menu.scrollToMenuItem) {
+      const items = getMenuItems(menu)
+      menu.scrollToMenuItem(items, items.indexOf(event.target))
+    }
+  }
 }

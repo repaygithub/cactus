@@ -1,4 +1,4 @@
-import { boolean, number, text } from '@storybook/addon-knobs'
+import { number } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 

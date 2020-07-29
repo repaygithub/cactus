@@ -5,6 +5,12 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import MenuBar from './MenuBar'
 
+global.MutationObserver = class {
+  constructor(callback) {}
+  disconnect() {}
+  observe(element, initObject) {}
+}
+
 describe('component: MenuBar', () => {
   test('typechecks', () => {
     const Menu = () => {
@@ -57,10 +63,7 @@ describe('component: MenuBar', () => {
         </MenuBar>
       </StyleProvider>
     )
-    const nav = getByLabelText('Menu of Main-ness')
-    expect(nav).toHaveAttribute('tabIndex', '0')
     userEvent.tab()
-    expect(nav).toHaveAttribute('tabIndex', '-1')
     expect(getByText('First')).toHaveFocus()
 
     /* NOTE
