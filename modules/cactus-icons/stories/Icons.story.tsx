@@ -36,9 +36,11 @@ storiesOf('Icons', module)
           gridGap: '16px',
         }}
       >
-        {Object.entries(icons).map(([name, Icon]) => (
-          <Icon key={name} iconSize={size} />
-        ))}
+        {Object.entries(icons)
+          .filter(([name]) => name !== 'iconSizes')
+          .map(([name, Icon]) => (
+            <Icon key={name} iconSize={size} />
+          ))}
       </div>
     )
   })
