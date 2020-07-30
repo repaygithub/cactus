@@ -52,7 +52,7 @@
     "unist-util-visit": "^2.0.3"
   },
   "dependencies": {
-    "@reach/rect": "^0.10.4",
+    "@reach/rect": "^0.10.5",
     "@repay/cactus-icons": "^1.0.0",
     "@repay/cactus-theme": "^1.0.0",
     "@repay/cactus-web": "^1.0.0",
