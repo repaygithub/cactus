@@ -339,6 +339,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 
 .c1 .children {
   overflow-wrap: break-word;
+  word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
@@ -814,6 +815,7 @@ exports[`Modal variant is danger snapshot 1`] = `
 
 .c1 .children {
   overflow-wrap: break-word;
+  word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
@@ -1256,6 +1258,7 @@ exports[`Modal variant is success snapshot 1`] = `
 
 .c1 .children {
   overflow-wrap: break-word;
+  word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
@@ -1676,6 +1679,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 
 .c1 .children {
   overflow-wrap: break-word;
+  word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
