@@ -3,7 +3,7 @@
 An application framework and design system built in React at [REPAY](https://github.com/repaygithub).
 
 
-## Getting Stared
+## Getting Started
 To review the documentation for `@repay/create-ui` visit [this link](../Getting-Started/README.md)
 
 ## Design System
