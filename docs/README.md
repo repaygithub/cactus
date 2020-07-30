@@ -2,6 +2,10 @@
 
 An application framework and design system built in React at [REPAY](https://github.com/repaygithub).
 
+
+## Getting Stared
+To review the documentation for `@repay/create-ui` visit [this link](../Getting-Started/README.md)
+
 ## Design System
 
 The Cactus Design System is built to aid designers and developers to make decisions in layout and component usage in applications. The goal is to create better applications by making clear, consistent, intuitive, and reusable patterns. These patterns are then turned into distributable modules for developers to use directly.
