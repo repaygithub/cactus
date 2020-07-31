@@ -13,11 +13,6 @@
 - fix(cactus-web): Fix space-evenly in IE, define which values are acceptable for Flex props [3f85fa8](https://github.com/repaygithub/cactus/commit/3f85fa8568359a27d9e19b40f87e21b62b7e3cf8)
 - feat(cactus-web): decrease font size for header text styles when on a mobile device [06e6beb](https://github.com/repaygithub/cactus/commit/06e6beb9171e50a3e8f4c5199087ffebe34816a4)
 - feat(cactus-web): ensure all font weights match the style guide [e4aa1bc](https://github.com/repaygithub/cactus/commit/e4aa1bcd9d44e2c0e3340a5a5cb0edb660256bfb)
-- feat(cactus-web): add tiny to fontSizes in theme and reference fontSizes directly from textStyles [6a1b812](https://github.com/repaygithub/cactus/commit/6a1b812693bf9dea139feb4b50317593504a752c)
-  - 🧨 BREAKING: The fontSizes array on the theme has changed to include the "tiny" size.  All sizes
-have shifted up one index value in the array.
-
-CACTUS-296
 - feat(cactus-web): alter line heights to unitless values that match style guide [3364d88](https://github.com/repaygithub/cactus/commit/3364d88675b1bb843d460ae057edd101d72b8a85)
 - refactor(cactus-web): Standardize box shadows using boxShadow helper [19d9921](https://github.com/repaygithub/cactus/commit/19d9921c6c4fd1b7793f487915b24ea70d98c7e2)
 - fix(cactus-web): change FileInput error/disabled border thickness to respond to theme settings [be302ab](https://github.com/repaygithub/cactus/commit/be302ab3896786c885a6c3bf338faa4d876093cd)
@@ -44,6 +39,8 @@ CACTUS-296
 - chore(cactus-web): Revert change to Pagination [09043c1](https://github.com/repaygithub/cactus/commit/09043c11be74ddf3d07e758a3350d7d62fe6e72e)
 - feat(cactus-web): ensure better usage of colorstyles from the theme on the components [f035fc0](https://github.com/repaygithub/cactus/commit/f035fc077d9c41b610bcc2ae0eb410a993112a96)
 - chore(cactus-web): update changelog [c25fa53](https://github.com/repaygithub/cactus/commit/c25fa533964ca06b59539bb4426abc0b6ee43afd)
+- style(cactus-theme): changed cta opacity values, implemented colorStyles in some components [f83d1fd](https://github.com/repaygithub/cactus/commit/f83d1fd60681e8dd37da149b8f0dc223dbbdaded)
+- feat(cactus-web): added warning and succes colors to theme [0453b8c](https://github.com/repaygithub/cactus/commit/0453b8c41aa55e8e72580b525e8c51ea36a268a4)
 
 ## [@repay/cactus-icons@v1.0.1](https://github.com/repaygithub/cactus/commit/f9dfc97f378caa22cb4e359394d302e504383c5a)
 
