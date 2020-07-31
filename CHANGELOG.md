@@ -1,5 +1,10 @@
 # Changelog
 
+## [@repay/cactus-theme@v1.0.1](https://github.com/repaygithub/cactus/commit/821ebb40329a772512398378266eefd8a6e2cee6)
+
+- feat(cactus-theme): add mobile font sizes and text styles to the theme [9a69281](https://github.com/repaygithub/cactus/commit/9a692811170e512c9e35dc3e1fc3df9893772328)
+- chore(cactus-theme): update changelog [446a829](https://github.com/repaygithub/cactus/commit/446a8298dd3d0cd25faff61e266562555ab7b585)
+
 ## [@repay/cactus-web@v0.9.1](https://github.com/repaygithub/cactus/commit/05c7e15a8169c97f3d1246c01fdc4f0284d5c31c)
 
 - feat(cactus-web): rework disabled styles for FileInput [eb4a728](https://github.com/repaygithub/cactus/commit/eb4a728fc54ab1fd50c3c251cad7b421315a6a5e)
