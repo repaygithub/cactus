@@ -57,7 +57,7 @@
     "unist-util-visit": "^2.0.0"
   },
   "dependencies": {
-    "@repay/cactus-icons": "^0.6.1",
+    "@repay/cactus-icons": "^1.0.0",
     "@repay/cactus-theme": "^1.0.0",
     "@repay/cactus-web": "^0.9.1",
     "normalize.css": "^8.0.1",
