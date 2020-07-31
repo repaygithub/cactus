@@ -1,5 +1,12 @@
 # Changelog
 
+## [@repay/cactus-icons@v1.0.1](https://github.com/repaygithub/cactus/commit/f9dfc97f378caa22cb4e359394d302e504383c5a)
+
+- chore(cactus-icons): upgrade @repay/cactus-theme [1ae4a04](https://github.com/repaygithub/cactus/commit/1ae4a041044a6bc0b8e213be9ee9edd40254b0da)
+- fix(cactus-icons): fix bug with icons in storybook [fcce9dd](https://github.com/repaygithub/cactus/commit/fcce9dde6d6e5399b3f4a3ef1b92477f4d447e5b)
+- feat(cactus-icons): upgrade to Styled Components v5 -- peer dependency is now ^4.1.4 || ^5.0.0 [647225d](https://github.com/repaygithub/cactus/commit/647225dad08cc3218315ed32b1471ab523eee7f0)
+- fix(cactus-icons): fix bug with icons in storybook [7aba9ca](https://github.com/repaygithub/cactus/commit/7aba9ca4e0c5c9d176e1e3741fde31e2626e1603)
+
 ## [@repay/cactus-theme@v1.0.1](https://github.com/repaygithub/cactus/commit/821ebb40329a772512398378266eefd8a6e2cee6)
 
 - feat(cactus-theme): add tiny to fontSizes in theme and reference fontSizes directly from textStyles [6a1b812](https://github.com/repaygithub/cactus/commit/6a1b812693bf9dea139feb4b50317593504a752c)
