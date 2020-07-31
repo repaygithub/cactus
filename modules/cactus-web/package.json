@@ -98,7 +98,7 @@
     "@reach/tooltip": "0.10.4",
     "@reach/utils": "^0.10.4",
     "@reach/visually-hidden": "^0.10.4",
-    "@repay/cactus-icons": "^0.6.1",
+    "@repay/cactus-icons": "^1.0.0",
     "@repay/cactus-theme": "^1.0.0",
     "lodash": "^4.17.19",
     "react-live": "^2.2.2",
