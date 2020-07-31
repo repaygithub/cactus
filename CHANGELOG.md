@@ -1,5 +1,50 @@
 # Changelog
 
+## [@repay/cactus-web@v1.0.2](https://github.com/repaygithub/cactus/commit/8251b7529188ab2faa8f5cf58f1c4e2e6f53f667)
+
+- chore(cactus-web): upgrade @repay/cactus-icons [ddc1673](https://github.com/repaygithub/cactus/commit/ddc167382455ab12eec612596bbfdf63ac89b1c1)
+- chore(cactus-web): upgrade @repay/cactus-theme [9a8ef74](https://github.com/repaygithub/cactus/commit/9a8ef74363d464bcd5371333c34ed592a551c3b9)
+- fix(cactus-web): fix ConfirmModal text overflow [8c348c9](https://github.com/repaygithub/cactus/commit/8c348c99f4e4f0db1447038308d33a7dfd27c9f1)
+- fix(cactus-web): fixed text overfow on IE (again) [9a28839](https://github.com/repaygithub/cactus/commit/9a28839f04c384bb7d9cc6aca39ff3add86784da)
+- fix(cactus-web): change word-break to overflow-wrap [a1252bd](https://github.com/repaygithub/cactus/commit/a1252bd0a9752e76684956c82261dbc0790ff3ef)
+- fix(cactus-web): fix ConfirmModal text overflow [e400532](https://github.com/repaygithub/cactus/commit/e40053205fe542dc24ea383872eaaaff6d839686)
+- feat(cactus-web): upgrade to Styled Components v5 -- peer dependency is now  ^4.1.4 || ^5.0.0 [c90a616](https://github.com/repaygithub/cactus/commit/c90a6163e0a35c5f561768284dcc310e95f0cf34)
+- feat(cactus-web): make FileInput border shape follow the setting in the theme [8bae654](https://github.com/repaygithub/cactus/commit/8bae6540adb990fcb18ad57fac99029cd0eafa41)
+- fix(cactus-web): Fix space-evenly in IE, define which values are acceptable for Flex props [3f85fa8](https://github.com/repaygithub/cactus/commit/3f85fa8568359a27d9e19b40f87e21b62b7e3cf8)
+- feat(cactus-web): decrease font size for header text styles when on a mobile device [06e6beb](https://github.com/repaygithub/cactus/commit/06e6beb9171e50a3e8f4c5199087ffebe34816a4)
+- feat(cactus-web): ensure all font weights match the style guide [e4aa1bc](https://github.com/repaygithub/cactus/commit/e4aa1bcd9d44e2c0e3340a5a5cb0edb660256bfb)
+- feat(cactus-web): add tiny to fontSizes in theme and reference fontSizes directly from textStyles [6a1b812](https://github.com/repaygithub/cactus/commit/6a1b812693bf9dea139feb4b50317593504a752c)
+  - 🧨 BREAKING: The fontSizes array on the theme has changed to include the "tiny" size.  All sizes
+have shifted up one index value in the array.
+
+CACTUS-296
+- feat(cactus-web): alter line heights to unitless values that match style guide [3364d88](https://github.com/repaygithub/cactus/commit/3364d88675b1bb843d460ae057edd101d72b8a85)
+- refactor(cactus-web): Standardize box shadows using boxShadow helper [19d9921](https://github.com/repaygithub/cactus/commit/19d9921c6c4fd1b7793f487915b24ea70d98c7e2)
+- fix(cactus-web): change FileInput error/disabled border thickness to respond to theme settings [be302ab](https://github.com/repaygithub/cactus/commit/be302ab3896786c885a6c3bf338faa4d876093cd)
+- refactor(cactus-web): Standardize box shadows using boxShadow helper [cffaedf](https://github.com/repaygithub/cactus/commit/cffaedf9c95a6ea16c46b6f5fe3d7917ea4c0433)
+- fix(cactus-web): Add overflow: visible to HeaderButton for IE [4e92332](https://github.com/repaygithub/cactus/commit/4e923327ad63a5a06bb9284d0605c59c7e38aa8b)
+- fix(cactus-web): removed min-width in textarea for tiny screens [8a094eb](https://github.com/repaygithub/cactus/commit/8a094eb77c6931ae0500ff2e52a52448b3050998)
+- refactor(cactus-web): position: relative the button instead of putting it in a div...duh [47d900a](https://github.com/repaygithub/cactus/commit/47d900a8835ca89faab2195edc45284a01a7e45f)
+- feat(cactus-web): Apply our own focus styles to header buttons [604ecf9](https://github.com/repaygithub/cactus/commit/604ecf923307e28e4746a381f597cad38391ee75)
+- fix(cactus-web): implemented colorStyles in other components. Refctor avatar Component [f182290](https://github.com/repaygithub/cactus/commit/f182290ab946306c160d34774a7aa3892adfcdde)
+- fix(cactus-web): Make pagination & sort options optional, fix cursor pointer area [66026fe](https://github.com/repaygithub/cactus/commit/66026feaf31f1af568533161e70b22cb739b4a40)
+- fix(cactus-web): Allow DataGrid to be rendered inside a display: block element [4ac860e](https://github.com/repaygithub/cactus/commit/4ac860ef1369b9ba90b361c4a242152f76ee9439)
+- fix(cactus-web): Fix keyboard event handler on page size selection. Add prop type for column title [e7993c3](https://github.com/repaygithub/cactus/commit/e7993c3bc5c4a6ae48fe95da35255ebfbd4883f7)
+- chore(cactus-web): Fix storybook so disableNext doesn't get passed unless it's checked [8f91573](https://github.com/repaygithub/cactus/commit/8f9157345e3a678510380140a32832a49f70fb6d)
+- fix(cactus-web): Use button for sortable headers so keyboard events work [841ede7](https://github.com/repaygithub/cactus/commit/841ede74a5b78e31b4f14bbd81e16e5fb01d4f27)
+- fix(cactus-web): Don't call onSort on first render. Fix bug if no sortOptions are provided [9c1d3e2](https://github.com/repaygithub/cactus/commit/9c1d3e21be27217c0c2b712056d525a64538cea7)
+- docs(cactus-web): Update DataGrid docs [fd87511](https://github.com/repaygithub/cactus/commit/fd875113b13919fc2b7befa8157baeb71e816c2a)
+- feat(cactus-web): Allow title on DataGrid.Column [ff816b0](https://github.com/repaygithub/cactus/commit/ff816b053540691f0c71754a38efa7426881c88f)
+- fix(cactus-web): fix avaColor background and disabled status [3579a22](https://github.com/repaygithub/cactus/commit/3579a229694bb51eeb786bf6b8914211f24b030a)
+- fix(cactus-web): ensure that focus outline for Button shows up in IE11 [8853790](https://github.com/repaygithub/cactus/commit/88537904d4a2265502056ebf659e3844545f8ed6)
+- docs(cactus-web): Add DataGrid docs [d94a9e9](https://github.com/repaygithub/cactus/commit/d94a9e97510163bd00fc51ac6caa6ca437d1f894)
+- refactor(cactus-web): Finalize storybook & propTypes, remove DataGrid from exports [79eac81](https://github.com/repaygithub/cactus/commit/79eac81c96f626ac83b98dd89a1079f6bc1a394c)
+- refactor(cactus-web): Add prop-types, update how column data is stored, fix IE issue [5216bed](https://github.com/repaygithub/cactus/commit/5216bed700c2c0438934dd79f4c4cc76281ee50c)
+- fix(cactus-web): fixed issues with width and overlow in IE11. Other theme changes [4893835](https://github.com/repaygithub/cactus/commit/48938353edb6e22466b35954169904bcdbe812db)
+- chore(cactus-web): Revert change to Pagination [09043c1](https://github.com/repaygithub/cactus/commit/09043c11be74ddf3d07e758a3350d7d62fe6e72e)
+- feat(cactus-web): ensure better usage of colorstyles from the theme on the components [f035fc0](https://github.com/repaygithub/cactus/commit/f035fc077d9c41b610bcc2ae0eb410a993112a96)
+- chore(cactus-web): update changelog [c25fa53](https://github.com/repaygithub/cactus/commit/c25fa533964ca06b59539bb4426abc0b6ee43afd)
+
 ## [@repay/cactus-icons@v1.0.1](https://github.com/repaygithub/cactus/commit/f9dfc97f378caa22cb4e359394d302e504383c5a)
 
 - chore(cactus-icons): upgrade @repay/cactus-theme [1ae4a04](https://github.com/repaygithub/cactus/commit/1ae4a041044a6bc0b8e213be9ee9edd40254b0da)
