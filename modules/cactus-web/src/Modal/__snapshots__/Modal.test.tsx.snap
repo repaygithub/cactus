@@ -2,7 +2,11 @@
 
 exports[`Modal is closed when isOpen=false snapshot 1`] = `
 <body>
-  <div />
+  @media screen and (min-width:1024px) {
+
+}
+
+<div />
 </body>
 `;
 

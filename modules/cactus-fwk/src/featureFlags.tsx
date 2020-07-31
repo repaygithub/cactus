@@ -17,7 +17,7 @@ const useFeatureFlags = <FeatureFlags extends string[]>(...features: FeatureFlag
   return result
 }
 
-const withFeatureFlags = <FeatureFlags extends string[], Props extends any>(
+const withFeatureFlags = <FeatureFlags extends string[], Props extends object>(
   features: FeatureFlags,
   Component: ComponentType<Props>
 ) => {
@@ -34,7 +34,7 @@ const withFeatureFlags = <FeatureFlags extends string[], Props extends any>(
             flags[key] = Boolean(featureFlags[key])
           }
         }
-        let propsWithFlags = { ...props, ...flags } as Props
+        let propsWithFlags = { ...props, ...flags } as React.PropsWithChildren<Props>
         return <Component {...propsWithFlags} />
       }}
     </FeatureFlagContext.Consumer>

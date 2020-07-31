@@ -35,7 +35,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   font-size: 16px;
 }
 
-.c2 .c10 {
+.c2 .sc-qYSYK {
   margin-top: 4px;
 }
 
@@ -130,7 +130,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="c7"
+        class="sc-fzpdbB c7"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

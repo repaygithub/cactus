@@ -7,7 +7,7 @@ import Text, { Span } from '../../components/Text'
 import ColumnImage from '../design-system/grid-columns.png'
 import GridImage from '../design-system/grid-numbered.png'
 
-interface ShadowBoxProps extends React.ComponentPropsWithRef<typeof Flex> {
+type ShadowBoxProps = React.ComponentPropsWithRef<typeof Flex> & {
   shadow: string
 }
 

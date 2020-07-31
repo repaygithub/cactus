@@ -196,22 +196,25 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
 
 Pagination.displayName = 'Pagination'
 
-//@ts-ignore
 Pagination.propTypes = {
-  pageCount: function (props: PaginationProps, propName, componentName) {
+  pageCount: function (props: Record<string, any>, propName, componentName) {
     const pageCount = parseInt(props.pageCount as any)
     if (pageCount < 1 || pageCount !== parseFloat(props.pageCount as any)) {
       return new Error('Prop `pageCount` must be a positive integer')
     }
+
+    return null
   },
-  currentPage: function (props: PaginationProps, propName, componentName) {
+  currentPage: function (props: Record<string, any>, propName, componentName) {
     const pageCount = parseInt(props.pageCount as any)
     const current = parseInt(props.currentPage as any)
     if (current < 1 || current > pageCount || current !== parseFloat(props.currentPage as any)) {
       return new Error('Prop `currentPage` must be an integer in the range [1, `pageCount`]')
     }
+
+    return null
   },
-  onPageChange: function (props: PaginationProps, propName, componentName) {
+  onPageChange: function (props: Record<string, any>, propName, componentName) {
     if (!props.onPageChange) {
       if (!props.linkAs) {
         return new Error('Either `linkAs` OR `onPageChange` prop is required')
@@ -219,8 +222,10 @@ Pagination.propTypes = {
     } else if (typeof props.onPageChange !== 'function') {
       return new Error('Prop `onPageChange` must be a function')
     }
+
+    return null
   },
-  linkAs: PropTypes.elementType,
+  linkAs: PropTypes.elementType as PropTypes.Requireable<React.ComponentType<PageLinkProps>>,
   label: PropTypes.string.isRequired,
   currentPageLabel: PropTypes.string.isRequired,
   prevPageLabel: PropTypes.string.isRequired,

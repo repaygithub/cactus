@@ -21,7 +21,8 @@
     "@repay/cactus-theme": "^0.5.0",
     "@repay/cactus-web": "^0.9.1",
     "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "react-dom": "^16.10.2",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@repay/babel-preset": "^1.0.0",
@@ -30,11 +31,12 @@
     "@types/reach__router": "^1.2.4",
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.2",
+    "@types/styled-components": "^5.1.1",
     "commander": "^5.1.0",
     "dotenv": "^8.2.0",
     "prop-types": "^15.7.2",
     "testcafe": "^1.8.4",
     "testcafe-browser-provider-browserstack": "^1.12.0",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.7"
   }
 }

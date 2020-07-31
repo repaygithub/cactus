@@ -1,16 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Card should support margin space props 1`] = `
-.c2 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c2 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
 .c1 {
   box-sizing: border-box;
   margin: 4px;
@@ -77,47 +67,7 @@ exports[`component: Card snapshot 1`] = `
 
 exports[`component: Card with theme customization should have 1px border radius 1`] = `
 <DocumentFragment>
-  .c2 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c2 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c3 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c3 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c4 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c4 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c5 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c5 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c1 {
+  .c1 {
   box-sizing: border-box;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
@@ -148,37 +98,7 @@ exports[`component: Card with theme customization should have 1px border radius 
 
 exports[`component: Card with theme customization should have 4px border radius 1`] = `
 <DocumentFragment>
-  .c2 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c2 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c3 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c3 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c4 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c4 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c1 {
+  .c1 {
   box-sizing: border-box;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
@@ -209,27 +129,7 @@ exports[`component: Card with theme customization should have 4px border radius 
 
 exports[`component: Card with theme customization should have no box shadow & 2px borders 1`] = `
 <DocumentFragment>
-  .c2 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c2 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c3 > .c0 {
-  padding: 24px;
-  color: pink;
-}
-
-.c3 > .c0 > .c0 {
-  padding: 32px;
-  color: blue;
-}
-
-.c1 {
+  .c1 {
   box-sizing: border-box;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);

@@ -98,6 +98,10 @@ exports[`component: SplitButton snapshot 1`] = `
   }
 }
 
+@media screen and (min-width:1024px) {
+
+}
+
 <div>
   <div
     class="c0"
@@ -205,36 +209,6 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   border-color: hsl(200,96%,35%);
 }
 
-.c7 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c7[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c8 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c8[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c9 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c9[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
 .c0 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -261,6 +235,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
     font-size: 18px;
     line-height: 1.5;
   }
+}
+
+@media screen and (min-width:1024px) {
+
 }
 
 <div>
@@ -370,36 +348,6 @@ exports[`component: SplitButton with theme customization should have 2px borders
   border-color: hsl(200,96%,35%);
 }
 
-.c7 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c7[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c8 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c8[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c9 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c9[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
 .c0 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -426,6 +374,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
     font-size: 18px;
     line-height: 1.5;
   }
+}
+
+@media screen and (min-width:1024px) {
+
 }
 
 <div>
@@ -508,36 +460,6 @@ exports[`component: SplitButton with theme customization should have intermediat
   border-color: hsl(200,96%,35%);
 }
 
-.c7 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c7[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c8 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c8[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c9 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c9[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
 .c4 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -591,6 +513,10 @@ exports[`component: SplitButton with theme customization should have intermediat
     font-size: 18px;
     line-height: 1.5;
   }
+}
+
+@media screen and (min-width:1024px) {
+
 }
 
 <div>
@@ -673,26 +599,6 @@ exports[`component: SplitButton with theme customization should have square shap
   border-color: hsl(200,96%,35%);
 }
 
-.c7 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c7[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
-.c8 .c5 {
-  width: 10px;
-  height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c8[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
 .c4 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -746,6 +652,10 @@ exports[`component: SplitButton with theme customization should have square shap
     font-size: 18px;
     line-height: 1.5;
   }
+}
+
+@media screen and (min-width:1024px) {
+
 }
 
 <div>

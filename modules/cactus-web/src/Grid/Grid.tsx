@@ -71,9 +71,8 @@ export const Item = styled.div<ItemProps>`
   }
 `
 
-const ColumnPropType = PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+const ColumnPropType = PropTypes.oneOf<ColumnNum>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 
-// @ts-ignore
 Item.propTypes = {
   tiny: ColumnPropType.isRequired,
   small: ColumnPropType,
@@ -95,7 +94,7 @@ interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridProp
 
 export const Grid = styled.div<GridProps>`
   box-sizing: border-box;
-  width: 100%
+  width: 100%;
 
   display: flex;
   flex-direction: row;
