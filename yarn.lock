@@ -4244,6 +4244,11 @@
     "@babel/preset-typescript" "^7.10.4"
     babel-plugin-dynamic-import-node "^2.3.3"
 
+"@repay/cactus-theme@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-theme/-/cactus-theme-0.5.0.tgz#0d54e509991eef91b38f147af052266f2be1dcb0"
+  integrity sha512-aWpVDoQR8CXnAh1dnH2EauoVNZwzOTW1caIAD//GGPcoEYhWgoI+7XZ94oGDXZRUuv1xrzC76DrtcaFYKRgGDg==
+
 "@repay/eslint-config@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@repay/eslint-config/-/eslint-config-3.0.0.tgz#3456d7f693835ac1a04eb980ab770a68552cbb84"
