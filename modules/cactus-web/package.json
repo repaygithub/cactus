@@ -99,7 +99,7 @@
     "@reach/utils": "^0.10.4",
     "@reach/visually-hidden": "^0.10.4",
     "@repay/cactus-icons": "^0.6.1",
-    "@repay/cactus-theme": "^0.5.0",
+    "@repay/cactus-theme": "^1.0.0",
     "lodash": "^4.17.19",
     "react-live": "^2.2.2",
     "styled-system": "^5.1.1"
