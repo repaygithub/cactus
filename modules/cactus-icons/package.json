@@ -55,7 +55,7 @@
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.7.5",
     "@repay/babel-preset": "^1.0.0",
-    "@repay/cactus-theme": "^0.5.0",
+    "@repay/cactus-theme": "^1.0.0",
     "@repay/scripts": "^2.0.0",
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/react": "5.3.19",
