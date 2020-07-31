@@ -2,7 +2,12 @@
 
 ## [@repay/cactus-theme@v1.0.1](https://github.com/repaygithub/cactus/commit/821ebb40329a772512398378266eefd8a6e2cee6)
 
+- feat(cactus-theme): add tiny to fontSizes in theme and reference fontSizes directly from textStyles [6a1b812](https://github.com/repaygithub/cactus/commit/6a1b812693bf9dea139feb4b50317593504a752c)
+  - 🧨 BREAKING: The fontSizes array on the theme has changed to include the "tiny" size.  All
+    sizes have shifted up one index value in the array.
 - feat(cactus-theme): add mobile font sizes and text styles to the theme [9a69281](https://github.com/repaygithub/cactus/commit/9a692811170e512c9e35dc3e1fc3df9893772328)
+- feat(cactus-theme): added warning and success colors to theme [0453b8c](https://github.com/repaygithub/cactus/commit/0453b8c41aa55e8e72580b525e8c51ea36a268a4)
+- style(cactus-theme): reference callToActionText [b504818](https://github.com/repaygithub/cactus/commit/b5048188cf96dd6f6dca09bbe2e0ddf6ee517af5)
 - chore(cactus-theme): update changelog [446a829](https://github.com/repaygithub/cactus/commit/446a8298dd3d0cd25faff61e266562555ab7b585)
 
 ## [@repay/cactus-web@v0.9.1](https://github.com/repaygithub/cactus/commit/05c7e15a8169c97f3d1246c01fdc4f0284d5c31c)
