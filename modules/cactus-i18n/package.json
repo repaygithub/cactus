@@ -54,10 +54,10 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "@fluent/bundle": "^0.14.0",
-    "@fluent/langneg": "^0.3.0",
+    "@fluent/bundle": "^0.16.0",
+    "@fluent/langneg": "^0.5.0",
     "intl": "^1.2.5",
-    "intl-pluralrules": "^1.1.2"
+    "intl-pluralrules": "^1.2.0"
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",
