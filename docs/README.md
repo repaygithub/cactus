@@ -4,7 +4,7 @@ An application framework and design system built in React at [REPAY](https://git
 
 
 ## Getting Started
-To review the documentation for `@repay/create-ui` visit [this link](../Getting-Started/README.md)
+To get started with a brand new UI application, visit [this link](../Getting-Started/README.md).  For guidance on using Cactus with an existing application, browse the module documentation and the example applications linked below.
 
 ## Design System
 
