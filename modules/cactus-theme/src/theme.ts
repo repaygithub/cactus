@@ -1,11 +1,12 @@
 import { hexToRgb, isDark, rgbToHsl } from './converters'
 
+// eslint-disable-next-line @typescript-eslint/prefer-interface
 export type ColorStyle = {
   color: string
   backgroundColor: string
 }
 
-export type StatusColors = {
+export interface StatusColors {
   background: {
     success: string
     warning: string
@@ -39,7 +40,7 @@ export interface IconSizeObject extends Array<number> {
   large?: number
 }
 
-export type TextStyleCollection = {
+export interface TextStyleCollection {
   tiny: TextStyle
   small: TextStyle
   body: TextStyle
@@ -49,6 +50,7 @@ export type TextStyleCollection = {
   h1: TextStyle
 }
 
+// eslint-disable-next-line @typescript-eslint/prefer-interface
 export type TextStyle = {
   fontSize: string
   lineHeight: string
@@ -61,7 +63,7 @@ export type Shape = 'square' | 'intermediate' | 'round'
 export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
 export interface CactusTheme {
-  breakpoints?: Array<String>
+  breakpoints?: string[]
   mediaQueries?: {
     small: string
     medium: string
@@ -121,7 +123,7 @@ export interface CactusTheme {
   border: BorderSize
   shape: Shape
   font: string
-  boxShadows: Boolean
+  boxShadows: boolean
 }
 
 export type CactusColor = Exclude<keyof CactusTheme['colors'], 'status'>
@@ -134,11 +136,11 @@ let lightGray = `hsl(0, 0%, 90%)`
 let mediumGray = `hsl(0, 0%, 70%)`
 let darkGray = `hsl(0, 0%, 50%)`
 
-type SharedGeneratorOptions = {
+interface SharedGeneratorOptions {
   border?: BorderSize
   shape?: Shape
   font?: Font
-  boxShadows?: Boolean
+  boxShadows?: boolean
 }
 
 interface HueGeneratorOptions extends SharedGeneratorOptions {
@@ -592,7 +594,7 @@ const repayOptions: GeneratorOptions = {
   boxShadows: true,
 }
 
-const makeTextStyles = (fontSizes: FontSizeObject) => ({
+const makeTextStyles = (fontSizes: FontSizeObject): TextStyleCollection => ({
   tiny: {
     fontSize: `${fontSizes.tiny}px`,
     lineHeight: '1.44',
@@ -653,7 +655,7 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
   const { border = 'thin', shape = 'round', font = 'Helvetica', boxShadows = true } = options
   const fontOptions: Font[] = ['Helvetica', 'Helvetica Neue', 'Arial']
 
-  fontOptions.sort((x: Font, y: Font) => {
+  fontOptions.sort((x: Font, y: Font): number => {
     return x === font ? -1 : y === font ? 1 : 0
   })
 
