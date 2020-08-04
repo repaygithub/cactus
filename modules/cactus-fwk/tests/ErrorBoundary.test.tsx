@@ -1,22 +1,22 @@
 import { cleanup, render } from '@testing-library/react'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import AppRoot, { ErrorBoundary, withErrorBoundary } from '../src/index'
 
 afterEach(cleanup)
 
-const ProblemChild = () => {
+const ProblemChild = (): never => {
   throw new Error('I am throwing this error just because I can')
 }
 
-const TestComponent = () => <h2>I won't throw any errors</h2>
+const TestComponent = (): ReactElement => <h2>I won't throw any errors</h2>
 
 interface TestErrorViewProps {
   error: Error
   info: React.ErrorInfo
 }
 
-const TestErrorView = (props: TestErrorViewProps) => (
+const TestErrorView = (props: TestErrorViewProps): ReactElement => (
   <div>
     <h2>There was an error</h2>
     <span>{props.error.message}</span>
@@ -24,21 +24,21 @@ const TestErrorView = (props: TestErrorViewProps) => (
   </div>
 )
 
-describe('error boundary', () => {
-  describe('with mocked console errors', () => {
+describe('error boundary', (): void => {
+  describe('with mocked console errors', (): void => {
     let error: any
     let onError: any
-    beforeEach(() => {
+    beforeEach((): void => {
       error = console.error
       console.error = jest.fn()
       onError = jest.fn()
     })
-    afterEach(() => {
+    afterEach((): void => {
       console.error = error
     })
 
-    describe('regular component', () => {
-      test('should catch errors and call onError', () => {
+    describe('regular component', (): void => {
+      test('should catch errors and call onError', (): void => {
         const { container } = render(
           <ErrorBoundary onError={onError} errorView={TestErrorView}>
             <ProblemChild />
@@ -52,8 +52,8 @@ describe('error boundary', () => {
       })
     })
 
-    describe('higher order component', () => {
-      test('should catch errors and call onError', () => {
+    describe('higher order component', (): void => {
+      test('should catch errors and call onError', (): void => {
         const GoldenChild = withErrorBoundary(ProblemChild, onError, TestErrorView)
         const { container } = render(<GoldenChild />)
         expect(ProblemChild).toThrowError('I am throwing this error just because I can')
@@ -63,8 +63,8 @@ describe('error boundary', () => {
       })
     })
 
-    describe('AppRoot', () => {
-      test('should allow error display to be passed to AppRoot', () => {
+    describe('AppRoot', (): void => {
+      test('should allow error display to be passed to AppRoot', (): void => {
         const { container } = render(
           <AppRoot onError={onError} globalErrorView={TestErrorView}>
             <ProblemChild />
@@ -77,7 +77,7 @@ describe('error boundary', () => {
         expect(console.error).toHaveBeenCalled()
       })
 
-      test('should return null when no errorDisplay is provided', () => {
+      test('should return null when no errorDisplay is provided', (): void => {
         const { container } = render(
           <AppRoot onError={onError}>
             <ProblemChild />
@@ -90,7 +90,7 @@ describe('error boundary', () => {
         expect(console.error).toHaveBeenCalled()
       })
 
-      test('should display errors in the console', () => {
+      test('should display errors in the console', (): void => {
         render(
           <AppRoot onError={onError}>
             <ProblemChild />
@@ -102,8 +102,8 @@ describe('error boundary', () => {
     })
   })
 
-  describe('regular component', () => {
-    test('should render children when no errors occur', () => {
+  describe('regular component', (): void => {
+    test('should render children when no errors occur', (): void => {
       const onError = jest.fn()
       const { container } = render(
         <ErrorBoundary onError={onError} errorView={TestErrorView}>
@@ -118,8 +118,8 @@ describe('error boundary', () => {
     })
   })
 
-  describe('higher order component', () => {
-    test('should render children when no errors occur', () => {
+  describe('higher order component', (): void => {
+    test('should render children when no errors occur', (): void => {
       const onError = jest.fn()
       const GoldenChild = withErrorBoundary(TestComponent, onError)
       const { container } = render(<GoldenChild />)

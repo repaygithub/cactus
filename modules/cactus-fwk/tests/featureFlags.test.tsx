@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import AppRoot, { FeatureFlag, useFeatureFlags, withFeatureFlags } from '../src/index'
 
-describe('feature flags', () => {
-  test('feature flags context object is optional on top level component', () => {
-    expect(() => {
+describe('feature flags', (): void => {
+  test('feature flags context object is optional on top level component', (): void => {
+    expect((): void => {
       render(
         <AppRoot>
           <span>Anything</span>
@@ -14,9 +14,9 @@ describe('feature flags', () => {
     }).not.toThrow()
   })
 
-  describe('useFeatureFlags()', () => {
-    test('returns all false when no context', () => {
-      const Random = () => {
+  describe('useFeatureFlags()', (): void => {
+    test('returns all false when no context', (): void => {
+      const Random = (): ReactElement => {
         const [featureA, featureB] = useFeatureFlags('featureA', 'featureB')
         return (
           <span>
@@ -30,8 +30,8 @@ describe('feature flags', () => {
       expect(container).toHaveTextContent('featureA is false, featureB is false')
     })
 
-    test('returns array of boolean values for feature flags requested', () => {
-      const Random = () => {
+    test('returns array of boolean values for feature flags requested', (): void => {
+      const Random = (): ReactElement => {
         const [featureA, featureB] = useFeatureFlags('featureA', 'featureB')
         return (
           <span>
@@ -49,8 +49,8 @@ describe('feature flags', () => {
       expect(container).toHaveTextContent('featureA is true, featureB is false')
     })
 
-    test('returns false when requested key is undefined', () => {
-      const Random = () => {
+    test('returns false when requested key is undefined', (): void => {
+      const Random = (): ReactElement => {
         const [featureA, featureB] = useFeatureFlags('featureA', 'featureB')
         return (
           <span>
@@ -69,9 +69,9 @@ describe('feature flags', () => {
     })
   })
 
-  describe('withFeatureFlags()', () => {
-    test('provides all props as false when no feature flags provided', () => {
-      const Random = (props: any) => {
+  describe('withFeatureFlags()', (): void => {
+    test('provides all props as false when no feature flags provided', (): void => {
+      const Random = (props: any): ReactElement => {
         return (
           <span>
             featureA is {String(props.featureA)}, featureB is {String(props.featureB)}
@@ -85,8 +85,8 @@ describe('feature flags', () => {
       expect(container).toHaveTextContent('featureA is false, featureB is false')
     })
 
-    test('adds props for matching requested feature keys', () => {
-      const Random = (props: any) => {
+    test('adds props for matching requested feature keys', (): void => {
+      const Random = (props: any): ReactElement => {
         return (
           <span>
             featureA is {String(props.featureA)}, featureB is {String(props.featureB)}
@@ -105,12 +105,12 @@ describe('feature flags', () => {
     })
   })
 
-  describe('<FeatureFlag />', () => {
-    test('provides all props as false when no feature flags provided by root', () => {
-      const TestComp = () => {
+  describe('<FeatureFlag />', (): void => {
+    test('provides all props as false when no feature flags provided by root', (): void => {
+      const TestComp = (): ReactElement => {
         return (
           <FeatureFlag feature="option_a">
-            {(enabled) =>
+            {(enabled): ReactElement =>
               enabled ? (
                 <span>Should not render this section of text</span>
               ) : (
@@ -126,11 +126,11 @@ describe('feature flags', () => {
       expect(container).toHaveTextContent('Should be rendered')
     })
 
-    test('allows rendering based on provided flags', () => {
-      const TestComp = () => {
+    test('allows rendering based on provided flags', (): void => {
+      const TestComp = (): ReactElement => {
         return (
           <FeatureFlag feature="featureA">
-            {(enabled) =>
+            {(enabled): ReactElement =>
               enabled ? (
                 <span>This text is expected to render second.</span>
               ) : (

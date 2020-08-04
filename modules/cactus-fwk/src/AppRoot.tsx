@@ -20,9 +20,9 @@ interface AppRootProps {
   globalErrorView?: ErrorView
 }
 
-const noop = (error: Error, info: React.ErrorInfo) => {}
+const noop = (): void => {}
 
-const AppRoot: React.FC<AppRootProps> = (props) => {
+const AppRoot: React.FC<AppRootProps> = (props): React.ReactElement => {
   return (
     <ErrorBoundary onError={props.onError || noop} errorView={props.globalErrorView}>
       <FeatureFlagContext.Provider value={props.featureFlags || null}>
@@ -32,6 +32,7 @@ const AppRoot: React.FC<AppRootProps> = (props) => {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
 AppRoot.propTypes = {
   featureFlags: PropTypes.objectOf(PropTypes.bool.isRequired),
   onError: PropTypes.func,
