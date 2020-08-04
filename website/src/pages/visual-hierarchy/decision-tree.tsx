@@ -3,7 +3,7 @@ import Helmet from 'react-helmet'
 
 import decisionTree from './decision-tree.png'
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="Hierarchy Decision Tree" />

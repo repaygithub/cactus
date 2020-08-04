@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Helmet from 'react-helmet'
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="General Hierarchy Guidelines" />

@@ -1,6 +1,6 @@
 import * as iconsList from '@repay/cactus-icons'
 
-type IconObject = {
+interface IconObject {
   name: string
   fullName: string
   path: string
@@ -10,7 +10,7 @@ type IconObject = {
 
 const iconsCategoryMap: { [key: string]: IconObject[] } = {}
 
-const icons = Object.entries(iconsList).filter(([name]) => name !== 'iconSizes')
+const icons = Object.entries(iconsList).filter(([name]): boolean => name !== 'iconSizes')
 
 for (const [fullName, Icon] of icons) {
   const path = fullName.replace(/(.)([A-Z])/, '$1-$2').toLowerCase()

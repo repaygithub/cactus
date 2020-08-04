@@ -16,12 +16,12 @@ const Table = styled.table`
   margin-bottom: 2em;
 
   thead {
-    background-color: ${(p) => p.theme.colors.darkContrast};
+    background-color: ${(p): string => p.theme.colors.darkContrast};
     border: none;
     padding: 0;
     font-size: 1.2em;
     text-align: left;
-    color: ${(p) => p.theme.colors.white};
+    color: ${(p): string => p.theme.colors.white};
   }
 
   th {
@@ -32,14 +32,14 @@ const Table = styled.table`
   }
 
   tbody {
-    color: ${(p) => p.theme.colors.text};
+    color: ${(p): string => p.theme.colors.text};
 
     & tr:nth-child(odd) {
-      background-color: ${(p) => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.white};
     }
 
     & tr:nth-child(even) {
-      background-color: ${(p) => p.theme.colors.lightContrast};
+      background-color: ${(p): string => p.theme.colors.lightContrast};
     }
   }
 
@@ -123,8 +123,8 @@ const StylingTable = styled(Table)`
   }
 `
 
-function sortProps(props: PropItem[]) {
-  return props.sort((a, b) => {
+function sortProps(props: PropItem[]): PropItem[] {
+  return props.sort((a, b): number => {
     if (a.name > b.name) {
       return 1
     } else if (a.name < b.name) {
@@ -140,26 +140,37 @@ export type ComponentWithFileMeta = React.ComponentType & {
   }
 }
 
-type PropsTableProps = {
+interface PropsTableProps {
   of: ComponentWithFileMeta
   staticProp?: string
 }
 
-const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) => {
+interface PropsMemo {
+  props?: { [k: string]: any }
+  coreProps?: { [k: string]: any }
+  ownProps?: { [k: string]: any }
+  styledSystemProps?: { [k: string]: any }
+  styledComponentProps?: { [k: string]: any }
+}
+
+const PropsTable: React.FC<PropsTableProps> = ({
+  of: component,
+  staticProp,
+}): React.ReactElement | null => {
   const data = useDocgen()
   const fileName = component.__filemeta && component.__filemeta.filename
-  const docItem = data.find((doc) => doc.key === fileName)
+  const docItem = data.find((doc): boolean => doc.key === fileName)
 
-  const { ownProps, styledSystemProps } = React.useMemo(() => {
+  const { ownProps, styledSystemProps } = React.useMemo((): PropsMemo => {
     if (docItem === undefined) {
       return {}
     }
     let value = docItem.value
     let doc: ComponentDoc | undefined = value.find(
-      (item) => item.displayName === component.displayName
+      (item): boolean => item.displayName === component.displayName
     )
     if (staticProp) {
-      doc = value.find((item) => item.displayName === staticProp)
+      doc = value.find((item): boolean => item.displayName === staticProp)
     }
     const componentName = doc && doc.displayName
     const props = Object.values((doc && doc.props) || {})
@@ -216,20 +227,24 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
               </tr>
             </thead>
             <tbody>
-              {ownProps.map((prop) => (
-                <tr key={prop.name}>
-                  <td>
-                    <code>{prop.name}</code>
-                  </td>
-                  <td>{prop.required ? 'Y' : 'N'}</td>
-                  <td>
-                    {prop.defaultValue &&
-                      (prop.defaultValue.value === '' ? '{empty string}' : prop.defaultValue.value)}
-                  </td>
-                  <td>{prop.type.name}</td>
-                  <td>{prop.description}</td>
-                </tr>
-              ))}
+              {ownProps.map(
+                (prop): React.ReactElement => (
+                  <tr key={prop.name}>
+                    <td>
+                      <code>{prop.name}</code>
+                    </td>
+                    <td>{prop.required ? 'Y' : 'N'}</td>
+                    <td>
+                      {prop.defaultValue &&
+                        (prop.defaultValue.value === ''
+                          ? '{empty string}'
+                          : prop.defaultValue.value)}
+                    </td>
+                    <td>{prop.type.name}</td>
+                    <td>{prop.description}</td>
+                  </tr>
+                )
+              )}
             </tbody>
           </CactusTable>
         ) : (
@@ -248,16 +263,18 @@ const PropsTable: React.FC<PropsTableProps> = ({ of: component, staticProp }) =>
                 </tr>
               </thead>
               <tbody>
-                {styledSystemProps.map((prop) => (
-                  <tr key={prop.name}>
-                    <td>
-                      <code>{prop.name}</code>
-                    </td>
-                    <td>{prop.required ? 'Y' : 'N'}</td>
-                    <td>{prop.type.name}</td>
-                    <td>{prop.description}</td>
-                  </tr>
-                ))}
+                {styledSystemProps.map(
+                  (prop): React.ReactElement => (
+                    <tr key={prop.name}>
+                      <td>
+                        <code>{prop.name}</code>
+                      </td>
+                      <td>{prop.required ? 'Y' : 'N'}</td>
+                      <td>{prop.type.name}</td>
+                      <td>{prop.description}</td>
+                    </tr>
+                  )
+                )}
               </tbody>
             </StylingTable>
           </>

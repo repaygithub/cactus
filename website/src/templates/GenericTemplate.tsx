@@ -6,7 +6,7 @@ import Helmet from 'react-helmet'
 
 import Link from '../components/Link'
 
-type GenericTemplateProps = {
+interface GenericTemplateProps {
   data: {
     mdx: Markdown
     site: Site
@@ -15,14 +15,14 @@ type GenericTemplateProps = {
 
 const components = {
   a: Link,
-  table: (props: any) => (
+  table: (props: any): React.ReactElement => (
     <div style={{ overflowX: 'auto' }}>
       <table {...props} />
     </div>
   ),
 }
 
-const GenericTemplate = ({ data }: GenericTemplateProps) => {
+const GenericTemplate = ({ data }: GenericTemplateProps): React.ReactElement => {
   const {
     mdx: { fields, body },
   } = data

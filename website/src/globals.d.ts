@@ -1,4 +1,4 @@
-declare type Site = {
+declare interface Site {
   siteMetadata: {
     title: string
     description: string
@@ -6,11 +6,13 @@ declare type Site = {
   }
 }
 
-declare type Edge<T> = { readonly node: T }
+declare interface Edge<T> {
+  readonly node: T
+}
 
 declare type Edges<T> = Edge<T>[]
 
-declare type Markdown = {
+declare interface Markdown {
   id: string
   excerpt?: string
   body: string
@@ -22,7 +24,7 @@ declare type Markdown = {
     date?: string
     draft?: boolean
     path: string
-    tags?: ReadonlyArray<string>
+    tags?: readonly string[]
     title?: string
     order?: number
   }
@@ -42,7 +44,7 @@ declare type Markdown = {
   }
 }
 
-declare type AllMarkdown = {
+declare interface AllMarkdown {
   totalCount: number
   edges: Edges<Markdown>
 }

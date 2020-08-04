@@ -31,10 +31,10 @@ import {
 import { useCactusTheme } from './CactusProvider'
 import { Span } from './Text'
 
-const upperCaseFirst = (word: string) => word.charAt(0).toUpperCase() + word.slice(1)
+const upperCaseFirst = (word: string): string => word.charAt(0).toUpperCase() + word.slice(1)
 const extraStyles: React.CSSProperties = { textAlign: 'right' }
 
-type ColorDisplayProps = {
+interface ColorDisplayProps {
   displayName?: string
   color: CactusColor | string
   textColor?: CactusColor | string
@@ -45,7 +45,7 @@ function isCactusColor(color: string): color is CactusColor {
   return cactusColors.includes(color)
 }
 
-function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
+function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps): React.ReactElement {
   const theme = useCactusTheme()
   const hasDisplayName = Boolean(displayName)
   let hslaStr: string
@@ -87,13 +87,13 @@ function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps) {
   )
 }
 
-type ColorBoxProps = {
+interface ColorBoxProps {
   name: ColorVariant
   title?: string
   children?: React.ReactNode
 }
 
-export function ColorBox({ name, title, children }: ColorBoxProps) {
+export function ColorBox({ name, title, children }: ColorBoxProps): React.ReactElement {
   const theme = useCactusTheme()
   let displayName = title || upperCaseFirst(name)
   let variant = theme.colorStyles[name]
@@ -109,28 +109,30 @@ export function ColorBox({ name, title, children }: ColorBoxProps) {
   )
 }
 
-type PaletteItem = {
+interface PaletteItem {
   bg: CactusColor
   color: CactusColor
 }
 
-type PaletteBoxProps = {
+interface PaletteBoxProps {
   colors: PaletteItem[]
   title: string
   children?: React.ReactNode
 }
 
-export function PaletteBox({ colors, title, children }: PaletteBoxProps) {
+export function PaletteBox({ colors, title, children }: PaletteBoxProps): React.ReactElement {
   return (
     <Box px={4} py={3} width="240px">
-      {colors.map((item, index) => (
-        <ColorDisplay
-          key={item.bg}
-          displayName={index === colors.length ? title : undefined}
-          color={item.bg}
-          textColor={item.color}
-        />
-      ))}
+      {colors.map(
+        (item, index): React.ReactElement => (
+          <ColorDisplay
+            key={item.bg}
+            displayName={index === colors.length ? title : undefined}
+            color={item.bg}
+            textColor={item.color}
+          />
+        )
+      )}
       {children}
     </Box>
   )
@@ -298,7 +300,12 @@ interface AccessibilityCheckProps {
   textSize?: AccessibilityTextSize
 }
 
-function AccessibilityCheck({ contrast, isDark, level, textSize }: AccessibilityCheckProps) {
+function AccessibilityCheck({
+  contrast,
+  isDark,
+  level,
+  textSize,
+}: AccessibilityCheckProps): React.ReactElement {
   const isAccessible = checkAccessibility(contrast, level, textSize)
   let bg: CactusColor | null = null
   let iconColor: CactusColor | null = null
@@ -342,7 +349,11 @@ interface AccessibilityBoxProps {
   isDark: boolean
 }
 
-export function AccessibilityBox({ color, title, isDark }: AccessibilityBoxProps) {
+export function AccessibilityBox({
+  color,
+  title,
+  isDark,
+}: AccessibilityBoxProps): React.ReactElement {
   const theme = useCactusTheme()
   const compareColor: CactusColor = isDark ? 'white' : 'darkestContrast'
   const borderColor = theme.colors[compareColor]

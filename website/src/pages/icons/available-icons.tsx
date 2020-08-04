@@ -12,8 +12,8 @@ const Code = styled.code`
 `
 
 const Pre = styled.pre`
-  padding: ${(p) => p.theme.space[4]}px;
-  background-color: ${(p) => p.theme.colors.lightGray};
+  padding: ${(p): string => p.theme.space[4]}px;
+  background-color: ${(p): string => p.theme.colors.lightGray};
   white-space: pre-line;
 `
 
@@ -42,7 +42,7 @@ export default () => (
 )
 `.trim()
 
-export default () => (
+export default (): React.ReactElement => (
   <>
     <Helmet title="Available Icons" />
     <Text as="h1" fontSize="h1">
@@ -57,26 +57,36 @@ export default () => (
       See below for the list of available icons and the names and paths by which they can be
       referenced.
     </Text>
-    {categories.map((cat) => {
-      const iconList = iconsCategoryMap[cat]
-      return (
-        <React.Fragment key={cat}>
-          <Text as="h3" fontSize="h3" style={{ textTransform: 'capitalize' }}>
-            {cat}
-          </Text>
-          <Flex flexWrap="wrap" justifyContent="start">
-            {iconList.map(({ fullName, path, Icon }) => (
-              <Flex key={path} m={4} flexBasis="64px" flexDirection="column" alignItems="center">
-                <Icon style={{ fontSize: '40px' }} />
-                <Text m={0} fontSize="12px">
-                  {fullName}
-                </Text>
-                <Code>/i/{path}</Code>
-              </Flex>
-            ))}
-          </Flex>
-        </React.Fragment>
-      )
-    })}
+    {categories.map(
+      (cat): React.ReactElement => {
+        const iconList = iconsCategoryMap[cat]
+        return (
+          <React.Fragment key={cat}>
+            <Text as="h3" fontSize="h3" style={{ textTransform: 'capitalize' }}>
+              {cat}
+            </Text>
+            <Flex flexWrap="wrap" justifyContent="start">
+              {iconList.map(
+                ({ fullName, path, Icon }): React.ReactElement => (
+                  <Flex
+                    key={path}
+                    m={4}
+                    flexBasis="64px"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    <Icon style={{ fontSize: '40px' }} />
+                    <Text m={0} fontSize="12px">
+                      {fullName}
+                    </Text>
+                    <Code>/i/{path}</Code>
+                  </Flex>
+                )
+              )}
+            </Flex>
+          </React.Fragment>
+        )
+      }
+    )}
   </>
 )

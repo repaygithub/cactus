@@ -1,13 +1,12 @@
-import { Box, Flex } from '@repay/cactus-web'
+import { Flex } from '@repay/cactus-web'
 import * as React from 'react'
 import Helmet from 'react-helmet'
-import styled from 'styled-components'
 
 import { AccessibilityBox, ColorBox, PaletteBox } from '../../components/Color'
 import Link from '../../components/Link'
 import Text, { Span } from '../../components/Text'
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="Color" />

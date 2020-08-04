@@ -7,7 +7,7 @@ import blfConfig3 from './blf-config-3.png'
 import blfConfigOld1 from './blf-config-old-1.png'
 import blfConfigOld2 from './blf-config-old-2.png'
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="Channels Case Study" />

@@ -4,10 +4,10 @@ import React from 'react'
 
 const LocalLink = RepayLink.withComponent(GatsbyLink)
 
-const isOutside = (href: string) =>
+const isOutside = (href: string): boolean =>
   href.startsWith('http') && !(global.window && href.startsWith(window.location.origin))
 
-const Link = ({ href, to, ...rest }: any) => {
+const Link = ({ href, to, ...rest }: any): React.ReactElement => {
   to = to || href || ''
   if (isOutside(to)) {
     return <RepayLink to={to} {...rest} />
