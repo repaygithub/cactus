@@ -114,12 +114,14 @@ exports[`component: MenuBar typechecks 1`] = `
   line-height: 1.6;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
+  box-shadow: inset 0 -1px 0 hsl(200,29%,90%);
 }
 
 .c0 [role='menubar'] > li > [role='menuitem'] {
   white-space: nowrap;
-  padding: 21px 9px 20px 9px;
-  border-bottom: 1px solid hsl(200,29%,90%);
+  padding: 20px 8px;
+  border: 1px solid transparent;
+  border-bottom-color: hsl(200,29%,90%);
 }
 
 .c0 [role='menubar'] > li > [role='menuitem']:hover,
@@ -130,7 +132,6 @@ exports[`component: MenuBar typechecks 1`] = `
 
 .c0 [role='menubar'] > li > [role='menuitem']:focus {
   border: 1px solid hsl(200,96%,35%);
-  padding: 20px 8px;
 }
 
 .c0 [role='menubar'] > li > [role='menuitem'][aria-current='true'] {
