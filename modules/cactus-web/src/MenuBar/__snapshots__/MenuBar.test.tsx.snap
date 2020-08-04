@@ -401,6 +401,7 @@ exports[`component: MenuBar typechecks 1`] = `
               role="none"
             >
               <a
+                aria-current="true"
                 class="c4"
                 href="#"
                 role="menuitem"
@@ -471,13 +472,33 @@ exports[`component: MenuBar typechecks 1`] = `
                   <li
                     role="none"
                   >
+                    <a
+                      href="#"
+                    >
+                      Birdy
+                    </a>
+                  </li>
+                  <li
+                    role="none"
+                  >
                     <button
+                      aria-current="true"
                       class="c4"
                       role="menuitem"
                       tabindex="-1"
                     >
-                      Birdy
+                      The Mighty
                     </button>
+                  </li>
+                  <li
+                    role="none"
+                  >
+                    <div>
+                      <em>
+                        Decode
+                      </em>
+                       
+                    </div>
                   </li>
                 </ul>
                 <div
@@ -543,6 +564,11 @@ exports[`component: MenuBar typechecks 1`] = `
         >
           Styled Link
         </a>
+      </li>
+      <li
+        role="none"
+      >
+        class 2
       </li>
     </ul>
     <div

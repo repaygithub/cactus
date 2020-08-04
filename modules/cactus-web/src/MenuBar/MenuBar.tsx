@@ -9,8 +9,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
+import { AsProps, GenericComponent } from '../helpers/asProps'
 import { border, boxShadow, radius } from '../helpers/theme'
-import { Omit } from '../types'
 import {
   focusMenu,
   ITEM_SELECTOR,
@@ -19,11 +19,6 @@ import {
   useSubmenuKeyHandlers,
   useSubmenuToggle,
 } from './scroll'
-
-interface MenuItemProps
-  extends Omit<React.AllHTMLAttributes<HTMLElement>, 'as' | 'tabIndex' | 'role'> {
-  as?: React.ReactType
-}
 
 interface ListProps {
   children: React.ReactNode
@@ -47,26 +42,38 @@ const preventAction = (event: React.KeyboardEvent<HTMLElement>) => {
   }
 }
 
-// The `as any` here is to enable proper use of link substition,
-// e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
-const MenuBarItem = React.forwardRef<HTMLElement, MenuItemProps>((props, ref) => {
+function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
+  props: AsProps<C>,
+  ref: React.Ref<E>
+) {
+  // The `as any` here is to enable proper use of link substition,
+  // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
   const propsCopy = { ...props } as any
-  if (!props.onKeyPress) {
+  if (!propsCopy.onKeyPress) {
     propsCopy.onKeyPress = keyPressAsClick
   }
-  const original = props.onKeyUp
+  const original = propsCopy.onKeyUp
   propsCopy.onKeyUp = !original
     ? preventAction
     : (e: React.KeyboardEvent<HTMLElement>) => {
         original(e)
         preventAction(e)
       }
+  // Overriding these two can completely screw up the algorithms used.
+  delete propsCopy.tabIndex
+  delete propsCopy.role
   return (
     <li role="none">
       <MenuButton ref={ref as any} {...propsCopy} />
     </li>
   )
-})
+}
+
+type MenuBarItemType = typeof MenuBarItemFunc
+
+// Tell Typescript to treat this as a regular functional component,
+// even though React knows it's a `forwardRef` component.
+const MenuBarItem = (React.forwardRef(MenuBarItemFunc) as any) as MenuBarItemType
 
 const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {
@@ -172,7 +179,6 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
       return () => observer.disconnect()
     }
   }, [menu])
-
   return (
     <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
@@ -205,18 +211,18 @@ MenuBar.displayName = 'MenuBar'
 MenuBar.propTypes = { 'aria-label': PropTypes.string }
 MenuBar.defaultProps = { 'aria-label': 'Main Menu' }
 
-type MenuBarType = typeof MenuBar & {
+type ExportedMenuBarType = typeof MenuBar & {
   List: typeof MenuBarList
-  Item: typeof MenuBarItem
+  Item: MenuBarItemType
 }
 
-const DefaultMenuBar = MenuBar as MenuBarType
-DefaultMenuBar.List = MenuBarList
-DefaultMenuBar.Item = MenuBarItem
+const TypedMenuBar = MenuBar as ExportedMenuBarType
+TypedMenuBar.List = MenuBarList
+TypedMenuBar.Item = MenuBarItem
 
-export { MenuBar, MenuBarList, MenuBarItem }
+export { TypedMenuBar as MenuBar, MenuBarList, MenuBarItem }
 
-export default DefaultMenuBar
+export default TypedMenuBar
 
 const ScrollButton = styled.div.attrs({ 'aria-hidden': true })<{ show?: boolean }>`
   ${(p) => p.theme.colorStyles.standard};
