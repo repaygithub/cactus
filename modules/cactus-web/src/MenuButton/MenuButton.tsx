@@ -156,7 +156,12 @@ function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
 MenuButtonBase.Item = ReachMenuItem
 MenuButtonBase.Link = ReachMenuLink
 
-type MenuButtonType = StyledComponent<typeof MenuButtonBase, any, {}, never> & {
+type MenuButtonType = StyledComponent<
+  typeof MenuButtonBase,
+  any,
+  Record<string, unknown>,
+  never
+> & {
   Item: typeof MenuButtonBase['Item']
   Link: typeof MenuButtonBase['Link']
 }

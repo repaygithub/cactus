@@ -98,11 +98,11 @@ describe('component: SelectField', (): void => {
       </StyleProvider>
     )
 
-    let tooltipTextEl = getByText('This is some information')
-    let tooltipEl = closest(tooltipTextEl, (el): boolean => el.getAttribute('role') === 'tooltip')
+    const tooltipTextEl = getByText('This is some information')
+    const tooltipEl = closest(tooltipTextEl, (el): boolean => el.getAttribute('role') === 'tooltip')
     expect(tooltipEl).not.toBeNull()
 
-    let select = getByLabelText('Requires a label')
+    const select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain((tooltipEl as HTMLElement).id)
   })
 
@@ -134,8 +134,8 @@ describe('component: SelectField', (): void => {
       </StyleProvider>
     )
 
-    let statusEl = getByText(`You're GREAT!`) as HTMLElement
-    let select = getByLabelText('Requires a label')
+    const statusEl = getByText(`You're GREAT!`) as HTMLElement
+    const select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
   })
 
@@ -152,8 +152,8 @@ describe('component: SelectField', (): void => {
       </StyleProvider>
     )
 
-    let statusEl = getByText(`You got a ridiculous warning`) as HTMLElement
-    let select = getByLabelText('Requires a label')
+    const statusEl = getByText(`You got a ridiculous warning`) as HTMLElement
+    const select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
   })
 
@@ -170,8 +170,8 @@ describe('component: SelectField', (): void => {
       </StyleProvider>
     )
 
-    let statusEl = getByText(`You've done this incorrectly`) as HTMLElement
-    let select = getByLabelText('Requires a label')
+    const statusEl = getByText(`You've done this incorrectly`) as HTMLElement
+    const select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
   })
 
@@ -205,7 +205,7 @@ describe('component: SelectField', (): void => {
           />
         </StyleProvider>
       )
-      let select = getByLabelText('Requires a label') as HTMLElement
+      const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.click(select)
       fireEvent.click(getByText('basic'))
       expect(onChange).toHaveBeenCalledWith('the-test-select-field', 'basic')
@@ -224,7 +224,7 @@ describe('component: SelectField', (): void => {
           />
         </StyleProvider>
       )
-      let select = getByLabelText('Requires a label') as HTMLElement
+      const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.blur(select)
       expect(onBlur).toHaveBeenCalledWith('the-test-select-field')
     })
@@ -242,7 +242,7 @@ describe('component: SelectField', (): void => {
           />
         </StyleProvider>
       )
-      let select = getByLabelText('Requires a label') as HTMLElement
+      const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.focus(select)
       expect(onFocus).toHaveBeenCalledWith('the-test-select-field')
     })

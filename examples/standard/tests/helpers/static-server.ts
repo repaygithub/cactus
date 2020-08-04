@@ -45,7 +45,7 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
 
   const server = http
     .createServer(function (request, response): void {
-      let url = request.url as string
+      const url = request.url as string
       let filePath = path.join(directory, url)
       if (isForbidden(filePath)) {
         response.writeHead(403)
@@ -55,8 +55,8 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
         filePath = filePath + 'index.html'
       }
 
-      let extname = String(path.extname(filePath)).toLowerCase()
-      let contentType = mimeTypes[extname as ExtName] || 'application/octet-stream'
+      const extname = String(path.extname(filePath)).toLowerCase()
+      const contentType = mimeTypes[extname as ExtName] || 'application/octet-stream'
 
       fs.readFile(filePath)
         .then((content): void => {

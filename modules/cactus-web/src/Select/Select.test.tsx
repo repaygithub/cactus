@@ -26,7 +26,7 @@ describe('component: Select', (): void => {
   })
 
   test('can receive options as objects', (): void => {
-    let options = [
+    const options = [
       { value: 'yum', label: 'Yum' },
       { value: 'who?', label: 'Who?' },
       { value: 'boss', label: 'Who is the boss?' },
@@ -78,7 +78,7 @@ describe('component: Select', (): void => {
     const trigger: HTMLElement = getByText('Select an option')
     fireEvent.click(trigger)
     await animationRender()
-    let topOption = getByText('yum')
+    const topOption = getByText('yum')
     expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(topOption.id)
   })
 
@@ -147,7 +147,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.click(trigger) // space is actually a click on buttons
       rerender(
         <StyleProvider>
@@ -155,7 +155,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let list = getByRole('listbox')
+      const list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toEqual('phoenix')
     })
@@ -167,7 +167,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
       rerender(
         <StyleProvider>
@@ -175,7 +175,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let list = getByRole('listbox')
+      const list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toEqual('phoenix')
     })
@@ -187,7 +187,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -195,7 +195,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let list = getByRole('listbox')
+      const list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toEqual('phoenix')
     })
@@ -207,7 +207,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+      const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -236,7 +236,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
+      const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -264,7 +264,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger: HTMLElement = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -272,7 +272,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let list = getByRole('listbox')
+      const list = getByRole('listbox')
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       // @ts-ignore
       expect(getActiveValue()).toEqual('tucson')
@@ -291,7 +291,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option')
+      const trigger: HTMLElement = getByText('Select an option')
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       rerender(
         <StyleProvider>
@@ -304,7 +304,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let list = getByRole('listbox')
+      const list = getByRole('listbox')
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(list, {
@@ -323,7 +323,7 @@ describe('component: Select', (): void => {
           </StyleProvider>
         )
         // @ts-ignore
-        let trigger: HTMLElement = getByText('Select an option') // default placeholder
+        const trigger: HTMLElement = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
         rerender(
           <StyleProvider>
@@ -331,7 +331,7 @@ describe('component: Select', (): void => {
           </StyleProvider>
         )
         await animationRender()
-        let list = getByRole('listbox')
+        const list = getByRole('listbox')
         // keycode 84 = t
         fireEvent.keyDown(list, { keyCode: 84, charCode: 84 })
         expect(getActiveValue()).toEqual('tucson')
@@ -348,7 +348,7 @@ describe('component: Select', (): void => {
           </StyleProvider>
         )
         // @ts-ignore
-        let trigger: HTMLElement = getByText('Select an option') // default placeholder
+        const trigger: HTMLElement = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
         rerender(
           <StyleProvider>
@@ -360,7 +360,7 @@ describe('component: Select', (): void => {
           </StyleProvider>
         )
         await animationRender()
-        let list = getByRole('listbox')
+        const list = getByRole('listbox')
         // keycode 84 = t
         fireEvent.keyDown(list, { keyCode: 84, charCode: 84 })
         // keycode 85 = u
@@ -378,7 +378,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Select an option').parentElement
+      const trigger: HTMLElement = getByText('Select an option').parentElement
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -410,7 +410,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Click me!')
+      const trigger: HTMLElement = getByText('Click me!')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -430,14 +430,14 @@ describe('component: Select', (): void => {
     })
 
     test('mouseEnter sets activedescendant', async (): Promise<void> => {
-      let cities = ['Apache Junction', 'Avondale', 'Benson', 'Bisbee', 'Buckeye', 'Bullhead City']
+      const cities = ['Apache Junction', 'Avondale', 'Benson', 'Bisbee', 'Buckeye', 'Bullhead City']
       const { getByText, getByRole, rerender } = render(
         <StyleProvider>
           <Select id="test-id" name="city" placeholder="Click me!" options={cities} />
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByText('Click me!')
+      const trigger: HTMLElement = getByText('Click me!')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -445,7 +445,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let bensonOption = getByText('Benson')
+      const bensonOption = getByText('Benson')
       fireEvent.mouseEnter(bensonOption)
       await animationRender()
       expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(bensonOption.id)
@@ -468,7 +468,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.focus(trigger)
       fireEvent.blur(trigger)
       expect(onBlur).toHaveBeenCalledWith('city')
@@ -489,7 +489,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       trigger.focus()
       fireEvent.click(trigger)
       rerender(
@@ -527,7 +527,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       trigger.focus()
       fireEvent.click(trigger)
       rerender(
@@ -567,7 +567,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.focus(trigger)
       expect(onFocus).toHaveBeenCalledWith('city')
     })
@@ -587,7 +587,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -665,7 +665,7 @@ describe('component: Select', (): void => {
       )
       fireEvent.click(getByRole('button'))
       await animationRender()
-      let options = getAllByRole('option')
+      const options = getAllByRole('option')
       options.forEach((o): void => {
         expect(o.getAttribute('aria-selected')).toBe(
           String(o.getAttribute('data-value') === 'tucson')
@@ -733,7 +733,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -748,7 +748,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let list = getByRole('listbox')
+      const list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('flagstaff', { selector: '[role="option"]' }))
@@ -772,7 +772,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -787,7 +787,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      let list = getByRole('listbox')
+      const list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('tucson', { selector: '[role="option"]' }))
@@ -811,7 +811,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -852,7 +852,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       // @ts-ignore
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -949,7 +949,7 @@ describe('component: Select', (): void => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -1044,7 +1044,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       expect(trigger).toHaveTextContent('superior')
       fireEvent.click(trigger)
       rerender(
@@ -1092,7 +1092,7 @@ describe('component: Select', (): void => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -1118,7 +1118,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -1153,7 +1153,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -1243,7 +1243,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       fireEvent.click(trigger)
       rerender(
         <StyleProvider>
@@ -1287,7 +1287,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      const trigger: HTMLElement = getByRole('button')
       expect(trigger).toHaveTextContent('boolestcoolest')
       fireEvent.click(trigger)
       rerender(

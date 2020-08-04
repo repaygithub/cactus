@@ -219,7 +219,12 @@ const DataGridContainer = (): ReactElement => {
         <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
         <DataGrid.Column>
           {(rowData): ReactElement => (
-            <SplitButton onSelectMainAction={(): void => {}} mainActionLabel="Edit">
+            <SplitButton
+              onSelectMainAction={(): void => {
+                return
+              }}
+              mainActionLabel="Edit"
+            >
               <SplitButton.Action
                 onSelect={(): void => {
                   clone(rowData)

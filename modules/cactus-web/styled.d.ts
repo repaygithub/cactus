@@ -8,7 +8,7 @@ declare module 'styled-components' {
   export type StyledComponentType<P> = StyledComponent<
     React.FunctionComponent<P>,
     DefaultTheme,
-    {},
+    Record<string, unknown>,
     never
   >
 }

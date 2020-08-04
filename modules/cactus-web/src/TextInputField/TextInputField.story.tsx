@@ -11,7 +11,7 @@ const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 const InputValidator = (): React.ReactElement => {
   const [input, setInput] = useState('')
 
-  let success = input.length > 5 ? 'Your input was successful' : undefined
+  const success = input.length > 5 ? 'Your input was successful' : undefined
 
   return (
     <TextInputField

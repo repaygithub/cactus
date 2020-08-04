@@ -34,7 +34,7 @@ const withFeatureFlags = <FeatureFlags extends string[], Props extends Record<st
             flags[key] = Boolean(featureFlags[key])
           }
         }
-        let propsWithFlags: Props = { ...props, ...flags }
+        const propsWithFlags: Props = { ...props, ...flags }
         return <Component {...propsWithFlags} />
       }}
     </FeatureFlagContext.Consumer>

@@ -165,7 +165,7 @@ const PropsTable: React.FC<PropsTableProps> = ({
     if (docItem === undefined) {
       return {}
     }
-    let value = docItem.value
+    const value = docItem.value
     let doc: ComponentDoc | undefined = value.find(
       (item): boolean => item.displayName === component.displayName
     )
@@ -180,7 +180,7 @@ const PropsTable: React.FC<PropsTableProps> = ({
     for (let i = 0; i < props.length; ++i) {
       const prop = props[i]
       if (prop.parent) {
-        let sourceFile = prop.parent.fileName
+        const sourceFile = prop.parent.fileName
         if (
           sourceFile.endsWith(componentName + '.tsx') ||
           sourceFile.endsWith(component.displayName + '.tsx') ||

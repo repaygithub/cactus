@@ -7,14 +7,14 @@ import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import FileInput, { FileInputProps, FileObject } from '../FileInput/FileInput'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
-import Label from '../Label/Label'
+import Label, { LabelProps } from '../Label/Label'
 import Tooltip from '../Tooltip/Tooltip'
 import { Omit } from '../types'
 
 interface FileInputFieldProps extends FileInputProps, MarginProps {
   className?: string
   label: React.ReactNode
-  labelProps?: object
+  labelProps?: LabelProps
   tooltip?: string
 }
 

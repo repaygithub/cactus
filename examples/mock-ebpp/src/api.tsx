@@ -31,7 +31,7 @@ export const fetchAccount = (id: string | undefined): Account | undefined => {
 }
 
 export const fetchPaymentHistory = (): PaymentData[] => {
-  let payments: PaymentData[] = []
+  const payments: PaymentData[] = []
 
   accounts.forEach((account: Account): void => {
     account.payments.forEach((payment: Payment): void => {
@@ -49,6 +49,6 @@ export const fetchPaymentHistory = (): PaymentData[] => {
   return payments
 }
 
-export const post = (data: object): void => {
+export const post = (data: { [k: string]: any }): void => {
   ;(window as any).apiData = data
 }

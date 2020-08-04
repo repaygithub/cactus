@@ -58,7 +58,7 @@ interface I18nControllerOptions {
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
 
 export default abstract class BaseI18nController {
-  public lang: string = ''
+  public lang = ''
   public defaultLang: string
   private _supportedLangs: string[]
   private _languages: string[] = []
@@ -154,7 +154,7 @@ export default abstract class BaseI18nController {
     section?: string
     id: string
     lang?: string
-  }): [string | null, object] {
+  }): [string | null, { [k: string]: any }] {
     const bundles = this._getDict()
     const key = section === 'global' ? id : `${section}__${id}`
     if (bundles !== undefined) {
@@ -178,8 +178,8 @@ export default abstract class BaseI18nController {
       }
       const message = bundle.getMessage(key)
       let text: string | null = null
-      let attrs: { [key: string]: string } = {}
-      let errors: any[] = []
+      const attrs: { [key: string]: string } = {}
+      const errors: any[] = []
       if (message?.attributes) {
         Object.entries(message.attributes).forEach(([attr, value]): void => {
           attrs[attr] = bundle.formatPattern(value, args, errors)

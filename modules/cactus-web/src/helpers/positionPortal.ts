@@ -22,7 +22,7 @@ function positionPortal(
   if (!isOpen || triggerRect === undefined || triggerRect === null) {
     return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
   }
-  let { offset, scrollbarWidth } = defOptions(options)
+  let { offset, scrollbarWidth } = defOptions(options) //eslint-disable-line prefer-const
   if (scrollbarWidth === undefined) {
     scrollbarWidth = 0
   }
@@ -30,7 +30,7 @@ function positionPortal(
   const scrollX = getScrollX()
 
   // default assumes no collisions bottom
-  let style: React.CSSProperties = {
+  const style: React.CSSProperties = {
     top: scrollY + triggerRect.top + triggerRect.height + offset + 'px',
     left: scrollX + triggerRect.left + 'px',
     width: triggerRect.width + 'px',

@@ -11,8 +11,12 @@ describe('Modal variant is warning', (): void => {
     const { baseElement } = render(
       <StyleProvider>
         <ConfirmModal
-          onConfirm={(): void => {}}
-          onClose={(): void => {}}
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
           isOpen={true}
           variant="warning"
         />
@@ -27,8 +31,12 @@ describe('Modal variant is success', (): void => {
     const { baseElement } = render(
       <StyleProvider>
         <ConfirmModal
-          onConfirm={(): void => {}}
-          onClose={(): void => {}}
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
           isOpen={true}
           variant="success"
         />
@@ -43,8 +51,12 @@ describe('Modal variant is danger', (): void => {
     const { baseElement } = render(
       <StyleProvider>
         <ConfirmModal
-          onConfirm={(): void => {}}
-          onClose={(): void => {}}
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
           isOpen={true}
           variant="danger"
         />
@@ -60,8 +72,12 @@ describe('Modal renders TextInput and Description', (): void => {
     const { baseElement, getByTestId } = render(
       <StyleProvider>
         <ConfirmModal
-          onConfirm={(): void => {}}
-          onClose={(): void => {}}
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
           isOpen={true}
           variant="danger"
         >

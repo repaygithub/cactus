@@ -178,15 +178,15 @@ const ValueSwitch = (props: {
   useLayoutEffect((): void => {
     if (spanRef.current !== null && moreRef.current !== null && shouldRenderAll) {
       setPrevValue(valueString)
-      let parentRect = spanRef.current.getBoundingClientRect()
-      let numberChildren = spanRef.current.childNodes.length
+      const parentRect = spanRef.current.getBoundingClientRect()
+      const numberChildren = spanRef.current.childNodes.length
       let index =
         numToRender < numberChildren && isElement(spanRef.current.childNodes[numToRender])
           ? numToRender
           : 0
       let child: any = spanRef.current.childNodes[index] as HTMLElement
       let childRect = child.getBoundingClientRect()
-      let direction = doesChildOverflow(parentRect, childRect) ? -1 : 1
+      const direction = doesChildOverflow(parentRect, childRect) ? -1 : 1
       const moreRect = moreRef.current.getBoundingClientRect()
       while (index >= 0 && index < numberChildren) {
         child = spanRef.current.childNodes[index]
@@ -573,7 +573,7 @@ function positionList(
   }
 
   // default assumes no collisions bottom
-  let style: React.CSSProperties = {
+  const style: React.CSSProperties = {
     top: scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
     left: scrollX + triggerRect.left + 'px',
     width: triggerRect.width + 'px',
@@ -625,11 +625,11 @@ class List extends React.Component<ListProps, ListState> {
   private listRef: HTMLUListElement | null = null
   private mobileInputRef = React.createRef<HTMLInputElement>()
 
-  private pendingChars: string = ''
+  private pendingChars = ''
   private keyClear: number | undefined
-  private searchIndex: number = 0
+  private searchIndex = 0
   private scrollClear: number | undefined
-  private didScroll: boolean = false
+  private didScroll = false
 
   /** Start List event handlers */
 
@@ -735,7 +735,7 @@ class List extends React.Component<ListProps, ListState> {
   private findOptionToFocus(key: number): ExtendedOptionType | null {
     const character = String.fromCharCode(key)
     const options = this.state.options
-    let selected = this.getActiveOpt()
+    const selected = this.getActiveOpt()
     if (!this.pendingChars && selected !== null) {
       this.searchIndex = getSelectedIndex(this.state.options, selected.value)
     }
@@ -856,8 +856,8 @@ class List extends React.Component<ListProps, ListState> {
   public componentDidUpdate(): void {
     if (this.props.isOpen) {
       window.requestAnimationFrame((): void => {
-        let listEl = this.listRef
-        let activeDescendant = this.props.comboBox
+        const listEl = this.listRef
+        const activeDescendant = this.props.comboBox
           ? this.props.activeDescendant
           : this.state.activeDescendant
 
@@ -871,13 +871,13 @@ class List extends React.Component<ListProps, ListState> {
         if (listEl === null || activeDescendant === '') {
           return
         }
-        let optionEl: HTMLElement | null = document.getElementById(activeDescendant)
+        const optionEl: HTMLElement | null = document.getElementById(activeDescendant)
         if (optionEl === null) {
           return
         }
         if (listEl.scrollHeight > listEl.clientHeight) {
-          var scrollBottom = listEl.clientHeight + listEl.scrollTop
-          var optionBottom = optionEl.offsetTop + optionEl.offsetHeight
+          const scrollBottom = listEl.clientHeight + listEl.scrollTop
+          const optionBottom = optionEl.offsetTop + optionEl.offsetHeight
           if (optionBottom > scrollBottom) {
             listEl.scrollTop = optionBottom - listEl.clientHeight
             this.scrolled()
@@ -932,11 +932,11 @@ class List extends React.Component<ListProps, ListState> {
                 >
                   {options.map(
                     (opt): React.ReactElement => {
-                      let optId = opt.id
-                      let isSelected = opt.isSelected
+                      const optId = opt.id
+                      const isSelected = opt.isSelected
                       let ariaSelected: boolean | 'true' | 'false' | undefined =
                         isSelected || undefined
-                      let isCreateNewOption =
+                      const isCreateNewOption =
                         comboBox && optId === `create-${this.state.searchValue}`
                       // multiselectable should have aria-select©ed on all options
                       if (multiple) {
@@ -1031,8 +1031,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     currentTriggerWidth: 0,
     extraOptions: [],
   }
-  private pendingChars: string = ''
-  private searchIndex: number = -1
+  private pendingChars = ''
+  private searchIndex = -1
   private keyClear: number | undefined
   private scrollClear: number | undefined
   private listRef = React.createRef<List>()
@@ -1065,7 +1065,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     state: Readonly<SelectState>
   ): Partial<SelectState> | null {
     if (props.value !== undefined && props.value !== state.value) {
-      let newState: Partial<SelectState> = { value: props.value }
+      const newState: Partial<SelectState> = { value: props.value }
       return newState
     }
     return null
@@ -1166,7 +1166,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (target.getAttribute('role') === 'option') {
       event.preventDefault()
       const activeId = target.id as string
-      let active = this.getExtOptions().find((o): boolean => o.id === activeId)
+      const active = this.getExtOptions().find((o): boolean => o.id === activeId)
 
       this.raiseChange(active || null)
       if (!this.props.multiple) {
@@ -1277,7 +1277,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END event handlers */
   /** START helpers */
 
-  private raiseChange = (option: OptionType | null, onlyAdd: boolean = false): void => {
+  private raiseChange = (option: OptionType | null, onlyAdd = false): void => {
     if (option === null) {
       return
     }
@@ -1408,8 +1408,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     let memo = this.props.options.map(
       (o): ExtendedOptionType => {
-        let opt = asOption(o)
-        let extendedOpt: ExtendedOptionType = {
+        const opt = asOption(o)
+        const extendedOpt: ExtendedOptionType = {
           ...opt,
           id: getOptionId(selectId, opt),
           isSelected: this.isSelected(opt),
@@ -1445,7 +1445,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END helpers */
 
   public render(): React.ReactElement {
-    let {
+    const {
       name,
       id,
       disabled,
@@ -1463,9 +1463,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       value: propsValue,
       ...rest
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
-    let { isOpen, searchValue, activeDescendant } = this.state
-    let options = this.getExtOptions()
-    let noOptsDisable = !comboBox && options.length === 0
+    const { isOpen, searchValue, activeDescendant } = this.state
+    const options = this.getExtOptions()
+    const noOptsDisable = !comboBox && options.length === 0
 
     return (
       <div className={className}>

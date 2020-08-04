@@ -100,7 +100,7 @@ export const TOKEN_SETTERS: { [token in FormatTokenType]: (date: Date, value: st
 }
 
 function matchAll(re: RegExp, str: string): string[] {
-  let found: string[] = []
+  const found: string[] = []
   let m: RegExpExecArray | null = null
   while ((m = re.exec(str))) {
     found.push(m[1])
@@ -181,7 +181,7 @@ export function getDefaultFormat(type: DateType): string {
 }
 
 export function formatDate(date: Date, format: string): string {
-  let breakup = parseFormat(format)
+  const breakup = parseFormat(format)
   return breakup
     .map((token): string => {
       if (TOKEN_FORMATTERS.hasOwnProperty(token)) {
@@ -204,7 +204,7 @@ function asOptions(formatOrOpts?: string | Partial<PartialDateOpts>): PartialDat
   }
   if (!result.type) {
     if (result.format) {
-      let format = result.format
+      const format = result.format
       if (format.includes('YYYY') || format.includes('dd')) {
         result.type = 'date'
         if (format.includes('h') || format.includes('H')) {
@@ -231,8 +231,8 @@ const __LOCALE_SPOKEN_FORMATS_CACHE__: {
 } = {}
 
 export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYear()): number {
-  let firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
-  let lastOfMonth = new Date(+firstOfMonth)
+  const firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
+  const lastOfMonth = new Date(+firstOfMonth)
   lastOfMonth.setMonth(month + 1, 1)
   lastOfMonth.setDate(0)
   return lastOfMonth.getDate()
@@ -270,7 +270,7 @@ export class PartialDate implements FormatTokenMap {
   private minutes?: number
   private period?: string
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get M() {
     return this.month === undefined ? '' : String(this.month + 1)
   }
@@ -283,7 +283,7 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get MM() {
     return this.month === undefined ? '' : this.pad(this.month + 1)
   }
@@ -292,7 +292,7 @@ export class PartialDate implements FormatTokenMap {
     this.M = value
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get d() {
     return this.toRender(this.day, 1)
   }
@@ -305,7 +305,7 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get dd() {
     return this.toRender(this.day, 2)
   }
@@ -314,7 +314,7 @@ export class PartialDate implements FormatTokenMap {
     this.d = value
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get YYYY() {
     return this.toRender(this.year, 4)
   }
@@ -327,12 +327,12 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get h() {
     if (this.hours === undefined) {
       return ''
     }
-    let hours = this.hours % 12
+    const hours = this.hours % 12
     return String(hours === 0 ? 12 : hours)
   }
 
@@ -340,17 +340,17 @@ export class PartialDate implements FormatTokenMap {
     if (value === undefined) {
       this.hours = value
     } else {
-      let adj = this.hours && this.hours >= 12 ? 12 : 0
+      const adj = this.hours && this.hours >= 12 ? 12 : 0
       this.setHours((Number(value) % 13) + adj)
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get hh() {
     if (this.hours === undefined) {
       return ''
     }
-    let hours = this.hours % 12
+    const hours = this.hours % 12
     return this.toRender(hours === 0 ? 12 : hours, 2)
   }
 
@@ -358,7 +358,7 @@ export class PartialDate implements FormatTokenMap {
     this.h = value
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get H() {
     return this.toRender(this.hours, 1)
   }
@@ -373,7 +373,7 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get HH() {
     return this.pad(this.hours)
   }
@@ -382,7 +382,7 @@ export class PartialDate implements FormatTokenMap {
     this.H = value
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get mm() {
     return this.pad(this.minutes)
   }
@@ -395,7 +395,7 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get aa() {
     return this.period || ''
   }
@@ -490,7 +490,7 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public parse(dateStr: string, format: string = this._format): PartialDate {
-    let parsedFormat = parseFormat(format)
+    const parsedFormat = parseFormat(format)
     let cursor = 0
     for (const token of parsedFormat) {
       if (isToken(token)) {
@@ -514,7 +514,7 @@ export class PartialDate implements FormatTokenMap {
     let result = ''
     for (const token of parsed) {
       if (isToken(token)) {
-        let val = this[token]
+        const val = this[token]
         result += val !== '' ? val : repeat('#', token.length)
       } else {
         result += token
@@ -574,7 +574,7 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public toDate(): Date {
-    let date = new Date()
+    const date = new Date()
     date.setFullYear(this.getYear(), this.getMonth(), this.getDate())
     date.setHours(this.getHours(), this.getMinutes(), 0, 0)
     return date
@@ -582,10 +582,10 @@ export class PartialDate implements FormatTokenMap {
 
   public isValid(): boolean {
     const type = this._type
-    let isValidDate =
+    const isValidDate =
       type === 'time' ||
       ([this.year, this.month, this.day].every(isNumber) && this.isDayOfMonth(this.day || 0))
-    let isValidTime =
+    const isValidTime =
       type === 'date' ||
       (this.hours !== undefined &&
         this.minutes !== undefined &&
@@ -595,7 +595,7 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public isDayOfMonth(day: number): boolean {
-    let date = new Date(this.getYear(), this.getMonth(), 1)
+    const date = new Date(this.getYear(), this.getMonth(), 1)
     date.setDate(day)
     return date.getMonth() === this.getMonth()
   }
@@ -615,7 +615,7 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public clone(): PartialDate {
-    let pd = new PartialDate('', {
+    const pd = new PartialDate('', {
       format: this._format,
       type: this._type,
       locale: this._locale,
@@ -641,8 +641,8 @@ export class PartialDate implements FormatTokenMap {
       if (isNaN(+date)) {
         return new PartialDate('', formatOrOpts)
       } else {
-        let opts = asOptions(formatOrOpts)
-        let dateStr = formatDate(date, opts.format)
+        const opts = asOptions(formatOrOpts)
+        const dateStr = formatDate(date, opts.format)
         return new PartialDate(dateStr, opts)
       }
     } else {
@@ -659,10 +659,10 @@ export function parseDate(dateStr: string, format?: string): Date {
   if (!format) {
     return new Date(dateStr)
   }
-  let parsedFormat = parseFormat(format)
+  const parsedFormat = parseFormat(format)
   if (parsedFormat.length > 0) {
     let cursor = 0
-    let partial = new PartialDate('', format)
+    const partial = new PartialDate('', format)
     for (const token of parsedFormat) {
       if (isToken(token)) {
         let value = dateStr.charAt(cursor)

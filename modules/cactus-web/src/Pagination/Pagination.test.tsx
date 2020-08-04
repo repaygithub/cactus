@@ -151,13 +151,13 @@ describe('component: Pagination', (): void => {
     )
 
     const links = getAllByRole('link')
-    for (let link of links.slice(0, 3)) {
+    for (const link of links.slice(0, 3)) {
       userEvent.click(link)
     }
     expect(func).not.toHaveBeenCalled()
     userEvent.click(links[3])
     expect(func).toHaveBeenCalledWith(2)
-    for (let link of getAllByRole('link').slice(3)) {
+    for (const link of getAllByRole('link').slice(3)) {
       userEvent.click(link)
     }
     expect(func).toHaveBeenCalledTimes(1)

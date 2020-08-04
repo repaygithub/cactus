@@ -14,7 +14,9 @@ describe('Modal is open when isOpen=true', (): void => {
           isOpen={true}
           modalLabel="Modal Label"
           closeLabel="Close Label"
-          onClose={(): void => {}}
+          onClose={(): void => {
+            return
+          }}
         />
       </StyleProvider>
     )
@@ -27,7 +29,12 @@ describe('Modal is closed when isOpen=false', (): void => {
   test('snapshot', (): void => {
     const { baseElement } = render(
       <StyleProvider>
-        <Modal isOpen={false} onClose={(): void => {}} />
+        <Modal
+          isOpen={false}
+          onClose={(): void => {
+            return
+          }}
+        />
       </StyleProvider>
     )
 
@@ -44,7 +51,9 @@ describe('Aria-labels applied correctly', (): void => {
           isOpen={true}
           modalLabel="Modal Label"
           closeLabel="Close Label"
-          onClose={(): void => {}}
+          onClose={(): void => {
+            return
+          }}
         />
       </StyleProvider>
     )
@@ -63,7 +72,9 @@ describe('Can render content as children', (): void => {
           isOpen={true}
           modalLabel="Modal Label"
           closeLabel="Close Label"
-          onClose={(): void => {}}
+          onClose={(): void => {
+            return
+          }}
         >
           <TextInput placeholder="placeHolder" data-testid="child" />
         </Modal>

@@ -233,7 +233,7 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
     ...rest
   } = props
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  let mainActionRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
+  const mainActionRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
   return (
     <div className={className} {...rest}>
       <MainActionButton

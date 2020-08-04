@@ -196,8 +196,8 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactE
         {fields.map(
           (field): ReactElement => {
             const Field = fieldTypeMap[field.type]
-            let { validator, ...rest } = field
-            let props = rest as React.ComponentPropsWithoutRef<typeof Field>
+            const { validator, ...rest } = field
+            const props = rest as React.ComponentPropsWithoutRef<typeof Field>
             props.value = values[field.name]
             props.onChange = handleChange
             props.onBlur = handleBlur

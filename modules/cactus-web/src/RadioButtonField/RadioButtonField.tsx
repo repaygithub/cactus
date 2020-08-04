@@ -7,7 +7,7 @@ import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
-import Label from '../Label/Label'
+import Label, { LabelProps } from '../Label/Label'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
@@ -16,7 +16,7 @@ export interface RadioButtonFieldProps
     MarginProps {
   label: React.ReactNode
   name: string
-  labelProps?: object
+  labelProps?: LabelProps
   id?: string
   onChange?: FieldOnChangeHandler<string>
   onFocus?: FieldOnFocusHandler

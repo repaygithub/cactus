@@ -6,6 +6,7 @@ import { margin, MarginProps } from 'styled-system'
 import { AccessibleField } from '../AccessibleField/AccessibleField'
 import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
+import { LabelProps } from '../Label/Label'
 import TextArea, { TextAreaProps } from '../TextArea/TextArea'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
@@ -14,7 +15,7 @@ interface TextAreaFieldProps
     Omit<TextAreaProps, 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
   label: React.ReactNode
   name: string
-  labelProps?: object
+  labelProps?: LabelProps
   success?: string
   warning?: string
   error?: string

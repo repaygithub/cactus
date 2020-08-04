@@ -8,14 +8,14 @@ import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
-import Label from '../Label/Label'
+import Label, { LabelProps } from '../Label/Label'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'onBlur' | 'onFocus' | 'disabled'>,
     MarginProps {
   label: React.ReactNode
-  labelProps?: object
+  labelProps?: LabelProps
   id?: string
   name: string
   onChange?: FieldOnChangeHandler<boolean>

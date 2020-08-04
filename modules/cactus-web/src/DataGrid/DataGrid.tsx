@@ -32,8 +32,12 @@ interface DataColumn {
 }
 
 const DataGridContext = createContext<DataGridContextType>({
-  addDataColumn: (): void => {},
-  addColumn: (): void => {},
+  addDataColumn: (): void => {
+    return
+  },
+  addColumn: (): void => {
+    return
+  },
 })
 
 interface DataGridProps extends MarginProps {

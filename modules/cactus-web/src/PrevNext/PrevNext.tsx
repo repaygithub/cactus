@@ -73,7 +73,9 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   disablePrev = false,
   disableNext = false,
   linkAs,
-  onNavigate = (): void => {},
+  onNavigate = (): void => {
+    return
+  },
   prevText,
   nextText,
 }): React.ReactElement => (
@@ -114,7 +116,9 @@ PrevNext.propTypes = {
 }
 
 PrevNext.defaultProps = {
-  onNavigate: (): void => {},
+  onNavigate: (): void => {
+    return
+  },
   prevText: 'Prev',
   nextText: 'Next',
 }

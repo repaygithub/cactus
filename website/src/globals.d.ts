@@ -64,7 +64,7 @@ declare module '*.png' {
 }
 
 declare module '@mdx-js/react' {
-  var MDXProvider: any
+  const MDXProvider: any
   export { MDXProvider }
 }
 

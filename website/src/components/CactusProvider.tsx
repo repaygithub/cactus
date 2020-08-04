@@ -25,11 +25,15 @@ interface ThemeArgsContextType {
   theme: CactusTheme
 }
 const ThemeArgsContext = React.createContext<ThemeArgsContextType>({
-  update: (): void => {},
+  update: (): void => {
+    return
+  },
   theme: cactusTheme,
 })
 
-export function CactusProvider({ children }: React.PropsWithChildren<{}>): ReactElement {
+export function CactusProvider({
+  children,
+}: React.PropsWithChildren<Record<string, unknown>>): ReactElement {
   const [themeArgs, setThemeArgs] = useState<GeneratorOptions>({ primaryHue: 200 })
   const theme = useMemo((): CactusTheme => generateTheme(themeArgs), [themeArgs])
   const contextValue = useMemo((): ThemeArgsContextType => ({ theme, update: setThemeArgs }), [
@@ -97,7 +101,7 @@ export function CactusThemeWidget(): ReactElement {
           if (values.type === 'use_hue') {
             update({ primaryHue: parseInt(values.primaryHue) })
           } else {
-            let { primary, secondary } = values
+            const { primary, secondary } = values
             update({ primary, secondary })
           }
         }

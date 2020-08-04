@@ -57,7 +57,7 @@ const cactusPosition: Position = (
   }
   const scrollX = getScrollX()
   const scrollY = getScrollY()
-  let styles: Styles = ({
+  const styles: Styles = ({
     left: triggerRect.left + scrollX,
     top: triggerRect.top + triggerRect.height + scrollY,
   } as unknown) as DOMRect

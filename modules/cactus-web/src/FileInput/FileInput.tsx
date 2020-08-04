@@ -384,7 +384,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 
             return new Promise<FileObject>((resolve): void => {
               reader.onload = (): void => {
-                let dataURL = reader.result as string
+                const dataURL = reader.result as string
                 if (file.size > 250000000 && dataURL === '') {
                   const errorMsg = onError(NOT_READABLE_ERR)
                   resolve({

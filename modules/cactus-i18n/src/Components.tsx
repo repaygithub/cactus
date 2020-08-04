@@ -27,8 +27,8 @@ const I18nProvider: React.FC<I18nProviderProps> = (props): ReactElement => {
     controller.setLang(props.lang)
   }
   const lang = controller.lang
-  let [loadingState, setLoading] = useState({})
-  let i18nContext: I18nContextType | null = {
+  const [loadingState, setLoading] = useState({})
+  const i18nContext: I18nContextType | null = {
     controller: controller,
     lang,
     section: 'global',
@@ -185,8 +185,8 @@ I18nElement.propTypes = {
 }
 
 interface I18nResourceProps extends I18nTextProps {
-  render?: (message: string, attributes?: object | null) => React.ReactNode
-  children?: (message: string, attributes?: object | null) => React.ReactNode
+  render?: (message: string, attributes?: { [k: string]: any } | null) => React.ReactNode
+  children?: (message: string, attributes?: { [k: string]: any } | null) => React.ReactNode
 }
 
 const I18nResource: React.FC<I18nResourceProps> = (props): ReactElement => {

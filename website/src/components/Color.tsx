@@ -54,8 +54,8 @@ function ColorDisplay({ displayName, color, textColor }: ColorDisplayProps): Rea
   } else {
     hslaStr = color
   }
-  let c = Color(hslaStr)
-  let [hue, saturation, luminosity, alpha] = c.array()
+  const c = Color(hslaStr)
+  const [hue, saturation, luminosity, alpha] = c.array()
   const isWhite = hue === 0 && saturation === 0 && luminosity === 100
   return (
     <Box
@@ -95,8 +95,8 @@ interface ColorBoxProps {
 
 export function ColorBox({ name, title, children }: ColorBoxProps): React.ReactElement {
   const theme = useCactusTheme()
-  let displayName = title || upperCaseFirst(name)
-  let variant = theme.colorStyles[name]
+  const displayName = title || upperCaseFirst(name)
+  const variant = theme.colorStyles[name]
   return (
     <Box px={4} py={3} width="240px">
       <ColorDisplay
@@ -359,7 +359,7 @@ export function AccessibilityBox({
   const borderColor = theme.colors[compareColor]
   const borderStyle = `1px solid ${borderColor}`
   const hslaStr = theme.colors[color]
-  let thisColor = new Color(hslaStr)
+  const thisColor = new Color(hslaStr)
   const contrastToWhite = thisColor.contrast(whiteColor)
   const contrastToDarkestContrast = thisColor.contrast(new Color(theme.colors.darkestContrast))
   return (

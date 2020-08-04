@@ -22,7 +22,7 @@ const accordionVariants: AccordionVariants[] = ['simple', 'outline']
 
 const initializeContent = (): ContentManagerState => {
   let number = 4
-  let state: ContentManagerState = {}
+  const state: ContentManagerState = {}
   do {
     state[number] = 0
   } while (--number >= 0)
@@ -61,7 +61,7 @@ const ContentBlocks = ({ number }: { number: number }): ReactElement | null => {
   if (number < 1) {
     return null
   }
-  let children = []
+  const children = []
   for (let i = 0; i < number; ++i) {
     children.push(
       <Text key={i} tabIndex={0}>
@@ -270,10 +270,10 @@ storiesOf('Accordion', module)
             <Box width="400px" maxWidth="90vw" height="100vh" py={5} style={{ overflowY: 'auto' }}>
               <Accordion.Provider maxOpen={1}>
                 {((): JSX.Element[] => {
-                  let blocks = []
+                  const blocks = []
                   let index = 0
                   while (typeof state[index] === 'number') {
-                    let group = index
+                    const group = index
                     blocks.push(
                       <Accordion key={group}>
                         <Accordion.Header>

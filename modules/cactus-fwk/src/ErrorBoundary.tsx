@@ -26,7 +26,11 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   public static propTypes = {
     onError: PropTypes.func.isRequired,
-    errorView: (props: any, propName: any, componentName: any): Error | null => {
+    errorView: (
+      props: { [k: string]: any },
+      propName: string,
+      componentName: string
+    ): Error | null => {
       const prop = props[propName]
       if (prop !== undefined && typeof prop !== 'string' && typeof prop !== 'function') {
         return new Error(

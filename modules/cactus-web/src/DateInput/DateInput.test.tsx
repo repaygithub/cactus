@@ -31,8 +31,8 @@ describe('component: DateInput', (): void => {
 
   describe('can be controlled', (): void => {
     test('with value as a Date', (): void => {
-      let value = new Date(2018, 8, 30)
-      let { getByLabelText, rerender } = render(
+      const value = new Date(2018, 8, 30)
+      const { getByLabelText, rerender } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" value={new Date(+value)} />
         </StyleProvider>
@@ -59,7 +59,7 @@ describe('component: DateInput', (): void => {
       const handleChange = jest.fn((_, v): void => {
         value = v
       })
-      let { getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
         </StyleProvider>
@@ -75,8 +75,8 @@ describe('component: DateInput', (): void => {
     })
 
     test('with value as a string', (): void => {
-      let value = new PartialDate('2018-09-30', 'YYYY-MM-dd')
-      let { getByLabelText, rerender } = render(
+      const value = new PartialDate('2018-09-30', 'YYYY-MM-dd')
+      const { getByLabelText, rerender } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" format="YYYY-MM-dd" value={value.format()} />
         </StyleProvider>
@@ -110,7 +110,7 @@ describe('component: DateInput', (): void => {
       const handleChange = jest.fn((_, v): void => {
         value = v
       })
-      let { getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
         </StyleProvider>
@@ -129,10 +129,10 @@ describe('component: DateInput', (): void => {
   describe('using inputs', (): void => {
     test('the up arrow increases value', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      let onChange = jest.fn((_, v): void => {
+      const onChange = jest.fn((_, v): void => {
         value = v
       })
-      let { getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput
             name="date-input"
@@ -142,7 +142,7 @@ describe('component: DateInput', (): void => {
           />
         </StyleProvider>
       )
-      let MM = getByLabelText('month')
+      const MM = getByLabelText('month')
       // @ts-ignore
       fireEvent.keyDown(MM, { key: 'ArrowUp', target: MM })
 
@@ -151,10 +151,10 @@ describe('component: DateInput', (): void => {
 
     test('the down arrow decreases value', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      let onChange = jest.fn((_, v): void => {
+      const onChange = jest.fn((_, v): void => {
         value = v
       })
-      let { getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput
             name="date-input"
@@ -164,7 +164,7 @@ describe('component: DateInput', (): void => {
           />
         </StyleProvider>
       )
-      let dd = getByLabelText('day of month')
+      const dd = getByLabelText('day of month')
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowDown', target: dd })
 
@@ -173,10 +173,10 @@ describe('component: DateInput', (): void => {
 
     test('the down arrow will loop when value is 1', async (): Promise<void> => {
       let value = new Date(2018, 8, 1)
-      let onChange = jest.fn((_, v): void => {
+      const onChange = jest.fn((_, v): void => {
         value = v
       })
-      let { getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput
             name="date-input"
@@ -186,7 +186,7 @@ describe('component: DateInput', (): void => {
           />
         </StyleProvider>
       )
-      let dd = getByLabelText('day of month')
+      const dd = getByLabelText('day of month')
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowDown', target: dd })
 
@@ -195,10 +195,10 @@ describe('component: DateInput', (): void => {
 
     test('the up arrow will loop when value is last day of month', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      let onChange = jest.fn((_, v): void => {
+      const onChange = jest.fn((_, v): void => {
         value = v
       })
-      let { getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput
             name="date-input"
@@ -208,7 +208,7 @@ describe('component: DateInput', (): void => {
           />
         </StyleProvider>
       )
-      let dd = getByLabelText('day of month')
+      const dd = getByLabelText('day of month')
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowUp', target: dd })
 
@@ -217,10 +217,10 @@ describe('component: DateInput', (): void => {
 
     test('looping works with February and leap year', async (): Promise<void> => {
       let value = new Date(2020, 1, 28)
-      let onChange = jest.fn((_, v): void => {
+      const onChange = jest.fn((_, v): void => {
         value = v
       })
-      let { getByLabelText, rerender } = render(
+      const { getByLabelText, rerender } = render(
         <StyleProvider>
           <DateInput
             name="date-input"
@@ -230,7 +230,7 @@ describe('component: DateInput', (): void => {
           />
         </StyleProvider>
       )
-      let dd = getByLabelText('day of month')
+      const dd = getByLabelText('day of month')
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowUp', target: dd })
 
@@ -270,7 +270,7 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      let portalTrigger = getByLabelText('Open date picker')
+      const portalTrigger = getByLabelText('Open date picker')
       act((): void => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
@@ -286,20 +286,20 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      let portalTrigger = getByLabelText('Open date picker')
+      const portalTrigger = getByLabelText('Open date picker')
       act((): void => {
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
       })
       await animationRender()
-      let today = PartialDate.from(new Date(), { type: 'date', format: 'YYYY-MM-dd' })
+      const today = PartialDate.from(new Date(), { type: 'date', format: 'YYYY-MM-dd' })
       expect(document.activeElement).toBe(getByText(today.toLocaleSpoken('date')).parentElement)
     })
 
     test('can select date from date picker and use month year selection', async (): Promise<
       void
     > => {
-      let handleChange = jest.fn()
+      const handleChange = jest.fn()
       const { getByLabelText, getByText } = render(
         <StyleProvider>
           <DateInput
@@ -311,13 +311,13 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      let portalTrigger = getByLabelText('Open date picker')
+      const portalTrigger = getByLabelText('Open date picker')
       act((): void => {
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
       })
       await animationRender()
-      let desiredDate = PartialDate.from('2018-03-23', { type: 'date', format: 'YYYY-MM-dd' })
+      const desiredDate = PartialDate.from('2018-03-23', { type: 'date', format: 'YYYY-MM-dd' })
       await act(
         async (): Promise<void> => {
           fireEvent.click(getByLabelText('Click to change month and year'))
@@ -339,7 +339,7 @@ describe('component: DateInput', (): void => {
      */
     describe('keyboard usage', (): void => {
       test('can navigate and select dates using the keyboard', async (): Promise<void> => {
-        let handleChange = jest.fn()
+        const handleChange = jest.fn()
         const { getByLabelText } = render(
           <StyleProvider>
             <DateInput
@@ -352,7 +352,7 @@ describe('component: DateInput', (): void => {
           </StyleProvider>
         )
 
-        let portalTrigger = getByLabelText('Open date picker')
+        const portalTrigger = getByLabelText('Open date picker')
         act((): void => {
           fireEvent.keyDown(portalTrigger, { key: ' ', keyCode: KeyCodes.SPACE })
           fireEvent.click(portalTrigger)
@@ -394,7 +394,7 @@ describe('component: DateInput', (): void => {
           </StyleProvider>
         )
 
-        let portalTrigger = getByLabelText('Open date picker')
+        const portalTrigger = getByLabelText('Open date picker')
         act((): void => {
           fireEvent.keyDown(portalTrigger, { key: ' ', keyCode: KeyCodes.SPACE })
           fireEvent.click(portalTrigger)
@@ -424,8 +424,10 @@ describe('component: DateInput', (): void => {
                 />
               </StyleProvider>
             )
-            // @ts-ignore
-            let selected = document.getElementById(monthList.getAttribute('aria-activedescendant'))
+            const selected = document.getElementById(
+              // @ts-ignore
+              monthList.getAttribute('aria-activedescendant')
+            )
             // @ts-ignore
             fireEvent.click(selected, {
               target: selected,
@@ -453,7 +455,7 @@ describe('component: DateInput', (): void => {
           </StyleProvider>
         )
 
-        let portalTrigger = getByLabelText('Open date picker')
+        const portalTrigger = getByLabelText('Open date picker')
         act((): void => {
           fireEvent.keyDown(portalTrigger, { key: ' ', keyCode: KeyCodes.SPACE })
           fireEvent.click(portalTrigger)
@@ -484,7 +486,7 @@ describe('component: DateInput', (): void => {
               </StyleProvider>
             )
             // @ts-ignore
-            let selected = document.getElementById(yearList.getAttribute('aria-activedescendant'))
+            const selected = document.getElementById(yearList.getAttribute('aria-activedescendant'))
             // @ts-ignore
             fireEvent.click(selected, {
               target: selected,
@@ -499,8 +501,8 @@ describe('component: DateInput', (): void => {
 
   describe('type=datetime', (): void => {
     test('renders all date and time inputs', (): void => {
-      let value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
-      let { getByLabelText } = render(
+      const value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
         </StyleProvider>
@@ -524,8 +526,8 @@ describe('component: DateInput', (): void => {
     })
 
     test('input type persists when value is Date and set externally', (): void => {
-      let value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
-      let { getByLabelText, rerender } = render(
+      const value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
+      const { getByLabelText, rerender } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
         </StyleProvider>
@@ -558,21 +560,21 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      let portalTrigger = getByLabelText('Open date picker')
+      const portalTrigger = getByLabelText('Open date picker')
       act((): void => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
       })
-      let hoursInputs = getAllByLabelText('hours')
-      let dialog = getByRole('dialog')
+      const hoursInputs = getAllByLabelText('hours')
+      const dialog = getByRole('dialog')
       expect(hoursInputs).toHaveLength(2)
       expect(dialog).not.toContainElement(hoursInputs[0])
       expect(dialog).toContainElement(hoursInputs[1])
     })
 
     test('can type into time input in portal', (): void => {
-      let value = PartialDate.from('2018-03-01 20:18', 'YYYY-MM-dd HH:mm')
+      const value = PartialDate.from('2018-03-01 20:18', 'YYYY-MM-dd HH:mm')
       const handleChange = jest.fn((_, update): void => {
         value.parse(update, 'YYYY-MM-dd HH:mm')
       })
@@ -604,7 +606,7 @@ describe('component: DateInput', (): void => {
         )
       }
 
-      let portalTrigger = getByLabelText('Open date picker')
+      const portalTrigger = getByLabelText('Open date picker')
       act((): void => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
@@ -628,8 +630,8 @@ describe('component: DateInput', (): void => {
 
   describe('type=time', (): void => {
     test('renders expeced time inputs', (): void => {
-      let value = '15:22'
-      let { getByLabelText } = render(
+      const value = '15:22'
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
         </StyleProvider>
@@ -643,8 +645,8 @@ describe('component: DateInput', (): void => {
     })
 
     test('does not render picker button', (): void => {
-      let value = '15:22'
-      let { getByLabelText } = render(
+      const value = '15:22'
+      const { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
         </StyleProvider>

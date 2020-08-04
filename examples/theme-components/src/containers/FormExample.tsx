@@ -55,7 +55,7 @@ const selectOptions = [
   { label: 'third option', value: 'third_option' },
   { label: 'fourth option', value: 'fourth_option' },
 ]
-const post = (data: object): void => {
+const post = (data: { [k: string]: any }): void => {
   ;(window as any).apiData = data
 }
 
@@ -77,7 +77,7 @@ const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
 
   const formatKey = (key: string): string => {
     const words = key.replace('_', ' ').split(' ')
-    let newWords: string[] = []
+    const newWords: string[] = []
 
     words.forEach((word): void => {
       newWords.push(word.charAt(0).toUpperCase() + word.slice(1))

@@ -20,7 +20,9 @@ interface AppRootProps {
   globalErrorView?: ErrorView
 }
 
-const noop = (): void => {}
+const noop = (): void => {
+  return
+}
 
 const AppRoot: React.FC<AppRootProps> = (props): React.ReactElement => {
   return (
@@ -32,7 +34,6 @@ const AppRoot: React.FC<AppRootProps> = (props): React.ReactElement => {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion
 AppRoot.propTypes = {
   featureFlags: PropTypes.objectOf(PropTypes.bool.isRequired),
   onError: PropTypes.func,

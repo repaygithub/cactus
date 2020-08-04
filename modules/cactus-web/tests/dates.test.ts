@@ -123,7 +123,7 @@ describe('date helpers', (): void => {
 
       test('correctly sets the year when year is less than 100', (): void => {
         const pd = new PartialDate('01/02/0004', 'MM/dd/YYYY')
-        let expected = new Date()
+        const expected = new Date()
         expected.setFullYear(4, 0, 2)
         expected.setHours(0, 0, 0, 0)
         expect(pd.toDate()).toEqual(expected)
@@ -132,7 +132,7 @@ describe('date helpers', (): void => {
       test('correctly updates the year when year becomes less than 100', (): void => {
         const pd = new PartialDate('01/02/2020', 'MM/dd/YYYY')
         pd.setYear(38)
-        let expected = new Date()
+        const expected = new Date()
         expected.setFullYear(38, 0, 2)
         expected.setHours(0, 0, 0, 0)
         expect(pd.toDate()).toEqual(expected)
@@ -142,7 +142,7 @@ describe('date helpers', (): void => {
         // Date is mocked to produce a consistent test which fails when the
         // minutes are close to the end of the hour and then the year changes
         // dramatically
-        let _Date = global.Date
+        const _Date = global.Date
         class MockDate extends Date {
           private constructor() {
             super()
@@ -165,7 +165,7 @@ describe('date helpers', (): void => {
             type: 'datetime',
           })
           pd.setYear(2)
-          let expected = new _Date()
+          const expected = new _Date()
           expected.setFullYear(2, 0, 2)
           expected.setHours(11, 53, 0, 0)
           expect(pd.toDate()).toEqual(expected)

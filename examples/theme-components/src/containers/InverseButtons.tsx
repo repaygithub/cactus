@@ -11,7 +11,7 @@ interface InverseButtonsState {
 }
 
 class InverseButtons extends Component<RouteComponentProps> {
-  public constructor(props: any) {
+  public constructor(props: RouteComponentProps) {
     super(props)
     this.handleOnClick = this.handleOnClick.bind(this)
   }

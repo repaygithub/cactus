@@ -10,7 +10,7 @@ interface ButtonsState {
 }
 
 class Buttons extends Component<RouteComponentProps> {
-  public constructor(props: any) {
+  public constructor(props: RouteComponentProps) {
     super(props)
     this.handleOnClick = this.handleOnClick.bind(this)
   }

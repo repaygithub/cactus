@@ -74,7 +74,7 @@ const getInitialState = (): State => ({
 
 const formatKey = (key: string): string => {
   const words = key.replace('_', ' ').split(' ')
-  let newWords: string[] = []
+  const newWords: string[] = []
 
   words.forEach((word): void => {
     newWords.push(word.charAt(0).toUpperCase() + word.slice(1))

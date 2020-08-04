@@ -74,15 +74,15 @@ const Faq = (props: RouteComponentProps): React.ReactElement => {
 
   const remove = (): void => {
     if (accordions.length > 0) {
-      let accordionsCopy = [...accordions]
+      const accordionsCopy = [...accordions]
       accordionsCopy.shift()
       setAccordions(accordionsCopy)
     }
   }
 
   const insert = (): void => {
-    let accordionsCopy = [...accordions]
-    let newAccordion = {
+    const accordionsCopy = [...accordions]
+    const newAccordion = {
       header: 'Lorem Ipsum?',
       body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
       tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum

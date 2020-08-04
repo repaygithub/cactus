@@ -7,13 +7,13 @@ class MockPromise {
   private _value: any
   private _hasThrown: boolean
 
-  public constructor(value?: any, hasThrown: boolean = false) {
+  public constructor(value?: unknown, hasThrown = false) {
     this._value = value
     this._hasThrown = hasThrown
   }
 
   public _call(value: any = this._value, hasThrown: boolean = this._hasThrown): void {
-    let callback = hasThrown ? this._catch : this._then
+    const callback = hasThrown ? this._catch : this._then
     let keepThrowing = false
     let nextValue: any
     if (callback !== null) {
@@ -45,11 +45,11 @@ class MockPromise {
     return (this._chain = new MockPromise())
   }
 
-  public static resolve(value: any): MockPromise {
+  public static resolve(value: unknown): MockPromise {
     return new MockPromise(value)
   }
 
-  public static reject(error: any): MockPromise {
+  public static reject(error: unknown): MockPromise {
     return new MockPromise(error, true)
   }
 }

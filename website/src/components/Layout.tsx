@@ -74,7 +74,7 @@ function addNode(group: MenuGroup, node: MenuItem): void {
 }
 
 function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
-  let group: MenuGroup = {
+  const group: MenuGroup = {
     order: 1,
     title: '',
     url: '/',
@@ -166,18 +166,22 @@ function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
 
 interface MenuContextType {
   state: string[]
-  open: Function
-  close: Function
+  open: (path: string) => void
+  close: (path: string) => void
 }
 const MenuContext = React.createContext<MenuContextType>({
   state: [],
-  open: (): void => {},
-  close: (): void => {},
+  open: (): void => {
+    return
+  },
+  close: (): void => {
+    return
+  },
 })
 
 const initialize = (location: WindowLocation): (() => string[]) => (): string[] => {
-  let state: string[] = []
-  let split = location.pathname.split('/').filter(Boolean)
+  const state: string[] = []
+  const split = location.pathname.split('/').filter(Boolean)
   for (let i = 0; i < split.length; ++i) {
     state.push('/' + split.slice(0, i).join('/') + '/')
   }
@@ -446,7 +450,7 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
 
   const [hasOverlay, setHasOverlay] = React.useState(checkShouldHaveOverlay)
   React.useEffect((): (() => void) => {
-    let handleResize = debounce((): void => {
+    const handleResize = debounce((): void => {
       setHasOverlay(checkShouldHaveOverlay())
     }, 200)
     window.addEventListener('resize', handleResize, false)
@@ -489,7 +493,7 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
       }
     }
   `)
-  let groups = React.useMemo((): MenuGroup => createMenuGroups(pages), [pages])
+  const groups = React.useMemo((): MenuGroup => createMenuGroups(pages), [pages])
 
   return (
     <React.Fragment>

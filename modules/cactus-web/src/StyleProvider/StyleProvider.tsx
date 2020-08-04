@@ -15,7 +15,7 @@ interface Process {
   env: Env
 }
 
-declare var process: Process
+declare let process: Process
 
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme

@@ -12,7 +12,8 @@
       "files": ["**/*.{ts,tsx}"],
       "extends": ["@repay/eslint-config/ts"],
       "rules": {
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off"
       }
     }
   ]

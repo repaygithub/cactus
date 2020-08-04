@@ -22,7 +22,7 @@ export const useI18nResource = (
   id: string,
   args?: Record<string, FluentVariable>,
   sectionOverride?: string
-): [string | null, object] => {
+): [string | null, { [k: string]: any }] => {
   const context = useContext(I18nContext)
   if (context === null) {
     return [null, {}]

@@ -74,7 +74,7 @@ describe('i18n functionality', (): void => {
       const esGlobalPromise = MockPromise.resolve([{ lang: 'es', ftl: '' }])
       //@ts-ignore
       i18nController.load = jest.fn((): MockPromise => esGlobalPromise)
-      let { container } = render(
+      const { container } = render(
         <I18nProvider lang="es" controller={i18nController}>
           <I18nText get="this_is_the_key">This is the default content.</I18nText>
         </I18nProvider>
@@ -334,7 +334,7 @@ key-for-no-people = blah blah blue stew`
         controller.load = jest.fn(
           ({ section }): MockPromise => (section === 'global' ? globalPromise : sectionPromise)
         )
-        let { container } = render(
+        const { container } = render(
           <I18nProvider controller={controller}>
             <I18nSection name="kleenex">
               <I18nText get="runny-nose" />
@@ -497,7 +497,7 @@ key-for-no-people = blah blah blue stew`
       controller.setDict('en-US', 'kleenex', `kleenex__key_for_the_people = We are NOT the people!`)
       let container
       act((): void => {
-        let tester = render(
+        const tester = render(
           <I18nProvider controller={controller}>
             <I18nSection name="kleenex">
               <I18nText get="key_for_the_people" section="global" />

@@ -70,7 +70,9 @@ const IS_FIREFOX = typeof window !== 'undefined' && window.navigator.userAgent.m
 const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
 
 const portalStyleOptions = { offset: 8 }
-const noop = function (): void {}
+const noop = function (): void {
+  return
+}
 const ALLOW_DEFAULT = ['Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
 
 function isOwnInput(target: any, container: Element): target is HTMLInputElement {
@@ -138,7 +140,7 @@ function arrowValueChange(
   value: PartialDate,
   key: 'ArrowUp' | 'ArrowDown'
 ): void {
-  let direction = key === 'ArrowUp' ? 1 : -1
+  const direction = key === 'ArrowUp' ? 1 : -1
   switch (token) {
     case 'YYYY': {
       value.setYear(value.getYear() + direction)
@@ -151,7 +153,7 @@ function arrowValueChange(
     }
     case 'd':
     case 'dd': {
-      let lastDate = value.getLastDayOfMonth()
+      const lastDate = value.getLastDayOfMonth()
       value.setDate(((value.getDate() - 1 + direction + lastDate) % lastDate) + 1)
       break
     }
@@ -477,13 +479,13 @@ function CalendarBase(props: CalendarProps): ReactElement {
     function (): CalendarDayDataType[][] {
       let weekIndex = 0
       let dayIndex = 0
-      let matrix: CalendarDayDataType[][] = []
+      const matrix: CalendarDayDataType[][] = []
 
       for (; weekIndex * 7 < days.length; ++weekIndex) {
         dayIndex = 0
-        let weekArr: CalendarDayDataType[] = []
+        const weekArr: CalendarDayDataType[] = []
         for (; dayIndex < 7; ++dayIndex) {
-          let date = days[weekIndex * 7 + dayIndex]
+          const date = days[weekIndex * 7 + dayIndex]
           const dateStrId = `${date.YYYY}-${date.MM}-${date.dd}`
           const isDisabled = typeof isValidDate === 'function' && !isValidDate(date.toDate())
           let dateDescriptor = date.toLocaleSpoken('date')
@@ -712,7 +714,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
     const locale = props.locale || getLocale()
     const type = props.type || 'date'
-    let format = props.format || getDefaultFormat(type)
+    const format = props.format || getDefaultFormat(type)
 
     this.state = {
       value: PartialDate.from(props.value, { format, locale, type }),
@@ -722,10 +724,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private _shouldFocusNext: boolean = false
-  private _lastInputKeyed: string = ''
-  private _shouldUpdateFocusDay: boolean = false
-  private _didClickButton: boolean = false
+  private _shouldFocusNext = false
+  private _lastInputKeyed = ''
+  private _shouldUpdateFocusDay = false
+  private _didClickButton = false
 
   private _inputWrapper = React.createRef<HTMLDivElement>()
   private _button = React.createRef<HTMLButtonElement>()
@@ -740,7 +742,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         if (typeof props.format !== 'string') {
           return new Error(`Provided prop 'format' must be a string.`)
         } else if (typeof props.value === 'string') {
-          let type = props.type || 'date'
+          const type = props.type || 'date'
           if (type === 'date' && /[HhmaDy]/.test(props.format)) {
             return new Error(
               `Provided format '${props.format}' contains unexpected tokens for type '${type}'.`
@@ -837,7 +839,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const _portal = this._portal.current
       const focusDay = this.state.focusDay
       window.requestAnimationFrame((): void => {
-        let toFocus = _portal && _portal.querySelector(`[data-date="${focusDay}"]`)
+        const toFocus = _portal && _portal.querySelector(`[data-date="${focusDay}"]`)
         // focus on focusDay button if focus is already in portal
         if (toFocus instanceof HTMLButtonElement) {
           toFocus.focus()
@@ -848,7 +850,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (this.state.isOpen === 'month-year') {
       window.requestAnimationFrame((): void => {
         const _portal = this._portal.current
-        let listboxes = _portal && _portal.querySelectorAll('[role="listbox"]')
+        const listboxes = _portal && _portal.querySelectorAll('[role="listbox"]')
         if (listboxes && listboxes.length) {
           for (let i = 0; i < listboxes.length; ++i) {
             const $list = listboxes[i]
@@ -858,8 +860,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             if (!$selected) continue
 
             if ($list.scrollHeight > $list.clientHeight) {
-              var scrollBottom = $list.clientHeight + $list.scrollTop
-              var optionBottom = $selected.offsetTop + $selected.offsetHeight
+              const scrollBottom = $list.clientHeight + $list.scrollTop
+              const optionBottom = $selected.offsetTop + $selected.offsetHeight
               if (optionBottom > scrollBottom) {
                 $list.scrollTop = optionBottom - $list.clientHeight
               } else if ($selected.offsetTop < $list.scrollTop) {
@@ -892,7 +894,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private handleKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const target = event.target
     if (isOwnInput(target, event.currentTarget)) {
-      let token = target.dataset.token as FormatTokenType
+      const token = target.dataset.token as FormatTokenType
       const eventKey = event.key
       if (eventKey === 'ArrowUp' || eventKey === 'ArrowDown') {
         this.handleUpdate(token, eventKey)
@@ -920,7 +922,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       data
     ) {
       data = String(data).substr(-1)
-      let token = target.dataset.token as FormatTokenType
+      const token = target.dataset.token as FormatTokenType
       this.handleUpdate(token, 'Key', data)
     }
   }
@@ -1005,10 +1007,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const { type } = this.props
       this.setState(
         (state): Pick<DateInputState, 'value' | 'isOpen' | 'focusDay'> => {
-          let value = state.value.clone()
+          const value = state.value.clone()
           value.parse(dateStr, 'YYYY-MM-dd')
           this.raiseChange(value)
-          let updates: Pick<DateInputState, 'value' | 'focusDay' | 'isOpen'> = {
+          const updates: Pick<DateInputState, 'value' | 'focusDay' | 'isOpen'> = {
             value,
             focusDay: undefined,
             isOpen: false,
@@ -1068,7 +1070,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const { which, by } = adjustment
       this.setState(
         ({ focusDay }): Pick<DateInputState, 'focusDay'> => {
-          let newDay = parseDate(focusDay as string, 'YYYY-MM-dd')
+          const newDay = parseDate(focusDay as string, 'YYYY-MM-dd')
           if (which === 'day') {
             newDay.setDate(newDay.getDate() + by)
           } else if (which === 'week') {
@@ -1103,7 +1105,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       if (activeElement !== null && isOwnInput(activeElement, _wrapper)) {
         this.handleUpdate(activeElement.dataset.token as any, currentTarget.dataset.name as any)
       } else {
-        let setFocusTo = _wrapper.querySelector('input') as HTMLInputElement
+        const setFocusTo = _wrapper.querySelector('input') as HTMLInputElement
         this.handleUpdate(setFocusTo.dataset.token as any, currentTarget.dataset.name as any)
         setFocusTo.focus()
       }
@@ -1113,7 +1115,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private handleListClick = (event: React.MouseEvent<HTMLUListElement>): void => {
-    let { currentTarget, target } = event
+    const { currentTarget } = event
+    let { target } = event
     if (target instanceof HTMLSpanElement) {
       // @ts-ignore
       target = target.closest('li')
@@ -1123,8 +1126,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const value = Number(target.dataset.value)
       this.setState(
         (state): Pick<DateInputState, 'focusDay'> => {
-          let { focusDay } = state
-          let pd = PartialDate.from(focusDay, 'YYYY-MM-dd')
+          const { focusDay } = state
+          const pd = PartialDate.from(focusDay, 'YYYY-MM-dd')
           pd[name](value)
           pd.ensureDayOfMonth()
           return { focusDay: pd.format() }
@@ -1134,7 +1137,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private handleListKeyDown = (event: React.KeyboardEvent<HTMLUListElement>): void => {
-    let { key, currentTarget } = event
+    const { key, currentTarget } = event
     let wasHandled = false
     if (key === 'ArrowUp' || key === 'ArrowDown') {
       wasHandled = true
@@ -1162,7 +1165,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (typeof time === 'string' && time !== '') {
       this.setState(
         ({ value }): Pick<DateInputState, 'value'> => {
-          let update = value.clone()
+          const update = value.clone()
           update.parse(time, 'HH:mm')
           this.raiseChange(update)
           return { value: update }
@@ -1180,7 +1183,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   ): void => {
     this.setState(
       ({ value, isOpen, focusDay }): Pick<DateInputState, 'value' | 'focusDay'> => {
-        let update = PartialDate.from(value)
+        const update = PartialDate.from(value)
         switch (type) {
           case 'ArrowUp':
           case 'ArrowDown': {
@@ -1203,7 +1206,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                 current = asNum
               } else {
                 current = Number(current)
-                let together = current * 10 + asNum
+                const together = current * 10 + asNum
                 if (token === 'YYYY') {
                   // years
                   if (together < 10000) {
@@ -1218,13 +1221,13 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                 } else if (/h{1,2}/i.test(token)) {
                   // hours
                   const military = token === 'HH' || token === 'H'
-                  let max = military ? 23 : 12
-                  let together = current * 10 + asNum
+                  const max = military ? 23 : 12
+                  const together = current * 10 + asNum
                   current = together <= max ? together : asNum
                 } else if (/m{1,2}/.test(token)) {
                   // minutes
-                  let together = current * 10 + asNum
-                  let mod = (current % 10) * 10 + asNum
+                  const together = current * 10 + asNum
+                  const mod = (current % 10) * 10 + asNum
                   if (together <= 59) {
                     current = together
                   } else if (mod <= 59) {
@@ -1307,7 +1310,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     this.setState(
       (state): Pick<DateInputState, 'isOpen' | 'focusDay'> => {
         const toggleToCal = state.isOpen === 'month-year'
-        let updates: Pick<DateInputState, 'isOpen' | 'focusDay'> = toggleToCal
+        const updates: Pick<DateInputState, 'isOpen' | 'focusDay'> = toggleToCal
           ? { isOpen: 'calendar' }
           : { isOpen: 'month-year' }
         this._shouldUpdateFocusDay = toggleToCal
@@ -1319,22 +1322,22 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _pickerMonthCacheKey = ''
   private _pickerMonthCache: MonthYearDataType | null = null
   private _getMonthData(): MonthYearDataType {
-    let { value, focusDay } = this.state
-    let focusPartialDate = PartialDate.from(focusDay || value, 'YYYY-MM-dd')
+    const { value, focusDay } = this.state
+    const focusPartialDate = PartialDate.from(focusDay || value, 'YYYY-MM-dd')
     const year = focusPartialDate.getYear()
     const month = focusPartialDate.getMonth()
     const pickerMonth = `${year}-${month}`
 
     if (this._pickerMonthCacheKey !== pickerMonth || !this._pickerMonthCache) {
       this._pickerMonthCacheKey = pickerMonth
-      let firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
-      let firstDay = firstOfMonth.getDay()
+      const firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
+      const firstDay = firstOfMonth.getDay()
       const lastDayOfMonth = getLastDayOfMonth(month, year)
       const showSixWeeks = firstDay + lastDayOfMonth >= 35
-      let days: unknown[] = Array(showSixWeeks ? 42 : 35).fill(0)
-      let calendarDate = new Date(year, month, -(firstDay - 1), 0, 0, 0, 0)
+      const days: unknown[] = Array(showSixWeeks ? 42 : 35).fill(0)
+      const calendarDate = new Date(year, month, -(firstDay - 1), 0, 0, 0, 0)
       for (let i = 0; i < days.length; ++i) {
-        let dateInt = calendarDate.getDate()
+        const dateInt = calendarDate.getDate()
         days[i] = PartialDate.from(calendarDate)
         calendarDate.setDate(dateInt + 1)
       }
@@ -1344,7 +1347,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     return this._pickerMonthCache
   }
 
-  private phrasesCacheKey: string = ''
+  private phrasesCacheKey = ''
   private phrasesCache: DateInputPhrasesType | undefined
 
   private getPhrases(): DateInputPhrasesType {
@@ -1352,7 +1355,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (this.phrasesCacheKey !== locale || !this.phrasesCache) {
       const monthOnlyFmt = new Intl.DateTimeFormat(locale, { month: 'long' })
       const monthOnlyFmtShort = new Intl.DateTimeFormat(locale, { month: 'short' })
-      let months = []
+      const months = []
       let testDate = new Date(2018, 0, 1, 0, 0, 0)
       let month = 0
       do {
@@ -1365,7 +1368,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       // get weekday names
       const weekdayOnlyFmt = new Intl.DateTimeFormat(locale, { weekday: 'long' })
       const weekdayOnlyFmtShort = new Intl.DateTimeFormat(locale, { weekday: 'short' })
-      let weekdays = []
+      const weekdays = []
       testDate = new Date(2018, 0, 1, 0, 0, 0)
       testDate.setDate(testDate.getDate() - testDate.getDay() - 1)
       let dayOfWeek = 0
@@ -1406,8 +1409,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (this._yearList.length) {
       return this._yearList
     }
-    let currentYear = new Date().getFullYear()
-    let result: number[] = [currentYear]
+    const currentYear = new Date().getFullYear()
+    const result: number[] = [currentYear]
     for (let i = 1; i < 100; ++i) {
       result.unshift(currentYear - i)
       result.push(currentYear + i)
@@ -1428,7 +1431,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     } = this.props
     const formatArray = parseFormat(value.getLocaleFormat())
     let isFirstInput = true
-    let inputRect =
+    const inputRect =
       this._inputWrapper.current !== null
         ? this._inputWrapper.current.getBoundingClientRect()
         : null
@@ -1465,7 +1468,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             (token, index): ReactElement => {
               const key = `${token}-${index}`
               if (isToken(token)) {
-                let inputId = isFirstInput ? id : ''
+                const inputId = isFirstInput ? id : ''
                 isFirstInput = false
                 return (
                   <input
@@ -1502,7 +1505,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               {({ rect, ref }): ReactElement => {
                 const monthYearId = id + '-monthyear-label'
                 const timeId = id + '-time'
-                let { month: focusMonth, year: focusYear, days } = this._getMonthData()
+                const { month: focusMonth, year: focusYear, days } = this._getMonthData()
                 const selectedStr = value.format('YYYY-MM-dd')
 
                 return (
@@ -1579,7 +1582,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                         <MonthYearListWrapper>
                           <div>
                             {((): ReactElement => {
-                              let monthList: React.ReactNodeArray = []
+                              const monthList: React.ReactNodeArray = []
                               let activeDescendant = ''
 
                               for (
@@ -1624,7 +1627,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                           </div>
                           <div>
                             {((): ReactElement => {
-                              let monthList: React.ReactNodeArray = []
+                              const monthList: React.ReactNodeArray = []
                               let activeDescendant = ''
                               const years = this.getYears()
 

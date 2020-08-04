@@ -19,7 +19,10 @@ const getInitialLang = (): string => {
   return urlParams.get('lang') || 'en-US'
 }
 
-class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsObject }> {
+class RootWrapper extends Component<
+  { [k: string]: any },
+  { lang: string; features: FeatureFlagsObject }
+> {
   public state = { lang: getInitialLang(), features: {} }
 
   private handleLangChange = (lang: string): void => this.setState({ lang })

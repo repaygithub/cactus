@@ -59,7 +59,9 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
   const theme: CactusTheme = React.useContext(ThemeContext)
 
   React.useEffect((): (() => void) => {
-    const removeListener = (): void => {}
+    const removeListener = (): void => {
+      return
+    }
     const queries: QueryType = {
       tiny: { matches: true, removeListener },
       small: { matches: true, removeListener },
@@ -68,7 +70,7 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
       extraLarge: { matches: false, removeListener },
     }
     const listener = (): void => {
-      for (let size of ORDERED_SIZES) {
+      for (const size of ORDERED_SIZES) {
         if (queries[size].matches) {
           setSize(size)
           break
@@ -76,7 +78,7 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     }
     if (theme.mediaQueries) {
-      for (let mq of Object.keys(theme.mediaQueries) as MediaQuery[]) {
+      for (const mq of Object.keys(theme.mediaQueries) as MediaQuery[]) {
         const media = window.matchMedia(theme.mediaQueries[mq].replace(/^@media /, ''))
         queries[mq] = media
         media.addListener(listener)
@@ -85,7 +87,7 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
     listener()
 
     return (): void => {
-      for (let mq of Object.keys(queries)) {
+      for (const mq of Object.keys(queries)) {
         queries[mq as Size].removeListener(listener)
       }
     }

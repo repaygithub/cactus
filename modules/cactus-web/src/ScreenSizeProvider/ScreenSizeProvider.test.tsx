@@ -24,8 +24,13 @@ describe('component: ScreenSizeProvider', (): void => {
 
   const media = {
     queries: [] as MQ[],
-    listener: (): void => {},
-    setWidth: (x: number): void => {}, //eslint-disable-line @typescript-eslint/no-unused-vars
+    listener: (): void => {
+      return
+    },
+    //eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setWidth: (x: number): void => {
+      return
+    },
   }
 
   const mockMedia = (): jest.MockContext<MQ, [string]> => {
@@ -35,7 +40,9 @@ describe('component: ScreenSizeProvider', (): void => {
         const result: MQ = {
           minPx: minPxMatch ? parseInt(minPxMatch[0]) : 0,
           matches: false,
-          removeListener: (): void => {},
+          removeListener: (): void => {
+            return
+          },
           addListener: (listener): void => {
             media.listener = listener
           },
