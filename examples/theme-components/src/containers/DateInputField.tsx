@@ -5,22 +5,27 @@ import React from 'react'
 
 import Link from '../components/Link'
 
-function initValues() {
+interface Values {
+  dateField: string
+  isValid: boolean
+}
+
+function initValues(): Values {
   return {
-    date_field: '',
+    dateField: '',
     isValid: false,
   }
 }
 
-const DateInputFieldExample: React.FC<RouteComponentProps> = () => {
+const DateInputFieldExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [values, setValues] = React.useState(initValues)
-  const handleChange = React.useCallback((name, value) => {
+  const handleChange = React.useCallback((name, value): void => {
     if (new Date() < new Date(value)) {
-      setValues((v) => ({ ...v, isValid: true }))
+      setValues((v): Values => ({ ...v, isValid: true }))
     } else {
-      setValues((v) => ({ ...v, isValid: false }))
+      setValues((v): Values => ({ ...v, isValid: false }))
     }
-    setValues((v) => ({ ...v, [name]: value }))
+    setValues((v): Values => ({ ...v, [name]: value }))
   }, [])
 
   return (
@@ -33,13 +38,13 @@ const DateInputFieldExample: React.FC<RouteComponentProps> = () => {
         DateInputField
       </Text>
       <Flex width="100%" justifyContent="center">
-        <form onSubmit={(event) => event.preventDefault()}>
+        <form onSubmit={(event): void => event.preventDefault()}>
           <DateInputField
-            name="date_field"
+            name="dateField"
             label="Date Field"
             success={values.isValid ? 'Valid date ' : undefined}
             error={values.isValid ? undefined : 'Date should be after today'}
-            value={values.date_field}
+            value={values.dateField}
             onChange={handleChange}
           />
         </form>

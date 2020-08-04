@@ -2,39 +2,31 @@ import { RouteComponentProps } from '@reach/router'
 import { ActionsAdd, NavigationChevronLeft } from '@repay/cactus-icons'
 import cactusTheme from '@repay/cactus-theme'
 import { Box, Button, Grid, IconButton, TextButton } from '@repay/cactus-web'
-import React, { Component, CSSProperties } from 'react'
+import React, { Component } from 'react'
 
 import Link from '../components/Link'
-
-const tableStyle: CSSProperties = {
-  textAlign: 'center',
-  width: '30%',
-  marginLeft: '35%',
-  marginRight: '35%',
-  marginTop: '5px',
-}
 
 interface InverseButtonsState {
   clickCount: number
 }
 
 class InverseButtons extends Component<RouteComponentProps> {
-  constructor(props: any) {
+  public constructor(props: any) {
     super(props)
     this.handleOnClick = this.handleOnClick.bind(this)
   }
 
-  state: InverseButtonsState = {
+  public state: InverseButtonsState = {
     clickCount: 0,
   }
 
-  handleOnClick() {
+  private handleOnClick(): void {
     this.setState({
       clickCount: this.state.clickCount + 1,
     })
   }
 
-  render() {
+  public render(): React.ReactElement {
     return (
       <div
         style={{

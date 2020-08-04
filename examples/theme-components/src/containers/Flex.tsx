@@ -43,11 +43,11 @@ const initialState = {
   items: 9,
 }
 
-const FlexExample: React.FC<RouteComponentProps> = () => {
+const FlexExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [state, setState] = useState(initialState)
 
   const changeProps = useCallback(
-    (name, value) => {
+    (name, value): void => {
       if (name === 'items') {
         value = parseInt(value.replace(/\D/g, ''), 10)
       }
@@ -75,9 +75,11 @@ const FlexExample: React.FC<RouteComponentProps> = () => {
         flexWrap={state.flexWrapOptions as FlexWrapProperty}
         flexDirection={state.directionOptions as FlexDirectionProperty}
       >
-        {[...Array(state.items > 0 ? state.items : 2)].map((_, i) => (
-          <Flex p={5} colors={colors[i]} height="100px" width="100px" key={i} />
-        ))}
+        {[...Array(state.items > 0 ? state.items : 2)].map(
+          (_, i): React.ReactElement => (
+            <Flex p={5} colors={colors[i]} height="100px" width="100px" key={i} />
+          )
+        )}
       </Flex>
       <Flex alignItems="flex-end" justifyContent="space-evenly" height="20%">
         <SelectField

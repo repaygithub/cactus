@@ -9,23 +9,22 @@ import {
   Flex,
   RadioButtonField,
   SelectField,
-  Spinner,
   Text,
   TextAreaField,
   TextInputField,
   ToggleField,
 } from '@repay/cactus-web'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import Link from '../components/Link'
 
 interface FieldsTypes {
   data: {
-    text_input: string
+    textInput: string
     password: string
     checkbox: boolean
-    radiobutton_group: string
-    select_box: string
+    radiobuttonGroup: string
+    selectBox: string
     textarea: string
     togglefield: boolean
   }
@@ -34,13 +33,13 @@ interface FieldsTypes {
     message: string
   }
 }
-const getInitialValues = () => ({
+const getInitialValues = (): FieldsTypes => ({
   data: {
-    text_input: '',
+    textInput: '',
     password: '',
     checkbox: true,
-    radiobutton_group: '',
-    select_box: '',
+    radiobuttonGroup: '',
+    selectBox: '',
     textarea: 'Some text for the text area',
     togglefield: false,
   },
@@ -56,65 +55,71 @@ const selectOptions = [
   { label: 'third option', value: 'third_option' },
   { label: 'fourth option', value: 'fourth_option' },
 ]
-const post = (data: object) => {
+const post = (data: object): void => {
   ;(window as any).apiData = data
 }
 
-const FormExample: React.FC<RouteComponentProps> = () => {
+const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
   const [values, setValues] = React.useState<FieldsTypes>(getInitialValues)
 
   const onChange = React.useCallback(
-    (name: string, value: any) => {
-      setValues((s) => ({
-        ...s,
-        data: { ...s.data, [name]: value },
-        status: { ...s.status },
-      }))
+    (name: string, value: any): void => {
+      setValues(
+        (s): FieldsTypes => ({
+          ...s,
+          data: { ...s.data, [name]: value },
+          status: { ...s.status },
+        })
+      )
     },
     [setValues]
   )
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
-    event.preventDefault()
-    validate(values.data)
-    post(values)
-    console.log((window as any).apiData)
-  }
-
-  const formatKey = (key: string) => {
+  const formatKey = (key: string): string => {
     const words = key.replace('_', ' ').split(' ')
-    let newWords: Array<string> = []
+    let newWords: string[] = []
 
-    words.forEach((word) => {
+    words.forEach((word): void => {
       newWords.push(word.charAt(0).toUpperCase() + word.slice(1))
     })
     return newWords.join(' ')
   }
 
-  const validate = (formData: typeof values.data) => {
+  const validate = (formData: typeof values.data): void => {
     let errorFound = false
     Object.keys(formData)
       .reverse()
-      .forEach((key) => {
+      .forEach((key): void => {
         //@ts-ignore
         const value = formData[key]
 
         if (value === '') {
           errorFound = true
-          setValues((state) => ({
-            data: { ...state.data },
-            status: { error: true, message: `${formatKey(key)} is empty.` },
-          }))
+          setValues(
+            (state): FieldsTypes => ({
+              data: { ...state.data },
+              status: { error: true, message: `${formatKey(key)} is empty.` },
+            })
+          )
           return
         }
       })
 
     if (errorFound === false) {
-      setValues((state) => ({
-        data: { ...state.data },
-        status: { error: false, message: `Form successfully submitted` },
-      }))
+      setValues(
+        (state): FieldsTypes => ({
+          data: { ...state.data },
+          status: { error: false, message: `Form successfully submitted` },
+        })
+      )
     }
+  }
+
+  const handleSubmit = (event: React.SyntheticEvent): void => {
+    event.preventDefault()
+    validate(values.data)
+    post(values)
+    console.log((window as any).apiData)
   }
 
   return (
@@ -136,8 +141,8 @@ const FormExample: React.FC<RouteComponentProps> = () => {
           </Text>
           <TextInputField
             label="Text Input"
-            name="text_input"
-            value={values.data.text_input}
+            name="textInput"
+            value={values.data.textInput}
             onChange={onChange}
             tooltip="You can type some text in this field"
             mb={4}
@@ -161,38 +166,38 @@ const FormExample: React.FC<RouteComponentProps> = () => {
               A set of Radio Buttons
             </Text>
             <RadioButtonField
-              name="radiobutton_group"
+              name="radiobuttonGroup"
               label="A Option"
               value="radio_a"
-              checked={values.data.radiobutton_group === 'radio_a'}
+              checked={values.data.radiobuttonGroup === 'radio_a'}
               onChange={onChange}
             />
             <RadioButtonField
-              name="radiobutton_group"
+              name="radiobuttonGroup"
               label="B Option"
               value="radio_b"
-              checked={values.data.radiobutton_group === 'radio_b'}
+              checked={values.data.radiobuttonGroup === 'radio_b'}
               onChange={onChange}
             />
             <RadioButtonField
-              name="radiobutton_group"
+              name="radiobuttonGroup"
               label="C Option"
               value="radio_c"
-              checked={values.data.radiobutton_group === 'radio_c'}
+              checked={values.data.radiobuttonGroup === 'radio_c'}
               onChange={onChange}
             />
             <RadioButtonField
-              name="radiobutton_group"
+              name="radiobuttonGroup"
               label="D Option"
               value="radio_d"
-              checked={values.data.radiobutton_group === 'radio_d'}
+              checked={values.data.radiobuttonGroup === 'radio_d'}
               onChange={onChange}
             />
           </Box>
           <SelectField
             label="Select Field"
-            name="select_box"
-            value={values.data.select_box}
+            name="selectBox"
+            value={values.data.selectBox}
             options={selectOptions}
             onChange={onChange}
           />

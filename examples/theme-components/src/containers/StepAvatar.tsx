@@ -1,20 +1,20 @@
 import { RouteComponentProps } from '@reach/router'
 import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { Button, Flex, Grid, StepAvatar, Text } from '@repay/cactus-web'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import Link from '../components/Link'
 
-const StepAvatarExample: React.FC<RouteComponentProps> = () => {
+const StepAvatarExample: React.FC<RouteComponentProps> = (): ReactElement => {
   const StepManager = (props: {
     children: (state: {
       currentStep: number
       changeStep: (step: number) => void
     }) => React.ReactNode
-  }) => {
+  }): ReactElement => {
     const [currentStep, setStep] = React.useState(2)
 
-    const changeStep = (val: number) => {
+    const changeStep = (val: number): void => {
       if (val > 0 && val < 5) {
         setStep(val)
       }
@@ -23,7 +23,7 @@ const StepAvatarExample: React.FC<RouteComponentProps> = () => {
     return <>{props.children({ currentStep, changeStep })}</>
   }
 
-  const getType = (currentStep: number, step: number) => {
+  const getType = (currentStep: number, step: number): 'notDone' | 'inProcess' | 'done' => {
     if (currentStep < step) {
       return 'notDone'
     } else if (currentStep === step) {
@@ -43,7 +43,7 @@ const StepAvatarExample: React.FC<RouteComponentProps> = () => {
       </Text>
       <Flex justifyContent="center">
         <StepManager>
-          {({ currentStep, changeStep }) => (
+          {({ currentStep, changeStep }): ReactElement => (
             <Grid justify="center" style={{ maxWidth: '800px' }}>
               <Grid.Item tiny={3}>
                 <StepAvatar as="button" status={getType(currentStep, 1)}>
@@ -66,10 +66,10 @@ const StepAvatarExample: React.FC<RouteComponentProps> = () => {
                 </StepAvatar>
               </Grid.Item>
               <Grid.Item tiny={6}>
-                <Button onClick={() => changeStep(currentStep - 1)}>Previous step</Button>
+                <Button onClick={(): void => changeStep(currentStep - 1)}>Previous step</Button>
               </Grid.Item>
               <Grid.Item tiny={6}>
-                <Button onClick={() => changeStep(currentStep + 1)}>Next step</Button>
+                <Button onClick={(): void => changeStep(currentStep + 1)}>Next step</Button>
               </Grid.Item>
             </Grid>
           )}
