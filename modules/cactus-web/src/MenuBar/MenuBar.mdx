@@ -17,6 +17,8 @@ The `MenuBar` component has two sub-components:
 - `MenuBar.List` - a drop-down sub-menu; it can be nested multiple times
 - `MenuBar.Item` - a `button` that can have an `onClick` handler to control behavior; also takes an `as` prop that can be used to change it to a link
 
+By default, clicking a MenuBar.Item will close any open submenus and return focus to the main nav; you can prevent this behavior by calling `event.stopPropagation()` in the item's `onClick` handler.
+
 ### Try it out
 
 export const code = `

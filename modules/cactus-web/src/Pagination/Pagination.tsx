@@ -132,7 +132,7 @@ const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps) => {
     linkProps.tabIndex = 0
   }
   if (onClick) {
-    linkProps.onKeyPress = keyPressAsClick(onClick)
+    linkProps.onKeyPress = keyPressAsClick
   }
   return (
     <a role="link" onClick={onClick} {...linkProps}>

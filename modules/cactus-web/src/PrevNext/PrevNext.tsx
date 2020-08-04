@@ -35,7 +35,7 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
     aria-disabled={disabled ? 'true' : 'false'}
     className={className}
     onClick={onClick}
-    onKeyPress={onClick && keyPressAsClick(onClick)}
+    onKeyPress={onClick && keyPressAsClick}
     tabIndex={disabled ? undefined : 0}
   >
     {children}

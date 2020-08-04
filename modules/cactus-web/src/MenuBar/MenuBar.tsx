@@ -52,16 +52,16 @@ const preventAction = (event: React.KeyboardEvent<HTMLElement>) => {
 // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
 const MenuBarItem = React.forwardRef<HTMLElement, MenuItemProps>((props, ref) => {
   const propsCopy = { ...props } as any
-  if (props.onClick && !props.onKeyPress) {
-    propsCopy.onKeyPress = keyPressAsClick(propsCopy.onClick)
-    const original = props.onKeyUp
-    propsCopy.onKeyUp = !original
-      ? preventAction
-      : (e: React.KeyboardEvent<HTMLElement>) => {
-          original(e)
-          preventAction(e)
-        }
+  if (!props.onKeyPress) {
+    propsCopy.onKeyPress = keyPressAsClick
   }
+  const original = props.onKeyUp
+  propsCopy.onKeyUp = !original
+    ? preventAction
+    : (e: React.KeyboardEvent<HTMLElement>) => {
+        original(e)
+        preventAction(e)
+      }
   return (
     <li role="none">
       <MenuButton ref={ref as any} {...propsCopy} />
@@ -151,6 +151,7 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
   const [scroll, menuRef, menu] = useScrollButtons('horizontal', true)
+
   React.useEffect(() => {
     if (menu) {
       // There doesn't seem to be any way in React to consistently identify the
@@ -172,8 +173,9 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
       return () => observer.disconnect()
     }
   }, [menu])
+
   return (
-    <Nav {...props} ref={ref} tabIndex={-1}>
+    <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
@@ -192,6 +194,13 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
     </Nav>
   )
 })
+
+const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+  const button = event.target as HTMLElement
+  if (button.matches && button.matches('[role="menuitem"]:not([aria-haspopup])')) {
+    event.currentTarget.focus()
+  }
+}
 
 MenuBar.displayName = 'MenuBar'
 MenuBar.propTypes = { 'aria-label': PropTypes.string }
