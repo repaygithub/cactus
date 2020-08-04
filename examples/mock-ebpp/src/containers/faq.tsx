@@ -1,7 +1,7 @@
 import { RouteComponentProps } from '@reach/router'
 import { Accordion, Button, Flex, Text } from '@repay/cactus-web'
 import React, { useState } from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 const initialAccordions = [
   {

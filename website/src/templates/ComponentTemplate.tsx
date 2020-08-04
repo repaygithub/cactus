@@ -2,7 +2,7 @@ import { MDXProvider } from '@mdx-js/react'
 import { graphql } from 'gatsby'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import * as React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 import DocgenProvider, { DocItem } from '../components/DocgenProvider'
 import Link from '../components/Link'

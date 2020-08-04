@@ -6,7 +6,7 @@ import Menu from '@repay/cactus-icons/i/navigation-hamburger'
 import { Box, IconButton } from '@repay/cactus-web'
 import { graphql, Link, useStaticQuery } from 'gatsby'
 import * as React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import { Motion, spring } from 'react-motion'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
