@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/react'
-import React, { useCallback, useReducer } from 'react'
+import React, { ReactElement, useCallback, useReducer } from 'react'
 
 import Box from '../Box/Box'
 import CheckBoxField from '../CheckBoxField/CheckBoxField'
@@ -40,7 +40,7 @@ const fieldTypeMap: { [k in FieldTypes]: React.ComponentType<any> } = {
   radio: RadioButtonField,
 }
 
-const isRequired: FieldValidatorFunc = (field, value) => {
+const isRequired: FieldValidatorFunc = (field, value): FieldStatus | null => {
   return Boolean(value) ? null : ['error', `This field is required.`]
 }
 
@@ -55,7 +55,7 @@ const fields: FieldTypeObjects[] = [
     type: 'textarea',
     label: 'Field 2',
     name: 'textArea',
-    validator: (_, value) =>
+    validator: (_, value): FieldStatus | null =>
       typeof value === 'string' && value.length < 300
         ? ['warning', 'Recommended length of at least 300.']
         : null,
@@ -65,7 +65,8 @@ const fields: FieldTypeObjects[] = [
     label: 'Field 3 (Select)',
     name: 'select',
     options: ['option 1', 'option 2'],
-    validator: (_, value) => (Boolean(value) ? ['success', 'Always successful.'] : null),
+    validator: (_, value): FieldStatus | null =>
+      Boolean(value) ? ['success', 'Always successful.'] : null,
   },
   {
     type: 'file',
@@ -103,37 +104,36 @@ const fields: FieldTypeObjects[] = [
   },
 ]
 
-type FormState = {
+interface FormState {
   values: { [k: string]: any }
   statuses: { [k: string]: null | FieldStatus }
 }
 
-type FormAction = {
+interface FormAction {
   type: 'change' | 'blur'
   name: string
   value?: any
 }
 
-const initForm = () =>
-  ({
-    values: {
-      input: '',
-      textArea: '',
-      select: '',
-      fileInput: undefined,
-      toggle: false,
-      cb1: false,
-      cb2: false,
-      rb: undefined,
-    },
-    statuses: {
-      input: ['error', 'This field is required.'],
-      textArea: ['warning', 'Recommended length of at least 300.'],
-      select: ['success', 'Always successful'],
-    },
-  } as FormState)
+const initForm = (): FormState => ({
+  values: {
+    input: '',
+    textArea: '',
+    select: '',
+    fileInput: undefined,
+    toggle: false,
+    cb1: false,
+    cb2: false,
+    rb: undefined,
+  },
+  statuses: {
+    input: ['error', 'This field is required.'],
+    textArea: ['warning', 'Recommended length of at least 300.'],
+    select: ['success', 'Always successful'],
+  },
+})
 
-const formReducer = (state: FormState, action: FormAction) => {
+const formReducer = (state: FormState, action: FormAction): FormState | never => {
   switch (action.type) {
     case 'change': {
       return {
@@ -142,7 +142,7 @@ const formReducer = (state: FormState, action: FormAction) => {
       }
     }
     case 'blur': {
-      const field = fields.find((f) => f.name === action.name)
+      const field = fields.find((f): boolean => f.name === action.name)
       if (field && typeof field.validator === 'function') {
         return {
           ...state,
@@ -158,18 +158,18 @@ const formReducer = (state: FormState, action: FormAction) => {
   return state
 }
 
-const ExampleForm = ({ withValidations }: { withValidations?: boolean }) => {
+const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactElement => {
   const [{ values, statuses }, dispatch] = useReducer(formReducer, null, initForm)
 
   const handleChange = useCallback(
-    (name: string, value: any) => {
+    (name: string, value: any): void => {
       dispatch({ type: 'change', name, value })
     },
     [dispatch]
   )
 
   const handleBlur = useCallback(
-    (name) => {
+    (name): void => {
       console.log(`onBlur(${name})`)
       dispatch({ type: 'blur', name })
     },
@@ -191,37 +191,39 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }) => {
         minWidth="350px"
         margin="0 auto"
         py={5}
-        onSubmit={(event: React.FormEvent<HTMLFormElement>) => event.preventDefault()}
+        onSubmit={(event: React.FormEvent<HTMLFormElement>): void => event.preventDefault()}
       >
-        {fields.map((field) => {
-          const Field = fieldTypeMap[field.type]
-          let { validator, ...rest } = field
-          let props = rest as React.ComponentPropsWithoutRef<typeof Field>
-          props.value = values[field.name]
-          props.onChange = handleChange
-          props.onBlur = handleBlur
-          switch (field.type) {
-            case 'radio': {
-              props.value = field.value
-              props.checked = field.value === values[field.name]
-              break
+        {fields.map(
+          (field): ReactElement => {
+            const Field = fieldTypeMap[field.type]
+            let { validator, ...rest } = field
+            let props = rest as React.ComponentPropsWithoutRef<typeof Field>
+            props.value = values[field.name]
+            props.onChange = handleChange
+            props.onBlur = handleBlur
+            switch (field.type) {
+              case 'radio': {
+                props.value = field.value
+                props.checked = field.value === values[field.name]
+                break
+              }
+              case 'checkbox': {
+                props.checked = values[field.name]
+                break
+              }
             }
-            case 'checkbox': {
-              props.checked = values[field.name]
-              break
+            if (withValidations && Array.isArray(statuses[field.name])) {
+              const [status, message] = statuses[field.name] as FieldStatus
+              props[status] = message
             }
+            return <Field key={field.type + field.label} {...props} />
           }
-          if (withValidations && Array.isArray(statuses[field.name])) {
-            const [status, message] = statuses[field.name] as FieldStatus
-            props[status] = message
-          }
-          return <Field key={field.type + field.label} {...props} />
-        })}
+        )}
       </Box>
     </div>
   )
 }
 
 storiesOf('FormField', module)
-  .add('Basic Usage', () => <ExampleForm />)
-  .add('With Statuses', () => <ExampleForm withValidations />)
+  .add('Basic Usage', (): ReactElement => <ExampleForm />)
+  .add('With Statuses', (): ReactElement => <ExampleForm withValidations />)

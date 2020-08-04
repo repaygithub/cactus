@@ -20,74 +20,74 @@ const statusOptions: StatusOptions = {
   warning: 'warning',
   success: 'success',
 }
-const ConfirmModalExample = () => {
+const ConfirmModalExample = (): React.ReactElement => {
   const [isOpen, setOpen] = useState(false)
   const cancelText = text('Cancel Button Text', 'Cancel')
   const confirmText = text('Confirm Button Text', 'Confirm')
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const iconSize = select('Icon size', ['medium', 'large'], 'medium')
   const variant = select('variant', statusOptions, statusOptions.action)
-  const descrpitionText = text(
+  const descriptionText = text(
     'Description text',
-    'Your actions can override past setting causing unintended consecuences.'
+    'Your actions can override past setting causing unintended consequences.'
   )
 
   return isOpen ? (
     <ConfirmModal
       isOpen={isOpen}
-      onClose={() => setOpen(false)}
+      onClose={(): void => setOpen(false)}
       variant={variant}
-      onConfirm={() => setOpen(false)}
+      onConfirm={(): void => setOpen(false)}
       confirmButtonText={confirmText}
       cancelButtonText={cancelText}
       iconName={iconName}
       iconSize={iconSize}
     >
       <Text as="h4" fontWeight="normal">
-        {descrpitionText}
+        {descriptionText}
       </Text>
     </ConfirmModal>
   ) : (
-    <Button variant="action" onClick={() => setOpen(true)}>
+    <Button variant="action" onClick={(): void => setOpen(true)}>
       Open Modal
     </Button>
   )
 }
 
-const ConfirmModalExample2 = () => {
+const ConfirmModalExample2 = (): React.ReactElement => {
   const [isOpen, setOpen] = useState(false)
   const cancelText = text('Cancel Button Text', 'Cancel')
   const confirmText = text('Confirm Button Text', 'Confirm')
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const iconSize = select('Icon size', ['medium', 'large'], 'medium')
   const variant = select('variant', statusOptions, statusOptions.action)
-  const descrpitionText = text(
+  const descriptionText = text(
     'Description text',
-    'Your actions can override past setting causing unintended consecuences.'
+    'Your actions can override past setting causing unintended consequences.'
   )
 
   return isOpen ? (
     <ConfirmModal
       isOpen={isOpen}
-      onClose={() => setOpen(false)}
+      onClose={(): void => setOpen(false)}
       variant={variant}
-      onConfirm={() => setOpen(false)}
+      onConfirm={(): void => setOpen(false)}
       confirmButtonText={confirmText}
       cancelButtonText={cancelText}
       iconName={iconName}
       iconSize={iconSize}
     >
       <Text as="h4" fontWeight="normal" margin="0 0 16px 0">
-        {descrpitionText}
+        {descriptionText}
       </Text>
       <TextInput placeholder="Placeholder" width="60%" />
     </ConfirmModal>
   ) : (
-    <Button variant="action" onClick={() => setOpen(true)}>
+    <Button variant="action" onClick={(): void => setOpen(true)}>
       Open Modal
     </Button>
   )
 }
 
-confirmModalStories.add('Basic Usage', () => <ConfirmModalExample />)
-confirmModalStories.add('With text input icon', () => <ConfirmModalExample2 />)
+confirmModalStories.add('Basic Usage', (): React.ReactElement => <ConfirmModalExample />)
+confirmModalStories.add('With text input icon', (): React.ReactElement => <ConfirmModalExample2 />)

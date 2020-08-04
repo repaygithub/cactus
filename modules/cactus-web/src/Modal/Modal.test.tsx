@@ -1,16 +1,12 @@
-import { DescriptiveEnvelope } from '@repay/cactus-icons/'
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextInput from '../TextInput/TextInput'
 import Modal from './Modal'
 
-const Icon = DescriptiveEnvelope as React.FunctionComponent
-afterEach(cleanup)
-
-describe('Modal is open when isOpen=true', () => {
-  test('snapshot', () => {
+describe('Modal is open when isOpen=true', (): void => {
+  test('snapshot', (): void => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
@@ -18,7 +14,7 @@ describe('Modal is open when isOpen=true', () => {
           isOpen={true}
           modalLabel="Modal Label"
           closeLabel="Close Label"
-          onClose={() => {}}
+          onClose={(): void => {}}
         />
       </StyleProvider>
     )
@@ -27,11 +23,11 @@ describe('Modal is open when isOpen=true', () => {
   })
 })
 
-describe('Modal is closed when isOpen=false', () => {
-  test('snapshot', () => {
+describe('Modal is closed when isOpen=false', (): void => {
+  test('snapshot', (): void => {
     const { baseElement } = render(
       <StyleProvider>
-        <Modal isOpen={false} onClose={() => {}} />
+        <Modal isOpen={false} onClose={(): void => {}} />
       </StyleProvider>
     )
 
@@ -40,11 +36,16 @@ describe('Modal is closed when isOpen=false', () => {
   })
 })
 
-describe('Aria-labels applied correctly', () => {
-  test('snapshot', () => {
+describe('Aria-labels applied correctly', (): void => {
+  test('snapshot', (): void => {
     const { baseElement } = render(
       <StyleProvider>
-        <Modal isOpen={true} modalLabel="Modal Label" closeLabel="Close Label" onClose={() => {}} />
+        <Modal
+          isOpen={true}
+          modalLabel="Modal Label"
+          closeLabel="Close Label"
+          onClose={(): void => {}}
+        />
       </StyleProvider>
     )
 
@@ -53,8 +54,8 @@ describe('Aria-labels applied correctly', () => {
   })
 })
 
-describe('Can render content as children', () => {
-  test('snapshot', () => {
+describe('Can render content as children', (): void => {
+  test('snapshot', (): void => {
     const { getByTestId } = render(
       <StyleProvider>
         <Modal
@@ -62,7 +63,7 @@ describe('Can render content as children', () => {
           isOpen={true}
           modalLabel="Modal Label"
           closeLabel="Close Label"
-          onClose={() => {}}
+          onClose={(): void => {}}
         >
           <TextInput placeholder="placeHolder" data-testid="child" />
         </Modal>

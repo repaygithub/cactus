@@ -7,13 +7,17 @@ import animationRender from '../../tests/helpers/animationRender'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import MenuButton from './MenuButton'
 
-describe('component: MenuButton', () => {
-  test('snapshot', () => {
+describe('component: MenuButton', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <MenuButton label="Demo">
-          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
+            Action One
+          </MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
+            Action Two
+          </MenuButton.Item>
           <MenuButton.Link href="#">Action Three</MenuButton.Link>
         </MenuButton>
       </StyleProvider>
@@ -22,14 +26,16 @@ describe('component: MenuButton', () => {
     expect(container).toMatchSnapshot()
   })
 
-  describe('mouse usage', () => {
-    test('can select an action', async () => {
+  describe('mouse usage', (): void => {
+    test('can select an action', async (): Promise<void> => {
       const actionOne = jest.fn()
       const { getByText } = render(
         <StyleProvider>
           <MenuButton label="Demo">
             <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
-            <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+            <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
+              Action Two
+            </MenuButton.Item>
             <MenuButton.Link href="#">Action Three</MenuButton.Link>
           </MenuButton>
         </StyleProvider>
@@ -42,8 +48,8 @@ describe('component: MenuButton', () => {
     })
   })
 
-  describe('keyboard usage', () => {
-    test('can select an action', async () => {
+  describe('keyboard usage', (): void => {
+    test('can select an action', async (): Promise<void> => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
       const { getByText, rerender } = render(
@@ -78,27 +84,35 @@ describe('component: MenuButton', () => {
   })
 })
 
-describe('With theme changes ', () => {
-  test('Should have square borders', () => {
+describe('With theme changes ', (): void => {
+  test('Should have square borders', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'square' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
-          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
+            Action One
+          </MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
+            Action Two
+          </MenuButton.Item>
           <MenuButton.Link href="#">Action Three</MenuButton.Link>
         </MenuButton>
       </StyleProvider>
     )
     expect(asFragment()).toMatchSnapshot()
   })
-  test('Should have intermediate borders', () => {
+  test('Should have intermediate borders', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
-          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
+            Action One
+          </MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
+            Action Two
+          </MenuButton.Item>
           <MenuButton.Link href="#">Action Three</MenuButton.Link>
         </MenuButton>
       </StyleProvider>
@@ -106,13 +120,17 @@ describe('With theme changes ', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('Dropdown should not have box-shadows', () => {
+  test('Dropdown should not have box-shadows', (): void => {
     const theme = generateTheme({ primaryHue: 200, boxShadows: false })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
-          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
+            Action One
+          </MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
+            Action Two
+          </MenuButton.Item>
           <MenuButton.Link href="#">Action Three</MenuButton.Link>
         </MenuButton>
       </StyleProvider>
@@ -120,13 +138,17 @@ describe('With theme changes ', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('Border should be 2px', () => {
+  test('Border should be 2px', (): void => {
     const theme = generateTheme({ primaryHue: 200, border: 'thick' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
-          <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
-          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
+            Action One
+          </MenuButton.Item>
+          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
+            Action Two
+          </MenuButton.Item>
           <MenuButton.Link href="#">Action Three</MenuButton.Link>
         </MenuButton>
       </StyleProvider>

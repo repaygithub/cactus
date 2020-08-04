@@ -63,7 +63,7 @@ const TEST_DATA = [
   },
 ]
 
-const BoolComponent = ({ value }: { value: boolean }) => {
+const BoolComponent = ({ value }: { value: boolean }): React.ReactElement => {
   return <div>{value ? 'YES' : 'NO'}</div>
 }
 
@@ -80,58 +80,61 @@ interface ContainerProps {
   fullWidth?: boolean
 }
 
-const DataGridContainer = (props: ContainerProps) => {
+const DataGridContainer = (props: ContainerProps): React.ReactElement => {
   const {
     providePageSizeOptions = true,
     providePageCount = true,
     showResultsCount = true,
     fullWidth,
   } = props
-  const [data, setData] = useState<Array<{ [key: string]: any }>>(TEST_DATA)
-  const [sortOptions, setSortOptions] = useState<Array<{ id: string; sortAscending: boolean }>>([
+  const [data, setData] = useState<{ [key: string]: any }[]>(TEST_DATA)
+  const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([
     { id: 'created', sortAscending: false },
   ])
   const [paginationOptions, setPaginationOptions] = useState<{
     currentPage: number
     pageSize: number
     pageCount?: number
-    pageSizeOptions?: Array<number>
+    pageSizeOptions?: number[]
   }>({ currentPage: 1, pageCount: 3, pageSize: 4, pageSizeOptions: [4, 6, 12] })
 
-  const clone = (rowData: { [key: string]: any }) => {
-    setData((currentData) => [...currentData, { ...rowData, name: `${rowData.name} Copy` }])
+  const clone = (rowData: { [key: string]: any }): void => {
+    setData((currentData): { [key: string]: any }[] => [
+      ...currentData,
+      { ...rowData, name: `${rowData.name} Copy` },
+    ])
   }
 
-  const deleteRow = (rowData: { [key: string]: any }) => {
-    const deleteIndex = data.findIndex((datum) => datum.name === rowData.name)
-    setData((currentData) => {
+  const deleteRow = (rowData: { [key: string]: any }): void => {
+    const deleteIndex = data.findIndex((datum): boolean => datum.name === rowData.name)
+    setData((currentData): { [key: string]: any }[] => {
       const newData = [...currentData]
       newData.splice(deleteIndex, 1)
       return newData
     })
   }
 
-  const onSort = (newSortOptions: Array<{ id: string; sortAscending: boolean }>) => {
+  const onSort = (newSortOptions: { id: string; sortAscending: boolean }[]): void => {
     const sortId = newSortOptions[0].id
     const sortAscending = newSortOptions[0].sortAscending
     const dataCopy = JSON.parse(JSON.stringify(data))
     if (sortId === 'created') {
       if (sortAscending) {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return (new Date(a.created) as any) - (new Date(b.created) as any)
         })
       } else {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return (new Date(b.created) as any) - (new Date(a.created) as any)
         })
       }
     } else if (sortId === 'active') {
       if (sortAscending) {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return a.active === b.active ? 0 : a.active ? 1 : -1
         })
       } else {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return a.active === b.active ? 0 : a.active ? -1 : 1
         })
       }
@@ -140,7 +143,7 @@ const DataGridContainer = (props: ContainerProps) => {
     setSortOptions(newSortOptions)
   }
 
-  const paginateData = () => {
+  const paginateData = (): { [key: string]: any }[] => {
     const index1 = (paginationOptions.currentPage - 1) * paginationOptions.pageSize
     const index2 = index1 + paginationOptions.pageSize
     return data.slice(index1, index2)
@@ -150,14 +153,14 @@ const DataGridContainer = (props: ContainerProps) => {
     currentPage: number
     pageSize: number
     pageCount?: number
-  }) => {
+  }): void => {
     if (newPaginationOptions.pageSize !== paginationOptions.pageSize) {
       newPaginationOptions.pageCount = Math.ceil(data.length / newPaginationOptions.pageSize)
     }
     setPaginationOptions(newPaginationOptions)
   }
 
-  const getResultsCountText = () => {
+  const getResultsCountText = (): string => {
     if (paginationOptions.pageCount) {
       return `Showing ${(paginationOptions.currentPage - 1) * paginationOptions.pageSize + 1} to ${
         paginationOptions.currentPage * paginationOptions.pageSize
@@ -169,7 +172,12 @@ const DataGridContainer = (props: ContainerProps) => {
     }
   }
 
-  const getPaginationOptions = () => {
+  const getPaginationOptions = (): {
+    currentPage: number
+    pageSize: number
+    pageCount?: number
+    pageSizeOptions?: number[]
+  } => {
     const paginationOptsCopy = JSON.parse(JSON.stringify(paginationOptions))
     if (!providePageSizeOptions) {
       paginationOptsCopy.pageSizeOptions = undefined
@@ -196,16 +204,18 @@ const DataGridContainer = (props: ContainerProps) => {
       <DataGrid.DataColumn id="created" title="Created" sortable={true} />
       <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
       <DataGrid.Column>
-        {(rowData) => (
-          <SplitButton onSelectMainAction={() => {}} mainActionLabel="Edit">
+        {(rowData): React.ReactElement => (
+          <SplitButton onSelectMainAction={(): void => {}} mainActionLabel="Edit">
             <SplitButton.Action
-              onSelect={() => {
+              onSelect={(): void => {
                 clone(rowData)
               }}
             >
               Clone
             </SplitButton.Action>
-            <SplitButton.Action onSelect={() => deleteRow(rowData)}>Delete</SplitButton.Action>
+            <SplitButton.Action onSelect={(): void => deleteRow(rowData)}>
+              Delete
+            </SplitButton.Action>
           </SplitButton>
         )}
       </DataGrid.Column>
@@ -213,8 +223,8 @@ const DataGridContainer = (props: ContainerProps) => {
   )
 }
 
-describe('component: DataGrid', () => {
-  test('snapshot', () => {
+describe('component: DataGrid', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <DataGridContainer />
@@ -224,7 +234,7 @@ describe('component: DataGrid', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should be able to change page size', () => {
+  test('should be able to change page size', (): void => {
     const { getByLabelText, getByText } = render(
       <StyleProvider>
         <DataGridContainer />
@@ -236,7 +246,7 @@ describe('component: DataGrid', () => {
     expect(getByText('Showing 1 to 6 of 11')).toBeInTheDocument()
   })
 
-  test('should be able to change sort direction', () => {
+  test('should be able to change sort direction', (): void => {
     const { getByText } = render(
       <StyleProvider>
         <DataGridContainer />
@@ -248,7 +258,7 @@ describe('component: DataGrid', () => {
     expect(createdHeader.parentElement).toHaveAttribute('aria-sort', 'ascending')
   })
 
-  test('should render using as prop', () => {
+  test('should render using as prop', (): void => {
     const { getAllByText } = render(
       <StyleProvider>
         <DataGridContainer />
@@ -259,7 +269,7 @@ describe('component: DataGrid', () => {
     expect(getAllByText('NO')[0]).toBeInTheDocument()
   })
 
-  test('should be able to change the page using Pagination', () => {
+  test('should be able to change the page using Pagination', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <DataGridContainer />
@@ -274,7 +284,7 @@ describe('component: DataGrid', () => {
     expect(getByText('Config 8')).toBeInTheDocument()
   })
 
-  test('should be able to change the page using PrevNext', () => {
+  test('should be able to change the page using PrevNext', (): void => {
     const { getByText } = render(
       <StyleProvider>
         <DataGridContainer providePageCount={false} />
@@ -289,7 +299,7 @@ describe('component: DataGrid', () => {
     expect(getByText('Config 8')).toBeInTheDocument()
   })
 
-  test('should render content from Column component', () => {
+  test('should render content from Column component', (): void => {
     const { getAllByText } = render(
       <StyleProvider>
         <DataGridContainer providePageCount={false} />

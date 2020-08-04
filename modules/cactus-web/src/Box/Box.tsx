@@ -1,5 +1,5 @@
-import { TextStyleCollection } from '@repay/cactus-theme'
-import styled from 'styled-components'
+import { TextStyle, TextStyleCollection } from '@repay/cactus-theme'
+import styled, { FlattenSimpleInterpolation } from 'styled-components'
 import {
   border,
   BorderProps,
@@ -37,7 +37,8 @@ export interface BoxProps
 export const Box = styled('div')<BoxProps>`
   box-sizing: border-box;
   ${compose(position, display, layout, space, colorStyle, color, typography, border)}
-  ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
+  ${(p): FlattenSimpleInterpolation | TextStyle | undefined =>
+    p.textStyle && textStyle(p.theme, p.textStyle)}
 `
 
 export default Box

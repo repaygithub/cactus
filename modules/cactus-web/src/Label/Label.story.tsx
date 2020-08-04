@@ -6,4 +6,7 @@ import Label from './Label'
 
 const labelStories = storiesOf('Label', module)
 
-labelStories.add('Basic Usage', () => <Label>{text('label text', 'A Label')}</Label>)
+labelStories.add(
+  'Basic Usage',
+  (): React.ReactElement => <Label>{text('label text', 'A Label')}</Label>
+)

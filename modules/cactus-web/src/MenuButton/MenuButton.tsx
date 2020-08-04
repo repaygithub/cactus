@@ -8,10 +8,15 @@ import {
 } from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { createGlobalStyle, css, StyledComponent } from 'styled-components'
+import styled, {
+  createGlobalStyle,
+  css,
+  FlattenSimpleInterpolation,
+  StyledComponent,
+} from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
@@ -53,13 +58,13 @@ const dropShapeMap = {
   `,
 }
 
-const getShape = (shape: Shape) => shapeMap[shape]
+const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
-const getBorder = (size: BorderSize) => borderMap[size]
+const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
-const getDropShape = (shape: Shape) => dropShapeMap[shape]
+const getDropShape = (shape: Shape): FlattenSimpleInterpolation => dropShapeMap[shape]
 
-const getDropDownBorder = (theme: CactusTheme) => {
+const getDropDownBorder = (theme: CactusTheme): FlattenSimpleInterpolation => {
   if (!theme.boxShadows) {
     return css`
       ${getBorder(theme.border)};
@@ -83,9 +88,9 @@ const MenuList = styled(ReachMenuItems)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
-  ${(p) => getDropDownBorder(p.theme)};
-  ${(p) => boxShadow(p.theme, 1)};
-  background-color: ${(p) => p.theme.colors.white};
+  ${(p): FlattenSimpleInterpolation => getDropDownBorder(p.theme)};
+  ${(p): string => boxShadow(p.theme, 1)};
+  background-color: ${(p): string => p.theme.colors.white};
 
   [data-reach-menu-item] {
     position: relative;
@@ -93,14 +98,14 @@ const MenuList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p) => textStyle(p.theme, 'small')};
-    ${(p) => p.theme.colorStyles.standard};
+    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
+    ${(p): ColorStyle => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
     text-align: center;
 
     &[data-selected] {
-      ${(p) => p.theme.colorStyles.callToAction};
+      ${(p): ColorStyle => p.theme.colorStyles.callToAction};
     }
   }
 `
@@ -115,7 +120,7 @@ interface MenuButtonProps extends MarginProps {
   disabled?: boolean
 }
 
-function MenuButtonBase(props: MenuButtonProps) {
+function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
   const { label, children, ...rest } = omitMargins(props) as Omit<
     MenuButtonProps,
     keyof MarginProps
@@ -128,7 +133,7 @@ function MenuButtonBase(props: MenuButtonProps) {
         <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
       </ReachMenuButton>
       <ReachMenuPopover
-        position={(targetRect, popoverRect) => {
+        position={(targetRect, popoverRect): { width?: number; left?: number; top?: string } => {
           if (!targetRect || !popoverRect) {
             return {}
           }
@@ -159,21 +164,21 @@ type MenuButtonType = StyledComponent<typeof MenuButtonBase, any, {}, never> & {
 const MenuButton = styled(MenuButtonBase)`
   position: relative;
   box-sizing: border-box;
-  ${(p) => getShape(p.theme.shape)};
-  ${(p) => getBorder(p.theme.border)};
+  ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+  ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
   appearance: none;
-  ${(p) => textStyle(p.theme, 'body')};
-  color: ${(p) => p.theme.colors.white};
-  background-color: ${(p) => p.theme.colors.darkContrast};
-  border-color: ${(p) => p.theme.colors.darkContrast};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+  color: ${(p): string => p.theme.colors.white};
+  background-color: ${(p): string => p.theme.colors.darkContrast};
+  border-color: ${(p): string => p.theme.colors.darkContrast};
 
   &:hover,
   &[aria-expanded='true'] {
-    background-color: ${(p) => p.theme.colors.callToAction};
-    border-color: ${(p) => p.theme.colors.callToAction};
+    background-color: ${(p): string => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
   }
 
   &::-moz-focus-inner {
@@ -190,16 +195,16 @@ const MenuButton = styled(MenuButtonBase)`
       top: -5px;
       left: -5px;
       box-sizing: border-box;
-      ${(p) => getShape(p.theme.shape)};
-      ${(p) => getBorder(p.theme.border)};
-      border-color: ${(p) => p.theme.colors.callToAction};
+      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+      border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
 
   &:disabled {
-    color: ${(p) => p.theme.colors.mediumGray};
-    background-color: ${(p) => p.theme.colors.lightGray};
-    border-color: ${(p) => p.theme.colors.lightGray};
+    color: ${(p): string => p.theme.colors.mediumGray};
+    background-color: ${(p): string => p.theme.colors.lightGray};
+    border-color: ${(p): string => p.theme.colors.lightGray};
     cursor: not-allowed;
   }
 

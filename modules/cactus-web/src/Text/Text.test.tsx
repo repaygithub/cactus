@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { cleanup, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
@@ -6,8 +6,8 @@ import { Span, Text } from './Text'
 
 afterEach(cleanup)
 
-describe('component: Text', () => {
-  test('snapshot', () => {
+describe('component: Text', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <Text>
@@ -20,7 +20,7 @@ describe('component: Text', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('can set text based properties', () => {
+  test('can set text based properties', (): void => {
     const { container } = render(
       <StyleProvider>
         <Text colors="base" fontWeight={600} fontStyle="italic" textAlign="right" textStyle="small">
@@ -33,8 +33,8 @@ describe('component: Text', () => {
   })
 })
 
-describe('component: Span', () => {
-  test('snapshot', () => {
+describe('component: Span', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <Span>when the cheese comes out everybody's happy</Span>
@@ -44,7 +44,7 @@ describe('component: Span', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('can set text based properties', () => {
+  test('can set text based properties', (): void => {
     const { container } = render(
       <StyleProvider>
         <Span colors="base" fontWeight={600} fontStyle="italic" textAlign="right" textStyle="h2">

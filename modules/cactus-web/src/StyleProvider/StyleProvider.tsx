@@ -1,4 +1,4 @@
-import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import cactusTheme, { CactusTheme, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import * as styledComponents from 'styled-components'
@@ -41,11 +41,11 @@ const queries = {
 const GlobalStyle = createGlobalStyle`
 html,
 body {
-  font-family: ${(p) =>
+  font-family: ${(p): styledComponents.Interpolation<styledComponents.ThemeProps<CactusTheme>> =>
     p.theme.font as styledComponents.Interpolation<styledComponents.ThemeProps<CactusTheme>>};
-  ${(p) => textStyle(p.theme, 'body')};
+  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   font-weight: 400;
-  color: ${(p) => p.theme.colors.darkestContrast};
+  color: ${(p): string => p.theme.colors.darkestContrast};
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
@@ -53,29 +53,29 @@ body {
 }
 
 small {
-  ${(p) => textStyle(p.theme, 'small')}
+  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')}
 }
 
 h1 {
-  ${(p) => textStyle(p.theme, 'h1')};
+  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h1')};
 }
 
 h2 {
-  ${(p) => textStyle(p.theme, 'h2')};
+  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h2')};
 }
 
 h3 {
-  ${(p) => textStyle(p.theme, 'h3')};
+  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h3')};
 }
 
 h4, h5, h6 {
-  ${(p) => textStyle(p.theme, 'h4')};
+  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h4')};
 }
 `
 
 let shouldCheckTheme = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test'
 
-const checkThemeProperties = (theme: CactusTheme) => {
+const checkThemeProperties = (theme: CactusTheme): void => {
   if (theme.colors.transparentCTA === undefined) {
     console.warn(
       "You are using an outdated version of @repay/cactus-theme. Some features won't be available in @repay/cactus-web with this version. Please upgrade to @repay/cactus-theme >= 0.4.3."
@@ -89,11 +89,11 @@ interface StyleProviderProps extends Omit<styledComponents.ThemeProviderProps<an
   global?: boolean
 }
 
-export const StyleProvider: React.FC<StyleProviderProps> = (props) => {
+export const StyleProvider: React.FC<StyleProviderProps> = (props): React.ReactElement => {
   const { global, children, theme: providedTheme, ...themeProviderProps } = props
   shouldCheckTheme && checkThemeProperties(providedTheme || cactusTheme)
   const theme = providedTheme ? providedTheme : cactusTheme
-  theme.breakpoints = breakpointOrder.map((bp) => `${breakpoints[bp]}px`)
+  theme.breakpoints = breakpointOrder.map((bp): string => `${breakpoints[bp]}px`)
   theme.mediaQueries = queries
 
   return (

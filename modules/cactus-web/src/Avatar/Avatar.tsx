@@ -4,7 +4,7 @@ import {
   NotificationInfo,
   StatusCheck,
 } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
@@ -20,7 +20,9 @@ interface AvatarProps extends MarginProps {
   className?: string
 }
 
-const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
+const avaColor = (
+  props: AvatarProps & ThemeProps<CactusTheme>
+): ReturnType<typeof css> | ColorStyle | undefined => {
   const { type, status, disabled } = props
 
   if (status !== undefined) {
@@ -46,7 +48,7 @@ const avaColor = (props: AvatarProps & ThemeProps<CactusTheme>) => {
   }
 }
 
-const getIcon = (status: AvatarStatus = 'info') => {
+const getIcon = (status: AvatarStatus = 'info'): typeof NotificationError => {
   switch (status) {
     case 'error':
       return NotificationError
@@ -59,7 +61,7 @@ const getIcon = (status: AvatarStatus = 'info') => {
   }
 }
 
-const AvatarBase = (props: AvatarProps) => {
+const AvatarBase = (props: AvatarProps): React.ReactElement => {
   const { className, status } = props
 
   const Icon = getIcon(status)

@@ -6,8 +6,8 @@ import Breadcrumb from './Breadcrumb'
 
 afterEach(cleanup)
 
-describe('Should render Breadcrumb', () => {
-  test('snapshot', () => {
+describe('Should render Breadcrumb', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <Breadcrumb>
@@ -21,8 +21,8 @@ describe('Should render Breadcrumb', () => {
   })
 })
 
-describe('Breadcrumb should have label and linkTo', () => {
-  test('snapshot', () => {
+describe('Breadcrumb should have label and linkTo', (): void => {
+  test('snapshot', (): void => {
     const { container, getByText } = render(
       <StyleProvider>
         <Breadcrumb>

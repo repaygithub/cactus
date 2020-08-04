@@ -6,7 +6,7 @@ import SelectField from './SelectField'
 
 afterEach(cleanup)
 
-function closest(el: HTMLElement, matcher: (el: HTMLElement) => boolean) {
+function closest(el: HTMLElement, matcher: (el: HTMLElement) => boolean): HTMLElement | null {
   while (el && el !== document.body) {
     if (el && matcher(el)) {
       return el
@@ -16,8 +16,8 @@ function closest(el: HTMLElement, matcher: (el: HTMLElement) => boolean) {
   return null
 }
 
-describe('component: SelectField', () => {
-  test('minimal snapshot', () => {
+describe('component: SelectField', (): void => {
+  test('minimal snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <SelectField
@@ -32,7 +32,7 @@ describe('component: SelectField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('render with complex options', () => {
+  test('render with complex options', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <SelectField
@@ -50,7 +50,7 @@ describe('component: SelectField', () => {
     expect(getByLabelText('Requires a label')).not.toBeNull()
   })
 
-  test('should render a disabled SelectField', () => {
+  test('should render a disabled SelectField', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <SelectField
@@ -69,7 +69,7 @@ describe('component: SelectField', () => {
     expect(getByLabelText('Requires a label')).toBeDisabled()
   })
 
-  test('should render an attached label', () => {
+  test('should render an attached label', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <SelectField
@@ -85,7 +85,7 @@ describe('component: SelectField', () => {
     expect(getByLabelText('Requires a label')).not.toBeNull()
   })
 
-  test('should render an attached tooltip', () => {
+  test('should render an attached tooltip', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <SelectField
@@ -99,14 +99,14 @@ describe('component: SelectField', () => {
     )
 
     let tooltipTextEl = getByText('This is some information')
-    let tooltipEl = closest(tooltipTextEl, (el) => el.getAttribute('role') === 'tooltip')
+    let tooltipEl = closest(tooltipTextEl, (el): boolean => el.getAttribute('role') === 'tooltip')
     expect(tooltipEl).not.toBeNull()
 
     let select = getByLabelText('Requires a label')
     expect(select.getAttribute('aria-describedby')).toContain((tooltipEl as HTMLElement).id)
   })
 
-  test('should render a provided placeholder', () => {
+  test('should render a provided placeholder', (): void => {
     const { getByText } = render(
       <StyleProvider>
         <SelectField
@@ -121,8 +121,8 @@ describe('component: SelectField', () => {
     expect(getByText('This is that placeholder')).not.toBeNull()
   })
 
-  test('should render an accessible success message', () => {
-    const { container, getByText, getByLabelText } = render(
+  test('should render an accessible success message', (): void => {
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <SelectField
           label="Requires a label"
@@ -139,8 +139,8 @@ describe('component: SelectField', () => {
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
   })
 
-  test('should render an accessible warning message', () => {
-    const { container, getByText, getByLabelText } = render(
+  test('should render an accessible warning message', (): void => {
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <SelectField
           label="Requires a label"
@@ -157,8 +157,8 @@ describe('component: SelectField', () => {
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
   })
 
-  test('should render an accessible error message', () => {
-    const { container, getByText, getByLabelText } = render(
+  test('should render an accessible error message', (): void => {
+    const { getByText, getByLabelText } = render(
       <StyleProvider>
         <SelectField
           label="Requires a label"
@@ -175,7 +175,7 @@ describe('component: SelectField', () => {
     expect(select.getAttribute('aria-describedby')).toContain(statusEl.id)
   })
 
-  test('supports margin props', () => {
+  test('supports margin props', (): void => {
     const { container } = render(
       <StyleProvider>
         <SelectField
@@ -191,8 +191,8 @@ describe('component: SelectField', () => {
     expect(container).not.toBeNull()
   })
 
-  describe('should accept form event', () => {
-    test('onChange', () => {
+  describe('should accept form event', (): void => {
+    test('onChange', (): void => {
       const onChange = jest.fn()
       const { getByLabelText, getByText } = render(
         <StyleProvider>
@@ -211,9 +211,9 @@ describe('component: SelectField', () => {
       expect(onChange).toHaveBeenCalledWith('the-test-select-field', 'basic')
     })
 
-    test('onBlur', async () => {
+    test('onBlur', async (): Promise<void> => {
       const onBlur = jest.fn()
-      const { getByLabelText, rerender, getByText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <SelectField
             label="Requires a label"
@@ -229,9 +229,9 @@ describe('component: SelectField', () => {
       expect(onBlur).toHaveBeenCalledWith('the-test-select-field')
     })
 
-    test('onFocus', async () => {
+    test('onFocus', async (): Promise<void> => {
       const onFocus = jest.fn()
-      const { getByLabelText, getByText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <SelectField
             label="Requires a label"

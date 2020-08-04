@@ -23,7 +23,7 @@ export interface RadioButtonFieldProps
   onBlur?: FieldOnBlurHandler
 }
 
-const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
+const RadioButtonFieldBase = (props: RadioButtonFieldProps): React.ReactElement => {
   const {
     label,
     labelProps,
@@ -38,7 +38,7 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
   const radioButtonId = useId(id, name)
 
   const handleChange = React.useCallback(
-    (event: React.FormEvent<HTMLInputElement>) => {
+    (event: React.FormEvent<HTMLInputElement>): void => {
       if (typeof onChange === 'function') {
         const target = (event.target as unknown) as HTMLInputElement
         onChange(name, target.value)
@@ -47,11 +47,11 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps) => {
     [name, onChange]
   )
 
-  const handleFocus = (event: React.FocusEvent) => {
+  const handleFocus = (): void => {
     handleEvent(onFocus, name)
   }
 
-  const handleBlur = (event: React.FocusEvent) => {
+  const handleBlur = (): void => {
     handleEvent(onBlur, name)
   }
 
@@ -78,7 +78,7 @@ export const RadioButtonField = styled(RadioButtonFieldBase)`
   }
 
   ${Label} {
-    cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+    cursor: ${(p): string => (p.disabled ? 'not-allowed' : 'pointer')};
     padding-left: 8px;
   }
 

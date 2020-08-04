@@ -8,8 +8,8 @@ import CheckBox from './CheckBox'
 
 afterEach(cleanup)
 
-describe('component: CheckBox', () => {
-  test('should render a checkbox', () => {
+describe('component: CheckBox', (): void => {
+  test('should render a checkbox', (): void => {
     const checkBox = render(
       <StyleProvider>
         <CheckBox id="check" />
@@ -19,7 +19,7 @@ describe('component: CheckBox', () => {
     expect(checkBox.asFragment()).toMatchSnapshot()
   })
 
-  test('should render a disabled checkbox', () => {
+  test('should render a disabled checkbox', (): void => {
     const checkBox = render(
       <StyleProvider>
         <CheckBox id="checking" disabled />
@@ -29,7 +29,7 @@ describe('component: CheckBox', () => {
     expect(checkBox.asFragment()).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const checkBox = render(
       <StyleProvider>
         <CheckBox id="MARGIN PROPS YEAH" m={4} />
@@ -39,7 +39,7 @@ describe('component: CheckBox', () => {
     expect(checkBox.asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onChange event', () => {
+  test('should trigger onChange event', (): void => {
     const onChange = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -51,7 +51,7 @@ describe('component: CheckBox', () => {
     expect(onChange).toHaveBeenCalled()
   })
 
-  test('should trigger onFocus event', () => {
+  test('should trigger onFocus event', (): void => {
     const onFocus = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -63,7 +63,7 @@ describe('component: CheckBox', () => {
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onBlur event', () => {
+  test('should trigger onBlur event', (): void => {
     const onBlur = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -75,7 +75,7 @@ describe('component: CheckBox', () => {
     expect(onBlur).toHaveBeenCalled()
   })
 
-  test('should not trigger onChange event', () => {
+  test('should not trigger onChange event', (): void => {
     const onChange = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -87,7 +87,7 @@ describe('component: CheckBox', () => {
     expect(onChange).not.toHaveBeenCalled()
   })
 
-  test('should not trigger onFocus event', () => {
+  test('should not trigger onFocus event', (): void => {
     const onFocus = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -99,8 +99,8 @@ describe('component: CheckBox', () => {
     expect(onFocus).not.toHaveBeenCalled()
   })
 
-  describe('with theme customization', () => {
-    test('should have 2px border', () => {
+  describe('with theme customization', (): void => {
+    test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -111,7 +111,7 @@ describe('component: CheckBox', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('should not have box shadow on focus', () => {
+    test('should not have box shadow on focus', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { asFragment } = render(
         <StyleProvider theme={theme}>

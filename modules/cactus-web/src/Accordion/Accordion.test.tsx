@@ -1,6 +1,6 @@
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { generateTheme } from '@repay/cactus-theme'
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
@@ -11,13 +11,9 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Text from '../Text/Text'
 import Accordion from './Accordion'
 
-afterEach(() => {
-  cleanup()
-})
-
-describe('component: Accordion', () => {
-  describe('Component', () => {
-    test('Should render Accordion', () => {
+describe('component: Accordion', (): void => {
+  describe('Component', (): void => {
+    test('Should render Accordion', (): void => {
       const { container } = render(
         <StyleProvider>
           <Accordion id="accordion">
@@ -34,7 +30,7 @@ describe('component: Accordion', () => {
       expect(container).toMatchSnapshot()
     })
 
-    test('Should render outline accordion', () => {
+    test('Should render outline accordion', (): void => {
       const { container } = render(
         <StyleProvider>
           <Accordion id="accordion" variant="outline">
@@ -51,7 +47,7 @@ describe('component: Accordion', () => {
       expect(container).toMatchSnapshot()
     })
 
-    test('Should open Accordion when button is clicked', async () => {
+    test('Should open Accordion when button is clicked', async (): Promise<void> => {
       const { container } = render(
         <StyleProvider>
           <Accordion>
@@ -64,14 +60,16 @@ describe('component: Accordion', () => {
       )
 
       const toggleButton = container.querySelector('button') as HTMLButtonElement
-      await act(async () => {
-        fireEvent.click(toggleButton)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(toggleButton)
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Test Body')
     })
 
-    test('should allow the user to initialize accordions as open', () => {
+    test('should allow the user to initialize accordions as open', (): void => {
       const { container } = render(
         <StyleProvider>
           <Accordion defaultOpen>
@@ -86,7 +84,7 @@ describe('component: Accordion', () => {
       expect(container).toHaveTextContent('Test Body')
     })
 
-    test('should support nested accordions', async () => {
+    test('should support nested accordions', async (): Promise<void> => {
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion data-testid="parent">
@@ -107,24 +105,28 @@ describe('component: Accordion', () => {
 
       const parentAccordion = getByTestId('parent')
       const parentButton = parentAccordion.querySelector('button') as HTMLElement
-      await act(async () => {
-        fireEvent.click(parentButton)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(parentButton)
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Child')
 
       const childAccordion = getByTestId('child')
       const childButton = childAccordion.querySelector('button') as HTMLElement
-      await act(async () => {
-        fireEvent.click(childButton)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(childButton)
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Child Content')
     })
   })
 
-  describe('Provider', () => {
-    test('Should manage Accordion state', async () => {
+  describe('Provider', (): void => {
+    test('Should manage Accordion state', async (): Promise<void> => {
       const { container } = render(
         <StyleProvider>
           <Accordion.Provider>
@@ -139,14 +141,16 @@ describe('component: Accordion', () => {
       )
 
       const toggleButton = container.querySelector('button') as HTMLButtonElement
-      await act(async () => {
-        fireEvent.click(toggleButton)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(toggleButton)
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Test Body')
     })
 
-    test('Should close one Accordion when another opens', async () => {
+    test('Should close one Accordion when another opens', async (): Promise<void> => {
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider>
@@ -169,25 +173,29 @@ describe('component: Accordion', () => {
       const a1Accordion = getByTestId('A1')
       const a1Button = a1Accordion.querySelector('button') as HTMLButtonElement
       const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
-      await act(async () => {
-        fireEvent.click(a1Button)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(a1Button)
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Should show first and not second')
       expect(container).not.toHaveTextContent('Should show second and not first')
 
-      await act(async () => {
-        fireEvent.click(a2Button)
-        await animationRender()
-        // @ts-ignore
-        fireEvent.transitionEnd(a1Accordion.childNodes[1])
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(a2Button)
+          await animationRender()
+          // @ts-ignore
+          fireEvent.transitionEnd(a1Accordion.childNodes[1])
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Should show second and not first')
       expect(container).not.toHaveTextContent('Should show first and not second')
     })
 
-    test('Should allow two Accordions to be open at the same time', async () => {
+    test('Should allow two Accordions to be open at the same time', async (): Promise<void> => {
       const { container, getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -209,22 +217,26 @@ describe('component: Accordion', () => {
 
       const a1Button = getByTestId('A1').querySelector('button') as HTMLButtonElement
       const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
-      await act(async () => {
-        fireEvent.click(a1Button)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(a1Button)
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Should show A1')
       expect(container).not.toHaveTextContent('Should show A2')
 
-      await act(async () => {
-        fireEvent.click(a2Button)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(a2Button)
+          await animationRender()
+        }
+      )
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
     })
 
-    test('should allow the user to initialize accordions as open', () => {
+    test('should allow the user to initialize accordions as open', (): void => {
       const { container } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -249,8 +261,8 @@ describe('component: Accordion', () => {
     })
   })
 
-  describe('Keyboard Interactions', () => {
-    test('DOWN arrow should move focus to the next accordion', () => {
+  describe('Keyboard Interactions', (): void => {
+    test('DOWN arrow should move focus to the next accordion', (): void => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -276,7 +288,7 @@ describe('component: Accordion', () => {
       expect(document.activeElement).toBe(getByTestId('A2').querySelector('button'))
     })
 
-    test('UP arrow should move focus to the previous accordion', () => {
+    test('UP arrow should move focus to the previous accordion', (): void => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -302,7 +314,7 @@ describe('component: Accordion', () => {
       expect(document.activeElement).toBe(getByTestId('A1').querySelector('button'))
     })
 
-    test('UP/DOWN arrows should loop on the accordions', () => {
+    test('UP/DOWN arrows should loop on the accordions', (): void => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -331,7 +343,7 @@ describe('component: Accordion', () => {
       expect(document.activeElement).toBe(a1)
     })
 
-    test('SPACE should open/close the accordion', () => {
+    test('SPACE should open/close the accordion', (): void => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion data-testid="Accordion">
@@ -349,7 +361,7 @@ describe('component: Accordion', () => {
       expect(a.getAttribute('aria-expanded')).toBe('false')
     })
 
-    test('RETURN should open/close the accordion', () => {
+    test('RETURN should open/close the accordion', (): void => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion data-testid="Accordion">
@@ -369,7 +381,7 @@ describe('component: Accordion', () => {
       expect(a.getAttribute('aria-expanded')).toBe('false')
     })
 
-    test('HOME should focus on the first accordion', () => {
+    test('HOME should focus on the first accordion', (): void => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -396,7 +408,7 @@ describe('component: Accordion', () => {
       expect(document.activeElement).toBe(a1)
     })
 
-    test('END should focus on the last accordion', () => {
+    test('END should focus on the last accordion', (): void => {
       const { getByTestId } = render(
         <StyleProvider>
           <Accordion.Provider maxOpen={2}>
@@ -424,17 +436,17 @@ describe('component: Accordion', () => {
     })
   })
 
-  describe('Render Prop', () => {
+  describe('Render Prop', (): void => {
     let suppliedHeaderId: string
-    const noop = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const noop = (e: React.MouseEvent<HTMLButtonElement>): void => {
       e.stopPropagation()
     }
-    test('should allow developer to customize content in header', async () => {
+    test('should allow developer to customize content in header', async (): Promise<void> => {
       const { getByTestId, getByText } = render(
         <StyleProvider>
           <Accordion data-testid="accordion" variant="outline">
             <Accordion.Header
-              render={({ isOpen, headerId }) => {
+              render={({ isOpen, headerId }): React.ReactElement => {
                 suppliedHeaderId = headerId
                 return (
                   <Flex alignItems="center" width="100%">
@@ -482,23 +494,27 @@ describe('component: Accordion', () => {
       expect(accordion.querySelector('button[aria-label="Move Up"]')).toBeInTheDocument()
       expect(accordion.querySelector('button[aria-label=Delete]')).not.toBeInTheDocument()
 
-      await act(async () => {
-        fireEvent.click(
-          accordion.querySelector('button[data-role="accordion-button"]') as HTMLButtonElement
-        )
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(
+            accordion.querySelector('button[data-role="accordion-button"]') as HTMLButtonElement
+          )
+          await animationRender()
+        }
+      )
 
       expect(accordion.querySelector('button[aria-label=Delete]')).toBeInTheDocument()
     })
 
-    test('clicking icon buttons inside header should not trigger opening/closing', async () => {
+    test('clicking icon buttons inside header should not trigger opening/closing', async (): Promise<
+      void
+    > => {
       const noop = jest.fn()
       const { getByTestId, container } = render(
         <StyleProvider>
           <Accordion>
             <Accordion.Header
-              render={() => (
+              render={(): React.ReactElement => (
                 <Flex alignItems="center" width="100%">
                   <Text as="h3">Test Header</Text>
                   <IconButton
@@ -520,17 +536,19 @@ describe('component: Accordion', () => {
       )
 
       const deleteButton = getByTestId('delete')
-      await act(async () => {
-        fireEvent.click(deleteButton)
-        await animationRender()
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(deleteButton)
+          await animationRender()
+        }
+      )
       expect(noop).toHaveBeenCalled()
       expect(container).not.toHaveTextContent('Should not show')
     })
   })
 
-  describe('with theme customization', () => {
-    test('simple accordion should have 2px border', () => {
+  describe('with theme customization', (): void => {
+    test('simple accordion should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -546,7 +564,7 @@ describe('component: Accordion', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('outline accordion should not have box shadows when open', () => {
+    test('outline accordion should not have box shadows when open', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -562,7 +580,7 @@ describe('component: Accordion', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('outline accordion should have 2px border', () => {
+    test('outline accordion should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -578,7 +596,7 @@ describe('component: Accordion', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('outline accordion should have 4px border-radius', () => {
+    test('outline accordion should have 4px border-radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -594,7 +612,7 @@ describe('component: Accordion', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('outline accordion should have 1px border-radius', () => {
+    test('outline accordion should have 1px border-radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>

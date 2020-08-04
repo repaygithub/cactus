@@ -1,15 +1,12 @@
-import cactusTheme from '@repay/cactus-theme'
-import { cleanup, fireEvent, queryByAttribute, render } from '@testing-library/react'
+import { fireEvent, queryByAttribute, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import CheckBoxField from './CheckBoxField'
 
-afterEach(cleanup)
-
-describe('component: CheckBoxField', () => {
-  test('should render a checkbox field', () => {
+describe('component: CheckBoxField', (): void => {
+  test('should render a checkbox field', (): void => {
     const checkboxField = render(
       <StyleProvider>
         <CheckBoxField label="SoIA" id="my-id" name="checkbox-test" />
@@ -19,7 +16,7 @@ describe('component: CheckBoxField', () => {
     expect(checkboxField.asFragment()).toMatchSnapshot()
   })
 
-  test('should render a disabled checkbox field', () => {
+  test('should render a disabled checkbox field', (): void => {
     const checkboxField = render(
       <StyleProvider>
         <CheckBoxField label="NMNL" id="my-id" name="checkbox-test" disabled />
@@ -29,7 +26,7 @@ describe('component: CheckBoxField', () => {
     expect(checkboxField.asFragment()).toMatchSnapshot()
   })
 
-  test('should generate unique id when one is not provided', () => {
+  test('should generate unique id when one is not provided', (): void => {
     const { container, getByText } = render(
       <StyleProvider>
         <CheckBoxField label="Scoreboard" name="scoreboard" />
@@ -43,7 +40,7 @@ describe('component: CheckBoxField', () => {
     expect(getById(container, labelElement.htmlFor)).not.toBeNull()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const checkboxField = render(
       <StyleProvider>
         <CheckBoxField label="space props" name="space_props" id="not-random" mr={3} />
@@ -53,7 +50,7 @@ describe('component: CheckBoxField', () => {
     expect(checkboxField.asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onChange event', () => {
+  test('should trigger onChange event', (): void => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -65,7 +62,7 @@ describe('component: CheckBoxField', () => {
     expect(onChange).toHaveBeenCalledWith('katastro', true)
   })
 
-  test('should trigger onFocus event', () => {
+  test('should trigger onFocus event', (): void => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -77,7 +74,7 @@ describe('component: CheckBoxField', () => {
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onBlur event', () => {
+  test('should trigger onBlur event', (): void => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -89,8 +86,8 @@ describe('component: CheckBoxField', () => {
     expect(onBlur).toHaveBeenCalled()
   })
 
-  describe('when disabled', () => {
-    test('should not trigger onChange event', () => {
+  describe('when disabled', (): void => {
+    test('should not trigger onChange event', (): void => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
         <StyleProvider>
@@ -102,7 +99,7 @@ describe('component: CheckBoxField', () => {
       expect(onChange).not.toHaveBeenCalled()
     })
 
-    test('should not trigger onFocus event', () => {
+    test('should not trigger onFocus event', (): void => {
       const onFocus = jest.fn()
       const { getByLabelText } = render(
         <StyleProvider>

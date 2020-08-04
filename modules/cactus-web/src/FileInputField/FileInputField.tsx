@@ -18,7 +18,7 @@ interface FileInputFieldProps extends FileInputProps, MarginProps {
   tooltip?: string
 }
 
-const FileInputFieldBase = (props: FileInputFieldProps) => {
+const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
   const { className, disabled, label, labelProps, id, tooltip, ...fileInputProps } = omitMargins(
     props
   ) as Omit<FileInputFieldProps, keyof MarginProps>
@@ -52,7 +52,7 @@ export const FileInputField = styled(FileInputFieldBase)`
     position: relative;
     bottom: 4px;
     padding-left: 16px;
-    ${(p) => p.disabled && `color: ${p.theme.colors.mediumGray};`}
+    ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
   }
 
   ${Tooltip} {
@@ -60,7 +60,7 @@ export const FileInputField = styled(FileInputFieldBase)`
     top: -2px;
     right: 8px;
     font-size: 16px;
-    ${(p) => p.disabled && `color: ${p.theme.colors.mediumGray};`}
+    ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
   }
 
   ${margin}

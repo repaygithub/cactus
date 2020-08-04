@@ -27,7 +27,7 @@ interface DateInputFieldProps
   tooltip?: string
 }
 
-function DateInputFieldBase(props: DateInputFieldProps) {
+function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
   const {
     className,
     id,
@@ -54,7 +54,7 @@ function DateInputFieldBase(props: DateInputFieldProps) {
       warning={warning}
       success={success}
     >
-      {({ fieldId, status, labelId, ariaDescribedBy }) => (
+      {({ fieldId, status, labelId, ariaDescribedBy }): React.ReactElement => (
         <DateInput
           {...rest}
           name={name}

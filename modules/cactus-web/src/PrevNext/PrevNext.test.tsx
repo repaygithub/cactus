@@ -5,8 +5,8 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import PrevNext from './PrevNext'
 
-describe('component: PrevNext', () => {
-  test('basic usage', () => {
+describe('component: PrevNext', (): void => {
+  test('basic usage', (): void => {
     const { container } = render(
       <StyleProvider>
         <PrevNext />
@@ -16,7 +16,7 @@ describe('component: PrevNext', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('provided link text', () => {
+  test('provided link text', (): void => {
     const { container } = render(
       <StyleProvider>
         <PrevNext prevText="Go Back" nextText="Go Forward" />
@@ -26,7 +26,7 @@ describe('component: PrevNext', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('disable prev', () => {
+  test('disable prev', (): void => {
     const { container } = render(
       <StyleProvider>
         <PrevNext disablePrev={true} />
@@ -36,7 +36,7 @@ describe('component: PrevNext', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('disable next', () => {
+  test('disable next', (): void => {
     const { container } = render(
       <StyleProvider>
         <PrevNext disableNext={true} />
@@ -46,7 +46,7 @@ describe('component: PrevNext', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('it calls the onNavigate handler when link is clicked', () => {
+  test('it calls the onNavigate handler when link is clicked', (): void => {
     const mockNavigate = jest.fn()
     const { getByText } = render(
       <StyleProvider>
@@ -63,9 +63,9 @@ describe('component: PrevNext', () => {
     expect(mockNavigate).toHaveBeenLastCalledWith('next')
   })
 
-  test('it calls the onNavigate handler when Enter is pressed on link focus', () => {
+  test('it calls the onNavigate handler when Enter is pressed on link focus', (): void => {
     const mockNavigate = jest.fn()
-    const { getByText } = render(
+    render(
       <StyleProvider>
         <PrevNext onNavigate={mockNavigate} />
       </StyleProvider>

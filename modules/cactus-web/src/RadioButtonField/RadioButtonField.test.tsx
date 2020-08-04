@@ -1,4 +1,3 @@
-import cactusTheme from '@repay/cactus-theme'
 import { cleanup, fireEvent, queryByAttribute, render } from '@testing-library/react'
 import * as React from 'react'
 
@@ -7,8 +6,8 @@ import RadioButtonField from './RadioButtonField'
 
 afterEach(cleanup)
 
-describe('component: RadioButtonField', () => {
-  test('should render a radio button field', () => {
+describe('component: RadioButtonField', (): void => {
+  test('should render a radio button field', (): void => {
     const { container } = render(
       <StyleProvider>
         <RadioButtonField id="rb" name="rb" label="My Label" />
@@ -18,7 +17,7 @@ describe('component: RadioButtonField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a disabled radio button field', () => {
+  test('should render a disabled radio button field', (): void => {
     const { container } = render(
       <StyleProvider>
         <RadioButtonField id="rb" name="rb" label="My Label" disabled />
@@ -28,7 +27,7 @@ describe('component: RadioButtonField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should generate a unique id when none is provided', () => {
+  test('should generate a unique id when none is provided', (): void => {
     const { container, getByText } = render(
       <StyleProvider>
         <RadioButtonField name="field_name" label="Find This" />
@@ -42,7 +41,7 @@ describe('component: RadioButtonField', () => {
     expect(getById(container, labelElement.htmlFor)).not.toBeNull()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const { container } = render(
       <StyleProvider>
         <RadioButtonField id="Ackermann" name="rbf" label="Mikasa" marginLeft={4} />
@@ -52,7 +51,7 @@ describe('component: RadioButtonField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should trigger onChange event', () => {
+  test('should trigger onChange event', (): void => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -64,7 +63,7 @@ describe('component: RadioButtonField', () => {
     expect(onChange).toHaveBeenCalledWith('rbf', 'on')
   })
 
-  test('should trigger onFocus event', () => {
+  test('should trigger onFocus event', (): void => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -76,7 +75,7 @@ describe('component: RadioButtonField', () => {
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onBlur event', () => {
+  test('should trigger onBlur event', (): void => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>

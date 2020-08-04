@@ -4,7 +4,15 @@ import { NavigationChevronDown, NavigationChevronRight } from '@repay/cactus-ico
 import { BorderSize, Shape } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, {
+  createContext,
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import styled, { css, StyledComponentBase } from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
@@ -72,7 +80,7 @@ const AccordionContext = createContext<AccordionContext>({
   focusLast: undefined,
 })
 
-const AccordionHeaderBase = (props: AccordionHeaderProps) => {
+const AccordionHeaderBase = (props: AccordionHeaderProps): ReactElement => {
   const { className, children, render, ...rest } = props
   const {
     isOpen,
@@ -85,7 +93,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
     focusLast,
   } = useContext(AccordionContext)
 
-  const handleHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleHeaderClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     let element: HTMLElement | null = event.target as HTMLElement
     do {
       if (element.tagName === 'BUTTON') return
@@ -97,7 +105,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
   }
 
   // Used to prevent default behavior/propagation
-  const handleHeaderKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  const handleHeaderKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
     const key = event.which || event.keyCode
     if ([KeyCodes.UP, KeyCodes.DOWN, KeyCodes.HOME, KeyCodes.END, KeyCodes.RETURN].includes(key)) {
       event.preventDefault()
@@ -105,7 +113,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps) => {
     }
   }
 
-  const handleHeaderKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  const handleHeaderKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
     const key = event.which || event.keyCode
     switch (key) {
       case KeyCodes.SPACE:
@@ -190,7 +198,8 @@ const headerBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   `,
 }
 
-const getHeaderBorder = (borderSize: BorderSize) => headerBorderMap[borderSize]
+const getHeaderBorder = (borderSize: BorderSize): ReturnType<typeof css> =>
+  headerBorderMap[borderSize]
 
 export const AccordionHeader = styled(AccordionHeaderBase)`
   box-sizing: border-box;
@@ -220,8 +229,8 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
     padding-right: 16px;
 
     &.is-open {
-      ${(p) => getHeaderBorder(p.theme.border)}
-      border-color: ${(p) => p.theme.colors.lightContrast};
+      ${(p): ReturnType<typeof css> => getHeaderBorder(p.theme.border)}
+      border-color: ${(p): string => p.theme.colors.lightContrast};
     }
   }
 `
@@ -237,7 +246,7 @@ const AccordionBodyInner = styled.div`
   }
 `
 
-const getHeight = (element: Element | null) => {
+const getHeight = (element: Element | null): number => {
   if (element !== null) {
     const { height } = element.getBoundingClientRect()
     return height
@@ -249,11 +258,12 @@ const getHeight = (element: Element | null) => {
  * determines animation duration based on pixels travelled with
  * a min of 200ms and max of 700ms otherwise x / 2 + 100
  */
-const getDuration = (delta: number) => Math.min(Math.max(Math.abs(delta / 2) + 100, 200), 700)
+const getDuration = (delta: number): number =>
+  Math.min(Math.max(Math.abs(delta / 2) + 100, 200), 700)
 
 type AnimationStateType = 'open' | 'animating' | 'closed'
 
-const AccordionBodyBase = (props: AccordionBodyProps) => {
+const AccordionBodyBase = (props: AccordionBodyProps): ReactElement | null => {
   const { className, children, ...restProps } = props
   const { isOpen, variant, bodyId, headerId } = useContext(AccordionContext)
   const previousIsOpen = useRef(isOpen)
@@ -261,9 +271,9 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
   const innerRef = useRef<HTMLDivElement | null>(null)
   const [height, setHeight] = useState(0)
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     let isSubscribed = true
-    window.requestAnimationFrame(() => {
+    window.requestAnimationFrame((): void => {
       if (previousIsOpen.current !== isOpen && isSubscribed) {
         setState('animating')
       }
@@ -274,13 +284,13 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
         setHeight(currentHeight)
       }
     })
-    return () => {
+    return (): void => {
       isSubscribed = false
     }
   })
 
   const handleTransitionEnd = useCallback(
-    (event: React.TransitionEvent<HTMLDivElement>) => {
+    (event: React.TransitionEvent<HTMLDivElement>): void => {
       if (getHeight(event.currentTarget) === 0) {
         setState('closed')
       } else {
@@ -290,7 +300,7 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
     [setState]
   )
 
-  const handleRectChange = (rect: PRect) => {
+  const handleRectChange = (rect: PRect): void => {
     if (rect.height !== height) {
       setHeight(rect.height)
     }
@@ -314,8 +324,8 @@ const AccordionBodyBase = (props: AccordionBodyProps) => {
       aria-labelledby={headerId}
     >
       <Rect observe={state === 'open'} onChange={handleRectChange}>
-        {({ ref }) => {
-          const mergeRefs = (n: HTMLDivElement | null) => {
+        {({ ref }): ReactElement => {
+          const mergeRefs = (n: HTMLDivElement | null): void => {
             innerRef.current = n
             assignRef(ref, n)
           }
@@ -351,21 +361,21 @@ const ProviderContext = createContext<AccordionProviderContext>({
 
 let order = 0
 
-export const AccordionProvider = (props: AccordionProviderProps) => {
+export const AccordionProvider = (props: AccordionProviderProps): ReactElement => {
   const { maxOpen = 1 } = props
   const [update, makeUpdate] = useState<boolean>(false)
 
   const managedAccordions = useRef<{ [key: string]: { open: boolean; order: number } }>({})
 
-  const manageOpen = (id: string, open: boolean) => {
+  const manageOpen = (id: string, open: boolean): void => {
     managedAccordions.current[id] = { open: open, order: order++ }
     const accordions = managedAccordions.current
     if (open) {
       const allOpen = Object.keys(accordions).filter(
-        (accordionId) => accordions[accordionId].open === true
+        (accordionId): boolean => accordions[accordionId].open === true
       )
       if (allOpen.length > maxOpen) {
-        allOpen.sort((a, b) => {
+        allOpen.sort((a, b): number => {
           if (accordions[a].order < accordions[b].order) {
             return -1
           } else if (accordions[a].order > accordions[b].order) {
@@ -379,7 +389,22 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
     makeUpdate(!update)
   }
 
-  const manageFocus = (id: string, offset: number) => {
+  const focusById = (id: string): void => {
+    const focusAccordion = document.getElementById(id)
+    if (focusAccordion) {
+      const toFocus = focusAccordion.querySelector(
+        'button[data-role="accordion-button"]'
+      ) as HTMLElement
+      toFocus.focus()
+    }
+  }
+
+  const getOrderedIds = (): string[] =>
+    Array.from(
+      document.querySelectorAll(`#${Object.keys(managedAccordions.current).join(',#')}`)
+    ).map((el): string => el.id)
+
+  const manageFocus = (id: string, offset: number): void => {
     if (Object.keys(managedAccordions.current).length > 1) {
       const orderedIds = getOrderedIds()
       const currentIndex = orderedIds.indexOf(id)
@@ -393,34 +418,19 @@ export const AccordionProvider = (props: AccordionProviderProps) => {
     }
   }
 
-  const focusFirst = () => {
+  const focusFirst = (): void => {
     if (Object.keys(managedAccordions.current).length > 1) {
       const orderedIds = getOrderedIds()
       focusById(orderedIds[0])
     }
   }
 
-  const focusLast = () => {
+  const focusLast = (): void => {
     if (Object.keys(managedAccordions.current).length > 1) {
       const orderedIds = getOrderedIds()
       focusById(orderedIds[orderedIds.length - 1])
     }
   }
-
-  const focusById = (id: string) => {
-    const focusAccordion = document.getElementById(id)
-    if (focusAccordion) {
-      const toFocus = focusAccordion.querySelector(
-        'button[data-role="accordion-button"]'
-      ) as HTMLElement
-      toFocus.focus()
-    }
-  }
-
-  const getOrderedIds = () =>
-    Array.from(
-      document.querySelectorAll(`#${Object.keys(managedAccordions.current).join(',#')}`)
-    ).map((el) => el.id)
 
   return (
     <ProviderContext.Provider
@@ -456,7 +466,7 @@ interface AccordionState {
   isOpen: boolean
 }
 
-const AccordionBase = (props: AccordionProps) => {
+const AccordionBase = (props: AccordionProps): ReactElement => {
   const {
     manageOpen,
     manageFocus,
@@ -476,46 +486,46 @@ const AccordionBase = (props: AccordionProps) => {
   }
   const [state, setState] = useState<AccordionState>({ isOpen: isOpen })
 
-  useEffect(() => {
+  useEffect((): void => {
     if (isManaged && typeof manageOpen === 'function') {
       manageOpen(id, defaultOpen || false)
     }
   }, [defaultOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     if (managedAccordions) {
       managedAccordions[id] = { open: isOpen, order: order++ }
     }
-    return () => {
+    return (): void => {
       if (managedAccordions) {
         delete managedAccordions[id]
       }
     }
   }, [id, managedAccordions]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const toggleOpen = () => {
+  const toggleOpen = (): void => {
     if (isManaged) {
       if (manageOpen && typeof manageOpen === 'function') {
         manageOpen(id, !isOpen)
       }
     } else {
-      setState((state) => ({ ...state, isOpen: !state.isOpen }))
+      setState((state): AccordionState => ({ ...state, isOpen: !state.isOpen }))
     }
   }
 
-  const shiftFocus = (offset: number) => {
+  const shiftFocus = (offset: number): void => {
     if (isManaged && typeof manageFocus === 'function') {
       manageFocus(id, offset)
     }
   }
 
-  const focusFirstAccordion = () => {
+  const focusFirstAccordion = (): void => {
     if (isManaged && typeof focusFirst === 'function') {
       focusFirst()
     }
   }
 
-  const focusLastAccordion = () => {
+  const focusLastAccordion = (): void => {
     if (isManaged && typeof focusLast === 'function') {
       focusLast()
     }
@@ -573,37 +583,39 @@ const simpleBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   thin: css`
     border-bottom: 1px solid;
     &:first-of-type {
-      border-top: 1px solid ${(p) => p.theme.colors.lightContrast};
+      border-top: 1px solid ${(p): string => p.theme.colors.lightContrast};
     }
   `,
   thick: css`
     border-bottom: 2px solid;
     &:first-of-type {
-      border-top: 2px solid ${(p) => p.theme.colors.lightContrast};
+      border-top: 2px solid ${(p): string => p.theme.colors.lightContrast};
     }
   `,
 }
 
-const getShape = (shape: Shape) => shapeMap[shape]
-const getOutlineBorder = (borderSize: BorderSize) => outlineBorderMap[borderSize]
-const getSimpleBorder = (borderSize: BorderSize) => simpleBorderMap[borderSize]
+const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
+const getOutlineBorder = (borderSize: BorderSize): ReturnType<typeof css> =>
+  outlineBorderMap[borderSize]
+const getSimpleBorder = (borderSize: BorderSize): ReturnType<typeof css> =>
+  simpleBorderMap[borderSize]
 
 const accordionVariantMap: VariantMap = {
   simple: css`
-  ${(p) => getSimpleBorder(p.theme.border)}
-    border-color: ${(p) => p.theme.colors.lightContrast};
+  ${(p): ReturnType<typeof css> => getSimpleBorder(p.theme.border)}
+    border-color: ${(p): string => p.theme.colors.lightContrast};
   `,
   outline: css`
-    ${(p) => getOutlineBorder(p.theme.border)}
-    border-color: ${(p) => p.theme.colors.lightContrast};
-    ${(p) => getShape(p.theme.shape)}
+    ${(p): ReturnType<typeof css> => getOutlineBorder(p.theme.border)}
+    border-color: ${(p): string => p.theme.colors.lightContrast};
+    ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
     & + & {
       margin-top: 8px;
     }
   `,
 }
 
-const variantStyles = (props: AccordionProps) => {
+const variantStyles = (props: AccordionProps): ReturnType<typeof css> | undefined => {
   if (props.variant !== undefined) {
     return accordionVariantMap[props.variant]
   }
@@ -615,7 +627,7 @@ export const Accordion = styled(AccordionBase)`
 
   &.box-shadow {
     border: 0px;
-    ${(p) => boxShadow(p.theme, 1)};
+    ${(p): string => boxShadow(p.theme, 1)};
   }
 
 

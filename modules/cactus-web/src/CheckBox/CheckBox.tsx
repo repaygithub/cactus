@@ -35,9 +35,9 @@ const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   `,
 }
 
-const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
+const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
 
-const CheckBoxBase = (props: CheckBoxProps) => {
+const CheckBoxBase = (props: CheckBoxProps): React.ReactElement => {
   const componentProps = omitMargins<CheckBoxProps>(props)
   const { disabled, id, className, ...checkBoxProps } = componentProps
   return (
@@ -63,14 +63,15 @@ const StyledCheckBox = styled.span<StyledCheckBoxProps>`
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  ${(p) => getBorder(p.theme.border)}
-  border-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast)};
-  background: ${(p) => (p.disabled ? p.theme.colors.lightGray : 'none')};
+  ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
+  border-color: ${(p): string =>
+    p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast};
+  background: ${(p): string => (p.disabled ? p.theme.colors.lightGray : 'none')};
   border-radius: 1px;
   svg {
     visibility: hidden;
     display: block;
-    color: ${(p) => p.theme.colors.white};
+    color: ${(p): string => p.theme.colors.white};
     width: 12px;
     height: 12px;
   }
@@ -83,10 +84,12 @@ export const CheckBox = styled(CheckBoxBase)`
   width: 16px;
   height: 16px;
   line-height: 16px;
-  cursor: ${(p) => (p.disabled ? 'cursor' : 'pointer')};
+  cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
   input:checked ~ span {
-    border-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
-    background-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
+    border-color: ${(p): string | undefined =>
+      !p.disabled ? p.theme.colors.callToAction : undefined};
+    background-color: ${(p): string | undefined =>
+      !p.disabled ? p.theme.colors.callToAction : undefined};
   }
 
   input:checked ~ span {
@@ -96,7 +99,7 @@ export const CheckBox = styled(CheckBoxBase)`
   }
 
   input:focus ~ span {
-    ${(p) => boxShadow(p.theme, 1)};
+    ${(p): string => boxShadow(p.theme, 1)};
   }
 
   ${margin}

@@ -8,8 +8,8 @@ import Button from './Button'
 
 afterEach(cleanup)
 
-describe('component: Button', () => {
-  test('should default to standard variant', () => {
+describe('component: Button', (): void => {
+  test('should default to standard variant', (): void => {
     const button = render(
       <StyleProvider>
         <Button>Click me!</Button>
@@ -19,7 +19,7 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should render standard variant', () => {
+  test('should render standard variant', (): void => {
     const button = render(
       <StyleProvider>
         <Button variant="standard">Click me!</Button>
@@ -29,7 +29,7 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should render call to action variant', () => {
+  test('should render call to action variant', (): void => {
     const button = render(
       <StyleProvider>
         <Button variant="action">Click me!</Button>
@@ -39,7 +39,7 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should render danger variant', () => {
+  test('should render danger variant', (): void => {
     const { asFragment } = render(
       <StyleProvider>
         <Button variant="danger">I am dangerous</Button>
@@ -49,7 +49,7 @@ describe('component: Button', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('should render disabled variant', () => {
+  test('should render disabled variant', (): void => {
     const button = render(
       <StyleProvider>
         <Button disabled>Click me!</Button>
@@ -59,7 +59,7 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse standard variant', () => {
+  test('should render inverse standard variant', (): void => {
     const button = render(
       <StyleProvider>
         <Button variant="standard" inverse>
@@ -71,7 +71,7 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse call to action variant', () => {
+  test('should render inverse call to action variant', (): void => {
     const button = render(
       <StyleProvider>
         <Button variant="action" inverse>
@@ -83,7 +83,7 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse danger variant', () => {
+  test('should render inverse danger variant', (): void => {
     const { asFragment } = render(
       <StyleProvider>
         <Button variant="danger" inverse>
@@ -95,7 +95,7 @@ describe('component: Button', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse disabled variant', () => {
+  test('should render inverse disabled variant', (): void => {
     const button = render(
       <StyleProvider>
         <Button disabled inverse>
@@ -107,7 +107,7 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const button = render(
       <StyleProvider>
         <Button mt={5}>I have margins!</Button>
@@ -117,8 +117,8 @@ describe('component: Button', () => {
     expect(button.asFragment()).toMatchSnapshot()
   })
 
-  test('should support svgs as children', () => {
-    const button = render(
+  test('should support svgs as children', (): void => {
+    render(
       <StyleProvider>
         <Button>
           <ActionsDelete /> Delete
@@ -127,7 +127,7 @@ describe('component: Button', () => {
     )
   })
 
-  test('should render Spinner when loading is true', () => {
+  test('should render Spinner when loading is true', (): void => {
     const { asFragment } = render(
       <StyleProvider>
         <Button loading>Submit</Button>
@@ -136,7 +136,7 @@ describe('component: Button', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onClick', () => {
+  test('should trigger onClick', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -150,7 +150,7 @@ describe('component: Button', () => {
     expect(onClick).toHaveBeenCalled()
   })
 
-  test('should not trigger disabled onClick', () => {
+  test('should not trigger disabled onClick', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -165,8 +165,8 @@ describe('component: Button', () => {
   })
 })
 
-describe('With theme changes ', () => {
-  test('should have 2px border', () => {
+describe('With theme changes ', (): void => {
+  test('should have 2px border', (): void => {
     const theme = generateTheme({ primaryHue: 200, border: 'thick' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
@@ -176,7 +176,7 @@ describe('With theme changes ', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('Should have intermediate border radius', () => {
+  test('Should have intermediate border radius', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
@@ -185,7 +185,7 @@ describe('With theme changes ', () => {
     )
     expect(asFragment()).toMatchSnapshot()
   })
-  test('Should have square border radius', () => {
+  test('Should have square border radius', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'square' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
@@ -194,7 +194,7 @@ describe('With theme changes ', () => {
     )
     expect(asFragment()).toMatchSnapshot()
   })
-  test('Should not have box shadows applied', () => {
+  test('Should not have box shadows applied', (): void => {
     const theme = generateTheme({ primaryHue: 200, boxShadows: false })
     const { asFragment } = render(
       <StyleProvider theme={theme}>

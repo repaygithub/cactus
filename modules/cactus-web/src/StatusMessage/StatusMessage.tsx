@@ -1,7 +1,8 @@
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
+import { TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 
 import { textStyle } from '../helpers/theme'
 
@@ -17,26 +18,26 @@ type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
-    background-color: ${(p) => p.theme.colors.status.avatar.success};
+    background-color: ${(p): string => p.theme.colors.status.avatar.success};
   `,
   warning: css`
-    background-color: ${(p) => p.theme.colors.status.avatar.warning};
+    background-color: ${(p): string => p.theme.colors.status.avatar.warning};
   `,
   error: css`
-    background-color: ${(p) => p.theme.colors.status.avatar.error};
+    background-color: ${(p): string => p.theme.colors.status.avatar.error};
   `,
 }
 
-const statusColors: any = (props: StatusMessageProps) => {
+const statusColors: any = (props: StatusMessageProps): ReturnType<typeof css> => {
   const { status } = props
   return statusMap[status as Status]
 }
 
-const Noop = () => null
+const Noop = (): null => null
 
 const StatusMessageBase: React.FC<
   StatusMessageProps & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-> = ({ status, className, children, ...rest }) => {
+> = ({ status, className, children, ...rest }): React.ReactElement => {
   let StatusIcon: React.ElementType<any> = Noop
   switch (status) {
     case 'error': {
@@ -66,7 +67,7 @@ const StatusMessage = styled(StatusMessageBase)<StatusMessageProps>`
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
-  ${(p) => textStyle(p.theme, 'small')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   ${statusColors}
 
   ${NotificationError}, ${NotificationAlert}, ${StatusCheck} {

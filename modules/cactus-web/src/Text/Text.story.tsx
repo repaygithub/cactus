@@ -19,7 +19,7 @@ cheesy grin cow monterey jack.`
 storiesOf('Text', module)
   .add(
     'Basic Usage of Text',
-    () => (
+    (): React.ReactElement => (
       <Text
         colors={select('colors', COLOR_STYLES, 'base')}
         margin={text('margin', '0 50px')}
@@ -36,7 +36,7 @@ storiesOf('Text', module)
   )
   .add(
     'Basic Usage of Span',
-    () => (
+    (): React.ReactElement => (
       <Span
         colors={select('colors', COLOR_STYLES, 'base')}
         margin={text('margin', '0 50px')}

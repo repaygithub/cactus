@@ -5,16 +5,16 @@ import {
   NotificationError,
   StatusCheck,
 } from '@repay/cactus-icons'
-import { CactusTheme, Shape } from '@repay/cactus-theme'
+import { CactusTheme, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import styled, {
   css,
   DefaultTheme,
   FlattenInterpolation,
+  FlattenSimpleInterpolation,
   StyledComponentBase,
   ThemedStyledProps,
-  ThemeProps,
 } from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
@@ -104,7 +104,7 @@ interface State {
   inputKey: string
 }
 
-const EmptyPromptsBase = (props: EmptyPromptsProps) => (
+const EmptyPromptsBase = (props: EmptyPromptsProps): React.ReactElement => (
   <div className={props.className}>
     <ActionsUpload iconSize="large" />
     <span>{props.prompt}</span>
@@ -119,14 +119,15 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
     position: absolute;
     top: 30%;
     left: 15%;
-    color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
+    color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
   }
 
   span {
     position: absolute;
     top: 20%;
     left: 37%;
-    color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.mediumContrast)};
+    color: ${(p): string =>
+      p.disabled ? p.theme.colors.mediumGray : p.theme.colors.mediumContrast};
   }
 `
 
@@ -140,58 +141,63 @@ type FileBoxMap = {
 
 const fileBoxMap: FileBoxMap = {
   loading: css<FileBoxPropsWithForwardRef>`
-    background-color: ${(P) => P.theme.colors.lightContrast};
+    background-color: ${(P): string => P.theme.colors.lightContrast};
   `,
   loaded: css<FileBoxPropsWithForwardRef>`
-    border: ${(p) => border(p.theme, p.theme.colors.success)};
-    background-color: ${(p) => p.theme.colors.transparentSuccess};
+    border: ${(p): string => border(p.theme, p.theme.colors.success)};
+    background-color: ${(p): string => p.theme.colors.transparentSuccess};
   `,
   error: css<FileBoxPropsWithForwardRef>`
-    border: ${(p) => border(p.theme, p.theme.colors.error)};
-    background-color: ${(p) => p.theme.colors.transparentError};
+    border: ${(p): string => border(p.theme, p.theme.colors.error)};
+    background-color: ${(p): string => p.theme.colors.transparentError};
   `,
   disabled: css<FileBoxPropsWithForwardRef>`
-    border: ${(p) => border(p.theme, p.theme.colors.mediumGray)};
-    background-color: ${(p) => p.theme.colors.lightGray};
+    border: ${(p): string => border(p.theme, p.theme.colors.mediumGray)};
+    background-color: ${(p): string => p.theme.colors.lightGray};
   `,
 }
 
-const fileStatus = (props: FileBoxPropsWithForwardRef) =>
-  props.disabled ? fileBoxMap.disabled : fileBoxMap[props.status]
+const fileStatus = (
+  props: FileBoxPropsWithForwardRef
+): FlattenInterpolation<
+  ThemedStyledProps<FileBoxProps & React.RefAttributes<HTMLDivElement>, DefaultTheme>
+> => (props.disabled ? fileBoxMap.disabled : fileBoxMap[props.status])
 
-const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>((props, ref) => {
-  const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
-  const onClick = () => {
-    onDelete(fileName)
+const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
+  (props, ref): React.ReactElement => {
+    const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
+    const onClick = (): void => {
+      onDelete(fileName)
+    }
+
+    let label = fileName
+    if (status === 'loaded') {
+      label += labels.loaded ? `, ${labels.loaded}` : ', Successful'
+    } else if (status === 'error' && errorMsg) {
+      label += `, ${errorMsg}`
+    } else if (status === 'loading') {
+      label += labels.loading ? `, ${labels.loading}` : ', Loading'
+    }
+
+    return (
+      <div className={className} tabIndex={0} aria-label={label} aria-disabled={disabled} ref={ref}>
+        {status === 'error' ? (
+          <Avatar type="alert" status="error" disabled={disabled} />
+        ) : (
+          status === 'loaded' && <Avatar type="alert" status="success" disabled={disabled} />
+        )}
+        <span>{fileName}</span>
+        {status === 'loading' ? (
+          <Spinner />
+        ) : (
+          <IconButton onClick={onClick} label={labels.delete} disabled={disabled}>
+            <NavigationClose />
+          </IconButton>
+        )}
+      </div>
+    )
   }
-
-  let label = fileName
-  if (status === 'loaded') {
-    label += labels.loaded ? `, ${labels.loaded}` : ', Successful'
-  } else if (status === 'error' && errorMsg) {
-    label += `, ${errorMsg}`
-  } else if (status === 'loading') {
-    label += labels.loading ? `, ${labels.loading}` : ', Loading'
-  }
-
-  return (
-    <div className={className} tabIndex={0} aria-label={label} aria-disabled={disabled} ref={ref}>
-      {status === 'error' ? (
-        <Avatar type="alert" status="error" disabled={disabled} />
-      ) : (
-        status === 'loaded' && <Avatar type="alert" status="success" disabled={disabled} />
-      )}
-      <span>{fileName}</span>
-      {status === 'loading' ? (
-        <Spinner />
-      ) : (
-        <IconButton onClick={onClick} label={labels.delete} disabled={disabled}>
-          <NavigationClose />
-        </IconButton>
-      )}
-    </div>
-  )
-})
+)
 
 const FileBox = styled(FileBoxBase)`
   box-sizing: border-box;
@@ -203,12 +209,13 @@ const FileBox = styled(FileBoxBase)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast)};
+  color: ${(p): string =>
+    p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast};
 
   span {
     margin-left: 8px;
     margin-right: 8px;
-    ${(p) => textStyle(p.theme, 'body')};
+    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   }
 
   ${Avatar} {
@@ -243,7 +250,7 @@ const FileBox = styled(FileBoxBase)`
   ${fileStatus}
 `
 
-const FileInfoBase = (props: FileInfoProps) => {
+const FileInfoBase = (props: FileInfoProps): React.ReactElement => {
   const { className, errorMsg, labels, boxRef, disabled, ...rest } = props
 
   return (
@@ -292,7 +299,7 @@ const defaultErrorHandler = (errorType: ErrorType, accept: string[] | undefined 
   return errorMsg
 }
 
-const FileInputBase = (props: FileInputProps) => {
+const FileInputBase = (props: FileInputProps): React.ReactElement => {
   const {
     className,
     onChange,
@@ -327,58 +334,92 @@ const FileInputBase = (props: FileInputProps) => {
   const fileSelector = useRef<HTMLInputElement | null>(null)
   const topFileBox = useRef<HTMLDivElement | null>(null)
 
-  useEffect(() => {
-    return () => {
+  useEffect((): (() => void) => {
+    return (): void => {
       isMounted.current = false
     }
   }, [])
 
-  useEffect(() => {
+  useEffect((): void => {
     if (topFileBox.current) {
       topFileBox.current.focus()
     }
   }, [state.files])
 
-  useEffect(() => {
+  useEffect((): void => {
     if (value && value !== state.files) {
-      setState((state) => ({ ...state, files: value }))
+      setState((state): State => ({ ...state, files: value }))
     }
   }, [state.files, value])
 
-  const saveFiles = (files: FileList | null) => {
+  const saveFiles = (files: FileList | null): void => {
     if (files && files.length > 0) {
       const loadingFiles = Array.from(files).map(
-        (file) => ({ fileName: file.name, contents: null, status: 'loading' } as FileObject)
+        (file): FileObject => ({ fileName: file.name, contents: null, status: 'loading' })
       )
-      setState((state) => ({ ...state, files: loadingFiles }))
+      setState((state): State => ({ ...state, files: loadingFiles }))
 
-      const promises = Array.from(files).map((file) => {
-        if (accept && !accepts(file, accept)) {
-          return new Promise<FileObject>((resolve) => {
-            const errorMsg = onError(FILE_TYPE_ERR, accept)
-            resolve({
-              fileName: file.name,
-              contents: null,
-              status: 'error',
-              errorMsg: errorMsg,
+      const promises = Array.from(files).map(
+        (file): Promise<FileObject> => {
+          if (accept && !accepts(file, accept)) {
+            return new Promise<FileObject>((resolve): void => {
+              const errorMsg = onError(FILE_TYPE_ERR, accept)
+              resolve({
+                fileName: file.name,
+                contents: null,
+                status: 'error',
+                errorMsg: errorMsg,
+              })
             })
-          })
-        }
+          }
 
-        if (rawFiles) {
-          return Promise.resolve<FileObject>({
-            fileName: file.name,
-            contents: file,
-            status: 'loaded',
-          })
-        } else {
-          const reader = new FileReader()
+          if (rawFiles) {
+            return Promise.resolve<FileObject>({
+              fileName: file.name,
+              contents: file,
+              status: 'loaded',
+            })
+          } else {
+            const reader = new FileReader()
 
-          return new Promise<FileObject>((resolve) => {
-            reader.onload = () => {
-              let dataURL = reader.result as string
-              if (file.size > 250000000 && dataURL === '') {
-                const errorMsg = onError(NOT_READABLE_ERR)
+            return new Promise<FileObject>((resolve): void => {
+              reader.onload = (): void => {
+                let dataURL = reader.result as string
+                if (file.size > 250000000 && dataURL === '') {
+                  const errorMsg = onError(NOT_READABLE_ERR)
+                  resolve({
+                    fileName: file.name,
+                    contents: null,
+                    status: 'error',
+                    errorMsg: errorMsg,
+                  })
+                }
+                resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
+              }
+
+              reader.onerror = (): void => {
+                reader.abort()
+                let errorType: ErrorType = UNKNOWN_ERR
+                if (reader.error) {
+                  switch (reader.error.name) {
+                    case NOT_FOUND_ERR:
+                      errorType = NOT_FOUND_ERR
+                      break
+                    case SECURITY_ERR:
+                      errorType = SECURITY_ERR
+                      break
+                    case ABORT_ERR:
+                      errorType = ABORT_ERR
+                      break
+                    case NOT_READABLE_ERR:
+                      errorType = NOT_READABLE_ERR
+                      break
+                    case ENCODING_ERR:
+                      errorType = ENCODING_ERR
+                      break
+                  }
+                }
+                const errorMsg = onError(errorType)
                 resolve({
                   fileName: file.name,
                   contents: null,
@@ -386,48 +427,16 @@ const FileInputBase = (props: FileInputProps) => {
                   errorMsg: errorMsg,
                 })
               }
-              resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
-            }
 
-            reader.onerror = () => {
-              reader.abort()
-              let errorType: ErrorType = UNKNOWN_ERR
-              if (reader.error) {
-                switch (reader.error.name) {
-                  case NOT_FOUND_ERR:
-                    errorType = NOT_FOUND_ERR
-                    break
-                  case SECURITY_ERR:
-                    errorType = SECURITY_ERR
-                    break
-                  case ABORT_ERR:
-                    errorType = ABORT_ERR
-                    break
-                  case NOT_READABLE_ERR:
-                    errorType = NOT_READABLE_ERR
-                    break
-                  case ENCODING_ERR:
-                    errorType = ENCODING_ERR
-                    break
-                }
-              }
-              const errorMsg = onError(errorType)
-              resolve({
-                fileName: file.name,
-                contents: null,
-                status: 'error',
-                errorMsg: errorMsg,
-              })
-            }
-
-            reader.readAsDataURL(file)
-          })
+              reader.readAsDataURL(file)
+            })
+          }
         }
-      })
+      )
 
-      Promise.all(promises).then((results) => {
+      Promise.all(promises).then((results): void => {
         if (isMounted.current === true) {
-          setState((state) => ({ ...state, files: results }))
+          setState((state): State => ({ ...state, files: results }))
           if (typeof onChange === 'function') {
             onChange(name, results)
           }
@@ -436,7 +445,9 @@ const FileInputBase = (props: FileInputProps) => {
     }
   }
 
-  const handleDrop = (disabled: boolean) => (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (disabled: boolean): ((e: React.DragEvent<HTMLDivElement>) => void) => (
+    event: React.DragEvent<HTMLDivElement>
+  ): void => {
     event.preventDefault()
     event.stopPropagation()
 
@@ -448,21 +459,21 @@ const FileInputBase = (props: FileInputProps) => {
     }
   }
 
-  const handleOpenFileSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenFileSelect = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault()
     if (fileSelector.current) {
       fileSelector.current.click()
     }
   }
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault()
 
     saveFiles(event.target.files)
   }
 
-  const handleDelete = (fileName: string) => {
-    const files = state.files.filter((file) => file.fileName !== fileName)
+  const handleDelete = (fileName: string): void => {
+    const files = state.files.filter((file): boolean => file.fileName !== fileName)
     setState({ files: files, inputKey: Math.random().toString(36) })
     if (isMounted.current === true) {
       if (typeof onChange === 'function') {
@@ -471,26 +482,26 @@ const FileInputBase = (props: FileInputProps) => {
     }
   }
 
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
     e.stopPropagation()
   }
 
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
     e.stopPropagation()
   }
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
     e.stopPropagation()
   }
 
-  const handleInputFocus = (e: React.FocusEvent<HTMLButtonElement>) => {
+  const handleInputFocus = (): void => {
     handleEvent(onFocus, name)
   }
 
-  const handleInputBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
+  const handleInputBlur = (): void => {
     handleEvent(onBlur, name)
   }
 
@@ -533,18 +544,20 @@ const FileInputBase = (props: FileInputProps) => {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {state.files.map((file, index) => (
-            <FileInfo
-              key={file.fileName}
-              fileName={file.fileName}
-              onDelete={handleDelete}
-              status={file.status}
-              errorMsg={file.errorMsg}
-              labels={labels}
-              boxRef={index === 0 ? topFileBox : undefined}
-              disabled={disabled}
-            />
-          ))}
+          {state.files.map(
+            (file, index): React.ReactElement => (
+              <FileInfo
+                key={file.fileName}
+                fileName={file.fileName}
+                onDelete={handleDelete}
+                status={file.status}
+                errorMsg={file.errorMsg}
+                labels={labels}
+                boxRef={index === 0 ? topFileBox : undefined}
+                disabled={disabled}
+              />
+            )
+          )}
           <TextButton
             variant="action"
             id={id}
@@ -574,20 +587,20 @@ const shapeMap: Record<Shape, string> = {
     border-radius: 8px;
   `,
 }
-const getShape = (shape: Shape) => shapeMap[shape]
+const getShape = (shape: Shape): string => shapeMap[shape]
 
 export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
-  ${(p) => getShape(p.theme.shape)}
-  border: ${(p) => (p.disabled ? 'none' : '2px dotted')};
-  border-color: ${(p) => p.theme.colors.darkestContrast};
+  ${(p): string => getShape(p.theme.shape)}
+  border: ${(p): string => (p.disabled ? 'none' : '2px dotted')};
+  border-color: ${(p): string => p.theme.colors.darkestContrast};
   min-width: 300px;
   min-height: 100px;
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  ${(p) => p.disabled && `background-color: ${p.theme.colors.lightGray};`}
+  ${(p): string => (p.disabled ? `background-color: ${p.theme.colors.lightGray};` : '')}
 
   &.empty {
     ${TextButton} {
@@ -599,7 +612,7 @@ export const FileInput = styled(FileInputBase)`
 
   &.notEmpty {
     flex-direction: column;
-    border-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
     padding: 0 8px;
 
     ${TextButton} {

@@ -6,8 +6,8 @@ import Tooltip from './Tooltip'
 
 afterEach(cleanup)
 
-describe('component: Tooltip', () => {
-  test('should render tooltip icon', () => {
+describe('component: Tooltip', (): void => {
+  test('should render tooltip icon', (): void => {
     const { container } = render(
       <StyleProvider>
         <Tooltip label="pitloot" />
@@ -17,7 +17,7 @@ describe('component: Tooltip', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a disabled tooltip', () => {
+  test('should render a disabled tooltip', (): void => {
     const { container } = render(
       <StyleProvider>
         <Tooltip label="pitloot" disabled={true} />
@@ -27,7 +27,7 @@ describe('component: Tooltip', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should not render portal without mouseenter event', () => {
+  test('should not render portal without mouseenter event', (): void => {
     render(
       <StyleProvider>
         <Tooltip label="This should be displayed" />
@@ -39,14 +39,14 @@ describe('component: Tooltip', () => {
     expect(portal).toBeNull()
   })
 
-  test('should render tooltip on hover', async () => {
+  test('should render tooltip on hover', async (): Promise<void> => {
     jest.useFakeTimers()
     render(
       <StyleProvider>
         <Tooltip label="This should be displayed" />
       </StyleProvider>
     )
-    act(() => {
+    act((): void => {
       fireEvent.mouseEnter(document.querySelector('span') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()

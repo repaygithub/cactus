@@ -1,8 +1,13 @@
 import { getScrollX, getScrollY } from './scrollOffset'
 
-export type PositionOptions = { offset: number; scrollbarWidth: number }
+export interface PositionOptions {
+  offset: number
+  scrollbarWidth: number
+}
 
-const defOptions = (options?: Partial<PositionOptions>) => ({
+const defOptions = (
+  options?: Partial<PositionOptions>
+): { offset: number; scrollbarWidth: number } => ({
   offset: 0,
   scrollbarWidth: 0,
   ...options,

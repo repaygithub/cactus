@@ -10,16 +10,16 @@ import DateInput from './DateInput'
 
 afterEach(cleanup)
 
-function animationRender() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      window.requestAnimationFrame(resolve)
+function animationRender(): Promise<void> {
+  return new Promise((resolve): void => {
+    setTimeout((): void => {
+      window.requestAnimationFrame((): void => resolve())
     }, 0)
   })
 }
 
-describe('component: DateInput', () => {
-  test('snapshot', () => {
+describe('component: DateInput', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <DateInput name="date-input" id="date-input" />
@@ -29,8 +29,8 @@ describe('component: DateInput', () => {
     expect(container).toMatchSnapshot()
   })
 
-  describe('can be controlled', () => {
-    test('with value as a Date', () => {
+  describe('can be controlled', (): void => {
+    test('with value as a Date', (): void => {
       let value = new Date(2018, 8, 30)
       let { getByLabelText, rerender } = render(
         <StyleProvider>
@@ -54,9 +54,9 @@ describe('component: DateInput', () => {
       expect(getByLabelText('day of month')).toHaveProperty('value', '12')
     })
 
-    test('when initial value = null then a Date is raised', () => {
+    test('when initial value = null then a Date is raised', (): void => {
       let value = null
-      const handleChange = jest.fn((_, v) => {
+      const handleChange = jest.fn((_, v): void => {
         value = v
       })
       let { getByLabelText } = render(
@@ -74,7 +74,7 @@ describe('component: DateInput', () => {
       expect(handleChange).toHaveBeenLastCalledWith('date-input', new Date(2019, 1, 14))
     })
 
-    test('with value as a string', () => {
+    test('with value as a string', (): void => {
       let value = new PartialDate('2018-09-30', 'YYYY-MM-dd')
       let { getByLabelText, rerender } = render(
         <StyleProvider>
@@ -87,7 +87,7 @@ describe('component: DateInput', () => {
 
       value.setDate(12)
 
-      act(() => {
+      act((): void => {
         rerender(
           <StyleProvider>
             <DateInput
@@ -105,9 +105,9 @@ describe('component: DateInput', () => {
       expect(getByLabelText('day of month')).toHaveProperty('value', '12')
     })
 
-    test('when initial value = undefined then a string is raised', () => {
+    test('when initial value = undefined then a string is raised', (): void => {
       let value = undefined
-      const handleChange = jest.fn((_, v) => {
+      const handleChange = jest.fn((_, v): void => {
         value = v
       })
       let { getByLabelText } = render(
@@ -126,10 +126,10 @@ describe('component: DateInput', () => {
     })
   })
 
-  describe('using inputs', () => {
-    test('the up arrow increases value', async () => {
+  describe('using inputs', (): void => {
+    test('the up arrow increases value', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      let onChange = jest.fn((_, v) => {
+      let onChange = jest.fn((_, v): void => {
         value = v
       })
       let { getByLabelText } = render(
@@ -149,9 +149,9 @@ describe('component: DateInput', () => {
       expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 9, 30))
     })
 
-    test('the down arrow decreases value', async () => {
+    test('the down arrow decreases value', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      let onChange = jest.fn((_, v) => {
+      let onChange = jest.fn((_, v): void => {
         value = v
       })
       let { getByLabelText } = render(
@@ -171,9 +171,9 @@ describe('component: DateInput', () => {
       expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 8, 29))
     })
 
-    test('the down arrow will loop when value is 1', async () => {
+    test('the down arrow will loop when value is 1', async (): Promise<void> => {
       let value = new Date(2018, 8, 1)
-      let onChange = jest.fn((_, v) => {
+      let onChange = jest.fn((_, v): void => {
         value = v
       })
       let { getByLabelText } = render(
@@ -193,9 +193,9 @@ describe('component: DateInput', () => {
       expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 8, 30))
     })
 
-    test('the up arrow will loop when value is last day of month', async () => {
+    test('the up arrow will loop when value is last day of month', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      let onChange = jest.fn((_, v) => {
+      let onChange = jest.fn((_, v): void => {
         value = v
       })
       let { getByLabelText } = render(
@@ -215,9 +215,9 @@ describe('component: DateInput', () => {
       expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 8, 1))
     })
 
-    test('looping works with February and leap year', async () => {
+    test('looping works with February and leap year', async (): Promise<void> => {
       let value = new Date(2020, 1, 28)
-      let onChange = jest.fn((_, v) => {
+      let onChange = jest.fn((_, v): void => {
         value = v
       })
       let { getByLabelText, rerender } = render(
@@ -252,8 +252,8 @@ describe('component: DateInput', () => {
     })
   })
 
-  describe('type=date (default)', () => {
-    test('renders date picker button', () => {
+  describe('type=date (default)', (): void => {
+    test('renders date picker button', (): void => {
       const { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" />
@@ -263,7 +263,7 @@ describe('component: DateInput', () => {
       expect(getByLabelText('Open date picker')).toBeInTheDocument()
     })
 
-    test('can open portal', () => {
+    test('can open portal', (): void => {
       const { getByLabelText, getByRole } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" />
@@ -271,7 +271,7 @@ describe('component: DateInput', () => {
       )
 
       let portalTrigger = getByLabelText('Open date picker')
-      act(() => {
+      act((): void => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
@@ -279,7 +279,7 @@ describe('component: DateInput', () => {
       expect(getByRole('dialog')).toBeInTheDocument()
     })
 
-    test('focus set to current date when no value selected', async () => {
+    test('focus set to current date when no value selected', async (): Promise<void> => {
       const { getByLabelText, getByText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" />
@@ -287,7 +287,7 @@ describe('component: DateInput', () => {
       )
 
       let portalTrigger = getByLabelText('Open date picker')
-      act(() => {
+      act((): void => {
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
       })
@@ -296,7 +296,9 @@ describe('component: DateInput', () => {
       expect(document.activeElement).toBe(getByText(today.toLocaleSpoken('date')).parentElement)
     })
 
-    test('can select date from date picker and use month year selection', async () => {
+    test('can select date from date picker and use month year selection', async (): Promise<
+      void
+    > => {
       let handleChange = jest.fn()
       const { getByLabelText, getByText } = render(
         <StyleProvider>
@@ -310,22 +312,24 @@ describe('component: DateInput', () => {
       )
 
       let portalTrigger = getByLabelText('Open date picker')
-      act(() => {
+      act((): void => {
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
       })
       await animationRender()
       let desiredDate = PartialDate.from('2018-03-23', { type: 'date', format: 'YYYY-MM-dd' })
-      await act(async () => {
-        fireEvent.click(getByLabelText('Click to change month and year'))
-        await animationRender()
-        fireEvent.click(getByText('March'))
-        fireEvent.click(getByText('2018'))
-        fireEvent.click(getByLabelText('Click to use calendar picker'))
-        await animationRender()
-        // @ts-ignore
-        fireEvent.click(getByText(desiredDate.toLocaleSpoken('date')).parentElement)
-      })
+      await act(
+        async (): Promise<void> => {
+          fireEvent.click(getByLabelText('Click to change month and year'))
+          await animationRender()
+          fireEvent.click(getByText('March'))
+          fireEvent.click(getByText('2018'))
+          fireEvent.click(getByLabelText('Click to use calendar picker'))
+          await animationRender()
+          // @ts-ignore
+          fireEvent.click(getByText(desiredDate.toLocaleSpoken('date')).parentElement)
+        }
+      )
       expect(handleChange).toHaveBeenCalledWith('date_input', '2018-03-23')
     })
 
@@ -333,8 +337,8 @@ describe('component: DateInput', () => {
      * js-dom doesn't properly apply user interactions like tabs changing focus
      * or Space / Enter clicking buttons so we fake those a little here.
      */
-    describe('keyboard usage', () => {
-      test('can navigate and select dates using the keyboard', async () => {
+    describe('keyboard usage', (): void => {
+      test('can navigate and select dates using the keyboard', async (): Promise<void> => {
         let handleChange = jest.fn()
         const { getByLabelText } = render(
           <StyleProvider>
@@ -349,31 +353,33 @@ describe('component: DateInput', () => {
         )
 
         let portalTrigger = getByLabelText('Open date picker')
-        act(() => {
+        act((): void => {
           fireEvent.keyDown(portalTrigger, { key: ' ', keyCode: KeyCodes.SPACE })
           fireEvent.click(portalTrigger)
         })
         await animationRender()
         // @ts-ignore
         expect(document.activeElement.dataset.date).toEqual('2018-03-22')
-        await act(async () => {
-          // @ts-ignore
-          fireEvent.keyDown(document.activeElement, {
-            key: 'ArrowRight',
-            target: document.activeElement,
-          })
-          await animationRender()
-          // @ts-ignore
-          fireEvent.click(document.activeElement, {
-            target: document.activeElement,
-          })
-        })
+        await act(
+          async (): Promise<void> => {
+            // @ts-ignore
+            fireEvent.keyDown(document.activeElement, {
+              key: 'ArrowRight',
+              target: document.activeElement,
+            })
+            await animationRender()
+            // @ts-ignore
+            fireEvent.click(document.activeElement, {
+              target: document.activeElement,
+            })
+          }
+        )
         expect(handleChange).toHaveBeenCalledWith('date_input', '2018-03-23')
       })
 
-      test('can change months using keyboard', async () => {
+      test('can change months using keyboard', async (): Promise<void> => {
         const pd = PartialDate.from('2018-03-22', 'YYYY-MM-dd')
-        const handleChange = jest.fn((_, value) => {
+        const handleChange = jest.fn((_, value): void => {
           pd.parse(value, 'YYYY-MM-dd')
         })
         const { getByLabelText, rerender } = render(
@@ -389,48 +395,50 @@ describe('component: DateInput', () => {
         )
 
         let portalTrigger = getByLabelText('Open date picker')
-        act(() => {
+        act((): void => {
           fireEvent.keyDown(portalTrigger, { key: ' ', keyCode: KeyCodes.SPACE })
           fireEvent.click(portalTrigger)
         })
         await animationRender()
         // @ts-ignore
         expect(document.activeElement.dataset.date).toEqual('2018-03-22')
-        await act(async () => {
-          fireEvent.click(getByLabelText('Click to change month and year'))
-          await animationRender()
-          const monthList = getByLabelText('Select a month')
-          // @ts-ignore
-          fireEvent.keyDown(monthList, {
-            key: 'ArrowUp',
-            target: monthList,
-          })
-          await animationRender()
-          rerender(
-            <StyleProvider>
-              <DateInput
-                name="date_input"
-                id="date-input"
-                format="YYYY-MM-dd"
-                value={pd.format()}
-                onChange={handleChange}
-              />
-            </StyleProvider>
-          )
-          // @ts-ignore
-          let selected = document.getElementById(monthList.getAttribute('aria-activedescendant'))
-          // @ts-ignore
-          fireEvent.click(selected, {
-            target: selected,
-          })
-          await animationRender()
-        })
+        await act(
+          async (): Promise<void> => {
+            fireEvent.click(getByLabelText('Click to change month and year'))
+            await animationRender()
+            const monthList = getByLabelText('Select a month')
+            // @ts-ignore
+            fireEvent.keyDown(monthList, {
+              key: 'ArrowUp',
+              target: monthList,
+            })
+            await animationRender()
+            rerender(
+              <StyleProvider>
+                <DateInput
+                  name="date_input"
+                  id="date-input"
+                  format="YYYY-MM-dd"
+                  value={pd.format()}
+                  onChange={handleChange}
+                />
+              </StyleProvider>
+            )
+            // @ts-ignore
+            let selected = document.getElementById(monthList.getAttribute('aria-activedescendant'))
+            // @ts-ignore
+            fireEvent.click(selected, {
+              target: selected,
+            })
+            await animationRender()
+          }
+        )
         expect(getByLabelText('Click to use calendar picker')).toHaveTextContent('February 2018')
       })
 
-      test('can change years using keyboard', async () => {
+      test('can change years using keyboard', async (): Promise<void> => {
         const pd = PartialDate.from('2018-03-22', 'YYYY-MM-dd')
-        const handleChange = jest.fn((_, value) => {
+        const handleChange = jest.fn((_, value): void => {
           pd.parse(value, 'YYYY-MM-dd')
         })
         const { getByLabelText, rerender } = render(
@@ -446,49 +454,51 @@ describe('component: DateInput', () => {
         )
 
         let portalTrigger = getByLabelText('Open date picker')
-        act(() => {
+        act((): void => {
           fireEvent.keyDown(portalTrigger, { key: ' ', keyCode: KeyCodes.SPACE })
           fireEvent.click(portalTrigger)
         })
         await animationRender()
         // @ts-ignore
         expect(document.activeElement.dataset.date).toEqual('2018-03-22')
-        await act(async () => {
-          fireEvent.click(getByLabelText('Click to change month and year'))
-          await animationRender()
-          const yearList = getByLabelText('Select a year')
-          // @ts-ignore
-          fireEvent.keyDown(yearList, {
-            key: 'ArrowUp',
-            target: yearList,
-          })
-          await animationRender()
-          rerender(
-            <StyleProvider>
-              <DateInput
-                name="date_input"
-                id="date-input"
-                format="YYYY-MM-dd"
-                value={pd.format()}
-                onChange={handleChange}
-              />
-            </StyleProvider>
-          )
-          // @ts-ignore
-          let selected = document.getElementById(yearList.getAttribute('aria-activedescendant'))
-          // @ts-ignore
-          fireEvent.click(selected, {
-            target: selected,
-          })
-          await animationRender()
-        })
+        await act(
+          async (): Promise<void> => {
+            fireEvent.click(getByLabelText('Click to change month and year'))
+            await animationRender()
+            const yearList = getByLabelText('Select a year')
+            // @ts-ignore
+            fireEvent.keyDown(yearList, {
+              key: 'ArrowUp',
+              target: yearList,
+            })
+            await animationRender()
+            rerender(
+              <StyleProvider>
+                <DateInput
+                  name="date_input"
+                  id="date-input"
+                  format="YYYY-MM-dd"
+                  value={pd.format()}
+                  onChange={handleChange}
+                />
+              </StyleProvider>
+            )
+            // @ts-ignore
+            let selected = document.getElementById(yearList.getAttribute('aria-activedescendant'))
+            // @ts-ignore
+            fireEvent.click(selected, {
+              target: selected,
+            })
+            await animationRender()
+          }
+        )
         expect(getByLabelText('Click to use calendar picker')).toHaveTextContent('March 2017')
       })
     })
   })
 
-  describe('type=datetime', () => {
-    test('renders all date and time inputs', () => {
+  describe('type=datetime', (): void => {
+    test('renders all date and time inputs', (): void => {
       let value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
       let { getByLabelText } = render(
         <StyleProvider>
@@ -503,7 +513,7 @@ describe('component: DateInput', () => {
       expect(getByLabelText('time period')).toHaveProperty('value', 'AM')
     })
 
-    test('renders date picker button', () => {
+    test('renders date picker button', (): void => {
       const { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" />
@@ -513,7 +523,7 @@ describe('component: DateInput', () => {
       expect(getByLabelText('Open date picker')).toBeInTheDocument()
     })
 
-    test('input type persists when value is Date and set externally', () => {
+    test('input type persists when value is Date and set externally', (): void => {
       let value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
       let { getByLabelText, rerender } = render(
         <StyleProvider>
@@ -541,7 +551,7 @@ describe('component: DateInput', () => {
       expect(getByLabelText('time period')).toHaveProperty('value', 'AM')
     })
 
-    test('can open portal with time input', () => {
+    test('can open portal with time input', (): void => {
       const { getByLabelText, getAllByLabelText, getByRole } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" type="datetime" />
@@ -549,7 +559,7 @@ describe('component: DateInput', () => {
       )
 
       let portalTrigger = getByLabelText('Open date picker')
-      act(() => {
+      act((): void => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
@@ -561,9 +571,9 @@ describe('component: DateInput', () => {
       expect(dialog).toContainElement(hoursInputs[1])
     })
 
-    test('can type into time input in portal', () => {
+    test('can type into time input in portal', (): void => {
       let value = PartialDate.from('2018-03-01 20:18', 'YYYY-MM-dd HH:mm')
-      const handleChange = jest.fn((_, update) => {
+      const handleChange = jest.fn((_, update): void => {
         value.parse(update, 'YYYY-MM-dd HH:mm')
       })
       const { getByLabelText, getAllByLabelText, rerender } = render(
@@ -579,7 +589,7 @@ describe('component: DateInput', () => {
         </StyleProvider>
       )
 
-      const renderNewValue = () => {
+      const renderNewValue = (): void => {
         rerender(
           <StyleProvider>
             <DateInput
@@ -595,13 +605,13 @@ describe('component: DateInput', () => {
       }
 
       let portalTrigger = getByLabelText('Open date picker')
-      act(() => {
+      act((): void => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
       })
 
-      act(() => {
+      act((): void => {
         userEvent.type(getAllByLabelText('hours')[1], '1')
         renderNewValue()
         userEvent.type(getAllByLabelText('minutes')[1], '3')
@@ -616,35 +626,35 @@ describe('component: DateInput', () => {
     })
   })
 
-  describe('type=time', () => {
-    test('renders expeced time inputs', () => {
+  describe('type=time', (): void => {
+    test('renders expeced time inputs', (): void => {
       let value = '15:22'
       let { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
         </StyleProvider>
       )
-      expect(() => getByLabelText('year')).toThrow()
-      expect(() => getByLabelText('month')).toThrow()
-      expect(() => getByLabelText('day of month')).toThrow()
+      expect((): HTMLElement => getByLabelText('year')).toThrow()
+      expect((): HTMLElement => getByLabelText('month')).toThrow()
+      expect((): HTMLElement => getByLabelText('day of month')).toThrow()
       expect(getByLabelText('hours')).toHaveProperty('value', '3')
       expect(getByLabelText('minutes')).toHaveProperty('value', '22')
       expect(getByLabelText('time period')).toHaveProperty('value', 'PM')
     })
 
-    test('does not render picker button', () => {
+    test('does not render picker button', (): void => {
       let value = '15:22'
       let { getByLabelText } = render(
         <StyleProvider>
           <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
         </StyleProvider>
       )
-      expect(() => getByLabelText('Open date picker')).toThrow()
+      expect((): HTMLElement => getByLabelText('Open date picker')).toThrow()
     })
   })
 
-  describe('with theme customization', () => {
-    test('should have 2px border', () => {
+  describe('with theme customization', (): void => {
+    test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -655,7 +665,7 @@ describe('component: DateInput', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('should match intermediate shape styles', () => {
+    test('should match intermediate shape styles', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -666,7 +676,7 @@ describe('component: DateInput', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('should match square shape styles', () => {
+    test('should match square shape styles', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -677,7 +687,7 @@ describe('component: DateInput', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('should not have box shadows set', () => {
+    test('should not have box shadows set', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { asFragment } = render(
         <StyleProvider theme={theme}>

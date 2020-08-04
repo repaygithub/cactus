@@ -15,7 +15,7 @@ interface SelectFieldProps
   label: React.ReactNode
   labelProps?: object
   name: string
-  options: Array<OptionType | string>
+  options: (OptionType | string)[]
   className?: string
   id?: string
   success?: string
@@ -26,7 +26,7 @@ interface SelectFieldProps
   onChange?: FieldOnChangeHandler<SelectValueType>
 }
 
-const SelectFieldBase: React.FC<SelectFieldProps> = (props) => {
+const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement => {
   const {
     className,
     id,
@@ -54,7 +54,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props) => {
       error={error}
       width={width}
     >
-      {({ fieldId, labelId, name, ariaDescribedBy, status }) => (
+      {({ fieldId, labelId, name, ariaDescribedBy, status }): React.ReactElement => (
         <Select
           {...rest}
           status={status}

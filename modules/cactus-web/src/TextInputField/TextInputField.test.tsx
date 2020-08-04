@@ -5,8 +5,8 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextInputField from './TextInputField'
 
-describe('component: TextInputField', () => {
-  test('should render a TextInputField', () => {
+describe('component: TextInputField', (): void => {
+  test('should render a TextInputField', (): void => {
     const { container } = render(
       <StyleProvider>
         <TextInputField
@@ -21,7 +21,7 @@ describe('component: TextInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a disabled TextInputField', () => {
+  test('should render a disabled TextInputField', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <TextInputField
@@ -37,7 +37,7 @@ describe('component: TextInputField', () => {
     expect(getByLabelText('Come on, type something')).toBeDisabled()
   })
 
-  test('should render a TextInputField with a placeholder', () => {
+  test('should render a TextInputField with a placeholder', (): void => {
     const { getByPlaceholderText } = render(
       <StyleProvider>
         <TextInputField
@@ -52,7 +52,7 @@ describe('component: TextInputField', () => {
     expect(getByPlaceholderText(`I won't disable it again, promise`)).toBeInTheDocument()
   })
 
-  test('should render a success TextInputField', () => {
+  test('should render a success TextInputField', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextInputField
@@ -69,7 +69,7 @@ describe('component: TextInputField', () => {
     ).toContain(getByText('Great! you typed something!').id)
   })
 
-  test('should render a warning TextInputField', () => {
+  test('should render a warning TextInputField', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextInputField
@@ -86,7 +86,7 @@ describe('component: TextInputField', () => {
     )
   })
 
-  test('should render an error TextInputField', () => {
+  test('should render an error TextInputField', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextInputField
@@ -103,7 +103,7 @@ describe('component: TextInputField', () => {
     )
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const { container } = render(
       <StyleProvider>
         <TextInputField
@@ -118,7 +118,7 @@ describe('component: TextInputField', () => {
     expect(container.firstElementChild).toHaveStyle('margin: 8px')
   })
 
-  test('should trigger onChange handler', () => {
+  test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
       <StyleProvider>

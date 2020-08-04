@@ -2,7 +2,7 @@ import omit from 'lodash/omit'
 
 export default omit
 
-export const omitMargins = <Obj extends object>(obj: Obj, ...undesired: string[]) =>
+export const omitMargins = <Obj extends object>(obj: Obj, ...undesired: string[]): Partial<Obj> =>
   omit(
     obj,
     'm',

@@ -2,6 +2,7 @@ import { PRect } from '@reach/rect'
 import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
 import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
+import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { cloneElement } from 'react'
 import styled from 'styled-components'
@@ -42,7 +43,15 @@ const OFFSET = 8
 const cactusPosition: Position = (
   triggerRect: PRect | null | undefined,
   tooltipRect: PRect | null | undefined
-) => {
+): {
+  left?: number
+  top?: number
+  width?: number
+  borderTopLeftRadius?: string
+  borderTopRightRadius?: string
+  borderBottomRightRadius?: string
+  borderBottomLeftRadius?: string
+} => {
   if (!triggerRect || !tooltipRect) {
     return {}
   }
@@ -95,10 +104,10 @@ interface StyledInfoProps {
 }
 
 const StyledInfo = styled(NotificationInfo)<StyledInfoProps>`
-  color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
+  color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
 `
 
-const TooltipBase = (props: TooltipProps) => {
+const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const { className, disabled, label, ariaLabel, id, maxWidth } = props
   const [trigger, tooltip] = useTooltip()
   return (
@@ -133,10 +142,10 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   position: absolute;
   padding: 16px;
   border-radius: 8px 8px 8px 8px;
-  ${(p) => boxShadow(p.theme, 2)};
+  ${(p): string => boxShadow(p.theme, 2)};
   font-size: 15px;
-  ${(p) => p.theme.colorStyles.standard};
-  border: 2px solid ${(p) => p.theme.colors.callToAction};
+  ${(p): ColorStyle => p.theme.colorStyles.standard};
+  border: 2px solid ${(p): string => p.theme.colors.callToAction};
   box-sizing: border-box;
   overflow-wrap: break-word;
 

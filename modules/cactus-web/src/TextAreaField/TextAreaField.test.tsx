@@ -5,8 +5,8 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextAreaField from './TextAreaField'
 
-describe('component: TextAreaField', () => {
-  test('should render a TextAreaField', () => {
+describe('component: TextAreaField', (): void => {
+  test('should render a TextAreaField', (): void => {
     const { container } = render(
       <StyleProvider>
         <TextAreaField
@@ -21,7 +21,7 @@ describe('component: TextAreaField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a disabled TextAreaField', () => {
+  test('should render a disabled TextAreaField', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
@@ -37,7 +37,7 @@ describe('component: TextAreaField', () => {
     expect(getByLabelText('boolest')).toBeDisabled()
   })
 
-  test('should render a TextAreaField with a placeholder', () => {
+  test('should render a TextAreaField with a placeholder', (): void => {
     const { getByPlaceholderText } = render(
       <StyleProvider>
         <TextAreaField
@@ -53,7 +53,7 @@ describe('component: TextAreaField', () => {
     expect(getByPlaceholderText('no question about it')).toBeInTheDocument()
   })
 
-  test('should render a success TextAreaField', () => {
+  test('should render a success TextAreaField', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
@@ -71,7 +71,7 @@ describe('component: TextAreaField', () => {
     )
   })
 
-  test('should render a warning TextAreaField', () => {
+  test('should render a warning TextAreaField', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
@@ -89,7 +89,7 @@ describe('component: TextAreaField', () => {
     )
   })
 
-  test('should render an error TextAreaField', () => {
+  test('should render an error TextAreaField', (): void => {
     const { getByText, getByLabelText } = render(
       <StyleProvider>
         <TextAreaField
@@ -107,7 +107,7 @@ describe('component: TextAreaField', () => {
     )
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const { container } = render(
       <StyleProvider>
         <TextAreaField
@@ -123,7 +123,7 @@ describe('component: TextAreaField', () => {
     expect(container.firstElementChild).toHaveStyle('margin-left: 8px')
   })
 
-  test('should trigger onChange handler', () => {
+  test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
       <StyleProvider>
