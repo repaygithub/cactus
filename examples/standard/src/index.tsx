@@ -1,11 +1,10 @@
 import { Router } from '@reach/router'
 import AppRoot, { FeatureFlagsObject } from '@repay/cactus-fwk'
 import I18nProvider from '@repay/cactus-i18n'
-import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import cactusTheme from '@repay/cactus-theme'
 import { StyleProvider } from '@repay/cactus-web'
-import React, { ChangeEvent, Component } from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import * as styledComponents from 'styled-components'
 
 import App from './App'
 import { Coffee, Home, Snack, Snacks } from './containers/index'
@@ -15,20 +14,23 @@ const appRoot = document.createElement('div')
 appRoot.className = 'app-root'
 document.body.appendChild(appRoot)
 
-const getInitialLang = () => {
+const getInitialLang = (): string => {
   const urlParams = new URLSearchParams(window.location.search)
   return urlParams.get('lang') || 'en-US'
 }
 
 class RootWrapper extends Component<{}, { lang: string; features: FeatureFlagsObject }> {
-  state = { lang: getInitialLang(), features: {} }
+  public state = { lang: getInitialLang(), features: {} }
 
-  handleLangChange = (lang: string) => this.setState({ lang })
+  private handleLangChange = (lang: string): void => this.setState({ lang })
 
-  handleChangeFeature = (name: string, enabled: boolean) => {
-    this.setState((s) => ({ features: { ...s.features, [name]: enabled } }))
+  private handleChangeFeature = (name: string, enabled: boolean): void => {
+    this.setState((s): { lang: string; features: FeatureFlagsObject } => ({
+      ...s,
+      features: { ...s.features, [name]: enabled },
+    }))
   }
-  render() {
+  public render(): React.ReactElement {
     return (
       <StyleProvider global theme={cactusTheme}>
         <AppRoot featureFlags={this.state.features}>
