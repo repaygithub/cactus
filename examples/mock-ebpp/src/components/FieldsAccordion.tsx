@@ -14,7 +14,7 @@ interface FieldsAccordionProps {
   disableDown: (index: number) => boolean
 }
 
-const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props) => {
+const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props): React.ReactElement => {
   const {
     index,
     header,
@@ -30,7 +30,13 @@ const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props) => {
   return (
     <Accordion variant="outline" {...rest}>
       <Accordion.Header
-        render={({ isOpen, headerId }: { isOpen: boolean; headerId: string }) => {
+        render={({
+          isOpen,
+          headerId,
+        }: {
+          isOpen: boolean
+          headerId: string
+        }): React.ReactElement => {
           return (
             <Flex alignItems="center" width="100%">
               <Text as={asProp || 'h3'} id={headerId}>
@@ -43,7 +49,7 @@ const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props) => {
                   ml="auto"
                   mr={4}
                   label={`Delete ${header}`}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>): void => {
                     onDelete(index)
                     e.stopPropagation()
                   }}
@@ -62,7 +68,7 @@ const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props) => {
                   iconSize="medium"
                   mr={1}
                   label={`Move ${header} down`}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>): void => {
                     onDownClick(index)
                     e.stopPropagation()
                   }}
@@ -73,7 +79,7 @@ const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props) => {
                 <IconButton
                   iconSize="medium"
                   label={`Move ${header} up`}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>): void => {
                     onUpClick(index)
                     e.stopPropagation()
                   }}

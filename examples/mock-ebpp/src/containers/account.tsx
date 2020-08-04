@@ -15,13 +15,13 @@ interface State {
   cardLastFour: string
   dob: string
   id: string
-  payments: Array<{ pnref: string; date: string }>
+  payments: { pnref: string; date: string }[]
 }
 
-const Account = (props: AccountProps) => {
+const Account = (props: AccountProps): React.ReactElement | null => {
   const [account, setAccount] = useState<State | undefined>(undefined)
 
-  useEffect(() => {
+  useEffect((): void => {
     setAccount(fetchAccount(props.accountId))
   }, [props.accountId])
 
@@ -55,16 +55,16 @@ const Account = (props: AccountProps) => {
             }}
           >
             <tbody>
-              {(Object.keys(account) as Array<keyof typeof account>).map((key) => {
-                return (
-                  key !== 'payments' && (
+              {(Object.keys(account) as (keyof typeof account)[]).map(
+                (key): React.ReactElement | null => {
+                  return key !== 'payments' ? (
                     <tr key={key}>
                       <th>{key}</th>
                       <td>{account[key]}</td>
                     </tr>
-                  )
-                )
-              })}
+                  ) : null
+                }
+              )}
             </tbody>
           </table>
         </Flex>
