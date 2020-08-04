@@ -3,8 +3,8 @@ import { cleanup } from '@testing-library/react'
 
 afterEach(cleanup)
 
-describe('Exports', () => {
-  test('should match snapshot of exported icons', () => {
+describe('Exports', (): void => {
+  test('should match snapshot of exported icons', (): void => {
     expect(Object.keys(icons)).toMatchSnapshot()
   })
 })

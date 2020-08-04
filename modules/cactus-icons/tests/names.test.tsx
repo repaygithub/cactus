@@ -1,11 +1,11 @@
 import { cleanup } from '@testing-library/react'
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 afterEach(cleanup)
 
-describe('Icon names', () => {
-  test('should match the snapshot of icon names', () => {
+describe('Icon names', (): void => {
+  test('should match the snapshot of icon names', (): void => {
     const names = fs.readdirSync(path.join(__dirname, '../i'))
     expect(names).toMatchSnapshot()
   })
