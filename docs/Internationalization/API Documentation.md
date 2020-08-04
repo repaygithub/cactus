@@ -46,6 +46,7 @@ The `get()` function accepts one argument which is an object with the following 
 | `lang`    | String | N        | Override the currently selected language                                           |
 | `section` | String | N        | The section where the id resides, defaults to `global`                             |
 | `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
+| `args`    | Object | N        | Used to resolve variables in the translations                                      |
 
 #### Returns
 
@@ -68,6 +69,7 @@ The `getText(params)` function accepts one argument which is an object with the 
 | `lang`    | String | N        | Override the currently selected language                                           |
 | `section` | String | N        | The section where the id resides, defaults to `global`                             |
 | `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
+| `args`    | Object | N        | Used to resolve variables in the translations                                      |
 
 #### Returns
 

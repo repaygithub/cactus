@@ -7,42 +7,6 @@ exports[`With theme changes  Border should be 2px 1`] = `
   vertical-align: middle;
 }
 
-.c3[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c3 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
-.c4[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c4 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
-.c5[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c5 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
 .c0 {
   position: relative;
   box-sizing: border-box;
@@ -102,6 +66,10 @@ exports[`With theme changes  Border should be 2px 1`] = `
   position: absolute;
   right: 10px;
   top: 12px;
+}
+
+@media screen and (min-width:1024px) {
+
 }
 
 @media screen and (min-width:1024px) {
@@ -205,28 +173,8 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   top: 12px;
 }
 
-.c3[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
+@media screen and (min-width:1024px) {
 
-.c3 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
-.c4[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c4 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
 }
 
 @media screen and (min-width:1024px) {
@@ -269,30 +217,6 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   vertical-align: middle;
 }
 
-.c3[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c3 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
-.c4[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c4 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
-
 .c0 {
   position: relative;
   box-sizing: border-box;
@@ -355,6 +279,10 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
 }
 
 @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
   .c0 {
     font-size: 18px;
     line-height: 1.5;
@@ -392,18 +320,6 @@ exports[`With theme changes  Should have square borders 1`] = `
   .c2 {
   font-size: 8px;
   vertical-align: middle;
-}
-
-.c3[aria-expanded='true'] .c1 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c3 .c1 {
-  position: absolute;
-  right: 10px;
-  top: 12px;
 }
 
 .c0 {
@@ -465,6 +381,10 @@ exports[`With theme changes  Should have square borders 1`] = `
   position: absolute;
   right: 10px;
   top: 12px;
+}
+
+@media screen and (min-width:1024px) {
+
 }
 
 @media screen and (min-width:1024px) {
@@ -565,6 +485,10 @@ exports[`component: MenuButton snapshot 1`] = `
   position: absolute;
   right: 10px;
   top: 12px;
+}
+
+@media screen and (min-width:1024px) {
+
 }
 
 @media screen and (min-width:1024px) {

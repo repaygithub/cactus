@@ -1,5 +1,6 @@
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
+import { FlexDirectionProperty, FlexWrapProperty } from 'csstype'
 import React from 'react'
 
 import Flex from './Flex'
@@ -26,10 +27,8 @@ storiesOf('Flex', module).add(
     <Flex
       justifyContent={select('justifyContent', justifyOptions, 'flex-end')}
       alignItems={select('alignItems', alignOptions, 'center')}
-      // @ts-ignore
-      flexWrap={select('flexWrap', flexWrapOptions, 'wrap')}
-      // @ts-ignore
-      flexDirection={select('flexDirection', directionOptions, 'row')}
+      flexWrap={select('flexWrap', flexWrapOptions, 'wrap') as FlexWrapProperty}
+      flexDirection={select('flexDirection', directionOptions, 'row') as FlexDirectionProperty}
       height={text('height', '100%')}
     >
       <Flex alignSelf={select('alignSelf', alignOptions, 'unset')} p={5} colors="base" />

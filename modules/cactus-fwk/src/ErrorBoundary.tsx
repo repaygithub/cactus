@@ -72,7 +72,7 @@ const withErrorBoundary = <BaseProps extends any>(
     throw new Error('You must pass the `onError` prop when using `withErrorBoundary`!')
   }
 
-  const Wrapped = (props: BaseProps) => (
+  const Wrapped = (props: React.PropsWithChildren<BaseProps>) => (
     <ErrorBoundary onError={onError} errorView={errorView}>
       <BaseComponent {...props} />
     </ErrorBoundary>

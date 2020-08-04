@@ -127,7 +127,6 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   ${iconSizes}
 `
 
-// @ts-ignore
 IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
   variant: PropTypes.oneOf(['standard', 'action', 'danger']),
@@ -142,6 +141,8 @@ IconButton.propTypes = {
         `Invalid prop 'label' of type '${typeof props.label}' supplied to '${componentName}', expected 'string'.`
       )
     }
+
+    return null
   },
   'aria-labelledby': (props: IconButtonProps, propName: string, componentName: string) => {
     if (!props['aria-labelledby'] && !props.label) {
@@ -155,6 +156,8 @@ IconButton.propTypes = {
         ]}' supplied to '${componentName}', expected 'string'.`
       )
     }
+
+    return null
   },
   display: PropTypes.oneOf(['flex', 'inline-flex']),
   inverse: PropTypes.bool,

@@ -99,7 +99,7 @@ describe('component: Button', () => {
     const button = render(
       <StyleProvider>
         <Button disabled inverse>
-          }>Click me!
+          Click me!
         </Button>
       </StyleProvider>
     )

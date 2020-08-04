@@ -378,20 +378,6 @@ exports[`component: DateInput with theme customization should have 2px border 1`
   cursor: pointer;
 }
 
-.c10 > .c4 {
-  margin-left: 0;
-}
-
-.c10 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c10 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
 .c0 {
   position: relative;
   color: hsl(200,9%,35%);
@@ -683,34 +669,6 @@ exports[`component: DateInput with theme customization should match intermediate
   cursor: pointer;
 }
 
-.c10 > .c4 {
-  margin-left: 0;
-}
-
-.c10 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c10 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
-.c11 > .c4 {
-  margin-left: 0;
-}
-
-.c11 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c11 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
 .c0 {
   position: relative;
   color: hsl(200,9%,35%);
@@ -1000,48 +958,6 @@ exports[`component: DateInput with theme customization should match square shape
   appearance: none;
   border: none;
   cursor: pointer;
-}
-
-.c10 > .c4 {
-  margin-left: 0;
-}
-
-.c10 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c10 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
-.c11 > .c4 {
-  margin-left: 0;
-}
-
-.c11 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c11 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
-.c12 > .c4 {
-  margin-left: 0;
-}
-
-.c12 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c12 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
 }
 
 .c0 {
@@ -1431,48 +1347,6 @@ exports[`component: DateInput with theme customization should not have box shado
 }
 
 .c0 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
-.c10 > .c4 {
-  margin-left: 0;
-}
-
-.c10 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c10 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
-.c11 > .c4 {
-  margin-left: 0;
-}
-
-.c11 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c11 .c6 {
-  margin-right: -2px;
-  margin-left: auto;
-}
-
-.c12 > .c4 {
-  margin-left: 0;
-}
-
-.c12 .c1 {
-  font-size: 16px;
-  margin-right: 8px;
-}
-
-.c12 .c6 {
   margin-right: -2px;
   margin-left: auto;
 }

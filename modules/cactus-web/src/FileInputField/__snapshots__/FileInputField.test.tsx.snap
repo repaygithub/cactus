@@ -55,13 +55,6 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   margin-right: 4px;
 }
 
-.c14 .c9 {
-  position: absolute;
-  top: 30%;
-  left: 15%;
-  color: hsl(200,96%,35%);
-}
-
 .c8 {
   width: 300px;
   height: 100px;
@@ -79,17 +72,6 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   top: 20%;
   left: 37%;
   color: hsl(0,0%,70%);
-}
-
-.c15.empty .c11 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
-}
-
-.c15.notEmpty .c11 {
-  position: relative;
-  margin: 16px 0 16px 0;
 }
 
 .c7 {
@@ -150,20 +132,6 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   color: hsl(0,0%,70%);
 }
 
-.c16 .c3 {
-  display: block;
-  position: relative;
-  bottom: 4px;
-  padding-left: 16px;
-}
-
-.c16 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
-  font-size: 16px;
-}
-
 .c2 {
   position: relative;
 }
@@ -213,7 +181,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="c6"
+        class="sc-fzoPby c6"
         disabled=""
         fill="currentcolor"
         height="1em"
@@ -300,10 +268,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   vertical-align: middle;
 }
 
-.c24 .c12 {
-  padding-bottom: 4px;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 40px;
@@ -376,8 +340,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 .c19 .c12,
-.c19 .sc-feJyhm,
-.c19 .c29 {
+.c19 .sc-fzqOul,
+.c19 .sc-oTbqq {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -426,54 +390,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   margin-right: 4px;
 }
 
-.c25 .c10 {
-  height: 24px;
-  width: 24px;
-}
-
-.c25 .c10 .c12 {
-  height: 16px;
-  width: 16px;
-}
-
-.c25 .c10 .c29 {
-  height: 18px;
-  width: 18px;
-}
-
-.c25 .c14 {
-  margin-left: auto;
-}
-
-.c25 .c16 {
-  height: 12px;
-  width: 12px;
-}
-
-.c26 .c10 {
-  height: 24px;
-  width: 24px;
-}
-
-.c26 .c10 .c12 {
-  height: 16px;
-  width: 16px;
-}
-
-.c26 .c10 .c29 {
-  height: 18px;
-  width: 18px;
-}
-
-.c26 .c14 {
-  margin-left: auto;
-}
-
-.c26 .c16 {
-  height: 12px;
-  width: 12px;
-}
-
 .c9 {
   box-sizing: border-box;
   width: 100%;
@@ -515,12 +431,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c9 .c10 .c29 {
+.c9 .c10 .sc-oTbqq {
   height: 18px;
   width: 18px;
 }
 
-.c9 .c30 {
+.c9 .sc-pBolk {
   height: 12px;
   width: 12px;
 }
@@ -588,17 +504,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   display: none;
 }
 
-.c27.empty .c21 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
-}
-
-.c27.notEmpty .c21 {
-  position: relative;
-  margin: 16px 0 16px 0;
-}
-
 .c4 {
   font-size: 18px;
   line-height: 1.5;
@@ -627,22 +532,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   top: -2px;
   right: 8px;
   font-size: 16px;
-}
-
-.c28 .c3 {
-  display: block;
-  position: relative;
-  bottom: 4px;
-  padding-left: 16px;
-  color: hsl(0,0%,70%);
-}
-
-.c28 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
-  font-size: 16px;
-  color: hsl(0,0%,70%);
 }
 
 @media screen and (min-width:1024px) {
@@ -688,7 +577,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="c6"
+        class="sc-fzoPby c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -845,7 +734,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c11 .c24 {
+.c11 .sc-fzoCCn {
   padding-bottom: 4px;
 }
 
@@ -928,30 +817,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   margin-right: 4px;
 }
 
-.c21 .c10 {
-  height: 24px;
-  width: 24px;
-}
-
-.c21 .c10 .c24 {
-  height: 16px;
-  width: 16px;
-}
-
-.c21 .c10 .c12 {
-  height: 18px;
-  width: 18px;
-}
-
-.c21 .c14 {
-  margin-left: auto;
-}
-
-.c21 .c16 {
-  height: 12px;
-  width: 12px;
-}
-
 .c9 {
   box-sizing: border-box;
   width: 100%;
@@ -988,7 +853,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c9 .c10 .c24 {
+.c9 .c10 .sc-fzoCCn {
   height: 16px;
   width: 16px;
 }
@@ -998,7 +863,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c9 .c25 {
+.c9 .sc-pBolk {
   height: 12px;
   width: 12px;
 }
@@ -1016,7 +881,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c8 .c26 {
+.c8 .sc-pJkiN {
   position: relative;
   margin-top: 4px;
 }
@@ -1066,17 +931,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   display: none;
 }
 
-.c22.empty .c18 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
-}
-
-.c22.notEmpty .c18 {
-  position: relative;
-  margin: 16px 0 16px 0;
-}
-
 .c4 {
   font-size: 18px;
   line-height: 1.5;
@@ -1105,22 +959,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   top: -2px;
   right: 8px;
   font-size: 16px;
-}
-
-.c23 .c3 {
-  display: block;
-  position: relative;
-  bottom: 4px;
-  padding-left: 16px;
-  color: hsl(0,0%,70%);
-}
-
-.c23 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
-  font-size: 16px;
-  color: hsl(0,0%,70%);
 }
 
 @media screen and (min-width:1024px) {
@@ -1159,7 +997,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="c6"
+        class="sc-fzoPby c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -1269,8 +1107,8 @@ exports[`component: FileInputField should render a loading file 1`] = `
 .c11 {
   vertical-align: middle;
   font-size: 40px;
-  -webkit-animation: iVXCSc 0.75s linear infinite;
-  animation: iVXCSc 0.75s linear infinite;
+  -webkit-animation: bKPVWD 0.75s linear infinite;
+  animation: bKPVWD 0.75s linear infinite;
 }
 
 .c13 {
@@ -1347,17 +1185,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   line-height: 1.5;
 }
 
-.c9 .c20 {
+.c9 .sc-qQxXP {
   height: 24px;
   width: 24px;
 }
 
-.c9 .c20 .c18 {
+.c9 .sc-qQxXP .sc-fzoCCn {
   height: 16px;
   width: 16px;
 }
 
-.c9 .c20 .c19 {
+.c9 .sc-qQxXP .sc-oTbqq {
   height: 18px;
   width: 18px;
 }
@@ -1367,11 +1205,11 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 12px;
 }
 
-.c9 .c21 {
+.c9 .sc-qYSYK {
   margin-left: auto;
 }
 
-.c9 .c17 {
+.c9 .sc-fzoMdx {
   height: 12px;
   width: 12px;
 }
@@ -1380,7 +1218,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 100%;
 }
 
-.c8 .c22 {
+.c8 .sc-pJkiN {
   position: relative;
   margin-top: 4px;
 }
@@ -1430,17 +1268,6 @@ exports[`component: FileInputField should render a loading file 1`] = `
   display: none;
 }
 
-.c15.empty .c12 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
-}
-
-.c15.notEmpty .c12 {
-  position: relative;
-  margin: 16px 0 16px 0;
-}
-
 .c4 {
   font-size: 18px;
   line-height: 1.5;
@@ -1469,22 +1296,6 @@ exports[`component: FileInputField should render a loading file 1`] = `
   top: -2px;
   right: 8px;
   font-size: 16px;
-}
-
-.c16 .c3 {
-  display: block;
-  position: relative;
-  bottom: 4px;
-  padding-left: 16px;
-  color: hsl(0,0%,70%);
-}
-
-.c16 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
-  font-size: 16px;
-  color: hsl(0,0%,70%);
 }
 
 @media screen and (min-width:1024px) {
@@ -1523,7 +1334,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="c6"
+        class="sc-fzoPby c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -1562,7 +1373,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
             boolest.txt
           </span>
           <svg
-            class="c10 c11"
+            class="sc-pAZqv c10 c11"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -1781,7 +1592,7 @@ exports[`component: FileInputField should render file input field 1`] = `
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="c6"
+        class="sc-fzoPby c6"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

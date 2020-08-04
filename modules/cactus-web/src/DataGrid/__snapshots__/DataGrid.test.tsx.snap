@@ -506,6 +506,10 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
   .c17,
   .c17:link {
     font-size: 15px;

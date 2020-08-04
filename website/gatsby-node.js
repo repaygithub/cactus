@@ -156,9 +156,9 @@ const DOCGEN_CACHE_KEY = 'cactus-docgen'
 exports.sourceNodes = async ({ actions, createNodeId, cache }) => {
   const { createNode } = actions
   const componentGlobs = [
-    modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.tsx'),
-    '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.test.tsx'),
-    '!' + modulesHelper.resolveModule('cactus-web/src/[A-Z]*/[A-Z]*.story.tsx'),
+    modulesHelper.resolveModule('cactus-web/src/+([A-Za-z])/+([A-Za-z]).tsx'),
+    '!' + modulesHelper.resolveModule('cactus-web/src/+([A-Za-z])/+([A-Za-z]).test.tsx'),
+    '!' + modulesHelper.resolveModule('cactus-web/src/+([A-Za-z])/+([A-Za-z]).story.tsx'),
   ]
 
   /**

@@ -35,14 +35,14 @@ exports[`component: DateInputField snapshot 1`] = `
   padding-right: 28px;
 }
 
-.c2 .c18 {
+.c2 .sc-pReKu {
   position: absolute;
   right: 8px;
   top: 2px;
   font-size: 16px;
 }
 
-.c2 .c17 {
+.c2 .sc-qYSYK {
   margin-top: 4px;
 }
 

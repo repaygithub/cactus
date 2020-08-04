@@ -64,15 +64,6 @@ exports[`component: RadioButtonField should render a disabled radio button field
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c9 + .c2 {
-  margin-top: 8px;
-}
-
-.c9 .c7 {
-  cursor: pointer;
-  padding-left: 8px;
-}
-
 .c3 + .c2 {
   margin-top: 8px;
 }
@@ -293,24 +284,6 @@ exports[`component: RadioButtonField should support margin space props 1`] = `
 
 .c4 input:focus ~ span {
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
-}
-
-.c9 + .c2 {
-  margin-top: 8px;
-}
-
-.c9 .c7 {
-  cursor: pointer;
-  padding-left: 8px;
-}
-
-.c10 + .c2 {
-  margin-top: 8px;
-}
-
-.c10 .c7 {
-  cursor: not-allowed;
-  padding-left: 8px;
 }
 
 .c3 {

@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-theme",
-  "version": "0.5.0",
+  "version": "1.0.1",
   "description": "The theme for the Cactus design-system at REPAY",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-theme",
   "license": "MIT",
@@ -21,10 +21,12 @@
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@repay/babel-preset": "^0.3.0",
-    "@repay/scripts": "^1.0.0",
-    "color": "^3.1.2",
-    "typescript": "^3.7.2"
+    "@babel/core": "^7.10.5",
+    "@repay/babel-preset": "^1.0.0",
+    "@repay/scripts": "^2.0.0",
+    "@types/jest": "^26.0.7",
+    "babel-jest": "^26.1.0",
+    "typescript": "^3.9.7"
   },
   "jest": {
     "transform": {

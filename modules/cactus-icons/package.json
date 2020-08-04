@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-icons",
-  "version": "0.6.1",
+  "version": "1.0.1",
   "description": "Cactus design-system icons as React elements",
   "module": "i/index.js",
   "main": "i/index.cjs.js",
@@ -49,32 +49,33 @@
   "peerDependencies": {
     "prop-types": ">=15.0.0",
     "react": "^16.8.3",
-    "styled-components": "^4.1.4"
+    "styled-components": "^4.1.4 || ^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.7.5",
-    "@repay/babel-preset": "^0.3.0",
-    "@repay/cactus-theme": "^0.5.0",
-    "@repay/scripts": "^1.0.0",
+    "@babel/core": "^7.10.5",
+    "@repay/babel-preset": "^1.0.0",
+    "@repay/cactus-theme": "^1.0.0",
+    "@repay/scripts": "^2.0.0",
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/react": "5.3.19",
-    "@svgr/core": "^4.2.0",
-    "@testing-library/react": "^10.4.3",
-    "@types/node": "^12.12.21",
-    "@types/storybook__react": "^4.0.2",
-    "@types/styled-system": "^5.1.2",
-    "babel-jest": "^24.7.1",
-    "fast-glob": "^2.2.6",
-    "jest": "^24.7.1",
-    "jest-styled-components": "^6.2.1",
+    "@svgr/core": "^5.4.0",
+    "@testing-library/react": "^10.4.7",
+    "@types/jest": "^26.0.7",
+    "@types/node": "^14.0.26",
+    "@types/storybook__react": "^5.2.1",
+    "@types/styled-components": "^5.1.1",
+    "@types/styled-system": "^5.1.9",
+    "babel-jest": "^26.1.0",
+    "fast-glob": "^3.2.4",
+    "jest": "^26.1.0",
+    "jest-styled-components": "^7.0.2",
     "prop-types": "^15.7.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "styled-components": "^4.4.1",
-    "typescript": "^3.7.2"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.1",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
-    "styled-system": "^5.1.1"
+    "styled-system": "^5.1.5"
   }
 }
