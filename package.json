@@ -64,5 +64,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "resolutions": {
+    "@typescript-eslint/eslint-plugin": "^3.7.1"
   }
 }
