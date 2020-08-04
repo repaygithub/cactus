@@ -1,8 +1,8 @@
 diff --git a/node_modules/testcafe/ts-defs/index.d.ts b/node_modules/testcafe/ts-defs/index.d.ts
-index 4e68771..6bb44b7 100644
+index f7ac893..58b35ce 100644
 --- a/node_modules/testcafe/ts-defs/index.d.ts
 +++ b/node_modules/testcafe/ts-defs/index.d.ts
-@@ -1313,7 +1313,7 @@ declare module 'testcafe' {
+@@ -1371,7 +1371,7 @@ declare module 'testcafe' {
              (
                  init:
                      | string

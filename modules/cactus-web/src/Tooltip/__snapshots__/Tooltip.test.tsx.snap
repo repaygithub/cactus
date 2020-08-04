@@ -78,7 +78,7 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
 <div
   class="c0"
   data-reach-tooltip=""
-  id="tooltip--7"
+  id="tooltip--10"
   role="tooltip"
   style="max-width: 500px; left: -8px; top: 0px; border-top-right-radius: 0px; width: 0px;"
 >

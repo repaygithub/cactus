@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 import blfConfig1 from './blf-config-1.png'
 import blfConfig2 from './blf-config-2.png'

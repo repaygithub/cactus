@@ -1,6 +1,6 @@
 import { Flex } from '@repay/cactus-web'
 import * as React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 
 import Link from '../../components/Link'
 import Text from '../../components/Text'
