@@ -14,10 +14,21 @@ An application framework and design system built in React at [REPAY](https://git
 - [`@repay/cactus-theme`](./modules/cactus-theme/) - Cactus UI Theme
 - [`@repay/cactus-web`](./modules/cactus-web/) - Cactus Web UI Components
 
-## Examples
+## Example Apps
 
-- [Standard Example](./examples/standard/) - generic implementations of features as a basic web app.
-- [Theme Components](./examples/theme-components) - exploration of using the components more in depth than the standard.
+- [Standard Example](./examples/standard/) - Generic implementations of features as a basic web app.
+- [Theme Components](./examples/theme-components) - Exploration of using the components more in depth than the standard.
+- [Mock EBPP](./examples/mock-ebpp) - A more fully-featured web app mocking out some features from EBPP.
+
+### Running Example Apps
+
+Each of the example apps listed above can be run locally to play around with yourself. To run any example app, follow these steps:
+
+1. Make sure all necessary dependencies are installed by running `yarn install` at the root of this repository.
+2. Make sure each module is built by running `yarn build` at the root of this repository.
+3. Navigate to any example app you wish to run. Ex: `cd examples/mock-ebpp`
+4. Run `yarn start`
+5. After the application builds, you can copy/paste the url from your terminal into your browser to view it.
 
 ## Installation
 
