@@ -270,7 +270,8 @@ const Nav = styled.nav`
 
 const MenuWrapper = styled.div<{ expanded: boolean }>`
   ${(p) => p.theme.colorStyles.standard};
-  display: ${(p) => (p.expanded ? 'flex' : 'none')};
+  display: flex;
+  visibility: ${(p) => (p.expanded ? 'visible' : 'hidden')};
   position: absolute;
   top: 100%;
   left: 0;

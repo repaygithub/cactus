@@ -41,44 +41,42 @@ export function useSubmenuToggle(): [boolean, ToggleSubmenu] {
           isExpanded = open === undefined ? !isExpanded : open
           // Was closed, now open
           if (isExpanded && menuButton) {
-            setTimeout(() => {
-              const menuWrapper = menuButton.nextElementSibling as HTMLElement
-              const maxRight = window.innerWidth - 25 // Include buffer for scrollbar.
-              const maxBottom = window.innerHeight
-              const offsetRect = (menuWrapper.offsetParent as HTMLElement).getBoundingClientRect()
-              const buttonRect = menuButton.getBoundingClientRect()
-              const menuRect = menuWrapper.getBoundingClientRect()
-              const parentMenu = getMenu(menuButton)
-              const orientation = parentMenu && parentMenu.getAttribute('aria-orientation')
-              let left, top
-              if (orientation === 'horizontal') {
-                const expectedRight = buttonRect.left + menuRect.width
-                if (expectedRight > maxRight) {
-                  left = Math.ceil(maxRight - menuRect.width - offsetRect.left)
-                } else {
-                  left = buttonRect.left - offsetRect.left
-                }
+            const menuWrapper = menuButton.nextElementSibling as HTMLElement
+            const maxRight = window.innerWidth - 25 // Include buffer for scrollbar.
+            const maxBottom = window.innerHeight
+            const offsetRect = (menuWrapper.offsetParent as HTMLElement).getBoundingClientRect()
+            const buttonRect = menuButton.getBoundingClientRect()
+            const menuRect = menuWrapper.getBoundingClientRect()
+            const parentMenu = getMenu(menuButton)
+            const orientation = parentMenu && parentMenu.getAttribute('aria-orientation')
+            let left, top
+            if (orientation === 'horizontal') {
+              const expectedRight = buttonRect.left + menuRect.width
+              if (expectedRight > maxRight) {
+                left = Math.ceil(maxRight - menuRect.width - offsetRect.left)
               } else {
-                const expectedRight = buttonRect.right + menuRect.width
-                if (expectedRight > maxRight) {
-                  left = Math.ceil(buttonRect.left - menuRect.width - offsetRect.left)
-                } else {
-                  left = Math.ceil(buttonRect.left - offsetRect.left + buttonRect.width)
-                }
-                const expectedBottom = buttonRect.top + menuRect.height
-                if (expectedBottom > maxBottom) {
-                  top = `${maxBottom - menuRect.height - offsetRect.top}px`
-                } else {
-                  top = `${buttonRect.top - offsetRect.top}px`
-                }
+                left = buttonRect.left - offsetRect.left
               }
-              // Using translate instead of left because of an issue I had with inconsistent width.
-              menuWrapper.style.transform = `translateX(${left}px)`
-              menuWrapper.style.top = top || ''
-              if (focus) {
-                ;(menuWrapper.querySelector(ITEM_SELECTOR) as HTMLElement).focus()
+            } else {
+              const expectedRight = buttonRect.right + menuRect.width
+              if (expectedRight > maxRight) {
+                left = Math.ceil(buttonRect.left - menuRect.width - offsetRect.left)
+              } else {
+                left = Math.ceil(buttonRect.left - offsetRect.left + buttonRect.width)
               }
-            })
+              const expectedBottom = buttonRect.top + menuRect.height
+              if (expectedBottom > maxBottom) {
+                top = `${maxBottom - menuRect.height - offsetRect.top}px`
+              } else {
+                top = `${buttonRect.top - offsetRect.top}px`
+              }
+            }
+            // Using translate instead of left because of an issue I had with inconsistent width.
+            menuWrapper.style.transform = `translateX(${left}px)`
+            menuWrapper.style.top = top || ''
+            if (focus) {
+              ;(menuWrapper.querySelector(ITEM_SELECTOR) as HTMLElement).focus()
+            }
           }
         }
         return isExpanded

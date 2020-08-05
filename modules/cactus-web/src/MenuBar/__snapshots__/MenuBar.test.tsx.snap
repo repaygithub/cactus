@@ -141,7 +141,11 @@ exports[`component: MenuBar typechecks 1`] = `
 .c9 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  display: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  visibility: hidden;
   position: absolute;
   top: 100%;
   left: 0;
