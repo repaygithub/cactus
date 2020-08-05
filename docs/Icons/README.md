@@ -1,6 +1,6 @@
 ---
 title: Cactus Icons
-order: 4
+order: 5
 ---
 
 # Cactus Design System Icons
@@ -26,7 +26,7 @@ Import all the icons or each icon individually and render as jsx elements.
 import ActionAdd from '@repay/cactus-icons/i/actions-add'
 import { ActionsDelete, ActionsGear } from '@repay/cactus-icons'
 
-export default props => (
+export default (props) => (
   <div>
     <button>
       <ActionsAdd />
