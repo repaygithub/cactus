@@ -1,8 +1,8 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { ReactElement, useState } from 'react'
 
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
+import ScreenSizeProvider, { Size } from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
 import DataGrid from './DataGrid'
 
@@ -192,6 +192,11 @@ const DataGridContainer = (): ReactElement => {
         paginationOptions={getPaginationOptions()}
         onPageChange={onPageChange}
         fullWidth={boolean('fullWidth', false)}
+        cardBreakpoint={select(
+          'cardBreakpoint',
+          ['tiny', 'small', 'medium', 'large', 'extraLarge'],
+          'tiny'
+        )}
         resultsCountText={showResultsCount ? getResultsCountText() : undefined}
         pageSizeSelectLabel={text('pageSizeSelectLabel', '')}
         paginationProps={{

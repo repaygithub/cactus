@@ -7,6 +7,7 @@ import styled, {
   DefaultTheme,
   FlattenSimpleInterpolation,
   StyledComponent,
+  ThemedStyledProps,
 } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
@@ -15,6 +16,7 @@ import { border, fontSize } from '../helpers/theme'
 import useId from '../helpers/useId'
 import Pagination from '../Pagination/Pagination'
 import PrevNext from '../PrevNext/PrevNext'
+import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import Table from '../Table/Table'
 
 interface DataGridContextType {
@@ -48,6 +50,7 @@ interface DataGridProps extends MarginProps {
   onSort: (newSortOptions: SortOption[]) => void
   children: React.ReactNode
   fullWidth?: boolean
+  cardBreakpoint?: Size
   className?: string
   resultsCountText?: string
   pageSizeSelectLabel?: string
@@ -85,6 +88,7 @@ interface ResultsViewSectionProps {
   onPageChange: (newPageOptions: PaginationOptions) => void
   makePageSizeLabel?: (pageSize: number) => string
   pageSizeSelectLabel?: string
+  cardBreakpoint: Size
   className?: string
 }
 
@@ -93,6 +97,7 @@ interface PageSizeSelectProps {
   onPageChange: (newPageOptions: PaginationOptions) => void
   makePageSizeLabel?: (pageSize: number) => string
   pageSizeSelectLabel?: string
+  cardBreakpoint: Size
   className?: string
 }
 
@@ -128,6 +133,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     onSort,
     paginationOptions,
     onPageChange,
+    cardBreakpoint = 'tiny',
     className,
     resultsCountText,
     pageSizeSelectLabel,
@@ -136,6 +142,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     prevNextProps,
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
+  const size = useContext(ScreenSizeContext)
 
   const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn): void => {
     setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
@@ -155,8 +162,9 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
           resultsCountText={resultsCountText}
           paginationOptions={paginationOptions}
           makePageSizeLabel={makePageSizeLabel}
+          cardBreakpoint={cardBreakpoint}
         />
-        <Table fullWidth={fullWidth}>
+        <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint}>
           <Table.Header>
             {[...columns.keys()].map(
               (key): ReactElement => {
@@ -276,6 +284,39 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
   )
 }
 
+const getMediaQuery = (
+  props:
+    | ThemedStyledProps<DataGridProps, DefaultTheme>
+    | ThemedStyledProps<ResultsViewSectionProps, DefaultTheme>
+    | ThemedStyledProps<PageSizeSelectProps, DefaultTheme>
+) => {
+  // Media queries in the theme were built using "min-width", meaning if a user wants
+  // the card breakpoint to be at "medium", we will add a media query to apply different
+  // styles when the screen reaches the "large" size. Therefore, we get the media query
+  // for the next screen size up. For "extraLarge", we can just return a media query for
+  // an absurdly large screen that would probably never even occur.
+  const {
+    cardBreakpoint,
+    theme: { mediaQueries },
+  } = props
+  if (mediaQueries !== undefined) {
+    switch (cardBreakpoint) {
+      case 'tiny':
+        return mediaQueries.small
+      case 'small':
+        return mediaQueries.medium
+      case 'medium':
+        return mediaQueries.large
+      case 'large':
+        return mediaQueries.extraLarge
+      case 'extraLarge':
+        return '@media screen and (min-width: 100000px)'
+      default:
+        return mediaQueries.small
+    }
+  }
+}
+
 export const DataGrid = styled(DataGridBase)`
   display: inline;
   flex-direction: column;
@@ -283,7 +324,7 @@ export const DataGrid = styled(DataGridBase)`
   overflow-x: auto;
   ${margin}
 
-  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+  ${getMediaQuery} {
     display: inline-flex;
   }
 
@@ -311,7 +352,7 @@ export const DataGrid = styled(DataGridBase)`
     margin-right: 16px;
     margin-top: 40px;
 
-    ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+    ${getMediaQuery} {
       justify-content: flex-end;
     }
   }
@@ -378,6 +419,7 @@ const ResultsViewSectionBase = (props: ResultsViewSectionProps): ReactElement | 
     pageSizeSelectLabel,
     makePageSizeLabel,
     paginationOptions,
+    cardBreakpoint,
     className,
   } = props
   if (
@@ -395,6 +437,7 @@ const ResultsViewSectionBase = (props: ResultsViewSectionProps): ReactElement | 
             pageSizeSelectLabel={pageSizeSelectLabel}
             makePageSizeLabel={makePageSizeLabel}
             onPageChange={onPageChange}
+            cardBreakpoint={cardBreakpoint}
           />
         )}
       </div>
@@ -413,7 +456,7 @@ const ResultsViewSection = styled(ResultsViewSectionBase)`
     margin-bottom: 8px;
   }
 
-  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+  ${getMediaQuery} {
     flex-direction: row;
     align-items: flex-start;
 
@@ -461,7 +504,7 @@ const PageSizeSelectBase = (props: PageSizeSelectProps): ReactElement => {
 const PageSizeSelect = styled(PageSizeSelectBase)`
   display: inline-box;
 
-  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+  ${getMediaQuery} {
     margin-left: auto;
   }
 
@@ -598,6 +641,10 @@ DataColumn.propTypes = {
 Column.propTypes = {
   children: PropTypes.func.isRequired,
   title: PropTypes.string,
+}
+
+DataGrid.defaultProps = {
+  cardBreakpoint: 'tiny',
 }
 
 type DataGridType = StyledComponent<typeof DataGridBase, DefaultTheme, DataGridProps> & {

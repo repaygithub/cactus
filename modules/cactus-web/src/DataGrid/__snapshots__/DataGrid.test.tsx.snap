@@ -535,7 +535,7 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:768px) {
   .c0 {
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
@@ -544,7 +544,7 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:768px) {
   .c0 .pagination {
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
@@ -553,7 +553,7 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:768px) {
   .c1 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
@@ -569,7 +569,7 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:768px) {
   .c2 {
     margin-left: auto;
   }
