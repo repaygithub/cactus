@@ -5,7 +5,7 @@ import React from 'react'
 
 import Link from '../components/Link'
 
-const FileInputExample: React.FC<RouteComponentProps> = () => {
+const FileInputExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const fileTypes = ['.doc', '.txt', '.md', '.pdf']
 
   return (

@@ -9,7 +9,7 @@ import Link from '../components/Link'
 const types: AvatarType[] = ['alert', 'feedback']
 const status: AvatarStatus[] = ['error', 'warning', 'info', 'success']
 
-const AvatarComponent: React.FC<RouteComponentProps> = () => {
+const AvatarComponent: React.FC<RouteComponentProps> = (): React.ReactElement => {
   return (
     <div>
       <Link to="/">
@@ -20,13 +20,15 @@ const AvatarComponent: React.FC<RouteComponentProps> = () => {
         Avatar
       </Text>
       <Grid ml="40px" mt="50px">
-        {types.map((t) =>
-          status.map((s) => (
-            <Grid.Item tiny={3} key={`${t}${s}`}>
-              <Label>{`${t} ${s}`}</Label>
-              <Avatar type={t} status={s} />
-            </Grid.Item>
-          ))
+        {types.map((t): React.ReactElement[] =>
+          status.map(
+            (s): React.ReactElement => (
+              <Grid.Item tiny={3} key={`${t}${s}`}>
+                <Label>{`${t} ${s}`}</Label>
+                <Avatar type={t} status={s} />
+              </Grid.Item>
+            )
+          )
         )}
       </Grid>
     </div>

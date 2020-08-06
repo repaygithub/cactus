@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { cleanup, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
@@ -6,8 +6,8 @@ import Table from './Table'
 
 afterEach(cleanup)
 
-describe('component: Table', () => {
-  test('regular table', () => {
+describe('component: Table', (): void => {
+  test('regular table', (): void => {
     const { container } = render(
       <StyleProvider>
         <Table>
@@ -32,7 +32,7 @@ describe('component: Table', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('table with no header', () => {
+  test('table with no header', (): void => {
     const { container } = render(
       <StyleProvider>
         <Table>
@@ -54,7 +54,7 @@ describe('component: Table', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('table with caption', () => {
+  test('table with caption', (): void => {
     const { container } = render(
       <StyleProvider>
         <Table>
@@ -80,7 +80,7 @@ describe('component: Table', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('card carousel', () => {
+  test('card carousel', (): void => {
     const { container } = render(
       <StyleProvider>
         <Table variant="card">

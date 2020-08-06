@@ -1,13 +1,11 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Grid from './Grid'
 
-afterEach(cleanup)
-
-describe('component: Grid', () => {
-  test('should render extraLarge viewport design', () => {
+describe('component: Grid', (): void => {
+  test('should render extraLarge viewport design', (): void => {
     const { container } = render(
       <StyleProvider>
         <Grid justify="center">
@@ -24,7 +22,7 @@ describe('component: Grid', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render tiny viewport design', () => {
+  test('should render tiny viewport design', (): void => {
     const { container } = render(
       <StyleProvider>
         <Grid justify="end">
@@ -39,7 +37,7 @@ describe('component: Grid', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('breakpoint styles should match larger screen sizes if their breakpoint style is not defined', () => {
+  test('breakpoint styles should match larger screen sizes if their breakpoint style is not defined', (): void => {
     const { container } = render(
       <StyleProvider>
         <Grid>

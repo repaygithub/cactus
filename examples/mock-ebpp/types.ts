@@ -5,24 +5,24 @@ interface FileObj {
 }
 
 export interface UIConfigData {
-  display_name: string
-  merchant_name: string
-  terms_and_conditions: string
-  welcome_content: string
-  footer_content: string
-  allow_customer_login: boolean
-  use_cactus_styles: boolean
-  select_color: string
-  file_input: Array<FileObj>
-  notification_email: string
-  all_locations: string[]
-  mp_location: string
-  card_brands: string[]
-  established_date: string
+  displayName: string
+  merchantName: string
+  termsAndConditions: string
+  welcomeContent: string
+  footerContent: string
+  allowCustomerLogin: boolean
+  useCactusStyles: boolean
+  selectColor: string
+  fileInput: FileObj[]
+  notificationEmail: string
+  allLocations: string[]
+  mpLocation: string
+  cardBrands: string[]
+  establishedDate: string
 }
 
-export type RulesData = Array<{
+export type RulesData = {
   key: string
-  conditions: Array<{ key: string; variable: string; operator: string; value: string }>
-  actions: Array<{ key: string; action: string }>
-}>
+  conditions: { key: string; variable: string; operator: string; value: string }[]
+  actions: { key: string; action: string }[]
+}[]

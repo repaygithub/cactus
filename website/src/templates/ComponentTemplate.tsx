@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet'
 import DocgenProvider, { DocItem } from '../components/DocgenProvider'
 import Link from '../components/Link'
 
-type ComponentTemplateProps = {
+interface ComponentTemplateProps {
   data: {
     docgenDb: {
       id: string
@@ -21,7 +21,7 @@ const components = {
   a: Link,
 }
 
-const ComponentTemplate = ({ data }: ComponentTemplateProps) => {
+const ComponentTemplate = ({ data }: ComponentTemplateProps): React.ReactElement => {
   const {
     docgenDb: { db },
     mdx: { body, fields },

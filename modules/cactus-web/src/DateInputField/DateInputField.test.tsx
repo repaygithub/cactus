@@ -1,13 +1,11 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DateInputField from './DateInputField'
 
-afterEach(cleanup)
-
-describe('component: DateInputField', () => {
-  test('snapshot', () => {
+describe('component: DateInputField', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <DateInputField name="date_field" label="Date Field" id="not-random" />
@@ -17,7 +15,7 @@ describe('component: DateInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('accessible label points to div[role=group] and month input', () => {
+  test('accessible label points to div[role=group] and month input', (): void => {
     const { getAllByLabelText } = render(
       <StyleProvider>
         <DateInputField name="date_field" label="Date Field" />
@@ -28,7 +26,7 @@ describe('component: DateInputField', () => {
     expect(input).toHaveAttribute('aria-label', 'month')
   })
 
-  test('provides accessible tooltip', () => {
+  test('provides accessible tooltip', (): void => {
     const { getByRole } = render(
       <StyleProvider>
         <DateInputField
@@ -43,7 +41,7 @@ describe('component: DateInputField', () => {
     expect(field.getAttribute('aria-describedby')).toContain(tooltip.id)
   })
 
-  test('provides accessible error message', () => {
+  test('provides accessible error message', (): void => {
     const { getByRole } = render(
       <StyleProvider>
         <DateInputField name="date_field" label="Date Field" error="an error message" />

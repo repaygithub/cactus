@@ -8,8 +8,8 @@ import TextButton from './TextButton'
 
 afterEach(cleanup)
 
-describe('component: TextButton', () => {
-  test('should default to standard variant', () => {
+describe('component: TextButton', (): void => {
+  test('should default to standard variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton>Click me!</TextButton>
@@ -19,7 +19,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render standard variant', () => {
+  test('should render standard variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton variant="standard">Click me!</TextButton>
@@ -29,7 +29,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render call to action variant', () => {
+  test('should render call to action variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton variant="action">Click me!</TextButton>
@@ -39,7 +39,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render danger variant', () => {
+  test('should render danger variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton variant="danger">Click me!</TextButton>
@@ -49,7 +49,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render disabled variant', () => {
+  test('should render disabled variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton disabled>Click me!</TextButton>
@@ -59,7 +59,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse standard variant', () => {
+  test('should render inverse standard variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton variant="standard" inverse>
@@ -71,7 +71,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse call to action variant', () => {
+  test('should render inverse call to action variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton variant="action" inverse>
@@ -83,7 +83,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse disabled variant', () => {
+  test('should render inverse disabled variant', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton variant="standard" inverse disabled>
@@ -95,7 +95,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should support space props', () => {
+  test('should support space props', (): void => {
     const textButton = render(
       <StyleProvider>
         <TextButton marginRight={5}>I have margins!</TextButton>
@@ -105,7 +105,7 @@ describe('component: TextButton', () => {
     expect(textButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onClick', () => {
+  test('should trigger onClick', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -119,7 +119,7 @@ describe('component: TextButton', () => {
     expect(onClick).toHaveBeenCalled()
   })
 
-  test('should not trigger onClick', () => {
+  test('should not trigger onClick', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -133,7 +133,7 @@ describe('component: TextButton', () => {
     expect(onClick).not.toHaveBeenCalled()
   })
 
-  test('should render a text+icon button', () => {
+  test('should render a text+icon button', (): void => {
     const textIconButton = render(
       <StyleProvider>
         <TextButton>
@@ -146,7 +146,7 @@ describe('component: TextButton', () => {
     expect(textIconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render a disabled text+icon button', () => {
+  test('should render a disabled text+icon button', (): void => {
     const textIconButton = render(
       <StyleProvider>
         <TextButton>
@@ -160,8 +160,8 @@ describe('component: TextButton', () => {
   })
 })
 
-describe('With theme changes ', () => {
-  test('Should have 2px border', () => {
+describe('With theme changes ', (): void => {
+  test('Should have 2px border', (): void => {
     const theme = generateTheme({ primaryHue: 200, border: 'thick' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
@@ -171,7 +171,7 @@ describe('With theme changes ', () => {
     expect(asFragment()).toMatchSnapshot()
   })
 
-  test('Should have square shape', () => {
+  test('Should have square shape', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'square' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>
@@ -180,7 +180,7 @@ describe('With theme changes ', () => {
     )
     expect(asFragment()).toMatchSnapshot()
   })
-  test('Should have intermediate shape', () => {
+  test('Should have intermediate shape', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
     const { asFragment } = render(
       <StyleProvider theme={theme}>

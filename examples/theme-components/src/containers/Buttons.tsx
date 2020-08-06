@@ -10,22 +10,22 @@ interface ButtonsState {
 }
 
 class Buttons extends Component<RouteComponentProps> {
-  constructor(props: any) {
+  public constructor(props: RouteComponentProps) {
     super(props)
     this.handleOnClick = this.handleOnClick.bind(this)
   }
 
-  state: ButtonsState = {
+  public state: ButtonsState = {
     clickCount: 0,
   }
 
-  handleOnClick() {
+  private handleOnClick(): void {
     this.setState({
       clickCount: this.state.clickCount + 1,
     })
   }
 
-  render() {
+  public render(): React.ReactElement {
     return (
       <div>
         <Link to="/">

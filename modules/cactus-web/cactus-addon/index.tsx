@@ -1,4 +1,4 @@
-import cactusTheme, { generateTheme } from '@repay/cactus-theme'
+import cactusTheme, { ColorStyle, generateTheme } from '@repay/cactus-theme'
 import addons, { makeDecorator } from '@storybook/addons'
 import * as React from 'react'
 import styled, { CSSObject } from 'styled-components'
@@ -18,8 +18,7 @@ interface StyledContainerBaseProps {
 const StyledContainerBase: React.FC<StyledContainerBaseProps> = ({
   className,
   children,
-  ...rest
-}) => <div className={className}>{children}</div>
+}): React.ReactElement => <div className={className}>{children}</div>
 
 const alignmentMap: { [k in AlignmentTypes]: CSSObject } = {
   center: { justifyContent: 'center', alignItems: 'center' },
@@ -35,9 +34,9 @@ const StyledContainer = styled(StyledContainerBase)`
   height: 100vh;
   display: flex;
   overflow-y: auto;
-  ${(p) => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
-  ${(p) => alignmentMap[p.align]};
-  ${(p) => p.overrides}
+  ${(p): ColorStyle => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
+  ${(p): CSSObject => alignmentMap[p.align]};
+  ${(p): CSSObject => p.overrides}
 `
 
 StyledContainer.defaultProps = {
@@ -48,16 +47,19 @@ interface ProvideCactusThemeProps {
   channel: any
 }
 
-const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({ channel, ...props }) => {
+const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({
+  channel,
+  ...props
+}): React.ReactElement => {
   const [theme, setTheme] = React.useState(cactusTheme)
   const [inverse, setInverse] = React.useState(false)
 
-  React.useEffect(() => {
-    const updateTheme = (params: any) => {
+  React.useEffect((): (() => void) => {
+    const updateTheme = (params: any): void => {
       setTheme(generateTheme(params))
     }
 
-    const updateBackground = ({ inverse }: any) => {
+    const updateBackground = ({ inverse }: any): void => {
       setInverse(inverse)
     }
 
@@ -65,7 +67,7 @@ const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({ channel, ...pro
     channel.on(BACKGROUND_CHANGE, updateBackground)
 
     channel.emit(DECORATOR_LISTENING)
-    return () => {
+    return (): void => {
       channel.removeListener(THEME_CHANGE, updateTheme)
       channel.removeListener(BACKGROUND_CHANGE, updateBackground)
     }
@@ -90,7 +92,7 @@ export default makeDecorator({
     getStory: any,
     context: any,
     { parameters, options }: { parameters?: CactusAddonsOptions; options?: CactusAddonsOptions }
-  ) => {
+  ): React.ReactElement => {
     const channel = addons.getChannel()
     parameters = { ...options, ...parameters }
 

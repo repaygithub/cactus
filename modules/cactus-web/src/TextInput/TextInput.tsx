@@ -1,7 +1,12 @@
-import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, {
+  css,
+  FlattenInterpolation,
+  FlattenSimpleInterpolation,
+  ThemeProps,
+} from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
@@ -29,27 +34,31 @@ type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> 
 
 const statusMap: StatusMap = {
   success: css`
-    border-color: ${(p) => p.theme.colors.success};
-    background: ${(p) => p.theme.colors.transparentSuccess};
+    border-color: ${(p): string => p.theme.colors.success};
+    background: ${(p): string => p.theme.colors.transparentSuccess};
   `,
   warning: css`
-    border-color: ${(p) => p.theme.colors.warning};
-    background: ${(p) => p.theme.colors.transparentWarning};
+    border-color: ${(p): string => p.theme.colors.warning};
+    background: ${(p): string => p.theme.colors.transparentWarning};
   `,
   error: css`
-    border-color: ${(p) => p.theme.colors.error};
-    background: ${(p) => p.theme.colors.transparentError};
+    border-color: ${(p): string => p.theme.colors.error};
+    background: ${(p): string => p.theme.colors.transparentError};
   `,
 }
 
-const displayStatus = (props: TextInputProps) => {
+const displayStatus = (
+  props: TextInputProps
+): FlattenInterpolation<ThemeProps<CactusTheme>> | string => {
   if (props.status && !props.disabled) {
     return statusMap[props.status]
+  } else {
+    return ''
   }
 }
 
 const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
-  (props: TextInputProps, forwardRef) => {
+  (props: TextInputProps, forwardRef): React.ReactElement => {
     const { className, ...rest } = omitMargins(props)
 
     return (
@@ -81,33 +90,34 @@ const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
   `,
 }
 
-const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
-const getShape = (shape: Shape) => shapeMap[shape]
+const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
+const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
 
 const Input = styled.input<InputProps>`
   box-sizing: border-box;
-  ${(p) => getBorder(p.theme.border)}
-  border-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast)};
-  ${(p) => getShape(p.theme.shape)}
+  ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
+  border-color: ${(p): string =>
+    p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast};
+  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
   height: 32px;
   outline: none;
   box-sizing: border-box;
   padding: 7px 28px 7px 15px;
-  ${(p) => textStyle(p.theme, 'body')};
-  width: ${(p) => p.width || 'auto'};
-  background-color: ${(p) => p.theme.colors.white};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+  width: ${(p): string | number => p.width || 'auto'};
+  background-color: ${(p): string => p.theme.colors.white};
 
   [disabled] {
-    border-color: ${(p) => p.theme.colors.lightGray};
-    background-color: ${(p) => p.theme.colors.lightGray};
+    border-color: ${(p): string => p.theme.colors.lightGray};
+    background-color: ${(p): string => p.theme.colors.lightGray};
   }
 
   &:focus {
-    border-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
   }
 
   &::placeholder {
-    color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${(p): string => p.theme.colors.mediumContrast};
     font-style: oblique;
   }
 

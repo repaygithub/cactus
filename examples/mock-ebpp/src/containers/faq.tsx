@@ -3,8 +3,6 @@ import { Accordion, Button, Flex, Text } from '@repay/cactus-web'
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 
-interface FaqProps extends RouteComponentProps {}
-
 const initialAccordions = [
   {
     header: 'What is EBPP?',
@@ -70,20 +68,21 @@ const initialAccordions = [
   },
 ]
 
-const Faq = (props: FaqProps) => {
+//eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Faq = (props: RouteComponentProps): React.ReactElement => {
   const [accordions, setAccordions] = useState(initialAccordions)
 
-  const remove = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const remove = (): void => {
     if (accordions.length > 0) {
-      let accordionsCopy = [...accordions]
+      const accordionsCopy = [...accordions]
       accordionsCopy.shift()
       setAccordions(accordionsCopy)
     }
   }
 
-  const insert = (event: React.MouseEvent<HTMLButtonElement>) => {
-    let accordionsCopy = [...accordions]
-    let newAccordion = {
+  const insert = (): void => {
+    const accordionsCopy = [...accordions]
+    const newAccordion = {
       header: 'Lorem Ipsum?',
       body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
       tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
@@ -118,14 +117,16 @@ const Faq = (props: FaqProps) => {
         >
           <Flex padding="16px" width="90%">
             <Accordion.Provider maxOpen={2}>
-              {accordions.map((accordion, index) => (
-                <Accordion key={index}>
-                  <Accordion.Header>
-                    <Text as="h3">{accordion.header}</Text>
-                  </Accordion.Header>
-                  <Accordion.Body>{accordion.body}</Accordion.Body>
-                </Accordion>
-              ))}
+              {accordions.map(
+                (accordion, index): React.ReactElement => (
+                  <Accordion key={index}>
+                    <Accordion.Header>
+                      <Text as="h3">{accordion.header}</Text>
+                    </Accordion.Header>
+                    <Accordion.Body>{accordion.body}</Accordion.Body>
+                  </Accordion>
+                )
+              )}
             </Accordion.Provider>
           </Flex>
 

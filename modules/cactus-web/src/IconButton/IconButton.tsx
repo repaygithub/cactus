@@ -25,59 +25,59 @@ type VariantMap = { [K in IconButtonVariants]: FlattenInterpolation<ThemeProps<C
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
 
     &:hover,
     &:focus {
-      color: ${(p) => p.theme.colors.base};
+      color: ${(p): string => p.theme.colors.base};
     }
   `,
   standard: css`
-    color: ${(p) => p.theme.colors.base};
+    color: ${(p): string => p.theme.colors.base};
 
     &:hover {
-      color: ${(p) => p.theme.colors.callToAction};
+      color: ${(p): string => p.theme.colors.callToAction};
     }
   `,
   danger: css`
-    color: ${(p) => p.theme.colors.error};
+    color: ${(p): string => p.theme.colors.error};
 
     &:hover {
-      color: ${(p) => p.theme.colors.errorDark};
+      color: ${(p): string => p.theme.colors.errorDark};
     }
   `,
 }
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
 
     &:hover,
     &:focus {
-      color: ${(p) => p.theme.colors.white};
+      color: ${(p): string => p.theme.colors.white};
     }
   `,
   standard: css`
-    color: ${(p) => p.theme.colors.white};
+    color: ${(p): string => p.theme.colors.white};
 
     &:hover,
     &:focus {
-      color: ${(p) => p.theme.colors.base};
-      background: ${(p) => p.theme.colors.white};
+      color: ${(p): string => p.theme.colors.base};
+      background: ${(p): string => p.theme.colors.white};
     }
   `,
   danger: css`
-    color: ${(p) => p.theme.colors.error};
+    color: ${(p): string => p.theme.colors.error};
 
     &:hover,
     &:focus {
-      color: ${(p) => p.theme.colors.white};
+      color: ${(p): string => p.theme.colors.white};
     }
   `,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
-  color: ${(p) => p.theme.colors.mediumGray};
+  color: ${(p): string => p.theme.colors.mediumGray};
   cursor: not-allowed;
 `
 
@@ -92,19 +92,21 @@ const variantOrDisabled = (
   }
 }
 
-const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>((props, ref) => {
-  const { label, children, inverse, iconSize, display, ...buttonProps } = props
-  const withoutMargins = omitMargins(buttonProps)
+const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>(
+  (props, ref): React.ReactElement => {
+    const { label, children, inverse, iconSize, display, ...buttonProps } = props
+    const withoutMargins = omitMargins(buttonProps)
 
-  return (
-    <button aria-label={label} ref={ref} {...withoutMargins}>
-      {children}
-    </button>
-  )
-})
+    return (
+      <button aria-label={label} ref={ref} {...withoutMargins}>
+        {children}
+      </button>
+    )
+  }
+)
 
 export const IconButton = styled(IconButtonBase)<IconButtonProps>`
-  display: ${(p) => p.display || 'inline-flex'};
+  display: ${(p): string => p.display || 'inline-flex'};
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -119,7 +121,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   }
 
   &:focus {
-    background-color: ${(p) => p.theme.colors.transparentCTA};
+    background-color: ${(p): string => p.theme.colors.transparentCTA};
   }
 
   ${variantOrDisabled}
@@ -131,7 +133,7 @@ IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
   variant: PropTypes.oneOf(['standard', 'action', 'danger']),
   disabled: PropTypes.bool,
-  label: (props: IconButtonProps, propName: string, componentName: string) => {
+  label: (props: IconButtonProps, propName: string, componentName: string): Error | null => {
     if (!props.label && !props['aria-labelledby']) {
       return new Error(
         `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
@@ -141,10 +143,13 @@ IconButton.propTypes = {
         `Invalid prop 'label' of type '${typeof props.label}' supplied to '${componentName}', expected 'string'.`
       )
     }
-
     return null
   },
-  'aria-labelledby': (props: IconButtonProps, propName: string, componentName: string) => {
+  'aria-labelledby': (
+    props: IconButtonProps,
+    propName: string,
+    componentName: string
+  ): Error | null => {
     if (!props['aria-labelledby'] && !props.label) {
       return new Error(
         `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
@@ -156,7 +161,6 @@ IconButton.propTypes = {
         ]}' supplied to '${componentName}', expected 'string'.`
       )
     }
-
     return null
   },
   display: PropTypes.oneOf(['flex', 'inline-flex']),

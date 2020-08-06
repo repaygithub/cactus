@@ -29,7 +29,7 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
   className,
   disabled,
   onClick,
-}) => (
+}): React.ReactElement => (
   <a
     role="link"
     aria-disabled={disabled ? 'true' : 'false'}
@@ -45,25 +45,25 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
 const PrevNextLink = styled(PrevNextLinkBase)`
   cursor: pointer;
   padding: 0 10px;
-  ${(p) => fontSize(p.theme, 'small')};
+  ${(p): string => fontSize(p.theme, 'small')};
   line-height: 20px;
   text-decoration: none;
 
   :hover {
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
   }
 
   :focus {
     outline: none;
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
   }
 
   :last-child {
-    border-left: ${(p) => border(p.theme, 'lightContrast')};
+    border-left: ${(p): string => border(p.theme, 'lightContrast')};
   }
 
   &[aria-disabled='true'] {
-    color: ${(p) => p.theme.colors.lightGray};
+    color: ${(p): string => p.theme.colors.lightGray};
     cursor: default;
   }
 `
@@ -73,22 +73,24 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   disablePrev = false,
   disableNext = false,
   linkAs,
-  onNavigate = () => {},
+  onNavigate = (): void => {
+    return
+  },
   prevText,
   nextText,
-}) => (
+}): React.ReactElement => (
   <div className={className}>
     <PrevNextLink
       as={linkAs}
       disabled={disablePrev}
-      onClick={() => !disablePrev && onNavigate('prev')}
+      onClick={(): void | boolean => !disablePrev && onNavigate('prev')}
     >
       {prevText}
     </PrevNextLink>
     <PrevNextLink
       as={linkAs}
       disabled={disableNext}
-      onClick={() => !disableNext && onNavigate('next')}
+      onClick={(): void | boolean => !disableNext && onNavigate('next')}
     >
       {nextText}
     </PrevNextLink>
@@ -114,7 +116,9 @@ PrevNext.propTypes = {
 }
 
 PrevNext.defaultProps = {
-  onNavigate: () => {},
+  onNavigate: (): void => {
+    return
+  },
   prevText: 'Prev',
   nextText: 'Next',
 }

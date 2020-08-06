@@ -5,19 +5,19 @@ import React, { useState } from 'react'
 
 import Link from '../components/Link'
 
-const AccessibleFieldComponent: React.FC<RouteComponentProps> = () => {
+const AccessibleFieldComponent: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [value, setValue] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [warning, setWarning] = useState('')
 
-  const cleanState = () => {
+  const cleanState = (): void => {
     setError('')
     setSuccess('')
     setWarning('')
   }
 
-  const checkValidEmail = () => {
+  const checkValidEmail = (): void => {
     cleanState()
     const regex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
     if (regex.test(value)) {
@@ -60,7 +60,7 @@ const AccessibleFieldComponent: React.FC<RouteComponentProps> = () => {
               style={{ minWidth: '300px' }}
               value={value}
               placeholder="name@example.com"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e): void => setValue(e.target.value)}
             />
           </AccessibleField>
         </Box>

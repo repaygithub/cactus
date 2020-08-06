@@ -3,20 +3,19 @@ import { CactusTheme } from '@repay/cactus-theme'
 import React from 'react'
 import styled, { StyledComponentBase } from 'styled-components'
 
-import Link from '../Link/Link'
-
 interface BreadcrumbItemProps {
   label: string
   linkTo: string
   className?: string
   active?: boolean
 }
+
 interface BreadcrumbProps {
   children?: React.ReactNode
   className?: string
 }
 
-const BreadcrumbItemBase = (props: BreadcrumbItemProps) => {
+const BreadcrumbItemBase = (props: BreadcrumbItemProps): React.ReactElement => {
   const { active, label, linkTo, className } = props
   return (
     <li className={className}>
@@ -27,7 +26,7 @@ const BreadcrumbItemBase = (props: BreadcrumbItemProps) => {
     </li>
   )
 }
-const BreadCrumbBase = (props: BreadcrumbProps) => {
+const BreadCrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { children, className } = props
   return (
     <nav aria-label="Breadcrumb" className={className}>
@@ -45,14 +44,14 @@ export const BreadCrumbItem = styled(BreadcrumbItemBase)`
   font-style: normal;
   a:visited,
   a:link {
-    color: ${(p) => (p.active ? '#2E3538' : '#5F7A88')};
+    color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
     font-style: normal;
     font-size: 15px;
     text-decoration: none;
   }
 
   & > svg {
-    color: ${(p) => (p.active ? '#2E3538' : '#5F7A88')};
+    color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
     margin: 0 3px;
     font-size: 10px;
   }

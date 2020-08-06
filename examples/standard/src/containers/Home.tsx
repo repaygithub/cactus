@@ -7,10 +7,13 @@ import { supportedLanguages } from '../i18nController'
 
 const languageOptions = [
   { value: '', label: 'use default' },
-  ...supportedLanguages.map((l) => ({ value: l.code, label: l.label })),
+  ...supportedLanguages.map((l): { value: string; label: string } => ({
+    value: l.code,
+    label: l.label,
+  })),
 ]
 
-const Home: React.FC<RouteComponentProps> = () => {
+const Home: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [termsLang, setTermsLang] = useState<string | undefined>()
   return (
     <div className="App">
@@ -40,7 +43,7 @@ const Home: React.FC<RouteComponentProps> = () => {
             label="Language"
             name="termsLang"
             value={termsLang}
-            onChange={(_, value: any) => setTermsLang(value as string)}
+            onChange={(_, value: any): void => setTermsLang(value as string)}
             options={languageOptions}
           />
         </Box>

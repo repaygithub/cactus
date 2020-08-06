@@ -11,20 +11,20 @@ import Link from '../components/Link'
 const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']
 const iconButtonSizes: IconButtonSizes[] = ['tiny', 'small', 'medium', 'large']
 
-interface propTypes {
+interface PropTypes {
   variant: IconButtonVariants
   iconSize: IconButtonSizes
   disabled: boolean
   inverse: boolean
 }
-const initState: propTypes = {
+const initState: PropTypes = {
   variant: 'standard',
   iconSize: 'medium',
   disabled: false,
   inverse: false,
 }
-const IconbuttonExample: React.FC<RouteComponentProps> = () => {
-  const [state, setState] = useState<propTypes>(initState)
+const IconbuttonExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
+  const [state, setState] = useState<PropTypes>(initState)
 
   const containerStyle = {
     backgroundColor: cactusTheme.colors.base,
@@ -33,7 +33,7 @@ const IconbuttonExample: React.FC<RouteComponentProps> = () => {
   }
 
   const changeVariant = useCallback(
-    (name, value) => {
+    (name, value): void => {
       setState({ ...state, [name]: value })
     },
     [state]
@@ -79,19 +79,21 @@ const IconbuttonExample: React.FC<RouteComponentProps> = () => {
       <Grid justify="center" style={state.inverse ? containerStyle : {}}>
         {Object.values(icons)
           .slice(0, Object.keys(icons).length - 2)
-          .map((Icon: React.ComponentType<any>, ix) => (
-            <Grid.Item tiny={3} medium={2} large={1} key={ix}>
-              <IconButton
-                label={`icb-${ix}`}
-                variant={state.variant}
-                iconSize={state.iconSize}
-                disabled={state.disabled}
-                inverse={state.inverse}
-              >
-                <Icon />
-              </IconButton>
-            </Grid.Item>
-          ))}
+          .map(
+            (Icon: React.ComponentType<any>, ix): React.ReactElement => (
+              <Grid.Item tiny={3} medium={2} large={1} key={ix}>
+                <IconButton
+                  label={`icb-${ix}`}
+                  variant={state.variant}
+                  iconSize={state.iconSize}
+                  disabled={state.disabled}
+                  inverse={state.inverse}
+                >
+                  <Icon />
+                </IconButton>
+              </Grid.Item>
+            )
+          )}
       </Grid>
     </div>
   )

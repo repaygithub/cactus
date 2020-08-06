@@ -1,4 +1,4 @@
-import { Box, Flex } from '@repay/cactus-web'
+import { Flex } from '@repay/cactus-web'
 import { Link } from 'gatsby'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
@@ -24,7 +24,7 @@ const Heading = styled.h2<TextAlignProps & ColorProps>`
   }
 `
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="Foundation" />

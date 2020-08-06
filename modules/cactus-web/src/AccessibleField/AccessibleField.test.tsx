@@ -4,8 +4,8 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import AccessibleField from './AccessibleField'
 
-describe('component: AccessibleField', () => {
-  test('provides an accessible label', () => {
+describe('component: AccessibleField', (): void => {
+  test('provides an accessible label', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <AccessibleField label="Accessible Label" name="text_field">
@@ -17,7 +17,7 @@ describe('component: AccessibleField', () => {
     expect(getByLabelText('Accessible Label')).toHaveAttribute('data-is', 'accessible')
   })
 
-  test('provides accessible status message', () => {
+  test('provides accessible status message', (): void => {
     const { getByLabelText, getByText } = render(
       <StyleProvider>
         <AccessibleField label="Accessible Label" name="text_field" error="This field has an error">
@@ -32,7 +32,7 @@ describe('component: AccessibleField', () => {
     )
   })
 
-  test('provides an accessible tooltip', () => {
+  test('provides an accessible tooltip', (): void => {
     const { getByLabelText, getByText } = render(
       <StyleProvider>
         <AccessibleField label="Accessible Label" name="text_field" tooltip="woot tooltips!">

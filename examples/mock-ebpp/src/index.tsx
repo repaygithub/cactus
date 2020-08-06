@@ -22,7 +22,7 @@ interface ContainerProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
     RouteComponentProps {}
 
-const AppContainer = (props: ContainerProps) => {
+const AppContainer = (props: ContainerProps): React.ReactElement => {
   const { children } = props
 
   return (
@@ -65,7 +65,7 @@ const AppContainer = (props: ContainerProps) => {
   )
 }
 
-const App = () => {
+const App = (): React.ReactElement => {
   return (
     <div>
       <Helmet>

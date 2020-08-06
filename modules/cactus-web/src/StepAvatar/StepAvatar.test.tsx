@@ -6,8 +6,8 @@ import StepAvatar from './StepAvatar'
 
 afterEach(cleanup)
 
-describe('component: StepAvatar', () => {
-  test('Default Step', () => {
+describe('component: StepAvatar', (): void => {
+  test('Default Step', (): void => {
     const { container } = render(
       <StyleProvider>
         <StepAvatar />
@@ -16,7 +16,7 @@ describe('component: StepAvatar', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('Step Avatar, Not Done', () => {
+  test('Step Avatar, Not Done', (): void => {
     const { container } = render(
       <StyleProvider>
         <StepAvatar status="notDone" />
@@ -25,7 +25,7 @@ describe('component: StepAvatar', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('Step Avatar, In Process', () => {
+  test('Step Avatar, In Process', (): void => {
     const { container } = render(
       <StyleProvider>
         <StepAvatar status="inProcess" />
@@ -34,7 +34,7 @@ describe('component: StepAvatar', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('Step Avatar, Done', () => {
+  test('Step Avatar, Done', (): void => {
     const { container } = render(
       <StyleProvider>
         <StepAvatar status="done" />

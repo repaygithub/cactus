@@ -1,5 +1,5 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -7,8 +7,8 @@ import animationRender from '../../tests/helpers/animationRender'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import SplitButton from './SplitButton'
 
-describe('component: SplitButton', () => {
-  test('snapshot', () => {
+describe('component: SplitButton', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <SplitButton mainActionLabel="Test" onSelectMainAction={jest.fn()}>
@@ -21,8 +21,8 @@ describe('component: SplitButton', () => {
     expect(container).toMatchSnapshot()
   })
 
-  describe('mouse interactions', () => {
-    test('can select main action', () => {
+  describe('mouse interactions', (): void => {
+    test('can select main action', (): void => {
       const onMainSelect = jest.fn()
       const { getByText } = render(
         <StyleProvider>
@@ -38,7 +38,7 @@ describe('component: SplitButton', () => {
       expect(onMainSelect).toHaveBeenCalled()
     })
 
-    test('can select an action from the dropdown', async () => {
+    test('can select an action from the dropdown', async (): Promise<void> => {
       const onAction1Select = jest.fn()
       const { getByText, getByLabelText } = render(
         <StyleProvider>
@@ -56,7 +56,7 @@ describe('component: SplitButton', () => {
       expect(onAction1Select).toHaveBeenCalled()
     })
 
-    test('cannot select main action when disabled', () => {
+    test('cannot select main action when disabled', (): void => {
       const onMainSelect = jest.fn()
       const { getByText } = render(
         <StyleProvider>
@@ -73,8 +73,8 @@ describe('component: SplitButton', () => {
     })
   })
 
-  describe('keyboard interactions', () => {
-    test('can select an action from the dropdown', async () => {
+  describe('keyboard interactions', (): void => {
+    test('can select an action from the dropdown', async (): Promise<void> => {
       const onAction2Select = jest.fn()
       const { rerender } = render(
         <StyleProvider>
@@ -105,8 +105,8 @@ describe('component: SplitButton', () => {
     })
   })
 
-  describe('with theme customization', () => {
-    test('should have square shape', () => {
+  describe('with theme customization', (): void => {
+    test('should have square shape', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { container } = render(
         <StyleProvider theme={theme}>
@@ -119,7 +119,7 @@ describe('component: SplitButton', () => {
 
       expect(container).toMatchSnapshot()
     })
-    test('should have intermediate shape', () => {
+    test('should have intermediate shape', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
       const { container } = render(
         <StyleProvider theme={theme}>
@@ -132,7 +132,7 @@ describe('component: SplitButton', () => {
 
       expect(container).toMatchSnapshot()
     })
-    test('dropdown should not have box shadows', () => {
+    test('dropdown should not have box shadows', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { container } = render(
         <StyleProvider theme={theme}>
@@ -145,7 +145,7 @@ describe('component: SplitButton', () => {
 
       expect(container).toMatchSnapshot()
     })
-    test('should have 2px borders', () => {
+    test('should have 2px borders', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { container } = render(
         <StyleProvider theme={theme}>

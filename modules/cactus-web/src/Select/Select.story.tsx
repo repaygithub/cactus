@@ -1,7 +1,7 @@
 import { actions } from '@storybook/addon-actions'
 import { array, boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import arizonaCities from '../storySupport/arizonaCities'
 import FormHandler from '../storySupport/FormHandler'
@@ -18,22 +18,25 @@ const longOptions: OptionType[] = [
 const defaultMultiValue = arizonaCities.slice(6, 15)
 
 storiesOf('Select', module)
-  .add('Basic Usage', () => (
-    <React.Fragment>
-      <Select
-        options={array('options', ['name', 'other', 'three'])}
-        name={text('name', 'random')}
-        id={text('id', 'select-input')}
-        disabled={boolean('disabled', false)}
-        multiple={boolean('multiple', false)}
-        m={text('m', '2')}
-        {...eventLoggers}
-      />
-    </React.Fragment>
-  ))
+  .add(
+    'Basic Usage',
+    (): ReactElement => (
+      <React.Fragment>
+        <Select
+          options={array('options', ['name', 'other', 'three'])}
+          name={text('name', 'random')}
+          id={text('id', 'select-input')}
+          disabled={boolean('disabled', false)}
+          multiple={boolean('multiple', false)}
+          m={text('m', '2')}
+          {...eventLoggers}
+        />
+      </React.Fragment>
+    )
+  )
   .add(
     'Collisions in an over-sized container',
-    () => (
+    (): ReactElement => (
       <React.Fragment>
         <Select
           options={array('options', ['name', 'other', 'three'])}
@@ -49,33 +52,19 @@ storiesOf('Select', module)
     ),
     { cactus: { overrides: { height: '220vh', width: '220vw' } } }
   )
-  .add('Long list of options', () => (
-    <FormHandler
-      defaultValue={arizonaCities[6]}
-      onChange={(name, value: string | number | Array<string | number> | null) => value}
-    >
-      {({ value, onChange }) => (
-        <Select
-          options={arizonaCities}
-          name="random"
-          id="select-input"
-          disabled={boolean('disabled', false)}
-          {...eventLoggers}
-          onChange={onChange}
-          value={value}
-        />
-      )}
-    </FormHandler>
-  ))
-  .add('Long option labels', () => (
-    <FormHandler
-      defaultValue=""
-      onChange={(name, value: string | number | Array<string | number> | null) => value}
-    >
-      {({ value, onChange }) => (
-        <div style={{ width: '194px' }}>
+  .add(
+    'Long list of options',
+    (): ReactElement => (
+      <FormHandler
+        defaultValue={arizonaCities[6]}
+        onChange={(
+          name,
+          value: string | number | (string | number)[] | null
+        ): string | number | (string | number)[] | null => value}
+      >
+        {({ value, onChange }): ReactElement => (
           <Select
-            options={longOptions}
+            options={arizonaCities}
             name="random"
             id="select-input"
             disabled={boolean('disabled', false)}
@@ -83,18 +72,47 @@ storiesOf('Select', module)
             onChange={onChange}
             value={value}
           />
-        </div>
-      )}
-    </FormHandler>
-  ))
+        )}
+      </FormHandler>
+    )
+  )
+  .add(
+    'Long option labels',
+    (): ReactElement => (
+      <FormHandler
+        defaultValue=""
+        onChange={(
+          name,
+          value: string | number | (string | number)[] | null
+        ): string | number | (string | number)[] | null => value}
+      >
+        {({ value, onChange }): ReactElement => (
+          <div style={{ width: '194px' }}>
+            <Select
+              options={longOptions}
+              name="random"
+              id="select-input"
+              disabled={boolean('disabled', false)}
+              {...eventLoggers}
+              onChange={onChange}
+              value={value}
+            />
+          </div>
+        )}
+      </FormHandler>
+    )
+  )
   .add(
     'With Multiselect',
-    () => (
+    (): ReactElement => (
       <FormHandler
         defaultValue={defaultMultiValue}
-        onChange={(name, value: string | number | Array<string | number> | null) => value}
+        onChange={(
+          name,
+          value: string | number | (string | number)[] | null
+        ): string | number | (string | number)[] | null => value}
       >
-        {({ value, onChange }) => (
+        {({ value, onChange }): ReactElement => (
           <Select
             options={arizonaCities}
             name="random"
@@ -112,11 +130,14 @@ storiesOf('Select', module)
   )
   .add(
     'With ComboBox',
-    () => (
+    (): ReactElement => (
       <FormHandler
-        onChange={(name, value: string | number | Array<string | number> | null) => value}
+        onChange={(
+          name,
+          value: string | number | (string | number)[] | null
+        ): string | number | (string | number)[] | null => value}
       >
-        {({ value, onChange }) => (
+        {({ value, onChange }): ReactElement => (
           <Select
             options={arizonaCities}
             name="random"
@@ -134,11 +155,14 @@ storiesOf('Select', module)
   )
   .add(
     'With MultiSelect ComboBox',
-    () => (
+    (): ReactElement => (
       <FormHandler
-        onChange={(name, value: string | number | Array<string | number> | null) => value}
+        onChange={(
+          name,
+          value: string | number | (string | number)[] | null
+        ): string | number | (string | number)[] | null => value}
       >
-        {({ value, onChange }) => (
+        {({ value, onChange }): ReactElement => (
           <Select
             options={arizonaCities}
             name="random"

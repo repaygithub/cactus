@@ -15,25 +15,25 @@ const BreakpointBox = styled(Box)`
   height: 50px;
   border-radius: 15%
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
+  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.small} {
     max-width: 708px;
     width: 75px;
     height 75px;
     border-radius: 25%;
   }
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
     max-width: 964px;
     width: 100px;
     height: 100px;
     border-radius: 35%;
   }
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.large} {
+  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.large} {
     max-width: 1140px;
     width: 150px;
     height: 150px;
     border-radius: 45%;
   }
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.extraLarge} {
+  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.extraLarge} {
     max-width: 1380px;
     width: 200px;
     height: 200px;
@@ -41,38 +41,41 @@ const BreakpointBox = styled(Box)`
   }
 `
 
-storiesOf('Style Provider', module).add('Component Adjusments based on Media Queries', () => {
-  return (
-    <StyleProvider theme={cactusTheme} global={true}>
-      <Grid justify="center">
-        <Grid.Item tiny={4}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={4}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={4}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={2}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={2}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={2}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={2}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={2}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-        <Grid.Item tiny={2}>
-          <BreakpointBox backgroundColor={backgroundColors} />
-        </Grid.Item>
-      </Grid>
-    </StyleProvider>
-  )
-})
+storiesOf('Style Provider', module).add(
+  'Component Adjusments based on Media Queries',
+  (): React.ReactElement => {
+    return (
+      <StyleProvider theme={cactusTheme} global={true}>
+        <Grid justify="center">
+          <Grid.Item tiny={4}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={4}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={4}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={2}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={2}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={2}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={2}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={2}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+          <Grid.Item tiny={2}>
+            <BreakpointBox backgroundColor={backgroundColors} />
+          </Grid.Item>
+        </Grid>
+      </StyleProvider>
+    )
+  }
+)

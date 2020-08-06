@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import Link from '../components/Link'
 
 class Home extends Component<RouteComponentProps> {
-  data = {
+  private data = {
     Buttons: '/Buttons/Standard',
     AccessibleField: 'AccessibleField',
     'Inverse Buttons': 'Buttons/Inverse',
@@ -28,7 +28,7 @@ class Home extends Component<RouteComponentProps> {
     StepAvatar: 'StepAvatar',
   }
 
-  render() {
+  public render(): React.ReactElement {
     return (
       <div style={{ textAlign: 'center' }}>
         <h2>
@@ -58,14 +58,16 @@ class Home extends Component<RouteComponentProps> {
               </tr>
               {Object.entries(this.data)
                 .sort()
-                .map((e) => (
-                  <tr key={e[0]}>
-                    <td>{e[0]}</td>
-                    <td>
-                      <Link to={e[1]}>Go!</Link>
-                    </td>
-                  </tr>
-                ))}
+                .map(
+                  (e): React.ReactElement => (
+                    <tr key={e[0]}>
+                      <td>{e[0]}</td>
+                      <td>
+                        <Link to={e[1]}>Go!</Link>
+                      </td>
+                    </tr>
+                  )
+                )}
             </tbody>
           </Box>
         </div>

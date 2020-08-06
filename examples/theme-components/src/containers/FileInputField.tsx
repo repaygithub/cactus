@@ -5,7 +5,7 @@ import React from 'react'
 
 import Link from '../components/Link'
 
-const FileInputFieldExample: React.FC<RouteComponentProps> = () => {
+const FileInputFieldExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   return (
     <div>
       <Link to="/">

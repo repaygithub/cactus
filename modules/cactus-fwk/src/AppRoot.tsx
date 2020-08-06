@@ -20,9 +20,11 @@ interface AppRootProps {
   globalErrorView?: ErrorView
 }
 
-const noop = (error: Error, info: React.ErrorInfo) => {}
+const noop = (): void => {
+  return
+}
 
-const AppRoot: React.FC<AppRootProps> = (props) => {
+const AppRoot: React.FC<AppRootProps> = (props): React.ReactElement => {
   return (
     <ErrorBoundary onError={props.onError || noop} errorView={props.globalErrorView}>
       <FeatureFlagContext.Provider value={props.featureFlags || null}>

@@ -5,7 +5,7 @@ import React from 'react'
 
 import Link from '../components/Link'
 
-const FieldWrapperExample: React.FC<RouteComponentProps> = () => {
+const FieldWrapperExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   return (
     <div>
       <Link to="/">

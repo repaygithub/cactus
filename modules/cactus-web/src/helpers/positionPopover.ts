@@ -9,7 +9,7 @@ type PRect = Partial<DOMRect> & {
   readonly width: number
 }
 
-export function getTopPosition(targetRect: PRect, popoverRect: PRect) {
+export function getTopPosition(targetRect: PRect, popoverRect: PRect): { top: string } {
   const { directionUp } = getCollisions(targetRect, popoverRect)
   return {
     top: directionUp

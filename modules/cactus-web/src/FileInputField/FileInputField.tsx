@@ -7,18 +7,18 @@ import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import FileInput, { FileInputProps, FileObject } from '../FileInput/FileInput'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
-import Label from '../Label/Label'
+import Label, { LabelProps } from '../Label/Label'
 import Tooltip from '../Tooltip/Tooltip'
 import { Omit } from '../types'
 
 interface FileInputFieldProps extends FileInputProps, MarginProps {
   className?: string
   label: React.ReactNode
-  labelProps?: object
+  labelProps?: LabelProps
   tooltip?: string
 }
 
-const FileInputFieldBase = (props: FileInputFieldProps) => {
+const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
   const { className, disabled, label, labelProps, id, tooltip, ...fileInputProps } = omitMargins(
     props
   ) as Omit<FileInputFieldProps, keyof MarginProps>
@@ -52,7 +52,7 @@ export const FileInputField = styled(FileInputFieldBase)`
     position: relative;
     bottom: 4px;
     padding-left: 16px;
-    ${(p) => p.disabled && `color: ${p.theme.colors.mediumGray};`}
+    ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
   }
 
   ${Tooltip} {
@@ -60,7 +60,7 @@ export const FileInputField = styled(FileInputFieldBase)`
     top: -2px;
     right: 8px;
     font-size: 16px;
-    ${(p) => p.disabled && `color: ${p.theme.colors.mediumGray};`}
+    ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
   }
 
   ${margin}

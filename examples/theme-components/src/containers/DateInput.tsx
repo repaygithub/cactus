@@ -7,10 +7,10 @@ import React, { useState } from 'react'
 
 import Link from '../components/Link'
 
-const DateInputExample: React.FC<RouteComponentProps> = () => {
+const DateInputExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [type, setType] = useState<DateType>('date')
 
-  const changeType = (value: any) => {
+  const changeType = (value: any): void => {
     const typeName: DateType = value
     setType(typeName)
   }
@@ -32,9 +32,9 @@ const DateInputExample: React.FC<RouteComponentProps> = () => {
           <Label>Controlled with default date </Label>
           <FormHandler
             defaultValue={new Date()}
-            onChange={(_, value: string | Date | null) => value}
+            onChange={(_, value: string | Date | null): string | Date | null => value}
           >
-            {({ value, onChange }) => (
+            {({ value, onChange }): React.ReactElement => (
               <DateInput
                 id="date-input-1 aklhjdklshd"
                 name="date-input"
@@ -50,7 +50,7 @@ const DateInputExample: React.FC<RouteComponentProps> = () => {
             options={['date', 'datetime', 'time']}
             name="icons"
             value={type}
-            onChange={(_, value) => changeType(value)}
+            onChange={(_, value): void => changeType(value)}
             id={Math.random().toString()}
           />
         </Flex>

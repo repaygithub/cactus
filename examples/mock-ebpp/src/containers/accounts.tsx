@@ -5,17 +5,16 @@ import { Helmet } from 'react-helmet'
 
 import { Account, fetchAccounts } from '../api'
 
-interface AccountsProps extends RouteComponentProps {}
-
 interface State {
-  accounts: Array<Account>
+  accounts: Account[]
   alert: string
 }
 
-const Accounts = (props: AccountsProps) => {
+//eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Accounts = (props: RouteComponentProps): React.ReactElement => {
   const [state, setState] = useState<State>({ accounts: [], alert: '' })
 
-  useEffect(() => {
+  useEffect((): void => {
     const accounts = fetchAccounts()
     setState({ accounts: accounts, alert: '' })
   }, [])
@@ -29,7 +28,11 @@ const Accounts = (props: AccountsProps) => {
 
       {state.alert && (
         <Flex justifyContent="center" mt={4} mb={4}>
-          <Alert status="success" onClose={() => setState({ ...state, alert: '' })} width="60%">
+          <Alert
+            status="success"
+            onClose={(): void => setState({ ...state, alert: '' })}
+            width="60%"
+          >
             {state.alert}
           </Alert>
         </Flex>
@@ -69,47 +72,51 @@ const Accounts = (props: AccountsProps) => {
             </thead>
 
             <tbody style={{ fontSize: '22px' }}>
-              {state.accounts.map((account: Account, index: number) => {
-                const color = index % 2 === 1 ? 'lightgrey' : 'white'
+              {state.accounts.map(
+                (account: Account, index: number): React.ReactElement => {
+                  const color = index % 2 === 1 ? 'lightgrey' : 'white'
 
-                const goToAccountPage = () => {
-                  navigate(`/account/${account.id}`)
+                  const goToAccountPage = (): void => {
+                    navigate(`/account/${account.id}`)
+                  }
+
+                  const deleteAccount = (): void => {
+                    setState({
+                      accounts: state.accounts.filter(
+                        (acct: Account): boolean => acct.id !== account.id
+                      ),
+                      alert: `Account ${account.id} deleted successfully`,
+                    })
+                  }
+
+                  return (
+                    <tr
+                      key={account.id}
+                      style={{
+                        backgroundColor: `${color}`,
+                        border: '2px solid black',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <td> {account.firstName} </td>
+                      <td> {account.lastName} </td>
+                      <td> {account.dob} </td>
+                      <td> {account.cardLastFour} </td>
+                      <td> {account.id} </td>
+                      <td>
+                        <SplitButton
+                          mainActionLabel="View Account"
+                          onSelectMainAction={goToAccountPage}
+                        >
+                          <SplitButton.Action onSelect={deleteAccount}>
+                            Delete Account
+                          </SplitButton.Action>
+                        </SplitButton>
+                      </td>
+                    </tr>
+                  )
                 }
-
-                const deleteAccount = () => {
-                  setState({
-                    accounts: state.accounts.filter((acct: Account) => acct.id !== account.id),
-                    alert: `Account ${account.id} deleted successfully`,
-                  })
-                }
-
-                return (
-                  <tr
-                    key={account.id}
-                    style={{
-                      backgroundColor: `${color}`,
-                      border: '2px solid black',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <td> {account.firstName} </td>
-                    <td> {account.lastName} </td>
-                    <td> {account.dob} </td>
-                    <td> {account.cardLastFour} </td>
-                    <td> {account.id} </td>
-                    <td>
-                      <SplitButton
-                        mainActionLabel="View Account"
-                        onSelectMainAction={goToAccountPage}
-                      >
-                        <SplitButton.Action onSelect={deleteAccount}>
-                          Delete Account
-                        </SplitButton.Action>
-                      </SplitButton>
-                    </td>
-                  </tr>
-                )
-              })}
+              )}
             </tbody>
           </table>
         </Flex>

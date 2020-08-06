@@ -1,3 +1,4 @@
+import { ColorStyle } from '@repay/cactus-theme'
 import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
@@ -13,14 +14,14 @@ type StepColor = { [K in AvatarStep]: FlattenInterpolation<ThemeProps<DefaultThe
 
 const stepColorMap: StepColor = {
   notDone: css`
-    ${(p) => p.theme.colorStyles.lightContrast};
+    ${(p): ColorStyle => p.theme.colorStyles.lightContrast};
   `,
   inProcess: css`
-    ${(p) => p.theme.colorStyles.callToAction};
-    ${(p) => boxShadow(p.theme, 1)};
+    ${(p): ColorStyle => p.theme.colorStyles.callToAction};
+    ${(p): string => boxShadow(p.theme, 1)};
   `,
   done: css`
-    ${(p) => p.theme.colorStyles.base};
+    ${(p): ColorStyle => p.theme.colorStyles.base};
   `,
 }
 
@@ -38,7 +39,7 @@ export const StepAvatar = styled.div<StepAvatarProps>`
   width: 48px;
   height: 48px;
   line-height: 49px;
-  ${(p) => fontSize(p.theme, 'h2')}
+  ${(p): string => fontSize(p.theme, 'h2')}
   font-weight: 400;
   text-align: center;
   appearance: none;

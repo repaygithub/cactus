@@ -25,7 +25,7 @@ interface AlertProps
   closeLabel?: string
 }
 
-const backgroundColor = (props: AlertProps & ThemeProps<CactusTheme>) => {
+const backgroundColor = (props: AlertProps & ThemeProps<CactusTheme>): string | undefined => {
   const { status } = props
   switch (status) {
     case 'error':
@@ -39,7 +39,7 @@ const backgroundColor = (props: AlertProps & ThemeProps<CactusTheme>) => {
   }
 }
 
-const borderColor = (props: AlertProps & ThemeProps<CactusTheme>) => {
+const borderColor = (props: AlertProps & ThemeProps<CactusTheme>): string | undefined => {
   const { status: status } = props
   switch (status) {
     case 'error':
@@ -57,21 +57,21 @@ type TypeMap = { [K in Type]: ReturnType<typeof css> }
 const typeMap: TypeMap = {
   general: css`
     width: 100%;
-    padding: ${(p) => p.theme.space[4]}px;
+    padding: ${(p): number => p.theme.space[4]}px;
   `,
   push: css`
-    padding: 10px ${(p) => p.theme.space[4]}px;
+    padding: 10px ${(p): number => p.theme.space[4]}px;
   `,
 }
 
-const typeVariant = (props: AlertProps) => {
+const typeVariant = (props: AlertProps): ReturnType<typeof css> | undefined => {
   const { type } = props
   if (type !== undefined) {
     return typeMap[type]
   }
 }
 
-const AlertBase = (props: AlertProps) => {
+const AlertBase = (props: AlertProps): React.ReactElement => {
   const { className, status, onClose, closeLabel, children } = props
 
   return (
@@ -98,7 +98,7 @@ export const Alert = styled(AlertBase)<AlertProps>`
   background: ${backgroundColor};
   border: 2px solid ${borderColor};
   ${typeVariant}
-  ${(p) => p.shadow && boxShadow(p.theme, 2)};
+  ${(p): string => (p.shadow ? boxShadow(p.theme, 2) : '')};
   border-radius: 8px;
   ${margin}
   ${width}

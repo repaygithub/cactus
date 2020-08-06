@@ -17,7 +17,7 @@ const statusOptions: StatusOptions = {
   success: 'success',
 }
 
-const ModalWithState = () => {
+const ModalWithState = (): React.ReactElement => {
   const [open, setOpen] = useState(true)
   const variant = select('variant', statusOptions, statusOptions.action)
   const modalLabel = text('Modal Label', 'Modal Label')
@@ -27,16 +27,16 @@ const ModalWithState = () => {
     <Modal
       variant={variant}
       isOpen={open}
-      onClose={() => setOpen(false)}
+      onClose={(): void => setOpen(false)}
       modalLabel={modalLabel}
       closeLabel={closeLabel}
     >
       <Text as="h3">This is a Modal</Text>
     </Modal>
   ) : (
-    <Button variant="action" onClick={() => setOpen(true)}>
+    <Button variant="action" onClick={(): void => setOpen(true)}>
       Open Modal
     </Button>
   )
 }
-modalStories.add('Basic Usage', () => <ModalWithState />)
+modalStories.add('Basic Usage', (): React.ReactElement => <ModalWithState />)

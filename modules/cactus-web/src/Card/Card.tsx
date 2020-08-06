@@ -1,4 +1,4 @@
-import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, ColorStyle, Shape } from '@repay/cactus-theme'
 import styled, { css } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
@@ -27,12 +27,12 @@ const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
   `,
 }
 
-const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
-const getShape = (shape: Shape) => shapeMap[shape]
-const getBoxShadow = (theme: CactusTheme) => {
+const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
+const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
+const getBoxShadow = (theme: CactusTheme): ReturnType<typeof css> => {
   return theme.boxShadows
     ? css`
-        ${(p) => `${boxShadow(p.theme, 1)};
+        ${(p): string => `${boxShadow(p.theme, 1)};
         :hover {
           ${boxShadow(p.theme, 2)};
         }`}
@@ -47,17 +47,17 @@ export const Card = styled.div<CardProps>`
   box-sizing: border-box;
   ${margin}
   ${width}
-  ${(p) => p.theme.colorStyles.standard};
-  ${(p) => getShape(p.theme.shape)}
-  padding: ${(p) => p.theme.space[4]}px;
-  ${(p) => getBoxShadow(p.theme)}
+  ${(p): ColorStyle => p.theme.colorStyles.standard};
+  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+  padding: ${(p): number => p.theme.space[4]}px;
+  ${(p): ReturnType<typeof css> => getBoxShadow(p.theme)}
 
   & > & {
-    padding: ${(p) => p.theme.space[5]}px;
+    padding: ${(p): number => p.theme.space[5]}px;
     color: pink;
   }
   & > & > & {
-    padding: ${(p) => p.theme.space[6]}px;
+    padding: ${(p): number => p.theme.space[6]}px;
     color: blue;
   }
 `

@@ -25,7 +25,7 @@ declare module '@storybook/addon-actions' {
 }
 
 declare module '@repay/scripts' {
-  type RepayScriptsArgs = {
+  interface RepayScriptsArgs {
     command: 'build' | 'dev'
     entry: string
     cwd: string

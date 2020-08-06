@@ -1,5 +1,6 @@
+import { TextStyle } from '@repay/cactus-theme'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { textStyle } from '../helpers/theme'
@@ -13,9 +14,9 @@ export interface LabelProps
     MarginProps {}
 
 export const Label = styled.label<LabelProps>`
-  ${(p) => textStyle(p.theme, 'body')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   font-weight: 600;
-  color: ${(p) => p.theme.colors.darkestContrast};
+  color: ${(p): string => p.theme.colors.darkestContrast};
 
   ${margin}
 `

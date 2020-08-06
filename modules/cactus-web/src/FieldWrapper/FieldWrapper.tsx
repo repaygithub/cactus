@@ -8,7 +8,7 @@ interface FieldWrapperProps
 
 export const FieldWrapper = styled.div<FieldWrapperProps>`
   & + & {
-    margin-top: ${(p) => p.theme.space[4]}px;
+    margin-top: ${(p): number => p.theme.space[4]}px;
   }
 
   ${margin}

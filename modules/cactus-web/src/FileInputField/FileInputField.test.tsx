@@ -1,14 +1,11 @@
-import cactusTheme from '@repay/cactus-theme'
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import FileInputField from './FileInputField'
 
-afterEach(cleanup)
-
-describe('component: FileInputField', () => {
-  test('should render file input field', () => {
+describe('component: FileInputField', (): void => {
+  test('should render file input field', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInputField
@@ -24,7 +21,7 @@ describe('component: FileInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a disabled file input field', () => {
+  test('should render a disabled file input field', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInputField
@@ -41,7 +38,7 @@ describe('component: FileInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a loading file', () => {
+  test('should render a loading file', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInputField
@@ -58,7 +55,7 @@ describe('component: FileInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a loaded file', () => {
+  test('should render a loaded file', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInputField
@@ -75,7 +72,7 @@ describe('component: FileInputField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a file with an error', () => {
+  test('should render a file with an error', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInputField

@@ -4,10 +4,10 @@ import Portal from '@reach/portal'
 import Rect, { PRect } from '@reach/rect'
 import { assignRef } from '@reach/utils'
 import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
-import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import styled, { css, CSSObject, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 import { width, WidthProps } from 'styled-system'
 
@@ -23,8 +23,11 @@ import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import TextButton from '../TextButton/TextButton'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
-export type SelectValueType = string | number | Array<string | number> | null
-export type OptionType = { label: string; value: string | number }
+export type SelectValueType = string | number | (string | number)[] | null
+export interface OptionType {
+  label: string
+  value: string | number
+}
 
 type ExtendedOptionType = OptionType & { id: string; isSelected: boolean }
 
@@ -35,10 +38,10 @@ export interface SelectProps
       React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
       'ref' | 'onChange' | 'onBlur' | 'onFocus'
     > {
-  options: Array<OptionType | string | number>
+  options: (OptionType | string | number)[]
   id: string
   name: string
-  value?: string | number | Array<string | number> | null
+  value?: string | number | (string | number)[] | null
   placeholder?: string
   className?: string
   /** !important */
@@ -59,23 +62,25 @@ type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
-    border-color: ${(p) => p.theme.colors.success};
-    background: ${(p) => p.theme.colors.transparentSuccess};
+    border-color: ${(p): string => p.theme.colors.success};
+    background: ${(p): string => p.theme.colors.transparentSuccess};
   `,
   warning: css`
-    border-color: ${(p) => p.theme.colors.warning};
-    background: ${(p) => p.theme.colors.transparentWarning};
+    border-color: ${(p): string => p.theme.colors.warning};
+    background: ${(p): string => p.theme.colors.transparentWarning};
   `,
   error: css`
-    border-color: ${(p) => p.theme.colors.error};
-    background: ${(p) => p.theme.colors.transparentError};
+    border-color: ${(p): string => p.theme.colors.error};
+    background: ${(p): string => p.theme.colors.transparentError};
   `,
 }
 
 // @ts-ignore
-const displayStatus: any = (props) => {
+const displayStatus: any = (props): ReturnType<typeof css> | string => {
   if (props.status && !props.disabled) {
     return statusMap[props.status as Status]
+  } else {
+    return ''
   }
 }
 
@@ -88,14 +93,16 @@ const ValueTagBase = React.forwardRef<
     children: React.ReactNode
     hidden?: boolean
   }
->(({ id, className, closeOption, children }, ref) => {
-  return (
-    <span id={id} ref={ref} className={className}>
-      <span className="value-tag__label">{children}</span>
-      {closeOption && <NavigationClose data-role="close" />}
-    </span>
-  )
-})
+>(
+  ({ id, className, closeOption, children }, ref): React.ReactElement => {
+    return (
+      <span id={id} ref={ref} className={className}>
+        <span className="value-tag__label">{children}</span>
+        {closeOption && <NavigationClose data-role="close" />}
+      </span>
+    )
+  }
+)
 
 const valueShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
   square: css`
@@ -109,18 +116,18 @@ const valueShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
   `,
 }
 
-const getValueShape = (shape: Shape) => valueShapeMap[shape]
+const getValueShape = (shape: Shape): FlattenSimpleInterpolation => valueShapeMap[shape]
 
 const ValueTag = styled(ValueTagBase)`
   box-sizing: border-box;
-  ${(p) => textStyle(p.theme, 'small')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   padding: 0 8px 0 8px;
-  border: 1px solid ${(p) => p.theme.colors.lightContrast};
-  ${(p) => getValueShape(p.theme.shape as Shape)}
+  border: 1px solid ${(p): string => p.theme.colors.lightContrast};
+  ${(p): FlattenSimpleInterpolation => getValueShape(p.theme.shape as Shape)}
   margin-right: 2px;
   display: inline-block;
   height: 24px;
-  ${(p) => (p.hidden ? { visibility: 'hidden' } : undefined)}
+  ${(p): CSSObject | undefined => (p.hidden ? { visibility: 'hidden' } : undefined)}
 
   ${NavigationClose} {
     appearance: none;
@@ -138,7 +145,7 @@ function isElement(el?: any): el is HTMLElement {
   return el && el.nodeType === 1
 }
 
-function doesChildOverflow(parentRect: ClientRect, childRect: ClientRect) {
+function doesChildOverflow(parentRect: ClientRect, childRect: ClientRect): boolean {
   return childRect.left + childRect.width > parentRect.left + parentRect.width
 }
 
@@ -146,7 +153,7 @@ function willTruncateBlockShow(
   parentRect: ClientRect,
   childRect: ClientRect,
   truncateRect: ClientRect
-) {
+): boolean {
   return parentRect.left + parentRect.width >= childRect.left + truncateRect.width
 }
 
@@ -155,31 +162,31 @@ const ValueSwitch = (props: {
   placeholder: string | undefined
   extraLabel: string
   multiple?: boolean
-}) => {
-  const selected = props.options.filter((o) => o.isSelected)
+}): React.ReactElement => {
+  const selected = props.options.filter((o): boolean => o.isSelected)
   const numSelected = selected.length
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
   const [numToRender, setNum] = useState(numSelected)
   const [prevValue, setPrevValue] = useState<string>('')
-  const valueString = selected.reduce((m, o) => m + o.label, '')
+  const valueString = selected.reduce((m, o): string => m + o.label, '')
   const shouldRenderAll = prevValue !== valueString
   /**
    * finds the maximum number of values it can display
    */
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useLayoutEffect(() => {
+  useLayoutEffect((): void => {
     if (spanRef.current !== null && moreRef.current !== null && shouldRenderAll) {
       setPrevValue(valueString)
-      let parentRect = spanRef.current.getBoundingClientRect()
-      let numberChildren = spanRef.current.childNodes.length
+      const parentRect = spanRef.current.getBoundingClientRect()
+      const numberChildren = spanRef.current.childNodes.length
       let index =
         numToRender < numberChildren && isElement(spanRef.current.childNodes[numToRender])
           ? numToRender
           : 0
       let child: any = spanRef.current.childNodes[index] as HTMLElement
       let childRect = child.getBoundingClientRect()
-      let direction = doesChildOverflow(parentRect, childRect) ? -1 : 1
+      const direction = doesChildOverflow(parentRect, childRect) ? -1 : 1
       const moreRect = moreRef.current.getBoundingClientRect()
       while (index >= 0 && index < numberChildren) {
         child = spanRef.current.childNodes[index]
@@ -211,11 +218,13 @@ const ValueSwitch = (props: {
     if (numSelected > 1) {
       return (
         <ValueSpan ref={spanRef}>
-          {selected.slice(0, shouldRenderAll ? undefined : numToRender).map((opt) => (
-            <ValueTag id={`value-tag::${opt.id}`} closeOption key={opt.value + opt.label}>
-              {opt.label}
-            </ValueTag>
-          ))}
+          {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
+            (opt): React.ReactElement => (
+              <ValueTag id={`value-tag::${opt.id}`} closeOption key={opt.value + opt.label}>
+                {opt.label}
+              </ValueTag>
+            )
+          )}
           <ValueTag ref={moreRef} hidden={numToRender >= numSelected || shouldRenderAll}>
             {props.extraLabel.replace(/\{\}/, String(numSelected - numToRender))}
           </ValueTag>
@@ -238,7 +247,7 @@ const ValueSwitch = (props: {
 
 const ValueSpan = styled.span`
   display: inline-block;
-  ${(p) => fontSize(p.theme, 'p')};
+  ${(p): string => fontSize(p.theme, 'p')};
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
@@ -247,8 +256,8 @@ const ValueSpan = styled.span`
 
 const Placeholder = styled.span`
   font-style: italic;
-  color: ${(p) => p.theme.colors.darkContrast};
-  ${(p) => fontSize(p.theme, 'p')};
+  color: ${(p): string => p.theme.colors.darkContrast};
+  ${(p): string => fontSize(p.theme, 'p')};
 `
 
 const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
@@ -272,8 +281,8 @@ const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
   `,
 }
 
-const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
-const getShape = (shape: Shape) => shapeMap[shape]
+const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
+const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
 
 const SelectTrigger = styled.button`
   position: relative;
@@ -283,22 +292,22 @@ const SelectTrigger = styled.button`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  ${(p) => getShape(p.theme.shape)}
-  ${(p) => getBorder(p.theme.border)}
+  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+  ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
   border-style: solid;
-  border-color: ${(p) => p.theme.colors.darkContrast};
+  border-color: ${(p): string => p.theme.colors.darkContrast};
   text-align: left;
   outline: none;
   appearance: none;
   cursor: pointer;
 
   :disabled {
-    border-color: ${(p) => p.theme.colors.mediumGray};
-    color: ${(p) => p.theme.colors.mediumGray};
+    border-color: ${(p): string => p.theme.colors.mediumGray};
+    color: ${(p): string => p.theme.colors.mediumGray};
     cursor: not-allowed;
 
     ${Placeholder} {
-      color: ${(p) => p.theme.colors.mediumGray};
+      color: ${(p): string => p.theme.colors.mediumGray};
     }
   }
 
@@ -308,10 +317,10 @@ const SelectTrigger = styled.button`
 
   &:focus,
   &[aria-expanded] {
-    border-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
 
     ${NavigationChevronDown} {
-      color: ${(p) => p.theme.colors.callToAction};
+      color: ${(p): string => p.theme.colors.callToAction};
     }
   }
 
@@ -336,10 +345,10 @@ const ComboInput = styled.input`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  ${(p) => getShape(p.theme.shape)}
-  ${(p) => getBorder(p.theme.border)}
+  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+  ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
   border-style: solid;
-  border-color: ${(p) => p.theme.colors.darkContrast};
+  border-color: ${(p): string => p.theme.colors.darkContrast};
   text-align: left;
   outline: none;
   appearance: none;
@@ -351,14 +360,14 @@ const ComboInput = styled.input`
 
   &:focus,
   &[aria-expanded] {
-    border-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
   }
 `
 
 const DONE_SECTION_HEIGHT = 52
 let RESPONSIVE_HEIGHT = 0
 
-function responsiveHeight() {
+function responsiveHeight(): number {
   return (typeof window !== 'undefined' && window.innerHeight * 0.4) || 0
 }
 
@@ -374,8 +383,8 @@ const listShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
   `,
 }
 
-const getListShape = (shape: Shape) => listShapeMap[shape]
-const getListBoxShadowStyles = (theme: CactusTheme) => {
+const getListShape = (shape: Shape): ReturnType<typeof css> => listShapeMap[shape]
+const getListBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => {
   return theme.boxShadows
     ? css`
         border: 0px;
@@ -395,16 +404,17 @@ const StyledList = styled.ul`
   margin-bottom: 0;
   overflow-y: auto;
   outline: none;
-  ${(p) => getListShape(p.theme.shape)}
-  ${(p) => getListBoxShadowStyles(p.theme)}
+  ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
+  ${(p): ReturnType<typeof css> => getListBoxShadowStyles(p.theme)}
   border-style: solid;
 
-  ${() =>
-    isResponsiveTouchDevice &&
-    `
+  ${(): string =>
+    isResponsiveTouchDevice
+      ? `
     margin-bottom: ${DONE_SECTION_HEIGHT}px;
     height: calc(100% - ${DONE_SECTION_HEIGHT}px);
-    padding: 20px 0;`}
+    padding: 20px 0;`
+      : ''}
 `
 
 const Option = styled.li`
@@ -412,23 +422,24 @@ const Option = styled.li`
   display: list-item;
   border: none;
   height: auto;
-  ${(p) => textStyle(p.theme, 'small')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   text-align: left;
   box-shadow: none;
   padding: 4px 16px;
   overflow-wrap: break-word;
 
-  ${(p) =>
-    isResponsiveTouchDevice &&
-    `
+  ${(p): string =>
+    isResponsiveTouchDevice
+      ? `
     padding: 6px 16px;
 
     & + & {
       border-top: 1px solid ${p.theme.colors.lightGray};
-    }`}
+    }`
+      : ''}
 
   &.highlighted-option {
-    ${(p) => p.theme.colorStyles.callToAction};
+    ${(p): ColorStyle => p.theme.colorStyles.callToAction};
 
     // haxors
     ${CheckBox} > input:not(:checked) + span {
@@ -447,15 +458,15 @@ const ListWrapper = styled.div`
   position: absolute;
   z-index: 1000;
   box-sizing: border-box;
-  ${(p) => getListShape(p.theme.shape)}
+  ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
   max-height: 400px;
   max-width: 100vw;
-  ${(p) => boxShadow(p.theme, 1)};
-  background-color: ${(p) => p.theme.colors.white};
+  ${(p): string => boxShadow(p.theme, 1)};
+  background-color: ${(p): string => p.theme.colors.white};
 
-  ${() =>
-    isResponsiveTouchDevice &&
-    `
+  ${(): string =>
+    isResponsiveTouchDevice
+      ? `
     position: fixed;
     border-radius: 0;
     box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
@@ -476,13 +487,14 @@ const ListWrapper = styled.div`
         rgba(255, 255, 255, 0) 20% 80%,
         rgba(255, 255, 255)
       );
-    }`}
+    }`
+      : ''}
 
   ${Flex} {
     bottom: 0;
     position: fixed;
     height: ${DONE_SECTION_HEIGHT}px;
-    border-top: 1px solid ${(p) => p.theme.colors.lightGray};
+    border-top: 1px solid ${(p): string => p.theme.colors.lightGray};
     width: 100%;
     padding: 8px 0;
   }
@@ -505,6 +517,99 @@ interface ListProps {
   handleComboInputBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 
+function getSelectedIndex(options: (string | OptionType)[], value: string | number): number {
+  for (let i = 0; i < options.length; ++i) {
+    const opt = options[i]
+    if (
+      (typeof opt === 'string' && opt === value) ||
+      (typeof opt !== 'string' && opt.value === value)
+    ) {
+      return i
+    }
+  }
+
+  return 0
+}
+
+function findMatchInRange(
+  options: ExtendedOptionType[],
+  pendingChars: string,
+  startIndex: number,
+  endIndex: number
+): ExtendedOptionType | null {
+  for (let i = startIndex; i < endIndex; ++i) {
+    const opt = options[i]
+    if (opt.label.toLowerCase().startsWith(pendingChars.toLowerCase())) {
+      return opt
+    }
+  }
+  return null
+}
+
+const OFFSET = 8
+const SCROLLBAR_WIDTH = 10
+function positionList(
+  isOpen: boolean,
+  comboBox: boolean | undefined,
+  triggerRect: PRect | null,
+  listRect: PRect | null
+): React.CSSProperties | undefined {
+  if (!listRect) {
+    return {}
+  }
+  if (!isOpen || triggerRect == null) {
+    return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
+  }
+
+  const scrollY = getScrollY()
+  const scrollX = getScrollX()
+
+  if (isResponsiveTouchDevice) {
+    return {
+      bottom: 0,
+      height: RESPONSIVE_HEIGHT + 'px',
+      width: window.innerWidth + 'px',
+    }
+  }
+
+  // default assumes no collisions bottom
+  const style: React.CSSProperties = {
+    top: scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
+    left: scrollX + triggerRect.left + 'px',
+    width: triggerRect.width + 'px',
+  }
+  if (listRect === undefined) {
+    return style
+  }
+
+  const collisions = {
+    top: triggerRect.top - listRect.height - OFFSET < 0,
+    right: window.innerWidth < triggerRect.left + triggerRect.width,
+    bottom: window.innerHeight < triggerRect.bottom + listRect.height,
+    left: triggerRect.left < 0,
+  }
+  if (collisions.right && window.innerWidth < triggerRect.width) {
+    collisions.left = true
+  }
+
+  if (collisions.bottom && !collisions.top) {
+    style.top = scrollY + triggerRect.top - listRect.height - OFFSET + 'px'
+  } else if (collisions.top && collisions.bottom && !comboBox) {
+    style.top = scrollY + 'px'
+    style.maxHeight = window.innerHeight - SCROLLBAR_WIDTH + 'px'
+  }
+  if (collisions.right && !collisions.left) {
+    style.left = window.innerWidth + scrollX - listRect.width + 'px'
+  } else if (collisions.left && !collisions.right) {
+    style.left = scrollX + 'px'
+  } else if (collisions.right && collisions.left) {
+    style.left = scrollX + 'px'
+    style.width = window.innerWidth - SCROLLBAR_WIDTH + 'px'
+  }
+
+  return style
+}
+
 interface ListState {
   activeDescendant: string
   searchValue: string
@@ -512,28 +617,28 @@ interface ListState {
 }
 
 class List extends React.Component<ListProps, ListState> {
-  state = {
+  public state = {
     activeDescendant: '',
     searchValue: this.props.searchValue,
     options: this.props.options,
   }
-  listRef: HTMLUListElement | null = null
-  mobileInputRef = React.createRef<HTMLInputElement>()
+  private listRef: HTMLUListElement | null = null
+  private mobileInputRef = React.createRef<HTMLInputElement>()
 
-  pendingChars: string = ''
-  keyClear: number | undefined
-  searchIndex: number = 0
-  scrollClear: number | undefined
-  didScroll: boolean = false
+  private pendingChars = ''
+  private keyClear: number | undefined
+  private searchIndex = 0
+  private scrollClear: number | undefined
+  private didScroll = false
 
   /** Start List event handlers */
 
-  handleBlur = (event: React.FocusEvent<HTMLUListElement>) => {
+  private handleBlur = (event: React.FocusEvent<HTMLUListElement>): void => {
     this.setActiveDescendant('')
     this.props.onBlur(event)
   }
 
-  handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+  private handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>): void => {
     const key = event.which || event.keyCode
     const active = this.getActiveOpt()
     const options = this.state.options
@@ -600,7 +705,7 @@ class List extends React.Component<ListProps, ListState> {
     }
   }
 
-  handleOptionMouseEnter = (event: React.MouseEvent<HTMLLIElement>) => {
+  private handleOptionMouseEnter = (event: React.MouseEvent<HTMLLIElement>): void => {
     const currentTarget = event.currentTarget
     // prevent triggering by automated scrolling
     if (!this.didScroll) {
@@ -611,26 +716,26 @@ class List extends React.Component<ListProps, ListState> {
   /** End List event handlers */
   /** Start List helpers */
 
-  focus = () => {
+  public focus = (): void => {
     this.listRef !== null && this.listRef.focus()
   }
 
-  isList = (node: HTMLElement | null) => this.listRef === node
+  public isList = (node: HTMLElement | null): boolean => this.listRef === node
 
-  getActiveOpt() {
+  public getActiveOpt(): ExtendedOptionType | null {
     const activeDescendant = this.props.comboBox
       ? this.props.activeDescendant
       : this.state.activeDescendant
     if (activeDescendant === '') {
       return null
     }
-    return this.state.options.find((o) => o.id === activeDescendant) || null
+    return this.state.options.find((o): boolean => o.id === activeDescendant) || null
   }
 
-  findOptionToFocus(key: number) {
+  private findOptionToFocus(key: number): ExtendedOptionType | null {
     const character = String.fromCharCode(key)
     const options = this.state.options
-    let selected = this.getActiveOpt()
+    const selected = this.getActiveOpt()
     if (!this.pendingChars && selected !== null) {
       this.searchIndex = getSelectedIndex(this.state.options, selected.value)
     }
@@ -648,24 +753,24 @@ class List extends React.Component<ListProps, ListState> {
       clearTimeout(this.keyClear)
       this.keyClear = undefined
     }
-    this.keyClear = window.setTimeout(() => {
+    this.keyClear = window.setTimeout((): void => {
       this.pendingChars = ''
       this.keyClear = undefined
     }, 500)
     return nextMatch
   }
 
-  scrolled = () => {
+  private scrolled = (): void => {
     this.didScroll = true
     clearTimeout(this.scrollClear)
-    this.scrollClear = window.setTimeout(() => {
+    this.scrollClear = window.setTimeout((): void => {
       this.didScroll = false
     }, 150) // 120ms worked on Firefox and IE11 so 150 is just extra safe
   }
 
-  static initActiveDescendant(options: ExtendedOptionType[]) {
+  public static initActiveDescendant(options: ExtendedOptionType[]): string {
     let activeId = ''
-    const selected = options.find((o) => o.isSelected)
+    const selected = options.find((o): boolean => o.isSelected)
     if (selected) {
       activeId = selected.id
     } else if (options.length) {
@@ -674,12 +779,12 @@ class List extends React.Component<ListProps, ListState> {
     return activeId
   }
 
-  static filterOptions = (
+  private static filterOptions = (
     options: ExtendedOptionType[],
     searchValue: string
   ): [ExtendedOptionType[], boolean] => {
     let addOption = true
-    options = options.filter((opt: ExtendedOptionType) => {
+    options = options.filter((opt: ExtendedOptionType): boolean => {
       if (opt.label.toLowerCase() === searchValue.toLowerCase() || searchValue === '') {
         addOption = false
       }
@@ -691,7 +796,7 @@ class List extends React.Component<ListProps, ListState> {
     return [options, addOption]
   }
 
-  setActiveDescendant = (id: string) => {
+  private setActiveDescendant = (id: string): void => {
     this.props.comboBox && typeof this.props.setActiveDescendant === 'function'
       ? this.props.setActiveDescendant(id)
       : this.setState({ activeDescendant: id })
@@ -699,7 +804,7 @@ class List extends React.Component<ListProps, ListState> {
 
   /** End List helpers */
 
-  static getDerivedStateFromProps(props: ListProps, state: ListState) {
+  private static getDerivedStateFromProps(props: ListProps, state: ListState): ListState | null {
     let filteredOptions: ExtendedOptionType[] = props.options
     let activeDescendant: string = state.activeDescendant
     let update = false
@@ -744,15 +849,15 @@ class List extends React.Component<ListProps, ListState> {
       : null
   }
 
-  componentDidMount() {
+  public componentDidMount(): void {
     RESPONSIVE_HEIGHT = isResponsiveTouchDevice ? responsiveHeight() : 0
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate(): void {
     if (this.props.isOpen) {
-      window.requestAnimationFrame(() => {
-        let listEl = this.listRef
-        let activeDescendant = this.props.comboBox
+      window.requestAnimationFrame((): void => {
+        const listEl = this.listRef
+        const activeDescendant = this.props.comboBox
           ? this.props.activeDescendant
           : this.state.activeDescendant
 
@@ -766,13 +871,13 @@ class List extends React.Component<ListProps, ListState> {
         if (listEl === null || activeDescendant === '') {
           return
         }
-        let optionEl: HTMLElement | null = document.getElementById(activeDescendant)
+        const optionEl: HTMLElement | null = document.getElementById(activeDescendant)
         if (optionEl === null) {
           return
         }
         if (listEl.scrollHeight > listEl.clientHeight) {
-          var scrollBottom = listEl.clientHeight + listEl.scrollTop
-          var optionBottom = optionEl.offsetTop + optionEl.offsetHeight
+          const scrollBottom = listEl.clientHeight + listEl.scrollTop
+          const optionBottom = optionEl.offsetTop + optionEl.offsetHeight
           if (optionBottom > scrollBottom) {
             listEl.scrollTop = optionBottom - listEl.clientHeight
             this.scrolled()
@@ -785,12 +890,12 @@ class List extends React.Component<ListProps, ListState> {
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount(): void {
     clearTimeout(this.scrollClear)
     clearTimeout(this.keyClear)
   }
 
-  render() {
+  public render(): React.ReactElement {
     const {
       isOpen,
       comboBox,
@@ -806,8 +911,8 @@ class List extends React.Component<ListProps, ListState> {
     return (
       <Portal>
         <Rect observe={isOpen}>
-          {({ ref: listRef, rect: listRect }) => {
-            const mergeRefs = (n: HTMLUListElement | null) => {
+          {({ ref: listRef, rect: listRect }): React.ReactElement => {
+            const mergeRefs = (n: HTMLUListElement | null): void => {
               this.listRef = n
               assignRef(listRef, n)
             }
@@ -825,42 +930,45 @@ class List extends React.Component<ListProps, ListState> {
                   ref={mergeRefs}
                   aria-activedescendant={activeDescendant || undefined}
                 >
-                  {options.map((opt) => {
-                    let optId = opt.id
-                    let isSelected = opt.isSelected
-                    let ariaSelected: boolean | 'true' | 'false' | undefined =
-                      isSelected || undefined
-                    let isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
-                    // multiselectable should have aria-select©ed on all options
-                    if (multiple) {
-                      ariaSelected = isSelected ? 'true' : 'false'
+                  {options.map(
+                    (opt): React.ReactElement => {
+                      const optId = opt.id
+                      const isSelected = opt.isSelected
+                      let ariaSelected: boolean | 'true' | 'false' | undefined =
+                        isSelected || undefined
+                      const isCreateNewOption =
+                        comboBox && optId === `create-${this.state.searchValue}`
+                      // multiselectable should have aria-select©ed on all options
+                      if (multiple) {
+                        ariaSelected = isSelected ? 'true' : 'false'
+                      }
+                      return (
+                        <Option
+                          id={optId}
+                          key={optId}
+                          className={activeDescendant === optId ? 'highlighted-option' : undefined}
+                          data-value={opt.value}
+                          role="option"
+                          data-role={isCreateNewOption ? 'create' : 'option'}
+                          aria-selected={ariaSelected}
+                          onMouseEnter={this.handleOptionMouseEnter}
+                        >
+                          {isCreateNewOption ? (
+                            <ActionsAdd mr={2} mb={2} />
+                          ) : multiple ? (
+                            <CheckBox
+                              id={`multiselect-option-check-${optId}`}
+                              aria-hidden="true"
+                              checked={isSelected}
+                              readOnly
+                              mr={2}
+                            />
+                          ) : null}
+                          {opt.label}
+                        </Option>
+                      )
                     }
-                    return (
-                      <Option
-                        id={optId}
-                        key={optId}
-                        className={activeDescendant === optId ? 'highlighted-option' : undefined}
-                        data-value={opt.value}
-                        role="option"
-                        data-role={isCreateNewOption ? 'create' : 'option'}
-                        aria-selected={ariaSelected}
-                        onMouseEnter={this.handleOptionMouseEnter}
-                      >
-                        {isCreateNewOption ? (
-                          <ActionsAdd mr={2} mb={2} />
-                        ) : multiple ? (
-                          <CheckBox
-                            id={`multiselect-option-check-${optId}`}
-                            aria-hidden="true"
-                            checked={isSelected}
-                            readOnly
-                            mr={2}
-                          />
-                        ) : null}
-                        {opt.label}
-                      </Option>
-                    )
-                  })}
+                  )}
                 </StyledList>
                 {isResponsiveTouchDevice ? (
                   <Flex justifyContent={comboBox ? 'space-between' : 'center'}>
@@ -890,115 +998,24 @@ class List extends React.Component<ListProps, ListState> {
   }
 }
 
-function findMatchInRange(
-  options: ExtendedOptionType[],
-  pendingChars: string,
-  startIndex: number,
-  endIndex: number
-) {
-  for (let i = startIndex; i < endIndex; ++i) {
-    const opt = options[i]
-    if (opt.label.toLowerCase().startsWith(pendingChars.toLowerCase())) {
-      return opt
-    }
-  }
-  return null
-}
-
-function asOption(opt: number | string | OptionType) {
+function asOption(opt: number | string | OptionType): OptionType {
   if (typeof opt === 'string') {
-    return { label: opt, value: opt } as OptionType
+    const option: OptionType = { label: opt, value: opt }
+    return option
   } else if (typeof opt === 'number') {
-    return { label: String(opt), value: opt } as OptionType
+    const option: OptionType = { label: String(opt), value: opt }
+    return option
   }
   return opt as OptionType
 }
 
-function getOptionId(selectId: string, option: OptionType) {
+function getOptionId(selectId: string, option: OptionType): string {
   return `${selectId}-${option.label}-${option.value}`.replace(/\s/g, '-')
 }
 
-function getSelectedIndex(options: Array<string | OptionType>, value: string | number): number {
-  for (let i = 0; i < options.length; ++i) {
-    const opt = options[i]
-    if (
-      (typeof opt === 'string' && opt === value) ||
-      (typeof opt !== 'string' && opt.value === value)
-    ) {
-      return i
-    }
-  }
-
-  return 0
-}
-
-const OFFSET = 8
-const SCROLLBAR_WIDTH = 10
-function positionList(
-  isOpen: boolean,
-  comboBox: boolean | undefined,
-  triggerRect: PRect | null,
-  listRect: PRect | null
-): React.CSSProperties | undefined {
-  if (!listRect) {
-    return {}
-  }
-  if (!isOpen || triggerRect == null) {
-    return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
-  }
-
-  const scrollY = getScrollY()
-  const scrollX = getScrollX()
-
-  if (isResponsiveTouchDevice) {
-    return {
-      bottom: 0,
-      height: RESPONSIVE_HEIGHT + 'px',
-      width: window.innerWidth + 'px',
-    }
-  }
-
-  // default assumes no collisions bottom
-  let style: React.CSSProperties = {
-    top: scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
-    left: scrollX + triggerRect.left + 'px',
-    width: triggerRect.width + 'px',
-  }
-  if (listRect === undefined) {
-    return style
-  }
-
-  const collisions = {
-    top: triggerRect.top - listRect.height - OFFSET < 0,
-    right: window.innerWidth < triggerRect.left + triggerRect.width,
-    bottom: window.innerHeight < triggerRect.bottom + listRect.height,
-    left: triggerRect.left < 0,
-  }
-  if (collisions.right && window.innerWidth < triggerRect.width) {
-    collisions.left = true
-  }
-
-  if (collisions.bottom && !collisions.top) {
-    style.top = scrollY + triggerRect.top - listRect.height - OFFSET + 'px'
-  } else if (collisions.top && collisions.bottom && !comboBox) {
-    style.top = scrollY + 'px'
-    style.maxHeight = window.innerHeight - SCROLLBAR_WIDTH + 'px'
-  }
-  if (collisions.right && !collisions.left) {
-    style.left = window.innerWidth + scrollX - listRect.width + 'px'
-  } else if (collisions.left && !collisions.right) {
-    style.left = scrollX + 'px'
-  } else if (collisions.right && collisions.left) {
-    style.left = scrollX + 'px'
-    style.width = window.innerWidth - SCROLLBAR_WIDTH + 'px'
-  }
-
-  return style
-}
-
-type SelectState = {
+interface SelectState {
   isOpen: boolean
-  value: string | number | Array<number | string> | null
+  value: string | number | (number | string)[] | null
   searchValue: string
   activeDescendant: string
   currentTriggerWidth: number
@@ -1006,7 +1023,7 @@ type SelectState = {
 }
 
 class SelectBase extends React.Component<SelectProps, SelectState> {
-  state = {
+  public state = {
     isOpen: false,
     value: this.props.value || null,
     searchValue: '',
@@ -1014,22 +1031,22 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     currentTriggerWidth: 0,
     extraOptions: [],
   }
-  pendingChars: string = ''
-  searchIndex: number = -1
-  keyClear: number | undefined
-  scrollClear: number | undefined
-  listRef = React.createRef<List>()
-  triggerRef = React.createRef<HTMLButtonElement>()
-  comboInputRef = React.createRef<HTMLInputElement>()
+  private pendingChars = ''
+  private searchIndex = -1
+  private keyClear: number | undefined
+  private scrollClear: number | undefined
+  private listRef = React.createRef<List>()
+  private triggerRef = React.createRef<HTMLButtonElement>()
+  private comboInputRef = React.createRef<HTMLInputElement>()
 
-  componentDidMount() {
+  public componentDidMount(): void {
     if (this.triggerRef.current !== null) {
       this.setState({ currentTriggerWidth: this.triggerRef.current.getBoundingClientRect().width })
     }
     this.detectOptionsFromValue()
   }
 
-  componentDidUpdate(prevProps: SelectProps) {
+  public componentDidUpdate(prevProps: SelectProps): void {
     if (this.triggerRef.current !== null) {
       const triggerWidth = this.triggerRef.current.getBoundingClientRect().width
       if (triggerWidth !== this.state.currentTriggerWidth) {
@@ -1043,15 +1060,18 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  static getDerivedStateFromProps(props: Readonly<SelectProps>, state: Readonly<SelectState>) {
+  public static getDerivedStateFromProps(
+    props: Readonly<SelectProps>,
+    state: Readonly<SelectState>
+  ): Partial<SelectState> | null {
     if (props.value !== undefined && props.value !== state.value) {
-      let newState: Partial<SelectState> = { value: props.value }
+      const newState: Partial<SelectState> = { value: props.value }
       return newState
     }
     return null
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount(): void {
     clearTimeout(this.keyClear)
     clearTimeout(this.scrollClear)
   }
@@ -1059,21 +1079,21 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END life-cycle methods */
   /** START event handlers */
 
-  handleBlur = (event: React.FocusEvent<HTMLButtonElement>) => {
+  private handleBlur = (event: React.FocusEvent<HTMLButtonElement>): void => {
     const isNotControlledBlur = !event.relatedTarget || !this.isList(event.relatedTarget)
     if (isNotControlledBlur) {
       handleEvent(this.props.onBlur, this.props.name)
     }
   }
 
-  handleFocus = (event: React.FocusEvent<HTMLButtonElement>) => {
+  private handleFocus = (event: React.FocusEvent<HTMLButtonElement>): void => {
     const isNotControlledFocus = !event.relatedTarget || !this.isList(event.relatedTarget)
     if (isNotControlledFocus) {
       handleEvent(this.props.onFocus, this.props.name)
     }
   }
 
-  handleKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  private handleKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
     const key = event.which || event.keyCode
 
     switch (key) {
@@ -1086,7 +1106,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  private handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault()
     let target: Element | null = event.target as HTMLElement
     // Get element from point if in IE
@@ -1102,7 +1122,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       if (optId) {
         optId = optId.split('::')[1]
       }
-      const option = this.getExtOptions().find((opt) => opt.id === optId)
+      const option = this.getExtOptions().find((opt): boolean => opt.id === optId)
       this.raiseChange(option || null)
     } else {
       handleEvent(this.props.onFocus, this.props.name)
@@ -1110,7 +1130,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  handleListBlur = (event: React.FocusEvent<HTMLUListElement>) => {
+  private handleListBlur = (event: React.FocusEvent<HTMLUListElement>): void => {
     const relatedTarget: Element | null = event.relatedTarget as HTMLElement
     if (
       relatedTarget instanceof HTMLElement &&
@@ -1128,7 +1148,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  handleListClick = (event: React.MouseEvent<HTMLUListElement>) => {
+  private handleListClick = (event: React.MouseEvent<HTMLUListElement>): void => {
     let target: Element | null = event.target as HTMLElement
     if (target.getAttribute('role') !== 'option') {
       target = target.closest('[role=option]')
@@ -1146,7 +1166,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (target.getAttribute('role') === 'option') {
       event.preventDefault()
       const activeId = target.id as string
-      let active = this.getExtOptions().find((o) => o.id === activeId)
+      const active = this.getExtOptions().find((o): boolean => o.id === activeId)
 
       this.raiseChange(active || null)
       if (!this.props.multiple) {
@@ -1156,11 +1176,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  handleComboInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private handleComboInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ searchValue: event.target.value, activeDescendant: '' })
   }
 
-  handleComboInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+  private handleComboInputBlur = (event: React.FocusEvent<HTMLInputElement>): void => {
     const relatedTarget: Element | null = event.relatedTarget as HTMLElement
     if (
       relatedTarget instanceof HTMLElement &&
@@ -1179,7 +1199,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  handleComboInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  private handleComboInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     const key = event.which || event.keyCode
     if (this.state.isOpen && this.listRef.current !== null) {
       const active = this.listRef.current.getActiveOpt()
@@ -1243,7 +1263,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  createOption = (value: string | number) => {
+  private createOption = (value: string | number): void => {
     const newOption = asOption(value)
     const extraOptions = (this.state.extraOptions as OptionType[]).concat(newOption)
     this.setState({ extraOptions })
@@ -1257,7 +1277,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END event handlers */
   /** START helpers */
 
-  raiseChange = (option: OptionType | null, onlyAdd: boolean = false) => {
+  private raiseChange = (option: OptionType | null, onlyAdd = false): void => {
     if (option === null) {
       return
     }
@@ -1267,11 +1287,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       if (value === null) {
         value = []
       } else {
-        value = ([] as Array<string | number>).concat(value)
+        value = ([] as (string | number)[]).concat(value)
       }
       if (value.includes(option.value)) {
         if (!onlyAdd) {
-          value = value.filter((v) => v !== option.value)
+          value = value.filter((v): boolean => v !== option.value)
         }
       } else {
         value.push(option.value)
@@ -1286,9 +1306,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  openList() {
+  private openList(): void {
     this.setState({ isOpen: true })
-    window.requestAnimationFrame(() => {
+    window.requestAnimationFrame((): void => {
       if (this.listRef.current !== null && !this.props.comboBox) {
         this.listRef.current.focus()
       } else if (this.comboInputRef.current !== null && this.props.comboBox) {
@@ -1297,9 +1317,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     })
   }
 
-  closeList = () => {
+  private closeList = (): void => {
     this.setState({ isOpen: false })
-    window.requestAnimationFrame(() => {
+    window.requestAnimationFrame((): void => {
       if (this.triggerRef.current !== null) {
         if (this.triggerRef.current.children.length > 0) {
           const trigger = this.triggerRef.current.children[0] as HTMLButtonElement
@@ -1311,18 +1331,18 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     })
   }
 
-  isSelected = (option: OptionType) => {
+  private isSelected = (option: OptionType): boolean => {
     return (
       (Array.isArray(this.state.value) && this.state.value.includes(option.value)) ||
       this.state.value === option.value
     )
   }
 
-  isList(node: any) {
-    return this.listRef.current!.isList(node)
+  private isList(node: any): boolean {
+    return this.listRef.current ? this.listRef.current.isList(node) : false
   }
 
-  getOptByValue(value: string | number) {
+  private getOptByValue(value: string | number): OptionType | null {
     for (const o of this.props.options) {
       const option = asOption(o)
       if (String(option.value) === String(value)) {
@@ -1332,17 +1352,17 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     return null
   }
 
-  optionsMap: { [key: string]: ExtendedOptionType } = {}
+  private optionsMap: { [key: string]: ExtendedOptionType } = {}
 
-  detectOptionsFromValue() {
-    this.getExtOptions().forEach((opt) => {
+  private detectOptionsFromValue(): void {
+    this.getExtOptions().forEach((opt): void => {
       this.optionsMap[opt.value] = opt
     })
     if (this.props.comboBox && this.props.value) {
       const newOptions: OptionType[] = []
 
       if (Array.isArray(this.props.value)) {
-        this.props.value.forEach((val) => {
+        this.props.value.forEach((val): void => {
           if (!this.optionsMap[val]) {
             newOptions.push(asOption(val))
           }
@@ -1353,15 +1373,20 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         }
       }
       if (newOptions.length > 0) {
-        this.setState((state) => ({ extraOptions: state.extraOptions.concat(newOptions) }))
+        this.setState(
+          (state): SelectState => ({
+            ...state,
+            extraOptions: state.extraOptions.concat(newOptions),
+          })
+        )
       }
     }
   }
 
   /** used to reduce rerenders of List and ValueSpan */
-  memoizedExtOptions: {
+  private memoizedExtOptions: {
     id: string | undefined
-    options: Array<string | number | OptionType>
+    options: (string | number | OptionType)[]
     memo: ExtendedOptionType[]
     value: SelectValueType
   } = {
@@ -1371,7 +1396,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     value: null,
   }
 
-  getExtOptions() {
+  private getExtOptions(): ExtendedOptionType[] {
     const selectId = this.props.id
     if (
       this.memoizedExtOptions.memo.length !== 0 &&
@@ -1381,19 +1406,24 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     ) {
       return this.memoizedExtOptions.memo
     }
-    let memo = this.props.options.map((o) => {
-      let opt = asOption(o)
-      return {
+    let memo = this.props.options.map(
+      (o): ExtendedOptionType => {
+        const opt = asOption(o)
+        const extendedOpt: ExtendedOptionType = {
+          ...opt,
+          id: getOptionId(selectId, opt),
+          isSelected: this.isSelected(opt),
+        }
+        return extendedOpt
+      }
+    )
+    const extraOpts = (this.state.extraOptions as OptionType[]).map(
+      (opt): ExtendedOptionType => ({
         ...opt,
         id: getOptionId(selectId, opt),
         isSelected: this.isSelected(opt),
-      } as ExtendedOptionType
-    })
-    const extraOpts = (this.state.extraOptions as OptionType[]).map((opt) => ({
-      ...opt,
-      id: getOptionId(selectId, opt),
-      isSelected: this.isSelected(opt),
-    }))
+      })
+    )
     memo = memo.concat(extraOpts)
     this.memoizedExtOptions = {
       id: selectId,
@@ -1404,18 +1434,18 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     return this.memoizedExtOptions.memo
   }
 
-  resetMemo = () => {
+  private resetMemo = (): void => {
     this.memoizedExtOptions.memo = []
   }
 
-  setActiveDescendant = (activeDescendant: string) => {
+  private setActiveDescendant = (activeDescendant: string): void => {
     this.setState({ activeDescendant: activeDescendant })
   }
 
   /** END helpers */
 
-  render() {
-    let {
+  public render(): React.ReactElement {
+    const {
       name,
       id,
       disabled,
@@ -1433,16 +1463,16 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       value: propsValue,
       ...rest
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
-    let { isOpen, searchValue, activeDescendant } = this.state
-    let options = this.getExtOptions()
-    let noOptsDisable = !comboBox && options.length === 0
+    const { isOpen, searchValue, activeDescendant } = this.state
+    const options = this.getExtOptions()
+    const noOptsDisable = !comboBox && options.length === 0
 
     return (
       <div className={className}>
         <Rect observe={isOpen}>
-          {({ ref: triggerRef, rect: triggerRect }) => (
+          {({ ref: triggerRef, rect: triggerRect }): React.ReactElement => (
             <div
-              ref={(node) => {
+              ref={(node): void => {
                 assignRef(triggerRef, node)
                 // @ts-ignore
                 this.triggerRef.current = node

@@ -9,7 +9,7 @@ interface FlexBoxProps extends BoxProps, Omit<FlexboxProps, 'justifySelf'> {}
 export const Flex = styled(Box)<FlexBoxProps>`
   ${flexbox}
 
-  ${(p) => {
+  ${(p): ReturnType<typeof css> | undefined => {
     if (p.justifyContent === 'space-evenly' && /MSIE|Trident/.test(window.navigator.userAgent)) {
       return css`
         justify-content: space-between;

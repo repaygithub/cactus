@@ -58,15 +58,15 @@ interface I18nControllerOptions {
 const _dictionaries = new WeakMap<BaseI18nController, Dictionary>()
 
 export default abstract class BaseI18nController {
-  lang: string = ''
-  defaultLang: string
-  _supportedLangs: string[]
-  _languages: string[] = []
-  _loadingState: LoadingState = {}
-  _listeners: LoadingStateListener[] = []
-  _debugMode: boolean
+  public lang = ''
+  public defaultLang: string
+  private _supportedLangs: string[]
+  private _languages: string[] = []
+  private _loadingState: LoadingState = {}
+  private _listeners: LoadingStateListener[] = []
+  private _debugMode: boolean
 
-  constructor(options: I18nControllerOptions) {
+  public constructor(options: I18nControllerOptions) {
     if (!Array.isArray(options.supportedLangs) || options.supportedLangs.length === 0) {
       throw new Error('You must provide supported languages')
     }
@@ -86,10 +86,11 @@ export default abstract class BaseI18nController {
     this._supportedLangs = options.supportedLangs
     this.defaultLang = options.defaultLang
     this.setLang(options.lang || this.defaultLang)
-    const bundles = this._supportedLangs.reduce((memo, lang) => {
+    const dict: Dictionary = {}
+    const bundles = this._supportedLangs.reduce((memo, lang): Dictionary => {
       memo[lang] = new FluentBundle(lang, { useIsolating })
       return memo
-    }, {} as Dictionary)
+    }, dict)
     _dictionaries.set(this, bundles)
     this._debugMode = Boolean(options.debugMode)
 
@@ -105,11 +106,11 @@ export default abstract class BaseI18nController {
     extra: { [key: string]: any }
   ): Promise<ResourceDefinition[]>
 
-  _getDict(): Dictionary {
+  private _getDict(): Dictionary {
     return _dictionaries.get(this) || {}
   }
 
-  setDict(lang: string, section: string, ftl: FTL) {
+  public setDict(lang: string, section: string, ftl: FTL): void {
     if (this._debugMode && !this._languages.includes(lang)) {
       console.warn(
         `You are loading an unrequested translation ${lang} for section: ${section} which will not be used. ` +
@@ -131,19 +132,19 @@ export default abstract class BaseI18nController {
     this._loadingState[`${section}/${lang}`] = 'loaded'
   }
 
-  private negotiateLang(lang: string) {
+  private negotiateLang(lang: string): string[] {
     return negotiateLanguages([lang], this._supportedLangs, {
       defaultLocale: this.defaultLang,
       strategy: 'matching',
     })
   }
 
-  setLang(lang: string) {
+  public setLang(lang: string): void {
     this._languages = this.negotiateLang(lang)
     this.lang = this._languages[0]
   }
 
-  get({
+  public get({
     args,
     section = 'global',
     id,
@@ -153,7 +154,7 @@ export default abstract class BaseI18nController {
     section?: string
     id: string
     lang?: string
-  }): [string | null, object] {
+  }): [string | null, { [k: string]: any }] {
     const bundles = this._getDict()
     const key = section === 'global' ? id : `${section}__${id}`
     if (bundles !== undefined) {
@@ -161,7 +162,7 @@ export default abstract class BaseI18nController {
       if (typeof overrideLang === 'string') {
         languages = this.negotiateLang(overrideLang)
       }
-      const lang = languages.find((l) => bundles[l] && bundles[l].hasMessage(key))
+      const lang = languages.find((l): boolean => bundles[l] && bundles[l].hasMessage(key))
       const bundle = lang && bundles[lang]
       if (!bundle) {
         if (
@@ -177,10 +178,10 @@ export default abstract class BaseI18nController {
       }
       const message = bundle.getMessage(key)
       let text: string | null = null
-      let attrs: { [key: string]: string } = {}
-      let errors: any[] = []
+      const attrs: { [key: string]: string } = {}
+      const errors: any[] = []
       if (message?.attributes) {
-        Object.entries(message.attributes).forEach(([attr, value]) => {
+        Object.entries(message.attributes).forEach(([attr, value]): void => {
           attrs[attr] = bundle.formatPattern(value, args, errors)
         })
       }
@@ -201,7 +202,7 @@ export default abstract class BaseI18nController {
     return [null, {}]
   }
 
-  getText({
+  public getText({
     args,
     section = 'global',
     id,
@@ -216,7 +217,7 @@ export default abstract class BaseI18nController {
     return message
   }
 
-  _load(
+  public _load(
     { lang: requestedLang, section }: { lang: string; section: string },
     extra: { [key: string]: any } = {}
   ): void {
@@ -228,14 +229,14 @@ export default abstract class BaseI18nController {
 
     this._loadingState[loadingKey] = 'loading'
     this.load({ lang, section }, extra)
-      .then((resourceDefs) => {
-        resourceDefs.forEach((resDef) => {
+      .then((resourceDefs): void => {
+        resourceDefs.forEach((resDef): void => {
           this.setDict(resDef.lang, section, resDef.ftl)
         })
         const updatedLoadingState = { ...this._loadingState }
-        this._listeners.forEach((l) => l(updatedLoadingState))
+        this._listeners.forEach((l): void => l(updatedLoadingState))
       })
-      .catch((error) => {
+      .catch((error): void => {
         this._loadingState[loadingKey] = 'failed'
         if (this._debugMode) {
           console.error(`FTL Resource ${lang}/${section} failed to load:`, error)
@@ -243,7 +244,7 @@ export default abstract class BaseI18nController {
       })
   }
 
-  hasText({
+  public hasText({
     section = 'global',
     id,
     lang,
@@ -258,23 +259,23 @@ export default abstract class BaseI18nController {
     if (typeof lang === 'string') {
       languages = this.negotiateLang(lang)
     }
-    return languages.some((l) => bundles[l] && bundles[l].hasMessage(key))
+    return languages.some((l): boolean => bundles[l] && bundles[l].hasMessage(key))
   }
 
-  hasLoaded(section: string, lang?: string) {
+  public hasLoaded(section: string, lang?: string): boolean {
     let languages = this._languages
     if (lang !== undefined) {
       languages = this.negotiateLang(lang)
     }
-    return languages.some((l) => this._loadingState[`${section}/${l}`] === 'loaded')
+    return languages.some((l): boolean => this._loadingState[`${section}/${l}`] === 'loaded')
   }
 
-  addListener(listener: LoadingStateListener): void {
+  public addListener(listener: LoadingStateListener): void {
     this._listeners.push(listener)
     listener(this._loadingState)
   }
 
-  removeListener(listener: LoadingStateListener): void {
-    this._listeners = this._listeners.filter((l) => l !== listener)
+  public removeListener(listener: LoadingStateListener): void {
+    this._listeners = this._listeners.filter((l): boolean => l !== listener)
   }
 }

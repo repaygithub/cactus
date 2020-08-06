@@ -3,9 +3,9 @@ import * as React from 'react'
 
 import { useId } from '../src/index'
 
-describe('useId()', () => {
-  test('maintains same id on rerender', () => {
-    const Something = ({ secondRender }: { secondRender?: boolean }) => {
+describe('useId()', (): void => {
+  test('maintains same id on rerender', (): void => {
+    const Something = ({ secondRender }: { secondRender?: boolean }): React.ReactElement => {
       const id = useId()
       return (
         <span id={id} data-testid="find-me">

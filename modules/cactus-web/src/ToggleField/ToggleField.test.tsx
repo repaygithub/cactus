@@ -1,4 +1,3 @@
-import cactusTheme from '@repay/cactus-theme'
 import { cleanup, fireEvent, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
@@ -8,8 +7,8 @@ import ToggleField from './ToggleField'
 
 afterEach(cleanup)
 
-describe('component: ToggleField', () => {
-  test('snapshot', () => {
+describe('component: ToggleField', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} />
@@ -19,7 +18,7 @@ describe('component: ToggleField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('snapshot when value=true', () => {
+  test('snapshot when value=true', (): void => {
     const { container } = render(
       <StyleProvider>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={true} />
@@ -29,7 +28,7 @@ describe('component: ToggleField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('snapshot when disabled', () => {
+  test('snapshot when disabled', (): void => {
     const { container } = render(
       <StyleProvider>
         <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} disabled />
@@ -39,7 +38,7 @@ describe('component: ToggleField', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should generate unique id when one is not provided', () => {
+  test('should generate unique id when one is not provided', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <ToggleField label="Show me the money" name="show-me-the-money" value={true} />
@@ -49,7 +48,7 @@ describe('component: ToggleField', () => {
     expect(getByLabelText('Show me the money').id).toContain('show-me-the-money')
   })
 
-  test('should trigger onChange event with next value', () => {
+  test('should trigger onChange event with next value', (): void => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -66,7 +65,7 @@ describe('component: ToggleField', () => {
     expect(onChange).toHaveBeenCalledWith('show-me-the-money', false)
   })
 
-  test('should trigger onFocus event', () => {
+  test('should trigger onFocus event', (): void => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -78,7 +77,7 @@ describe('component: ToggleField', () => {
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onBlur event', () => {
+  test('should trigger onBlur event', (): void => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -90,8 +89,8 @@ describe('component: ToggleField', () => {
     expect(onBlur).toHaveBeenCalled()
   })
 
-  describe('when disabled', () => {
-    test('should not trigger onChange event', () => {
+  describe('when disabled', (): void => {
+    test('should not trigger onChange event', (): void => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
         <StyleProvider>
@@ -103,7 +102,7 @@ describe('component: ToggleField', () => {
       expect(onChange).not.toHaveBeenCalled()
     })
 
-    test('should not trigger onFocus event', () => {
+    test('should not trigger onFocus event', (): void => {
       const onFocus = jest.fn()
       const { getByLabelText } = render(
         <StyleProvider>

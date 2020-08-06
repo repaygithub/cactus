@@ -48,59 +48,59 @@ const TOKEN_MATCHERS: { [value: string]: FormatTokenType } = {
 }
 
 export const TOKEN_FORMATTERS: { [token in FormatTokenType]: (date: Date) => string } = {
-  M: (date: Date) => (date.getMonth() + 1).toString(),
-  MM: (date: Date) => ('0' + (date.getMonth() + 1).toString()).slice(-2),
-  d: (date: Date) => date.getDate().toString(),
-  dd: (date: Date) => ('0' + date.getDate().toString()).slice(-2),
-  YYYY: (date: Date) => date.getFullYear().toString(),
-  h: (date: Date) => (date.getHours() % 12 || 12).toString(),
-  hh: (date: Date) => ('0' + (date.getHours() % 12 || 12).toString()).slice(-2),
-  H: (date: Date) => date.getHours().toString(),
-  HH: (date: Date) => ('0' + date.getHours().toString()).slice(-2),
-  mm: (date: Date) => ('0' + date.getMinutes().toString()).slice(-2),
-  aa: (date: Date) => (date.getHours() >= 12 ? 'PM' : 'AM'),
+  M: (date: Date): string => (date.getMonth() + 1).toString(),
+  MM: (date: Date): string => ('0' + (date.getMonth() + 1).toString()).slice(-2),
+  d: (date: Date): string => date.getDate().toString(),
+  dd: (date: Date): string => ('0' + date.getDate().toString()).slice(-2),
+  YYYY: (date: Date): string => date.getFullYear().toString(),
+  h: (date: Date): string => (date.getHours() % 12 || 12).toString(),
+  hh: (date: Date): string => ('0' + (date.getHours() % 12 || 12).toString()).slice(-2),
+  H: (date: Date): string => date.getHours().toString(),
+  HH: (date: Date): string => ('0' + date.getHours().toString()).slice(-2),
+  mm: (date: Date): string => ('0' + date.getMinutes().toString()).slice(-2),
+  aa: (date: Date): string => (date.getHours() >= 12 ? 'PM' : 'AM'),
 }
 
 export const TOKEN_SETTERS: { [token in FormatTokenType]: (date: Date, value: string) => void } = {
-  M(date, value) {
+  M(date, value): void {
     date.setMonth(Number(value) - 1)
   },
-  MM(date, value) {
+  MM(date, value): void {
     date.setMonth(Number(value) - 1)
   },
-  d(date, value) {
+  d(date, value): void {
     date.setDate(Number(value))
   },
-  dd(date, value) {
+  dd(date, value): void {
     date.setDate(Number(value))
   },
-  YYYY(date, value) {
+  YYYY(date, value): void {
     date.setFullYear(Number(value))
   },
-  h(date, value) {
+  h(date, value): void {
     date.setHours(Number(value))
   },
-  hh(date, value) {
+  hh(date, value): void {
     date.setHours(Number(value))
   },
-  H(date, value) {
+  H(date, value): void {
     date.setHours(Number(value))
   },
-  HH(date, value) {
+  HH(date, value): void {
     date.setHours(Number(value))
   },
-  mm(date, value) {
+  mm(date, value): void {
     date.setMinutes(Number(value))
   },
-  aa(date, value) {
+  aa(date, value): void {
     if (/p/.test(value)) {
       date.setHours(date.getHours() + 12)
     }
   },
 }
 
-function matchAll(re: RegExp, str: string) {
-  let found: string[] = []
+function matchAll(re: RegExp, str: string): string[] {
+  const found: string[] = []
   let m: RegExpExecArray | null = null
   while ((m = re.exec(str))) {
     found.push(m[1])
@@ -108,7 +108,7 @@ function matchAll(re: RegExp, str: string) {
   return found
 }
 
-function repeat(char: string, num: number) {
+function repeat(char: string, num: number): string {
   let result = char
   while (result.length < num) {
     result += char
@@ -116,13 +116,13 @@ function repeat(char: string, num: number) {
   return result.slice(0, num)
 }
 
-function isNumber(x: any): x is Number {
+function isNumber(x: any): x is number {
   return typeof x === 'number'
 }
 
 const __FORMAT_CACHE__: { [key: string]: string[] } = {}
 
-export function parseFormat(formatStr: string) {
+export function parseFormat(formatStr: string): string[] {
   if (__FORMAT_CACHE__.hasOwnProperty(formatStr)) {
     return __FORMAT_CACHE__[formatStr]
   }
@@ -134,12 +134,15 @@ export function parseFormat(formatStr: string) {
  */
 const __LOCALE_FORMATS_CACHE__: { [key: string]: string[] } = {}
 
-type GetLocaleformatOpt = {
+interface GetLocaleformatOpt {
   // represents the time values to include in a format: date only, time only, or both.
   type: DateType
 }
 /** Returns an array representing how to format a date based on current locale */
-export function getLocaleFormat(locale?: string, options: GetLocaleformatOpt = { type: 'date' }) {
+export function getLocaleFormat(
+  locale?: string,
+  options: GetLocaleformatOpt = { type: 'date' }
+): string {
   if (locale === undefined) {
     locale = getLocale()
   }
@@ -161,14 +164,14 @@ export function getLocaleFormat(locale?: string, options: GetLocaleformatOpt = {
       timeZone: 'UTC',
     })
 
-    formatArray = matchAll(/(\d+|PM|[^0-9PM]+)/g, testDateString).map((m) =>
+    formatArray = matchAll(/(\d+|PM|[^0-9PM]+)/g, testDateString).map((m): string =>
       TOKEN_MATCHERS.hasOwnProperty(m) ? TOKEN_MATCHERS[m] : m
     )
   }
   return formatArray.join('')
 }
 
-export function getDefaultFormat(type: DateType) {
+export function getDefaultFormat(type: DateType): string {
   if (type === 'datetime') {
     return 'YYYY-MM-ddTHH:mm'
   } else if (type === 'time') {
@@ -177,10 +180,10 @@ export function getDefaultFormat(type: DateType) {
   return 'YYYY-MM-dd'
 }
 
-export function formatDate(date: Date, format: string) {
-  let breakup = parseFormat(format)
+export function formatDate(date: Date, format: string): string {
+  const breakup = parseFormat(format)
   return breakup
-    .map((token) => {
+    .map((token): string => {
       if (TOKEN_FORMATTERS.hasOwnProperty(token)) {
         return TOKEN_FORMATTERS[token as FormatTokenType](date)
       }
@@ -188,57 +191,6 @@ export function formatDate(date: Date, format: string) {
     })
     .join('')
 }
-
-/**
- * Will attempt to parse a string as a date using the provided format,
- * and is not forgiving.
- */
-export function parseDate(dateStr: string, format?: string): Date {
-  if (!format) {
-    return new Date(dateStr)
-  }
-  let parsedFormat = parseFormat(format)
-  if (parsedFormat.length > 0) {
-    let cursor = 0
-    let partial = new PartialDate('', format)
-    for (const token of parsedFormat) {
-      if (isToken(token)) {
-        let value = dateStr.charAt(cursor)
-        while (/[0-9]/.test(dateStr.charAt(++cursor))) {
-          value += dateStr.charAt(cursor)
-        }
-        partial[token] = value
-      } else {
-        cursor += token.length
-      }
-    }
-    return partial.toDate()
-  }
-
-  return new Date(NaN)
-}
-
-export function isValidDate(date: Date) {
-  return !isNaN(+date)
-}
-
-export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYear()): number {
-  let firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
-  let lastOfMonth = new Date(+firstOfMonth)
-  lastOfMonth.setMonth(month + 1, 1)
-  lastOfMonth.setDate(0)
-  return lastOfMonth.getDate()
-}
-
-/** used privately for defaults */
-const TODAY = new Date()
-
-const __LOCALE_SPOKEN_FORMATS_CACHE__: {
-  [key: string]: InstanceType<typeof Intl.DateTimeFormat>
-} = {}
-
-type FormatTokenMap = { [key in FormatTokenType]?: string | number }
-type PartialDateOpts = { format: string; locale: string; type: DateType }
 
 function asOptions(formatOrOpts?: string | Partial<PartialDateOpts>): PartialDateOpts {
   let result: Partial<PartialDateOpts> = {}
@@ -252,7 +204,7 @@ function asOptions(formatOrOpts?: string | Partial<PartialDateOpts>): PartialDat
   }
   if (!result.type) {
     if (result.format) {
-      let format = result.format
+      const format = result.format
       if (format.includes('YYYY') || format.includes('dd')) {
         result.type = 'date'
         if (format.includes('h') || format.includes('H')) {
@@ -271,6 +223,21 @@ function asOptions(formatOrOpts?: string | Partial<PartialDateOpts>): PartialDat
   return result as PartialDateOpts
 }
 
+/** used privately for defaults */
+const TODAY = new Date()
+
+const __LOCALE_SPOKEN_FORMATS_CACHE__: {
+  [key: string]: InstanceType<typeof Intl.DateTimeFormat>
+} = {}
+
+export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYear()): number {
+  const firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
+  const lastOfMonth = new Date(+firstOfMonth)
+  lastOfMonth.setMonth(month + 1, 1)
+  lastOfMonth.setDate(0)
+  return lastOfMonth.getDate()
+}
+
 /**
  * Partial date is to allow the saving and formatting of an incomplete date.
  * Values which are not available will be replaced with # when formatting,
@@ -280,7 +247,7 @@ function asOptions(formatOrOpts?: string | Partial<PartialDateOpts>): PartialDat
  * in all getters and setters
  */
 export class PartialDate implements FormatTokenMap {
-  constructor(date?: string, formatOrOpts?: string | Partial<PartialDateOpts>) {
+  public constructor(date?: string, formatOrOpts?: string | Partial<PartialDateOpts>) {
     const { format, type, locale } = asOptions(formatOrOpts)
     this._locale = locale
     this._localeFormat = getLocaleFormat(locale, { type })
@@ -303,11 +270,12 @@ export class PartialDate implements FormatTokenMap {
   private minutes?: number
   private period?: string
 
-  get M() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get M() {
     return this.month === undefined ? '' : String(this.month + 1)
   }
 
-  set M(value: string | number | undefined) {
+  public set M(value: string | number | undefined) {
     if (value === undefined) {
       this.month = value
     } else {
@@ -315,19 +283,21 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  get MM() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get MM() {
     return this.month === undefined ? '' : this.pad(this.month + 1)
   }
 
-  set MM(value: string | number | undefined) {
+  public set MM(value: string | number | undefined) {
     this.M = value
   }
 
-  get d() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get d() {
     return this.toRender(this.day, 1)
   }
 
-  set d(value: string | number | undefined) {
+  public set d(value: string | number | undefined) {
     if (value === undefined) {
       this.day = undefined
     } else {
@@ -335,19 +305,21 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  get dd() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get dd() {
     return this.toRender(this.day, 2)
   }
 
-  set dd(value: string | number | undefined) {
+  public set dd(value: string | number | undefined) {
     this.d = value
   }
 
-  get YYYY() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get YYYY() {
     return this.toRender(this.year, 4)
   }
 
-  set YYYY(value: string | number | undefined) {
+  public set YYYY(value: string | number | undefined) {
     if (value === undefined) {
       this.year = value
     } else {
@@ -355,40 +327,43 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  get h() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get h() {
     if (this.hours === undefined) {
       return ''
     }
-    let hours = this.hours % 12
+    const hours = this.hours % 12
     return String(hours === 0 ? 12 : hours)
   }
 
-  set h(value: string | number | undefined) {
+  public set h(value: string | number | undefined) {
     if (value === undefined) {
       this.hours = value
     } else {
-      let adj = this.hours && this.hours >= 12 ? 12 : 0
+      const adj = this.hours && this.hours >= 12 ? 12 : 0
       this.setHours((Number(value) % 13) + adj)
     }
   }
 
-  get hh() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get hh() {
     if (this.hours === undefined) {
       return ''
     }
-    let hours = this.hours % 12
+    const hours = this.hours % 12
     return this.toRender(hours === 0 ? 12 : hours, 2)
   }
 
-  set hh(value: string | number | undefined) {
+  public set hh(value: string | number | undefined) {
     this.h = value
   }
 
-  get H() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get H() {
     return this.toRender(this.hours, 1)
   }
 
-  set H(value: string | number | undefined) {
+  public set H(value: string | number | undefined) {
     if (value === undefined) {
       this.hours = value
     } else {
@@ -398,19 +373,21 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  get HH() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get HH() {
     return this.pad(this.hours)
   }
 
-  set HH(value: string | number | undefined) {
+  public set HH(value: string | number | undefined) {
     this.H = value
   }
 
-  get mm() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get mm() {
     return this.pad(this.minutes)
   }
 
-  set mm(value: string | number | undefined) {
+  public set mm(value: string | number | undefined) {
     if (value === undefined) {
       this.minutes = value
     } else {
@@ -418,11 +395,12 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  get aa() {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  public get aa() {
     return this.period || ''
   }
 
-  set aa(value: string | undefined) {
+  public set aa(value: string | undefined) {
     if (typeof value === 'string' && /[pa]/i.test(value)) {
       this.period = /p/i.test(value) ? 'PM' : 'AM'
       if (this.hours === undefined) {
@@ -437,67 +415,67 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  getYear() {
+  public getYear(): number {
     return this.year === undefined ? TODAY.getFullYear() : this.year
   }
 
-  setYear(value: number) {
+  public setYear(value: number): void {
     this.year = value
   }
 
-  getMonth() {
+  public getMonth(): number {
     return this.month === undefined ? TODAY.getMonth() : this.month
   }
 
-  setMonth(value: number) {
+  public setMonth(value: number): void {
     this.month = value % 12
   }
 
-  getDate() {
+  public getDate(): number {
     return this.day === undefined ? TODAY.getDate() : this.day
   }
 
-  setDate(value: number) {
+  public setDate(value: number): void {
     this.day = value % 32
   }
 
-  getHours() {
+  public getHours(): number {
     return this.hours || 0
   }
 
-  setHours(value: number) {
+  public setHours(value: number): void {
     this.hours = value % 24
     this.period = value > 11 ? 'PM' : 'AM'
   }
 
-  getMinutes() {
+  public getMinutes(): number {
     return this.minutes || 0
   }
 
-  setMinutes(value: number) {
+  public setMinutes(value: number): void {
     this.minutes = value % 60
   }
 
-  getLocaleFormat() {
+  public getLocaleFormat(): string {
     return this._localeFormat
   }
 
-  setLocale(locale: string) {
+  public setLocale(locale: string): void {
     this._locale = locale
     this._localeFormat = getLocaleFormat(locale, { type: this._type })
   }
 
-  getType() {
+  public getType(): DateType {
     return this._type
   }
 
-  setType(type: DateType, format: string) {
+  public setType(type: DateType, format: string): void {
     this._type = type
     this._format = format
     this._localeFormat = getLocaleFormat(this._locale, { type })
   }
 
-  private toRender(val: number | undefined, padTo: number) {
+  private toRender(val: number | undefined, padTo: number): string {
     if (val === undefined) {
       return ''
     }
@@ -507,12 +485,12 @@ export class PartialDate implements FormatTokenMap {
     return String(val)
   }
 
-  private pad(val?: number) {
+  private pad(val?: number): string {
     return val === undefined ? '' : ('0' + val).slice(-2)
   }
 
-  parse(dateStr: string, format: string = this._format) {
-    let parsedFormat = parseFormat(format)
+  public parse(dateStr: string, format: string = this._format): PartialDate {
+    const parsedFormat = parseFormat(format)
     let cursor = 0
     for (const token of parsedFormat) {
       if (isToken(token)) {
@@ -531,12 +509,12 @@ export class PartialDate implements FormatTokenMap {
     return this
   }
 
-  format(format?: string) {
+  public format(format?: string): string {
     const parsed = parseFormat(format || this._format)
     let result = ''
     for (const token of parsed) {
       if (isToken(token)) {
-        let val = this[token]
+        const val = this[token]
         result += val !== '' ? val : repeat('#', token.length)
       } else {
         result += token
@@ -545,7 +523,7 @@ export class PartialDate implements FormatTokenMap {
     return result
   }
 
-  equals(date?: PartialDate, type: DateType = this._type): boolean {
+  public equals(date?: PartialDate, type: DateType = this._type): boolean {
     if (date instanceof PartialDate) {
       if (type === 'datetime') {
         return (
@@ -567,11 +545,11 @@ export class PartialDate implements FormatTokenMap {
     return false
   }
 
-  toLocaleFormat() {
+  public toLocaleFormat(): string {
     return this.format(this._localeFormat)
   }
 
-  toLocaleSpoken(type: DateType): string {
+  public toLocaleSpoken(type: DateType): string {
     let spokenFormatter: InstanceType<typeof Intl.DateTimeFormat>
     const cacheKey = this._locale + type
     if (__LOCALE_SPOKEN_FORMATS_CACHE__.hasOwnProperty(cacheKey)) {
@@ -595,19 +573,19 @@ export class PartialDate implements FormatTokenMap {
     return spokenFormatter.format(this.toDate())
   }
 
-  toDate(): Date {
-    let date = new Date()
+  public toDate(): Date {
+    const date = new Date()
     date.setFullYear(this.getYear(), this.getMonth(), this.getDate())
     date.setHours(this.getHours(), this.getMinutes(), 0, 0)
     return date
   }
 
-  isValid(): boolean {
+  public isValid(): boolean {
     const type = this._type
-    let isValidDate =
+    const isValidDate =
       type === 'time' ||
       ([this.year, this.month, this.day].every(isNumber) && this.isDayOfMonth(this.day || 0))
-    let isValidTime =
+    const isValidTime =
       type === 'date' ||
       (this.hours !== undefined &&
         this.minutes !== undefined &&
@@ -616,18 +594,18 @@ export class PartialDate implements FormatTokenMap {
     return isValidDate && isValidTime
   }
 
-  isDayOfMonth(day: number): boolean {
-    let date = new Date(this.getYear(), this.getMonth(), 1)
+  public isDayOfMonth(day: number): boolean {
+    const date = new Date(this.getYear(), this.getMonth(), 1)
     date.setDate(day)
     return date.getMonth() === this.getMonth()
   }
 
-  getLastDayOfMonth() {
+  public getLastDayOfMonth(): number {
     // naively assume 31 is the last day of month when month does not exist
     return this.month !== undefined ? getLastDayOfMonth(this.month, this.year) : 31
   }
 
-  ensureDayOfMonth() {
+  public ensureDayOfMonth(): void {
     if (this.day !== undefined && this.month !== undefined) {
       const lastDay = getLastDayOfMonth(this.month, this.year)
       if (this.day > lastDay) {
@@ -636,8 +614,8 @@ export class PartialDate implements FormatTokenMap {
     }
   }
 
-  clone() {
-    let pd = new PartialDate('', {
+  public clone(): PartialDate {
+    const pd = new PartialDate('', {
       format: this._format,
       type: this._type,
       locale: this._locale,
@@ -651,10 +629,10 @@ export class PartialDate implements FormatTokenMap {
     return pd
   }
 
-  static from(
+  public static from(
     date?: null | string | Date | PartialDate,
     formatOrOpts?: string | Partial<PartialDateOpts>
-  ) {
+  ): PartialDate {
     if (date == null) {
       return new PartialDate('', formatOrOpts)
     } else if (date instanceof PartialDate) {
@@ -663,12 +641,52 @@ export class PartialDate implements FormatTokenMap {
       if (isNaN(+date)) {
         return new PartialDate('', formatOrOpts)
       } else {
-        let opts = asOptions(formatOrOpts)
-        let dateStr = formatDate(date, opts.format)
+        const opts = asOptions(formatOrOpts)
+        const dateStr = formatDate(date, opts.format)
         return new PartialDate(dateStr, opts)
       }
     } else {
       return new PartialDate(date, formatOrOpts)
     }
   }
+}
+
+/**
+ * Will attempt to parse a string as a date using the provided format,
+ * and is not forgiving.
+ */
+export function parseDate(dateStr: string, format?: string): Date {
+  if (!format) {
+    return new Date(dateStr)
+  }
+  const parsedFormat = parseFormat(format)
+  if (parsedFormat.length > 0) {
+    let cursor = 0
+    const partial = new PartialDate('', format)
+    for (const token of parsedFormat) {
+      if (isToken(token)) {
+        let value = dateStr.charAt(cursor)
+        while (/[0-9]/.test(dateStr.charAt(++cursor))) {
+          value += dateStr.charAt(cursor)
+        }
+        partial[token] = value
+      } else {
+        cursor += token.length
+      }
+    }
+    return partial.toDate()
+  }
+
+  return new Date(NaN)
+}
+
+export function isValidDate(date: Date): boolean {
+  return !isNaN(+date)
+}
+
+type FormatTokenMap = { [key in FormatTokenType]?: string | number }
+interface PartialDateOpts {
+  format: string
+  locale: string
+  type: DateType
 }

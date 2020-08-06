@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 type SnackProps = RouteComponentProps<{ snack: string }>
 
 class Snack extends Component<SnackProps> {
-  render() {
+  public render(): React.ReactElement {
     return (
       <I18nSection name={this.props.snack || ''}>
         <h2>

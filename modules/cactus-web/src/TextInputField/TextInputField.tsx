@@ -25,7 +25,7 @@ interface TextInputFieldProps
   onBlur?: FieldOnBlurHandler
 }
 
-const TextInputFieldBase = (props: TextInputFieldProps) => {
+const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
   const {
     id,
     name,
@@ -43,7 +43,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
   } = omitMargins(props) as Omit<TextInputFieldProps, keyof MarginProps>
 
   const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
       if (typeof onChange === 'function') {
         const currentTarget = (event.currentTarget as unknown) as HTMLInputElement
         onChange(name, currentTarget.value)
@@ -52,11 +52,11 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
     [onChange, name]
   )
 
-  const handleFocus = (event: React.FocusEvent) => {
+  const handleFocus = (): void => {
     handleEvent(onFocus, name)
   }
 
-  const handleBlur = (event: React.FocusEvent) => {
+  const handleBlur = (): void => {
     handleEvent(onBlur, name)
   }
 
@@ -72,7 +72,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
       error={error}
       tooltip={tooltip}
     >
-      {({ fieldId, status, ariaDescribedBy }) => (
+      {({ fieldId, status, ariaDescribedBy }): React.ReactElement => (
         <TextInput
           {...inputProps}
           id={fieldId}
@@ -91,7 +91,7 @@ const TextInputFieldBase = (props: TextInputFieldProps) => {
 
 export const TextInputField = styled(TextInputFieldBase)`
   position: relative;
-  width: ${(p) => p.width || 'auto'};
+  width: ${(p): string | number => p.width || 'auto'};
   ${margin}
 `
 

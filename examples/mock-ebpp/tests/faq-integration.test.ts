@@ -5,20 +5,27 @@ import { Selector } from 'testcafe'
 import makeActions from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 
+// eslint-disable-next-line no-undef
 fixture('FAQ Integration Tests')
-  .before(async (ctx) => {
-    ctx.server = startStaticServer({
-      directory: path.join(process.cwd(), 'dist'),
-      port: 33567,
-      singlePageApp: true,
-    })
-  })
-  .after(async (ctx) => {
-    await ctx.server.close()
-  })
+  .before(
+    async (ctx): Promise<void> => {
+      ctx.server = startStaticServer({
+        directory: path.join(process.cwd(), 'dist'),
+        port: 33567,
+        singlePageApp: true,
+      })
+    }
+  )
+  .after(
+    async (ctx): Promise<void> => {
+      await ctx.server.close()
+    }
+  )
   .page('http://localhost:33567/faq')
 
-test('use the DOWN arrow key to navigate even after the order changes', async (t: TestController) => {
+test('use the DOWN arrow key to navigate even after the order changes', async (t: TestController): Promise<
+  void
+> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
   await t.click(queryByText('Insert Accordion'))
   await focusAccordionHeaderByText('Lorem Ipsum?')
@@ -47,7 +54,9 @@ test('use the DOWN arrow key to navigate even after the order changes', async (t
     .eql('Why EBPP?')
 })
 
-test('use the UP arrow key to navigate even after the order changes', async (t: TestController) => {
+test('use the UP arrow key to navigate even after the order changes', async (t: TestController): Promise<
+  void
+> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
   await t.click(queryByText('Insert Accordion'))
@@ -77,7 +86,9 @@ test('use the UP arrow key to navigate even after the order changes', async (t: 
     .eql('What is Bill Presentment?')
 })
 
-test('use the HOME key to focus on the first accordion after the order changes', async (t: TestController) => {
+test('use the HOME key to focus on the first accordion after the order changes', async (t: TestController): Promise<
+  void
+> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
   await t.click(queryByText('Insert Accordion'))
@@ -94,7 +105,9 @@ test('use the HOME key to focus on the first accordion after the order changes',
     .eql('Lorem Ipsum?')
 })
 
-test('use the END key to focus on the first accordion after the order changes', async (t: TestController) => {
+test('use the END key to focus on the first accordion after the order changes', async (t: TestController): Promise<
+  void
+> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
   await t.click(queryByText('Insert Accordion'))

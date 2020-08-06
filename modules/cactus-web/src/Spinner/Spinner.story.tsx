@@ -10,15 +10,21 @@ const iconSizes: IconSize[] = ['tiny', 'small', 'medium', 'large']
 const colors = Object.keys(cactusTheme.colors)
 
 storiesOf('Spinner', module)
-  .add('Basic Usage', () => (
-    <Spinner
-      iconSize={select('iconSize', iconSizes, 'large')}
-      color={select('color', colors, 'darkestContrast')}
-    />
-  ))
-  .add('Custom Sizing', () => <Spinner iconSize={text('iconSize', '64px')} />)
-  .add('using spacing', () => (
-    <React.Fragment>
-      <Spinner m={text('m', '0 auto')} />
-    </React.Fragment>
-  ))
+  .add(
+    'Basic Usage',
+    (): React.ReactElement => (
+      <Spinner
+        iconSize={select('iconSize', iconSizes, 'large')}
+        color={select('color', colors, 'darkestContrast')}
+      />
+    )
+  )
+  .add('Custom Sizing', (): React.ReactElement => <Spinner iconSize={text('iconSize', '64px')} />)
+  .add(
+    'using spacing',
+    (): React.ReactElement => (
+      <React.Fragment>
+        <Spinner m={text('m', '0 auto')} />
+      </React.Fragment>
+    )
+  )

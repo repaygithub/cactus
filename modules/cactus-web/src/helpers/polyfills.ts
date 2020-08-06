@@ -4,8 +4,8 @@ if (typeof window !== 'undefined' && !(window as any).Element.prototype.matches)
 }
 
 if (typeof window !== 'undefined' && !(window as any).Element.prototype.closest) {
-  Element.prototype.closest = function (s: string) {
-    var el: Element | (Node & ParentNode) | null = this
+  Element.prototype.closest = function (s: string): Element | null {
+    let el: Element | (Node & ParentNode) | null = this //eslint-disable-line @typescript-eslint/no-this-alias
 
     do {
       if ((el as Element).matches(s)) return el as Element

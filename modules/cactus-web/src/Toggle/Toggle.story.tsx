@@ -10,13 +10,13 @@ const initialState = { value: false }
 type State = Readonly<typeof initialState>
 
 class ToggleManager extends React.Component {
-  readonly state: State = initialState
-  handleToggle = () => {
+  public readonly state: State = initialState
+  private handleToggle = (): void => {
     this.setState({
       value: !this.state.value,
     })
   }
-  render() {
+  public render(): React.ReactElement {
     return (
       <Toggle
         value={this.state.value}
@@ -28,6 +28,9 @@ class ToggleManager extends React.Component {
   }
 }
 
-toggleStories.add('Basic Usage', () => {
-  return <ToggleManager />
-})
+toggleStories.add(
+  'Basic Usage',
+  (): React.ReactElement => {
+    return <ToggleManager />
+  }
+)

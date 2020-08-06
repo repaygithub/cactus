@@ -8,27 +8,33 @@ import RadioButton from './RadioButton'
 const radioButtonStories = storiesOf('RadioButton', module)
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 
-radioButtonStories.add('Basic Usage', () => (
-  <RadioButton id="some-id" name="test" disabled={boolean('disabled', false)} {...eventLoggers} />
-))
+radioButtonStories.add(
+  'Basic Usage',
+  (): React.ReactElement => (
+    <RadioButton id="some-id" name="test" disabled={boolean('disabled', false)} {...eventLoggers} />
+  )
+)
 
-radioButtonStories.add('Multiple Radio Buttons', () => (
-  <div>
+radioButtonStories.add(
+  'Multiple Radio Buttons',
+  (): React.ReactElement => (
     <div>
-      <RadioButton
-        id="some-id"
-        name="test"
-        disabled={boolean('disabled', false)}
-        {...eventLoggers}
-      />
+      <div>
+        <RadioButton
+          id="some-id"
+          name="test"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+        />
+      </div>
+      <div>
+        <RadioButton
+          id="some-other-id"
+          name="test"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+        />
+      </div>
     </div>
-    <div>
-      <RadioButton
-        id="some-other-id"
-        name="test"
-        disabled={boolean('disabled', false)}
-        {...eventLoggers}
-      />
-    </div>
-  </div>
-))
+  )
+)

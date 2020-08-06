@@ -7,22 +7,28 @@ import DateInputField from './DateInputField'
 const dateInputTypes: ('date' | 'datetime' | 'time')[] = ['date', 'datetime', 'time']
 
 storiesOf('DateInputField', module)
-  .add('Default Usage', () => (
-    <DateInputField
-      label={text('label', 'Date Input Field')}
-      name={text('name', 'date_input_field')}
-      type={select('type?', dateInputTypes, 'date')}
-      width="350px"
-    />
-  ))
-  .add('extended props', () => (
-    <DateInputField
-      label={text('label', 'Time field')}
-      name={text('name', 'date_input_field')}
-      type={select('type?', dateInputTypes, 'date')}
-      tooltip={text('tooltip?', '')}
-      error={text('error?', '')}
-      success={text('success?', '')}
-      warning={text('warning?', '')}
-    />
-  ))
+  .add(
+    'Default Usage',
+    (): React.ReactElement => (
+      <DateInputField
+        label={text('label', 'Date Input Field')}
+        name={text('name', 'date_input_field')}
+        type={select('type?', dateInputTypes, 'date')}
+        width="350px"
+      />
+    )
+  )
+  .add(
+    'extended props',
+    (): React.ReactElement => (
+      <DateInputField
+        label={text('label', 'Time field')}
+        name={text('name', 'date_input_field')}
+        type={select('type?', dateInputTypes, 'date')}
+        tooltip={text('tooltip?', '')}
+        error={text('error?', '')}
+        success={text('success?', '')}
+        warning={text('warning?', '')}
+      />
+    )
+  )

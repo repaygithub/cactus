@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 
-import Text, { Span } from '../../components/Text'
+import Text from '../../components/Text'
 import ColumnImage from '../design-system/grid-columns.png'
 import GridImage from '../design-system/grid-numbered.png'
 
@@ -12,7 +12,7 @@ type ShadowBoxProps = React.ComponentPropsWithRef<typeof Flex> & {
 }
 
 const ShadowBox = styled<React.FC<ShadowBoxProps>>(Flex)`
-  box-shadow: ${(p) => `${p.shadow} ${p.theme.colors.callToAction}`};
+  box-shadow: ${(p): string => `${p.shadow} ${p.theme.colors.callToAction}`};
 `
 
 ShadowBox.defaultProps = {
@@ -103,7 +103,7 @@ interface SpacingBoxProps {
   padding: string
 }
 
-const SpacingBox = (props: SpacingBoxProps) => {
+const SpacingBox = (props: SpacingBoxProps): React.ReactElement => {
   return (
     <Flex
       margin="0"
@@ -136,7 +136,7 @@ const Clear = styled(Box)`
   }
 `
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="Shared Styles" />

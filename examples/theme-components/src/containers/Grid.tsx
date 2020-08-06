@@ -13,12 +13,12 @@ const initialState = {
   blue: '4',
   black: '4',
 }
-const GridExample: React.FC<RouteComponentProps> = () => {
-  const [state, setStatte] = useState(initialState)
+const GridExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
+  const [state, setState] = useState(initialState)
 
   const changeState = useCallback(
-    (name, value) => {
-      setStatte({ ...state, [name]: value })
+    (name, value): void => {
+      setState({ ...state, [name]: value })
     },
     [state]
   )

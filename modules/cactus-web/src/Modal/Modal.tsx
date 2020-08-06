@@ -1,9 +1,9 @@
 import { DialogContent, DialogOverlay, DialogProps } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
-import { BorderSize, CactusTheme, Shape } from '@repay/cactus-theme'
+import { BorderSize, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
-import styled, { css, ThemeProps } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 
 import Flex from '../Flex/Flex'
 import { boxShadow } from '../helpers/theme'
@@ -22,19 +22,6 @@ export interface ModalProps {
 }
 interface ModalPopupProps extends DialogProps {
   variant: ModalType
-}
-
-const baseColor = ({ variant, theme }: ModalPopupProps & ThemeProps<CactusTheme>) => {
-  switch (variant) {
-    case 'action':
-      return theme.colors.callToAction
-    case 'danger':
-      return theme.colors.error
-    case 'success':
-      return theme.colors.success
-    case 'warning':
-      return theme.colors.warning
-  }
 }
 
 const borderMap = {
@@ -57,11 +44,11 @@ const shapeMap = {
     border-radius: 20px;
   `,
 }
-const getShape = (shape: Shape) => shapeMap[shape]
+const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
-const getBorder = (size: BorderSize) => borderMap[size]
+const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
-const Modalbase: FunctionComponent<ModalProps> = (props) => {
+const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
   const { variant = 'action', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
   const hasChildren = !!React.Children.count(children)
 
@@ -101,10 +88,10 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
   > [data-reach-dialog-content] {
     flex-basis: 100%;
     width: 100%;
-    ${(p) => getBorder(p.theme.border)};
-    ${(p) => getShape(p.theme.shape)};
+    ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+    ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
     background: white;
-    ${(p) => boxShadow(p.theme, 2)};
+    ${(p): string => boxShadow(p.theme, 2)};
     margin: auto;
     max-width: 80%;
     outline: none;
@@ -112,16 +99,16 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     position: relative;
     ${variant({
       action: css`
-        border-color: ${(p) => p.theme.colors.callToAction};
+        border-color: ${(p): string => p.theme.colors.callToAction};
       `,
       warning: css`
-        border-color: ${(p) => p.theme.colors.warning};
+        border-color: ${(p): string => p.theme.colors.warning};
       `,
       success: css`
-        border-color: ${(p) => p.theme.colors.success};
+        border-color: ${(p): string => p.theme.colors.success};
       `,
       danger: css`
-        border-color: ${(p) => p.theme.colors.error};
+        border-color: ${(p): string => p.theme.colors.error};
       `,
     })}
     ${IconButton} {
@@ -131,7 +118,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
       top: 24px;
       width: 16px;
     }
-    ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+    ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
       padding: 40px 88px;
       max-width: 30%;
       ${IconButton} {

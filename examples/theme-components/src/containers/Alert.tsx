@@ -8,7 +8,7 @@ import Link from '../components/Link'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 
-const AlertComponent: React.FC<RouteComponentProps> = () => {
+const AlertComponent: React.FC<RouteComponentProps> = (): React.ReactElement => {
   return (
     <div>
       <Link to="/">
@@ -20,11 +20,13 @@ const AlertComponent: React.FC<RouteComponentProps> = () => {
       </Text>
       <Flex flexDirection="column" alignItems="center" width="100%">
         <Label> General</Label>
-        {status.map((e) => (
-          <Alert status={e} type="general" my="10px" key={e} width="50%">
-            <Text textAlign="center">{e} Message</Text>
-          </Alert>
-        ))}
+        {status.map(
+          (e): React.ReactElement => (
+            <Alert status={e} type="general" my="10px" key={e} width="50%">
+              <Text textAlign="center">{e} Message</Text>
+            </Alert>
+          )
+        )}
       </Flex>
     </div>
   )

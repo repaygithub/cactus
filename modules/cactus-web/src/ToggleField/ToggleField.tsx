@@ -29,7 +29,7 @@ export interface ToggleFieldProps
   onBlur?: FieldOnBlurHandler
 }
 
-const ToggleFieldBase = (props: ToggleFieldProps) => {
+const ToggleFieldBase = (props: ToggleFieldProps): React.ReactElement => {
   const {
     labelProps,
     className,
@@ -45,7 +45,7 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
   const fieldId = useId(id, name)
 
   const handleClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: React.MouseEvent<HTMLButtonElement>): void => {
       if (typeof onClick === 'function') {
         onClick(event)
       }
@@ -57,11 +57,11 @@ const ToggleFieldBase = (props: ToggleFieldProps) => {
     [onClick, onChange, name]
   )
 
-  const handleFocus = (event: React.FocusEvent) => {
+  const handleFocus = (): void => {
     handleEvent(onFocus, name)
   }
 
-  const handleBlur = (event: React.FocusEvent) => {
+  const handleBlur = (): void => {
     handleEvent(onBlur, name)
   }
 
@@ -86,7 +86,7 @@ export const ToggleField = styled(ToggleFieldBase)`
   ${margin}
 
   ${Label} {
-    cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+    cursor: ${(p): string => (p.disabled ? 'not-allowed' : 'pointer')};
     margin-left: 8px;
     line-height: 26px;
     vertical-align: -2px;

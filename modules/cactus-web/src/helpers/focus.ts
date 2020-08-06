@@ -6,15 +6,15 @@ const FOCUS_SELECTOR =
   'textarea:not(:disabled)' +
   '[tabindex]'
 
-export function getFocusable(root?: any) {
+export function getFocusable(root?: Element | Document): Element[] {
   let searchFrom: Element | Document
   if (root && root instanceof Element) {
     searchFrom = root
   } else {
     searchFrom = document
   }
-  let result = Array.from(searchFrom.querySelectorAll(FOCUS_SELECTOR))
-  return result.filter((el) => {
+  const result = Array.from(searchFrom.querySelectorAll(FOCUS_SELECTOR))
+  return result.filter((el): boolean => {
     // @ts-ignore
     if (el.hasAttribute('tabindex') && el.tabIndex < 0) {
       return false

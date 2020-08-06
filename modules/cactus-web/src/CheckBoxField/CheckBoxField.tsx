@@ -8,14 +8,14 @@ import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
-import Label from '../Label/Label'
+import Label, { LabelProps } from '../Label/Label'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'onBlur' | 'onFocus' | 'disabled'>,
     MarginProps {
   label: React.ReactNode
-  labelProps?: object
+  labelProps?: LabelProps
   id?: string
   name: string
   onChange?: FieldOnChangeHandler<boolean>
@@ -24,7 +24,7 @@ interface CheckBoxFieldProps
   disabled?: boolean
 }
 
-const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
+const CheckBoxFieldBase = (props: CheckBoxFieldProps): React.ReactElement => {
   const componentProps = omitMargins(props) as Omit<CheckBoxFieldProps, keyof MarginProps>
   const {
     label,
@@ -40,7 +40,7 @@ const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
   const checkboxId = useId(id, name)
 
   const handleChange = React.useCallback(
-    (event: React.FormEvent<HTMLInputElement>) => {
+    (event: React.FormEvent<HTMLInputElement>): void => {
       if (typeof onChange === 'function') {
         const target = (event.target as unknown) as HTMLInputElement
         onChange(name, target.checked)
@@ -49,11 +49,11 @@ const CheckBoxFieldBase = (props: CheckBoxFieldProps) => {
     [name, onChange]
   )
 
-  const handleFocus = (event: React.FocusEvent) => {
+  const handleFocus = (): void => {
     handleEvent(onFocus, name)
   }
 
-  const handleBlur = (event: React.FocusEvent) => {
+  const handleBlur = (): void => {
     handleEvent(onBlur, name)
   }
 
@@ -80,7 +80,7 @@ export const CheckBoxField = styled(CheckBoxFieldBase)`
   }
 
   ${Label} {
-    cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+    cursor: ${(p): string => (p.disabled ? 'not-allowed' : 'pointer')};
     padding-left: 8px;
   }
 
