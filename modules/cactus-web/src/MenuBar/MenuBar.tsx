@@ -59,9 +59,6 @@ function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
         original(e)
         preventAction(e)
       }
-  // Overriding these two can completely screw up the algorithms used.
-  delete propsCopy.tabIndex
-  delete propsCopy.role
   return (
     <li role="none">
       <MenuButton ref={ref as any} {...propsCopy} />
@@ -73,7 +70,25 @@ type MenuBarItemType = typeof MenuBarItemFunc
 
 // Tell Typescript to treat this as a regular functional component,
 // even though React knows it's a `forwardRef` component.
-const MenuBarItem = (React.forwardRef(MenuBarItemFunc) as any) as MenuBarItemType
+const MenuBarItemFR = React.forwardRef(MenuBarItemFunc) as any
+const MenuBarItem = MenuBarItemFR as MenuBarItemType
+
+MenuBarItemFR.displayName = 'MenuBarItem'
+
+MenuBarItemFR.propTypes = {
+  tabIndex: function (props: Record<string, any>): Error | null {
+    if (props.tabIndex !== undefined) {
+      return new Error('`tabIndex` is set programmatically, not using props')
+    }
+    return null
+  },
+  role: function (props: Record<string, any>): Error | null {
+    if (props.role && props.role !== 'menuitem') {
+      return new Error('`menuitem` is the only allowable ARIA role')
+    }
+    return null
+  },
+}
 
 const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {

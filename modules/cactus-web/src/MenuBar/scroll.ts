@@ -75,7 +75,8 @@ export function useSubmenuToggle(): [boolean, ToggleSubmenu] {
             menuWrapper.style.transform = `translateX(${left}px)`
             menuWrapper.style.top = top || ''
             if (focus) {
-              ;(menuWrapper.querySelector(ITEM_SELECTOR) as HTMLElement).focus()
+              const firstItem = menuWrapper.querySelector(ITEM_SELECTOR) as HTMLElement
+              setTimeout(() => firstItem.focus())
             }
           }
         }
