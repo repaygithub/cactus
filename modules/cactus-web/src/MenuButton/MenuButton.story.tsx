@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions'
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { ReactElement } from 'react'
 
@@ -11,7 +11,11 @@ storiesOf('MenuButton', module)
   .add(
     'Basic Usage',
     (): ReactElement => (
-      <MenuButton label={text('label', 'Demo Actions')} disabled={boolean('disabled?', false)}>
+      <MenuButton
+        label={text('label', 'Demo Actions')}
+        disabled={boolean('disabled?', false)}
+        variant={select('variant', ['filled', 'unfilled'], 'filled')}
+      >
         <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
         <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
         <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>
@@ -21,7 +25,11 @@ storiesOf('MenuButton', module)
   .add(
     'with Links',
     (): ReactElement => (
-      <MenuButton label={text('label', 'Demo')} disabled={boolean('disabled?', false)}>
+      <MenuButton
+        label={text('label', 'Demo')}
+        disabled={boolean('disabled?', false)}
+        variant={select('variant', ['filled', 'unfilled'], 'filled')}
+      >
         <MenuButton.Link href="#" onClick={stopNav}>
           Link One
         </MenuButton.Link>
@@ -37,7 +45,11 @@ storiesOf('MenuButton', module)
   .add(
     'with Collisions',
     (): ReactElement => (
-      <MenuButton label={text('label', 'Demo')} disabled={boolean('disabled?', false)}>
+      <MenuButton
+        label={text('label', 'Demo')}
+        disabled={boolean('disabled?', false)}
+        variant={select('variant', ['filled', 'unfilled'], 'filled')}
+      >
         <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
         <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
         <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>

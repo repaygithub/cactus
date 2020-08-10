@@ -31,10 +31,6 @@ exports[`With theme changes  Border should be 2px 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
-  border: 0;
-}
-
 .c0:focus::after {
   content: '';
   display: block;
@@ -47,6 +43,10 @@ exports[`With theme changes  Border should be 2px 1`] = `
   border-radius: 20px;
   border: 2px solid;
   border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:disabled {
@@ -136,10 +136,6 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
-  border: 0;
-}
-
 .c0:focus::after {
   content: '';
   display: block;
@@ -152,6 +148,10 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   border-radius: 20px;
   border: 1px solid;
   border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:disabled {
@@ -241,10 +241,6 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
-  border: 0;
-}
-
 .c0:focus::after {
   content: '';
   display: block;
@@ -257,6 +253,10 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   border-radius: 8px;
   border: 1px solid;
   border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:disabled {
@@ -346,10 +346,6 @@ exports[`With theme changes  Should have square borders 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
-  border: 0;
-}
-
 .c0:focus::after {
   content: '';
   display: block;
@@ -362,6 +358,10 @@ exports[`With theme changes  Should have square borders 1`] = `
   border-radius: 1px;
   border: 1px solid;
   border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:disabled {
@@ -450,10 +450,6 @@ exports[`component: MenuButton snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
-  border: 0;
-}
-
 .c0:focus::after {
   content: '';
   display: block;
@@ -466,6 +462,10 @@ exports[`component: MenuButton snapshot 1`] = `
   border-radius: 20px;
   border: 1px solid;
   border-color: hsl(200,96%,35%);
+}
+
+.c0::-moz-focus-inner {
+  border: 0;
 }
 
 .c0:disabled {
