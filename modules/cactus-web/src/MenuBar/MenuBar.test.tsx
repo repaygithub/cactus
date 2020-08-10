@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -7,9 +7,15 @@ import MenuBar from './MenuBar'
 
 // @ts-ignore
 global.MutationObserver = class {
-  constructor(callback: any) {}
-  disconnect() {}
-  observe(element: any, initObject: any) {}
+  constructor() {
+    return
+  }
+  disconnect() {
+    return
+  }
+  observe() {
+    return
+  }
 }
 
 describe('component: MenuBar', () => {
@@ -48,7 +54,7 @@ describe('component: MenuBar', () => {
   })
 
   test('focus', () => {
-    const { container, getByText, getByLabelText } = render(
+    const { getByText } = render(
       <StyleProvider>
         <MenuBar aria-label="Menu of Main-ness">
           <MenuBar.Item>First</MenuBar.Item>

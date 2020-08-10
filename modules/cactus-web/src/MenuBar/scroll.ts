@@ -95,7 +95,9 @@ const getOrientation = (element: HTMLElement) => {
   return menu && menu.getAttribute('aria-orientation')
 }
 
-export function useSubmenuKeyHandlers(toggle: ToggleSubmenu) {
+type KeyHandler = (e: React.KeyboardEvent<HTMLElement>) => void
+
+export function useSubmenuKeyHandlers(toggle: ToggleSubmenu): [KeyHandler, KeyHandler] {
   const handleToggle = React.useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
       const menuButton = event.currentTarget
@@ -140,7 +142,7 @@ export function useSubmenuKeyHandlers(toggle: ToggleSubmenu) {
   return [handleToggle, handleSubmenu]
 }
 
-export const menuKeyHandler = (event: React.KeyboardEvent<HTMLElement>) => {
+export const menuKeyHandler = (event: React.KeyboardEvent<HTMLElement>): void => {
   const menu = event.currentTarget as MenuWithScroll
   const parentMenu = getMenu(menu)
   const orientation = menu.getAttribute('aria-orientation')
@@ -198,7 +200,6 @@ export const menuKeyHandler = (event: React.KeyboardEvent<HTMLElement>) => {
     }
     event.stopPropagation()
     event.preventDefault()
-    return false
   }
 }
 
@@ -345,7 +346,7 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
         setScroll((s) => updateScrollState(s, next))
       }
 
-      const observer = observeRect(menu, (menuRect) => {
+      const observer = observeRect(menu, () => {
         setScroll(updateScrollState)
       })
       observer.observe()
@@ -355,7 +356,7 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
   return [scroll, menuRef, menu]
 }
 
-export const focusMenu = (event: React.FocusEvent<HTMLElement>) => {
+export const focusMenu = (event: React.FocusEvent<HTMLElement>): void => {
   if (event.target.matches(ITEM_SELECTOR)) {
     const menu = event.currentTarget as MenuWithScroll
     if (menu.scrollToMenuItem) {
