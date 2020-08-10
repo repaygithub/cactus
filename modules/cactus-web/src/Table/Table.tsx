@@ -1,7 +1,7 @@
-import { Shape } from '@repay/cactus-theme'
+import { ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
-import styled, { css, StyledComponentType } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 
 import { border, boxShadow, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
@@ -72,11 +72,11 @@ const Wrapper = styled.div<TableProps>`
   max-width: 100%;
   overflow-x: auto;
   margin: 0px 16px;
-  ${(p) => p.fullWidth && 'min-width: calc(100% - 32px)'};
+  ${(p): string => (p.fullWidth ? 'min-width: calc(100% - 32px)' : '')};
 `
 
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ children, cardBreakpoint, ...props }, ref) => {
+  ({ children, cardBreakpoint, ...props }, ref): React.ReactElement => {
     const size = useContext(ScreenSizeContext)
     const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
     if (props.variant) {
@@ -104,7 +104,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
 )
 
 export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, ...props }, ref): React.ReactElement => {
     const context = useContext<TableContextProps>(TableContext)
     if (context.cellType && !props.as) {
       props.as = context.cellType
@@ -136,7 +136,7 @@ export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellPro
 )
 
 export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeaderProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, ...props }, ref): React.ReactElement => {
     const context = useContext<TableContextProps>(TableContext)
     return (
       <TableContext.Provider value={{ ...context, inHeader: true, cellType: 'th', cellIndex: 0 }}>
@@ -148,7 +148,7 @@ export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeader
   }
 )
 
-export const TableRow: React.FC<TableRowProps> = ({ children, ...props }) => {
+export const TableRow: React.FC<TableRowProps> = ({ children, ...props }): React.ReactElement => {
   const context = useContext<TableContextProps>(TableContext)
 
   return (
@@ -205,7 +205,7 @@ const shapeMap = {
   round: '8px',
 }
 
-const getShape = (shape: Shape, location: BorderCorner) =>
+const getShape = (shape: Shape, location: BorderCorner): string =>
   `border-${location}-radius: ${shapeMap[shape]}`
 
 const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
@@ -234,17 +234,17 @@ const ContentBox = styled.div`
 const StyledCell = styled.td(
   variant({
     table: css<TableCellProps>`
-      text-align: ${(p) => p.align || 'left'};
+      text-align: ${(p): string => p.align || 'left'};
       padding: 16px;
       min-width: calc(160px * 0.7125);
 
-      ${(p) =>
+      ${(p): string | undefined =>
         p.theme.mediaQueries &&
         `${p.theme.mediaQueries.large} {
       min-width: calc(160px * 0.875);
     }`}
 
-      ${(p) =>
+      ${(p): string | undefined =>
         p.theme.mediaQueries &&
         `${p.theme.mediaQueries.extraLarge} {
       min-width: 160px;
@@ -258,7 +258,7 @@ const StyledCell = styled.td(
         justify-content: space-between;
         padding: 8px 16px;
         :nth-of-type(even) {
-          background-color: ${(p) => p.theme.colors.lightContrast};
+          background-color: ${(p): string => p.theme.colors.lightContrast};
         }
         :last-child {
           border-bottom-left-radius: inherit;
@@ -284,41 +284,41 @@ const StyledHeader = styled.thead<TableHeaderProps>`
   &&&&& th,
   &&&&& td {
     text-transform: uppercase;
-    border: ${(p) => border(p.theme, 'base')};
-    ${(p) => p.theme.colorStyles.base};
+    border: ${(p): string => border(p.theme, 'base')};
+    ${(p): ColorStyle => p.theme.colorStyles.base};
   }
   ${headerVariants}
 `
 
 const table = css`
   display: table;
-  ${(p) => textStyle(p.theme, 'small')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   border-spacing: 0;
 
   td,
   th {
-    background-color: ${(p) => p.theme.colors.white};
-    border-top: ${(p) => border(p.theme, 'transparent')};
-    border-bottom: ${(p) => border(p.theme, 'transparent')};
+    background-color: ${(p): string => p.theme.colors.white};
+    border-top: ${(p): string => border(p.theme, 'transparent')};
+    border-bottom: ${(p): string => border(p.theme, 'transparent')};
     :first-child {
-      border-left: ${(p) => border(p.theme, 'lightContrast')};
+      border-left: ${(p): string => border(p.theme, 'lightContrast')};
     }
     :last-child {
-      border-right: ${(p) => border(p.theme, 'lightContrast')};
+      border-right: ${(p): string => border(p.theme, 'lightContrast')};
     }
   }
 
   tr:nth-of-type(even) {
     td,
     th {
-      background-color: ${(p) => p.theme.colors.lightContrast};
+      background-color: ${(p): string => p.theme.colors.lightContrast};
     }
   }
 
   &&& tr:hover {
     th,
     td {
-      border-color: ${(p) => p.theme.colors.callToAction};
+      border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
 
@@ -326,8 +326,8 @@ const table = css`
     outline: 0;
     td,
     th {
-      background-color: ${(p) => p.theme.colors.transparentCTA};
-      border-color: ${(p) => p.theme.colors.callToAction};
+      background-color: ${(p): string => p.theme.colors.transparentCTA};
+      border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
 
@@ -337,12 +337,12 @@ const table = css`
   thead > tr:first-child {
     th,
     td {
-      border-top-color: ${(p) => p.theme.colors.lightContrast};
+      border-top-color: ${(p): string => p.theme.colors.lightContrast};
       :first-child {
-        ${(p) => getShape(p.theme.shape, 'top-left')};
+        ${(p): string => getShape(p.theme.shape, 'top-left')};
       }
       :last-child {
-        ${(p) => getShape(p.theme.shape, 'top-right')};
+        ${(p): string => getShape(p.theme.shape, 'top-right')};
       }
     }
   }
@@ -366,12 +366,12 @@ const table = css`
     & > tr:last-child {
       th,
       td {
-        border-bottom-color: ${(p) => p.theme.colors.lightContrast};
+        border-bottom-color: ${(p): string => p.theme.colors.lightContrast};
         :first-child {
-          ${(p) => getShape(p.theme.shape, 'bottom-left')};
+          ${(p): string => getShape(p.theme.shape, 'bottom-left')};
         }
         :last-child {
-          ${(p) => getShape(p.theme.shape, 'bottom-right')};
+          ${(p): string => getShape(p.theme.shape, 'bottom-right')};
         }
       }
     }
@@ -379,7 +379,7 @@ const table = css`
 `
 
 const card = css`
-  ${(p) => textStyle(p.theme, 'tiny')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'tiny')};
   overflow-wrap: break-word;
 
   &,
@@ -396,14 +396,14 @@ const card = css`
     flex-flow: column nowrap;
     min-width: 272px;
     max-width: 360px;
-    ${(p) => boxShadow(p.theme, 1)};
-    background-color: ${(p) => p.theme.colors.white};
-    border: ${(p) => border(p.theme, 'lightContrast')};
-    border-radius: ${(p) => shapeMap[p.theme.shape]};
+    ${(p): string => boxShadow(p.theme, 1)};
+    background-color: ${(p): string => p.theme.colors.white};
+    border: ${(p): string => border(p.theme, 'lightContrast')};
+    border-radius: ${(p): string => shapeMap[p.theme.shape]};
     margin: 4px;
     outline: 0;
     :focus {
-      border-color: ${(p) => p.theme.colors.callToAction};
+      border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
   th,
@@ -413,7 +413,7 @@ const card = css`
     max-width: 100%;
     padding: 8px 16px;
     :nth-of-type(even) {
-      background-color: ${(p) => p.theme.colors.lightContrast};
+      background-color: ${(p): string => p.theme.colors.lightContrast};
     }
     :last-child {
       border-bottom-left-radius: inherit;
@@ -423,8 +423,8 @@ const card = css`
 `
 
 const StyledTable = styled.table<TableProps>`
-  ${(p) => p.fullWidth && 'min-width: 100%'};
-  color: ${(p) => p.theme.colors.darkestContrast};
+  ${(p): string => (p.fullWidth ? 'min-width: 100%' : '')};
+  color: ${(p): string => p.theme.colors.darkestContrast};
 
   th {
     font-weight: 600;

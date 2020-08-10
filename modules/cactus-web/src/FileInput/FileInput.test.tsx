@@ -1,13 +1,11 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import FileInput from './FileInput'
 
-afterEach(cleanup)
-
-describe('component: FileInput', () => {
-  test('should render a file input', () => {
+describe('component: FileInput', (): void => {
+  test('should render a file input', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInput name="throatpunch" accept={['.tsx']} labels={{ delete: 'ejecto seato cuz' }} />
@@ -17,7 +15,7 @@ describe('component: FileInput', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a disabled file input', () => {
+  test('should render a disabled file input', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInput
@@ -32,7 +30,7 @@ describe('component: FileInput', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a loading file', () => {
+  test('should render a loading file', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInput
@@ -47,7 +45,7 @@ describe('component: FileInput', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a loaded file', () => {
+  test('should render a loaded file', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInput
@@ -62,7 +60,7 @@ describe('component: FileInput', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should render a file with an error', () => {
+  test('should render a file with an error', (): void => {
     const { container } = render(
       <StyleProvider>
         <FileInput

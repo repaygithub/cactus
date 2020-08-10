@@ -23,7 +23,7 @@ const flexWrapOptions = ['unset', 'initial', 'wrap', 'nowrap', 'wrap-reverse']
 
 storiesOf('Flex', module).add(
   'Basic Usage',
-  () => (
+  (): React.ReactElement => (
     <Flex
       justifyContent={select('justifyContent', justifyOptions, 'flex-end')}
       alignItems={select('alignItems', alignOptions, 'center')}

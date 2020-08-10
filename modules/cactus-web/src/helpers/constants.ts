@@ -10,7 +10,7 @@ export const livePreviewStyle = {
   marginBottom: '10px',
 }
 
-export const breakpointOrder: Array<keyof typeof breakpoints> = [
+export const breakpointOrder: (keyof typeof breakpoints)[] = [
   'small',
   'medium',
   'large',

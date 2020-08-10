@@ -6,8 +6,8 @@ import Link from './Link'
 
 afterEach(cleanup)
 
-describe('component: Link', () => {
-  test('should render a Link', () => {
+describe('component: Link', (): void => {
+  test('should render a Link', (): void => {
     const { container } = render(
       <StyleProvider>
         <Link to="https://somewhere.over/the/rainbow">way up high</Link>
@@ -17,7 +17,7 @@ describe('component: Link', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const { container } = render(
       <StyleProvider>
         <Link my={4} to="https://somewhere.over/the/rainbow">
@@ -29,7 +29,7 @@ describe('component: Link', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should contain the correct href', () => {
+  test('should contain the correct href', (): void => {
     const { getByText } = render(
       <StyleProvider>
         <Link to="https://throatpunch.com">cough cough</Link>

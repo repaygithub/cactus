@@ -5,7 +5,7 @@ export type ColorStyle = {
   backgroundColor: string
 }
 
-export type StatusColors = {
+export interface StatusColors {
   background: {
     success: string
     warning: string
@@ -39,7 +39,7 @@ export interface IconSizeObject extends Array<number> {
   large?: number
 }
 
-export type TextStyleCollection = {
+export interface TextStyleCollection {
   tiny: TextStyle
   small: TextStyle
   body: TextStyle
@@ -61,7 +61,7 @@ export type Shape = 'square' | 'intermediate' | 'round'
 export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
 export interface CactusTheme {
-  breakpoints?: Array<String>
+  breakpoints?: string[]
   mediaQueries?: {
     small: string
     medium: string
@@ -121,7 +121,7 @@ export interface CactusTheme {
   border: BorderSize
   shape: Shape
   font: string
-  boxShadows: Boolean
+  boxShadows: boolean
 }
 
 export type CactusColor = Exclude<keyof CactusTheme['colors'], 'status'>
@@ -129,16 +129,16 @@ export type CactusColor = Exclude<keyof CactusTheme['colors'], 'status'>
 export type ColorVariant = keyof CactusTheme['colorStyles']
 
 /** Neutrals */
-let white = `hsl(0, 0%, 100%)`
-let lightGray = `hsl(0, 0%, 90%)`
-let mediumGray = `hsl(0, 0%, 70%)`
-let darkGray = `hsl(0, 0%, 50%)`
+const white = `hsl(0, 0%, 100%)`
+const lightGray = `hsl(0, 0%, 90%)`
+const mediumGray = `hsl(0, 0%, 70%)`
+const darkGray = `hsl(0, 0%, 50%)`
 
-type SharedGeneratorOptions = {
+interface SharedGeneratorOptions {
   border?: BorderSize
   shape?: Shape
   font?: Font
-  boxShadows?: Boolean
+  boxShadows?: boolean
 }
 
 interface HueGeneratorOptions extends SharedGeneratorOptions {
@@ -149,28 +149,28 @@ function fromHue({
   primaryHue,
 }: HueGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   /** Core colors */
-  let base = `hsl(${primaryHue}, 96%, 11%)`
-  let baseText = `hsl(0, 0%, 100%)`
-  let callToAction = `hsl(${primaryHue}, 96%, 35%)`
-  let callToActionText = `hsl(0, 0%, 100%)`
-  let transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.3)`
+  const base = `hsl(${primaryHue}, 96%, 11%)`
+  const baseText = `hsl(0, 0%, 100%)`
+  const callToAction = `hsl(${primaryHue}, 96%, 35%)`
+  const callToActionText = `hsl(0, 0%, 100%)`
+  const transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.3)`
 
   /** Contrasts */
-  let lightContrast = `hsl(${primaryHue}, 29%, 90%)`
-  let mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
-  let darkContrast = `hsl(${primaryHue}, 9%, 35%)`
-  let darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
+  const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
+  const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
+  const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
+  const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
 
   /** Notification Colors */
-  let success = `hsl(145, 89%, 28%)`
-  let error = `hsl(353, 84%, 44%)`
-  let warning = `hsl(47, 82%, 47%)`
-  let transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
-  let transparentError = `hsla(353, 84%, 44%, 0.3)`
-  let transparentWarning = `hsla(47, 82%, 47%, 0.3)`
-  let errorDark = `hsl(353, 96%, 11%)`
-  let warningDark = `hsl(47, 96%, 11%)`
-  let successDark = `hsl(145, 96%, 11%)`
+  const success = `hsl(145, 89%, 28%)`
+  const error = `hsl(353, 84%, 44%)`
+  const warning = `hsl(47, 82%, 47%)`
+  const transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
+  const transparentError = `hsla(353, 84%, 44%, 0.3)`
+  const transparentWarning = `hsla(47, 82%, 47%, 0.3)`
+  const errorDark = `hsl(353, 96%, 11%)`
+  const warningDark = `hsl(47, 96%, 11%)`
+  const successDark = `hsl(145, 96%, 11%)`
 
   const status: StatusColors = {
     background: {
@@ -272,21 +272,21 @@ function fromTwoColor({
 }: TwoColorGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   const primaryRgb = hexToRgb(primary)
   const secondaryRgb = hexToRgb(secondary)
-  let [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
+  const [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
   let [secondaryHue, secondarySaturation, secondaryLightness] = rgbToHsl(...secondaryRgb)
   const isSecondaryWhite = secondaryLightness === 100
 
   /** Notification Colors */
   // TODO determine colors to contrast with CTA hue
-  let success = `hsl(145, 89%, 28%)`
-  let error = `hsl(353, 84%, 44%)`
-  let warning = `hsl(47, 82%, 47%)`
-  let transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
-  let transparentError = `hsla(353, 84%, 44%, 0.3)`
-  let transparentWarning = `hsla(47, 82%, 47%, 0.3)`
-  let errorDark = `hsl(353, 96%, 11%)`
-  let warningDark = `hsl(47, 96%, 11%)`
-  let successDark = `hsl(145, 96%, 11%)`
+  const success = `hsl(145, 89%, 28%)`
+  const error = `hsl(353, 84%, 44%)`
+  const warning = `hsl(47, 82%, 47%)`
+  const transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
+  const transparentError = `hsla(353, 84%, 44%, 0.3)`
+  const transparentWarning = `hsla(47, 82%, 47%, 0.3)`
+  const errorDark = `hsl(353, 96%, 11%)`
+  const warningDark = `hsl(47, 96%, 11%)`
+  const successDark = `hsl(145, 96%, 11%)`
 
   const status: StatusColors = {
     background: {
@@ -304,13 +304,13 @@ function fromTwoColor({
   // both colors are undefined or white
   if (primaryLightness === 100 && isSecondaryWhite) {
     /** Contrasts */
-    let lightContrast = `hsl(${primaryHue}, 29%, 90%)`
-    let mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
-    let darkContrast = `hsl(${primaryHue}, 9%, 35%)`
-    let darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
+    const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
+    const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
+    const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
+    const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
 
-    let callToAction = `hsl(244, 48%, 26%)`
-    let callToActionText = white
+    const callToAction = `hsl(244, 48%, 26%)`
+    const callToActionText = white
 
     return [
       {
@@ -391,24 +391,24 @@ function fromTwoColor({
   // primary is non-black and secondary is light or white
   if (isSecondaryWhite || !isDark(...secondaryRgb)) {
     /** Core colors */
-    let base = `hsl(${primaryHue}, ${primarySaturation}%, ${primaryLightness}%)`
-    let contrastHue = isSecondaryWhite ? primaryHue : secondaryHue
+    const base = `hsl(${primaryHue}, ${primarySaturation}%, ${primaryLightness}%)`
+    const contrastHue = isSecondaryWhite ? primaryHue : secondaryHue
 
     /** Contrasts */
-    let lightContrast = `hsl(${contrastHue}, 29%, 90%)`
-    let mediumContrast = `hsl(${contrastHue}, 18%, 45%)`
-    let darkContrast = `hsl(${contrastHue}, 9%, 35%)`
-    let darkestContrast = `hsl(${contrastHue}, 10%, 20%)`
+    const lightContrast = `hsl(${contrastHue}, 29%, 90%)`
+    const mediumContrast = `hsl(${contrastHue}, 18%, 45%)`
+    const darkContrast = `hsl(${contrastHue}, 9%, 35%)`
+    const darkestContrast = `hsl(${contrastHue}, 10%, 20%)`
 
-    let baseText = isDark(...primaryRgb) ? white : darkestContrast
+    const baseText = isDark(...primaryRgb) ? white : darkestContrast
 
     // create secondary color from primary
     secondaryHue = primaryLightness !== 0 ? primaryHue : 244
     secondarySaturation = primaryLightness > 21 ? 98 : 96
     secondaryLightness = primaryLightness > 21 ? 10 : 35
-    let callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
-    let callToActionText = white
-    let transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
+    const callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
+    const callToActionText = white
+    const transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
 
     return [
       {
@@ -488,19 +488,19 @@ function fromTwoColor({
 
   // both primary and secondary are non-white colors
   /** Core colors */
-  let base = `hsl(${primaryHue}, ${primarySaturation}%, ${primaryLightness}%)`
+  const base = `hsl(${primaryHue}, ${primarySaturation}%, ${primaryLightness}%)`
 
   /** Contrasts */
-  let lightContrast = `hsl(${primaryHue}, 29%, 90%)`
-  let mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
-  let darkContrast = `hsl(${primaryHue}, 9%, 35%)`
-  let darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
+  const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
+  const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
+  const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
+  const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
 
-  let baseText = isDark(...primaryRgb) ? white : darkestContrast
+  const baseText = isDark(...primaryRgb) ? white : darkestContrast
 
-  let callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
-  let callToActionText = isDark(...secondaryRgb) ? white : darkestContrast
-  let transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
+  const callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
+  const callToActionText = isDark(...secondaryRgb) ? white : darkestContrast
+  const transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
 
   return [
     {
@@ -592,7 +592,7 @@ const repayOptions: GeneratorOptions = {
   boxShadows: true,
 }
 
-const makeTextStyles = (fontSizes: FontSizeObject) => ({
+const makeTextStyles = (fontSizes: FontSizeObject): TextStyleCollection => ({
   tiny: {
     fontSize: `${fontSizes.tiny}px`,
     lineHeight: '1.44',
@@ -653,7 +653,7 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
   const { border = 'thin', shape = 'round', font = 'Helvetica', boxShadows = true } = options
   const fontOptions: Font[] = ['Helvetica', 'Helvetica Neue', 'Arial']
 
-  fontOptions.sort((x: Font, y: Font) => {
+  fontOptions.sort((x: Font, y: Font): number => {
     return x === font ? -1 : y === font ? 1 : 0
   })
 

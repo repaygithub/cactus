@@ -1,27 +1,32 @@
 import { queryByLabelText, queryByText } from '@testing-library/testcafe'
 import * as path from 'path'
-import { ClientFunction, Selector } from 'testcafe'
+import { ClientFunction } from 'testcafe'
 
 import { UIConfigData } from '../types'
 import makeActions from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 
-const getApiData = ClientFunction(() => (window as any).apiData)
+const getApiData = ClientFunction((): UIConfigData => (window as any).apiData)
 
+// eslint-disable-next-line no-undef
 fixture('UI Config Integration Tests')
-  .before(async (ctx) => {
-    ctx.server = startStaticServer({
-      directory: path.join(process.cwd(), 'dist'),
-      port: 33567,
-      singlePageApp: true,
-    })
-  })
-  .after(async (ctx) => {
-    await ctx.server.close()
-  })
+  .before(
+    async (ctx): Promise<void> => {
+      ctx.server = startStaticServer({
+        directory: path.join(process.cwd(), 'dist'),
+        port: 33567,
+        singlePageApp: true,
+      })
+    }
+  )
+  .after(
+    async (ctx): Promise<void> => {
+      await ctx.server.close()
+    }
+  )
   .page('http://localhost:33567/ui-config')
 
-test('should fill out and submit the entire form', async (t) => {
+test('should fill out and submit the entire form', async (t): Promise<void> => {
   const { fillTextField, searchComboBox, selectDropdownOption, uploadFile } = makeActions(t)
 
   await fillTextField('Display Name', 'Test Merchant')
@@ -33,37 +38,37 @@ test('should fill out and submit the entire form', async (t) => {
   await selectDropdownOption('All Locations', ['Tempe', 'Phoenix'])
   await searchComboBox('Most Popular Location', 'Tempe')
   await searchComboBox('Card Brands', ['MasterCard', 'FakeBrand'])
-  await uploadFile('Upload Logo')
+  await uploadFile()
   await t.click(queryByText('Blue'))
   await t.click(queryByText('Allow Customer Login'))
   await t.click(queryByText('Use Cactus Styles'))
   await t.click(queryByText('Submit'))
 
   const apiData: UIConfigData = await getApiData()
-  if (apiData.file_input[0].contents === null) {
+  if (apiData.fileInput[0].contents === null) {
     // IE spits out null for the contents if the file is 0 bytes
-    apiData.file_input[0].contents = 'data:'
+    apiData.fileInput[0].contents = 'data:'
   }
 
   await t.expect(apiData).eql({
-    display_name: 'Test Merchant',
-    merchant_name: 'tst-mrchnt',
-    terms_and_conditions: 'You must be this tall to test',
-    welcome_content: 'Welcome to the integration test app',
-    footer_content: 'Powered by coffee and sheer willpower',
-    notification_email: 'dhuber@repay.com',
-    all_locations: ['Tempe', 'Phoenix'],
-    mp_location: 'Tempe',
-    card_brands: ['MasterCard', 'FakeBrand'],
-    allow_customer_login: true,
-    use_cactus_styles: true,
-    select_color: 'blue',
-    file_input: [{ fileName: 'test-logo.jpg', contents: 'data:', status: 'loaded' }],
-    established_date: '2019-10-16',
+    displayName: 'Test Merchant',
+    merchantName: 'tst-mrchnt',
+    termsAndConditions: 'You must be this tall to test',
+    welcomeContent: 'Welcome to the integration test app',
+    footerContent: 'Powered by coffee and sheer willpower',
+    notificationEmail: 'dhuber@repay.com',
+    allLocations: ['Tempe', 'Phoenix'],
+    mpLocation: 'Tempe',
+    cardBrands: ['MasterCard', 'FakeBrand'],
+    allowCustomerLogin: true,
+    useCactusStyles: true,
+    selectColor: 'blue',
+    fileInput: [{ fileName: 'test-logo.jpg', contents: 'data:', status: 'loaded' }],
+    establishedDate: '2019-10-16',
   })
 })
 
-test('moves focus to date picker on click', async (t) => {
+test('moves focus to date picker on click', async (t): Promise<void> => {
   const { getActiveElement } = makeActions(t)
   const datePickerTrigger = queryByLabelText('Open date picker')
   await t.click(datePickerTrigger).pressKey('tab')
@@ -78,7 +83,7 @@ test('moves focus to date picker on click', async (t) => {
     .ok('Date picker is not focused')
 })
 
-test('locks focus to date picker', async (t: TestController) => {
+test('locks focus to date picker', async (t: TestController): Promise<void> => {
   const { getActiveElement } = makeActions(t)
   const datePickerTrigger = queryByLabelText('Open date picker')
   await t.click(datePickerTrigger)
@@ -106,7 +111,7 @@ test('locks focus to date picker', async (t: TestController) => {
     .ok('Date button not focused')
 })
 
-test('move and select date with keyboard', async (t: TestController) => {
+test('move and select date with keyboard', async (t: TestController): Promise<void> => {
   const { getActiveElement } = makeActions(t)
   const datePickerTrigger = queryByLabelText('Open date picker')
   await t.click(datePickerTrigger)

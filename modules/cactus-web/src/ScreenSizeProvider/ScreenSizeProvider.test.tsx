@@ -4,10 +4,10 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import { ScreenSizeContext, ScreenSizeProvider, SIZES } from './ScreenSizeProvider'
 
-const Size: React.FC = (props) => {
+const Size: React.FC = (): React.ReactElement => {
   return (
     <ScreenSizeContext.Consumer>
-      {(value) => <span>{value.toString()}</span>}
+      {(value): React.ReactElement => <span>{value.toString()}</span>}
     </ScreenSizeContext.Consumer>
   )
 }
@@ -19,32 +19,41 @@ interface MQ {
   addListener: (x: () => void) => void
 }
 
-describe('component: ScreenSizeProvider', () => {
+describe('component: ScreenSizeProvider', (): void => {
   const matchMedia = window.matchMedia
 
   const media = {
     queries: [] as MQ[],
-    listener: () => {},
-    setWidth: (x: number) => {},
+    listener: (): void => {
+      return
+    },
+    //eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setWidth: (x: number): void => {
+      return
+    },
   }
 
-  const mockMedia = () => {
-    const mock = jest.fn((query: string) => {
-      const minPxMatch = query.match(/\d+/g)
-      const result: MQ = {
-        minPx: minPxMatch ? parseInt(minPxMatch[0]) : 0,
-        matches: false,
-        removeListener: (x: () => void) => {},
-        addListener: (listener) => {
-          media.listener = listener
-        },
+  const mockMedia = (): jest.MockContext<MQ, [string]> => {
+    const mock = jest.fn(
+      (query: string): MQ => {
+        const minPxMatch = query.match(/\d+/g)
+        const result: MQ = {
+          minPx: minPxMatch ? parseInt(minPxMatch[0]) : 0,
+          matches: false,
+          removeListener: (): void => {
+            return
+          },
+          addListener: (listener): void => {
+            media.listener = listener
+          },
+        }
+        media.queries.push(result)
+        return result
       }
-      media.queries.push(result)
-      return result
-    })
+    )
     window.matchMedia = mock as any
     media.queries = [] as MQ[]
-    media.setWidth = (width: number) => {
+    media.setWidth = (width: number): void => {
       for (const mq of media.queries) {
         mq.matches = width >= mq.minPx
       }
@@ -53,11 +62,11 @@ describe('component: ScreenSizeProvider', () => {
     return mock.mock
   }
 
-  afterEach(() => {
+  afterEach((): void => {
     window.matchMedia = matchMedia
   })
 
-  test('changing screen size', () => {
+  test('changing screen size', (): void => {
     const mock = mockMedia()
 
     const { container } = render(
@@ -94,7 +103,7 @@ describe('component: ScreenSizeProvider', () => {
     expect(container).toHaveTextContent('medium')
   })
 
-  test('size comparisons', () => {
+  test('size comparisons', (): void => {
     expect(SIZES.tiny < SIZES.small).toBe(true)
     expect(SIZES.tiny < SIZES.large).toBe(true)
     expect(SIZES.small < SIZES.large).toBe(true)

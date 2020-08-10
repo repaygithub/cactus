@@ -35,6 +35,7 @@ interface AccessibleFieldProps extends MarginProps, WidthProps {
   children: JSX.Element | RenderFunc
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ExtAccessibleFieldProps extends Omit<AccessibleFieldProps, 'children'> {}
 
 export function useAccessibleField({
@@ -74,7 +75,7 @@ export function useAccessibleField({
   }
 }
 
-function AccessibleFieldBase(props: AccessibleFieldProps) {
+function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   const accessibility = useAccessibleField(props)
   const {
     fieldId,
@@ -89,7 +90,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps) {
 
   const ref = React.useRef<HTMLDivElement | null>(null)
   const [maxWidth, setMaxWidth] = React.useState<string | undefined>(undefined)
-  React.useLayoutEffect(() => {
+  React.useLayoutEffect((): void => {
     if (ref.current instanceof HTMLElement) {
       const containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
       if (containerWidth !== maxWidth) {

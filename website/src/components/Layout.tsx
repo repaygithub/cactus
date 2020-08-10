@@ -8,7 +8,7 @@ import { graphql, Link, useStaticQuery } from 'gatsby'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import { Motion, spring } from 'react-motion'
-import styled, { css } from 'styled-components'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 import { ReactComponent as Cactus } from '../assets/cactus.svg'
 import debounce from '../helpers/debounce'
@@ -29,8 +29,8 @@ interface MenuItem {
   routes: string[]
 }
 
-function sortGroup(group: MenuGroup) {
-  group.items.sort((a, b) => {
+function sortGroup(group: MenuGroup): MenuGroup {
+  group.items.sort((a, b): number => {
     if (typeof a.order === 'number' && typeof b.order === 'number') {
       return a.order - b.order
     } else if (typeof a.order === 'number') {
@@ -48,7 +48,7 @@ function sortGroup(group: MenuGroup) {
   return group
 }
 
-function addNode(group: MenuGroup, node: MenuItem) {
+function addNode(group: MenuGroup, node: MenuItem): void {
   if (node.routes.length === 1) {
     if (node.routes[0] === '') {
       // skip root
@@ -62,19 +62,19 @@ function addNode(group: MenuGroup, node: MenuItem) {
     })
   } else {
     const route = node.routes.shift() + '/'
-    const parent = group.items.find((g) => g.url.endsWith(route))
+    const parent = group.items.find((g): boolean => g.url.endsWith(route))
     if (parent !== undefined) {
       addNode(parent, node)
     } else {
       console.error(`Could not find group for: `, node)
       console.log(`${route} not found among:`)
-      group.items.forEach((g) => console.log('\t' + g.url))
+      group.items.forEach((g): void => console.log('\t' + g.url))
     }
   }
 }
 
-function createMenuGroups(pages: Edges<Markdown>) {
-  let group: MenuGroup = {
+function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
+  const group: MenuGroup = {
     order: 1,
     title: '',
     url: '/',
@@ -124,7 +124,12 @@ function createMenuGroups(pages: Edges<Markdown>) {
         url: '/stories/',
         // always last
         order: 1000,
-        items: storybooks.map((story) => ({
+        items: storybooks.map((story): {
+          title: string
+          url: string
+          order: number
+          items: []
+        } => ({
           title: story.name,
           // withPrefix because it's not a gatsby link
           url: `https://repaygithub.github.io/cactus/stories/${story.dirname}/`,
@@ -149,8 +154,8 @@ function createMenuGroups(pages: Edges<Markdown>) {
         routes: slug.replace(/(^\/|\/$)/g, '').split('/'),
       })
     )
-    .sort((a, b) => a.routes.length - b.routes.length)
-    .forEach((item) => {
+    .sort((a, b): number => a.routes.length - b.routes.length)
+    .forEach((item): void => {
       addNode(group, item)
     })
 
@@ -159,33 +164,44 @@ function createMenuGroups(pages: Edges<Markdown>) {
   return group
 }
 
-type MenuContextType = { state: string[]; open: Function; close: Function }
+interface MenuContextType {
+  state: string[]
+  open: (path: string) => void
+  close: (path: string) => void
+}
 const MenuContext = React.createContext<MenuContextType>({
   state: [],
-  open: () => {},
-  close: () => {},
+  open: (): void => {
+    return
+  },
+  close: (): void => {
+    return
+  },
 })
 
-const initialize = (location: WindowLocation) => () => {
-  let state: string[] = []
-  let split = location.pathname.split('/').filter(Boolean)
+const initialize = (location: WindowLocation): (() => string[]) => (): string[] => {
+  const state: string[] = []
+  const split = location.pathname.split('/').filter(Boolean)
   for (let i = 0; i < split.length; ++i) {
     state.push('/' + split.slice(0, i).join('/') + '/')
   }
   return state
 }
 
-const MenuController: React.FC<{ location: WindowLocation }> = ({ children, location }) => {
+const MenuController: React.FC<{ location: WindowLocation }> = ({
+  children,
+  location,
+}): React.ReactElement => {
   const [state, setState] = React.useState(initialize(location))
   const open = React.useCallback(
-    (path) => {
-      setState((s) => [...s, path])
+    (path): void => {
+      setState((s): string[] => [...s, path])
     },
     [setState]
   )
   const close = React.useCallback(
-    (path) => {
-      setState((s) => s.filter((p) => p !== path))
+    (path): void => {
+      setState((s): string[] => s.filter((p): boolean => p !== path))
     },
     [setState]
   )
@@ -197,47 +213,47 @@ const MenuController: React.FC<{ location: WindowLocation }> = ({ children, loca
   )
 }
 
-const useMenu = (path: string) => {
+const useMenu = (path: string): { isOpen: boolean; toggle: () => void } => {
   const context = React.useContext(MenuContext)
   const isOpen = context.state.includes(path)
   return {
     isOpen,
-    toggle: () => (isOpen ? context.close(path) : context.open(path)),
+    toggle: (): void => (isOpen ? context.close(path) : context.open(path)),
   }
 }
 
 const StyledLink = styled(Link)`
   display: block;
   padding: 8px;
-  color: ${(p) => p.theme.colors.base};
+  color: ${(p): string => p.theme.colors.base};
   text-decoration: none;
 
   &[aria-current='page'] {
-    background-color: ${(p) => p.theme.colors.mediumContrast};
-    color: ${(p) => p.theme.colors.white};
+    background-color: ${(p): string => p.theme.colors.mediumContrast};
+    color: ${(p): string => p.theme.colors.white};
   }
 
   &:hover {
-    background-color: ${(p) => p.theme.colors.base};
-    color: ${(p) => p.theme.colors.baseText};
+    background-color: ${(p): string => p.theme.colors.base};
+    color: ${(p): string => p.theme.colors.baseText};
 
     ~ ${IconButton} {
-      color: ${(p) => p.theme.colors.baseText};
+      color: ${(p): string => p.theme.colors.baseText};
     }
   }
 `
 
 const StyledA = StyledLink.withComponent('a')
 
-const isStorybookUrl = (url: string) => /stories\/[a-zA-Z]/.test(url)
+const isStorybookUrl = (url: string): boolean => /stories\/[a-zA-Z]/.test(url)
 
-const NavToggle = ({ toggle, ...rest }: any) => (
+const NavToggle = ({ toggle, ...rest }: any): React.ReactElement => (
   <IconButton {...rest} onClick={toggle} label="open section" iconSize="small">
     <NavigationChevronLeft />
   </IconButton>
 )
 
-const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }) => {
+const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }): React.ReactElement => {
   const { isOpen, toggle } = useMenu(item.url)
   const hasChildren = item.items.length > 0
 
@@ -255,9 +271,11 @@ const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }) => {
           <NavToggle aria-expanded={isOpen ? 'true' : 'false'} toggle={toggle} />
           {isOpen && (
             <MenuList>
-              {item.items.map((item) => (
-                <MenuItem item={item} key={item.url} />
-              ))}
+              {item.items.map(
+                (item): React.ReactElement => (
+                  <MenuItem item={item} key={item.url} />
+                )
+              )}
             </MenuList>
           )}
         </>
@@ -317,8 +335,8 @@ const InnerSidebar = styled.nav`
   float: right;
   min-width: 200px;
   height: 100%;
-  background-color: ${(p) => p.theme.colors.lightContrast};
-  border-right: 2px solid ${(p) => p.theme.colors.base};
+  background-color: ${(p): string => p.theme.colors.lightContrast};
+  border-right: 2px solid ${(p): string => p.theme.colors.base};
 `
 const OuterSidebar = styled.div`
   position: fixed;
@@ -327,7 +345,7 @@ const OuterSidebar = styled.div`
   top: 0;
   bottom: 0;
   overflow: hidden;
-  background-color: ${(p) => p.theme.colors.white};
+  background-color: ${(p): string => p.theme.colors.white};
 
   ::after {
     content: '';
@@ -351,16 +369,16 @@ const RootLink = styled(Link)`
   left: 0;
   right: 0;
   display: block;
-  padding: ${(p) => p.theme.space[3]}px;
+  padding: ${(p): number => p.theme.space[3]}px;
   text-decoration: none;
-  color: ${(p) => p.theme.colors.base};
-  background-color: ${(p) => p.theme.colors.base};
-  color: ${(p) => p.theme.colors.baseText};
+  color: ${(p): string => p.theme.colors.base};
+  background-color: ${(p): string => p.theme.colors.base};
+  color: ${(p): string => p.theme.colors.baseText};
   font-weight: 600;
 
   &:hover,
   &:focus {
-    color: ${(p) => p.theme.colors.lightContrast};
+    color: ${(p): string => p.theme.colors.lightContrast};
   }
 `
 
@@ -374,7 +392,7 @@ const CactusIcon = styled(Cactus).attrs({
 const Header = styled(Box)<{ isOverlayed?: boolean }>`
   position: fixed;
 
-  ${(p: any) =>
+  ${(p: any): FlattenInterpolation<ThemeProps<any>> =>
     p.isOverlayed &&
     css`
       ${IconButton} {
@@ -388,7 +406,7 @@ const Header = styled(Box)<{ isOverlayed?: boolean }>`
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: ${(p) => p.theme.colors.base};
+        background-color: ${(p): string => p.theme.colors.base};
         opacity: 0.5;
       }
     `}
@@ -413,33 +431,33 @@ const Overlay = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: ${(p) => p.theme.colors.base};
+    background-color: ${(p): string => p.theme.colors.base};
     opacity: 0.5;
   }
 `
 
 // defines spring for react-motion
 const springConfig = { stiffness: 220, damping: 26 }
-const checkShouldHaveOverlay = () => global.window && window.innerWidth < 1024
+const checkShouldHaveOverlay = (): boolean => global.window && window.innerWidth < 1024
 
 const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = ({
   children,
   className,
   location,
-}) => {
+}): React.ReactElement => {
   const [isOpen, setOpen] = React.useState(global.window && global.window.innerWidth >= 1024)
-  const toggleOpen = React.useCallback(() => setOpen(!isOpen), [isOpen, setOpen])
+  const toggleOpen = React.useCallback((): void => setOpen(!isOpen), [isOpen, setOpen])
 
   const [hasOverlay, setHasOverlay] = React.useState(checkShouldHaveOverlay)
-  React.useEffect(() => {
-    let handleResize = debounce(() => {
+  React.useEffect((): (() => void) => {
+    const handleResize = debounce((): void => {
       setHasOverlay(checkShouldHaveOverlay())
     }, 200)
     window.addEventListener('resize', handleResize, false)
-    return () => window.removeEventListener('resize', handleResize)
+    return (): void => window.removeEventListener('resize', handleResize)
   }, [])
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     if (hasOverlay) {
       setOpen(false)
     }
@@ -475,7 +493,7 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
       }
     }
   `)
-  let groups = React.useMemo(() => createMenuGroups(pages), [pages])
+  const groups = React.useMemo((): MenuGroup => createMenuGroups(pages), [pages])
 
   return (
     <React.Fragment>
@@ -487,7 +505,7 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
       </Helmet>
       <CactusProvider>
         <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
-          {({ width }) => {
+          {({ width }): React.ReactElement => {
             return (
               <div className={className}>
                 <Header
@@ -516,9 +534,11 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
                     <Scrollable>
                       <MenuController location={location}>
                         <MenuList>
-                          {groups.items.map((item) => (
-                            <MenuItem key={item.url} item={item} />
-                          ))}
+                          {groups.items.map(
+                            (item): React.ReactElement => (
+                              <MenuItem key={item.url} item={item} />
+                            )
+                          )}
                         </MenuList>
                       </MenuController>
                     </Scrollable>
@@ -536,6 +556,10 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
   )
 }
 
-export default styled((props) => (
-  <Location>{({ location }) => <BaseLayout {...props} location={location} />}</Location>
-))``
+export default styled(
+  (props): React.ReactElement => (
+    <Location>
+      {({ location }): React.ReactElement => <BaseLayout {...props} location={location} />}
+    </Location>
+  )
+)``

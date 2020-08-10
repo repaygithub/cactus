@@ -6,8 +6,8 @@ import Spinner from './Spinner'
 
 afterEach(cleanup)
 
-describe('component: Spinner', () => {
-  test('snapshot', () => {
+describe('component: Spinner', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <Spinner />

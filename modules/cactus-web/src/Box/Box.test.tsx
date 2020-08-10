@@ -1,13 +1,11 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Box from './Box'
 
-afterEach(cleanup)
-
-describe('component: Box', () => {
-  test('snapshot', () => {
+describe('component: Box', (): void => {
+  test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
         <Box />
@@ -17,7 +15,7 @@ describe('component: Box', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should accept built-in props', () => {
+  test('should accept built-in props', (): void => {
     const { container } = render(
       <StyleProvider>
         <Box

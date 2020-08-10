@@ -2,15 +2,15 @@ import { RouteComponentProps } from '@reach/router'
 import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { Button, Flex, Modal, SelectField, Text } from '@repay/cactus-web'
 import { ModalType } from '@repay/cactus-web/dist/Modal/Modal'
-import React, { useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 
 import Link from '../components/Link'
 
-const ModalComponent: React.FC<RouteComponentProps> = () => {
+const ModalComponent: React.FC<RouteComponentProps> = (): ReactElement => {
   const [open, setOpen] = useState(false)
   const [variant, setVariant] = useState<ModalType>('action')
 
-  const setVariantName = (value: any) => {
+  const setVariantName = (value: any): void => {
     const name: ModalType = value
     setVariant(name)
   }
@@ -25,7 +25,7 @@ const ModalComponent: React.FC<RouteComponentProps> = () => {
         Modal
       </Text>
       <Flex justifyContent="center" margin="auto" mt="50px" width="30%">
-        <Button onClick={() => setOpen(true)} mr="5px">
+        <Button onClick={(): void => setOpen(true)} mr="5px">
           Simple
         </Button>
       </Flex>
@@ -42,14 +42,14 @@ const ModalComponent: React.FC<RouteComponentProps> = () => {
           options={['default', 'danger', 'warning', 'success']}
           name="variant"
           value={variant}
-          onChange={(_, value) => setVariantName(value)}
+          onChange={(_, value): void => setVariantName(value)}
           margin="0"
         />
       </Flex>
       <Modal
         variant={variant}
         isOpen={open}
-        onClose={() => setOpen(false)}
+        onClose={(): void => setOpen(false)}
         modalLabel="Modal Label"
         closeLabel="Close Label"
       >

@@ -3,9 +3,10 @@ import {
   NavigationChevronRight,
   NavigationMenuDots,
 } from '@repay/cactus-icons'
+import { ColorStyle } from '@repay/cactus-theme'
 import pick from 'lodash/pick'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
@@ -52,7 +53,7 @@ interface PageProps extends CommonPageProps {
   children: React.ReactChild
 }
 
-const PageButton = (props: PageProps) => {
+const PageButton = (props: PageProps): ReactElement => {
   const { page, currentPage, linkAs, pageChangeHandler, children, ...rest } = props
   const disabled = page === currentPage
   return (
@@ -70,7 +71,7 @@ const PageButton = (props: PageProps) => {
   )
 }
 
-function getPageButton(page: number, props: CommonPageProps, label: string) {
+function getPageButton(page: number, props: CommonPageProps, label: string): ReactElement {
   if (page === props.currentPage) {
     props = { ...props, 'aria-current': 'page' }
   } else {
@@ -83,7 +84,7 @@ function getPageButton(page: number, props: CommonPageProps, label: string) {
   )
 }
 
-function dots(key: string) {
+function dots(key: string): ReactElement {
   return (
     <PageItem key={key}>
       <RotatedMenuDots />
@@ -95,7 +96,7 @@ function getPages(
   commonProps: CommonPageProps,
   lastPage: number,
   makeLinkLabel: (page: number) => string
-) {
+): ReactElement[] {
   // TODO At some point we might want to make these breakpoints configurable,
   // or controlled by media queries.
   const lastBreak = lastPage - 2
@@ -109,7 +110,7 @@ function getPages(
     lowerBreak = 1
   }
 
-  const pages: Array<React.ReactElement> = []
+  const pages: ReactElement[] = []
   if (lowerBreak > 1) {
     pages.push(dots('lower-break'))
   }
@@ -123,7 +124,7 @@ function getPages(
   return pages
 }
 
-const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps) => {
+const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps): ReactElement => {
   const { page, disabled, children, onClick, ...rest } = props
   const linkProps: React.AnchorHTMLAttributes<HTMLAnchorElement> = rest
   if (disabled) {
@@ -141,12 +142,12 @@ const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps) => {
   )
 }
 
-export const Pagination: React.FC<PaginationProps> = (props) => {
+export const Pagination: React.FC<PaginationProps> = (props): ReactElement | null => {
   const { pageCount, currentPage, label, className, onPageChange, linkAs } = props
   const pageChangeHandler = React.useCallback(
-    (page: number) => {
+    (page: number): (() => void) | undefined => {
       if (onPageChange) {
-        return () => onPageChange(page)
+        return (): void => onPageChange(page)
       }
     },
     [onPageChange]
@@ -169,7 +170,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
   prevProps['aria-label'] = `${props.prevPageLabel}, ${currentPage - 1}`
   const nextProps = { ...commonProps, page: Math.min(pageCount, currentPage + 1) }
   nextProps['aria-label'] = `${props.nextPageLabel}, ${currentPage + 1}`
-  const marginProps = pick(props, margin.propNames as Array<string>)
+  const marginProps = pick(props, margin.propNames as string[])
 
   return (
     <Nav className={className} aria-label={label} {...marginProps}>
@@ -197,7 +198,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
 Pagination.displayName = 'Pagination'
 
 Pagination.propTypes = {
-  pageCount: function (props: Record<string, any>, propName, componentName) {
+  pageCount: function (props: Record<string, any>): Error | null {
     const pageCount = parseInt(props.pageCount as any)
     if (pageCount < 1 || pageCount !== parseFloat(props.pageCount as any)) {
       return new Error('Prop `pageCount` must be a positive integer')
@@ -205,7 +206,7 @@ Pagination.propTypes = {
 
     return null
   },
-  currentPage: function (props: Record<string, any>, propName, componentName) {
+  currentPage: function (props: Record<string, any>): Error | null {
     const pageCount = parseInt(props.pageCount as any)
     const current = parseInt(props.currentPage as any)
     if (current < 1 || current > pageCount || current !== parseFloat(props.currentPage as any)) {
@@ -214,7 +215,7 @@ Pagination.propTypes = {
 
     return null
   },
-  onPageChange: function (props: Record<string, any>, propName, componentName) {
+  onPageChange: function (props: Record<string, any>): Error | null {
     if (!props.onPageChange) {
       if (!props.linkAs) {
         return new Error('Either `linkAs` OR `onPageChange` prop is required')
@@ -240,13 +241,13 @@ Pagination.defaultProps = {
   prevPageLabel: 'Go to previous page',
   nextPageLabel: 'Go to next page',
   lastPageLabel: 'Go to last page',
-  makeLinkLabel: (page: number) => `Go to page ${page}`,
+  makeLinkLabel: (page: number): string => `Go to page ${page}`,
 }
 
 export default Pagination
 
 // TODO Use the real icons once they're added to the library
-const NavigationFirst = () => {
+const NavigationFirst = (): ReactElement => {
   return (
     <svg
       fill="currentcolor"
@@ -260,7 +261,7 @@ const NavigationFirst = () => {
   )
 }
 
-const NavigationLast = () => {
+const NavigationLast = (): ReactElement => {
   return (
     <svg
       fill="currentcolor"
@@ -304,16 +305,16 @@ const PageItem = styled.li`
 
   &,
   :link {
-    color: ${(p) => p.theme.colors.darkestContrast};
-    ${(p) => fontSize(p.theme, 'small')};
+    color: ${(p): string => p.theme.colors.darkestContrast};
+    ${(p): string => fontSize(p.theme, 'small')};
     line-height: 18px;
     text-decoration: none;
   }
 
-  border-left: ${(p) => border(p.theme, 'lightContrast')};
+  border-left: ${(p): string => border(p.theme, 'lightContrast')};
 
   &:last-child {
-    border-right: ${(p) => border(p.theme, 'lightContrast')};
+    border-right: ${(p): string => border(p.theme, 'lightContrast')};
   }
 
   svg {
@@ -332,7 +333,7 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
   border-radius: 8px;
 
   &:visited {
-    color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${(p): string => p.theme.colors.mediumContrast};
   }
 
   // For styling active links, and overriding the :visited color.
@@ -340,7 +341,7 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
   color: inherit;
 
   &:hover {
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
   }
 
   &:active,
@@ -348,7 +349,7 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
     // Re-stated to prevent a small shift when the button is clicked in Firefox
     padding: 3px;
     outline: none;
-    ${(p) => p.theme.colorStyles.callToAction};
+    ${(p): ColorStyle => p.theme.colorStyles.callToAction};
   }
 
   // Just in case they want to use a button for 'linkAs'
@@ -361,12 +362,12 @@ const PageLink = styled(PageLinkBase)<PageLinkProps>`
 
   &[disabled],
   &[aria-disabled='true'] {
-    color: ${(p) => p.theme.colors.lightGray};
+    color: ${(p): string => p.theme.colors.lightGray};
     background-color: transparent;
     cursor: default;
   }
 
   &[aria-current='page'] {
-    ${(p) => p.theme.colorStyles.base};
+    ${(p): ColorStyle => p.theme.colorStyles.base};
   }
 `

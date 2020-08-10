@@ -2,11 +2,18 @@
   "extends": ["@repay/eslint-config"],
   "overrides": [
     {
-      "files": ["**/*.{ts,tsx}"],
-      "parser": "@typescript-eslint/parser",
+      "files": ["**/*.{js,jsx}"],
       "rules": {
         "no-unused-vars": "off",
         "no-undef": "off"
+      }
+    },
+    {
+      "files": ["**/*.{ts,tsx}"],
+      "extends": ["@repay/eslint-config/ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-comment": "off"
       }
     }
   ]

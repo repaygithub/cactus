@@ -1,7 +1,7 @@
-import { BorderSize, Shape } from '@repay/cactus-theme'
+import { BorderSize, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
@@ -29,117 +29,117 @@ type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   action: css`
-    ${(p) => p.theme.colorStyles.callToAction}
-    border-color: ${(p) => p.theme.colors.callToAction};
+    ${(p): ColorStyle => p.theme.colorStyles.callToAction}
+    border-color: ${(p): string => p.theme.colors.callToAction};
 
     &:hover {
-      ${(p) => p.theme.colorStyles.base}
-      border-color: ${(p) => p.theme.colors.base};
+      ${(p): ColorStyle => p.theme.colorStyles.base}
+      border-color: ${(p): string => p.theme.colors.base};
     }
   `,
   standard: css`
-    color: ${(p) => p.theme.colors.base};
-    background-color: ${(p) => p.theme.colors.white};
-    border-color: ${(p) => p.theme.colors.base};
+    color: ${(p): string => p.theme.colors.base};
+    background-color: ${(p): string => p.theme.colors.white};
+    border-color: ${(p): string => p.theme.colors.base};
 
     &:hover {
-      ${(p) => p.theme.colorStyles.base}
-      border-color: ${(p) => p.theme.colors.base};
+      ${(p): ColorStyle => p.theme.colorStyles.base}
+      border-color: ${(p): string => p.theme.colors.base};
     }
   `,
   danger: css`
-    ${(p) => p.theme.colorStyles.error}
-    border-color: ${(p) => p.theme.colors.error};
+    ${(p): ColorStyle => p.theme.colorStyles.error}
+    border-color: ${(p): string => p.theme.colors.error};
 
     &:hover {
-      color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.errorDark};
-      border-color: ${(p) => p.theme.colors.errorDark};
+      color: ${(p): string => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.errorDark};
+      border-color: ${(p): string => p.theme.colors.errorDark};
     }
   `,
   warning: css`
-    ${(p) => p.theme.colorStyles.warning}
-    border-color: ${(p) => p.theme.colors.warning};
+    ${(p): ColorStyle => p.theme.colorStyles.warning}
+    border-color: ${(p): string => p.theme.colors.warning};
 
     &:hover {
-      color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.warningDark};
-      border-color: ${(p) => p.theme.colors.warningDark};
+      color: ${(p): string => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.warningDark};
+      border-color: ${(p): string => p.theme.colors.warningDark};
     }
   `,
   success: css`
-    ${(p) => p.theme.colorStyles.success}
-    border-color: ${(p) => p.theme.colors.success};
+    ${(p): ColorStyle => p.theme.colorStyles.success}
+    border-color: ${(p): string => p.theme.colors.success};
 
     &:hover {
-      color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.successDark};
-      border-color: ${(p) => p.theme.colors.successDark};
+      color: ${(p): string => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.successDark};
+      border-color: ${(p): string => p.theme.colors.successDark};
     }
   `,
 }
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    color: ${(p) => p.theme.colors.callToActionText};
-    background-color: ${(p) => p.theme.colors.callToAction};
-    border-color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToActionText};
+    background-color: ${(p): string => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
 
     &:hover {
-      color: ${(p) => p.theme.colors.callToAction};
-      background-color: ${(p) => p.theme.colors.white};
-      border-color: ${(p) => p.theme.colors.white};
+      color: ${(p): string => p.theme.colors.callToAction};
+      background-color: ${(p): string => p.theme.colors.white};
+      border-color: ${(p): string => p.theme.colors.white};
     }
   `,
   standard: css`
-    color: ${(p) => p.theme.colors.white};
-    background-color: ${(p) => p.theme.colors.base};
-    border-color: ${(p) => p.theme.colors.white};
+    color: ${(p): string => p.theme.colors.white};
+    background-color: ${(p): string => p.theme.colors.base};
+    border-color: ${(p): string => p.theme.colors.white};
 
     &:hover {
-      color: ${(p) => p.theme.colors.base};
-      background-color: ${(p) => p.theme.colors.white};
-      border-color: ${(p) => p.theme.colors.white};
+      color: ${(p): string => p.theme.colors.base};
+      background-color: ${(p): string => p.theme.colors.white};
+      border-color: ${(p): string => p.theme.colors.white};
     }
   `,
   danger: css`
-    color: ${(p) => p.theme.colors.error};
-    background-color: ${(p) => p.theme.colors.white};
-    border-color: ${(p) => p.theme.colors.error};
+    color: ${(p): string => p.theme.colors.error};
+    background-color: ${(p): string => p.theme.colors.white};
+    border-color: ${(p): string => p.theme.colors.error};
 
     &:hover {
-      color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.error};
+      color: ${(p): string => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.error};
     }
   `,
   warning: css`
-    color: ${(p) => p.theme.colors.warning};
-    background-color: ${(p) => p.theme.colors.white};
-    border-color: ${(p) => p.theme.colors.warning};
+    color: ${(p): string => p.theme.colors.warning};
+    background-color: ${(p): string => p.theme.colors.white};
+    border-color: ${(p): string => p.theme.colors.warning};
 
     &:hover {
-      color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.warning};
-      border-color: ${(p) => p.theme.colors.warning};
+      color: ${(p): string => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.warning};
+      border-color: ${(p): string => p.theme.colors.warning};
     }
   `,
   success: css`
-    color: ${(p) => p.theme.colors.success};
-    background-color: ${(p) => p.theme.colors.white};
-    border-color: ${(p) => p.theme.colors.success};
+    color: ${(p): string => p.theme.colors.success};
+    background-color: ${(p): string => p.theme.colors.white};
+    border-color: ${(p): string => p.theme.colors.success};
 
     &:hover {
-      color: ${(p) => p.theme.colors.white};
-      background-color: ${(p) => p.theme.colors.success};
-      border-color: ${(p) => p.theme.colors.success};
+      color: ${(p): string => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.success};
+      border-color: ${(p): string => p.theme.colors.success};
     }
   `,
 }
 
 const disabled = css`
-  color: ${(p) => p.theme.colors.mediumGray};
-  background-color: ${(p) => p.theme.colors.lightGray};
-  border-color: ${(p) => p.theme.colors.lightGray};
+  color: ${(p): string => p.theme.colors.mediumGray};
+  background-color: ${(p): string => p.theme.colors.lightGray};
+  border-color: ${(p): string => p.theme.colors.lightGray};
   cursor: not-allowed;
 `
 
@@ -163,11 +163,13 @@ const shapeMap = {
     border-radius: 20px;
   `,
 }
-const getShape = (shape: Shape) => shapeMap[shape]
+const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
-const getBorder = (size: BorderSize) => borderMap[size]
+const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
-const variantOrDisabled = (props: ButtonProps) => {
+const variantOrDisabled = (
+  props: ButtonProps
+): ReturnType<typeof css> | FlattenSimpleInterpolation | undefined => {
   const map = props.inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
     return disabled
@@ -184,7 +186,7 @@ const ButtonBase: React.FC<ButtonProps> = ({
   variant,
   loadingText,
   ...rest
-}) => {
+}): React.ReactElement => {
   const props = omitMargins(rest)
   let spanProps = null
   if (loading === true) {
@@ -205,9 +207,9 @@ export const Button = styled(ButtonBase)<ButtonProps>`
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
-  ${(p) => textStyle(p.theme, 'body')};
-  ${(p) => getBorder(p.theme.border)};
-  ${(p) => getShape(p.theme.shape)};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+  ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+  ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
 
   &::-moz-focus-inner {
     border: 0;
@@ -222,9 +224,9 @@ export const Button = styled(ButtonBase)<ButtonProps>`
       width: calc(100% + 10px);
       top: -5px;
       left: -5px;
-      ${(p) => getBorder(p.theme.border)};
-      ${(p) => getShape(p.theme.shape)};
-      border-color: ${(p) => p.theme.colors.callToAction};
+      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+      border-color: ${(p): string => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
   }

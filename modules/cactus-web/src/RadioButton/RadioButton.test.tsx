@@ -7,8 +7,8 @@ import RadioButton from './RadioButton'
 
 afterEach(cleanup)
 
-describe('component: RadioButton', () => {
-  test('should render a radio button', () => {
+describe('component: RadioButton', (): void => {
+  test('should render a radio button', (): void => {
     const radioButton = render(
       <StyleProvider>
         <RadioButton name="test" id="radio" />
@@ -18,7 +18,7 @@ describe('component: RadioButton', () => {
     expect(radioButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render a disabled radio button', () => {
+  test('should render a disabled radio button', (): void => {
     const radioButton = render(
       <StyleProvider>
         <RadioButton name="test" id="radio" disabled />
@@ -28,7 +28,7 @@ describe('component: RadioButton', () => {
     expect(radioButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const radioButton = render(
       <StyleProvider>
         <RadioButton name="test" id="SPACE PROPS YEAH" margin={4} />
@@ -38,7 +38,7 @@ describe('component: RadioButton', () => {
     expect(radioButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onChange event', () => {
+  test('should trigger onChange event', (): void => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -50,7 +50,7 @@ describe('component: RadioButton', () => {
     expect(onChange).toHaveBeenCalled()
   })
 
-  test('should trigger onFocus event', () => {
+  test('should trigger onFocus event', (): void => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -62,7 +62,7 @@ describe('component: RadioButton', () => {
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onFocus event', () => {
+  test('should trigger onFocus event', (): void => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
@@ -78,8 +78,8 @@ describe('component: RadioButton', () => {
   the checkboxes; it's a bug in @testing-library/react and/or user-event. If/when that issue is fixed, we should add
   tests to ensure that no events are triggered when the radio button is disabled. */
 
-  describe('with theme customization', () => {
-    test('should not have box shadows on focus', () => {
+  describe('with theme customization', (): void => {
+    test('should not have box shadows on focus', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { asFragment } = render(
         <StyleProvider theme={theme}>

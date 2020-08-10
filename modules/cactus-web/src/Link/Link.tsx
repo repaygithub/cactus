@@ -15,7 +15,7 @@ interface LinkProps
   to: string
 }
 
-const LinkBase = (props: LinkProps) => {
+const LinkBase = (props: LinkProps): React.ReactElement => {
   const { to, ...rest } = omitMargins(props)
 
   return <a href={to} {...rest} />
@@ -27,20 +27,20 @@ export const Link = styled(LinkBase)`
   position: relative;
 
   :link {
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
   }
 
   :visited {
-    color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${(p): string => p.theme.colors.mediumContrast};
   }
 
   :hover {
-    color: ${(p) => p.theme.colors.base};
+    color: ${(p): string => p.theme.colors.base};
   }
 
   :focus {
-    color: ${(p) => p.theme.colors.callToAction};
-    background-color: ${(p) => p.theme.colors.transparentCTA};
+    color: ${(p): string => p.theme.colors.callToAction};
+    background-color: ${(p): string => p.theme.colors.transparentCTA};
   }
 
   ${margin};

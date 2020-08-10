@@ -37,15 +37,15 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
     throw Error(`Provided directory [${directory}] must be an absolute path.`)
   }
 
-  function isForbidden(filePath: string) {
+  function isForbidden(filePath: string): boolean {
     return !filePath.startsWith(directory)
   }
   const notFoundPath = path.resolve(directory, './404.html')
   const indexPath = path.resolve(directory, 'index.html')
 
   const server = http
-    .createServer(function (request, response) {
-      let url = request.url as string
+    .createServer(function (request, response): void {
+      const url = request.url as string
       let filePath = path.join(directory, url)
       if (isForbidden(filePath)) {
         response.writeHead(403)
@@ -55,30 +55,30 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
         filePath = filePath + 'index.html'
       }
 
-      let extname = String(path.extname(filePath)).toLowerCase()
-      let contentType = mimeTypes[extname as ExtName] || 'application/octet-stream'
+      const extname = String(path.extname(filePath)).toLowerCase()
+      const contentType = mimeTypes[extname as ExtName] || 'application/octet-stream'
 
       fs.readFile(filePath)
-        .then((content) => {
+        .then((content): void => {
           response.writeHead(200, { 'Content-Type': contentType })
           response.end(content, 'utf-8')
         })
-        .catch((error) => {
+        .catch((error): void => {
           if (error.code === 'ENOENT') {
             if (singlePageApp) {
               fs.readFile(indexPath)
                 .catch(
-                  () =>
+                  (): string =>
                     'Not Found: you must provide an index.html file when singlePageApp is set to true.'
                 )
-                .then((content) => {
+                .then((content): void => {
                   response.writeHead(200, { 'Content-Type': mimeTypes['.html'] })
                   response.end(content, 'utf-8')
                 })
             } else {
               fs.readFile(notFoundPath)
-                .catch(() => 'Not Found')
-                .then((content) => {
+                .catch((): string => 'Not Found')
+                .then((content): void => {
                   response.writeHead(404, { 'Content-Type': mimeTypes['.html'] })
                   response.end(content, 'utf-8')
                 })
@@ -93,9 +93,9 @@ export default function startStaticServer({ directory, port, singlePageApp }: Ar
 
   return {
     server,
-    close() {
-      return new Promise((resolve, reject) => {
-        server.close((error) => {
+    close(): Promise<void> {
+      return new Promise((resolve, reject): void => {
+        server.close((error): void => {
           if (error) {
             reject(error)
           } else {

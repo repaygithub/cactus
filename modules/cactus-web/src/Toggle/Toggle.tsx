@@ -18,7 +18,7 @@ export interface ToggleProps
   disabled?: boolean
 }
 
-const ToggleBase = (props: ToggleProps) => {
+const ToggleBase = (props: ToggleProps): React.ReactElement => {
   const componentProps = omitMargins(props)
   const { value, ...toggleProps } = componentProps
   return (
@@ -35,7 +35,7 @@ const StyledX = styled(NavigationClose)`
   position: absolute;
   top: 6px;
   right: 8px;
-  color: ${(p) => p.theme.colors.white};
+  color: ${(p): string => p.theme.colors.white};
 `
 
 const StyledCheck = styled(StatusCheck)`
@@ -44,7 +44,7 @@ const StyledCheck = styled(StatusCheck)`
   position: absolute;
   top: 4px;
   left: 5px;
-  color: ${(p) => p.theme.colors.white};
+  color: ${(p): string => p.theme.colors.white};
 `
 
 export const Toggle = styled(ToggleBase)`
@@ -53,12 +53,12 @@ export const Toggle = styled(ToggleBase)`
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: ${(p) => p.theme.colors.error};
-  border: 1px solid ${(p) => p.theme.colors.error};
-  cursor: ${(p) => (p.disabled ? 'cursor' : 'pointer')};
+  background-color: ${(p): string => p.theme.colors.error};
+  border: 1px solid ${(p): string => p.theme.colors.error};
+  cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
 
   &:focus {
-    ${(p) => boxShadow(p.theme, 1)};
+    ${(p): string => boxShadow(p.theme, 1)};
   }
 
   ::after {
@@ -70,13 +70,13 @@ export const Toggle = styled(ToggleBase)`
     left: -1px;
     position: absolute;
     transition: transform 0.3s;
-    background-color: ${(p) => p.theme.colors.white};
-    box-shadow: 0 0 3px ${(p) => p.theme.colors.darkestContrast};
+    background-color: ${(p): string => p.theme.colors.white};
+    box-shadow: 0 0 3px ${(p): string => p.theme.colors.darkestContrast};
   }
 
   &[aria-checked='true'] {
-    background-color: ${(p) => p.theme.colors.success};
-    border-color: ${(p) => p.theme.colors.success};
+    background-color: ${(p): string => p.theme.colors.success};
+    border-color: ${(p): string => p.theme.colors.success};
 
     ::after {
       transform: translateX(26px);

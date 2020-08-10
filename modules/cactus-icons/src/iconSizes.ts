@@ -4,7 +4,7 @@ const iconSizes = system({
   iconSize: {
     property: 'fontSize',
     scale: 'iconSizes',
-    transform: (size, scale) => {
+    transform: (size, scale): string => {
       let iconSize: string | number = get(scale, size, size)
       iconSize = iconSize.toString()
       if (/^[0-9]+$/.test(iconSize)) {

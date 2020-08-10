@@ -1,7 +1,7 @@
 import { actions } from '@storybook/addon-actions'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import FormHandler from '../storySupport/FormHandler'
 import DateInput from './DateInput'
@@ -11,16 +11,19 @@ const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 storiesOf('DateInput', module)
   .add(
     'Basic Usage',
-    () => <DateInput id="date-input-uncontrolled" name="date" {...eventLoggers} />,
+    (): ReactElement => <DateInput id="date-input-uncontrolled" name="date" {...eventLoggers} />,
     {
       cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
     }
   )
   .add(
     'Controlled with Date',
-    () => (
-      <FormHandler defaultValue={new Date()} onChange={(_, value: string | Date | null) => value}>
-        {({ value, onChange }) => (
+    (): ReactElement => (
+      <FormHandler
+        defaultValue={new Date()}
+        onChange={(_, value: string | Date | null): string | Date | null => value}
+      >
+        {({ value, onChange }): ReactElement => (
           <DateInput
             id="date-input-1"
             name={text('name', 'date-input')}
@@ -35,9 +38,12 @@ storiesOf('DateInput', module)
   )
   .add(
     'Controlled with string',
-    () => (
-      <FormHandler defaultValue="2019-09-16" onChange={(_, value: string | Date | null) => value}>
-        {({ value, onChange }) => (
+    (): ReactElement => (
+      <FormHandler
+        defaultValue="2019-09-16"
+        onChange={(_, value: string | Date | null): string | Date | null => value}
+      >
+        {({ value, onChange }): ReactElement => (
           <DateInput
             id="date-input-with-string-value"
             name={text('name', 'date-input-with-string-value')}
@@ -50,21 +56,30 @@ storiesOf('DateInput', module)
     ),
     { cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } } }
   )
-  .add('type="time"', () => <DateInput id="time-input" name="time" type="time" {...eventLoggers} />)
-  .add('type="datetime"', () => (
-    <DateInput id="datetime-input" name="datetime" type="datetime" {...eventLoggers} />
-  ))
-  .add('with isValidDate', () => (
-    <div>
-      <DateInput
-        type="date"
-        id="date-with-blackouts"
-        name="date_with_blackouts"
-        isValidDate={(date) => {
-          const day = date.getDay()
-          return day !== 0 && day !== 6
-        }}
-      />
-      <p>Only business days are allowed.</p>
-    </div>
-  ))
+  .add(
+    'type="time"',
+    (): ReactElement => <DateInput id="time-input" name="time" type="time" {...eventLoggers} />
+  )
+  .add(
+    'type="datetime"',
+    (): ReactElement => (
+      <DateInput id="datetime-input" name="datetime" type="datetime" {...eventLoggers} />
+    )
+  )
+  .add(
+    'with isValidDate',
+    (): ReactElement => (
+      <div>
+        <DateInput
+          type="date"
+          id="date-with-blackouts"
+          name="date_with_blackouts"
+          isValidDate={(date): boolean => {
+            const day = date.getDay()
+            return day !== 0 && day !== 6
+          }}
+        />
+        <p>Only business days are allowed.</p>
+      </div>
+    )
+  )

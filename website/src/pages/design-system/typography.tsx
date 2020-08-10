@@ -57,7 +57,7 @@ const WeightFlex = styled(Flex)`
   }
 `
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="Typography" />

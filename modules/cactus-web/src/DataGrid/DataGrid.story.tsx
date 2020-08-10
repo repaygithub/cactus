@@ -1,6 +1,6 @@
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import React, { useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
@@ -70,11 +70,11 @@ const INITIAL_DATA = [
   },
 ]
 
-const BoolComponent = ({ value }: { value: boolean }) => {
+const BoolComponent = ({ value }: { value: boolean }): ReactElement => {
   return <div>{value ? 'YES' : 'NO'}</div>
 }
 
-const DataGridContainer = () => {
+const DataGridContainer = (): ReactElement => {
   const showResultsCount = boolean('Show Results Count', true)
   const providePageSizeOptions = boolean('Provide Page Size Options', true)
   const providePageCount = boolean('Provide Page Count', true)
@@ -82,49 +82,52 @@ const DataGridContainer = () => {
   const nextText = text('PrevNext: nextText', 'Next')
   const disableNext = boolean('PrevNext: disableNext', false)
 
-  const [data, setData] = useState<Array<{ [key: string]: any }>>(INITIAL_DATA)
-  const [sortOptions, setSortOptions] = useState<Array<{ id: string; sortAscending: boolean }>>([])
+  const [data, setData] = useState<{ [key: string]: any }[]>(INITIAL_DATA)
+  const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([])
   const [paginationOptions, setPaginationOptions] = useState<{
     currentPage: number
     pageSize: number
     pageCount?: number
-    pageSizeOptions?: Array<number>
+    pageSizeOptions?: number[]
   }>({ currentPage: 1, pageCount: 3, pageSize: 4, pageSizeOptions: [4, 6, 12] })
 
-  const clone = (rowData: { [key: string]: any }) => {
-    setData((currentData) => [...currentData, { ...rowData, name: `${rowData.name} Copy` }])
+  const clone = (rowData: { [key: string]: any }): void => {
+    setData((currentData): { [key: string]: any }[] => [
+      ...currentData,
+      { ...rowData, name: `${rowData.name} Copy` },
+    ])
   }
 
-  const deleteRow = (rowData: { [key: string]: any }) => {
-    const deleteIndex = data.findIndex((datum) => datum.name === rowData.name)
-    setData((currentData) => {
+  const deleteRow = (rowData: { [key: string]: any }): void => {
+    const deleteIndex = data.findIndex((datum): boolean => datum.name === rowData.name)
+    setData((currentData): { [key: string]: any }[] => {
       const newData = [...currentData]
       newData.splice(deleteIndex, 1)
       return newData
     })
   }
 
-  const onSort = (newSortOptions: Array<{ id: string; sortAscending: boolean }>) => {
+  const onSort = (newSortOptions: { id: string; sortAscending: boolean }[]): void => {
     const sortId = newSortOptions[0].id
     const sortAscending = newSortOptions[0].sortAscending
     const dataCopy = JSON.parse(JSON.stringify(data))
     if (sortId === 'created') {
       if (sortAscending) {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return (new Date(a.created) as any) - (new Date(b.created) as any)
         })
       } else {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return (new Date(b.created) as any) - (new Date(a.created) as any)
         })
       }
     } else if (sortId === 'active') {
       if (sortAscending) {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return a.active === b.active ? 0 : a.active ? 1 : -1
         })
       } else {
-        dataCopy.sort((a: Datum, b: Datum) => {
+        dataCopy.sort((a: Datum, b: Datum): number => {
           return a.active === b.active ? 0 : a.active ? -1 : 1
         })
       }
@@ -133,7 +136,7 @@ const DataGridContainer = () => {
     setSortOptions(newSortOptions)
   }
 
-  const paginateData = () => {
+  const paginateData = (): { [key: string]: any }[] => {
     const index1 = (paginationOptions.currentPage - 1) * paginationOptions.pageSize
     const index2 = index1 + paginationOptions.pageSize
     return data.slice(index1, index2)
@@ -143,14 +146,14 @@ const DataGridContainer = () => {
     currentPage: number
     pageSize: number
     pageCount?: number
-  }) => {
+  }): void => {
     if (newPaginationOptions.pageSize !== paginationOptions.pageSize) {
       newPaginationOptions.pageCount = Math.ceil(data.length / newPaginationOptions.pageSize)
     }
     setPaginationOptions(newPaginationOptions)
   }
 
-  const getResultsCountText = () => {
+  const getResultsCountText = (): string => {
     if (paginationOptions.pageCount) {
       return `Showing ${(paginationOptions.currentPage - 1) * paginationOptions.pageSize + 1} to ${
         paginationOptions.currentPage * paginationOptions.pageSize
@@ -162,7 +165,12 @@ const DataGridContainer = () => {
     }
   }
 
-  const getPaginationOptions = () => {
+  const getPaginationOptions = (): {
+    currentPage: number
+    pageSize: number
+    pageCount?: number
+    pageSizeOptions?: number[]
+  } => {
     const paginationOptsCopy = JSON.parse(JSON.stringify(paginationOptions))
     if (!providePageSizeOptions) {
       paginationOptsCopy.pageSizeOptions = undefined
@@ -210,16 +218,23 @@ const DataGridContainer = () => {
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
         <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
         <DataGrid.Column>
-          {(rowData) => (
-            <SplitButton onSelectMainAction={() => {}} mainActionLabel="Edit">
+          {(rowData): ReactElement => (
+            <SplitButton
+              onSelectMainAction={(): void => {
+                return
+              }}
+              mainActionLabel="Edit"
+            >
               <SplitButton.Action
-                onSelect={() => {
+                onSelect={(): void => {
                   clone(rowData)
                 }}
               >
                 Clone
               </SplitButton.Action>
-              <SplitButton.Action onSelect={() => deleteRow(rowData)}>Delete</SplitButton.Action>
+              <SplitButton.Action onSelect={(): void => deleteRow(rowData)}>
+                Delete
+              </SplitButton.Action>
             </SplitButton>
           )}
         </DataGrid.Column>
@@ -228,7 +243,7 @@ const DataGridContainer = () => {
   )
 }
 
-storiesOf('DataGrid', module).add('Basic Usage', () => <DataGridContainer />, {
+storiesOf('DataGrid', module).add('Basic Usage', (): ReactElement => <DataGridContainer />, {
   cactus: {
     overrides: { display: 'block', textAlign: 'center', paddingTop: '16px', paddingBottom: '16px' },
   },

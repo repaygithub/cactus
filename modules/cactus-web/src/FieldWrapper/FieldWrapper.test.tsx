@@ -1,13 +1,11 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import FieldWrapper from './FieldWrapper'
 
-afterEach(cleanup)
-
-describe('component: FormField', () => {
-  test('should provide 16px of spacing between fields', () => {
+describe('component: FormField', (): void => {
+  test('should provide 16px of spacing between fields', (): void => {
     const { container } = render(
       <StyleProvider>
         <div>

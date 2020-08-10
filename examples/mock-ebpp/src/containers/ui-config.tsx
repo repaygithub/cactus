@@ -18,8 +18,6 @@ import { Helmet } from 'react-helmet'
 
 import { post } from '../api'
 
-interface UIConfigProps extends RouteComponentProps {}
-
 interface FileObject {
   fileName: string
   contents: File | string | null
@@ -29,20 +27,20 @@ interface FileObject {
 
 interface State {
   formData: {
-    display_name: string
-    merchant_name: string
-    terms_and_conditions: string
-    welcome_content: string
-    footer_content: string
-    notification_email: string
-    all_locations: Array<string>
-    mp_location: string
-    card_brands: Array<string>
-    allow_customer_login: boolean
-    use_cactus_styles: boolean
-    select_color: string
-    file_input: Array<FileObject> | undefined
-    established_date: string
+    displayName: string
+    merchantName: string
+    termsAndConditions: string
+    welcomeContent: string
+    footerContent: string
+    notificationEmail: string
+    allLocations: string[]
+    mpLocation: string
+    cardBrands: string[]
+    allowCustomerLogin: boolean
+    useCactusStyles: boolean
+    selectColor: string
+    fileInput: FileObject[] | undefined
+    establishedDate: string
   }
 
   status: {
@@ -51,22 +49,22 @@ interface State {
   }
 }
 
-const getInitialState = () => ({
+const getInitialState = (): State => ({
   formData: {
-    display_name: '',
-    merchant_name: '',
-    terms_and_conditions: '',
-    welcome_content: '',
-    footer_content: '',
-    notification_email: '',
-    all_locations: [],
-    mp_location: '',
-    card_brands: [],
-    allow_customer_login: false,
-    use_cactus_styles: false,
-    select_color: '',
-    file_input: undefined,
-    established_date: '2019-10-16',
+    displayName: '',
+    merchantName: '',
+    termsAndConditions: '',
+    welcomeContent: '',
+    footerContent: '',
+    notificationEmail: '',
+    allLocations: [],
+    mpLocation: '',
+    cardBrands: [],
+    allowCustomerLogin: false,
+    useCactusStyles: false,
+    selectColor: '',
+    fileInput: undefined,
+    establishedDate: '2019-10-16',
   },
   status: {
     error: undefined,
@@ -74,61 +72,68 @@ const getInitialState = () => ({
   },
 })
 
-const formatKey = (key: string) => {
+const formatKey = (key: string): string => {
   const words = key.replace('_', ' ').split(' ')
-  let newWords: Array<string> = []
+  const newWords: string[] = []
 
-  words.forEach((word) => {
+  words.forEach((word): void => {
     newWords.push(word.charAt(0).toUpperCase() + word.slice(1))
   })
   return newWords.join(' ')
 }
 
-const UIConfig = (props: UIConfigProps) => {
+//eslint-disable-next-line @typescript-eslint/no-unused-vars
+const UIConfig = (props: RouteComponentProps): React.ReactElement => {
   const [state, setState] = useState<State>(getInitialState())
 
-  const handleChange = (name: string, value: any) => {
-    setState((state) => ({
-      formData: { ...state.formData, [name]: value },
-      status: { ...state.status },
-    }))
+  const handleChange = (name: string, value: any): void => {
+    setState(
+      (state): State => ({
+        formData: { ...state.formData, [name]: value },
+        status: { ...state.status },
+      })
+    )
   }
 
-  const validate = (formData: typeof state.formData) => {
+  const validate = (formData: typeof state.formData): void => {
     let errorFound = false
-    Object.keys(formData).forEach((key) => {
+    Object.keys(formData).forEach((key): void => {
       //@ts-ignore
       const value = formData[key]
 
       if (value === '' || (Array.isArray(value) && value.length === 0)) {
         errorFound = true
-        setState((state) => ({
-          formData: { ...state.formData },
-          status: { error: true, message: `${formatKey(key)} is empty.` },
-        }))
+        setState(
+          (state): State => ({
+            formData: { ...state.formData },
+            status: { error: true, message: `${formatKey(key)} is empty.` },
+          })
+        )
         return
       }
     })
 
     if (errorFound === false) {
-      setState((state) => ({
-        formData: { ...state.formData },
-        status: { error: false, message: `Form successfully submitted` },
-      }))
+      setState(
+        (state): State => ({
+          formData: { ...state.formData },
+          status: { error: false, message: `Form successfully submitted` },
+        })
+      )
     }
   }
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault()
     validate(state.formData)
     post(state.formData)
     console.log((window as any).apiData)
   }
 
-  const handleReset = () => {
-    console.log(state.formData.file_input)
+  const handleReset = (): void => {
+    console.log(state.formData.fileInput)
     setState({ ...getInitialState() })
-    console.log(state.formData.file_input)
+    console.log(state.formData.fileInput)
   }
 
   const emails = ['vvyverman@repay.com', 'dhuber@repay.com']
@@ -158,67 +163,67 @@ const UIConfig = (props: UIConfigProps) => {
             <form onSubmit={handleSubmit} style={{ width: '100%', padding: '16px' }}>
               <TextInputField
                 onChange={handleChange}
-                name="display_name"
+                name="displayName"
                 label="Display Name"
-                value={state.formData.display_name}
+                value={state.formData.displayName}
                 tooltip="Enter your merchant display name"
               />
 
               <TextInputField
                 onChange={handleChange}
-                name="merchant_name"
+                name="merchantName"
                 label="Merchant Name"
-                value={state.formData.merchant_name}
+                value={state.formData.merchantName}
                 tooltip="Enter your merchant name"
               />
               <TextAreaField
                 onChange={handleChange}
-                name="terms_and_conditions"
+                name="termsAndConditions"
                 label="Terms and Conditions"
-                value={state.formData.terms_and_conditions}
+                value={state.formData.termsAndConditions}
                 tooltip="Enter the terms and conditions for your customers"
               />
 
               <TextAreaField
                 onChange={handleChange}
-                name="welcome_content"
+                name="welcomeContent"
                 label="Welcome Content"
-                value={state.formData.welcome_content}
+                value={state.formData.welcomeContent}
                 tooltip="Enter content to be displayed on login"
               />
               <TextAreaField
                 onChange={handleChange}
-                name="footer_content"
+                name="footerContent"
                 label="Footer Content"
                 my={4}
-                value={state.formData.footer_content}
+                value={state.formData.footerContent}
                 tooltip="Enter content to be displayed in the footer"
               />
               <SelectField
                 options={emails}
                 label="Notification Email"
-                name="notification_email"
+                name="notificationEmail"
                 my={4}
                 onChange={handleChange}
-                value={state.formData.notification_email}
+                value={state.formData.notificationEmail}
                 tooltip="Select an email to recieve notifications "
               />
               <SelectField
                 options={cities}
                 multiple={true}
                 label="All Locations"
-                name="all_locations"
+                name="allLocations"
                 onChange={handleChange}
-                value={state.formData.all_locations}
+                value={state.formData.allLocations}
                 tooltip="Select all store locations"
               />
               <SelectField
                 options={cities}
                 comboBox={true}
                 label="Most Popular Location"
-                name="mp_location"
+                name="mpLocation"
                 onChange={handleChange}
-                value={state.formData.mp_location}
+                value={state.formData.mpLocation}
                 tooltip="Select your most popular location"
               />
               <SelectField
@@ -226,9 +231,9 @@ const UIConfig = (props: UIConfigProps) => {
                 multiple={true}
                 comboBox={true}
                 label="Card Brands"
-                name="card_brands"
+                name="cardBrands"
                 onChange={handleChange}
-                value={state.formData.card_brands}
+                value={state.formData.cardBrands}
                 tooltip="Select or create your supported card brands"
               />
 
@@ -236,7 +241,7 @@ const UIConfig = (props: UIConfigProps) => {
                 <FileInputField
                   my={4}
                   label="Upload Logo"
-                  name="file_input"
+                  name="fileInput"
                   tooltip="Upload files"
                   accept={['.jpg', '.png']}
                   labels={{
@@ -247,58 +252,58 @@ const UIConfig = (props: UIConfigProps) => {
                   prompt="Drag files here or"
                   buttonText="Select Files..."
                   onChange={handleChange}
-                  value={state.formData.file_input}
+                  value={state.formData.fileInput}
                 />
               </Flex>
 
               <Flex flexDirection="column" my={3}>
                 <h3 style={{ margin: '5px 0' }}>Select Color</h3>
                 <RadioButtonField
-                  name="select_color"
+                  name="selectColor"
                   value="yellow"
                   label="Yellow"
                   onChange={handleChange}
-                  checked={state.formData.select_color === 'yellow'}
+                  checked={state.formData.selectColor === 'yellow'}
                 />
                 <RadioButtonField
-                  name="select_color"
+                  name="selectColor"
                   value="pink"
                   label="Pink"
                   onChange={handleChange}
-                  checked={state.formData.select_color === 'pink'}
+                  checked={state.formData.selectColor === 'pink'}
                 />
                 <RadioButtonField
-                  name="select_color"
+                  name="selectColor"
                   value="blue"
                   label="Blue"
                   onChange={handleChange}
-                  checked={state.formData.select_color === 'blue'}
+                  checked={state.formData.selectColor === 'blue'}
                 />
               </Flex>
 
               <ToggleField
-                name="allow_customer_login"
+                name="allowCustomerLogin"
                 label="Allow Customer Login"
                 onChange={handleChange}
-                value={state.formData.allow_customer_login}
+                value={state.formData.allowCustomerLogin}
                 my={4}
               />
 
               <CheckBoxField
-                name="use_cactus_styles"
+                name="useCactusStyles"
                 label="Use Cactus Styles"
                 my={4}
-                checked={state.formData.use_cactus_styles}
+                checked={state.formData.useCactusStyles}
                 onChange={handleChange}
               />
 
               <DateInputField
                 label="Established Date"
-                name="established_date"
+                name="establishedDate"
                 id="established-date"
                 tooltip="The date which the company was established"
                 format="YYYY-MM-dd"
-                value={state.formData.established_date}
+                value={state.formData.establishedDate}
                 onChange={handleChange}
               />
 

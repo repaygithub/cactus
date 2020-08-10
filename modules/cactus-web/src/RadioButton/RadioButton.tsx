@@ -22,7 +22,7 @@ interface StyledRadioButtonProps extends React.HTMLProps<HTMLSpanElement> {
   disabled?: boolean
 }
 
-const RadioButtonBase = (props: RadioButtonProps) => {
+const RadioButtonBase = (props: RadioButtonProps): React.ReactElement => {
   const componentProps = omitMargins(props) as Omit<RadioButtonProps, keyof MarginProps>
   const { disabled, id, className, ...radioButtonProps } = componentProps
   return (
@@ -47,8 +47,8 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: ${(p) => (p.disabled ? p.theme.colors.lightGray : 'transparent')};
-  border: 2px solid ${(p) => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
+  background-color: ${(p): string => (p.disabled ? p.theme.colors.lightGray : 'transparent')};
+  border: 2px solid ${(p): string => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
 
   :after {
     position: absolute;
@@ -57,7 +57,7 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${(p) =>
+    background-color: ${(p): string =>
       p.disabled ? p.theme.colors.lightGray : p.theme.colors.callToAction};
     margin: 2px 2px;
     box-sizing: border-box;
@@ -71,10 +71,11 @@ export const RadioButton = styled(RadioButtonBase)`
   line-height: 16px;
   width: 16px;
   height: 16px;
-  cursor: ${(p) => (p.disabled ? 'cursor' : 'pointer')};
+  cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
 
   input:checked ~ span {
-    border-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
+    border-color: ${(p): string | undefined =>
+      !p.disabled ? p.theme.colors.callToAction : undefined};
     background-color: transparent;
   }
 
@@ -83,7 +84,7 @@ export const RadioButton = styled(RadioButtonBase)`
   }
 
   input:focus ~ span {
-    ${(p) => boxShadow(p.theme, 1)}
+    ${(p): string => boxShadow(p.theme, 1)}
   }
 
   ${margin}

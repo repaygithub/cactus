@@ -10,23 +10,36 @@ import {
   StyleProvider,
   TextInputField,
 } from '@repay/cactus-web'
-import React, { FormEvent, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, {
+  FormEvent,
+  ReactElement,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
-const themeArgsTypes = ['use_hue', 'two_colors']
-
-type ThemeArgsContextType = {
+interface ThemeArgsContextType {
   update: (opt: GeneratorOptions) => void
   theme: CactusTheme
 }
 const ThemeArgsContext = React.createContext<ThemeArgsContextType>({
-  update: () => {},
+  update: (): void => {
+    return
+  },
   theme: cactusTheme,
 })
 
-export function CactusProvider({ children }: React.PropsWithChildren<{}>) {
+export function CactusProvider({
+  children,
+}: React.PropsWithChildren<Record<string, unknown>>): ReactElement {
   const [themeArgs, setThemeArgs] = useState<GeneratorOptions>({ primaryHue: 200 })
-  const theme = useMemo(() => generateTheme(themeArgs), [themeArgs])
-  const contextValue = useMemo(() => ({ theme, update: setThemeArgs }), [theme, setThemeArgs])
+  const theme = useMemo((): CactusTheme => generateTheme(themeArgs), [themeArgs])
+  const contextValue = useMemo((): ThemeArgsContextType => ({ theme, update: setThemeArgs }), [
+    theme,
+    setThemeArgs,
+  ])
   return (
     <ThemeArgsContext.Provider value={contextValue}>
       <StyleProvider global theme={theme}>
@@ -38,7 +51,7 @@ export function CactusProvider({ children }: React.PropsWithChildren<{}>) {
 
 const Form = Box.withComponent('form')
 
-export function CactusThemeWidget(props: React.Props<{}>) {
+export function CactusThemeWidget(): ReactElement {
   const formRef = useRef<HTMLFormElement | null>(null)
   const [isClosed, setIsClosed] = useState(true)
   const [values, setValues] = useState<{ [key: string]: any }>({
@@ -47,12 +60,12 @@ export function CactusThemeWidget(props: React.Props<{}>) {
     primary: '',
     secondary: '',
   })
-  const handleOnChange = (name: string, value: any) => {
-    setValues((v) => ({ ...v, [name]: value }))
+  const handleOnChange = (name: string, value: any): void => {
+    setValues((v): { [k: string]: any } => ({ ...v, [name]: value }))
   }
 
-  useEffect(() => {
-    function handleBodyClick(event: MouseEvent) {
+  useEffect((): (() => void) => {
+    function handleBodyClick(event: MouseEvent): void {
       if (
         formRef.current instanceof HTMLElement &&
         event.target instanceof HTMLElement &&
@@ -63,7 +76,7 @@ export function CactusThemeWidget(props: React.Props<{}>) {
     }
 
     document.body.addEventListener('click', handleBodyClick, false)
-    return () => document.body.removeEventListener('click', handleBodyClick, false)
+    return (): void => document.body.removeEventListener('click', handleBodyClick, false)
   }, [])
 
   if (isClosed) {
@@ -72,7 +85,7 @@ export function CactusThemeWidget(props: React.Props<{}>) {
         <IconButton
           label="Update Theme"
           iconSize="medium"
-          onClick={() => setIsClosed((closed) => !closed)}
+          onClick={(): void => setIsClosed((closed): boolean => !closed)}
         >
           <ActionsGear aria-hidden="true" />
         </IconButton>
@@ -82,18 +95,18 @@ export function CactusThemeWidget(props: React.Props<{}>) {
 
   return (
     <ThemeArgsContext.Consumer>
-      {({ update }) => {
-        const handleThemeSubmit = (event: FormEvent<HTMLFormElement>) => {
+      {({ update }): ReactElement => {
+        const handleThemeSubmit = (event: FormEvent<HTMLFormElement>): void => {
           event.preventDefault()
           if (values.type === 'use_hue') {
             update({ primaryHue: parseInt(values.primaryHue) })
           } else {
-            let { primary, secondary } = values
+            const { primary, secondary } = values
             update({ primary, secondary })
           }
         }
 
-        const handleThemeDefault = () => {
+        const handleThemeDefault = (): void => {
           setValues({ type: 'use_hue', primaryHue: 200 })
           update({ primaryHue: 200 })
         }
@@ -137,7 +150,9 @@ export function CactusThemeWidget(props: React.Props<{}>) {
                     min="0"
                     max="360"
                     value={values.primaryHue}
-                    onChange={(e) => handleOnChange(e.currentTarget.name, e.currentTarget.value)}
+                    onChange={(e): void =>
+                      handleOnChange(e.currentTarget.name, e.currentTarget.value)
+                    }
                   />
                 </AccessibleField>
                 <Box
@@ -179,7 +194,7 @@ export function CactusThemeWidget(props: React.Props<{}>) {
   )
 }
 
-export function useCactusTheme() {
+export function useCactusTheme(): CactusTheme {
   const { theme } = useContext(ThemeArgsContext)
   return theme
 }

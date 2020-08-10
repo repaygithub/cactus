@@ -37,7 +37,9 @@
     "packages": [
       "website",
       "modules/*",
-      "examples/*"
+      "examples/*",
+      ".yalc/*",
+      ".yalc/@*/*"
     ],
     "noHoist": [
       "**/jest-styled-components"
@@ -45,7 +47,6 @@
   },
   "devDependencies": {
     "@repay/eslint-config": "^3.0.0",
-    "@typescript-eslint/parser": "^3.7.1",
     "commitizen": "^4.1.2",
     "conventional-commits-parser": "^3.1.0",
     "cz-conventional-changelog": "3.2.0",
@@ -63,5 +64,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "resolutions": {
+    "@typescript-eslint/eslint-plugin": "^3.7.1"
   }
 }

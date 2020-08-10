@@ -1,5 +1,5 @@
-import { TextStyleCollection } from '@repay/cactus-theme'
-import styled from 'styled-components'
+import { TextStyle, TextStyleCollection } from '@repay/cactus-theme'
+import styled, { FlattenSimpleInterpolation } from 'styled-components'
 import {
   color,
   ColorProps,
@@ -38,7 +38,8 @@ export const Text = styled('p')<TextProps>`
   ${fontWeight}
   ${textAlign}
   ${fontStyle}
-  ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
+  ${(p): FlattenSimpleInterpolation | TextStyle | undefined =>
+    p.textStyle && textStyle(p.theme, p.textStyle)}
 `
 
 export const Span = Text.withComponent('span')

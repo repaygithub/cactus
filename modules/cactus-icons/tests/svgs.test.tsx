@@ -6,9 +6,9 @@ import * as icons from '../ts'
 
 afterEach(cleanup)
 
-const iconEntries = Object.entries(icons).filter(([name]) => name !== 'iconSizes')
+const iconEntries = Object.entries(icons).filter(([name]): boolean => name !== 'iconSizes')
 
-test.each(iconEntries)('renders %s', (_, Component) => {
+test.each(iconEntries)('renders %s', (_, Component): void => {
   const { asFragment } = render(
     <StyleProvider>
       <Component />

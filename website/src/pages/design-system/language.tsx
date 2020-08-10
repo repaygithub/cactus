@@ -1,4 +1,3 @@
-import { Flex } from '@repay/cactus-web'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
@@ -9,10 +8,10 @@ import Link from '../../components/Link'
 const Em = styled.em`
   font-style: normal;
   font-weight: 600;
-  color: ${(p) => p.theme.colors.callToAction};
+  color: ${(p): string => p.theme.colors.callToAction};
 `
 
-export default () => {
+export default (): React.ReactElement => {
   return (
     <>
       <Helmet title="Design Language" />

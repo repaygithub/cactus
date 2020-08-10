@@ -3,7 +3,7 @@ import { withFeatureFlags } from '@repay/cactus-fwk'
 import { I18nResource, I18nText } from '@repay/cactus-i18n'
 import Heart from '@repay/cactus-icons/i/status-like'
 import { Box, Flex, MenuButton, ToggleField } from '@repay/cactus-web'
-import React, { Component } from 'react'
+import React, { Component, ReactElement } from 'react'
 
 interface AppProps extends RouteComponentProps {
   onLangChange: (lang: string) => void
@@ -14,18 +14,18 @@ interface AppProps extends RouteComponentProps {
 }
 
 class App extends Component<AppProps> {
-  render() {
+  public render(): ReactElement {
     return (
       <div style={{ paddingTop: '8px' }}>
         <Flex>
           <I18nResource get="language-label">
-            {(label) => (
+            {(label): ReactElement => (
               <MenuButton label={label} ml={2} mr={2} data-testid="select-language">
-                <MenuButton.Item onSelect={() => this.props.onLangChange('en-US')}>
+                <MenuButton.Item onSelect={(): void => this.props.onLangChange('en-US')}>
                   🇺🇸 English
                 </MenuButton.Item>
                 <MenuButton.Item
-                  onSelect={() => this.props.onLangChange('es-US')}
+                  onSelect={(): void => this.props.onLangChange('es-US')}
                   data-testid="spanish-option"
                 >
                   🇲🇽 Español
@@ -50,7 +50,7 @@ class App extends Component<AppProps> {
         >
           <div>
             <I18nResource get="feature-carrots-label">
-              {(label) => (
+              {(label): ReactElement => (
                 <ToggleField
                   name="include_carrot_snacks"
                   id="feature-include-carrots"

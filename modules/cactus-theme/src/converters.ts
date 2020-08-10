@@ -16,7 +16,7 @@ export function rgbToHsl(red: number, green: number, blue: number): [number, num
     // achromatic
     hue = saturation = 0
   } else {
-    let difference = max - min
+    const difference = max - min
     saturation = lightness > 0.5 ? difference / (2 - max - min) : difference / (max + min)
 
     switch (max) {

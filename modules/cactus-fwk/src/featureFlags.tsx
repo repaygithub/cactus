@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { ComponentType, createContext, FC, useContext } from 'react'
+import React, { ComponentType, createContext, FC, ReactElement, useContext } from 'react'
 
 import { FeatureFlagsObject } from './types'
 
@@ -17,13 +17,13 @@ const useFeatureFlags = <FeatureFlags extends string[]>(...features: FeatureFlag
   return result
 }
 
-const withFeatureFlags = <FeatureFlags extends string[], Props extends object>(
+const withFeatureFlags = <FeatureFlags extends string[], Props extends Record<string, any>>(
   features: FeatureFlags,
   Component: ComponentType<Props>
-) => {
-  return (props: Props) => (
+): ((props: Props) => ReactElement) => {
+  return (props: Props): ReactElement => (
     <FeatureFlagContext.Consumer>
-      {(featureFlags) => {
+      {(featureFlags): ReactElement => {
         const flags: FeatureFlagsObject = {}
         if (featureFlags === null) {
           for (const key of features) {
@@ -34,7 +34,7 @@ const withFeatureFlags = <FeatureFlags extends string[], Props extends object>(
             flags[key] = Boolean(featureFlags[key])
           }
         }
-        let propsWithFlags = { ...props, ...flags } as React.PropsWithChildren<Props>
+        const propsWithFlags: Props = { ...props, ...flags }
         return <Component {...propsWithFlags} />
       }}
     </FeatureFlagContext.Consumer>
@@ -43,10 +43,10 @@ const withFeatureFlags = <FeatureFlags extends string[], Props extends object>(
 
 interface FeatureFlagProps {
   feature: string
-  children: (enabled: boolean) => React.ReactElement
+  children: (enabled: boolean) => ReactElement
 }
 
-const FeatureFlag: FC<FeatureFlagProps> = ({ feature, children }) => {
+const FeatureFlag: FC<FeatureFlagProps> = ({ feature, children }): ReactElement => {
   const [enabled] = useFeatureFlags(feature)
   return children(enabled)
 }

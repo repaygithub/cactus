@@ -15,12 +15,15 @@ const statusOptions: StatusOptions = {
   error: 'error',
 }
 
-storiesOf('TextArea', module).add('Basic Usage', () => (
-  <TextArea
-    disabled={boolean('disabled', false)}
-    placeholder={text('placeholder', 'Placeholder')}
-    status={select('status', statusOptions, statusOptions.none)}
-    resize={boolean('resize', false)}
-    {...eventLoggers}
-  />
-))
+storiesOf('TextArea', module).add(
+  'Basic Usage',
+  (): React.ReactElement => (
+    <TextArea
+      disabled={boolean('disabled', false)}
+      placeholder={text('placeholder', 'Placeholder')}
+      status={select('status', statusOptions, statusOptions.none)}
+      resize={boolean('resize', false)}
+      {...eventLoggers}
+    />
+  )
+)

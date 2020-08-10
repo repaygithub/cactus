@@ -9,7 +9,7 @@ import { Span, Text } from './Text'
 const COLOR_STYLES = Object.keys(cactusTheme.colorStyles) as CactusColor[]
 const TEXT_STYLES = Object.keys(cactusTheme.textStyles)
 
-let sampleText = `Stinking bishop pepper jack cheese on toast. St. agur
+const sampleText = `Stinking bishop pepper jack cheese on toast. St. agur
 blue cheese cheese triangles smelly cheese danish fontina pepper
 jack melted cheese pecorino mozzarella. Squirty cheese feta pecorino
 bocconcini everyone loves when the cheese comes out everybody's happy
@@ -19,7 +19,7 @@ cheesy grin cow monterey jack.`
 storiesOf('Text', module)
   .add(
     'Basic Usage of Text',
-    () => (
+    (): React.ReactElement => (
       <Text
         colors={select('colors', COLOR_STYLES, 'base')}
         margin={text('margin', '0 50px')}
@@ -36,7 +36,7 @@ storiesOf('Text', module)
   )
   .add(
     'Basic Usage of Span',
-    () => (
+    (): React.ReactElement => (
       <Span
         colors={select('colors', COLOR_STYLES, 'base')}
         margin={text('margin', '0 50px')}

@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, RenderResult } from '@testing-library/react'
+import { act, cleanup, fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import I18nProvider, {
@@ -15,7 +15,7 @@ import { ResourceDefinition } from '../src/types'
 import MockPromise from './helpers/MockPromise'
 
 class I18nController extends BaseI18nController {
-  load(arg: { lang: string; section: string }) {
+  public load(): Promise<never[]> {
     console.error('This should not be called')
     return Promise.resolve([])
   }
@@ -23,9 +23,9 @@ class I18nController extends BaseI18nController {
 
 afterEach(cleanup)
 
-describe('i18n functionality', () => {
-  describe('<I18nProvider />', () => {
-    test('allows I18nText to render translations when provided', () => {
+describe('i18n functionality', (): void => {
+  describe('<I18nProvider />', (): void => {
+    test('allows I18nText to render translations when provided', (): void => {
       const global = `this_is_the_key = This should render`
       const i18nController = new I18nController({
         defaultLang: 'en',
@@ -40,7 +40,7 @@ describe('i18n functionality', () => {
       expect(container).toHaveTextContent('This should render')
     })
 
-    test('should load translations for requested language', () => {
+    test('should load translations for requested language', (): void => {
       const globalEn = 'this-is-the-key = This should not render'
       const globalEs = 'this-is-the-key = Este texto debe mostrar'
       const globalEsResDef: ResourceDefinition = { lang: 'es', ftl: globalEs }
@@ -51,20 +51,20 @@ describe('i18n functionality', () => {
       })
       const esGlobalPromise = MockPromise.resolve([globalEsResDef])
       // @ts-ignore
-      i18nController.load = jest.fn(() => esGlobalPromise)
+      i18nController.load = jest.fn((): MockPromise => esGlobalPromise)
       const { container } = render(
         <I18nProvider lang="es" controller={i18nController}>
           <I18nText get="this-is-the-key">This is the default content.</I18nText>
         </I18nProvider>
       )
-      act(() => {
+      act((): void => {
         esGlobalPromise._call()
       })
       // @ts-ignore
       expect(container).toHaveTextContent('Este texto debe mostrar')
     })
 
-    test('should render key from default language when key does not exist for requested language', () => {
+    test('should render key from default language when key does not exist for requested language', (): void => {
       const global = `this_is_the_key = This should render`
       const i18nController = new I18nController({
         defaultLang: 'en',
@@ -73,30 +73,30 @@ describe('i18n functionality', () => {
       })
       const esGlobalPromise = MockPromise.resolve([{ lang: 'es', ftl: '' }])
       //@ts-ignore
-      i18nController.load = jest.fn(() => esGlobalPromise)
-      let { container } = render(
+      i18nController.load = jest.fn((): MockPromise => esGlobalPromise)
+      const { container } = render(
         <I18nProvider lang="es" controller={i18nController}>
           <I18nText get="this_is_the_key">This is the default content.</I18nText>
         </I18nProvider>
       )
-      act(() => {
+      act((): void => {
         esGlobalPromise._call()
       })
       expect(container).toHaveTextContent('This should render')
     })
 
-    describe('with mocked console.error', () => {
+    describe('with mocked console.error', (): void => {
       let _error: any
-      beforeEach(() => {
+      beforeEach((): void => {
         _error = console.error
         console.error = jest.fn()
       })
-      afterEach(() => {
+      afterEach((): void => {
         console.error = _error
       })
 
-      test('throws when I18nProvider is rendered without a controller', () => {
-        expect(() => {
+      test('throws when I18nProvider is rendered without a controller', (): void => {
+        expect((): void => {
           render(
             // @ts-ignore
             <I18nProvider>
@@ -108,35 +108,36 @@ describe('i18n functionality', () => {
     })
   })
 
-  describe('I18nController class', () => {
-    test('should throw error when no supported languages are given', () => {
+  describe('I18nController class', (): void => {
+    test('should throw error when no supported languages are given', (): void => {
       //@ts-ignore
-      expect(() => new BaseI18nController({ defaultLang: 'en' })).toThrowError(
+      expect((): BaseI18nController => new BaseI18nController({ defaultLang: 'en' })).toThrowError(
         'You must provide supported languages'
       )
     })
 
-    test('load() should throw when not overridden', () => {
+    test('load() should throw when not overridden', (): void => {
       //@ts-ignore
       class BadI18nController extends BaseI18nController {}
       expect(
-        () => new BadI18nController({ defaultLang: 'en', supportedLangs: ['en'] })
+        (): BaseI18nController =>
+          new BadI18nController({ defaultLang: 'en', supportedLangs: ['en'] })
       ).toThrowError('You must override the `load` method')
     })
 
-    test('should load default global when none is provided', () => {
-      const mockLoad = jest.fn((...args) => MockPromise.resolve([{ lang: 'en', ftl: '' }]))
+    test('should load default global when none is provided', (): void => {
+      const mockLoad = jest.fn((): MockPromise => MockPromise.resolve([{ lang: 'en', ftl: '' }]))
       class Controller extends BaseI18nController {
         //@ts-ignore
-        load(...args) {
-          return mockLoad(...args)
+        public load(): MockPromise {
+          return mockLoad()
         }
       }
       new Controller({ defaultLang: 'en', supportedLangs: ['en'] })
       expect(mockLoad).toHaveBeenCalled()
     })
 
-    test('can access translations outside React context', () => {
+    test('can access translations outside React context', (): void => {
       const global = `
 key_for_the_people = We are the people!
   .aria-label=anything { $value }
@@ -157,7 +158,7 @@ key-for-no-people = blah blah blue stew`
       expect(controller.getText({ id: 'key_for_the_people' })).toBe('Nosotros somos personas!')
     })
 
-    test('defaults to use bidi isolating', () => {
+    test('defaults to use bidi isolating', (): void => {
       const global = `for-all-to-see = You can't see why this fails { $foo }`
       const controller = new I18nController({
         defaultLang: 'en',
@@ -169,7 +170,7 @@ key-for-no-people = blah blah blue stew`
       )
     })
 
-    test('can disabled bidi isolating characters', () => {
+    test('can disabled bidi isolating characters', (): void => {
       const global = `for-all-to-see = No hidden characters here { $foo }`
       const controller = new I18nController({
         defaultLang: 'en',
@@ -182,7 +183,7 @@ key-for-no-people = blah blah blue stew`
       )
     })
 
-    test('should only attempt to load supported languages', () => {
+    test('should only attempt to load supported languages', (): void => {
       const global = `
 key_for_the_people = We are the people!
   .aria-label=anything { $value }
@@ -194,26 +195,28 @@ key-for-no-people = blah blah blue stew`
         global,
       })
       // @ts-ignore
-      controller.load = jest.fn((args) => MockPromise.resolve([{ lang: 'en', ftl: global }]))
+      controller.load = jest.fn(
+        (): MockPromise => MockPromise.resolve([{ lang: 'en', ftl: global }])
+      )
       controller._load({ lang: 'de-DE', section: 'global' })
       expect(controller.load).not.toBeCalled()
     })
 
-    describe('with mocked console.error and console.warn', () => {
+    describe('with mocked console.error and console.warn', (): void => {
       let _error: any
       let _warn: any
-      beforeEach(() => {
+      beforeEach((): void => {
         _error = console.error
         _warn = console.warn
         console.warn = jest.fn()
         console.error = jest.fn()
       })
-      afterEach(() => {
+      afterEach((): void => {
         console.error = _error
         console.warn = _warn
       })
 
-      test('get() should gracefully handle missing id', () => {
+      test('get() should gracefully handle missing id', (): void => {
         const global = `this_is_the_key = This should render`
         const i18nController = new I18nController({
           defaultLang: 'en',
@@ -228,7 +231,7 @@ key-for-no-people = blah blah blue stew`
         )
       })
 
-      test('get() should gracefully handle missing section', () => {
+      test('get() should gracefully handle missing section', (): void => {
         const global = `this_is_the_key = This should render`
         const i18nController = new I18nController({
           defaultLang: 'en',
@@ -242,7 +245,7 @@ key-for-no-people = blah blah blue stew`
         )
       })
 
-      test('can check for existing messages', () => {
+      test('can check for existing messages', (): void => {
         const global = `this_is_the_key = This should render`
         const i18nController = new I18nController({
           defaultLang: 'en',
@@ -255,24 +258,25 @@ key-for-no-people = blah blah blue stew`
         expect(console.warn).not.toHaveBeenCalled()
       })
 
-      test('keeps track of failed resources', () => {
+      test('keeps track of failed resources', (): void => {
         const globalPromise = MockPromise.reject(Error('failed to load requested resource'))
-        const mockLoad = jest.fn((...args) => globalPromise)
+        const mockLoad = jest.fn((): MockPromise => globalPromise)
         class Controller extends BaseI18nController {
           //@ts-ignore
-          load(...args) {
-            return mockLoad(...args)
+          public load(): MockPromise {
+            return mockLoad()
           }
         }
         const controller = new Controller({ defaultLang: 'en', supportedLangs: ['en'] })
         globalPromise._call()
+        //@ts-ignore
         expect(controller._loadingState['global/en']).toBe('failed')
       })
     })
   })
 
-  describe('<I18nSection />', () => {
-    test('can be rendered without providing context', () => {
+  describe('<I18nSection />', (): void => {
+    test('can be rendered without providing context', (): void => {
       const { container } = render(
         <I18nSection name="blank">
           <I18nText get="this_is_the_key">This is the default content.</I18nText>
@@ -281,7 +285,7 @@ key-for-no-people = blah blah blue stew`
       expect(container).toHaveTextContent('This is the default content.')
     })
 
-    test('passed extra data to load()', () => {
+    test('passed extra data to load()', (): void => {
       const controller = new I18nController({
         defaultLang: 'en',
         supportedLangs: ['en', 'en-US'],
@@ -294,7 +298,7 @@ key-for-no-people = blah blah blue stew`
         },
       ])
       //@ts-ignore
-      controller.load = jest.fn(() => sectionPromise)
+      controller.load = jest.fn((): MockPromise => sectionPromise)
 
       render(
         <I18nProvider controller={controller}>
@@ -303,7 +307,7 @@ key-for-no-people = blah blah blue stew`
           </I18nSection>
         </I18nProvider>
       )
-      act(() => {
+      act((): void => {
         sectionPromise._call()
       })
       expect(controller.load).toHaveBeenCalledWith(
@@ -312,8 +316,8 @@ key-for-no-people = blah blah blue stew`
       )
     })
 
-    describe('should override', () => {
-      test('section name', () => {
+    describe('should override', (): void => {
+      test('section name', (): void => {
         const controller = new I18nController({
           defaultLang: 'en',
           supportedLangs: ['en', 'en-US'],
@@ -327,24 +331,24 @@ key-for-no-people = blah blah blue stew`
           },
         ])
         //@ts-ignore
-        controller.load = jest.fn(({ section }) =>
-          section === 'global' ? globalPromise : sectionPromise
+        controller.load = jest.fn(
+          ({ section }): MockPromise => (section === 'global' ? globalPromise : sectionPromise)
         )
-        let { container } = render(
+        const { container } = render(
           <I18nProvider controller={controller}>
             <I18nSection name="kleenex">
               <I18nText get="runny-nose" />
             </I18nSection>
           </I18nProvider>
         )
-        act(() => {
+        act((): void => {
           globalPromise._call()
           sectionPromise._call()
         })
         expect(container).toHaveTextContent('This text should render')
       })
 
-      test('language selection', () => {
+      test('language selection', (): void => {
         const controller = new I18nController({
           defaultLang: 'en',
           supportedLangs: ['en', 'es'],
@@ -358,8 +362,8 @@ key-for-no-people = blah blah blue stew`
           },
         ])
         //@ts-ignore
-        controller.load = jest.fn(({ section, lang }) =>
-          lang === 'en' ? globalPromise : esGlobalPromise
+        controller.load = jest.fn(
+          ({ lang }): MockPromise => (lang === 'en' ? globalPromise : esGlobalPromise)
         )
         const { container } = render(
           <I18nProvider controller={controller}>
@@ -368,7 +372,7 @@ key-for-no-people = blah blah blue stew`
             </I18nSection>
           </I18nProvider>
         )
-        act(() => {
+        act((): void => {
           globalPromise._call()
           esGlobalPromise._call()
         })
@@ -376,7 +380,7 @@ key-for-no-people = blah blah blue stew`
       })
     })
 
-    test('will load extra dependencies', () => {
+    test('will load extra dependencies', (): void => {
       const controller = new I18nController({
         defaultLang: 'en',
         supportedLangs: ['en', 'en-US'],
@@ -395,8 +399,8 @@ key-for-no-people = blah blah blue stew`
         },
       ])
       //@ts-ignore
-      controller.load = jest.fn(({ section }) =>
-        section === 'needed' ? neededPromise : kleenexPromise
+      controller.load = jest.fn(
+        ({ section }): MockPromise => (section === 'needed' ? neededPromise : kleenexPromise)
       )
 
       const { container } = render(
@@ -406,18 +410,18 @@ key-for-no-people = blah blah blue stew`
           </I18nSection>
         </I18nProvider>
       )
-      act(() => {
+      act((): void => {
         kleenexPromise._call()
       })
       // should not render until 'needed' section is also loaded
       expect(container).toHaveTextContent('')
-      act(() => {
+      act((): void => {
         neededPromise._call()
       })
       expect(container).toHaveTextContent('This text should render')
     })
 
-    test('will load extra dependencies with custom props', () => {
+    test('will load extra dependencies with custom props', (): void => {
       const controller = new I18nController({
         defaultLang: 'en',
         supportedLangs: ['en', 'en-US'],
@@ -436,12 +440,12 @@ key-for-no-people = blah blah blue stew`
         },
       ])
       //@ts-ignore
-      controller.load = jest.fn(({ section }) =>
-        section === 'needed' ? neededPromise : kleenexPromise
+      controller.load = jest.fn(
+        ({ section }): MockPromise => (section === 'needed' ? neededPromise : kleenexPromise)
       )
 
       const i18nDependencies = [{ section: 'needed', extra: 'data', for: 'load function' }]
-      const { container } = render(
+      render(
         <I18nProvider controller={controller}>
           <I18nSection name="kleenex" dependencies={i18nDependencies}>
             <I18nText get="runny-nose" />
@@ -455,20 +459,20 @@ key-for-no-people = blah blah blue stew`
     })
   })
 
-  describe('<I18nText />', () => {
-    test('can render get id', () => {
+  describe('<I18nText />', (): void => {
+    test('can render get id', (): void => {
       const { container } = render(<I18nText get="this_is_my_key" />)
       expect(container).toHaveTextContent('this_is_my_key')
     })
 
-    test('renders children when no dictionary is present', () => {
+    test('renders children when no dictionary is present', (): void => {
       const { container } = render(
         <I18nText get="this_is_my_key">This is the default content.</I18nText>
       )
       expect(container).toHaveTextContent('This is the default content.')
     })
 
-    test('can render variables in a translation', () => {
+    test('can render variables in a translation', (): void => {
       const global = `key-for-the-group= We are the { $groupName }!`
       const controller = new I18nController({
         defaultLang: 'en-US',
@@ -483,7 +487,7 @@ key-for-no-people = blah blah blue stew`
       expect(container).toHaveTextContent('We are the \u2068people\u2069!')
     })
 
-    test('can override section', () => {
+    test('can override section', (): void => {
       const global = `key_for_the_people= We are the people!`
       const controller = new I18nController({
         defaultLang: 'en-US',
@@ -492,8 +496,8 @@ key-for-no-people = blah blah blue stew`
       })
       controller.setDict('en-US', 'kleenex', `kleenex__key_for_the_people = We are NOT the people!`)
       let container
-      act(() => {
-        let tester = render(
+      act((): void => {
+        const tester = render(
           <I18nProvider controller={controller}>
             <I18nSection name="kleenex">
               <I18nText get="key_for_the_people" section="global" />
@@ -506,13 +510,13 @@ key-for-no-people = blah blah blue stew`
     })
   })
 
-  describe('<I18nElement />', () => {
-    test('can render get id when no context present', () => {
+  describe('<I18nElement />', (): void => {
+    test('can render get id when no context present', (): void => {
       const { container } = render(<I18nElement get="this_is_my_key" as="div" />)
       expect(container).toHaveTextContent('this_is_my_key')
     })
 
-    test('can render variables in a translation', () => {
+    test('can render variables in a translation', (): void => {
       const global = `key-for-the-group= We are the { $groupName }!`
       const controller = new I18nController({
         defaultLang: 'en-US',
@@ -527,7 +531,7 @@ key-for-no-people = blah blah blue stew`
       expect(container).toHaveTextContent('We are the \u2068people\u2069!')
     })
 
-    test('can render an element with attributes', () => {
+    test('can render an element with attributes', (): void => {
       const global = `
 key-for-the-group= We are the { $groupName }!
   .aria-label = { $groupName} run the world`
@@ -544,7 +548,7 @@ key-for-the-group= We are the { $groupName }!
       expect(getByLabelText('\u2068people\u2069 run the world')).not.toBeNull()
     })
 
-    test('should pass additional props to rendered element', () => {
+    test('should pass additional props to rendered element', (): void => {
       const global = `
 key-for-the-group= We are the people!
   .aria-label = people run the world`
@@ -564,15 +568,17 @@ key-for-the-group= We are the people!
     })
   })
 
-  describe('<I18nResource />', () => {
-    test('renders get key when message not found', () => {
+  describe('<I18nResource />', (): void => {
+    test('renders get key when message not found', (): void => {
       const { container } = render(
-        <I18nResource get="this_is_my_key">{(message) => <span>{message}</span>}</I18nResource>
+        <I18nResource get="this_is_my_key">
+          {(message): React.ReactElement => <span>{message}</span>}
+        </I18nResource>
       )
       expect(container).toHaveTextContent('this_is_my_key')
     })
 
-    test('calls provided children as render prop', () => {
+    test('calls provided children as render prop', (): void => {
       const global = `
 key-for-the-group = We are the { $groupName }!
   .aria-label = { $groupName} run the world`
@@ -584,7 +590,7 @@ key-for-the-group = We are the { $groupName }!
       const { getByLabelText } = render(
         <I18nProvider controller={controller}>
           <I18nResource get="key-for-the-group" args={{ groupName: 'people' }}>
-            {(message, attrs) => <span {...attrs}>{message}</span>}
+            {(message, attrs): React.ReactElement => <span {...attrs}>{message}</span>}
           </I18nResource>
         </I18nProvider>
       )
@@ -593,7 +599,7 @@ key-for-the-group = We are the { $groupName }!
       expect(span).toHaveTextContent('We are the \u2068people\u2069!')
     })
 
-    test('calls provided render prop', () => {
+    test('calls provided render prop', (): void => {
       const global = `
 key-for-the-group = We are the { $groupName }!
   .aria-label = { $groupName} run the world`
@@ -607,7 +613,7 @@ key-for-the-group = We are the { $groupName }!
           <I18nResource
             get="key-for-the-group"
             args={{ groupName: 'people' }}
-            render={(message, attrs) => <span {...attrs}>{message}</span>}
+            render={(message, attrs): React.ReactElement => <span {...attrs}>{message}</span>}
           />
         </I18nProvider>
       )
@@ -617,17 +623,19 @@ key-for-the-group = We are the { $groupName }!
     })
   })
 
-  describe('<I18nFormatted />', () => {
-    test('should handle additional formatting', () => {
+  describe('<I18nFormatted />', (): void => {
+    test('should handle additional formatting', (): void => {
       const global = `key-for-the-group= We are the people!`
       const controller = new I18nController({
         defaultLang: 'en-US',
         supportedLangs: ['en-US'],
         global,
       })
-      const formatter = jest.fn((text: string) => {
-        return <div data-testid="hoobla">{text}</div>
-      })
+      const formatter = jest.fn(
+        (text: string): React.ReactElement => {
+          return <div data-testid="hoobla">{text}</div>
+        }
+      )
       const { getByTestId } = render(
         <I18nProvider controller={controller}>
           <I18nFormatted get="key-for-the-group" formatter={formatter} />
@@ -637,15 +645,15 @@ key-for-the-group = We are the { $groupName }!
     })
   })
 
-  describe('useI18nText()', () => {
-    test('returns fluent text', () => {
+  describe('useI18nText()', (): void => {
+    test('returns fluent text', (): void => {
       const global = `key-for-the-group= We are the people!`
       const controller = new I18nController({
         defaultLang: 'en-US',
         supportedLangs: ['en-US'],
         global,
       })
-      const TestI18nText = () => {
+      const TestI18nText = (): React.ReactElement => {
         const text = useI18nText('key-for-the-group')
         return <div data-testid="used-text">{text}</div>
       }
@@ -657,14 +665,14 @@ key-for-the-group = We are the { $groupName }!
       expect(getByTestId('used-text')).toHaveTextContent('We are the people!')
     })
 
-    test('returns formatted fluent text with args', () => {
+    test('returns formatted fluent text with args', (): void => {
       const global = `key-for-the-group= We are the { $groupName }!`
       const controller = new I18nController({
         defaultLang: 'en-US',
         supportedLangs: ['en-US'],
         global,
       })
-      const TestI18nText = () => {
+      const TestI18nText = (): React.ReactElement => {
         const text = useI18nText('key-for-the-group', { groupName: 'rabbits' })
         return <div data-testid="used-text">{text}</div>
       }
@@ -676,7 +684,7 @@ key-for-the-group = We are the { $groupName }!
       expect(getByTestId('used-text')).toHaveTextContent(/We are the .rabbits.!/)
     })
 
-    test('allows overriding section for text', () => {
+    test('allows overriding section for text', (): void => {
       const global = `key-for-the-group= We are the { $groupName }!`
       const simple = `simple__key-for-the-group = We are the simple people!`
       const controller = new I18nController({
@@ -685,7 +693,7 @@ key-for-the-group = We are the { $groupName }!
         global,
       })
       controller.setDict('en-US', 'simple', simple)
-      const TestI18nText = () => {
+      const TestI18nText = (): React.ReactElement => {
         const text = useI18nText('key-for-the-group', undefined, 'simple')
         return <div data-testid="used-text">{text}</div>
       }
@@ -698,8 +706,8 @@ key-for-the-group = We are the { $groupName }!
     })
   })
 
-  describe('useI18nResource()', () => {
-    test('returns fluent text and attributes', () => {
+  describe('useI18nResource()', (): void => {
+    test('returns fluent text and attributes', (): void => {
       const global = `
 key-for-the-group= We are the people!
   .aria-label = people run the world`
@@ -708,7 +716,7 @@ key-for-the-group= We are the people!
         supportedLangs: ['en-US'],
         global,
       })
-      const TestI18nResource = () => {
+      const TestI18nResource = (): React.ReactElement => {
         const [text, attrs] = useI18nResource('key-for-the-group')
         return <div {...attrs}>{text}</div>
       }
@@ -720,7 +728,7 @@ key-for-the-group= We are the people!
       expect(getByLabelText('people run the world')).toHaveTextContent('We are the people!')
     })
 
-    test('returns formatted text and attributes applying provided args', () => {
+    test('returns formatted text and attributes applying provided args', (): void => {
       const global = `
 key-for-the-group= We are the { $groupName }!
   .aria-label = people run the { $place }`
@@ -729,7 +737,7 @@ key-for-the-group= We are the { $groupName }!
         supportedLangs: ['en-US'],
         global,
       })
-      const TestI18nResource = () => {
+      const TestI18nResource = (): React.ReactElement => {
         const [text, attrs] = useI18nResource('key-for-the-group', {
           groupName: 'people',
           place: 'world',
@@ -744,7 +752,7 @@ key-for-the-group= We are the { $groupName }!
       expect(getByLabelText(/people run the .world./)).toHaveTextContent(/We are the .people.!/)
     })
 
-    test('allows overriding section', () => {
+    test('allows overriding section', (): void => {
       const global = `key-for-the-group= We are the people!`
       const controller = new I18nController({
         defaultLang: 'en-US',
@@ -752,7 +760,7 @@ key-for-the-group= We are the { $groupName }!
         global,
       })
       controller.setDict('en-US', 'other', 'other__key-for-the-group = We are the OTHER people!')
-      const TestI18nResource = () => {
+      const TestI18nResource = (): React.ReactElement => {
         const [text, attrs] = useI18nResource('key-for-the-group', undefined, 'other')
         return (
           <div data-testid="select-me" {...attrs}>

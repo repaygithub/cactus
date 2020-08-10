@@ -6,22 +6,27 @@ import { RulesData } from '../types'
 import makeActions from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 
-const getApiData = ClientFunction(() => (window as any).apiData)
+const getApiData = ClientFunction((): RulesData => (window as any).apiData)
 
+// eslint-disable-next-line no-undef
 fixture('Rules Integration Tests')
-  .before(async (ctx) => {
-    ctx.server = startStaticServer({
-      directory: path.join(process.cwd(), 'dist'),
-      port: 33567,
-      singlePageApp: true,
-    })
-  })
-  .after(async (ctx) => {
-    await ctx.server.close()
-  })
+  .before(
+    async (ctx): Promise<void> => {
+      ctx.server = startStaticServer({
+        directory: path.join(process.cwd(), 'dist'),
+        port: 33567,
+        singlePageApp: true,
+      })
+    }
+  )
+  .after(
+    async (ctx): Promise<void> => {
+      await ctx.server.close()
+    }
+  )
   .page('http://localhost:33567/rules')
 
-test('fill out and submit the form sequentially', async (t: TestController) => {
+test('fill out and submit the form sequentially', async (t: TestController): Promise<void> => {
   const { selectDropdownOption } = makeActions(t)
 
   await t.click(queryByText('Add Rule')).click(queryByText('Add Condition'))
@@ -44,7 +49,9 @@ test('fill out and submit the form sequentially', async (t: TestController) => {
   ])
 })
 
-test('fill out and submit the form with deleting and reordering', async (t: TestController) => {
+test('fill out and submit the form with deleting and reordering', async (t: TestController): Promise<
+  void
+> => {
   const { selectDropdownOption } = makeActions(t)
 
   await t.click(queryByText('Add Rule')).click(queryByText('Add Condition'))

@@ -8,7 +8,9 @@ import { withTheme } from 'styled-components'
 type IconSize = 'tiny' | 'small' | 'medium' | 'large'
 const iconSizes: IconSize[] = ['tiny', 'small', 'medium', 'large']
 
-const IconsPage: React.FC<RouteComponentProps & { theme: CactusTheme }> = ({ theme }) => {
+const IconsPage: React.FC<RouteComponentProps & { theme: CactusTheme }> = ({
+  theme,
+}): React.ReactElement => {
   const themeColors = Object.keys(theme.colors) as CactusColor[]
   const [color, setColor] = React.useState(themeColors[0])
   const [size, setSize] = React.useState('medium' as IconSize)
@@ -22,24 +24,26 @@ const IconsPage: React.FC<RouteComponentProps & { theme: CactusTheme }> = ({ the
           label="Icon Color"
           value={color}
           options={themeColors}
-          onChange={(_, value) => setColor(value as CactusColor)}
+          onChange={(_, value): void => setColor(value as CactusColor)}
         />
         <SelectField
           name="icon_size"
           label="Icon Size"
           value={size}
           options={iconSizes}
-          onChange={(_, value) => setSize(value as IconSize)}
+          onChange={(_, value): void => setSize(value as IconSize)}
           ml={4}
         />
       </Flex>
       <Box color={color}>
         <Grid justify="center">
-          {Object.entries(icons).map(([name, Icon]) => (
-            <Grid.Item key={name} tiny={1}>
-              <Icon iconSize={size} />
-            </Grid.Item>
-          ))}
+          {Object.entries(icons).map(
+            ([name, Icon]): React.ReactElement => (
+              <Grid.Item key={name} tiny={1}>
+                <Icon iconSize={size} />
+              </Grid.Item>
+            )
+          )}
         </Grid>
       </Box>
     </Box>

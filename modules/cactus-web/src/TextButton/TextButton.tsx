@@ -1,7 +1,12 @@
 import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, {
+  css,
+  FlattenInterpolation,
+  FlattenSimpleInterpolation,
+  ThemeProps,
+} from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { textStyle } from '../helpers/theme'
@@ -26,13 +31,13 @@ type VariantMap = { [K in TextButtonVariants]: FlattenInterpolation<ThemeProps<C
 
 const variantMap: VariantMap = {
   action: css`
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
   `,
   standard: css`
-    color: ${(p) => p.theme.colors.base};
+    color: ${(p): string => p.theme.colors.base};
   `,
   danger: css`
-    color: ${(p) => p.theme.colors.error};
+    color: ${(p): string => p.theme.colors.error};
   `,
 }
 
@@ -56,23 +61,23 @@ const shapeMap = {
     border-radius: 20px;
   `,
 }
-const getShape = (shape: Shape) => shapeMap[shape]
+const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
-const getBorder = (size: BorderSize) => borderMap[size]
+const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
 const inverseVariantMap: VariantMap = {
   action: css`
     font-weight: 600;
-    color: ${(p) => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.callToAction};
   `,
   standard: css`
-    color: ${(p) => p.theme.colors.white};
+    color: ${(p): string => p.theme.colors.white};
   `,
   danger: css``,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
-  color: ${(p) => p.theme.colors.mediumGray};
+  color: ${(p): string => p.theme.colors.mediumGray};
   cursor: not-allowed;
 `
 
@@ -92,7 +97,7 @@ const variantOrDisabled = (
 }
 
 export const TextButton = styled.button<TextButtonProps>`
-  ${(p) => textStyle(p.theme, 'body')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   position: relative;
   border: none;
   padding: 4px;
@@ -103,7 +108,7 @@ export const TextButton = styled.button<TextButtonProps>`
   box-sizing: border-box;
 
   &:hover {
-    text-decoration: ${(p) => !p.disabled && 'underline'};
+    text-decoration: ${(p): string => (!p.disabled ? 'underline' : '')};
   }
 
   &:focus {
@@ -116,9 +121,9 @@ export const TextButton = styled.button<TextButtonProps>`
       width: 100%;
       top: 0px;
       left: 0px;
-      ${(p) => getBorder(p.theme.border)};
-      ${(p) => getShape(p.theme.shape)};
-      border-color: ${(p) => p.theme.colors.callToAction};
+      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+      border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
 

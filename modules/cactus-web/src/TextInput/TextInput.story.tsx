@@ -18,11 +18,14 @@ const statusOptions: StatusOptions = {
   error: 'error',
 }
 
-textInputStories.add('Basic Usage', () => (
-  <TextInput
-    disabled={boolean('disabled', false)}
-    placeholder={text('placeholder', 'Placeholder')}
-    status={select('status', statusOptions, statusOptions.none)}
-    {...eventLoggers}
-  />
-))
+textInputStories.add(
+  'Basic Usage',
+  (): React.ReactElement => (
+    <TextInput
+      disabled={boolean('disabled', false)}
+      placeholder={text('placeholder', 'Placeholder')}
+      status={select('status', statusOptions, statusOptions.none)}
+      {...eventLoggers}
+    />
+  )
+)

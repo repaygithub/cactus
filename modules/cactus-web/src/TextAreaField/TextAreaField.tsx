@@ -6,6 +6,7 @@ import { margin, MarginProps } from 'styled-system'
 import { AccessibleField } from '../AccessibleField/AccessibleField'
 import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
+import { LabelProps } from '../Label/Label'
 import TextArea, { TextAreaProps } from '../TextArea/TextArea'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
@@ -14,7 +15,7 @@ interface TextAreaFieldProps
     Omit<TextAreaProps, 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
   label: React.ReactNode
   name: string
-  labelProps?: object
+  labelProps?: LabelProps
   success?: string
   warning?: string
   error?: string
@@ -24,7 +25,7 @@ interface TextAreaFieldProps
   onBlur?: FieldOnBlurHandler
 }
 
-const TextAreaFieldBase = (props: TextAreaFieldProps) => {
+const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
   const {
     label,
     labelProps,
@@ -42,7 +43,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
   } = omitMargins(props) as Omit<TextAreaFieldProps, keyof MarginProps>
 
   const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
       if (typeof onChange === 'function') {
         const currentTarget = (event.currentTarget as unknown) as HTMLTextAreaElement
         onChange(name, currentTarget.value)
@@ -51,11 +52,11 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
     [onChange, name]
   )
 
-  const handleFocus = (event: React.FocusEvent) => {
+  const handleFocus = (): void => {
     handleEvent(onFocus, name)
   }
 
-  const handleBlur = (event: React.FocusEvent) => {
+  const handleBlur = (): void => {
     handleEvent(onBlur, name)
   }
 
@@ -71,7 +72,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
       error={error}
       tooltip={tooltip}
     >
-      {({ fieldId, status, ariaDescribedBy }) => (
+      {({ fieldId, status, ariaDescribedBy }): React.ReactElement => (
         <TextArea
           id={fieldId}
           width="100%"
@@ -90,7 +91,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps) => {
 
 export const TextAreaField = styled(TextAreaFieldBase)`
   position: relative;
-  width: ${(p) => p.width || 'auto'};
+  width: ${(p): string => p.width || 'auto'};
   ${margin}
 `
 

@@ -1,73 +1,106 @@
 import { Router } from '@reach/router'
 import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import { Flex, Spinner, StyleProvider } from '@repay/cactus-web'
-import React, { Component, Suspense } from 'react'
+import React, { Component, ComponentType, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import * as styledComponents from 'styled-components'
 
-const ButtonsPage = React.lazy(() =>
-  import(/* webpackChunkName: "Buttons" */ './containers/Buttons')
+const ButtonsPage = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Buttons" */ './containers/Buttons')
 )
-const HomePage = React.lazy(() => import(/* webpackChunkName: "Home" */ './containers/Home'))
-const InverseButtonsPage = React.lazy(() =>
-  import(/* webpackChunkName: "InverseButtons" */ './containers/InverseButtons')
+const HomePage = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Home" */ './containers/Home')
 )
-const FormExample = React.lazy(() =>
-  import(/* webpackChunkName: "FormExample" */ './containers/FormExample')
+const InverseButtonsPage = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "InverseButtons" */ './containers/InverseButtons')
 )
-
-const AccessibleFieldExample = React.lazy(() =>
-  import(/* webpackChunkName: "AccessibleField" */ './containers/AccessibleField')
-)
-const ModalExample = React.lazy(() => import(/* webpackChunkName: "Modal" */ './containers/Modal'))
-
-const BreadcrumbExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/Breadcrumb')
-)
-const AccordionExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/Accordion')
+const FormExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "FormExample" */ './containers/FormExample')
 )
 
-const AvatarExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/Avatar')
+const AccessibleFieldExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "AccessibleField" */ './containers/AccessibleField')
 )
-const AlertExample = React.lazy(() => import(/* webpackChunkName: "Modal" */ './containers/Alert'))
-
-const DateInputExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/DateInput')
-)
-
-const DateInputFieldExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/DateInputField')
-)
-const FieldWrapperExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/FieldWrapper')
+const ModalExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/Modal')
 )
 
-const FileInputExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/FileInput')
+const BreadcrumbExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/Breadcrumb')
+)
+const AccordionExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/Accordion')
 )
 
-const FileInputFieldExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/FileInputField')
+const AvatarExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/Avatar')
 )
-const FlexExample = React.lazy(() => import(/* webpackChunkName: "Modal" */ './containers/Flex'))
-
-const GridExample = React.lazy(() => import(/* webpackChunkName: "Modal" */ './containers/Grid'))
-
-const IconButtonExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/IconButton')
+const AlertExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/Alert')
 )
 
-const MenuButtonExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/MenuButton')
+const DateInputExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/DateInput')
 )
 
-const StepAvatarExample = React.lazy(() =>
-  import(/* webpackChunkName: "Modal" */ './containers/StepAvatar')
+const DateInputFieldExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/DateInputField')
+)
+const FieldWrapperExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/FieldWrapper')
 )
 
-const Icons = React.lazy(() => import(/* webpackChunkName: "Icons" */ './containers/Icons'))
+const FileInputExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/FileInput')
+)
+
+const FileInputFieldExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/FileInputField')
+)
+const FlexExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/Flex')
+)
+
+const GridExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/Grid')
+)
+
+const IconButtonExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/IconButton')
+)
+
+const MenuButtonExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/MenuButton')
+)
+
+const StepAvatarExample = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Modal" */ './containers/StepAvatar')
+)
+
+const Icons = React.lazy(
+  (): Promise<{ default: ComponentType<any> }> =>
+    import(/* webpackChunkName: "Icons" */ './containers/Icons')
+)
 
 const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   CactusTheme
@@ -86,7 +119,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 class RootTheme extends Component {
-  render() {
+  public render(): React.ReactElement {
     return (
       <StyleProvider theme={cactusTheme} global>
         <Suspense

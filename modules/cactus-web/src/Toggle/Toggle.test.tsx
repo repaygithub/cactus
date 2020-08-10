@@ -7,8 +7,8 @@ import Toggle from './Toggle'
 
 afterEach(cleanup)
 
-describe('component: Toggle', () => {
-  test('should render a toggle', () => {
+describe('component: Toggle', (): void => {
+  test('should render a toggle', (): void => {
     const toggle = render(
       <StyleProvider>
         <Toggle value={false} />
@@ -18,7 +18,7 @@ describe('component: Toggle', () => {
     expect(toggle.asFragment()).toMatchSnapshot()
   })
 
-  test('should render a disabled toggle', () => {
+  test('should render a disabled toggle', (): void => {
     const toggle = render(
       <StyleProvider>
         <Toggle value={false} disabled={true} />
@@ -28,7 +28,7 @@ describe('component: Toggle', () => {
     expect(toggle.asFragment()).toMatchSnapshot()
   })
 
-  test('should initialize value to true', () => {
+  test('should initialize value to true', (): void => {
     const toggle = render(
       <StyleProvider>
         <Toggle value={true} />
@@ -38,7 +38,7 @@ describe('component: Toggle', () => {
     expect(toggle.asFragment()).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const toggle = render(
       <StyleProvider>
         <Toggle value={false} marginBottom={4} />
@@ -48,7 +48,7 @@ describe('component: Toggle', () => {
     expect(toggle.asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onClick event', () => {
+  test('should trigger onClick event', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -60,7 +60,7 @@ describe('component: Toggle', () => {
     expect(onClick).toHaveBeenCalled()
   })
 
-  test('should not trigger onClick event', () => {
+  test('should not trigger onClick event', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -72,8 +72,8 @@ describe('component: Toggle', () => {
     expect(onClick).not.toHaveBeenCalled()
   })
 
-  describe('with theme customization', () => {
-    test('should not have box shadows on focus', () => {
+  describe('with theme customization', (): void => {
+    test('should not have box shadows on focus', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { asFragment } = render(
         <StyleProvider theme={theme}>

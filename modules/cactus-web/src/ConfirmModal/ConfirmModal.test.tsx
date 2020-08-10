@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
@@ -6,35 +6,60 @@ import Text from '../Text/Text'
 import TextInput from '../TextInput/TextInput'
 import ConfirmModal from './ConfirmModal'
 
-afterEach(cleanup)
-
-describe('Modal variant is warning', () => {
-  test('snapshot', () => {
+describe('Modal variant is warning', (): void => {
+  test('snapshot', (): void => {
     const { baseElement } = render(
       <StyleProvider>
-        <ConfirmModal onConfirm={() => {}} onClose={() => {}} isOpen={true} variant="warning" />
+        <ConfirmModal
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
+          isOpen={true}
+          variant="warning"
+        />
       </StyleProvider>
     )
 
     expect(baseElement).toMatchSnapshot()
   })
 })
-describe('Modal variant is success', () => {
-  test('snapshot', () => {
+describe('Modal variant is success', (): void => {
+  test('snapshot', (): void => {
     const { baseElement } = render(
       <StyleProvider>
-        <ConfirmModal onConfirm={() => {}} onClose={() => {}} isOpen={true} variant="success" />
+        <ConfirmModal
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
+          isOpen={true}
+          variant="success"
+        />
       </StyleProvider>
     )
 
     expect(baseElement).toMatchSnapshot()
   })
 })
-describe('Modal variant is danger', () => {
-  test('snapshot', () => {
+describe('Modal variant is danger', (): void => {
+  test('snapshot', (): void => {
     const { baseElement } = render(
       <StyleProvider>
-        <ConfirmModal onConfirm={() => {}} onClose={() => {}} isOpen={true} variant="danger" />
+        <ConfirmModal
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
+          isOpen={true}
+          variant="danger"
+        />
       </StyleProvider>
     )
 
@@ -42,11 +67,20 @@ describe('Modal variant is danger', () => {
   })
 })
 
-describe('Modal renders TextInput and Description', () => {
-  test('snapshot', () => {
+describe('Modal renders TextInput and Description', (): void => {
+  test('snapshot', (): void => {
     const { baseElement, getByTestId } = render(
       <StyleProvider>
-        <ConfirmModal onConfirm={() => {}} onClose={() => {}} isOpen={true} variant="danger">
+        <ConfirmModal
+          onConfirm={(): void => {
+            return
+          }}
+          onClose={(): void => {
+            return
+          }}
+          isOpen={true}
+          variant="danger"
+        >
           <Text as="h4" fontWeight="normal" data-testid="description">
             Description text
           </Text>

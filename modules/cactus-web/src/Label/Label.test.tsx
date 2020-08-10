@@ -1,14 +1,11 @@
-import cactusTheme from '@repay/cactus-theme'
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Label from './Label'
 
-afterEach(cleanup)
-
-describe('component: Label', () => {
-  test('should render a label component', () => {
+describe('component: Label', (): void => {
+  test('should render a label component', (): void => {
     const label = render(
       <StyleProvider>
         <Label>It is important to label UI elements</Label>
@@ -18,7 +15,7 @@ describe('component: Label', () => {
     expect(label.asFragment()).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const label = render(
       <StyleProvider>
         <Label ml={2} />

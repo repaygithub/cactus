@@ -7,7 +7,7 @@ import {
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, Shape } from '@repay/cactus-theme'
+import { BorderSize, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { MutableRefObject, useRef, useState } from 'react'
 import styled, {
@@ -23,7 +23,9 @@ import { getTopPosition } from '../helpers/positionPopover'
 import { getScrollX } from '../helpers/scrollOffset'
 import { boxShadow, textStyle } from '../helpers/theme'
 
-export type IconProps = { iconSize: 'tiny' | 'small' | 'medium' | 'large' }
+export interface IconProps {
+  iconSize: 'tiny' | 'small' | 'medium' | 'large'
+}
 
 interface SplitButtonProps
   extends Omit<
@@ -66,17 +68,17 @@ const mainShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
   `,
 }
 
-const getBorder = (borderSize: BorderSize) => borderMap[borderSize]
-const getMainShape = (shape: Shape) => mainShapeMap[shape]
+const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
+const getMainShape = (shape: Shape): ReturnType<typeof css> => mainShapeMap[shape]
 
 const MainActionButton = styled.button`
   box-sizing: border-box;
-  ${(p) => getBorder(p.theme.border)}
-  ${(p) => getMainShape(p.theme.shape)}
-  background-color: ${(p) => p.theme.colors.white};
+  ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
+  ${(p): ReturnType<typeof css> => getMainShape(p.theme.shape)}
+  background-color: ${(p): string => p.theme.colors.white};
   height: 32px;
   outline: none;
-  ${(p) => textStyle(p.theme, 'body')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   font-weight: 400;
   cursor: pointer;
   padding-left: 12px;
@@ -91,26 +93,27 @@ const MainActionButton = styled.button`
     border: 0;
   }
 
-  ${(p) =>
-    p.disabled &&
-    `
-  color: ${p.theme.colors.mediumGray};
-  background-color: ${p.theme.colors.lightGray};
-  border-color: ${p.theme.colors.lightGray};
-  cursor: not-allowed;
-  `}
+  ${(p): string =>
+    p.disabled
+      ? `
+    color: ${p.theme.colors.mediumGray};
+    background-color: ${p.theme.colors.lightGray};
+    border-color: ${p.theme.colors.lightGray};
+    cursor: not-allowed;
+  `
+      : ''}
 
   &.dd-closed {
-    border-color: ${(p) => p.theme.colors.darkestContrast};
+    border-color: ${(p): string => p.theme.colors.darkestContrast};
 
     &:hover,
     &:focus {
-      border-color: ${(p) => p.theme.colors.callToAction};
+      border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
 
   &.dd-open {
-    border-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
   }
 `
 
@@ -132,21 +135,22 @@ const dropdownShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
   `,
 }
 
-const getDropdownShape = (shape: Shape) => dropdownShapeMap[shape]
+const getDropdownShape = (shape: Shape): FlattenSimpleInterpolation => dropdownShapeMap[shape]
 
 const SplitButtonList = styled(ReachMenuItems)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
-  ${(p) => getDropdownShape(p.theme.shape)}
-  ${(p) => boxShadow(p.theme, 1)};
+  ${(p): FlattenSimpleInterpolation => getDropdownShape(p.theme.shape)}
+  ${(p): string => boxShadow(p.theme, 1)};
   z-index: 1000;
-  background-color: ${(p) => p.theme.colors.white};
+  background-color: ${(p): string => p.theme.colors.white};
 
-  ${(p) =>
-    !p.theme.boxShadows &&
-    `${getBorder(p.theme.border)};
-    border-color: ${p.theme.colors.lightContrast};`}
+  ${(p): string =>
+    !p.theme.boxShadows
+      ? `${getBorder(p.theme.border)};
+        border-color: ${p.theme.colors.lightContrast};`
+      : ''}
 
   [data-reach-menu-item] {
     position: relative;
@@ -154,14 +158,14 @@ const SplitButtonList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p) => textStyle(p.theme, 'small')};
-    ${(p) => p.theme.colorStyles.standard};
+    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
+    ${(p): ColorStyle => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
     text-align: center;
 
     &[data-selected] {
-      ${(p) => p.theme.colorStyles.callToAction};
+      ${(p): ColorStyle => p.theme.colorStyles.callToAction};
     }
   }
 `
@@ -178,44 +182,46 @@ const dropdownButtonShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
   `,
 }
 
-const getDropdownButtonShape = (shape: Shape) => dropdownButtonShapeMap[shape]
+const getDropdownButtonShape = (shape: Shape): FlattenSimpleInterpolation =>
+  dropdownButtonShapeMap[shape]
 
 const DropdownButton = styled(ReachMenuButton)`
   box-sizing: border-box;
-  background-color: ${(p) => p.theme.colors.darkestContrast};
+  background-color: ${(p): string => p.theme.colors.darkestContrast};
   height: 32px;
   width: 36px;
-  ${(p) => getDropdownButtonShape(p.theme.shape)}
+  ${(p): FlattenSimpleInterpolation => getDropdownButtonShape(p.theme.shape)}
   margin-left: 1px;
   border: 0px;
   outline: none;
   cursor: pointer;
 
-  ${(p) =>
-    p.disabled &&
-    `
+  ${(p): string =>
+    p.disabled
+      ? `
   color: ${p.theme.colors.mediumGray};
   background-color: ${p.theme.colors.lightGray};
   cursor: not-allowed;
-  `}
+  `
+      : ''}
 
   ${NavigationChevronDown} {
     width: 10px;
     height: 10px;
-    color: ${(p) => p.theme.colors.white};
+    color: ${(p): string => p.theme.colors.white};
   }
 
   &:hover,
   &:focus {
-    background-color: ${(p) => !p.disabled && p.theme.colors.callToAction};
+    background-color: ${(p): string => (!p.disabled ? p.theme.colors.callToAction : '')};
   }
 
   &[aria-expanded='true'] ~ ${MainActionButton} {
-    border-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
   }
 `
 
-const SplitButtonBase = (props: SplitButtonProps) => {
+const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
   const {
     className,
     mainActionLabel,
@@ -227,7 +233,7 @@ const SplitButtonBase = (props: SplitButtonProps) => {
     ...rest
   } = props
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  let mainActionRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
+  const mainActionRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
   return (
     <div className={className} {...rest}>
       <MainActionButton
@@ -241,7 +247,7 @@ const SplitButtonBase = (props: SplitButtonProps) => {
         {mainActionLabel}
       </MainActionButton>
       <ReachMenu>
-        {({ isOpen }: { isOpen: boolean }) => {
+        {({ isOpen }: { isOpen: boolean }): React.ReactElement => {
           setDropdownOpen(isOpen)
           return (
             <React.Fragment>
@@ -250,7 +256,10 @@ const SplitButtonBase = (props: SplitButtonProps) => {
                 <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
               </DropdownButton>
               <ReachMenuPopover
-                position={(targetRect, popoverRect) => {
+                position={(
+                  targetRect,
+                  popoverRect
+                ): { width?: number; left?: number; top?: string } => {
                   if (!targetRect || !popoverRect || !mainActionRef.current) {
                     return {}
                   }
@@ -276,7 +285,7 @@ const SplitButtonBase = (props: SplitButtonProps) => {
   )
 }
 
-const SplitButtonActionBase = (props: SplitButtonActionProps) => {
+const SplitButtonActionBase = (props: SplitButtonActionProps): React.ReactElement => {
   const { children, icon: Icon, ...rest } = props
   return (
     <ReachMenuItem {...rest}>
@@ -306,11 +315,11 @@ export const SplitButton = styled(SplitButtonBase)`
       transform: rotate3d(1, 0, 0, 180deg);
     }
 
-    background-color: ${(p) => p.theme.colors.callToAction};
+    background-color: ${(p): string => p.theme.colors.callToAction};
   }
 
   ${DropdownButton}[aria-expanded='true'] + ${MainActionButton} {
-    border-color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p): string => p.theme.colors.callToAction};
   }
 ` as any
 

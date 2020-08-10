@@ -1,8 +1,13 @@
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, Shape } from '@repay/cactus-theme'
+import { BorderSize, ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import styled, { css, DefaultTheme, StyledComponent } from 'styled-components'
+import React, { createContext, ReactElement, useContext, useEffect, useState } from 'react'
+import styled, {
+  css,
+  DefaultTheme,
+  FlattenSimpleInterpolation,
+  StyledComponent,
+} from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { keyPressAsClick } from '../helpers/a11y'
@@ -27,16 +32,20 @@ interface DataColumn {
 }
 
 const DataGridContext = createContext<DataGridContextType>({
-  addDataColumn: () => {},
-  addColumn: () => {},
+  addDataColumn: (): void => {
+    return
+  },
+  addColumn: (): void => {
+    return
+  },
 })
 
 interface DataGridProps extends MarginProps {
-  data: Array<{ [key: string]: any }>
+  data: { [key: string]: any }[]
   paginationOptions?: PaginationOptions
-  sortOptions?: Array<SortOption>
+  sortOptions?: SortOption[]
   onPageChange: (newPageOptions: PaginationOptions) => void
-  onSort: (newSortOptions: Array<SortOption>) => void
+  onSort: (newSortOptions: SortOption[]) => void
   children: React.ReactNode
   fullWidth?: boolean
   className?: string
@@ -62,7 +71,7 @@ interface PaginationOptions {
   currentPage: number
   pageSize: number
   pageCount?: number
-  pageSizeOptions?: Array<number>
+  pageSizeOptions?: number[]
 }
 
 interface SortOption {
@@ -110,7 +119,7 @@ interface ColumnObject {
   title?: string
 }
 
-const DataGridBase = (props: DataGridProps) => {
+const DataGridBase = (props: DataGridProps): ReactElement => {
   const {
     children,
     data,
@@ -128,11 +137,11 @@ const DataGridBase = (props: DataGridProps) => {
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
 
-  const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn) => {
+  const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn): void => {
     setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
   }
 
-  const addColumn = (key: string, columnFn: ColumnFn, title?: string) => {
+  const addColumn = (key: string, columnFn: ColumnFn, title?: string): void => {
     setColumns(new Map(columns.set(key, { columnFn, title })))
   }
 
@@ -149,78 +158,84 @@ const DataGridBase = (props: DataGridProps) => {
         />
         <Table fullWidth={fullWidth}>
           <Table.Header>
-            {[...columns.keys()].map((key) => {
-              let column = columns.get(key)
-              if (column && column.hasOwnProperty('sortable')) {
-                column = column as DataColumnObject
-                let sortOpt: SortOption | undefined = undefined
-                if (column.sortable && sortOptions !== undefined) {
-                  sortOpt = sortOptions.find((opt: SortOption) => opt.id === key)
-                }
-                const flipChevron = sortOpt !== undefined && sortOpt.sortAscending === true
-                return (
-                  <Table.Cell
-                    className={`table-cell ${flipChevron ? 'flip-chevron' : ''}`}
-                    key={key}
-                    aria-sort={
-                      column.sortable
-                        ? sortOpt
-                          ? sortOpt.sortAscending
-                            ? 'ascending'
-                            : 'descending'
-                          : 'none'
-                        : undefined
-                    }
-                  >
-                    {column.sortable && sortOptions !== undefined ? (
-                      <HeaderButton
-                        onClick={() => {
-                          const { sortAscending: currentSortAscending } = sortOptions[0] || {}
-                          const newOptions = [
-                            { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
-                          ]
-                          onSort(newOptions)
-                        }}
-                      >
-                        {column.title}
+            {[...columns.keys()].map(
+              (key): ReactElement => {
+                let column = columns.get(key)
+                if (column && column.hasOwnProperty('sortable')) {
+                  column = column as DataColumnObject
+                  let sortOpt: SortOption | undefined = undefined
+                  if (column.sortable && sortOptions !== undefined) {
+                    sortOpt = sortOptions.find((opt: SortOption): boolean => opt.id === key)
+                  }
+                  const flipChevron = sortOpt !== undefined && sortOpt.sortAscending === true
+                  return (
+                    <Table.Cell
+                      className={`table-cell ${flipChevron ? 'flip-chevron' : ''}`}
+                      key={key}
+                      aria-sort={
+                        column.sortable
+                          ? sortOpt
+                            ? sortOpt.sortAscending
+                              ? 'ascending'
+                              : 'descending'
+                            : 'none'
+                          : undefined
+                      }
+                    >
+                      {column.sortable && sortOptions !== undefined ? (
+                        <HeaderButton
+                          onClick={(): void => {
+                            const { sortAscending: currentSortAscending } = sortOptions[0] || {}
+                            const newOptions = [
+                              { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
+                            ]
+                            onSort(newOptions)
+                          }}
+                        >
+                          {column.title}
 
-                        {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
-                      </HeaderButton>
-                    ) : (
-                      column.title
-                    )}
-                  </Table.Cell>
-                )
-              } else {
-                column = column as ColumnObject
-                return <Table.Cell key={`col-${key}`}>{column.title || ''}</Table.Cell>
+                          {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
+                        </HeaderButton>
+                      ) : (
+                        column.title
+                      )}
+                    </Table.Cell>
+                  )
+                } else {
+                  column = column as ColumnObject
+                  return <Table.Cell key={`col-${key}`}>{column.title || ''}</Table.Cell>
+                }
               }
-            })}
+            )}
           </Table.Header>
           <Table.Body>
-            {data.map((datum, datumIndex) => (
-              <Table.Row key={`row-${datumIndex}`}>
-                {[...columns.keys()].map((key, keyIndex) => {
-                  let column = columns.get(key)
-                  if (column && column.hasOwnProperty('sortable')) {
-                    column = column as DataColumnObject
-                    const AsComponent = column.asComponent
-                    return (
-                      <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
-                        {AsComponent ? <AsComponent value={datum[key]} /> : datum[key]}
-                      </Table.Cell>
-                    )
-                  } else {
-                    column = column as ColumnObject
-                    return (
-                      <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
-                        {column && column.columnFn(datum)}
-                      </Table.Cell>
-                    )
-                  }
-                })}
-              </Table.Row>
-            ))}
+            {data.map(
+              (datum, datumIndex): ReactElement => (
+                <Table.Row key={`row-${datumIndex}`}>
+                  {[...columns.keys()].map(
+                    (key, keyIndex): ReactElement => {
+                      let column = columns.get(key)
+                      if (column && column.hasOwnProperty('sortable')) {
+                        column = column as DataColumnObject
+                        const AsComponent = column.asComponent
+                        return (
+                          <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
+                            {AsComponent ? <AsComponent value={datum[key]} /> : datum[key]}
+                          </Table.Cell>
+                        )
+                      } else {
+                        column = column as ColumnObject
+                        return (
+                          <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
+                            {column && column.columnFn(datum)}
+                          </Table.Cell>
+                        )
+                      }
+                    }
+                  )}
+                </Table.Row>
+              )
+            )}
           </Table.Body>
         </Table>
       </DataGridContext.Provider>
@@ -230,7 +245,7 @@ const DataGridBase = (props: DataGridProps) => {
             <Pagination
               currentPage={paginationOptions.currentPage}
               pageCount={paginationOptions.pageCount}
-              onPageChange={(page: number) => {
+              onPageChange={(page: number): void => {
                 onPageChange({ ...paginationOptions, currentPage: page })
               }}
               {...paginationProps}
@@ -238,7 +253,7 @@ const DataGridBase = (props: DataGridProps) => {
           ) : (
             <PrevNext
               disablePrev={paginationOptions.currentPage === 1}
-              onNavigate={(direction: 'prev' | 'next') => {
+              onNavigate={(direction: 'prev' | 'next'): void => {
                 onPageChange({
                   ...paginationOptions,
                   currentPage:
@@ -264,11 +279,11 @@ const DataGridBase = (props: DataGridProps) => {
 export const DataGrid = styled(DataGridBase)`
   display: inline;
   flex-direction: column;
-  width: ${(p) => (p.fullWidth ? '100%' : 'auto')};
+  width: ${(p): string => (p.fullWidth ? '100%' : 'auto')};
   overflow-x: auto;
   ${margin}
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
     display: inline-flex;
   }
 
@@ -296,7 +311,7 @@ export const DataGrid = styled(DataGridBase)`
     margin-right: 16px;
     margin-top: 40px;
 
-    ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+    ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
       justify-content: flex-end;
     }
   }
@@ -322,9 +337,9 @@ const shapeMap = {
     border-radius: 20px;
   `,
 }
-const getShape = (shape: Shape) => shapeMap[shape]
+const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
-const getBorder = (size: BorderSize) => borderMap[size]
+const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
 const HeaderButton = styled.button`
   background: none;
@@ -349,14 +364,14 @@ const HeaderButton = styled.button`
       width: calc(100% + 16px);
       bottom: -4px;
       right: -8px;
-      border-color: ${(p) => p.theme.colors.lightContrast};
-      ${(p) => getShape(p.theme.shape)}
-      ${(p) => getBorder(p.theme.border)}
+      border-color: ${(p): string => p.theme.colors.lightContrast};
+      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)}
+      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)}
     }
   }
 `
 
-const ResultsViewSectionBase = (props: ResultsViewSectionProps) => {
+const ResultsViewSectionBase = (props: ResultsViewSectionProps): ReactElement | null => {
   const {
     onPageChange,
     resultsCountText,
@@ -398,7 +413,7 @@ const ResultsViewSection = styled(ResultsViewSectionBase)`
     margin-bottom: 8px;
   }
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
     flex-direction: row;
     align-items: flex-start;
 
@@ -408,7 +423,7 @@ const ResultsViewSection = styled(ResultsViewSectionBase)`
   }
 `
 
-const PageSizeSelectBase = (props: PageSizeSelectProps) => {
+const PageSizeSelectBase = (props: PageSizeSelectProps): ReactElement => {
   const { paginationOptions, onPageChange, pageSizeSelectLabel, className } = props
   const { pageSizeOptions } = paginationOptions
   const makePageSizeLabel = props.makePageSizeLabel as (pageSize: number) => string
@@ -417,25 +432,27 @@ const PageSizeSelectBase = (props: PageSizeSelectProps) => {
       <span>{pageSizeSelectLabel || 'View'}</span>
       <ol className="page-options-list">
         {pageSizeOptions &&
-          pageSizeOptions.map((pageSize) => {
-            const isCurrentPageSize = paginationOptions.pageSize === pageSize
-            return (
-              <li className="page-option" key={`page-size-option-${pageSize}`}>
-                <a
-                  role="link"
-                  aria-selected={isCurrentPageSize ? 'true' : 'false'}
-                  onClick={() => {
-                    onPageChange({ ...paginationOptions, pageSize: pageSize })
-                  }}
-                  onKeyPress={keyPressAsClick}
-                  tabIndex={isCurrentPageSize ? undefined : 0}
-                  aria-label={makePageSizeLabel(pageSize)}
-                >
-                  {pageSize}
-                </a>
-              </li>
-            )
-          })}
+          pageSizeOptions.map(
+            (pageSize): ReactElement => {
+              const isCurrentPageSize = paginationOptions.pageSize === pageSize
+              return (
+                <li className="page-option" key={`page-size-option-${pageSize}`}>
+                  <a
+                    role="link"
+                    aria-selected={isCurrentPageSize ? 'true' : 'false'}
+                    onClick={(): void => {
+                      onPageChange({ ...paginationOptions, pageSize: pageSize })
+                    }}
+                    onKeyPress={keyPressAsClick}
+                    tabIndex={isCurrentPageSize ? undefined : 0}
+                    aria-label={makePageSizeLabel(pageSize)}
+                  >
+                    {pageSize}
+                  </a>
+                </li>
+              )
+            }
+          )}
       </ol>
     </div>
   )
@@ -444,7 +461,7 @@ const PageSizeSelectBase = (props: PageSizeSelectProps) => {
 const PageSizeSelect = styled(PageSizeSelectBase)`
   display: inline-box;
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
     margin-left: auto;
   }
 
@@ -469,16 +486,16 @@ const PageSizeSelect = styled(PageSizeSelectBase)`
     padding: 2px 8px;
     display: block;
 
-    border-left: ${(p) => border(p.theme, 'lightContrast')};
+    border-left: ${(p): string => border(p.theme, 'lightContrast')};
 
     &:last-child {
-      border-right: ${(p) => border(p.theme, 'lightContrast')};
+      border-right: ${(p): string => border(p.theme, 'lightContrast')};
     }
 
     &,
     a {
-      color: ${(p) => p.theme.colors.darkestContrast};
-      ${(p) => fontSize(p.theme, 'small')};
+      color: ${(p): string => p.theme.colors.darkestContrast};
+      ${(p): string => fontSize(p.theme, 'small')};
       line-height: 18px;
       text-decoration: none;
     }
@@ -495,7 +512,7 @@ const PageSizeSelect = styled(PageSizeSelectBase)`
       color: inherit;
 
       &:hover {
-        color: ${(p) => p.theme.colors.callToAction};
+        color: ${(p): string => p.theme.colors.callToAction};
       }
 
       &:active,
@@ -503,30 +520,30 @@ const PageSizeSelect = styled(PageSizeSelectBase)`
         // Re-stated to prevent a small shift when the button is clicked in Firefox
         padding: 3px;
         outline: none;
-        ${(p) => p.theme.colorStyles.callToAction};
+        ${(p): ColorStyle => p.theme.colorStyles.callToAction};
       }
 
       &[aria-selected='true'] {
-        ${(p) => p.theme.colorStyles.base};
+        ${(p): ColorStyle => p.theme.colorStyles.base};
       }
     }
   }
 `
 
-export const DataColumn = (props: DataColumnProps) => {
+export const DataColumn = (props: DataColumnProps): ReactElement => {
   const { id, title, sortable = false, as: asComponent } = props
   const { addDataColumn } = useContext(DataGridContext)
-  useEffect(() => {
+  useEffect((): void => {
     addDataColumn({ id, title, sortable, asComponent })
   }, [asComponent, id, sortable, title]) // eslint-disable-line react-hooks/exhaustive-deps
   return <React.Fragment />
 }
 
-const Column = (props: ColumnProps) => {
+const Column = (props: ColumnProps): ReactElement => {
   const { children, title } = props
   const { addColumn } = useContext(DataGridContext)
   const fnKey = useId()
-  useEffect(() => {
+  useEffect((): void => {
     if (children && typeof children === 'function') {
       addColumn(fnKey, children, title)
     }
@@ -535,7 +552,7 @@ const Column = (props: ColumnProps) => {
 }
 
 PageSizeSelect.defaultProps = {
-  makePageSizeLabel: (pageSize: number) => `View ${pageSize} rows per page`,
+  makePageSizeLabel: (pageSize: number): string => `View ${pageSize} rows per page`,
 }
 
 DataGrid.propTypes = {

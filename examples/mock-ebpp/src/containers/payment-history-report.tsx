@@ -1,20 +1,19 @@
 import { RouteComponentProps } from '@reach/router'
-import { Flex, Grid, Text } from '@repay/cactus-web'
+import { Flex, Text } from '@repay/cactus-web'
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { fetchPaymentHistory, PaymentData } from '../api'
 
-interface PaymentHistoryProps extends RouteComponentProps {}
-
 interface State {
-  payments: Array<PaymentData>
+  payments: PaymentData[]
 }
 
-const PaymentHistoryReport = (props: PaymentHistoryProps) => {
+//eslint-disable-next-line @typescript-eslint/no-unused-vars
+const PaymentHistoryReport = (props: RouteComponentProps): React.ReactElement => {
   const [state, setState] = useState<State>({ payments: [] })
 
-  useEffect(() => {
+  useEffect((): void => {
     const payments = fetchPaymentHistory()
     console.log(payments)
     setState({ payments: payments })
@@ -59,26 +58,28 @@ const PaymentHistoryReport = (props: PaymentHistoryProps) => {
             </thead>
 
             <tbody style={{ fontSize: '22px' }}>
-              {state.payments.map((payment: PaymentData, index: number) => {
-                const color = index % 2 === 1 ? 'lightgrey' : 'white'
+              {state.payments.map(
+                (payment: PaymentData, index: number): React.ReactElement => {
+                  const color = index % 2 === 1 ? 'lightgrey' : 'white'
 
-                return (
-                  <tr
-                    style={{
-                      backgroundColor: `${color}`,
-                      border: '2px solid black',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <td> {payment.firstName} </td>
-                    <td> {payment.lastName} </td>
-                    <td> {payment.pnref} </td>
-                    <td> {payment.date} </td>
-                    <td> {payment.cardLastFour} </td>
-                    <td> {payment.id} </td>
-                  </tr>
-                )
-              })}
+                  return (
+                    <tr
+                      style={{
+                        backgroundColor: `${color}`,
+                        border: '2px solid black',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <td> {payment.firstName} </td>
+                      <td> {payment.lastName} </td>
+                      <td> {payment.pnref} </td>
+                      <td> {payment.date} </td>
+                      <td> {payment.cardLastFour} </td>
+                      <td> {payment.id} </td>
+                    </tr>
+                  )
+                }
+              )}
             </tbody>
           </table>
         </Flex>

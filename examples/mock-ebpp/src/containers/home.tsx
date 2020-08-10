@@ -3,9 +3,8 @@ import { Card, Flex, Grid, Text } from '@repay/cactus-web'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-interface HomeProps extends RouteComponentProps {}
-
-const Home = (props: HomeProps) => {
+//eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Home = (props: RouteComponentProps): React.ReactElement => {
   return (
     <div>
       <Helmet>

@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { ReactComponent as NoResultsCactus } from '../assets/no-results-cactus.svg'
 
-export default () => (
+export default (): React.ReactElement => (
   <>
     <Flex
       display="flex"

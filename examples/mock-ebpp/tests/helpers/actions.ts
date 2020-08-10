@@ -1,29 +1,36 @@
 import { queryByLabelText, queryByText, within } from '@testing-library/testcafe'
 import { ClientFunction, Selector } from 'testcafe'
 
-const getDropdown = Selector(() => {
+const getDropdown = Selector((): Element | null => {
   if (document.activeElement && document.activeElement.getAttribute('role') === 'listbox') {
     return document.activeElement
   }
   return null
 })
 
-const getCombo = Selector(() => {
+const getCombo = Selector((): Element | null => {
   if (document.activeElement && document.activeElement.getAttribute('role') === 'search') {
     return document.activeElement
   }
   return null
 })
 
-const fillTextField = (t: TestController) => async (label: string, text: string) => {
+const fillTextField = (
+  t: TestController
+): ((label: string, text: string) => Promise<void>) => async (
+  label: string,
+  text: string
+): Promise<void> => {
   const field = queryByLabelText(label)
   await t.click(field).typeText(field, text)
 }
 
-const selectDropdownOption = (t: TestController) => async (
+const selectDropdownOption = (
+  t: TestController
+): ((label: string, optionOrOptions: string | string[]) => Promise<void>) => async (
   label: string,
-  optionOrOptions: string | Array<string>
-) => {
+  optionOrOptions: string | string[]
+): Promise<void> => {
   const selectTrigger = queryByLabelText(label)
   await t.click(selectTrigger)
   const dropdownList = getDropdown()
@@ -37,10 +44,12 @@ const selectDropdownOption = (t: TestController) => async (
   }
 }
 
-const searchComboBox = (t: TestController) => async (
+const searchComboBox = (
+  t: TestController
+): ((label: string, optionOrOptions: string | string[]) => Promise<void>) => async (
   label: string,
-  optionOrOptions: string | Array<string>
-) => {
+  optionOrOptions: string | string[]
+): Promise<void> => {
   const comboTrigger = queryByLabelText(label)
   await t.click(comboTrigger)
   const comboInput = getCombo()
@@ -59,22 +68,31 @@ const searchComboBox = (t: TestController) => async (
   }
 }
 
-const uploadFile = (t: TestController) => async (label: string) => {
+const uploadFile = (t: TestController): (() => Promise<void>) => async (): Promise<void> => {
   const fileInput = Selector('input[type=file]')
   const fileInputButton = queryByText(/Select Files/)
   await t.click(fileInputButton)
   await t.setFilesToUpload(fileInput, ['test-data/test-logo.jpg'])
 }
 
-const focusAccordionHeaderByText = ClientFunction((text: string) => {
+const focusAccordionHeaderByText = ClientFunction((text: string): void => {
   window.TestingLibraryDom.queryByText(document.body, text)
     ?.parentElement?.querySelector('button')
     ?.focus()
 })
 
-const getActiveElement = Selector(() => document.activeElement)
+const getActiveElement = Selector((): Element | null => document.activeElement)
 
-export default (t: TestController) => ({
+export default (
+  t: TestController
+): {
+  fillTextField: (label: string, text: string) => Promise<void>
+  focusAccordionHeaderByText: (text: string) => void
+  getActiveElement: Selector
+  searchComboBox: (label: string, optionOrOptions: string | string[]) => Promise<void>
+  selectDropdownOption: (label: string, optionOrOptions: string | string[]) => Promise<void>
+  uploadFile: () => Promise<void>
+} => ({
   fillTextField: fillTextField(t),
   focusAccordionHeaderByText,
   getActiveElement,

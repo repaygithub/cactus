@@ -1,15 +1,12 @@
 import { StatusCheck } from '@repay/cactus-icons'
-import cactusTheme from '@repay/cactus-theme'
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import IconButton from './IconButton'
 
-afterEach(cleanup)
-
-describe('component: IconButton', () => {
-  test('should default to standard medium icon button', () => {
+describe('component: IconButton', (): void => {
+  test('should default to standard medium icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest">
@@ -21,7 +18,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render standard medium icon button', () => {
+  test('should render standard medium icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" iconSize="medium">
@@ -33,7 +30,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render tiny icon button', () => {
+  test('should render tiny icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" iconSize="tiny">
@@ -45,7 +42,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render small icon button', () => {
+  test('should render small icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" iconSize="small">
@@ -57,7 +54,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render large icon button', () => {
+  test('should render large icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" iconSize="large">
@@ -69,7 +66,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render call to action icon button', () => {
+  test('should render call to action icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" variant="action">
@@ -81,7 +78,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render danger icon button', () => {
+  test('should render danger icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" variant="danger">
@@ -93,7 +90,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse standard icon button', () => {
+  test('should render inverse standard icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" variant="standard" inverse>
@@ -105,7 +102,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse call to action icon button', () => {
+  test('should render inverse call to action icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" variant="action" inverse>
@@ -117,7 +114,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse danger icon button', () => {
+  test('should render inverse danger icon button', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" variant="danger" inverse>
@@ -129,7 +126,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render icon button with aria-label', () => {
+  test('should render icon button with aria-label', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="uchiha-itachi">
@@ -141,7 +138,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render disabled variant', () => {
+  test('should render disabled variant', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" disabled>
@@ -153,7 +150,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should render inverse disabled variant', () => {
+  test('should render inverse disabled variant', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" inverse disabled>
@@ -165,7 +162,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const iconButton = render(
       <StyleProvider>
         <IconButton label="boolest" mb={4}>
@@ -177,7 +174,7 @@ describe('component: IconButton', () => {
     expect(iconButton.asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onClick', () => {
+  test('should trigger onClick', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>
@@ -191,7 +188,7 @@ describe('component: IconButton', () => {
     expect(onClick).toHaveBeenCalled()
   })
 
-  test('should not trigger onClick', () => {
+  test('should not trigger onClick', (): void => {
     const onClick = jest.fn()
     const { getByTestId } = render(
       <StyleProvider>

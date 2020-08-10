@@ -6,8 +6,8 @@ import Flex from './Flex'
 
 afterEach(cleanup)
 
-describe('component: Flex', () => {
-  test('snapshot with no props', () => {
+describe('component: Flex', (): void => {
+  test('snapshot with no props', (): void => {
     const { container } = render(
       <StyleProvider>
         <Flex />
@@ -17,7 +17,7 @@ describe('component: Flex', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should accept flex props', () => {
+  test('should accept flex props', (): void => {
     const { container } = render(
       <StyleProvider>
         <Flex
@@ -35,7 +35,7 @@ describe('component: Flex', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should accept basic built-in props', () => {
+  test('should accept basic built-in props', (): void => {
     const { container } = render(
       <StyleProvider>
         <Flex

@@ -16,11 +16,11 @@ export interface FormHandlerState<Value> {
 /**
  * Helper for Field component stories to manage value via onChange handler
  */
-function FormHandler<Value>(props: FormHandlerProps<Value>) {
+function FormHandler<Value>(props: FormHandlerProps<Value>): React.ReactElement {
   const { defaultValue, onChange: providedOnChange, children } = props
   const [value, setValue] = React.useState(defaultValue)
   const onChange = React.useCallback(
-    (name: string, value: Value) => {
+    (name: string, value: Value): void => {
       setValue(providedOnChange(name, value))
     },
     [providedOnChange, setValue]

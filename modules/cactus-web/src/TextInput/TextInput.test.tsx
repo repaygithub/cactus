@@ -8,8 +8,8 @@ import TextInput from './TextInput'
 
 afterEach(cleanup)
 
-describe('component: TextInput', () => {
-  test('should render a text input', () => {
+describe('component: TextInput', (): void => {
+  test('should render a text input', (): void => {
     const input = render(
       <StyleProvider>
         <TextInput />
@@ -19,7 +19,7 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
-  test('should render a disabled input', () => {
+  test('should render a disabled input', (): void => {
     const input = render(
       <StyleProvider>
         <TextInput disabled />
@@ -29,7 +29,7 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
-  test('should render an input with a placeholder', () => {
+  test('should render an input with a placeholder', (): void => {
     const input = render(
       <StyleProvider>
         <TextInput placeholder="hold my place" />
@@ -39,7 +39,7 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
-  test('should render a success input', () => {
+  test('should render a success input', (): void => {
     const input = render(
       <StyleProvider>
         <TextInput status="success" />
@@ -49,7 +49,7 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
-  test('should render an warning input', () => {
+  test('should render an warning input', (): void => {
     const input = render(
       <StyleProvider>
         <TextInput status="warning" />
@@ -59,7 +59,7 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
-  test('should render an error input', () => {
+  test('should render an error input', (): void => {
     const input = render(
       <StyleProvider>
         <TextInput status="error" />
@@ -69,7 +69,7 @@ describe('component: TextInput', () => {
     expect(input.asFragment()).toMatchSnapshot()
   })
 
-  test('should support margin space props', () => {
+  test('should support margin space props', (): void => {
     const textInput = render(
       <StyleProvider>
         <TextInput marginTop={4} />
@@ -79,7 +79,7 @@ describe('component: TextInput', () => {
     expect(textInput.asFragment()).toMatchSnapshot()
   })
 
-  test('should trigger onChange handler', () => {
+  test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
       <StyleProvider>
@@ -91,8 +91,8 @@ describe('component: TextInput', () => {
     expect(onChange).toHaveBeenCalled()
   })
 
-  describe('with theme customization', () => {
-    test('should have 2px border', () => {
+  describe('with theme customization', (): void => {
+    test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -103,7 +103,7 @@ describe('component: TextInput', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('should have 8px border radius', () => {
+    test('should have 8px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
@@ -114,7 +114,7 @@ describe('component: TextInput', () => {
       expect(asFragment()).toMatchSnapshot()
     })
 
-    test('should have 1px border radius', () => {
+    test('should have 1px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>

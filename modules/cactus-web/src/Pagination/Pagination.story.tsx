@@ -6,11 +6,12 @@ import Pagination from './Pagination'
 
 const paginationStories = storiesOf('Pagination', module)
 
-paginationStories.add('Basic Usage', () => (
-  <ManagedPagination pageCount={number('Page Count', 10)} />
-))
+paginationStories.add(
+  'Basic Usage',
+  (): React.ReactElement => <ManagedPagination pageCount={number('Page Count', 10)} />
+)
 
-function ManagedPagination({ pageCount }: { pageCount: number }) {
+function ManagedPagination({ pageCount }: { pageCount: number }): React.ReactElement {
   const [current, setCurrent] = React.useState(1)
   return <Pagination currentPage={current} pageCount={pageCount} onPageChange={setCurrent} />
 }
