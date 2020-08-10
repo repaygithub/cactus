@@ -9,7 +9,7 @@ import {
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { BorderSize, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { MutableRefObject, useRef, useState } from 'react'
+import React, { MutableRefObject, useRef } from 'react'
 import styled, {
   createGlobalStyle,
   css,
@@ -232,25 +232,23 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
     'aria-label': ariaLabel = 'Action List',
     ...rest
   } = props
-  const [dropdownOpen, setDropdownOpen] = useState(false)
   const mainActionRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
   return (
     <div className={className} {...rest}>
-      <MainActionButton
-        className={dropdownOpen ? 'dd-open' : !disabled ? 'dd-closed' : ''}
-        ref={mainActionRef}
-        type="button"
-        disabled={disabled}
-        onClick={onSelectMainAction}
-      >
-        {MainActionIcon && <MainActionIcon iconSize="small" />}
-        {mainActionLabel}
-      </MainActionButton>
       <ReachMenu>
         {({ isOpen }: { isOpen: boolean }): React.ReactElement => {
-          setDropdownOpen(isOpen)
           return (
-            <React.Fragment>
+            <>
+              <MainActionButton
+                className={isOpen ? 'dd-open' : !disabled ? 'dd-closed' : ''}
+                ref={mainActionRef}
+                type="button"
+                disabled={disabled}
+                onClick={onSelectMainAction}
+              >
+                {MainActionIcon && <MainActionIcon iconSize="small" />}
+                {mainActionLabel}
+              </MainActionButton>
               <SplitButtonStyles />
               <DropdownButton disabled={disabled} aria-label={ariaLabel}>
                 <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
@@ -277,7 +275,7 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
               >
                 <SplitButtonList>{children}</SplitButtonList>
               </ReachMenuPopover>
-            </React.Fragment>
+            </>
           )
         }}
       </ReachMenu>

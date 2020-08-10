@@ -252,12 +252,12 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       Test
     </button>
     <button
-      aria-controls="menu--48"
+      aria-controls="menu--44"
       aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--menu--48"
+      id="menu-button--menu--44"
       type="button"
     >
       <svg
@@ -391,12 +391,12 @@ exports[`component: SplitButton with theme customization should have 2px borders
       Test
     </button>
     <button
-      aria-controls="menu--53"
+      aria-controls="menu--49"
       aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--menu--53"
+      id="menu-button--menu--49"
       type="button"
     >
       <svg
@@ -530,12 +530,12 @@ exports[`component: SplitButton with theme customization should have intermediat
       Test
     </button>
     <button
-      aria-controls="menu--43"
+      aria-controls="menu--39"
       aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--menu--43"
+      id="menu-button--menu--39"
       type="button"
     >
       <svg
@@ -669,12 +669,12 @@ exports[`component: SplitButton with theme customization should have square shap
       Test
     </button>
     <button
-      aria-controls="menu--38"
+      aria-controls="menu--34"
       aria-haspopup="true"
       aria-label="Action List"
       class="c3 c4"
       data-reach-menu-button=""
-      id="menu-button--menu--38"
+      id="menu-button--menu--34"
       type="button"
     >
       <svg
