@@ -1,6 +1,6 @@
 import { RouteComponentProps, Router } from '@reach/router'
 import { DescriptiveHome } from '@repay/cactus-icons'
-import { Flex, StyleProvider, Text } from '@repay/cactus-web'
+import { Flex, ScreenSizeProvider, StyleProvider, Text } from '@repay/cactus-web'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
@@ -28,38 +28,40 @@ const AppContainer = (props: ContainerProps): React.ReactElement => {
   return (
     <div>
       <StyleProvider global>
-        <div>
-          <Flex
-            alignItems="center"
-            justifyContent="space-evenly"
-            height="100px"
-            width="100%"
-            backgroundColor="lightContrast"
-          >
-            <Link to="/" style={{ fontSize: '30px' }}>
-              <Text>
-                <DescriptiveHome />
-              </Text>
-            </Link>
-            <Link to="/payment-history" style={{ fontSize: '30px' }}>
-              Payment History Report
-            </Link>
-            <Link to="/accounts" style={{ fontSize: '30px' }}>
-              Accounts
-            </Link>
-            <Link to="/ui-config" style={{ fontSize: '30px' }}>
-              UI Config
-            </Link>
-            <Link to="/faq" style={{ fontSize: '30px' }}>
-              FAQ
-            </Link>
-            <Link to="/rules" style={{ fontSize: '30px' }}>
-              Rules
-            </Link>
-          </Flex>
+        <ScreenSizeProvider>
+          <div>
+            <Flex
+              alignItems="center"
+              justifyContent="space-evenly"
+              height="100px"
+              width="100%"
+              backgroundColor="lightContrast"
+            >
+              <Link to="/" style={{ fontSize: '30px' }}>
+                <Text>
+                  <DescriptiveHome />
+                </Text>
+              </Link>
+              <Link to="/payment-history" style={{ fontSize: '30px' }}>
+                Payment History Report
+              </Link>
+              <Link to="/accounts" style={{ fontSize: '30px' }}>
+                Accounts
+              </Link>
+              <Link to="/ui-config" style={{ fontSize: '30px' }}>
+                UI Config
+              </Link>
+              <Link to="/faq" style={{ fontSize: '30px' }}>
+                FAQ
+              </Link>
+              <Link to="/rules" style={{ fontSize: '30px' }}>
+                Rules
+              </Link>
+            </Flex>
 
-          {children}
-        </div>
+            {children}
+          </div>
+        </ScreenSizeProvider>
       </StyleProvider>
     </div>
   )
