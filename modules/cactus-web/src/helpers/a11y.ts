@@ -1,10 +1,12 @@
 import { KeyboardEvent } from 'react'
 
-export const keyPressAsClick = (onClick: () => void): ((e: React.KeyboardEvent) => void) => {
-  return (event: React.KeyboardEvent): void => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      onClick()
-    }
+export const isActionKey = (event: KeyboardEvent): boolean =>
+  event.key === 'Enter' || event.key === ' '
+
+export const keyPressAsClick = (event: KeyboardEvent): void => {
+  if (isActionKey(event)) {
+    event.preventDefault()
+    const target = event.target as HTMLElement
+    target.click && target.click()
   }
 }

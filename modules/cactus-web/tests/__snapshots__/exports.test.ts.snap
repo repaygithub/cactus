@@ -23,6 +23,7 @@ Array [
   "IconButton",
   "Label",
   "Link",
+  "MenuBar",
   "MenuButton",
   "Modal",
   "Pagination",

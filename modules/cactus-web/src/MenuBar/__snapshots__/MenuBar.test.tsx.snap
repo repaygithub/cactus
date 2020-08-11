@@ -1,0 +1,593 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: MenuBar typechecks 1`] = `
+.c8 {
+  vertical-align: middle;
+}
+
+.c2 {
+  vertical-align: middle;
+}
+
+.c13 {
+  vertical-align: middle;
+}
+
+.c10 {
+  vertical-align: middle;
+}
+
+.c6 {
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+}
+
+.c5 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c1 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  display: none;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: center;
+  outline: none;
+}
+
+.c1:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c1 svg {
+  width: 18px;
+  height: 18px;
+  margin: 8px;
+}
+
+.c12 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: center;
+  outline: none;
+}
+
+.c12:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c12 svg {
+  width: 18px;
+  height: 18px;
+  margin: 8px;
+}
+
+.c0 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  position: relative;
+  outline: none;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  box-shadow: inset 0 -1px 0 hsl(200,29%,90%);
+}
+
+.c0 [role='menubar'] > li > [role='menuitem'] {
+  white-space: nowrap;
+  padding: 20px 8px;
+  border: 1px solid transparent;
+  border-bottom-color: hsl(200,29%,90%);
+}
+
+.c0 [role='menubar'] > li > [role='menuitem']:hover,
+.c0 [role='menubar'] > li > [role='menuitem'][aria-expanded='true'] {
+  color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c0 [role='menubar'] > li > [role='menuitem']:focus {
+  border: 1px solid hsl(200,96%,35%);
+}
+
+.c0 [role='menubar'] > li > [role='menuitem'][aria-current='true'] {
+  font-weight: bold;
+}
+
+.c9 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  outline: none;
+  border: 1px solid hsl(200,29%,90%);
+  border-radius: 8px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  white-space: normal;
+  -webkit-flex-flow: column nowrap;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  min-width: 200px;
+  max-width: 320px;
+  max-height: 70vh;
+  z-index: 1;
+}
+
+.c9 ul {
+  width: 100%;
+}
+
+.c9 [role='menuitem'] {
+  padding: 4px 8px;
+}
+
+.c9 [role='menuitem'] .c7 {
+  -webkit-transform: rotateZ(-90deg);
+  -ms-transform: rotateZ(-90deg);
+  transform: rotateZ(-90deg);
+}
+
+.c9 [role='menuitem'][aria-expanded='true'] {
+  background-color: hsl(200,29%,90%);
+}
+
+.c9 [role='menuitem'][aria-expanded='true'] .c7 {
+  -webkit-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+}
+
+.c9 [role='menuitem']:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c9 [role='menuitem']:focus {
+  background-color: hsl(200,29%,90%);
+  color: hsl(200,96%,35%);
+}
+
+.c3 {
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0;
+  margin: 0;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.c3 > li > [role='menuitem'] {
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+
+.c11 {
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0;
+  margin: 0;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.c11 > li > [role='menuitem'] {
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+
+.c4 {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-sizing: border-box;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c4:active,
+.c4:focus {
+  outline: none;
+}
+
+.c4::-moz-focus-inner {
+  border: none;
+}
+
+.c4 .c7 {
+  width: 8px;
+  height: 8px;
+  margin-left: 16px;
+}
+
+<div>
+  <nav
+    aria-label="Menu of Main-ness"
+    class="c0"
+    tabindex="-1"
+  >
+    <div
+      aria-hidden="true"
+      class="c1"
+    >
+      <svg
+        class="c2"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+        />
+      </svg>
+    </div>
+    <ul
+      aria-orientation="horizontal"
+      class="c3"
+      role="menubar"
+    >
+      <li
+        role="none"
+      >
+        <button
+          aria-current="true"
+          aria-expanded="false"
+          aria-haspopup="menu"
+          class="c4"
+          role="menuitem"
+          tabindex="0"
+        >
+          <div
+            class="c5"
+          >
+            <em>
+              Emphasized
+            </em>
+          </div>
+          <div
+            aria-hidden="true"
+            class="c6"
+          >
+            <svg
+              class="c7 c8"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                transform="rotate(-90 12 12)"
+              />
+            </svg>
+          </div>
+        </button>
+        <div
+          class="c9"
+          tabindex="-1"
+        >
+          <div
+            aria-hidden="true"
+            class="c1"
+          >
+            <svg
+              class="c10"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                transform="matrix(0 1 1 0 0 0)"
+              />
+            </svg>
+          </div>
+          <ul
+            aria-orientation="vertical"
+            class="c11"
+            role="menu"
+          >
+            <li
+              role="none"
+            >
+              <a
+                aria-current="true"
+                class="c4"
+                href="#"
+                role="menuitem"
+                tabindex="-1"
+              >
+                Link to the Past
+              </a>
+            </li>
+            <li
+              role="none"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                class="c4"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <div
+                  class="c5"
+                >
+                  Nested
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="c6"
+                >
+                  <svg
+                    class="c7 c8"
+                    fill="currentcolor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                  >
+                    <path
+                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="rotate(-90 12 12)"
+                    />
+                  </svg>
+                </div>
+              </button>
+              <div
+                class="c9"
+                tabindex="-1"
+              >
+                <div
+                  aria-hidden="true"
+                  class="c1"
+                >
+                  <svg
+                    class="c10"
+                    fill="currentcolor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                  >
+                    <path
+                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="matrix(0 1 1 0 0 0)"
+                    />
+                  </svg>
+                </div>
+                <ul
+                  aria-orientation="vertical"
+                  class="c11"
+                  role="menu"
+                >
+                  <li
+                    role="none"
+                  >
+                    <a
+                      href="#"
+                    >
+                      Birdy
+                    </a>
+                  </li>
+                  <li
+                    role="none"
+                  >
+                    <button
+                      aria-current="true"
+                      class="c4"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      The Mighty
+                    </button>
+                  </li>
+                  <li
+                    role="none"
+                  >
+                    <div>
+                      <em>
+                        Decode
+                      </em>
+                       
+                    </div>
+                  </li>
+                </ul>
+                <div
+                  aria-hidden="true"
+                  class="c1"
+                >
+                  <svg
+                    class="c7 c8"
+                    fill="currentcolor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                  >
+                    <path
+                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="rotate(-90 12 12)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div
+            aria-hidden="true"
+            class="c1"
+          >
+            <svg
+              class="c7 c8"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                transform="rotate(-90 12 12)"
+              />
+            </svg>
+          </div>
+        </div>
+      </li>
+      <li
+        role="none"
+      >
+        <button
+          aria-current="true"
+          class="c4"
+          role="menuitem"
+          tabindex="-1"
+        >
+          <em>
+            A button
+          </em>
+        </button>
+      </li>
+      <li
+        role="none"
+      >
+        <a
+          class="c4"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Styled Link
+        </a>
+      </li>
+      <li
+        role="none"
+      >
+        class 2
+      </li>
+    </ul>
+    <div
+      aria-hidden="true"
+      class="c12"
+    >
+      <svg
+        class="c13"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="matrix(-1 0 0 1 24 0)"
+        />
+      </svg>
+    </div>
+  </nav>
+</div>
+`;

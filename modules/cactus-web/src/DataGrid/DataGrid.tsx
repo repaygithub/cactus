@@ -443,9 +443,7 @@ const PageSizeSelectBase = (props: PageSizeSelectProps): ReactElement => {
                     onClick={(): void => {
                       onPageChange({ ...paginationOptions, pageSize: pageSize })
                     }}
-                    onKeyPress={keyPressAsClick((): void => {
-                      onPageChange({ ...paginationOptions, pageSize: pageSize })
-                    })}
+                    onKeyPress={keyPressAsClick}
                     tabIndex={isCurrentPageSize ? undefined : 0}
                     aria-label={makePageSizeLabel(pageSize)}
                   >

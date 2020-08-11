@@ -12,7 +12,16 @@ export const border = (theme: CactusTheme, color: string): string => {
   return `${thickness} solid ${theme.colors[color as CactusColor] || color}`
 }
 
-export const invertColors = (style: ColorStyle): { color: string; backgroundColor: string } => {
+const radii = {
+  square: '1px',
+  intermediate: '4px',
+  round: '8px',
+}
+
+// There are elements with other radius patterns, but this seems like the most common.
+export const radius = ({ theme }: { theme: CactusTheme }): string => radii[theme.shape]
+
+export const invertColors = (style: ColorStyle): ColorStyle => {
   return { color: style.backgroundColor, backgroundColor: style.color }
 }
 
