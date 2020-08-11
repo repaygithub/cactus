@@ -2,7 +2,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { ReactElement, useState } from 'react'
 
-import ScreenSizeProvider, { Size } from '../ScreenSizeProvider/ScreenSizeProvider'
+import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
 import DataGrid from './DataGrid'
 

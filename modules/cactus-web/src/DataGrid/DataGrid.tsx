@@ -14,6 +14,7 @@ import { margin, MarginProps } from 'styled-system'
 import { keyPressAsClick } from '../helpers/a11y'
 import { border, fontSize } from '../helpers/theme'
 import useId from '../helpers/useId'
+import MenuButton from '../MenuButton/MenuButton'
 import Pagination from '../Pagination/Pagination'
 import PrevNext from '../PrevNext/PrevNext'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -68,6 +69,12 @@ interface DataGridProps extends MarginProps {
     nextText?: string
     disableNext?: boolean
   }
+  sortLabels?: {
+    sortBy?: string
+    order?: string
+    ascending?: string
+    descending?: string
+  }
 }
 
 interface PaginationOptions {
@@ -82,13 +89,23 @@ interface SortOption {
   sortAscending: boolean
 }
 
-interface ResultsViewSectionProps {
+interface TopSectionProps {
   resultsCountText?: string
   paginationOptions?: PaginationOptions
   onPageChange: (newPageOptions: PaginationOptions) => void
   makePageSizeLabel?: (pageSize: number) => string
   pageSizeSelectLabel?: string
   cardBreakpoint: Size
+  isCardView: boolean
+  sortableColumns: Map<string, DataColumnObject>
+  handleSortColChange: (id: string) => void
+  handleSortDirChange: (sortAscending: boolean) => void
+  sortLabels: {
+    sortBy?: string
+    order?: string
+    ascending?: string
+    descending?: string
+  }
   className?: string
 }
 
@@ -140,9 +157,17 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     makePageSizeLabel,
     paginationProps,
     prevNextProps,
+    sortLabels = {
+      sortBy: 'Sort by',
+      order: 'Order',
+      ascending: 'Ascending',
+      descending: 'Descending',
+    },
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
+  const [sortableColumns, setSortableColumns] = useState(new Map<string, DataColumnObject>())
   const size = useContext(ScreenSizeContext)
+  const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
 
   const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn): void => {
     setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
@@ -152,17 +177,60 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     setColumns(new Map(columns.set(key, { columnFn, title })))
   }
 
+  useEffect(() => {
+    const sortableCols: Map<string, DataColumnObject> = new Map()
+    for (const k of columns.keys()) {
+      let col = columns.get(k)
+      if (col !== undefined && col.hasOwnProperty('sortable')) {
+        col = col as DataColumnObject
+        if (col.sortable) {
+          sortableCols.set(k, col)
+        }
+      }
+    }
+    setSortableColumns(sortableCols)
+  }, [columns])
+
+  const handleSort = (id: string, exists: boolean) => {
+    if (sortOptions) {
+      const { sortAscending: currentSortAscending } = sortOptions[0] || {}
+      const newOptions = [{ id, sortAscending: exists ? !currentSortAscending : false }]
+      onSort(newOptions)
+    }
+  }
+
+  const handleSortColChange = (id: string) => {
+    if (sortOptions) {
+      const { sortAscending: currentSortAscending } = sortOptions[0] || {}
+      const newOptions = [
+        { id, sortAscending: currentSortAscending !== undefined ? currentSortAscending : false },
+      ]
+      onSort(newOptions)
+    }
+  }
+
+  const handleSortDirChange = (sortAscending: boolean) => {
+    if (sortOptions) {
+      onSort([{ ...sortOptions[0], sortAscending }])
+    }
+  }
+
   return (
     <div className={className}>
       <DataGridContext.Provider value={{ addDataColumn, addColumn }}>
         {children}
-        <ResultsViewSection
+        <TopSection
           onPageChange={onPageChange}
           pageSizeSelectLabel={pageSizeSelectLabel}
           resultsCountText={resultsCountText}
           paginationOptions={paginationOptions}
           makePageSizeLabel={makePageSizeLabel}
           cardBreakpoint={cardBreakpoint}
+          isCardView={isCardView}
+          sortableColumns={sortableColumns}
+          handleSortColChange={handleSortColChange}
+          handleSortDirChange={handleSortDirChange}
+          sortLabels={sortLabels}
         />
         <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint}>
           <Table.Header>
@@ -190,16 +258,8 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
                           : undefined
                       }
                     >
-                      {column.sortable && sortOptions !== undefined ? (
-                        <HeaderButton
-                          onClick={(): void => {
-                            const { sortAscending: currentSortAscending } = sortOptions[0] || {}
-                            const newOptions = [
-                              { id: key, sortAscending: sortOpt ? !currentSortAscending : false },
-                            ]
-                            onSort(newOptions)
-                          }}
-                        >
+                      {column.sortable && sortOptions !== undefined && !isCardView ? (
+                        <HeaderButton onClick={(): void => handleSort(key, sortOpt !== undefined)}>
                           {column.title}
 
                           {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
@@ -247,7 +307,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
           </Table.Body>
         </Table>
       </DataGridContext.Provider>
-      <div className="pagination">
+      <div className={`bottom-section ${isCardView ? 'is-card-view' : ''}`}>
         {paginationOptions !== undefined ? (
           paginationOptions.pageCount ? (
             <Pagination
@@ -279,6 +339,9 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
             />
           )
         ) : null}
+        {isCardView && resultsCountText !== undefined && (
+          <span className="results-count-text">{resultsCountText}</span>
+        )}
       </div>
     </div>
   )
@@ -287,7 +350,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
 const getMediaQuery = (
   props:
     | ThemedStyledProps<DataGridProps, DefaultTheme>
-    | ThemedStyledProps<ResultsViewSectionProps, DefaultTheme>
+    | ThemedStyledProps<TopSectionProps, DefaultTheme>
     | ThemedStyledProps<PageSizeSelectProps, DefaultTheme>
 ) => {
   // Media queries in the theme were built using "min-width", meaning if a user wants
@@ -346,14 +409,39 @@ export const DataGrid = styled(DataGridBase)`
     }
   }
 
-  .pagination {
+  .bottom-section {
+    // Card view styles
     display: flex;
-    justify-content: center;
-    margin-right: 16px;
+    flex-direction: column;
+    align-items: center;
     margin-top: 40px;
 
+    .results-count-text {
+      margin-top: 16px;
+    }
+
+    // Non-card view styles
     ${getMediaQuery} {
+      flex-direction: row;
       justify-content: flex-end;
+      margin-right: 16px;
+    }
+
+    // Card view styles when screen is larger than tiny
+    &.is-card-view {
+      ${(p) =>
+        p.theme.mediaQueries &&
+        `${p.theme.mediaQueries.small} {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        margin-right: 16px;
+        margin-top: 16px;
+
+        .results-count-text {
+          margin-top: 0px;
+          margin-left: 16px;
+        }
+      }`}
     }
   }
 ` as any
@@ -412,7 +500,7 @@ const HeaderButton = styled.button`
   }
 `
 
-const ResultsViewSectionBase = (props: ResultsViewSectionProps): ReactElement | null => {
+const TopSectionBase = (props: TopSectionProps): ReactElement | null => {
   const {
     onPageChange,
     resultsCountText,
@@ -420,32 +508,57 @@ const ResultsViewSectionBase = (props: ResultsViewSectionProps): ReactElement | 
     makePageSizeLabel,
     paginationOptions,
     cardBreakpoint,
+    isCardView,
+    sortableColumns,
+    handleSortColChange,
+    handleSortDirChange,
+    sortLabels,
     className,
   } = props
-  if (
-    !resultsCountText &&
-    (!paginationOptions || (paginationOptions && !paginationOptions.pageSizeOptions))
-  ) {
-    return null
-  } else {
-    return (
-      <div className={className}>
-        {resultsCountText && <span className="results-count-text">{resultsCountText}</span>}
-        {paginationOptions !== undefined && paginationOptions.pageSizeOptions && (
-          <PageSizeSelect
-            paginationOptions={paginationOptions}
-            pageSizeSelectLabel={pageSizeSelectLabel}
-            makePageSizeLabel={makePageSizeLabel}
-            onPageChange={onPageChange}
-            cardBreakpoint={cardBreakpoint}
-          />
-        )}
-      </div>
-    )
-  }
+  return (
+    <div className={className}>
+      {resultsCountText && !isCardView && (
+        <span className="results-count-text">{resultsCountText}</span>
+      )}
+      {isCardView && (
+        <div className="sort-buttons">
+          <MenuButton variant="unfilled" label={sortLabels.sortBy || 'Sort by'} mr={4}>
+            {[...sortableColumns.keys()].map(
+              (key): ReactElement => {
+                const col = sortableColumns.get(key) as DataColumnObject
+                return (
+                  <MenuButton.Item onSelect={() => handleSortColChange(key)}>
+                    {col.title}
+                  </MenuButton.Item>
+                )
+              }
+            )}
+          </MenuButton>
+          <MenuButton variant="unfilled" label={sortLabels.order || 'Order'}>
+            <MenuButton.Item onSelect={() => handleSortDirChange(true)}>
+              {sortLabels.ascending || 'Ascending'}
+            </MenuButton.Item>
+            <MenuButton.Item onSelect={() => handleSortDirChange(false)}>
+              {sortLabels.descending || 'Descending'}
+            </MenuButton.Item>
+          </MenuButton>
+        </div>
+      )}
+      {paginationOptions !== undefined && paginationOptions.pageSizeOptions && (
+        <PageSizeSelect
+          paginationOptions={paginationOptions}
+          pageSizeSelectLabel={pageSizeSelectLabel}
+          makePageSizeLabel={makePageSizeLabel}
+          onPageChange={onPageChange}
+          cardBreakpoint={cardBreakpoint}
+        />
+      )}
+    </div>
+  )
 }
 
-const ResultsViewSection = styled(ResultsViewSectionBase)`
+const TopSection = styled(TopSectionBase)`
+  // Card view styles
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -456,6 +569,7 @@ const ResultsViewSection = styled(ResultsViewSectionBase)`
     margin-bottom: 8px;
   }
 
+  // Non-card view styles
   ${getMediaQuery} {
     flex-direction: row;
     align-items: flex-start;
@@ -464,6 +578,23 @@ const ResultsViewSection = styled(ResultsViewSectionBase)`
       margin-bottom: 0;
     }
   }
+
+  .sort-buttons {
+    margin-bottom: 16px;
+  }
+
+  // Card view styles when screen is larger than tiny
+  ${(p) =>
+    p.isCardView &&
+    `${p.theme.mediaQueries && p.theme.mediaQueries.small} {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    .sort-buttons {
+      margin-bottom: 0px;
+    }
+  }`}
 `
 
 const PageSizeSelectBase = (props: PageSizeSelectProps): ReactElement => {
@@ -645,6 +776,12 @@ Column.propTypes = {
 
 DataGrid.defaultProps = {
   cardBreakpoint: 'tiny',
+  sortLabels: {
+    sortBy: 'Sort by',
+    order: 'Order',
+    ascending: 'Ascending',
+    descending: 'Descending',
+  },
 }
 
 type DataGridType = StyledComponent<typeof DataGridBase, DefaultTheme, DataGridProps> & {
