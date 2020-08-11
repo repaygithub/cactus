@@ -5,7 +5,7 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import useId from '../helpers/useId'
-import { Label } from '../Label/Label'
+import Label, { LabelProps } from '../Label/Label'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import { Tooltip } from '../Tooltip/Tooltip'
 
@@ -22,15 +22,19 @@ interface AccessibleProps {
 
 type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
 
-interface AccessibleFieldProps extends MarginProps, WidthProps {
-  id?: string
+// These are the props commonly used by components that wrap AccessibleField.
+export interface FieldProps {
   name: string
   label: React.ReactNode
-  labelProps?: Omit<React.ComponentPropsWithoutRef<typeof Label>, 'children'>
+  labelProps?: Omit<LabelProps, 'children' | 'htmlFor' | 'id'>
   tooltip?: string
   error?: string
   warning?: string
   success?: string
+}
+
+interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
+  id?: string
   className?: string
   children: JSX.Element | RenderFunc
 }

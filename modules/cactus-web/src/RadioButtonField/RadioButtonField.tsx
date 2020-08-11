@@ -16,7 +16,7 @@ export interface RadioButtonFieldProps
     MarginProps {
   label: React.ReactNode
   name: string
-  labelProps?: LabelProps
+  labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
   onChange?: FieldOnChangeHandler<string>
   onFocus?: FieldOnFocusHandler
@@ -65,7 +65,7 @@ const RadioButtonFieldBase = (props: RadioButtonFieldProps): React.ReactElement 
         onBlur={handleBlur}
         {...radioButtonProps}
       />
-      <Label htmlFor={radioButtonId} {...labelProps}>
+      <Label {...labelProps} htmlFor={radioButtonId}>
         {label}
       </Label>
     </FieldWrapper>

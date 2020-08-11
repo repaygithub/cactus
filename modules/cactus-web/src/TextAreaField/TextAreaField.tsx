@@ -3,23 +3,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { AccessibleField } from '../AccessibleField/AccessibleField'
+import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
-import { LabelProps } from '../Label/Label'
 import TextArea, { TextAreaProps } from '../TextArea/TextArea'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
 
 interface TextAreaFieldProps
   extends MarginProps,
-    Omit<TextAreaProps, 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
-  label: React.ReactNode
-  name: string
-  labelProps?: LabelProps
-  success?: string
-  warning?: string
-  error?: string
-  tooltip?: string
+    FieldProps,
+    Omit<TextAreaProps, 'name' | 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
   onChange?: FieldOnChangeHandler<string>
   onFocus?: FieldOnFocusHandler
   onBlur?: FieldOnBlurHandler
