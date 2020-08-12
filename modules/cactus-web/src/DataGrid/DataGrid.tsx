@@ -1,7 +1,7 @@
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { BorderSize, ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { createContext, ReactElement, useContext, useEffect, useState } from 'react'
+import React, { createContext, ReactElement, useContext, useEffect, useMemo, useState } from 'react'
 import styled, {
   css,
   DefaultTheme,
@@ -165,19 +165,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     },
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
-  const [sortableColumns, setSortableColumns] = useState(new Map<string, DataColumnObject>())
-  const size = useContext(ScreenSizeContext)
-  const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
-
-  const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn): void => {
-    setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
-  }
-
-  const addColumn = (key: string, columnFn: ColumnFn, title?: string): void => {
-    setColumns(new Map(columns.set(key, { columnFn, title })))
-  }
-
-  useEffect(() => {
+  const sortableColumns = useMemo(() => {
     const sortableCols: Map<string, DataColumnObject> = new Map()
     for (const k of columns.keys()) {
       let col = columns.get(k)
@@ -188,8 +176,19 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
         }
       }
     }
-    setSortableColumns(sortableCols)
+    return sortableCols
   }, [columns])
+
+  const size = useContext(ScreenSizeContext)
+  const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
+
+  const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn): void => {
+    setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
+  }
+
+  const addColumn = (key: string, columnFn: ColumnFn, title?: string): void => {
+    setColumns(new Map(columns.set(key, { columnFn, title })))
+  }
 
   const handleSort = (id: string, exists: boolean) => {
     if (sortOptions) {
@@ -759,6 +758,12 @@ DataGrid.propTypes = {
     prevText: PropTypes.string,
     nextText: PropTypes.string,
     disableNext: PropTypes.bool,
+  }),
+  sortLabels: PropTypes.shape({
+    sortBy: PropTypes.string,
+    order: PropTypes.string,
+    ascending: PropTypes.string,
+    descending: PropTypes.string,
   }),
 }
 
