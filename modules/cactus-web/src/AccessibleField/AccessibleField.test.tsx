@@ -50,7 +50,12 @@ describe('component: AccessibleField', (): void => {
   test('alternate prop types', (): void => {
     const { container, getByText } = render(
       <StyleProvider>
-        <AccessibleField id="aftest" label={<em>Accessible Label</em>} name="text_field">
+        <AccessibleField
+          id="aftest"
+          label={<em>Accessible Label</em>}
+          name="text_field"
+          tooltip={<strong>JSX Tooltip</strong>}
+        >
           {(field) => <input name={field.name} id={field.fieldId} />}
         </AccessibleField>
       </StyleProvider>
@@ -62,6 +67,12 @@ describe('component: AccessibleField', (): void => {
     expect(label?.tagName).toBe('LABEL')
     const input = container.querySelector(`#${label?.getAttribute('for')}`)
     expect(input).toHaveAttribute('name', 'text_field')
+
+    const tooltipText = getByText('JSX Tooltip')
+    expect(tooltipText.tagName).toBe('STRONG')
+    expect(tooltipText.parentElement).toHaveAttribute('id', 'aftest-tip')
+    expect(tooltipText.parentElement).toHaveAttribute('role', 'tooltip')
+
     expect(container).toMatchSnapshot()
   })
 })

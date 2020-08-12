@@ -27,7 +27,7 @@ export interface FieldProps {
   name: string
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor' | 'id'>
-  tooltip?: string
+  tooltip?: React.ReactNode
   error?: string
   warning?: string
   success?: string
@@ -161,7 +161,7 @@ AccessibleField.propTypes = {
   success: PropTypes.string,
   warning: PropTypes.string,
   error: PropTypes.string,
-  tooltip: PropTypes.string,
+  tooltip: PropTypes.node,
 }
 
 export default AccessibleField
