@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-icons@v1.0.2](https://github.com/repaygithub/cactus/commit/41fed40cf29a35bff3db0e1c808f85e49178db1f)
+
+- refactor(cactus-icons): Apply TS linting rules [5ccc80e](https://github.com/repaygithub/cactus/commit/5ccc80e3af88913f0fb5890042b7ccf6c8f55af6)
+- chore(cactus-icons): upgrade Styled System [7656b9c](https://github.com/repaygithub/cactus/commit/7656b9c5f91b9177590743c9134ef4a52db4681e)
+- chore(cactus-icons): update changelog [6caffde](https://github.com/repaygithub/cactus/commit/6caffde34ae39f6e38cd088ab6fe68715fec9175)
+
 ## [@repay/cactus-i18n@v1.0.0](https://github.com/repaygithub/cactus/commit/e840b9e5c3cbf48442281025fe13e1039dfffc38)
 
 - refactor(cactus-i18n): Apply TS linting rules [1fac605](https://github.com/repaygithub/cactus/commit/1fac605d8aac9a05ef962486549b07a7a539987e)
