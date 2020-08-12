@@ -168,7 +168,10 @@ function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
           const scrollX = getScrollX()
 
           return {
-            width: targetRect.width,
+            width: Math.max(
+              targetRect.width,
+              Math.min(targetRect.width + targetRect.width * 0.5, 300)
+            ),
             left: targetRect.left + scrollX,
             ...getTopPosition(targetRect, popoverRect),
           }
@@ -283,6 +286,7 @@ MenuButton.propTypes = {
   label: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  variant: PropTypes.oneOf(['filled', 'unfilled']),
 }
 
 MenuButton.defaultProps = {
