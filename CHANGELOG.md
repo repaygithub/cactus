@@ -1,5 +1,15 @@
 # Changelog
 
+## [@repay/cactus-i18n@v1.0.0](https://github.com/repaygithub/cactus/commit/e840b9e5c3cbf48442281025fe13e1039dfffc38)
+
+- refactor(cactus-i18n): Apply TS linting rules [1fac605](https://github.com/repaygithub/cactus/commit/1fac605d8aac9a05ef962486549b07a7a539987e)
+- docs(cactus-i18n): add args to the base controller API docs [824bdcc](https://github.com/repaygithub/cactus/commit/824bdcc28c45ea65ef71e533c00048ac83f174f2)
+- chore(cactus-i18n): upgrade intl-pluralrules [b54a019](https://github.com/repaygithub/cactus/commit/b54a019eda6db0a385f589c46b82e3c20f7cecdd)
+- chore(cactus-i18n): upgrade Fluent packages [bb25712](https://github.com/repaygithub/cactus/commit/bb257120ab57d37b0acf2165215923a416ad893a)
+- docs(cactus-i18n): fixed example for i18nController action in docs [847ddb7](https://github.com/repaygithub/cactus/commit/847ddb7d9e7309fd1d77f6c91ae3a22b186ff286)
+- docs(cactus-i18n): fixed example for i18Ncontroller action in docs [d73164e](https://github.com/repaygithub/cactus/commit/d73164e0d05a7cace4b95205d101c14e981611d1)
+- chore(cactus-i18n): update changelog [cda6e38](https://github.com/repaygithub/cactus/commit/cda6e38f7830c4adaf09a0d6f05473e5367d22a0)
+
 ## [@repay/cactus-web@v1.0.2](https://github.com/repaygithub/cactus/commit/8251b7529188ab2faa8f5cf58f1c4e2e6f53f667)
 
 - chore(cactus-web): upgrade @repay/cactus-icons [ddc1673](https://github.com/repaygithub/cactus/commit/ddc167382455ab12eec612596bbfdf63ac89b1c1)
