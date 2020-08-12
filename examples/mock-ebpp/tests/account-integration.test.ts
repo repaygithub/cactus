@@ -1,4 +1,4 @@
-import { queryAllByText, queryByText } from '@testing-library/testcafe'
+import { queryAllByText, queryByLabelText, queryByText } from '@testing-library/testcafe'
 import * as path from 'path'
 import { Selector } from 'testcafe'
 
@@ -24,66 +24,66 @@ fixture('Account Integration Tests')
 
 test('DataGrid interactions in table view', async (t: TestController): Promise<void> => {
   // Set desktop screen size
-  await t.resizeWindow(1600, 1200)
+  await t.resizeWindow(1600, 994)
   // Sort by first name
-  await t.click(queryByText('First Name'))
-  await t.expect(queryByText('Anita').exists).ok()
-  await t.expect(queryByText('James').exists).ok()
-  await t.expect(queryByText('Victoria').exists).notOk()
-
-  // Change sort order
   await t.click(queryByText('First Name'))
   await t.expect(queryByText('Victoria').exists).ok()
   await t.expect(queryByText('Chris').exists).ok()
   await t.expect(queryByText('Anita').exists).notOk()
 
-  // Go to second page
-  await t.click(Selector('a').withAttribute('aria-label', 'Go to page 2'))
-  await t.expect(queryByText('Apple').exists).ok()
+  // Change sort order
+  await t.click(queryByText('First Name'))
   await t.expect(queryByText('Anita').exists).ok()
+  await t.expect(queryByText('James').exists).ok()
+  await t.expect(queryByText('Victoria').exists).notOk()
+
+  // Go to second page
+  await t.click(queryByLabelText('Go to page 2'))
+  await t.expect(queryByText('Nick').exists).ok()
+  await t.expect(queryByText('Victoria').exists).ok()
 
   // Delete account using SplitButton
   await t.click(Selector('button').withAttribute('data-reach-menu-button').nth(0))
   await t.click(
-    Selector('div').withAttribute('data-reach-menu-item').withText('Delete Account 76324')
+    Selector('div').withAttribute('data-reach-menu-item').withText('Delete Account 01254')
   )
-  await t.expect(queryByText('Account 76324 deleted successfully').exists).ok()
+  await t.expect(queryByText('Account 01254 deleted successfully').exists).ok()
 
   // Navigate to account page using SplitButton
   await t.click(queryAllByText('View Account').nth(0))
-  await t.expect(queryByText('Account 36521').exists).ok()
+  await t.expect(queryByText('Account 85963').exists).ok()
 })
 
 test('DataGrid interactions in card view', async (t: TestController): Promise<void> => {
   // Set iPad screen size
-  await t.resizeWindow(834, 1112)
+  await t.resizeWindow(834, 994)
   // Sort by first name
   await t.click(queryByText('Sort by'))
   await t.click(Selector('div').withAttribute('data-reach-menu-item').withText('First Name'))
-  await t.expect(queryByText('Anita').exists).ok()
-  await t.expect(queryByText('James').exists).ok()
-  await t.expect(queryByText('Victoria').exists).notOk()
-
-  // Change sort order
-  await t.click(queryByText('Order'))
-  await t.click(Selector('div').withAttribute('data-reach-menu-item').withText('Ascending'))
   await t.expect(queryByText('Victoria').exists).ok()
   await t.expect(queryByText('Chris').exists).ok()
   await t.expect(queryByText('Anita').exists).notOk()
 
-  // // Go to second page
-  await t.click(Selector('a').withAttribute('aria-label', 'Go to page 2'))
-  await t.expect(queryByText('Apple').exists).ok()
+  // Change sort order
+  await t.click(queryByText('Order'))
+  await t.click(Selector('div').withAttribute('data-reach-menu-item').withText('Ascending'))
   await t.expect(queryByText('Anita').exists).ok()
+  await t.expect(queryByText('James').exists).ok()
+  await t.expect(queryByText('Victoria').exists).notOk()
+
+  // // Go to second page
+  await t.click(queryByLabelText('Go to page 2'))
+  await t.expect(queryByText('Nick').exists).ok()
+  await t.expect(queryByText('Victoria').exists).ok()
 
   // // Delete account using SplitButton
   await t.click(Selector('button').withAttribute('data-reach-menu-button').nth(2))
   await t.click(
-    Selector('div').withAttribute('data-reach-menu-item').withText('Delete Account 76324')
+    Selector('div').withAttribute('data-reach-menu-item').withText('Delete Account 01254')
   )
-  await t.expect(queryByText('Account 76324 deleted successfully').exists).ok()
+  await t.expect(queryByText('Account 01254 deleted successfully').exists).ok()
 
   // Navigate to account page using SplitButton
   await t.click(queryAllByText('View Account').nth(0))
-  await t.expect(queryByText('Account 36521').exists).ok()
+  await t.expect(queryByText('Account 85963').exists).ok()
 })

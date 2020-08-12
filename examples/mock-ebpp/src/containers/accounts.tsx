@@ -34,8 +34,8 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
 
   useEffect((): void => {
     const accounts = fetchAccounts()
-    setState({ ...state, accounts: accounts })
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    setState((state) => ({ ...state, accounts: accounts }))
+  }, [])
 
   const paginateData = (): { [key: string]: any }[] => {
     const { paginationOptions, accounts } = state
@@ -45,7 +45,7 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
   }
 
   const handlePageChange = (newPaginationOptions: PaginationOptions) => {
-    setState({ ...state, paginationOptions: newPaginationOptions })
+    setState((state) => ({ ...state, paginationOptions: newPaginationOptions }))
   }
 
   const handleSort = (newSortOptions: SortOption[]) => {
@@ -56,20 +56,20 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
       if (sortAscending) {
         accountsCopy.sort((a: Account, b: Account) => {
           if (a[sortId] < b[sortId]) {
-            return 1
+            return -1
           }
           if (a[sortId] > b[sortId]) {
-            return -1
+            return 1
           }
           return 0
         })
       } else {
         accountsCopy.sort((a: Account, b: Account): number => {
           if (a[sortId] < b[sortId]) {
-            return -1
+            return 1
           }
           if (a[sortId] > b[sortId]) {
-            return 1
+            return -1
           }
           return 0
         })
@@ -86,7 +86,7 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
         })
       }
     }
-    setState({ ...state, sortOptions: newSortOptions, accounts: accountsCopy })
+    setState((state) => ({ ...state, sortOptions: newSortOptions, accounts: accountsCopy }))
   }
 
   return (
@@ -147,13 +147,13 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
                 >
                   <SplitButton.Action
                     onSelect={() => {
-                      setState({
+                      setState((state) => ({
                         ...state,
                         accounts: state.accounts.filter(
                           (acct: Account): boolean => acct.id !== rowData.id
                         ),
                         alert: `Account ${rowData.id} deleted successfully`,
-                      })
+                      }))
                     }}
                   >
                     {`Delete Account ${rowData.id}`}
