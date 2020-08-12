@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[12],{1084:function(e,n,t){"use strict";t.r(n);var r=t(0),c=t(258),i=t.n(c),a=t(1118),o=t.n(a);n.default=function(){return r.createElement(r.Fragment,null,r.createElement(i.a,{title:"Hierarchy Decision Tree"}),r.createElement("h1",null,"Hierarchy Decision Tree"),r.createElement("img",{src:o.a}))}},1118:function(e,n,t){e.exports=t.p+"static/decision-tree-eed54ddf692ceb19082f9d3651b339fd.png"}}]);
-//# sourceMappingURL=component---src-pages-visual-hierarchy-decision-tree-tsx-7c7fcade628b35811952.js.map
