@@ -33,7 +33,7 @@ const Home = (props: RouteComponentProps): React.ReactElement => {
             <Grid.Item tiny={12}>
               <h5> Developed by Dhalton Huber and Victoria Vyverman</h5>
             </Grid.Item>
-            <Grid.Item tiny={0} medium={2} />
+            <Grid.Item tiny={1} medium={2} />
             <Grid.Item tiny={12} medium={4}>
               <Card>
                 <h2 style={{ margin: 0 }}> Dhalton Huber </h2>
@@ -52,7 +52,7 @@ const Home = (props: RouteComponentProps): React.ReactElement => {
               </Card>
             </Grid.Item>
 
-            <Grid.Item tiny={0} medium={2} />
+            <Grid.Item tiny={1} medium={2} />
           </Grid>
         </Flex>
       </Flex>
