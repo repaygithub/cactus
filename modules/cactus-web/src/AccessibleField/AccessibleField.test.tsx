@@ -9,12 +9,14 @@ describe('component: AccessibleField', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
         <AccessibleField label="Accessible Label" name="text_field">
-          <input name="text_field" data-is="accessible" />
+          <input data-is="accessible" />
         </AccessibleField>
       </StyleProvider>
     )
 
-    expect(getByLabelText('Accessible Label')).toHaveAttribute('data-is', 'accessible')
+    const input = getByLabelText('Accessible Label')
+    expect(input).toHaveAttribute('data-is', 'accessible')
+    expect(input).toHaveAttribute('name', 'text_field')
   })
 
   test('provides accessible status message', (): void => {
@@ -27,8 +29,7 @@ describe('component: AccessibleField', (): void => {
     )
 
     expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toContain(
-      //@ts-ignore
-      getByText('This field has an error').closest('[id]').id
+      getByText('This field has an error').closest('[id]')?.id
     )
   })
 
@@ -42,8 +43,25 @@ describe('component: AccessibleField', (): void => {
     )
 
     expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toContain(
-      //@ts-ignore
-      getByText('woot tooltips!').closest('[id]').id
+      getByText('woot tooltips!').closest('[id]')?.id
     )
+  })
+
+  test('alternate prop types', (): void => {
+    const { container, getByText } = render(
+      <StyleProvider>
+        <AccessibleField id="aftest" label={<em>Accessible Label</em>} name="text_field">
+          {(field) => <input name={field.name} id={field.fieldId} />}
+        </AccessibleField>
+      </StyleProvider>
+    )
+
+    const labelText = getByText('Accessible Label')
+    expect(labelText.tagName).toBe('EM')
+    const label = labelText.parentElement
+    expect(label?.tagName).toBe('LABEL')
+    const input = container.querySelector(`#${label?.getAttribute('for')}`)
+    expect(input).toHaveAttribute('name', 'text_field')
+    expect(container).toMatchSnapshot()
   })
 })

@@ -14,7 +14,7 @@ import { Omit } from '../types'
 interface FileInputFieldProps extends FileInputProps, MarginProps {
   className?: string
   label: React.ReactNode
-  labelProps?: LabelProps
+  labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   tooltip?: string
 }
 
@@ -33,7 +33,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
 
   return (
     <FieldWrapper className={className} ref={containerRef}>
-      <Label htmlFor={inputId} {...labelProps}>
+      <Label {...labelProps} htmlFor={inputId}>
         {label}
       </Label>
       {tooltip && (
