@@ -160,7 +160,10 @@ function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
         <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
       </ReachMenuButton>
       <ReachMenuPopover
-        position={(targetRect, popoverRect): { width?: number; left?: number; top?: string } => {
+        position={(
+          targetRect,
+          popoverRect
+        ): { minWidth?: number; maxWidth?: number; left?: number; top?: string } => {
           if (!targetRect || !popoverRect) {
             return {}
           }
@@ -168,10 +171,8 @@ function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
           const scrollX = getScrollX()
 
           return {
-            width: Math.max(
-              targetRect.width,
-              Math.min(targetRect.width + targetRect.width * 0.5, 300)
-            ),
+            minWidth: targetRect.width,
+            maxWidth: Math.max(targetRect.width, Math.min(targetRect.width * 1.5, 300)),
             left: targetRect.left + scrollX,
             ...getTopPosition(targetRect, popoverRect),
           }
