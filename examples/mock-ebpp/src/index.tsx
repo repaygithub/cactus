@@ -1,11 +1,10 @@
-import { RouteComponentProps, Router } from '@reach/router'
-import { DescriptiveHome } from '@repay/cactus-icons'
-import { Flex, StyleProvider, Text } from '@repay/cactus-web'
+import { Router } from '@reach/router'
+import { StyleProvider } from '@repay/cactus-web'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
 
-import Link from './components/Link'
+import MenuBar from './components/MenuBar'
 import Account from './containers/account'
 import Accounts from './containers/accounts'
 import Faq from './containers/faq'
@@ -18,62 +17,15 @@ const appRoot = document.createElement('div')
 appRoot.className = 'app-root'
 document.body.appendChild(appRoot)
 
-interface ContainerProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    RouteComponentProps {}
-
-const AppContainer = (props: ContainerProps): React.ReactElement => {
-  const { children } = props
-
-  return (
-    <div>
-      <StyleProvider global>
-        <div>
-          <Flex
-            alignItems="center"
-            justifyContent="space-evenly"
-            height="100px"
-            width="100%"
-            backgroundColor="lightContrast"
-          >
-            <Link to="/" style={{ fontSize: '30px' }}>
-              <Text>
-                <DescriptiveHome />
-              </Text>
-            </Link>
-            <Link to="/payment-history" style={{ fontSize: '30px' }}>
-              Payment History Report
-            </Link>
-            <Link to="/accounts" style={{ fontSize: '30px' }}>
-              Accounts
-            </Link>
-            <Link to="/ui-config" style={{ fontSize: '30px' }}>
-              UI Config
-            </Link>
-            <Link to="/faq" style={{ fontSize: '30px' }}>
-              FAQ
-            </Link>
-            <Link to="/rules" style={{ fontSize: '30px' }}>
-              Rules
-            </Link>
-          </Flex>
-
-          {children}
-        </div>
-      </StyleProvider>
-    </div>
-  )
-}
-
 const App = (): React.ReactElement => {
   return (
-    <div>
+    <StyleProvider global>
       <Helmet>
         <title> Home </title>
         <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicon.ico" />
       </Helmet>
       <Router>
-        <AppContainer path="/">
+        <MenuBar path="/">
           <Home path="/" />
           <PaymentHistoryReport path="/payment-history" />
           <Accounts path="/accounts" />
@@ -81,9 +33,9 @@ const App = (): React.ReactElement => {
           <Faq path="/faq" />
           <Rules path="/rules" />
           <Account path="/account/:accountId" />
-        </AppContainer>
+        </MenuBar>
       </Router>
-    </div>
+    </StyleProvider>
   )
 }
 
