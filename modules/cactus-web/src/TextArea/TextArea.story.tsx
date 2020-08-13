@@ -3,7 +3,8 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
-import TextArea, { Status } from './TextArea'
+import { Status } from '../StatusMessage/StatusMessage'
+import TextArea from './TextArea'
 
 type StatusOptions = { [k in Status | 'none']: Status | null }
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')

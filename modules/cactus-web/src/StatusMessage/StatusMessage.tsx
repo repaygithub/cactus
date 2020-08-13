@@ -1,8 +1,7 @@
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
-import { TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { textStyle } from '../helpers/theme'
 
@@ -10,7 +9,7 @@ export type Status = 'success' | 'warning' | 'error'
 
 export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
 
-interface StatusMessageProps {
+interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement> {
   status: Status
 }
 
@@ -28,16 +27,14 @@ const statusMap: StatusMap = {
   `,
 }
 
-const statusColors: any = (props: StatusMessageProps): ReturnType<typeof css> => {
-  const { status } = props
-  return statusMap[status as Status]
-}
-
 const Noop = (): null => null
 
-const StatusMessageBase: React.FC<
-  StatusMessageProps & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-> = ({ status, className, children, ...rest }): React.ReactElement => {
+const StatusMessageBase: React.FC<StatusMessageProps> = ({
+  status,
+  className,
+  children,
+  ...rest
+}): React.ReactElement => {
   let StatusIcon: React.ElementType<any> = Noop
   switch (status) {
     case 'error': {
@@ -61,14 +58,14 @@ const StatusMessageBase: React.FC<
   )
 }
 
-const StatusMessage = styled(StatusMessageBase)<StatusMessageProps>`
+const StatusMessage = styled(StatusMessageBase)`
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
-  ${statusColors}
+  ${(p) => textStyle(p.theme, 'small')};
+  ${(p) => statusMap[p.status]}
 
   ${NotificationError}, ${NotificationAlert}, ${StatusCheck} {
     margin-right: 4px;
