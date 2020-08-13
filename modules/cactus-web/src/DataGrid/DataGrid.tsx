@@ -759,6 +759,7 @@ DataGrid.propTypes = {
     nextText: PropTypes.string,
     disableNext: PropTypes.bool,
   }),
+  cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   sortLabels: PropTypes.shape({
     sortBy: PropTypes.string,
     order: PropTypes.string,
