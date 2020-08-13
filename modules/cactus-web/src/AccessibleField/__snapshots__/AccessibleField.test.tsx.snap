@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: AccessibleField alternate prop types 1`] = `
+.c1 + .c0 {
+  margin-top: 16px;
+}
+
+.c4 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
+.c2 {
+  position: relative;
+}
+
+.c2 .c3 {
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 28px;
+}
+
+.c2 .sc-pReKu {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  font-size: 16px;
+}
+
+.c2 .sc-qYSYK {
+  margin-top: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+<div>
+  <div
+    class="c0 c1 c2"
+  >
+    <label
+      class="c3 c4"
+      for="aftest"
+      id="aftest-label"
+    >
+      <em>
+        Accessible Label
+      </em>
+    </label>
+    <input
+      id="aftest"
+      name="text_field"
+    />
+  </div>
+</div>
+`;

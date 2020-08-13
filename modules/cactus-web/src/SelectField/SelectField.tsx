@@ -3,26 +3,19 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
-import AccessibleField from '../AccessibleField/AccessibleField'
+import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import { omitMargins } from '../helpers/omit'
-import { LabelProps } from '../Label/Label'
 import Select, { OptionType, SelectProps, SelectValueType } from '../Select/Select'
-import { FieldOnChangeHandler, Omit } from '../types'
+import { FieldOnChangeHandler } from '../types'
 
 interface SelectFieldProps
   extends MarginProps,
     WidthProps,
+    FieldProps,
     Omit<SelectProps, 'id' | 'onChange' | keyof MarginProps | keyof WidthProps> {
-  label: React.ReactNode
-  labelProps?: LabelProps
-  name: string
   options: (OptionType | string)[]
   className?: string
   id?: string
-  success?: string
-  warning?: string
-  error?: string
-  tooltip?: string
   multiple?: boolean
   onChange?: FieldOnChangeHandler<SelectValueType>
 }

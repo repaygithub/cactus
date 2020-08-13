@@ -15,7 +15,6 @@ const PaymentHistoryReport = (props: RouteComponentProps): React.ReactElement =>
 
   useEffect((): void => {
     const payments = fetchPaymentHistory()
-    console.log(payments)
     setState({ payments: payments })
   }, [])
 
@@ -64,6 +63,7 @@ const PaymentHistoryReport = (props: RouteComponentProps): React.ReactElement =>
 
                   return (
                     <tr
+                      key={payment.pnref}
                       style={{
                         backgroundColor: `${color}`,
                         border: '2px solid black',

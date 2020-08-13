@@ -3,28 +3,20 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
-import AccessibleField from '../AccessibleField/AccessibleField'
+import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import DateInput from '../DateInput/DateInput'
 import { omitMargins } from '../helpers/omit'
-import Label from '../Label/Label'
-import { Omit } from '../types'
 
 interface DateInputFieldProps
   extends MarginProps,
     WidthProps,
+    FieldProps,
     Omit<
-      React.ComponentPropsWithoutRef<typeof DateInput>,
-      'id' | 'status' | keyof MarginProps | keyof WidthProps
+      React.ComponentProps<typeof DateInput>,
+      'id' | 'status' | 'ref' | keyof MarginProps | keyof WidthProps
     > {
-  label: React.ReactNode
-  labelProps?: Omit<React.ComponentPropsWithoutRef<typeof Label>, 'children'>
-  name: string
   className?: string
   id?: string
-  success?: string
-  warning?: string
-  error?: string
-  tooltip?: string
 }
 
 function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {

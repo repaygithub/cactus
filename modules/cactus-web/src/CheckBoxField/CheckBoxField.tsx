@@ -15,7 +15,7 @@ interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'onBlur' | 'onFocus' | 'disabled'>,
     MarginProps {
   label: React.ReactNode
-  labelProps?: LabelProps
+  labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
   name: string
   onChange?: FieldOnChangeHandler<boolean>
@@ -67,7 +67,7 @@ const CheckBoxFieldBase = (props: CheckBoxFieldProps): React.ReactElement => {
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      <Label htmlFor={checkboxId} {...labelProps}>
+      <Label {...labelProps} htmlFor={checkboxId}>
         {label}
       </Label>
     </FieldWrapper>

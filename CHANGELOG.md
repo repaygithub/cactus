@@ -1,5 +1,37 @@
 # Changelog
 
+## [@repay/cactus-web@v1.1.2](https://github.com/repaygithub/cactus/commit/ddcc9062b6b16e47e5b9cddc53eda68850af8bf6)
+
+- fix(cactus-web): add console warning for invalid props [9858f73](https://github.com/repaygithub/cactus/commit/9858f73dde153eb945bf9268c64a44c0dda9a23d)
+- fix(cactus-web): fix types when using `as` prop [9ce1eda](https://github.com/repaygithub/cactus/commit/9ce1eda7bc439d3f1675e4796a09607b0de49659)
+- refactor(cactus-web): fix Typescript linting errors [817f382](https://github.com/repaygithub/cactus/commit/817f3823b3e670a9e7ecd8bdc40c3da8665a720b)
+- fix(cactus-web): get rid of console warning triggered by SplitButton drop-down [993c118](https://github.com/repaygithub/cactus/commit/993c1180c5a063b9e271579f823b93002707cb8d)
+- fix(cactus-web): extend border across entire width of nav [31eaecb](https://github.com/repaygithub/cactus/commit/31eaecbb14ec1dfcc5f454e2711120dd24c2ee80)
+- fix(cactus-web): close menu when item is clicked [c7cf1fa](https://github.com/repaygithub/cactus/commit/c7cf1fad8900eaa76dc8417732c78c3b3be0aac5)
+- fix(cactus-web): fix scrolling algorithm [a347e9e](https://github.com/repaygithub/cactus/commit/a347e9e4e7fae379d2a924a15ff7b349e3113f3b)
+- refactor(cactus-web): Apply TS linting rules [09ae435](https://github.com/repaygithub/cactus/commit/09ae43557ca906619a5d39a271e981d883ece933)
+- chore(cactus-web): upgrade Styled System [796d52f](https://github.com/repaygithub/cactus/commit/796d52f0ecc40ff9dd73856978a41893c870a1a0)
+- chore(cactus-web): upgrade Reach dependencies [c5a7f54](https://github.com/repaygithub/cactus/commit/c5a7f5478723a88ab8062e8e69d6258d7b6adf72)
+- refactor(cactus-web): upgrade @types/lodash and adjust omit calls accordingly [99a1b6d](https://github.com/repaygithub/cactus/commit/99a1b6d3e3869da1c3a203c74a965dca754dcb30)
+- chore(cactus-web): fix changelog [13fdd55](https://github.com/repaygithub/cactus/commit/13fdd5509d3c3abed4258ea61964efdb9ba32274)
+- chore(cactus-web): update changelog [761c54d](https://github.com/repaygithub/cactus/commit/761c54dcea106c736cab75871ef54a38d6c29335)
+
+## [@repay/cactus-icons@v1.0.2](https://github.com/repaygithub/cactus/commit/41fed40cf29a35bff3db0e1c808f85e49178db1f)
+
+- refactor(cactus-icons): Apply TS linting rules [5ccc80e](https://github.com/repaygithub/cactus/commit/5ccc80e3af88913f0fb5890042b7ccf6c8f55af6)
+- chore(cactus-icons): upgrade Styled System [7656b9c](https://github.com/repaygithub/cactus/commit/7656b9c5f91b9177590743c9134ef4a52db4681e)
+- chore(cactus-icons): update changelog [6caffde](https://github.com/repaygithub/cactus/commit/6caffde34ae39f6e38cd088ab6fe68715fec9175)
+
+## [@repay/cactus-i18n@v1.0.0](https://github.com/repaygithub/cactus/commit/e840b9e5c3cbf48442281025fe13e1039dfffc38)
+
+- refactor(cactus-i18n): Apply TS linting rules [1fac605](https://github.com/repaygithub/cactus/commit/1fac605d8aac9a05ef962486549b07a7a539987e)
+- docs(cactus-i18n): add args to the base controller API docs [824bdcc](https://github.com/repaygithub/cactus/commit/824bdcc28c45ea65ef71e533c00048ac83f174f2)
+- chore(cactus-i18n): upgrade intl-pluralrules [b54a019](https://github.com/repaygithub/cactus/commit/b54a019eda6db0a385f589c46b82e3c20f7cecdd)
+- chore(cactus-i18n): upgrade Fluent packages [bb25712](https://github.com/repaygithub/cactus/commit/bb257120ab57d37b0acf2165215923a416ad893a)
+- docs(cactus-i18n): fixed example for i18nController action in docs [847ddb7](https://github.com/repaygithub/cactus/commit/847ddb7d9e7309fd1d77f6c91ae3a22b186ff286)
+- docs(cactus-i18n): fixed example for i18Ncontroller action in docs [d73164e](https://github.com/repaygithub/cactus/commit/d73164e0d05a7cace4b95205d101c14e981611d1)
+- chore(cactus-i18n): update changelog [cda6e38](https://github.com/repaygithub/cactus/commit/cda6e38f7830c4adaf09a0d6f05473e5367d22a0)
+
 ## [@repay/cactus-web@v1.0.2](https://github.com/repaygithub/cactus/commit/8251b7529188ab2faa8f5cf58f1c4e2e6f53f667)
 
 - chore(cactus-web): upgrade @repay/cactus-icons [ddc1673](https://github.com/repaygithub/cactus/commit/ddc167382455ab12eec612596bbfdf63ac89b1c1)
