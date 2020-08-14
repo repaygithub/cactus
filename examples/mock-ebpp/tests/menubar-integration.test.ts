@@ -22,7 +22,6 @@ fixture('Menu bar integration test')
   .page('http://localhost:33567/')
 
 const getUrl = ClientFunction(() => window.location.href)
-const getWindowHeight = ClientFunction(() => window.innerHeight)
 
 test('Navigate to faq page', async (t: TestController): Promise<void> => {
   await t.click(Selector('a').withText('FAQ'))
@@ -41,8 +40,7 @@ test('Interact with dropdown', async (t: TestController): Promise<void> => {
 })
 
 test('Can click item when MenuBar is overflowed', async (t: TestController): Promise<void> => {
-  const innerHeight = await getWindowHeight()
-  await t.resizeWindow(1024, innerHeight)
+  await t.resizeWindow(1024, 500)
   await t.click(Selector('nav').child('div').nth(-1))
   await t.click(Selector('nav').child('div').nth(-1))
   await t.click(Selector('button').withText('Explore our modules on GitHub'))
