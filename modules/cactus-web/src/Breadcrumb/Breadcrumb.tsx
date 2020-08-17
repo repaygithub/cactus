@@ -4,7 +4,7 @@ import React from 'react'
 import styled, { StyledComponentBase } from 'styled-components'
 
 interface BreadcrumbItemProps {
-  label: string
+  label: React.ReactNode
   linkTo: string
   className?: string
   active?: boolean
