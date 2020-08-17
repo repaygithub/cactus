@@ -7,16 +7,10 @@ import { margin, MarginProps } from 'styled-system'
 import { omitMargins } from '../helpers/omit'
 import { textStyle } from '../helpers/theme'
 import Spinner from '../Spinner/Spinner'
-import { Omit } from '../types'
 
 export type ButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
 
-interface ButtonProps
-  extends Omit<
-      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-      'ref' | 'disabled'
-    >,
-    MarginProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, MarginProps {
   variant?: ButtonVariants
   /** !important */
   disabled?: boolean
@@ -167,9 +161,7 @@ const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
 const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
-const variantOrDisabled = (
-  props: ButtonProps
-): ReturnType<typeof css> | FlattenSimpleInterpolation | undefined => {
+const variantOrDisabled = (props: ButtonProps) => {
   const map = props.inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
     return disabled
