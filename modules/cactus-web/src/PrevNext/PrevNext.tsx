@@ -14,8 +14,8 @@ interface PrevNextProps extends MarginProps {
   disableNext?: boolean
   linkAs?: React.ElementType
   onNavigate?: (direction: NavDirection) => void
-  prevText?: string
-  nextText?: string
+  prevText?: React.ReactNode
+  nextText?: React.ReactNode
 }
 
 interface PrevNextLinkProps {
@@ -111,8 +111,8 @@ PrevNext.propTypes = {
   disableNext: PropTypes.bool,
   linkAs: linkAsPropType,
   onNavigate: PropTypes.func,
-  prevText: PropTypes.string,
-  nextText: PropTypes.string,
+  prevText: PropTypes.node,
+  nextText: PropTypes.node,
 }
 
 PrevNext.defaultProps = {
