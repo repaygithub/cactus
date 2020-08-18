@@ -15,7 +15,7 @@ interface FileInputFieldProps extends FileInputProps, MarginProps {
   className?: string
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
-  tooltip?: string
+  tooltip?: React.ReactNode
 }
 
 const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
@@ -69,7 +69,7 @@ export const FileInputField = styled(FileInputFieldBase)`
 FileInputField.propTypes = {
   label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
-  tooltip: PropTypes.string,
+  tooltip: PropTypes.node,
   name: PropTypes.string.isRequired,
   accept: PropTypes.arrayOf(PropTypes.string) as PropTypes.Validator<string[] | undefined>,
   labels: PropTypes.shape({

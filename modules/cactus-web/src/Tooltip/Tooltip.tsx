@@ -1,4 +1,4 @@
-import { PRect } from '@reach/rect'
+import { Position } from '@reach/popover'
 import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
 import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
@@ -6,61 +6,33 @@ import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { cloneElement } from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps, maxWidth } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { boxShadow } from '../helpers/theme'
-import { Omit } from '../types'
 
-interface Styles extends DOMRect {
-  top: number
-  left: number
-  borderTopLeftRadius?: string
-  borderTopRightRadius?: string
-  borderBottomRightRadius?: string
-  borderBottomLeftRadius?: string
-}
-
-type Position = (
-  triggerRect: PRect | null | undefined,
-  tooltipRect: PRect | null | undefined
-) => DOMRect
-
-interface TooltipProps
-  extends MarginProps,
-    Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'ref'> {
+interface TooltipProps extends MarginProps {
   /** Text to be displayed */
-  label: string
+  label: React.ReactNode
   ariaLabel?: string
-  DEBUG_STYLE?: boolean
   position?: Position
   maxWidth?: string
   disabled?: boolean
+  className?: string
+  id?: string
 }
 
 const OFFSET = 8
-// @ts-ignore
-const cactusPosition: Position = (
-  triggerRect: PRect | null | undefined,
-  tooltipRect: PRect | null | undefined
-): {
-  left?: number
-  top?: number
-  width?: number
-  borderTopLeftRadius?: string
-  borderTopRightRadius?: string
-  borderBottomRightRadius?: string
-  borderBottomLeftRadius?: string
-} => {
+const cactusPosition: Position = (triggerRect, tooltipRect) => {
   if (!triggerRect || !tooltipRect) {
     return {}
   }
   const scrollX = getScrollX()
   const scrollY = getScrollY()
-  const styles: Styles = ({
+  const styles: ReturnType<Position> = {
     left: triggerRect.left + scrollX,
     top: triggerRect.top + triggerRect.height + scrollY,
-  } as unknown) as DOMRect
+  }
 
   if (!tooltipRect) {
     return styles
@@ -108,7 +80,7 @@ const StyledInfo = styled(NotificationInfo)<StyledInfoProps>`
 `
 
 const TooltipBase = (props: TooltipProps): React.ReactElement => {
-  const { className, disabled, label, ariaLabel, id, maxWidth } = props
+  const { className, disabled, label, ariaLabel, id, maxWidth, position } = props
   const [trigger, tooltip] = useTooltip()
   return (
     <>
@@ -124,7 +96,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
             {...tooltip}
             label={label}
             ariaLabel={ariaLabel}
-            position={cactusPosition}
+            position={position || cactusPosition}
             style={{ maxWidth }}
           />
           <VisuallyHidden role="tooltip" id={id}>
@@ -148,8 +120,6 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   border: 2px solid ${(p): string => p.theme.colors.callToAction};
   box-sizing: border-box;
   overflow-wrap: break-word;
-
-  ${maxWidth}
 `
 
 export const Tooltip = styled(TooltipBase)`
@@ -157,7 +127,7 @@ export const Tooltip = styled(TooltipBase)`
 `
 
 Tooltip.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
   ariaLabel: PropTypes.string,
   position: PropTypes.func,
   maxWidth: PropTypes.string,
