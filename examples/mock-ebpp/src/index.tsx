@@ -1,5 +1,5 @@
 import { Router } from '@reach/router'
-import { StyleProvider } from '@repay/cactus-web'
+import { ScreenSizeProvider, StyleProvider } from '@repay/cactus-web'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
@@ -20,21 +20,23 @@ document.body.appendChild(appRoot)
 const App = (): React.ReactElement => {
   return (
     <StyleProvider global>
-      <Helmet>
-        <title> Home </title>
-        <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicon.ico" />
-      </Helmet>
-      <Router>
-        <MenuBar path="/">
-          <Home path="/" />
-          <PaymentHistoryReport path="/payment-history" />
-          <Accounts path="/accounts" />
-          <UIConfig path="/ui-config" />
-          <Faq path="/faq" />
-          <Rules path="/rules" />
-          <Account path="/account/:accountId" />
-        </MenuBar>
-      </Router>
+      <ScreenSizeProvider>
+        <Helmet>
+          <title> Home </title>
+          <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicon.ico" />
+        </Helmet>
+        <Router>
+          <MenuBar path="/">
+            <Home path="/" />
+            <PaymentHistoryReport path="/payment-history" />
+            <Accounts path="/accounts" />
+            <UIConfig path="/ui-config" />
+            <Faq path="/faq" />
+            <Rules path="/rules" />
+            <Account path="/account/:accountId" />
+          </MenuBar>
+        </Router>
+      </ScreenSizeProvider>
     </StyleProvider>
   )
 }

@@ -1,23 +1,93 @@
 import { navigate, RouteComponentProps } from '@reach/router'
-import { Alert, Flex, SplitButton, Text } from '@repay/cactus-web'
+import { Alert, DataGrid, Flex, SplitButton, Text } from '@repay/cactus-web'
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Account, fetchAccounts } from '../api'
 
+interface PaginationOptions {
+  currentPage: number
+  pageSize: number
+  pageCount: number
+}
+
+interface SortOption {
+  id: string
+  sortAscending: boolean
+}
+
 interface State {
   accounts: Account[]
   alert: string
+  paginationOptions: PaginationOptions
+  sortOptions: SortOption[]
 }
 
 //eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Accounts = (props: RouteComponentProps): React.ReactElement => {
-  const [state, setState] = useState<State>({ accounts: [], alert: '' })
+  const [state, setState] = useState<State>({
+    accounts: [],
+    alert: '',
+    paginationOptions: { currentPage: 1, pageSize: 5, pageCount: 2 },
+    sortOptions: [],
+  })
 
   useEffect((): void => {
     const accounts = fetchAccounts()
-    setState({ accounts: accounts, alert: '' })
+    setState((state) => ({ ...state, accounts: accounts }))
   }, [])
+
+  const paginateData = (): { [key: string]: any }[] => {
+    const { paginationOptions, accounts } = state
+    const index1 = (paginationOptions.currentPage - 1) * paginationOptions.pageSize
+    const index2 = index1 + paginationOptions.pageSize
+    return accounts.slice(index1, index2)
+  }
+
+  const handlePageChange = (newPaginationOptions: PaginationOptions) => {
+    setState((state) => ({ ...state, paginationOptions: newPaginationOptions }))
+  }
+
+  const handleSort = (newSortOptions: SortOption[]) => {
+    const sortId = newSortOptions[0].id
+    const sortAscending = newSortOptions[0].sortAscending
+    const accountsCopy = JSON.parse(JSON.stringify(state.accounts))
+    if (sortId === 'firstName' || sortId === 'lastName') {
+      if (sortAscending) {
+        accountsCopy.sort((a: Account, b: Account) => {
+          if (a[sortId] < b[sortId]) {
+            return -1
+          }
+          if (a[sortId] > b[sortId]) {
+            return 1
+          }
+          return 0
+        })
+      } else {
+        accountsCopy.sort((a: Account, b: Account): number => {
+          if (a[sortId] < b[sortId]) {
+            return 1
+          }
+          if (a[sortId] > b[sortId]) {
+            return -1
+          }
+          return 0
+        })
+      }
+    }
+    if (sortId === 'dob') {
+      if (sortAscending) {
+        accountsCopy.sort((a: Account, b: Account): number => {
+          return (new Date(a.dob) as any) - (new Date(b.dob) as any)
+        })
+      } else {
+        accountsCopy.sort((a: Account, b: Account): number => {
+          return (new Date(b.dob) as any) - (new Date(a.dob) as any)
+        })
+      }
+    }
+    setState((state) => ({ ...state, sortOptions: newSortOptions, accounts: accountsCopy }))
+  }
 
   return (
     <div>
@@ -51,74 +121,47 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
           borderStyle="solid"
           width="90%"
           justifyContent="center"
+          paddingTop="40px"
+          paddingBottom="40px"
         >
-          <table
-            style={{
-              width: '90%',
-              borderCollapse: 'collapse',
-              marginBottom: '20px',
-              marginTop: '20px',
-            }}
+          <DataGrid
+            data={paginateData()}
+            paginationOptions={state.paginationOptions}
+            onPageChange={handlePageChange}
+            sortOptions={state.sortOptions}
+            onSort={handleSort}
+            cardBreakpoint="small"
           >
-            <thead style={{ backgroundColor: 'grey', fontSize: '26px', border: '2px solid grey' }}>
-              <tr>
-                <th> First Name</th>
-                <th> Last Name</th>
-                <th> Date of Birth</th>
-                <th> Last Four</th>
-                <th> ID </th>
-                <th />
-              </tr>
-            </thead>
-
-            <tbody style={{ fontSize: '22px' }}>
-              {state.accounts.map(
-                (account: Account, index: number): React.ReactElement => {
-                  const color = index % 2 === 1 ? 'lightgrey' : 'white'
-
-                  const goToAccountPage = (): void => {
-                    navigate(`/account/${account.id}`)
-                  }
-
-                  const deleteAccount = (): void => {
-                    setState({
-                      accounts: state.accounts.filter(
-                        (acct: Account): boolean => acct.id !== account.id
-                      ),
-                      alert: `Account ${account.id} deleted successfully`,
-                    })
-                  }
-
-                  return (
-                    <tr
-                      key={account.id}
-                      style={{
-                        backgroundColor: `${color}`,
-                        border: '2px solid black',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <td> {account.firstName} </td>
-                      <td> {account.lastName} </td>
-                      <td> {account.dob} </td>
-                      <td> {account.cardLastFour} </td>
-                      <td> {account.id} </td>
-                      <td>
-                        <SplitButton
-                          mainActionLabel="View Account"
-                          onSelectMainAction={goToAccountPage}
-                        >
-                          <SplitButton.Action onSelect={deleteAccount}>
-                            Delete Account
-                          </SplitButton.Action>
-                        </SplitButton>
-                      </td>
-                    </tr>
-                  )
-                }
+            <DataGrid.DataColumn id="firstName" title="First Name" sortable />
+            <DataGrid.DataColumn id="lastName" title="Last Name" sortable />
+            <DataGrid.DataColumn id="dob" title="Date of Birth" sortable />
+            <DataGrid.DataColumn id="cardLastFour" title="Last 4 of Card" />
+            <DataGrid.DataColumn id="id" title="Account ID" />
+            <DataGrid.Column>
+              {(rowData: Account) => (
+                <SplitButton
+                  mainActionLabel="View Account"
+                  onSelectMainAction={() => {
+                    navigate(`/account/${rowData.id}`)
+                  }}
+                >
+                  <SplitButton.Action
+                    onSelect={() => {
+                      setState((state) => ({
+                        ...state,
+                        accounts: state.accounts.filter(
+                          (acct: Account): boolean => acct.id !== rowData.id
+                        ),
+                        alert: `Account ${rowData.id} deleted successfully`,
+                      }))
+                    }}
+                  >
+                    {`Delete Account ${rowData.id}`}
+                  </SplitButton.Action>
+                </SplitButton>
               )}
-            </tbody>
-          </table>
+            </DataGrid.Column>
+          </DataGrid>
         </Flex>
       </Flex>
     </div>

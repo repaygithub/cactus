@@ -3,6 +3,7 @@ import {
   MenuButton as ReachMenuButton,
   MenuItem as ReachMenuItem,
   MenuItems as ReachMenuItems,
+  MenuItemsProps as ReachMenuItemsProps,
   MenuLink as ReachMenuLink,
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
@@ -84,7 +85,31 @@ const MenuButtonStyles = createGlobalStyle`
   }
 `
 
-const MenuList = styled(ReachMenuItems)`
+const menuListVariants: VariantMap = {
+  filled: css`
+    border: 0;
+    &[data-selected] {
+      ${(p): ColorStyle => p.theme.colorStyles.callToAction};
+    }
+  `,
+  unfilled: css`
+    ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+    border-color: ${(p): string => p.theme.colors.white};
+    &[data-selected] {
+      border-color: ${(p): string => p.theme.colors.callToAction};
+    }
+
+    &:hover {
+      ${(p): ColorStyle => p.theme.colorStyles.callToAction};
+    }
+  `,
+}
+
+interface MenuListProps extends ReachMenuItemsProps {
+  variant: MenuButtonVariant
+}
+
+const MenuList = styled(ReachMenuItems)<MenuListProps>`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
@@ -93,6 +118,7 @@ const MenuList = styled(ReachMenuItems)`
   background-color: ${(p): string => p.theme.colors.white};
 
   [data-reach-menu-item] {
+    box-sizing: border-box;
     position: relative;
     display: block;
     cursor: pointer;
@@ -104,14 +130,15 @@ const MenuList = styled(ReachMenuItems)`
     padding: 4px 16px;
     text-align: center;
 
-    &[data-selected] {
-      ${(p): ColorStyle => p.theme.colorStyles.callToAction};
-    }
+    ${(p): ReturnType<typeof css> => menuListVariants[p.variant]}
   }
 `
 
+type MenuButtonVariant = 'filled' | 'unfilled'
+
 interface MenuButtonProps extends MarginProps {
   label: React.ReactNode
+  variant?: MenuButtonVariant
   className?: string
   /**
    * Must be a MenuButton.Item or MenuButton.Link
@@ -121,7 +148,7 @@ interface MenuButtonProps extends MarginProps {
 }
 
 function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
-  const { label, children, ...rest } = omitMargins(props) as Omit<
+  const { label, children, variant = 'filled', ...rest } = omitMargins(props) as Omit<
     MenuButtonProps,
     keyof MarginProps
   >
@@ -133,7 +160,10 @@ function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
         <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
       </ReachMenuButton>
       <ReachMenuPopover
-        position={(targetRect, popoverRect): { width?: number; left?: number; top?: string } => {
+        position={(
+          targetRect,
+          popoverRect
+        ): { minWidth?: number; maxWidth?: number; left?: number; top?: string } => {
           if (!targetRect || !popoverRect) {
             return {}
           }
@@ -141,13 +171,14 @@ function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
           const scrollX = getScrollX()
 
           return {
-            width: targetRect.width,
+            minWidth: targetRect.width,
+            maxWidth: Math.max(targetRect.width, Math.min(targetRect.width * 1.5, 300)),
             left: targetRect.left + scrollX,
             ...getTopPosition(targetRect, popoverRect),
           }
         }}
       >
-        <MenuList>{children}</MenuList>
+        <MenuList variant={variant}>{children}</MenuList>
       </ReachMenuPopover>
     </ReachMenu>
   )
@@ -166,6 +197,54 @@ type MenuButtonType = StyledComponent<
   Link: typeof MenuButtonBase['Link']
 }
 
+type VariantMap = { [K in MenuButtonVariant]: ReturnType<typeof css> }
+
+const buttonVariantMap: VariantMap = {
+  filled: css`
+    color: ${(p): string => p.theme.colors.white};
+    background-color: ${(p): string => p.theme.colors.darkContrast};
+    border-color: ${(p): string => p.theme.colors.darkContrast};
+
+    &:hover,
+    &[aria-expanded='true'] {
+      background-color: ${(p): string => p.theme.colors.callToAction};
+      border-color: ${(p): string => p.theme.colors.callToAction};
+    }
+
+    &:focus {
+      ::after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: calc(100% + 10px);
+        width: calc(100% + 11px);
+        top: -5px;
+        left: -5px;
+        box-sizing: border-box;
+        ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+        ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+        border-color: ${(p): string => p.theme.colors.callToAction};
+      }
+    }
+  `,
+  unfilled: css`
+    color: ${(p): string => p.theme.colors.darkContrast};
+    background-color: ${(p): string => p.theme.colors.white};
+    border-color: ${(p): string => p.theme.colors.white};
+
+    &:hover,
+    &[aria-expanded='true'] {
+      color: ${(p): string => p.theme.colors.white};
+      background-color: ${(p): string => p.theme.colors.base};
+      border-color: ${(p): string => p.theme.colors.base};
+    }
+
+    &:focus {
+      border-color: ${(p): string => p.theme.colors.callToAction};
+    }
+  `,
+}
+
 const MenuButton = styled(MenuButtonBase)`
   position: relative;
   box-sizing: border-box;
@@ -176,34 +255,10 @@ const MenuButton = styled(MenuButtonBase)`
   cursor: pointer;
   appearance: none;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
-  color: ${(p): string => p.theme.colors.white};
-  background-color: ${(p): string => p.theme.colors.darkContrast};
-  border-color: ${(p): string => p.theme.colors.darkContrast};
-
-  &:hover,
-  &[aria-expanded='true'] {
-    background-color: ${(p): string => p.theme.colors.callToAction};
-    border-color: ${(p): string => p.theme.colors.callToAction};
-  }
+  ${(p): ReturnType<typeof css> => buttonVariantMap[p.variant || 'filled']}
 
   &::-moz-focus-inner {
     border: 0;
-  }
-
-  &:focus {
-    ::after {
-      content: '';
-      display: block;
-      position: absolute;
-      height: calc(100% + 10px);
-      width: calc(100% + 11px);
-      top: -5px;
-      left: -5px;
-      box-sizing: border-box;
-      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
-      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
-      border-color: ${(p): string => p.theme.colors.callToAction};
-    }
   }
 
   &:disabled {
@@ -232,6 +287,11 @@ MenuButton.propTypes = {
   label: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  variant: PropTypes.oneOf(['filled', 'unfilled']),
+}
+
+MenuButton.defaultProps = {
+  variant: 'filled',
 }
 
 export { MenuButton }

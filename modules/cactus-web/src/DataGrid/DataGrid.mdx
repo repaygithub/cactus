@@ -20,12 +20,15 @@ The `DataGrid` is a wrapper for `Table` that allows you to easily define table c
   through the props; the `DataGrid` component does not manage those values internally.
 - Use `paginationProps` and `prevNextProps` to manage labels & text for the `Pagination` and `PrevNext` components, respectively. This
   makes features such as internationalization possible.
+- Use the `sortLabels` prop to pass internationalized labels for the sorting dropdowns used in the card view.
 - Just like the `Table`, the `DataGrid` should be rendered as a descendant of `ScreenSizeProvider` to take advantage of the card carousel feature.
 - If `pageSizeOptions` is omitted from `paginationOptions`, the component will not render the selection of page sizes to choose from.
 - If `pageCount` is omitted from `paginationOptions`, `DataGrid` will render the `PrevNext` component to handle pagination instead of the `Pagination` component.
 - You can provide text describing how many rows are displayed using the `resultsCountText` prop. It will display this text above the `DataGrid`.
 - The `DataGrid.DataColumn` exposes an `as` prop which can be used to render a column's cells using a certain component. The component rendered will
   receive a single `value` prop which is the data value to be rendered in the cell.
+- Similar to the `Table` component, the `DataGrid` exposes the `cardBreakpoint` prop, where you can define at what breakpoint you would like to switch to card
+  view. It default to `tiny` but you can select from any of our breakpoints: `tiny`, `small`, `medium`, `large` and `extraLarge`.
 
 ## Basic usage
 

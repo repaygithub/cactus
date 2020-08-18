@@ -11,6 +11,7 @@ program.option(
   'The file or directory from which to run the tests',
   listProcessor
 )
+program.option('-f, --fixture <fixture>', 'A specific fixture to run tests for')
 program.requiredOption(
   '-b, --browser <browser>',
   'The browser where the tests are run',
@@ -23,6 +24,9 @@ const runTests = async () => {
   try {
     let runner = testcafe.createRunner()
     runner = program.src ? runner.src(program.src) : runner
+    runner = program.fixture
+      ? runner.filter((_, fixtureName) => fixtureName === program.fixture)
+      : runner
     const numFailedTests = await runner.browsers(program.browser).run()
     await testcafe.close()
     if (numFailedTests > 0) {

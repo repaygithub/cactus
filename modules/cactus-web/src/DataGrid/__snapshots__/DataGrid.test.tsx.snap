@@ -358,17 +358,23 @@ exports[`component: DataGrid snapshot 1`] = `
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .pagination {
+.c0 .bottom-section {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-right: 16px;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   margin-top: 40px;
+}
+
+.c0 .bottom-section .results-count-text {
+  margin-top: 16px;
 }
 
 .c7 {
@@ -419,6 +425,10 @@ exports[`component: DataGrid snapshot 1`] = `
 
 .c1 .results-count-text {
   margin-bottom: 8px;
+}
+
+.c1 .sort-buttons {
+  margin-bottom: 16px;
 }
 
 .c2 {
@@ -535,7 +545,7 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:768px) {
   .c0 {
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
@@ -544,16 +554,39 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
-  .c0 .pagination {
+@media screen and (min-width:768px) {
+  .c0 .bottom-section {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
     -webkit-box-pack: end;
     -webkit-justify-content: flex-end;
     -ms-flex-pack: end;
     justify-content: flex-end;
+    margin-right: 16px;
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:768px) {
+  .c0 .bottom-section.is-card-view {
+    -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-right: 16px;
+    margin-top: 16px;
+  }
+
+  .c0 .bottom-section.is-card-view .results-count-text {
+    margin-top: 0px;
+    margin-left: 16px;
+  }
+}
+
+@media screen and (min-width:768px) {
   .c1 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
@@ -569,7 +602,7 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:768px) {
   .c2 {
     margin-left: auto;
   }
@@ -931,7 +964,7 @@ exports[`component: DataGrid snapshot 1`] = `
       </table>
     </div>
     <div
-      class="pagination"
+      class="bottom-section "
     >
       <nav
         aria-label="Pages"
