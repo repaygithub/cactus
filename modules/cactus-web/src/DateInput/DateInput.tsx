@@ -356,6 +356,10 @@ const MonthYearSelect = styled.button`
   justify-content: space-between;
   align-items: center;
 
+  &[aria-label='Click to use calendar picker'] {
+    color: ${(p) => p.theme.colors.callToAction};
+  }
+
   [data-is-open='month-year'] {
     transform: rotate3d(1, 0, 0, 180deg);
   }
@@ -555,7 +559,7 @@ function CalendarBase(props: CalendarProps): ReactElement {
 }
 
 const Calendar = styled(CalendarBase)`
-  background-color: ${(p): string => p.theme.colors.lightGray};
+  background-color: ${(p): string => p.theme.colors.lightContrast};
   padding: 0 10px;
 
   > [role='row'] {
@@ -590,7 +594,7 @@ const MonthYearListWrapper = styled.div`
   display: flex;
   height: 240px;
   width: 300px;
-  background-color: ${(p): string => p.theme.colors.lightGray};
+  background-color: ${(p): string => p.theme.colors.lightContrast};
   padding: 0;
   justify-content: space-between;
   align-items: start;
