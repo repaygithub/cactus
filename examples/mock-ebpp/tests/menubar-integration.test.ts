@@ -44,9 +44,9 @@ test('Interact with dropdown', async (t: TestController): Promise<void> => {
 test('Can click item when MenuBar is overflowed', async (t: TestController): Promise<void> => {
   const innerHeight = await getWindowHeight()
   await t.resizeWindow(1024, innerHeight)
-  const overflowedItem = Selector('nav').child('div').nth(-1)
-  await t.click(overflowedItem)
-  await t.click(overflowedItem)
+  const scrollIcon = Selector('nav').child('div').nth(-1)
+  await t.click(scrollIcon)
+  await t.click(scrollIcon)
   await t.click(Selector('button').withText('Explore our modules on GitHub'))
   await t.expect(queryByText('Cactus Framework').exists).ok()
 })

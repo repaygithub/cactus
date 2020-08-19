@@ -25,6 +25,7 @@ storiesOf('DateInput', module)
       >
         {({ value, onChange }): ReactElement => (
           <DateInput
+            disabled
             id="date-input-1"
             name={text('name', 'date-input')}
             type={select('type', ['date', 'datetime', 'time'], 'date')}
