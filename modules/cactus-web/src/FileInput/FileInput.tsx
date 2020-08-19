@@ -5,17 +5,10 @@ import {
   NotificationError,
   StatusCheck,
 } from '@repay/cactus-icons'
-import { CactusTheme, Shape, TextStyle } from '@repay/cactus-theme'
+import { CactusTheme, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
-import styled, {
-  css,
-  DefaultTheme,
-  FlattenInterpolation,
-  FlattenSimpleInterpolation,
-  StyledComponentBase,
-  ThemedStyledProps,
-} from 'styled-components'
+import styled, { css, StyledComponentBase } from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
 import Avatar from '../Avatar/Avatar'
@@ -28,7 +21,7 @@ import { IconButton } from '../IconButton/IconButton'
 import Spinner from '../Spinner/Spinner'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import { TextButton } from '../TextButton/TextButton'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
 
 const FILE_TYPE_ERR = 'FileTypeError'
 const NOT_FOUND_ERR = 'NotFoundError'
@@ -52,17 +45,14 @@ export interface FileInputProps
   extends MarginProps,
     MaxWidthProps,
     WidthProps,
-    Omit<
-      React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-      'onChange' | 'onError' | 'onFocus' | 'onBlur' | 'ref'
-    > {
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onError' | 'onFocus' | 'onBlur'> {
   name: string
   accept?: string[]
   labels?: { delete?: string; loading?: string; loaded?: string }
   buttonText?: string
   prompt?: string
   onChange?: FieldOnChangeHandler<FileObject[]>
-  onError?: (type: ErrorType, accept?: string[]) => string
+  onError?: (type: ErrorType, accept?: string[]) => React.ReactChild
   onFocus?: FieldOnFocusHandler
   onBlur?: FieldOnBlurHandler
   rawFiles?: boolean
@@ -83,7 +73,7 @@ interface FileBoxProps {
   status: FileStatus
   labels: { delete?: string; loading?: string; loaded?: string }
   className?: string
-  errorMsg?: string
+  errorMsg?: React.ReactChild
   disabled?: boolean
 }
 
@@ -96,7 +86,7 @@ export interface FileObject {
   fileName: string
   contents: File | string | null
   status: FileStatus
-  errorMsg?: string
+  errorMsg?: React.ReactChild
 }
 
 interface State {
@@ -131,37 +121,26 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
   }
 `
 
-type FileBoxPropsWithForwardRef = ThemedStyledProps<
-  FileBoxProps & React.RefAttributes<HTMLDivElement>,
-  DefaultTheme
->
-type FileBoxMap = {
-  [K in FileStatus | 'disabled']: FlattenInterpolation<FileBoxPropsWithForwardRef>
-}
-
-const fileBoxMap: FileBoxMap = {
-  loading: css<FileBoxPropsWithForwardRef>`
-    background-color: ${(P): string => P.theme.colors.lightContrast};
+const fileBoxMap = {
+  loading: css`
+    background-color: ${(p): string => p.theme.colors.lightContrast};
   `,
-  loaded: css<FileBoxPropsWithForwardRef>`
+  loaded: css`
     border: ${(p): string => border(p.theme, p.theme.colors.success)};
     background-color: ${(p): string => p.theme.colors.transparentSuccess};
   `,
-  error: css<FileBoxPropsWithForwardRef>`
+  error: css`
     border: ${(p): string => border(p.theme, p.theme.colors.error)};
     background-color: ${(p): string => p.theme.colors.transparentError};
   `,
-  disabled: css<FileBoxPropsWithForwardRef>`
+  disabled: css`
     border: ${(p): string => border(p.theme, p.theme.colors.mediumGray)};
     background-color: ${(p): string => p.theme.colors.lightGray};
   `,
 }
 
-const fileStatus = (
-  props: FileBoxPropsWithForwardRef
-): FlattenInterpolation<
-  ThemedStyledProps<FileBoxProps & React.RefAttributes<HTMLDivElement>, DefaultTheme>
-> => (props.disabled ? fileBoxMap.disabled : fileBoxMap[props.status])
+const fileStatus = (props: FileBoxProps) =>
+  props.disabled ? fileBoxMap.disabled : fileBoxMap[props.status]
 
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
   (props, ref): React.ReactElement => {
@@ -215,7 +194,7 @@ const FileBox = styled(FileBoxBase)`
   span {
     margin-left: 8px;
     margin-right: 8px;
-    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+    ${(p) => textStyle(p.theme, 'body')};
   }
 
   ${Avatar} {
@@ -663,7 +642,7 @@ FileInput.propTypes = {
       fileName: PropTypes.string.isRequired,
       content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
       status: PropTypes.oneOf(['loading', 'loaded', 'error']),
-      errorMsg: PropTypes.string,
+      errorMsg: PropTypes.node,
     })
   ),
 }

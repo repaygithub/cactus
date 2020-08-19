@@ -17,7 +17,7 @@ interface AccessibleProps {
   tooltipId: string
   statusId: string
   status?: Status
-  statusMessage?: string
+  statusMessage?: React.ReactNode
 }
 
 type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
@@ -28,9 +28,9 @@ export interface FieldProps {
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor' | 'id'>
   tooltip?: React.ReactNode
-  error?: string
-  warning?: string
-  success?: string
+  error?: React.ReactNode
+  warning?: React.ReactNode
+  success?: React.ReactNode
 }
 
 interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
@@ -55,7 +55,7 @@ export function useAccessibleField({
   const tooltipId = `${fieldId}-tip`
 
   let status: Status | undefined
-  let statusMessage: string | undefined
+  let statusMessage: React.ReactNode | undefined
   if (error) {
     status = 'error'
     statusMessage = error
@@ -158,9 +158,9 @@ AccessibleField.propTypes = {
   name: PropTypes.string.isRequired,
   className: PropTypes.string,
   id: PropTypes.string,
-  success: PropTypes.string,
-  warning: PropTypes.string,
-  error: PropTypes.string,
+  success: PropTypes.node,
+  warning: PropTypes.node,
+  error: PropTypes.node,
   tooltip: PropTypes.node,
 }
 

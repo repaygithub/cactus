@@ -11,19 +11,10 @@ import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
 import { textStyle } from '../helpers/theme'
-import { StatusPropType } from '../StatusMessage/StatusMessage'
-import { Omit } from '../types'
-
-export type Status = 'success' | 'warning' | 'error'
+import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
 export interface TextAreaProps
-  extends Omit<
-      React.DetailedHTMLProps<
-        React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-        HTMLTextAreaElement
-      >,
-      'ref'
-    >,
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     MarginProps {
   disabled?: boolean
   status?: Status | null

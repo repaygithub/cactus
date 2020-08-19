@@ -30,19 +30,16 @@ interface AccordionProps
   extends MarginProps,
     MaxWidthProps,
     WidthProps,
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+    React.HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean
   variant?: AccordionVariants
 }
 
-interface AccordionHeaderProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface AccordionHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   render?: (opts: { isOpen: boolean; headerId: string }) => JSX.Element
 }
 
-interface AccordionBodyProps
-  extends MarginProps,
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+interface AccordionBodyProps extends MarginProps, React.HTMLAttributes<HTMLDivElement> {}
 
 interface AccordionContext {
   isOpen: boolean
@@ -594,11 +591,9 @@ const simpleBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   `,
 }
 
-const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
-const getOutlineBorder = (borderSize: BorderSize): ReturnType<typeof css> =>
-  outlineBorderMap[borderSize]
-const getSimpleBorder = (borderSize: BorderSize): ReturnType<typeof css> =>
-  simpleBorderMap[borderSize]
+const getShape = (shape: Shape) => shapeMap[shape]
+const getOutlineBorder = (borderSize: BorderSize) => outlineBorderMap[borderSize]
+const getSimpleBorder = (borderSize: BorderSize) => simpleBorderMap[borderSize]
 
 const accordionVariantMap: VariantMap = {
   simple: css`

@@ -9,7 +9,7 @@ storiesOf('Breadcrumb', module).add(
   (): ReactElement => (
     <Breadcrumb>
       <Breadcrumb.Item label={text('Label 1', 'Account')} linkTo="/" />
-      <Breadcrumb.Item label={text('Label 2', 'Make a Payment')} linkTo="/" active />
+      <Breadcrumb.Item label={<em>{text('Label 2', 'Make a Payment')}</em>} linkTo="/" active />
     </Breadcrumb>
   )
 )

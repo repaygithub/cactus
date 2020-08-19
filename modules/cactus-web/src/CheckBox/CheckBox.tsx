@@ -7,19 +7,12 @@ import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
 import { boxShadow } from '../helpers/theme'
-import { Omit } from '../types'
 
-export interface CheckBoxProps
-  extends Omit<
-      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-      'ref'
-    >,
-    MarginProps {
+export interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
   id: string
-  disabled?: boolean
 }
 
-interface StyledCheckBoxProps extends React.HTMLProps<HTMLSpanElement> {
+interface StyledCheckBoxProps {
   disabled?: boolean
 }
 
@@ -105,7 +98,6 @@ export const CheckBox = styled(CheckBoxBase)`
   ${margin}
 `
 
-// @ts-ignore
 CheckBox.propTypes = {
   id: PropTypes.string.isRequired,
   disabled: PropTypes.bool,

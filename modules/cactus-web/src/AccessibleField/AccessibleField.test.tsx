@@ -55,6 +55,9 @@ describe('component: AccessibleField', (): void => {
           label={<em>Accessible Label</em>}
           name="text_field"
           tooltip={<strong>JSX Tooltip</strong>}
+          error={<p>Error Paragraph</p>}
+          warning={<a>Warning Anchor</a>}
+          success={<b>Bold Success</b>}
         >
           {(field) => <input name={field.name} id={field.fieldId} />}
         </AccessibleField>
@@ -72,6 +75,21 @@ describe('component: AccessibleField', (): void => {
     expect(tooltipText.tagName).toBe('STRONG')
     expect(tooltipText.parentElement).toHaveAttribute('id', 'aftest-tip')
     expect(tooltipText.parentElement).toHaveAttribute('role', 'tooltip')
+
+    const errorText = getByText('Error Paragraph')
+    expect(errorText.tagName).toBe('P')
+    const errorDiv = errorText.closest('div')
+    expect(errorDiv).toHaveAttribute('id', 'aftest-status')
+    expect(errorDiv).toHaveAttribute('role', 'alert')
+    let otherStatus = null
+    try {
+      otherStatus = getByText('Warning Anchor')
+    } catch {}
+    expect(otherStatus).toBe(null)
+    try {
+      otherStatus = getByText('Bold Success')
+    } catch {}
+    expect(otherStatus).toBe(null)
 
     expect(container).toMatchSnapshot()
   })

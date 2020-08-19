@@ -1,8 +1,8 @@
 import * as icons from '@repay/cactus-icons'
-import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
+import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, ThemeProps } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Button from '../Button/Button'
 import Flex from '../Flex/Flex'
@@ -16,12 +16,10 @@ export type IconNames = keyof typeof icons
 const iconNames: IconNames[] = Object.keys(icons) as (keyof typeof icons)[]
 
 interface ConfirmModalProps extends ModalProps {
-  cancelButtonText?: string
-  children?: React.ReactNode
-  confirmButtonText?: string
-  description?: string
+  cancelButtonText?: React.ReactNode
+  confirmButtonText?: React.ReactNode
   onConfirm: () => void
-  title?: string
+  title?: React.ReactNode
   iconName?: IconNames
   iconSize?: IconSizes
 }
@@ -30,7 +28,7 @@ interface IconProps {
   iconSize?: IconSizes
   iconName?: IconNames
   className?: string
-  variant?: string
+  variant?: ModalProps['variant']
 }
 
 const IconBase = ({ className, iconSize, iconName }: IconProps): React.ReactElement => {
@@ -48,9 +46,7 @@ const getIconWidthAndHeight = ({ iconSize }: IconProps): '56px' | '88px' | undef
   }
 }
 
-const getFlexDirection = ({
-  iconSize,
-}: ConfirmModalProps & ThemeProps<CactusTheme>): 'row' | 'column' =>
+const getFlexDirection = ({ iconSize }: ConfirmModalProps): 'row' | 'column' =>
   iconSize === 'medium' ? 'row' : 'column'
 
 const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
@@ -139,25 +135,23 @@ const Icon = styled(IconBase)<IconProps>`
   })}
 `
 ConfirmModal.propTypes = {
-  cancelButtonText: PropTypes.string,
+  cancelButtonText: PropTypes.node,
   className: PropTypes.string,
   closeLabel: PropTypes.string,
-  confirmButtonText: PropTypes.string,
-  description: PropTypes.string,
+  confirmButtonText: PropTypes.node,
   iconName: PropTypes.oneOf([...iconNames]),
   iconSize: PropTypes.oneOf(['medium', 'large']),
   isOpen: PropTypes.bool.isRequired,
   modalLabel: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  title: PropTypes.string,
+  title: PropTypes.node,
   variant: PropTypes.oneOf(['action', 'danger', 'warning', 'success']),
 }
 
 ConfirmModal.defaultProps = {
   cancelButtonText: 'Cancel',
   confirmButtonText: 'Confirm',
-  description: undefined,
   iconName: undefined,
   iconSize: 'medium',
   title: 'Modal Title',

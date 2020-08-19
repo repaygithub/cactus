@@ -42,6 +42,7 @@ const ConfirmModalExample = (): React.ReactElement => {
       cancelButtonText={cancelText}
       iconName={iconName}
       iconSize={iconSize}
+      title={text('Title', '')}
     >
       <Text as="h4" fontWeight="normal">
         {descriptionText}
