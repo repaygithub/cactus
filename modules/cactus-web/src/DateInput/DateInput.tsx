@@ -356,7 +356,7 @@ const MonthYearSelect = styled.button`
   justify-content: space-between;
   align-items: center;
 
-  &[aria-label='Click to use calendar picker'] {
+  &.month-year {
     color: ${(p) => p.theme.colors.callToAction};
   }
 
@@ -1528,6 +1528,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                       }}
                     >
                       <MonthYearSelect
+                        className={isOpen}
                         tabIndex={0}
                         onClick={this.handleSelectMonthClick}
                         aria-label={
