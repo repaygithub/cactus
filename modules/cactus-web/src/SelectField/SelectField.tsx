@@ -13,7 +13,7 @@ interface SelectFieldProps
     WidthProps,
     FieldProps,
     Omit<SelectProps, 'id' | 'onChange' | keyof MarginProps | keyof WidthProps> {
-  options: (OptionType | string)[]
+  options: (OptionType | string | number)[]
   className?: string
   id?: string
   multiple?: boolean
