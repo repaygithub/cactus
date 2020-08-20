@@ -1,14 +1,8 @@
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, ColorStyle, Shape } from '@repay/cactus-theme'
+import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, ReactElement, useContext, useEffect, useMemo, useState } from 'react'
-import styled, {
-  css,
-  DefaultTheme,
-  FlattenSimpleInterpolation,
-  StyledComponent,
-  ThemedStyledProps,
-} from 'styled-components'
+import styled, { DefaultTheme, StyledComponent, ThemedStyledProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { keyPressAsClick } from '../helpers/a11y'
@@ -22,14 +16,14 @@ import Table from '../Table/Table'
 
 interface DataGridContextType {
   addDataColumn: (dataColumn: DataColumn) => void
-  addColumn: (key: string, columnFn: ColumnFn, title?: string) => void
+  addColumn: (key: string, columnFn: ColumnFn, title?: React.ReactChild) => void
 }
 
 type ColumnFn = (rowData: { [key: string]: any }) => React.ReactNode
 
 interface DataColumn {
   id: string
-  title: string
+  title: React.ReactChild
   sortable: boolean
   asComponent?: React.ComponentType<any>
 }
@@ -53,8 +47,8 @@ interface DataGridProps extends MarginProps {
   fullWidth?: boolean
   cardBreakpoint?: Size
   className?: string
-  resultsCountText?: string
-  pageSizeSelectLabel?: string
+  resultsCountText?: React.ReactChild
+  pageSizeSelectLabel?: React.ReactChild
   makePageSizeLabel?: (pageSize: number) => string
   paginationProps?: {
     label?: string
@@ -65,16 +59,11 @@ interface DataGridProps extends MarginProps {
     makeLinkLabel?: (page: number) => string
   }
   prevNextProps?: {
-    prevText?: string
-    nextText?: string
+    prevText?: React.ReactNode
+    nextText?: React.ReactNode
     disableNext?: boolean
   }
-  sortLabels?: {
-    sortBy?: string
-    order?: string
-    ascending?: string
-    descending?: string
-  }
+  sortLabels?: SortLabels
 }
 
 interface PaginationOptions {
@@ -89,23 +78,25 @@ interface SortOption {
   sortAscending: boolean
 }
 
+interface SortLabels {
+  sortBy?: React.ReactChild
+  order?: React.ReactChild
+  ascending?: React.ReactChild
+  descending?: React.ReactChild
+}
+
 interface TopSectionProps {
-  resultsCountText?: string
+  resultsCountText?: React.ReactChild
   paginationOptions?: PaginationOptions
   onPageChange: (newPageOptions: PaginationOptions) => void
   makePageSizeLabel?: (pageSize: number) => string
-  pageSizeSelectLabel?: string
+  pageSizeSelectLabel?: React.ReactChild
   cardBreakpoint: Size
   isCardView: boolean
   sortableColumns: Map<string, DataColumnObject>
   handleSortColChange: (id: string) => void
   handleSortDirChange: (sortAscending: boolean) => void
-  sortLabels: {
-    sortBy?: string
-    order?: string
-    ascending?: string
-    descending?: string
-  }
+  sortLabels: SortLabels
   className?: string
 }
 
@@ -113,32 +104,32 @@ interface PageSizeSelectProps {
   paginationOptions: PaginationOptions
   onPageChange: (newPageOptions: PaginationOptions) => void
   makePageSizeLabel?: (pageSize: number) => string
-  pageSizeSelectLabel?: string
+  pageSizeSelectLabel?: React.ReactChild
   cardBreakpoint: Size
   className?: string
 }
 
 interface DataColumnProps {
   id: string
-  title: string
+  title: React.ReactChild
   sortable?: boolean
   as?: React.ComponentType<any>
 }
 
 interface ColumnProps {
   children: ColumnFn
-  title?: string
+  title?: React.ReactChild
 }
 
 interface DataColumnObject {
-  title: string
+  title: React.ReactChild
   sortable: boolean
   asComponent?: React.ComponentType<any>
 }
 
 interface ColumnObject {
   columnFn: ColumnFn
-  title?: string
+  title?: React.ReactChild
 }
 
 const DataGridBase = (props: DataGridProps): ReactElement => {
@@ -157,12 +148,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     makePageSizeLabel,
     paginationProps,
     prevNextProps,
-    sortLabels = {
-      sortBy: 'Sort by',
-      order: 'Order',
-      ascending: 'Ascending',
-      descending: 'Descending',
-    },
+    sortLabels = {},
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
   const sortableColumns = useMemo(() => {
@@ -186,7 +172,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
   }
 
-  const addColumn = (key: string, columnFn: ColumnFn, title?: string): void => {
+  const addColumn = (key: string, columnFn: ColumnFn, title?: React.ReactChild): void => {
     setColumns(new Map(columns.set(key, { columnFn, title })))
   }
 
@@ -445,29 +431,11 @@ export const DataGrid = styled(DataGridBase)`
   }
 ` as any
 
-const borderMap = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
-
 const shapeMap = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 8px;',
+  round: 'border-radius: 20px;',
 }
-const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
-
-const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
 const HeaderButton = styled.button`
   background: none;
@@ -492,9 +460,8 @@ const HeaderButton = styled.button`
       width: calc(100% + 16px);
       bottom: -4px;
       right: -8px;
-      border-color: ${(p): string => p.theme.colors.lightContrast};
-      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)}
-      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)}
+      border: ${(p) => border(p.theme, 'lightContrast')};
+      ${(p) => shapeMap[p.theme.shape]}
     }
   }
 `
@@ -599,7 +566,7 @@ const TopSection = styled(TopSectionBase)`
 const PageSizeSelectBase = (props: PageSizeSelectProps): ReactElement => {
   const { paginationOptions, onPageChange, pageSizeSelectLabel, className } = props
   const { pageSizeOptions } = paginationOptions
-  const makePageSizeLabel = props.makePageSizeLabel as (pageSize: number) => string
+  const makePageSizeLabel = props.makePageSizeLabel || (() => undefined)
   return (
     <div className={className}>
       <span>{pageSizeSelectLabel || 'View'}</span>
@@ -743,8 +710,8 @@ DataGrid.propTypes = {
   onSort: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   fullWidth: PropTypes.bool,
-  resultsCountText: PropTypes.string,
-  pageSizeSelectLabel: PropTypes.string,
+  resultsCountText: PropTypes.node,
+  pageSizeSelectLabel: PropTypes.node,
   makePageSizeLabel: PropTypes.func,
   paginationProps: PropTypes.shape({
     label: PropTypes.string,
@@ -755,29 +722,29 @@ DataGrid.propTypes = {
     makeLinkLabel: PropTypes.func,
   }),
   prevNextProps: PropTypes.shape({
-    prevText: PropTypes.string,
-    nextText: PropTypes.string,
+    prevText: PropTypes.node,
+    nextText: PropTypes.node,
     disableNext: PropTypes.bool,
   }),
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   sortLabels: PropTypes.shape({
-    sortBy: PropTypes.string,
-    order: PropTypes.string,
-    ascending: PropTypes.string,
-    descending: PropTypes.string,
+    sortBy: PropTypes.node,
+    order: PropTypes.node,
+    ascending: PropTypes.node,
+    descending: PropTypes.node,
   }),
 }
 
 DataColumn.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
   sortable: PropTypes.bool,
   as: PropTypes.elementType,
 }
 
 Column.propTypes = {
   children: PropTypes.func.isRequired,
-  title: PropTypes.string,
+  title: PropTypes.node,
 }
 
 DataGrid.defaultProps = {

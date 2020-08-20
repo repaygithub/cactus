@@ -8,74 +8,43 @@ import {
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
+import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, {
-  createGlobalStyle,
-  css,
-  FlattenSimpleInterpolation,
-  StyledComponent,
-} from 'styled-components'
+import styled, { createGlobalStyle, css, StyledComponent } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
 import { getTopPosition } from '../helpers/positionPopover'
 import { getScrollX } from '../helpers/scrollOffset'
-import { boxShadow, textStyle } from '../helpers/theme'
-import { Omit } from '../types'
-
-const borderMap = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
+import { border, boxShadow, textStyle } from '../helpers/theme'
 
 const shapeMap = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 8px;',
+  round: 'border-radius: 20px;',
 }
 
 const dropShapeMap = {
-  square: css`
-    border-radius: 0 0 1px 1px;
-  `,
-  intermediate: css`
-    border-radius: 0 0 4px 4px;
-  `,
-  round: css`
-    border-radius: 0 0 8px 8px;
-  `,
+  square: 'border-radius: 0 0 1px 1px;',
+  intermediate: 'border-radius: 0 0 4px 4px;',
+  round: 'border-radius: 0 0 8px 8px;',
 }
 
-const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
+type ThemeProps = { theme: CactusTheme }
 
-const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
+const getShape = ({ theme }: ThemeProps) => shapeMap[theme.shape]
 
-const getDropShape = (shape: Shape): FlattenSimpleInterpolation => dropShapeMap[shape]
+const getDropShape = ({ theme }: ThemeProps) => dropShapeMap[theme.shape]
 
-const getDropDownBorder = (theme: CactusTheme): FlattenSimpleInterpolation => {
+const getDropDownBorder = ({ theme }: ThemeProps) => {
   if (!theme.boxShadows) {
     return css`
-      ${getBorder(theme.border)};
-      border-color: ${theme.colors.lightContrast};
-      ${getDropShape(theme.shape)};
+      border: ${border(theme, 'lightContrast')};
+      ${getDropShape};
     `
   } else {
-    return css`
-      ${getDropShape(theme.shape)};
-    `
+    return css(getDropShape)
   }
 }
 
@@ -93,8 +62,7 @@ const menuListVariants: VariantMap = {
     }
   `,
   unfilled: css`
-    ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
-    border-color: ${(p): string => p.theme.colors.white};
+    border: ${(p) => border(p.theme, 'white')};
     &[data-selected] {
       border-color: ${(p): string => p.theme.colors.callToAction};
     }
@@ -113,9 +81,9 @@ const MenuList = styled(ReachMenuItems)<MenuListProps>`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
-  ${(p): FlattenSimpleInterpolation => getDropDownBorder(p.theme)};
-  ${(p): string => boxShadow(p.theme, 1)};
-  background-color: ${(p): string => p.theme.colors.white};
+  ${getDropDownBorder};
+  ${(p) => boxShadow(p.theme, 1)};
+  background-color: ${(p) => p.theme.colors.white};
 
   [data-reach-menu-item] {
     box-sizing: border-box;
@@ -124,13 +92,13 @@ const MenuList = styled(ReachMenuItems)<MenuListProps>`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
-    ${(p): ColorStyle => p.theme.colorStyles.standard};
+    ${(p) => textStyle(p.theme, 'small')};
+    ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
     text-align: center;
 
-    ${(p): ReturnType<typeof css> => menuListVariants[p.variant]}
+    ${(p) => menuListVariants[p.variant]}
   }
 `
 
@@ -221,9 +189,8 @@ const buttonVariantMap: VariantMap = {
         top: -5px;
         left: -5px;
         box-sizing: border-box;
-        ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
-        ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
-        border-color: ${(p): string => p.theme.colors.callToAction};
+        ${getShape};
+        border: ${(p) => border(p.theme, 'callToAction')};
       }
     }
   `,
@@ -248,14 +215,14 @@ const buttonVariantMap: VariantMap = {
 const MenuButton = styled(MenuButtonBase)`
   position: relative;
   box-sizing: border-box;
-  ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
-  ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+  ${getShape};
+  border: ${(p) => border(p.theme, '')};
   padding: 2px 24px 2px 14px;
   outline: none;
   cursor: pointer;
   appearance: none;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
-  ${(p): ReturnType<typeof css> => buttonVariantMap[p.variant || 'filled']}
+  ${(p) => textStyle(p.theme, 'body')};
+  ${(p) => buttonVariantMap[p.variant || 'filled']}
 
   &::-moz-focus-inner {
     border: 0;

@@ -402,9 +402,8 @@ exports[`component: DataGrid snapshot 1`] = `
   width: calc(100% + 16px);
   bottom: -4px;
   right: -8px;
-  border-color: hsl(200,29%,90%);
+  border: 1px solid hsl(200,29%,90%);
   border-radius: 20px;
-  border: 1px solid;
 }
 
 .c1 {

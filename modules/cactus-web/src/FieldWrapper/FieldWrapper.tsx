@@ -1,12 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-interface FieldWrapperProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    MarginProps {}
-
-export const FieldWrapper = styled.div<FieldWrapperProps>`
+export const FieldWrapper = styled.div<MarginProps>`
   & + & {
     margin-top: ${(p): number => p.theme.space[4]}px;
   }

@@ -49,8 +49,8 @@ export interface FileInputProps
   name: string
   accept?: string[]
   labels?: { delete?: string; loading?: string; loaded?: string }
-  buttonText?: string
-  prompt?: string
+  buttonText?: React.ReactNode
+  prompt?: React.ReactNode
   onChange?: FieldOnChangeHandler<FileObject[]>
   onError?: (type: ErrorType, accept?: string[]) => React.ReactChild
   onFocus?: FieldOnFocusHandler
@@ -62,7 +62,7 @@ export interface FileInputProps
 }
 
 interface EmptyPromptsProps {
-  prompt: string
+  prompt: React.ReactNode
   disabled?: boolean
   className?: string
 }
@@ -288,11 +288,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     rawFiles,
     name,
     accept,
-    labels = {
-      delete: 'Delete File',
-      loading: 'Loading',
-      loaded: 'Successful',
-    },
+    labels = {},
     buttonText = 'Select Files...',
     prompt = 'Drag files here or',
     multiple,
@@ -629,8 +625,8 @@ FileInput.propTypes = {
     loading: PropTypes.string,
     loaded: PropTypes.string,
   }),
-  buttonText: PropTypes.string,
-  prompt: PropTypes.string,
+  buttonText: PropTypes.node,
+  prompt: PropTypes.node,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
