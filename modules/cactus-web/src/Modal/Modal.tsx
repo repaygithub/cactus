@@ -1,12 +1,11 @@
 import { DialogContent, DialogOverlay, DialogProps } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
-import { BorderSize, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import Flex from '../Flex/Flex'
-import { boxShadow } from '../helpers/theme'
+import { border, boxShadow } from '../helpers/theme'
 import variant from '../helpers/variant'
 import IconButton from '../IconButton/IconButton'
 
@@ -24,29 +23,11 @@ interface ModalPopupProps extends DialogProps {
   variant: ModalType
 }
 
-const borderMap = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
-
 const shapeMap = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 8px;',
+  round: 'border-radius: 20px;',
 }
-const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
-
-const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
 const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
   const { variant = 'action', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
@@ -88,8 +69,8 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
   > [data-reach-dialog-content] {
     flex-basis: 100%;
     width: 100%;
-    ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
-    ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+    border: ${(p) => border(p.theme, '')};
+    ${(p) => shapeMap[p.theme.shape]};
     background: white;
     ${(p): string => boxShadow(p.theme, 2)};
     margin: auto;

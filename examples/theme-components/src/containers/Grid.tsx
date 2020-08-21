@@ -5,20 +5,22 @@ import React, { useCallback, useState } from 'react'
 
 import Link from '../components/Link'
 
-const columns = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+type ColumnNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+
+const columns: ColumnNum[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 const initialState = {
-  red: '4',
-  green: '4',
-  blue: '4',
-  black: '4',
+  red: 4 as ColumnNum,
+  green: 4 as ColumnNum,
+  blue: 4 as ColumnNum,
+  black: 4 as ColumnNum,
 }
 const GridExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [state, setState] = useState(initialState)
 
   const changeState = useCallback(
     (name, value): void => {
-      setState({ ...state, [name]: value })
+      setState({ ...state, [name]: value as ColumnNum })
     },
     [state]
   )
@@ -32,16 +34,16 @@ const GridExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
         Grid Layout
       </Text>
       <Grid>
-        <Grid.Item tiny={parseInt(state.red)}>
+        <Grid.Item tiny={state.red}>
           <Box width="100%" height="25px" backgroundColor="red" />
         </Grid.Item>
-        <Grid.Item tiny={parseInt(state.green)}>
+        <Grid.Item tiny={state.green}>
           <Box width="100%" height="25px" backgroundColor="green" />
         </Grid.Item>
-        <Grid.Item tiny={parseInt(state.blue)} m>
+        <Grid.Item tiny={state.blue}>
           <Box width="100%" height="25px" backgroundColor="blue" />
         </Grid.Item>
-        <Grid.Item tiny={parseInt(state.black)}>
+        <Grid.Item tiny={state.black}>
           <Box width="100%" height="25px" backgroundColor="black" />
         </Grid.Item>
       </Grid>

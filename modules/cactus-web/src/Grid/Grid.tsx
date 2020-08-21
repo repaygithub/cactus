@@ -1,21 +1,17 @@
 import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React from 'react'
-import styled, { css, FlattenSimpleInterpolation, StyledComponentBase } from 'styled-components'
+import styled, { StyledComponentBase } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 const GUTTER_WIDTH = 16
 
 type ColumnNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 
-interface GridProps
-  extends MarginProps,
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface GridProps extends MarginProps {
   justify?: 'start' | 'center' | 'end' | 'normal'
 }
 
-interface ItemProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface ItemProps {
   tiny: ColumnNum
   small?: ColumnNum
   medium?: ColumnNum
@@ -23,33 +19,29 @@ interface ItemProps
   extraLarge?: ColumnNum
 }
 
-const calculateFlexItemSize = (columnNum: ColumnNum): FlattenSimpleInterpolation =>
-  css`calc(${(columnNum / 12) * 100}% - ${GUTTER_WIDTH}px)`
+const calculateFlexItemSize = (columnNum: ColumnNum) =>
+  `calc(${(columnNum / 12) * 100}% - ${GUTTER_WIDTH}px)`
 
 export const Item = styled.div<ItemProps>`
   box-sizing: border-box;
 
   margin: ${GUTTER_WIDTH / 2}px ${GUTTER_WIDTH / 2}px;
-  width: ${(p): FlattenSimpleInterpolation => calculateFlexItemSize(p.tiny)};
+  width: ${(p) => calculateFlexItemSize(p.tiny)};
 
   @media (min-width: 769px) {
-    width: ${(p): FlattenSimpleInterpolation | undefined =>
-      p.small ? calculateFlexItemSize(p.small) : undefined};
+    width: ${(p) => (p.small ? calculateFlexItemSize(p.small) : undefined)};
   }
 
   @media (min-width: 1025px) {
-    width: ${(p): FlattenSimpleInterpolation | undefined =>
-      p.medium ? calculateFlexItemSize(p.medium) : undefined};
+    width: ${(p) => (p.medium ? calculateFlexItemSize(p.medium) : undefined)};
   }
 
   @media (min-width: 1201px) {
-    width: ${(p): FlattenSimpleInterpolation | undefined =>
-      p.large ? calculateFlexItemSize(p.large) : undefined};
+    width: ${(p) => (p.large ? calculateFlexItemSize(p.large) : undefined)};
   }
 
   @media (min-width: 1441px) {
-    width: ${(p): FlattenSimpleInterpolation | undefined =>
-      p.extraLarge ? calculateFlexItemSize(p.extraLarge) : undefined};
+    width: ${(p) => (p.extraLarge ? calculateFlexItemSize(p.extraLarge) : undefined)};
   }
 
   @supports (display: grid) {
@@ -93,7 +85,7 @@ const flexJustifyMap = {
 }
 
 interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridProps> {
-  Item: React.ComponentType<ItemProps>
+  Item: typeof Item
 }
 
 export const Grid = styled.div<GridProps>`
@@ -121,9 +113,10 @@ export const Grid = styled.div<GridProps>`
   }
 
   ${margin}
-` as any
+`
 
-Grid.Item = Item
+const DefaultGrid = Grid as any
+DefaultGrid.Item = Item
 
 Grid.propTypes = {
   justify: PropTypes.oneOf(['start', 'center', 'end', 'normal']),
@@ -133,4 +126,4 @@ Grid.defaultProps = {
   justify: 'normal',
 }
 
-export default Grid as GridComponent
+export default DefaultGrid as GridComponent

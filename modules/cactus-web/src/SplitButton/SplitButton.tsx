@@ -7,33 +7,22 @@ import {
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
+import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { MutableRefObject, useRef } from 'react'
-import styled, {
-  createGlobalStyle,
-  css,
-  DefaultTheme,
-  FlattenSimpleInterpolation,
-  StyledComponent,
-} from 'styled-components'
+import styled, { createGlobalStyle, DefaultTheme, StyledComponent } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getTopPosition } from '../helpers/positionPopover'
 import { getScrollX } from '../helpers/scrollOffset'
-import { boxShadow, textStyle } from '../helpers/theme'
+import { border, boxShadow, textStyle } from '../helpers/theme'
 
 export interface IconProps {
   iconSize: 'tiny' | 'small' | 'medium' | 'large'
 }
 
-interface SplitButtonProps
-  extends Omit<
-      React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-      'aria-label'
-    >,
-    MarginProps {
-  mainActionLabel: string
+interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
+  mainActionLabel: React.ReactChild
   onSelectMainAction: (event: React.MouseEvent<HTMLButtonElement>) => void
   mainActionIcon?: React.FunctionComponent<IconProps>
   disabled?: boolean
@@ -47,38 +36,20 @@ interface SplitButtonActionProps extends Omit<MenuItemImplProps, 'onSelect'> {
   icon?: React.FunctionComponent<IconProps>
 }
 
-const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
+const mainShapeMap: { [K in Shape]: string } = {
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 8px 1px 1px 8px;',
+  round: 'border-radius: 20px 1px 1px 20px;',
 }
-
-const mainShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px 1px 1px 8px;
-  `,
-  round: css`
-    border-radius: 20px 1px 1px 20px;
-  `,
-}
-
-const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
-const getMainShape = (shape: Shape): ReturnType<typeof css> => mainShapeMap[shape]
 
 const MainActionButton = styled.button`
   box-sizing: border-box;
-  ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
-  ${(p): ReturnType<typeof css> => getMainShape(p.theme.shape)}
+  border: ${(p) => border(p.theme, '')};
+  ${(p) => mainShapeMap[p.theme.shape]}
   background-color: ${(p): string => p.theme.colors.white};
   height: 32px;
   outline: none;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+  ${(p) => textStyle(p.theme, 'body')};
   font-weight: 400;
   cursor: pointer;
   padding-left: 12px;
@@ -123,34 +94,22 @@ const SplitButtonStyles = createGlobalStyle`
   }
 `
 
-const dropdownShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
+const dropdownShapeMap: { [K in Shape]: string } = {
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 4px;',
+  round: 'border-radius: 8px;',
 }
-
-const getDropdownShape = (shape: Shape): FlattenSimpleInterpolation => dropdownShapeMap[shape]
 
 const SplitButtonList = styled(ReachMenuItems)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
-  ${(p): FlattenSimpleInterpolation => getDropdownShape(p.theme.shape)}
+  ${(p) => dropdownShapeMap[p.theme.shape]}
   ${(p): string => boxShadow(p.theme, 1)};
   z-index: 1000;
   background-color: ${(p): string => p.theme.colors.white};
 
-  ${(p): string =>
-    !p.theme.boxShadows
-      ? `${getBorder(p.theme.border)};
-        border-color: ${p.theme.colors.lightContrast};`
-      : ''}
+  border: ${(p) => (!p.theme.boxShadows ? border(p.theme, 'lightContrast') : '0')};
 
   [data-reach-menu-item] {
     position: relative;
@@ -158,7 +117,7 @@ const SplitButtonList = styled(ReachMenuItems)`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
+    ${(p) => textStyle(p.theme, 'small')};
     ${(p): ColorStyle => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
@@ -170,27 +129,18 @@ const SplitButtonList = styled(ReachMenuItems)`
   }
 `
 
-const dropdownButtonShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 1px 8px 8px 1px;
-  `,
-  round: css`
-    border-radius: 1px 20px 20px 1px;
-  `,
+const dropdownButtonShapeMap: { [K in Shape]: string } = {
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 1px 8px 8px 1px;',
+  round: 'border-radius: 1px 20px 20px 1px;',
 }
-
-const getDropdownButtonShape = (shape: Shape): FlattenSimpleInterpolation =>
-  dropdownButtonShapeMap[shape]
 
 const DropdownButton = styled(ReachMenuButton)`
   box-sizing: border-box;
   background-color: ${(p): string => p.theme.colors.darkestContrast};
   height: 32px;
   width: 36px;
-  ${(p): FlattenSimpleInterpolation => getDropdownButtonShape(p.theme.shape)}
+  ${(p) => dropdownButtonShapeMap[p.theme.shape]}
   margin-left: 1px;
   border: 0px;
   outline: none;
@@ -322,7 +272,7 @@ export const SplitButton = styled(SplitButtonBase)`
 ` as any
 
 SplitButton.propTypes = {
-  mainActionLabel: PropTypes.string.isRequired,
+  mainActionLabel: PropTypes.node.isRequired,
   onSelectMainAction: PropTypes.func.isRequired,
   mainActionIcon: PropTypes.elementType,
   disabled: PropTypes.bool,

@@ -1,25 +1,13 @@
-import { BorderSize, Shape } from '@repay/cactus-theme'
-import { CactusTheme, TextStyle } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import styled, {
-  css,
-  FlattenInterpolation,
-  FlattenSimpleInterpolation,
-  ThemeProps,
-} from 'styled-components'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { textStyle } from '../helpers/theme'
-import { Omit } from '../types'
+import { border, textStyle } from '../helpers/theme'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger'
 
-interface TextButtonProps
-  extends Omit<
-      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-      'ref'
-    >,
-    MarginProps {
+interface TextButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, MarginProps {
   variant?: TextButtonVariants
   /** !important */
   disabled?: boolean
@@ -41,29 +29,11 @@ const variantMap: VariantMap = {
   `,
 }
 
-const borderMap = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
-
 const shapeMap = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 8px;',
+  round: 'border-radius: 20px;',
 }
-const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
-
-const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
 const inverseVariantMap: VariantMap = {
   action: css`
@@ -81,9 +51,7 @@ const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
   cursor: not-allowed;
 `
 
-const variantOrDisabled = (
-  props: TextButtonProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+const variantOrDisabled = (props: TextButtonProps) => {
   const { variant, inverse } = props
   if (variant === 'danger' && inverse) {
     throw new Error('A danger variant does not exist for an inverse TextButton.')
@@ -97,7 +65,7 @@ const variantOrDisabled = (
 }
 
 export const TextButton = styled.button<TextButtonProps>`
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+  ${(p) => textStyle(p.theme, 'body')};
   position: relative;
   border: none;
   padding: 4px;
@@ -121,9 +89,8 @@ export const TextButton = styled.button<TextButtonProps>`
       width: 100%;
       top: 0px;
       left: 0px;
-      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
-      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
-      border-color: ${(p): string => p.theme.colors.callToAction};
+      border: ${(p) => border(p.theme, 'callToAction')};
+      ${(p) => shapeMap[p.theme.shape]};
     }
   }
 
@@ -141,7 +108,6 @@ export const TextButton = styled.button<TextButtonProps>`
   ${margin}
 `
 
-// @ts-ignore
 TextButton.propTypes = {
   variant: PropTypes.oneOf(['standard', 'action', 'danger']),
   disabled: PropTypes.bool,

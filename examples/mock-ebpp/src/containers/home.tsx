@@ -25,7 +25,7 @@ const Home = (props: RouteComponentProps): React.ReactElement => {
           width="90%"
           justifyContent="center"
         >
-          <Grid justify="center" width="100%" mb={4}>
+          <Grid justify="center" mb={4}>
             <Grid.Item tiny={12}>
               <h3> Welcome to The Example Testing App 😃</h3>
             </Grid.Item>
