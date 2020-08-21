@@ -34,9 +34,12 @@ const shadowTypes = [
   '0px 45px 48px',
 ]
 
-export const boxShadow = (theme: CactusTheme, shadowType: number): string => {
+export const boxShadow = (theme: CactusTheme, shadowType: number | string): string => {
   if (theme.boxShadows) {
-    return `box-shadow: ${shadowTypes[shadowType]} ${theme.colors.transparentCTA}`
+    if (typeof shadowType === 'number') {
+      shadowType = shadowTypes[shadowType]
+    }
+    return `box-shadow: ${shadowType} ${theme.colors.transparentCTA}`
   } else {
     return ''
   }
@@ -72,3 +75,8 @@ export const textStyle = (
 
   return theme.textStyles[size]
 }
+
+type MediaQuery = keyof Required<CactusTheme>['mediaQueries']
+
+export const media = (theme: CactusTheme, query: MediaQuery): string | undefined =>
+  theme.mediaQueries && theme.mediaQueries[query]

@@ -3,20 +3,22 @@ import {
   NavigationChevronLeft,
   NavigationChevronRight,
   NavigationChevronUp,
+  NavigationHamburger,
 } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { border, boxShadow, radius } from '../helpers/theme'
+import { border, boxShadow, media, radius, textStyle } from '../helpers/theme'
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
   focusMenu,
   ITEM_SELECTOR,
   menuKeyHandler,
   useScrollButtons,
-  useSubmenuKeyHandlers,
+  useSubmenuHandlers,
   useSubmenuToggle,
 } from './scroll'
 
@@ -29,11 +31,24 @@ interface ListProps {
 interface MenuProps {
   children: React.ReactNode
   expanded: boolean
+  variant: Variant
 }
 
 interface MenuBarProps {
   children: React.ReactNode
   'aria-label'?: string
+}
+
+type Variant = 'mobile' | 'sidebar' | 'top'
+
+const useVariant = (): Variant => {
+  const size = React.useContext(ScreenSizeContext)
+  if (size < SIZES.small) {
+    return 'mobile'
+  } else if (size < SIZES.large) {
+    return 'sidebar'
+  }
+  return 'top'
 }
 
 const preventAction = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -92,27 +107,11 @@ MenuBarItemFR.propTypes = {
 
 const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {
-    const [expanded, toggle] = useSubmenuToggle()
+    const variant = useVariant()
+    const [expanded, toggle] = useSubmenuToggle(variant === 'top')
 
-    const [toggleOnKey, handleSubmenu] = useSubmenuKeyHandlers(toggle)
+    const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
 
-    const closeOnBlur = React.useCallback(
-      (event) => {
-        const target = event.currentTarget
-        setTimeout(() => {
-          if (!target.contains(document.activeElement)) {
-            toggle(null, false)
-          }
-        })
-      },
-      [toggle]
-    )
-    const toggleOnClick = React.useCallback(
-      (event) => {
-        toggle(event.currentTarget, undefined)
-      },
-      [toggle]
-    )
     return (
       <li role="none" onKeyDown={handleSubmenu} onBlur={closeOnBlur}>
         <MenuButton
@@ -129,7 +128,9 @@ const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
             <NavigationChevronDown />
           </IconWrapper>
         </MenuButton>
-        <Menu expanded={expanded}>{children}</Menu>
+        <Menu expanded={expanded} variant={variant}>
+          {children}
+        </Menu>
       </li>
     )
   }
@@ -147,11 +148,12 @@ const TextWrapper = styled.div`
   flex-grow: 1;
 `
 
-const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
+const Menu: React.FC<MenuProps> = ({ children, expanded, variant }) => {
+  const usesScroll = variant === 'top'
   const [scroll, menuRef] = useScrollButtons('vertical', expanded)
   return (
-    <MenuWrapper expanded={expanded} tabIndex={-1}>
-      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
+    <MenuWrapper expanded={expanded} tabIndex={-1} variant={variant}>
+      <ScrollButton show={usesScroll && scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
       <MenuList
@@ -160,40 +162,48 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
         ref={menuRef}
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
+        variant={variant}
       >
         {children}
       </MenuList>
-      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
+      <ScrollButton show={usesScroll && scroll.showFore} onClick={scroll.clickFore}>
         <NavigationChevronDown />
       </ScrollButton>
     </MenuWrapper>
   )
 }
 
-const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
-  const [scroll, menuRef, menu] = useScrollButtons('horizontal', true)
-
-  React.useEffect(() => {
-    if (menu) {
-      // There doesn't seem to be any way in React to consistently identify the
-      // first descendent of a particular type, so instead we'll use this event
-      // to ensure that even if elements are dynamically added or removed, the
-      // first menuitem will always get tab focus for the whole component.
-      const mutationCallback = () => {
-        const menuItems = menu.querySelectorAll(ITEM_SELECTOR)
-        if (menuItems.length) {
-          ;(menuItems[0] as HTMLElement).tabIndex = 0
-          for (let i = 1; i < menuItems.length; i++) {
-            ;(menuItems[i] as HTMLElement).tabIndex = -1
-          }
+const setTabIndex = (menu: HTMLElement | null, isSidebar: boolean) => {
+  if (menu) {
+    // There doesn't seem to be any way in React to consistently identify the
+    // first descendent of a particular type, so instead we'll use this event
+    // to ensure that even if elements are dynamically added or removed, the
+    // first menuitem will always get tab focus for the whole component.
+    const mutationCallback = () => {
+      const menuItems = menu.querySelectorAll(ITEM_SELECTOR)
+      if (menuItems.length) {
+        let i = 0
+        if (!isSidebar) {
+          ;(menuItems[i++] as HTMLElement).tabIndex = 0
+        }
+        for (; i < menuItems.length; i++) {
+          ;(menuItems[i] as HTMLElement).tabIndex = -1
         }
       }
-      const observer = new MutationObserver(mutationCallback)
-      observer.observe(menu, { childList: true, subtree: true })
-      mutationCallback()
-      return () => observer.disconnect()
     }
-  }, [menu])
+    const observer = new MutationObserver(mutationCallback)
+    observer.observe(menu, { childList: true, subtree: true })
+    mutationCallback()
+    return () => observer.disconnect()
+  }
+}
+
+const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
+  const orientation = 'horizontal'
+  const [scroll, menuRef, menu] = useScrollButtons(orientation, true)
+
+  React.useEffect(() => setTabIndex(menu, false), [menu])
+
   return (
     <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
@@ -201,10 +211,11 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
       </ScrollButton>
       <MenuList
         role="menubar"
-        aria-orientation="horizontal"
+        aria-orientation={orientation}
         ref={menuRef}
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
+        variant="top"
       >
         {children}
       </MenuList>
@@ -215,10 +226,60 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
   )
 })
 
+const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
+  const orientation = 'vertical'
+  const [expanded, toggle] = useSubmenuToggle(false)
+  const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
+  React.useEffect(() => setTabIndex(menu, true), [menu])
+  return (
+    <SidebarNav
+      {...props}
+      ref={ref}
+      aria-orientation={orientation}
+      onKeyDown={handleSubmenu}
+      onBlur={closeOnBlur}
+      onClick={navClickHandler}
+      tabIndex={-1}
+    >
+      <HamburgerButton
+        tabIndex={0}
+        aria-haspopup="menu"
+        aria-expanded={expanded}
+        onClick={toggleOnClick}
+        onKeyDown={toggleOnKey}
+        onKeyUp={preventAction}
+      >
+        <NavigationHamburger />
+      </HamburgerButton>
+      <SidebarMenu
+        expanded={expanded}
+        role="menu"
+        aria-orientation={orientation}
+        onFocus={focusMenu}
+        onKeyDown={menuKeyHandler}
+        ref={menuRef}
+        variant="sidebar"
+      >
+        {children}
+      </SidebarMenu>
+    </SidebarNav>
+  )
+})
+
+const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
+  const variant = useVariant()
+  const Menubar = variant === 'top' ? Topbar : Sidebar
+  return <Menubar {...props} ref={ref} />
+})
+
 const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
   const button = event.target as HTMLElement
   if (button.matches && button.matches('[role="menuitem"]:not([aria-haspopup])')) {
-    event.currentTarget.focus()
+    ;(document.activeElement as HTMLElement).blur()
+    const nav = event.currentTarget
+    setTimeout(() => nav.focus())
   }
 }
 
@@ -266,7 +327,7 @@ const Nav = styled.nav`
   align-items: stretch;
   position: relative;
   outline: none;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => textStyle(p.theme, 'small')};
   ${(p) => p.theme.colorStyles.standard};
   box-shadow: inset 0 -${(p) => border(p.theme, 'lightContrast').replace('solid', '0')};
 
@@ -289,7 +350,88 @@ const Nav = styled.nav`
   }
 `
 
-const MenuWrapper = styled.div<{ expanded: boolean }>`
+const SidebarNav = styled.nav`
+  outline: none;
+  position: fixed;
+  left: 0;
+  ${(p) => textStyle(p.theme, 'small')};
+  ${(p) => p.theme.colorStyles.standard};
+  box-sizing: border-box;
+
+  width: 100vw;
+  height: 60px;
+  bottom: 0;
+  border-top: ${(p) => border(p.theme, 'lightContrast')};
+
+  ${(p) => media(p.theme, 'small')} {
+    width: 60px;
+    height: 100vh;
+    top: 0;
+    border-top: 0;
+    border-right: ${(p) => border(p.theme, 'lightContrast')};
+  }
+`
+
+// The box shadow is #2, but shifted to be only on the right side.
+const SidebarMenu = styled.ul<MenuProps>`
+  ${(p) => p.theme.colorStyles.standard}
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: ${(p) => (p.expanded ? 'block' : 'none')};
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  top: unset;
+  bottom: 60px;
+  height: auto;
+  max-height: calc(100vh - 60px);
+  z-index: 100;
+
+  ${(p) => media(p.theme, 'small')} {
+    left: 60px;
+    width: 350px;
+    top: 0;
+    bottom: 0;
+    max-height: 100vh;
+    ${(p) => boxShadow(p.theme, '12px 0 24px -12px')};
+  }
+  overflow: auto;
+  outline: none;
+
+  [role='menuitem'] {
+    padding: 20px 16px;
+    border-bottom: ${(p) => border(p.theme, 'lightContrast')};
+    ${NavigationChevronDown} {
+      transform: rotateZ(-90deg);
+    }
+    &[aria-expanded='true'] ${NavigationChevronDown} {
+      transform: rotateZ(90deg);
+    }
+    &:hover,
+    &[aria-expanded='true'] {
+      color: ${(p) => p.theme.colors.callToAction};
+      border-bottom-color: ${(p) => p.theme.colors.callToAction};
+    }
+    &:focus {
+      outline: ${(p) => border(p.theme, 'callToAction')};
+      outline-offset: -${(p) => (p.theme.border === 'thick' ? '2' : '1')}px;
+    }
+    &[aria-current='true'],
+    &[aria-expanded='true'] {
+      font-weight: 600;
+    }
+  }
+
+  [role='menu'] {
+    padding-left: 8px;
+    [role='menu'] {
+      padding-left: 12px;
+    }
+  }
+`
+
+const topWrapper = css<MenuProps>`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
   visibility: ${(p) => (p.expanded ? 'visible' : 'hidden')};
@@ -303,6 +445,7 @@ const MenuWrapper = styled.div<{ expanded: boolean }>`
   white-space: normal;
   flex-flow: column nowrap;
   align-items: stretch;
+  width: auto;
   min-width: 200px;
   max-width: 320px;
   max-height: 70vh;
@@ -334,15 +477,19 @@ const MenuWrapper = styled.div<{ expanded: boolean }>`
   }
 `
 
-const MenuList = styled.ul<{ top?: number; left?: number }>`
-  list-style: none;
+const MenuWrapper = styled.div<MenuProps>`
+  width: 100%;
+  background-color: ${(p) => p.theme.colors.lightContrast};
+  display: ${(p) => (p.expanded ? 'inline-block' : 'none')};
+
+  ${(p) => p.variant === 'top' && topWrapper}
+`
+
+const topList = css<{ 'aria-orientation'?: 'vertical' | 'horizontal' }>`
   display: flex;
   flex-direction: ${(p) => (p['aria-orientation'] === 'vertical' ? 'column' : 'row')};
   justify-content: flex-start;
   flex-wrap: nowrap;
-  flex-grow: 1;
-  padding: 0;
-  margin: 0;
   align-items: stretch;
 
   overflow: hidden;
@@ -354,12 +501,18 @@ const MenuList = styled.ul<{ top?: number; left?: number }>`
   }
 `
 
-const MenuButton = styled.button.attrs({ role: 'menuitem' })`
+const MenuList = styled.ul<{ variant: Variant }>`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  ${(p) => p.variant === 'top' && topList}
+`
+
+const buttonStyles = `
   cursor: pointer;
   border: none;
   outline: none;
-  width: 100%;
-  height: 100%;
   background-color: transparent;
   text-decoration: none;
   text-align: left;
@@ -377,11 +530,66 @@ const MenuButton = styled.button.attrs({ role: 'menuitem' })`
   &::-moz-focus-inner {
     border: none;
   }
+`
+
+const MenuButton = styled.button.attrs({ role: 'menuitem' })`
+  ${buttonStyles}
+  width: 100%;
+  height: 100%;
 
   ${NavigationChevronDown} {
     width: 8px;
     height: 8px;
     margin-left: 16px;
     ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
+  }
+`
+
+const HamburgerButton = styled.button.attrs({ role: 'button' })`
+  ${buttonStyles}
+
+  width: 60px;
+  height: 60px;
+  padding: 18px;
+  border-right: ${(p) => border(p.theme, 'lightContrast')};
+
+  ${(p) => media(p.theme, 'small')} {
+    border-right: 0;
+    border-bottom: ${(p) => border(p.theme, 'lightContrast')};
+  }
+
+  ${NavigationHamburger} {
+    width: 24px;
+    height: 24px;
+  }
+
+  :hover {
+    color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
+  }
+
+  :focus {
+    outline: ${(p) => border(p.theme, 'callToAction')};
+    outline-offset: -${(p) => (p.theme.border === 'thick' ? '2' : '1')}px;
+  }
+
+  &[aria-expanded='true'] {
+    ${(p) => p.theme.colorStyles.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
+
+    &::after {
+      content: '';
+      z-index: 99;
+      background-color: rgba(0, 0, 0, 50%);
+      position: fixed;
+      top: 0;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      cursor: default;
+      ${(p) => media(p.theme, 'small')} {
+        display: none;
+      }
+    }
   }
 `

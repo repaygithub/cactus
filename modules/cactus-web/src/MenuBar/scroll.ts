@@ -18,6 +18,8 @@ const getMenu: (f: HTMLElement) => HTMLElement | undefined = (fromNode) => {
   if (parent) {
     if (parent.matches('[role^="menu"]')) {
       return parent
+    } else if (fromNode.matches('nav')) {
+      return fromNode
       // Don't bother searching past the menubar.
     } else if (fromNode.getAttribute('role') !== 'menubar') {
       return getMenu(parent)
@@ -25,14 +27,17 @@ const getMenu: (f: HTMLElement) => HTMLElement | undefined = (fromNode) => {
   }
 }
 
-const getMenuItems: (m: HTMLElement) => HTMLElement[] = (menu) => {
+const getMenuItems = (menu: HTMLElement, directChildrenOnly: boolean): HTMLElement[] => {
   const elements = [...(menu.querySelectorAll(ITEM_SELECTOR) as any)] as HTMLElement[]
-  return elements.filter((e) => e.offsetWidth && getMenu(e) === menu)
+  if (directChildrenOnly) {
+    return elements.filter((e) => getMenu(e) === menu)
+  }
+  return elements.filter((e) => e.offsetWidth)
 }
 
 type ToggleSubmenu = (b: HTMLElement | null, o: boolean | undefined, f?: boolean) => void
 
-export function useSubmenuToggle(): [boolean, ToggleSubmenu] {
+export function useSubmenuToggle(usePositioning: boolean): [boolean, ToggleSubmenu] {
   const [expanded, setExpanded] = React.useState<boolean>(false)
   const toggle = React.useCallback<ToggleSubmenu>(
     (menuButton, open, focus = false) => {
@@ -42,38 +47,40 @@ export function useSubmenuToggle(): [boolean, ToggleSubmenu] {
           // Was closed, now open
           if (isExpanded && menuButton) {
             const menuWrapper = menuButton.nextElementSibling as HTMLElement
-            const maxRight = window.innerWidth - 25 // Include buffer for scrollbar.
-            const maxBottom = window.innerHeight
-            const offsetRect = (menuWrapper.offsetParent as HTMLElement).getBoundingClientRect()
-            const buttonRect = menuButton.getBoundingClientRect()
-            const menuRect = menuWrapper.getBoundingClientRect()
-            const parentMenu = getMenu(menuButton)
-            const orientation = parentMenu && parentMenu.getAttribute('aria-orientation')
-            let left, top
-            if (orientation === 'horizontal') {
-              const expectedRight = buttonRect.left + menuRect.width
-              if (expectedRight > maxRight) {
-                left = Math.ceil(maxRight - menuRect.width - offsetRect.left)
+            if (usePositioning) {
+              const maxRight = window.innerWidth - 25 // Include buffer for scrollbar.
+              const maxBottom = window.innerHeight
+              const offsetRect = (menuWrapper.offsetParent as HTMLElement).getBoundingClientRect()
+              const buttonRect = menuButton.getBoundingClientRect()
+              const menuRect = menuWrapper.getBoundingClientRect()
+              const parentMenu = getMenu(menuButton)
+              const orientation = parentMenu && parentMenu.getAttribute('aria-orientation')
+              let left, top
+              if (orientation === 'horizontal') {
+                const expectedRight = buttonRect.left + menuRect.width
+                if (expectedRight > maxRight) {
+                  left = Math.ceil(maxRight - menuRect.width - offsetRect.left)
+                } else {
+                  left = buttonRect.left - offsetRect.left
+                }
               } else {
-                left = buttonRect.left - offsetRect.left
+                const expectedRight = buttonRect.right + menuRect.width
+                if (expectedRight > maxRight) {
+                  left = Math.ceil(buttonRect.left - menuRect.width - offsetRect.left)
+                } else {
+                  left = Math.ceil(buttonRect.left - offsetRect.left + buttonRect.width)
+                }
+                const expectedBottom = buttonRect.top + menuRect.height
+                if (expectedBottom > maxBottom) {
+                  top = `${maxBottom - menuRect.height - offsetRect.top}px`
+                } else {
+                  top = `${buttonRect.top - offsetRect.top}px`
+                }
               }
-            } else {
-              const expectedRight = buttonRect.right + menuRect.width
-              if (expectedRight > maxRight) {
-                left = Math.ceil(buttonRect.left - menuRect.width - offsetRect.left)
-              } else {
-                left = Math.ceil(buttonRect.left - offsetRect.left + buttonRect.width)
-              }
-              const expectedBottom = buttonRect.top + menuRect.height
-              if (expectedBottom > maxBottom) {
-                top = `${maxBottom - menuRect.height - offsetRect.top}px`
-              } else {
-                top = `${buttonRect.top - offsetRect.top}px`
-              }
+              // Using translate instead of left because of an issue I had with inconsistent width.
+              menuWrapper.style.transform = `translateX(${left}px)`
+              menuWrapper.style.top = top || ''
             }
-            // Using translate instead of left because of an issue I had with inconsistent width.
-            menuWrapper.style.transform = `translateX(${left}px)`
-            menuWrapper.style.top = top || ''
             if (focus) {
               const firstItem = menuWrapper.querySelector(ITEM_SELECTOR) as HTMLElement
               setTimeout(() => firstItem.focus())
@@ -83,7 +90,7 @@ export function useSubmenuToggle(): [boolean, ToggleSubmenu] {
         return isExpanded
       })
     },
-    [setExpanded]
+    [setExpanded, usePositioning]
   )
   return [expanded, toggle]
 }
@@ -96,10 +103,15 @@ const getOrientation = (element: HTMLElement) => {
   return menu && menu.getAttribute('aria-orientation')
 }
 
-type KeyHandler = (e: React.KeyboardEvent<HTMLElement>) => void
+type SubmenuHandlers = [
+  React.KeyboardEventHandler<HTMLElement>,
+  React.MouseEventHandler<HTMLElement>,
+  React.FocusEventHandler<HTMLElement>,
+  React.KeyboardEventHandler<HTMLElement>
+]
 
-export function useSubmenuKeyHandlers(toggle: ToggleSubmenu): [KeyHandler, KeyHandler] {
-  const handleToggle = React.useCallback(
+export function useSubmenuHandlers(toggle: ToggleSubmenu): SubmenuHandlers {
+  const toggleOnKey = React.useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
       const menuButton = event.currentTarget
       const orientation = getOrientation(menuButton)
@@ -114,9 +126,26 @@ export function useSubmenuKeyHandlers(toggle: ToggleSubmenu): [KeyHandler, KeyHa
     },
     [toggle]
   )
+  const closeOnBlur = React.useCallback(
+    (event: React.FocusEvent<HTMLElement>) => {
+      const target = event.currentTarget
+      setTimeout(() => {
+        if (!target.contains(document.activeElement)) {
+          toggle(null, false)
+        }
+      })
+    },
+    [toggle]
+  )
+  const toggleOnClick = React.useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      toggle(event.currentTarget, undefined)
+    },
+    [toggle]
+  )
   const handleSubmenu = React.useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
-      const menuButton = event.currentTarget.querySelector(ITEM_SELECTOR) as HTMLElement
+      const menuButton = event.currentTarget.querySelector('[aria-expanded]') as HTMLElement
       if (isExpanded(menuButton)) {
         const orientation = getOrientation(event.currentTarget)
         switch (event.key) {
@@ -127,7 +156,7 @@ export function useSubmenuKeyHandlers(toggle: ToggleSubmenu): [KeyHandler, KeyHa
             break
           case openKey(orientation):
             const menu = event.currentTarget.querySelector('[role="menu"]')
-            const items = getMenuItems(menu as HTMLElement)
+            const items = getMenuItems(menu as HTMLElement, true)
             const currentFocus = items.indexOf(document.activeElement as HTMLElement)
             items[(currentFocus + 1) % items.length].focus()
             break
@@ -140,7 +169,7 @@ export function useSubmenuKeyHandlers(toggle: ToggleSubmenu): [KeyHandler, KeyHa
     },
     [toggle]
   )
-  return [handleToggle, handleSubmenu]
+  return [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu]
 }
 
 export const menuKeyHandler = (event: React.KeyboardEvent<HTMLElement>): void => {
@@ -150,7 +179,7 @@ export const menuKeyHandler = (event: React.KeyboardEvent<HTMLElement>): void =>
   const scrollForward = orientation === 'vertical' ? 'ArrowDown' : 'ArrowRight'
   const scrollBack = orientation === 'vertical' ? 'ArrowUp' : 'ArrowLeft'
   const allowWrapBack = !parentMenu || parentMenu.getAttribute('aria-orientation') === orientation
-  const visibleElements = getMenuItems(menu)
+  const visibleElements = getMenuItems(menu, true)
   const currentFocus = visibleElements.indexOf(document.activeElement as HTMLElement)
   let focusIndex = -1
   switch (event.key) {
@@ -216,7 +245,7 @@ interface Scroll {
 const DEFAULT_SCROLL: Scroll = { offset: 0, current: 0 }
 
 interface MenuWithScroll extends HTMLUListElement {
-  scrollToMenuItem?: (a: HTMLElement[], b: number) => void
+  scrollToMenuItem?: (target: HTMLElement) => void
 }
 
 type MenuElement = MenuWithScroll | null
@@ -224,6 +253,16 @@ type MenuElement = MenuWithScroll | null
 type MenuRef = (m: MenuElement) => void
 
 type ScrollButtonHook = (o: Orientation, e: boolean) => [Scroll, MenuRef, MenuElement]
+
+function getScrollInfo(element: HTMLElement): [HTMLElement, number, HTMLElement[]] {
+  const overflow = window.getComputedStyle(element).overflow
+  if (overflow === 'hidden') {
+    return [element.parentElement as HTMLElement, BUTTON_WIDTH, getMenuItems(element, true)]
+  } else if (overflow === 'auto') {
+    return [element, 0, getMenuItems(element, false)]
+  }
+  return getScrollInfo(element.parentElement as HTMLElement)
+}
 
 export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
   const [menu, menuRef] = React.useState<MenuElement>(null)
@@ -245,19 +284,18 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
         scrollWidth = 'scrollHeight'
       }
       const updateScrollState: (s: Scroll, b?: number) => Scroll = (scroll, button) => {
-        const items = getMenuItems(menu)
+        const [wrapper, buttonWidth, items] = getScrollInfo(menu)
         let maxButton = items.length - 1
         button = Math.min(maxButton, button === undefined ? scroll.current : button)
-        const wrapper = menu.parentElement as HTMLElement
         const parentRect = wrapper.getBoundingClientRect()
-        let maxTrailingWidth = Math.ceil(parentRect[width] - BUTTON_WIDTH)
+        let maxTrailingWidth = Math.ceil(parentRect[width] - buttonWidth)
         let menuWidth = 0
         let offset = 0
         for (let i = maxButton; i >= 0; i--) {
           const itemWidth = items[i].getBoundingClientRect()[width]
           menuWidth += itemWidth
           if (i === 0) {
-            maxTrailingWidth += BUTTON_WIDTH
+            maxTrailingWidth += buttonWidth
           }
           if (menuWidth < maxTrailingWidth) {
             maxButton = i
@@ -266,7 +304,7 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
             offset += itemWidth
           }
         }
-        if (button === 1 && items[0].getBoundingClientRect()[width] < BUTTON_WIDTH) {
+        if (button === 1 && items[0].getBoundingClientRect()[width] < buttonWidth) {
           if (button > scroll.current && maxButton > 1) {
             return updateScrollState(scroll, 2)
           } else if (button < scroll.current) {
@@ -275,15 +313,19 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
         }
 
         const showBack = button > 0
-        let buttonWidth = showBack ? BUTTON_WIDTH : 0
-        const showFore = greaterThan(menuWidth - offset, parentRect[width] - buttonWidth)
+        let $buttonWidth = showBack ? buttonWidth : 0
+        const showFore = greaterThan(menuWidth - offset, parentRect[width] - $buttonWidth)
         if (showFore) {
-          buttonWidth += BUTTON_WIDTH
+          $buttonWidth += buttonWidth
         }
 
         // This is a fix for an IE bug with nested flex items.
-        if (parentRect[width] > 0 && /MSIE|Trident/.test(window.navigator.userAgent)) {
-          menu.style.maxHeight = `calc(70vh - ${buttonWidth}px)`
+        if (
+          buttonWidth &&
+          parentRect[width] > 0 &&
+          /MSIE|Trident/.test(window.navigator.userAgent)
+        ) {
+          menu.style.maxHeight = `calc(70vh - ${$buttonWidth}px)`
         }
 
         // If the offset/button state is unchanged, don't update the state.
@@ -295,7 +337,8 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
           return scroll
         }
         // Set the actual scroll offset on the menu.
-        menu[scrollAttr] = offset
+        const scrollElement = buttonWidth ? menu : wrapper
+        scrollElement[scrollAttr] = offset
         const result: Scroll = {
           showFore,
           showBack,
@@ -311,13 +354,13 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
         return result
       }
 
-      type Calc = (r: DOMRect[], i: number, t: boolean, m: number) => number
-      const calcNextButton: Calc = (itemRects, index, toTop, minBack) => {
+      type Calc = (r: DOMRect[], i: number, t: boolean, m: number, w: number) => number
+      const calcNextButton: Calc = (itemRects, index, toTop, minBack, buttonWidth) => {
         for (let i = index; i >= 0; i--) {
           if (Math.round(itemRects[i][back]) < minBack) {
             // If we run calculations to the top and get an index > 0, we guessed wrong.
             if (toTop) {
-              return calcNextButton(itemRects, index, false, minBack + BUTTON_WIDTH)
+              return calcNextButton(itemRects, index, false, minBack + buttonWidth, 0)
             }
             return Math.min(i + 1, index)
           }
@@ -325,8 +368,9 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
         return 0
       }
 
-      menu.scrollToMenuItem = (items, index) => {
-        const wrapper = menu.parentElement as HTMLElement
+      menu.scrollToMenuItem = (target) => {
+        const [wrapper, buttonWidth, items] = getScrollInfo(menu)
+        const index = items.indexOf(target)
         const parentRect = wrapper.getBoundingClientRect()
         let next = 0
         if (index < 0) {
@@ -336,13 +380,13 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
           const max = Math.round(parentRect[fore])
           // If the button is offscreen, shift all calculations to where it's onscreen;
           // start by assuming the button is visible, then adjust if that's impossible.
-          let shift = Math.min(0, max - BUTTON_WIDTH - Math.round(itemRects[index][fore]))
+          let shift = Math.min(0, max - buttonWidth - Math.round(itemRects[index][fore]))
           const end = Math.round(itemRects[itemRects.length - 1][fore])
           if (end + shift <= max) {
-            shift = Math.min(0, shift + BUTTON_WIDTH)
+            shift = Math.min(0, shift + buttonWidth)
           }
           const min = Math.round(parentRect[back]) - shift
-          next = calcNextButton(itemRects, index, true, min)
+          next = calcNextButton(itemRects, index, true, min, buttonWidth)
         }
         setScroll((s) => updateScrollState(s, next))
       }
@@ -361,8 +405,7 @@ export const focusMenu = (event: React.FocusEvent<HTMLElement>): void => {
   if (event.target.matches(ITEM_SELECTOR)) {
     const menu = event.currentTarget as MenuWithScroll
     if (menu.scrollToMenuItem) {
-      const items = getMenuItems(menu)
-      menu.scrollToMenuItem(items, items.indexOf(event.target))
+      menu.scrollToMenuItem(event.target as HTMLElement)
     }
   }
 }
