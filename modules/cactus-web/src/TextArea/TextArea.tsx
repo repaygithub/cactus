@@ -77,10 +77,10 @@ const Area = styled.textarea<TextAreaProps>`
     border-color: ${(p): string => p.theme.colors.callToAction};
   }
 
-  &:disabled{
+  &:disabled {
     cursor: not-allowed;
   }
-  
+
   &:disabled::placeholder {
     color: ${(p): string => p.theme.colors.mediumGray};
     font-style: oblique;
