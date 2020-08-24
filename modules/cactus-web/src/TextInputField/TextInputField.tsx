@@ -91,7 +91,6 @@ export const TextInputField = styled(TextInputFieldBase)`
   ${margin}
 `
 
-// @ts-ignore
 TextInputField.propTypes = {
   label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,

@@ -1,16 +1,11 @@
-import { BorderSize, CactusTheme, Shape, TextStyle } from '@repay/cactus-theme'
+import { CactusTheme, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, {
-  css,
-  FlattenInterpolation,
-  FlattenSimpleInterpolation,
-  ThemeProps,
-} from 'styled-components'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { textStyle } from '../helpers/theme'
+import { border, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
 export interface TextAreaProps
@@ -50,43 +45,21 @@ const displayStatus = (
   }
 }
 
-const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
+const shapeMap: { [K in Shape]: string } = {
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 4px;',
+  round: 'border-radius: 8px;',
 }
-
-const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
-}
-
-const getBorder = (borderSize: BorderSize): FlattenInterpolation<ThemeProps<CactusTheme>> =>
-  borderMap[borderSize]
-const getShape = (shape: Shape): FlattenInterpolation<ThemeProps<CactusTheme>> => shapeMap[shape]
 
 const Area = styled.textarea<TextAreaProps>`
-  ${(p): FlattenInterpolation<ThemeProps<CactusTheme>> => getBorder(p.theme.border)}
-  border-color: ${(p): string =>
-    p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkContrast};
-  ${(p): FlattenInterpolation<ThemeProps<CactusTheme>> => getShape(p.theme.shape)}
+  border: ${(p) => border(p.theme, p.disabled ? 'lightGray' : 'darkContrast')};
+  ${(p) => shapeMap[p.theme.shape]}
   min-height: 100px;
-  ${(p): string => (p.theme.mediaQueries ? p.theme.mediaQueries.small : '')}{
+  ${(p): string => (p.theme.mediaQueries ? p.theme.mediaQueries.small : '')} {
     min-width: 336px;
-
   }
   box-sizing: border-box;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')}
+  ${(p) => textStyle(p.theme, 'body')}
   padding: 8px 16px;
   outline: none;
   background-color: ${(p): string =>
@@ -133,7 +106,6 @@ export const TextArea = styled(TextAreaBase)`
   ${margin}
 `
 
-// @ts-ignore
 TextArea.propTypes = {
   disabled: PropTypes.bool,
   status: StatusPropType,

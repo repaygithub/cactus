@@ -4,22 +4,16 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { Omit } from '../types'
 
-interface LinkProps
-  extends MarginProps,
-    Omit<
-      React.DetailedHTMLProps<React.LinkHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>,
-      'href'
-    > {
+interface LinkProps extends MarginProps, Omit<React.LinkHTMLAttributes<HTMLAnchorElement>, 'href'> {
   to: string
 }
 
-const LinkBase = (props: LinkProps): React.ReactElement => {
+const LinkBase = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
   const { to, ...rest } = omitMargins(props)
 
-  return <a href={to} {...rest} />
-}
+  return <a ref={ref} href={to} {...rest} />
+})
 
 export const Link = styled(LinkBase)`
   font-style: italic;
@@ -46,7 +40,6 @@ export const Link = styled(LinkBase)`
   ${margin};
 `
 
-// @ts-ignore
 Link.propTypes = {
   to: PropTypes.string.isRequired,
 }

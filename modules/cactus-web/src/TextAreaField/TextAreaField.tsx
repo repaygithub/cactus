@@ -91,7 +91,6 @@ export const TextAreaField = styled(TextAreaFieldBase)`
   ${margin}
 `
 
-// @ts-ignore
 TextAreaField.propTypes = {
   label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
