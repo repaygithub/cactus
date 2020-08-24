@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Footer snapshot 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 16px 24px 16px 24px;
+}
+
+.c1 img {
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 16px 24px 16px 24px;
+  background-color: hsl(0,0%,100%);
+}
+
+.c4 {
+  height: 100%;
+  width: 0px;
+  border-left: 1px solid hsl(200,96%,35%);
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.c3 {
+  font-style: italic;
+  outline: none;
+  position: relative;
+  white-space: nowrap;
+}
+
+.c3:link {
+  color: hsl(200,96%,35%);
+}
+
+.c3:visited {
+  color: hsl(200,18%,45%);
+}
+
+.c3:hover {
+  color: hsl(200,96%,11%);
+}
+
+.c3:focus {
+  color: hsl(200,96%,35%);
+  background-color: hsla(200,96%,35%,0.3);
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  background-color: hsl(200,29%,90%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+
+  .c1 img {
+    margin-bottom: 0px;
+  }
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      
+      <div>
+        Custom Content
+      </div>
+    </div>
+    <div
+      class="c2"
+    >
+      <div
+        class=""
+      >
+        <a
+          class="sc-AxjAm c3"
+          href="https://google.com"
+        >
+          Some Link
+        </a>
+        <span
+          class="c4"
+        />
+        <a
+          class="sc-AxjAm c3"
+          href="https://repay.com"
+        >
+          Some Other Link
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

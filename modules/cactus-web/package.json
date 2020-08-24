@@ -49,7 +49,10 @@
       "src/**/*.{ts,tsx}",
       "!src/**/*.story.{ts,tsx}",
       "!src/storySupport/**"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png)$": "<rootDir>/tests/__mocks__/fileMock.js"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
