@@ -710,6 +710,7 @@ interface DateInputState {
   isOpen: false | 'month-year' | 'calendar'
   // YYYY-MM-dd
   focusDay?: string
+  disabled?: boolean
 }
 
 class DateInputBase extends Component<DateInputProps, DateInputState> {
@@ -1432,6 +1433,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       'aria-labelledby': ariaLabelledBy,
       type,
       isValidDate,
+      disabled,
     } = this.props
     const formatArray = parseFormat(value.getLocaleFormat())
     let isFirstInput = true
@@ -1460,9 +1462,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           {hasDate && (
             <IconButton
               ref={this._button}
-              onMouseDown={this.handleButtonMouseDown}
-              onTouchStart={this.handleButtonMouseDown}
-              onKeyDown={this.handleButtonKeyDown}
+              onMouseDown={!disabled ? this.handleButtonMouseDown : undefined}
+              onTouchStart={!disabled ? this.handleButtonMouseDown : undefined}
+              onKeyDown={!disabled ? this.handleButtonKeyDown : undefined}
               label={phrases.pickerLabel}
             >
               <DescriptiveCalendar />
@@ -1476,6 +1478,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                 isFirstInput = false
                 return (
                   <input
+                    disabled={disabled}
                     key={key}
                     type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
                     id={inputId}
@@ -1495,11 +1498,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           <ToggleButtons aria-hidden="true">
             <NavigationChevronUp
               data-name="ArrowUp"
-              onMouseDownCapture={this.handleToggleMouseDown}
+              onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
             />
             <NavigationChevronDown
               data-name="ArrowDown"
-              onMouseDownCapture={this.handleToggleMouseDown}
+              onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
             />
           </ToggleButtons>
         </InputWrapper>
@@ -1686,8 +1689,19 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 }
 
 export const DateInput = styled(DateInputBase)`
-  ${margin}
-  ${width}
+  background-color: ${(p) => p.disabled && p.theme.colors.lightGray};
+  border-color: ${(p) => p.disabled && p.theme.colors.lightGray};
+  color: ${(p) => p.disabled && p.theme.colors.mediumGray};
+  cursor: ${(p) => p.disabled && 'not-allowed'};
+  & input::placeholder,
+  input,
+  svg,
+  ${IconButton} {
+    color: ${(p) => p.disabled && p.theme.colors.mediumGray};
+    cursor: ${(p) => p.disabled && 'not-allowed'};
+  }
+  ${margin};
+  ${width};
 `
 
 export default DateInput

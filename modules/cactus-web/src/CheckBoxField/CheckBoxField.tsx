@@ -82,6 +82,7 @@ export const CheckBoxField = styled(CheckBoxFieldBase)`
   ${Label} {
     cursor: ${(p): string => (p.disabled ? 'not-allowed' : 'pointer')};
     padding-left: 8px;
+    color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 
   ${margin}

@@ -1,5 +1,5 @@
 import { actions } from '@storybook/addon-actions'
-import { select, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { ReactElement } from 'react'
 
@@ -11,7 +11,14 @@ const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 storiesOf('DateInput', module)
   .add(
     'Basic Usage',
-    (): ReactElement => <DateInput id="date-input-uncontrolled" name="date" {...eventLoggers} />,
+    (): ReactElement => (
+      <DateInput
+        id="date-input-uncontrolled"
+        name="date"
+        {...eventLoggers}
+        disabled={boolean('disabled', false)}
+      />
+    ),
     {
       cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
     }
@@ -25,6 +32,7 @@ storiesOf('DateInput', module)
       >
         {({ value, onChange }): ReactElement => (
           <DateInput
+            disabled={boolean('disabled', false)}
             id="date-input-1"
             name={text('name', 'date-input')}
             type={select('type', ['date', 'datetime', 'time'], 'date')}
@@ -45,6 +53,7 @@ storiesOf('DateInput', module)
       >
         {({ value, onChange }): ReactElement => (
           <DateInput
+            disabled={boolean('disabled', false)}
             id="date-input-with-string-value"
             name={text('name', 'date-input-with-string-value')}
             value={value}
@@ -58,12 +67,26 @@ storiesOf('DateInput', module)
   )
   .add(
     'type="time"',
-    (): ReactElement => <DateInput id="time-input" name="time" type="time" {...eventLoggers} />
+    (): ReactElement => (
+      <DateInput
+        id="time-input"
+        name="time"
+        type="time"
+        {...eventLoggers}
+        disabled={boolean('disabled', false)}
+      />
+    )
   )
   .add(
     'type="datetime"',
     (): ReactElement => (
-      <DateInput id="datetime-input" name="datetime" type="datetime" {...eventLoggers} />
+      <DateInput
+        id="datetime-input"
+        name="datetime"
+        type="datetime"
+        {...eventLoggers}
+        disabled={boolean('disabled', false)}
+      />
     )
   )
   .add(
@@ -71,6 +94,7 @@ storiesOf('DateInput', module)
     (): ReactElement => (
       <div>
         <DateInput
+          disabled={boolean('disabled', false)}
           type="date"
           id="date-with-blackouts"
           name="date_with_blackouts"

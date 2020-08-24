@@ -107,11 +107,16 @@ const Input = styled.input<InputProps>`
   width: ${(p): string | number => p.width || 'auto'};
   background-color: ${(p): string => p.theme.colors.white};
 
-  [disabled] {
+  &:disabled {
+    cursor: not-allowed;
     border-color: ${(p): string => p.theme.colors.lightGray};
     background-color: ${(p): string => p.theme.colors.lightGray};
   }
 
+&:disabled::placeholder{
+  color: ${(p): string => p.theme.colors.mediumGray};
+
+}
   &:focus {
     border-color: ${(p): string => p.theme.colors.callToAction};
   }

@@ -18,6 +18,7 @@ interface AccessibleProps {
   statusId: string
   status?: Status
   statusMessage?: React.ReactNode
+  disabled?: boolean
 }
 
 type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
@@ -37,6 +38,7 @@ interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
   id?: string
   className?: string
   children: JSX.Element | RenderFunc
+  disabled?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -48,6 +50,7 @@ export function useAccessibleField({
   error,
   warning,
   success,
+  disabled,
 }: Partial<AccessibleFieldProps>): AccessibleProps {
   const fieldId = useId(id, name)
   const labelId = `${fieldId}-label`
@@ -76,6 +79,7 @@ export function useAccessibleField({
     status,
     statusMessage,
     tooltipId,
+    disabled,
   }
 }
 
@@ -90,6 +94,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     tooltipId,
     status,
     statusMessage,
+    disabled,
   } = accessibility
 
   const ref = React.useRef<HTMLDivElement | null>(null)
@@ -108,7 +113,9 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
       <Label {...props.labelProps} id={labelId} htmlFor={fieldId}>
         {props.label}
       </Label>
-      {props.tooltip && <Tooltip label={props.tooltip} id={tooltipId} maxWidth={maxWidth} />}
+      {props.tooltip && (
+        <Tooltip label={props.tooltip} id={tooltipId} maxWidth={maxWidth} disabled={disabled} />
+      )}
       {typeof props.children === 'function'
         ? props.children(accessibility)
         : React.cloneElement(React.Children.only(props.children), {
@@ -138,6 +145,7 @@ export const AccessibleField = styled(AccessibleFieldBase)`
     box-sizing: border-box;
     padding-left: 16px;
     padding-right: 28px;
+    color: ${(p) => p.disabled && p.theme.colors.mediumGray}
   }
 
   ${Tooltip}  {
@@ -162,6 +170,7 @@ AccessibleField.propTypes = {
   warning: PropTypes.node,
   error: PropTypes.node,
   tooltip: PropTypes.node,
+  disabled: PropTypes.bool,
 }
 
 export default AccessibleField

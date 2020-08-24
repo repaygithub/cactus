@@ -40,6 +40,7 @@ const ToggleFieldBase = (props: ToggleFieldProps): React.ReactElement => {
     onFocus,
     onBlur,
     onClick,
+    disabled,
     ...toggleProps
   } = omitMargins(props) as Omit<ToggleFieldProps, keyof MarginProps>
   const fieldId = useId(id, name)
@@ -69,6 +70,7 @@ const ToggleFieldBase = (props: ToggleFieldProps): React.ReactElement => {
     <FieldWrapper className={className}>
       <Toggle
         {...toggleProps}
+        disabled={disabled}
         name={name}
         id={fieldId}
         onClick={handleClick}
@@ -90,6 +92,7 @@ export const ToggleField = styled(ToggleFieldBase)`
     margin-left: 8px;
     line-height: 26px;
     vertical-align: -2px;
+    color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 
   ${Toggle} {

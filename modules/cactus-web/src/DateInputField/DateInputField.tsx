@@ -31,11 +31,13 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     warning,
     error,
     width,
+    disabled,
     ...rest
   } = omitMargins(props) as Omit<DateInputFieldProps, keyof MarginProps>
 
   return (
     <AccessibleField
+      disabled={disabled}
       className={className}
       id={id}
       name={name}
@@ -49,6 +51,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       {({ fieldId, status, labelId, ariaDescribedBy }): React.ReactElement => (
         <DateInput
           {...rest}
+          disabled={disabled}
           name={name}
           id={fieldId}
           status={status}

@@ -53,8 +53,9 @@ export const Toggle = styled(ToggleBase)`
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: ${(p): string => p.theme.colors.error};
-  border: 1px solid ${(p): string => p.theme.colors.error};
+  background-color: ${(p): string =>
+    p.disabled ? p.theme.colors.lightGray : p.theme.colors.error};
+  border: 1px solid ${(p): string => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.error)};
   cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
 
   &:focus {
