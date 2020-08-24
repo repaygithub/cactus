@@ -64,23 +64,27 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c9::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c9:disabled {
+  cursor: not-allowed;
+}
+
+.c9:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c9::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c9:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c9:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c9:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c9::placeholder {
-  color: hsl(200,18%,45%);
+.c9:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 

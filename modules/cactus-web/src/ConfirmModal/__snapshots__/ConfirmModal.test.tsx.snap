@@ -52,9 +52,26 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c11 [disabled] {
+.c11:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+}
+
+.c11:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c11:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c11:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c11:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c11:focus {

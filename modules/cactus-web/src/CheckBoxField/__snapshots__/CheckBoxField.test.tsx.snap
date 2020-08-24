@@ -200,6 +200,7 @@ exports[`component: CheckBoxField should render a disabled checkbox field 1`] = 
 .c3 .c8 {
   cursor: not-allowed;
   padding-left: 8px;
+  color: hsl(0,0%,70%);
 }
 
 @media screen and (min-width:1024px) {

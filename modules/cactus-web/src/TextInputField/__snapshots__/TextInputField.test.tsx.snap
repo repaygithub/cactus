@@ -54,9 +54,26 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c9 [disabled] {
+.c9:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+}
+
+.c9:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c9:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c9:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c9:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c9:focus {
