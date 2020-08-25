@@ -1,6 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Footer snapshot 1`] = `
+.c5 {
+  font-style: italic;
+  outline: none;
+  position: relative;
+}
+
+.c5:link {
+  color: hsl(200,96%,35%);
+}
+
+.c5:visited {
+  color: hsl(200,18%,45%);
+}
+
+.c5:hover {
+  color: hsl(200,96%,11%);
+}
+
+.c5:focus {
+  color: hsl(200,96%,35%);
+  background-color: hsla(200,96%,35%,0.3);
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -20,11 +43,6 @@ exports[`component: Footer snapshot 1`] = `
   padding: 16px 24px 16px 24px;
 }
 
-.c1 img {
-  margin-right: 16px;
-  margin-bottom: 16px;
-}
-
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -38,36 +56,51 @@ exports[`component: Footer snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c4 {
-  height: 100%;
-  width: 0px;
-  border-left: 1px solid hsl(200,96%,35%);
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
 .c3 {
-  font-style: italic;
-  outline: none;
-  position: relative;
-  white-space: nowrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.c3:link {
-  color: hsl(200,96%,35%);
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  border-right: 1px solid hsl(200,96%,35%);
 }
 
-.c3:visited {
-  color: hsl(200,18%,45%);
-}
-
-.c3:hover {
-  color: hsl(200,96%,11%);
-}
-
-.c3:focus {
-  color: hsl(200,96%,35%);
-  background-color: hsla(200,96%,35%,0.3);
+.c4:last-of-type {
+  border-right: none;
 }
 
 .c0 {
@@ -97,9 +130,19 @@ exports[`component: Footer snapshot 1`] = `
     -ms-flex-pack: start;
     justify-content: flex-start;
   }
+}
 
-  .c1 img {
-    margin-bottom: 0px;
+@media screen and (min-width:768px) {
+  .c3 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c4 {
+    max-width: calc(100% / 6);
   }
 }
 
@@ -119,23 +162,28 @@ exports[`component: Footer snapshot 1`] = `
       class="c2"
     >
       <div
-        class=""
+        class="c3"
       >
-        <a
-          class="sc-AxjAm c3"
-          href="https://google.com"
-        >
-          Some Link
-        </a>
-        <span
+        <div
           class="c4"
-        />
-        <a
-          class="sc-AxjAm c3"
-          href="https://repay.com"
         >
-          Some Other Link
-        </a>
+          <a
+            class="c5"
+            href="https://google.com"
+          >
+            Some Link
+          </a>
+        </div>
+        <div
+          class="c4"
+        >
+          <a
+            class="c5"
+            href="https://repay.com"
+          >
+            Some Other Link
+          </a>
+        </div>
       </div>
     </div>
   </div>
