@@ -7,7 +7,6 @@ import Link from '../Link/Link'
 import { ScreenSizeContext, Size } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 interface FooterContextType {
-  setMainContent: (content: React.ReactNode) => void
   addLink: (content: React.ReactNode, to: string) => void
 }
 
@@ -17,7 +16,6 @@ interface LinkType {
 }
 
 interface FooterState {
-  mainContent: React.ReactNode
   links: LinkType[]
 }
 
@@ -30,9 +28,6 @@ interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const FooterContext = createContext<FooterContextType>({
-  setMainContent: (): void => {
-    return
-  },
   addLink: (): void => {
     return
   },
@@ -126,14 +121,9 @@ const divideLinks = (links: LinkType[], maxCols: number): LinkType[][] => {
 const FooterBase = (props: FooterProps) => {
   const { logo: Logo, className, children } = props
   const [state, setState] = useState<FooterState>({
-    mainContent: '',
     links: [],
   })
   const screenSize = useContext(ScreenSizeContext)
-
-  const setMainContent = (content: React.ReactNode) => {
-    setState((state) => ({ ...state, mainContent: content }))
-  }
 
   const addLink = (content: React.ReactNode, to: string) => {
     setState((state) => ({ ...state, links: [...state.links, { content, to }] }))
@@ -143,7 +133,7 @@ const FooterBase = (props: FooterProps) => {
 
   return (
     <div className={className}>
-      <FooterContext.Provider value={{ setMainContent, addLink }}>
+      <FooterContext.Provider value={{ addLink }}>
         <LogoAndContentSection>
           {Logo && (
             <LogoWrapper>{typeof Logo === 'string' ? <img src={Logo} /> : <Logo />}</LogoWrapper>
