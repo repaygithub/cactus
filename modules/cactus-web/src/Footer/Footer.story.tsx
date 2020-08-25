@@ -41,8 +41,8 @@ storiesOf('Footer', module).add('Basic Usage', () => {
 
   return (
     <ScreenSizeProvider>
-      <Footer key={`${customContent}-${numLinks}`} src={RepayLogo}>
-        <Footer.Main>{customContent !== '' ? customContent : null}</Footer.Main>
+      <Footer key={`${customContent}-${numLinks}`} logo={RepayLogo}>
+        {customContent !== '' ? customContent : null}
         {makeLinks(numLinks)}
       </Footer>
     </ScreenSizeProvider>
