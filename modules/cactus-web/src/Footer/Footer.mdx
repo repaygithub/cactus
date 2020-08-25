@@ -14,19 +14,21 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 - The footer should be rendered at the bottom of the page.
 - The footer should be rendered as a descendent of `ScreenSizeProvider` in order for the links to be displayed properly.
-- You can brand the footer using the `src` prop -- this allows you to pass a logo to the footer.
+- You can brand the footer using the `logo` prop -- this allows you to pass a logo to the footer, and you can provide either
+an img src _or_ a custom component to render an image.
 
 ## Basic usage
 
-The `Footer` component provides two sub-components for rendering content and links:
-  - `Footer.Main` - Receives any custom content you'd like to render in the footer as children.
-  - `Footer.Link` - Receives a `to` prop & renders a link in the lower section of the footer.
+The `Footer` component provides the `Footer.Link` sub-component for rendering links. It accepts `to` prop
+and arranges all of your links in the bottom section of the footer.
+
+Any other custom content you'd like to display can be rendered as a child of `Footer` and will be shown to the right of the logo.
 
 ### Try It Out
 
 export const code = `
-<Footer src={RepayLogo}>
-  <Footer.Main>Custom Footer Content</Footer.Main>
+<Footer logo={RepayLogo}>
+  Custom Footer Content
   <Footer.Link to="https://google.com">Privacy Policy</Footer.Link>
   <Footer.Link to="https://repay.com">Careers</Footer.Link>
   <Footer.Link to="https://microsoft.com">Contact Us</Footer.Link>
