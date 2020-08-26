@@ -1461,6 +1461,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         >
           {hasDate && (
             <IconButton
+              disabled={disabled}
               ref={this._button}
               onMouseDown={!disabled ? this.handleButtonMouseDown : undefined}
               onTouchStart={!disabled ? this.handleButtonMouseDown : undefined}
