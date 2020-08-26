@@ -20,9 +20,6 @@ exports[`component: DataGrid snapshot 1`] = `
 
 .c14 {
   box-sizing: border-box;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
