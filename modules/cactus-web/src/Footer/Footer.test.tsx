@@ -3,15 +3,16 @@ import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Footer from './Footer'
-import RepayLogo from './repay-logo.png'
 
-const Logo = () => <img data-testid="image" src={RepayLogo} />
+const REPAY_LOGO =
+  'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg'
+const Logo = () => <img data-testid="image" src={REPAY_LOGO} />
 
 describe('component: Footer', () => {
   test('snapshot', () => {
     const { container } = render(
       <StyleProvider>
-        <Footer logo={RepayLogo}>
+        <Footer logo={REPAY_LOGO}>
           Custom Content
           <Footer.Link to="https://google.com">Some Link</Footer.Link>
           <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
@@ -25,7 +26,7 @@ describe('component: Footer', () => {
   test('should be able to pass custom content using Footer.Main', () => {
     const { getByText } = render(
       <StyleProvider>
-        <Footer logo={RepayLogo}>
+        <Footer logo={REPAY_LOGO}>
           Custom Content
           <Footer.Link to="https://google.com">Some Link</Footer.Link>
           <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
@@ -39,7 +40,7 @@ describe('component: Footer', () => {
   test('should be able to pass links using Footer.Link', () => {
     const { getByText } = render(
       <StyleProvider>
-        <Footer logo={RepayLogo}>
+        <Footer logo={REPAY_LOGO}>
           Custom Content
           <Footer.Link to="https://google.com">Some Link</Footer.Link>
           <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>

@@ -1,25 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Footer snapshot 1`] = `
-.c5 {
+.c7 {
   font-style: italic;
   outline: none;
   position: relative;
 }
 
-.c5:link {
+.c7:link {
   color: hsl(200,96%,35%);
 }
 
-.c5:visited {
+.c7:visited {
   color: hsl(200,18%,45%);
 }
 
-.c5:hover {
+.c7:hover {
   color: hsl(200,96%,11%);
 }
 
-.c5:focus {
+.c7:focus {
   color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
 }
@@ -44,6 +44,15 @@ exports[`component: Footer snapshot 1`] = `
 }
 
 .c2 {
+  margin-bottom: 16px;
+}
+
+.c3 {
+  width: 138px;
+  height: 40px;
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -56,7 +65,7 @@ exports[`component: Footer snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c3 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -75,7 +84,7 @@ exports[`component: Footer snapshot 1`] = `
   width: 100%;
 }
 
-.c4 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -99,7 +108,7 @@ exports[`component: Footer snapshot 1`] = `
   border-right: 1px solid hsl(200,96%,35%);
 }
 
-.c4:last-of-type {
+.c6:last-of-type {
   border-right: none;
 }
 
@@ -133,7 +142,14 @@ exports[`component: Footer snapshot 1`] = `
 }
 
 @media screen and (min-width:768px) {
-  .c3 {
+  .c2 {
+    margin-right: 16px;
+    margin-bottom: 0px;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c5 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -141,7 +157,7 @@ exports[`component: Footer snapshot 1`] = `
 }
 
 @media screen and (min-width:768px) {
-  .c4 {
+  .c6 {
     max-width: calc(100% / 6);
   }
 }
@@ -153,32 +169,39 @@ exports[`component: Footer snapshot 1`] = `
     <div
       class="c1"
     >
-      
+      <div
+        class="c2"
+      >
+        <img
+          class="c3"
+          src="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+        />
+      </div>
       <div>
         Custom Content
       </div>
     </div>
     <div
-      class="c2"
+      class="c4"
     >
       <div
-        class="c3"
+        class="c5"
       >
         <div
-          class="c4"
+          class="c6"
         >
           <a
-            class="c5"
+            class="c7"
             href="https://google.com"
           >
             Some Link
           </a>
         </div>
         <div
-          class="c4"
+          class="c6"
         >
           <a
-            class="c5"
+            class="c7"
             href="https://repay.com"
           >
             Some Other Link

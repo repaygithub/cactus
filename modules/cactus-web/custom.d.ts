@@ -35,5 +35,3 @@ declare module '@repay/scripts' {
 
   export default repayScripts
 }
-
-declare module '*.png'

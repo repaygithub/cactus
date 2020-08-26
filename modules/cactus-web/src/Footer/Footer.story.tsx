@@ -4,7 +4,6 @@ import React from 'react'
 
 import { ScreenSizeProvider } from '../ScreenSizeProvider/ScreenSizeProvider'
 import Footer from './Footer'
-import RepayLogo from './repay-logo.png'
 
 const LINK_TEXT = [
   'Some Link',
@@ -41,7 +40,10 @@ storiesOf('Footer', module).add('Basic Usage', () => {
 
   return (
     <ScreenSizeProvider>
-      <Footer key={`${customContent}-${numLinks}`} logo={RepayLogo}>
+      <Footer
+        key={`${customContent}-${numLinks}`}
+        logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+      >
         {customContent !== '' ? customContent : null}
         {makeLinks(numLinks)}
       </Footer>

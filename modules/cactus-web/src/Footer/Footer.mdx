@@ -5,7 +5,6 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import Footer from './Footer'
-import RepayLogo from './repay-logo.png'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Footer
@@ -27,7 +26,7 @@ Any other custom content you'd like to display can be rendered as a child of `Fo
 ### Try It Out
 
 export const code = `
-<Footer logo={RepayLogo}>
+<Footer logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg">
   Custom Footer Content
   <Footer.Link to="https://google.com">Privacy Policy</Footer.Link>
   <Footer.Link to="https://repay.com">Careers</Footer.Link>
@@ -35,7 +34,7 @@ export const code = `
 </Footer>
 `
 
-<LiveProvider code={code} scope={{ Footer, RepayLogo }}>
+<LiveProvider code={code} scope={{ Footer }}>
   <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />

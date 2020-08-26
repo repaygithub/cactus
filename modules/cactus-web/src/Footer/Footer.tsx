@@ -55,6 +55,11 @@ const LogoWrapper = styled('div')`
   }
 `
 
+const Img = styled('img')`
+  width: 138px;
+  height: 40px;
+`
+
 const LinkSection = styled('div')`
   display: flex;
   justify-content: center;
@@ -136,7 +141,7 @@ const FooterBase = (props: FooterProps) => {
       <FooterContext.Provider value={{ addLink }}>
         <LogoAndContentSection>
           {Logo && (
-            <LogoWrapper>{typeof Logo === 'string' ? <img src={Logo} /> : <Logo />}</LogoWrapper>
+            <LogoWrapper>{typeof Logo === 'string' ? <Img src={Logo} /> : <Logo />}</LogoWrapper>
           )}
           <div>{children}</div>
         </LogoAndContentSection>
