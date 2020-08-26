@@ -8,6 +8,9 @@ exports[`component: SplitButton snapshot 1`] = `
 
 .c2 {
   box-sizing: border-box;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
@@ -19,6 +22,9 @@ exports[`component: SplitButton snapshot 1`] = `
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .c2 svg {
@@ -53,6 +59,10 @@ exports[`component: SplitButton snapshot 1`] = `
   border: 0px;
   outline: none;
   cursor: pointer;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
 }
 
 .c4 .c5 {
@@ -71,10 +81,10 @@ exports[`component: SplitButton snapshot 1`] = `
 }
 
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c0 .c3[aria-expanded='true'] {
@@ -147,6 +157,9 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 
 .c2 {
   box-sizing: border-box;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
@@ -158,6 +171,9 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .c2 svg {
@@ -192,6 +208,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   border: 0px;
   outline: none;
   cursor: pointer;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
 }
 
 .c4 .c5 {
@@ -210,10 +230,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 }
 
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c0 .c3[aria-expanded='true'] {
@@ -286,6 +306,9 @@ exports[`component: SplitButton with theme customization should have 2px borders
 
 .c2 {
   box-sizing: border-box;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   border: 2px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
@@ -297,6 +320,9 @@ exports[`component: SplitButton with theme customization should have 2px borders
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .c2 svg {
@@ -331,6 +357,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
   border: 0px;
   outline: none;
   cursor: pointer;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
 }
 
 .c4 .c5 {
@@ -349,10 +379,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
 }
 
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c0 .c3[aria-expanded='true'] {
@@ -425,6 +455,9 @@ exports[`component: SplitButton with theme customization should have intermediat
 
 .c2 {
   box-sizing: border-box;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   border: 1px solid;
   border-radius: 8px 1px 1px 8px;
   background-color: hsl(0,0%,100%);
@@ -436,6 +469,9 @@ exports[`component: SplitButton with theme customization should have intermediat
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .c2 svg {
@@ -470,6 +506,10 @@ exports[`component: SplitButton with theme customization should have intermediat
   border: 0px;
   outline: none;
   cursor: pointer;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
 }
 
 .c4 .c5 {
@@ -488,10 +528,10 @@ exports[`component: SplitButton with theme customization should have intermediat
 }
 
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c0 .c3[aria-expanded='true'] {
@@ -564,6 +604,9 @@ exports[`component: SplitButton with theme customization should have square shap
 
 .c2 {
   box-sizing: border-box;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   border: 1px solid;
   border-radius: 1px;
   background-color: hsl(0,0%,100%);
@@ -575,6 +618,9 @@ exports[`component: SplitButton with theme customization should have square shap
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .c2 svg {
@@ -609,6 +655,10 @@ exports[`component: SplitButton with theme customization should have square shap
   border: 0px;
   outline: none;
   cursor: pointer;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
 }
 
 .c4 .c5 {
@@ -627,10 +677,10 @@ exports[`component: SplitButton with theme customization should have square shap
 }
 
 .c0 {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c0 .c3[aria-expanded='true'] {
