@@ -5,7 +5,7 @@ import {
   NavigationChevronDown,
   NavigationChevronUp,
 } from '@repay/cactus-icons'
-import { BorderSize, CactusTheme, Shape, TextStyle } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment, MouseEventHandler, ReactElement, useMemo } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
@@ -1689,9 +1689,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 }
 
 export const DateInput = styled(DateInputBase)`
-  background-color: ${(p) => p.disabled && p.theme.colors.lightGray};
+  ${(p): ColorStyle | string => (p.disabled ? p.theme.colorStyles.disable : '')};
   border-color: ${(p) => p.disabled && p.theme.colors.lightGray};
-  color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   cursor: ${(p) => p.disabled && 'not-allowed'};
   & input::placeholder,
   input,
