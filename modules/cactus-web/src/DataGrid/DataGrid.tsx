@@ -132,6 +132,14 @@ interface ColumnObject {
   title?: React.ReactChild
 }
 
+const IconWrapper = styled.div`
+  flex-shrink: 1;
+`
+
+const TextWrapper = styled.div`
+  flex-grow: 1;
+`
+
 const DataGridBase = (props: DataGridProps): ReactElement => {
   const {
     children,
@@ -245,9 +253,10 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
                     >
                       {column.sortable && sortOptions !== undefined && !isCardView ? (
                         <HeaderButton onClick={(): void => handleSort(key, sortOpt !== undefined)}>
-                          {column.title}
-
-                          {sortOpt !== undefined && <NavigationChevronDown aria-hidden="true" />}
+                          <TextWrapper>{column.title}</TextWrapper>
+                          <IconWrapper aria-hidden>
+                            {sortOpt !== undefined && <NavigationChevronDown />}
+                          </IconWrapper>
                         </HeaderButton>
                       ) : (
                         column.title
@@ -438,6 +447,8 @@ const shapeMap = {
 }
 
 const HeaderButton = styled.button`
+  display: flex;
+  align-items: center;
   background: none;
   border: none;
   color: inherit;
