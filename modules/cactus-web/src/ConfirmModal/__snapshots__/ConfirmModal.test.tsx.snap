@@ -151,8 +151,8 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 .c13:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(353,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(353,96%,11%);
 }
 
@@ -606,8 +606,8 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 .c10:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(353,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(353,96%,11%);
 }
 
@@ -1036,8 +1036,8 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 .c10:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(145,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(145,96%,11%);
 }
 
@@ -1446,8 +1446,8 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 .c10:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(47,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(47,96%,11%);
 }
 

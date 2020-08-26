@@ -592,8 +592,8 @@ exports[`component: Button should render danger variant 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(353,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(353,96%,11%);
 }
 
@@ -629,8 +629,8 @@ exports[`component: Button should render disabled variant 1`] = `
   line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
-  color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
@@ -699,8 +699,8 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
   border-color: hsl(200,96%,35%);
 }
 
@@ -810,8 +810,8 @@ exports[`component: Button should render inverse danger variant 1`] = `
 }
 
 .c0:hover {
-  color: hsl(0,0%,100%);
   background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
 }
 
 @media screen and (min-width:1024px) {
@@ -846,8 +846,8 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
-  color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
@@ -916,8 +916,8 @@ exports[`component: Button should render inverse standard variant 1`] = `
   line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
-  color: hsl(0,0%,100%);
   background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
   border-color: hsl(0,0%,100%);
 }
 

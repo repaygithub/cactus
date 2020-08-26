@@ -434,7 +434,7 @@ function fromTwoColor({
         },
         transparentWarning: {
           backgroundColor: transparentWarning,
-          color: darkContrast,
+          color: darkestContrast,
         },
         errorDark: {
           backgroundColor: errorDark,
