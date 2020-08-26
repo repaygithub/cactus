@@ -22,29 +22,22 @@ interface AvatarProps extends MarginProps {
 
 const avaColor = (
   props: AvatarProps & ThemeProps<CactusTheme>
-): ReturnType<typeof css> | ColorStyle | undefined => {
+): ReturnType<typeof css> | ColorStyle | undefined | any => {
   const { type, status, disabled } = props
 
   if (status !== undefined) {
-    if (disabled) {
-      return css`
-        color: ${props.theme.colors.white};
-        background-color: ${props.theme.colors.mediumGray};
-      `
-    } else
-      switch (type) {
-        case 'alert':
-          return status === 'info'
-            ? props.theme.colorStyles.lightContrast
-            : css`
-                color: ${props.theme.colors.darkestContrast};
-                background-color: ${props.theme.colors.status.avatar[status]};
-              `
-        case 'feedback':
-          return status === 'info'
-            ? props.theme.colorStyles.lightContrast
-            : props.theme.colorStyles[status]
-      }
+    if (disabled) return props.theme.colorStyles.disable
+    if (status === 'info') return props.theme.colorStyles.lightContrast
+
+    switch (type) {
+      case 'alert':
+        return css`
+          color: ${(p): string => p.theme.colors.darkestContrast};
+          background-color: ${(p): string => p.theme.colors.status.avatar[status]};
+        `
+      case 'feedback':
+        return props.theme.colorStyles[status]
+    }
   }
 }
 

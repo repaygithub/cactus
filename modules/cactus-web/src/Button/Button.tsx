@@ -46,8 +46,7 @@ const variantMap: VariantMap = {
     border-color: ${(p): string => p.theme.colors.error};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.white};
-      background-color: ${(p): string => p.theme.colors.errorDark};
+      ${(p): ColorStyle => p.theme.colorStyles.errorDark}
       border-color: ${(p): string => p.theme.colors.errorDark};
     }
   `,
@@ -56,8 +55,7 @@ const variantMap: VariantMap = {
     border-color: ${(p): string => p.theme.colors.warning};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.white};
-      background-color: ${(p): string => p.theme.colors.warningDark};
+      ${(p): ColorStyle => p.theme.colorStyles.warningDark}
       border-color: ${(p): string => p.theme.colors.warningDark};
     }
   `,
@@ -66,8 +64,7 @@ const variantMap: VariantMap = {
     border-color: ${(p): string => p.theme.colors.success};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.white};
-      background-color: ${(p): string => p.theme.colors.successDark};
+      ${(p): ColorStyle => p.theme.colorStyles.successDark}
       border-color: ${(p): string => p.theme.colors.successDark};
     }
   `,
@@ -75,8 +72,7 @@ const variantMap: VariantMap = {
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    color: ${(p): string => p.theme.colors.callToActionText};
-    background-color: ${(p): string => p.theme.colors.callToAction};
+    ${(p): ColorStyle => p.theme.colorStyles.callToAction};
     border-color: ${(p): string => p.theme.colors.callToAction};
 
     &:hover {
@@ -86,8 +82,7 @@ const inverseVariantMap: VariantMap = {
     }
   `,
   standard: css`
-    color: ${(p): string => p.theme.colors.white};
-    background-color: ${(p): string => p.theme.colors.base};
+    ${(p): ColorStyle => p.theme.colorStyles.base};
     border-color: ${(p): string => p.theme.colors.white};
 
     &:hover {
@@ -102,8 +97,7 @@ const inverseVariantMap: VariantMap = {
     border-color: ${(p): string => p.theme.colors.error};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.white};
-      background-color: ${(p): string => p.theme.colors.error};
+      ${(p): ColorStyle => p.theme.colorStyles.error}
     }
   `,
   warning: css`
@@ -112,8 +106,7 @@ const inverseVariantMap: VariantMap = {
     border-color: ${(p): string => p.theme.colors.warning};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.white};
-      background-color: ${(p): string => p.theme.colors.warning};
+      ${(p): ColorStyle => p.theme.colorStyles.warning}
       border-color: ${(p): string => p.theme.colors.warning};
     }
   `,
@@ -123,16 +116,14 @@ const inverseVariantMap: VariantMap = {
     border-color: ${(p): string => p.theme.colors.success};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.white};
-      background-color: ${(p): string => p.theme.colors.success};
+      ${(p): ColorStyle => p.theme.colorStyles.success}
       border-color: ${(p): string => p.theme.colors.success};
     }
   `,
 }
 
 const disabled = css`
-  color: ${(p): string => p.theme.colors.mediumGray};
-  background-color: ${(p): string => p.theme.colors.lightGray};
+  ${(p): ColorStyle => p.theme.colorStyles.disable};
   border-color: ${(p): string => p.theme.colors.lightGray};
   cursor: not-allowed;
 `
