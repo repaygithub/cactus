@@ -16,16 +16,12 @@ interface LinkType {
   to: string
 }
 
-interface FooterState {
-  links: LinkType[]
-}
-
 interface LinkColProps {
   maxCols: number
 }
 
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {
-  logo?: string | React.ComponentType<any>
+  logo?: string | React.ReactElement
 }
 
 const FooterContext = createContext<FooterContextType>({
@@ -57,8 +53,8 @@ const LogoWrapper = styled('div')`
 `
 
 const Img = styled('img')`
-  width: 138px;
-  height: 40px;
+  max-width: 200px;
+  max-height: 80px;
 `
 
 const LinkSection = styled('div')`
@@ -125,7 +121,7 @@ const divideLinks = (links: LinkType[], maxCols: number): LinkType[][] => {
 }
 
 const FooterBase = (props: FooterProps) => {
-  const { logo: Logo, className, children } = props
+  const { logo, className, children } = props
   const [links, setLinks] = useState(new Map<string, LinkType>())
   const screenSize = useContext(ScreenSizeContext)
 
@@ -138,9 +134,7 @@ const FooterBase = (props: FooterProps) => {
   return (
     <div className={className}>
       <LogoAndContentSection>
-        {Logo && (
-          <LogoWrapper>{typeof Logo === 'string' ? <Img src={Logo} /> : <Logo />}</LogoWrapper>
-        )}
+        {logo && <LogoWrapper>{typeof logo === 'string' ? <Img src={logo} /> : logo}</LogoWrapper>}
         <div>
           <FooterContext.Provider value={{ addLink }}>{children}</FooterContext.Provider>
         </div>
@@ -189,10 +183,13 @@ export const Footer = styled(FooterBase)`
   width: 100%;
   background-color: ${(p) => p.theme.colors.lightContrast};
   ${(p) => boxShadow(p.theme, 1)};
-` as any
+`
+
+const DefaultFooter = Footer as any
+DefaultFooter.Link = FooterLink
 
 Footer.propTypes = {
-  src: PropTypes.string,
+  logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 }
 
 FooterLink.propTypes = {
@@ -204,6 +201,4 @@ type FooterType = StyledComponent<typeof FooterBase, DefaultTheme, FooterProps> 
   Link: React.ComponentType<LinkProps>
 }
 
-Footer.Link = FooterLink
-
-export default Footer as FooterType
+export default DefaultFooter as FooterType

@@ -60,7 +60,7 @@ describe('component: Footer', () => {
   test('should be able to pass a logo using a component', () => {
     const { getByTestId } = render(
       <StyleProvider>
-        <Footer logo={Logo}>
+        <Footer logo={<Logo />}>
           Custom Content
           <Footer.Link to="https://google.com">Some Link</Footer.Link>
           <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>

@@ -48,8 +48,8 @@ exports[`component: Footer snapshot 1`] = `
 }
 
 .c3 {
-  width: 138px;
-  height: 40px;
+  max-width: 200px;
+  max-height: 80px;
 }
 
 .c4 {
