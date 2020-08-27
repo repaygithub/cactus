@@ -22,7 +22,7 @@ interface AvatarProps extends MarginProps {
 
 const avaColor = (
   props: AvatarProps & ThemeProps<CactusTheme>
-): ReturnType<typeof css> | ColorStyle | undefined | any => {
+): ReturnType<typeof css> | ColorStyle | undefined => {
   const { type, status, disabled } = props
 
   if (status !== undefined) {

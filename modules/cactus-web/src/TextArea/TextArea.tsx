@@ -62,8 +62,7 @@ const Area = styled.textarea<TextAreaProps>`
   ${(p) => textStyle(p.theme, 'body')}
   padding: 8px 16px;
   outline: none;
-  background-color: ${(p): string =>
-    p.disabled ? p.theme.colors.lightGray : p.theme.colors.white};
+  background-color: ${(p): string => p.theme.colors.white};
   height: ${(p): string => p.height || 'auto'};
   width: ${(p): string => p.width || 'auto'};
   display: block;
@@ -79,14 +78,13 @@ const Area = styled.textarea<TextAreaProps>`
 
   &:disabled {
     cursor: not-allowed;
-    color: ${(p): string => p.theme.colors.mediumGray};
+    ${(p) => p.theme.colorStyles.disable};
   }
 
   &:disabled::placeholder {
     color: ${(p): string => p.theme.colors.mediumGray};
     font-style: oblique;
   }
-
   ${displayStatus}
 `
 

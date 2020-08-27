@@ -1,4 +1,4 @@
-import { CactusTheme, Shape } from '@repay/cactus-theme'
+import { CactusTheme, ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -77,8 +77,7 @@ const Input = styled.input<InputProps>`
   &:disabled {
     cursor: not-allowed;
     border-color: ${(p): string => p.theme.colors.lightGray};
-    background-color: ${(p): string => p.theme.colors.lightGray};
-    color: ${(p): string => p.theme.colors.mediumGray};
+    ${(p): ColorStyle => p.theme.colorStyles.disable};
   }
 
   &:disabled::placeholder {
