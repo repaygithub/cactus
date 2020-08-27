@@ -78,6 +78,7 @@ const Input = styled.input<InputProps>`
     cursor: not-allowed;
     border-color: ${(p): string => p.theme.colors.lightGray};
     background-color: ${(p): string => p.theme.colors.lightGray};
+    color: ${(p): string => p.theme.colors.mediumGray};
   }
 
   &:disabled::placeholder {

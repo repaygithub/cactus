@@ -123,6 +123,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
             name,
             'aria-describedby': ariaDescribedBy,
             status,
+            disabled,
           })}
       {status !== undefined && (
         <div>
@@ -145,10 +146,10 @@ export const AccessibleField = styled(AccessibleFieldBase)`
     box-sizing: border-box;
     padding-left: 16px;
     padding-right: 28px;
-    color: ${(p) => p.disabled && p.theme.colors.mediumGray}
+    color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 
-  ${Tooltip}  {
+  ${Tooltip} {
     position: absolute;
     right: 8px;
     top: 2px;

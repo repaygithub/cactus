@@ -710,7 +710,6 @@ interface DateInputState {
   isOpen: false | 'month-year' | 'calendar'
   // YYYY-MM-dd
   focusDay?: string
-  disabled?: boolean
 }
 
 class DateInputBase extends Component<DateInputProps, DateInputState> {

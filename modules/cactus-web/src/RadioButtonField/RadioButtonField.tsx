@@ -80,7 +80,7 @@ export const RadioButtonField = styled(RadioButtonFieldBase)`
   ${Label} {
     cursor: ${(p): string => (p.disabled ? 'not-allowed' : 'pointer')};
     padding-left: 8px;
-    color: ${(p) => p.disabled && p.theme.colors.lightGray};
+    color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 
   ${margin}

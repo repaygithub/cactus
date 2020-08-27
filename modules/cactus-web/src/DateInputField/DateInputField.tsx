@@ -48,10 +48,10 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       warning={warning}
       success={success}
     >
-      {({ fieldId, status, labelId, ariaDescribedBy }): React.ReactElement => (
+      {({ fieldId, status, labelId, ariaDescribedBy, disabled }): React.ReactElement => (
         <DateInput
-          {...rest}
           disabled={disabled}
+          {...rest}
           name={name}
           id={fieldId}
           status={status}

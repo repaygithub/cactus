@@ -18,7 +18,7 @@ storiesOf('AccessibleField', module).add(
         success={text('success (will show field success)', '')}
         tooltip={text('tooltip?', 'Will only show a tooltip when text is provided.')}
       >
-        <input style={{ minWidth: '300px' }} disabled={disabled} />
+        <input style={{ minWidth: '300px' }} />
       </AccessibleField>
     )
   }

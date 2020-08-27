@@ -79,6 +79,7 @@ const Area = styled.textarea<TextAreaProps>`
 
   &:disabled {
     cursor: not-allowed;
+    color: ${(p): string => p.theme.colors.mediumGray};
   }
 
   &:disabled::placeholder {

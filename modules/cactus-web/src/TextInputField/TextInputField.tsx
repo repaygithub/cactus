@@ -67,7 +67,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       error={error}
       tooltip={tooltip}
     >
-      {({ fieldId, status, ariaDescribedBy }): React.ReactElement => (
+      {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextInput
           {...inputProps}
           disabled={disabled}

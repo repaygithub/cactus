@@ -67,7 +67,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       error={error}
       tooltip={tooltip}
     >
-      {({ fieldId, status, ariaDescribedBy }): React.ReactElement => (
+      {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextArea
           disabled={disabled}
           id={fieldId}
