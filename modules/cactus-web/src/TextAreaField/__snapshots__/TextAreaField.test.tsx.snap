@@ -65,6 +65,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 
 .c9:disabled {
   cursor: not-allowed;
+  color: hsl(0,0%,70%);
 }
 
 .c9:disabled::-webkit-input-placeholder {

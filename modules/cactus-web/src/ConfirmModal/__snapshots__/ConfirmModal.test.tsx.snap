@@ -55,6 +55,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c11:disabled::-webkit-input-placeholder {
