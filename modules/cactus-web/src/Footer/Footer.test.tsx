@@ -70,4 +70,31 @@ describe('component: Footer', () => {
 
     expect(getByTestId('image')).toBeInTheDocument()
   })
+
+  test('should be able to update links without creating new ones', () => {
+    const { queryByText, getByText, rerender } = render(
+      <StyleProvider>
+        <Footer logo={REPAY_LOGO}>
+          Custom Content
+          <Footer.Link to="https://google.com">Some Link</Footer.Link>
+          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
+        </Footer>
+      </StyleProvider>
+    )
+
+    rerender(
+      <StyleProvider>
+        <Footer logo={REPAY_LOGO}>
+          Custom Content
+          <Footer.Link to="https://microsoft.com">Changed Link</Footer.Link>
+          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
+        </Footer>
+      </StyleProvider>
+    )
+
+    expect(queryByText('Some Link')).toBeNull()
+    const changedLink = getByText('Changed Link')
+    expect(changedLink).toBeInTheDocument()
+    expect(changedLink).toHaveAttribute('href', 'https://microsoft.com')
+  })
 })
