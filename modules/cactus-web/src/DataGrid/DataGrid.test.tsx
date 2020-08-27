@@ -258,7 +258,7 @@ describe('component: DataGrid', (): void => {
       </StyleProvider>
     )
 
-    const createdHeader = getByText('Created')
+    const createdHeader = getByText('Created').parentElement as HTMLElement
     fireEvent.click(createdHeader)
     expect(createdHeader.parentElement).toHaveAttribute('aria-sort', 'ascending')
   })
