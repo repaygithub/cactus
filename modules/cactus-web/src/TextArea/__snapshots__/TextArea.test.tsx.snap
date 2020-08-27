@@ -10,7 +10,7 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
   line-height: 1.5;
   padding: 8px 16px;
   outline: none;
-  background-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,100%);
   height: auto;
   width: auto;
   display: block;
@@ -27,6 +27,7 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -109,6 +110,7 @@ exports[`component: TextArea should render a success textarea 1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -188,6 +190,7 @@ exports[`component: TextArea should render a textarea 1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -267,6 +270,7 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -349,6 +353,7 @@ exports[`component: TextArea should render a warning textarea 1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -430,6 +435,7 @@ exports[`component: TextArea should render an error textarea 1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -509,6 +515,7 @@ exports[`component: TextArea should support margin space props 1`] = `
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -590,6 +597,7 @@ exports[`component: TextArea with theme customization should have 1px border rad
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -669,6 +677,7 @@ exports[`component: TextArea with theme customization should have 2px border 1`]
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
@@ -748,6 +757,7 @@ exports[`component: TextArea with theme customization should have 8px border rad
 
 .c1:disabled {
   cursor: not-allowed;
+  background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 

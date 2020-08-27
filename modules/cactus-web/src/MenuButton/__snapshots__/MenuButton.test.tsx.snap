@@ -49,8 +49,8 @@ exports[`With theme changes  Border should be 2px 1`] = `
 }
 
 .c0:disabled {
-  color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
@@ -153,8 +153,8 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
 }
 
 .c0:disabled {
-  color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
@@ -257,8 +257,8 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
 }
 
 .c0:disabled {
-  color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
@@ -361,8 +361,8 @@ exports[`With theme changes  Should have square borders 1`] = `
 }
 
 .c0:disabled {
-  color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
@@ -464,8 +464,8 @@ exports[`component: MenuButton snapshot 1`] = `
 }
 
 .c0:disabled {
-  color: hsl(0,0%,70%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
