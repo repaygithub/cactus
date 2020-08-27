@@ -1,5 +1,566 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`component: MenuBar sidebar 1`] = `
+.c9 {
+  vertical-align: middle;
+}
+
+.c12 {
+  vertical-align: middle;
+}
+
+.c3 {
+  vertical-align: middle;
+}
+
+.c7 {
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+}
+
+.c6 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c11 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  display: none;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: center;
+  outline: none;
+}
+
+.c11:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c11 svg {
+  width: 18px;
+  height: 18px;
+  margin: 8px;
+}
+
+.c0 {
+  outline: none;
+  position: fixed;
+  left: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  box-sizing: border-box;
+  width: 100vw;
+  height: 60px;
+  bottom: 0;
+  border-top: 1px solid hsl(200,29%,90%);
+}
+
+.c4 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  top: unset;
+  bottom: 60px;
+  height: auto;
+  max-height: calc(100vh - 60px);
+  z-index: 100;
+  overflow: auto;
+  outline: none;
+}
+
+.c4 [role='menuitem'] {
+  padding: 20px 16px;
+  border-bottom: 1px solid hsl(200,29%,90%);
+}
+
+.c4 [role='menuitem'] .c8 {
+  -webkit-transform: rotateZ(-90deg);
+  -ms-transform: rotateZ(-90deg);
+  transform: rotateZ(-90deg);
+}
+
+.c4 [role='menuitem'][aria-expanded='true'] .c8 {
+  -webkit-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+}
+
+.c4 [role='menuitem']:hover,
+.c4 [role='menuitem'][aria-expanded='true'] {
+  color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c4 [role='menuitem']:focus {
+  outline: 1px solid hsl(200,96%,35%);
+  outline-offset: -1px;
+}
+
+.c4 [role='menuitem'][aria-current='true'],
+.c4 [role='menuitem'][aria-expanded='true'] {
+  font-weight: 600;
+}
+
+.c4 [role='menu'] {
+  padding-left: 8px;
+}
+
+.c4 [role='menu'] [role='menu'] {
+  padding-left: 12px;
+}
+
+.c10 {
+  width: 100%;
+  background-color: hsl(200,29%,90%);
+  display: none;
+}
+
+.c13 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.c5 {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-sizing: border-box;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.c5:active,
+.c5:focus {
+  outline: none;
+}
+
+.c5::-moz-focus-inner {
+  border: none;
+}
+
+.c5 .c8 {
+  width: 8px;
+  height: 8px;
+  margin-left: 16px;
+}
+
+.c1 {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  box-sizing: border-box;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  padding: 18px;
+  border-right: 1px solid hsl(200,29%,90%);
+}
+
+.c1:active,
+.c1:focus {
+  outline: none;
+}
+
+.c1::-moz-focus-inner {
+  border: none;
+}
+
+.c1 .c2 {
+  width: 24px;
+  height: 24px;
+}
+
+.c1:hover {
+  color: hsl(200,96%,35%);
+  border-color: hsl(200,96%,35%);
+}
+
+.c1:focus {
+  outline: 1px solid hsl(200,96%,35%);
+  outline-offset: -1px;
+}
+
+.c1[aria-expanded='true'] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+  border-color: hsl(200,96%,35%);
+}
+
+.c1[aria-expanded='true']::after {
+  content: '';
+  z-index: 99;
+  background-color: rgba(0,0,0,50%);
+  position: fixed;
+  top: 0;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  cursor: default;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c0 {
+    width: 60px;
+    height: 100vh;
+    top: 0;
+    border-top: 0;
+    border-right: 1px solid hsl(200,29%,90%);
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c4 {
+    left: 60px;
+    width: 350px;
+    top: 0;
+    bottom: 0;
+    max-height: 100vh;
+    box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    border-right: 0;
+    border-bottom: 1px solid hsl(200,29%,90%);
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c1[aria-expanded='true']::after {
+    display: none;
+  }
+}
+
+<div>
+  <nav
+    aria-label="Menu of Main-ness"
+    aria-orientation="vertical"
+    class="c0"
+    tabindex="-1"
+  >
+    <button
+      aria-expanded="false"
+      aria-haspopup="menu"
+      class="c1"
+      role="button"
+      tabindex="0"
+    >
+      <svg
+        class="c2 c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M2,5 C1.44771525,5 1,4.55228475 1,4 C1,3.44771525 1.44771525,3 2,3 L22,3 C22.5522847,3 23,3.44771525 23,4 C23,4.55228475 22.5522847,5 22,5 L2,5 Z M2,13 C1.44771525,13 1,12.5522847 1,12 C1,11.4477153 1.44771525,11 2,11 L22,11 C22.5522847,11 23,11.4477153 23,12 C23,12.5522847 22.5522847,13 22,13 L2,13 Z M2,21 C1.44771525,21 1,20.5522847 1,20 C1,19.4477153 1.44771525,19 2,19 L22,19 C22.5522847,19 23,19.4477153 23,20 C23,20.5522847 22.5522847,21 22,21 L2,21 Z"
+        />
+      </svg>
+    </button>
+    <ul
+      aria-orientation="vertical"
+      class="c4"
+      role="menu"
+    >
+      <li
+        role="none"
+      >
+        <button
+          aria-current="true"
+          aria-expanded="false"
+          aria-haspopup="menu"
+          class="c5"
+          role="menuitem"
+          tabindex="-1"
+        >
+          <div
+            class="c6"
+          >
+            <em>
+              Emphasized
+            </em>
+          </div>
+          <div
+            aria-hidden="true"
+            class="c7"
+          >
+            <svg
+              class="c8 c9"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                transform="rotate(-90 12 12)"
+              />
+            </svg>
+          </div>
+        </button>
+        <div
+          class="c10"
+          tabindex="-1"
+        >
+          <div
+            aria-hidden="true"
+            class="c11"
+          >
+            <svg
+              class="c12"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                transform="matrix(0 1 1 0 0 0)"
+              />
+            </svg>
+          </div>
+          <ul
+            aria-orientation="vertical"
+            class="c13"
+            role="menu"
+          >
+            <li
+              role="none"
+            >
+              <a
+                aria-current="true"
+                class="c5"
+                href="#"
+                role="menuitem"
+                tabindex="-1"
+              >
+                Link to the Past
+              </a>
+            </li>
+            <li
+              role="none"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                class="c5"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <div
+                  class="c6"
+                >
+                  Nested
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="c7"
+                >
+                  <svg
+                    class="c8 c9"
+                    fill="currentcolor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                  >
+                    <path
+                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="rotate(-90 12 12)"
+                    />
+                  </svg>
+                </div>
+              </button>
+              <div
+                class="c10"
+                tabindex="-1"
+              >
+                <div
+                  aria-hidden="true"
+                  class="c11"
+                >
+                  <svg
+                    class="c12"
+                    fill="currentcolor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                  >
+                    <path
+                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="matrix(0 1 1 0 0 0)"
+                    />
+                  </svg>
+                </div>
+                <ul
+                  aria-orientation="vertical"
+                  class="c13"
+                  role="menu"
+                >
+                  <li
+                    role="none"
+                  >
+                    <a
+                      href="#"
+                    >
+                      Birdy
+                    </a>
+                  </li>
+                  <li
+                    role="none"
+                  >
+                    <button
+                      aria-current="true"
+                      class="c5"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      The Mighty
+                    </button>
+                  </li>
+                  <li
+                    role="none"
+                  >
+                    <div>
+                      <em>
+                        Decode
+                      </em>
+                       
+                    </div>
+                  </li>
+                </ul>
+                <div
+                  aria-hidden="true"
+                  class="c11"
+                >
+                  <svg
+                    class="c8 c9"
+                    fill="currentcolor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                  >
+                    <path
+                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="rotate(-90 12 12)"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div
+            aria-hidden="true"
+            class="c11"
+          >
+            <svg
+              class="c8 c9"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                transform="rotate(-90 12 12)"
+              />
+            </svg>
+          </div>
+        </div>
+      </li>
+      <li
+        role="none"
+      >
+        <button
+          aria-current="true"
+          class="c5"
+          role="menuitem"
+          tabindex="-1"
+        >
+          <em>
+            A button
+          </em>
+        </button>
+      </li>
+      <li
+        role="none"
+      >
+        <a
+          class="c5"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Styled Link
+        </a>
+      </li>
+      <li
+        role="none"
+      >
+        class 2
+      </li>
+    </ul>
+  </nav>
+</div>
+`;
+
 exports[`component: MenuBar typechecks 1`] = `
 .c8 {
   vertical-align: middle;
@@ -139,6 +700,9 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 .c9 {
+  width: 100%;
+  background-color: hsl(200,29%,90%);
+  display: none;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   display: -webkit-box;
@@ -161,6 +725,7 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
+  width: auto;
   min-width: 200px;
   max-width: 320px;
   max-height: 70vh;
@@ -202,6 +767,8 @@ exports[`component: MenuBar typechecks 1`] = `
 
 .c3 {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -216,12 +783,6 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  padding: 0;
-  margin: 0;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -237,6 +798,8 @@ exports[`component: MenuBar typechecks 1`] = `
 
 .c11 {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -251,12 +814,6 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  padding: 0;
-  margin: 0;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -274,8 +831,6 @@ exports[`component: MenuBar typechecks 1`] = `
   cursor: pointer;
   border: none;
   outline: none;
-  width: 100%;
-  height: 100%;
   background-color: transparent;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -291,6 +846,8 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .c4:active,
@@ -306,6 +863,13 @@ exports[`component: MenuBar typechecks 1`] = `
   width: 8px;
   height: 8px;
   margin-left: 16px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>

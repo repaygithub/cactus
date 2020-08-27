@@ -2,6 +2,7 @@ import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import MenuBar from './MenuBar'
 
@@ -17,6 +18,9 @@ global.MutationObserver = class {
     return
   }
 }
+
+// @ts-ignore
+window.getComputedStyle = () => ({ overflow: 'auto' })
 
 // Example for typescript how to use a custom component with MenuBar.Item.
 const Linkish = (props: { to: string; children: string }) => <a href={props.to}>{props.children}</a>
@@ -38,47 +42,61 @@ class Class extends React.Component<Sample, unknown> {
   }
 }
 
+const Menu = () => {
+  const navRef = React.useRef<HTMLElement>(null)
+  const listRef = React.useRef<HTMLButtonElement>(null)
+  const linkRef = React.useRef<HTMLAnchorElement>(null)
+  const itemRef = React.useRef<HTMLButtonElement>(null)
+  const customRef = React.useRef<HTMLDivElement>(null)
+  return (
+    <MenuBar ref={navRef} aria-label="Menu of Main-ness">
+      <MenuBar.List ref={listRef} title={<em>Emphasized</em>} aria-current>
+        <MenuBar.Item key="item" ref={linkRef} as="a" href="#" aria-current>
+          Link to the Past
+        </MenuBar.Item>
+        <MenuBar.List key="list" title="Nested">
+          <MenuBar.Item key="linkish" as={Linkish} to="#">
+            Birdy
+          </MenuBar.Item>
+          <MenuBar.Item key="normal" aria-current>
+            The Mighty
+          </MenuBar.Item>
+          <MenuBar.Item key="custom" as={WithRef} ref={customRef} sample="Decode" />
+        </MenuBar.List>
+      </MenuBar.List>
+      <MenuBar.Item
+        ref={itemRef}
+        aria-current
+        onClick={() => alert('Clicked')}
+        children={<em>A button</em>}
+      />
+      <MenuBar.Item as="a">Styled Link</MenuBar.Item>
+      <MenuBar.Item as={Class} sample="class" prop={2} />
+    </MenuBar>
+  )
+}
+
 describe('component: MenuBar', () => {
   test('typechecks', () => {
-    const Menu = () => {
-      const navRef = React.useRef<HTMLElement>(null)
-      const listRef = React.useRef<HTMLButtonElement>(null)
-      const linkRef = React.useRef<HTMLAnchorElement>(null)
-      const itemRef = React.useRef<HTMLButtonElement>(null)
-      const customRef = React.useRef<HTMLDivElement>(null)
-      return (
-        <MenuBar ref={navRef} aria-label="Menu of Main-ness">
-          <MenuBar.List ref={listRef} title={<em>Emphasized</em>} aria-current>
-            <MenuBar.Item key="item" ref={linkRef} as="a" href="#" aria-current>
-              Link to the Past
-            </MenuBar.Item>
-            <MenuBar.List key="list" title="Nested">
-              <MenuBar.Item key="linkish" as={Linkish} to="#">
-                Birdy
-              </MenuBar.Item>
-              <MenuBar.Item key="normal" aria-current>
-                The Mighty
-              </MenuBar.Item>
-              <MenuBar.Item key="custom" as={WithRef} ref={customRef} sample="Decode" />
-            </MenuBar.List>
-          </MenuBar.List>
-          <MenuBar.Item
-            ref={itemRef}
-            aria-current
-            onClick={() => alert('Clicked')}
-            children={<em>A button</em>}
-          />
-          <MenuBar.Item as="a">Styled Link</MenuBar.Item>
-          <MenuBar.Item as={Class} sample="class" prop={2} />
-        </MenuBar>
-      )
-    }
     const { container } = render(
       <StyleProvider>
         <Menu />
       </StyleProvider>
     )
     expect(container).toMatchSnapshot()
+  })
+
+  test('sidebar', () => {
+    const { container } = render(
+      <StyleProvider>
+        <ScreenSizeContext.Provider value={SIZES.medium}>
+          <Menu />
+        </ScreenSizeContext.Provider>
+      </StyleProvider>
+    )
+    expect(container).toMatchSnapshot()
+    const hamburger = container.querySelectorAll('[role="button"]')
+    expect(hamburger).toHaveLength(1)
   })
 
   test('focus', () => {
