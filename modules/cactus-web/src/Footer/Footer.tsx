@@ -52,24 +52,23 @@ const LogoWrapper = styled('div')`
   }
 `
 
+const ContentWrapper = styled('div')`
+  max-width 100%;
+`
+
 const Img = styled('img')`
   max-width: 200px;
   max-height: 80px;
 `
 
-const LinkSection = styled('div')`
+const LinksColsContainer = styled('div')`
+  max-width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
   justify-content: center;
   padding: 16px 24px 16px 24px;
   background-color: ${(p) => p.theme.colors.white};
-`
-
-const LinksColsContainer = styled('div')`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
 
   ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
     flex-direction: row;
@@ -81,7 +80,6 @@ const LinkCol = styled('div')<LinkColProps>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
   flex-grow: 1;
 
   ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
@@ -135,27 +133,25 @@ const FooterBase = (props: FooterProps) => {
     <div className={className}>
       <LogoAndContentSection>
         {logo && <LogoWrapper>{typeof logo === 'string' ? <Img src={logo} /> : logo}</LogoWrapper>}
-        <div>
+        <ContentWrapper>
           <FooterContext.Provider value={{ addLink }}>{children}</FooterContext.Provider>
-        </div>
+        </ContentWrapper>
       </LogoAndContentSection>
 
       {links.size > 0 && (
-        <LinkSection>
-          <LinksColsContainer>
-            {dividedLinks.map((links: LinkType[], colIndex: number) => (
-              <React.Fragment key={`link-col-${colIndex}`}>
-                <LinkCol maxCols={columnsMap[screenSize.size]}>
-                  {links.map((link: LinkType, linkIndex: number) => (
-                    <Link key={`list-link-${linkIndex}`} to={link.to}>
-                      {link.content}
-                    </Link>
-                  ))}
-                </LinkCol>
-              </React.Fragment>
-            ))}
-          </LinksColsContainer>
-        </LinkSection>
+        <LinksColsContainer>
+          {dividedLinks.map((links: LinkType[], colIndex: number) => (
+            <React.Fragment key={`link-col-${colIndex}`}>
+              <LinkCol maxCols={columnsMap[screenSize.size]}>
+                {links.map((link: LinkType, linkIndex: number) => (
+                  <Link key={`list-link-${linkIndex}`} to={link.to}>
+                    {link.content}
+                  </Link>
+                ))}
+              </LinkCol>
+            </React.Fragment>
+          ))}
+        </LinksColsContainer>
       )}
     </div>
   )
