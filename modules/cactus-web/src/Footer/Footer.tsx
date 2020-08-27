@@ -3,11 +3,12 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import styled, { DefaultTheme, StyledComponent } from 'styled-components'
 
 import { boxShadow } from '../helpers/theme'
+import useId from '../helpers/useId'
 import Link from '../Link/Link'
 import { ScreenSizeContext, Size } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 interface FooterContextType {
-  addLink: (content: React.ReactNode, to: string) => void
+  addLink: (key: string, content: React.ReactNode, to: string) => void
 }
 
 interface LinkType {
@@ -125,28 +126,27 @@ const divideLinks = (links: LinkType[], maxCols: number): LinkType[][] => {
 
 const FooterBase = (props: FooterProps) => {
   const { logo: Logo, className, children } = props
-  const [state, setState] = useState<FooterState>({
-    links: [],
-  })
+  const [links, setLinks] = useState(new Map<string, LinkType>())
   const screenSize = useContext(ScreenSizeContext)
 
-  const addLink = (content: React.ReactNode, to: string) => {
-    setState((state) => ({ ...state, links: [...state.links, { content, to }] }))
+  const addLink = (key: string, content: React.ReactNode, to: string) => {
+    setLinks((links) => new Map(links.set(key, { content, to })))
   }
 
-  const dividedLinks = divideLinks([...state.links], columnsMap[screenSize.size])
+  const dividedLinks = divideLinks(Array.from(links.values()), columnsMap[screenSize.size])
 
   return (
     <div className={className}>
-      <FooterContext.Provider value={{ addLink }}>
-        <LogoAndContentSection>
-          {Logo && (
-            <LogoWrapper>{typeof Logo === 'string' ? <Img src={Logo} /> : <Logo />}</LogoWrapper>
-          )}
-          <div>{children}</div>
-        </LogoAndContentSection>
-      </FooterContext.Provider>
-      {state.links.length > 0 && (
+      <LogoAndContentSection>
+        {Logo && (
+          <LogoWrapper>{typeof Logo === 'string' ? <Img src={Logo} /> : <Logo />}</LogoWrapper>
+        )}
+        <div>
+          <FooterContext.Provider value={{ addLink }}>{children}</FooterContext.Provider>
+        </div>
+      </LogoAndContentSection>
+
+      {links.size > 0 && (
         <LinkSection>
           <LinksColsContainer>
             {dividedLinks.map((links: LinkType[], colIndex: number) => (
@@ -175,9 +175,10 @@ interface LinkProps {
 export const FooterLink = (props: LinkProps): React.ReactNode => {
   const { children, to } = props
   const { addLink } = useContext(FooterContext)
+  const key = useId()
   useEffect(() => {
-    addLink(children, to)
-  }, [children]) // eslint-disable-line react-hooks/exhaustive-deps
+    addLink(key, children, to)
+  }, [children, to]) // eslint-disable-line react-hooks/exhaustive-deps
   return <React.Fragment />
 }
 

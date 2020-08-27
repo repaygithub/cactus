@@ -23,7 +23,7 @@ describe('component: Footer', () => {
     expect(container).toMatchSnapshot()
   })
 
-  test('should be able to pass custom content using Footer.Main', () => {
+  test('should be able to pass custom content using children', () => {
     const { getByText } = render(
       <StyleProvider>
         <Footer logo={REPAY_LOGO}>
