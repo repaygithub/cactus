@@ -149,8 +149,8 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  background-color: hsl(0,0%,90%);
+  border: 1px solid hsl(0,0%,90%);
   cursor: cursor;
 }
 

@@ -16,9 +16,27 @@ exports[`component: TextInput should render a disabled input 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -85,9 +103,27 @@ exports[`component: TextInput should render a success input 1`] = `
   background: hsla(145,89%,28%,0.3);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -151,9 +187,27 @@ exports[`component: TextInput should render a text input 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -219,9 +273,27 @@ exports[`component: TextInput should render an error input 1`] = `
   background: hsla(353,84%,44%,0.3);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -285,9 +357,27 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -354,9 +444,27 @@ exports[`component: TextInput should render an warning input 1`] = `
   background: hsla(47,82%,47%,0.3);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -420,9 +528,27 @@ exports[`component: TextInput should support margin space props 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -487,9 +613,27 @@ exports[`component: TextInput with theme customization should have 1px border ra
   background-color: hsl(0,0%,100%);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -553,9 +697,27 @@ exports[`component: TextInput with theme customization should have 2px border 1`
   background-color: hsl(0,0%,100%);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {
@@ -619,9 +781,27 @@ exports[`component: TextInput with theme customization should have 8px border ra
   background-color: hsl(0,0%,100%);
 }
 
-.c1 [disabled] {
+.c1:disabled {
+  cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
 }
 
 .c1:focus {

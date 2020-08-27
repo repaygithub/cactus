@@ -71,6 +71,7 @@ exports[`component: RadioButtonField should render a disabled radio button field
 .c3 .c7 {
   cursor: not-allowed;
   padding-left: 8px;
+  color: hsl(0,0%,70%);
 }
 
 @media screen and (min-width:1024px) {

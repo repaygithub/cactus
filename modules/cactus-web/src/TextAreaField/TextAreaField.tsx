@@ -32,6 +32,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
     onBlur,
     name,
     id,
+    disabled,
     ...textAreaProps
   } = omitMargins(props) as Omit<TextAreaFieldProps, keyof MarginProps>
 
@@ -55,6 +56,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
 
   return (
     <AccessibleField
+      disabled={disabled}
       id={id}
       name={name}
       label={label}
@@ -65,8 +67,9 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       error={error}
       tooltip={tooltip}
     >
-      {({ fieldId, status, ariaDescribedBy }): React.ReactElement => (
+      {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextArea
+          disabled={disabled}
           id={fieldId}
           width="100%"
           status={status}

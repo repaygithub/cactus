@@ -32,11 +32,13 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
     warning,
     error,
     width,
+    disabled,
     ...rest
   } = omitMargins(props) as Omit<SelectFieldProps, keyof MarginProps>
 
   return (
     <AccessibleField
+      disabled={disabled}
       className={className}
       id={id}
       name={name}
@@ -48,9 +50,10 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
       error={error}
       width={width}
     >
-      {({ fieldId, labelId, name, ariaDescribedBy, status }): React.ReactElement => (
+      {({ fieldId, labelId, name, ariaDescribedBy, status, disabled }): React.ReactElement => (
         <Select
           {...rest}
+          disabled={disabled}
           status={status}
           name={name}
           id={fieldId}

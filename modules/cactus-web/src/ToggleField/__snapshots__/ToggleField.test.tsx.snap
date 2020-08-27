@@ -200,8 +200,8 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  background-color: hsl(0,0%,90%);
+  border: 1px solid hsl(0,0%,90%);
   cursor: cursor;
 }
 
@@ -264,6 +264,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   margin-left: 8px;
   line-height: 26px;
   vertical-align: -2px;
+  color: hsl(0,0%,70%);
 }
 
 .c2 .c3 {

@@ -68,6 +68,7 @@ const Area = styled.textarea<TextAreaProps>`
   width: ${(p): string => p.width || 'auto'};
   display: block;
   resize: ${(p): string => (p.resize ? 'vertical' : 'none')};
+
   &:first-line {
     padding-right: 15px;
   }
@@ -76,8 +77,13 @@ const Area = styled.textarea<TextAreaProps>`
     border-color: ${(p): string => p.theme.colors.callToAction};
   }
 
-  &::placeholder {
-    color: ${(p): string => p.theme.colors.mediumContrast};
+  &:disabled {
+    cursor: not-allowed;
+    color: ${(p): string => p.theme.colors.mediumGray};
+  }
+
+  &:disabled::placeholder {
+    color: ${(p): string => p.theme.colors.mediumGray};
     font-style: oblique;
   }
 

@@ -1,4 +1,4 @@
-import { select, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
@@ -11,6 +11,7 @@ storiesOf('DateInputField', module)
     'Default Usage',
     (): React.ReactElement => (
       <DateInputField
+        disabled={boolean('disabled', false)}
         label={text('label', 'Date Input Field')}
         name={text('name', 'date_input_field')}
         type={select('type?', dateInputTypes, 'date')}
@@ -22,6 +23,7 @@ storiesOf('DateInputField', module)
     'extended props',
     (): React.ReactElement => (
       <DateInputField
+        disabled={boolean('disabled', false)}
         label={text('label', 'Time field')}
         name={text('name', 'date_input_field')}
         type={select('type?', dateInputTypes, 'date')}

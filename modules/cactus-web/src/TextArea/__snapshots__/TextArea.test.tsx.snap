@@ -25,23 +25,28 @@ exports[`component: TextArea should render a disabled textarea 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -102,23 +107,28 @@ exports[`component: TextArea should render a success textarea 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -176,23 +186,28 @@ exports[`component: TextArea should render a textarea 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -250,23 +265,28 @@ exports[`component: TextArea should render a textarea with a placeholder 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -327,23 +347,28 @@ exports[`component: TextArea should render a warning textarea 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -403,23 +428,28 @@ exports[`component: TextArea should render an error textarea 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -477,23 +507,28 @@ exports[`component: TextArea should support margin space props 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -553,23 +588,28 @@ exports[`component: TextArea with theme customization should have 1px border rad
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -627,23 +667,28 @@ exports[`component: TextArea with theme customization should have 2px border 1`]
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
@@ -701,23 +746,28 @@ exports[`component: TextArea with theme customization should have 8px border rad
   border-color: hsl(200,96%,35%);
 }
 
-.c1::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled {
+  cursor: not-allowed;
+  color: hsl(0,0%,70%);
+}
+
+.c1:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::-moz-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c1::placeholder {
-  color: hsl(200,18%,45%);
+.c1:disabled::placeholder {
+  color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
