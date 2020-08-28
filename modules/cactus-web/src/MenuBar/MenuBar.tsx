@@ -7,7 +7,7 @@ import {
 } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
@@ -31,7 +31,6 @@ interface ListProps {
 interface MenuProps {
   children: React.ReactNode
   expanded: boolean
-  variant: Variant
 }
 
 interface MenuBarProps {
@@ -108,7 +107,8 @@ MenuBarItemFR.propTypes = {
 const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {
     const variant = useVariant()
-    const [expanded, toggle] = useSubmenuToggle(variant === 'top')
+    const isTopbar = variant === 'top'
+    const [expanded, toggle] = useSubmenuToggle(isTopbar)
 
     const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
 
@@ -128,9 +128,19 @@ const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
             <NavigationChevronDown />
           </IconWrapper>
         </MenuButton>
-        <Menu expanded={expanded} variant={variant}>
-          {children}
-        </Menu>
+        {isTopbar ? (
+          <FloatingMenu expanded={expanded}>{children}</FloatingMenu>
+        ) : (
+          <InlineMenu
+            expanded={expanded}
+            role="menu"
+            aria-orientation="vertical"
+            onFocus={focusMenu}
+            onKeyDown={menuKeyHandler}
+          >
+            {children}
+          </InlineMenu>
+        )}
       </li>
     )
   }
@@ -148,12 +158,11 @@ const TextWrapper = styled.div`
   flex-grow: 1;
 `
 
-const Menu: React.FC<MenuProps> = ({ children, expanded, variant }) => {
-  const usesScroll = variant === 'top'
+const FloatingMenu: React.FC<MenuProps> = ({ children, expanded }) => {
   const [scroll, menuRef] = useScrollButtons('vertical', expanded)
   return (
-    <MenuWrapper expanded={expanded} tabIndex={-1} variant={variant}>
-      <ScrollButton show={usesScroll && scroll.showBack} onClick={scroll.clickBack}>
+    <MenuWrapper expanded={expanded} tabIndex={-1}>
+      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
       <MenuList
@@ -162,11 +171,10 @@ const Menu: React.FC<MenuProps> = ({ children, expanded, variant }) => {
         ref={menuRef}
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
-        variant={variant}
       >
         {children}
       </MenuList>
-      <ScrollButton show={usesScroll && scroll.showFore} onClick={scroll.clickFore}>
+      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
         <NavigationChevronDown />
       </ScrollButton>
     </MenuWrapper>
@@ -215,7 +223,6 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
         ref={menuRef}
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
-        variant="top"
       >
         {children}
       </MenuList>
@@ -260,7 +267,6 @@ const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
         ref={menuRef}
-        variant="sidebar"
       >
         {children}
       </SidebarMenu>
@@ -372,12 +378,21 @@ const SidebarNav = styled.nav`
   }
 `
 
-// The box shadow is #2, but shifted to be only on the right side.
-const SidebarMenu = styled.ul<MenuProps>`
-  ${(p) => p.theme.colorStyles.standard}
+const listStyle = `
   list-style: none;
   padding: 0;
   margin: 0;
+`
+
+const InlineMenu = styled.ul<MenuProps>`
+  ${listStyle}
+  display: ${(p) => (p.expanded ? 'block' : 'none')};
+`
+
+// The box shadow is #2, but shifted to be only on the right side.
+const SidebarMenu = styled.ul<MenuProps>`
+  ${(p) => p.theme.colorStyles.standard}
+  ${listStyle}
   display: ${(p) => (p.expanded ? 'block' : 'none')};
   position: fixed;
   left: 0;
@@ -424,14 +439,15 @@ const SidebarMenu = styled.ul<MenuProps>`
   }
 
   [role='menu'] {
+    background-color: ${(p) => p.theme.colors.lightContrast};
     padding-left: 8px;
     [role='menu'] {
-      padding-left: 12px;
+      padding-left: 14px;
     }
   }
 `
 
-const topWrapper = css<MenuProps>`
+const MenuWrapper = styled.div<MenuProps>`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
   visibility: ${(p) => (p.expanded ? 'visible' : 'hidden')};
@@ -450,10 +466,6 @@ const topWrapper = css<MenuProps>`
   max-width: 320px;
   max-height: 70vh;
   z-index: 1;
-
-  ul {
-    width: 100%;
-  }
 
   [role='menuitem'] {
     padding: 4px 8px;
@@ -477,15 +489,9 @@ const topWrapper = css<MenuProps>`
   }
 `
 
-const MenuWrapper = styled.div<MenuProps>`
+const MenuList = styled.ul`
+  ${listStyle}
   width: 100%;
-  background-color: ${(p) => p.theme.colors.lightContrast};
-  display: ${(p) => (p.expanded ? 'inline-block' : 'none')};
-
-  ${(p) => p.variant === 'top' && topWrapper}
-`
-
-const topList = css<{ 'aria-orientation'?: 'vertical' | 'horizontal' }>`
   display: flex;
   flex-direction: ${(p) => (p['aria-orientation'] === 'vertical' ? 'column' : 'row')};
   justify-content: flex-start;
@@ -493,20 +499,6 @@ const topList = css<{ 'aria-orientation'?: 'vertical' | 'horizontal' }>`
   align-items: stretch;
 
   overflow: hidden;
-
-  & > li > [role='menuitem'] {
-    position: relative;
-    top: 0px;
-    left: 0px;
-  }
-`
-
-const MenuList = styled.ul<{ variant: Variant }>`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  ${(p) => p.variant === 'top' && topList}
 `
 
 const buttonStyles = `

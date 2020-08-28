@@ -5,10 +5,6 @@ exports[`component: MenuBar sidebar 1`] = `
   vertical-align: middle;
 }
 
-.c12 {
-  vertical-align: middle;
-}
-
 .c3 {
   vertical-align: middle;
 }
@@ -26,37 +22,6 @@ exports[`component: MenuBar sidebar 1`] = `
   flex-grow: 1;
 }
 
-.c11 {
-  background-color: hsl(0,0%,100%);
-  color: hsl(200,10%,20%);
-  display: none;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  cursor: pointer;
-  background-color: transparent;
-  text-align: center;
-  outline: none;
-}
-
-.c11:hover {
-  color: hsl(200,96%,35%);
-}
-
-.c11 svg {
-  width: 18px;
-  height: 18px;
-  margin: 8px;
-}
-
 .c0 {
   outline: none;
   position: fixed;
@@ -70,6 +35,13 @@ exports[`component: MenuBar sidebar 1`] = `
   height: 60px;
   bottom: 0;
   border-top: 1px solid hsl(200,29%,90%);
+}
+
+.c10 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: none;
 }
 
 .c4 {
@@ -125,23 +97,12 @@ exports[`component: MenuBar sidebar 1`] = `
 }
 
 .c4 [role='menu'] {
+  background-color: hsl(200,29%,90%);
   padding-left: 8px;
 }
 
 .c4 [role='menu'] [role='menu'] {
-  padding-left: 12px;
-}
-
-.c10 {
-  width: 100%;
-  background-color: hsl(200,29%,90%);
-  display: none;
-}
-
-.c13 {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  padding-left: 14px;
 }
 
 .c5 {
@@ -357,174 +318,96 @@ exports[`component: MenuBar sidebar 1`] = `
             </svg>
           </div>
         </button>
-        <div
+        <ul
+          aria-orientation="vertical"
           class="c10"
-          tabindex="-1"
+          role="menu"
         >
-          <div
-            aria-hidden="true"
-            class="c11"
+          <li
+            role="none"
           >
-            <svg
-              class="c12"
-              fill="currentcolor"
-              height="1em"
-              viewBox="0 0 24 24"
-              width="1em"
+            <a
+              aria-current="true"
+              class="c5"
+              href="#"
+              role="menuitem"
+              tabindex="-1"
             >
-              <path
-                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                transform="matrix(0 1 1 0 0 0)"
-              />
-            </svg>
-          </div>
-          <ul
-            aria-orientation="vertical"
-            class="c13"
-            role="menu"
+              Link to the Past
+            </a>
+          </li>
+          <li
+            role="none"
           >
-            <li
-              role="none"
+            <button
+              aria-expanded="false"
+              aria-haspopup="menu"
+              class="c5"
+              role="menuitem"
+              tabindex="-1"
             >
-              <a
-                aria-current="true"
-                class="c5"
-                href="#"
-                role="menuitem"
-                tabindex="-1"
-              >
-                Link to the Past
-              </a>
-            </li>
-            <li
-              role="none"
-            >
-              <button
-                aria-expanded="false"
-                aria-haspopup="menu"
-                class="c5"
-                role="menuitem"
-                tabindex="-1"
-              >
-                <div
-                  class="c6"
-                >
-                  Nested
-                </div>
-                <div
-                  aria-hidden="true"
-                  class="c7"
-                >
-                  <svg
-                    class="c8 c9"
-                    fill="currentcolor"
-                    height="1em"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                  >
-                    <path
-                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                      transform="rotate(-90 12 12)"
-                    />
-                  </svg>
-                </div>
-              </button>
               <div
-                class="c10"
-                tabindex="-1"
+                class="c6"
               >
-                <div
-                  aria-hidden="true"
-                  class="c11"
-                >
-                  <svg
-                    class="c12"
-                    fill="currentcolor"
-                    height="1em"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                  >
-                    <path
-                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                      transform="matrix(0 1 1 0 0 0)"
-                    />
-                  </svg>
-                </div>
-                <ul
-                  aria-orientation="vertical"
-                  class="c13"
-                  role="menu"
-                >
-                  <li
-                    role="none"
-                  >
-                    <a
-                      href="#"
-                    >
-                      Birdy
-                    </a>
-                  </li>
-                  <li
-                    role="none"
-                  >
-                    <button
-                      aria-current="true"
-                      class="c5"
-                      role="menuitem"
-                      tabindex="-1"
-                    >
-                      The Mighty
-                    </button>
-                  </li>
-                  <li
-                    role="none"
-                  >
-                    <div>
-                      <em>
-                        Decode
-                      </em>
-                       
-                    </div>
-                  </li>
-                </ul>
-                <div
-                  aria-hidden="true"
-                  class="c11"
-                >
-                  <svg
-                    class="c8 c9"
-                    fill="currentcolor"
-                    height="1em"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                  >
-                    <path
-                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                      transform="rotate(-90 12 12)"
-                    />
-                  </svg>
-                </div>
+                Nested
               </div>
-            </li>
-          </ul>
-          <div
-            aria-hidden="true"
-            class="c11"
-          >
-            <svg
-              class="c8 c9"
-              fill="currentcolor"
-              height="1em"
-              viewBox="0 0 24 24"
-              width="1em"
+              <div
+                aria-hidden="true"
+                class="c7"
+              >
+                <svg
+                  class="c8 c9"
+                  fill="currentcolor"
+                  height="1em"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                >
+                  <path
+                    d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                    transform="rotate(-90 12 12)"
+                  />
+                </svg>
+              </div>
+            </button>
+            <ul
+              aria-orientation="vertical"
+              class="c10"
+              role="menu"
             >
-              <path
-                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                transform="rotate(-90 12 12)"
-              />
-            </svg>
-          </div>
-        </div>
+              <li
+                role="none"
+              >
+                <a
+                  href="#"
+                >
+                  Birdy
+                </a>
+              </li>
+              <li
+                role="none"
+              >
+                <button
+                  aria-current="true"
+                  class="c5"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  The Mighty
+                </button>
+              </li>
+              <li
+                role="none"
+              >
+                <div>
+                  <em>
+                    Decode
+                  </em>
+                   
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </li>
       <li
         role="none"
@@ -700,9 +583,6 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 .c9 {
-  width: 100%;
-  background-color: hsl(200,29%,90%);
-  display: none;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   display: -webkit-box;
@@ -730,10 +610,6 @@ exports[`component: MenuBar typechecks 1`] = `
   max-width: 320px;
   max-height: 70vh;
   z-index: 1;
-}
-
-.c9 ul {
-  width: 100%;
 }
 
 .c9 [role='menuitem'] {
@@ -769,6 +645,7 @@ exports[`component: MenuBar typechecks 1`] = `
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -790,16 +667,11 @@ exports[`component: MenuBar typechecks 1`] = `
   overflow: hidden;
 }
 
-.c3 > li > [role='menuitem'] {
-  position: relative;
-  top: 0px;
-  left: 0px;
-}
-
 .c11 {
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -819,12 +691,6 @@ exports[`component: MenuBar typechecks 1`] = `
   -ms-flex-align: stretch;
   align-items: stretch;
   overflow: hidden;
-}
-
-.c11 > li > [role='menuitem'] {
-  position: relative;
-  top: 0px;
-  left: 0px;
 }
 
 .c4 {
