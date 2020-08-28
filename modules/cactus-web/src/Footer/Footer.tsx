@@ -81,6 +81,7 @@ const LinkCol = styled('div')<LinkColProps>`
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  padding: 0 16px 0 16px;
 
   ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
     max-width: calc(100% / ${(p) => p.maxCols});
@@ -132,7 +133,11 @@ const FooterBase = (props: FooterProps) => {
   return (
     <div className={className}>
       <LogoAndContentSection>
-        {logo && <LogoWrapper>{typeof logo === 'string' ? <Img src={logo} /> : logo}</LogoWrapper>}
+        {logo && (
+          <LogoWrapper>
+            {typeof logo === 'string' ? <Img alt="Logo" src={logo} /> : logo}
+          </LogoWrapper>
+        )}
         <ContentWrapper>
           <FooterContext.Provider value={{ addLink }}>{children}</FooterContext.Provider>
         </ContentWrapper>
@@ -142,7 +147,7 @@ const FooterBase = (props: FooterProps) => {
         <LinksColsContainer>
           {dividedLinks.map((links: LinkType[], colIndex: number) => (
             <React.Fragment key={`link-col-${colIndex}`}>
-              <LinkCol maxCols={columnsMap[screenSize.size]}>
+              <LinkCol maxCols={dividedLinks.length}>
                 {links.map((link: LinkType, linkIndex: number) => (
                   <Link key={`list-link-${linkIndex}`} to={link.to}>
                     {link.content}
