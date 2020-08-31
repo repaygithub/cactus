@@ -1,25 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Footer snapshot 1`] = `
-.c7 {
+.c8 {
   font-style: italic;
   outline: none;
   position: relative;
 }
 
-.c7:link {
+.c8:link {
   color: hsl(200,96%,35%);
 }
 
-.c7:visited {
+.c8:visited {
   color: hsl(200,18%,45%);
 }
 
-.c7:hover {
+.c8:hover {
   color: hsl(200,96%,11%);
 }
 
-.c7:focus {
+.c8:focus {
   color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
 }
@@ -99,6 +99,10 @@ exports[`component: Footer snapshot 1`] = `
   flex-grow: 1;
   padding: 0 16px 0 16px;
   border-right: 1px solid hsl(200,96%,35%);
+}
+
+.c6 .c7 {
+  max-width: 100%;
 }
 
 .c6:last-of-type {
@@ -184,7 +188,7 @@ exports[`component: Footer snapshot 1`] = `
         class="c6"
       >
         <a
-          class="c7"
+          class="c7 c8"
           href="https://google.com"
         >
           Some Link
@@ -194,7 +198,7 @@ exports[`component: Footer snapshot 1`] = `
         class="c6"
       >
         <a
-          class="c7"
+          class="c7 c8"
           href="https://repay.com"
         >
           Some Other Link

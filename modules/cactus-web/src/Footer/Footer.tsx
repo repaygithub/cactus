@@ -83,6 +83,10 @@ const LinkCol = styled('div')<LinkColProps>`
   flex-grow: 1;
   padding: 0 16px 0 16px;
 
+  ${Link} {
+    max-width: 100%;
+  }
+
   ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
     max-width: calc(100% / ${(p) => p.maxCols});
   }
