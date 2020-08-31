@@ -12,9 +12,18 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c7 {
+.c8 {
   vertical-align: middle;
+  outline: none;
+  color: hsl(200,10%,20%);
+}
+
+.c8:hover {
   color: hsl(200,96%,35%);
+}
+
+.c7:focus {
+  color: hsl(47,82%,47%);
 }
 
 .c2 {
@@ -39,7 +48,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   margin-top: 4px;
 }
 
-.c9 {
+.c10 {
   box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 20px;
@@ -53,54 +62,54 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c9:disabled {
+.c10:disabled {
   cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
-.c9:disabled::-webkit-input-placeholder {
+.c10:disabled::-webkit-input-placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c9:disabled::-moz-placeholder {
+.c10:disabled::-moz-placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c9:disabled:-ms-input-placeholder {
+.c10:disabled:-ms-input-placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c9:disabled::placeholder {
+.c10:disabled::placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c9:focus {
+.c10:focus {
   border-color: hsl(200,96%,35%);
 }
 
-.c9::-webkit-input-placeholder {
+.c10::-webkit-input-placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c9::-moz-placeholder {
+.c10::-moz-placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c9:-ms-input-placeholder {
+.c10:-ms-input-placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c9::placeholder {
+.c10::placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c8 {
+.c9 {
   box-sizing: border-box;
 }
 
@@ -117,7 +126,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c9 {
+  .c10 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -135,11 +144,11 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
       Enter some text
     </label>
     <span
-      class="c6 "
+      class="c6 c7"
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="sc-fzpdbB c7"
+        class="sc-fzpdbB c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -158,11 +167,11 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
       Go on, do it
     </span>
     <div
-      class="c8"
+      class="c9"
     >
       <input
         aria-describedby="instigate-tip instigate-status"
-        class="c9"
+        class="c10"
         id="instigate"
         name="instigate"
         width="100%"
