@@ -144,6 +144,7 @@ const DropdownButton = styled(ReachMenuButton)`
   border: 0px;
   outline: none;
   cursor: pointer;
+  ${(p) => p.disabled && p.theme.colorStyles.disable};
 
   ${(p): string =>
     p.disabled
@@ -151,7 +152,6 @@ const DropdownButton = styled(ReachMenuButton)`
   cursor: not-allowed;
   `
       : ''}
-  ${(p) => p.theme.colorStyles.disable};
 
   ${NavigationChevronDown} {
     width: 10px;
