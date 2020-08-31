@@ -53,8 +53,6 @@ exports[`component: SplitButton snapshot 1`] = `
   border: 0px;
   outline: none;
   cursor: pointer;
-  background-color: hsl(0,0%,90%);
-  color: hsl(0,0%,70%);
 }
 
 .c4 .c5 {
@@ -194,8 +192,6 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   border: 0px;
   outline: none;
   cursor: pointer;
-  background-color: hsl(0,0%,90%);
-  color: hsl(0,0%,70%);
 }
 
 .c4 .c5 {
@@ -335,8 +331,6 @@ exports[`component: SplitButton with theme customization should have 2px borders
   border: 0px;
   outline: none;
   cursor: pointer;
-  background-color: hsl(0,0%,90%);
-  color: hsl(0,0%,70%);
 }
 
 .c4 .c5 {
@@ -476,8 +470,6 @@ exports[`component: SplitButton with theme customization should have intermediat
   border: 0px;
   outline: none;
   cursor: pointer;
-  background-color: hsl(0,0%,90%);
-  color: hsl(0,0%,70%);
 }
 
 .c4 .c5 {
@@ -617,8 +609,6 @@ exports[`component: SplitButton with theme customization should have square shap
   border: 0px;
   outline: none;
   cursor: pointer;
-  background-color: hsl(0,0%,90%);
-  color: hsl(0,0%,70%);
 }
 
 .c4 .c5 {
