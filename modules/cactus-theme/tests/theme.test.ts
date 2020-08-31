@@ -1,6 +1,6 @@
 import Color from 'color'
 
-import { CactusTheme } from '../dist'
+import { CactusTheme } from '../dist/theme'
 import cactusTheme, { generateTheme } from '../src/theme'
 
 function themeAccessibility(themeName: string, theme: CactusTheme): void {
@@ -24,7 +24,16 @@ function themeAccessibility(themeName: string, theme: CactusTheme): void {
     })
 
     Object.keys(theme.colorStyles).forEach((name: keyof typeof theme['colorStyles']): void => {
-      if (typeof name === 'string') {
+      if (name.includes('transparent')) {
+        test(`colorStyle ${name}`, (): void => {
+          const color = new Color(theme.colorStyles[name].backgroundColor)
+          expect(
+            color
+              .mix(new Color('white').alpha(1 - color.alpha()))
+              .contrast(new Color(theme.colorStyles[name].color))
+          ).toBeGreaterThanOrEqual(4.5)
+        })
+      } else if (typeof name === 'string' && name !== 'disable') {
         test(`colorStyle ${name}`, (): void => {
           expect(
             new Color(theme.colorStyles[name].backgroundColor).contrast(

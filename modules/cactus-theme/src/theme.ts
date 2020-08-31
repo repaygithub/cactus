@@ -117,6 +117,13 @@ export interface CactusTheme {
     error: ColorStyle
     warning: ColorStyle
     disable: ColorStyle
+    transparentCTA: ColorStyle
+    transparentError: ColorStyle
+    transparentSuccess: ColorStyle
+    transparentWarning: ColorStyle
+    errorDark: ColorStyle
+    warningDark: ColorStyle
+    successDark: ColorStyle
   }
   border: BorderSize
   shape: Shape
@@ -255,7 +262,35 @@ function fromHue({
       },
       disable: {
         backgroundColor: lightGray,
+        color: mediumGray,
+      },
+      transparentCTA: {
+        backgroundColor: transparentCTA,
         color: darkestContrast,
+      },
+      transparentError: {
+        backgroundColor: transparentError,
+        color: darkestContrast,
+      },
+      transparentSuccess: {
+        backgroundColor: transparentSuccess,
+        color: darkestContrast,
+      },
+      transparentWarning: {
+        backgroundColor: transparentWarning,
+        color: darkContrast,
+      },
+      errorDark: {
+        backgroundColor: errorDark,
+        color: white,
+      },
+      warningDark: {
+        backgroundColor: warningDark,
+        color: white,
+      },
+      successDark: {
+        backgroundColor: successDark,
+        color: white,
       },
     },
   ]
@@ -310,6 +345,7 @@ function fromTwoColor({
     const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
 
     const callToAction = `hsl(244, 48%, 26%)`
+    const transparentCTA = `hsla(244, 48%, 26%, 0.3)`
     const callToActionText = white
 
     return [
@@ -319,7 +355,7 @@ function fromTwoColor({
         baseText: darkestContrast,
         callToAction: callToAction,
         callToActionText: callToActionText,
-        transparentCTA: `hsla(244, 48%, 26%, 0.3)`,
+        transparentCTA: transparentCTA,
 
         /** Contrasts */
         lightContrast,
@@ -382,7 +418,35 @@ function fromTwoColor({
         },
         disable: {
           backgroundColor: lightGray,
+          color: mediumGray,
+        },
+        transparentCTA: {
+          backgroundColor: transparentCTA,
           color: darkestContrast,
+        },
+        transparentError: {
+          backgroundColor: transparentError,
+          color: darkestContrast,
+        },
+        transparentSuccess: {
+          backgroundColor: transparentSuccess,
+          color: darkestContrast,
+        },
+        transparentWarning: {
+          backgroundColor: transparentWarning,
+          color: darkestContrast,
+        },
+        errorDark: {
+          backgroundColor: errorDark,
+          color: white,
+        },
+        warningDark: {
+          backgroundColor: warningDark,
+          color: white,
+        },
+        successDark: {
+          backgroundColor: successDark,
+          color: white,
         },
       },
     ]
@@ -480,7 +544,35 @@ function fromTwoColor({
         },
         disable: {
           backgroundColor: lightGray,
+          color: mediumGray,
+        },
+        transparentCTA: {
+          backgroundColor: transparentCTA,
           color: darkestContrast,
+        },
+        transparentError: {
+          backgroundColor: transparentError,
+          color: darkestContrast,
+        },
+        transparentSuccess: {
+          backgroundColor: transparentSuccess,
+          color: darkestContrast,
+        },
+        transparentWarning: {
+          backgroundColor: transparentWarning,
+          color: darkContrast,
+        },
+        errorDark: {
+          backgroundColor: errorDark,
+          color: white,
+        },
+        warningDark: {
+          backgroundColor: warningDark,
+          color: white,
+        },
+        successDark: {
+          backgroundColor: successDark,
+          color: white,
         },
       },
     ]
@@ -572,7 +664,35 @@ function fromTwoColor({
       },
       disable: {
         backgroundColor: lightGray,
+        color: mediumGray,
+      },
+      transparentCTA: {
+        backgroundColor: transparentCTA,
         color: darkestContrast,
+      },
+      transparentError: {
+        backgroundColor: transparentError,
+        color: darkestContrast,
+      },
+      transparentSuccess: {
+        backgroundColor: transparentSuccess,
+        color: darkestContrast,
+      },
+      transparentWarning: {
+        backgroundColor: transparentWarning,
+        color: darkContrast,
+      },
+      errorDark: {
+        backgroundColor: errorDark,
+        color: white,
+      },
+      warningDark: {
+        backgroundColor: warningDark,
+        color: white,
+      },
+      successDark: {
+        backgroundColor: successDark,
+        color: white,
       },
     },
   ]

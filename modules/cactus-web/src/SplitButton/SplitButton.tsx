@@ -70,12 +70,11 @@ const MainActionButton = styled.button`
   ${(p): string =>
     p.disabled
       ? `
-    color: ${p.theme.colors.mediumGray};
-    background-color: ${p.theme.colors.lightGray};
     border-color: ${p.theme.colors.lightGray};
     cursor: not-allowed;
   `
       : ''}
+    ${(p) => p.disabled && p.theme.colorStyles.disable}
 
   &.dd-closed {
     border-color: ${(p): string => p.theme.colors.darkestContrast};
@@ -148,13 +147,12 @@ const DropdownButton = styled(ReachMenuButton)`
   border: 0px;
   outline: none;
   cursor: pointer;
+  ${(p) => p.disabled && p.theme.colorStyles.disable};
   flex-grow: 0;
 
   ${(p): string =>
     p.disabled
       ? `
-  color: ${p.theme.colors.mediumGray};
-  background-color: ${p.theme.colors.lightGray};
   cursor: not-allowed;
   `
       : ''}

@@ -229,8 +229,7 @@ const MenuButton = styled(MenuButtonBase)`
   }
 
   &:disabled {
-    color: ${(p): string => p.theme.colors.mediumGray};
-    background-color: ${(p): string => p.theme.colors.lightGray};
+    ${(p): ColorStyle => p.theme.colorStyles.disable};
     border-color: ${(p): string => p.theme.colors.lightGray};
     cursor: not-allowed;
   }

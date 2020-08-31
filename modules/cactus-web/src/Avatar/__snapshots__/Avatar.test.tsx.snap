@@ -73,8 +73,8 @@ exports[`component: Avatars Alert Avatar, Alert, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .sc-fzqOul {
@@ -173,8 +173,8 @@ exports[`component: Avatars Alert Avatar, Check, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .sc-fzqOul {
@@ -273,8 +273,8 @@ exports[`component: Avatars Alert Avatar, Error, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .c1 {
@@ -373,8 +373,8 @@ exports[`component: Avatars Alert Avatar, Information, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .sc-fzqOul {
@@ -473,8 +473,8 @@ exports[`component: Avatars Default Avatar, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .sc-fzqOul {
@@ -573,8 +573,8 @@ exports[`component: Avatars Feed Back Avatar, Alert, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .sc-fzqOul {
@@ -673,8 +673,8 @@ exports[`component: Avatars Feed Back Avatar, Check, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .sc-fzqOul {
@@ -773,8 +773,8 @@ exports[`component: Avatars Feed Back Avatar, Error, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .c1 {
@@ -873,8 +873,8 @@ exports[`component: Avatars Feed Back Avatar, Information, disabled 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  color: hsl(0,0%,100%);
-  background-color: hsl(0,0%,70%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
 }
 
 .c0 .sc-fzqOul {
