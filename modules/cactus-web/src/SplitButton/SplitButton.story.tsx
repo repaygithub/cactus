@@ -78,3 +78,18 @@ storiesOf('SplitButton', module)
     ),
     { cactus: { overrides: { height: '220vh', width: '220vw' } } }
   )
+  .add('Fixed Width Container', () => (
+    <div style={{ width: '125px' }}>
+      <SplitButton
+        onSelectMainAction={(): void => console.log('Main Action')}
+        mainActionLabel="Main Action"
+      >
+        <SplitButton.Action onSelect={(): void => console.log('Action One')}>
+          Action One
+        </SplitButton.Action>
+        <SplitButton.Action onSelect={(): void => console.log('Action Two')}>
+          Action Two
+        </SplitButton.Action>
+      </SplitButton>
+    </div>
+  ))

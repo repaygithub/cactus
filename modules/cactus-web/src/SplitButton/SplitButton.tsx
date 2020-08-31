@@ -54,6 +54,9 @@ const MainActionButton = styled.button`
   cursor: pointer;
   padding-left: 12px;
   padding-right: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   svg {
     margin-right: 4px;
@@ -145,6 +148,7 @@ const DropdownButton = styled(ReachMenuButton)`
   outline: none;
   cursor: pointer;
   ${(p) => p.disabled && p.theme.colorStyles.disable};
+  flex-grow: 0;
 
   ${(p): string =>
     p.disabled
@@ -253,7 +257,7 @@ type SplitButtonType = StyledComponent<typeof SplitButtonBase, DefaultTheme, Spl
 }
 
 export const SplitButton = styled(SplitButtonBase)`
-  display: inline-flex;
+  display: flex;
   ${margin}
 
   ${DropdownButton}[aria-expanded='true'] {

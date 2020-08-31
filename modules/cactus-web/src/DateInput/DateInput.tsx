@@ -1474,7 +1474,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             (token, index): ReactElement => {
               const key = `${token}-${index}`
               if (isToken(token)) {
-                const inputId = isFirstInput ? id : ''
+                const inputId = isFirstInput ? id : undefined
                 isFirstInput = false
                 return (
                   <input
