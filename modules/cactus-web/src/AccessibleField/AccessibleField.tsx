@@ -7,7 +7,7 @@ import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
-import { Tooltip } from '../Tooltip/Tooltip'
+import { Tooltip, TooltipHandle } from '../Tooltip/Tooltip'
 
 interface AccessibleProps {
   name: string
@@ -98,6 +98,8 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   } = accessibility
 
   const ref = React.useRef<HTMLDivElement | null>(null)
+  const tooltipRef = React.useRef<TooltipHandle>(null)
+
   const [maxWidth, setMaxWidth] = React.useState<string | undefined>(undefined)
   React.useLayoutEffect((): void => {
     if (ref.current instanceof HTMLElement) {
@@ -108,13 +110,23 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     }
   }, [maxWidth, setMaxWidth])
 
+  const handleFieldFocus = () => {
+    if (tooltipRef.current !== null) tooltipRef.current.toggle()
+  }
+
   return (
     <FieldWrapper className={props.className} ref={ref}>
       <Label {...props.labelProps} id={labelId} htmlFor={fieldId}>
         {props.label}
       </Label>
       {props.tooltip && (
-        <Tooltip label={props.tooltip} id={tooltipId} maxWidth={maxWidth} disabled={disabled} />
+        <Tooltip
+          label={props.tooltip}
+          id={tooltipId}
+          maxWidth={maxWidth}
+          disabled={disabled}
+          ref={tooltipRef}
+        />
       )}
       {typeof props.children === 'function'
         ? props.children(accessibility)
@@ -124,6 +136,8 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
             'aria-describedby': ariaDescribedBy,
             status,
             disabled,
+            onFocus: handleFieldFocus,
+            onBlur: handleFieldFocus,
           })}
       {status !== undefined && (
         <div>

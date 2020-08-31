@@ -2,14 +2,14 @@ import { Position } from '@reach/popover'
 import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
 import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
-import { ColorStyle } from '@repay/cactus-theme'
+import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { cloneElement } from 'react'
+import React, { cloneElement, useImperativeHandle } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
-import { boxShadow } from '../helpers/theme'
+import { border, boxShadow } from '../helpers/theme'
 
 interface TooltipProps extends MarginProps {
   /** Text to be displayed */
@@ -21,6 +21,9 @@ interface TooltipProps extends MarginProps {
   className?: string
   id?: string
 }
+export interface TooltipHandle {
+  toggle(): void
+}
 
 const OFFSET = 8
 const cactusPosition: Position = (triggerRect, tooltipRect) => {
@@ -31,7 +34,7 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   const scrollY = getScrollY()
   const styles: ReturnType<Position> = {
     left: triggerRect.left + scrollX,
-    top: triggerRect.top + triggerRect.height + scrollY,
+    top: triggerRect.top - tooltipRect.height + scrollY,
   }
 
   if (!tooltipRect) {
@@ -46,16 +49,16 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   }
 
   const directionRight = collisions.left && !collisions.right
-  const directionUp = collisions.bottom && !collisions.top
+  const directionBottom = collisions.top && !collisions.bottom
 
-  if (directionRight && !directionUp) {
-    styles.borderTopLeftRadius = '0px'
-  } else if (directionRight && directionUp) {
+  if (directionRight && !directionBottom) {
     styles.borderBottomLeftRadius = '0px'
-  } else if (!directionRight && !directionUp) {
-    styles.borderTopRightRadius = '0px'
-  } else if (!directionRight && directionUp) {
+  } else if (directionRight && directionBottom) {
+    styles.borderTopLeftRadius = '0px'
+  } else if (!directionRight && !directionBottom) {
     styles.borderBottomRightRadius = '0px'
+  } else if (!directionRight && directionBottom) {
+    styles.borderTopRightRadius = '0px'
   }
 
   return {
@@ -63,9 +66,9 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
     left: directionRight
       ? triggerRect.left + OFFSET + scrollX
       : triggerRect.right - OFFSET - tooltipRect.width + scrollX,
-    top: directionUp
-      ? triggerRect.top - tooltipRect.height + scrollY
-      : triggerRect.top + triggerRect.height + scrollY,
+    top: directionBottom
+      ? triggerRect.top + triggerRect.height + scrollY
+      : triggerRect.top - tooltipRect.height + scrollY,
     // setting width to itself explicitly prevents "drift"
     width: tooltipRect.width,
   }
@@ -76,36 +79,57 @@ interface StyledInfoProps {
 }
 
 const StyledInfo = styled(NotificationInfo)<StyledInfoProps>`
-  color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
+  outline: none;
+  color: ${(p): string =>
+    p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast};
+  &:hover {
+    color: ${(p): string => p.theme.colors.callToAction};
+  }
 `
 
-const TooltipBase = (props: TooltipProps): React.ReactElement => {
-  const { className, disabled, label, ariaLabel, id, maxWidth, position } = props
-  const [trigger, tooltip] = useTooltip()
-  return (
-    <>
-      {cloneElement(
-        <span className={className}>
-          <StyledInfo disabled={disabled} />
-        </span>,
-        trigger
-      )}
-      {!disabled && (
-        <>
-          <TooltipPopup
-            {...tooltip}
-            label={label}
-            ariaLabel={ariaLabel}
-            position={position || cactusPosition}
-            style={{ maxWidth }}
-          />
-          <VisuallyHidden role="tooltip" id={id}>
-            {label}
-          </VisuallyHidden>
-        </>
-      )}
-    </>
-  )
+const TooltipBase = React.forwardRef(
+  (props: TooltipProps, ref): React.ReactElement => {
+    const { className, disabled, label, ariaLabel, id, maxWidth, position } = props
+    const [trigger, tooltip] = useTooltip()
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    useImperativeHandle(ref, () => ({
+      toggle() {
+        setIsVisible(!isVisible)
+      },
+    }))
+
+    return (
+      <>
+        {cloneElement(
+          <span className={className}>
+            <StyledInfo disabled={disabled} />
+          </span>,
+          trigger
+        )}
+        {!disabled && (
+          <>
+            <TooltipPopup
+              {...tooltip}
+              isVisible={isVisible || tooltip.isVisible}
+              label={label}
+              ariaLabel={ariaLabel}
+              position={position || cactusPosition}
+              style={{ maxWidth }}
+            />
+            <VisuallyHidden role="tooltip" id={id}>
+              {label}
+            </VisuallyHidden>
+          </>
+        )}
+      </>
+    )
+  }
+)
+const shapeMap: { [K in Shape]: string } = {
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 4px;',
+  round: 'border-radius: 8px;',
 }
 
 export const TooltipPopup = styled(ReachTooltipPopup)`
@@ -113,16 +137,20 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   pointer-events: none;
   position: absolute;
   padding: 16px;
-  border-radius: 8px 8px 8px 8px;
-  ${(p): string => boxShadow(p.theme, 2)};
+  ${(p): string => boxShadow(p.theme, 1)};
   font-size: 15px;
   ${(p): ColorStyle => p.theme.colorStyles.standard};
-  border: 2px solid ${(p): string => p.theme.colors.callToAction};
+  border-color: ${(p): string => p.theme.colors.callToAction};
   box-sizing: border-box;
   overflow-wrap: break-word;
+  border: ${(p) => border(p.theme, 'callToAction')};
+  ${(p): string => shapeMap[p.theme.shape]}
 `
 
 export const Tooltip = styled(TooltipBase)`
+  &:focus {
+    color: ${(p): string => p.theme.colors.warning};
+  }
   ${margin}
 `
 
