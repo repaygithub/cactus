@@ -11,7 +11,7 @@ import styled from 'styled-components'
 
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { border, boxShadow, media, radius, textStyle } from '../helpers/theme'
+import { border, borderSize, boxShadow, media, radius, textStyle } from '../helpers/theme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
   focusMenu,
@@ -415,7 +415,7 @@ const SidebarMenu = styled.ul<MenuProps>`
   outline: none;
 
   [role='menuitem'] {
-    padding: 20px 16px;
+    padding: 18px 16px;
     border-bottom: ${(p) => border(p.theme, 'lightContrast')};
     ${NavigationChevronDown} {
       transform: rotateZ(-90deg);
@@ -428,9 +428,18 @@ const SidebarMenu = styled.ul<MenuProps>`
       color: ${(p) => p.theme.colors.callToAction};
       border-bottom-color: ${(p) => p.theme.colors.callToAction};
     }
-    &:focus {
-      outline: ${(p) => border(p.theme, 'callToAction')};
-      outline-offset: -${(p) => (p.theme.border === 'thick' ? '2' : '1')}px;
+    position: relative;
+    overflow: visible;
+    &:focus::after {
+      border: ${(p) => border(p.theme, 'callToAction')};
+      background-color: transparent;
+      box-sizing: border-box;
+      width: 100%;
+      height: calc(100% + ${borderSize});
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
     }
     &[aria-current='true'],
     &[aria-expanded='true'] {
@@ -560,9 +569,23 @@ const HamburgerButton = styled.button.attrs({ role: 'button' })`
     border-color: ${(p) => p.theme.colors.callToAction};
   }
 
-  :focus {
-    outline: ${(p) => border(p.theme, 'callToAction')};
-    outline-offset: -${(p) => (p.theme.border === 'thick' ? '2' : '1')}px;
+  position: relative;
+  overflow: visible;
+  :focus::after {
+    border: ${(p) => border(p.theme, 'callToAction')};
+    background-color: transparent;
+    box-sizing: border-box;
+    width: calc(100% + ${borderSize});
+    height: 100%;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -${borderSize};
+    ${(p) => media(p.theme, 'small')} {
+      top: 0;
+      width: 100%;
+      height: calc(100% + ${borderSize});
+    }
   }
 
   &[aria-expanded='true'] {
@@ -572,7 +595,7 @@ const HamburgerButton = styled.button.attrs({ role: 'button' })`
     &::after {
       content: '';
       z-index: 99;
-      background-color: rgba(0, 0, 0, 50%);
+      background-color: rgba(0, 0, 0, 0.5);
       position: fixed;
       top: 0;
       bottom: 60px;

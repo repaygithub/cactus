@@ -64,8 +64,10 @@ exports[`component: MenuBar sidebar 1`] = `
 }
 
 .c4 [role='menuitem'] {
-  padding: 20px 16px;
+  padding: 18px 16px;
   border-bottom: 1px solid hsl(200,29%,90%);
+  position: relative;
+  overflow: visible;
 }
 
 .c4 [role='menuitem'] .c8 {
@@ -86,9 +88,16 @@ exports[`component: MenuBar sidebar 1`] = `
   border-bottom-color: hsl(200,96%,35%);
 }
 
-.c4 [role='menuitem']:focus {
-  outline: 1px solid hsl(200,96%,35%);
-  outline-offset: -1px;
+.c4 [role='menuitem']:focus::after {
+  border: 1px solid hsl(200,96%,35%);
+  background-color: transparent;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% + 1px);
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .c4 [role='menuitem'][aria-current='true'],
@@ -166,6 +175,8 @@ exports[`component: MenuBar sidebar 1`] = `
   height: 60px;
   padding: 18px;
   border-right: 1px solid hsl(200,29%,90%);
+  position: relative;
+  overflow: visible;
 }
 
 .c1:active,
@@ -187,9 +198,16 @@ exports[`component: MenuBar sidebar 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c1:focus {
-  outline: 1px solid hsl(200,96%,35%);
-  outline-offset: -1px;
+.c1:focus::after {
+  border: 1px solid hsl(200,96%,35%);
+  background-color: transparent;
+  box-sizing: border-box;
+  width: calc(100% + 1px);
+  height: 100%;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
 }
 
 .c1[aria-expanded='true'] {
@@ -201,7 +219,7 @@ exports[`component: MenuBar sidebar 1`] = `
 .c1[aria-expanded='true']::after {
   content: '';
   z-index: 99;
-  background-color: rgba(0,0,0,50%);
+  background-color: rgba(0,0,0,0.5);
   position: fixed;
   top: 0;
   bottom: 60px;
@@ -242,6 +260,14 @@ exports[`component: MenuBar sidebar 1`] = `
   .c1 {
     border-right: 0;
     border-bottom: 1px solid hsl(200,29%,90%);
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c1:focus::after {
+    top: 0;
+    width: 100%;
+    height: calc(100% + 1px);
   }
 }
 

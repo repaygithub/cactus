@@ -7,6 +7,10 @@ import {
 } from '@repay/cactus-theme'
 import { css, FlattenSimpleInterpolation } from 'styled-components'
 
+type Props = { theme: CactusTheme }
+
+export const borderSize = (props: Props): string => (props.theme.border === 'thick' ? '2px' : '1px')
+
 export const border = (theme: CactusTheme, color: string): string => {
   const thickness = theme.border === 'thick' ? '2px' : '1px'
   return `${thickness} solid ${theme.colors[color as CactusColor] || color}`
@@ -19,7 +23,7 @@ const radii = {
 }
 
 // There are elements with other radius patterns, but this seems like the most common.
-export const radius = ({ theme }: { theme: CactusTheme }): string => radii[theme.shape]
+export const radius = ({ theme }: Props): string => radii[theme.shape]
 
 export const invertColors = (style: ColorStyle): ColorStyle => {
   return { color: style.backgroundColor, backgroundColor: style.color }
