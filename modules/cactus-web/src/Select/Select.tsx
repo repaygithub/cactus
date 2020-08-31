@@ -976,7 +976,7 @@ class List extends React.Component<ListProps, ListState> {
                       <ComboInput
                         data-role="mobile-search"
                         type="text"
-                        role="search"
+                        role="textbox"
                         ref={this.mobileInputRef}
                         value={this.props.searchValue}
                         onChange={this.props.handleComboInputChange}
