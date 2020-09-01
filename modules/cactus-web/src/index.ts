@@ -26,6 +26,7 @@ export { Pagination } from './Pagination/Pagination'
 export { PrevNext } from './PrevNext/PrevNext'
 export { RadioButton } from './RadioButton/RadioButton'
 export { RadioButtonField } from './RadioButtonField/RadioButtonField'
+export { default as RadioGroup } from './RadioGroup/RadioGroup'
 export {
   ScreenSizeContext,
   ScreenSizeProvider,

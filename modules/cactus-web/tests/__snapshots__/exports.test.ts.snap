@@ -31,6 +31,7 @@ Array [
   "PrevNext",
   "RadioButton",
   "RadioButtonField",
+  "RadioGroup",
   "ScreenSizeContext",
   "ScreenSizeProvider",
   "SIZES",

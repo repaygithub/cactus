@@ -23,54 +23,57 @@ export interface RadioButtonFieldProps
   onBlur?: FieldOnBlurHandler
 }
 
-const RadioButtonFieldBase = (props: RadioButtonFieldProps): React.ReactElement => {
-  const {
-    label,
-    labelProps,
-    id,
-    className,
-    name,
-    onChange,
-    onFocus,
-    onBlur,
-    ...radioButtonProps
-  } = omitMargins(props) as Omit<RadioButtonFieldProps, keyof MarginProps>
-  const radioButtonId = useId(id, name)
+const RadioButtonFieldBase = React.forwardRef<HTMLInputElement, RadioButtonFieldProps>(
+  (props, ref) => {
+    const {
+      label,
+      labelProps,
+      id,
+      className,
+      name,
+      onChange,
+      onFocus,
+      onBlur,
+      ...radioButtonProps
+    } = omitMargins(props) as Omit<RadioButtonFieldProps, keyof MarginProps>
+    const radioButtonId = useId(id, name)
 
-  const handleChange = React.useCallback(
-    (event: React.FormEvent<HTMLInputElement>): void => {
-      if (typeof onChange === 'function') {
-        const target = (event.target as unknown) as HTMLInputElement
-        onChange(name, target.value)
-      }
-    },
-    [name, onChange]
-  )
+    const handleChange = React.useCallback(
+      (event: React.FormEvent<HTMLInputElement>): void => {
+        if (typeof onChange === 'function') {
+          const target = (event.target as unknown) as HTMLInputElement
+          onChange(name, target.value)
+        }
+      },
+      [name, onChange]
+    )
 
-  const handleFocus = (): void => {
-    handleEvent(onFocus, name)
+    const handleFocus = (): void => {
+      handleEvent(onFocus, name)
+    }
+
+    const handleBlur = (): void => {
+      handleEvent(onBlur, name)
+    }
+
+    return (
+      <FieldWrapper className={className}>
+        <RadioButton
+          ref={ref}
+          id={radioButtonId}
+          name={name}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          {...radioButtonProps}
+        />
+        <Label {...labelProps} htmlFor={radioButtonId}>
+          {label}
+        </Label>
+      </FieldWrapper>
+    )
   }
-
-  const handleBlur = (): void => {
-    handleEvent(onBlur, name)
-  }
-
-  return (
-    <FieldWrapper className={className}>
-      <RadioButton
-        id={radioButtonId}
-        name={name}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        {...radioButtonProps}
-      />
-      <Label {...labelProps} htmlFor={radioButtonId}>
-        {label}
-      </Label>
-    </FieldWrapper>
-  )
-}
+)
 
 export const RadioButtonField = styled(RadioButtonFieldBase)`
   & + & {
@@ -86,7 +89,6 @@ export const RadioButtonField = styled(RadioButtonFieldBase)`
   ${margin}
 `
 
-// @ts-ignore
 RadioButtonField.propTypes = {
   label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,

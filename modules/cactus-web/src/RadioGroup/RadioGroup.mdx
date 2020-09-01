@@ -1,0 +1,49 @@
+---
+name: RadioGroup
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import RadioGroup from './RadioGroup'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# RadioGroup
+
+`RadioGroup` is a wrapper for a group of radio buttons, styled so that it fits in with and behaves like other field types (e.g. `TextInputField`).
+
+## Basic Usage
+
+`RadioGroup` is used like other `AccessibleField` derivatives, except that the individual radio buttons are passed as children. The `name`, `readOnly`, `required`, and `disabled` props are passed to the `RadioGroup` and forwarded to the individual buttons; the first three are unconditional, but `disabled` is only forwarded if it is `true` (so that you can disable individual buttons if needed).
+
+`RadioGroup.Button` is a straight wrapper around `RadioButtonField`, with the `name`, `readOnly`, and `required` props removed so they can be omitted without causing Typescript errors.
+
+### Try it out
+
+export const code = `<RadioGroup name="radioCity" label="Here there be radios" value="option_b">
+  <RadioGroup.Button label="Radio The First" value="option_a" />
+  <RadioGroup.Button label="Radio The Second" value="option_b" />
+  <RadioGroup.Button label="Radio The Third" value="option_c" />
+</RadioGroup>`
+
+<LiveProvider code={code} scope={{ RadioGroup }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- Use meaningful labels to ensure accessibility.
+- Prop forwarding for `name`, etc., will only work if the buttons are direct children of the group (or inside a `React.Fragment`, array, etc.). If you use an intermediate component, it will need to accept the forwarded props and pass them on in turn.
+- You can control the selected value in one of two ways (which should not be mixed):
+  - You can pass `value` or `defaultValue` to the group.
+  - You can pass `checked` or `defaultChecked` to individual buttons.
+- A `ref` passed to `RadioGroup` will be set on the `<fieldset>` HTML element that wraps the group.
+- The `onChange`, `onFocus`, and `onBlur` handlers are _not_ forwarded to the individual buttons; they are attached to the `<fieldset>` and rely on event delegation to capture changes.
+  - This especially impacts the focus handlers, because when switching from one button to the next within the group, you'll get a blur event for the first button followed by a focus event for the second.
+
+## Properties
+
+<PropsTable of={RadioGroup} includeProps={['name', 'label', 'disabled', 'tooltip', 'error', 'warning', 'success']} />
