@@ -226,6 +226,9 @@ exports[`component: MenuBar sidebar 1`] = `
   left: 0;
   right: 0;
   cursor: default;
+  border: 0;
+  width: auto;
+  height: auto;
 }
 
 @media screen and (min-width:1024px) {

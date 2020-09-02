@@ -602,6 +602,9 @@ const HamburgerButton = styled.button.attrs({ role: 'button' })`
       left: 0;
       right: 0;
       cursor: default;
+      border: 0;
+      width: auto;
+      height: auto;
       ${(p) => media(p.theme, 'small')} {
         display: none;
       }
