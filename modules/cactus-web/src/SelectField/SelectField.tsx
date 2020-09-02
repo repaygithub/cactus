@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
+import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import Select, { OptionType, SelectProps, SelectValueType } from '../Select/Select'
 import { FieldOnChangeHandler } from '../types'
@@ -33,9 +34,18 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
     error,
     width,
     disabled,
+    onFocus,
+    onBlur,
     ...rest
   } = omitMargins(props) as Omit<SelectFieldProps, keyof MarginProps>
 
+  const handleFocus = (): void => {
+    handleEvent(onFocus, name)
+  }
+
+  const handleBlur = (): void => {
+    handleEvent(onBlur, name)
+  }
   return (
     <AccessibleField
       disabled={disabled}
@@ -63,8 +73,12 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
           id={fieldId}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
-          onFocus={handleFieldFocus}
-          onBlur={handleFieldBlur}
+          onFocus={() => {
+            handleFocus(), handleFieldFocus()
+          }}
+          onBlur={() => {
+            handleBlur(), handleFieldBlur()
+          }}
         />
       )}
     </AccessibleField>

@@ -226,12 +226,11 @@ describe('component: SelectField', (): void => {
       )
       const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.blur(select)
-      expect(onBlur).toHaveBeenCalled
+      expect(onBlur).toHaveBeenCalledWith('the-test-select-field')
     })
 
     test('onFocus', async (): Promise<void> => {
       const onFocus = jest.fn()
-      console.log(onFocus())
       const { getByLabelText } = render(
         <StyleProvider>
           <SelectField
@@ -245,7 +244,7 @@ describe('component: SelectField', (): void => {
       )
       const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.focus(select)
-      expect(onFocus).toHaveBeenCalled()
+      expect(onFocus).toHaveBeenCalledWith('the-test-select-field')
     })
   })
 })
