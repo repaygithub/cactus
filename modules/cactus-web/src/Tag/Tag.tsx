@@ -1,21 +1,21 @@
 import { NavigationClose } from '@repay/cactus-icons'
 import { Shape, TextStyle } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, CSSObject, FlattenSimpleInterpolation } from 'styled-components'
 
 import { textStyle } from '../helpers/theme'
 
-const TagBase = React.forwardRef<
-  HTMLSpanElement,
-  {
-    id?: string
-    className?: string
-    closeOption?: boolean
-    children: React.ReactNode
-    hidden?: boolean
-    onCloseIconClick?: () => void
-  }
->(
+interface TagProps {
+  id?: string
+  className?: string
+  closeOption?: boolean
+  children: React.ReactNode
+  hidden?: boolean
+  onCloseIconClick?: () => void
+}
+
+const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
   ({ id, className, closeOption, children, onCloseIconClick }, ref): React.ReactElement => {
     return (
       <span id={id} ref={ref} className={className}>
@@ -61,5 +61,19 @@ export const Tag = styled(TagBase)`
     vertical-align: -3px;
   }
 `
+
+Tag.propTypes = {
+  id: PropTypes.string,
+  closeOption: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  hidden: PropTypes.bool,
+  onCloseIconClick: PropTypes.func,
+}
+
+Tag.defaultProps = {
+  id: 'tag-id',
+  closeOption: true,
+  hidden: false,
+}
 
 export default Tag

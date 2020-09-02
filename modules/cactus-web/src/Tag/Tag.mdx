@@ -5,16 +5,44 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import Tag from './Tag'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Tag
 
-TODO - describe component here
-
+The `Tag` Component is a chip that let users intriduce information that can be deleted
 TODO - render component here
 
-## Best practices
+### Try it out
 
-TODO - see README for what to include here
+export const code = `() => {
+  const [open, setOpen] = React.useState(false)
+  const [values, setValues] = React.useState([{label:'Cactus', id:'1'}, {label:'Web', id:'2'}])
+  const deleteTag = (id) => {
+      setValues(values.filter((e) => e.id !== id))
+    }
+    return (
+      <div>
+        {values.map((e) => (
+          <Tag
+            closeOption
+            id={e.id}
+            key={e.id}
+            onCloseIconClick={() => deleteTag(e.id)}
+          >
+            {e.label}
+          </Tag>
+        ))}
+      </div>
+    )
+    }
+`
+
+<LiveProvider code={code} scope={{ Tag }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Basic usage
 
@@ -23,15 +51,16 @@ TODO - brief description
 ```jsx
 import React from 'react'
 import { Tag } from '@repay/cactus-web'
+...
 
-;<Tag />
-```
-
-```tsx
-import * as React from 'react'
-import { Tag } from '@repay/cactus-web'
-
-;<Tag />
+//Basic Usage
+ <Tag
+  closeOption
+  id='id'
+  onCloseIconClick={doSomething}
+  >
+  "Label for the tag"
+</Tag>
 ```
 
 ## Properties
