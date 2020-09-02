@@ -1,5 +1,51 @@
 # Changelog
 
+## [@repay/cactus-web@v2.0.0](https://github.com/repaygithub/cactus/commit/13ecec3ef19e871987405418d9b5c33bb28c38b5)
+
+- fix(cactus-web): fix conflicts with master [c9b53b5](https://github.com/repaygithub/cactus/commit/c9b53b5c1c4caa3b0a00dd0554c89181a3dbcdbc)
+- fix(cactus-web): fix disble style applying even when it's enabled [5acc983](https://github.com/repaygithub/cactus/commit/5acc9830f3037560f162abcb27d33f022d8d797e)
+- fix(cactus-web): add colorStyle object to some components [d0cede6](https://github.com/repaygithub/cactus/commit/d0cede60d11213ff32fdf4fd6236c3b010a453fe)
+- feat(cactus-web): add more color styles to the theme [8be5ec3](https://github.com/repaygithub/cactus/commit/8be5ec34d87f1eeea61ba84cf61f4dded9280e11)
+- fix(cactus-web): pull disable prop from render function or clone element [bcb48df](https://github.com/repaygithub/cactus/commit/bcb48dfa48aaab7f2439bee1333007340bf9d124)
+- fix(cactus-web): fix arrow shifting in header buttons in DataGrid [dbc7bfb](https://github.com/repaygithub/cactus/commit/dbc7bfbcf658cebaedb100513455bb100bc1b9b1)
+- fix(cactus-web): fix text overflow bug in SplitButton [e2e8dd2](https://github.com/repaygithub/cactus/commit/e2e8dd2622fdbb07e99963bfa3e75594858dfe1a)
+- fix(cactus-web): fix calendar disable clickable [dca6460](https://github.com/repaygithub/cactus/commit/dca6460e966ed6c3079f94bb9481b518fdd4cc0c)
+- fix(cactus-web): remove blank IDs from dd and yyyy DateInput input elements [f5554d8](https://github.com/repaygithub/cactus/commit/f5554d8ae8f21f00ba90f16a674e1f6c6abb110c)
+- fix(cactus-web): match the disable styles to the form elements [1a3eb46](https://github.com/repaygithub/cactus/commit/1a3eb46ce784b91587fac8b8c608f6135c1c8fe6)
+- fix(cactus-web): fix integration tests [7c780ca](https://github.com/repaygithub/cactus/commit/7c780ca92115ae382cfb2116f44e9f8895b08f56)
+- refactor(cactus-web): clean up CSS helpers for TextInput [4669e6f](https://github.com/repaygithub/cactus/commit/4669e6fe52daf4c0309e17f319641c12faf2c5c2)
+- refactor(cactus-web): clean up CSS helpers for TextButton [148ac8c](https://github.com/repaygithub/cactus/commit/148ac8cc57df21fb0d40c67834d26215851901fd)
+- refactor(cactus-web): clean up CSS helpers for TextArea [78e5282](https://github.com/repaygithub/cactus/commit/78e5282eb93c5ab3bf24ed225c95591d27a9ba9b)
+- refactor(cactus-web): make SplitButton accept JSX [058e7b4](https://github.com/repaygithub/cactus/commit/058e7b46156be57da226c4c6881793a520e246fa)
+- refactor(cactus-web): clean up CSS helpers for Modal [eaff624](https://github.com/repaygithub/cactus/commit/eaff6244dc44917e61919c8ccb978b6229e8b102)
+- fix(cactus-web): add ref to Link component [9aeb086](https://github.com/repaygithub/cactus/commit/9aeb0869e8ec46ae0abacb088ecf3f72f856d285)
+- refactor(cactus-web): remove redundant props from Grid [4eea4cb](https://github.com/repaygithub/cactus/commit/4eea4cbc6aa6caf02e3feaac030bfb27e1db10a6)
+- fix(cactus-web): fix DateInput colors [29fd64a](https://github.com/repaygithub/cactus/commit/29fd64afcfb42a195f28a887060b8e344b17e3b7)
+- refactor(cactus-web): rename css selector for DateInput month/year title [7dbfe2c](https://github.com/repaygithub/cactus/commit/7dbfe2c35054ce54be53e1330dc0a9d32d80a551)
+- fix(cactus-web): fix DateInput colors [72bff82](https://github.com/repaygithub/cactus/commit/72bff82ae1846fbe672064c9af99b7dc6865d37b)
+- refactor(cactus-web): make FileInput accept JSX [a18c794](https://github.com/repaygithub/cactus/commit/a18c7947cc8d6f059a1ae7c9b8eefd7c41023310)
+- refactor(cactus-web): make DataGrid accept JSX [7dda2b2](https://github.com/repaygithub/cactus/commit/7dda2b2c632eb974ec8ae55821c14884146cd962)
+- refactor(cactus-web): make PrevNext accept JSX [42e1009](https://github.com/repaygithub/cactus/commit/42e1009159878a528006d72e6e39aa02c3fdb9c3)
+- refactor(cactus-web): simplify MenuButton CSS calls [b345297](https://github.com/repaygithub/cactus/commit/b345297e8c857f1f7667e73dfdaa748db962888f)
+- refactor(cactus-web): remove redundant props definition from FieldWrapper [d394571](https://github.com/repaygithub/cactus/commit/d3945711aca5a51281a86950c714676b01923162)
+- refactor(cactus-web): make ConfirmModal accept JSX [6720032](https://github.com/repaygithub/cactus/commit/672003243b7b63673f9549e46b744d83d22b3139)
+  - 🧨 BREAKING: Removed unused `description` prop.
+- refactor(cactus-web): tweak the CheckBox types a bit [704eb12](https://github.com/repaygithub/cactus/commit/704eb123d1aa027bc80f0f856e17b2ec7d46c0db)
+- refactor(cactus-web): tweak the Button types a bit [414a9a8](https://github.com/repaygithub/cactus/commit/414a9a8841503c1b130e33d92be8c74e3f9bc23c)
+- refactor(cactus-web): make Breadcrumb.Item accept JSX [0bca0a2](https://github.com/repaygithub/cactus/commit/0bca0a2318be008a83a61683e57d6e176d47df8c)
+- refactor(cactus-web): remove `ref` prop from Alert [c2c1ba1](https://github.com/repaygithub/cactus/commit/c2c1ba1717d79b0b336252b465a305fc515a67db)
+- refactor(cactus-web): tweak the Accordion types a bit [a580c8c](https://github.com/repaygithub/cactus/commit/a580c8c8329d232e6e328b74c4e2498fc6fefa6a)
+- refactor(cactus-web): make StatusMessage accept JSX [258d161](https://github.com/repaygithub/cactus/commit/258d1610e0e2f0e2e389451190ce9dad45d6204a)
+- refactor(cactus-web): Adjust MenuButton width calculation [d8c6a30](https://github.com/repaygithub/cactus/commit/d8c6a306f8183ecf30d472366ea08a977051cd75)
+- chore(cactus-web): Add cardBreakpoint to prop types [b91eb4f](https://github.com/repaygithub/cactus/commit/b91eb4f2863bf64c1252fec9fadbed255a1c4dce)
+- fix(cactus-web): make Tooltip accept JSX; stop ignoring `position` prop [01a9866](https://github.com/repaygithub/cactus/commit/01a98666caff173d255be6793017c42b97bf25ac)
+  - 🧨 BREAKING: Removed unused props from Tooltip; the component's behavior is unchanged so it
+shouldn't break anything functionally, but the type signature is different so it could break
+Typescript builds.
+- fix(cactus-web): Better MenuButton width calculation, add variant to proptypes [0b61f59](https://github.com/repaygithub/cactus/commit/0b61f591666ea833ba9cef630997df43aea25bb6)
+- fix(cactus-web): Use useMemo instead of state, add sort labels to proptypes [9490f58](https://github.com/repaygithub/cactus/commit/9490f582d048e28e65d1335b5c9e1d3b2c9957fa)
+- chore(cactus-web): update changelog [428f752](https://github.com/repaygithub/cactus/commit/428f7520ca25407639b0a5e074eb0d05b276db1b)
+
 ## [@repay/cactus-web@v1.1.2](https://github.com/repaygithub/cactus/commit/ddcc9062b6b16e47e5b9cddc53eda68850af8bf6)
 
 - fix(cactus-web): add console warning for invalid props [9858f73](https://github.com/repaygithub/cactus/commit/9858f73dde153eb945bf9268c64a44c0dda9a23d)
