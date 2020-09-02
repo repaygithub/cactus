@@ -67,15 +67,23 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       error={error}
       tooltip={tooltip}
     >
-      {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
+      {(
+        { fieldId, status, ariaDescribedBy, disabled },
+        handleFieldBlur,
+        handleFieldFocus
+      ): React.ReactElement => (
         <TextArea
           disabled={disabled}
           id={fieldId}
           width="100%"
           status={status}
           onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          onFocus={() => {
+            handleFocus(), handleFieldFocus()
+          }}
+          onBlur={() => {
+            handleBlur(), handleFieldBlur()
+          }}
           aria-describedby={ariaDescribedBy}
           name={name}
           {...textAreaProps}

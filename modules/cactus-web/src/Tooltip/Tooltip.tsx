@@ -4,7 +4,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { cloneElement, useImperativeHandle } from 'react'
+import React, { cloneElement } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
@@ -20,6 +20,7 @@ interface TooltipProps extends MarginProps {
   disabled?: boolean
   className?: string
   id?: string
+  forceVisible?: boolean
 }
 export interface TooltipHandle {
   toggle(): void
@@ -83,49 +84,40 @@ const StyledInfo = styled(NotificationInfo)<StyledInfoProps>`
   color: ${(p): string =>
     p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast};
   &:hover {
-    color: ${(p): string => p.theme.colors.callToAction};
+    color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
   }
 `
 
-const TooltipBase = React.forwardRef(
-  (props: TooltipProps, ref): React.ReactElement => {
-    const { className, disabled, label, ariaLabel, id, maxWidth, position } = props
-    const [trigger, tooltip] = useTooltip()
-    const [isVisible, setIsVisible] = React.useState(false)
+const TooltipBase = (props: TooltipProps): React.ReactElement => {
+  const { className, disabled, label, ariaLabel, id, maxWidth, position, forceVisible } = props
+  const [trigger, tooltip] = useTooltip()
 
-    useImperativeHandle(ref, () => ({
-      toggle() {
-        setIsVisible(!isVisible)
-      },
-    }))
-
-    return (
-      <>
-        {cloneElement(
-          <span className={className}>
-            <StyledInfo disabled={disabled} />
-          </span>,
-          trigger
-        )}
-        {!disabled && (
-          <>
-            <TooltipPopup
-              {...tooltip}
-              isVisible={isVisible || tooltip.isVisible}
-              label={label}
-              ariaLabel={ariaLabel}
-              position={position || cactusPosition}
-              style={{ maxWidth }}
-            />
-            <VisuallyHidden role="tooltip" id={id}>
-              {label}
-            </VisuallyHidden>
-          </>
-        )}
-      </>
-    )
-  }
-)
+  return (
+    <>
+      {cloneElement(
+        <span className={className}>
+          <StyledInfo disabled={disabled} />
+        </span>,
+        trigger
+      )}
+      {!disabled && (
+        <>
+          <TooltipPopup
+            {...tooltip}
+            isVisible={forceVisible || tooltip.isVisible}
+            label={label}
+            ariaLabel={ariaLabel}
+            position={position || cactusPosition}
+            style={{ maxWidth }}
+          />
+          <VisuallyHidden role="tooltip" id={id}>
+            {label}
+          </VisuallyHidden>
+        </>
+      )}
+    </>
+  )
+}
 const shapeMap: { [K in Shape]: string } = {
   square: 'border-radius: 1px;',
   intermediate: 'border-radius: 4px;',

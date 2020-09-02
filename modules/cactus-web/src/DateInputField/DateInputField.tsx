@@ -48,7 +48,11 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       warning={warning}
       success={success}
     >
-      {({ fieldId, status, labelId, ariaDescribedBy, disabled }): React.ReactElement => (
+      {(
+        { fieldId, status, labelId, ariaDescribedBy, disabled },
+        handleFieldBlur,
+        handleFieldFocus
+      ): React.ReactElement => (
         <DateInput
           disabled={disabled}
           {...rest}
@@ -57,6 +61,8 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
           status={status}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
+          onFocus={handleFieldFocus}
+          onBlur={handleFieldBlur}
         />
       )}
     </AccessibleField>

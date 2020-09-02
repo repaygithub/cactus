@@ -8,7 +8,7 @@ exports[`component: Tooltip should render a disabled tooltip 1`] = `
 }
 
 .c1:hover {
-  color: hsl(200,96%,35%);
+  color: hsl(0,0%,70%);
 }
 
 .c0:focus {

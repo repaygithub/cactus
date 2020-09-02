@@ -50,7 +50,11 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
       error={error}
       width={width}
     >
-      {({ fieldId, labelId, name, ariaDescribedBy, status, disabled }): React.ReactElement => (
+      {(
+        { fieldId, labelId, name, ariaDescribedBy, status, disabled },
+        handleFieldBlur,
+        handleFieldFocus
+      ): React.ReactElement => (
         <Select
           {...rest}
           disabled={disabled}
@@ -59,6 +63,8 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
           id={fieldId}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
+          onFocus={handleFieldFocus}
+          onBlur={handleFieldBlur}
         />
       )}
     </AccessibleField>

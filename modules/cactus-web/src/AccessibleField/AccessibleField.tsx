@@ -7,7 +7,7 @@ import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
-import { Tooltip, TooltipHandle } from '../Tooltip/Tooltip'
+import { Tooltip } from '../Tooltip/Tooltip'
 
 interface AccessibleProps {
   name: string
@@ -21,7 +21,11 @@ interface AccessibleProps {
   disabled?: boolean
 }
 
-type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
+type RenderFunc = (
+  props: AccessibleProps,
+  handleFieldBlur: () => void,
+  handleFieldFocus: () => void
+) => JSX.Element | JSX.Element[]
 
 // These are the props commonly used by components that wrap AccessibleField.
 export interface FieldProps {
@@ -98,7 +102,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   } = accessibility
 
   const ref = React.useRef<HTMLDivElement | null>(null)
-  const tooltipRef = React.useRef<TooltipHandle>(null)
+  const [forceTooltipVisible, setTooltipVisible] = React.useState<boolean>(false)
 
   const [maxWidth, setMaxWidth] = React.useState<string | undefined>(undefined)
   React.useLayoutEffect((): void => {
@@ -111,7 +115,10 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   }, [maxWidth, setMaxWidth])
 
   const handleFieldFocus = () => {
-    if (tooltipRef.current !== null) tooltipRef.current.toggle()
+    setTooltipVisible(true)
+  }
+  const handleFieldBlur = () => {
+    setTooltipVisible(false)
   }
 
   return (
@@ -125,11 +132,11 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
           id={tooltipId}
           maxWidth={maxWidth}
           disabled={disabled}
-          ref={tooltipRef}
+          forceVisible={forceTooltipVisible}
         />
       )}
       {typeof props.children === 'function'
-        ? props.children(accessibility)
+        ? props.children(accessibility, handleFieldBlur, handleFieldFocus)
         : React.cloneElement(React.Children.only(props.children), {
             id: fieldId,
             name,
@@ -137,7 +144,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
             status,
             disabled,
             onFocus: handleFieldFocus,
-            onBlur: handleFieldFocus,
+            onBlur: handleFieldBlur,
           })}
       {status !== undefined && (
         <div>

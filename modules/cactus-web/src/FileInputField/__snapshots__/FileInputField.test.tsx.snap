@@ -133,7 +133,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 }
 
 .c7:hover {
-  color: hsl(200,96%,35%);
+  color: hsl(0,0%,70%);
 }
 
 .c6:focus {
