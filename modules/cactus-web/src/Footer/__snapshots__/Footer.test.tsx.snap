@@ -1,0 +1,210 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Footer snapshot 1`] = `
+.c8 {
+  font-style: italic;
+  outline: none;
+  position: relative;
+}
+
+.c8:link {
+  color: hsl(200,96%,35%);
+}
+
+.c8:visited {
+  color: hsl(200,18%,45%);
+}
+
+.c8:hover {
+  color: hsl(200,96%,11%);
+}
+
+.c8:focus {
+  color: hsl(200,96%,35%);
+  background-color: hsla(200,96%,35%,0.3);
+}
+
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 16px 24px 16px 24px;
+}
+
+.c2 {
+  margin-bottom: 16px;
+}
+
+.c4 {
+  max-width: 100%;
+}
+
+.c3 {
+  max-width: 200px;
+  max-height: 80px;
+}
+
+.c5 {
+  max-width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 16px 24px 16px 24px;
+  background-color: hsl(0,0%,100%);
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  padding: 0 16px 0 16px;
+  border-right: 1px solid hsl(200,96%,35%);
+}
+
+.c6 .c7 {
+  max-width: 100%;
+}
+
+.c6:last-of-type {
+  border-right: none;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 100%;
+  background-color: hsl(200,29%,90%);
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+@media screen and (min-width:768px) {
+  .c1 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c2 {
+    margin-right: 16px;
+    margin-bottom: 0px;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c5 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c6 {
+    max-width: calc(100% / 2);
+  }
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        <img
+          alt="Logo"
+          class="c3"
+          src="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+        />
+      </div>
+      <div
+        class="c4"
+      >
+        Custom Content
+      </div>
+    </div>
+    <div
+      class="c5"
+    >
+      <div
+        class="c6"
+      >
+        <a
+          class="c7 c8"
+          href="https://google.com"
+        >
+          Some Link
+        </a>
+      </div>
+      <div
+        class="c6"
+      >
+        <a
+          class="c7 c8"
+          href="https://repay.com"
+        >
+          Some Other Link
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
