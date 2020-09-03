@@ -1,0 +1,51 @@
+---
+name: Footer
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Footer from './Footer'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# Footer
+
+## Best practices
+
+- The footer should be rendered at the bottom of the page.
+- The footer should be rendered as a descendent of `ScreenSizeProvider` in order for the links to be displayed properly.
+- You can brand the footer using the `logo` prop -- this allows you to pass a logo to the footer, and you can provide either
+an img src _or_ a custom component to render an image.
+- The `alt` attribute on the logo will default to "Logo" when passing a src string to the `logo` prop. If the `alt` attr needs
+to be translated, we recommend that you pass a logo component with your own translated `alt` attribute set on your `img` tag.
+
+## Basic usage
+
+The `Footer` component provides the `Footer.Link` sub-component for rendering links. It accepts `to` prop
+and arranges all of your links in the bottom section of the footer.
+
+Any other custom content you'd like to display can be rendered as a child of `Footer` and will be shown to the right of the logo.
+
+### Try It Out
+
+export const code = `
+<Footer logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg">
+  Custom Footer Content
+  <Footer.Link to="https://google.com">Privacy Policy</Footer.Link>
+  <Footer.Link to="https://repay.com">Careers</Footer.Link>
+  <Footer.Link to="https://microsoft.com">Contact Us</Footer.Link>
+</Footer>
+`
+
+<LiveProvider code={code} scope={{ Footer }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Properties
+
+### Footer
+<PropsTable of={Footer} />
+
+### Footer.Link
+<PropsTable of={Footer} staticProp="FooterLink" />

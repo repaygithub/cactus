@@ -3,6 +3,7 @@ import {
   NavigationChevronLeft,
   NavigationChevronRight,
   NavigationChevronUp,
+  NavigationHamburger,
 } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -10,13 +11,14 @@ import styled from 'styled-components'
 
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { border, boxShadow, radius } from '../helpers/theme'
+import { border, borderSize, boxShadow, media, radius, textStyle } from '../helpers/theme'
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
   focusMenu,
   ITEM_SELECTOR,
   menuKeyHandler,
   useScrollButtons,
-  useSubmenuKeyHandlers,
+  useSubmenuHandlers,
   useSubmenuToggle,
 } from './scroll'
 
@@ -34,6 +36,18 @@ interface MenuProps {
 interface MenuBarProps {
   children: React.ReactNode
   'aria-label'?: string
+}
+
+type Variant = 'mobile' | 'sidebar' | 'top'
+
+const useVariant = (): Variant => {
+  const size = React.useContext(ScreenSizeContext)
+  if (size < SIZES.small) {
+    return 'mobile'
+  } else if (size < SIZES.large) {
+    return 'sidebar'
+  }
+  return 'top'
 }
 
 const preventAction = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -92,27 +106,12 @@ MenuBarItemFR.propTypes = {
 
 const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {
-    const [expanded, toggle] = useSubmenuToggle()
+    const variant = useVariant()
+    const isTopbar = variant === 'top'
+    const [expanded, toggle] = useSubmenuToggle(isTopbar)
 
-    const [toggleOnKey, handleSubmenu] = useSubmenuKeyHandlers(toggle)
+    const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
 
-    const closeOnBlur = React.useCallback(
-      (event) => {
-        const target = event.currentTarget
-        setTimeout(() => {
-          if (!target.contains(document.activeElement)) {
-            toggle(null, false)
-          }
-        })
-      },
-      [toggle]
-    )
-    const toggleOnClick = React.useCallback(
-      (event) => {
-        toggle(event.currentTarget, undefined)
-      },
-      [toggle]
-    )
     return (
       <li role="none" onKeyDown={handleSubmenu} onBlur={closeOnBlur}>
         <MenuButton
@@ -129,7 +128,19 @@ const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
             <NavigationChevronDown />
           </IconWrapper>
         </MenuButton>
-        <Menu expanded={expanded}>{children}</Menu>
+        {isTopbar ? (
+          <FloatingMenu expanded={expanded}>{children}</FloatingMenu>
+        ) : (
+          <InlineMenu
+            expanded={expanded}
+            role="menu"
+            aria-orientation="vertical"
+            onFocus={focusMenu}
+            onKeyDown={menuKeyHandler}
+          >
+            {children}
+          </InlineMenu>
+        )}
       </li>
     )
   }
@@ -147,7 +158,7 @@ const TextWrapper = styled.div`
   flex-grow: 1;
 `
 
-const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
+const FloatingMenu: React.FC<MenuProps> = ({ children, expanded }) => {
   const [scroll, menuRef] = useScrollButtons('vertical', expanded)
   return (
     <MenuWrapper expanded={expanded} tabIndex={-1}>
@@ -170,30 +181,37 @@ const Menu: React.FC<MenuProps> = ({ children, expanded }) => {
   )
 }
 
-const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
-  const [scroll, menuRef, menu] = useScrollButtons('horizontal', true)
-
-  React.useEffect(() => {
-    if (menu) {
-      // There doesn't seem to be any way in React to consistently identify the
-      // first descendent of a particular type, so instead we'll use this event
-      // to ensure that even if elements are dynamically added or removed, the
-      // first menuitem will always get tab focus for the whole component.
-      const mutationCallback = () => {
-        const menuItems = menu.querySelectorAll(ITEM_SELECTOR)
-        if (menuItems.length) {
-          ;(menuItems[0] as HTMLElement).tabIndex = 0
-          for (let i = 1; i < menuItems.length; i++) {
-            ;(menuItems[i] as HTMLElement).tabIndex = -1
-          }
+const setTabIndex = (menu: HTMLElement | null, isSidebar: boolean) => {
+  if (menu) {
+    // There doesn't seem to be any way in React to consistently identify the
+    // first descendent of a particular type, so instead we'll use this event
+    // to ensure that even if elements are dynamically added or removed, the
+    // first menuitem will always get tab focus for the whole component.
+    const mutationCallback = () => {
+      const menuItems = menu.querySelectorAll(ITEM_SELECTOR)
+      if (menuItems.length) {
+        let i = 0
+        if (!isSidebar) {
+          ;(menuItems[i++] as HTMLElement).tabIndex = 0
+        }
+        for (; i < menuItems.length; i++) {
+          ;(menuItems[i] as HTMLElement).tabIndex = -1
         }
       }
-      const observer = new MutationObserver(mutationCallback)
-      observer.observe(menu, { childList: true, subtree: true })
-      mutationCallback()
-      return () => observer.disconnect()
     }
-  }, [menu])
+    const observer = new MutationObserver(mutationCallback)
+    observer.observe(menu, { childList: true, subtree: true })
+    mutationCallback()
+    return () => observer.disconnect()
+  }
+}
+
+const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
+  const orientation = 'horizontal'
+  const [scroll, menuRef, menu] = useScrollButtons(orientation, true)
+
+  React.useEffect(() => setTabIndex(menu, false), [menu])
+
   return (
     <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
@@ -201,7 +219,7 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
       </ScrollButton>
       <MenuList
         role="menubar"
-        aria-orientation="horizontal"
+        aria-orientation={orientation}
         ref={menuRef}
         onFocus={focusMenu}
         onKeyDown={menuKeyHandler}
@@ -215,10 +233,59 @@ const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...prop
   )
 })
 
+const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
+  const orientation = 'vertical'
+  const [expanded, toggle] = useSubmenuToggle(false)
+  const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
+  React.useEffect(() => setTabIndex(menu, true), [menu])
+  return (
+    <SidebarNav
+      {...props}
+      ref={ref}
+      aria-orientation={orientation}
+      onKeyDown={handleSubmenu}
+      onBlur={closeOnBlur}
+      onClick={navClickHandler}
+      tabIndex={-1}
+    >
+      <HamburgerButton
+        tabIndex={0}
+        aria-haspopup="menu"
+        aria-expanded={expanded}
+        onClick={toggleOnClick}
+        onKeyDown={toggleOnKey}
+        onKeyUp={preventAction}
+      >
+        <NavigationHamburger />
+      </HamburgerButton>
+      <SidebarMenu
+        expanded={expanded}
+        role="menu"
+        aria-orientation={orientation}
+        onFocus={focusMenu}
+        onKeyDown={menuKeyHandler}
+        ref={menuRef}
+      >
+        {children}
+      </SidebarMenu>
+    </SidebarNav>
+  )
+})
+
+const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
+  const variant = useVariant()
+  const Menubar = variant === 'top' ? Topbar : Sidebar
+  return <Menubar {...props} ref={ref} />
+})
+
 const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
   const button = event.target as HTMLElement
   if (button.matches && button.matches('[role="menuitem"]:not([aria-haspopup])')) {
-    event.currentTarget.focus()
+    ;(document.activeElement as HTMLElement).blur()
+    const nav = event.currentTarget
+    setTimeout(() => nav.focus())
   }
 }
 
@@ -266,7 +333,7 @@ const Nav = styled.nav`
   align-items: stretch;
   position: relative;
   outline: none;
-  ${(p) => p.theme.textStyles.small};
+  ${(p) => textStyle(p.theme, 'small')};
   ${(p) => p.theme.colorStyles.standard};
   box-shadow: inset 0 -${(p) => border(p.theme, 'lightContrast').replace('solid', '0')};
 
@@ -289,7 +356,107 @@ const Nav = styled.nav`
   }
 `
 
-const MenuWrapper = styled.div<{ expanded: boolean }>`
+const SidebarNav = styled.nav`
+  outline: none;
+  position: fixed;
+  left: 0;
+  ${(p) => textStyle(p.theme, 'small')};
+  ${(p) => p.theme.colorStyles.standard};
+  box-sizing: border-box;
+
+  width: 100vw;
+  height: 60px;
+  bottom: 0;
+  border-top: ${(p) => border(p.theme, 'lightContrast')};
+
+  ${(p) => media(p.theme, 'small')} {
+    width: 60px;
+    height: 100vh;
+    top: 0;
+    border-top: 0;
+    border-right: ${(p) => border(p.theme, 'lightContrast')};
+  }
+`
+
+const listStyle = `
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`
+
+const InlineMenu = styled.ul<MenuProps>`
+  ${listStyle}
+  display: ${(p) => (p.expanded ? 'block' : 'none')};
+`
+
+// The box shadow is #2, but shifted to be only on the right side.
+const SidebarMenu = styled.ul<MenuProps>`
+  ${(p) => p.theme.colorStyles.standard}
+  ${listStyle}
+  display: ${(p) => (p.expanded ? 'block' : 'none')};
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  top: unset;
+  bottom: 60px;
+  height: auto;
+  max-height: calc(100vh - 60px);
+  z-index: 100;
+
+  ${(p) => media(p.theme, 'small')} {
+    left: 60px;
+    width: 350px;
+    top: 0;
+    bottom: 0;
+    max-height: 100vh;
+    ${(p) => boxShadow(p.theme, '12px 0 24px -12px')};
+  }
+  overflow: auto;
+  outline: none;
+
+  [role='menuitem'] {
+    padding: 18px 16px;
+    border-bottom: ${(p) => border(p.theme, 'lightContrast')};
+    ${NavigationChevronDown} {
+      transform: rotateZ(-90deg);
+    }
+    &[aria-expanded='true'] ${NavigationChevronDown} {
+      transform: rotateZ(90deg);
+    }
+    &:hover,
+    &[aria-expanded='true'] {
+      color: ${(p) => p.theme.colors.callToAction};
+      border-bottom-color: ${(p) => p.theme.colors.callToAction};
+    }
+    position: relative;
+    overflow: visible;
+    &:focus::after {
+      border: ${(p) => border(p.theme, 'callToAction')};
+      background-color: transparent;
+      box-sizing: border-box;
+      width: 100%;
+      height: calc(100% + ${borderSize});
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    &[aria-current='true'],
+    &[aria-expanded='true'] {
+      font-weight: 600;
+    }
+  }
+
+  [role='menu'] {
+    background-color: ${(p) => p.theme.colors.lightContrast};
+    padding-left: 8px;
+    [role='menu'] {
+      padding-left: 14px;
+    }
+  }
+`
+
+const MenuWrapper = styled.div<MenuProps>`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
   visibility: ${(p) => (p.expanded ? 'visible' : 'hidden')};
@@ -303,14 +470,11 @@ const MenuWrapper = styled.div<{ expanded: boolean }>`
   white-space: normal;
   flex-flow: column nowrap;
   align-items: stretch;
+  width: auto;
   min-width: 200px;
   max-width: 320px;
   max-height: 70vh;
   z-index: 1;
-
-  ul {
-    width: 100%;
-  }
 
   [role='menuitem'] {
     padding: 4px 8px;
@@ -334,32 +498,22 @@ const MenuWrapper = styled.div<{ expanded: boolean }>`
   }
 `
 
-const MenuList = styled.ul<{ top?: number; left?: number }>`
-  list-style: none;
+const MenuList = styled.ul`
+  ${listStyle}
+  width: 100%;
   display: flex;
   flex-direction: ${(p) => (p['aria-orientation'] === 'vertical' ? 'column' : 'row')};
   justify-content: flex-start;
   flex-wrap: nowrap;
-  flex-grow: 1;
-  padding: 0;
-  margin: 0;
   align-items: stretch;
 
   overflow: hidden;
-
-  & > li > [role='menuitem'] {
-    position: relative;
-    top: 0px;
-    left: 0px;
-  }
 `
 
-const MenuButton = styled.button.attrs({ role: 'menuitem' })`
+const buttonStyles = `
   cursor: pointer;
   border: none;
   outline: none;
-  width: 100%;
-  height: 100%;
   background-color: transparent;
   text-decoration: none;
   text-align: left;
@@ -377,11 +531,83 @@ const MenuButton = styled.button.attrs({ role: 'menuitem' })`
   &::-moz-focus-inner {
     border: none;
   }
+`
+
+const MenuButton = styled.button.attrs({ role: 'menuitem' })`
+  ${buttonStyles}
+  width: 100%;
+  height: 100%;
 
   ${NavigationChevronDown} {
     width: 8px;
     height: 8px;
     margin-left: 16px;
     ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
+  }
+`
+
+const HamburgerButton = styled.button.attrs({ role: 'button' })`
+  ${buttonStyles}
+
+  width: 60px;
+  height: 60px;
+  padding: 18px;
+  border-right: ${(p) => border(p.theme, 'lightContrast')};
+
+  ${(p) => media(p.theme, 'small')} {
+    border-right: 0;
+    border-bottom: ${(p) => border(p.theme, 'lightContrast')};
+  }
+
+  ${NavigationHamburger} {
+    width: 24px;
+    height: 24px;
+  }
+
+  :hover {
+    color: ${(p) => p.theme.colors.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
+  }
+
+  position: relative;
+  overflow: visible;
+  :focus::after {
+    border: ${(p) => border(p.theme, 'callToAction')};
+    background-color: transparent;
+    box-sizing: border-box;
+    width: calc(100% + ${borderSize});
+    height: 100%;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -${borderSize};
+    ${(p) => media(p.theme, 'small')} {
+      top: 0;
+      width: 100%;
+      height: calc(100% + ${borderSize});
+    }
+  }
+
+  &[aria-expanded='true'] {
+    ${(p) => p.theme.colorStyles.callToAction};
+    border-color: ${(p) => p.theme.colors.callToAction};
+
+    &::after {
+      content: '';
+      z-index: 99;
+      background-color: rgba(0, 0, 0, 0.5);
+      position: fixed;
+      top: 0;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      cursor: default;
+      border: 0;
+      width: auto;
+      height: auto;
+      ${(p) => media(p.theme, 'small')} {
+        display: none;
+      }
+    }
   }
 `
