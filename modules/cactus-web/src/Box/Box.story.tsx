@@ -1,5 +1,5 @@
 import cactusTheme, { TextStyleCollection } from '@repay/cactus-theme'
-import { select, text } from '@storybook/addon-knobs'
+import { object, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import { PositionProperty, ZIndexProperty } from 'csstype'
 import React from 'react'
@@ -32,6 +32,12 @@ const sizes = [0, 1, 2, 3, 4, 5, 6]
 const colorStyles = Object.keys(cactusTheme.colorStyles)
 const themeColors = Object.keys(cactusTheme.colors)
 const textStyles = Object.keys(cactusTheme.textStyles)
+
+const defaultBorderRadiusObj = {
+  square: '4px',
+  intermediate: '10px',
+  round: '20px',
+}
 
 storiesOf('Box', module)
   .add(
@@ -84,3 +90,23 @@ storiesOf('Box', module)
       </Box>
     )
   )
+  .add('Custom Border Radius Definitions', () => (
+    <Box
+      width={text('width', '120px')}
+      height={text('height', '120px')}
+      color={select('color', themeColors, 'darkestContrast')}
+      backgroundColor={select('backgroundColor (bg)', themeColors, 'lightContrast')}
+      borderColor={select('borderColor', themeColors, 'darkestContrast')}
+      borderWidth={text('borderWidth', '2px')}
+      borderStyle={text('borderStyle', 'solid')}
+      textStyle={select('textStyle', textStyles, 'body') as keyof TextStyleCollection}
+      padding={select('padding', sizes, 4)}
+      borderRadius={object('borderRadius', defaultBorderRadiusObj)}
+      borderTopLeftRadius={object('borderTopLeftRadius', {})}
+      borderTopRightRadius={object('borderTopRightRadius', {})}
+      borderBottomRightRadius={object('borderBottomRightRadius', {})}
+      borderBottomLeftRadius={object('borderBottomLeftRadius', {})}
+    >
+      {text('children', 'Example Content')}
+    </Box>
+  ))
