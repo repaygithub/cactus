@@ -55,5 +55,6 @@ Array [
   "useId",
   "ConfirmModal",
   "Tag",
+  "Footer",
 ]
 `;
