@@ -54,5 +54,6 @@ Array [
   "Tooltip",
   "useId",
   "ConfirmModal",
+  "Tag",
 ]
 `;

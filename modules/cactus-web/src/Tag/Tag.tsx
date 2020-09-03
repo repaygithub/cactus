@@ -72,7 +72,7 @@ Tag.propTypes = {
 
 Tag.defaultProps = {
   id: 'tag-id',
-  closeOption: true,
+  closeOption: false,
   hidden: false,
 }
 

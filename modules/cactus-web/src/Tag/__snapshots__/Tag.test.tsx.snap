@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Tag can render content as children 1`] = `
+.c0 {
+  box-sizing: border-box;
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 0 8px 0 8px;
+  border: 1px solid hsl(200,29%,90%);
+  border-radius: 8px;
+  margin-right: 2px;
+  display: inline-block;
+  height: 24px;
+}
+
+.c0 .sc-fzoxnE {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 8px;
+  padding: 4px;
+  margin-left: 12px;
+  vertical-align: -3px;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+<div>
+  <span
+    class="c0"
+    id="tag-id"
+  >
+    <span
+      class="value-tag__label"
+    >
+      Test label
+    </span>
+  </span>
+</div>
+`;
