@@ -11,6 +11,21 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Box
 
+## Best practices
+
+Use the theme based parameters when possible, this will prevent discrepancies should the theme update in the future.
+
+## Basic usage
+
+The `Box` component is a generic component intended to be used for spacing and alignment within an application.
+  - The default `Box` is a `div` element but can be swapped for any element type using the `as="dd"` prop.
+  - The only built-in style is `box-sizing: border-box` for intuitive sizing.
+  - With the `Box` you have the ability to make the box conform to the shape set in the theme just like most of the rest of the cactus components do.
+  To do this, just set `borderRadius="themed"`.
+  - You can also pass in custom border radius definitions to change with the theme. To do this, you can set
+  `borderRadius={{ square: '2px', intermediate: '6px', round: '12px' }}`. You can customize each individual corner this way as well, using `borderTopLeftRadius`,
+  `borderTopRightRadius`, and so on.
+
 ### Try it out
 
 export const code = `<Box
@@ -35,14 +50,6 @@ export const code = `<Box
     <LivePreview />
   </div>
 </LiveProvider>
-
-## Best practices
-
-Use the theme based parameters when possible, this will prevent discrepencies should the theme update in the future.
-
-## Basic usage
-
-The `Box` component is a generic component intended to be used for spacing and alignment within an application. The default `Box` is a `div` element but can be swapped for any element type using the `as="dd"` prop. The only built-in style is `box-sizing: border-box` for intuitive sizing.
 
 ```jsx
 import React from 'react'
