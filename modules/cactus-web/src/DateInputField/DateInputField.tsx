@@ -5,6 +5,7 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import DateInput from '../DateInput/DateInput'
+import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 
 interface DateInputFieldProps
@@ -32,9 +33,18 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     error,
     width,
     disabled,
+    onBlur,
+    onFocus,
     ...rest
   } = omitMargins(props) as Omit<DateInputFieldProps, keyof MarginProps>
 
+  const handleFocus = (): void => {
+    handleEvent(onFocus, name)
+  }
+
+  const handleBlur = (): void => {
+    handleEvent(onBlur, name)
+  }
   return (
     <AccessibleField
       disabled={disabled}
@@ -61,8 +71,12 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
           status={status}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
-          onFocus={handleFieldFocus}
-          onBlur={handleFieldBlur}
+          onFocus={() => {
+            handleFocus(), handleFieldFocus()
+          }}
+          onBlur={() => {
+            handleBlur(), handleFieldBlur()
+          }}
         />
       )}
     </AccessibleField>
