@@ -891,7 +891,7 @@ describe('component: Select', (): void => {
       )
       await animationRender()
       expect(getByRole('listbox')).toBeInTheDocument()
-      expect(document.activeElement).toBe(getByRole('search'))
+      expect(document.activeElement).toBe(getByRole('textbox'))
     })
 
     test('typing should filter options', async (): Promise<void> => {
@@ -908,7 +908,7 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      const searchBox = getByRole('search')
+      const searchBox = getByRole('textbox')
       userEvent.type(searchBox, 'phoe')
       const list = getByRole('listbox')
       expect(list).toHaveTextContent('phoenix')
@@ -1258,7 +1258,7 @@ describe('component: Select', (): void => {
       )
       await animationRender()
       fireEvent.click(getByText('flagstaff'))
-      fireEvent.click(getByRole('search'))
+      fireEvent.click(getByRole('textbox'))
       expect(getByRole('listbox')).not.toBeNull()
     })
 

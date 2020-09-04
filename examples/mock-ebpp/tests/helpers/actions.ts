@@ -9,7 +9,7 @@ const getDropdown = Selector((): Element | null => {
 })
 
 const getCombo = Selector((): Element | null => {
-  if (document.activeElement && document.activeElement.getAttribute('role') === 'search') {
+  if (document.activeElement && document.activeElement.getAttribute('role') === 'textbox') {
     return document.activeElement
   }
   return null
