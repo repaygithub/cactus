@@ -48,6 +48,7 @@ export interface SelectProps
   disabled?: boolean
   multiple?: boolean
   comboBox?: boolean
+  comboBoxSearchLabel?: string
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -503,6 +504,7 @@ const ListWrapper = styled.div`
 interface ListProps {
   isOpen: boolean
   comboBox?: boolean
+  comboBoxSearchLabel: string
   options: ExtendedOptionType[]
   multiple?: boolean
   searchValue: string
@@ -976,12 +978,13 @@ class List extends React.Component<ListProps, ListState> {
                       <ComboInput
                         data-role="mobile-search"
                         type="text"
-                        role="search"
+                        role="textbox"
                         ref={this.mobileInputRef}
                         value={this.props.searchValue}
                         onChange={this.props.handleComboInputChange}
                         onBlur={this.props.handleComboInputBlur}
                         style={{ width: '40%', marginLeft: '16px' }}
+                        aria-label={this.props.comboBoxSearchLabel}
                       />
                     ) : null}
                     <TextButton onClick={onClose} variant="action" mr={comboBox ? 4 : 0}>
@@ -1490,11 +1493,12 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                   onChange={this.handleComboInputChange}
                   onBlur={this.handleComboInputBlur}
                   onKeyDown={this.handleComboInputKeyDown}
-                  role="search"
+                  role="textbox"
                   aria-haspopup="listbox"
                   aria-expanded={isOpen || undefined}
                   aria-multiselectable={multiple}
                   aria-activedescendant={activeDescendant ? activeDescendant : undefined}
+                  aria-label={this.props.comboBoxSearchLabel || 'Search for an option'}
                 />
               ) : (
                 <SelectTrigger
@@ -1524,6 +1528,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                 ref={this.listRef}
                 isOpen={isOpen}
                 comboBox={comboBox}
+                comboBoxSearchLabel={this.props.comboBoxSearchLabel || 'Search for an option'}
                 options={options}
                 multiple={multiple}
                 searchValue={searchValue}

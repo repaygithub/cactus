@@ -152,3 +152,18 @@ test('should not trigger onChange event', () => {
   expect(onChange).not.toHaveBeenCalled()
 })
 ```
+
+### Accessing Local Storybooks on iOS
+
+Sometimes it may be necessary to view the storybooks on a mobile device to test/debug features like accessibility. To do this, you can follow these steps:
+
+1. Plug an iPhone in to your Mac & make sure the phone is on the same network as the computer.
+2. In the iPhone's settings, navigate to Safari > Advanced and make sure "Web Inspector" is turned on.
+3. On your Mac, open Safari > Preferences > Advanced and make sure "Show develop menu in menu bar" is checked.
+4. In the Safari search bar on the iPhone, type your computer's IP address followed by the port the storybooks are running on, which defaults to 9001.
+(Ex: 10.1.2.345:9001)
+5. You can view the development console on Mac by clicking Develop > (your iPhone's name) > and selecting the browser window from the list of open windows
+on the iOS device.
+
+Note: If you don't know your computer's IP address, you can get it by running `ifconfig` in your terminal. The IP address you'll want will be directly after `inet`
+in the last result returned from `ifconfig`. 
