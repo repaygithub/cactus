@@ -1,27 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Tooltip should render a disabled tooltip 1`] = `
-.c1 {
+.c0 {
   vertical-align: middle;
   outline: none;
   color: hsl(0,0%,70%);
 }
 
-.c1:hover {
+.c0:hover {
   color: hsl(0,0%,70%);
-}
-
-.c0:focus {
-  color: hsl(47,82%,47%);
 }
 
 <div>
   <span
-    class="c0"
+    class=""
     data-reach-tooltip-trigger=""
   >
     <svg
-      class="sc-fzoCCn c1"
+      class="sc-fzoCCn c0"
       disabled=""
       fill="currentcolor"
       height="1em"
@@ -37,27 +33,23 @@ exports[`component: Tooltip should render a disabled tooltip 1`] = `
 `;
 
 exports[`component: Tooltip should render tooltip icon 1`] = `
-.c1 {
+.c0 {
   vertical-align: middle;
   outline: none;
   color: hsl(200,10%,20%);
 }
 
-.c1:hover {
+.c0:hover {
   color: hsl(200,96%,35%);
-}
-
-.c0:focus {
-  color: hsl(47,82%,47%);
 }
 
 <div>
   <span
-    class="c0"
+    class=""
     data-reach-tooltip-trigger=""
   >
     <svg
-      class="sc-fzoCCn c1"
+      class="sc-fzoCCn c0"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -87,7 +79,6 @@ exports[`component: Tooltip should render tooltip on hover 1`] = `
   font-size: 15px;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  border-color: hsl(200,96%,35%);
   box-sizing: border-box;
   overflow-wrap: break-word;
   border: 1px solid hsl(200,96%,35%);

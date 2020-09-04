@@ -5,7 +5,7 @@ import { NotificationInfo } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { cloneElement } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
@@ -77,12 +77,26 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
 
 interface StyledInfoProps {
   disabled?: boolean
+  forceVisible?: boolean
 }
 
+const getStyledInfoColor = (props: StyledInfoProps): ReturnType<typeof css> => {
+  if (props.disabled) {
+    return css`
+      color: ${(p): string => p.theme.colors.mediumGray};
+    `
+  } else if (props.forceVisible) {
+    return css`
+      color: ${(p): string => p.theme.colors.callToAction};
+    `
+  }
+  return css`
+    color: ${(p): string => p.theme.colors.darkestContrast};
+  `
+}
 const StyledInfo = styled(NotificationInfo)<StyledInfoProps>`
   outline: none;
-  color: ${(p): string =>
-    p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast};
+  ${getStyledInfoColor};
   &:hover {
     color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
   }
@@ -96,7 +110,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
     <>
       {cloneElement(
         <span className={className}>
-          <StyledInfo disabled={disabled} />
+          <StyledInfo disabled={disabled} forceVisible={forceVisible} />
         </span>,
         trigger
       )}
@@ -132,7 +146,6 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   ${(p): string => boxShadow(p.theme, 1)};
   font-size: 15px;
   ${(p): ColorStyle => p.theme.colorStyles.standard};
-  border-color: ${(p): string => p.theme.colors.callToAction};
   box-sizing: border-box;
   overflow-wrap: break-word;
   border: ${(p) => border(p.theme, 'callToAction')};
@@ -140,9 +153,6 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
 `
 
 export const Tooltip = styled(TooltipBase)`
-  &:focus {
-    color: ${(p): string => p.theme.colors.warning};
-  }
   ${margin}
 `
 

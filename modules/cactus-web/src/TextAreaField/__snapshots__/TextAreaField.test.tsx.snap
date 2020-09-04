@@ -12,18 +12,14 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c8 {
+.c7 {
   vertical-align: middle;
   outline: none;
   color: hsl(200,10%,20%);
 }
 
-.c8:hover {
+.c7:hover {
   color: hsl(200,96%,35%);
-}
-
-.c7:focus {
-  color: hsl(47,82%,47%);
 }
 
 .c2 {
@@ -48,7 +44,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   margin-top: 4px;
 }
 
-.c10 {
+.c9 {
   border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
   min-height: 100px;
@@ -64,40 +60,40 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   resize: none;
 }
 
-.c10:first-line {
+.c9:first-line {
   padding-right: 15px;
 }
 
-.c10:focus {
+.c9:focus {
   border-color: hsl(200,96%,35%);
 }
 
-.c10:disabled {
+.c9:disabled {
   cursor: not-allowed;
   color: hsl(0,0%,70%);
 }
 
-.c10:disabled::-webkit-input-placeholder {
+.c9:disabled::-webkit-input-placeholder {
   color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c10:disabled::-moz-placeholder {
+.c9:disabled::-moz-placeholder {
   color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c10:disabled:-ms-input-placeholder {
+.c9:disabled:-ms-input-placeholder {
   color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c10:disabled::placeholder {
+.c9:disabled::placeholder {
   color: hsl(0,0%,70%);
   font-style: oblique;
 }
 
-.c9 {
+.c8 {
   position: relative;
   display: block;
 }
@@ -115,13 +111,13 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 }
 
 @media screen and (min-width:768px) {
-  .c10 {
+  .c9 {
     min-width: 336px;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c10 {
+  .c9 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -139,11 +135,11 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       boolest
     </label>
     <span
-      class="c6 c7"
+      class="c6 "
       data-reach-tooltip-trigger=""
     >
       <svg
-        class="sc-fzpdbB c8"
+        class="sc-fzpdbB c7"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -162,11 +158,11 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       the boolest dude in the office
     </span>
     <div
-      class="c9"
+      class="c8"
     >
       <textarea
         aria-describedby="boolest-tip boolest-status"
-        class="c10"
+        class="c9"
         id="boolest"
         name="boolest"
         width="100%"

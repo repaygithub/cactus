@@ -21,11 +21,7 @@ interface AccessibleProps {
   disabled?: boolean
 }
 
-type RenderFunc = (
-  props: AccessibleProps,
-  handleFieldBlur: () => void,
-  handleFieldFocus: () => void
-) => JSX.Element | JSX.Element[]
+type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
 
 // These are the props commonly used by components that wrap AccessibleField.
 export interface FieldProps {
@@ -122,7 +118,12 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   }
 
   return (
-    <FieldWrapper className={props.className} ref={ref}>
+    <FieldWrapper
+      className={props.className}
+      ref={ref}
+      onFocus={handleFieldFocus}
+      onBlur={handleFieldBlur}
+    >
       <Label {...props.labelProps} id={labelId} htmlFor={fieldId}>
         {props.label}
       </Label>
@@ -136,15 +137,13 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
         />
       )}
       {typeof props.children === 'function'
-        ? props.children(accessibility, handleFieldBlur, handleFieldFocus)
+        ? props.children(accessibility)
         : React.cloneElement(React.Children.only(props.children), {
             id: fieldId,
             name,
             'aria-describedby': ariaDescribedBy,
             status,
             disabled,
-            onFocus: handleFieldFocus,
-            onBlur: handleFieldBlur,
           })}
       {status !== undefined && (
         <div>

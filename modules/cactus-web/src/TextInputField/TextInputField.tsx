@@ -67,11 +67,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       error={error}
       tooltip={tooltip}
     >
-      {(
-        { fieldId, status, ariaDescribedBy, disabled },
-        handleFieldBlur,
-        handleFieldFocus
-      ): React.ReactElement => (
+      {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextInput
           {...inputProps}
           disabled={disabled}
@@ -79,12 +75,8 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
           width="100%"
           status={status}
           onChange={handleChange}
-          onFocus={() => {
-            handleFocus(), handleFieldFocus()
-          }}
-          onBlur={() => {
-            handleBlur(), handleFieldBlur()
-          }}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           name={name}
           aria-describedby={ariaDescribedBy}
         />
