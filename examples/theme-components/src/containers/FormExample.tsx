@@ -2,12 +2,11 @@ import { RouteComponentProps } from '@reach/router'
 import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import {
   Alert,
-  Box,
   Button,
   Card,
   CheckBoxField,
   Flex,
-  RadioButtonField,
+  RadioGroup,
   SelectField,
   Text,
   TextAreaField,
@@ -161,39 +160,18 @@ const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
             checked={values.data.checkbox}
             onChange={onChange}
           />
-          <Box my={4}>
-            <Text as="h4" mb={3}>
-              A set of Radio Buttons
-            </Text>
-            <RadioButtonField
-              name="radiobuttonGroup"
-              label="A Option"
-              value="radio_a"
-              checked={values.data.radiobuttonGroup === 'radio_a'}
-              onChange={onChange}
-            />
-            <RadioButtonField
-              name="radiobuttonGroup"
-              label="B Option"
-              value="radio_b"
-              checked={values.data.radiobuttonGroup === 'radio_b'}
-              onChange={onChange}
-            />
-            <RadioButtonField
-              name="radiobuttonGroup"
-              label="C Option"
-              value="radio_c"
-              checked={values.data.radiobuttonGroup === 'radio_c'}
-              onChange={onChange}
-            />
-            <RadioButtonField
-              name="radiobuttonGroup"
-              label="D Option"
-              value="radio_d"
-              checked={values.data.radiobuttonGroup === 'radio_d'}
-              onChange={onChange}
-            />
-          </Box>
+          <RadioGroup
+            name="radiobuttonGroup"
+            label="A set of Radio Buttons"
+            my={4}
+            onChange={onChange}
+            value={values.data.radiobuttonGroup}
+          >
+            <RadioGroup.Button label="A Option" value="radio_a" />
+            <RadioGroup.Button label="B Option" value="radio_b" />
+            <RadioGroup.Button label="C Option" value="radio_c" />
+            <RadioGroup.Button label="D Option" value="radio_d" />
+          </RadioGroup>
           <SelectField
             label="Select Field"
             name="selectBox"

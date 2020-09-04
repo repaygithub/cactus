@@ -6,7 +6,7 @@ import {
   DateInputField,
   FileInputField,
   Flex,
-  RadioButtonField,
+  RadioGroup,
   SelectField,
   Text,
   TextAreaField,
@@ -256,30 +256,17 @@ const UIConfig = (props: RouteComponentProps): React.ReactElement => {
                 />
               </Flex>
 
-              <Flex flexDirection="column" my={3}>
-                <h3 style={{ margin: '5px 0' }}>Select Color</h3>
-                <RadioButtonField
-                  name="selectColor"
-                  value="yellow"
-                  label="Yellow"
-                  onChange={handleChange}
-                  checked={state.formData.selectColor === 'yellow'}
-                />
-                <RadioButtonField
-                  name="selectColor"
-                  value="pink"
-                  label="Pink"
-                  onChange={handleChange}
-                  checked={state.formData.selectColor === 'pink'}
-                />
-                <RadioButtonField
-                  name="selectColor"
-                  value="blue"
-                  label="Blue"
-                  onChange={handleChange}
-                  checked={state.formData.selectColor === 'blue'}
-                />
-              </Flex>
+              <RadioGroup
+                name="selectColor"
+                label="Select Color"
+                my={3}
+                onChange={handleChange}
+                value={state.formData.selectColor}
+              >
+                <RadioGroup.Button value="yellow" label="Yellow" />
+                <RadioGroup.Button value="pink" label="Pink" />
+                <RadioGroup.Button value="blue" label="Blue" />
+              </RadioGroup>
 
               <ToggleField
                 name="allowCustomerLogin"
