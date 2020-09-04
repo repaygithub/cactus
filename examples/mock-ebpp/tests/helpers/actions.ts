@@ -1,14 +1,14 @@
 import { queryByLabelText, queryByText, within } from '@testing-library/testcafe'
 import { ClientFunction, Selector } from 'testcafe'
 
-const getDropdown = Selector((): Element | null => {
+const getDropdown = Selector(() => {
   if (document.activeElement && document.activeElement.getAttribute('role') === 'listbox') {
     return document.activeElement
   }
   return null
 })
 
-const getCombo = Selector((): Element | null => {
+const getCombo = Selector(() => {
   if (document.activeElement && document.activeElement.getAttribute('role') === 'search') {
     return document.activeElement
   }
@@ -81,7 +81,7 @@ const focusAccordionHeaderByText = ClientFunction((text: string): void => {
     ?.focus()
 })
 
-const getActiveElement = Selector((): Element | null => document.activeElement)
+const getActiveElement = Selector(() => document.activeElement)
 
 export default (
   t: TestController
