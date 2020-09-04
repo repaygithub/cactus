@@ -2,8 +2,10 @@ import PropTypes from 'prop-types'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import styled, { DefaultTheme, StyledComponent } from 'styled-components'
 
-import { boxShadow } from '../helpers/theme'
+import { useSizeRef } from '../helpers/rect'
+import { boxShadow, media } from '../helpers/theme'
 import useId from '../helpers/useId'
+import { useLayout } from '../Layout/Layout'
 import Link from '../Link/Link'
 import { ScreenSizeContext, Size } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -37,7 +39,7 @@ const LogoAndContentSection = styled('div')`
   align-items: center;
   padding: 16px 24px 16px 24px;
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
+  ${(p) => media(p.theme, 'small')} {
     flex-direction: row;
     justify-content: flex-start;
   }
@@ -46,7 +48,7 @@ const LogoAndContentSection = styled('div')`
 const LogoWrapper = styled('div')`
   margin-bottom: 16px;
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
+  ${(p) => media(p.theme, 'small')} {
     margin-right: 16px;
     margin-bottom: 0px;
   }
@@ -70,7 +72,7 @@ const LinksColsContainer = styled('div')`
   padding: 16px 24px 16px 24px;
   background-color: ${(p) => p.theme.colors.white};
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
+  ${(p) => media(p.theme, 'small')} {
     flex-direction: row;
   }
 `
@@ -87,7 +89,7 @@ const LinkCol = styled('div')<LinkColProps>`
     max-width: 100%;
   }
 
-  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
+  ${(p) => media(p.theme, 'small')} {
     max-width: calc(100% / ${(p) => p.maxCols});
   }
 
@@ -134,8 +136,17 @@ const FooterBase = (props: FooterProps) => {
 
   const dividedLinks = divideLinks(Array.from(links.values()), columnsMap[screenSize.size])
 
+  const [footerHeight, setHeight] = React.useState<number>(0)
+  const heightCallback = React.useCallback(
+    (footerRect: DOMRect) => setHeight(() => footerRect.height),
+    [setHeight]
+  )
+  const sizeRef = useSizeRef<HTMLDivElement>(heightCallback)
+  const position = screenSize.size === 'tiny' ? 'flow' : 'fixedBottom'
+  useLayout('footer', { position, offset: footerHeight })
+
   return (
-    <div className={className}>
+    <div ref={sizeRef} className={className}>
       <LogoAndContentSection>
         {logo && (
           <LogoWrapper>
@@ -188,6 +199,11 @@ export const Footer = styled(FooterBase)`
   width: 100%;
   background-color: ${(p) => p.theme.colors.lightContrast};
   ${(p) => boxShadow(p.theme, 1)};
+  ${(p) => media(p.theme, 'small')} {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+  }
 `
 
 const DefaultFooter = Footer as any

@@ -18,7 +18,6 @@ const LinkBase = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => 
 export const Link = styled(LinkBase)`
   font-style: italic;
   outline: none;
-  position: relative;
 
   :link {
     color: ${(p): string => p.theme.colors.callToAction};

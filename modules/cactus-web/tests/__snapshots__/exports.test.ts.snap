@@ -23,6 +23,7 @@ Array [
   "Grid",
   "IconButton",
   "Label",
+  "Layout",
   "Link",
   "MenuBar",
   "MenuButton",

@@ -4,7 +4,6 @@ exports[`component: Link should render a Link 1`] = `
 .c0 {
   font-style: italic;
   outline: none;
-  position: relative;
 }
 
 .c0:link {
@@ -38,7 +37,6 @@ exports[`component: Link should support margin space props 1`] = `
 .c0 {
   font-style: italic;
   outline: none;
-  position: relative;
   margin-top: 16px;
   margin-bottom: 16px;
 }
