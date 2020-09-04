@@ -3,10 +3,11 @@ import { Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, CSSObject, FlattenSimpleInterpolation } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 import { textStyle } from '../helpers/theme'
 
-interface TagProps {
+interface TagProps extends MarginProps {
   id?: string
   className?: string
   closeOption?: boolean
@@ -20,7 +21,9 @@ const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
     return (
       <span id={id} ref={ref} className={className}>
         <span className="value-tag__label">{children}</span>
-        {closeOption && <NavigationClose data-role="close" onClick={onCloseIconClick} />}
+        {(closeOption || typeof onCloseIconClick === 'function') && (
+          <NavigationClose data-role="close" onClick={onCloseIconClick} />
+        )}
       </span>
     )
   }
@@ -60,6 +63,7 @@ export const Tag = styled(TagBase)`
     margin-left: 12px;
     vertical-align: -3px;
   }
+  ${margin}
 `
 
 Tag.propTypes = {
