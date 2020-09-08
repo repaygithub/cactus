@@ -9,7 +9,7 @@ exports[`component: TextInput should render a disabled input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -94,7 +94,7 @@ exports[`component: TextInput should render a success input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -180,7 +180,7 @@ exports[`component: TextInput should render a text input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -264,7 +264,7 @@ exports[`component: TextInput should render an error input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -350,7 +350,7 @@ exports[`component: TextInput should render an input with a placeholder 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -435,7 +435,7 @@ exports[`component: TextInput should render an warning input 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -521,7 +521,7 @@ exports[`component: TextInput should support margin space props 1`] = `
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -606,7 +606,7 @@ exports[`component: TextInput with theme customization should have 1px border ra
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -690,7 +690,7 @@ exports[`component: TextInput with theme customization should have 2px border 1`
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
@@ -774,7 +774,7 @@ exports[`component: TextInput with theme customization should have 8px border ra
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   font-size: 18px;
   line-height: 1.5;
   width: auto;
