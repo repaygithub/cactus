@@ -77,7 +77,7 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
 
 interface StyledInfoProps {
   disabled?: boolean
-  $forceVisible?: boolean
+  forceVisible?: boolean
 }
 
 const getStyledInfoColor = (props: StyledInfoProps): ReturnType<typeof css> => {
@@ -85,7 +85,7 @@ const getStyledInfoColor = (props: StyledInfoProps): ReturnType<typeof css> => {
     return css`
       color: ${(p): string => p.theme.colors.mediumGray};
     `
-  } else if (props.$forceVisible) {
+  } else if (props.forceVisible) {
     return css`
       color: ${(p): string => p.theme.colors.callToAction};
     `
@@ -94,7 +94,9 @@ const getStyledInfoColor = (props: StyledInfoProps): ReturnType<typeof css> => {
     color: ${(p): string => p.theme.colors.darkestContrast};
   `
 }
-const StyledInfo = styled(NotificationInfo)<StyledInfoProps>`
+const StyledInfo = styled(({ forceVisible, ...props }) => <NotificationInfo {...props} />)<
+  StyledInfoProps
+>`
   outline: none;
   ${getStyledInfoColor};
   &:hover {
@@ -110,7 +112,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
     <>
       {cloneElement(
         <span className={className}>
-          <StyledInfo disabled={disabled} $forceVisible={forceVisible} />
+          <StyledInfo disabled={disabled} forceVisible={forceVisible} />
         </span>,
         trigger
       )}
