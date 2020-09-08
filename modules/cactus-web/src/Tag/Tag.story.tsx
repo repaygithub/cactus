@@ -1,0 +1,59 @@
+import { boolean } from '@storybook/addon-knobs'
+import { storiesOf } from '@storybook/react'
+import React from 'react'
+
+import Button from '../Button/Button'
+import Flex from '../Flex/Flex'
+import Tag from './Tag'
+
+const options = [
+  {
+    label: 'this',
+    id: '1',
+  },
+  {
+    label: 'is',
+    id: '2',
+  },
+  {
+    label: 'an',
+    id: '3',
+  },
+  {
+    label: 'example',
+    id: '4',
+  },
+]
+
+storiesOf('Tag', module).add(
+  'With close option',
+  (): React.ReactElement => {
+    const [values, setValues] = React.useState(options)
+
+    const deleteTag = (id: string) => {
+      setValues(values.filter((e) => e.id !== id))
+    }
+    const closeOption = boolean('close option', true)
+    return (
+      <Flex justifyContent="center" flexDirection="column">
+        <div>
+          {values.map((e) => (
+            <Tag
+              closeOption={closeOption}
+              id={e.id}
+              key={e.id}
+              onCloseIconClick={closeOption ? () => deleteTag(e.id) : undefined}
+            >
+              {e.label}
+            </Tag>
+          ))}
+        </div>
+        {closeOption && (
+          <Button variant="action" onClick={() => setValues(options)} mt="50px">
+            Reset Tags
+          </Button>
+        )}
+      </Flex>
+    )
+  }
+)

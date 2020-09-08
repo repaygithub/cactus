@@ -1,0 +1,65 @@
+---
+name: Tag
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Tag from './Tag'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# Tag
+
+The `Tag` Component is a chip that let users present text inside it that can be deleted.
+
+### Try it out
+
+export const code = `() => {
+  const [open, setOpen] = React.useState(false)
+  const [values, setValues] = React.useState([{label:'Cactus', id:'1'}, {label:'Web', id:'2'}])
+  const deleteTag = (id) => {
+      setValues(values.filter((e) => e.id !== id))
+    }
+    return (
+      <div>
+        {values.map((e) => (
+          <Tag
+            closeOption
+            id={e.id}
+            key={e.id}
+            onCloseIconClick={() => deleteTag(e.id)}
+          >
+            {e.label}
+          </Tag>
+        ))}
+      </div>
+    )
+    }
+`
+
+<LiveProvider code={code} scope={{ Tag }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Basic usage
+
+```jsx
+import React from 'react'
+import { Tag } from '@repay/cactus-web'
+...
+
+//Basic Usage
+ <Tag
+  closeOption
+  id='id'
+  onCloseIconClick={doSomething}
+  >
+  "Label for the tag"
+</Tag>
+```
+
+## Properties
+
+<PropsTable of={Tag} />

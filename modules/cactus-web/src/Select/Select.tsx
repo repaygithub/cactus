@@ -3,11 +3,11 @@ import '../helpers/polyfills'
 import Portal from '@reach/portal'
 import Rect, { PRect } from '@reach/rect'
 import { assignRef } from '@reach/utils'
-import { ActionsAdd, NavigationChevronDown, NavigationClose } from '@repay/cactus-icons'
+import { ActionsAdd, NavigationChevronDown } from '@repay/cactus-icons'
 import { BorderSize, CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import styled, { css, CSSObject, FlattenSimpleInterpolation } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 import { width, WidthProps } from 'styled-system'
 
@@ -20,6 +20,7 @@ import { omitMargins } from '../helpers/omit'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { boxShadow, fontSize, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
+import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
@@ -84,63 +85,6 @@ const displayStatus: any = (props): ReturnType<typeof css> | string => {
     return ''
   }
 }
-
-const ValueTagBase = React.forwardRef<
-  HTMLSpanElement,
-  {
-    id?: string
-    className?: string
-    closeOption?: boolean
-    children: React.ReactNode
-    hidden?: boolean
-  }
->(
-  ({ id, className, closeOption, children }, ref): React.ReactElement => {
-    return (
-      <span id={id} ref={ref} className={className}>
-        <span className="value-tag__label">{children}</span>
-        {closeOption && <NavigationClose data-role="close" />}
-      </span>
-    )
-  }
-)
-
-const valueShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
-}
-
-const getValueShape = (shape: Shape): FlattenSimpleInterpolation => valueShapeMap[shape]
-
-const ValueTag = styled(ValueTagBase)`
-  box-sizing: border-box;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
-  padding: 0 8px 0 8px;
-  border: 1px solid ${(p): string => p.theme.colors.lightContrast};
-  ${(p): FlattenSimpleInterpolation => getValueShape(p.theme.shape as Shape)}
-  margin-right: 2px;
-  display: inline-block;
-  height: 24px;
-  ${(p): CSSObject | undefined => (p.hidden ? { visibility: 'hidden' } : undefined)}
-
-  ${NavigationClose} {
-    appearance: none;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    font-size: 8px;
-    padding: 4px;
-    margin-left: 12px;
-    vertical-align: -3px;
-  }
-`
 
 function isElement(el?: any): el is HTMLElement {
   return el && el.nodeType === 1
@@ -221,23 +165,23 @@ const ValueSwitch = (props: {
         <ValueSpan ref={spanRef}>
           {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
             (opt): React.ReactElement => (
-              <ValueTag id={`value-tag::${opt.id}`} closeOption key={opt.value + opt.label}>
+              <Tag id={`value-tag::${opt.id}`} closeOption key={opt.value + opt.label}>
                 {opt.label}
-              </ValueTag>
+              </Tag>
             )
           )}
-          <ValueTag ref={moreRef} hidden={numToRender >= numSelected || shouldRenderAll}>
+          <Tag ref={moreRef} hidden={numToRender >= numSelected || shouldRenderAll}>
             {props.extraLabel.replace(/\{\}/, String(numSelected - numToRender))}
-          </ValueTag>
+          </Tag>
         </ValueSpan>
       )
     } else {
       const value = selected[0]
       return (
         <ValueSpan>
-          <ValueTag id={`value-tag::${value.id}`} closeOption>
+          <Tag id={`value-tag::${value.id}`} closeOption>
             {value.label}
-          </ValueTag>
+          </Tag>
         </ValueSpan>
       )
     }
@@ -301,36 +245,29 @@ const SelectTrigger = styled.button`
   outline: none;
   appearance: none;
   cursor: pointer;
-
   :disabled {
     border-color: ${(p): string => p.theme.colors.mediumGray};
     color: ${(p): string => p.theme.colors.mediumGray};
     cursor: not-allowed;
-
     ${Placeholder} {
       color: ${(p): string => p.theme.colors.mediumGray};
     }
   }
-
   &::-moz-focus-inner {
     border: 0;
   }
-
   &:focus,
   &[aria-expanded] {
     border-color: ${(p): string => p.theme.colors.callToAction};
-
     ${NavigationChevronDown} {
       color: ${(p): string => p.theme.colors.callToAction};
     }
   }
-
   &[aria-expanded] {
     ${NavigationChevronDown} {
       transform: rotate3d(1, 0, 0, 180deg);
     }
   }
-
   ${NavigationChevronDown} {
     position: absolute;
     right: 14px; // 14 + 2px from border
@@ -354,11 +291,9 @@ const ComboInput = styled.input`
   outline: none;
   appearance: none;
   font-size: 18px;
-
   &::-moz-focus-inner {
     border: 0;
   }
-
   &:focus,
   &[aria-expanded] {
     border-color: ${(p): string => p.theme.colors.callToAction};
@@ -408,7 +343,6 @@ const StyledList = styled.ul`
   ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
   ${(p): ReturnType<typeof css> => getListBoxShadowStyles(p.theme)}
   border-style: solid;
-
   ${(): string =>
     isResponsiveTouchDevice
       ? `
@@ -428,26 +362,21 @@ const Option = styled.li`
   box-shadow: none;
   padding: 4px 16px;
   overflow-wrap: break-word;
-
   ${(p): string =>
     isResponsiveTouchDevice
       ? `
     padding: 6px 16px;
-
     & + & {
       border-top: 1px solid ${p.theme.colors.lightGray};
     }`
       : ''}
-
   &.highlighted-option {
     ${(p): ColorStyle => p.theme.colorStyles.callToAction};
-
     // haxors
     ${CheckBox} > input:not(:checked) + span {
       border-color: white;
     }
   }
-
   ${CheckBox} {
     pointer-events: none;
     margin-right: 4px;
@@ -464,14 +393,12 @@ const ListWrapper = styled.div`
   max-width: 100vw;
   ${(p): string => boxShadow(p.theme, 1)};
   background-color: ${(p): string => p.theme.colors.white};
-
   ${(): string =>
     isResponsiveTouchDevice
       ? `
     position: fixed;
     border-radius: 0;
     box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
-
     &:after {
       position: absolute;
       top: 0;
@@ -490,7 +417,6 @@ const ListWrapper = styled.div`
       );
     }`
       : ''}
-
   ${Flex} {
     bottom: 0;
     position: fixed;
@@ -1558,7 +1484,6 @@ export const Select = styled(SelectBase)`
   }
   ${margin}
   ${width}
-
   ${SelectTrigger} {
     ${displayStatus}
   }
