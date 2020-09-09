@@ -221,8 +221,14 @@ const DataGridContainer = (): ReactElement => {
       >
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
-        <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
-        <DataGrid.Column>
+        <DataGrid.DataColumn
+          id="active"
+          title="Active"
+          as={BoolComponent}
+          sortable={true}
+          width={text('Active Column Width', '')}
+        />
+        <DataGrid.Column width={text('Action Column Width', '')}>
           {(rowData): ReactElement => (
             <SplitButton
               onSelectMainAction={(): void => {
