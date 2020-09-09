@@ -2,6 +2,7 @@ import { ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import { width } from 'styled-system'
 
 import { border, boxShadow, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
@@ -236,19 +237,18 @@ const StyledCell = styled.td(
     table: css<TableCellProps>`
       text-align: ${(p): string => p.align || 'left'};
       padding: 16px;
-      min-width: calc(160px * 0.7125);
 
-      ${(p): string | undefined =>
-        p.theme.mediaQueries &&
-        `${p.theme.mediaQueries.large} {
-      min-width: calc(160px * 0.875);
-    }`}
-
-      ${(p): string | undefined =>
-        p.theme.mediaQueries &&
-        `${p.theme.mediaQueries.extraLarge} {
-      min-width: 160px;
-    }`}
+      ${(p) =>
+        p.width
+          ? `${width}`
+          : p.theme.mediaQueries &&
+            `min-width: calc(160px * 0.7125);
+            ${p.theme.mediaQueries.large} {
+        min-width: calc(160px * 0.875);
+      }
+      ${p.theme.mediaQueries.extraLarge} {
+        min-width: 160px;
+      }`}
     `,
     card: css`
       && {
