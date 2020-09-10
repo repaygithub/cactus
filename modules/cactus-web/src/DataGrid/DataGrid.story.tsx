@@ -219,7 +219,7 @@ const DataGridContainer = (): ReactElement => {
               }
         }
       >
-        <DataGrid.DataColumn id="name" title="Name" align="right" />
+        <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
         <DataGrid.DataColumn
           id="active"
