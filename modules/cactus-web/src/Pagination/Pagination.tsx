@@ -302,6 +302,7 @@ const PageItem = styled.li`
   appearance: none;
   padding: 2px 8px;
   display: block;
+  box-sizing: content-box;
 
   &,
   :link {

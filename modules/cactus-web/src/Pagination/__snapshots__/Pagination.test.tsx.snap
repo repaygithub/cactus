@@ -42,6 +42,7 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
   appearance: none;
   padding: 2px 8px;
   display: block;
+  box-sizing: content-box;
   border-left: 1px solid hsl(200,29%,90%);
 }
 
