@@ -69,7 +69,7 @@ const Input = styled.input<InputProps>`
   height: 32px;
   outline: none;
   box-sizing: border-box;
-  padding: 7px 28px 7px 15px;
+  padding: 0px 28px 0px 15px;
   ${(p) => textStyle(p.theme, 'body')};
   width: ${(p): string | number => p.width || 'auto'};
   background-color: ${(p): string => p.theme.colors.white};
