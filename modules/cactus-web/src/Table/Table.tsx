@@ -2,7 +2,7 @@ import { ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
-import { width } from 'styled-system'
+import { width, WidthProps } from 'styled-system'
 
 import { border, boxShadow, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
@@ -41,11 +41,15 @@ interface TableHeaderProps
 }
 
 export interface TableCellProps
-  extends React.DetailedHTMLProps<
-    React.TdHTMLAttributes<HTMLTableDataCellElement> &
-      React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
-    HTMLTableDataCellElement & HTMLTableHeaderCellElement
-  > {
+  extends WidthProps,
+    Omit<
+      React.DetailedHTMLProps<
+        React.TdHTMLAttributes<HTMLTableDataCellElement> &
+          React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
+        HTMLTableDataCellElement & HTMLTableHeaderCellElement
+      >,
+      'width'
+    > {
   variant?: TableVariant
   align?: CellAlignment
   as?: CellType
@@ -232,7 +236,7 @@ const ContentBox = styled.div`
   }
 `
 
-const StyledCell = styled.td(
+const StyledCell = styled(({ width, variant, ...rest }) => <td {...rest} />)(
   variant({
     table: css<TableCellProps>`
       text-align: ${(p): string => p.align || 'left'};
