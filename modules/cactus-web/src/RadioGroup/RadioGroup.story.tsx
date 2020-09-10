@@ -44,7 +44,7 @@ radioGroupStories.add('With Values', () => {
         <RadioGroup.Button label={<sup>Strong</sup>} value="strong" />
         <RadioGroup.Button label="Fortunate" value="ladybug" />
       </RadioGroup>
-      <RadioGroup name="youAreGroupThree" label={<em>Follower</em>} readOnly required>
+      <RadioGroup name="youAreGroupThree" label={<em>Follower</em>} required>
         <RadioGroup.Button checked={value === ''} label="Zen" value="" />
         <RadioGroup.Button checked={value === 'strong'} label="Confident" value="strong" />
         <RadioGroup.Button checked={value === 'ladybug'} label="Miraculous" value="ladybug" />

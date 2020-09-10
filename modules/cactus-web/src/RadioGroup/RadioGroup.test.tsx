@@ -13,7 +13,6 @@ describe('component: RadioGroup', (): void => {
           id="rg"
           name="places"
           label="Realm"
-          readOnly
           required
           disabled={false}
           value="persephone"
@@ -34,7 +33,6 @@ describe('component: RadioGroup', (): void => {
       const radio = radios[i]
       expect(radio.name).toBe('places')
       expect(radio.type).toBe('radio')
-      expect(radio.readOnly).toBe(true)
       expect(radio.required).toBe(true)
       expect(radio.disabled).toBe(i === 4)
       expect(radio.checked).toBe(i === 1)
@@ -71,7 +69,6 @@ describe('component: RadioGroup', (): void => {
     for (let i = 0; i < 5; i++) {
       const radio = radios[i]
       expect(radio.name).toBe('cities')
-      expect(radio.readOnly).toBe(false)
       expect(radio.required).toBe(false)
       expect(radio.disabled).toBe(true)
       expect(radio.checked).toBe(i === 2)

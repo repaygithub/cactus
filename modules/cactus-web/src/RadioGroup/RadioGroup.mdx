@@ -15,9 +15,9 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 ## Basic Usage
 
-`RadioGroup` is used like other `AccessibleField` derivatives, except that the individual radio buttons are passed as children. The `name`, `readOnly`, `required`, and `disabled` props are passed to the `RadioGroup` and forwarded to the individual buttons; the first three are unconditional, but `disabled` is only forwarded if it is `true` (so that you can disable individual buttons if needed).
+`RadioGroup` is used like other `AccessibleField` derivatives, except that the individual radio buttons are passed as children. The `name`, `required`, and `disabled` props are passed to the `RadioGroup` and forwarded to the individual buttons; the first three are unconditional, but `disabled` is only forwarded if it is `true` (so that you can disable individual buttons if needed).
 
-`RadioGroup.Button` is a straight wrapper around `RadioButtonField`, with the `name`, `readOnly`, and `required` props removed so they can be omitted without causing Typescript errors.
+`RadioGroup.Button` is a straight wrapper around `RadioButtonField`, with the `name`, and `required` props removed so they can be omitted without causing Typescript errors.
 
 ### Try it out
 

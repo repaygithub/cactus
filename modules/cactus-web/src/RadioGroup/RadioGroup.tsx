@@ -25,7 +25,6 @@ interface RadioGroupProps
     > {
   value?: string | number
   defaultValue?: string | number
-  readOnly?: boolean
   required?: boolean
   onChange?: FieldOnChangeHandler<string>
   onFocus?: FieldOnFocusHandler
@@ -33,7 +32,7 @@ interface RadioGroupProps
 }
 
 // This allows omitting the required `name` prop, since it'll be injected by the RadioGroup.
-type RadioGroupButtonProps = Omit<RadioButtonFieldProps, 'name' | 'readOnly' | 'required'>
+type RadioGroupButtonProps = Omit<RadioButtonFieldProps, 'name' | 'required'>
 const RadioGroupButton = React.forwardRef<HTMLInputElement, RadioGroupButtonProps>(
   (props: any, ref) => <RadioButtonField ref={ref} {...props} />
 )
@@ -42,7 +41,6 @@ RadioGroupButton.displayName = 'RadioGroup.Button'
 type ForwardProps = {
   name: string
   disabled?: boolean
-  readOnly?: boolean
   required?: boolean
 }
 
@@ -71,7 +69,6 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       label,
       children,
       tooltip,
-      readOnly,
       required,
       defaultValue,
       value,
@@ -100,7 +97,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
     useValue(fsRef, 'defaultChecked', defaultValue)
     useValue(fsRef, 'checked', value, [value])
 
-    const forwardProps: ForwardProps = { name, readOnly, required }
+    const forwardProps: ForwardProps = { name, required }
     if (disabled === true) {
       forwardProps.disabled = disabled
     }
@@ -173,7 +170,6 @@ RadioGroup.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  readOnly: PropTypes.bool,
   required: PropTypes.bool,
   label: PropTypes.node.isRequired,
   tooltip: PropTypes.node,
@@ -186,11 +182,7 @@ RadioGroup.propTypes = {
   value: function (props: Record<string, any>): Error | null {
     if (props.value !== undefined) {
       const proptype = typeof props.value
-      if (!props.onChange && !props.readOnly) {
-        return new Error(
-          'You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.'
-        )
-      } else if (!(proptype === 'string' || proptype === 'number')) {
+      if (!(proptype === 'string' || proptype === 'number')) {
         return new Error('The `value` prop must be a string or number.')
       }
     }
