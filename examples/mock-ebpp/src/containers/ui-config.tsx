@@ -13,10 +13,39 @@ import {
   TextInputField,
   ToggleField,
 } from '@repay/cactus-web'
-import React, { useState } from 'react'
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers } from 'formik'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import { post } from '../api'
+
+type FormikFieldProps = Omit<
+  React.ComponentProps<typeof Field>,
+  'innerRef' | 'type' | 'render' | 'component'
+>
+
+const FormikField: React.FunctionComponent<FormikFieldProps> = ({
+  as: WrappedComponent,
+  name,
+  validate,
+  value: passedValue,
+  ...rest
+}) => (
+  <Field name={name} validate={validate}>
+    {({ field: { name, value }, form: { setFieldValue, setFieldTouched } }: FieldProps<any>) => {
+      const valueToUse = passedValue === undefined || passedValue === null ? value : passedValue
+      return (
+        <WrappedComponent
+          {...rest}
+          name={name}
+          value={valueToUse}
+          onChange={(_: string, val: any) => setFieldValue(name, val)}
+          onBlur={() => setFieldTouched(name, true)}
+        />
+      )
+    }}
+  </Field>
+)
 
 interface FileObject {
   fileName: string
@@ -25,115 +54,88 @@ interface FileObject {
   errorMsg?: string
 }
 
-interface State {
-  formData: {
-    displayName: string
-    merchantName: string
-    termsAndConditions: string
-    welcomeContent: string
-    footerContent: string
-    notificationEmail: string
-    allLocations: string[]
-    mpLocation: string
-    cardBrands: string[]
-    allowCustomerLogin: boolean
-    useCactusStyles: boolean
-    selectColor: string
-    fileInput: FileObject[] | undefined
-    establishedDate: string
-  }
-
-  status: {
-    error: boolean | undefined
-    message: string
-  }
+interface FormData {
+  displayName: string
+  merchantName: string
+  termsAndConditions: string
+  welcomeContent: string
+  footerContent: string
+  notificationEmail: string
+  allLocations: string[]
+  mpLocation: string
+  cardBrands: string[]
+  allowCustomerLogin: boolean
+  useCactusStyles: boolean
+  selectColor: string
+  fileInput: FileObject[] | undefined
+  establishedDate: string
 }
 
-const getInitialState = (): State => ({
-  formData: {
-    displayName: '',
-    merchantName: '',
-    termsAndConditions: '',
-    welcomeContent: '',
-    footerContent: '',
-    notificationEmail: '',
-    allLocations: [],
-    mpLocation: '',
-    cardBrands: [],
-    allowCustomerLogin: false,
-    useCactusStyles: false,
-    selectColor: '',
-    fileInput: undefined,
-    establishedDate: '2019-10-16',
-  },
-  status: {
-    error: undefined,
-    message: '',
-  },
-})
+type FormErrors = { [K in keyof FormData]?: string }
 
-const formatKey = (key: string): string => {
-  const words = key.replace('_', ' ').split(' ')
-  const newWords: string[] = []
-
-  words.forEach((word): void => {
-    newWords.push(word.charAt(0).toUpperCase() + word.slice(1))
-  })
-  return newWords.join(' ')
+const initialValues: FormData = {
+  displayName: '',
+  merchantName: '',
+  termsAndConditions: '',
+  welcomeContent: '',
+  footerContent: '',
+  notificationEmail: '',
+  allLocations: [],
+  mpLocation: '',
+  cardBrands: [],
+  allowCustomerLogin: false,
+  useCactusStyles: false,
+  selectColor: '',
+  fileInput: undefined,
+  establishedDate: '2019-10-16',
 }
 
-//eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UIConfig = (props: RouteComponentProps): React.ReactElement => {
-  const [state, setState] = useState<State>(getInitialState())
-
-  const handleChange = (name: string, value: any): void => {
-    setState(
-      (state): State => ({
-        formData: { ...state.formData, [name]: value },
-        status: { ...state.status },
-      })
-    )
-  }
-
-  const validate = (formData: typeof state.formData): void => {
-    let errorFound = false
-    Object.keys(formData).forEach((key): void => {
-      //@ts-ignore
-      const value = formData[key]
-
-      if (value === '' || (Array.isArray(value) && value.length === 0)) {
-        errorFound = true
-        setState(
-          (state): State => ({
-            formData: { ...state.formData },
-            status: { error: true, message: `${formatKey(key)} is empty.` },
-          })
-        )
-        return
-      }
-    })
-
-    if (errorFound === false) {
-      setState(
-        (state): State => ({
-          formData: { ...state.formData },
-          status: { error: false, message: `Form successfully submitted` },
-        })
-      )
-    }
-  }
-
-  const handleSubmit = (event: React.SyntheticEvent): void => {
-    event.preventDefault()
-    validate(state.formData)
-    post(state.formData)
+const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
+  const onSubmit = (values: FormData, { setSubmitting }: FormikHelpers<FormData>) => {
+    post(values)
     console.log((window as any).apiData)
+    setSubmitting(false)
   }
 
-  const handleReset = (): void => {
-    console.log(state.formData.fileInput)
-    setState({ ...getInitialState() })
-    console.log(state.formData.fileInput)
+  const validate = (values: FormData): FormErrors => {
+    const errors: FormErrors = {}
+    if (!values.displayName) {
+      errors.displayName = 'Must provide display name'
+    }
+    if (!values.merchantName) {
+      errors.merchantName = 'Must provide merchant name'
+    }
+    if (!values.termsAndConditions) {
+      errors.termsAndConditions = 'Must provide terms & conditions'
+    }
+    if (!values.welcomeContent) {
+      errors.welcomeContent = 'Must provide welcome content'
+    }
+    if (!values.footerContent) {
+      errors.footerContent = 'Must provide footer content'
+    }
+    if (!values.notificationEmail) {
+      errors.notificationEmail = 'Must select a notification email'
+    }
+    if (!values.allLocations || !values.allLocations.length) {
+      errors.allLocations = 'Must select at least one location'
+    }
+    if (!values.mpLocation) {
+      errors.mpLocation = 'Must select most popular location'
+    }
+    if (!values.cardBrands || !values.cardBrands.length) {
+      errors.cardBrands = 'Must select supported card brands'
+    }
+    if (!values.selectColor) {
+      errors.selectColor = 'Must choose a color'
+    }
+    if (!values.fileInput) {
+      errors.fileInput = 'Must choose a logo'
+    }
+    if (!values.establishedDate) {
+      errors.establishedDate = 'Must set established date'
+    }
+    return errors
   }
 
   const emails = ['vvyverman@repay.com', 'dhuber@repay.com']
@@ -152,159 +154,159 @@ const UIConfig = (props: RouteComponentProps): React.ReactElement => {
           </Text>
         </Flex>
 
-        <Flex borderColor="base" borderWidth="2px" borderStyle="solid" width="90%">
-          {state.status.error === true ? (
-            <Alert status="error">{state.status.message}</Alert>
-          ) : state.status.error === false ? (
-            <Alert status="success"> {state.status.message} </Alert>
-          ) : null}
+        <Formik initialValues={initialValues} onSubmit={onSubmit} validate={validate}>
+          {({ errors, touched }) => (
+            <Flex borderColor="base" borderWidth="2px" borderStyle="solid" width="90%">
+              <ErrorMessage name="fileInput">
+                {(msg: string) => <Alert status="error">{msg}</Alert>}
+              </ErrorMessage>
+              <Flex width="100%">
+                <Form style={{ width: '100%', padding: '16px' }}>
+                  <FormikField
+                    as={TextInputField}
+                    name="displayName"
+                    label="Display Name"
+                    tooltip="Enter your merchant display name"
+                    error={touched.displayName && errors.displayName}
+                  />
 
-          <Flex width="100%">
-            <form onSubmit={handleSubmit} style={{ width: '100%', padding: '16px' }}>
-              <TextInputField
-                onChange={handleChange}
-                name="displayName"
-                label="Display Name"
-                value={state.formData.displayName}
-                tooltip="Enter your merchant display name"
-              />
+                  <FormikField
+                    as={TextInputField}
+                    name="merchantName"
+                    label="Merchant Name"
+                    tooltip="Enter your merchant name"
+                    error={touched.merchantName && errors.merchantName}
+                  />
+                  <FormikField
+                    as={TextAreaField}
+                    name="termsAndConditions"
+                    label="Terms and Conditions"
+                    tooltip="Enter the terms and conditions for your customers"
+                    error={touched.termsAndConditions && errors.termsAndConditions}
+                  />
 
-              <TextInputField
-                onChange={handleChange}
-                name="merchantName"
-                label="Merchant Name"
-                value={state.formData.merchantName}
-                tooltip="Enter your merchant name"
-              />
-              <TextAreaField
-                onChange={handleChange}
-                name="termsAndConditions"
-                label="Terms and Conditions"
-                value={state.formData.termsAndConditions}
-                tooltip="Enter the terms and conditions for your customers"
-              />
+                  <FormikField
+                    as={TextAreaField}
+                    name="welcomeContent"
+                    label="Welcome Content"
+                    tooltip="Enter content to be displayed on login"
+                    error={touched.welcomeContent && errors.welcomeContent}
+                  />
+                  <FormikField
+                    as={TextAreaField}
+                    name="footerContent"
+                    label="Footer Content"
+                    my={4}
+                    tooltip="Enter content to be displayed in the footer"
+                    error={touched.footerContent && errors.footerContent}
+                  />
+                  <FormikField
+                    as={SelectField}
+                    options={emails}
+                    label="Notification Email"
+                    name="notificationEmail"
+                    my={4}
+                    tooltip="Select an email to receive notifications"
+                    error={touched.notificationEmail && errors.notificationEmail}
+                  />
+                  <FormikField
+                    as={SelectField}
+                    options={cities}
+                    multiple={true}
+                    label="All Locations"
+                    name="allLocations"
+                    tooltip="Select all store locations"
+                    error={touched.allLocations && errors.allLocations}
+                  />
+                  <FormikField
+                    as={SelectField}
+                    options={cities}
+                    comboBox={true}
+                    label="Most Popular Location"
+                    name="mpLocation"
+                    tooltip="Select your most popular location"
+                    error={touched.mpLocation && errors.mpLocation}
+                  />
+                  <FormikField
+                    as={SelectField}
+                    options={cardBrands}
+                    multiple={true}
+                    comboBox={true}
+                    label="Card Brands"
+                    name="cardBrands"
+                    tooltip="Select or create your supported card brands"
+                    error={touched.cardBrands && errors.cardBrands}
+                  />
 
-              <TextAreaField
-                onChange={handleChange}
-                name="welcomeContent"
-                label="Welcome Content"
-                value={state.formData.welcomeContent}
-                tooltip="Enter content to be displayed on login"
-              />
-              <TextAreaField
-                onChange={handleChange}
-                name="footerContent"
-                label="Footer Content"
-                my={4}
-                value={state.formData.footerContent}
-                tooltip="Enter content to be displayed in the footer"
-              />
-              <SelectField
-                options={emails}
-                label="Notification Email"
-                name="notificationEmail"
-                my={4}
-                onChange={handleChange}
-                value={state.formData.notificationEmail}
-                tooltip="Select an email to recieve notifications "
-              />
-              <SelectField
-                options={cities}
-                multiple={true}
-                label="All Locations"
-                name="allLocations"
-                onChange={handleChange}
-                value={state.formData.allLocations}
-                tooltip="Select all store locations"
-              />
-              <SelectField
-                options={cities}
-                comboBox={true}
-                label="Most Popular Location"
-                name="mpLocation"
-                onChange={handleChange}
-                value={state.formData.mpLocation}
-                tooltip="Select your most popular location"
-              />
-              <SelectField
-                options={cardBrands}
-                multiple={true}
-                comboBox={true}
-                label="Card Brands"
-                name="cardBrands"
-                onChange={handleChange}
-                value={state.formData.cardBrands}
-                tooltip="Select or create your supported card brands"
-              />
+                  <Flex width="50%">
+                    <FormikField
+                      as={FileInputField}
+                      my={4}
+                      label="Upload Logo"
+                      name="fileInput"
+                      tooltip="Upload files"
+                      accept={['.jpg', '.png']}
+                      labels={{
+                        delete: 'delete file',
+                        loading: 'loading',
+                        loaded: 'successful',
+                      }}
+                      prompt="Drag files here or"
+                      buttonText="Select Files..."
+                      validate={(val?: any) => (!val ? 'Must upload a logo' : undefined)}
+                    />
+                  </Flex>
 
-              <Flex width="50%">
-                <FileInputField
-                  my={4}
-                  label="Upload Logo"
-                  name="fileInput"
-                  tooltip="Upload files"
-                  accept={['.jpg', '.png']}
-                  labels={{
-                    delete: 'delete file',
-                    loading: 'loading',
-                    loaded: 'successful',
-                  }}
-                  prompt="Drag files here or"
-                  buttonText="Select Files..."
-                  onChange={handleChange}
-                  value={state.formData.fileInput}
-                />
+                  <FormikField
+                    as={RadioGroup}
+                    name="selectColor"
+                    label="Select Color"
+                    my={3}
+                    validate={(val?: string) => (!val ? 'Must select a color' : undefined)}
+                    error={touched.selectColor && errors.selectColor}
+                  >
+                    <RadioGroup.Button value="yellow" label="Yellow" />
+                    <RadioGroup.Button value="pink" label="Pink" />
+                    <RadioGroup.Button value="blue" label="Blue" />
+                  </FormikField>
+
+                  <FormikField
+                    as={ToggleField}
+                    name="allowCustomerLogin"
+                    label="Allow Customer Login"
+                    my={4}
+                  />
+
+                  <FormikField
+                    as={CheckBoxField}
+                    name="useCactusStyles"
+                    label="Use Cactus Styles"
+                    my={4}
+                  />
+
+                  <FormikField
+                    as={DateInputField}
+                    label="Established Date"
+                    name="establishedDate"
+                    id="established-date"
+                    tooltip="The date which the company was established"
+                    format="YYYY-MM-dd"
+                    error={touched.establishedDate && errors.establishedDate}
+                  />
+
+                  <Flex width="100%" justifyContent="center">
+                    <Button type="reset" variant="standard" my={3} mr={3}>
+                      Reset
+                    </Button>
+                    <Button type="submit" variant="action" my={3} ml={3}>
+                      Submit
+                    </Button>
+                  </Flex>
+                </Form>
               </Flex>
-
-              <RadioGroup
-                name="selectColor"
-                label="Select Color"
-                my={3}
-                onChange={handleChange}
-                value={state.formData.selectColor}
-              >
-                <RadioGroup.Button value="yellow" label="Yellow" />
-                <RadioGroup.Button value="pink" label="Pink" />
-                <RadioGroup.Button value="blue" label="Blue" />
-              </RadioGroup>
-
-              <ToggleField
-                name="allowCustomerLogin"
-                label="Allow Customer Login"
-                onChange={handleChange}
-                value={state.formData.allowCustomerLogin}
-                my={4}
-              />
-
-              <CheckBoxField
-                name="useCactusStyles"
-                label="Use Cactus Styles"
-                my={4}
-                checked={state.formData.useCactusStyles}
-                onChange={handleChange}
-              />
-
-              <DateInputField
-                label="Established Date"
-                name="establishedDate"
-                id="established-date"
-                tooltip="The date which the company was established"
-                format="YYYY-MM-dd"
-                value={state.formData.establishedDate}
-                onChange={handleChange}
-              />
-
-              <Flex width="100%" justifyContent="center">
-                <Button variant="standard" my={3} mr={3} onClick={handleReset}>
-                  Reset
-                </Button>
-                <Button type="submit" variant="action" my={3} ml={3}>
-                  Submit
-                </Button>
-              </Flex>
-            </form>
-          </Flex>
-        </Flex>
+            </Flex>
+          )}
+        </Formik>
       </Flex>
     </div>
   )

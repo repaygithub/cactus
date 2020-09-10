@@ -39,6 +39,15 @@ Inverse props are a _work in progress_ and should not be used in production curr
 
 Most of the time, a theme will make use of a lighter base color, and components placed on that background will be easily visible, however, if the base color is dark, it will be necessary to use the inverse colors for a component so that it is easy to see. The inverse components flip the colors used in their standard counterpart which will provide more contrast, making them easier to see.
 
+## Form Helper Tools
+
+If you are using `@repay/cactus-web` form elements to build a form and you'd like to implement a third-party form management tool, we recommend that you use [Formik](https://formik.org/).
+
+Formik exports a [Field](https://formik.org/docs/api/field) component which can easily be used to wrap our components, and their API helps handle things like form state
+management as well as field validation.
+
+To see an example showcasing how `Formik` and `@repay/cactus-web` form elements can be used together, check out the [UI Config](../../examples/mock-ebpp/src/containers/ui-config.tsx) container in our Mock EBPP app. Take note of the `FormikField` component and how it uses `Field` to wrap each of our components, as well as how we can use `Formik` to accomplish field validation.
+
 ## Next Steps
 
 You can find individual component documentation in the side navigation.
