@@ -4,7 +4,14 @@ import * as React from 'react'
 import styled, { CSSObject } from 'styled-components'
 
 import { StyleProvider } from '../src/StyleProvider/StyleProvider'
-import { BACKGROUND_CHANGE, DECORATOR_LISTENING, NAME, PROP_NAME, THEME_CHANGE } from './constants'
+import {
+  BACKGROUND_CHANGE,
+  BORDER_BOX_CHANGE,
+  DECORATOR_LISTENING,
+  NAME,
+  PROP_NAME,
+  THEME_CHANGE,
+} from './constants'
 
 type AlignmentTypes = 'center' | 'left' | 'right' | 'bottom' | 'top'
 
@@ -13,6 +20,7 @@ interface StyledContainerBaseProps {
   className?: string
   align?: AlignmentTypes
   overrides?: CSSObject
+  borderBox?: boolean
 }
 
 const StyledContainerBase: React.FC<StyledContainerBaseProps> = ({
@@ -38,9 +46,7 @@ const StyledContainer = styled(StyledContainerBase)`
   ${(p): CSSObject => alignmentMap[p.align]};
   ${(p): CSSObject => p.overrides}
 
-  * {
-    box-sizing: border-box;
-  }
+  ${(p): string => p.borderBox && '* { box-sizing: border-box; }'}
 `
 
 StyledContainer.defaultProps = {
@@ -57,6 +63,7 @@ const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({
 }): React.ReactElement => {
   const [theme, setTheme] = React.useState(cactusTheme)
   const [inverse, setInverse] = React.useState(false)
+  const [borderBox, setBorderBox] = React.useState(false)
 
   React.useEffect((): (() => void) => {
     const updateTheme = (params: any): void => {
@@ -67,19 +74,25 @@ const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({
       setInverse(inverse)
     }
 
+    const updateBorderBox = ({ borderBox }: any): void => {
+      setBorderBox(borderBox)
+    }
+
     channel.on(THEME_CHANGE, updateTheme)
     channel.on(BACKGROUND_CHANGE, updateBackground)
+    channel.on(BORDER_BOX_CHANGE, updateBorderBox)
 
     channel.emit(DECORATOR_LISTENING)
     return (): void => {
       channel.removeListener(THEME_CHANGE, updateTheme)
       channel.removeListener(BACKGROUND_CHANGE, updateBackground)
+      channel.removeListener(BORDER_BOX_CHANGE, updateBorderBox)
     }
   }, [channel])
 
   return (
     <StyleProvider theme={theme} global>
-      <StyledContainer {...props} inverse={inverse} />
+      <StyledContainer {...props} inverse={inverse} borderBox={borderBox} />
     </StyleProvider>
   )
 }
