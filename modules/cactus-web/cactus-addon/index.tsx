@@ -37,6 +37,10 @@ const StyledContainer = styled(StyledContainerBase)`
   ${(p): ColorStyle => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
   ${(p): CSSObject => alignmentMap[p.align]};
   ${(p): CSSObject => p.overrides}
+
+  * {
+    box-sizing: border-box;
+  }
 `
 
 StyledContainer.defaultProps = {
