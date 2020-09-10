@@ -1,9 +1,12 @@
 import React from 'react'
 
+type CloneFunc = (e: React.ReactElement, p?: Record<string, any>) => React.ReactElement
+
 // This can also be used just to flatten the children, but cloning seems the more likely use case.
 export function cloneAll(
   children: React.ReactNode,
-  cloneProps?: Record<string, any>
+  cloneProps?: Record<string, any>,
+  makeClone: CloneFunc = React.cloneElement
 ): React.ReactChild[] {
   const hasKeyPrefix = cloneProps && (cloneProps.key || cloneProps.key === 0)
   const childArray = React.Children.toArray(children) as React.ReactChild[]
@@ -12,15 +15,18 @@ export function cloneAll(
       children.push(child)
     } else {
       const key = hasKeyPrefix ? `${cloneProps?.key}${child.key}` : child.key
-      const props: Record<string, any> = cloneProps ? { ...cloneProps, key } : { key }
+      let props: Record<string, any> | undefined
+      if (cloneProps) {
+        props = { ...cloneProps, key }
+      } else if (hasKeyPrefix) {
+        props = { key }
+      }
       if (child.type === React.Fragment) {
         if (child.props.children) {
-          children.push(...cloneAll(child.props.children, props))
+          children.push(...cloneAll(child.props.children, props, makeClone))
         }
-      } else if (hasKeyPrefix || cloneProps) {
-        children.push(React.cloneElement(child, props))
       } else {
-        children.push(child)
+        children.push(makeClone(child, props))
       }
     }
     return children

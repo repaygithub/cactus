@@ -40,6 +40,7 @@ export const code = `<RadioGroup name="radioCity" label="Here there be radios" v
 - You can control the selected value in one of two ways (which should not be mixed):
   - You can pass `value` or `defaultValue` to the group.
   - You can pass `checked` or `defaultChecked` to individual buttons.
+  - This also works by prop forwarding, and has a similar caveat: if the child has a `value` prop that matches the group's `value` prop, a `checked` prop is added (and similarly for `defaultValue`/`defaultChecked`); **if the child has no `value` prop the group's `value` is forwarded,** so keep that in mind if you need a radio button with no value or have an intermediate component.
 - A `ref` passed to `RadioGroup` will be set on the `<fieldset>` HTML element that wraps the group.
 - The `onChange`, `onFocus`, and `onBlur` handlers are _not_ forwarded to the individual buttons; they are attached to the `<fieldset>` and rely on event delegation to capture changes.
   - This especially impacts the focus handlers, because when switching from one button to the next within the group, you'll get a blur event for the first button followed by a focus event for the second.

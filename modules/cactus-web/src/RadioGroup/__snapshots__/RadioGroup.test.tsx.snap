@@ -575,6 +575,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
           for="life"
         >
           <input
+            checked=""
             class="c9"
             id="life"
             name="places"

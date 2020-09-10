@@ -7,7 +7,7 @@ import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleFie
 import Box from '../Box/Box'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
-import { cloneAll, useMergedRefs } from '../helpers/react'
+import { cloneAll } from '../helpers/react'
 import { border } from '../helpers/theme'
 import Label from '../Label/Label'
 import RadioButtonField, { RadioButtonFieldProps } from '../RadioButtonField/RadioButtonField'
@@ -44,25 +44,6 @@ type ForwardProps = {
   required?: boolean
 }
 
-const useValue = (
-  fsRef: React.RefObject<HTMLFieldSetElement>,
-  attr: 'checked' | 'defaultChecked',
-  value: string | number | undefined,
-  dependencies: any[] = []
-) => {
-  React.useEffect(() => {
-    if (value !== undefined && fsRef.current instanceof HTMLFieldSetElement) {
-      const radios = fsRef.current.querySelectorAll('input[type="radio"]')
-      for (let i = 0; i < radios.length; i++) {
-        const radio = radios[i] as HTMLInputElement
-        if (radio.value == value) {
-          radio[attr] = true
-        }
-      }
-    }
-  }, dependencies) // eslint-disable-line react-hooks/exhaustive-deps
-}
-
 export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>(
   (
     {
@@ -92,16 +73,27 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
     } = useAccessibleField(props)
     const [showTooltip, setTooltipVisible] = React.useState<boolean>(false)
 
-    const fsRef = React.useRef<HTMLFieldSetElement>(null)
-    const mergedRef = useMergedRefs(ref, fsRef)
-    useValue(fsRef, 'defaultChecked', defaultValue)
-    useValue(fsRef, 'checked', value, [value])
-
     const forwardProps: ForwardProps = { name, required }
     if (disabled === true) {
       forwardProps.disabled = disabled
     }
-    children = cloneAll(children, forwardProps)
+    const cloneWithValue = (element: React.ReactElement, props: any) => {
+      if (value !== undefined) {
+        if (element.props.value !== undefined) {
+          props = { ...props, checked: element.props.value === value }
+        } else {
+          props = { ...props, value }
+        }
+      } else if (defaultValue !== undefined) {
+        if (element.props.value !== undefined) {
+          props = { ...props, defaultChecked: element.props.value === defaultValue }
+        } else {
+          props = { ...props, defaultValue }
+        }
+      }
+      return React.cloneElement(element, props)
+    }
+    children = cloneAll(children, forwardProps, cloneWithValue)
 
     const handleChange = React.useCallback(
       (event: React.FormEvent<HTMLFieldSetElement>): void => {
@@ -134,7 +126,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
     return (
       <Fieldset
         {...props}
-        ref={mergedRef}
+        ref={ref}
         id={fieldId}
         role="radiogroup"
         aria-describedby={ariaDescribedBy}
