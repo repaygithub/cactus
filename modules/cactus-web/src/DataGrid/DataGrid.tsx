@@ -3,7 +3,7 @@ import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, ReactElement, useContext, useEffect, useMemo, useState } from 'react'
 import styled, { DefaultTheme, StyledComponent, ThemedStyledProps } from 'styled-components'
-import { margin, MarginProps, WidthProps } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 
 import { keyPressAsClick } from '../helpers/a11y'
 import { border, fontSize } from '../helpers/theme'
@@ -12,7 +12,7 @@ import MenuButton from '../MenuButton/MenuButton'
 import Pagination from '../Pagination/Pagination'
 import PrevNext from '../PrevNext/PrevNext'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import Table from '../Table/Table'
+import Table, { TableCellProps } from '../Table/Table'
 
 interface DataGridContextType {
   addDataColumn: (dataColumn: DataColumnProps) => void
@@ -102,14 +102,14 @@ interface PageSizeSelectProps {
   className?: string
 }
 
-interface DataColumnProps extends WidthProps {
+interface DataColumnProps extends Omit<TableCellProps, 'as' | 'title'> {
   id: string
   title: React.ReactChild
   sortable?: boolean
   as?: React.ComponentType<any>
 }
 
-interface ColumnProps extends WidthProps {
+interface ColumnProps extends Omit<TableCellProps, 'as' | 'title'> {
   children: ColumnFn
   title?: React.ReactChild
 }

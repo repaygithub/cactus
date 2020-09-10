@@ -40,7 +40,7 @@ interface TableHeaderProps
   variant?: TableVariant
 }
 
-interface TableCellProps
+export interface TableCellProps
   extends React.DetailedHTMLProps<
     React.TdHTMLAttributes<HTMLTableDataCellElement> &
       React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
