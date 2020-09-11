@@ -4,7 +4,7 @@ import React, { createContext, useContext } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { width, WidthProps } from 'styled-system'
 
-import { border, boxShadow, textStyle } from '../helpers/theme'
+import { border, boxShadow, media, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -236,7 +236,7 @@ const ContentBox = styled.div`
   }
 `
 
-const StyledCell = styled(({ width, variant, ...rest }) => <td {...rest} />)(
+const StyledCell = styled.td(
   variant({
     table: css<TableCellProps>`
       text-align: ${(p): string => p.align || 'left'};
@@ -244,15 +244,16 @@ const StyledCell = styled(({ width, variant, ...rest }) => <td {...rest} />)(
 
       ${(p) =>
         p.width
-          ? `${width}`
-          : p.theme.mediaQueries &&
-            `min-width: calc(160px * 0.7125);
-            ${p.theme.mediaQueries.large} {
-        min-width: calc(160px * 0.875);
-      }
-      ${p.theme.mediaQueries.extraLarge} {
-        min-width: 160px;
-      }`}
+          ? width
+          : css`
+              min-width: calc(160px * 0.7125);
+              ${media(p.theme, 'large')} {
+                min-width: calc(160px * 0.875);
+              }
+              ${media(p.theme, 'extraLarge')} {
+                min-width: 160px;
+              }
+            `}
     `,
     card: css`
       && {
