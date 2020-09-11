@@ -143,6 +143,7 @@ export type ComponentWithFileMeta = React.ComponentType & {
 interface PropsTableProps {
   of: ComponentWithFileMeta
   staticProp?: string
+  includeProps?: string[]
 }
 
 interface PropsMemo {
@@ -156,6 +157,7 @@ interface PropsMemo {
 const PropsTable: React.FC<PropsTableProps> = ({
   of: component,
   staticProp,
+  includeProps = [],
 }): React.ReactElement | null => {
   const data = useDocgen()
   const fileName = component.__filemeta && component.__filemeta.filename
@@ -184,7 +186,8 @@ const PropsTable: React.FC<PropsTableProps> = ({
         if (
           sourceFile.endsWith(componentName + '.tsx') ||
           sourceFile.endsWith(component.displayName + '.tsx') ||
-          prop.description.includes('!important')
+          prop.description.includes('!important') ||
+          includeProps.includes(prop.name)
         ) {
           prop.description = prop.description.replace(/!important\s*/, '')
           ownProps.push(prop)
@@ -205,7 +208,7 @@ const PropsTable: React.FC<PropsTableProps> = ({
       styledSystemProps,
       styledComponentProps: probablyStyledComponentProps,
     }
-  }, [component, docItem, staticProp])
+  }, [component.displayName, docItem, includeProps, staticProp])
 
   if (ownProps === undefined) {
     return null

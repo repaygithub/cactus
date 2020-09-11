@@ -6,7 +6,7 @@ import {
   DateInputField,
   FileInputField,
   Flex,
-  RadioButtonField,
+  RadioGroup,
   SelectField,
   Text,
   TextAreaField,
@@ -160,9 +160,6 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
               <ErrorMessage name="fileInput">
                 {(msg: string) => <Alert status="error">{msg}</Alert>}
               </ErrorMessage>
-              <ErrorMessage name="selectColor">
-                {(msg: string) => <Alert status="error">{msg}</Alert>}
-              </ErrorMessage>
               <Flex width="100%">
                 <Form style={{ width: '100%', padding: '16px' }}>
                   <FormikField
@@ -260,30 +257,18 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     />
                   </Flex>
 
-                  <Flex flexDirection="column" my={3}>
-                    <h3 style={{ margin: '5px 0' }}>Select Color</h3>
-                    <FormikField
-                      as={RadioButtonField}
-                      name="selectColor"
-                      value="yellow"
-                      label="Yellow"
-                      validate={(val?: string) => (!val ? 'Must select a color' : undefined)}
-                    />
-                    <FormikField
-                      as={RadioButtonField}
-                      name="selectColor"
-                      value="pink"
-                      label="Pink"
-                      validate={(val?: string) => (!val ? 'Must select a color' : undefined)}
-                    />
-                    <FormikField
-                      as={RadioButtonField}
-                      name="selectColor"
-                      value="blue"
-                      label="Blue"
-                      validate={(val?: string) => (!val ? 'Must select a color' : undefined)}
-                    />
-                  </Flex>
+                  <FormikField
+                    as={RadioGroup}
+                    name="selectColor"
+                    label="Select Color"
+                    my={3}
+                    validate={(val?: string) => (!val ? 'Must select a color' : undefined)}
+                    error={touched.selectColor && errors.selectColor}
+                  >
+                    <RadioGroup.Button value="yellow" label="Yellow" />
+                    <RadioGroup.Button value="pink" label="Pink" />
+                    <RadioGroup.Button value="blue" label="Blue" />
+                  </FormikField>
 
                   <FormikField
                     as={ToggleField}

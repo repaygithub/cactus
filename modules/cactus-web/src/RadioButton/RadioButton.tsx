@@ -5,14 +5,8 @@ import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
 import { boxShadow } from '../helpers/theme'
-import { Omit } from '../types'
 
-export interface RadioButtonProps
-  extends Omit<
-      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-      'ref'
-    >,
-    MarginProps {
+export interface RadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
   id: string
   name: string
   disabled?: boolean
@@ -22,16 +16,16 @@ interface StyledRadioButtonProps extends React.HTMLProps<HTMLSpanElement> {
   disabled?: boolean
 }
 
-const RadioButtonBase = (props: RadioButtonProps): React.ReactElement => {
+const RadioButtonBase = React.forwardRef<HTMLInputElement, RadioButtonProps>((props, ref) => {
   const componentProps = omitMargins(props) as Omit<RadioButtonProps, keyof MarginProps>
   const { disabled, id, className, ...radioButtonProps } = componentProps
   return (
     <label className={className} htmlFor={id}>
-      <HiddenRadioButton id={id} disabled={disabled} {...radioButtonProps} />
+      <HiddenRadioButton ref={ref} id={id} disabled={disabled} {...radioButtonProps} />
       <StyledRadioButton aria-hidden={true} disabled={disabled} />
     </label>
   )
-}
+})
 
 const HiddenRadioButton = styled.input.attrs({ type: 'radio' as string })`
   opacity: 0;
@@ -50,7 +44,7 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
   background-color: ${(p): string => (p.disabled ? p.theme.colors.lightGray : 'transparent')};
   border: 2px solid ${(p): string => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
 
-  :after {
+  ::after {
     position: absolute;
     content: '';
     display: none;
@@ -79,7 +73,7 @@ export const RadioButton = styled(RadioButtonBase)`
     background-color: transparent;
   }
 
-  input:checked ~ span:after {
+  input:checked ~ span::after {
     display: block;
   }
 
@@ -90,7 +84,6 @@ export const RadioButton = styled(RadioButtonBase)`
   ${margin}
 `
 
-// @ts-ignore
 RadioButton.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
