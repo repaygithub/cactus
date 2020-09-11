@@ -1,0 +1,121 @@
+---
+name: ActionBar
+menu: Components
+---
+
+import ActionBar from './ActionBar'
+import PropsTable from 'website-src/components/PropsTable'
+
+# ActionBar
+
+The ActionBar contains buttons that allow the user to "act" on the website or the individual page they are on. Depending on the screen size it will appear on the left or bottom of the screen; at medium sizes and smaller, the MenuBar will also appear as the first icon on the ActionBar.
+
+## Basic Usage
+
+Most commonly the ActionBar should be used as a direct child of the Layout component. ActionBar items can be added as direct children of the ActionBar, although the ActionProvider component can provide greater flexibility. (ActionProvider, like ScreenSizeProvider, is automatically included when using the Layout component.)
+
+```jsx
+import React from 'react'
+import { ActionsPrint } from '@repay/cactus-icons'
+import { ActionBar, Layout } from '@repay/cactus-web'
+
+const MySite = () => (
+  <Layout>
+    <ActionBar>
+      <ActionBar.Item
+        icon={<ActionsPrint/>}
+        onClick={printThisPage}
+        aria-label="Print this page"
+      />
+    </ActionBar>
+    <ActionBar.Content>
+      <h1>Latin Or Something</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </ActionBar.Content>
+  </Layout>
+)
+```
+
+### Page-specific Actions
+
+Some actions (like a search filter panel) may only apply to some pages, not the entire website. To add an action to the ActionBar without needing to place the ActionBar at the "bottom" of the component tree, an ActionBar.Item can be rendered in any descendant of an ActionProvider and it will appear in the ActionBar rather than inline. The item will be added to the ActionBar when the ActionBar.Item is mounted, and removed when it is unmounted.
+
+```jsx
+import React from 'react'
+import { ActionsKey } from '@repay/cactus-icons'
+import { ActionBar } from '@repay/cactus-web'
+
+const MyPage = () => (
+  <>
+    <ActionBar.Item
+      key="page-action"
+      icon={<ActionsKey/>}
+      orderHint="high"
+      onClick={doSomethingPageSpecific}
+    />
+    <PageContent/>
+  </>
+)
+```
+
+- You must provide either a _key_ or an _id_ prop to uniquely identify the action on the ActionBar (`id` takes precedence over `key`); if neither is present, an error will be thrown.
+- The _orderHint_ indicates where, relative to other ActionBar items, the item should appear.
+  - Possible values are 'top', 'high', 'center' (default), 'low', and 'bottom'.
+  - Items with the same hint are rendered in the order they're added, according to how React renders the entire document tree.
+- If this technique is used but there is no ActionProvider to capture the item and move it to the ActionBar, the item will instead render inline. (This is how an ActionBar having direct children can be used with no ActionProvider.)
+
+### useAction Hook
+
+`useAction` is the low-level hook that allows `ActionBar.Item` to be rendered anywhere.
+
+```js
+function useAction(
+    element: ReactElement,
+    orderHint?: OrderHint,
+    key?: string,
+): ReactElement | null;
+```
+
+You pass in an _element_ that you want added to the ActionBar. Optionally you can give it an _orderHint_. The _key_ is marked as optional because it defaults to the `element.key`, but just as in `ActionBar.Item`, if no key is given an error will be thrown.
+
+The return value depends on whether or not the hook is used within an ActionProvider or not. If an ActionProvider captured the element for use on the ActionBar, the hook returns null. If there is no ActionProvider, the passed-in element is returned unchanged and the dev can decide what (if anything) to do with it.
+
+```jsx
+import React from 'react'
+import { ActionsKey } from '@repay/cactus-icons'
+import { Layout, useAction } from '@repay/cactus-web'
+
+const MyPage = () => {
+  const pageAction = (
+    <ActionBar.Button
+      key="page-action"
+      onClick={doSomethingPageSpecific}
+    >
+      <ActionsKey/>
+    </ActionBar.Button>
+  )
+  const renderButton = useAction(pageAction, 'high')
+  return (
+    <>
+      (renderButton && <AlternativeDoSomethingImplementation/>)
+      <PageContent/>
+    </>
+  )
+}
+```
+
+### Accessibility
+
+Because ActionBar items typically only have an icon and no text, it may not be obvious to users what it does. This can be circumvented to an extent using ARIA attributes, tooltips, etc., but touch-only users may have no choice but to click the button to see what it does. As such, you should avoid "destructive" side effects such as navigation or directly changing a page in ways that are difficult to undo or not obvious; more often clicking an ActionBar item would toggle a menu or page section that has a more verbose explanation as to its purpose.
+
+## Properties
+
+`ActionBar` takes no custom props, just standard `div` attributes.
+
+### ActionBar.Item
+
+<PropsTable of={ActionBar} staticProp="ActionBarItem" includeProps={['icon', 'orderHint', 'key', 'id']} />
+
+### ActionBar.Button
+
+This is just a styled button that looks like buttons on the ActionBar should look.

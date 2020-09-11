@@ -1,5 +1,7 @@
 export { AccessibleField, useAccessibleField } from './AccessibleField/AccessibleField'
 export { Accordion } from './Accordion/Accordion'
+export { default as ActionBar } from './ActionBar/ActionBar'
+export { default as ActionProvider, useAction, useActionBarItems } from './ActionBar/ActionProvider'
 export { Alert } from './Alert/Alert'
 export { Avatar } from './Avatar/Avatar'
 export { Breadcrumb } from './Breadcrumb/Breadcrumb'

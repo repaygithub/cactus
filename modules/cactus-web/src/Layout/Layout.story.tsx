@@ -1,12 +1,13 @@
+import { DescriptiveClock } from '@repay/cactus-icons'
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
+import ActionBar from '../ActionBar/ActionBar'
 import Box from '../Box/Box'
 import Footer from '../Footer/Footer'
 import MenuBar from '../MenuBar/MenuBar'
-import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import Layout, { useLayout } from './Layout'
+import Layout from './Layout'
 
 function action(msg: string) {
   return () => console.log('ITEM CLICKED:', msg)
@@ -14,18 +15,6 @@ function action(msg: string) {
 
 const LOGO =
   'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg'
-
-const TempActionBar = () => {
-  const size = React.useContext(ScreenSizeContext)
-  const render = size >= SIZES.large
-  useLayout('actionbar', { position: render ? 'floatLeft' : 'flow', offset: 60 })
-  if (!render) return null
-  return (
-    <Layout.Sidebar>
-      <button type="button">B</button>
-    </Layout.Sidebar>
-  )
-}
 
 const TempBrandBar = () => (
   <Box width="100%">
@@ -61,7 +50,15 @@ storiesOf('Layout', module).add(
             <MenuBar.Item onClick={action('Stars')}>Up There</MenuBar.Item>
           </MenuBar>
         )}
-        {hasActions && <TempActionBar />}
+        {hasActions && (
+          <ActionBar>
+            <ActionBar.Item
+              key="whattime"
+              icon={<DescriptiveClock />}
+              onClick={() => alert(`It is now ${new Date()}.`)}
+            />
+          </ActionBar>
+        )}
         <Layout.Content>
           <h1>Latin Or Something</h1>
           <p>
