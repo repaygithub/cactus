@@ -2,8 +2,9 @@ import { ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import { width, WidthProps } from 'styled-system'
 
-import { border, boxShadow, textStyle } from '../helpers/theme'
+import { border, boxShadow, media, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -39,12 +40,16 @@ interface TableHeaderProps
   variant?: TableVariant
 }
 
-interface TableCellProps
-  extends React.DetailedHTMLProps<
-    React.TdHTMLAttributes<HTMLTableDataCellElement> &
-      React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
-    HTMLTableDataCellElement & HTMLTableHeaderCellElement
-  > {
+export interface TableCellProps
+  extends WidthProps,
+    Omit<
+      React.DetailedHTMLProps<
+        React.TdHTMLAttributes<HTMLTableDataCellElement> &
+          React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
+        HTMLTableDataCellElement & HTMLTableHeaderCellElement
+      >,
+      'width'
+    > {
   variant?: TableVariant
   align?: CellAlignment
   as?: CellType
@@ -236,19 +241,19 @@ const StyledCell = styled.td(
     table: css<TableCellProps>`
       text-align: ${(p): string => p.align || 'left'};
       padding: 16px;
-      min-width: calc(160px * 0.7125);
 
-      ${(p): string | undefined =>
-        p.theme.mediaQueries &&
-        `${p.theme.mediaQueries.large} {
-      min-width: calc(160px * 0.875);
-    }`}
-
-      ${(p): string | undefined =>
-        p.theme.mediaQueries &&
-        `${p.theme.mediaQueries.extraLarge} {
-      min-width: 160px;
-    }`}
+      ${(p) =>
+        p.width
+          ? width
+          : css`
+              min-width: calc(160px * 0.7125);
+              ${media(p.theme, 'large')} {
+                min-width: calc(160px * 0.875);
+              }
+              ${media(p.theme, 'extraLarge')} {
+                min-width: 160px;
+              }
+            `}
     `,
     card: css`
       && {
