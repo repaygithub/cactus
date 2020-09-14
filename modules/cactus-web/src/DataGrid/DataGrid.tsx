@@ -139,8 +139,6 @@ const IconWrapper = styled.div`
 const TextWrapper = styled.div`
   flex-grow: 1;
 `
-
-type Noop = () => void
 const DataGridBase = (props: DataGridProps): ReactElement => {
   const {
     children,
