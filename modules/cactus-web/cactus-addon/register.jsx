@@ -4,7 +4,13 @@ import { Form } from '@storybook/components'
 import { styled } from '@storybook/theming'
 import * as React from 'react'
 
-import { BACKGROUND_CHANGE, DECORATOR_LISTENING, NAME, THEME_CHANGE } from './constants'
+import {
+  BACKGROUND_CHANGE,
+  BORDER_BOX_CHANGE,
+  DECORATOR_LISTENING,
+  NAME,
+  THEME_CHANGE,
+} from './constants'
 
 const ScrollArea = styled('div')({ height: '100%', width: '100%', overflowY: 'auto' })
 
@@ -28,6 +34,7 @@ class Panel extends React.Component {
       boxShadows: true,
     },
     backgroundInverse: false,
+    borderBox: false,
   }
 
   componentDidMount() {
@@ -41,6 +48,12 @@ class Panel extends React.Component {
   emitBackgroundChange = () => {
     this.props.channel.emit(BACKGROUND_CHANGE, {
       inverse: this.state.backgroundInverse,
+    })
+  }
+
+  emitBorderBoxChange = () => {
+    this.props.channel.emit(BORDER_BOX_CHANGE, {
+      borderBox: this.state.borderBox,
     })
   }
 
@@ -66,6 +79,10 @@ class Panel extends React.Component {
 
   handleBackgroundChange = (name, value) => {
     this.setState(() => ({ [name]: value }), this.emitBackgroundChange)
+  }
+
+  handleBorderBoxChange = (name, value) => {
+    this.setState(() => ({ [name]: value }), this.emitBorderBoxChange)
   }
 
   handleThemeChange = (name, value) => {
@@ -239,6 +256,22 @@ class Panel extends React.Component {
               checked={this.state.backgroundInverse}
             />
             <label htmlFor="background-inverse">Inverse</label>
+          </Form.Field>
+
+          <SectionTitle>Border-Box Everything</SectionTitle>
+          <Form.Field>
+            <input
+              id="border-box"
+              type="checkbox"
+              name="borderBox"
+              onChange={({ currentTarget }) =>
+                this.handleBorderBoxChange(currentTarget.name, currentTarget.checked)
+              }
+              checked={this.state.borderBox}
+            />
+            <label htmlFor="border-box">
+              Force Storybook to render everything with box-sixing: border-box
+            </label>
           </Form.Field>
         </Form>
       </ScrollArea>
