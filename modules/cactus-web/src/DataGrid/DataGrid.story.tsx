@@ -81,6 +81,7 @@ const DataGridContainer = (): ReactElement => {
   const prevText = text('PrevNext: prevText', 'Prev')
   const nextText = text('PrevNext: nextText', 'Next')
   const disableNext = boolean('PrevNext: disableNext', false)
+  const sortableCols = boolean('Include Sortable Columns', true)
 
   const [data, setData] = useState<{ [key: string]: any }[]>(INITIAL_DATA)
   const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([])
@@ -220,12 +221,12 @@ const DataGridContainer = (): ReactElement => {
         }
       >
         <DataGrid.DataColumn id="name" title="Name" />
-        <DataGrid.DataColumn id="created" title="Created" sortable={true} />
+        <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} />
         <DataGrid.DataColumn
           id="active"
           title="Active"
           as={BoolComponent}
-          sortable={true}
+          sortable={sortableCols}
           width={text('Active Column Width', '')}
         />
         <DataGrid.Column width={text('Action Column Width', '')}>
