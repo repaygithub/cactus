@@ -34,8 +34,8 @@ interface DataGridProps extends MarginProps {
   data: { [key: string]: any }[]
   paginationOptions?: PaginationOptions
   sortOptions?: SortOption[]
-  onPageChange: (newPageOptions: PaginationOptions) => void
-  onSort: (newSortOptions: SortOption[]) => void
+  onPageChange?: (newPageOptions: PaginationOptions) => void
+  onSort?: (newSortOptions: SortOption[]) => void
   children: React.ReactNode
   fullWidth?: boolean
   cardBreakpoint?: Size
@@ -148,9 +148,9 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     data,
     fullWidth,
     sortOptions,
-    onSort,
+    onSort = () => undefined,
     paginationOptions,
-    onPageChange,
+    onPageChange = () => undefined,
     cardBreakpoint = 'tiny',
     className,
     resultsCountText,
@@ -559,7 +559,7 @@ const TopSection = styled(TopSectionBase)`
     flex-direction: row;
     align-items: flex-start;
 
-    .results-count-text: {
+    .results-count-text {
       margin-bottom: 0;
     }
   }
@@ -723,8 +723,8 @@ DataGrid.propTypes = {
   sortOptions: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.string.isRequired, sortAscending: PropTypes.bool.isRequired })
   ),
-  onPageChange: PropTypes.func.isRequired,
-  onSort: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func,
+  onSort: PropTypes.func,
   children: PropTypes.node.isRequired,
   fullWidth: PropTypes.bool,
   resultsCountText: PropTypes.node,
@@ -767,6 +767,8 @@ Column.propTypes = {
 }
 
 DataGrid.defaultProps = {
+  onSort: () => undefined,
+  onPageChange: () => undefined,
   cardBreakpoint: 'tiny',
   sortLabels: {
     sortBy: 'Sort by',

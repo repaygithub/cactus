@@ -625,7 +625,7 @@ exports[`component: DataGrid snapshot 1`] = `
     align-items: flex-start;
   }
 
-  .c1 .results-count-text: {
+  .c1 .results-count-text {
     margin-bottom: 0;
   }
 }
