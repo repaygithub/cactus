@@ -269,8 +269,8 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
                         </IconWrapper>
                       </HeaderButton>
                     ) : (
-                        column.title
-                      )}
+                      column.title
+                    )}
                   </Table.Cell>
                 )
               } else if (isColumn(column)) {
@@ -321,25 +321,25 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
               {...paginationProps}
             />
           ) : (
-              <PrevNext
-                disablePrev={paginationOptions.currentPage === 1}
-                onNavigate={(direction: 'prev' | 'next'): void => {
-                  onPageChange({
-                    ...paginationOptions,
-                    currentPage:
-                      direction === 'prev'
-                        ? paginationOptions.currentPage - 1
-                        : paginationOptions.currentPage + 1,
-                  })
-                }}
-                disableNext={
-                  prevNextProps
-                    ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
-                    : data.length < paginationOptions.pageSize
-                }
-                {...prevNextProps}
-              />
-            )
+            <PrevNext
+              disablePrev={paginationOptions.currentPage === 1}
+              onNavigate={(direction: 'prev' | 'next'): void => {
+                onPageChange({
+                  ...paginationOptions,
+                  currentPage:
+                    direction === 'prev'
+                      ? paginationOptions.currentPage - 1
+                      : paginationOptions.currentPage + 1,
+                })
+              }}
+              disableNext={
+                prevNextProps
+                  ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
+                  : data.length < paginationOptions.pageSize
+              }
+              {...prevNextProps}
+            />
+          )
         ) : null}
         {isCardView && resultsCountText !== undefined && (
           <span className="results-count-text">{resultsCountText}</span>
@@ -432,8 +432,8 @@ export const DataGrid = styled(DataGridBase)`
     // Card view styles when screen is larger than tiny
     &.is-card-view {
       ${(p) =>
-    p.theme.mediaQueries &&
-    `${p.theme.mediaQueries.small} {
+        p.theme.mediaQueries &&
+        `${p.theme.mediaQueries.small} {
         flex-direction: row-reverse;
         justify-content: space-between;
         margin-right: 16px;
