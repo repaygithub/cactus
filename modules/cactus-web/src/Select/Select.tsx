@@ -504,7 +504,8 @@ function positionList(
   const style: React.CSSProperties = {
     top: scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
     left: scrollX + triggerRect.left + 'px',
-    width: triggerRect.width + 'px',
+    minWidth: triggerRect.width,
+    maxWidth: Math.max(triggerRect.width, Math.min(triggerRect.width * 2, 300)),
   }
   if (listRect === undefined) {
     return style
