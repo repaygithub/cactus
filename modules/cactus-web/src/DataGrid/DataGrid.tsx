@@ -12,21 +12,14 @@ import MenuButton from '../MenuButton/MenuButton'
 import Pagination from '../Pagination/Pagination'
 import PrevNext from '../PrevNext/PrevNext'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import Table from '../Table/Table'
+import Table, { TableCellProps } from '../Table/Table'
 
 interface DataGridContextType {
-  addDataColumn: (dataColumn: DataColumn) => void
-  addColumn: (key: string, columnFn: ColumnFn, title?: React.ReactChild) => void
+  addDataColumn: (dataColumn: DataColumnProps) => void
+  addColumn: (key: string, column: ColumnProps) => void
 }
 
 type ColumnFn = (rowData: { [key: string]: any }) => React.ReactNode
-
-interface DataColumn {
-  id: string
-  title: React.ReactChild
-  sortable: boolean
-  asComponent?: React.ComponentType<any>
-}
 
 const DataGridContext = createContext<DataGridContextType>({
   addDataColumn: (): void => {
@@ -109,14 +102,14 @@ interface PageSizeSelectProps {
   className?: string
 }
 
-interface DataColumnProps {
+interface DataColumnProps extends Omit<TableCellProps, 'as' | 'title'> {
   id: string
   title: React.ReactChild
   sortable?: boolean
   as?: React.ComponentType<any>
 }
 
-interface ColumnProps {
+interface ColumnProps extends Omit<TableCellProps, 'as' | 'title'> {
   children: ColumnFn
   title?: React.ReactChild
 }
@@ -125,11 +118,13 @@ interface DataColumnObject {
   title: React.ReactChild
   sortable: boolean
   asComponent?: React.ComponentType<any>
+  cellProps?: { [K: string]: any }
 }
 
 interface ColumnObject {
   columnFn: ColumnFn
   title?: React.ReactChild
+  cellProps?: { [K: string]: any }
 }
 
 const IconWrapper = styled.div`
@@ -139,6 +134,14 @@ const IconWrapper = styled.div`
 const TextWrapper = styled.div`
   flex-grow: 1;
 `
+
+const isDataColumn = (col: any): col is DataColumnObject => {
+  return col && col.hasOwnProperty('sortable')
+}
+const isColumn = (col: any): col is ColumnObject => {
+  return col && col.hasOwnProperty('columnFn')
+}
+
 const DataGridBase = (props: DataGridProps): ReactElement => {
   const {
     children,
@@ -175,12 +178,21 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
 
-  const addDataColumn = ({ id, title, sortable, asComponent }: DataColumn): void => {
-    setColumns(new Map(columns.set(id, { title, sortable, asComponent })))
+  const addDataColumn = ({
+    id,
+    title,
+    sortable = false,
+    as: asComponent,
+    ...cellProps
+  }: DataColumnProps): void => {
+    setColumns(new Map(columns.set(id, { title, sortable, asComponent, cellProps })))
   }
 
-  const addColumn = (key: string, columnFn: ColumnFn, title?: React.ReactChild): void => {
-    setColumns(new Map(columns.set(key, { columnFn, title })))
+  const addColumn = (
+    key: string,
+    { children: columnFn, title, ...cellProps }: ColumnProps
+  ): void => {
+    setColumns(new Map(columns.set(key, { columnFn, title, cellProps })))
   }
 
   const handleSort = (id: string, exists: boolean) => {
@@ -226,74 +238,71 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
         />
         <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint}>
           <Table.Header>
-            {[...columns.keys()].map(
-              (key): ReactElement => {
-                let column = columns.get(key)
-                if (column && column.hasOwnProperty('sortable')) {
-                  column = column as DataColumnObject
-                  let sortOpt: SortOption | undefined = undefined
-                  if (column.sortable && sortOptions !== undefined) {
-                    sortOpt = sortOptions.find((opt: SortOption): boolean => opt.id === key)
-                  }
-                  const flipChevron = sortOpt !== undefined && sortOpt.sortAscending === true
-                  return (
-                    <Table.Cell
-                      className={`table-cell ${flipChevron ? 'flip-chevron' : ''}`}
-                      key={key}
-                      aria-sort={
-                        column.sortable
-                          ? sortOpt
-                            ? sortOpt.sortAscending
-                              ? 'ascending'
-                              : 'descending'
-                            : 'none'
-                          : undefined
-                      }
-                    >
-                      {column.sortable && sortOptions !== undefined && !isCardView ? (
-                        <HeaderButton onClick={(): void => handleSort(key, sortOpt !== undefined)}>
-                          <TextWrapper>{column.title}</TextWrapper>
-                          <IconWrapper aria-hidden>
-                            {sortOpt !== undefined && <NavigationChevronDown />}
-                          </IconWrapper>
-                        </HeaderButton>
-                      ) : (
+            {[...columns.keys()].map((key) => {
+              const column = columns.get(key)
+              if (isDataColumn(column)) {
+                let sortOpt: SortOption | undefined = undefined
+                if (column.sortable && sortOptions !== undefined) {
+                  sortOpt = sortOptions.find((opt: SortOption): boolean => opt.id === key)
+                }
+                const flipChevron = sortOpt !== undefined && sortOpt.sortAscending === true
+                return (
+                  <Table.Cell
+                    className={`table-cell ${flipChevron ? 'flip-chevron' : ''}`}
+                    key={key}
+                    aria-sort={
+                      column.sortable
+                        ? sortOpt
+                          ? sortOpt.sortAscending
+                            ? 'ascending'
+                            : 'descending'
+                          : 'none'
+                        : undefined
+                    }
+                    {...column.cellProps}
+                  >
+                    {column.sortable && sortOptions !== undefined && !isCardView ? (
+                      <HeaderButton onClick={(): void => handleSort(key, sortOpt !== undefined)}>
+                        <TextWrapper>{column.title}</TextWrapper>
+                        <IconWrapper aria-hidden>
+                          {sortOpt !== undefined && <NavigationChevronDown />}
+                        </IconWrapper>
+                      </HeaderButton>
+                    ) : (
                         column.title
                       )}
-                    </Table.Cell>
-                  )
-                } else {
-                  column = column as ColumnObject
-                  return <Table.Cell key={`col-${key}`}>{column.title || ''}</Table.Cell>
-                }
+                  </Table.Cell>
+                )
+              } else if (isColumn(column)) {
+                return (
+                  <Table.Cell key={`col-${key}`} {...column.cellProps}>
+                    {column.title || ''}
+                  </Table.Cell>
+                )
               }
-            )}
+            })}
           </Table.Header>
           <Table.Body>
             {data.map(
               (datum, datumIndex): ReactElement => (
                 <Table.Row key={`row-${datumIndex}`}>
-                  {[...columns.keys()].map(
-                    (key, keyIndex): ReactElement => {
-                      let column = columns.get(key)
-                      if (column && column.hasOwnProperty('sortable')) {
-                        column = column as DataColumnObject
-                        const AsComponent = column.asComponent
-                        return (
-                          <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
-                            {AsComponent ? <AsComponent value={datum[key]} /> : datum[key]}
-                          </Table.Cell>
-                        )
-                      } else {
-                        column = column as ColumnObject
-                        return (
-                          <Table.Cell key={`cell-${datumIndex}-${keyIndex}`}>
-                            {column && column.columnFn(datum)}
-                          </Table.Cell>
-                        )
-                      }
+                  {[...columns.keys()].map((key, keyIndex) => {
+                    const column = columns.get(key)
+                    if (isDataColumn(column)) {
+                      const AsComponent = column.asComponent
+                      return (
+                        <Table.Cell key={`cell-${datumIndex}-${keyIndex}`} {...column.cellProps}>
+                          {AsComponent ? <AsComponent value={datum[key]} /> : datum[key]}
+                        </Table.Cell>
+                      )
+                    } else if (isColumn(column)) {
+                      return (
+                        <Table.Cell key={`cell-${datumIndex}-${keyIndex}`} {...column.cellProps}>
+                          {column && column.columnFn(datum)}
+                        </Table.Cell>
+                      )
                     }
-                  )}
+                  })}
                 </Table.Row>
               )
             )}
@@ -312,25 +321,25 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
               {...paginationProps}
             />
           ) : (
-            <PrevNext
-              disablePrev={paginationOptions.currentPage === 1}
-              onNavigate={(direction: 'prev' | 'next'): void => {
-                onPageChange({
-                  ...paginationOptions,
-                  currentPage:
-                    direction === 'prev'
-                      ? paginationOptions.currentPage - 1
-                      : paginationOptions.currentPage + 1,
-                })
-              }}
-              disableNext={
-                prevNextProps
-                  ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
-                  : data.length < paginationOptions.pageSize
-              }
-              {...prevNextProps}
-            />
-          )
+              <PrevNext
+                disablePrev={paginationOptions.currentPage === 1}
+                onNavigate={(direction: 'prev' | 'next'): void => {
+                  onPageChange({
+                    ...paginationOptions,
+                    currentPage:
+                      direction === 'prev'
+                        ? paginationOptions.currentPage - 1
+                        : paginationOptions.currentPage + 1,
+                  })
+                }}
+                disableNext={
+                  prevNextProps
+                    ? prevNextProps.disableNext || data.length < paginationOptions.pageSize
+                    : data.length < paginationOptions.pageSize
+                }
+                {...prevNextProps}
+              />
+            )
         ) : null}
         {isCardView && resultsCountText !== undefined && (
           <span className="results-count-text">{resultsCountText}</span>
@@ -423,8 +432,8 @@ export const DataGrid = styled(DataGridBase)`
     // Card view styles when screen is larger than tiny
     &.is-card-view {
       ${(p) =>
-        p.theme.mediaQueries &&
-        `${p.theme.mediaQueries.small} {
+    p.theme.mediaQueries &&
+    `${p.theme.mediaQueries.small} {
         flex-direction: row-reverse;
         justify-content: space-between;
         margin-right: 16px;
@@ -681,23 +690,21 @@ const PageSizeSelect = styled(PageSizeSelectBase)`
 `
 
 export const DataColumn = (props: DataColumnProps): ReactElement => {
-  const { id, title, sortable = false, as: asComponent } = props
   const { addDataColumn } = useContext(DataGridContext)
   useEffect((): void => {
-    addDataColumn({ id, title, sortable, asComponent })
-  }, [asComponent, id, sortable, title]) // eslint-disable-line react-hooks/exhaustive-deps
+    addDataColumn(props)
+  }, [props]) // eslint-disable-line react-hooks/exhaustive-deps
   return <React.Fragment />
 }
 
 const Column = (props: ColumnProps): ReactElement => {
-  const { children, title } = props
   const { addColumn } = useContext(DataGridContext)
   const fnKey = useId()
   useEffect((): void => {
-    if (children && typeof children === 'function') {
-      addColumn(fnKey, children, title)
+    if (props.children && typeof props.children === 'function') {
+      addColumn(fnKey, props)
     }
-  }, [children]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props]) // eslint-disable-line react-hooks/exhaustive-deps
   return <React.Fragment />
 }
 
@@ -750,11 +757,13 @@ DataColumn.propTypes = {
   title: PropTypes.node.isRequired,
   sortable: PropTypes.bool,
   as: PropTypes.elementType,
+  width: PropTypes.string,
 }
 
 Column.propTypes = {
   children: PropTypes.func.isRequired,
   title: PropTypes.node,
+  width: PropTypes.string,
 }
 
 DataGrid.defaultProps = {

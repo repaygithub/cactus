@@ -35,6 +35,7 @@ The `DataGrid` is a wrapper for `Table` that allows you to easily define table c
 The `DataGrid` component has two sub-components to help define your grid structure:
   - `DataGrid.DataColumn` - Receives an `id` prop and renders data from the `data` prop when the key matches `id`. Requires no children.
   - `DataGrid.Column` - Receives a child render function which will be to render anything in this column's cells.
+Any extra props passed to `Column` or `DataColumn` will be passed on to `Table.Cell` internally.
 
 ### Try It Out
 
