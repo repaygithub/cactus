@@ -54,11 +54,9 @@ export const Card = styled.div<CardProps>`
 
   & > & {
     padding: ${(p): number => p.theme.space[5]}px;
-    color: pink;
   }
   & > & > & {
     padding: ${(p): number => p.theme.space[6]}px;
-    color: blue;
   }
 `
 
