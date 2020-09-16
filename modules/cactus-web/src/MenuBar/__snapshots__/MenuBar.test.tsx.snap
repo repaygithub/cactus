@@ -1,50 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: MenuBar sidebar 1`] = `
-.c9 {
+.c10 {
   vertical-align: middle;
 }
 
-.c3 {
+.c4 {
   vertical-align: middle;
 }
 
-.c7 {
+.c0 {
+  background-color: transparent;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0px;
+  bottom: 0px;
+  border-right: 1px solid hsl(200,29%,90%);
+}
+
+.c8 {
   -webkit-flex-shrink: 1;
   -ms-flex-negative: 1;
   flex-shrink: 1;
 }
 
-.c6 {
+.c7 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
-.c0 {
+.c1 {
   outline: none;
-  position: fixed;
-  left: 0;
   font-size: 15px;
   line-height: 1.6;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  box-sizing: border-box;
-  width: 100vw;
-  height: 60px;
-  bottom: 0;
-  border-top: 1px solid hsl(200,29%,90%);
 }
 
-.c10 {
+.c11 {
   list-style: none;
   padding: 0;
   margin: 0;
   display: none;
 }
 
-.c4 {
+.c5 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   list-style: none;
@@ -55,7 +59,7 @@ exports[`component: MenuBar sidebar 1`] = `
   left: 0;
   width: 100vw;
   top: unset;
-  bottom: 60px;
+  bottom: 0px;
   height: auto;
   max-height: calc(100vh - 60px);
   z-index: 100;
@@ -63,32 +67,32 @@ exports[`component: MenuBar sidebar 1`] = `
   outline: none;
 }
 
-.c4 [role='menuitem'] {
+.c5 [role='menuitem'] {
   padding: 18px 16px;
   border-bottom: 1px solid hsl(200,29%,90%);
   position: relative;
   overflow: visible;
 }
 
-.c4 [role='menuitem'] .c8 {
+.c5 [role='menuitem'] .c9 {
   -webkit-transform: rotateZ(-90deg);
   -ms-transform: rotateZ(-90deg);
   transform: rotateZ(-90deg);
 }
 
-.c4 [role='menuitem'][aria-expanded='true'] .c8 {
+.c5 [role='menuitem'][aria-expanded='true'] .c9 {
   -webkit-transform: rotateZ(90deg);
   -ms-transform: rotateZ(90deg);
   transform: rotateZ(90deg);
 }
 
-.c4 [role='menuitem']:hover,
-.c4 [role='menuitem'][aria-expanded='true'] {
+.c5 [role='menuitem']:hover,
+.c5 [role='menuitem'][aria-expanded='true'] {
   color: hsl(200,96%,35%);
   border-bottom-color: hsl(200,96%,35%);
 }
 
-.c4 [role='menuitem']:focus::after {
+.c5 [role='menuitem']:focus::after {
   border: 1px solid hsl(200,96%,35%);
   background-color: transparent;
   box-sizing: border-box;
@@ -100,21 +104,21 @@ exports[`component: MenuBar sidebar 1`] = `
   top: 0;
 }
 
-.c4 [role='menuitem'][aria-current='true'],
-.c4 [role='menuitem'][aria-expanded='true'] {
+.c5 [role='menuitem'][aria-current='true'],
+.c5 [role='menuitem'][aria-expanded='true'] {
   font-weight: 600;
 }
 
-.c4 [role='menu'] {
+.c5 [role='menu'] {
   background-color: hsl(200,29%,90%);
   padding-left: 8px;
 }
 
-.c4 [role='menu'] [role='menu'] {
+.c5 [role='menu'] [role='menu'] {
   padding-left: 14px;
 }
 
-.c5 {
+.c6 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -137,22 +141,22 @@ exports[`component: MenuBar sidebar 1`] = `
   height: 100%;
 }
 
-.c5:active,
-.c5:focus {
+.c6:active,
+.c6:focus {
   outline: none;
 }
 
-.c5::-moz-focus-inner {
+.c6::-moz-focus-inner {
   border: none;
 }
 
-.c5 .c8 {
+.c6 .c9 {
   width: 8px;
   height: 8px;
   margin-left: 16px;
 }
 
-.c1 {
+.c2 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -179,26 +183,26 @@ exports[`component: MenuBar sidebar 1`] = `
   overflow: visible;
 }
 
-.c1:active,
-.c1:focus {
+.c2:active,
+.c2:focus {
   outline: none;
 }
 
-.c1::-moz-focus-inner {
+.c2::-moz-focus-inner {
   border: none;
 }
 
-.c1 .c2 {
+.c2 .c3 {
   width: 24px;
   height: 24px;
 }
 
-.c1:hover {
+.c2:hover {
   color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c1:focus::after {
+.c2:focus::after {
   border: 1px solid hsl(200,96%,35%);
   background-color: transparent;
   box-sizing: border-box;
@@ -210,13 +214,13 @@ exports[`component: MenuBar sidebar 1`] = `
   top: -1px;
 }
 
-.c1[aria-expanded='true'] {
+.c2[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,35%);
 }
 
-.c1[aria-expanded='true']::after {
+.c2[aria-expanded='true']::after {
   content: '';
   z-index: 99;
   background-color: rgba(0,0,0,0.5);
@@ -232,42 +236,32 @@ exports[`component: MenuBar sidebar 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c0 {
+  .c1 {
     font-size: 15px;
     line-height: 1.6;
   }
 }
 
 @media screen and (min-width:768px) {
-  .c0 {
-    width: 60px;
-    height: 100vh;
-    top: 0;
-    border-top: 0;
-    border-right: 1px solid hsl(200,29%,90%);
-  }
-}
-
-@media screen and (min-width:768px) {
-  .c4 {
+  .c5 {
     left: 60px;
     width: 350px;
     top: 0;
-    bottom: 0;
+    bottom: 0px;
     max-height: 100vh;
     box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
   }
 }
 
 @media screen and (min-width:768px) {
-  .c1 {
+  .c2 {
     border-right: 0;
     border-bottom: 1px solid hsl(200,29%,90%);
   }
 }
 
 @media screen and (min-width:768px) {
-  .c1:focus::after {
+  .c2:focus::after {
     top: 0;
     width: 100%;
     height: calc(100% + 1px);
@@ -275,201 +269,205 @@ exports[`component: MenuBar sidebar 1`] = `
 }
 
 @media screen and (min-width:768px) {
-  .c1[aria-expanded='true']::after {
+  .c2[aria-expanded='true']::after {
     display: none;
   }
 }
 
 <div>
-  <nav
-    aria-label="Menu of Main-ness"
-    aria-orientation="vertical"
+  <div
     class="c0"
-    tabindex="-1"
   >
-    <button
-      aria-expanded="false"
-      aria-haspopup="menu"
-      class="c1"
-      role="button"
-      tabindex="0"
-    >
-      <svg
-        class="c2 c3"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M2,5 C1.44771525,5 1,4.55228475 1,4 C1,3.44771525 1.44771525,3 2,3 L22,3 C22.5522847,3 23,3.44771525 23,4 C23,4.55228475 22.5522847,5 22,5 L2,5 Z M2,13 C1.44771525,13 1,12.5522847 1,12 C1,11.4477153 1.44771525,11 2,11 L22,11 C22.5522847,11 23,11.4477153 23,12 C23,12.5522847 22.5522847,13 22,13 L2,13 Z M2,21 C1.44771525,21 1,20.5522847 1,20 C1,19.4477153 1.44771525,19 2,19 L22,19 C22.5522847,19 23,19.4477153 23,20 C23,20.5522847 22.5522847,21 22,21 L2,21 Z"
-        />
-      </svg>
-    </button>
-    <ul
+    <nav
+      aria-label="Menu of Main-ness"
       aria-orientation="vertical"
-      class="c4"
-      role="menu"
+      class="c1"
+      tabindex="-1"
     >
-      <li
-        role="none"
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="c2"
+        role="button"
+        tabindex="0"
       >
-        <button
-          aria-current="true"
-          aria-expanded="false"
-          aria-haspopup="menu"
-          class="c5"
-          role="menuitem"
-          tabindex="-1"
+        <svg
+          class="c3 c4"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
         >
-          <div
+          <path
+            d="M2,5 C1.44771525,5 1,4.55228475 1,4 C1,3.44771525 1.44771525,3 2,3 L22,3 C22.5522847,3 23,3.44771525 23,4 C23,4.55228475 22.5522847,5 22,5 L2,5 Z M2,13 C1.44771525,13 1,12.5522847 1,12 C1,11.4477153 1.44771525,11 2,11 L22,11 C22.5522847,11 23,11.4477153 23,12 C23,12.5522847 22.5522847,13 22,13 L2,13 Z M2,21 C1.44771525,21 1,20.5522847 1,20 C1,19.4477153 1.44771525,19 2,19 L22,19 C22.5522847,19 23,19.4477153 23,20 C23,20.5522847 22.5522847,21 22,21 L2,21 Z"
+          />
+        </svg>
+      </button>
+      <ul
+        aria-orientation="vertical"
+        class="c5"
+        role="menu"
+      >
+        <li
+          role="none"
+        >
+          <button
+            aria-current="true"
+            aria-expanded="false"
+            aria-haspopup="menu"
             class="c6"
+            role="menuitem"
+            tabindex="-1"
+          >
+            <div
+              class="c7"
+            >
+              <em>
+                Emphasized
+              </em>
+            </div>
+            <div
+              aria-hidden="true"
+              class="c8"
+            >
+              <svg
+                class="c9 c10"
+                fill="currentcolor"
+                height="1em"
+                viewBox="0 0 24 24"
+                width="1em"
+              >
+                <path
+                  d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                  transform="rotate(-90 12 12)"
+                />
+              </svg>
+            </div>
+          </button>
+          <ul
+            aria-orientation="vertical"
+            class="c11"
+            role="menu"
+          >
+            <li
+              role="none"
+            >
+              <a
+                aria-current="true"
+                class="c6"
+                href="#"
+                role="menuitem"
+                tabindex="-1"
+              >
+                Link to the Past
+              </a>
+            </li>
+            <li
+              role="none"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                class="c6"
+                role="menuitem"
+                tabindex="-1"
+              >
+                <div
+                  class="c7"
+                >
+                  Nested
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="c8"
+                >
+                  <svg
+                    class="c9 c10"
+                    fill="currentcolor"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                  >
+                    <path
+                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                      transform="rotate(-90 12 12)"
+                    />
+                  </svg>
+                </div>
+              </button>
+              <ul
+                aria-orientation="vertical"
+                class="c11"
+                role="menu"
+              >
+                <li
+                  role="none"
+                >
+                  <a
+                    href="#"
+                  >
+                    Birdy
+                  </a>
+                </li>
+                <li
+                  role="none"
+                >
+                  <button
+                    aria-current="true"
+                    class="c6"
+                    role="menuitem"
+                    tabindex="-1"
+                  >
+                    The Mighty
+                  </button>
+                </li>
+                <li
+                  role="none"
+                >
+                  <div>
+                    <em>
+                      Decode
+                    </em>
+                     
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li
+          role="none"
+        >
+          <button
+            aria-current="true"
+            class="c6"
+            role="menuitem"
+            tabindex="-1"
           >
             <em>
-              Emphasized
+              A button
             </em>
-          </div>
-          <div
-            aria-hidden="true"
-            class="c7"
-          >
-            <svg
-              class="c8 c9"
-              fill="currentcolor"
-              height="1em"
-              viewBox="0 0 24 24"
-              width="1em"
-            >
-              <path
-                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                transform="rotate(-90 12 12)"
-              />
-            </svg>
-          </div>
-        </button>
-        <ul
-          aria-orientation="vertical"
-          class="c10"
-          role="menu"
+          </button>
+        </li>
+        <li
+          role="none"
         >
-          <li
-            role="none"
+          <a
+            class="c6"
+            role="menuitem"
+            tabindex="-1"
           >
-            <a
-              aria-current="true"
-              class="c5"
-              href="#"
-              role="menuitem"
-              tabindex="-1"
-            >
-              Link to the Past
-            </a>
-          </li>
-          <li
-            role="none"
-          >
-            <button
-              aria-expanded="false"
-              aria-haspopup="menu"
-              class="c5"
-              role="menuitem"
-              tabindex="-1"
-            >
-              <div
-                class="c6"
-              >
-                Nested
-              </div>
-              <div
-                aria-hidden="true"
-                class="c7"
-              >
-                <svg
-                  class="c8 c9"
-                  fill="currentcolor"
-                  height="1em"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                >
-                  <path
-                    d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                    transform="rotate(-90 12 12)"
-                  />
-                </svg>
-              </div>
-            </button>
-            <ul
-              aria-orientation="vertical"
-              class="c10"
-              role="menu"
-            >
-              <li
-                role="none"
-              >
-                <a
-                  href="#"
-                >
-                  Birdy
-                </a>
-              </li>
-              <li
-                role="none"
-              >
-                <button
-                  aria-current="true"
-                  class="c5"
-                  role="menuitem"
-                  tabindex="-1"
-                >
-                  The Mighty
-                </button>
-              </li>
-              <li
-                role="none"
-              >
-                <div>
-                  <em>
-                    Decode
-                  </em>
-                   
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li
-        role="none"
-      >
-        <button
-          aria-current="true"
-          class="c5"
-          role="menuitem"
-          tabindex="-1"
+            Styled Link
+          </a>
+        </li>
+        <li
+          role="none"
         >
-          <em>
-            A button
-          </em>
-        </button>
-      </li>
-      <li
-        role="none"
-      >
-        <a
-          class="c5"
-          role="menuitem"
-          tabindex="-1"
-        >
-          Styled Link
-        </a>
-      </li>
-      <li
-        role="none"
-      >
-        class 2
-      </li>
-    </ul>
-  </nav>
+          class 2
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>
 `;
 

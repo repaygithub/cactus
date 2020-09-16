@@ -12,6 +12,7 @@ import styled from 'styled-components'
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
 import { border, borderSize, boxShadow, media, radius, textStyle } from '../helpers/theme'
+import { LayoutInfo, Sidebar as LayoutSidebar, useLayout } from '../Layout/Layout'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
   focusMenu,
@@ -37,6 +38,10 @@ interface MenuBarProps {
   children: React.ReactNode
   'aria-label'?: string
 }
+
+type PositionProp = { fixedBottom: number }
+
+type LayoutMenuProps = MenuBarProps & PositionProp
 
 type Variant = 'mobile' | 'sidebar' | 'top'
 
@@ -233,59 +238,71 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
   )
 })
 
-const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
-  const orientation = 'vertical'
-  const [expanded, toggle] = useSubmenuToggle(false)
-  const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
-  React.useEffect(() => setTabIndex(menu, true), [menu])
-  return (
-    <SidebarNav
-      {...props}
-      ref={ref}
-      aria-orientation={orientation}
-      onKeyDown={handleSubmenu}
-      onBlur={closeOnBlur}
-      onClick={navClickHandler}
-      tabIndex={-1}
-    >
-      <HamburgerButton
-        tabIndex={0}
-        aria-haspopup="menu"
-        aria-expanded={expanded}
-        onClick={toggleOnClick}
-        onKeyDown={toggleOnKey}
-        onKeyUp={preventAction}
-      >
-        <NavigationHamburger />
-      </HamburgerButton>
-      <SidebarMenu
-        expanded={expanded}
-        role="menu"
-        aria-orientation={orientation}
-        onFocus={focusMenu}
-        onKeyDown={menuKeyHandler}
-        ref={menuRef}
-      >
-        {children}
-      </SidebarMenu>
-    </SidebarNav>
-  )
-})
+const Sidebar = React.forwardRef<HTMLElement, LayoutMenuProps>(
+  ({ children, fixedBottom, ...props }, ref) => {
+    const orientation = 'vertical'
+    const [expanded, toggle] = useSubmenuToggle(false)
+    const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
+    React.useEffect(() => setTabIndex(menu, true), [menu])
+    return (
+      <LayoutSidebar>
+        <SidebarNav
+          {...props}
+          ref={ref}
+          aria-orientation={orientation}
+          onKeyDown={handleSubmenu}
+          onBlur={closeOnBlur}
+          onClick={navClickHandler}
+          tabIndex={-1}
+        >
+          <HamburgerButton
+            tabIndex={0}
+            aria-haspopup="menu"
+            aria-expanded={expanded}
+            onClick={toggleOnClick}
+            onKeyDown={toggleOnKey}
+            onKeyUp={preventAction}
+          >
+            <NavigationHamburger />
+          </HamburgerButton>
+          <SidebarMenu
+            expanded={expanded}
+            role="menu"
+            aria-orientation={orientation}
+            onFocus={focusMenu}
+            onKeyDown={menuKeyHandler}
+            ref={menuRef}
+            fixedBottom={fixedBottom}
+          >
+            {children}
+          </SidebarMenu>
+        </SidebarNav>
+      </LayoutSidebar>
+    )
+  }
+)
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const variant = useVariant()
-  const Menubar = variant === 'top' ? Topbar : Sidebar
-  return <Menubar {...props} ref={ref} />
+  const layout: LayoutInfo = { position: 'flow', offset: 60 }
+  if (variant === 'sidebar') {
+    layout.position = 'fixedLeft'
+  } else if (variant === 'mobile') {
+    layout.position = 'fixedBottom'
+  }
+  const { fixedBottom } = useLayout('menubar', layout)
+  if (variant === 'top') {
+    return <Topbar {...props} ref={ref} />
+  }
+  return <Sidebar {...props} ref={ref} fixedBottom={fixedBottom} />
 })
 
 const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
   const button = event.target as HTMLElement
   if (button.matches && button.matches('[role="menuitem"]:not([aria-haspopup])')) {
     ;(document.activeElement as HTMLElement).blur()
-    const nav = event.currentTarget
-    setTimeout(() => nav.focus())
   }
 }
 
@@ -358,24 +375,8 @@ const Nav = styled.nav`
 
 const SidebarNav = styled.nav`
   outline: none;
-  position: fixed;
-  left: 0;
   ${(p) => textStyle(p.theme, 'small')};
   ${(p) => p.theme.colorStyles.standard};
-  box-sizing: border-box;
-
-  width: 100vw;
-  height: 60px;
-  bottom: 0;
-  border-top: ${(p) => border(p.theme, 'lightContrast')};
-
-  ${(p) => media(p.theme, 'small')} {
-    width: 60px;
-    height: 100vh;
-    top: 0;
-    border-top: 0;
-    border-right: ${(p) => border(p.theme, 'lightContrast')};
-  }
 `
 
 const listStyle = `
@@ -390,7 +391,7 @@ const InlineMenu = styled.ul<MenuProps>`
 `
 
 // The box shadow is #2, but shifted to be only on the right side.
-const SidebarMenu = styled.ul<MenuProps>`
+const SidebarMenu = styled.ul<MenuProps & PositionProp>`
   ${(p) => p.theme.colorStyles.standard}
   ${listStyle}
   display: ${(p) => (p.expanded ? 'block' : 'none')};
@@ -398,7 +399,7 @@ const SidebarMenu = styled.ul<MenuProps>`
   left: 0;
   width: 100vw;
   top: unset;
-  bottom: 60px;
+  bottom: ${(p) => p.fixedBottom}px;
   height: auto;
   max-height: calc(100vh - 60px);
   z-index: 100;
@@ -407,7 +408,7 @@ const SidebarMenu = styled.ul<MenuProps>`
     left: 60px;
     width: 350px;
     top: 0;
-    bottom: 0;
+    bottom: ${(p) => p.fixedBottom}px;
     max-height: 100vh;
     ${(p) => boxShadow(p.theme, '12px 0 24px -12px')};
   }

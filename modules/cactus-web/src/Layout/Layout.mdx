@@ -1,0 +1,50 @@
+---
+name: Layout
+menu: Components
+---
+
+import Layout from './Layout'
+
+# Layout
+
+Component that represents a web site's main responsive layout. It's specifically designed for use with cactus components; that may change in the future, but for now the code is relatively simple to copy & adapt if you wish for more custom layouts.
+
+The site's main content should be wrapped in `Layout.Content`; for example, if using a routing library that's where you would put the router so that changing pages doesn't affect the menu, etc.
+
+## Basic Usage
+
+Acceptable children are:
+- BrandBar
+- MenuBar
+- ActionBar
+- Layout.Content
+- Footer
+
+All the children except `Layout.Content` are optional, though ActionBar is highly recommended. If included, they should be included in the listed order, and as direct children.
+
+```jsx
+import React from 'react'
+import { ActionBar, BrandBar, Footer, Layout, MenuBar } from '@repay/cactus-web'
+
+const LOGO = "https://mysite.com/logo"
+
+const MySite = () => (
+  <Layout>
+    <BrandBar logo={LOGO} />
+    <MenuBar>
+      <MenuBar.Item>Teenage Mutant</MenuBar.Item>
+      <MenuBar.Item>Ninja Turtles</MenuBar.Item>
+    </MenuBar>
+    <ActionBar />
+    <Layout.Content>
+      <h1>Latin Or Something</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </Layout.Content>
+    <Footer logo={LOGO}>The Foot clan returns.</Footer>
+  </Layout>
+)
+```
+
+## Properties
+
+`Layout` takes no props aside from `children`.
