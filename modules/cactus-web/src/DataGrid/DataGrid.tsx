@@ -393,12 +393,6 @@ export const DataGrid = styled(DataGridBase)`
     display: inline-flex;
   }
 
-  .results-count {
-    margin-bottom: 40px;
-    margin-left: 16px;
-    margin-right: auto;
-  }
-
   th {
     ${NavigationChevronDown} {
       margin-left: 8px;
@@ -505,7 +499,7 @@ const TopSectionBase = (props: TopSectionProps): ReactElement | null => {
       {resultsCountText && !isCardView && (
         <span className="results-count-text">{resultsCountText}</span>
       )}
-      {isCardView && (
+      {isCardView && sortableColumns.size > 1 && (
         <div className="sort-buttons">
           <MenuButton variant="unfilled" label={sortLabels.sortBy || 'Sort by'} mr={4}>
             {[...sortableColumns.keys()].map(
@@ -548,24 +542,28 @@ const TopSection = styled(TopSectionBase)`
   flex-direction: column;
   align-items: center;
   padding: 0 16px;
-  margin-bottom: 40px;
 
-  .results-count-text {
-    margin-bottom: 8px;
-  }
+  ${(p) =>
+    (p.isCardView && p.sortableColumns.size > 0) ||
+    (p.paginationOptions?.pageSizeOptions !== undefined &&
+      p.paginationOptions?.pageSizeOptions.length > 0)
+      ? 'margin-bottom: 40px;'
+      : ''}
 
   // Non-card view styles
   ${getMediaQuery} {
     flex-direction: row;
     align-items: flex-start;
 
-    .results-count-text {
-      margin-bottom: 0;
-    }
+    ${(p) =>
+      p.resultsCountText !== undefined && p.resultsCountText !== null && 'margin-bottom: 40px;'}
   }
 
   .sort-buttons {
-    margin-bottom: 16px;
+    ${(p) =>
+      p.paginationOptions?.pageSizeOptions !== undefined &&
+      p.paginationOptions?.pageSizeOptions.length > 0 &&
+      'margin-bottom: 16px;'}
   }
 
   // Card view styles when screen is larger than tiny
@@ -620,7 +618,7 @@ const PageSizeSelectBase = (props: PageSizeSelectProps): ReactElement => {
 const PageSizeSelect = styled(PageSizeSelectBase)`
   display: inline-box;
 
-  ${getMediaQuery} {
+  ${(p) => p.theme.mediaQueries && p.theme.mediaQueries.small} {
     margin-left: auto;
   }
 
