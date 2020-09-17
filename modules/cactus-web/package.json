@@ -86,17 +86,17 @@
   "peerDependencies": {
     "prop-types": ">=15.7.0",
     "react": "^16.8.3",
-    "styled-components": "^4.1.4 || ^5.0.0"
+    "styled-components": "^5.0.0"
   },
   "dependencies": {
-    "@reach/dialog": "^0.10.5",
-    "@reach/menu-button": "^0.10.5",
-    "@reach/popover": "^0.10.5",
-    "@reach/portal": "^0.10.5",
-    "@reach/rect": "^0.10.5",
-    "@reach/tooltip": "0.10.5",
-    "@reach/utils": "^0.10.5",
-    "@reach/visually-hidden": "^0.10.4",
+    "@reach/dialog": "^0.11.2",
+    "@reach/menu-button": "^0.11.2",
+    "@reach/popover": "^0.11.2",
+    "@reach/portal": "^0.11.2",
+    "@reach/rect": "^0.11.2",
+    "@reach/tooltip": "0.11.2",
+    "@reach/utils": "^0.11.2",
+    "@reach/visually-hidden": "^0.11.1",
     "@repay/cactus-icons": "^1.0.0",
     "@repay/cactus-theme": "^1.0.0",
     "lodash": "^4.17.19",
