@@ -505,7 +505,7 @@ function positionList(
     top: scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
     left: scrollX + triggerRect.left + 'px',
     minWidth: triggerRect.width,
-    maxWidth: Math.max(triggerRect.width, Math.min(triggerRect.width * 2, 300)),
+    maxWidth: Math.max(triggerRect.width, Math.min(triggerRect.width * 2, 400)),
   }
   if (listRect === undefined) {
     return style
