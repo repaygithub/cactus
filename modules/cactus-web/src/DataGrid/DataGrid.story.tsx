@@ -74,15 +74,27 @@ const BoolComponent = ({ value }: { value: boolean }): ReactElement => {
   return <div>{value ? 'YES' : 'NO'}</div>
 }
 
-const DataGridContainer = (): ReactElement => {
-  const showResultsCount = boolean('Show Results Count', true)
-  const providePageSizeOptions = boolean('Provide Page Size Options', true)
-  const providePageCount = boolean('Provide Page Count', true)
-  const prevText = text('PrevNext: prevText', 'Prev')
-  const nextText = text('PrevNext: nextText', 'Next')
-  const disableNext = boolean('PrevNext: disableNext', false)
+const DataGridContainer = ({
+  initialData,
+  includePaginationAndSort = true,
+}: {
+  initialData: Record<string, any>[]
+  includePaginationAndSort?: boolean
+}): ReactElement => {
+  const showResultsCount = includePaginationAndSort
+    ? boolean('Show Results Count', true)
+    : undefined
+  const providePageSizeOptions = includePaginationAndSort
+    ? boolean('Provide Page Size Options', true)
+    : undefined
+  const providePageCount = includePaginationAndSort
+    ? boolean('Provide Page Count', true)
+    : undefined
+  const prevText = includePaginationAndSort ? text('PrevNext: prevText', 'Prev') : undefined
+  const nextText = includePaginationAndSort ? text('PrevNext: nextText', 'Next') : undefined
+  const disableNext = includePaginationAndSort ? boolean('PrevNext: disableNext', false) : undefined
 
-  const [data, setData] = useState<{ [key: string]: any }[]>(INITIAL_DATA)
+  const [data, setData] = useState<{ [key: string]: any }[]>(initialData)
   const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([])
   const [paginationOptions, setPaginationOptions] = useState<{
     currentPage: number
@@ -186,10 +198,10 @@ const DataGridContainer = (): ReactElement => {
   return (
     <ScreenSizeProvider>
       <DataGrid
-        data={paginateData()}
-        sortOptions={sortOptions}
+        data={includePaginationAndSort ? paginateData() : data}
+        sortOptions={includePaginationAndSort ? sortOptions : undefined}
         onSort={onSort}
-        paginationOptions={getPaginationOptions()}
+        paginationOptions={includePaginationAndSort ? getPaginationOptions() : undefined}
         onPageChange={onPageChange}
         fullWidth={boolean('fullWidth', false)}
         cardBreakpoint={select(
@@ -198,14 +210,18 @@ const DataGridContainer = (): ReactElement => {
           'tiny'
         )}
         resultsCountText={showResultsCount ? getResultsCountText() : undefined}
-        pageSizeSelectLabel={text('pageSizeSelectLabel', '')}
-        paginationProps={{
-          label: text('Pagination: label', ''),
-          currentPageLabel: text('Pagination: currentPageLabel', ''),
-          prevPageLabel: text('Pagination: prevPageLabel', ''),
-          nextPageLabel: text('Pagination: nextPageLabel', ''),
-          lastPageLabel: text('Pagination: lastPageLabel', ''),
-        }}
+        pageSizeSelectLabel={includePaginationAndSort ? text('pageSizeSelectLabel', '') : undefined}
+        paginationProps={
+          includePaginationAndSort
+            ? {
+                label: text('Pagination: label', ''),
+                currentPageLabel: text('Pagination: currentPageLabel', ''),
+                prevPageLabel: text('Pagination: prevPageLabel', ''),
+                nextPageLabel: text('Pagination: nextPageLabel', ''),
+                lastPageLabel: text('Pagination: lastPageLabel', ''),
+              }
+            : undefined
+        }
         prevNextProps={
           disableNext
             ? {
@@ -254,8 +270,57 @@ const DataGridContainer = (): ReactElement => {
   )
 }
 
-storiesOf('DataGrid', module).add('Basic Usage', (): ReactElement => <DataGridContainer />, {
-  cactus: {
-    overrides: { display: 'block', textAlign: 'center', paddingTop: '16px', paddingBottom: '16px' },
-  },
-})
+storiesOf('DataGrid', module)
+  .add('Basic Usage', (): ReactElement => <DataGridContainer initialData={INITIAL_DATA} />, {
+    cactus: {
+      overrides: {
+        display: 'block',
+        textAlign: 'center',
+        paddingTop: '16px',
+        paddingBottom: '16px',
+      },
+    },
+  })
+  .add(
+    'Lots and Lots of Rows',
+    () => (
+      <DataGridContainer
+        initialData={INITIAL_DATA.concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)
+          .concat(INITIAL_DATA)}
+        includePaginationAndSort={false}
+      />
+    ),
+    {
+      cactus: {
+        overrides: {
+          display: 'block',
+          textAlign: 'center',
+          paddingTop: '16px',
+          paddingBottom: '16px',
+        },
+      },
+    }
+  )
