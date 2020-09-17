@@ -1,10 +1,13 @@
 import { BorderSize, CactusTheme, ColorStyle, Shape } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { boxShadow } from '../helpers/theme'
 
-interface CardProps extends MarginProps, WidthProps {}
+interface CardProps extends MarginProps, WidthProps {
+  useBoxShadow?: boolean
+}
 
 const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   thin: css`
@@ -29,8 +32,8 @@ const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
 
 const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
 const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
-const getBoxShadow = (theme: CactusTheme): ReturnType<typeof css> => {
-  return theme.boxShadows
+const getBoxShadow = (theme: CactusTheme, useBoxShadow?: boolean): ReturnType<typeof css> => {
+  return theme.boxShadows && useBoxShadow
     ? css`
         ${(p): string => `${boxShadow(p.theme, 1)};
         :hover {
@@ -50,7 +53,7 @@ export const Card = styled.div<CardProps>`
   ${(p): ColorStyle => p.theme.colorStyles.standard};
   ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
   padding: ${(p): number => p.theme.space[4]}px;
-  ${(p): ReturnType<typeof css> => getBoxShadow(p.theme)}
+  ${(p): ReturnType<typeof css> => getBoxShadow(p.theme, p.useBoxShadow)}
 
   & > & {
     padding: ${(p): number => p.theme.space[5]}px;
@@ -59,5 +62,13 @@ export const Card = styled.div<CardProps>`
     padding: ${(p): number => p.theme.space[6]}px;
   }
 `
+
+Card.defaultProps = {
+  useBoxShadow: true,
+}
+
+Card.propTypes = {
+  useBoxShadow: PropTypes.bool,
+}
 
 export default Card

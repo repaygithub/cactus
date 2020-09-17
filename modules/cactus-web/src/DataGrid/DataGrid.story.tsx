@@ -93,6 +93,9 @@ const DataGridContainer = ({
   const prevText = includePaginationAndSort ? text('PrevNext: prevText', 'Prev') : undefined
   const nextText = includePaginationAndSort ? text('PrevNext: nextText', 'Next') : undefined
   const disableNext = includePaginationAndSort ? boolean('PrevNext: disableNext', false) : undefined
+  const sortableCols = includePaginationAndSort
+    ? boolean('Include Sortable Columns', true)
+    : undefined
 
   const [data, setData] = useState<{ [key: string]: any }[]>(initialData)
   const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([])
@@ -236,12 +239,12 @@ const DataGridContainer = ({
         }
       >
         <DataGrid.DataColumn id="name" title="Name" />
-        <DataGrid.DataColumn id="created" title="Created" sortable={true} />
+        <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} />
         <DataGrid.DataColumn
           id="active"
           title="Active"
           as={BoolComponent}
-          sortable={true}
+          sortable={sortableCols}
           width={text('Active Column Width', '')}
         />
         <DataGrid.Column width={text('Action Column Width', '')}>

@@ -1,4 +1,4 @@
-import { date, text } from '@storybook/addon-knobs'
+import { boolean, date, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
@@ -9,7 +9,7 @@ storiesOf('Card', module)
   .add(
     'Basic Usage',
     (): React.ReactElement => (
-      <Card margin="40px">
+      <Card margin="40px" useBoxShadow={boolean('useBoxShadow', true)}>
         <h2 style={{ margin: 0 }}>{text('Title', 'Title')}</h2>
         <h4 style={{ margin: '0 0 8px', fontWeight: 400, fontSize: '12px' }}>
           {text('Subtitle', 'Subtitle')}
