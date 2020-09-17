@@ -1,0 +1,54 @@
+---
+name: BrandBar
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import BrandBar from './BrandBar'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# BrandBar
+
+The `BrandBar` Components allows yout to render a Logo of your choice and a user menu with a dropdown for actions such as settings and Loggin in/out.
+
+### Try it out
+
+export const code = `<BrandBar
+    onProfilePage
+    usernameText'Hershell Jewess'
+    logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+  >
+    <BrandBar.Item onSelect={() => console.log('Settings'))}>Settings</BrandBar.Item>
+    <BrandBar.Item onSelect={() => console.log('Logout'))}>Logout</BrandBar.Item>
+  </BrandBar>`
+
+<LiveProvider code={code} scope={{ BrandBar }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Basic usage
+
+TODO - brief description
+
+```jsx
+import React from 'react'
+import { BrandBar } from '@repay/cactus-web'
+
+const BasicBrandBar = () => {
+  return (
+    <BrandBar
+      usernameText="Hershell Jewess"
+      logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+    >
+      <BrandBar.Item onSelect={someAction}>Settings</BrandBar.Item>
+      <BrandBar.Item onSelect={someAction}>Logout</BrandBar.Item>
+    </BrandBar>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={BrandBar} />
