@@ -37,6 +37,7 @@ textInputFieldStories
         error={text('error', '')}
         tooltip={text('tooltip', 'Enter some text')}
         name="input-1"
+        autoTooltip={boolean('autoTooltip', true)}
         {...eventLoggers}
       />
     ),

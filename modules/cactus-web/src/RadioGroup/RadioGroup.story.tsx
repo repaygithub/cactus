@@ -22,6 +22,7 @@ radioGroupStories.add(
       error={text('error', '')}
       success={text('success', '')}
       warning={text('warning', '')}
+      autoTooltip={boolean('autoTooltip', true)}
     >
       <RadioGroup.Button label="That's right" value="right" />
       <RadioGroup.Button disabled label="That's wrong" value="left" />

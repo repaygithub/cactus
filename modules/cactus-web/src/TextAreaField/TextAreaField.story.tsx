@@ -21,6 +21,7 @@ storiesOf('TextAreaField', module)
         error={text('error', '')}
         tooltip={text('tooltip', 'Some tooltip text')}
         resize={boolean('resize', false)}
+        autoTooltip={boolean('autoTooltip', true)}
         {...eventLoggers}
       />
     )

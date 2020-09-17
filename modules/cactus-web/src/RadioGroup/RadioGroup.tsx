@@ -56,6 +56,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       onChange,
       onFocus,
       onBlur,
+      autoTooltip = true,
       ...props
     },
     ref
@@ -143,7 +144,12 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
           {children}
         </Box>
         {tooltip && (
-          <Tooltip id={tooltipId} label={tooltip} disabled={disabled} forceVisible={showTooltip} />
+          <Tooltip
+            id={tooltipId}
+            label={tooltip}
+            disabled={disabled}
+            forceVisible={autoTooltip ? showTooltip : false}
+          />
         )}
         {status && (
           <div>
