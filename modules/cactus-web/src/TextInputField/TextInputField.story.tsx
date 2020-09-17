@@ -39,7 +39,8 @@ textInputFieldStories
         name="input-1"
         {...eventLoggers}
       />
-    )
+    ),
+    { cactus: { overrides: { height: '110vh', width: '110vw' } } }
   )
   .add(
     'Fixed Width Container',

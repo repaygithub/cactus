@@ -4,7 +4,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { cloneElement } from 'react'
+import React, { cloneElement, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
@@ -106,7 +106,8 @@ const StyledInfo = styled(({ forceVisible, ...props }) => <NotificationInfo {...
 
 const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const { className, disabled, label, ariaLabel, id, maxWidth, position, forceVisible } = props
-  const [trigger, tooltip] = useTooltip()
+  const triggerRef = useRef<HTMLSpanElement | null>(null)
+  const [trigger, tooltip] = useTooltip({ ref: triggerRef })
 
   return (
     <>
@@ -123,7 +124,12 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
             isVisible={forceVisible || tooltip.isVisible}
             label={label}
             ariaLabel={ariaLabel}
-            position={position || cactusPosition}
+            position={
+              position ||
+              ((_, tooltipRect) => {
+                return cactusPosition(triggerRef.current?.getBoundingClientRect(), tooltipRect)
+              })
+            }
             style={{ maxWidth }}
           />
           <VisuallyHidden role="tooltip" id={id}>
