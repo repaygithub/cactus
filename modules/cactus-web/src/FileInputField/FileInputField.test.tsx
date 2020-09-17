@@ -96,7 +96,50 @@ describe('component: FileInputField', (): void => {
     expect(container).toMatchSnapshot()
   })
 
-  /** TODO: Add integration tests to theme-components example using puppeteer. We can't put them here because
-   * @types/puppeteer brings in @types/node and sets everything else on fire
-   * */
+  test('should render field validation messages', () => {
+    const { getByText, rerender } = render(
+      <StyleProvider>
+        <FileInputField
+          name="dabears"
+          id="free-fallin"
+          label="Bickin Back"
+          accept={['.txt']}
+          success="Mirror mirror on the wall"
+        />
+      </StyleProvider>
+    )
+
+    const successMsg = getByText('Mirror mirror on the wall')
+    expect(successMsg).toBeInTheDocument()
+
+    rerender(
+      <StyleProvider>
+        <FileInputField
+          name="dabears"
+          id="free-fallin"
+          label="Bickin Back"
+          accept={['.txt']}
+          warning="Who's the boolest of them all?"
+        />
+      </StyleProvider>
+    )
+
+    const warningMsg = getByText("Who's the boolest of them all?")
+    expect(warningMsg).toBeInTheDocument()
+
+    rerender(
+      <StyleProvider>
+        <FileInputField
+          name="dabears"
+          id="free-fallin"
+          label="Bickin Back"
+          accept={['.txt']}
+          error="My boy's the boolest of them all"
+        />
+      </StyleProvider>
+    )
+
+    const errorMsg = getByText("My boy's the boolest of them all")
+    expect(errorMsg).toBeInTheDocument()
+  })
 })
