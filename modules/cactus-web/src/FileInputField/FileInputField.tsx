@@ -1,17 +1,16 @@
 import PropTypes from 'prop-types'
-import React, { useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import FieldWrapper from '../FieldWrapper/FieldWrapper'
+import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import FileInput, { FileInputProps, FileObject } from '../FileInput/FileInput'
 import { omitMargins } from '../helpers/omit'
-import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import Tooltip from '../Tooltip/Tooltip'
 import { Omit } from '../types'
 
-interface FileInputFieldProps extends FileInputProps, MarginProps {
+interface FileInputFieldProps extends FileInputProps, MarginProps, FieldProps {
   className?: string
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
@@ -19,28 +18,48 @@ interface FileInputFieldProps extends FileInputProps, MarginProps {
 }
 
 const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
-  const { className, disabled, label, labelProps, id, tooltip, ...fileInputProps } = omitMargins(
-    props
-  ) as Omit<FileInputFieldProps, keyof MarginProps>
-  const inputId = useId(id, 'file-input')
-  const tipId = tooltip ? `${inputId}-tip` : ''
-  const containerRef = useRef<HTMLDivElement | null>(null)
-
-  let tooltipWidth = undefined
-  if (containerRef.current && tooltip) {
-    tooltipWidth = `${containerRef.current.getBoundingClientRect().width - 32}px`
-  }
+  const {
+    className,
+    disabled,
+    label,
+    labelProps,
+    id,
+    tooltip,
+    name,
+    success,
+    warning,
+    error,
+    width,
+    autoTooltip = false,
+    ...rest
+  } = omitMargins(props) as Omit<FileInputFieldProps, keyof MarginProps>
 
   return (
-    <FieldWrapper className={className} ref={containerRef}>
-      <Label {...labelProps} htmlFor={inputId}>
-        {label}
-      </Label>
-      {tooltip && (
-        <Tooltip id={tipId} label={tooltip} maxWidth={tooltipWidth} disabled={disabled} />
+    <AccessibleField
+      disabled={disabled}
+      className={className}
+      id={id}
+      name={name}
+      label={label}
+      labelProps={labelProps}
+      tooltip={tooltip}
+      success={success}
+      warning={warning}
+      error={error}
+      width={width}
+      autoTooltip={autoTooltip}
+    >
+      {({ fieldId, labelId, name, ariaDescribedBy, disabled }) => (
+        <FileInput
+          {...rest}
+          id={fieldId}
+          name={name}
+          disabled={disabled}
+          aria-labelledby={labelId}
+          aria-describedby={ariaDescribedBy}
+        />
       )}
-      <FileInput id={inputId} aria-describedby={tipId} disabled={disabled} {...fileInputProps} />
-    </FieldWrapper>
+    </AccessibleField>
   )
 }
 

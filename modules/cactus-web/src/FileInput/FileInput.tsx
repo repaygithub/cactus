@@ -145,7 +145,8 @@ const fileStatus = (props: FileBoxProps) =>
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
   (props, ref): React.ReactElement => {
     const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
-    const onClick = (): void => {
+    const onClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+      e.currentTarget.blur()
       onDelete(fileName)
     }
 

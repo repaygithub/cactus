@@ -22,6 +22,10 @@ storiesOf('FileInputField', module).add(
       }}
       prompt={text('prompt', 'Drag files here or')}
       buttonText={text('buttonText', 'Select Files...')}
+      success={text('success', '')}
+      warning={text('warning', '')}
+      error={text('error', '')}
+      autoTooltip={boolean('autoTooltip', false)}
     />
   )
 )
