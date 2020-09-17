@@ -54,10 +54,16 @@ describe('component: BrandBar', () => {
       )
 
       fireEvent.keyDown(getByText('Test name'), { key: 'Enter' })
+      await animationRender()
+
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+      await animationRender()
+
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+      await animationRender()
+
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'Enter' })
       await animationRender()
