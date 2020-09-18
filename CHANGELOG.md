@@ -1,5 +1,14 @@
 # Changelog
 
+## [@repay/cactus-icons@v2.0.0](https://github.com/repaygithub/cactus/commit/eaf0c0e842136348d76620f3d35b8d996314149f)
+
+- perf(cactus-icons): alter styled-components peer dependency to v5 only [c918fde](https://github.com/repaygithub/cactus/commit/c918fdeeefffe2813783edeb010d83ff89779aeb)
+  - 🧨 BREAKING: Styled Components v4.x.x can no longer be used as a peer dependency.  An upgrade to
+v5.x.x is required.
+
+CACTUS-364
+- chore(cactus-icons): update changelog [5204e79](https://github.com/repaygithub/cactus/commit/5204e795ccce9e2446ed947f62828545cc60da75)
+
 ## [@repay/cactus-web@v2.1.0](https://github.com/repaygithub/cactus/commit/0fe4551c5cf914ee046b9f581eacbeeed9cbda24)
 
 - fix(cactus-web): call styled-system's width function correctly [b574eea](https://github.com/repaygithub/cactus/commit/b574eea4ac59f06e8f0607ebd6a306cc2c401733)
