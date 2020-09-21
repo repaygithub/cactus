@@ -6,15 +6,12 @@ import { margin, MarginProps } from 'styled-system'
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import FileInput, { FileInputProps, FileObject } from '../FileInput/FileInput'
 import { omitMargins } from '../helpers/omit'
-import Label, { LabelProps } from '../Label/Label'
+import Label from '../Label/Label'
 import Tooltip from '../Tooltip/Tooltip'
 import { Omit } from '../types'
 
 interface FileInputFieldProps extends FileInputProps, MarginProps, FieldProps {
   className?: string
-  label: React.ReactNode
-  labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
-  tooltip?: React.ReactNode
 }
 
 const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
