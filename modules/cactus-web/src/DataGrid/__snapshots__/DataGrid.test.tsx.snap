@@ -363,12 +363,6 @@ exports[`component: DataGrid snapshot 1`] = `
   overflow-x: auto;
 }
 
-.c0 .results-count {
-  margin-bottom: 40px;
-  margin-left: 16px;
-  margin-right: auto;
-}
-
 .c0 th .c10 {
   margin-left: 8px;
 }
@@ -449,10 +443,6 @@ exports[`component: DataGrid snapshot 1`] = `
   align-items: center;
   padding: 0 16px;
   margin-bottom: 40px;
-}
-
-.c1 .results-count-text {
-  margin-bottom: 8px;
 }
 
 .c1 .sort-buttons {
@@ -623,10 +613,7 @@ exports[`component: DataGrid snapshot 1`] = `
     -webkit-box-align: flex-start;
     -ms-flex-align: flex-start;
     align-items: flex-start;
-  }
-
-  .c1 .results-count-text {
-    margin-bottom: 0;
+    margin-bottom: 40px;
   }
 }
 

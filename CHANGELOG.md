@@ -1,5 +1,30 @@
 # Changelog
 
+## [@repay/cactus-web@v3.0.0](https://github.com/repaygithub/cactus/commit/544b69b3b3aa2b420b6180d7683526970f06dfc4)
+
+- chore(cactus-web): upgrade cactus-icons to 2.x.x [4957895](https://github.com/repaygithub/cactus/commit/49578955cdcd74f126108f26abb9d93403b00da9)
+- perf(cactus-web): alter styled-components peer dependency to v5 only [6cfae83](https://github.com/repaygithub/cactus/commit/6cfae83904322f590b2d386516763a8d300dec16)
+  - 🧨 BREAKING: Styled Components v4.x.x can no longer be used as a peer dependency.  An upgrade to
+v5.x.x is required.
+
+CACTUS-364
+- perf(cactus-web): upgrade Reach packages to improve popover performance [ad30fdc](https://github.com/repaygithub/cactus/commit/ad30fdc6e6898a38af435e33b9293d7989b8497a)
+- feat(cactus-web): add useBoxShadow prop to Card [8be2af4](https://github.com/repaygithub/cactus/commit/8be2af40618f412e12bcbe62d2147d585da9730e)
+- fix(cactus-web): apply appropriate margin to DataGrid TopSection [a29bbcf](https://github.com/repaygithub/cactus/commit/a29bbcf63012201f1566222d3e9eeeb1776cbff2)
+- fix(cactus-web): remove hard-coded text colors on nested cards [dd5c417](https://github.com/repaygithub/cactus/commit/dd5c417499ab4e28be835fd675b3467b524adb2f)
+- chore(cactus-web): add some scroll bars to TextInputField story [6e6c63a](https://github.com/repaygithub/cactus/commit/6e6c63ae82cfb752b9f8f6d26b0a0c6d947d1ade)
+- fix(cactus-web): fix tooltip positioning on field focus [e050dc7](https://github.com/repaygithub/cactus/commit/e050dc71111e70b7d66dcde3e05f2944dd7b3b74)
+- chore(cactus-web): update changelog [1a782c7](https://github.com/repaygithub/cactus/commit/1a782c737d1d05b2b9c832bb98cb4f08473554ae)
+
+## [@repay/cactus-icons@v2.0.0](https://github.com/repaygithub/cactus/commit/eaf0c0e842136348d76620f3d35b8d996314149f)
+
+- perf(cactus-icons): alter styled-components peer dependency to v5 only [c918fde](https://github.com/repaygithub/cactus/commit/c918fdeeefffe2813783edeb010d83ff89779aeb)
+  - 🧨 BREAKING: Styled Components v4.x.x can no longer be used as a peer dependency.  An upgrade to
+v5.x.x is required.
+
+CACTUS-364
+- chore(cactus-icons): update changelog [5204e79](https://github.com/repaygithub/cactus/commit/5204e795ccce9e2446ed947f62828545cc60da75)
+
 ## [@repay/cactus-web@v2.1.0](https://github.com/repaygithub/cactus/commit/0fe4551c5cf914ee046b9f581eacbeeed9cbda24)
 
 - fix(cactus-web): call styled-system's width function correctly [b574eea](https://github.com/repaygithub/cactus/commit/b574eea4ac59f06e8f0607ebd6a306cc2c401733)

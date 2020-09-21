@@ -140,7 +140,7 @@ function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
 
           return {
             minWidth: targetRect.width,
-            maxWidth: Math.max(targetRect.width, Math.min(targetRect.width * 1.5, 300)),
+            maxWidth: Math.max(targetRect.width, Math.min(targetRect.width * 2, 400)),
             left: targetRect.left + scrollX,
             ...getTopPosition(targetRect, popoverRect),
           }
