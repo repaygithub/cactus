@@ -3581,6 +3581,13 @@
     "@babel/preset-typescript" "^7.10.4"
     babel-plugin-dynamic-import-node "^2.3.3"
 
+"@repay/cactus-icons@^1.0.0":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@repay/cactus-icons/-/cactus-icons-1.0.2.tgz#f1ffdfffdf81559b4e01b7b423c975ef7b7aa83b"
+  integrity sha512-Dskid6ELodweFmLJMoGlAXrme8DaNwl3FRnXY6OKRrcEoZ8z/8ymub1j3D9Q8K99meq4pGD1qmnSQoxnA4CFlA==
+  dependencies:
+    styled-system "^5.1.5"
+
 "@repay/eslint-config@^3.0.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@repay/eslint-config/-/eslint-config-3.1.0.tgz#f53b86b0b8a6559ba41cdf64903f0c80faccc916"
