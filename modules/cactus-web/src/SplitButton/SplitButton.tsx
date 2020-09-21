@@ -209,7 +209,7 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
                 position={(
                   targetRect,
                   popoverRect
-                ): { width?: number; left?: number; top?: string } => {
+                ): { minWidth?: number; maxWidth?: number; left?: number; top?: string } => {
                   if (!targetRect || !popoverRect || !mainActionRef.current) {
                     return {}
                   }
@@ -219,7 +219,8 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
                   const scrollX = getScrollX()
 
                   return {
-                    width: splitButtonWidth,
+                    minWidth: splitButtonWidth,
+                    maxWidth: Math.max(splitButtonWidth, Math.min(splitButtonWidth * 2, 400)),
                     left: targetRect.left - mainActionButtonWidth + scrollX - 6,
                     ...getTopPosition(targetRect, popoverRect),
                   }
