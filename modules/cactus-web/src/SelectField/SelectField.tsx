@@ -33,6 +33,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
     error,
     width,
     disabled,
+    autoTooltip,
     ...rest
   } = omitMargins(props) as Omit<SelectFieldProps, keyof MarginProps>
 
@@ -49,6 +50,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
       warning={warning}
       error={error}
       width={width}
+      autoTooltip={autoTooltip}
     >
       {({ fieldId, labelId, name, ariaDescribedBy, status, disabled }): React.ReactElement => (
         <Select

@@ -19,6 +19,7 @@ storiesOf('SelectField', module)
         success={text('success', '')}
         warning={text('warning', '')}
         error={text('error', '')}
+        autoTooltip={boolean('autoTooltip', true)}
       />
     ),
     { knobs: { escapeHTML: false } }

@@ -1,6 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
 import {
-  Alert,
   Button,
   CheckBoxField,
   DateInputField,
@@ -13,7 +12,7 @@ import {
   TextInputField,
   ToggleField,
 } from '@repay/cactus-web'
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers } from 'formik'
+import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
@@ -157,9 +156,6 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
         <Formik initialValues={initialValues} onSubmit={onSubmit} validate={validate}>
           {({ errors, touched }) => (
             <Flex borderColor="base" borderWidth="2px" borderStyle="solid" width="90%">
-              <ErrorMessage name="fileInput">
-                {(msg: string) => <Alert status="error">{msg}</Alert>}
-              </ErrorMessage>
               <Flex width="100%">
                 <Form style={{ width: '100%', padding: '16px' }}>
                   <FormikField
@@ -254,6 +250,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                       prompt="Drag files here or"
                       buttonText="Select Files..."
                       validate={(val?: any) => (!val ? 'Must upload a logo' : undefined)}
+                      error={touched.fileInput && errors.fileInput}
                     />
                   </Flex>
 

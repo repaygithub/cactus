@@ -31,6 +31,7 @@ storiesOf('DateInputField', module)
         error={text('error?', '')}
         success={text('success?', '')}
         warning={text('warning?', '')}
+        autoTooltip={boolean('autoTooltip', true)}
       />
     )
   )
