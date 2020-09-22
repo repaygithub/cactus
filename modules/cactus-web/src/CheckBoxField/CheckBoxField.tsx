@@ -11,7 +11,7 @@ import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
-interface CheckBoxFieldProps
+export interface CheckBoxFieldProps
   extends Omit<CheckBoxProps, 'id' | 'onChange' | 'onBlur' | 'onFocus' | 'disabled'>,
     MarginProps {
   label: React.ReactNode
@@ -24,7 +24,7 @@ interface CheckBoxFieldProps
   disabled?: boolean
 }
 
-const CheckBoxFieldBase = (props: CheckBoxFieldProps): React.ReactElement => {
+const CheckBoxFieldBase = React.forwardRef<HTMLInputElement, CheckBoxFieldProps>((props, ref) => {
   const componentProps = omitMargins(props) as Omit<CheckBoxFieldProps, keyof MarginProps>
   const {
     label,
@@ -61,6 +61,7 @@ const CheckBoxFieldBase = (props: CheckBoxFieldProps): React.ReactElement => {
     <FieldWrapper className={className}>
       <CheckBox
         {...checkboxProps}
+        ref={ref}
         id={checkboxId}
         name={name}
         onChange={handleChange}
@@ -72,7 +73,7 @@ const CheckBoxFieldBase = (props: CheckBoxFieldProps): React.ReactElement => {
       </Label>
     </FieldWrapper>
   )
-}
+})
 
 export const CheckBoxField = styled(CheckBoxFieldBase)`
   & + & {
