@@ -14,12 +14,12 @@ The `BrandBar` Components allows yout to render a Logo of your choice and a user
 ### Try it out
 
 export const code = `<BrandBar
-    onProfilePage
-    usernameText'Hershell Jewess'
+    isProfilePage
+    userMenuText'Hershell Jewess'
     logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
   >
-    <BrandBar.Item onSelect={() => console.log('Settings'))}>Settings</BrandBar.Item>
-    <BrandBar.Item onSelect={() => console.log('Logout'))}>Logout</BrandBar.Item>
+    <BrandBar.UserMenuItem onSelect={() => console.log('Settings'))}>Settings</BrandBar.UserMenuItem>
+    <BrandBar.UserMenuItem onSelect={() => console.log('Logout'))}>Logout</BrandBar.UserMenuItem>
   </BrandBar>`
 
 <LiveProvider code={code} scope={{ BrandBar }}>

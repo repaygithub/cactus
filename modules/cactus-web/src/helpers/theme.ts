@@ -18,15 +18,15 @@ export const border = (theme: CactusTheme, color: string): string => {
 
 type Direction = 'top' | 'bottom' | 'left' | 'right'
 
-export const outsetBorder = (theme: CactusTheme, color: string, direction?: Direction): string => {
+export const insetBorder = (theme: CactusTheme, color: string, direction?: Direction): string => {
   let hOffset = 0,
     vOffset = 0,
     spread = 0
   const thickness = theme.border === 'thick' ? 2 : 1
   if (direction === 'top') {
-    vOffset = -thickness
-  } else if (direction === 'bottom') {
     vOffset = thickness
+  } else if (direction === 'bottom') {
+    vOffset = -thickness
   } else if (direction === 'left') {
     hOffset = thickness
   } else if (direction === 'right') {
@@ -35,7 +35,7 @@ export const outsetBorder = (theme: CactusTheme, color: string, direction?: Dire
     spread = thickness
   }
   color = theme.colors[color as CactusColor] || color
-  return `box-shadow: ${hOffset}px ${vOffset}px 0px ${spread}px ${color}`
+  return `box-shadow: inset ${hOffset}px ${vOffset}px 0px ${spread}px ${color}`
 }
 
 const radii = {

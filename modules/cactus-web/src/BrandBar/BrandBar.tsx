@@ -13,7 +13,7 @@ import React, { MutableRefObject, useRef } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { getTopPosition } from '../helpers/positionPopover'
-import { outsetBorder } from '../helpers/theme'
+import { insetBorder } from '../helpers/theme'
 import { border, boxShadow, fontSize, media, textStyle } from '../helpers/theme'
 
 interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -110,7 +110,7 @@ export const StyledBrandBar = styled.div<BrandBarProps>`
   justify-content: center;
   align-items: flex-end;
   width: 100%;
-  border-bottom: ${(p): string => border(p.theme, 'lightContrast')};
+  ${(p): string => insetBorder(p.theme, 'lightContrast', 'bottom')};
   ${(p) =>
     p.isProfilePage &&
     `
@@ -118,7 +118,7 @@ export const StyledBrandBar = styled.div<BrandBarProps>`
       color: ${p.theme.colors.callToAction}
     }
     & button{
-      ${outsetBorder(p.theme, 'callToAction', 'bottom')};
+      ${insetBorder(p.theme, 'callToAction', 'bottom')};
     }
   `}
   ${(p) => media(p.theme, 'small')} {
@@ -145,11 +145,11 @@ const MenuButton = styled(ReachMenuButton)<MenuItemsProps>`
     padding: 16px;
     cursor: pointer;
     &:focus {
-      ${(p) => outsetBorder(p.theme, 'callToAction')};
+      ${(p) => insetBorder(p.theme, 'callToAction')};
       outline: none;
     }
     &[aria-expanded='true'] {
-      ${(p) => outsetBorder(p.theme, 'callToAction', 'bottom')};
+      ${(p) => insetBorder(p.theme, 'callToAction', 'bottom')};
       color: ${(p): string => p.theme.colors.callToAction};
 
       ${NavigationChevronDown} {
