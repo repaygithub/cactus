@@ -129,7 +129,9 @@ const LogoWrapper = styled.div`
   padding: 16px;
   max-width: 200px;
   max-height: 80px;
+  display: flex;
   & > * {
+    flex-shrink: 0;
     max-width: 100%;
     max-height: 100%;
   }
