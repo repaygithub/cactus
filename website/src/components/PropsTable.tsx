@@ -183,7 +183,6 @@ const PropsTable: React.FC<PropsTableProps> = ({
       const prop = props[i]
       if (prop.parent) {
         const sourceFile = prop.parent.fileName
-        console.log(sourceFile.includes('node_modules'))
         if (sourceFile.includes('styled-system')) {
           styledSystemProps.push(prop)
         } else if (!sourceFile.includes('node_modules')) {
