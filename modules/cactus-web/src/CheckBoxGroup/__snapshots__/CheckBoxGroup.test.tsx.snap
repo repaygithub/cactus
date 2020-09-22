@@ -1,0 +1,664 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
+.c5 + .c4 {
+  margin-top: 16px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
+.c16 {
+  vertical-align: middle;
+}
+
+.c11 {
+  vertical-align: middle;
+}
+
+.c17 {
+  outline: none;
+  color: hsl(200,10%,20%);
+}
+
+.c17:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c3 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding-top: 8px;
+}
+
+.c9 {
+  opacity: 0;
+  border: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.c10 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1px solid;
+  border-color: hsl(200,10%,20%);
+  background: none;
+  border-radius: 1px;
+}
+
+.c10 svg {
+  margin: 1px;
+}
+
+.c10 svg {
+  visibility: hidden;
+  display: block;
+  color: hsl(0,0%,100%);
+  width: 12px;
+  height: 12px;
+}
+
+.c14 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1px solid;
+  border-color: hsl(0,0%,90%);
+  background: hsl(0,0%,90%);
+  border-radius: 1px;
+}
+
+.c14 svg {
+  margin: 1px;
+}
+
+.c14 svg {
+  visibility: hidden;
+  display: block;
+  color: hsl(0,0%,100%);
+  width: 12px;
+  height: 12px;
+}
+
+.c8 {
+  position: relative;
+  display: inline-block;
+  vertical-align: -1px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.c8 input:checked ~ span {
+  border-color: hsl(200,96%,35%);
+  background-color: hsl(200,96%,35%);
+}
+
+.c8 input:checked ~ span svg {
+  visibility: visible;
+}
+
+.c8 input:focus ~ span {
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+.c13 {
+  position: relative;
+  display: inline-block;
+  vertical-align: -1px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  cursor: cursor;
+}
+
+.c13 input:checked ~ span svg {
+  visibility: visible;
+}
+
+.c13 input:focus ~ span {
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+.c7 + .c6 {
+  margin-top: 8px;
+}
+
+.c7 .c1 {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.c12 + .c6 {
+  margin-top: 8px;
+}
+
+.c12 .c1 {
+  cursor: not-allowed;
+  padding-left: 8px;
+  color: hsl(0,0%,70%);
+}
+
+.c0 {
+  position: relative;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.c0 legend {
+  box-sizing: border-box;
+  border-bottom: 1px solid currentcolor;
+  padding-left: 16px;
+  padding-right: 28px;
+  width: 100%;
+  float: left;
+  color: currentcolor;
+}
+
+.c0 legend + * {
+  clear: both;
+}
+
+.c0 .c15 {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  font-size: 16px;
+}
+
+.c0 .sc-qYSYK {
+  margin-top: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c2 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+<div>
+  <fieldset
+    aria-describedby="cbg-tip cbg-status"
+    class="c0"
+    id="cbg"
+    name="checkboxes"
+  >
+    <legend
+      class="c1 c2"
+      id="cbg-label"
+    >
+      Checkboxes
+    </legend>
+    <div
+      class="c3"
+    >
+      <div
+        class="c4 c5 c6 c7"
+      >
+        <label
+          class="c8"
+          for="cb1"
+        >
+          <input
+            checked=""
+            class="c9"
+            id="cb1"
+            name="cb1"
+            required=""
+            type="checkbox"
+          />
+          <span
+            aria-hidden="true"
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+              />
+            </svg>
+          </span>
+        </label>
+        <label
+          class="c1 c2"
+          for="cb1"
+        >
+          CB 1
+        </label>
+      </div>
+      <div
+        class="c4 c5 c6 c7"
+      >
+        <label
+          class="c8"
+          for="cb2"
+        >
+          <input
+            class="c9"
+            id="cb2"
+            name="cb2"
+            required=""
+            type="checkbox"
+          />
+          <span
+            aria-hidden="true"
+            class="c10"
+          >
+            <svg
+              class="c11"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+              />
+            </svg>
+          </span>
+        </label>
+        <label
+          class="c1 c2"
+          for="cb2"
+        >
+          CB 2
+        </label>
+      </div>
+      <div
+        class="c4 c5 c6 c12"
+      >
+        <label
+          class="c13"
+          for="cb3"
+        >
+          <input
+            class="c9"
+            disabled=""
+            id="cb3"
+            name="cb3"
+            required=""
+            type="checkbox"
+          />
+          <span
+            aria-hidden="true"
+            class="c14"
+            disabled=""
+          >
+            <svg
+              class="c11"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+              />
+            </svg>
+          </span>
+        </label>
+        <label
+          class="c1 c2"
+          for="cb3"
+        >
+          CB 3
+        </label>
+      </div>
+    </div>
+    <span
+      class="c15 "
+      data-reach-tooltip-trigger=""
+    >
+      <svg
+        class="c16 c17"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+        />
+      </svg>
+    </span>
+    <span
+      id="cbg-tip"
+      role="tooltip"
+      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
+    >
+      Check some boxes
+    </span>
+  </fieldset>
+</div>
+`;
+
+exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = `
+.c5 + .c4 {
+  margin-top: 16px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
+.c16 {
+  vertical-align: middle;
+}
+
+.c12 {
+  vertical-align: middle;
+}
+
+.c14 {
+  padding: 2px 4px;
+  position: relative;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsla(353,84%,44%,0.3);
+}
+
+.c14 .c15,
+.c14 .sc-fzoCCn,
+.c14 .c11 {
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding-top: 8px;
+}
+
+.c9 {
+  opacity: 0;
+  border: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.c10 {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: 1px solid;
+  border-color: hsl(0,0%,90%);
+  background: hsl(0,0%,90%);
+  border-radius: 1px;
+}
+
+.c10 svg {
+  margin: 1px;
+}
+
+.c10 svg {
+  visibility: hidden;
+  display: block;
+  color: hsl(0,0%,100%);
+  width: 12px;
+  height: 12px;
+}
+
+.c8 {
+  position: relative;
+  display: inline-block;
+  vertical-align: -1px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  cursor: cursor;
+}
+
+.c8 input:checked ~ span svg {
+  visibility: visible;
+}
+
+.c8 input:focus ~ span {
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+.c7 + .c6 {
+  margin-top: 8px;
+}
+
+.c7 .c1 {
+  cursor: not-allowed;
+  padding-left: 8px;
+  color: hsl(0,0%,70%);
+}
+
+.c0 {
+  position: relative;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.c0 legend {
+  box-sizing: border-box;
+  border-bottom: 1px solid currentcolor;
+  padding-left: 16px;
+  padding-right: 28px;
+  width: 100%;
+  float: left;
+  color: hsl(0,0%,70%);
+}
+
+.c0 legend + * {
+  clear: both;
+}
+
+.c0 .sc-pReKu {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  font-size: 16px;
+}
+
+.c0 .c13 {
+  margin-top: 4px;
+}
+
+@media screen and (min-width:1024px) {
+  .c2 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c14 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+<div>
+  <fieldset
+    aria-describedby="cbg-tip cbg-status"
+    class="c0"
+    disabled=""
+    id="cbg"
+    name="checkboxes"
+  >
+    <legend
+      class="c1 c2"
+      id="cbg-label"
+    >
+      Checkboxes
+    </legend>
+    <div
+      class="c3"
+    >
+      <div
+        class="c4 c5 c6 c7"
+      >
+        <label
+          class="c8"
+          for="cb1"
+        >
+          <input
+            checked=""
+            class="c9"
+            disabled=""
+            id="cb1"
+            name="cb1"
+            type="checkbox"
+          />
+          <span
+            aria-hidden="true"
+            class="c10"
+            disabled=""
+          >
+            <svg
+              class="c11 c12"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+              />
+            </svg>
+          </span>
+        </label>
+        <label
+          class="c1 c2"
+          for="cb1"
+        >
+          CB 1
+        </label>
+      </div>
+      <div
+        class="c4 c5 c6 c7"
+      >
+        <label
+          class="c8"
+          for="cb2"
+        >
+          <input
+            class="c9"
+            disabled=""
+            id="cb2"
+            name="cb2"
+            type="checkbox"
+          />
+          <span
+            aria-hidden="true"
+            class="c10"
+            disabled=""
+          >
+            <svg
+              class="c11 c12"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+              />
+            </svg>
+          </span>
+        </label>
+        <label
+          class="c1 c2"
+          for="cb2"
+        >
+          CB 2
+        </label>
+      </div>
+      <div
+        class="c4 c5 c6 c7"
+      >
+        <label
+          class="c8"
+          for="cb3"
+        >
+          <input
+            class="c9"
+            disabled=""
+            id="cb3"
+            name="cb3"
+            type="checkbox"
+          />
+          <span
+            aria-hidden="true"
+            class="c10"
+            disabled=""
+          >
+            <svg
+              class="c11 c12"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
+              />
+            </svg>
+          </span>
+        </label>
+        <label
+          class="c1 c2"
+          for="cb3"
+        >
+          CB 3
+        </label>
+      </div>
+    </div>
+    <div>
+      <div
+        class="c13 c14"
+        id="cbg-status"
+        role="alert"
+      >
+        <svg
+          aria-hidden="true"
+          class="c15 c16"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M11.1055728,1.5527864 C11.4740971,0.815737865 12.5259029,0.815737865 12.8944272,1.5527864 L22.8944272,21.5527864 C23.2268777,22.2176875 22.743382,23 22,23 L2,23 C1.25661798,23 0.773122263,22.2176875 1.10557281,21.5527864 L11.1055728,1.5527864 Z M3.61803399,21 L20.381966,21 L12,4.23606798 L3.61803399,21 Z M12,18 C11.4477153,18 11,17.5522847 11,17 C11,16.4477153 11.4477153,16 12,16 C12.5522847,16 13,16.4477153 13,17 C13,17.5522847 12.5522847,18 12,18 Z M13,14 C13,14.5522847 12.5522847,15 12,15 C11.4477153,15 11,14.5522847 11,14 L11,11 C11,10.4477153 11.4477153,10 12,10 C12.5522847,10 13,10.4477153 13,11 L13,14 Z"
+          />
+        </svg>
+        <span>
+          No box checking for you
+        </span>
+      </div>
+    </div>
+  </fieldset>
+</div>
+`;
