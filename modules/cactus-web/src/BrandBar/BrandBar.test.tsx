@@ -10,9 +10,13 @@ describe('component: BrandBar', () => {
   test('snapshot', () => {
     const { container } = render(
       <StyleProvider>
-        <BrandBar usernameText="Test name">
-          <BrandBar.Item onSelect={(): void => console.log('Settings')}>Settings</BrandBar.Item>
-          <BrandBar.Item onSelect={(): void => console.log('Logout')}>Logout</BrandBar.Item>
+        <BrandBar userMenuText="Test name">
+          <BrandBar.UserMenuItem onSelect={(): void => console.log('Settings')}>
+            Settings
+          </BrandBar.UserMenuItem>
+          <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
+            Logout
+          </BrandBar.UserMenuItem>
         </BrandBar>
       </StyleProvider>
     )
@@ -25,9 +29,11 @@ describe('component: BrandBar', () => {
       const actionOne = jest.fn()
       const { getByText } = render(
         <StyleProvider>
-          <BrandBar usernameText="Test name">
-            <BrandBar.Item onSelect={actionOne}>Settings</BrandBar.Item>
-            <BrandBar.Item onSelect={(): void => console.log('Logout')}>Logout</BrandBar.Item>
+          <BrandBar userMenuText="Test name">
+            <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
+              Logout
+            </BrandBar.UserMenuItem>
           </BrandBar>
         </StyleProvider>
       )
@@ -39,16 +45,16 @@ describe('component: BrandBar', () => {
     })
   })
 
-  describe('mouse usage', (): void => {
+  describe('keyboard usage', (): void => {
     test('can select an action', async (): Promise<void> => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
 
       const { getByText } = render(
         <StyleProvider>
-          <BrandBar usernameText="Test name">
-            <BrandBar.Item onSelect={actionOne}>Settings</BrandBar.Item>
-            <BrandBar.Item onSelect={actionTwo}>Logout</BrandBar.Item>
+          <BrandBar userMenuText="Test name">
+            <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onSelect={actionTwo}>Logout</BrandBar.UserMenuItem>
           </BrandBar>
         </StyleProvider>
       )

@@ -1,7 +1,7 @@
 import {
   Menu,
   MenuButton as ReachMenuButton,
-  MenuItem,
+  MenuItem as ReachMenuItem,
   MenuItems as ReachMenuList,
   MenuItemsProps,
   MenuPopover,
@@ -9,17 +9,21 @@ import {
 import { DescriptiveProfile, NavigationChevronDown } from '@repay/cactus-icons'
 import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { MutableRefObject, useRef } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { getTopPosition } from '../helpers/positionPopover'
-import { getScrollX } from '../helpers/scrollOffset'
+import { outsetBorder } from '../helpers/theme'
 import { border, boxShadow, fontSize, media, textStyle } from '../helpers/theme'
 
 interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
-  usernameText: string
-  onProfilePage?: boolean
+  userMenuText: string
+  isProfilePage?: boolean
+}
+interface MenuItemProps {
+  children?: React.ReactNode
+  onSelect: () => any
 }
 
 type ThemeProps = { theme: CactusTheme }
@@ -48,34 +52,41 @@ const getDropDownBorder = ({ theme }: ThemeProps) => {
   }
 }
 
-const BrandBarBase = (props: BrandBarProps): React.ReactElement => {
-  const { logo, className, usernameText, children } = props
+const BrandBar = (props: BrandBarProps): React.ReactElement => {
+  const { logo, className, userMenuText, children } = props
+  const buttonRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
 
   return (
-    <div className={className}>
-      <LogoWrapper>{typeof logo === 'string' ? <Img alt="Logo" src={logo} /> : logo}</LogoWrapper>
+    <StyledBrandBar className={className} {...props}>
+      <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
       <Menu>
         <MenuButtonStyles />
-        <MenuButton>
+        <MenuButton ref={buttonRef}>
           <DescriptiveProfile mr="8px" />
-          <span>{usernameText}</span>
+          <span>{userMenuText}</span>
           <NavigationChevronDown aria-hidden="true" ml="8px" />
         </MenuButton>
         <MenuPopover
           position={(
             targetRect,
             popoverRect
-          ): { minWidth?: number; maxWidth?: number; left?: number; top?: string } => {
-            if (!targetRect || !popoverRect) {
+          ): {
+            minWidth?: number
+            maxWidth?: number
+            right?: number
+            left?: number
+            top?: string
+          } => {
+            if (!targetRect || !popoverRect || !buttonRef.current) {
               return {}
             }
-
-            const scrollX = getScrollX()
+            const buttonWidth = buttonRef.current.clientWidth
 
             return {
-              minWidth: targetRect.width,
-              maxWidth: Math.max(targetRect.width, Math.min(targetRect.width * 1.5, 300)),
-              left: targetRect.left + scrollX,
+              minWidth: targetRect.width + 21,
+              maxWidth: Math.max(buttonWidth, Math.min(buttonWidth * 2, 400)),
+              right: targetRect.right,
+              left: targetRect.left - 21,
               ...getTopPosition(targetRect, popoverRect),
             }
           }}
@@ -83,25 +94,31 @@ const BrandBarBase = (props: BrandBarProps): React.ReactElement => {
           <MenuList>{children}</MenuList>
         </MenuPopover>
       </Menu>
-    </div>
+    </StyledBrandBar>
   )
 }
-BrandBarBase.Item = MenuItem
 
-export const BrandBar = styled(BrandBarBase)`
+const MenuItem = (props: MenuItemProps) => {
+  const { children, onSelect } = props
+  return <ReachMenuItem onSelect={onSelect}>{children}</ReachMenuItem>
+}
+
+BrandBar.UserMenuItem = MenuItem
+
+export const StyledBrandBar = styled.div<BrandBarProps>`
   display: flex;
   justify-content: center;
   align-items: flex-end;
   width: 100%;
   border-bottom: ${(p): string => border(p.theme, 'lightContrast')};
   ${(p) =>
-    p.onProfilePage &&
+    p.isProfilePage &&
     `
     & svg, & button{
       color: ${p.theme.colors.callToAction}
     }
     & button{
-      border-bottom: ${border(p.theme, 'callToAction')};
+      ${outsetBorder(p.theme, 'callToAction', 'bottom')};
     }
   `}
   ${(p) => media(p.theme, 'small')} {
@@ -110,10 +127,12 @@ export const BrandBar = styled(BrandBarBase)`
 `
 const LogoWrapper = styled.div`
   padding: 16px;
-`
-const Img = styled('img')`
   max-width: 200px;
   max-height: 80px;
+  & > * {
+    max-width: 100%;
+    max-height: 100%;
+  }
 `
 
 const MenuButton = styled(ReachMenuButton)<MenuItemsProps>`
@@ -124,14 +143,13 @@ const MenuButton = styled(ReachMenuButton)<MenuItemsProps>`
     display: flex;
     align-items: center;
     padding: 16px;
-    border: ${(p) => border(p.theme, 'transparent')};
     cursor: pointer;
     &:focus {
-      border-color: ${(p): string => p.theme.colors.callToAction};
+      ${(p) => outsetBorder(p.theme, 'callToAction')};
       outline: none;
     }
     &[aria-expanded='true'] {
-      border-bottom-color: ${(p): string => p.theme.colors.callToAction};
+      ${(p) => outsetBorder(p.theme, 'callToAction', 'bottom')};
       color: ${(p): string => p.theme.colors.callToAction};
 
       ${NavigationChevronDown} {
@@ -181,12 +199,12 @@ const MenuList = styled(ReachMenuList)`
 `
 BrandBar.propTypes = {
   logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  usernameText: PropTypes.string.isRequired,
-  onProfilePage: PropTypes.bool,
+  userMenuText: PropTypes.string.isRequired,
+  isProfilePage: PropTypes.bool,
 }
 
 BrandBar.defaultProps = {
-  onProfilePage: false,
+  isProfilePage: false,
 }
 
 export default BrandBar

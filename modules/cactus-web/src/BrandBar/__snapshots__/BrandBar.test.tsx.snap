@@ -30,6 +30,13 @@ exports[`component: BrandBar snapshot 1`] = `
 
 .c1 {
   padding: 16px;
+  max-width: 200px;
+  max-height: 80px;
+}
+
+.c1 > * {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .c2 {
@@ -59,17 +66,16 @@ exports[`component: BrandBar snapshot 1`] = `
     -ms-flex-align: center;
     align-items: center;
     padding: 16px;
-    border: 1px solid transparent;
     cursor: pointer;
   }
 
   .c2:focus {
-    border-color: hsl(200,96%,35%);
+    box-shadow: 0px 0px 0px 1px hsl(200,96%,35%);
     outline: none;
   }
 
   .c2[aria-expanded='true'] {
-    border-bottom-color: hsl(200,96%,35%);
+    box-shadow: 0px 1px 0px 0px hsl(200,96%,35%);
     color: hsl(200,96%,35%);
   }
 

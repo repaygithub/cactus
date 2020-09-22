@@ -40,12 +40,12 @@ storiesOf('Layout', module).add(
       <Layout>
         {hasBrand && (
           <BrandBar
-            onProfilePage={boolean('On profile page?', false)}
-            usernameText={text('Menu Title', 'Hershell Jewess')}
+            isProfilePage={boolean('On profile page?', false)}
+            userMenuText={text('Menu Title', 'Hershell Jewess')}
             logo={LOGO}
           >
-            <BrandBar.Item onSelect={action('Settings')}>Settings</BrandBar.Item>
-            <BrandBar.Item onSelect={action('Logout')}>Logout</BrandBar.Item>
+            <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
           </BrandBar>
         )}
         {hasMenu && (
