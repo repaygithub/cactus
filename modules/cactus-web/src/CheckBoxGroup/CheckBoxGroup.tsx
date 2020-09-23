@@ -5,13 +5,13 @@ import { MarginProps, WidthProps } from 'styled-system'
 import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
+import Fieldset from '../Fieldset/Fieldset'
 import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
-import Fieldset from '../Fieldset/Fieldset'
 
 interface CheckBoxGroupProps
   extends MarginProps,
