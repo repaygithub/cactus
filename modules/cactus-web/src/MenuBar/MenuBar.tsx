@@ -9,10 +9,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 
+import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
-import { isActionKey, keyPressAsClick } from '../helpers/a11y'
+import { keyPressAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { border, borderSize, boxShadow, media, radius, textStyle } from '../helpers/theme'
+import { border, borderSize, boxShadow, radius, textStyle } from '../helpers/theme'
+import usePopup from '../helpers/usePopup'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -37,11 +39,10 @@ interface MenuProps {
 }
 
 interface MenuBarProps {
+  id?: string
   children: React.ReactNode
   'aria-label'?: string
 }
-
-type SidebarMenuProps = MenuBarProps & { variant: Variant }
 
 type Variant = 'mobile' | 'sidebar' | 'top'
 
@@ -55,11 +56,8 @@ const useVariant = (): Variant => {
   return 'top'
 }
 
-const preventAction = (event: React.KeyboardEvent<HTMLElement>) => {
-  if (isActionKey(event)) {
-    event.preventDefault()
-  }
-}
+const getMenuItems = (menu: HTMLElement) =>
+  Array.from(menu.querySelectorAll(ITEM_SELECTOR)) as HTMLElement[]
 
 function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
   props: AsProps<C>,
@@ -166,7 +164,7 @@ const TextWrapper = styled.div`
 const FloatingMenu: React.FC<MenuProps> = ({ children, expanded }) => {
   const [scroll, menuRef] = useScrollButtons('vertical', expanded)
   return (
-    <MenuWrapper expanded={expanded} tabIndex={-1}>
+    <MenuWrapper aria-hidden={!expanded || undefined} tabIndex={-1}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
@@ -193,14 +191,14 @@ const setTabIndex = (menu: HTMLElement | null, isSidebar: boolean) => {
     // to ensure that even if elements are dynamically added or removed, the
     // first menuitem will always get tab focus for the whole component.
     const mutationCallback = () => {
-      const menuItems = menu.querySelectorAll(ITEM_SELECTOR)
+      const menuItems = getMenuItems(menu)
       if (menuItems.length) {
         let i = 0
         if (!isSidebar) {
-          ;(menuItems[i++] as HTMLElement).tabIndex = 0
+          menuItems[i++].tabIndex = 0
         }
         for (; i < menuItems.length; i++) {
-          ;(menuItems[i] as HTMLElement).tabIndex = -1
+          menuItems[i].tabIndex = -1
         }
       }
     }
@@ -240,63 +238,55 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
   )
 })
 
-const Sidebar = React.forwardRef<HTMLElement, SidebarMenuProps>(
-  ({ children, variant, ...props }, ref) => {
-    const orientation = 'vertical'
-    // TODO Maybe we can somehow move this styling to ActionBarPanel?
-    const fixedBottom = variant === 'sidebar' ? 0 : 60
+const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
+  const nav = <NavPanel key="cactus-web-menubar" {...props} ref={ref} />
+  const renderNav = useAction(nav, -1)
+  return renderNav && <LayoutSidebar layoutRole="menubar">{renderNav}</LayoutSidebar>
+})
 
-    const [expanded, toggle] = useSubmenuToggle(false)
-    const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
-    React.useEffect(() => setTabIndex(menu, true), [menu])
+const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ...props }, ref) => {
+  const orientation = 'vertical'
+  const { expanded, wrapperProps, buttonProps, popupProps } = usePopup('menu', {
+    id,
+    focusControl: getMenuItems,
+  })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
+  React.useEffect(() => setTabIndex(menu, true), [menu])
 
-    const nav = (
-      <SidebarNav
-        {...props}
-        ref={ref}
-        key="cactus-web-menubar"
+  return (
+    <ActionBar.PanelWrapper
+      as="nav"
+      ref={ref}
+      {...props}
+      {...wrapperProps}
+      tabIndex={-1}
+      onClick={navClickHandler}
+      aria-orientation={orientation}
+    >
+      <ActionBar.Button {...buttonProps}>
+        <NavigationHamburger />
+      </ActionBar.Button>
+      <ActionBar.PanelPopup
+        padding="0"
+        width="350px"
+        as={SidebarMenu}
         aria-orientation={orientation}
-        onKeyDown={handleSubmenu}
-        onBlur={closeOnBlur}
-        onClick={navClickHandler}
-        tabIndex={-1}
+        onFocus={focusMenu}
+        onKeyDown={menuKeyHandler}
+        ref={menuRef}
+        {...popupProps}
       >
-        <LayoutSidebar.Button
-          tabIndex={0}
-          aria-haspopup="menu"
-          aria-expanded={expanded}
-          onClick={toggleOnClick}
-          onKeyDown={toggleOnKey}
-          onKeyUp={preventAction}
-        >
-          <NavigationHamburger />
-        </LayoutSidebar.Button>
-        <SidebarMenu
-          expanded={expanded}
-          role="menu"
-          aria-orientation={orientation}
-          onFocus={focusMenu}
-          onKeyDown={menuKeyHandler}
-          ref={menuRef}
-          fixedBottom={fixedBottom}
-        >
-          {children}
-        </SidebarMenu>
-      </SidebarNav>
-    )
-    const renderNav = useAction(nav, -1)
-    return renderNav && <LayoutSidebar layoutRole="menubar">{renderNav}</LayoutSidebar>
-  }
-)
+        {children}
+      </ActionBar.PanelPopup>
+    </ActionBar.PanelWrapper>
+  )
+})
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const variant = useVariant()
-  if (variant === 'top') {
-    return <Topbar {...props} ref={ref} />
-  }
-  return <Sidebar {...props} ref={ref} variant={variant} />
+  const Nav = variant === 'top' ? Topbar : Sidebar
+  return <Nav {...props} ref={ref} />
 })
 
 const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -373,12 +363,6 @@ const Nav = styled.nav`
   }
 `
 
-const SidebarNav = styled.nav`
-  outline: none;
-  ${(p) => textStyle(p.theme, 'small')};
-  background-color: transparent;
-`
-
 const listStyle = `
   list-style: none;
   padding: 0;
@@ -390,30 +374,10 @@ const InlineMenu = styled.ul<MenuProps>`
   display: ${(p) => (p.expanded ? 'block' : 'none')};
 `
 
-// The box shadow is #2, but shifted to be only on the right side.
-const SidebarMenu = styled.ul<MenuProps & { fixedBottom: number }>`
+const SidebarMenu = styled.ul`
   ${(p) => p.theme.colorStyles.standard}
+  ${(p) => textStyle(p.theme, 'small')};
   ${listStyle}
-  display: ${(p) => (p.expanded ? 'block' : 'none')};
-  position: fixed;
-  left: 0;
-  width: 100vw;
-  top: unset;
-  bottom: ${(p) => p.fixedBottom}px;
-  height: auto;
-  max-height: calc(100vh - 60px);
-  z-index: 100;
-
-  ${(p) => media(p.theme, 'small')} {
-    left: 60px;
-    width: 350px;
-    top: 0;
-    bottom: ${(p) => p.fixedBottom}px;
-    max-height: 100vh;
-    ${(p) => boxShadow(p.theme, '12px 0 24px -12px')};
-  }
-  overflow: auto;
-  outline: none;
 
   [role='menuitem'] {
     padding: 18px 16px;
@@ -457,10 +421,13 @@ const SidebarMenu = styled.ul<MenuProps & { fixedBottom: number }>`
   }
 `
 
-const MenuWrapper = styled.div<MenuProps>`
+const MenuWrapper = styled.div`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
-  visibility: ${(p) => (p.expanded ? 'visible' : 'hidden')};
+  visibility: visible;
+  &[aria-hidden='true'] {
+    visibility: hidden;
+  }
   position: absolute;
   top: 100%;
   left: 0;

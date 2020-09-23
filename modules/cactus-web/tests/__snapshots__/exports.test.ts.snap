@@ -26,6 +26,7 @@ Array [
   "FileInputField",
   "Flex",
   "Grid",
+  "usePopup",
   "IconButton",
   "Label",
   "Layout",

@@ -60,14 +60,18 @@ const shadowTypes = [
   '0px 45px 48px',
 ]
 
-export const boxShadow = (theme: CactusTheme, shadowType: number | string): string => {
+export const boxShadow = (
+  theme: CactusTheme,
+  shadowType: number | string,
+  fallback?: string
+): string => {
   if (theme.boxShadows) {
     if (typeof shadowType === 'number') {
       shadowType = shadowTypes[shadowType]
     }
     return `box-shadow: ${shadowType} ${theme.colors.transparentCTA}`
   } else {
-    return ''
+    return fallback || ''
   }
 }
 

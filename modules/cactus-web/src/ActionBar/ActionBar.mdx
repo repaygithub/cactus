@@ -16,7 +16,7 @@ Most commonly the ActionBar should be used as a direct child of the Layout compo
 
 ```jsx
 import React from 'react'
-import { ActionsPrint } from '@repay/cactus-icons'
+import { ActionsGear, ActionsPrint } from '@repay/cactus-icons'
 import { ActionBar, Layout } from '@repay/cactus-web'
 
 const MySite = () => (
@@ -28,6 +28,10 @@ const MySite = () => (
         onClick={printThisPage}
         aria-label="Print this page"
       />
+      <ActionBar.Panel icon={<ActionsGear/>} aria-label="Settings">
+        <h3>I am a settings panel</h3>
+        <input name="enable_the_awesome" type="checkbox" />
+      </ActionBar.Panel>
     </ActionBar>
     <Layout.Content>
       <h1>Latin Or Something</h1>
@@ -36,6 +40,30 @@ const MySite = () => (
   </Layout>
 )
 ```
+
+### ActionBar.Item and ActionBar.Panel
+
+There are two types of items that typically go on the ActionBar: a simple button, ActionBar.Item, and a button that opens a dialog popup, ActionBar.Panel. ActionBar.Item will typically effect change through an `onClick` handler, while the contents of the dialog popup can be just about anything.
+
+Panel dialog popups are opened and closed by clicking the button; they can also be closed by pressing Escape while focus is on the button or within the dialog, or by shifting focus to any element outside the dialog. If you want additional control over the behavior of the dialog, you can use a render prop instead of a component tree:
+
+```jsx
+(
+  <ActionBar.Panel icon={<ActionsGear/>} aria-label="Settings">
+    {(toggle, expanded) => (
+      <>
+        <h3>I am a settings panel</h3>
+        <input name="enable_the_awesome" type="checkbox" />
+        <button onClick={() => toggle(false)}>Close</button>
+      </>
+    )}
+  </ActionBar.Panel>
+)
+```
+
+By default, the dialog popup is positioned right next to the ActionBar. The width and padding can be changed via styled-system props, but you can also change the positioning by passing a `positionPopup` callback. This will be called every time the popup is becomes visible, with two arguments: the popup div, and the control button.
+
+> **Note:** On smaller screens the popup uses `position: fixed` by default, while on large screens it uses `position: absolute`. Absolutely positioned block elements will try to fit inside their parents regardless of where they're actually placed, which in this case is the 60px sidebar; as such, using the `width` prop is recommended.
 
 ### Page-specific Actions
 
@@ -64,6 +92,7 @@ const MyPage = () => (
   - Possible values are 'top', 'high', 'center' (default), 'low', and 'bottom'.
   - Items with the same hint are rendered in the order they're added, according to how React renders the entire document tree.
 - If this technique is used but there is no ActionProvider to capture the item and move it to the ActionBar, the item will instead render inline. (This is how an ActionBar having direct children can be used with no ActionProvider.)
+- Works with ActionBar.Panel as well.
 
 ### useAction Hook
 
@@ -71,9 +100,9 @@ const MyPage = () => (
 
 ```js
 function useAction(
-    element: ReactElement,
-    orderHint?: OrderHint,
-    key?: string,
+  element: ReactElement,
+  orderHint?: OrderHint,
+  key?: string,
 ): ReactElement | null;
 ```
 
@@ -105,6 +134,8 @@ const MyPage = () => {
 }
 ```
 
+> **Note:** Because the child element may be moved and not rendered immediately, any `useEffect` hooks in the same component or ancestor components will run before the DOM has been updated for the action element. The `usePopup` hook, for example, will not work unless it is used "below" the component where `useAction` is called.
+
 ### Accessibility
 
 Because ActionBar items typically only have an icon and no text, it may not be obvious to users what it does. This can be circumvented to an extent using ARIA attributes, tooltips, etc., but touch-only users may have no choice but to click the button to see what it does. As such, you should avoid "destructive" side effects such as navigation or directly changing a page in ways that are difficult to undo or not obvious; more often clicking an ActionBar item would toggle a menu or page section that has a more verbose explanation as to its purpose.
@@ -117,6 +148,16 @@ Because ActionBar items typically only have an icon and no text, it may not be o
 
 <PropsTable of={ActionBar} staticProp="ActionBarItem" />
 
-### ActionBar.Button
+### ActionBar.Panel
 
-This is just a styled button that looks like buttons on the ActionBar should look.
+Any ARIA attributes will be forwarded to the button, except for "aria-haspopup", "aria-controls", and "aria-expanded", which will be overwritten according to the current state of the popup. Non-ARIA props such as event handlers will be set on the wrapper, so they will receive bubbled events from both the button and the contents of the panel.
+
+<PropsTable of={ActionBar} staticProp="ActionBarPanel" />
+
+### Button, PanelWrapper, PanelPopup
+
+These are just styled components for building custom ActionBar functionality with the same look and feel as `ActionBar.Item` and `ActionBar.Panel`.
+
+- **ActionBar.Button**: a styled button
+- **ActionBar.PanelWrapper**: a styled div designed to contain a button and a panel popup
+- **ActionBar.PanelPopup**: a styled div designed to be hidden or shown as the button is clicked; it also accepts the [padding (but not margin)](https://styled-system.com/api#space) and [layout](https://styled-system.com/api#layout) props from styled-system
