@@ -143,7 +143,6 @@ export type ComponentWithFileMeta = React.ComponentType & {
 interface PropsTableProps {
   of: ComponentWithFileMeta
   staticProp?: string
-  includeProps?: string[]
 }
 
 interface PropsMemo {
