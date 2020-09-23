@@ -123,6 +123,8 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
+        // So cactus-web docs can use react-live without having react-live as a cactus dependency
+        'react-live': require.resolve('react-live'),
         // used to ensure only a single versions of styled-components is loaded
         'styled-components': path.resolve('../node_modules/styled-components'),
         // used to reference website components from inside mdx files, such as those in cactus-web
