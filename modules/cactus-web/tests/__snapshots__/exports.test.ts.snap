@@ -13,6 +13,7 @@ Array [
   "Card",
   "CheckBox",
   "CheckBoxField",
+  "CheckBoxGroup",
   "DataGrid",
   "DateInput",
   "DateInputField",
@@ -58,6 +59,5 @@ Array [
   "ConfirmModal",
   "Tag",
   "Footer",
-  "CheckBoxGroup",
 ]
 `;

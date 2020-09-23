@@ -1,19 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { MarginProps, WidthProps } from 'styled-system'
 
 import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
-import FieldWrapper from '../FieldWrapper/FieldWrapper'
 import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
-import { border } from '../helpers/theme'
 import Label from '../Label/Label'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
+import Fieldset from '../Fieldset/Fieldset'
 
 interface CheckBoxGroupProps
   extends MarginProps,
@@ -128,7 +126,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
     )
 
     return (
-      <FieldSet
+      <Fieldset
         {...props}
         ref={ref}
         id={fieldId}
@@ -160,7 +158,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
             </StatusMessage>
           </div>
         )}
-      </FieldSet>
+      </Fieldset>
     )
   }
 )
@@ -190,36 +188,3 @@ const DefaultCheckBoxGroup = CheckBoxGroup as any
 DefaultCheckBoxGroup.Item = CheckBoxGroupItem
 
 export default DefaultCheckBoxGroup as CheckBoxGroupType
-
-const FieldSet = styled(FieldWrapper)<{ disabled?: boolean }>`
-  position: relative;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  ${margin}
-  ${width}
-
-  legend {
-    box-sizing: border-box;
-    border-bottom: ${(p) => border(p.theme, 'currentcolor')};
-    padding-left: 16px;
-    padding-right: 28px;
-    width: 100%;
-    float: left;
-    + * {
-      clear: both;
-    }
-    color: ${(p) => (p.disabled ? p.theme.colors.mediumGray : 'currentcolor')};
-  }
-
-  ${Tooltip} {
-    position: absolute;
-    right: 8px;
-    top: 2px;
-    font-size: 16px;
-  }
-
-  ${StatusMessage} {
-    margin-top: 4px;
-  }
-`.withComponent('fieldset')
