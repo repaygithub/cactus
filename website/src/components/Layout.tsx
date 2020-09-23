@@ -80,19 +80,12 @@ function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
     url: '/',
     items: [
       {
-        title: 'Design System',
+        title: 'Style Guide',
         // redirects to /design-system/language/
-        url: '/design-system/',
+        url: 'https://www.figma.com/proto/J9TeJ5homSkfSwV1sCFLoF/REPAY-STYLEGUIDE-V-1',
         // always first
         order: -1,
-        items: [
-          { title: 'Language', url: '/design-system/language/', order: 0, items: [] },
-          { title: 'Foundation', url: '/design-system/foundation/', order: 10, items: [] },
-          { title: 'Color', url: '/design-system/color/', order: 20, items: [] },
-          { title: 'Typography', url: '/design-system/typography/', order: 30, items: [] },
-          { title: 'Icons', url: '/design-system/icons/', order: 40, items: [] },
-          { title: 'Shared Styles', url: '/design-system/shared-styles/', order: 50, items: [] },
-        ],
+        items: [],
       },
       {
         title: 'Visual Hierarchy',
