@@ -42,7 +42,7 @@ export const code = `
 - `CheckBoxGroup` props will only be forwarded to the individual checkboxes if they are direct children of `CheckBoxGroup`.
 If you use an intermediate component, the component will have to accept the forwarded props and pass them on.
 - You can control the values using one of two methods, which should not be mixed:
-  - Pass `value` or `defaultValue` to `CheckBoxGroup`. These should be objects, mapping the checkbox names to their boolean values.
+  - Pass `checked` to `CheckBoxGroup`. This should be an object, mapping the checkbox names to their boolean values.
   - Pass `checked` or `defaultChecked` to `CheckBoxGroup.Item`s.
 - Passing a `ref` to `CheckBoxGroup` will be set on the `fieldset` element.
 - `onChange`, `onFocus` and `onBlur` handlers are not forwarded to individual checkboxes. They are associated with the `fieldset` and rely on event delegation to capture changes.

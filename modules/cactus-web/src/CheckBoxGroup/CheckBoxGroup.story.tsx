@@ -1,6 +1,6 @@
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 import Flex from '../Flex/Flex'
 import CheckBoxGroup from './CheckBoxGroup'
@@ -44,7 +44,7 @@ checkBoxGroupStories.add(
         <CheckBoxGroup
           name="controller"
           label="Controller"
-          value={value}
+          checked={value}
           onChange={(name, val) => setValue((value) => ({ ...value, [name]: val }))}
         >
           <CheckBoxGroup.Item name="option-1" label="Option 1" />
@@ -57,31 +57,6 @@ checkBoxGroupStories.add(
           <CheckBoxGroup.Item checked={value['option-3']} name="option-6" label="Option 6" />
         </CheckBoxGroup>
       </Flex>
-    )
-  }
-)
-
-checkBoxGroupStories.add(
-  'With Default Values',
-  (): React.ReactElement => {
-    const formRef = useRef<HTMLFormElement>(null)
-    return (
-      <form ref={formRef}>
-        <Flex flexDirection="column">
-          <CheckBoxGroup
-            name="checkboxes"
-            label="2 & 3 Default True"
-            defaultValue={{ 'option-2': true, 'option-3': true }}
-          >
-            <CheckBoxGroup.Item name="option-1" label="Option 1" />
-            <CheckBoxGroup.Item name="option-2" label="Option 2" />
-            <CheckBoxGroup.Item name="option-3" label="Option 3" />
-          </CheckBoxGroup>
-        </Flex>
-        <button type="button" onClick={() => formRef.current?.reset()}>
-          Reset
-        </button>
-      </form>
     )
   }
 )

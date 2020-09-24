@@ -14,7 +14,7 @@ describe('component: CheckBoxGroup', (): void => {
           name="checkboxes"
           label="Checkboxes"
           required
-          value={{ cb1: true }}
+          checked={{ cb1: true }}
           tooltip="Check some boxes"
         >
           <CheckBoxGroup.Item id="cb1" name="cb1" label="CB 1" />
@@ -45,7 +45,7 @@ describe('component: CheckBoxGroup', (): void => {
           name="checkboxes"
           label="Checkboxes"
           disabled
-          defaultValue={{ cb1: true }}
+          checked={{ cb1: true }}
           error="No box checking for you"
         >
           <CheckBoxGroup.Item id="cb1" name="cb1" label="CB 1" />

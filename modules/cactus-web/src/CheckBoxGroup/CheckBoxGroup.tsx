@@ -21,8 +21,7 @@ interface CheckBoxGroupProps
       React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
       'name' | 'onChange' | 'onFocus' | 'onBlur' | 'defaultValue'
     > {
-  value?: { [K: string]: boolean }
-  defaultValue?: { [K: string]: boolean }
+  checked?: { [K: string]: boolean }
   required?: boolean
   onChange?: FieldOnChangeHandler<boolean>
   onFocus?: FieldOnFocusHandler
@@ -47,8 +46,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       children,
       tooltip,
       required,
-      defaultValue,
-      value,
+      checked,
       onChange,
       onFocus,
       onBlur,
@@ -76,20 +74,8 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
     }
 
     const cloneWithValue = (element: React.ReactElement, props: any) => {
-      if (value !== undefined) {
-        props = { ...props, checked: value[element.props.name] || false }
-        // if (element.props.value !== undefined) {
-        //   props = { ...props, checked: element.props.value === value }
-        // } else {
-        //   props = { ...props, value }
-        // }
-      } else if (defaultValue !== undefined) {
-        props = { ...props, defaultChecked: defaultValue[element.props.name] || false }
-        // if (element.props.value !== undefined) {
-        //   props = { ...props, defaultChecked: element.props.value === defaultValue }
-        // } else {
-        //   props = { ...props, defaultValue }
-        // }
+      if (checked !== undefined) {
+        props = { ...props, checked: checked[element.props.name] || false }
       }
       return React.cloneElement(element, props)
     }
@@ -178,8 +164,7 @@ CheckBoxGroup.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  value: PropTypes.objectOf(PropTypes.bool.isRequired),
-  defaultValue: PropTypes.objectOf(PropTypes.bool.isRequired),
+  checked: PropTypes.objectOf(PropTypes.bool.isRequired),
 }
 
 type CheckBoxGroupType = typeof CheckBoxGroup & { Item: typeof CheckBoxGroupItem }
