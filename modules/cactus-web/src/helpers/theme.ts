@@ -7,7 +7,7 @@ import {
 } from '@repay/cactus-theme'
 import { css, FlattenSimpleInterpolation } from 'styled-components'
 
-type Props = { theme: CactusTheme }
+export type Props = { theme: CactusTheme }
 
 export const borderSize = (props: Props): string => (props.theme.border === 'thick' ? '2px' : '1px')
 
@@ -16,7 +16,7 @@ export const border = (theme: CactusTheme, color: string): string => {
   return `${thickness} solid ${theme.colors[color as CactusColor] || color}`
 }
 
-type Direction = 'top' | 'bottom' | 'left' | 'right'
+export type Direction = 'top' | 'bottom' | 'left' | 'right'
 
 export const insetBorder = (theme: CactusTheme, color: string, direction?: Direction): string => {
   let hOffset = 0,

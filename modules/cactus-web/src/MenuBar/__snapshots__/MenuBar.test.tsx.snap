@@ -56,11 +56,11 @@ exports[`component: MenuBar sidebar 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c3.c3.c3:focus {
+.c3.c3.c3.c3:focus {
   box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
 }
 
-.c3.c3.c3[aria-expanded='true'] {
+.c3.c3.c3.c3[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
   box-shadow: none;
@@ -74,27 +74,55 @@ exports[`component: MenuBar sidebar 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0px;
-  bottom: 0px;
-  box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
 }
 
 .c0:empty {
   display: none;
 }
 
-.c0 .c2 {
+.c0.cactus-layout-floatLeft,
+.c0.cactus-layout-fixedLeft {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
+}
+
+.c0.cactus-layout-floatLeft .c2,
+.c0.cactus-layout-fixedLeft .c2 {
   box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
 }
 
-.c0 .c2:hover {
+.c0.cactus-layout-floatLeft .c2:hover,
+.c0.cactus-layout-fixedLeft .c2:hover {
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
+}
+
+.c0.cactus-layout-fixedBottom {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  box-shadow: inset 0px 1px 0px 0px hsl(200,29%,90%);
+}
+
+.c0.cactus-layout-fixedBottom .c2 {
+  box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
+}
+
+.c0.cactus-layout-fixedBottom .c2:hover {
+  box-shadow: inset -1px 0px 0px 0px hsl(200,96%,35%);
+}
+
+.c0.cactus-layout-fixedBottom .c2[aria-expanded='true']::after {
+  content: '';
+  z-index: 99;
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  cursor: default;
 }
 
 .c8 {
@@ -252,7 +280,7 @@ exports[`component: MenuBar sidebar 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 cactus-layout-fixedLeft"
   >
     <nav
       aria-label="Menu of Main-ness"

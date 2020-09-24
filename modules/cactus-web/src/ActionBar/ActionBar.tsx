@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Sidebar } from '../Layout/Layout'
+import { Sidebar } from '../Layout/Sidebar'
 import { OrderHint, OrderHintKey, useAction, useActionBarItems } from './ActionProvider'
 
 interface ItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

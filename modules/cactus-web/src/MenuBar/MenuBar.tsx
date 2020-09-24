@@ -13,7 +13,8 @@ import { useAction } from '../ActionBar/ActionProvider'
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
 import { border, borderSize, boxShadow, media, radius, textStyle } from '../helpers/theme'
-import { Sidebar as LayoutSidebar, useLayout } from '../Layout/Layout'
+import { useLayout } from '../Layout/Layout'
+import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
   focusMenu,

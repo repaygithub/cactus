@@ -42,8 +42,23 @@ exports[`component: Footer snapshot 1`] = `
   padding: 16px 24px 16px 24px;
 }
 
+.cactus-layout-fixedBottom .c1 {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
 .c2 {
   margin-bottom: 16px;
+}
+
+.cactus-layout-fixedBottom .c2 {
+  margin-right: 16px;
+  margin-bottom: 0px;
 }
 
 .c4 {
@@ -61,9 +76,9 @@ exports[`component: Footer snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -104,6 +119,10 @@ exports[`component: Footer snapshot 1`] = `
   max-width: 100%;
 }
 
+.cactus-layout-fixedBottom .c6 {
+  max-width: calc(100% / 2);
+}
+
 .c6:last-of-type {
   border-right: none;
 }
@@ -125,50 +144,14 @@ exports[`component: Footer snapshot 1`] = `
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-@media screen and (min-width:768px) {
-  .c1 {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-  }
-}
-
-@media screen and (min-width:768px) {
-  .c2 {
-    margin-right: 16px;
-    margin-bottom: 0px;
-  }
-}
-
-@media screen and (min-width:768px) {
-  .c5 {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-  }
-}
-
-@media screen and (min-width:768px) {
-  .c6 {
-    max-width: calc(100% / 2);
-  }
-}
-
-@media screen and (min-width:768px) {
-  .c0 {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-  }
+.c0.cactus-layout-fixedBottom {
+  height: auto;
 }
 
 <div>
-  <div
-    class="c0"
+  <footer
+    class="c0 cactus-layout-fixedBottom"
+    role="contentinfo"
   >
     <div
       class="c1"
@@ -212,6 +195,6 @@ exports[`component: Footer snapshot 1`] = `
         </a>
       </div>
     </div>
-  </div>
+  </footer>
 </div>
 `;
