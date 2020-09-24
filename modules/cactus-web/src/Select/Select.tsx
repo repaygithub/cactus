@@ -791,20 +791,24 @@ class List extends React.Component<ListProps, ListState> {
     RESPONSIVE_HEIGHT = isResponsiveTouchDevice ? responsiveHeight() : 0
   }
 
-  public componentDidUpdate(): void {
+  public componentDidUpdate(prevProps: ListProps): void {
     if (this.props.isOpen) {
-      window.requestAnimationFrame((): void => {
-        const listEl = this.listRef
-        const activeDescendant = this.props.comboBox
-          ? this.props.activeDescendant
-          : this.state.activeDescendant
+      const listJustOpened = !prevProps.isOpen
 
+      if (listJustOpened) {
         if (
           this.mobileInputRef.current !== null &&
           document.activeElement !== this.mobileInputRef.current
         ) {
           this.mobileInputRef.current.focus()
         }
+      }
+
+      window.requestAnimationFrame((): void => {
+        const listEl = this.listRef
+        const activeDescendant = this.props.comboBox
+          ? this.props.activeDescendant
+          : this.state.activeDescendant
 
         if (listEl === null || activeDescendant === '') {
           return
