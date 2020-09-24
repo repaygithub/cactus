@@ -143,7 +143,6 @@ export type ComponentWithFileMeta = React.ComponentType & {
 interface PropsTableProps {
   of: ComponentWithFileMeta
   staticProp?: string
-  includeProps?: string[]
 }
 
 interface PropsMemo {
@@ -157,7 +156,6 @@ interface PropsMemo {
 const PropsTable: React.FC<PropsTableProps> = ({
   of: component,
   staticProp,
-  includeProps = [],
 }): React.ReactElement | null => {
   const data = useDocgen()
   const fileName = component.__filemeta && component.__filemeta.filename
@@ -171,10 +169,11 @@ const PropsTable: React.FC<PropsTableProps> = ({
     let doc: ComponentDoc | undefined = value.find(
       (item): boolean => item.displayName === component.displayName
     )
+
     if (staticProp) {
       doc = value.find((item): boolean => item.displayName === staticProp)
     }
-    const componentName = doc && doc.displayName
+
     const props = Object.values((doc && doc.props) || {})
     const ownProps = []
     const styledSystemProps = []
@@ -183,16 +182,11 @@ const PropsTable: React.FC<PropsTableProps> = ({
       const prop = props[i]
       if (prop.parent) {
         const sourceFile = prop.parent.fileName
-        if (
-          sourceFile.endsWith(componentName + '.tsx') ||
-          sourceFile.endsWith(component.displayName + '.tsx') ||
-          prop.description.includes('!important') ||
-          includeProps.includes(prop.name)
-        ) {
+        if (sourceFile.includes('styled-system')) {
+          styledSystemProps.push(prop)
+        } else if (!sourceFile.includes('node_modules')) {
           prop.description = prop.description.replace(/!important\s*/, '')
           ownProps.push(prop)
-        } else if (sourceFile.includes('styled-system')) {
-          styledSystemProps.push(prop)
         }
       } else {
         probablyStyledComponentProps.push(prop)
@@ -208,7 +202,7 @@ const PropsTable: React.FC<PropsTableProps> = ({
       styledSystemProps,
       styledComponentProps: probablyStyledComponentProps,
     }
-  }, [component.displayName, docItem, includeProps, staticProp])
+  }, [component.displayName, docItem, staticProp])
 
   if (ownProps === undefined) {
     return null
