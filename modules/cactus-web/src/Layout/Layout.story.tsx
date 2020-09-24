@@ -2,7 +2,7 @@ import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
-import Box from '../Box/Box'
+import BrandBar from '../BrandBar/BrandBar'
 import Footer from '../Footer/Footer'
 import MenuBar from '../MenuBar/MenuBar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -27,12 +27,6 @@ const TempActionBar = () => {
   )
 }
 
-const TempBrandBar = () => (
-  <Box width="100%">
-    <img src={LOGO} style={{ height: '60px' }} />
-  </Box>
-)
-
 storiesOf('Layout', module).add(
   'Basic Usage',
   () => {
@@ -44,7 +38,16 @@ storiesOf('Layout', module).add(
 
     return (
       <Layout>
-        {hasBrand && <TempBrandBar />}
+        {hasBrand && (
+          <BrandBar
+            isProfilePage={boolean('On profile page?', false)}
+            userMenuText={text('Menu Title', 'Hershell Jewess')}
+            logo={LOGO}
+          >
+            <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+          </BrandBar>
+        )}
         {hasMenu && (
           <MenuBar>
             <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
