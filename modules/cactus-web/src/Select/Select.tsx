@@ -1251,13 +1251,15 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   private openList(): void {
     this.setState({ isOpen: true }, () => {
-      window.requestAnimationFrame((): void => {
-        if (this.listRef.current !== null && !this.props.comboBox) {
-          this.listRef.current.focus()
-        } else if (this.comboInputRef.current !== null && this.props.comboBox) {
-          this.comboInputRef.current.focus()
-        }
-      })
+      if (!isResponsiveTouchDevice) {
+        window.requestAnimationFrame((): void => {
+          if (this.listRef.current !== null && !this.props.comboBox) {
+            this.listRef.current.focus()
+          } else if (this.comboInputRef.current !== null && this.props.comboBox) {
+            this.comboInputRef.current.focus()
+          }
+        })
+      }
     })
   }
 
