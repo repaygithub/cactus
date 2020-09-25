@@ -1,0 +1,33 @@
+---
+name: BrandBar
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import BrandBar from './BrandBar'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# BrandBar
+
+The `BrandBar` Components allows yout to render a Logo of your choice and a user menu with a dropdown for actions such as settings and Loggin in/out.
+
+### Try it out
+
+export const code = `<BrandBar
+    isProfilePage
+    userMenuText'Hershell Jewess'
+    logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+  >
+    <BrandBar.UserMenuItem onSelect={() => console.log('Settings'))}>Settings</BrandBar.UserMenuItem>
+    <BrandBar.UserMenuItem onSelect={() => console.log('Logout'))}>Logout</BrandBar.UserMenuItem>
+  </BrandBar>`
+
+<LiveProvider code={code} scope={{ BrandBar }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Properties
+
+<PropsTable of={BrandBar} />

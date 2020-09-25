@@ -63,6 +63,7 @@
     "react-docgen-typescript": "^1.20.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
+    "react-live": "^2.2.2",
     "react-motion": "^0.5.2",
     "styled-components": "^5.1.1"
   }

@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import React from 'react'
 
 import ActionBar from '../ActionBar/ActionBar'
-import Box from '../Box/Box'
+import BrandBar from '../BrandBar/BrandBar'
 import Footer from '../Footer/Footer'
 import MenuBar from '../MenuBar/MenuBar'
 import Layout from './Layout'
@@ -15,12 +15,6 @@ function action(msg: string) {
 
 const LOGO =
   'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg'
-
-const TempBrandBar = () => (
-  <Box width="100%">
-    <img src={LOGO} style={{ height: '60px' }} />
-  </Box>
-)
 
 storiesOf('Layout', module).add(
   'Basic Usage',
@@ -33,7 +27,16 @@ storiesOf('Layout', module).add(
 
     return (
       <Layout>
-        {hasBrand && <TempBrandBar />}
+        {hasBrand && (
+          <BrandBar
+            isProfilePage={boolean('On profile page?', false)}
+            userMenuText={text('Menu Title', 'Hershell Jewess')}
+            logo={LOGO}
+          >
+            <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+          </BrandBar>
+        )}
         {hasMenu && (
           <MenuBar>
             <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>

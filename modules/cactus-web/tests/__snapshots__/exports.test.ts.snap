@@ -62,5 +62,6 @@ Array [
   "ConfirmModal",
   "Tag",
   "Footer",
+  "BrandBar",
 ]
 `;
