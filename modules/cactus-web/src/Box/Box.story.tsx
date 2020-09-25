@@ -1,7 +1,13 @@
 import cactusTheme, { TextStyleCollection } from '@repay/cactus-theme'
 import { object, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import { PositionProperty, ZIndexProperty } from 'csstype'
+import {
+  OverflowProperty,
+  OverflowXProperty,
+  OverflowYProperty,
+  PositionProperty,
+  ZIndexProperty,
+} from 'csstype'
 import React from 'react'
 
 import Box from './Box'
@@ -66,6 +72,9 @@ storiesOf('Box', module)
         borderStyle={text('borderStyle', 'solid')}
         textStyle={select('textStyle', textStyles, 'body') as keyof TextStyleCollection}
         zIndex={text('zIndex', '') as ZIndexProperty}
+        overflow={text('overflow', '') as OverflowProperty}
+        overflowX={text('overflowX', '') as OverflowXProperty}
+        overflowY={text('overflowY', '') as OverflowYProperty}
       >
         {text('children', 'Example Content')}
       </Box>

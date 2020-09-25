@@ -12,6 +12,8 @@ import {
   DisplayProps,
   layout,
   LayoutProps,
+  overflow,
+  OverflowProps,
   position,
   PositionProps,
   space,
@@ -52,7 +54,8 @@ export interface BoxProps
     ColorStyleProps,
     DisplayProps,
     TypographyProps,
-    CustomBorderProps {
+    CustomBorderProps,
+    OverflowProps {
   textStyle?: keyof TextStyleCollection
 }
 
@@ -96,7 +99,7 @@ const decideBorderRadius = (props: ThemedStyledProps<BoxProps, DefaultTheme>) =>
 
 export const Box = styled('div')<BoxProps>`
   box-sizing: border-box;
-  ${compose(position, display, layout, space, colorStyle, color, typography, border)}
+  ${compose(position, display, layout, space, colorStyle, color, typography, border, overflow)}
   ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
   ${decideBorderRadius}
 `

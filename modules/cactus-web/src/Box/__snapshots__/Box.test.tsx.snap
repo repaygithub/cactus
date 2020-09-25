@@ -20,6 +20,7 @@ exports[`component: Box should accept built-in props 1`] = `
   border-radius: 20px;
   border-style: solid;
   z-index: 100;
+  overflow: scroll;
   font-size: 31.1px;
   line-height: 1.5;
 }
@@ -37,6 +38,7 @@ exports[`component: Box should accept built-in props 1`] = `
     color="white"
     display="block"
     height="120px"
+    overflow="scroll"
     width="120px"
   >
     Content
