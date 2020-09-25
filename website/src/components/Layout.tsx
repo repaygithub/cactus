@@ -81,7 +81,6 @@ function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
     items: [
       {
         title: 'Style Guide',
-        // redirects to /design-system/language/
         url: 'https://www.figma.com/proto/J9TeJ5homSkfSwV1sCFLoF/REPAY-STYLEGUIDE-V-1',
         // always first
         order: -1,
