@@ -41,6 +41,38 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   padding-top: 8px;
 }
 
+.c0 {
+  position: relative;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.c0 legend {
+  box-sizing: border-box;
+  border-bottom: 1px solid currentcolor;
+  padding-left: 16px;
+  padding-right: 28px;
+  width: 100%;
+  float: left;
+  color: hsl(0,0%,70%);
+}
+
+.c0 legend + * {
+  clear: both;
+}
+
+.c0 .sc-pReKu {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  font-size: 16px;
+}
+
+.c0 .c11 {
+  margin-top: 4px;
+}
+
 .c9 {
   opacity: 0;
   height: 0;
@@ -101,38 +133,6 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
-}
-
-.c0 {
-  position: relative;
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-.c0 legend {
-  box-sizing: border-box;
-  border-bottom: 1px solid currentcolor;
-  padding-left: 16px;
-  padding-right: 28px;
-  width: 100%;
-  float: left;
-  color: hsl(0,0%,70%);
-}
-
-.c0 legend + * {
-  clear: both;
-}
-
-.c0 .sc-pReKu {
-  position: absolute;
-  right: 8px;
-  top: 2px;
-  font-size: 16px;
-}
-
-.c0 .c11 {
-  margin-top: 4px;
 }
 
 @media screen and (min-width:1024px) {
@@ -368,6 +368,38 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   padding-top: 8px;
 }
 
+.c0 {
+  position: relative;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.c0 legend {
+  box-sizing: border-box;
+  border-bottom: 1px solid currentcolor;
+  padding-left: 16px;
+  padding-right: 28px;
+  width: 100%;
+  float: left;
+  color: currentcolor;
+}
+
+.c0 legend + * {
+  clear: both;
+}
+
+.c0 .c14 {
+  position: absolute;
+  right: 8px;
+  top: 2px;
+  font-size: 16px;
+}
+
+.c0 .sc-qYSYK {
+  margin-top: 4px;
+}
+
 .c9 {
   opacity: 0;
   height: 0;
@@ -482,38 +514,6 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
-}
-
-.c0 {
-  position: relative;
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-.c0 legend {
-  box-sizing: border-box;
-  border-bottom: 1px solid currentcolor;
-  padding-left: 16px;
-  padding-right: 28px;
-  width: 100%;
-  float: left;
-  color: currentcolor;
-}
-
-.c0 legend + * {
-  clear: both;
-}
-
-.c0 .c14 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
-  font-size: 16px;
-}
-
-.c0 .sc-qYSYK {
-  margin-top: 4px;
 }
 
 @media screen and (min-width:1024px) {

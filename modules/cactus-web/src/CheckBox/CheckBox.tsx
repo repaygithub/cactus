@@ -30,18 +30,18 @@ const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
 
 const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
 
-const CheckBoxBase = (props: CheckBoxProps): React.ReactElement => {
+const CheckBoxBase = React.forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => {
   const componentProps = omitMargins<CheckBoxProps>(props)
   const { disabled, id, className, ...checkBoxProps } = componentProps
   return (
     <label className={className} htmlFor={id}>
-      <HiddenCheckBox id={id} disabled={disabled} {...checkBoxProps} />
+      <HiddenCheckBox id={id} ref={ref} disabled={disabled} {...checkBoxProps} />
       <StyledCheckBox aria-hidden={true} disabled={disabled}>
         <StatusCheck />
       </StyledCheckBox>
     </label>
   )
-}
+})
 
 const HiddenCheckBox = styled.input.attrs({ type: 'checkbox' as string })`
   opacity: 0;

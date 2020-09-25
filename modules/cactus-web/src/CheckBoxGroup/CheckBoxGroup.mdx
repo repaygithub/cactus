@@ -1,0 +1,53 @@
+---
+name: CheckBoxGroup
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import CheckBoxGroup from './CheckBoxGroup'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# CheckBoxGroup
+
+`CheckBoxGroup` is a wrapper for a group of associated checkboxes which behaves like other field components.
+
+## Basic Usage
+
+`CheckBoxGroup` renders a `fieldset`, and any checkboxes in the group should be rendered and children.
+`required` and `disabled` props are forwarded to all of the checkboxes, but you can still disable individual checkboxes if you need to.
+
+`CheckBoxGroup.Item` is a wrapper for `CheckBoxField` with the `required` prop removed so that it can be left out without causing TS errors.
+
+### Try It out
+
+export const code = `
+<CheckBoxGroup name="checkboxes" label="A CheckBox Group">
+  <CheckBoxGroup.Item name="opt1" label="Option 1" />
+  <CheckBoxGroup.Item name="opt2" label="Option 2" />
+  <CheckBoxGroup.Item name="opt3" label="Option 3" />
+</CheckBoxGroup>
+`
+
+<LiveProvider code={code} scope={{ CheckBoxGroup }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best Practices
+
+- Use meaningful labels to ensure accessibility.
+- `CheckBoxGroup` props will only be forwarded to the individual checkboxes if they are direct children of `CheckBoxGroup`.
+If you use an intermediate component, the component will have to accept the forwarded props and pass them on.
+- You can control the values using one of two methods, which should not be mixed:
+  - Pass `checked` to `CheckBoxGroup`. This should be an object, mapping the checkbox names to their boolean values.
+  - Pass `checked` or `defaultChecked` to `CheckBoxGroup.Item`s.
+- Passing a `ref` to `CheckBoxGroup` will be set on the `fieldset` element.
+- `onChange`, `onFocus` and `onBlur` handlers are not forwarded to individual checkboxes. They are associated with the `fieldset` and rely on event delegation to capture changes.
+  - The `name` passed to `onFocus` and `onBlur` handlers will match with the `name` of the `CheckBoxGroup`, while the `name` passed to the `onChange` handler will be the name associated with an individual checkbox.
+
+## Properties
+
+<PropsTable of={CheckBoxGroup} />

@@ -4,53 +4,49 @@ import { MarginProps, WidthProps } from 'styled-system'
 
 import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
+import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
 import Fieldset from '../Fieldset/Fieldset'
 import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
-import RadioButtonField, { RadioButtonFieldProps } from '../RadioButtonField/RadioButtonField'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
 
-interface RadioGroupProps
+interface CheckBoxGroupProps
   extends MarginProps,
     WidthProps,
     Omit<FieldProps, 'labelProps'>,
     Omit<
       React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
-      'name' | 'onChange' | 'onFocus' | 'onBlur'
+      'name' | 'onChange' | 'onFocus' | 'onBlur' | 'defaultValue'
     > {
-  value?: string | number
-  defaultValue?: string | number
+  checked?: { [K: string]: boolean }
   required?: boolean
-  onChange?: FieldOnChangeHandler<string>
+  onChange?: FieldOnChangeHandler<boolean>
   onFocus?: FieldOnFocusHandler
   onBlur?: FieldOnBlurHandler
 }
 
-// This allows omitting the required `name` prop, since it'll be injected by the RadioGroup.
-type RadioGroupButtonProps = Omit<RadioButtonFieldProps, 'name' | 'required'>
-const RadioGroupButton = React.forwardRef<HTMLInputElement, RadioGroupButtonProps>(
-  (props: any, ref) => <RadioButtonField ref={ref} {...props} />
+type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
+const CheckBoxGroupItem = React.forwardRef<HTMLInputElement, CheckBoxGroupItemProps>(
+  (props: any, ref) => <CheckBoxField ref={ref} {...props} />
 )
-RadioGroupButton.displayName = 'RadioGroup.Button'
+CheckBoxGroupItem.displayName = 'CheckBoxGroup.Item'
 
 type ForwardProps = {
-  name: string
   disabled?: boolean
   required?: boolean
 }
 
-export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>(
+export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
   (
     {
       label,
       children,
       tooltip,
       required,
-      defaultValue,
-      value,
+      checked,
       onChange,
       onFocus,
       onBlur,
@@ -72,23 +68,14 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
     } = useAccessibleField(props)
     const [showTooltip, setTooltipVisible] = React.useState<boolean>(false)
 
-    const forwardProps: ForwardProps = { name, required }
+    const forwardProps: ForwardProps = { required }
     if (disabled === true) {
       forwardProps.disabled = disabled
     }
+
     const cloneWithValue = (element: React.ReactElement, props: any) => {
-      if (value !== undefined) {
-        if (element.props.value !== undefined) {
-          props = { ...props, checked: element.props.value === value }
-        } else {
-          props = { ...props, value }
-        }
-      } else if (defaultValue !== undefined) {
-        if (element.props.value !== undefined) {
-          props = { ...props, defaultChecked: element.props.value === defaultValue }
-        } else {
-          props = { ...props, defaultValue }
-        }
+      if (checked !== undefined) {
+        props = { ...props, checked: checked[element.props.name] || false }
       }
       return React.cloneElement(element, props)
     }
@@ -98,20 +85,22 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       (event: React.FormEvent<HTMLFieldSetElement>): void => {
         if (typeof onChange === 'function') {
           const target = (event.target as unknown) as HTMLInputElement
-          onChange(name, target.value)
+          onChange(target.name, target.checked)
         }
       },
-      [name, onChange]
+      [onChange]
     )
+
     const handleFocus = React.useCallback(
-      (e: React.FocusEvent<HTMLFieldSetElement>) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      (event: React.FocusEvent<HTMLFieldSetElement>): void => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node)) {
           handleEvent(onFocus, name)
           setTooltipVisible(() => true)
         }
       },
-      [onFocus, name, setTooltipVisible]
+      [name, onFocus]
     )
+
     const handleBlur = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
@@ -127,7 +116,6 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
         {...props}
         ref={ref}
         id={fieldId}
-        role="radiogroup"
         aria-describedby={ariaDescribedBy}
         name={name}
         disabled={disabled}
@@ -135,7 +123,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Label as="legend" id={labelId}>
+        <Label id={labelId} as="legend">
           {label}
         </Label>
         <Box mx={4} pt={3}>
@@ -161,8 +149,9 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
   }
 )
 
-RadioGroup.displayName = 'RadioGroup'
-RadioGroup.propTypes = {
+CheckBoxGroup.displayName = 'CheckBoxGroup'
+
+CheckBoxGroup.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
@@ -175,33 +164,12 @@ RadioGroup.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  value: function (props: Record<string, any>): Error | null {
-    if (props.value !== undefined) {
-      const proptype = typeof props.value
-      if (!(proptype === 'string' || proptype === 'number')) {
-        return new Error('The `value` prop must be a string or number.')
-      }
-    }
-    return null
-  },
-  defaultValue: function (props: Record<string, any>): Error | null {
-    if (props.defaultValue !== undefined) {
-      const proptype = typeof props.defaultValue
-      if (props.value !== undefined) {
-        return new Error(
-          'You provided both `value` and `defaultValue` props. Radio groups must be either controlled or uncontrolled (specify either the `value` prop, or the `defaultValue` prop, but not both). More info: https://fb.me/react-controlled-components'
-        )
-      } else if (!(proptype === 'string' || proptype === 'number')) {
-        return new Error('The `defaultValue` prop must be a string or number.')
-      }
-    }
-    return null
-  },
+  checked: PropTypes.objectOf(PropTypes.bool.isRequired),
 }
 
-type RadioGroupType = typeof RadioGroup & { Button: typeof RadioGroupButton }
+type CheckBoxGroupType = typeof CheckBoxGroup & { Item: typeof CheckBoxGroupItem }
 
-const DefaultRadioGroup = RadioGroup as any
-DefaultRadioGroup.Button = RadioGroupButton
+const DefaultCheckBoxGroup = CheckBoxGroup as any
+DefaultCheckBoxGroup.Item = CheckBoxGroupItem
 
-export default DefaultRadioGroup as RadioGroupType
+export default DefaultCheckBoxGroup as CheckBoxGroupType
