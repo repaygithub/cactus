@@ -38,6 +38,7 @@ describe('component: Box', (): void => {
           borderStyle="solid"
           zIndex={100}
           textStyle="h1"
+          overflow="scroll"
         >
           Content
         </Box>
