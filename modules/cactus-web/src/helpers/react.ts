@@ -51,3 +51,18 @@ export function useMergedRefs<T>(...refs: Ref<T>[]): React.RefCallback<T> {
     [refs]
   )
 }
+
+// Similar to useMemo/useCallback except stability is guaranteed.
+export function useValue<T>(value: T, dependencies: any[]): T {
+  const valueRef = React.useRef<T>(value)
+  const depRef = React.useRef<any[]>(dependencies)
+  const length = Math.max(dependencies.length, depRef.current.length)
+  for (let i = 0; i < length; i++) {
+    if (depRef.current[i] !== dependencies[i]) {
+      depRef.current = dependencies
+      valueRef.current = value
+      break
+    }
+  }
+  return valueRef.current
+}

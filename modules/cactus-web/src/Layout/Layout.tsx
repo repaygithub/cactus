@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { border } from '../helpers/theme'
+import ActionProvider from '../ActionBar/ActionProvider'
+import { insetBorder } from '../helpers/theme'
 import ScreenSizeProvider, {
   ScreenSizeContext,
   SIZES,
@@ -25,19 +26,25 @@ interface LayoutCtx extends LayoutProps {
   componentInfo: ComponentInfo
 }
 
-interface SidebarProps extends LayoutCtx {
+interface SidebarProps extends LayoutProps {
   variant: SidebarVariant
 }
 
-export const Sidebar: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
+interface LayoutSidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  layoutRole: Role
+}
+
+type SidebarType = React.FC<LayoutSidebarProps> & { Button: ReturnType<typeof styled.button> }
+
+export const Sidebar: SidebarType = ({ layoutRole, ...props }) => {
   const size = React.useContext(ScreenSizeContext)
-  const layout = React.useContext(LayoutContext)
   let variant: SidebarVariant = 'floatLeft'
   if (size < SIZES.small) {
     variant = 'fixedBottom'
   } else if (size < SIZES.large) {
     variant = 'fixedLeft'
   }
+  const layout = useLayout(layoutRole, { position: variant, offset: 60 })
   return <SidebarDiv {...props} {...layout} variant={variant} />
 }
 
@@ -93,7 +100,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   return (
     <ScreenSizeProvider>
       <LayoutContext.Provider value={layout}>
-        <LayoutWrapper {...layout}>{children}</LayoutWrapper>
+        <ActionProvider>
+          <LayoutWrapper {...layout}>{children}</LayoutWrapper>
+        </ActionProvider>
       </LayoutContext.Provider>
     </ScreenSizeProvider>
   )
@@ -106,34 +115,116 @@ const Main = styled.main`
 `
 Main.defaultProps = { role: 'main' }
 
-const SidebarDiv = styled.div<SidebarProps>`
+type LayoutType = typeof Layout & {
+  Content: typeof Main
+}
+const DefaultLayout = Layout as any
+DefaultLayout.Content = Main
+export default DefaultLayout as LayoutType
+
+Sidebar.Button = styled.button.attrs({ role: 'button' })`
+  cursor: pointer;
+  border: none;
+  outline: none;
   background-color: transparent;
+  text-decoration: none;
+  text-align: left;
+  color: inherit;
+  font: inherit;
   box-sizing: border-box;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &::-moz-focus-inner {
+    border: none;
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 8px;
+
+  img,
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  :hover {
+    color: ${(p) => p.theme.colors.callToAction};
+  }
+
+  &&&:focus {
+    ${(p) => insetBorder(p.theme, 'callToAction')};
+  }
+
+  &&&[aria-expanded='true'] {
+    ${(p) => p.theme.colorStyles.callToAction};
+    box-shadow: none;
+  }
+`
+
+const SidebarDiv = styled.div<SidebarProps>`
+  ${(p) => p.theme.colorStyles.standard};
+  box-sizing: border-box;
+  display: flex;
+  :empty {
+    display: none;
+  }
   ${(p) => {
+    const buttonBorder = p.variant === 'fixedBottom' ? 'right' : 'bottom'
+    const buttonStyle = `${Sidebar.Button} {
+      ${insetBorder(p.theme, 'lightContrast', buttonBorder)};
+      :hover {
+        ${insetBorder(p.theme, 'callToAction', buttonBorder)};
+      }
+    }`
     switch (p.variant) {
       case 'fixedBottom':
         return `
+          flex-direction: row;
           position: fixed;
           left: 0;
           right: 0;
           bottom: 0;
           height: ${p.fixedBottom}px;
-          border-top: ${border(p.theme, 'lightContrast')};
+          ${insetBorder(p.theme, 'lightContrast', 'top')};
+          ${buttonStyle};
+          ${Sidebar.Button}[aria-expanded='true']::after {
+            content: '';
+            z-index: 99;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            bottom: ${p.fixedBottom}px;
+            left: 0;
+            right: 0;
+            cursor: default;
+          }
         `
       case 'fixedLeft':
         return `
+          flex-direction: column;
           position: fixed;
           top: 0;
           left: 0;
           width: ${p.fixedLeft}px;
           bottom: ${p.fixedBottom}px;
-          border-right: ${border(p.theme, 'lightContrast')};
+          ${insetBorder(p.theme, 'lightContrast', 'right')};
+          ${buttonStyle};
         `
       case 'floatLeft':
         return `
+          flex-direction: column;
           width: ${p.floatLeft}px;
           height: auto;
-          border-right: ${border(p.theme, 'lightContrast')};
+          ${insetBorder(p.theme, 'lightContrast', 'right')};
+          ${buttonStyle};
         `
     }
   }}
@@ -190,14 +281,3 @@ const LayoutWrapper = styled.div<LayoutProps>`
         }
       `}
 `
-
-type LayoutType = typeof Layout & {
-  Content: typeof Main
-  Sidebar: typeof Sidebar
-}
-
-const DefaultLayout = Layout as any
-DefaultLayout.Content = Main
-DefaultLayout.Sidebar = Sidebar
-
-export default DefaultLayout as LayoutType

@@ -9,10 +9,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 
+import { useAction } from '../ActionBar/ActionProvider'
 import { isActionKey, keyPressAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
 import { border, borderSize, boxShadow, media, radius, textStyle } from '../helpers/theme'
-import { LayoutInfo, Sidebar as LayoutSidebar, useLayout } from '../Layout/Layout'
+import { Sidebar as LayoutSidebar, useLayout } from '../Layout/Layout'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
   focusMenu,
@@ -39,9 +40,7 @@ interface MenuBarProps {
   'aria-label'?: string
 }
 
-type PositionProp = { fixedBottom: number }
-
-type LayoutMenuProps = MenuBarProps & PositionProp
+type SidebarMenuProps = MenuBarProps & { variant: Variant }
 
 type Variant = 'mobile' | 'sidebar' | 'top'
 
@@ -217,6 +216,8 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
 
   React.useEffect(() => setTabIndex(menu, false), [menu])
 
+  useLayout('menubar', { position: 'flow', offset: 0 })
+
   return (
     <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
@@ -238,65 +239,63 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
   )
 })
 
-const Sidebar = React.forwardRef<HTMLElement, LayoutMenuProps>(
-  ({ children, fixedBottom, ...props }, ref) => {
+const Sidebar = React.forwardRef<HTMLElement, SidebarMenuProps>(
+  ({ children, variant, ...props }, ref) => {
     const orientation = 'vertical'
+    // TODO Maybe we can somehow move this styling to ActionBarPanel?
+    const fixedBottom = variant === 'sidebar' ? 0 : 60
+
     const [expanded, toggle] = useSubmenuToggle(false)
     const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
     React.useEffect(() => setTabIndex(menu, true), [menu])
-    return (
-      <LayoutSidebar>
-        <SidebarNav
-          {...props}
-          ref={ref}
-          aria-orientation={orientation}
-          onKeyDown={handleSubmenu}
-          onBlur={closeOnBlur}
-          onClick={navClickHandler}
-          tabIndex={-1}
+
+    const nav = (
+      <SidebarNav
+        {...props}
+        ref={ref}
+        key="cactus-web-menubar"
+        aria-orientation={orientation}
+        onKeyDown={handleSubmenu}
+        onBlur={closeOnBlur}
+        onClick={navClickHandler}
+        tabIndex={-1}
+      >
+        <LayoutSidebar.Button
+          tabIndex={0}
+          aria-haspopup="menu"
+          aria-expanded={expanded}
+          onClick={toggleOnClick}
+          onKeyDown={toggleOnKey}
+          onKeyUp={preventAction}
         >
-          <HamburgerButton
-            tabIndex={0}
-            aria-haspopup="menu"
-            aria-expanded={expanded}
-            onClick={toggleOnClick}
-            onKeyDown={toggleOnKey}
-            onKeyUp={preventAction}
-          >
-            <NavigationHamburger />
-          </HamburgerButton>
-          <SidebarMenu
-            expanded={expanded}
-            role="menu"
-            aria-orientation={orientation}
-            onFocus={focusMenu}
-            onKeyDown={menuKeyHandler}
-            ref={menuRef}
-            fixedBottom={fixedBottom}
-          >
-            {children}
-          </SidebarMenu>
-        </SidebarNav>
-      </LayoutSidebar>
+          <NavigationHamburger />
+        </LayoutSidebar.Button>
+        <SidebarMenu
+          expanded={expanded}
+          role="menu"
+          aria-orientation={orientation}
+          onFocus={focusMenu}
+          onKeyDown={menuKeyHandler}
+          ref={menuRef}
+          fixedBottom={fixedBottom}
+        >
+          {children}
+        </SidebarMenu>
+      </SidebarNav>
     )
+    const renderNav = useAction(nav, -1)
+    return renderNav && <LayoutSidebar layoutRole="menubar">{renderNav}</LayoutSidebar>
   }
 )
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const variant = useVariant()
-  const layout: LayoutInfo = { position: 'flow', offset: 60 }
-  if (variant === 'sidebar') {
-    layout.position = 'fixedLeft'
-  } else if (variant === 'mobile') {
-    layout.position = 'fixedBottom'
-  }
-  const { fixedBottom } = useLayout('menubar', layout)
   if (variant === 'top') {
     return <Topbar {...props} ref={ref} />
   }
-  return <Sidebar {...props} ref={ref} fixedBottom={fixedBottom} />
+  return <Sidebar {...props} ref={ref} variant={variant} />
 })
 
 const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -376,7 +375,7 @@ const Nav = styled.nav`
 const SidebarNav = styled.nav`
   outline: none;
   ${(p) => textStyle(p.theme, 'small')};
-  ${(p) => p.theme.colorStyles.standard};
+  background-color: transparent;
 `
 
 const listStyle = `
@@ -391,7 +390,7 @@ const InlineMenu = styled.ul<MenuProps>`
 `
 
 // The box shadow is #2, but shifted to be only on the right side.
-const SidebarMenu = styled.ul<MenuProps & PositionProp>`
+const SidebarMenu = styled.ul<MenuProps & { fixedBottom: number }>`
   ${(p) => p.theme.colorStyles.standard}
   ${listStyle}
   display: ${(p) => (p.expanded ? 'block' : 'none')};
@@ -544,71 +543,5 @@ const MenuButton = styled.button.attrs({ role: 'menuitem' })`
     height: 8px;
     margin-left: 16px;
     ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
-  }
-`
-
-const HamburgerButton = styled.button.attrs({ role: 'button' })`
-  ${buttonStyles}
-
-  width: 60px;
-  height: 60px;
-  padding: 18px;
-  border-right: ${(p) => border(p.theme, 'lightContrast')};
-
-  ${(p) => media(p.theme, 'small')} {
-    border-right: 0;
-    border-bottom: ${(p) => border(p.theme, 'lightContrast')};
-  }
-
-  ${NavigationHamburger} {
-    width: 24px;
-    height: 24px;
-  }
-
-  :hover {
-    color: ${(p) => p.theme.colors.callToAction};
-    border-color: ${(p) => p.theme.colors.callToAction};
-  }
-
-  position: relative;
-  overflow: visible;
-  :focus::after {
-    border: ${(p) => border(p.theme, 'callToAction')};
-    background-color: transparent;
-    box-sizing: border-box;
-    width: calc(100% + ${borderSize});
-    height: 100%;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: -${borderSize};
-    ${(p) => media(p.theme, 'small')} {
-      top: 0;
-      width: 100%;
-      height: calc(100% + ${borderSize});
-    }
-  }
-
-  &[aria-expanded='true'] {
-    ${(p) => p.theme.colorStyles.callToAction};
-    border-color: ${(p) => p.theme.colors.callToAction};
-
-    &::after {
-      content: '';
-      z-index: 99;
-      background-color: rgba(0, 0, 0, 0.5);
-      position: fixed;
-      top: 0;
-      bottom: 60px;
-      left: 0;
-      right: 0;
-      cursor: default;
-      border: 0;
-      width: auto;
-      height: auto;
-      ${(p) => media(p.theme, 'small')} {
-        display: none;
-      }
-    }
   }
 `
