@@ -258,7 +258,7 @@ const StyledCell = styled.td(
     card: css`
       && {
         display: flex;
-        max-width: 100%;
+        width: 288px;
         flex-flow: row wrap;
         justify-content: space-between;
         padding: 8px 16px;
