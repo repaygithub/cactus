@@ -221,6 +221,7 @@ const MenuButton = styled(MenuButtonBase)`
   outline: none;
   cursor: pointer;
   appearance: none;
+  overflow: visible;
   ${(p) => textStyle(p.theme, 'body')};
   ${(p) => buttonVariantMap[p.variant || 'filled']}
 
