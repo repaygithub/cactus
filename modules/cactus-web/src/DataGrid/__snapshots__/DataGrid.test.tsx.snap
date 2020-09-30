@@ -45,22 +45,8 @@ exports[`component: DataGrid snapshot 1`] = `
   border: 0;
 }
 
-.c14.dd-closed {
-  border-color: hsl(200,10%,20%);
-}
-
-.c14.dd-closed:hover,
-.c14.dd-closed:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c14.dd-open {
-  border-color: hsl(200,96%,35%);
-}
-
 .c16 {
   box-sizing: border-box;
-  background-color: hsl(200,10%,20%);
   height: 32px;
   width: 36px;
   border-radius: 1px 20px 20px 1px;
@@ -77,12 +63,6 @@ exports[`component: DataGrid snapshot 1`] = `
 .c16 .c10 {
   width: 10px;
   height: 10px;
-  color: hsl(0,0%,100%);
-}
-
-.c16:hover,
-.c16:focus {
-  background-color: hsl(200,96%,35%);
 }
 
 .c16[aria-expanded='true'] ~ .c13 {
@@ -96,8 +76,22 @@ exports[`component: DataGrid snapshot 1`] = `
   display: flex;
 }
 
+.c12 .c13.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c12 .c13.dd-closed:hover,
+.c12 .c13.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c12 .c13.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
 .c12 .c15[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
 }
 
 .c12 .c15[aria-expanded='true'] .c10 {
@@ -106,8 +100,15 @@ exports[`component: DataGrid snapshot 1`] = `
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c12 .c15[aria-expanded='true'] + .c13 {
-  border-color: hsl(200,96%,35%);
+.c12 .c15 {
+  background-color: hsl(200,10%,20%);
+  color: hsl(0,0%,100%);
+}
+
+.c12 .c15:hover,
+.c12 .c15:focus {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
 }
 
 .c18 {
@@ -784,6 +785,7 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
+                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"
@@ -842,6 +844,7 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
+                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"
@@ -900,6 +903,7 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
+                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"
@@ -958,6 +962,7 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
+                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"

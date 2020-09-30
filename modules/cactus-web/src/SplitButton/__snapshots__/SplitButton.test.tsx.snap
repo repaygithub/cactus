@@ -88,10 +88,6 @@ exports[`component: SplitButton snapshot 1`] = `
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3[aria-expanded='true'] + .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
 .c0 .c3 {
   background-color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
@@ -238,10 +234,6 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
-}
-
-.c0 .c3[aria-expanded='true'] + .c1 {
-  border-color: hsl(200,96%,35%);
 }
 
 .c0 .c3 {
@@ -392,10 +384,6 @@ exports[`component: SplitButton with theme customization should have 2px borders
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3[aria-expanded='true'] + .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
 .c0 .c3 {
   background-color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
@@ -544,10 +532,6 @@ exports[`component: SplitButton with theme customization should have intermediat
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3[aria-expanded='true'] + .c1 {
-  border-color: hsl(200,96%,35%);
-}
-
 .c0 .c3 {
   background-color: hsl(200,10%,20%);
   color: hsl(0,0%,100%);
@@ -694,10 +678,6 @@ exports[`component: SplitButton with theme customization should have square shap
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
-}
-
-.c0 .c3[aria-expanded='true'] + .c1 {
-  border-color: hsl(200,96%,35%);
 }
 
 .c0 .c3 {
