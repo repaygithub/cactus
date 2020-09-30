@@ -10,13 +10,15 @@ import { NavigationChevronDown } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { MutableRefObject, useRef } from 'react'
-import styled, { createGlobalStyle, DefaultTheme, StyledComponent } from 'styled-components'
+import styled, { createGlobalStyle, css, DefaultTheme, StyledComponent } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getTopPosition } from '../helpers/positionPopover'
 import { getScrollX } from '../helpers/scrollOffset'
 import { border, boxShadow, textStyle } from '../helpers/theme'
+import variant from '../helpers/variant'
 
+export type SplitButtonVariant = 'standard' | 'danger' | 'success'
 export interface IconProps {
   iconSize: 'tiny' | 'small' | 'medium' | 'large'
 }
@@ -28,6 +30,7 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginP
   disabled?: boolean
   // Aria label for the dropdown trigger. Defaults to "Action List"
   'aria-label'?: string
+  variant?: SplitButtonVariant
 }
 
 interface SplitButtonActionProps extends Omit<MenuItemImplProps, 'onSelect'> {
@@ -41,6 +44,18 @@ const mainShapeMap: { [K in Shape]: string } = {
   intermediate: 'border-radius: 8px 1px 1px 8px;',
   round: 'border-radius: 20px 1px 1px 20px;',
 }
+
+const getVariantDark = variant({
+  standard: css`
+    ${(p): ColorStyle => p.theme.colorStyles.callToAction};
+  `,
+  danger: css`
+    ${(p): ColorStyle => p.theme.colorStyles.errorDark};
+  `,
+  success: css`
+    ${(p): ColorStyle => p.theme.colorStyles.successDark};
+  `,
+})
 
 const MainActionButton = styled.button`
   box-sizing: border-box;
@@ -75,19 +90,6 @@ const MainActionButton = styled.button`
   `
       : ''}
     ${(p) => p.disabled && p.theme.colorStyles.disable}
-
-  &.dd-closed {
-    border-color: ${(p): string => p.theme.colors.darkestContrast};
-
-    &:hover,
-    &:focus {
-      border-color: ${(p): string => p.theme.colors.callToAction};
-    }
-  }
-
-  &.dd-open {
-    border-color: ${(p): string => p.theme.colors.callToAction};
-  }
 `
 
 const SplitButtonStyles = createGlobalStyle`
@@ -139,7 +141,6 @@ const dropdownButtonShapeMap: { [K in Shape]: string } = {
 
 const DropdownButton = styled(ReachMenuButton)`
   box-sizing: border-box;
-  background-color: ${(p): string => p.theme.colors.darkestContrast};
   height: 32px;
   width: 36px;
   ${(p) => dropdownButtonShapeMap[p.theme.shape]}
@@ -160,12 +161,6 @@ const DropdownButton = styled(ReachMenuButton)`
   ${NavigationChevronDown} {
     width: 10px;
     height: 10px;
-    color: ${(p): string => p.theme.colors.white};
-  }
-
-  &:hover,
-  &:focus {
-    background-color: ${(p): string => (!p.disabled ? p.theme.colors.callToAction : '')};
   }
 
   &[aria-expanded='true'] ~ ${MainActionButton} {
@@ -260,17 +255,74 @@ type SplitButtonType = StyledComponent<typeof SplitButtonBase, DefaultTheme, Spl
 export const SplitButton = styled(SplitButtonBase)`
   display: flex;
   ${margin}
+  ${MainActionButton} {
+    &.dd-closed {
+      ${variant({
+        standard: css`
+          border-color: ${(p): string => p.theme.colors.darkestContrast};
+        `,
+        danger: css`
+          border-color: ${(p): string => p.theme.colors.error};
+        `,
+        success: css`
+          border-color: ${(p): string => p.theme.colors.success};
+        `,
+      })}
 
+      &:hover,
+      &:focus {
+        ${variant({
+          standard: css`
+            border-color: ${(p): string => p.theme.colors.callToAction};
+          `,
+          danger: css`
+            border-color: ${(p): string => p.theme.colors.error};
+          `,
+          success: css`
+            border-color: ${(p): string => p.theme.colors.success};
+          `,
+        })}
+      }
+    }
+
+    &.dd-open {
+      ${variant({
+        standard: css`
+          border-color: ${(p): string => p.theme.colors.callToAction};
+        `,
+        danger: css`
+          border-color: ${(p): string => p.theme.colors.errorDark};
+        `,
+        success: css`
+          border-color: ${(p): string => p.theme.colors.successDark};
+        `,
+      })}
+    }
+  }
   ${DropdownButton}[aria-expanded='true'] {
     ${NavigationChevronDown} {
       transform: rotate3d(1, 0, 0, 180deg);
     }
-
-    background-color: ${(p): string => p.theme.colors.callToAction};
+    ${getVariantDark};
   }
 
-  ${DropdownButton}[aria-expanded='true'] + ${MainActionButton} {
-    border-color: ${(p): string => p.theme.colors.callToAction};
+  ${DropdownButton} {
+    ${variant({
+      standard: css`
+        ${(p): ColorStyle => p.theme.colorStyles.darkestContrast};
+      `,
+      danger: css`
+        ${(p): ColorStyle => p.theme.colorStyles.error};
+      `,
+      success: css`
+        ${(p): ColorStyle => p.theme.colorStyles.success};
+      `,
+    })}
+
+    &:hover,
+    &:focus {
+      ${(p) => !p.disabled && getVariantDark};
+    }
   }
 ` as any
 
@@ -279,6 +331,10 @@ SplitButton.propTypes = {
   onSelectMainAction: PropTypes.func.isRequired,
   mainActionIcon: PropTypes.elementType,
   disabled: PropTypes.bool,
+}
+
+SplitButton.defaultProps = {
+  variant: 'standard',
 }
 
 SplitButton.Action = SplitButtonAction
