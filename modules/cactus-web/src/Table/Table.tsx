@@ -256,7 +256,7 @@ const StyledCell = styled.td(
     card: css`
       && {
         display: flex;
-        width: 272px;
+        width: 240px;
         flex-flow: row wrap;
         justify-content: space-between;
         padding: 8px 16px;

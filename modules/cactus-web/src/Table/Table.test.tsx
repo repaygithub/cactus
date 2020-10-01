@@ -128,6 +128,6 @@ describe('component: Table', (): void => {
       </StyleProvider>
     )
     const singleCell = getByTestId('cell')
-    expect(singleCell).toHaveStyle('width: 272px')
+    expect(singleCell).toHaveStyle('width: 240px')
   })
 })

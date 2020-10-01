@@ -47,7 +47,7 @@ exports[`component: Table card carousel 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  width: 272px;
+  width: 240px;
   -webkit-flex-flow: row wrap;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
