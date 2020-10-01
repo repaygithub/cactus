@@ -38,6 +38,9 @@ interface SplitButtonActionProps extends Omit<MenuItemImplProps, 'onSelect'> {
   onSelect: () => any
   icon?: React.FunctionComponent<IconProps>
 }
+interface SplitButtonListProps {
+  variant?: SplitButtonVariant
+}
 
 const mainShapeMap: { [K in Shape]: string } = {
   square: 'border-radius: 1px;',
@@ -104,7 +107,7 @@ const dropdownShapeMap: { [K in Shape]: string } = {
   round: 'border-radius: 8px;',
 }
 
-const SplitButtonList = styled(ReachMenuItems)`
+const SplitButtonList = styled(ReachMenuItems)<SplitButtonListProps>`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
@@ -112,7 +115,6 @@ const SplitButtonList = styled(ReachMenuItems)`
   ${(p): string => boxShadow(p.theme, 1)};
   z-index: 1000;
   background-color: ${(p): string => p.theme.colors.white};
-
   border: ${(p) => (!p.theme.boxShadows ? border(p.theme, 'lightContrast') : '0')};
 
   [data-reach-menu-item] {
@@ -126,9 +128,8 @@ const SplitButtonList = styled(ReachMenuItems)`
     outline: none;
     padding: 4px 16px;
     text-align: center;
-
     &[data-selected] {
-      ${(p): ColorStyle => p.theme.colorStyles.callToAction};
+      ${getVariantDark}
     }
   }
 `
@@ -177,6 +178,7 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
     disabled,
     children,
     'aria-label': ariaLabel = 'Action List',
+    variant,
     ...rest
   } = props
   const mainActionRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
@@ -221,7 +223,7 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
                   }
                 }}
               >
-                <SplitButtonList>{children}</SplitButtonList>
+                <SplitButtonList variant={variant}>{children}</SplitButtonList>
               </ReachMenuPopover>
             </>
           )

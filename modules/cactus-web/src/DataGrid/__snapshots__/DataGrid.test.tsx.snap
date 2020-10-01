@@ -785,7 +785,6 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
-                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"
@@ -844,7 +843,6 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
-                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"
@@ -903,7 +901,6 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
-                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"
@@ -962,7 +959,6 @@ exports[`component: DataGrid snapshot 1`] = `
             >
               <div
                 class="c12"
-                variant="standard"
               >
                 <button
                   class="c13 c14 dd-closed"

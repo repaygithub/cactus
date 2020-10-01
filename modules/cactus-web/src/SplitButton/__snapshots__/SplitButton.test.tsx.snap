@@ -113,7 +113,6 @@ exports[`component: SplitButton snapshot 1`] = `
 <div>
   <div
     class="c0"
-    variant="standard"
   >
     <button
       class="c1 c2 dd-closed"
@@ -261,7 +260,6 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 <div>
   <div
     class="c0"
-    variant="standard"
   >
     <button
       class="c1 c2 dd-closed"
@@ -409,7 +407,6 @@ exports[`component: SplitButton with theme customization should have 2px borders
 <div>
   <div
     class="c0"
-    variant="standard"
   >
     <button
       class="c1 c2 dd-closed"
@@ -557,7 +554,6 @@ exports[`component: SplitButton with theme customization should have intermediat
 <div>
   <div
     class="c0"
-    variant="standard"
   >
     <button
       class="c1 c2 dd-closed"
@@ -705,7 +701,6 @@ exports[`component: SplitButton with theme customization should have square shap
 <div>
   <div
     class="c0"
-    variant="standard"
   >
     <button
       class="c1 c2 dd-closed"
