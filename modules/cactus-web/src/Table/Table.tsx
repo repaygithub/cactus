@@ -228,11 +228,9 @@ const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
 const ContentBox = styled.div`
   flex-grow: 1;
   text-align: right;
-  max-width: 100%;
   &:only-child,
   ${HeaderBox}:empty + & {
     text-align: center;
-    width: 100%;
   }
 `
 
@@ -258,7 +256,7 @@ const StyledCell = styled.td(
     card: css`
       && {
         display: flex;
-        width: 288px;
+        width: 272px;
         flex-flow: row wrap;
         justify-content: space-between;
         padding: 8px 16px;
