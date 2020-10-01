@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import styled, { DefaultTheme, StyledComponent } from 'styled-components'
+import styled from 'styled-components'
 
 import { useSizeRef } from '../helpers/rect'
-import { boxShadow, media } from '../helpers/theme'
+import { boxShadow } from '../helpers/theme'
 import useId from '../helpers/useId'
 import { useLayout } from '../Layout/Layout'
 import Link from '../Link/Link'
@@ -39,7 +39,7 @@ const LogoAndContentSection = styled('div')`
   align-items: center;
   padding: 16px 24px 16px 24px;
 
-  ${(p) => media(p.theme, 'small')} {
+  .cactus-layout-fixedBottom & {
     flex-direction: row;
     justify-content: flex-start;
   }
@@ -48,7 +48,7 @@ const LogoAndContentSection = styled('div')`
 const LogoWrapper = styled('div')`
   margin-bottom: 16px;
 
-  ${(p) => media(p.theme, 'small')} {
+  .cactus-layout-fixedBottom & {
     margin-right: 16px;
     margin-bottom: 0px;
   }
@@ -66,15 +66,11 @@ const Img = styled('img')`
 const LinksColsContainer = styled('div')`
   max-width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: stretch;
   justify-content: center;
   padding: 16px 24px 16px 24px;
   background-color: ${(p) => p.theme.colors.white};
-
-  ${(p) => media(p.theme, 'small')} {
-    flex-direction: row;
-  }
 `
 
 const LinkCol = styled('div')<LinkColProps>`
@@ -89,7 +85,7 @@ const LinkCol = styled('div')<LinkColProps>`
     max-width: 100%;
   }
 
-  ${(p) => media(p.theme, 'small')} {
+  .cactus-layout-fixedBottom & {
     max-width: calc(100% / ${(p) => p.maxCols});
   }
 
@@ -125,7 +121,9 @@ const divideLinks = (links: LinkType[], maxCols: number): LinkType[][] => {
   return divided
 }
 
-const FooterBase = (props: FooterProps) => {
+type FooterType = React.FC<FooterProps> & { Link: React.FC<LinkProps> }
+
+export const Footer: FooterType = (props) => {
   const { logo, className, children } = props
   const [links, setLinks] = useState(new Map<string, LinkType>())
   const screenSize = useContext(ScreenSizeContext)
@@ -143,10 +141,13 @@ const FooterBase = (props: FooterProps) => {
   )
   const sizeRef = useSizeRef<HTMLDivElement>(heightCallback)
   const position = screenSize.size === 'tiny' ? 'flow' : 'fixedBottom'
-  useLayout('footer', { position, offset: footerHeight })
+  let { cssClass } = useLayout('footer', { position, offset: footerHeight })
+  if (className) {
+    cssClass = `${className} ${cssClass}`
+  }
 
   return (
-    <div ref={sizeRef} className={className}>
+    <StyledFooter ref={sizeRef} className={cssClass}>
       <LogoAndContentSection>
         {logo && (
           <LogoWrapper>
@@ -173,7 +174,7 @@ const FooterBase = (props: FooterProps) => {
           ))}
         </LinksColsContainer>
       )}
-    </div>
+    </StyledFooter>
   )
 }
 
@@ -182,7 +183,7 @@ interface LinkProps {
   to: string
 }
 
-export const FooterLink = (props: LinkProps): React.ReactNode => {
+export const FooterLink: React.FC<LinkProps> = (props) => {
   const { children, to } = props
   const { addLink } = useContext(FooterContext)
   const key = useId()
@@ -192,22 +193,19 @@ export const FooterLink = (props: LinkProps): React.ReactNode => {
   return <React.Fragment />
 }
 
-export const Footer = styled(FooterBase)`
+const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
   background-color: ${(p) => p.theme.colors.lightContrast};
   ${(p) => boxShadow(p.theme, 1)};
-  ${(p) => media(p.theme, 'small')} {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+  &.cactus-layout-fixedBottom {
+    height: auto;
   }
 `
 
-const DefaultFooter = Footer as any
-DefaultFooter.Link = FooterLink
+Footer.Link = FooterLink
 
 Footer.propTypes = {
   logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
@@ -218,8 +216,4 @@ FooterLink.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-type FooterType = StyledComponent<typeof FooterBase, DefaultTheme, FooterProps> & {
-  Link: React.ComponentType<LinkProps>
-}
-
-export default DefaultFooter as FooterType
+export default Footer
