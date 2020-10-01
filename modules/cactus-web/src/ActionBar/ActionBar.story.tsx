@@ -42,7 +42,7 @@ const SimpleRouter = () => {
   return (
     <Flex alignItems="center" justifyContent="center" flexDirection="column">
       <ActionBar.Item
-        key="refresh"
+        id="refresh"
         icon={<ActionsRefresh />}
         orderHint="high"
         onClick={() => setCount((c) => c + 1)}

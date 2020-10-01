@@ -56,7 +56,7 @@ storiesOf('Layout', module).add(
         {hasActions && (
           <ActionBar>
             <ActionBar.Item
-              key="whattime"
+              id="whattime"
               icon={<DescriptiveClock />}
               onClick={() => alert(`It is now ${new Date()}.`)}
             />
