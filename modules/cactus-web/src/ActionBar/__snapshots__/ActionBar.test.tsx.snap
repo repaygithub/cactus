@@ -148,6 +148,7 @@ exports[`component: ActionBar typechecks 1`] = `
     </button>
     <button
       class="c1 c2"
+      id="two"
       role="button"
     >
       <svg

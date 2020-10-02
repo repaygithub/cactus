@@ -12,7 +12,7 @@ describe('component: ActionBar', () => {
       <StyleProvider>
         <ActionBar>
           <ActionBar.Item id="one" icon={<ActionsGear />} />
-          <ActionBar.Item key="two" icon={<ActionsKey />} />
+          <ActionBar.Item id="two" icon={<ActionsKey />} />
         </ActionBar>
       </StyleProvider>
     )
@@ -29,7 +29,7 @@ describe('component: ActionBar', () => {
           <div aria-label="Content">
             <ActionBar.Item id="bottom" icon={<ActionsKey />} orderHint="bottom" />
             <ActionBar.Item id="normal" icon={<ActionsKey />} />
-            <ActionBar.Item key="top" aria-label="top" icon={<ActionsKey />} orderHint="top" />
+            <ActionBar.Item id="top" aria-label="top" icon={<ActionsKey />} orderHint="top" />
           </div>
         </ActionProvider>
       </StyleProvider>

@@ -5,6 +5,8 @@ import { Sidebar } from '../Layout/Sidebar'
 import { OrderHint, OrderHintKey, useAction, useActionBarItems } from './ActionProvider'
 
 interface ItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Required when used within an ActionProvider */
+  id?: string
   icon: React.ReactElement
   orderHint?: OrderHint
 }
@@ -16,9 +18,7 @@ export const ActionBarItem = React.forwardRef<HTMLButtonElement, ItemProps>(
         {icon}
       </ActionBar.Button>
     )
-    // Undocumented React internals: make sure a test will fail if this changes.
-    const key = (child as any)._owner?.key
-    return useAction(child, orderHint, props.id || key)
+    return useAction(child, orderHint, props.id)
   }
 )
 

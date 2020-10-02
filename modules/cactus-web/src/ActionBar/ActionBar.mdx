@@ -23,6 +23,7 @@ const MySite = () => (
   <Layout>
     <ActionBar>
       <ActionBar.Item
+        id="ab-print"
         icon={<ActionsPrint/>}
         onClick={printThisPage}
         aria-label="Print this page"
@@ -48,7 +49,7 @@ import { ActionBar } from '@repay/cactus-web'
 const MyPage = () => (
   <>
     <ActionBar.Item
-      key="page-action"
+      id="page-action"
       icon={<ActionsKey/>}
       orderHint="high"
       onClick={doSomethingPageSpecific}
@@ -58,7 +59,7 @@ const MyPage = () => (
 )
 ```
 
-- You must provide either a _key_ or an _id_ prop to uniquely identify the action on the ActionBar (`id` takes precedence over `key`); if neither is present, an error will be thrown.
+- You must provide an _id_ prop to uniquely identify the action on the ActionBar; if it is not present, an error will be thrown. (We would use _key_ as well, but React doesn't forward it with the props.)
 - The _orderHint_ indicates where, relative to other ActionBar items, the item should appear.
   - Possible values are 'top', 'high', 'center' (default), 'low', and 'bottom'.
   - Items with the same hint are rendered in the order they're added, according to how React renders the entire document tree.
@@ -114,7 +115,7 @@ Because ActionBar items typically only have an icon and no text, it may not be o
 
 ### ActionBar.Item
 
-<PropsTable of={ActionBar} staticProp="ActionBarItem" includeProps={['icon', 'orderHint', 'key', 'id']} />
+<PropsTable of={ActionBar} staticProp="ActionBarItem" />
 
 ### ActionBar.Button
 
