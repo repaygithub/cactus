@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: SplitButton snapshot 1`] = `
-.c6 {
+.c5 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c2 {
+.c1 {
   box-sizing: border-box;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
@@ -24,17 +24,31 @@ exports[`component: SplitButton snapshot 1`] = `
   white-space: nowrap;
 }
 
-.c2 svg {
+.c1 svg {
   margin-right: 4px;
   margin-bottom: 3px;
 }
 
-.c2::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c4 {
+.c1.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c1.dd-closed:hover,
+.c1.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c3 {
   box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
   height: 32px;
   width: 36px;
   border-radius: 1px 20px 20px 1px;
@@ -46,15 +60,20 @@ exports[`component: SplitButton snapshot 1`] = `
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
   flex-grow: 0;
+  background-color: hsl(200,10%,20%);
+  color: hsl(0,0%,100%);
 }
 
-.c4 .c5 {
+.c3:hover,
+.c3:focus {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c3 .c4 {
   width: 10px;
   height: 10px;
-}
-
-.c4[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
 }
 
 .c0 {
@@ -64,43 +83,19 @@ exports[`component: SplitButton snapshot 1`] = `
   display: flex;
 }
 
-.c0 .c1.dd-closed {
-  border-color: hsl(200,10%,20%);
-}
-
-.c0 .c1.dd-closed:hover,
-.c0 .c1.dd-closed:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c1.dd-open {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c3[aria-expanded='true'] {
+.c0 .c2[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c0 .c3[aria-expanded='true'] .c5 {
+.c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3 {
-  background-color: hsl(200,10%,20%);
-  color: hsl(0,0%,100%);
-}
-
-.c0 .c3:hover,
-.c0 .c3:focus {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
-}
-
 @media screen and (min-width:1024px) {
-  .c2 {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -115,7 +110,7 @@ exports[`component: SplitButton snapshot 1`] = `
     class="c0"
   >
     <button
-      class="c1 c2 dd-closed"
+      class="c1 dd-closed"
       type="button"
     >
       Test
@@ -124,14 +119,15 @@ exports[`component: SplitButton snapshot 1`] = `
       aria-controls="menu--1"
       aria-haspopup="true"
       aria-label="Action List"
-      class="c3 c4"
+      class="c2 c3"
       data-reach-menu-button=""
       id="menu-button--menu--1"
       type="button"
+      variant="standard"
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="c4 c5"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -148,12 +144,12 @@ exports[`component: SplitButton snapshot 1`] = `
 `;
 
 exports[`component: SplitButton with theme customization dropdown should not have box shadows 1`] = `
-.c6 {
+.c5 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c2 {
+.c1 {
   box-sizing: border-box;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
@@ -171,17 +167,31 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   white-space: nowrap;
 }
 
-.c2 svg {
+.c1 svg {
   margin-right: 4px;
   margin-bottom: 3px;
 }
 
-.c2::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c4 {
+.c1.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c1.dd-closed:hover,
+.c1.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c3 {
   box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
   height: 32px;
   width: 36px;
   border-radius: 1px 20px 20px 1px;
@@ -193,15 +203,20 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
   flex-grow: 0;
+  background-color: hsl(200,10%,20%);
+  color: hsl(0,0%,100%);
 }
 
-.c4 .c5 {
+.c3:hover,
+.c3:focus {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c3 .c4 {
   width: 10px;
   height: 10px;
-}
-
-.c4[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
 }
 
 .c0 {
@@ -211,43 +226,19 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   display: flex;
 }
 
-.c0 .c1.dd-closed {
-  border-color: hsl(200,10%,20%);
-}
-
-.c0 .c1.dd-closed:hover,
-.c0 .c1.dd-closed:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c1.dd-open {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c3[aria-expanded='true'] {
+.c0 .c2[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c0 .c3[aria-expanded='true'] .c5 {
+.c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3 {
-  background-color: hsl(200,10%,20%);
-  color: hsl(0,0%,100%);
-}
-
-.c0 .c3:hover,
-.c0 .c3:focus {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
-}
-
 @media screen and (min-width:1024px) {
-  .c2 {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -262,7 +253,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
     class="c0"
   >
     <button
-      class="c1 c2 dd-closed"
+      class="c1 dd-closed"
       type="button"
     >
       Test
@@ -271,14 +262,15 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       aria-controls="menu--44"
       aria-haspopup="true"
       aria-label="Action List"
-      class="c3 c4"
+      class="c2 c3"
       data-reach-menu-button=""
       id="menu-button--menu--44"
       type="button"
+      variant="standard"
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="c4 c5"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -295,12 +287,12 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 `;
 
 exports[`component: SplitButton with theme customization should have 2px borders 1`] = `
-.c6 {
+.c5 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c2 {
+.c1 {
   box-sizing: border-box;
   border: 2px solid;
   border-radius: 20px 1px 1px 20px;
@@ -318,17 +310,31 @@ exports[`component: SplitButton with theme customization should have 2px borders
   white-space: nowrap;
 }
 
-.c2 svg {
+.c1 svg {
   margin-right: 4px;
   margin-bottom: 3px;
 }
 
-.c2::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c4 {
+.c1.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c1.dd-closed:hover,
+.c1.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c3 {
   box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
   height: 32px;
   width: 36px;
   border-radius: 1px 20px 20px 1px;
@@ -340,15 +346,20 @@ exports[`component: SplitButton with theme customization should have 2px borders
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
   flex-grow: 0;
+  background-color: hsl(200,10%,20%);
+  color: hsl(0,0%,100%);
 }
 
-.c4 .c5 {
+.c3:hover,
+.c3:focus {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c3 .c4 {
   width: 10px;
   height: 10px;
-}
-
-.c4[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
 }
 
 .c0 {
@@ -358,43 +369,19 @@ exports[`component: SplitButton with theme customization should have 2px borders
   display: flex;
 }
 
-.c0 .c1.dd-closed {
-  border-color: hsl(200,10%,20%);
-}
-
-.c0 .c1.dd-closed:hover,
-.c0 .c1.dd-closed:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c1.dd-open {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c3[aria-expanded='true'] {
+.c0 .c2[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c0 .c3[aria-expanded='true'] .c5 {
+.c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3 {
-  background-color: hsl(200,10%,20%);
-  color: hsl(0,0%,100%);
-}
-
-.c0 .c3:hover,
-.c0 .c3:focus {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
-}
-
 @media screen and (min-width:1024px) {
-  .c2 {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -409,7 +396,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
     class="c0"
   >
     <button
-      class="c1 c2 dd-closed"
+      class="c1 dd-closed"
       type="button"
     >
       Test
@@ -418,14 +405,15 @@ exports[`component: SplitButton with theme customization should have 2px borders
       aria-controls="menu--49"
       aria-haspopup="true"
       aria-label="Action List"
-      class="c3 c4"
+      class="c2 c3"
       data-reach-menu-button=""
       id="menu-button--menu--49"
       type="button"
+      variant="standard"
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="c4 c5"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -442,12 +430,12 @@ exports[`component: SplitButton with theme customization should have 2px borders
 `;
 
 exports[`component: SplitButton with theme customization should have intermediate shape 1`] = `
-.c6 {
+.c5 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c2 {
+.c1 {
   box-sizing: border-box;
   border: 1px solid;
   border-radius: 8px 1px 1px 8px;
@@ -465,17 +453,31 @@ exports[`component: SplitButton with theme customization should have intermediat
   white-space: nowrap;
 }
 
-.c2 svg {
+.c1 svg {
   margin-right: 4px;
   margin-bottom: 3px;
 }
 
-.c2::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c4 {
+.c1.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c1.dd-closed:hover,
+.c1.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c3 {
   box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
   height: 32px;
   width: 36px;
   border-radius: 1px 8px 8px 1px;
@@ -487,15 +489,20 @@ exports[`component: SplitButton with theme customization should have intermediat
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
   flex-grow: 0;
+  background-color: hsl(200,10%,20%);
+  color: hsl(0,0%,100%);
 }
 
-.c4 .c5 {
+.c3:hover,
+.c3:focus {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c3 .c4 {
   width: 10px;
   height: 10px;
-}
-
-.c4[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
 }
 
 .c0 {
@@ -505,43 +512,19 @@ exports[`component: SplitButton with theme customization should have intermediat
   display: flex;
 }
 
-.c0 .c1.dd-closed {
-  border-color: hsl(200,10%,20%);
-}
-
-.c0 .c1.dd-closed:hover,
-.c0 .c1.dd-closed:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c1.dd-open {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c3[aria-expanded='true'] {
+.c0 .c2[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c0 .c3[aria-expanded='true'] .c5 {
+.c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3 {
-  background-color: hsl(200,10%,20%);
-  color: hsl(0,0%,100%);
-}
-
-.c0 .c3:hover,
-.c0 .c3:focus {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
-}
-
 @media screen and (min-width:1024px) {
-  .c2 {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -556,7 +539,7 @@ exports[`component: SplitButton with theme customization should have intermediat
     class="c0"
   >
     <button
-      class="c1 c2 dd-closed"
+      class="c1 dd-closed"
       type="button"
     >
       Test
@@ -565,14 +548,15 @@ exports[`component: SplitButton with theme customization should have intermediat
       aria-controls="menu--39"
       aria-haspopup="true"
       aria-label="Action List"
-      class="c3 c4"
+      class="c2 c3"
       data-reach-menu-button=""
       id="menu-button--menu--39"
       type="button"
+      variant="standard"
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="c4 c5"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -589,12 +573,12 @@ exports[`component: SplitButton with theme customization should have intermediat
 `;
 
 exports[`component: SplitButton with theme customization should have square shape 1`] = `
-.c6 {
+.c5 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c2 {
+.c1 {
   box-sizing: border-box;
   border: 1px solid;
   border-radius: 1px;
@@ -612,17 +596,31 @@ exports[`component: SplitButton with theme customization should have square shap
   white-space: nowrap;
 }
 
-.c2 svg {
+.c1 svg {
   margin-right: 4px;
   margin-bottom: 3px;
 }
 
-.c2::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c4 {
+.c1.dd-closed {
+  border-color: hsl(200,10%,20%);
+}
+
+.c1.dd-closed:hover,
+.c1.dd-closed:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c1.dd-open {
+  border-color: hsl(200,96%,35%);
+}
+
+.c3 {
   box-sizing: border-box;
+  background-color: hsl(200,10%,20%);
   height: 32px;
   width: 36px;
   border-radius: 1px;
@@ -634,15 +632,20 @@ exports[`component: SplitButton with theme customization should have square shap
   -webkit-flex-grow: 0;
   -ms-flex-positive: 0;
   flex-grow: 0;
+  background-color: hsl(200,10%,20%);
+  color: hsl(0,0%,100%);
 }
 
-.c4 .c5 {
+.c3:hover,
+.c3:focus {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c3 .c4 {
   width: 10px;
   height: 10px;
-}
-
-.c4[aria-expanded='true'] ~ .c1 {
-  border-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
 }
 
 .c0 {
@@ -652,43 +655,19 @@ exports[`component: SplitButton with theme customization should have square shap
   display: flex;
 }
 
-.c0 .c1.dd-closed {
-  border-color: hsl(200,10%,20%);
-}
-
-.c0 .c1.dd-closed:hover,
-.c0 .c1.dd-closed:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c1.dd-open {
-  border-color: hsl(200,96%,35%);
-}
-
-.c0 .c3[aria-expanded='true'] {
+.c0 .c2[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c0 .c3[aria-expanded='true'] .c5 {
+.c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c3 {
-  background-color: hsl(200,10%,20%);
-  color: hsl(0,0%,100%);
-}
-
-.c0 .c3:hover,
-.c0 .c3:focus {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
-}
-
 @media screen and (min-width:1024px) {
-  .c2 {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -703,7 +682,7 @@ exports[`component: SplitButton with theme customization should have square shap
     class="c0"
   >
     <button
-      class="c1 c2 dd-closed"
+      class="c1 dd-closed"
       type="button"
     >
       Test
@@ -712,14 +691,15 @@ exports[`component: SplitButton with theme customization should have square shap
       aria-controls="menu--34"
       aria-haspopup="true"
       aria-label="Action List"
-      class="c3 c4"
+      class="c2 c3"
       data-reach-menu-button=""
       id="menu-button--menu--34"
       type="button"
+      variant="standard"
     >
       <svg
         aria-hidden="true"
-        class="c5 c6"
+        class="c4 c5"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

@@ -38,7 +38,7 @@ interface SplitButtonActionProps extends Omit<MenuItemImplProps, 'onSelect'> {
   onSelect: () => any
   icon?: React.FunctionComponent<IconProps>
 }
-interface SplitButtonListProps {
+interface VariantInterface {
   variant?: SplitButtonVariant
 }
 
@@ -60,7 +60,7 @@ const getVariantDark = variant({
   `,
 })
 
-const MainActionButton = styled.button`
+const MainActionButton = styled.button<VariantInterface>`
   box-sizing: border-box;
   border: ${(p) => border(p.theme, '')};
   ${(p) => mainShapeMap[p.theme.shape]}
@@ -93,6 +93,50 @@ const MainActionButton = styled.button`
   `
       : ''}
     ${(p) => p.disabled && p.theme.colorStyles.disable}
+
+    &.dd-closed {
+      ${variant({
+        standard: css`
+          border-color: ${(p): string => p.theme.colors.darkestContrast};
+        `,
+        danger: css`
+          border-color: ${(p): string => p.theme.colors.error};
+        `,
+        success: css`
+          border-color: ${(p): string => p.theme.colors.success};
+        `,
+      })}
+
+      &:hover,
+      &:focus {
+        ${variant({
+          standard: css`
+            border-color: ${(p): string => p.theme.colors.callToAction};
+          `,
+          danger: css`
+            border-color: ${(p): string => p.theme.colors.errorDark};
+          `,
+          success: css`
+            border-color: ${(p): string => p.theme.colors.successDark};
+          `,
+        })}
+      }
+    }
+
+    &.dd-open {
+      ${variant({
+        standard: css`
+          border-color: ${(p): string => p.theme.colors.callToAction};
+        `,
+        danger: css`
+          border-color: ${(p): string => p.theme.colors.errorDark};
+        `,
+        success: css`
+          border-color: ${(p): string => p.theme.colors.successDark};
+        `,
+      })}
+    }
+
 `
 
 const SplitButtonStyles = createGlobalStyle`
@@ -107,7 +151,7 @@ const dropdownShapeMap: { [K in Shape]: string } = {
   round: 'border-radius: 8px;',
 }
 
-const SplitButtonList = styled(ReachMenuItems)<SplitButtonListProps>`
+const SplitButtonList = styled(ReachMenuItems)<VariantInterface>`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
@@ -140,8 +184,9 @@ const dropdownButtonShapeMap: { [K in Shape]: string } = {
   round: 'border-radius: 1px 20px 20px 1px;',
 }
 
-const DropdownButton = styled(ReachMenuButton)`
+const DropdownButton = styled(ReachMenuButton)<VariantInterface>`
   box-sizing: border-box;
+  background-color: ${(p): string => p.theme.colors.darkestContrast};
   height: 32px;
   width: 36px;
   ${(p) => dropdownButtonShapeMap[p.theme.shape]}
@@ -149,8 +194,21 @@ const DropdownButton = styled(ReachMenuButton)`
   border: 0px;
   outline: none;
   cursor: pointer;
-  ${(p) => p.disabled && p.theme.colorStyles.disable};
   flex-grow: 0;
+  ${(p) =>
+    p.disabled
+      ? p.theme.colorStyles.disable
+      : variant({
+          standard: css`
+            ${(p): ColorStyle => p.theme.colorStyles.darkestContrast};
+          `,
+          danger: css`
+            ${(p): ColorStyle => p.theme.colorStyles.error};
+          `,
+          success: css`
+            ${(p): ColorStyle => p.theme.colorStyles.success};
+          `,
+        })};
 
   ${(p): string =>
     p.disabled
@@ -158,14 +216,14 @@ const DropdownButton = styled(ReachMenuButton)`
   cursor: not-allowed;
   `
       : ''}
-
+  &:hover,
+  &:focus {
+    ${(p) => !p.disabled && getVariantDark};
+  }
   ${NavigationChevronDown} {
     width: 10px;
     height: 10px;
-  }
-
-  &[aria-expanded='true'] ~ ${MainActionButton} {
-    border-color: ${(p): string => p.theme.colors.callToAction};
+    color: ${(p): string => p.theme.colors.white};
   }
 `
 
@@ -194,12 +252,13 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
                 type="button"
                 disabled={disabled}
                 onClick={onSelectMainAction}
+                variant={variant}
               >
                 {MainActionIcon && <MainActionIcon iconSize="small" />}
                 {mainActionLabel}
               </MainActionButton>
               <SplitButtonStyles />
-              <DropdownButton disabled={disabled} aria-label={ariaLabel}>
+              <DropdownButton disabled={disabled} aria-label={ariaLabel} variant={variant}>
                 <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
               </DropdownButton>
               <ReachMenuPopover
@@ -257,74 +316,12 @@ type SplitButtonType = StyledComponent<typeof SplitButtonBase, DefaultTheme, Spl
 export const SplitButton = styled(SplitButtonBase)`
   display: flex;
   ${margin}
-  ${MainActionButton} {
-    &.dd-closed {
-      ${variant({
-        standard: css`
-          border-color: ${(p): string => p.theme.colors.darkestContrast};
-        `,
-        danger: css`
-          border-color: ${(p): string => p.theme.colors.error};
-        `,
-        success: css`
-          border-color: ${(p): string => p.theme.colors.success};
-        `,
-      })}
 
-      &:hover,
-      &:focus {
-        ${variant({
-          standard: css`
-            border-color: ${(p): string => p.theme.colors.callToAction};
-          `,
-          danger: css`
-            border-color: ${(p): string => p.theme.colors.error};
-          `,
-          success: css`
-            border-color: ${(p): string => p.theme.colors.success};
-          `,
-        })}
-      }
-    }
-
-    &.dd-open {
-      ${variant({
-        standard: css`
-          border-color: ${(p): string => p.theme.colors.callToAction};
-        `,
-        danger: css`
-          border-color: ${(p): string => p.theme.colors.errorDark};
-        `,
-        success: css`
-          border-color: ${(p): string => p.theme.colors.successDark};
-        `,
-      })}
-    }
-  }
   ${DropdownButton}[aria-expanded='true'] {
     ${NavigationChevronDown} {
       transform: rotate3d(1, 0, 0, 180deg);
     }
     ${getVariantDark};
-  }
-
-  ${DropdownButton} {
-    ${variant({
-      standard: css`
-        ${(p): ColorStyle => p.theme.colorStyles.darkestContrast};
-      `,
-      danger: css`
-        ${(p): ColorStyle => p.theme.colorStyles.error};
-      `,
-      success: css`
-        ${(p): ColorStyle => p.theme.colorStyles.success};
-      `,
-    })}
-
-    &:hover,
-    &:focus {
-      ${(p) => !p.disabled && getVariantDark};
-    }
   }
 ` as any
 
@@ -333,6 +330,7 @@ SplitButton.propTypes = {
   onSelectMainAction: PropTypes.func.isRequired,
   mainActionIcon: PropTypes.elementType,
   disabled: PropTypes.bool,
+  VARIANT: PropTypes.oneOf(['standard', 'danger', 'success']),
 }
 
 SplitButton.defaultProps = {
