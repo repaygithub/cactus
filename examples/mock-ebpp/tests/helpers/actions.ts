@@ -1,12 +1,5 @@
-import { queryByLabelText, queryByText, within } from '@testing-library/testcafe'
+import { queryByLabelText, queryByRole, queryByText, within } from '@testing-library/testcafe'
 import { ClientFunction, Selector } from 'testcafe'
-
-const getDropdown = Selector(() => {
-  if (document.activeElement && document.activeElement.getAttribute('role') === 'listbox') {
-    return document.activeElement
-  }
-  return null
-})
 
 const getCombo = Selector(() => {
   if (document.activeElement && document.activeElement.getAttribute('role') === 'textbox') {
@@ -33,7 +26,7 @@ const selectDropdownOption = (
 ): Promise<void> => {
   const selectTrigger = queryByLabelText(label)
   await t.click(selectTrigger)
-  const dropdownList = getDropdown()
+  const dropdownList = queryByRole('listbox')
   if (typeof optionOrOptions === 'string') {
     await t.click(within(dropdownList).queryByText(optionOrOptions))
   } else if (Array.isArray(optionOrOptions)) {

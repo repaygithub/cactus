@@ -77,6 +77,15 @@ const statusMap: StatusMap = {
   `,
 }
 
+// Thank you, Stack Overflow https://stackoverflow.com/questions/49986720/how-to-detect-internet-explorer-11-and-below-versions
+const isIE = () => {
+  const ua = window.navigator.userAgent //Check the userAgent property of the window.navigator object
+  const msie = ua.indexOf('MSIE ') // IE 10 or older
+  const trident = ua.indexOf('Trident/') //IE 11
+
+  return msie > 0 || trident > 0
+}
+
 // @ts-ignore
 const displayStatus: any = (props): ReturnType<typeof css> | string => {
   if (props.status && !props.disabled) {
@@ -782,20 +791,24 @@ class List extends React.Component<ListProps, ListState> {
     RESPONSIVE_HEIGHT = isResponsiveTouchDevice ? responsiveHeight() : 0
   }
 
-  public componentDidUpdate(): void {
+  public componentDidUpdate(prevProps: ListProps): void {
     if (this.props.isOpen) {
-      window.requestAnimationFrame((): void => {
-        const listEl = this.listRef
-        const activeDescendant = this.props.comboBox
-          ? this.props.activeDescendant
-          : this.state.activeDescendant
+      const listJustOpened = !prevProps.isOpen
 
+      if (listJustOpened) {
         if (
           this.mobileInputRef.current !== null &&
           document.activeElement !== this.mobileInputRef.current
         ) {
           this.mobileInputRef.current.focus()
         }
+      }
+
+      window.requestAnimationFrame((): void => {
+        const listEl = this.listRef
+        const activeDescendant = this.props.comboBox
+          ? this.props.activeDescendant
+          : this.state.activeDescendant
 
         if (listEl === null || activeDescendant === '') {
           return
@@ -1120,12 +1133,16 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       event.preventDefault()
       return
     }
-    if (
-      relatedTarget === null ||
-      (relatedTarget instanceof HTMLElement && relatedTarget.getAttribute('role') !== 'listbox')
-    ) {
-      this.closeList()
-      this.setState({ searchValue: '', activeDescendant: '' })
+
+    // In IE, there's no relatedTarget on blur...it's already moved on to activeElement
+    if (isIE()) {
+      setTimeout(() => {
+        const focusTarget = document.activeElement
+        this.closeListIfNotFocused(focusTarget)
+      })
+    } else {
+      const focusTarget = relatedTarget
+      this.closeListIfNotFocused(focusTarget)
     }
   }
 
@@ -1238,13 +1255,15 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   private openList(): void {
     this.setState({ isOpen: true }, () => {
-      window.requestAnimationFrame((): void => {
-        if (this.listRef.current !== null && !this.props.comboBox) {
-          this.listRef.current.focus()
-        } else if (this.comboInputRef.current !== null && this.props.comboBox) {
-          this.comboInputRef.current.focus()
-        }
-      })
+      if (!isResponsiveTouchDevice) {
+        window.requestAnimationFrame((): void => {
+          if (this.listRef.current !== null && !this.props.comboBox) {
+            this.listRef.current.focus()
+          } else if (this.comboInputRef.current !== null && this.props.comboBox) {
+            this.comboInputRef.current.focus()
+          }
+        })
+      }
     })
   }
 
@@ -1260,6 +1279,16 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         }
       }
     })
+  }
+
+  private closeListIfNotFocused = (focusTarget: Element | null) => {
+    if (
+      focusTarget === null ||
+      (focusTarget instanceof HTMLElement && focusTarget.getAttribute('role') !== 'listbox')
+    ) {
+      this.closeList()
+      this.setState({ searchValue: '', activeDescendant: '' })
+    }
   }
 
   private isSelected = (option: OptionType): boolean => {

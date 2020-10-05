@@ -37,7 +37,7 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
   await selectDropdownOption('Notification Email', 'dhuber@repay.com')
   await selectDropdownOption('All Locations', ['Tempe', 'Phoenix'])
   await searchComboBox('Most Popular Location', 'Tempe')
-  await searchComboBox('Card Brands', ['MasterCard', 'FakeBrand'])
+  await selectDropdownOption('Card Brands', ['MasterCard', 'Visa'])
   await uploadFile()
   await t.click(queryByText('Blue'))
   await t.click(queryByText('Allow Customer Login'))
@@ -59,7 +59,7 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
     notificationEmail: 'dhuber@repay.com',
     allLocations: ['Tempe', 'Phoenix'],
     mpLocation: 'Tempe',
-    cardBrands: ['MasterCard', 'FakeBrand'],
+    cardBrands: ['MasterCard', 'Visa'],
     allowCustomerLogin: true,
     useCactusStyles: true,
     selectColor: 'blue',
