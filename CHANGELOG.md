@@ -1,5 +1,28 @@
 # Changelog
 
+## [@repay/cactus-web@v3.1.0](https://github.com/repaygithub/cactus/commit/50b46d46832db3a88f7237506ffd9e73468498e4)
+
+- docs(cactus-web): fix ActionBar.Item docs [0edd3d6](https://github.com/repaygithub/cactus/commit/0edd3d607e4800325f1c668063eb500ac3a3ce8a)
+- fix(cactus-web): remove experimental key access, use `id` instead [f269788](https://github.com/repaygithub/cactus/commit/f26978887ad0b83b39c68a59e09667bf9a2e54e4)
+- fix(cactus-web): fix focus outline on MenuButton in IE11 [a6c5a67](https://github.com/repaygithub/cactus/commit/a6c5a67b139546365d1237771ed46ed687f55e64)
+- refactor(cactus-web): decouple Sidebar code from Layout [451d78a](https://github.com/repaygithub/cactus/commit/451d78a01f21ee3313b477a3d6144c392b72624c)
+- refactor(cactus-web): add overflow props to Box component [50c3175](https://github.com/repaygithub/cactus/commit/50c31751b7faf73a5eb47ed7e9f402701211c750)
+- docs(cactus-web): fix typo [97d9e7c](https://github.com/repaygithub/cactus/commit/97d9e7c6e05fbb7a92f673ec54e15c3a596c2652)
+- refactor(cactus-web): add overflow props to Box component [288b1c8](https://github.com/repaygithub/cactus/commit/288b1c8844f3c91d3d991ee2cd45f39c73df287a)
+- refactor(cactus-web): remove defaultValue prop, change value prop to checked [4f47382](https://github.com/repaygithub/cactus/commit/4f473829512f0aa803db0726a6f266bfa4f1e87e)
+- refactor(cactus-web): put Fieldset in separate file that both RadioGroup & CheckBoxGroup can use [ba7fe01](https://github.com/repaygithub/cactus/commit/ba7fe01cc829b3b27cddd92e5b355403f8519ee5)
+- chore(cactus-web): remove reference to includeProps, export default from CheckBoxGroup [e25db35](https://github.com/repaygithub/cactus/commit/e25db35ba2952a689345a7674e5c31714a1c93a9)
+- chore(cactus-web): remove react-live from dependencies [5a70fb5](https://github.com/repaygithub/cactus/commit/5a70fb5ee8b817d911b955e5c4da3eb175f9ab9f)
+- docs(cactus-web): add CheckBoxGroup docs [39ec76a](https://github.com/repaygithub/cactus/commit/39ec76a96b5316a54670fb32f94f9cdeb76aa585)
+- feat(cactus-web): add CheckBoxGroup component [51ddeb4](https://github.com/repaygithub/cactus/commit/51ddeb4fc1724522f56ca3494cccfd0c44ff9ee8)
+- refactor(cactus-web): convert CheckBox & CheckBoxField to forwardRef components [45e7fa5](https://github.com/repaygithub/cactus/commit/45e7fa534e41366a2750514b4703b589ccc03dfc)
+- feat(cactus-web): add ActionBar component [5c6206c](https://github.com/repaygithub/cactus/commit/5c6206c8281ec4864df6cf7e8fbb4a636e00f906)
+- fix(cactus-web): fix logo/menubar alignment on IE11 [d43b9d8](https://github.com/repaygithub/cactus/commit/d43b9d88177bbe95799b9493fd6b4de677037d83)
+- fix(cactus-web): change outsetborder to inset border. Fix docs page names [565287a](https://github.com/repaygithub/cactus/commit/565287a96bdf14fd5b66f2652a0c4ab41a9fb478)
+- fix(cactus-web): fix dropdown. Change main and subcomponent to prevent the use of as prop [f751f84](https://github.com/repaygithub/cactus/commit/f751f8434a80673416dac8e5bc42283d384925f1)
+- fix(cactus-web): remove redundant props on FileInputField [93e238b](https://github.com/repaygithub/cactus/commit/93e238b09e2faad2add0290fc205292ca1c0db50)
+- chore(cactus-web): update changelog [8c4b9b5](https://github.com/repaygithub/cactus/commit/8c4b9b56de86b16ab1f353d635d5ebfdd77557a6)
+
 ## [@repay/cactus-web@v3.0.0](https://github.com/repaygithub/cactus/commit/544b69b3b3aa2b420b6180d7683526970f06dfc4)
 
 - chore(cactus-web): upgrade cactus-icons to 2.x.x [4957895](https://github.com/repaygithub/cactus/commit/49578955cdcd74f126108f26abb9d93403b00da9)
