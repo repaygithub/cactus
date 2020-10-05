@@ -330,7 +330,7 @@ SplitButton.propTypes = {
   onSelectMainAction: PropTypes.func.isRequired,
   mainActionIcon: PropTypes.elementType,
   disabled: PropTypes.bool,
-  VARIANT: PropTypes.oneOf(['standard', 'danger', 'success']),
+  variant: PropTypes.oneOf(['standard', 'danger', 'success']),
 }
 
 SplitButton.defaultProps = {
