@@ -3,10 +3,18 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
-import SplitButton, { IconProps } from './SplitButton'
+import SplitButton, { IconProps, SplitButtonVariant } from './SplitButton'
 
 type IconName = keyof typeof icons | 'None'
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
+
+type VariantOptions = { [k in SplitButtonVariant]: SplitButtonVariant }
+
+const variantOptions: VariantOptions = {
+  standard: 'standard',
+  danger: 'danger',
+  success: 'success',
+}
 
 storiesOf('SplitButton', module)
   .add(
@@ -16,6 +24,8 @@ storiesOf('SplitButton', module)
       const mainIconName: IconName = select('mainActionIcon', iconNames, 'None')
       const actionIconName1: IconName = select('actionIcon1', iconNames, 'None')
       const actionIconName2: IconName = select('actionIcon2', iconNames, 'None')
+      const variant = select('variant', variantOptions, variantOptions.standard)
+
       let MainIcon: React.FunctionComponent<IconProps>
       let ActionIcon1: React.FunctionComponent<IconProps>
       let ActionIcon2: React.FunctionComponent<IconProps>
@@ -37,6 +47,7 @@ storiesOf('SplitButton', module)
           // @ts-ignore
           mainActionIcon={MainIcon ? MainIcon : undefined}
           disabled={boolean('disabled', false)}
+          variant={variant}
         >
           <SplitButton.Action
             onSelect={(): void => console.log('Action One')}
