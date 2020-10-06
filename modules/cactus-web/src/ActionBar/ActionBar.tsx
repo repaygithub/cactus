@@ -24,7 +24,7 @@ const stylePropNames: string[] = layout.propNames.concat(padding.propNames)
 
 type RenderFn = (t: TogglePopup, expanded: boolean) => React.ReactElement | null
 
-interface PanelProps extends StyleProps, Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
+interface PanelProps extends StyleProps, React.HTMLAttributes<HTMLElement> {
   icon: React.ReactElement
   orderHint?: OrderHint
   popupType?: PopupType
@@ -47,7 +47,7 @@ export const ActionBarItem = React.forwardRef<HTMLButtonElement, ItemProps>(
   }
 )
 
-export const ActionBarPanel = React.forwardRef<HTMLElement, PanelProps>(
+export const ActionBarPanel = React.forwardRef<HTMLDivElement, PanelProps>(
   ({ orderHint, ...props }, ref) => {
     // Functionality encapsulated in an "inner" component so `useAction`
     // won't interfere with the effect hooks inside of `usePopup`.
@@ -56,7 +56,7 @@ export const ActionBarPanel = React.forwardRef<HTMLElement, PanelProps>(
   }
 )
 
-const Panel = React.forwardRef<HTMLElement, PanelProps>(
+const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
   (
     { icon, popupType = 'dialog', positionPopup, children, id, onBlur, onKeyDown, ...props },
     ref
@@ -82,10 +82,8 @@ const Panel = React.forwardRef<HTMLElement, PanelProps>(
       }
     }
 
-    // For some reason Typescript complains about this ref even though it
-    // appears identical to the one in `PanelPopup`, which works just fine...
     return (
-      <ActionBar.PanelWrapper {...wrapperProps} ref={ref as any}>
+      <ActionBar.PanelWrapper {...wrapperProps} ref={ref}>
         <ActionBar.Button {...ariaProps} {...buttonProps}>
           {icon}
         </ActionBar.Button>
@@ -144,7 +142,8 @@ ActionBarItem.propTypes = {
 }
 
 ActionBarPanel.propTypes = {
-  ...ActionBarItem.propTypes,
+  icon: PropTypes.element.isRequired,
+  orderHint: ActionBarItem.propTypes.orderHint,
   popupType: PropTypes.oneOf<PopupType>(['menu', 'listbox', 'tree', 'grid', 'dialog']),
   positionPopup: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
