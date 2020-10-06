@@ -59,19 +59,19 @@ export type FocusControl = (
 ) => FocusList | HTMLElement | undefined
 export type FocusSetter = (f: FocusHint, opts?: FocusOpts) => void
 
-const INITIAL_STATE: FocusState = {
+const initialState = (): FocusState => ({
   focusHint: null,
   focusIndex: -1,
   shift: false,
   control: getFocusable,
-}
+})
 
 // If they pass the ID, then presumably they don't need the ref.
 export function useFocusControl(fc: FocusControl | undefined, rootId: string): FocusSetter
 export function useFocusControl(fc?: FocusControl): [FocusSetter, React.RefObject<HTMLElement>]
 export function useFocusControl(focusControl: FocusControl = getFocusable, rootId?: string): any {
   const focusRootRef = React.useRef<RootHint>(rootId || null)
-  const [state, setState] = React.useState(INITIAL_STATE)
+  const [state, setState] = React.useState(initialState())
 
   const setFocus = React.useCallback<FocusSetter>(
     (focusHint, { shift = false, delay = false, control = focusControl } = {}) =>
