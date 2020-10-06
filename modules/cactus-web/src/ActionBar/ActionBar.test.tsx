@@ -56,6 +56,7 @@ describe('component: ActionBar', () => {
     const outsideRef: React.MutableRefObject<HTMLButtonElement | null> = { current: null }
     const { getByLabelText } = render(
       <StyleProvider>
+        <button ref={outsideRef}>Outside</button>
         <ActionBar>
           <ActionBar.Panel id="one" icon={<ActionsGear />} ref={panelRef} aria-label="The Panel">
             {(toggle, expanded) => (
@@ -73,7 +74,6 @@ describe('component: ActionBar', () => {
             )}
           </ActionBar.Panel>
         </ActionBar>
-        <button ref={outsideRef}>Outside</button>
       </StyleProvider>
     )
     const button = getByLabelText('The Panel')
@@ -88,13 +88,36 @@ describe('component: ActionBar', () => {
     expect(panel).toHaveAttribute('aria-hidden', 'true')
     expect(checkbox.checked).toBe(false)
 
+    // Show by clicking the button
     userEvent.click(button)
     expect(button).toHaveAttribute('aria-expanded', 'true')
     expect(panel).not.toHaveAttribute('aria-hidden')
     expect(checkbox).toHaveFocus()
     expect(checkbox.checked).toBe(true)
 
+    // Hide by pressing escape
+    userEvent.type(checkbox, '{esc}', { skipClick: true })
+    expect(panel).toHaveAttribute('aria-hidden', 'true')
+    expect(button).toHaveFocus()
+
+    // Show by pressing enter
+    userEvent.type(button, '{enter}', { skipClick: true })
+    expect(panel).not.toHaveAttribute('aria-hidden')
+    expect(checkbox).toHaveFocus()
+
+    // Hide by clicking outside popup
     userEvent.click(outsideRef.current as HTMLElement)
+    expect(panel).toHaveAttribute('aria-hidden', 'true')
+    expect(outsideRef.current).toHaveFocus()
+
+    // Show by pressing space
+    userEvent.tab()
+    userEvent.type(button, '{space}', { skipClick: true })
+    expect(panel).not.toHaveAttribute('aria-hidden')
+    expect(checkbox).toHaveFocus()
+
+    // Hide by toggling checkbox
+    userEvent.click(checkbox)
     expect(panel).toHaveAttribute('aria-hidden', 'true')
   })
 })

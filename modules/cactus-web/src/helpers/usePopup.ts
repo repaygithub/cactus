@@ -2,6 +2,7 @@ import React from 'react'
 
 import { isActionKey, preventAction } from './a11y'
 import { FocusControl, FocusHint, FocusOpts, FocusSetter, useFocusControl } from './focus'
+import { useBox } from './react'
 import useId from './useId'
 
 export type PopupType = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog'
@@ -60,28 +61,29 @@ function usePopup(
   const popupId = useId(inputPopupId || (id && `${id}-popup`))
   const setFocus = useFocusControl(focusControl, popupId)
   const [expanded, setExpanded] = React.useState<boolean>(initialExpanded)
+  const box = useBox({ expanded, setFocus })
 
   // For convenience, you can control focus & visibility with a single call.
   const toggle = React.useCallback<TogglePopup>(
-    (expand, focusHint, focusOpt) =>
-      setExpanded((isExpanded) => {
-        if (expand !== isExpanded) {
-          isExpanded = expand === undefined ? !isExpanded : expand
-          // Delay focus so popup has time to become visible.
-          if (isExpanded && focusHint !== undefined && focusOpt?.delay === undefined) {
-            focusOpt = focusOpt ? { ...focusOpt, delay: true } : { delay: true }
-          }
+    (expand, focusHint, focusOpt) => {
+      let isExpanded = box.expanded
+      if (expand !== isExpanded) {
+        isExpanded = !isExpanded
+        // Delay focus so popup has time to become visible.
+        if (isExpanded && focusHint !== undefined && focusOpt?.delay === undefined) {
+          focusOpt = focusOpt ? { ...focusOpt, delay: true } : { delay: true }
         }
-        // A closed element can't focus by index or text search.
-        if (!isExpanded && typeof focusHint !== 'object') {
-          focusHint = null
-        }
-        if (focusHint !== undefined) {
-          setFocus(focusHint, focusOpt)
-        }
-        return isExpanded
-      }),
-    [setExpanded, setFocus]
+        setExpanded(isExpanded)
+      }
+      // A closed element can't focus by index or text search.
+      if (!isExpanded && typeof focusHint !== 'object') {
+        focusHint = null
+      }
+      if (focusHint !== undefined) {
+        box.setFocus(focusHint, focusOpt)
+      }
+    },
+    [box, setExpanded]
   )
 
   React.useLayoutEffect(() => {

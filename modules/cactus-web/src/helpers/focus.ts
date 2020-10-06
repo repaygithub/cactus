@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useBox } from './react'
+
 type FocusList = HTMLElement[]
 
 const FOCUS_SELECTOR =
@@ -59,11 +61,11 @@ export type FocusControl = (
 ) => FocusList | HTMLElement | undefined
 export type FocusSetter = (f: FocusHint, opts?: FocusOpts) => void
 
-const initialState = (): FocusState => ({
+const initialState = (control: FocusControl): FocusState => ({
   focusHint: null,
   focusIndex: -1,
   shift: false,
-  control: getFocusable,
+  control,
 })
 
 // If they pass the ID, then presumably they don't need the ref.
@@ -71,24 +73,25 @@ export function useFocusControl(fc: FocusControl | undefined, rootId: string): F
 export function useFocusControl(fc?: FocusControl): [FocusSetter, React.RefObject<HTMLElement>]
 export function useFocusControl(focusControl: FocusControl = getFocusable, rootId?: string): any {
   const focusRootRef = React.useRef<RootHint>(rootId || null)
-  const [state, setState] = React.useState(initialState())
+  const [state, setState] = React.useState(initialState(focusControl))
+  const box = useBox({ state, focusControl })
 
   const setFocus = React.useCallback<FocusSetter>(
-    (focusHint, { shift = false, delay = false, control = focusControl } = {}) =>
-      setState((state) => {
-        // No point in delaying setting the state to null.
-        if (delay && focusHint !== null) {
-          return { ...state, focusHint, shift, control }
-        }
-        // Modify in-place to prevent re-render; in truth, we treat this more
-        // like a ref than state, but `delay` is easier to implement this way.
-        state.focusHint = focusHint
-        state.shift = shift
-        state.control = control
-        applyFocusState(state, focusRootRef.current)
-        return state
-      }),
-    [focusControl, focusRootRef, setState]
+    (focusHint, opts = {}) => {
+      const { state, focusControl } = box
+      const { shift = false, delay = false, control = focusControl } = opts
+      // No point in delaying setting the state to null.
+      if (delay && focusHint !== null) {
+        return setState({ ...state, focusHint, shift, control })
+      }
+      // Modify in-place to prevent re-render; in truth, we treat this more
+      // like a ref than state, but `delay` is easier to implement this way.
+      state.focusHint = focusHint
+      state.shift = shift
+      state.control = control
+      applyFocusState(state, focusRootRef.current)
+    },
+    [box, focusRootRef, setState]
   )
 
   React.useEffect(() => applyFocusState(state, focusRootRef.current), [state, focusRootRef])
