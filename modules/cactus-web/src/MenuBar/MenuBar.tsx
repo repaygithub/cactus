@@ -260,7 +260,6 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
       ref={ref}
       {...props}
       {...wrapperProps}
-      tabIndex={-1}
       onClick={navClickHandler}
       aria-orientation={orientation}
     >

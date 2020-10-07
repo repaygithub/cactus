@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { isActionKey, preventAction } from './a11y'
+import { isIE } from './constants'
 import { FocusControl, FocusHint, FocusOpts, FocusSetter, useFocusControl } from './focus'
 import { useBox } from './react'
 import useId from './useId'
@@ -99,18 +100,12 @@ function usePopup(
   const closeOnBlur = React.useCallback(
     (event: React.FocusEvent<HTMLElement>) => {
       const wrapper = event.currentTarget
-      const focused = event.relatedTarget
-      if (focused instanceof Node) {
-        if (!wrapper.contains(focused)) {
-          toggle(false)
-        }
-      } else {
-        setTimeout(() => {
-          const focused = document.activeElement
-          if (!wrapper.contains(focused)) {
-            toggle(false)
-          }
-        })
+      // IE sets activeElement before the blur/focus events, but doesn't support
+      // relatedTarget. Note that in React 17 this might change if they switch
+      // from focus/blur to focusin/focusout, which DO support relatedTarget.
+      const focused = isIE ? document.activeElement : event.relatedTarget
+      if (!focused || !wrapper.contains(focused as Node)) {
+        toggle(false)
       }
       if (onWrapperBlur) {
         onWrapperBlur(event, toggle)
@@ -161,6 +156,8 @@ function usePopup(
   const wrapperProps = {
     id,
     role: 'none',
+    // This is needed for closeOnBlur to work on Safari.
+    tabIndex: -1,
     onBlur: closeOnBlur,
     onKeyDown: handleCloseKey,
   }

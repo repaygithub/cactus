@@ -185,6 +185,7 @@ exports[`component: ActionBar typechecks 1`] = `
       class="c1"
       id="one"
       role="none"
+      tabindex="-1"
     >
       <button
         aria-controls="one-popup"
