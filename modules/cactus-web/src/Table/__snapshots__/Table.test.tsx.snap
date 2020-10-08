@@ -29,13 +29,11 @@ exports[`component: Table card carousel 1`] = `
   -ms-flex-positive: 1;
   flex-grow: 1;
   text-align: right;
-  max-width: 100%;
 }
 
 .c7:only-child,
 .c5:empty + .c7 {
   text-align: center;
-  width: 100%;
 }
 
 .c3 {
@@ -49,7 +47,7 @@ exports[`component: Table card carousel 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  max-width: 100%;
+  width: 240px;
   -webkit-flex-flow: row wrap;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
