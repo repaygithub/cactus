@@ -59,7 +59,6 @@ export interface TableCellProps
   variant?: TableVariant
   align?: CellAlignment
   as?: CellType
-  height?: string | undefined
 }
 
 type TableRowProps = React.DetailedHTMLProps<
@@ -137,7 +136,6 @@ function useCombinedRefs(...refs: any) {
 export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
   ({ children, ...props }, ref): React.ReactElement => {
     const context = useContext<TableContextProps>(TableContext)
-
     if (context.cellType && !props.as) {
       props.as = context.cellType
     }
@@ -157,20 +155,17 @@ export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellPro
             context.largestCell.height = combinedRef.current.clientHeight
             context.largestCell.cell = combinedRef.current.cellIndex
           }
+          if (combinedRef.current.cellIndex === context.largestCell.cell) {
+            combinedRef.current.style.height = `${context.largestCell.height - 16}px`
+          }
         }
-      })
+      }, [combinedRef, context.largestCell.cell, context.largestCell.height, ref, children])
+
       const headerContent = context.headers && context.headers[context.cellIndex]
       context.cellIndex += colSpan
       props.variant = 'card'
 
-      return combinedRef &&
-        combinedRef.current &&
-        combinedRef.current.cellIndex === context.largestCell.cell ? (
-        <StyledCell {...props} ref={combinedRef} height={`${context.largestCell.height - 16}px`}>
-          {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
-          <ContentBox>{children}</ContentBox>
-        </StyledCell>
-      ) : (
+      return (
         <StyledCell {...props} ref={combinedRef}>
           {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
           <ContentBox>{children}</ContentBox>
@@ -281,7 +276,7 @@ const ContentBox = styled.div`
   }
 `
 
-const StyledCell = styled.td<TableCellProps>(
+const StyledCell = styled.td(
   variant({
     table: css<TableCellProps>`
       text-align: ${(p): string => p.align || 'left'};
@@ -300,9 +295,8 @@ const StyledCell = styled.td<TableCellProps>(
               }
             `}
     `,
-    card: css<TableCellProps>`
+    card: css`
       && {
-        height: ${(p) => p.height};
         display: flex;
         width: 240px;
         flex-flow: row wrap;
