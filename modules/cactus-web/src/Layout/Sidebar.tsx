@@ -26,7 +26,7 @@ export const Sidebar: SidebarType = ({ layoutRole, className, ...props }) => {
   return <SidebarDiv {...props} className={className} />
 }
 
-Sidebar.Button = styled.button.attrs({ role: 'button' })`
+Sidebar.Button = styled.button`
   cursor: pointer;
   border: none;
   outline: none;
@@ -72,6 +72,7 @@ Sidebar.Button = styled.button.attrs({ role: 'button' })`
     box-shadow: none;
   }
 `
+Sidebar.Button.defaultProps = { role: 'button' }
 
 const borders = ({ theme }: ThemeProps, border: Direction, buttonBorder: Direction) => `
   ${insetBorder(theme, 'lightContrast', border)};

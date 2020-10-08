@@ -314,7 +314,6 @@ exports[`component: MenuBar sidebar 1`] = `
       aria-orientation="vertical"
       class="c1"
       id="mb"
-      role="none"
       tabindex="-1"
     >
       <button
@@ -344,7 +343,6 @@ exports[`component: MenuBar sidebar 1`] = `
         id="mb-popup"
         role="menu"
         tabindex="-1"
-        width="350px"
       >
         <li
           role="none"

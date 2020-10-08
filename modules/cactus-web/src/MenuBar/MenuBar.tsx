@@ -254,6 +254,7 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
   const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
   React.useEffect(() => setTabIndex(menu, true), [menu])
 
+  delete wrapperProps.role
   return (
     <ActionBar.PanelWrapper
       as="nav"

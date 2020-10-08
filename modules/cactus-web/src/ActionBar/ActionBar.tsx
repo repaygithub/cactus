@@ -151,8 +151,11 @@ ActionBarPanel.propTypes = {
 
 ActionBarPanel.defaultProps = { popupType: 'dialog' }
 
+const styleOnlyProps = stylePropNames.concat(['fixedLeft', 'floatLeft', 'fixedBottom', 'flow'])
 // The box shadow is #2, but shifted to be only on the right side.
-const StyledPopup = styled.div<LayoutProps & StyleProps>`
+const StyledPopup = styled.div.withConfig({
+  shouldForwardProp: (prop) => !styleOnlyProps.includes(prop),
+})<LayoutProps & StyleProps>`
   ${(p) => p.theme.colorStyles.standard};
   box-sizing: border-box;
   z-index: 100;
