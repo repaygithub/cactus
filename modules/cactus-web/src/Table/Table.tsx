@@ -1,6 +1,6 @@
 import { ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useLayoutEffect } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { width, WidthProps } from 'styled-system'
 
@@ -16,12 +16,18 @@ type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 
 type TableVariant = 'table' | 'card'
 
+interface CellHeightProps {
+  height: number
+  cell: number
+}
+
 interface TableContextProps {
   cellType?: CellType
   inHeader: boolean
   headers?: React.ReactNode[]
   cellIndex: number
   variant: TableVariant
+  largestCell: CellHeightProps
 }
 
 interface TableProps
@@ -29,7 +35,7 @@ interface TableProps
   fullWidth?: boolean
   cardBreakpoint?: Size
   variant?: TableVariant
-  as?: React.ReactType
+  as?: React.ElementType
 }
 
 interface TableHeaderProps
@@ -53,6 +59,7 @@ export interface TableCellProps
   variant?: TableVariant
   align?: CellAlignment
   as?: CellType
+  height?: string | undefined
 }
 
 type TableRowProps = React.DetailedHTMLProps<
@@ -69,6 +76,10 @@ const DEFAULT_CONTEXT: TableContextProps = {
   inHeader: false,
   cellIndex: 0,
   variant: 'table',
+  largestCell: {
+    height: 0,
+    cell: 0,
+  },
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -108,23 +119,59 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
   }
 )
 
+function useCombinedRefs(...refs: any) {
+  const targetRef = React.useRef<HTMLTableDataCellElement | null>(null)
+
+  React.useEffect(() => {
+    refs.forEach((ref: typeof targetRef) => {
+      if (!ref) return
+      else if (ref.current) {
+        ref.current = targetRef.current
+      }
+    })
+  }, [refs])
+
+  return targetRef
+}
+
 export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
   ({ children, ...props }, ref): React.ReactElement => {
     const context = useContext<TableContextProps>(TableContext)
+
     if (context.cellType && !props.as) {
       props.as = context.cellType
     }
+
     const colSpan = parseInt((props.colSpan as any) || '1')
 
     if (context.inHeader && context.headers) {
       context.headers[context.cellIndex] = children
       context.cellIndex += colSpan
     } else if (context.variant === 'card') {
+      const innerRef = React.useRef(null)
+      const combinedRef = useCombinedRefs(ref, innerRef)
+
+      useLayoutEffect(() => {
+        if (combinedRef && combinedRef.current) {
+          if (combinedRef.current.clientHeight > context.largestCell.height) {
+            context.largestCell.height = combinedRef.current.clientHeight
+            context.largestCell.cell = combinedRef.current.cellIndex
+          }
+        }
+      })
       const headerContent = context.headers && context.headers[context.cellIndex]
       context.cellIndex += colSpan
       props.variant = 'card'
-      return (
-        <StyledCell {...props} ref={ref}>
+
+      return combinedRef &&
+        combinedRef.current &&
+        combinedRef.current.cellIndex === context.largestCell.cell ? (
+        <StyledCell {...props} ref={combinedRef} height={`${context.largestCell.height - 16}px`}>
+          {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
+          <ContentBox>{children}</ContentBox>
+        </StyledCell>
+      ) : (
+        <StyledCell {...props} ref={combinedRef}>
           {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
           <ContentBox>{children}</ContentBox>
         </StyledCell>
@@ -175,7 +222,7 @@ type TableComponentType = ForwardRefComponent<HTMLTableElement, TableProps> & {
   Header: ForwardRefComponent<HTMLTableSectionElement, TableHeaderProps>
   Cell: ForwardRefComponent<HTMLTableDataCellElement, TableCellProps>
   Row: React.FC<TableRowProps>
-  Body: React.ReactType<TableBodyProps>
+  Body: React.ElementType<TableBodyProps>
 }
 
 const DefaultTable = Table as TableComponentType
@@ -236,7 +283,7 @@ const ContentBox = styled.div`
   }
 `
 
-const StyledCell = styled.td(
+const StyledCell = styled.td<TableCellProps>(
   variant({
     table: css<TableCellProps>`
       text-align: ${(p): string => p.align || 'left'};
@@ -255,13 +302,18 @@ const StyledCell = styled.td(
               }
             `}
     `,
-    card: css`
+    card: css<TableCellProps>`
       && {
+        height: ${(p) => p.height};
         display: flex;
         max-width: 100%;
         flex-flow: row wrap;
         justify-content: space-between;
+        align-items: flex-start;
         padding: 8px 16px;
+        > div[aria-hidden='true'] + div {
+          align-self: flex-end;
+        }
         :nth-of-type(even) {
           background-color: ${(p): string => p.theme.colors.lightContrast};
         }

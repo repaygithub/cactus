@@ -57,7 +57,17 @@ exports[`component: Table card carousel 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
   padding: 8px 16px;
+}
+
+.c4.c4 > div[aria-hidden='true'] + div {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
 }
 
 .c4.c4:nth-of-type(even) {
