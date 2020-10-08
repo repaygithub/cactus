@@ -186,7 +186,8 @@ const StyledPopup = styled.div<LayoutProps & StyleProps>`
     top: 0;
     bottom: ${(p) => p.fixedBottom}px;
     ${(p) =>
-      boxShadow(p.theme, '12px 0 24px -12px', `border-right: ${border(p.theme, 'lightContrast')}`)};
+      boxShadow(p.theme, '12px 0 24px -12px') ||
+      `border-right: ${border(p.theme, 'lightContrast')}`};
   }
 
   .cactus-layout-floatLeft & {
@@ -195,6 +196,7 @@ const StyledPopup = styled.div<LayoutProps & StyleProps>`
     top: 0;
     bottom: 0;
     ${(p) =>
-      boxShadow(p.theme, '12px 0 24px -12px', `border-right: ${border(p.theme, 'lightContrast')}`)};
+      boxShadow(p.theme, '12px 0 24px -12px') ||
+      `border-right: ${border(p.theme, 'lightContrast')}`};
   }
 `
