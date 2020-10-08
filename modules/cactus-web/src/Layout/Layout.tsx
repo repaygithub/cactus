@@ -117,6 +117,7 @@ const LayoutWrapper = styled.div<LayoutProps>(
      left: 0;
      width: ${p.fixedLeft}px;
      bottom: ${p.fixedBottom}px;
+     z-index: 1000;
   }
 
   .cactus-layout-fixedBottom {
@@ -125,6 +126,7 @@ const LayoutWrapper = styled.div<LayoutProps>(
      right: 0;
      bottom: 0;
      height: ${p.fixedBottom}px;
+     z-index: 1000;
   }
 
   ${
