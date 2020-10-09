@@ -27,7 +27,7 @@ storiesOf('DateInput', module)
     'Controlled with Date',
     (): ReactElement => (
       <FormHandler
-        defaultValue={new Date()}
+        defaultValue={new Date('10/1/2020')}
         onChange={(_, value: string | Date | null): string | Date | null => value}
       >
         {({ value, onChange }): ReactElement => (

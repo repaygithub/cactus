@@ -37,7 +37,7 @@ storiesOf('Card', module)
                 Due Date{' '}
               </th>
               <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>
-                {new Date(date('Date', new Date())).toLocaleDateString()}
+                {new Date(date('Date', new Date('10/5/2020'))).toLocaleDateString()}
               </td>
             </tr>
 
