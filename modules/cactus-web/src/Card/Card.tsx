@@ -1,11 +1,11 @@
 import { BorderSize, CactusTheme, ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps, padding, PaddingProps, width, WidthProps } from 'styled-system'
 
 import { boxShadow } from '../helpers/theme'
 
-interface CardProps extends MarginProps, WidthProps {
+interface CardProps extends MarginProps, WidthProps, PaddingProps {
   useBoxShadow?: boolean
 }
 
@@ -53,14 +53,8 @@ export const Card = styled.div<CardProps>`
   ${(p): ColorStyle => p.theme.colorStyles.standard};
   ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
   padding: ${(p): number => p.theme.space[4]}px;
+  ${padding}
   ${(p): ReturnType<typeof css> => getBoxShadow(p.theme, p.useBoxShadow)}
-
-  & > & {
-    padding: ${(p): number => p.theme.space[5]}px;
-  }
-  & > & > & {
-    padding: ${(p): number => p.theme.space[6]}px;
-  }
 `
 
 Card.defaultProps = {
