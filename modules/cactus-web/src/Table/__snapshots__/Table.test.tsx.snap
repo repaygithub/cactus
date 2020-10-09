@@ -203,7 +203,6 @@ exports[`component: Table card carousel 1`] = `
         >
           <td
             class="c4"
-            style="height: -16px;"
           >
             <div
               aria-hidden="true"
@@ -223,7 +222,6 @@ exports[`component: Table card carousel 1`] = `
         >
           <td
             class="c4"
-            style="height: -16px;"
           >
             <div
               aria-hidden="true"
@@ -243,7 +241,6 @@ exports[`component: Table card carousel 1`] = `
         >
           <td
             class="c4"
-            style="height: -16px;"
           >
             <div
               aria-hidden="true"
