@@ -4,7 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { layout, LayoutProps as LayoutStyleProps, padding, PaddingProps } from 'styled-system'
 
-import { GenericComponent } from '../helpers/asProps'
+import { AsProps, GenericComponent } from '../helpers/asProps'
 import { border, boxShadow } from '../helpers/theme'
 import usePopup, { PopupType, PositionPopup, TogglePopup } from '../helpers/usePopup'
 import { LayoutProps, useLayoutProps } from '../Layout/Layout'
@@ -30,10 +30,6 @@ interface PanelProps extends StyleProps, React.HTMLAttributes<HTMLElement> {
   popupType?: PopupType
   positionPopup?: PositionPopup
   children?: React.ReactNode | RenderFn
-}
-
-interface PanelPopupProps extends StyleProps, React.HTMLAttributes<HTMLElement> {
-  as?: GenericComponent
 }
 
 export const ActionBarItem = React.forwardRef<HTMLButtonElement, ItemProps>(
@@ -95,10 +91,14 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
   }
 )
 
-const PanelPopup = React.forwardRef<HTMLElement, PanelPopupProps>((props, ref) => {
+// We'll add forwardRef down below, but the generic is what we want Typescript to see.
+function PanelPopup<E, C extends GenericComponent = 'div'>(
+  props: AsProps<C> & StyleProps,
+  ref: React.Ref<E>
+) {
   const layoutProps = useLayoutProps()
-  return <StyledPopup {...layoutProps} {...props} ref={ref} />
-})
+  return <StyledPopup {...layoutProps} {...(props as any)} ref={ref as any} />
+}
 
 interface ActionBarType extends React.FC<React.HTMLAttributes<HTMLDivElement>> {
   Item: typeof ActionBarItem
@@ -121,7 +121,7 @@ export const ActionBar: ActionBarType = ({ children, ...props }) => {
 ActionBar.Item = ActionBarItem
 ActionBar.Panel = ActionBarPanel
 ActionBar.Button = Sidebar.Button
-ActionBar.PanelPopup = PanelPopup
+ActionBar.PanelPopup = React.forwardRef(PanelPopup) as any
 ActionBar.PanelWrapper = styled.div`
   outline: none;
   border: none;

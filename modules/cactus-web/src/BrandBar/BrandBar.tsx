@@ -79,7 +79,6 @@ BrandBar.defaultProps = {
 export default BrandBar
 
 const ActionBarUserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, isProfilePage }) => {
-  const reachPopup: any = { as: ActionMenuPopup, portal: false }
   const button = (
     <ActionWrapper key="cactus-user-menu">
       <Menu>
@@ -87,7 +86,7 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, is
           <DescriptiveProfile />
           <VisuallyHidden>{userMenuText}</VisuallyHidden>
         </ActionMenuButton>
-        <ActionBar.PanelPopup {...reachPopup}>
+        <ActionBar.PanelPopup as={ActionMenuPopup} portal={false}>
           <PopupHeader aria-hidden>
             <DescriptiveProfile mr="8px" />
             {userMenuText}
