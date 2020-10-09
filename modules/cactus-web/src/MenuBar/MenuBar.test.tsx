@@ -49,7 +49,7 @@ const Menu = () => {
   const itemRef = React.useRef<HTMLButtonElement>(null)
   const customRef = React.useRef<HTMLDivElement>(null)
   return (
-    <MenuBar ref={navRef} aria-label="Menu of Main-ness">
+    <MenuBar id="mb" ref={navRef} aria-label="Menu of Main-ness">
       <MenuBar.List ref={listRef} title={<em>Emphasized</em>} aria-current>
         <MenuBar.Item key="item" ref={linkRef} as="a" href="#" aria-current>
           Link to the Past

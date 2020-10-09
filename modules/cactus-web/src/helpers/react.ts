@@ -66,3 +66,14 @@ export function useValue<T>(value: T, dependencies: any[]): T {
   }
   return valueRef.current
 }
+
+// An immutable container with mutable contents; basically, a self-updating ref.
+export function useBox<T>(box: T): T {
+  const { current } = React.useRef<T>(box)
+  if (box !== current) {
+    for (const key of Object.keys(box) as (keyof T)[]) {
+      current[key] = box[key]
+    }
+  }
+  return current
+}

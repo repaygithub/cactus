@@ -14,7 +14,6 @@ function handleGuardFocus(event: React.FocusEvent<HTMLDivElement>): void {
       // if the focused guard is at the start then well focus on that last item
       const index = guardType === 'start' ? focusableList.length - 1 : 0
       const el = focusableList[index]
-      // @ts-ignore
       if (el && el.focus) el.focus()
       event.stopPropagation()
       event.preventDefault()

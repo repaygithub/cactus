@@ -83,8 +83,10 @@ const borders = ({ theme }: ThemeProps, border: Direction, buttonBorder: Directi
   }
 `
 
+// `position: relative` to make it easier to position panel popups.
 const SidebarDiv = styled.div`
   ${(p) => p.theme.colorStyles.standard};
+  position: relative;
   box-sizing: border-box;
   display: flex;
   :empty {
