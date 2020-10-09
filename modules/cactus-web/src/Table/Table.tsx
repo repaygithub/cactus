@@ -155,12 +155,11 @@ export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellPro
             context.largestCell.height = combinedRef.current.clientHeight
             context.largestCell.cell = combinedRef.current.cellIndex
           }
-          if (combinedRef.current.cellIndex === context.largestCell.cell) {
-            combinedRef.current.style.height = `${context.largestCell.height - 16}px`
-          }
         }
       }, [combinedRef, context.largestCell.cell, context.largestCell.height, ref, children])
-
+      if (combinedRef.current && combinedRef.current.cellIndex === context.largestCell.cell) {
+        combinedRef.current.style.height = `${context.largestCell.height - 16}px`
+      }
       const headerContent = context.headers && context.headers[context.cellIndex]
       context.cellIndex += colSpan
       props.variant = 'card'
