@@ -15,7 +15,7 @@
     "prebuild": "yarn cleanup && yarn update:stories-cache",
     "build": "gatsby build --prefix-paths",
     "postbuild": "node tools/build-storybooks",
-    "test": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.json --noEmit --skipLibCheck",
     "test:ci": "yarn test",
     "test:local": "yarn test"
   },
