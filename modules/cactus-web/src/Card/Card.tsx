@@ -55,13 +55,6 @@ export const Card = styled.div<CardProps>`
   padding: ${(p): number => p.theme.space[4]}px;
   ${padding}
   ${(p): ReturnType<typeof css> => getBoxShadow(p.theme, p.useBoxShadow)}
-
-  & > & {
-    padding: ${(p): number => p.theme.space[5]}px;
-  }
-  & > & > & {
-    padding: ${(p): number => p.theme.space[6]}px;
-  }
 `
 
 Card.defaultProps = {
