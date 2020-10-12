@@ -1,26 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Breadcrumb should have label and linkTo snapshot 1`] = `
-.c2 {
-  font-size: 8px;
-  vertical-align: middle;
-}
-
 .c1 {
   color: black;
   font-style: normal;
 }
 
-.c1 a:visited,
-.c1 a:link {
-  color: #5F7A88;
+.c1:visited,
+.c1:link {
+  color: #5f7a88;
   font-style: normal;
   font-size: 15px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c1 > svg {
+.c1[aria-current='page'] {
+  color: #2e3538;
+}
+
+.c2 {
+  font-size: 8px;
+  vertical-align: middle;
   color: #5F7A88;
   margin: 0 3px;
   font-size: 10px;
@@ -43,16 +44,15 @@ exports[`Breadcrumb should have label and linkTo snapshot 1`] = `
     class="c0"
   >
     <ul>
-      <li
-        class="c1"
-      >
+      <li>
         <a
+          class="c1"
           href="www.github.com"
         >
           Link2
         </a>
         <svg
-          class="c2"
+          class="sc-fznyYp c2"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -70,46 +70,35 @@ exports[`Breadcrumb should have label and linkTo snapshot 1`] = `
 `;
 
 exports[`Should render Breadcrumb snapshot 1`] = `
-.c2 {
-  font-size: 8px;
-  vertical-align: middle;
-}
-
 .c1 {
   color: black;
   font-style: normal;
 }
 
-.c1 a:visited,
-.c1 a:link {
-  color: #5F7A88;
+.c1:visited,
+.c1:link {
+  color: #5f7a88;
   font-style: normal;
   font-size: 15px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c1 > svg {
+.c1[aria-current='page'] {
+  color: #2e3538;
+}
+
+.c2 {
+  font-size: 8px;
+  vertical-align: middle;
   color: #5F7A88;
   margin: 0 3px;
   font-size: 10px;
 }
 
 .c3 {
-  color: black;
-  font-style: normal;
-}
-
-.c3 a:visited,
-.c3 a:link {
-  color: #2E3538;
-  font-style: normal;
-  font-size: 15px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c3 > svg {
+  font-size: 8px;
+  vertical-align: middle;
   color: #2E3538;
   margin: 0 3px;
   font-size: 10px;
@@ -132,16 +121,15 @@ exports[`Should render Breadcrumb snapshot 1`] = `
     class="c0"
   >
     <ul>
-      <li
-        class="c1"
-      >
+      <li>
         <a
+          class="c1"
           href="www.github.com"
         >
           Link2
         </a>
         <svg
-          class="c2"
+          class="sc-fznyYp c2"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -153,17 +141,16 @@ exports[`Should render Breadcrumb snapshot 1`] = `
           />
         </svg>
       </li>
-      <li
-        class="c3"
-      >
+      <li>
         <a
           aria-current="page"
+          class="c1"
           href="www.repay.com"
         >
           Link2
         </a>
         <svg
-          class="c2"
+          class="sc-fznyYp c3"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"

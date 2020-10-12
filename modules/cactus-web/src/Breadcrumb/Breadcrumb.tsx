@@ -1,7 +1,6 @@
 import { NavigationChevronRight } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
 import React from 'react'
-import styled, { StyledComponentBase } from 'styled-components'
+import styled from 'styled-components'
 
 interface BreadcrumbItemProps {
   linkTo: string
@@ -15,56 +14,61 @@ interface BreadcrumbProps {
   className?: string
 }
 
-const BreadcrumbItemBase = (props: BreadcrumbItemProps): React.ReactElement => {
+export const BreadCrumbItem = (props: BreadcrumbItemProps): React.ReactElement => {
   const { active, children, linkTo, className } = props
   return (
     <li className={className}>
-      <a href={linkTo} aria-current={active && 'page'}>
+      <BreadCrumbLink href={linkTo} aria-current={active && 'page'}>
         {children}
-      </a>
-      <NavigationChevronRight iconSize="tiny" />
+      </BreadCrumbLink>
+      <StyledChevron iconSize="tiny" active={active} />
     </li>
   )
 }
-const BreadCrumbBase = (props: BreadcrumbProps): React.ReactElement => {
+
+const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { children, className } = props
   return (
-    <nav aria-label="Breadcrumb" className={className}>
+    <StyledNav aria-label="Breadcrumb" className={className}>
       <ul>{children}</ul>
-    </nav>
+    </StyledNav>
   )
 }
 
-interface BreadcrumbComponent extends StyledComponentBase<'ul', CactusTheme, BreadcrumbProps> {
-  Item: React.ComponentType<BreadcrumbItemProps>
-}
-
-export const BreadCrumbItem = styled(BreadcrumbItemBase)`
+const BreadCrumbLink = styled.a`
   color: black;
   font-style: normal;
-  a:visited,
-  a:link {
-    color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
+  &:visited,
+  &:link {
+    color: #5f7a88;
     font-style: normal;
     font-size: 15px;
     text-decoration: none;
   }
-
-  & > svg {
-    color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
-    margin: 0 3px;
-    font-size: 10px;
+  &[aria-current='page'] {
+    color: #2e3538;
   }
 `
 
-export const Breadcrumb = styled(BreadCrumbBase)`
+const StyledChevron = styled(NavigationChevronRight)<{ active?: boolean }>`
+  color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
+  margin: 0 3px;
+  font-size: 10px;
+`
+
+const StyledNav = styled.nav`
   > ul {
     display: flex;
     flex-direction: row;
     list-style: none;
   }
-` as any
+`
 
+type BreadcrumbComponent = typeof BreadcrumbBase & {
+  Item: React.ComponentType<BreadcrumbItemProps>
+}
+
+export const Breadcrumb = BreadcrumbBase as BreadcrumbComponent
 Breadcrumb.Item = BreadCrumbItem
 
-export default Breadcrumb as BreadcrumbComponent
+export default Breadcrumb
