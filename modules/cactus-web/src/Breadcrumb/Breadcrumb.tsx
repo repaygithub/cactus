@@ -4,10 +4,10 @@ import React from 'react'
 import styled, { StyledComponentBase } from 'styled-components'
 
 interface BreadcrumbItemProps {
-  label: React.ReactNode
   linkTo: string
   className?: string
   active?: boolean
+  children?: React.ReactNode
 }
 
 interface BreadcrumbProps {
@@ -16,11 +16,11 @@ interface BreadcrumbProps {
 }
 
 const BreadcrumbItemBase = (props: BreadcrumbItemProps): React.ReactElement => {
-  const { active, label, linkTo, className } = props
+  const { active, children, linkTo, className } = props
   return (
     <li className={className}>
       <a href={linkTo} aria-current={active && 'page'}>
-        {label}
+        {children}
       </a>
       <NavigationChevronRight iconSize="tiny" />
     </li>

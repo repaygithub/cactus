@@ -15,8 +15,8 @@ The `Breadcrumb` comopnent allows you to render a navigation of your previusly v
 ### Try it out
 
 export const code = `<Breadcrumb>
-  <Breadcrumb.Item label='Account' linkTo="/" />
-  <Breadcrumb.Item label='Make a Payment' linkTo="/" active />
+  <Breadcrumb.Item linkTo="/">Account</Breadcrumb.Item>
+  <Breadcrumb.Item linkTo="/" active>Make a Payment</Breadcrumb.Item>
 </Breadcrumb>`
 
 <LiveProvider code={code} scope={{ Breadcrumb }}>
@@ -28,34 +28,8 @@ export const code = `<Breadcrumb>
 ## Best practices
 
 The Breadcrumb component consists of two parts: The `Breadcrumb` which works as a wrapper for the navigation links.
-And a `Breadcrumb.Item` which represents a single Breadrumb or link. the label and linkTo should be passed as props,
+And a `Breadcrumb.Item` which represents a single Breadrumb or link. linkTo should be passed as a prop,
 and if it's the last navigation Breadcrumb, an active prop should be passed as well.
-
-## Basic usage
-
-```jsx
-import React from 'react'
-import { Breadcrumb } from '@repay/cactus-web'
-
-// Basic usage
- <Breadcrumb>
-    <Breadcrumb.Item label='Account' linkTo="/" />
-    <Breadcrumb.Item label='Make a Payment'linkTo="/"/>
-</Breadcrumb>
-
-
-// With dynimic links and labels
-const values={Label: 'link', Label2: 'link2'}
-  {Object.values(values).map((e, i, arr) =>
-    arr.length - 1 === i ? (
-      <Breadcrumb.Item label={e[0]} linkTo="/" active key={i}/>
-    ) : (
-      <Breadcrumb.Item label={e[0]} linkTo={e[1]} key={i}/>
-    )
-  )}
-</Breadcrumb>
-
-```
 
 ## Properties
 

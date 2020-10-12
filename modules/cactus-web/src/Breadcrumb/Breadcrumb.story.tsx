@@ -8,8 +8,10 @@ storiesOf('Breadcrumb', module).add(
   'Basic Usage',
   (): ReactElement => (
     <Breadcrumb>
-      <Breadcrumb.Item label={text('Label 1', 'Account')} linkTo="/" />
-      <Breadcrumb.Item label={<em>{text('Label 2', 'Make a Payment')}</em>} linkTo="/" active />
+      <Breadcrumb.Item linkTo="/">{text('Label 1', 'Account')}</Breadcrumb.Item>
+      <Breadcrumb.Item linkTo="/" active>
+        <em>{text('Label 2', 'Make a Payment')}</em>
+      </Breadcrumb.Item>
     </Breadcrumb>
   )
 )
@@ -24,9 +26,13 @@ storiesOf('Breadcrumb', module).add(
         {values.map(
           (e, i, arr): ReactElement =>
             arr.length - 1 === i ? (
-              <Breadcrumb.Item label={text(`Label ${i + 1}`, `${e}`)} linkTo="/" active key={i} />
+              <Breadcrumb.Item linkTo="/" active key={i}>
+                {text(`Label ${i + 1}`, `${e}`)}
+              </Breadcrumb.Item>
             ) : (
-              <Breadcrumb.Item label={text(`Label ${i + 1}`, `${e}`)} linkTo="/" key={i} />
+              <Breadcrumb.Item linkTo="/" key={i}>
+                {text(`Label ${i + 1}`, `${e}`)}
+              </Breadcrumb.Item>
             )
         )}
       </Breadcrumb>

@@ -11,8 +11,10 @@ describe('Should render Breadcrumb', (): void => {
     const { container } = render(
       <StyleProvider>
         <Breadcrumb>
-          <Breadcrumb.Item label="Link2" linkTo="www.github.com" />
-          <Breadcrumb.Item label="Link2" linkTo="www.repay.com" active />
+          <Breadcrumb.Item linkTo="www.github.com">Link2</Breadcrumb.Item>
+          <Breadcrumb.Item linkTo="www.repay.com" active>
+            Link2
+          </Breadcrumb.Item>
         </Breadcrumb>
       </StyleProvider>
     )
@@ -26,7 +28,7 @@ describe('Breadcrumb should have label and linkTo', (): void => {
     const { container, getByText } = render(
       <StyleProvider>
         <Breadcrumb>
-          <Breadcrumb.Item label="Link2" linkTo="www.github.com" />
+          <Breadcrumb.Item linkTo="www.github.com">Link2</Breadcrumb.Item>
         </Breadcrumb>
       </StyleProvider>
     )
