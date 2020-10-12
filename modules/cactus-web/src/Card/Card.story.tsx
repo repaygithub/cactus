@@ -9,7 +9,13 @@ storiesOf('Card', module)
   .add(
     'Basic Usage',
     (): React.ReactElement => (
-      <Card margin="40px" useBoxShadow={boolean('useBoxShadow', true)}>
+      <Card
+        margin="40px"
+        useBoxShadow={boolean('useBoxShadow', true)}
+        padding={text('padding', '')}
+        paddingX={text('paddingX', '')}
+        paddingY={text('paddingY', '')}
+      >
         <h2 style={{ margin: 0 }}>{text('Title', 'Title')}</h2>
         <h4 style={{ margin: '0 0 8px', fontWeight: 400, fontSize: '12px' }}>
           {text('Subtitle', 'Subtitle')}

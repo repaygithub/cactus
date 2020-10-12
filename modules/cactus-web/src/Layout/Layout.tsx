@@ -1,3 +1,4 @@
+import pick from 'lodash/pick'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -5,9 +6,11 @@ import ActionProvider from '../ActionBar/ActionProvider'
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 
 export type Role = 'menubar' | 'actionbar' | 'footer'
-export type Position = 'fixedLeft' | 'floatLeft' | 'fixedBottom' | 'flow'
 
-type LayoutProps = { [K in Position]: number }
+const POSITIONS = ['fixedLeft', 'floatLeft', 'fixedBottom', 'flow'] as const
+export type Position = typeof POSITIONS[number]
+
+export type LayoutProps = { [K in Position]: number }
 
 export interface LayoutInfo {
   position: Position
@@ -50,6 +53,11 @@ export const useLayout = (role: Role, { position, offset }: LayoutInfo): UseLayo
     }
   }, [role, position, offset, componentInfo, setLayout])
   return { ...layout, cssClass: `cactus-layout-${position}` }
+}
+
+export const useLayoutProps = (): LayoutProps => {
+  const layout = React.useContext(LayoutContext)
+  return pick(layout, POSITIONS)
 }
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -117,6 +125,7 @@ const LayoutWrapper = styled.div<LayoutProps>(
      left: 0;
      width: ${p.fixedLeft}px;
      bottom: ${p.fixedBottom}px;
+     z-index: 1000;
   }
 
   .cactus-layout-fixedBottom {
@@ -125,6 +134,7 @@ const LayoutWrapper = styled.div<LayoutProps>(
      right: 0;
      bottom: 0;
      height: ${p.fixedBottom}px;
+     z-index: 1000;
   }
 
   ${

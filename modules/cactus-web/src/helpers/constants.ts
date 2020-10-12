@@ -25,3 +25,6 @@ export const isResponsiveTouchDevice: boolean =
   window.innerWidth < breakpoints.small &&
   'ontouchstart' in window &&
   screen.width === window.innerWidth
+
+export const isIE: boolean =
+  typeof window !== 'undefined' && /MSIE|Trident/.test(window.navigator.userAgent)

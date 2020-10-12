@@ -1,4 +1,4 @@
-import { DescriptiveClock } from '@repay/cactus-icons'
+import { ActionsGear, DescriptiveClock } from '@repay/cactus-icons'
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
@@ -7,6 +7,7 @@ import ActionBar from '../ActionBar/ActionBar'
 import BrandBar from '../BrandBar/BrandBar'
 import Footer from '../Footer/Footer'
 import MenuBar from '../MenuBar/MenuBar'
+import TextInputField from '../TextInputField/TextInputField'
 import Layout from './Layout'
 
 function action(msg: string) {
@@ -60,10 +61,20 @@ storiesOf('Layout', module).add(
               icon={<DescriptiveClock />}
               onClick={() => alert(`It is now ${new Date()}.`)}
             />
+            <ActionBar.Panel
+              id="settings"
+              icon={<ActionsGear />}
+              popupType="dialog"
+              aria-label="Settings"
+            >
+              <TextInputField label="Some Setting" name="setting" />
+            </ActionBar.Panel>
           </ActionBar>
         )}
         <Layout.Content>
           <h1>Latin Or Something</h1>
+          <TextInputField name="foo" label="Foo" />
+          <TextInputField name="bar" label="Bar" />
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas augue ex, dignissim
             sed fringilla nec, tincidunt fermentum libero. Mauris ut enim ornare, euismod nibh at,
