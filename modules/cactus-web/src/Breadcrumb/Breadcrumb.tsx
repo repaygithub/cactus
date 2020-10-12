@@ -14,13 +14,13 @@ interface BreadcrumbProps {
   className?: string
 }
 
-export const BreadCrumbItem = (props: BreadcrumbItemProps): React.ReactElement => {
+export const BreadcrumbItem = (props: BreadcrumbItemProps): React.ReactElement => {
   const { active, children, linkTo, className } = props
   return (
     <li className={className}>
-      <BreadCrumbLink href={linkTo} aria-current={active && 'page'}>
+      <BreadcrumbLink href={linkTo} aria-current={active && 'page'}>
         {children}
-      </BreadCrumbLink>
+      </BreadcrumbLink>
       <StyledChevron iconSize="tiny" active={active} />
     </li>
   )
@@ -35,7 +35,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   )
 }
 
-const BreadCrumbLink = styled.a`
+const BreadcrumbLink = styled.a`
   color: black;
   font-style: normal;
   &:visited,
@@ -69,6 +69,6 @@ type BreadcrumbComponent = typeof BreadcrumbBase & {
 }
 
 export const Breadcrumb = BreadcrumbBase as BreadcrumbComponent
-Breadcrumb.Item = BreadCrumbItem
+Breadcrumb.Item = BreadcrumbItem
 
 export default Breadcrumb
