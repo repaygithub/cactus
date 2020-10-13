@@ -1,4 +1,4 @@
-import * as icons from '@repay/cactus-icons/i'
+import * as icons from '@repay/cactus-icons'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
