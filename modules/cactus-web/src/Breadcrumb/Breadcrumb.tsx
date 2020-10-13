@@ -2,6 +2,8 @@ import { NavigationChevronRight } from '@repay/cactus-icons'
 import React from 'react'
 import styled from 'styled-components'
 
+import { borderSize } from '../helpers/theme'
+
 interface BreadcrumbItemProps {
   linkTo: string
   className?: string
@@ -38,20 +40,28 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
 const BreadcrumbLink = styled.a`
   color: black;
   font-style: normal;
+  outline: none;
   &:visited,
   &:link {
-    color: #5f7a88;
+    color: ${(p) => p.theme.colors.mediumContrast};
     font-style: normal;
     font-size: 15px;
     text-decoration: none;
   }
   &[aria-current='page'] {
-    color: #2e3538;
+    color: ${(p) => p.theme.colors.darkestContrast};
+  }
+  &:hover {
+    color: ${(p) => p.theme.colors.callToAction};
+  }
+  &:focus {
+    outline: ${(p) => `${p.theme.colors.callToAction} solid ${borderSize(p)}`};
   }
 `
 
 const StyledChevron = styled(NavigationChevronRight)<{ active?: boolean }>`
-  color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
+  color: ${(p): string =>
+    p.active ? p.theme.colors.darkestContrast : p.theme.colors.mediumContrast};
   margin: 0 3px;
   font-size: 10px;
 `

@@ -4,11 +4,12 @@ exports[`Breadcrumb should have label and linkTo snapshot 1`] = `
 .c1 {
   color: black;
   font-style: normal;
+  outline: none;
 }
 
 .c1:visited,
 .c1:link {
-  color: #5f7a88;
+  color: hsl(200,18%,45%);
   font-style: normal;
   font-size: 15px;
   -webkit-text-decoration: none;
@@ -16,13 +17,21 @@ exports[`Breadcrumb should have label and linkTo snapshot 1`] = `
 }
 
 .c1[aria-current='page'] {
-  color: #2e3538;
+  color: hsl(200,10%,20%);
+}
+
+.c1:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c1:focus {
+  outline: hsl(200,96%,35%) solid 1px;
 }
 
 .c2 {
   font-size: 8px;
   vertical-align: middle;
-  color: #5F7A88;
+  color: hsl(200,18%,45%);
   margin: 0 3px;
   font-size: 10px;
 }
@@ -73,11 +82,12 @@ exports[`Should render Breadcrumb snapshot 1`] = `
 .c1 {
   color: black;
   font-style: normal;
+  outline: none;
 }
 
 .c1:visited,
 .c1:link {
-  color: #5f7a88;
+  color: hsl(200,18%,45%);
   font-style: normal;
   font-size: 15px;
   -webkit-text-decoration: none;
@@ -85,13 +95,21 @@ exports[`Should render Breadcrumb snapshot 1`] = `
 }
 
 .c1[aria-current='page'] {
-  color: #2e3538;
+  color: hsl(200,10%,20%);
+}
+
+.c1:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c1:focus {
+  outline: hsl(200,96%,35%) solid 1px;
 }
 
 .c2 {
   font-size: 8px;
   vertical-align: middle;
-  color: #5F7A88;
+  color: hsl(200,18%,45%);
   margin: 0 3px;
   font-size: 10px;
 }
@@ -99,7 +117,7 @@ exports[`Should render Breadcrumb snapshot 1`] = `
 .c3 {
   font-size: 8px;
   vertical-align: middle;
-  color: #2E3538;
+  color: hsl(200,10%,20%);
   margin: 0 3px;
   font-size: 10px;
 }
