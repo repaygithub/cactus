@@ -29,7 +29,9 @@
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
     "release": "node scripts/release.js",
     "commit": "git-cz",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "test:build": "docker build -t tests .",
+    "test:docker": "docker run -v \"/$(pwd)/modules/cactus-web/__image_snapshots__:/code/modules/cactus-web/__image_snapshots__\" tests"
   },
   "license": "MIT",
   "private": true,

@@ -1,0 +1,9 @@
+name: 'Storyshot Tests'
+description: 'Run storyshot tests for cactus-web'
+inputs:
+  args:
+    description: 'Command to run'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

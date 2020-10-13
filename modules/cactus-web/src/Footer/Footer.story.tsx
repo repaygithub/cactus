@@ -22,7 +22,8 @@ const LINKS = ['repay.com', 'google.com', 'microsoft.com']
 
 storiesOf('Footer', module).add('Basic Usage', () => {
   const customContent = text('custom content', 'Some Custom Footer Content')
-  const numLinks = number('number of links', 10)
+  let numLinks = number('number of links', 2)
+  numLinks -= 2
 
   const makeLinks = (numLinks: number) => {
     const links = []
@@ -45,6 +46,8 @@ storiesOf('Footer', module).add('Basic Usage', () => {
         logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
       >
         {customContent !== '' ? customContent : null}
+        <Footer.Link to="https://google.com">Static</Footer.Link>
+        <Footer.Link to="https://repay.com">Unchanging</Footer.Link>
         {makeLinks(numLinks)}
       </Footer>
     </ScreenSizeProvider>
