@@ -257,7 +257,7 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
   delete wrapperProps.role
   return (
     <ActionBar.PanelWrapper
-      as="nav"
+      as={SideNav}
       ref={ref}
       {...props}
       {...wrapperProps}
@@ -360,6 +360,14 @@ const Nav = styled.nav`
     &[aria-current='true'] {
       font-weight: bold;
     }
+  }
+`
+
+const SideNav = styled.nav`
+  .cactus-layout-fixedBottom & {
+    position: absolute;
+    left: 0;
+    bottom: 0;
   }
 `
 

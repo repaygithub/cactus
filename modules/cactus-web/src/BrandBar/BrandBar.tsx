@@ -15,8 +15,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { ActionBar } from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
 import { getTopPosition } from '../helpers/positionPopover'
-import { insetBorder, radius } from '../helpers/theme'
-import { border, boxShadow, textStyle } from '../helpers/theme'
+import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { Sidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -80,7 +79,7 @@ export default BrandBar
 
 const ActionBarUserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, isProfilePage }) => {
   const button = (
-    <ActionWrapper key="cactus-user-menu">
+    <ActionBar.PanelWrapper key="cactus-user-menu">
       <Menu>
         <ActionMenuButton as={ReachMenuButton as any} $isProfilePage={isProfilePage}>
           <DescriptiveProfile />
@@ -94,7 +93,7 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, is
           <ReachMenuList>{children}</ReachMenuList>
         </ActionBar.PanelPopup>
       </Menu>
-    </ActionWrapper>
+    </ActionBar.PanelWrapper>
   )
   const renderButton = useAction(button, 1000)
   return renderButton && <Sidebar layoutRole="brandbar">{renderButton}</Sidebar>
@@ -215,12 +214,6 @@ const MenuList = styled(ReachMenuList)`
       ${(p) => p.theme.colorStyles.callToAction};
     }
   }
-`
-
-const ActionWrapper = styled(ActionBar.PanelWrapper)`
-  position: absolute;
-  right: 0;
-  bottom: 0;
 `
 
 const ActionMenuButton = styled(ActionBar.Button)<ProfileStyleProp>(

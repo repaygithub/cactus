@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Direction, insetBorder, Props as ThemeProps } from '../helpers/theme'
+import { insetBorder } from '../helpers/theme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { Position, Role, useLayout } from './Layout'
 
@@ -74,16 +74,6 @@ Sidebar.Button = styled.button`
 `
 Sidebar.Button.defaultProps = { role: 'button' }
 
-const borders = ({ theme }: ThemeProps, border: Direction, buttonBorder: Direction) => `
-  ${insetBorder(theme, 'lightContrast', border)};
-  ${Sidebar.Button} {
-    ${insetBorder(theme, 'lightContrast', buttonBorder)};
-    :hover {
-      ${insetBorder(theme, 'callToAction', buttonBorder)};
-    }
-  }
-`
-
 // `position: relative` to make it easier to position panel popups.
 const SidebarDiv = styled.div`
   ${(p) => p.theme.colorStyles.standard};
@@ -97,12 +87,19 @@ const SidebarDiv = styled.div`
   &.cactus-layout-floatLeft,
   &.cactus-layout-fixedLeft {
     flex-direction: column;
-    ${(p) => borders(p, 'right', 'bottom')};
+    ${(p) => insetBorder(p.theme, 'lightContrast', 'right')};
+    ${Sidebar.Button} {
+      ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom')};
+      :hover {
+        ${(p) => insetBorder(p.theme, 'callToAction', 'bottom')};
+      }
+    }
   }
 
   &.cactus-layout-fixedBottom {
     flex-direction: row;
-    ${(p) => borders(p, 'top', 'right')};
+    justify-content: flex-end;
+    ${(p) => insetBorder(p.theme, 'lightContrast', 'top')};
     ${Sidebar.Button}[aria-expanded='true']::after {
       content: '';
       z-index: 99;

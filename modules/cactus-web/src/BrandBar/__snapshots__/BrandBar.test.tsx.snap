@@ -47,15 +47,11 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   box-shadow: inset 0px 1px 0px 0px hsl(200,29%,90%);
-}
-
-.c2.cactus-layout-fixedBottom .sc-qYSYK {
-  box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
-}
-
-.c2.cactus-layout-fixedBottom .sc-qYSYK:hover {
-  box-shadow: inset -1px 0px 0px 0px hsl(200,96%,35%);
 }
 
 .c2.cactus-layout-fixedBottom .sc-qYSYK[aria-expanded='true']::after {
@@ -68,6 +64,15 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   left: 0;
   right: 0;
   cursor: default;
+}
+
+.c3 {
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  background-color: transparent;
 }
 
 .c7 {
@@ -145,18 +150,6 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   flex-shrink: 0;
   max-width: 100%;
   max-height: 100%;
-}
-
-.c3 {
-  outline: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  display: block;
-  background-color: transparent;
-  position: absolute;
-  right: 0;
-  bottom: 0;
 }
 
 .c4 {
@@ -286,7 +279,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
       class="c2 cactus-layout-fixedBottom"
     >
       <div
-        class="sc-pJkiN c3"
+        class="c3"
       >
         <button
           aria-controls="menu--7"
