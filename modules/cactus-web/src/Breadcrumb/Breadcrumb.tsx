@@ -2,13 +2,11 @@ import { NavigationChevronRight } from '@repay/cactus-icons'
 import React from 'react'
 import styled from 'styled-components'
 
+import { AsProps, GenericComponent } from '../helpers/asProps'
 import { borderSize } from '../helpers/theme'
 
-interface BreadcrumbItemProps {
-  linkTo: string
-  className?: string
+type BreadcrumbItemProps<C extends GenericComponent> = AsProps<C> & {
   active?: boolean
-  children?: React.ReactNode
 }
 
 interface BreadcrumbProps {
@@ -16,13 +14,17 @@ interface BreadcrumbProps {
   className?: string
 }
 
-export const BreadcrumbItem = (props: BreadcrumbItemProps): React.ReactElement => {
-  const { active, children, linkTo, className } = props
+export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
+  props: BreadcrumbItemProps<C>
+): React.ReactElement => {
+  const { active, ...rest } = props
+
+  // The "as any" with ...rest is necessary because Styled Components' types do not like
+  // forcing an aria-current when we're not sure if the element will be an <a>
+  // Here, we're just trusting the user to use a Link-ish component for the "as" prop
   return (
-    <li className={className}>
-      <BreadcrumbLink href={linkTo} aria-current={active && 'page'}>
-        {children}
-      </BreadcrumbLink>
+    <li>
+      <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
       <StyledChevron iconSize="tiny" active={active} />
     </li>
   )
@@ -75,7 +77,7 @@ const StyledNav = styled.nav`
 `
 
 type BreadcrumbComponent = typeof BreadcrumbBase & {
-  Item: React.ComponentType<BreadcrumbItemProps>
+  Item: typeof BreadcrumbItem
 }
 
 export const Breadcrumb = BreadcrumbBase as BreadcrumbComponent

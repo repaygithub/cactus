@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Breadcrumb should have label and linkTo snapshot 1`] = `
+exports[`Breadcrumb should have label and href snapshot 1`] = `
 .c1 {
   color: black;
   font-style: normal;
