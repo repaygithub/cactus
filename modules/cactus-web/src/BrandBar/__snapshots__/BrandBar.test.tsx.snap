@@ -152,6 +152,10 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   max-height: 100%;
 }
 
+.c10 {
+  outline: none;
+}
+
 .c4 {
   cursor: pointer;
   border: none;
@@ -333,6 +337,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
           </div>
           <div
             aria-labelledby="menu-button--menu--7"
+            class="c10"
             data-reach-menu-items=""
             id="menu--7"
             role="menu"

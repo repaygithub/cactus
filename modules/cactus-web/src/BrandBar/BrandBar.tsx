@@ -90,7 +90,7 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, is
             <DescriptiveProfile mr="8px" />
             {userMenuText}
           </PopupHeader>
-          <ReachMenuList>{children}</ReachMenuList>
+          <ActionMenuList>{children}</ActionMenuList>
         </ActionBar.PanelPopup>
       </Menu>
     </ActionBar.PanelWrapper>
@@ -214,6 +214,10 @@ const MenuList = styled(ReachMenuList)`
       ${(p) => p.theme.colorStyles.callToAction};
     }
   }
+`
+
+const ActionMenuList = styled(ReachMenuList)`
+  outline: none;
 `
 
 const ActionMenuButton = styled(ActionBar.Button)<ProfileStyleProp>(
