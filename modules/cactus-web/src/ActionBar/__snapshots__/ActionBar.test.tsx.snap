@@ -103,15 +103,11 @@ exports[`component: ActionBar typechecks 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   box-shadow: inset 0px 1px 0px 0px hsl(200,29%,90%);
-}
-
-.c0.cactus-layout-fixedBottom .c2 {
-  box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
-}
-
-.c0.cactus-layout-fixedBottom .c2:hover {
-  box-shadow: inset -1px 0px 0px 0px hsl(200,96%,35%);
 }
 
 .c0.cactus-layout-fixedBottom .c2[aria-expanded='true']::after {
