@@ -10,17 +10,15 @@ import Label from '../Label/Label'
 import RadioButtonField, { RadioButtonFieldProps } from '../RadioButtonField/RadioButtonField'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
-import { FieldOnChangeHandler } from '../types'
 
 interface RadioGroupProps
   extends MarginProps,
     WidthProps,
     Omit<FieldProps, 'labelProps'>,
-    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'onChange'> {
+    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name'> {
   value?: string | number
   defaultValue?: string | number
   required?: boolean
-  onChange?: FieldOnChangeHandler<string>
 }
 
 // This allows omitting the required `name` prop, since it'll be injected by the RadioGroup.
@@ -45,7 +43,6 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       required,
       defaultValue,
       value,
-      onChange,
       onFocus,
       onBlur,
       autoTooltip = true,
@@ -70,6 +67,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
     if (disabled === true) {
       forwardProps.disabled = disabled
     }
+    const hasOnChange = !!props.onChange
     const cloneWithValue = (element: React.ReactElement, props: any) => {
       if (value !== undefined) {
         if (element.props.value !== undefined) {
@@ -84,19 +82,15 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
           props = { ...props, defaultValue }
         }
       }
+      // This is to avert a PropTypes warning regarding missing onChange handler.
+      const hasChecked = props.checked !== undefined || element.props.checked !== undefined
+      if (hasChecked && hasOnChange && !element.props.onChange) {
+        props = { ...props, onChange: () => undefined }
+      }
       return React.cloneElement(element, props)
     }
     children = cloneAll(children, forwardProps, cloneWithValue)
 
-    const handleChange = React.useCallback(
-      (event: React.FormEvent<HTMLFieldSetElement>): void => {
-        if (typeof onChange === 'function') {
-          const target = (event.target as unknown) as HTMLInputElement
-          onChange(name, target.value)
-        }
-      },
-      [name, onChange]
-    )
     const handleFocus = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
         onFocus?.(e)
@@ -125,7 +119,6 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
         aria-describedby={ariaDescribedBy}
         name={name}
         disabled={disabled}
-        onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
@@ -166,16 +159,7 @@ RadioGroup.propTypes = {
   success: PropTypes.node,
   warning: PropTypes.node,
   error: PropTypes.node,
-  onChange: PropTypes.func,
-  value: function (props: Record<string, any>): Error | null {
-    if (props.value !== undefined) {
-      const proptype = typeof props.value
-      if (!(proptype === 'string' || proptype === 'number')) {
-        return new Error('The `value` prop must be a string or number.')
-      }
-    }
-    return null
-  },
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: function (props: Record<string, any>): Error | null {
     if (props.defaultValue !== undefined) {
       const proptype = typeof props.defaultValue

@@ -8,44 +8,24 @@ import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
-import { FieldOnChangeHandler } from '../types'
 
-export interface RadioButtonFieldProps
-  extends Omit<RadioButtonProps, 'id' | 'onChange'>,
-    MarginProps {
+export interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id'>, MarginProps {
   label: React.ReactNode
   name: string
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
-  onChange?: FieldOnChangeHandler<string>
 }
 
 const RadioButtonFieldBase = React.forwardRef<HTMLInputElement, RadioButtonFieldProps>(
   (props, ref) => {
-    const { label, labelProps, id, className, name, onChange, ...radioButtonProps } = omitMargins(
+    const { label, labelProps, id, className, name, ...radioButtonProps } = omitMargins(
       props
     ) as Omit<RadioButtonFieldProps, keyof MarginProps>
     const radioButtonId = useId(id, name)
 
-    const handleChange = React.useCallback(
-      (event: React.FormEvent<HTMLInputElement>): void => {
-        if (typeof onChange === 'function') {
-          const target = (event.target as unknown) as HTMLInputElement
-          onChange(name, target.value)
-        }
-      },
-      [name, onChange]
-    )
-
     return (
       <FieldWrapper className={className}>
-        <RadioButton
-          ref={ref}
-          id={radioButtonId}
-          name={name}
-          onChange={handleChange}
-          {...radioButtonProps}
-        />
+        <RadioButton ref={ref} id={radioButtonId} name={name} {...radioButtonProps} />
         <Label {...labelProps} htmlFor={radioButtonId}>
           {label}
         </Label>
@@ -73,7 +53,6 @@ RadioButtonField.propTypes = {
   name: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
   id: PropTypes.string,
-  onChange: PropTypes.func,
 }
 
 RadioButtonField.defaultProps = {

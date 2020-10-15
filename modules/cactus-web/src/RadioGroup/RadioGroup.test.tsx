@@ -17,6 +17,7 @@ describe('component: RadioGroup', (): void => {
           disabled={false}
           value="persephone"
           tooltip="Select your preferred realm"
+          onChange={() => undefined}
         >
           <RadioGroup.Button id="earth" label="Glebe" value="james" />
           <RadioGroup.Button id="life" label="Elysium" value="persephone" />
@@ -80,8 +81,10 @@ describe('component: RadioGroup', (): void => {
   })
 
   test('should trigger events', (): void => {
-    const onChange = jest.fn()
-    const onChangeOne = jest.fn()
+    const changes: [string, string][] = []
+    const onChange = jest.fn((e) => changes.push([e.target.name, e.target.value]))
+    const changeOne: [string, string][] = []
+    const onChangeOne = jest.fn((e) => changeOne.push([e.target.name, e.target.value]))
     const focusNames: string[] = []
     const onFocus = jest.fn((e) => focusNames.push(e.target.id))
     const focusOne: string[] = []
@@ -136,11 +139,11 @@ describe('component: RadioGroup', (): void => {
     expect(onBlur).toHaveBeenCalledTimes(2)
 
     userEvent.tab()
-    expect(onChange.mock.calls).toEqual([
+    expect(changes).toEqual([
       ['wizards', 'pyro'],
       ['wizards', 'persephone'],
     ])
-    expect(onChangeOne.mock.calls).toEqual([['wizards', 'pyro']])
+    expect(changeOne).toEqual([['wizards', 'pyro']])
     expect(focusNames).toEqual(['earth', 'fire', 'life'])
     expect(focusOne).toEqual(['earth'])
     expect(blurNames).toEqual(['earth', 'fire', 'life'])

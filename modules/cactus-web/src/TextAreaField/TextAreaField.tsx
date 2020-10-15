@@ -6,14 +6,11 @@ import { margin, MarginProps } from 'styled-system'
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import { omitMargins } from '../helpers/omit'
 import TextArea, { TextAreaProps } from '../TextArea/TextArea'
-import { FieldOnChangeHandler } from '../types'
 
 interface TextAreaFieldProps
   extends MarginProps,
     FieldProps,
-    Omit<TextAreaProps, 'name' | 'status' | 'onChange'> {
-  onChange?: FieldOnChangeHandler<string>
-}
+    Omit<TextAreaProps, 'name' | 'status'> {}
 
 const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
   const {
@@ -24,23 +21,12 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
     warning,
     error,
     tooltip,
-    onChange,
     name,
     id,
     disabled,
     autoTooltip,
     ...textAreaProps
   } = omitMargins(props) as Omit<TextAreaFieldProps, keyof MarginProps>
-
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
-      if (typeof onChange === 'function') {
-        const currentTarget = (event.currentTarget as unknown) as HTMLTextAreaElement
-        onChange(name, currentTarget.value)
-      }
-    },
-    [onChange, name]
-  )
 
   return (
     <AccessibleField
@@ -62,7 +48,6 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
           id={fieldId}
           width="100%"
           status={status}
-          onChange={handleChange}
           aria-describedby={ariaDescribedBy}
           name={name}
           {...textAreaProps}
@@ -87,7 +72,6 @@ TextAreaField.propTypes = {
   error: PropTypes.string,
   tooltip: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func,
 }
 
 TextAreaField.defaultProps = {

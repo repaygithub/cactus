@@ -1,4 +1,3 @@
-import { actions } from '@storybook/addon-actions'
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { useState } from 'react'
@@ -6,7 +5,11 @@ import React, { useState } from 'react'
 import TextInputField from './TextInputField'
 
 const textInputFieldStories = storiesOf('TextInputField', module)
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+const eventLoggers = {
+  onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
+  onFocus: (e: any) => console.log('onFocus:', e.target.name),
+  onBlur: (e: any) => console.log('onBlur:', e.target.name),
+}
 
 const InputValidator = (): React.ReactElement => {
   const [input, setInput] = useState('')
@@ -18,7 +21,7 @@ const InputValidator = (): React.ReactElement => {
       name="input"
       label="Type Something"
       tooltip="You must type more than 5 characters"
-      onChange={(_, value): void => setInput(value)}
+      onChange={(e) => setInput(e.target.value)}
       success={success}
     />
   )

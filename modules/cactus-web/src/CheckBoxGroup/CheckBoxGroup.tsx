@@ -10,16 +10,14 @@ import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
-import { FieldOnChangeHandler } from '../types'
 
 interface CheckBoxGroupProps
   extends MarginProps,
     WidthProps,
     Omit<FieldProps, 'labelProps'>,
-    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'onChange' | 'defaultValue'> {
+    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'defaultValue'> {
   checked?: { [K: string]: boolean }
   required?: boolean
-  onChange?: FieldOnChangeHandler<boolean>
 }
 
 type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
@@ -35,18 +33,7 @@ type ForwardProps = {
 
 export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
   (
-    {
-      label,
-      children,
-      tooltip,
-      required,
-      checked,
-      onChange,
-      onFocus,
-      onBlur,
-      autoTooltip = true,
-      ...props
-    },
+    { label, children, tooltip, required, checked, onFocus, onBlur, autoTooltip = true, ...props },
     ref
   ) => {
     const {
@@ -67,23 +54,19 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       forwardProps.disabled = disabled
     }
 
+    const hasOnChange = !!props.onChange
     const cloneWithValue = (element: React.ReactElement, props: any) => {
       if (checked !== undefined) {
         props = { ...props, checked: checked[element.props.name] || false }
       }
+      // This is to avert a PropTypes warning regarding missing onChange handler.
+      const hasChecked = props.checked !== undefined || element.props.checked !== undefined
+      if (hasChecked && hasOnChange && !element.props.onChange) {
+        props = { ...props, onChange: () => undefined }
+      }
       return React.cloneElement(element, props)
     }
     children = cloneAll(children, forwardProps, cloneWithValue)
-
-    const handleChange = React.useCallback(
-      (event: React.FormEvent<HTMLFieldSetElement>): void => {
-        if (typeof onChange === 'function') {
-          const target = (event.target as unknown) as HTMLInputElement
-          onChange(target.name, target.checked)
-        }
-      },
-      [onChange]
-    )
 
     const handleFocus = React.useCallback(
       (event: React.FocusEvent<HTMLFieldSetElement>): void => {
@@ -113,7 +96,6 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
         aria-describedby={ariaDescribedBy}
         name={name}
         disabled={disabled}
-        onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
@@ -155,7 +137,6 @@ CheckBoxGroup.propTypes = {
   success: PropTypes.node,
   warning: PropTypes.node,
   error: PropTypes.node,
-  onChange: PropTypes.func,
   checked: PropTypes.objectOf(PropTypes.bool.isRequired),
 }
 
