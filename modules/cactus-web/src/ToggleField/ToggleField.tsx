@@ -4,16 +4,13 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import Toggle, { ToggleProps } from '../Toggle/Toggle'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
+import { FieldOnChangeHandler } from '../types'
 
-export interface ToggleFieldProps
-  extends MarginProps,
-    Omit<ToggleProps, 'id' | 'onChange' | 'onFocus' | 'onBlur'> {
+export interface ToggleFieldProps extends MarginProps, Omit<ToggleProps, 'id' | 'onChange'> {
   label: React.ReactNode
   /** props to be passed to the Label element (available for accessibility considerations) */
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
@@ -25,8 +22,6 @@ export interface ToggleFieldProps
   disabled?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   onChange?: FieldOnChangeHandler<boolean>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
 }
 
 const ToggleFieldBase = (props: ToggleFieldProps): React.ReactElement => {
@@ -37,8 +32,6 @@ const ToggleFieldBase = (props: ToggleFieldProps): React.ReactElement => {
     id,
     name,
     onChange,
-    onFocus,
-    onBlur,
     onClick,
     disabled,
     ...toggleProps
@@ -58,25 +51,9 @@ const ToggleFieldBase = (props: ToggleFieldProps): React.ReactElement => {
     [onClick, onChange, name]
   )
 
-  const handleFocus = (): void => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (): void => {
-    handleEvent(onBlur, name)
-  }
-
   return (
     <FieldWrapper className={className}>
-      <Toggle
-        {...toggleProps}
-        disabled={disabled}
-        name={name}
-        id={fieldId}
-        onClick={handleClick}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      />
+      <Toggle {...toggleProps} disabled={disabled} name={name} id={fieldId} onClick={handleClick} />
       <Label {...props.labelProps} htmlFor={fieldId}>
         {props.label}
       </Label>
@@ -100,7 +77,6 @@ export const ToggleField = styled(ToggleFieldBase)`
   }
 `
 
-// @ts-ignore
 ToggleField.propTypes = {
   label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
@@ -110,8 +86,6 @@ ToggleField.propTypes = {
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
   onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
 }
 
 ToggleField.defaultProps = {

@@ -6,26 +6,20 @@ import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleFie
 import Box from '../Box/Box'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
 import Fieldset from '../Fieldset/Fieldset'
-import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
+import { FieldOnChangeHandler } from '../types'
 
 interface CheckBoxGroupProps
   extends MarginProps,
     WidthProps,
     Omit<FieldProps, 'labelProps'>,
-    Omit<
-      React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
-      'name' | 'onChange' | 'onFocus' | 'onBlur' | 'defaultValue'
-    > {
+    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'onChange' | 'defaultValue'> {
   checked?: { [K: string]: boolean }
   required?: boolean
   onChange?: FieldOnChangeHandler<boolean>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
 }
 
 type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
@@ -93,22 +87,22 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
 
     const handleFocus = React.useCallback(
       (event: React.FocusEvent<HTMLFieldSetElement>): void => {
+        onFocus?.(event)
         if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-          handleEvent(onFocus, name)
           setTooltipVisible(() => true)
         }
       },
-      [name, onFocus]
+      [onFocus]
     )
 
     const handleBlur = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
+        onBlur?.(e)
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          handleEvent(onBlur, name)
           setTooltipVisible(() => false)
         }
       },
-      [onBlur, name, setTooltipVisible]
+      [onBlur, setTooltipVisible]
     )
 
     return (
@@ -162,8 +156,6 @@ CheckBoxGroup.propTypes = {
   warning: PropTypes.node,
   error: PropTypes.node,
   onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
   checked: PropTypes.objectOf(PropTypes.bool.isRequired),
 }
 

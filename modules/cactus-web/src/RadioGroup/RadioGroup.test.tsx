@@ -82,9 +82,12 @@ describe('component: RadioGroup', (): void => {
   test('should trigger events', (): void => {
     const onChange = jest.fn()
     const onChangeOne = jest.fn()
-    const onFocus = jest.fn()
-    const onFocusOne = jest.fn()
-    const onBlur = jest.fn()
+    const focusNames: string[] = []
+    const onFocus = jest.fn((e) => focusNames.push(e.target.id))
+    const focusOne: string[] = []
+    const onFocusOne = jest.fn((e) => focusOne.push(e.target.id))
+    const blurNames: string[] = []
+    const onBlur = jest.fn((e) => blurNames.push(e.target.id))
     const { getByLabelText } = render(
       <StyleProvider>
         <RadioGroup
@@ -121,16 +124,16 @@ describe('component: RadioGroup', (): void => {
     userEvent.click(getByLabelText('Sorcha'))
     expect(onChange).toHaveBeenCalledTimes(1)
     expect(onChangeOne).toHaveBeenCalledTimes(1)
-    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(onFocus).toHaveBeenCalledTimes(2)
     expect(onFocusOne).toHaveBeenCalledTimes(1)
-    expect(onBlur).not.toHaveBeenCalled()
+    expect(onBlur).toHaveBeenCalledTimes(1)
 
     userEvent.click(getByLabelText('Yogo'))
     expect(onChange).toHaveBeenCalledTimes(2)
     expect(onChangeOne).toHaveBeenCalledTimes(1)
-    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(onFocus).toHaveBeenCalledTimes(3)
     expect(onFocusOne).toHaveBeenCalledTimes(1)
-    expect(onBlur).not.toHaveBeenCalled()
+    expect(onBlur).toHaveBeenCalledTimes(2)
 
     userEvent.tab()
     expect(onChange.mock.calls).toEqual([
@@ -138,8 +141,8 @@ describe('component: RadioGroup', (): void => {
       ['wizards', 'persephone'],
     ])
     expect(onChangeOne.mock.calls).toEqual([['wizards', 'pyro']])
-    expect(onFocus.mock.calls).toEqual([['wizards']])
-    expect(onFocusOne.mock.calls).toEqual([['wizards']])
-    expect(onBlur.mock.calls).toEqual([['wizards']])
+    expect(focusNames).toEqual(['earth', 'fire', 'life'])
+    expect(focusOne).toEqual(['earth'])
+    expect(blurNames).toEqual(['earth', 'fire', 'life'])
   })
 })

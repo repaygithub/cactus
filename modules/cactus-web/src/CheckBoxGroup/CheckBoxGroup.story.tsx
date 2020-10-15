@@ -16,8 +16,8 @@ checkBoxGroupStories.add(
       label={text('label', 'My Label')}
       disabled={boolean('disabled', false)}
       onChange={(name, value) => console.log(`'${name}' changed: ${value}`)}
-      onFocus={(name) => console.log(`'${name}' focused`)}
-      onBlur={(name) => console.log(`'${name}' blurred`)}
+      onFocus={(e) => console.log(`'${e.target.name}' focused`)}
+      onBlur={(e) => console.log(`'${e.target.name}' blurred`)}
       tooltip={text('tooltip', 'Check some boxes')}
       autoTooltip={boolean('autoTooltip', true)}
       error={text('error', '')}

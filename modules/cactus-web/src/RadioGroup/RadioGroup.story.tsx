@@ -16,8 +16,8 @@ radioGroupStories.add(
       label={text('label', 'A Label')}
       disabled={boolean('disabled', false)}
       onChange={(name, value) => console.log(`'${name}' changed: ${value}`)}
-      onFocus={(name) => console.log(`'${name}' focused`)}
-      onBlur={(name) => console.log(`'${name}' blurred`)}
+      onFocus={(e: any) => console.log(`'${e.target.value}' focused`)}
+      onBlur={(e: any) => console.log(`'${e.target.value}' blurred`)}
       tooltip={text('tooltip', 'Here there be radio buttons')}
       error={text('error', '')}
       success={text('success', '')}

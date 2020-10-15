@@ -4,18 +4,15 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
-import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
+import { FieldOnChangeHandler } from '../types'
 
 interface TextInputFieldProps
   extends MarginProps,
     FieldProps,
-    Omit<TextInputProps, 'name' | 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
+    Omit<TextInputProps, 'name' | 'status' | 'onChange'> {
   onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
 }
 
 const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
@@ -30,8 +27,6 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     error,
     tooltip,
     onChange,
-    onFocus,
-    onBlur,
     disabled,
     autoTooltip,
     ...inputProps
@@ -46,14 +41,6 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     },
     [onChange, name]
   )
-
-  const handleFocus = (): void => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (): void => {
-    handleEvent(onBlur, name)
-  }
 
   return (
     <AccessibleField
@@ -77,8 +64,6 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
           width="100%"
           status={status}
           onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           name={name}
           aria-describedby={ariaDescribedBy}
         />
@@ -102,8 +87,6 @@ TextInputField.propTypes = {
   error: PropTypes.string,
   tooltip: PropTypes.string,
   onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
 }
 
 TextInputField.defaultProps = {

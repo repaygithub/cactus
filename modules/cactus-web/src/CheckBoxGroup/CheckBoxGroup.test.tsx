@@ -72,9 +72,12 @@ describe('component: CheckBoxGroup', (): void => {
   test('should trigger events', () => {
     const onChange = jest.fn()
     const onChangeOne = jest.fn()
-    const onFocus = jest.fn()
-    const onFocusOne = jest.fn()
-    const onBlur = jest.fn()
+    const focusNames: string[] = []
+    const onFocus = jest.fn((e) => focusNames.push(e.target.name))
+    const focusOne: string[] = []
+    const onFocusOne = jest.fn((e) => focusOne.push(e.target.name))
+    const blurNames: string[] = []
+    const onBlur = jest.fn((e) => blurNames.push(e.target.name))
     const { getByLabelText } = render(
       <StyleProvider>
         <CheckBoxGroup
@@ -109,16 +112,16 @@ describe('component: CheckBoxGroup', (): void => {
     userEvent.click(getByLabelText('CB 2'))
     expect(onChange).toHaveBeenCalledTimes(1)
     expect(onChangeOne).toHaveBeenCalledTimes(1)
-    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(onFocus).toHaveBeenCalledTimes(2)
     expect(onFocusOne).toHaveBeenCalledTimes(1)
-    expect(onBlur).not.toHaveBeenCalled()
+    expect(onBlur).toHaveBeenCalledTimes(1)
 
     userEvent.click(getByLabelText('CB 1'))
     expect(onChange).toHaveBeenCalledTimes(2)
     expect(onChangeOne).toHaveBeenCalledTimes(1)
-    expect(onFocus).toHaveBeenCalledTimes(1)
+    expect(onFocus).toHaveBeenCalledTimes(3)
     expect(onFocusOne).toHaveBeenCalledTimes(2)
-    expect(onBlur).not.toHaveBeenCalled()
+    expect(onBlur).toHaveBeenCalledTimes(2)
 
     userEvent.tab()
     expect(onChange.mock.calls).toEqual([
@@ -126,8 +129,8 @@ describe('component: CheckBoxGroup', (): void => {
       ['cb1', true],
     ])
     expect(onChangeOne.mock.calls).toEqual([['cb2', true]])
-    expect(onFocus.mock.calls).toEqual([['checkboxes'], ['checkboxes']])
-    expect(onFocusOne.mock.calls).toEqual([['cb1'], ['cb1']])
-    expect(onBlur.mock.calls).toEqual([['checkboxes']])
+    expect(focusNames).toEqual(['cb1', 'cb2', 'cb1', 'cb2'])
+    expect(focusOne).toEqual(['cb1', 'cb1'])
+    expect(blurNames).toEqual(['cb1', 'cb2', 'cb1'])
   })
 })

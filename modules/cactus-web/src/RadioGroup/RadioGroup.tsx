@@ -5,28 +5,22 @@ import { MarginProps, WidthProps } from 'styled-system'
 import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import Fieldset from '../Fieldset/Fieldset'
-import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
 import RadioButtonField, { RadioButtonFieldProps } from '../RadioButtonField/RadioButtonField'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
+import { FieldOnChangeHandler } from '../types'
 
 interface RadioGroupProps
   extends MarginProps,
     WidthProps,
     Omit<FieldProps, 'labelProps'>,
-    Omit<
-      React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
-      'name' | 'onChange' | 'onFocus' | 'onBlur'
-    > {
+    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'onChange'> {
   value?: string | number
   defaultValue?: string | number
   required?: boolean
   onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
 }
 
 // This allows omitting the required `name` prop, since it'll be injected by the RadioGroup.
@@ -105,21 +99,21 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
     )
     const handleFocus = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
+        onFocus?.(e)
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          handleEvent(onFocus, name)
           setTooltipVisible(() => true)
         }
       },
-      [onFocus, name, setTooltipVisible]
+      [onFocus, setTooltipVisible]
     )
     const handleBlur = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
+        onBlur?.(e)
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          handleEvent(onBlur, name)
           setTooltipVisible(() => false)
         }
       },
-      [onBlur, name, setTooltipVisible]
+      [onBlur, setTooltipVisible]
     )
 
     return (
@@ -173,8 +167,6 @@ RadioGroup.propTypes = {
   warning: PropTypes.node,
   error: PropTypes.node,
   onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
   value: function (props: Record<string, any>): Error | null {
     if (props.value !== undefined) {
       const proptype = typeof props.value

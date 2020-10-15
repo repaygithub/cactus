@@ -4,18 +4,15 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
-import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import TextArea, { TextAreaProps } from '../TextArea/TextArea'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
+import { FieldOnChangeHandler } from '../types'
 
 interface TextAreaFieldProps
   extends MarginProps,
     FieldProps,
-    Omit<TextAreaProps, 'name' | 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
+    Omit<TextAreaProps, 'name' | 'status' | 'onChange'> {
   onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
 }
 
 const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
@@ -28,8 +25,6 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
     error,
     tooltip,
     onChange,
-    onFocus,
-    onBlur,
     name,
     id,
     disabled,
@@ -46,14 +41,6 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
     },
     [onChange, name]
   )
-
-  const handleFocus = (): void => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (): void => {
-    handleEvent(onBlur, name)
-  }
 
   return (
     <AccessibleField
@@ -76,8 +63,6 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
           width="100%"
           status={status}
           onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           aria-describedby={ariaDescribedBy}
           name={name}
           {...textAreaProps}
@@ -103,8 +88,6 @@ TextAreaField.propTypes = {
   tooltip: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
 }
 
 TextAreaField.defaultProps = {
