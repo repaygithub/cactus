@@ -8,8 +8,34 @@ storiesOf('Breadcrumb', module).add(
   'Basic Usage',
   (): ReactElement => (
     <Breadcrumb>
-      <Breadcrumb.Item label={text('Label 1', 'Account')} linkTo="/" />
-      <Breadcrumb.Item label={<em>{text('Label 2', 'Make a Payment')}</em>} linkTo="/" active />
+      <Breadcrumb.Item href="/">{text('Label 1', 'Account')}</Breadcrumb.Item>
+      <Breadcrumb.Item href="/" active>
+        <em>{text('Label 2', 'Make a Payment')}</em>
+      </Breadcrumb.Item>
+    </Breadcrumb>
+  )
+)
+
+const CustomLink: React.FC<{ className?: string; children: React.ReactNode; customTo: string }> = ({
+  children,
+  className,
+  customTo,
+}) => (
+  <a style={{ color: 'pink' }} className={className} href={customTo}>
+    {children}
+  </a>
+)
+
+storiesOf('Breadcrumb', module).add(
+  'Custom Item Elements',
+  (): ReactElement => (
+    <Breadcrumb>
+      <Breadcrumb.Item as={CustomLink} customTo="/">
+        {text('Label 1', 'Account')}
+      </Breadcrumb.Item>
+      <Breadcrumb.Item as={CustomLink} customTo="/" active>
+        <em>{text('Label 2', 'Make a Payment')}</em>
+      </Breadcrumb.Item>
     </Breadcrumb>
   )
 )
@@ -24,9 +50,13 @@ storiesOf('Breadcrumb', module).add(
         {values.map(
           (e, i, arr): ReactElement =>
             arr.length - 1 === i ? (
-              <Breadcrumb.Item label={text(`Label ${i + 1}`, `${e}`)} linkTo="/" active key={i} />
+              <Breadcrumb.Item href="/" active key={i}>
+                {text(`Label ${i + 1}`, `${e}`)}
+              </Breadcrumb.Item>
             ) : (
-              <Breadcrumb.Item label={text(`Label ${i + 1}`, `${e}`)} linkTo="/" key={i} />
+              <Breadcrumb.Item href="/" key={i}>
+                {text(`Label ${i + 1}`, `${e}`)}
+              </Breadcrumb.Item>
             )
         )}
       </Breadcrumb>

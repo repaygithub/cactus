@@ -32,13 +32,17 @@ const BreadcrumbExample: React.FC<RouteComponentProps & BreadProps> = (
       </Text>
       <Flex flexDirection="column" alignItems="center" justifyContent="flex-start" height="100vh">
         <Breadcrumb>
-          <Breadcrumb.Item label="Home" linkTo="/" />
+          <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
           {paths.map(
             (e): React.ReactElement => (
-              <Breadcrumb.Item label={e} linkTo="/" key={e} />
+              <Breadcrumb.Item href="/" key={e}>
+                {e}
+              </Breadcrumb.Item>
             )
           )}
-          <Breadcrumb.Item label={path.substring(1)} linkTo={path} active />
+          <Breadcrumb.Item href={path} active>
+            {path.substring(1)}
+          </Breadcrumb.Item>
         </Breadcrumb>
         <TextInputField
           label="Add a new path"
