@@ -94,9 +94,7 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [setSize, theme])
 
   return (
-    <ScreenSizeContext.Provider value={new ScreenSize(currentSize)}>
-      {children}
-    </ScreenSizeContext.Provider>
+    <ScreenSizeContext.Provider value={SIZES[currentSize]}>{children}</ScreenSizeContext.Provider>
   )
 }
 

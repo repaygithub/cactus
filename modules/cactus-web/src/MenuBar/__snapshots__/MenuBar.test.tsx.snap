@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: MenuBar sidebar 1`] = `
-.c11 {
+.c12 {
+  vertical-align: middle;
+}
+
+.c5 {
   vertical-align: middle;
 }
 
 .c4 {
-  vertical-align: middle;
-}
-
-.c3 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -37,30 +37,30 @@ exports[`component: MenuBar sidebar 1`] = `
   padding: 8px;
 }
 
-.c3:active,
-.c3:focus {
+.c4:active,
+.c4:focus {
   outline: none;
 }
 
-.c3::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: none;
 }
 
-.c3 img,
-.c3 svg {
+.c4 img,
+.c4 svg {
   width: 24px;
   height: 24px;
 }
 
-.c3:hover {
+.c4:hover {
   color: hsl(200,96%,35%);
 }
 
-.c3.c3.c3.c3:focus {
+.c4.c4.c4.c4:focus {
   box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
 }
 
-.c3.c3.c3.c3[aria-expanded='true'] {
+.c4.c4.c4.c4[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
   box-shadow: none;
@@ -89,13 +89,13 @@ exports[`component: MenuBar sidebar 1`] = `
   box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
 }
 
-.c0.cactus-layout-floatLeft .c2,
-.c0.cactus-layout-fixedLeft .c2 {
+.c0.cactus-layout-floatLeft .c3,
+.c0.cactus-layout-fixedLeft .c3 {
   box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
 }
 
-.c0.cactus-layout-floatLeft .c2:hover,
-.c0.cactus-layout-fixedLeft .c2:hover {
+.c0.cactus-layout-floatLeft .c3:hover,
+.c0.cactus-layout-fixedLeft .c3:hover {
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
 }
 
@@ -103,18 +103,14 @@ exports[`component: MenuBar sidebar 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   box-shadow: inset 0px 1px 0px 0px hsl(200,29%,90%);
 }
 
-.c0.cactus-layout-fixedBottom .c2 {
-  box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
-}
-
-.c0.cactus-layout-fixedBottom .c2:hover {
-  box-shadow: inset -1px 0px 0px 0px hsl(200,96%,35%);
-}
-
-.c0.cactus-layout-fixedBottom .c2[aria-expanded='true']::after {
+.c0.cactus-layout-fixedBottom .c3[aria-expanded='true']::after {
   content: '';
   z-index: 99;
   background-color: rgba(0,0,0,0.5);
@@ -126,7 +122,7 @@ exports[`component: MenuBar sidebar 1`] = `
   cursor: default;
 }
 
-.c1 {
+.c2 {
   outline: none;
   border: none;
   margin: 0;
@@ -135,7 +131,7 @@ exports[`component: MenuBar sidebar 1`] = `
   background-color: transparent;
 }
 
-.c6 {
+.c7 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   box-sizing: border-box;
@@ -150,11 +146,11 @@ exports[`component: MenuBar sidebar 1`] = `
   padding: 0;
 }
 
-.c6[aria-hidden='true'] {
+.c7[aria-hidden='true'] {
   display: none;
 }
 
-.cactus-layout-fixedBottom .c6 {
+.cactus-layout-fixedBottom .c7 {
   position: fixed;
   left: 0;
   width: 100vw;
@@ -163,7 +159,7 @@ exports[`component: MenuBar sidebar 1`] = `
   max-height: calc(100vh - 0px);
 }
 
-.cactus-layout-fixedLeft .c6 {
+.cactus-layout-fixedLeft .c7 {
   position: fixed;
   left: 0px;
   top: 0;
@@ -171,7 +167,7 @@ exports[`component: MenuBar sidebar 1`] = `
   box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
 }
 
-.cactus-layout-floatLeft .c6 {
+.cactus-layout-floatLeft .c7 {
   position: absolute;
   left: 0px;
   top: 0;
@@ -179,27 +175,33 @@ exports[`component: MenuBar sidebar 1`] = `
   box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
 }
 
-.c9 {
+.c10 {
   -webkit-flex-shrink: 1;
   -ms-flex-negative: 1;
   flex-shrink: 1;
 }
 
-.c8 {
+.c9 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
-.c12 {
+.cactus-layout-fixedBottom .c1 {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.c13 {
   list-style: none;
   padding: 0;
   margin: 0;
   display: none;
 }
 
-.c5 {
+.c6 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   font-size: 15px;
@@ -209,32 +211,32 @@ exports[`component: MenuBar sidebar 1`] = `
   margin: 0;
 }
 
-.c5 [role='menuitem'] {
+.c6 [role='menuitem'] {
   padding: 18px 16px;
   border-bottom: 1px solid hsl(200,29%,90%);
   position: relative;
   overflow: visible;
 }
 
-.c5 [role='menuitem'] .c10 {
+.c6 [role='menuitem'] .c11 {
   -webkit-transform: rotateZ(-90deg);
   -ms-transform: rotateZ(-90deg);
   transform: rotateZ(-90deg);
 }
 
-.c5 [role='menuitem'][aria-expanded='true'] .c10 {
+.c6 [role='menuitem'][aria-expanded='true'] .c11 {
   -webkit-transform: rotateZ(90deg);
   -ms-transform: rotateZ(90deg);
   transform: rotateZ(90deg);
 }
 
-.c5 [role='menuitem']:hover,
-.c5 [role='menuitem'][aria-expanded='true'] {
+.c6 [role='menuitem']:hover,
+.c6 [role='menuitem'][aria-expanded='true'] {
   color: hsl(200,96%,35%);
   border-bottom-color: hsl(200,96%,35%);
 }
 
-.c5 [role='menuitem']:focus::after {
+.c6 [role='menuitem']:focus::after {
   border: 1px solid hsl(200,96%,35%);
   background-color: transparent;
   box-sizing: border-box;
@@ -246,21 +248,21 @@ exports[`component: MenuBar sidebar 1`] = `
   top: 0;
 }
 
-.c5 [role='menuitem'][aria-current='true'],
-.c5 [role='menuitem'][aria-expanded='true'] {
+.c6 [role='menuitem'][aria-current='true'],
+.c6 [role='menuitem'][aria-expanded='true'] {
   font-weight: 600;
 }
 
-.c5 [role='menu'] {
+.c6 [role='menu'] {
   background-color: hsl(200,29%,90%);
   padding-left: 8px;
 }
 
-.c5 [role='menu'] [role='menu'] {
+.c6 [role='menu'] [role='menu'] {
   padding-left: 14px;
 }
 
-.c7 {
+.c8 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -283,23 +285,23 @@ exports[`component: MenuBar sidebar 1`] = `
   height: 100%;
 }
 
-.c7:active,
-.c7:focus {
+.c8:active,
+.c8:focus {
   outline: none;
 }
 
-.c7::-moz-focus-inner {
+.c8::-moz-focus-inner {
   border: none;
 }
 
-.c7 .c10 {
+.c8 .c11 {
   width: 8px;
   height: 8px;
   margin-left: 16px;
 }
 
 @media screen and (min-width:1024px) {
-  .c5 {
+  .c6 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -312,20 +314,19 @@ exports[`component: MenuBar sidebar 1`] = `
     <nav
       aria-label="Menu of Main-ness"
       aria-orientation="vertical"
-      class="c1"
+      class="c1 c2"
       id="mb"
-      role="none"
       tabindex="-1"
     >
       <button
         aria-controls="mb-popup"
         aria-haspopup="menu"
-        class="c2 c3"
+        class="c3 c4"
         id="mb-button"
         role="button"
       >
         <svg
-          class="c4"
+          class="c5"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -340,11 +341,10 @@ exports[`component: MenuBar sidebar 1`] = `
         aria-hidden="true"
         aria-labelledby="mb-button"
         aria-orientation="vertical"
-        class="c5 c6"
+        class="c6 c7"
         id="mb-popup"
         role="menu"
         tabindex="-1"
-        width="350px"
       >
         <li
           role="none"
@@ -353,12 +353,12 @@ exports[`component: MenuBar sidebar 1`] = `
             aria-current="true"
             aria-expanded="false"
             aria-haspopup="menu"
-            class="c7"
+            class="c8"
             role="menuitem"
             tabindex="-1"
           >
             <div
-              class="c8"
+              class="c9"
             >
               <em>
                 Emphasized
@@ -366,10 +366,10 @@ exports[`component: MenuBar sidebar 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c9"
+              class="c10"
             >
               <svg
-                class="c10 c11"
+                class="c11 c12"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -384,7 +384,7 @@ exports[`component: MenuBar sidebar 1`] = `
           </button>
           <ul
             aria-orientation="vertical"
-            class="c12"
+            class="c13"
             role="menu"
           >
             <li
@@ -392,7 +392,7 @@ exports[`component: MenuBar sidebar 1`] = `
             >
               <a
                 aria-current="true"
-                class="c7"
+                class="c8"
                 href="#"
                 role="menuitem"
                 tabindex="-1"
@@ -406,21 +406,21 @@ exports[`component: MenuBar sidebar 1`] = `
               <button
                 aria-expanded="false"
                 aria-haspopup="menu"
-                class="c7"
+                class="c8"
                 role="menuitem"
                 tabindex="-1"
               >
                 <div
-                  class="c8"
+                  class="c9"
                 >
                   Nested
                 </div>
                 <div
                   aria-hidden="true"
-                  class="c9"
+                  class="c10"
                 >
                   <svg
-                    class="c10 c11"
+                    class="c11 c12"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -435,7 +435,7 @@ exports[`component: MenuBar sidebar 1`] = `
               </button>
               <ul
                 aria-orientation="vertical"
-                class="c12"
+                class="c13"
                 role="menu"
               >
                 <li
@@ -452,7 +452,7 @@ exports[`component: MenuBar sidebar 1`] = `
                 >
                   <button
                     aria-current="true"
-                    class="c7"
+                    class="c8"
                     role="menuitem"
                     tabindex="-1"
                   >
@@ -478,7 +478,7 @@ exports[`component: MenuBar sidebar 1`] = `
         >
           <button
             aria-current="true"
-            class="c7"
+            class="c8"
             role="menuitem"
             tabindex="-1"
           >
@@ -491,7 +491,7 @@ exports[`component: MenuBar sidebar 1`] = `
           role="none"
         >
           <a
-            class="c7"
+            class="c8"
             role="menuitem"
             tabindex="-1"
           >

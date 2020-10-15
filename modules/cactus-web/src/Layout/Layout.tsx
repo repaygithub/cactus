@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import ActionProvider from '../ActionBar/ActionProvider'
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 
-export type Role = 'menubar' | 'actionbar' | 'footer'
+export type Role = 'menubar' | 'actionbar' | 'footer' | 'brandbar'
 
 const POSITIONS = ['fixedLeft', 'floatLeft', 'fixedBottom', 'flow'] as const
 export type Position = typeof POSITIONS[number]

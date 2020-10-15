@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-web",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A UI component library for web built in React by REPAY",
   "main": "dist/cactus-web.cjs.js",
   "module": "dist/index.js",
@@ -21,6 +21,7 @@
     "test:stories": "yarn start-storybook -p 9122 -c .storybook --smoke-test",
     "test:local": " yarn test:types && yarn test",
     "test:visual": "start-test 'start-storybook -p 9001 -c .storybook --ci' 9001 'yarn test:focus \"storyshots.test.ts\"'",
+    "test:visual-update": "start-test 'start-storybook -p 9001 -c .storybook --ci' 9001 'yarn test:focus \"storyshots.test.ts\" -u'",
     "test:ci": "yarn test:local --maxWorkers=2 && yarn test:stories",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "start": "start-storybook -p 9001 -c .storybook",

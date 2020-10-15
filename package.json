@@ -31,7 +31,8 @@
     "commit": "git-cz",
     "postinstall": "patch-package",
     "test:build": "docker build -t tests .",
-    "test:docker": "docker run -v \"/$(pwd)/modules/cactus-web/__image_snapshots__:/code/modules/cactus-web/__image_snapshots__\" tests"
+    "test:docker": "docker run -v \"/$(pwd)/modules/cactus-web/__image_snapshots__:/code/modules/cactus-web/__image_snapshots__\" tests",
+    "test:docker-update": "yarn test:docker yarn web test:visual-update"
   },
   "license": "MIT",
   "private": true,

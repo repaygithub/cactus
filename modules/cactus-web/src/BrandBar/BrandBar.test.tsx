@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import BrandBar from './BrandBar'
 
@@ -18,6 +19,25 @@ describe('component: BrandBar', () => {
             Logout
           </BrandBar.UserMenuItem>
         </BrandBar>
+      </StyleProvider>
+    )
+
+    expect(container).toMatchSnapshot()
+  })
+
+  test('snapshot - mobile', () => {
+    const { container } = render(
+      <StyleProvider>
+        <ScreenSizeContext.Provider value={SIZES.tiny}>
+          <BrandBar userMenuText="Test name">
+            <BrandBar.UserMenuItem onSelect={(): void => console.log('Settings')}>
+              Settings
+            </BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
+              Logout
+            </BrandBar.UserMenuItem>
+          </BrandBar>
+        </ScreenSizeContext.Provider>
       </StyleProvider>
     )
 

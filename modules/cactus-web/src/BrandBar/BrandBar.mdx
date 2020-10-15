@@ -15,11 +15,11 @@ The `BrandBar` Components allows yout to render a Logo of your choice and a user
 
 export const code = `<BrandBar
     isProfilePage
-    userMenuText'Hershell Jewess'
+    userMenuText="Hershell Jewess"
     logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
   >
-    <BrandBar.UserMenuItem onSelect={() => console.log('Settings'))}>Settings</BrandBar.UserMenuItem>
-    <BrandBar.UserMenuItem onSelect={() => console.log('Logout'))}>Logout</BrandBar.UserMenuItem>
+    <BrandBar.UserMenuItem onSelect={() => console.log('Settings')}>Settings</BrandBar.UserMenuItem>
+    <BrandBar.UserMenuItem onSelect={() => console.log('Logout')}>Logout</BrandBar.UserMenuItem>
   </BrandBar>`
 
 <LiveProvider code={code} scope={{ BrandBar }}>

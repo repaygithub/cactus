@@ -6,6 +6,7 @@
 .cache
 .DS_Store
 local.env
+__diff_output__
 
 .vscode/*
 !.vscode/tasks.json
