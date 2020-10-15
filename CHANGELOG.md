@@ -1,5 +1,25 @@
 # Changelog
 
+## [@repay/cactus-web@v3.2.0](https://github.com/repaygithub/cactus/commit/ee16d57e7b17042a48dcce69741c02ea4b951883)
+
+- chore(cactus-web): remove ts-jest from cactus-web [b9c48c0](https://github.com/repaygithub/cactus/commit/b9c48c08d50dccfc10d64a76d18b12d6f09ab9be)
+- chore(cactus-web): update stories to provide consistent snapshots [35dd4e5](https://github.com/repaygithub/cactus/commit/35dd4e539e989c1f937d57e04b66ad5e99c4bbee)
+- fix(cactus-web): remove hard-coded nested padding styles on Card [700cdf9](https://github.com/repaygithub/cactus/commit/700cdf908357b06731a1df4d0abee6c0d3699523)
+- docs(cactus-web): update Card docs [c66dba3](https://github.com/repaygithub/cactus/commit/c66dba344314214e7e4795946183dec06df28d62)
+- feat(cactus-web): add padding props to card [0ece89b](https://github.com/repaygithub/cactus/commit/0ece89bf545f143b1d9ab90180fdd5d0a5f50e17)
+- refactor(cactus-web): simplify box-shadow fallback [273cb2d](https://github.com/repaygithub/cactus/commit/273cb2dc62b996b6b8a32fb00764362f3312a212)
+- refactor(cactus-web): format file [4a7184d](https://github.com/repaygithub/cactus/commit/4a7184d5c9dea1e98bfa38ebefcc95541998566e)
+- fix(cactus-web): fix issue where some elements were displaying above the mobile menu [22bf7d9](https://github.com/repaygithub/cactus/commit/22bf7d91f5d840d42e1d9e6f4027330d83992730)
+- docs(cactus-web): add docs for `usePopup` hook [8fdb828](https://github.com/repaygithub/cactus/commit/8fdb8286d1ebe81d5cdbaf3f1421a6f51ae2922d)
+- fix(cactus-web): fix blur/click behavior on Safari [a123dc0](https://github.com/repaygithub/cactus/commit/a123dc092968b2b5b5da5bfbe2267da1b3ac5fe0)
+- chore(cactus-web): make changes re Typescript/docs PR feedback [7e8e8b3](https://github.com/repaygithub/cactus/commit/7e8e8b3aac13138a67732daafa5c7cb98b1c5bac)
+- fix(cactus-web): fix nested state update issue & expand test [c8a6c41](https://github.com/repaygithub/cactus/commit/c8a6c419f0c10da5d43b9deeea27dcd0a6e142c2)
+- fix(cactus-web): don't use global var for mutable state :( [4414f6f](https://github.com/repaygithub/cactus/commit/4414f6f29d14205f1499e97a3d3a491dc2f8b615)
+- feat(cactus-web): add ActionBar.Panel component [14ac2e0](https://github.com/repaygithub/cactus/commit/14ac2e0f6d80b58ce0a42df43f965b47c4049a03)
+- refactor(cactus-web): change variant in proptypes to lower-case [898cd7a](https://github.com/repaygithub/cactus/commit/898cd7a0593a67a574d513647f9914d9d84cb5d7)
+- fix(cactus-web): ignore width on card view of table and Datagrid [eda9df2](https://github.com/repaygithub/cactus/commit/eda9df2f82eb32e480a3f79c3c07f680d0fc4f0e)
+- chore(cactus-web): update changelog [382134b](https://github.com/repaygithub/cactus/commit/382134b1e4ff27a407fb322c088590f57860f061)
+
 ## [@repay/cactus-web@v3.1.0](https://github.com/repaygithub/cactus/commit/50b46d46832db3a88f7237506ffd9e73468498e4)
 
 - docs(cactus-web): fix ActionBar.Item docs [0edd3d6](https://github.com/repaygithub/cactus/commit/0edd3d607e4800325f1c668063eb500ac3a3ce8a)
