@@ -126,19 +126,32 @@ tableStories.add(
             <Table.Cell>Header Cell</Table.Cell>
             <Table.Cell>Header Cell</Table.Cell>
             <Table.Cell>Header Cell</Table.Cell>
+            <Table.Cell>Header Cell</Table.Cell>
           </Table.Header>
           <Table.Body>
             <Table.Row>
-              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>
+                {text(
+                  'text',
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
+                )}
+              </Table.Cell>
               <Table.Cell>Data cell</Table.Cell>
               <Table.Cell>Data cell</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>Data cell</Table.Cell>
               <Table.Cell>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis
-                dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel
+                {text(
+                  'text',
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
+                )}
               </Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
               <Table.Cell>Data cell</Table.Cell>
             </Table.Row>
             <Table.Row>

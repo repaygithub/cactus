@@ -36,6 +36,12 @@ exports[`component: Table card carousel 1`] = `
   text-align: center;
 }
 
+.c5:not(:empty) + .c7 {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
 .c3 {
   text-align: left;
   padding: 16px;
@@ -43,6 +49,7 @@ exports[`component: Table card carousel 1`] = `
 }
 
 .c4.c4 {
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -60,12 +67,6 @@ exports[`component: Table card carousel 1`] = `
   -ms-flex-align: flex-start;
   align-items: flex-start;
   padding: 8px 16px;
-}
-
-.c4.c4 > div[aria-hidden='true'] + div {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
 }
 
 .c4.c4:nth-of-type(even) {
@@ -127,7 +128,9 @@ exports[`component: Table card carousel 1`] = `
   -webkit-flex-flow: column nowrap;
   -ms-flex-flow: column nowrap;
   flex-flow: column nowrap;
-  min-width: 272px;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
   max-width: 360px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   background-color: hsl(0,0%,100%);

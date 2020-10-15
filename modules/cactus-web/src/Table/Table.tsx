@@ -4,6 +4,7 @@ import React, { createContext, useContext, useLayoutEffect } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { width, WidthProps } from 'styled-system'
 
+import { useMergedRefs } from '../helpers/react'
 import { border, boxShadow, media, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -27,7 +28,7 @@ interface TableContextProps {
   headers?: React.ReactNode[]
   cellIndex: number
   variant: TableVariant
-  largestCell: CellHeightProps
+  maxHeights: number[]
 }
 
 interface TableProps
@@ -75,10 +76,7 @@ const DEFAULT_CONTEXT: TableContextProps = {
   inHeader: false,
   cellIndex: 0,
   variant: 'table',
-  largestCell: {
-    height: 0,
-    cell: 0,
-  },
+  maxHeights: [],
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -117,20 +115,42 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     )
   }
 )
+interface CardCellProps {
+  ref: React.MutableRefObject<HTMLTableDataCellElement | null> | any
+  children: React.ReactNode
+  colSpan: number
+  ctx: TableContextProps
+}
 
-function useCombinedRefs(...refs: any) {
-  const targetRef = React.useRef<HTMLTableDataCellElement | null>(null)
+const CardCell: React.FC<CardCellProps> = (props: CardCellProps): React.ReactElement => {
+  const { ref, colSpan, children, ctx, ...rest } = props
+  const context = useContext<TableContextProps>(TableContext)
+  const innerRef = React.useRef<HTMLTableDataCellElement>(null)
+  const combinedRef = useMergedRefs(ref, innerRef)
 
-  React.useEffect(() => {
-    refs.forEach((ref: typeof targetRef) => {
-      if (!ref) return
-      else if (ref.current) {
-        ref.current = targetRef.current
+  useLayoutEffect(() => {
+    if (innerRef && innerRef.current) {
+      const cellIndex = innerRef.current.cellIndex
+
+      const maxHeight = context.maxHeights[cellIndex]
+      if (innerRef.current.clientHeight > maxHeight || maxHeight === undefined) {
+        context.maxHeights[cellIndex] = innerRef.current.clientHeight
       }
-    })
-  }, [refs])
+    }
+  }, [context.maxHeights])
 
-  return targetRef
+  if (innerRef.current)
+    innerRef.current.style.minHeight = `${context.maxHeights[innerRef.current?.cellIndex]}px`
+
+  const headerContent = context.headers && context.headers[context.cellIndex]
+  context.cellIndex += colSpan
+
+  return (
+    <StyledCell ref={combinedRef} {...rest}>
+      {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
+      <ContentBox>{children}</ContentBox>
+    </StyledCell>
+  )
 }
 
 export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
@@ -146,29 +166,12 @@ export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellPro
       context.headers[context.cellIndex] = children
       context.cellIndex += colSpan
     } else if (context.variant === 'card') {
-      const innerRef = React.useRef(null)
-      const combinedRef = useCombinedRefs(ref, innerRef)
-
-      useLayoutEffect(() => {
-        if (combinedRef && combinedRef.current) {
-          if (combinedRef.current.clientHeight > context.largestCell.height) {
-            context.largestCell.height = combinedRef.current.clientHeight
-            context.largestCell.cell = combinedRef.current.cellIndex
-          }
-        }
-      }, [combinedRef, context.largestCell.cell, context.largestCell.height, ref, children])
-      if (combinedRef.current && combinedRef.current.cellIndex === context.largestCell.cell) {
-        combinedRef.current.style.height = `${context.largestCell.height - 16}px`
-      }
-      const headerContent = context.headers && context.headers[context.cellIndex]
-      context.cellIndex += colSpan
       props.variant = 'card'
 
       return (
-        <StyledCell {...props} ref={combinedRef}>
-          {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
-          <ContentBox>{children}</ContentBox>
-        </StyledCell>
+        <CardCell ref={ref} colSpan={colSpan} ctx={context} {...props}>
+          {children}
+        </CardCell>
       )
     }
 
@@ -207,11 +210,9 @@ export const TableRow: React.FC<TableRowProps> = ({ children, ...props }): React
 }
 
 export const TableBody = 'tbody'
-
 type ForwardRefComponent<T, P> = React.ForwardRefExoticComponent<
   React.PropsWithoutRef<P> & React.RefAttributes<T>
 >
-
 type TableComponentType = ForwardRefComponent<HTMLTableElement, TableProps> & {
   Header: ForwardRefComponent<HTMLTableSectionElement, TableHeaderProps>
   Cell: ForwardRefComponent<HTMLTableDataCellElement, TableCellProps>
@@ -273,6 +274,9 @@ const ContentBox = styled.div`
   ${HeaderBox}:empty + & {
     text-align: center;
   }
+  ${HeaderBox}:not(:empty) + & {
+    align-self: flex-end;
+  }
 `
 
 const StyledCell = styled.td(
@@ -296,15 +300,13 @@ const StyledCell = styled.td(
     `,
     card: css`
       && {
+        box-sizing: border-box;
         display: flex;
         width: 240px;
         flex-flow: row wrap;
         justify-content: space-between;
         align-items: flex-start;
         padding: 8px 16px;
-        > div[aria-hidden='true'] + div {
-          align-self: flex-end;
-        }
         :nth-of-type(even) {
           background-color: ${(p): string => p.theme.colors.lightContrast};
         }
@@ -442,7 +444,7 @@ const card = css`
   tr {
     display: flex;
     flex-flow: column nowrap;
-    min-width: 272px;
+    min-width: fit-content;
     max-width: 360px;
     ${(p): string => boxShadow(p.theme, 1)};
     background-color: ${(p): string => p.theme.colors.white};
