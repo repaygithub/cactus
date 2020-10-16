@@ -10,17 +10,9 @@ import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 type CellAlignment = 'center' | 'right' | 'left'
-
 type CellType = 'th' | 'td'
-
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-
 type TableVariant = 'table' | 'card'
-
-interface CellHeightProps {
-  height: number
-  cell: number
-}
 
 interface TableContextProps {
   cellType?: CellType
