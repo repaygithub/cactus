@@ -1,27 +1,32 @@
-import { actions } from '@storybook/addon-actions'
 import { boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
-import FormHandler from '../storySupport/FormHandler'
 import ToggleField from './ToggleField'
 
-const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
+const eventLoggers = {
+  onClick: (e: any) => console.log(`onClick '${e.target.name}': ${e.target.checked}`),
+  onFocus: (e: any) => console.log('onFocus:', e.target.name),
+  onBlur: (e: any) => console.log('onBlur:', e.target.name),
+}
 
-storiesOf('ToggleField', module).add(
-  'Basic Usage',
-  (): React.ReactElement => (
-    <FormHandler defaultValue={false} onChange={(name: string, value: boolean): boolean => value}>
-      {({ value, onChange }): React.ReactElement => (
-        <ToggleField
-          name={text('name', 'boolean_field')}
-          label={text('label', 'Boolean Field')}
-          value={value}
-          onChange={onChange}
-          disabled={boolean('disabled', false)}
-          {...eventLoggers}
-        />
-      )}
-    </FormHandler>
+const ToggleHandler = (props: any) => {
+  const [checked, setChecked] = React.useState<boolean>(false)
+  const onChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(`onChange '${e.target.name}': ${e.target.checked}`)
+      setChecked(e.target.checked)
+    },
+    [setChecked]
   )
-)
+  return <ToggleField {...props} checked={checked} onChange={onChange} />
+}
+
+storiesOf('ToggleField', module).add('Basic Usage', () => (
+  <ToggleHandler
+    name={text('name', 'boolean_field')}
+    label={text('label', 'Boolean Field')}
+    disabled={boolean('disabled', false)}
+    {...eventLoggers}
+  />
+))

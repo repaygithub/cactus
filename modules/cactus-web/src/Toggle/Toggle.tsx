@@ -4,61 +4,96 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
+import { extractMargins } from '../helpers/omit'
 import { boxShadow } from '../helpers/theme'
-import { Omit } from '../types'
 
-export interface ToggleProps
-  extends Omit<
-      React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-      'value' | 'ref'
-    >,
-    MarginProps {
-  value?: boolean
+export interface ToggleProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
+  checked?: boolean
   disabled?: boolean
 }
 
-const ToggleBase = (props: ToggleProps): React.ReactElement => {
-  const componentProps = omitMargins(props)
-  const { value, ...toggleProps } = componentProps
-  return (
-    <button type="button" role="switch" aria-checked={value} {...toggleProps}>
-      <StyledX aria-hidden="true" />
-      <StyledCheck aria-hidden="true" />
-    </button>
-  )
-}
+export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
+  ({ className, ...props }, ref) => {
+    const marginProps = extractMargins(props)
+    return (
+      <Wrapper {...marginProps} className={className} role="none">
+        <Checkbox {...props} role="switch" aria-checked={props.checked} ref={ref} />
+        <Switch aria-hidden />
+        <StyledX aria-hidden />
+        <StyledCheck aria-hidden />
+      </Wrapper>
+    )
+  }
+)
+
+const Checkbox = styled.input.attrs({ type: 'checkbox' as string })`
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  margin: 0;
+  z-index: 1;
+  position: absolute;
+  cursor: pointer;
+  :disabled {
+    cursor: not-allowed;
+  }
+`
 
 const StyledX = styled(NavigationClose)`
   width: 12px;
   height: 12px;
   position: absolute;
-  top: 6px;
-  right: 8px;
+  top: 7px;
+  right: 9px;
   color: ${(p): string => p.theme.colors.white};
+  opacity: 1;
+  transition: opacity 0.3s;
+  input:checked ~ & {
+    opacity: 0;
+  }
 `
 
 const StyledCheck = styled(StatusCheck)`
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 4px;
-  left: 5px;
+  top: 5px;
+  left: 6px;
   color: ${(p): string => p.theme.colors.white};
+  opacity: 0;
+  transition: opacity 0.3s;
+  input:checked ~ & {
+    opacity: 1;
+  }
 `
 
-export const Toggle = styled(ToggleBase)`
+const Wrapper = styled.div`
+  display: inline-block;
   position: relative;
   width: 51px;
   height: 26px;
-  border-radius: 13px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
   outline: none;
-  background-color: ${(p): string =>
-    p.disabled ? p.theme.colors.lightGray : p.theme.colors.error};
-  border: 1px solid ${(p): string => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.error)};
-  cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
+  ${margin}
+`
 
-  &:focus {
+const Switch = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  background-color: ${(p) => p.theme.colors.error};
+  cursor: pointer;
+  input:disabled ~ & {
+    background-color: ${(p) => p.theme.colors.lightGray};
+    cursor: cursor;
+    opacity: 0.5;
+  }
+
+  input:focus ~ & {
     ${(p): string => boxShadow(p.theme, 1)};
   }
 
@@ -67,56 +102,33 @@ export const Toggle = styled(ToggleBase)`
     height: 26px;
     border-radius: 50%;
     content: '';
-    top: -1px;
-    left: -1px;
+    top: 0;
+    left: 0;
     position: absolute;
-    transition: transform 0.3s;
+    transition: left 0.3s;
     background-color: ${(p): string => p.theme.colors.white};
     box-shadow: 0 0 3px ${(p): string => p.theme.colors.darkestContrast};
   }
 
-  &[aria-checked='true'] {
+  input:checked ~ & {
     background-color: ${(p): string => p.theme.colors.success};
-    border-color: ${(p): string => p.theme.colors.success};
 
     ::after {
-      transform: translateX(26px);
-    }
-
-    ${StyledX} {
-      opacity: 0;
-    }
-
-    ${StyledCheck} {
-      opacity: 1;
+      left: 26px;
     }
   }
-
-  ${StyledX} {
-    opacity: 1;
-    transition: opacity 0.3s;
-  }
-
-  ${StyledCheck} {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  &[disabled] {
-    opacity: 0.5;
-  }
-
-  ${margin}
 `
 
-// @ts-ignore
 Toggle.propTypes = {
-  value: PropTypes.bool,
+  checked: PropTypes.bool,
   disabled: PropTypes.bool,
 }
 
 Toggle.defaultProps = {
   disabled: false,
 }
+
+// Enable use of `Toggle` as a styled-components CSS class.
+Toggle.toString = Wrapper.toString
 
 export default Toggle

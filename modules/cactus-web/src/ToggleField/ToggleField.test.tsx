@@ -1,27 +1,41 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import pick from 'lodash/pick'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import ToggleField from './ToggleField'
 
-afterEach(cleanup)
+// Use this to avoid PropTypes error regarding readonly field.
+const noop = () => undefined
 
 describe('component: ToggleField', (): void => {
   test('snapshot', (): void => {
     const { container } = render(
       <StyleProvider>
-        <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} />
+        <ToggleField
+          id="static-id"
+          name="is_enabled"
+          label="Enabled"
+          checked={false}
+          onChange={noop}
+        />
       </StyleProvider>
     )
 
     expect(container).toMatchSnapshot()
   })
 
-  test('snapshot when value=true', (): void => {
+  test('snapshot when checked=true', (): void => {
     const { container } = render(
       <StyleProvider>
-        <ToggleField id="static-id" name="is_enabled" label="Enabled" value={true} />
+        <ToggleField
+          id="static-id"
+          name="is_enabled"
+          label="Enabled"
+          checked={true}
+          onChange={noop}
+        />
       </StyleProvider>
     )
 
@@ -31,7 +45,7 @@ describe('component: ToggleField', (): void => {
   test('snapshot when disabled', (): void => {
     const { container } = render(
       <StyleProvider>
-        <ToggleField id="static-id" name="is_enabled" label="Enabled" value={false} disabled />
+        <ToggleField id="static-id" name="is_enabled" label="Enabled" checked={false} disabled />
       </StyleProvider>
     )
 
@@ -41,7 +55,12 @@ describe('component: ToggleField', (): void => {
   test('should generate unique id when one is not provided', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>
-        <ToggleField label="Show me the money" name="show-me-the-money" value={true} />
+        <ToggleField
+          label="Show me the money"
+          name="show-me-the-money"
+          checked={true}
+          onChange={noop}
+        />
       </StyleProvider>
     )
 
@@ -49,27 +68,35 @@ describe('component: ToggleField', (): void => {
   })
 
   test('should trigger onChange event with next value', (): void => {
-    const onChange = jest.fn()
+    const box: any = {}
+    const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'checked'])))
     const { getByLabelText } = render(
       <StyleProvider>
         <ToggleField
           label="Show me the money"
           name="show-me-the-money"
-          value={true}
+          checked={true}
           onChange={onChange}
         />
       </StyleProvider>
     )
 
     fireEvent.click(getByLabelText('Show me the money'))
-    expect(onChange).toHaveBeenCalledWith('show-me-the-money', false)
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(box).toEqual({ name: 'show-me-the-money', checked: false })
   })
 
   test('should trigger onFocus event', (): void => {
     const onFocus = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
-        <ToggleField label="Strange Nights" name="strange_nights" value={false} onFocus={onFocus} />
+        <ToggleField
+          label="Strange Nights"
+          name="strange_nights"
+          checked={false}
+          onFocus={onFocus}
+          onChange={noop}
+        />
       </StyleProvider>
     )
 
@@ -81,7 +108,13 @@ describe('component: ToggleField', (): void => {
     const onBlur = jest.fn()
     const { getByLabelText } = render(
       <StyleProvider>
-        <ToggleField label="Washed." name="washed" value={false} onBlur={onBlur} />
+        <ToggleField
+          label="Washed."
+          name="washed"
+          checked={false}
+          onBlur={onBlur}
+          onChange={noop}
+        />
       </StyleProvider>
     )
 
@@ -94,7 +127,7 @@ describe('component: ToggleField', (): void => {
       const onChange = jest.fn()
       const { getByLabelText } = render(
         <StyleProvider>
-          <ToggleField label="Flow" name="flow" value={false} onChange={onChange} disabled />
+          <ToggleField label="Flow" name="flow" checked={false} onChange={onChange} disabled />
         </StyleProvider>
       )
 
@@ -109,7 +142,7 @@ describe('component: ToggleField', (): void => {
           <ToggleField
             label="Not For Sale"
             name="not_for_sale"
-            value={true}
+            checked={true}
             onFocus={onFocus}
             disabled
           />

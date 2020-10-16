@@ -6,31 +6,21 @@ import Toggle from './Toggle'
 
 const toggleStories = storiesOf('Toggle', module)
 
-const initialState = { value: false }
-type State = Readonly<typeof initialState>
-
-class ToggleManager extends React.Component {
-  public readonly state: State = initialState
-  private handleToggle = (): void => {
-    this.setState({
-      value: !this.state.value,
-    })
-  }
-  public render(): React.ReactElement {
-    return (
-      <Toggle
-        value={this.state.value}
-        onClick={this.handleToggle}
-        disabled={boolean('disabled', false)}
-        {...this.props}
-      />
-    )
-  }
+const ToggleManager = (props: any) => {
+  const [checked, setChecked] = React.useState<boolean>(false)
+  const onChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(`onChange '${e.target.name}': ${e.target.checked}`)
+      setChecked(e.target.checked)
+    },
+    [setChecked]
+  )
+  return <Toggle {...props} checked={checked} onChange={onChange} />
 }
 
 toggleStories.add(
   'Basic Usage',
   (): React.ReactElement => {
-    return <ToggleManager />
+    return <ToggleManager disabled={boolean('Disabled', false)} />
   }
 )
