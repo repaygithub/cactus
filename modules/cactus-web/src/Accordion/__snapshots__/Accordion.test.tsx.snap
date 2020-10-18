@@ -234,7 +234,7 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-top: 8px;
 }
 
@@ -376,7 +376,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-top: 8px;
 }
 
@@ -517,7 +517,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-top: 8px;
 }
 
@@ -658,7 +658,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-top: 8px;
 }
 
@@ -798,7 +798,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   border: 0px;
 }
 
-.c1 + .c0 {
+.c0 + .c0 {
   margin-top: 8px;
 }
 

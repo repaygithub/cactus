@@ -5,12 +5,15 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
   vertical-align: middle;
 }
 
-.c5 {
+.c6 {
   vertical-align: middle;
 }
 
 .c4 {
   vertical-align: middle;
+}
+
+.c5 {
   margin-top: 5px;
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
@@ -262,7 +265,7 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
         class="c1"
       >
         <svg
-          class="sc-fznOgF c4"
+          class="c4 c5"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -296,7 +299,7 @@ exports[`component: Pagination 11 pages, first page selected 1`] = `
           tabindex="0"
         >
           <svg
-            class="c5"
+            class="c6"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"

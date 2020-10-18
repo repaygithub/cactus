@@ -20,6 +20,9 @@ exports[`component: Flex should accept basic built-in props 1`] = `
   border-radius: 20px;
   border-style: solid;
   z-index: 100;
+}
+
+.c1 {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -27,7 +30,7 @@ exports[`component: Flex should accept basic built-in props 1`] = `
 
 <div>
   <div
-    class="sc-AxjAm c0"
+    class="c0 c1"
     color="white"
     display="block"
     height="120px"
@@ -45,6 +48,9 @@ exports[`component: Flex should accept flex props 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+}
+
+.c1 {
   -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
@@ -61,12 +67,7 @@ exports[`component: Flex should accept flex props 1`] = `
   flex-direction: column;
 }
 
-.c1 {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+.c2 {
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
@@ -75,12 +76,7 @@ exports[`component: Flex should accept flex props 1`] = `
   flex-wrap: wrap;
 }
 
-.c2 {
-  box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+.c3 {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -88,15 +84,15 @@ exports[`component: Flex should accept flex props 1`] = `
 
 <div>
   <div
-    class="sc-AxjAm c0"
+    class="c0 c1"
     display="flex"
   >
     <div
-      class="sc-AxjAm c1"
+      class="c0 c2"
       display="flex"
     />
     <div
-      class="sc-AxjAm c2"
+      class="c0 c3"
       display="flex"
     />
   </div>
@@ -110,6 +106,9 @@ exports[`component: Flex snapshot with no props 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+}
+
+.c1 {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -117,7 +116,7 @@ exports[`component: Flex snapshot with no props 1`] = `
 
 <div>
   <div
-    class="sc-AxjAm c0"
+    class="c0 c1"
     display="flex"
   />
 </div>

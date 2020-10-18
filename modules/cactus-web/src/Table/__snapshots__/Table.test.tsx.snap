@@ -23,7 +23,7 @@ exports[`component: Table card carousel 1`] = `
   display: none;
 }
 
-.c7 {
+.c8 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -31,8 +31,8 @@ exports[`component: Table card carousel 1`] = `
   text-align: right;
 }
 
-.c7:only-child,
-.c5:empty + .c7 {
+.c8:only-child,
+.c5:empty + .c8 {
   text-align: center;
 }
 
@@ -213,7 +213,7 @@ exports[`component: Table card carousel 1`] = `
               Header Cell
             </div>
             <div
-              class="c7"
+              class="c7 c8"
             >
               Data cell
             </div>
@@ -233,7 +233,7 @@ exports[`component: Table card carousel 1`] = `
               Header Cell
             </div>
             <div
-              class="c7"
+              class="c7 c8"
             >
               Data cell
             </div>
@@ -253,7 +253,7 @@ exports[`component: Table card carousel 1`] = `
               Header Cell
             </div>
             <div
-              class="c7"
+              class="c7 c8"
             >
               Data cell
             </div>

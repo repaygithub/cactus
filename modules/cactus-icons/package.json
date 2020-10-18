@@ -35,6 +35,10 @@
     "transform": {
       "^.+\\.(t|j)sx?$": "babel-jest"
     },
+    "moduleNameMapper": {
+      "^styled-components":
+        "<rootDir>/../../node_modules/styled-components/dist/styled-components.browser.cjs.js"
+    },
     "setupFilesAfterEnv": [
       "<rootDir>/tests/__setup__/setup.ts"
     ],
@@ -64,17 +68,17 @@
     "@types/jest": "^26.0.7",
     "@types/node": "^14.0.26",
     "@types/storybook__react": "^5.2.1",
-    "@types/styled-components": "^5.1.1",
+    "@types/styled-components": "^5.1.4",
     "@types/styled-system": "^5.1.9",
     "babel-jest": "^26.1.0",
     "babel-loader": "^8.1.0",
     "fast-glob": "^3.2.4",
     "jest": "^26.1.0",
-    "jest-styled-components": "^7.0.2",
+    "jest-styled-components": "^7.0.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.0",
     "typescript": "^3.9.7"
   },
   "dependencies": {

@@ -38,6 +38,10 @@
     "transformIgnorePatterns": [
       "/node_modules/(?!@repay/cactus-icons)"
     ],
+    "moduleNameMapper": {
+      "^styled-components":
+        "<rootDir>/../../node_modules/styled-components/dist/styled-components.browser.cjs.js"
+    },
     "setupFiles": [
       "<rootDir>/.jest/register-context.js"
     ],
@@ -78,7 +82,7 @@
     "@types/react": "^16.9.43",
     "@types/storybook__addon-viewport": "^5.2.1",
     "@types/storybook__react": "^5.2.1",
-    "@types/styled-components": "^5.1.1",
+    "@types/styled-components": "^5.1.4",
     "@types/styled-system": "^5.1.9",
     "@types/user-event": "^4.1.0",
     "babel-jest": "^26.1.0",
@@ -86,7 +90,7 @@
     "babel-plugin-require-context-hook": "^1.0.0",
     "csstype": "^2.6.11",
     "jest": "^24.0.1",
-    "jest-styled-components": "^7.0.2",
+    "jest-styled-components": "^7.0.3",
     "prop-types": "^15.7.2",
     "puppeteer": "^5.3.1",
     "react": "^16.13.1",
@@ -94,7 +98,7 @@
     "react-test-renderer": "^16.13.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "start-server-and-test": "^1.11.5",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.0",
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
