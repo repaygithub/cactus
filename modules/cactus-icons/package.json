@@ -56,10 +56,10 @@
     "styled-components": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@repay/babel-preset": "^1.0.0",
+    "@babel/core": "^7.12.3",
+    "@repay/babel-preset": "^1.0.1",
     "@repay/cactus-theme": "^1.0.0",
-    "@repay/scripts": "^2.0.0",
+    "@repay/scripts": "^2.0.1",
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/react": "5.3.19",
     "@storybook/theming": "^5.3.19",
@@ -70,7 +70,7 @@
     "@types/storybook__react": "^5.2.1",
     "@types/styled-components": "^5.1.4",
     "@types/styled-system": "^5.1.9",
-    "babel-jest": "^26.1.0",
+    "babel-jest": "^26.6.0",
     "babel-loader": "^8.1.0",
     "fast-glob": "^3.2.4",
     "jest": "^26.1.0",
