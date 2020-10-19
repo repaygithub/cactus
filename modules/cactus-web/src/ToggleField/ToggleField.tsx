@@ -62,4 +62,5 @@ ToggleField.defaultProps = {
   checked: false,
 }
 
+ToggleField.displayName = 'ToggleField'
 export default ToggleField

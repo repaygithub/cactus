@@ -40,8 +40,10 @@ import { Button, RadioButtonField } from '@repay/cactus-web'
 export default function Form() {
   const [values, setValues] = useState({ radiobuttonfield: 'option_a' })
   const handleChange = useCallback(
-    (name, value) => {
-      setValues(state => setValues({ ...state, [name]: value }))
+    (e) => {
+      if (e.checked) {
+        setValues(state => ({ ...state, [e.target.name]: e.target.value }))
+      }
     },
     [setValues]
   )

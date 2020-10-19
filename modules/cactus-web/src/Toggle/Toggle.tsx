@@ -130,5 +130,6 @@ Toggle.defaultProps = {
 
 // Enable use of `Toggle` as a styled-components CSS class.
 Toggle.toString = Wrapper.toString
+Toggle.displayName = 'Toggle'
 
 export default Toggle
