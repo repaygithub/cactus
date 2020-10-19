@@ -20,7 +20,6 @@ interface TableContextProps {
   headers?: React.ReactNode[]
   cellIndex: number
   variant: TableVariant
-  maxHeights: number[]
 }
 
 interface TableProps
@@ -68,7 +67,6 @@ const DEFAULT_CONTEXT: TableContextProps = {
   inHeader: false,
   cellIndex: 0,
   variant: 'table',
-  maxHeights: [],
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -84,6 +82,32 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
   ({ children, cardBreakpoint, ...props }, ref): React.ReactElement => {
     const size = useContext(ScreenSizeContext)
     const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
+    const tableRef = React.useRef<HTMLTableElement>(null)
+    const mergedRef = useMergedRefs(ref, tableRef)
+    useLayoutEffect(() => {
+      const heightInfo = []
+      if (context.variant === 'card') {
+        const cells = tableRef.current?.querySelectorAll(`${StyledCell}`)
+        if (cells?.length > 0) {
+          for (const cell of cells as HTMLTableCellElement[]) {
+            const cellIndex = cell.cellIndex
+            const info = heightInfo[cellIndex] || (heightInfo[cellIndex] = { max: 0, cells: [] })
+            const height = cell.clientHeight
+            info.max = Math.max(info.max, height)
+            info.cells.push({ height, cell })
+          }
+          // We queue the updates then make them all at once to avoid layout thrashing.
+          for (const info of heightInfo) {
+            for (const cellInfo of info.cells) {
+              if (cellInfo.height !== info.max) {
+                cellInfo.cell.style.minHeight = `${info.max}px`
+              }
+            }
+          }
+        }
+      }
+    })
+
     if (props.variant) {
       context.variant = props.variant
     } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
@@ -93,12 +117,12 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     return (
       <TableContext.Provider value={context}>
         {props.as ? (
-          <StyledTable {...props} ref={ref}>
+          <StyledTable {...props} ref={mergedRef}>
             {children}
           </StyledTable>
         ) : (
           <Wrapper fullWidth={props.fullWidth}>
-            <StyledTable {...props} ref={ref}>
+            <StyledTable {...props} ref={mergedRef}>
               {children}
             </StyledTable>
           </Wrapper>
@@ -107,43 +131,6 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     )
   }
 )
-interface CardCellProps {
-  ref: React.MutableRefObject<HTMLTableDataCellElement | null> | any
-  children: React.ReactNode
-  colSpan: number
-  ctx: TableContextProps
-}
-
-const CardCell: React.FC<CardCellProps> = (props: CardCellProps): React.ReactElement => {
-  const { ref, colSpan, children, ctx, ...rest } = props
-  const context = useContext<TableContextProps>(TableContext)
-  const innerRef = React.useRef<HTMLTableDataCellElement>(null)
-  const combinedRef = useMergedRefs(ref, innerRef)
-
-  useLayoutEffect(() => {
-    if (innerRef && innerRef.current) {
-      const cellIndex = innerRef.current.cellIndex
-
-      const maxHeight = context.maxHeights[cellIndex]
-      if (innerRef.current.clientHeight > maxHeight || maxHeight === undefined) {
-        context.maxHeights[cellIndex] = innerRef.current.clientHeight
-      }
-    }
-  }, [context.maxHeights])
-
-  if (innerRef.current)
-    innerRef.current.style.minHeight = `${context.maxHeights[innerRef.current?.cellIndex]}px`
-
-  const headerContent = context.headers && context.headers[context.cellIndex]
-  context.cellIndex += colSpan
-
-  return (
-    <StyledCell ref={combinedRef} {...rest}>
-      {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
-      <ContentBox>{children}</ContentBox>
-    </StyledCell>
-  )
-}
 
 export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
   ({ children, ...props }, ref): React.ReactElement => {
@@ -158,12 +145,14 @@ export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellPro
       context.headers[context.cellIndex] = children
       context.cellIndex += colSpan
     } else if (context.variant === 'card') {
+      const headerContent = context.headers && context.headers[context.cellIndex]
+      context.cellIndex += colSpan
       props.variant = 'card'
-
       return (
-        <CardCell ref={ref} colSpan={colSpan} ctx={context} {...props}>
-          {children}
-        </CardCell>
+        <StyledCell ref={ref} {...props}>
+          {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
+          <ContentBox>{children}</ContentBox>
+        </StyledCell>
       )
     }
 
