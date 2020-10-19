@@ -107,9 +107,110 @@ export const StyleProvider: React.FC<StyleProviderProps> = (props): React.ReactE
   )
 }
 
-// @ts-ignore
+// PropTypes declarations of some recurring types so they can be re-used.
+const textStyleObj = PropTypes.shape({
+  fontSize: PropTypes.string.isRequired,
+  lineHeight: PropTypes.string.isRequired,
+}).isRequired
+const textStylesObj = PropTypes.shape({
+  tiny: textStyleObj,
+  small: textStyleObj,
+  body: textStyleObj,
+  h4: textStyleObj,
+  h3: textStyleObj,
+  h2: textStyleObj,
+  h1: textStyleObj,
+}).isRequired
+const colorStyleObj = PropTypes.shape({
+  color: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+}).isRequired
+const statusObj = PropTypes.shape({
+  success: PropTypes.string.isRequired,
+  warning: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
+}).isRequired
+
+const generateArrayValidator = (expectedLength: number) =>
+  PropTypes.arrayOf<number>((propValue, key, componentName, _, propFullName) => {
+    if (propValue.length !== expectedLength) {
+      return new Error(
+        `Invalid prop \`${propFullName}\` supplied to \`${componentName}\`. ${propFullName.substring(
+          0,
+          propFullName.length - 3
+        )} must be an array of length ${expectedLength}, but it is length ${propValue.length}.`
+      )
+    }
+    const type = typeof propValue[key]
+    if (type !== 'number') {
+      return new Error(
+        `Invalid prop \`${propFullName}\` of type \`${type}\` supplied to \`${componentName}\`, expected \`number\`.`
+      )
+    }
+    return null
+  }).isRequired
+
 StyleProvider.propTypes = {
   global: PropTypes.bool,
+  // @ts-ignore
+  theme: PropTypes.shape({
+    colors: PropTypes.shape({
+      base: PropTypes.string.isRequired,
+      baseText: PropTypes.string.isRequired,
+      callToAction: PropTypes.string.isRequired,
+      callToActionText: PropTypes.string.isRequired,
+      transparentCTA: PropTypes.string.isRequired,
+      lightContrast: PropTypes.string.isRequired,
+      mediumContrast: PropTypes.string.isRequired,
+      darkContrast: PropTypes.string.isRequired,
+      darkestContrast: PropTypes.string.isRequired,
+      white: PropTypes.string.isRequired,
+      lightGray: PropTypes.string.isRequired,
+      mediumGray: PropTypes.string.isRequired,
+      darkGray: PropTypes.string.isRequired,
+      success: PropTypes.string.isRequired,
+      warning: PropTypes.string.isRequired,
+      error: PropTypes.string.isRequired,
+      transparentSuccess: PropTypes.string.isRequired,
+      transparentWarning: PropTypes.string.isRequired,
+      transparentError: PropTypes.string.isRequired,
+      errorDark: PropTypes.string.isRequired,
+      warningDark: PropTypes.string.isRequired,
+      successDark: PropTypes.string.isRequired,
+      status: PropTypes.shape({
+        background: statusObj,
+        avatar: statusObj,
+      }).isRequired,
+    }).isRequired,
+    space: generateArrayValidator(8),
+    fontSizes: generateArrayValidator(7),
+    mobileFontSizes: generateArrayValidator(7),
+    iconSizes: generateArrayValidator(4),
+    textStyles: textStylesObj,
+    mobileTextStyles: textStylesObj,
+    colorStyles: PropTypes.shape({
+      base: colorStyleObj,
+      callToAction: colorStyleObj,
+      standard: colorStyleObj,
+      lightContrast: colorStyleObj,
+      darkestContrast: colorStyleObj,
+      success: colorStyleObj,
+      error: colorStyleObj,
+      warning: colorStyleObj,
+      disable: colorStyleObj,
+      transparentCTA: colorStyleObj,
+      transparentError: colorStyleObj,
+      transparentSuccess: colorStyleObj,
+      transparentWarning: colorStyleObj,
+      errorDark: colorStyleObj,
+      warningDark: colorStyleObj,
+      successDark: colorStyleObj,
+    }).isRequired,
+    border: PropTypes.oneOf(['thin', 'thick']).isRequired,
+    shape: PropTypes.oneOf(['square', 'intermediate', 'round']).isRequired,
+    font: PropTypes.string.isRequired,
+    boxShadows: PropTypes.bool.isRequired,
+  }),
 }
 
 StyleProvider.defaultProps = {
