@@ -334,8 +334,10 @@ const getListBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => {
     ? css`
         border: 0px;
       `
-    : css`${borderMap[theme.border]}
-  border-color: ${theme.colors.lightContrast};`
+    : css`
+        ${borderMap[theme.border]}
+        border-color: ${theme.colors.lightContrast};
+      `
 }
 
 const StyledList = styled.ul`
@@ -1509,7 +1511,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
 export const Select = styled(SelectBase)`
   max-width: 100%;
-  & button:disabled{
+  & button:disabled {
     background-color: ${(p) => p.disabled && p.theme.colors.lightGray};
     border-color: ${(p) => p.disabled && p.theme.colors.lightGray};
   }
