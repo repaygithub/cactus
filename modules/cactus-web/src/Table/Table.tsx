@@ -78,6 +78,11 @@ const Wrapper = styled.div<TableProps>`
   ${(p): string => (p.fullWidth ? 'min-width: calc(100% - 32px)' : '')};
 `
 
+interface heightInfoProps {
+  max: number
+  cells: any[]
+}
+
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(
   ({ children, cardBreakpoint, ...props }, ref): React.ReactElement => {
     const size = useContext(ScreenSizeContext)
@@ -85,29 +90,38 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     const tableRef = React.useRef<HTMLTableElement>(null)
     const mergedRef = useMergedRefs(ref, tableRef)
     useLayoutEffect(() => {
-      const heightInfo = []
+      const heightInfo: heightInfoProps[] = []
+      let height = 0
+
       if (context.variant === 'card') {
         const cells = tableRef.current?.querySelectorAll(`${StyledCell}`)
-        if (cells?.length > 0) {
-          for (const cell of cells as HTMLTableCellElement[]) {
-            const cellIndex = cell.cellIndex
+        if (cells && cells.length > 0) {
+          cells.forEach((cell) => {
+            const cellIndex = (cell as HTMLTableCellElement).cellIndex
             const info = heightInfo[cellIndex] || (heightInfo[cellIndex] = { max: 0, cells: [] })
-            const height = cell.clientHeight
-            info.max = Math.max(info.max, height)
-            info.cells.push({ height, cell })
-          }
+            const [first, second] = cell.childNodes as any
+            const rect1 = first.getBoundingClientRect?.()
+            const rect2 = second?.getBoundingClientRect?.()
+            if (rect1) {
+              if (!rect2 || rect1.width + rect2.width < cell.clientWidth - 16) {
+                height = rect1.height
+              } else {
+                height = rect1.height + rect2.height + 16
+              }
+              info.max = Math.max(info.max, height)
+              info.cells.push({ height, cell })
+            }
+          })
+
           // We queue the updates then make them all at once to avoid layout thrashing.
           for (const info of heightInfo) {
             for (const cellInfo of info.cells) {
-              if (cellInfo.height !== info.max) {
-                cellInfo.cell.style.minHeight = `${info.max}px`
-              }
+              cellInfo.cell.style.minHeight = `${info.max}px`
             }
           }
         }
       }
     })
-
     if (props.variant) {
       context.variant = props.variant
     } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
@@ -148,8 +162,9 @@ export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellPro
       const headerContent = context.headers && context.headers[context.cellIndex]
       context.cellIndex += colSpan
       props.variant = 'card'
+
       return (
-        <StyledCell ref={ref} {...props}>
+        <StyledCell {...props} ref={ref}>
           {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
           <ContentBox>{children}</ContentBox>
         </StyledCell>
@@ -265,7 +280,6 @@ const StyledCell = styled.td(
     table: css<TableCellProps>`
       text-align: ${(p): string => p.align || 'left'};
       padding: 16px;
-
       ${(p) =>
         p.width
           ? width
@@ -281,7 +295,6 @@ const StyledCell = styled.td(
     `,
     card: css`
       && {
-        box-sizing: border-box;
         display: flex;
         width: 240px;
         flex-flow: row wrap;
@@ -325,7 +338,6 @@ const table = css`
   display: table;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   border-spacing: 0;
-
   td,
   th {
     background-color: ${(p): string => p.theme.colors.white};
@@ -338,21 +350,18 @@ const table = css`
       border-right: ${(p): string => border(p.theme, 'lightContrast')};
     }
   }
-
   tr:nth-of-type(even) {
     td,
     th {
       background-color: ${(p): string => p.theme.colors.lightContrast};
     }
   }
-
   &&& tr:hover {
     th,
     td {
       border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
-
   &&& tr:focus {
     outline: 0;
     td,
@@ -361,7 +370,6 @@ const table = css`
       border-color: ${(p): string => p.theme.colors.callToAction};
     }
   }
-
   // first row
   & > tr:first-of-type,
   tbody > tr:first-child,
@@ -377,7 +385,6 @@ const table = css`
       }
     }
   }
-
   // first row false positives
   && > thead + tr:first-of-type,
   && > thead + tbody > tr:first-child {
@@ -388,7 +395,6 @@ const table = css`
       border-top-right-radius: 0px;
     }
   }
-
   // last row
   &,
   tbody:last-child,
@@ -412,7 +418,6 @@ const table = css`
 const card = css`
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'tiny')};
   overflow-wrap: break-word;
-
   &,
   thead,
   tbody,
@@ -421,11 +426,10 @@ const card = css`
     flex-flow: row nowrap;
     justify-content: flex-start;
   }
-
   tr {
     display: flex;
     flex-flow: column nowrap;
-    min-width: fit-content;
+    min-width: 240px;
     max-width: 360px;
     ${(p): string => boxShadow(p.theme, 1)};
     background-color: ${(p): string => p.theme.colors.white};
@@ -456,10 +460,8 @@ const card = css`
 const StyledTable = styled.table<TableProps>`
   ${(p): string => (p.fullWidth ? 'min-width: 100%' : '')};
   color: ${(p): string => p.theme.colors.darkestContrast};
-
   th {
     font-weight: 600;
   }
-
   ${variant({ table, card })};
 `

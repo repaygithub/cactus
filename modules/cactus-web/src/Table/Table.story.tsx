@@ -132,7 +132,7 @@ tableStories.add(
             <Table.Row>
               <Table.Cell>
                 {text(
-                  'text',
+                  'text 1',
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
                 )}
               </Table.Cell>
@@ -143,7 +143,7 @@ tableStories.add(
               <Table.Cell>Data cell</Table.Cell>
               <Table.Cell>
                 {text(
-                  'text',
+                  'text 2',
                   'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
                 )}
               </Table.Cell>
