@@ -100,7 +100,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
             const cellIndex = (cell as HTMLTableCellElement).cellIndex
             const info = heightInfo[cellIndex] || (heightInfo[cellIndex] = { max: 0, cells: [] })
             const [first, second] = cell.childNodes as any
-            const rect1 = first.getBoundingClientRect?.()
+            const rect1 = first?.getBoundingClientRect?.()
             const rect2 = second?.getBoundingClientRect?.()
             if (rect1) {
               if (!rect2 || rect1.width + rect2.width < cell.clientWidth - 16) {
