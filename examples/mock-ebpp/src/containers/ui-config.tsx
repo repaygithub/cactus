@@ -235,7 +235,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                   />
 
                   <Flex width="50%">
-                    <FormikField
+                    <Field
                       as={FileInputField}
                       my={4}
                       label="Upload Logo"
