@@ -300,6 +300,7 @@ const StyledCell = styled.td(
         flex-flow: row wrap;
         justify-content: space-between;
         align-items: flex-start;
+        box-sizing: border-box;
         padding: 8px 16px;
         :nth-of-type(even) {
           background-color: ${(p): string => p.theme.colors.lightContrast};

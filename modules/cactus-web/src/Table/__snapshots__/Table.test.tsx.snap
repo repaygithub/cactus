@@ -65,6 +65,7 @@ exports[`component: Table card carousel 1`] = `
   -webkit-box-align: flex-start;
   -ms-flex-align: flex-start;
   align-items: flex-start;
+  box-sizing: border-box;
   padding: 8px 16px;
 }
 
