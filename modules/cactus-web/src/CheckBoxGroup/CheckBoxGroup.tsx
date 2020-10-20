@@ -31,6 +31,8 @@ type ForwardProps = {
   required?: boolean
 }
 
+const noop = () => undefined
+
 export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
   (
     { label, children, tooltip, required, checked, onFocus, onBlur, autoTooltip = true, ...props },
@@ -62,7 +64,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       // This is to avert a PropTypes warning regarding missing onChange handler.
       const hasChecked = props.checked !== undefined || element.props.checked !== undefined
       if (hasChecked && hasOnChange && !element.props.onChange) {
-        props = { ...props, onChange: () => undefined }
+        props = { ...props, onChange: noop }
       }
       return React.cloneElement(element, props)
     }

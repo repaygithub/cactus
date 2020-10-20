@@ -34,6 +34,8 @@ type ForwardProps = {
   required?: boolean
 }
 
+const noop = () => undefined
+
 export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>(
   (
     {
@@ -85,7 +87,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       // This is to avert a PropTypes warning regarding missing onChange handler.
       const hasChecked = props.checked !== undefined || element.props.checked !== undefined
       if (hasChecked && hasOnChange && !element.props.onChange) {
-        props = { ...props, onChange: () => undefined }
+        props = { ...props, onChange: noop }
       }
       return React.cloneElement(element, props)
     }
