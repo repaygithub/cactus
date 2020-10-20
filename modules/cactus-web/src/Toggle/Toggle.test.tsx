@@ -1,11 +1,9 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Toggle from './Toggle'
-
-afterEach(cleanup)
 
 describe('component: Toggle', (): void => {
   test('should render a toggle', (): void => {

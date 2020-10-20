@@ -1,11 +1,9 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import RadioButton from './RadioButton'
-
-afterEach(cleanup)
 
 describe('component: RadioButton', (): void => {
   test('should render a radio button', (): void => {

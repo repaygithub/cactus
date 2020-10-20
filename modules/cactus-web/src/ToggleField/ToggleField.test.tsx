@@ -1,11 +1,9 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import ToggleField from './ToggleField'
-
-afterEach(cleanup)
 
 describe('component: ToggleField', (): void => {
   test('snapshot', (): void => {

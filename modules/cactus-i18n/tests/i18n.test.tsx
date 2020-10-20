@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import I18nProvider, {
@@ -20,8 +20,6 @@ class I18nController extends BaseI18nController {
     return Promise.resolve([])
   }
 }
-
-afterEach(cleanup)
 
 describe('i18n functionality', (): void => {
   describe('<I18nProvider />', (): void => {

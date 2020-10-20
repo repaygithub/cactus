@@ -1,10 +1,8 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Table from './Table'
-
-afterEach(cleanup)
 
 describe('component: Table', (): void => {
   test('regular table', (): void => {
