@@ -55,12 +55,13 @@ const LogoWrapper = styled('div')`
 `
 
 const ContentWrapper = styled('div')`
-  max-width 100%;
+  max-width: 100%;
+  font-size: 15px;
 `
 
 const Img = styled('img')`
   max-width: 200px;
-  max-height: 80px;
+  max-height: 40px;
 `
 
 const LinksColsContainer = styled('div')`
@@ -83,6 +84,7 @@ const LinkCol = styled('div')<LinkColProps>`
 
   ${Link} {
     max-width: 100%;
+    font-size: 15px;
   }
 
   .cactus-layout-fixedBottom & {
@@ -199,6 +201,7 @@ const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })`
   justify-content: center;
   width: 100%;
   background-color: ${(p) => p.theme.colors.lightContrast};
+  margin-top: auto;
   ${(p) => boxShadow(p.theme, 1)};
   &.cactus-layout-fixedBottom {
     height: auto;

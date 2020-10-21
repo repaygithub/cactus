@@ -63,11 +63,12 @@ exports[`component: Footer snapshot 1`] = `
 
 .c4 {
   max-width: 100%;
+  font-size: 15px;
 }
 
 .c3 {
   max-width: 200px;
-  max-height: 80px;
+  max-height: 40px;
 }
 
 .c5 {
@@ -117,6 +118,7 @@ exports[`component: Footer snapshot 1`] = `
 
 .c6 .c7 {
   max-width: 100%;
+  font-size: 15px;
 }
 
 .cactus-layout-fixedBottom .c6 {
@@ -141,6 +143,7 @@ exports[`component: Footer snapshot 1`] = `
   justify-content: center;
   width: 100%;
   background-color: hsl(200,29%,90%);
+  margin-top: auto;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
