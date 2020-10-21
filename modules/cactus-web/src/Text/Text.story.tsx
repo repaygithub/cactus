@@ -1,7 +1,7 @@
 import cactusTheme, { CactusColor, TextStyleCollection } from '@repay/cactus-theme'
 import { select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import { FontWeightProperty, TextAlignProperty } from 'csstype'
+import { Property } from 'csstype'
 import React from 'react'
 
 import { Span, Text } from './Text'
@@ -24,9 +24,9 @@ storiesOf('Text', module)
         colors={select('colors', COLOR_STYLES, 'base')}
         margin={text('margin', '0 50px')}
         padding={text('padding', '3')}
-        fontWeight={text('fontWeight', '400') as FontWeightProperty}
+        fontWeight={text('fontWeight', '400') as Property.FontWeight}
         fontStyle={text('fontStyle', 'italic')}
-        textAlign={text('textAlign', 'left') as TextAlignProperty}
+        textAlign={text('textAlign', 'left') as Property.TextAlign}
         textStyle={select('textStyle', TEXT_STYLES, 'small') as keyof TextStyleCollection}
       >
         {text('children', sampleText)}
@@ -41,9 +41,9 @@ storiesOf('Text', module)
         colors={select('colors', COLOR_STYLES, 'base')}
         margin={text('margin', '0 50px')}
         padding={text('padding', '3')}
-        fontWeight={text('fontWeight', '400') as FontWeightProperty}
+        fontWeight={text('fontWeight', '400') as Property.FontWeight}
         fontStyle={text('fontStyle', 'italic')}
-        textAlign={text('textAlign', 'left') as TextAlignProperty}
+        textAlign={text('textAlign', 'left') as Property.TextAlign}
         textStyle={select('textStyle', TEXT_STYLES, 'small') as keyof TextStyleCollection}
       >
         {text('children', sampleText)}
