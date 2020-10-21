@@ -37,6 +37,6 @@
     "dotenv": "^8.2.0",
     "testcafe": "^1.9.4",
     "testcafe-browser-provider-browserstack": "^1.13.1",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.3"
   }
 }
