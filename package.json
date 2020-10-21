@@ -50,9 +50,9 @@
   },
   "devDependencies": {
     "@repay/eslint-config": "^3.1.1",
-    "commitizen": "^4.1.2",
+    "commitizen": "^4.2.2",
     "conventional-commits-parser": "^3.1.0",
-    "cz-conventional-changelog": "3.2.0",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.11.0",
     "gh-pages": "^3.1.0",
     "git-raw-commits": "^2.0.7",
