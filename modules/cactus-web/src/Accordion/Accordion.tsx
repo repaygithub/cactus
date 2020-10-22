@@ -81,6 +81,7 @@ const AccordionContext = createContext<AccordionContext>({
 const getBoxShadow = (theme: CactusTheme, useBoxShadows?: boolean): ReturnType<typeof css> => {
   return theme.boxShadows && useBoxShadows
     ? css`
+        border: 0px;
         ${(p): string => `${boxShadow(p.theme, 1)}`}
       `
     : css``
@@ -630,7 +631,6 @@ export const Accordion = styled(AccordionBase)`
   width: 100%;
 
   &.box-shadow {
-    border: 0px;
     ${(p): ReturnType<typeof css> => getBoxShadow(p.theme, p.useBoxShadows)}
   }
 
