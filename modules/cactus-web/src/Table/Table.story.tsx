@@ -42,7 +42,7 @@ tableStories.add(
     const makeRow = (
       content: string,
       index: number,
-      Row: React.ReactType = Table.Row
+      Row: React.ElementType = Table.Row
     ): React.ReactElement => {
       const cols = []
       for (let i = 0; i < colCount; i++) {
@@ -89,7 +89,7 @@ tableStories.add(
     const makeRow = (
       content: string,
       index: number,
-      Cell: React.ReactType = 'td'
+      Cell: React.ElementType = 'td'
     ): React.ReactElement => {
       const cols = []
       for (let i = 0; i < colCount; i++) {
@@ -111,6 +111,55 @@ tableStories.add(
           {captionText && <caption>{captionText}</caption>}
           {header}
           <Body>{rows}</Body>
+        </Table>
+      </ScreenSizeProvider>
+    )
+  }
+)
+tableStories.add(
+  'With long values',
+  (): React.ReactElement => {
+    return (
+      <ScreenSizeProvider>
+        <Table variant="card">
+          <Table.Header>
+            <Table.Cell>Header Cell</Table.Cell>
+            <Table.Cell>Header Cell</Table.Cell>
+            <Table.Cell>Header Cell</Table.Cell>
+            <Table.Cell>Header Cell</Table.Cell>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>
+                {text(
+                  'text 1',
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
+                )}
+              </Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>
+                {text(
+                  'text 2',
+                  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
+                )}
+              </Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+          </Table.Body>
         </Table>
       </ScreenSizeProvider>
     )
