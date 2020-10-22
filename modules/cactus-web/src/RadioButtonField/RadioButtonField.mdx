@@ -41,7 +41,7 @@ export default function Form() {
   const [values, setValues] = useState({ radiobuttonfield: 'option_a' })
   const handleChange = useCallback(
     (e) => {
-      if (e.checked) {
+      if (e.target.checked) {
         setValues(state => ({ ...state, [e.target.name]: e.target.value }))
       }
     },
