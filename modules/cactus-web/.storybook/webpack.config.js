@@ -1,4 +1,5 @@
 module.exports = ({ config }) => {
+  config.entry = [require.resolve('../dist/helpers/polyfills'), ...config.entry]
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
     loader: require.resolve('babel-loader'),

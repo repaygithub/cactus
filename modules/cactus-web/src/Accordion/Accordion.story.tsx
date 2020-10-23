@@ -1,5 +1,5 @@
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
-import { number, select, text } from '@storybook/addon-knobs'
+import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
 
@@ -108,7 +108,11 @@ const ReorderAccordions = (): ReactElement => {
       <Accordion.Provider>
         {accordionHeaders.map(
           (header, index): ReactElement => (
-            <Accordion variant="outline" key={header}>
+            <Accordion
+              variant="outline"
+              key={header}
+              useBoxShadows={boolean('useBoxShadows', true)}
+            >
               <Accordion.Header
                 render={({ isOpen, headerId }): ReactElement => {
                   return (
@@ -185,7 +189,10 @@ storiesOf('Accordion', module)
     'Basic Usage',
     (): ReactElement => (
       <Box width="312px">
-        <Accordion variant={select('variant', accordionVariants, 'simple')}>
+        <Accordion
+          variant={select('variant', accordionVariants, 'simple')}
+          useBoxShadows={boolean('useBoxShadows', true)}
+        >
           <Accordion.Header>
             <Text as="h3">{text('header', 'Accordion')}</Text>
           </Accordion.Header>
