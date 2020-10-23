@@ -196,7 +196,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Enter content to be displayed in the footer"
                     error={touched.footerContent && errors.footerContent}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={emails}
                     label="Notification Email"
@@ -205,7 +205,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Select an email to receive notifications"
                     error={touched.notificationEmail && errors.notificationEmail}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={cities}
                     multiple={true}
@@ -214,7 +214,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Select all store locations"
                     error={touched.allLocations && errors.allLocations}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={cities}
                     comboBox={true}
@@ -223,7 +223,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Select your most popular location"
                     error={touched.mpLocation && errors.mpLocation}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={cardBrands}
                     multiple={true}

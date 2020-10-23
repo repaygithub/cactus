@@ -69,22 +69,9 @@ const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
   )
 
   const onChange = React.useCallback(
-    (e: React.SyntheticEvent): void => {
-      const { name, value } = e.target as HTMLInputElement
+    (e: React.ChangeEvent<any>): void => {
+      const { name, value } = e.target
       setValues((s) => ({ ...s, data: { ...s.data, [name]: value } }))
-    },
-    [setValues]
-  )
-
-  const onLegacyChange = React.useCallback(
-    (name: string, value: any): void => {
-      setValues(
-        (s): FieldsTypes => ({
-          ...s,
-          data: { ...s.data, [name]: value },
-          status: { ...s.status },
-        })
-      )
     },
     [setValues]
   )
@@ -192,7 +179,7 @@ const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
             name="selectBox"
             value={values.data.selectBox}
             options={selectOptions}
-            onChange={onLegacyChange}
+            onChange={onChange}
           />
           <TextAreaField
             name="textarea"

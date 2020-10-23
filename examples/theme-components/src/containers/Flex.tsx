@@ -47,7 +47,7 @@ const FlexExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [state, setState] = useState(initialState)
 
   const changeProps = useCallback(
-    (name, value): void => {
+    ({ target: { name, value } }): void => {
       if (name === 'items') {
         value = parseInt(value.replace(/\D/g, ''), 10)
       }

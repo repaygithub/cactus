@@ -144,7 +144,9 @@ exports[`component: SelectField minimal snapshot 1`] = `
     <div
       class="c6 c7"
     >
-      <div>
+      <div
+        tabindex="-1"
+      >
         <button
           aria-describedby="prevent-random-id-tip prevent-random-id-status"
           aria-haspopup="listbox"

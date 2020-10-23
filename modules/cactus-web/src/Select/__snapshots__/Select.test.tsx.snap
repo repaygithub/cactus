@@ -86,7 +86,9 @@ exports[`component: Select snapshot 1`] = `
 <div
     class="c0"
   >
-    <div>
+    <div
+      tabindex="-1"
+    >
       <button
         aria-haspopup="listbox"
         aria-multiselectable="false"
@@ -204,7 +206,9 @@ exports[`component: Select with theme customization should have 2px border 1`] =
 <div
     class="c0"
   >
-    <div>
+    <div
+      tabindex="-1"
+    >
       <button
         aria-haspopup="listbox"
         aria-multiselectable="false"
@@ -322,7 +326,9 @@ exports[`component: Select with theme customization should match intermediate sh
 <div
     class="c0"
   >
-    <div>
+    <div
+      tabindex="-1"
+    >
       <button
         aria-haspopup="listbox"
         aria-multiselectable="false"
@@ -440,7 +446,9 @@ exports[`component: Select with theme customization should match square shape st
 <div
     class="c0"
   >
-    <div>
+    <div
+      tabindex="-1"
+    >
       <button
         aria-haspopup="listbox"
         aria-multiselectable="false"
@@ -558,7 +566,9 @@ exports[`component: Select with theme customization should not have box shadows 
 <div
     class="c0"
   >
-    <div>
+    <div
+      tabindex="-1"
+    >
       <button
         aria-haspopup="listbox"
         aria-multiselectable="false"

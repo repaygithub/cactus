@@ -1,13 +1,15 @@
-import { actions } from '@storybook/addon-actions'
 import { array, boolean, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { ReactElement } from 'react'
 
 import arizonaCities from '../storySupport/arizonaCities'
-import FormHandler from '../storySupport/FormHandler'
-import Select, { OptionType } from './Select'
+import Select, { OptionType, SelectValueType } from './Select'
 
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+const eventLoggers = {
+  onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
+  onFocus: (e: any) => console.log('onFocus:', e.target.name),
+  onBlur: (e: any) => console.log('onBlur:', e.target.name),
+}
 
 const longOptions: OptionType[] = [
   { label: 'This should be the longest option available', value: 'long-option' },
@@ -54,128 +56,95 @@ storiesOf('Select', module)
   )
   .add(
     'Long list of options',
-    (): ReactElement => (
-      <FormHandler
-        defaultValue={arizonaCities[6]}
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <Select
-            options={arizonaCities}
-            name="random"
-            id="select-input"
-            disabled={boolean('disabled', false)}
-            {...eventLoggers}
-            onChange={onChange}
-            value={value}
-          />
-        )}
-      </FormHandler>
-    )
+    (): ReactElement => {
+      const [value, setValue] = React.useState<SelectValueType>(arizonaCities[6])
+      return (
+        <Select
+          options={arizonaCities}
+          name="random"
+          id="select-input"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+        />
+      )
+    }
   )
   .add(
     'Long option labels',
-    (): ReactElement => (
-      <FormHandler
-        defaultValue=""
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <div style={{ width: '194px' }}>
-            <Select
-              options={longOptions}
-              name="random"
-              id="select-input"
-              disabled={boolean('disabled', false)}
-              {...eventLoggers}
-              onChange={onChange}
-              value={value}
-            />
-          </div>
-        )}
-      </FormHandler>
-    )
-  )
-  .add(
-    'With Multiselect',
-    (): ReactElement => (
-      <FormHandler
-        defaultValue={defaultMultiValue}
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
+    (): ReactElement => {
+      const [value, setValue] = React.useState<SelectValueType>('')
+      return (
+        <div style={{ width: '194px' }}>
           <Select
-            options={arizonaCities}
+            options={longOptions}
             name="random"
             id="select-input"
             disabled={boolean('disabled', false)}
             {...eventLoggers}
-            onChange={onChange}
+            onChange={(e) => setValue(e.target.value)}
             value={value}
-            multiple
           />
-        )}
-      </FormHandler>
-    ),
+        </div>
+      )
+    }
+  )
+  .add(
+    'With Multiselect',
+    (): ReactElement => {
+      const [value, setValue] = React.useState<SelectValueType>(defaultMultiValue)
+      return (
+        <Select
+          options={arizonaCities}
+          name="random"
+          id="select-input"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          multiple
+        />
+      )
+    },
     { cactus: { overrides: { overflow: 'hidden' } } }
   )
   .add(
     'With ComboBox',
-    (): ReactElement => (
-      <FormHandler
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <Select
-            options={arizonaCities}
-            name="random"
-            id="select-input"
-            disabled={boolean('disabled', false)}
-            {...eventLoggers}
-            onChange={onChange}
-            value={value}
-            comboBox
-          />
-        )}
-      </FormHandler>
-    ),
+    (): ReactElement => {
+      const [value, setValue] = React.useState<SelectValueType>(null)
+      return (
+        <Select
+          options={arizonaCities}
+          name="random"
+          id="select-input"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          comboBox
+        />
+      )
+    },
     { cactus: { overrides: { overflow: 'hidden' } } }
   )
   .add(
     'With MultiSelect ComboBox',
-    (): ReactElement => (
-      <FormHandler
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <Select
-            options={arizonaCities}
-            name="random"
-            id="select-input"
-            disabled={boolean('disabled', false)}
-            {...eventLoggers}
-            onChange={onChange}
-            value={value}
-            comboBox
-            multiple
-          />
-        )}
-      </FormHandler>
-    ),
+    (): ReactElement => {
+      const [value, setValue] = React.useState<SelectValueType>([])
+      return (
+        <Select
+          options={arizonaCities}
+          name="random"
+          id="select-input"
+          disabled={boolean('disabled', false)}
+          {...eventLoggers}
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+          comboBox
+          multiple
+        />
+      )
+    },
     { cactus: { overrides: { overflow: 'hidden' } } }
   )

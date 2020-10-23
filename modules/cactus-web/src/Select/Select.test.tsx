@@ -1,6 +1,7 @@
 import { generateTheme } from '@repay/cactus-theme'
 import { act, fireEvent, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import pick from 'lodash/pick'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
@@ -279,7 +280,8 @@ describe('component: Select', (): void => {
     })
 
     test('raises onChange event on RETURN keydown', async (): Promise<void> => {
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -293,6 +295,7 @@ describe('component: Select', (): void => {
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option')
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(box).toEqual({})
       rerender(
         <StyleProvider>
           <Select
@@ -312,7 +315,8 @@ describe('component: Select', (): void => {
         charCode: KeyCodes.RETURN,
       })
       await animationRender()
-      expect(onChange).toHaveBeenCalledWith('city', 'flagstaff')
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'city', value: 'flagstaff' })
     })
 
     describe('typing with open list', (): void => {
@@ -397,7 +401,8 @@ describe('component: Select', (): void => {
     })
 
     test('raises onChange event on click', async (): Promise<void> => {
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, rerender } = render(
         <StyleProvider>
           <Select
@@ -426,7 +431,8 @@ describe('component: Select', (): void => {
       await animationRender()
       fireEvent.click(getByText('flagstaff'))
       await animationRender()
-      expect(onChange).toHaveBeenCalledWith('city', 'flagstaff')
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'city', value: 'flagstaff' })
     })
 
     test('mouseEnter sets activedescendant', async (): Promise<void> => {
@@ -454,7 +460,10 @@ describe('component: Select', (): void => {
 
   describe('onBlur()', (): void => {
     test('is called when user blurs the closed Select', (): void => {
-      const onBlur = jest.fn()
+      const box: any = {}
+      const onBlur = jest.fn((e) => {
+        box.name = e.target.name
+      })
       const { getByRole } = render(
         <StyleProvider>
           <Select
@@ -471,11 +480,15 @@ describe('component: Select', (): void => {
       const trigger: HTMLElement = getByRole('button')
       fireEvent.focus(trigger)
       fireEvent.blur(trigger)
-      expect(onBlur).toHaveBeenCalledWith('city')
+      expect(onBlur).toHaveBeenCalledTimes(1)
+      expect(box.name).toEqual('city')
     })
 
     test('is NOT called when list opens', async (): Promise<void> => {
-      const onBlur = jest.fn()
+      const box: any = {}
+      const onBlur = jest.fn((e) => {
+        box.name = e.target.name
+      })
       const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -507,10 +520,14 @@ describe('component: Select', (): void => {
       await animationRender()
       expect(document.activeElement).toBe(getByRole('listbox'))
       expect(onBlur).not.toHaveBeenCalled()
+      expect(box).toEqual({})
     })
 
     test('is called when list blurs by outside action', async (): Promise<void> => {
-      const onBlur = jest.fn()
+      const box: any = {}
+      const onBlur = jest.fn((e) => {
+        box.name = e.target.name
+      })
       const { getByText, getByRole, rerender } = render(
         <StyleProvider>
           <React.Fragment>
@@ -547,13 +564,17 @@ describe('component: Select', (): void => {
       )
       await animationRender()
       getByText('lose focus').focus()
-      expect(onBlur).toHaveBeenCalledWith('city')
+      expect(onBlur).toHaveBeenCalledTimes(1)
+      expect(box.name).toEqual('city')
     })
   })
 
   describe('onFocus()', (): void => {
     test('is called when user focuses on Select', (): void => {
-      const onFocus = jest.fn()
+      const box: any = {}
+      const onFocus = jest.fn((e) => {
+        box.name = e.target.name
+      })
       const { getByRole } = render(
         <StyleProvider>
           <Select
@@ -569,11 +590,15 @@ describe('component: Select', (): void => {
       // @ts-ignore
       const trigger: HTMLElement = getByRole('button')
       fireEvent.focus(trigger)
-      expect(onFocus).toHaveBeenCalledWith('city')
+      expect(onFocus).toHaveBeenCalledTimes(1)
+      expect(box.name).toEqual('city')
     })
 
     test('is NOT called when list closes via keyboard', async (): Promise<void> => {
-      const onFocus = jest.fn()
+      const box: any = {}
+      const onFocus = jest.fn((e) => {
+        box.name = e.target.name
+      })
       const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -602,7 +627,8 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      expect(onFocus).toHaveBeenCalledWith('city')
+      expect(onFocus).toHaveBeenCalledTimes(1)
+      expect(box.name).toEqual('city')
       onFocus.mockReset()
       act((): void => {
         fireEvent.keyDown(getByRole('listbox'), {
@@ -630,7 +656,8 @@ describe('component: Select', (): void => {
   describe('with multiple=true', (): void => {
     test('trigger is rendered with aria-multiselectable=true', async (): Promise<void> => {
       const startingValue = ['tucson']
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       render(
         <StyleProvider>
           <Select
@@ -650,7 +677,8 @@ describe('component: Select', (): void => {
       void
     > => {
       const startingValue = ['tucson']
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByRole, getAllByRole } = render(
         <StyleProvider>
           <Select
@@ -674,7 +702,8 @@ describe('component: Select', (): void => {
     })
 
     test('can click checkboxes to add values', async (): Promise<void> => {
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, rerender } = render(
         <StyleProvider>
           <Select
@@ -714,12 +743,14 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       await animationRender()
-      expect(onChange).toHaveBeenCalledWith('city', ['phoenix'])
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'city', value: ['phoenix'] })
     })
 
     test('can select multiple options', async (): Promise<void> => {
       const startingValue = ['tucson']
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -753,12 +784,14 @@ describe('component: Select', (): void => {
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('flagstaff', { selector: '[role="option"]' }))
       await animationRender()
-      expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'flagstaff'])
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'city', value: ['tucson', 'flagstaff'] })
     })
 
     test('removed value when selected again', async (): Promise<void> => {
       const startingValue = ['tucson']
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -792,12 +825,14 @@ describe('component: Select', (): void => {
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('tucson', { selector: '[role="option"]' }))
       await animationRender()
-      expect(onChange).toHaveBeenCalledWith('city', [])
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'city', value: [] })
     })
 
     test('SPACE key will toggle option', async (): Promise<void> => {
       const startingValue = ['tucson']
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -832,13 +867,15 @@ describe('component: Select', (): void => {
         charCode: KeyCodes.SPACE,
       })
       await animationRender()
-      expect(onChange).toHaveBeenCalledWith('city', [])
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'city', value: [] })
       expect(document.activeElement).toBe(getByRole('listbox'))
     })
 
     test('CLICK will toggle option but not close', async (): Promise<void> => {
       const startingValue = ['tucson']
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -870,7 +907,8 @@ describe('component: Select', (): void => {
       expect(getActiveValue()).toBe('tucson')
       fireEvent.click(getByText('phoenix'))
       await animationRender()
-      expect(onChange).toHaveBeenCalledWith('city', ['tucson', 'phoenix'])
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'city', value: ['tucson', 'phoenix'] })
       expect(document.activeElement).toBe(getByRole('listbox'))
     })
   })

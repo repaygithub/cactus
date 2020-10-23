@@ -50,7 +50,7 @@ const DateInputExample: React.FC<RouteComponentProps> = (): React.ReactElement =
             options={['date', 'datetime', 'time']}
             name="icons"
             value={type}
-            onChange={(_, value): void => changeType(value)}
+            onChange={({ target: { value } }): void => changeType(value)}
             id={Math.random().toString()}
           />
         </Flex>
