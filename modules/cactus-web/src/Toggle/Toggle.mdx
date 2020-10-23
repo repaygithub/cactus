@@ -7,21 +7,18 @@ import PropsTable from 'website-src/components/PropsTable'
 import { livePreviewStyle } from '../helpers/constants'
 import Toggle from './Toggle'
 import cactusTheme from '@repay/cactus-theme'
-import React, { useState } from 'react'
+import React from 'react'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Toggle
 
-The `Toggle` component can be useful for boolean fields.
+The `Toggle` component can be useful for boolean fields. Props & behavior are basically the same as a checkbox.
 
 ### Try it out
 
-export const code = ` () => {
-  const [state, setState] = useState(true)
-  return <Toggle value={state} onClick={() => setState(!state)} />
-}`
+export const code = `<Toggle />`
 
-<LiveProvider code={code} scope={{ Toggle, useState }}>
+<LiveProvider code={code} scope={{ Toggle }}>
   <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
@@ -44,10 +41,10 @@ export const code = ` () => {
 import { Toggle } from '@repay/cactus-web'
 ...
 // Basic usage
-<Toggle value={false} />
+<Toggle defaultChecked={false} />
 
 // Disabled
-<Toggle value={true} disabled={true} />
+<Toggle disabled />
 ```
 
 ## Properties

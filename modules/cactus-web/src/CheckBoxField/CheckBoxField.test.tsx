@@ -1,5 +1,6 @@
 import { fireEvent, queryByAttribute, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import pick from 'lodash/pick'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
@@ -51,15 +52,17 @@ describe('component: CheckBoxField', (): void => {
   })
 
   test('should trigger onChange event', (): void => {
-    const onChange = jest.fn()
+    const box: any = {}
+    const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'checked'])))
     const { getByLabelText } = render(
       <StyleProvider>
-        <CheckBoxField label="Katastro" name="katastro" onChange={onChange} />
+        <CheckBoxField label="Katastro" name="katastro" defaultChecked onChange={onChange} />
       </StyleProvider>
     )
 
     fireEvent.click(getByLabelText('Katastro'))
-    expect(onChange).toHaveBeenCalledWith('katastro', true)
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(box).toEqual({ name: 'katastro', checked: false })
   })
 
   test('should trigger onFocus event', (): void => {

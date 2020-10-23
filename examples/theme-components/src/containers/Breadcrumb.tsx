@@ -48,7 +48,7 @@ const BreadcrumbExample: React.FC<RouteComponentProps & BreadProps> = (
           label="Add a new path"
           name="path"
           value={value}
-          onChange={(_, val): void => setValue(val)}
+          onChange={(e): void => setValue(e.target.value)}
         />
         <Button onClick={addPaths} mt="10px">
           Add
