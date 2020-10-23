@@ -794,10 +794,6 @@ exports[`component: Accordion with theme customization outline accordion should 
   border-radius: 8px;
 }
 
-.c1.box-shadow {
-  border: 0px;
-}
-
 .c1 + .c0 {
   margin-top: 8px;
 }

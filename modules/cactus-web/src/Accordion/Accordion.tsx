@@ -33,6 +33,7 @@ interface AccordionProps
     React.HTMLAttributes<HTMLDivElement> {
   defaultOpen?: boolean
   variant?: AccordionVariants
+  useBoxShadows?: boolean
 }
 
 interface AccordionHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -76,6 +77,15 @@ const AccordionContext = createContext<AccordionContext>({
   focusFirst: undefined,
   focusLast: undefined,
 })
+
+const getBoxShadow = (theme: CactusTheme, useBoxShadows?: boolean): ReturnType<typeof css> => {
+  return theme.boxShadows && useBoxShadows
+    ? css`
+        border: 0px;
+        ${(p): string => `${boxShadow(p.theme, 1)}`}
+      `
+    : css``
+}
 
 const AccordionHeaderBase = (props: AccordionHeaderProps): ReactElement => {
   const { className, children, render, ...rest } = props
@@ -621,8 +631,7 @@ export const Accordion = styled(AccordionBase)`
   width: 100%;
 
   &.box-shadow {
-    border: 0px;
-    ${(p): string => boxShadow(p.theme, 1)};
+    ${(p): ReturnType<typeof css> => getBoxShadow(p.theme, p.useBoxShadows)}
   }
 
 
@@ -636,11 +645,13 @@ export const Accordion = styled(AccordionBase)`
 Accordion.defaultProps = {
   defaultOpen: false,
   variant: 'simple',
+  useBoxShadows: true,
 }
 
 Accordion.propTypes = {
   defaultOpen: PropTypes.bool,
   variant: PropTypes.oneOf(['simple', 'outline']),
+  useBoxShadows: PropTypes.bool,
 }
 
 Accordion.Header = AccordionHeader
