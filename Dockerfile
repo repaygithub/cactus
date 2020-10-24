@@ -48,8 +48,9 @@ COPY modules/cactus-web/package.json /code/modules/cactus-web/
 RUN yarn --frozen-lockfile
 COPY modules/cactus-web/.jest/ /code/modules/cactus-web/.jest/
 COPY modules/cactus-web/.storybook/ /code/modules/cactus-web/.storybook/
-COPY modules/cactus-web/cactus-addon/ /code/modules/cactus-web/cactus-addon
-COPY modules/cactus-web/.babelrc /code/modules/cactus-web
-COPY modules/cactus-web/src/ /code/modules/cactus-web/src
-COPY modules/cactus-web/tests/ /code/modules/cactus-web/tests
+COPY modules/cactus-web/cactus-addon/ /code/modules/cactus-web/cactus-addon/
+COPY modules/cactus-web/.babelrc /code/modules/cactus-web/
+COPY modules/cactus-web/dist/helpers/polyfills.js /code/modules/cactus-web/dist/helpers/
+COPY modules/cactus-web/src/ /code/modules/cactus-web/src/
+COPY modules/cactus-web/tests/ /code/modules/cactus-web/tests/
 CMD yarn web test:visual
