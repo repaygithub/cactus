@@ -7,15 +7,11 @@ const supportedDevices = ['iPhone 5', 'iPad']
 
 interface MatchOptions {
   customSnapshotsDir?: string
-  failureThreshold?: number
-  failureThresholdType?: 'pixel' | 'percent'
 }
 
 const createCustomizePage = (device: devices.Device) => (page: Page) => page.emulate(device)
 const createGetMatchOptions = (name: string) => (): MatchOptions => ({
   customSnapshotsDir: path.resolve('__image_snapshots__', name),
-  failureThreshold: 0.02, // 2% threshold
-  failureThresholdType: 'percent',
 })
 const storyKindRegex = /^((?!.*?(Spinner)).)*$/
 
