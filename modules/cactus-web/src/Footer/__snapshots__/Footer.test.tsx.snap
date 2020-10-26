@@ -64,6 +64,7 @@ exports[`component: Footer snapshot 1`] = `
 .c4 {
   max-width: 100%;
   font-size: 15px;
+  line-height: 1.6;
 }
 
 .c3 {
@@ -119,6 +120,7 @@ exports[`component: Footer snapshot 1`] = `
 .c6 .c7 {
   max-width: 100%;
   font-size: 15px;
+  line-height: 1.6;
 }
 
 .cactus-layout-fixedBottom .c6 {
@@ -149,6 +151,20 @@ exports[`component: Footer snapshot 1`] = `
 
 .c0.cactus-layout-fixedBottom {
   height: auto;
+}
+
+@media screen and (min-width:1024px) {
+  .c4 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c6 .c7 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
