@@ -1,9 +1,10 @@
+import { TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { FlattenSimpleInterpolation } from 'styled-components'
 
 import { useSizeRef } from '../helpers/rect'
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, textStyle } from '../helpers/theme'
 import useId from '../helpers/useId'
 import { useLayout } from '../Layout/Layout'
 import Link from '../Link/Link'
@@ -56,7 +57,7 @@ const LogoWrapper = styled('div')`
 
 const ContentWrapper = styled('div')`
   max-width: 100%;
-  font-size: 15px;
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
 `
 
 const Img = styled('img')`
@@ -84,7 +85,7 @@ const LinkCol = styled('div')<LinkColProps>`
 
   ${Link} {
     max-width: 100%;
-    font-size: 15px;
+    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   }
 
   .cactus-layout-fixedBottom & {
