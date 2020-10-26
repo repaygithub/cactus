@@ -49,6 +49,8 @@ export interface SelectProps
   disabled?: boolean
   multiple?: boolean
   comboBox?: boolean
+  canCreateOption?: boolean
+  matchNotFoundText?: string
   comboBoxSearchLabel?: string
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
@@ -361,6 +363,17 @@ const StyledList = styled.ul`
       : ''}
 `
 
+const NoMatch = styled.li`
+  display: list-item;
+  border: none;
+  height: auto;
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
+  text-align: left;
+  box-shadow: none;
+  padding: 4px 16px;
+  overflow-wrap: break-word;
+`
+
 const Option = styled.li`
   cursor: pointer;
   display: list-item;
@@ -439,6 +452,8 @@ const ListWrapper = styled.div`
 interface ListProps {
   isOpen: boolean
   comboBox?: boolean
+  canCreateOption: boolean
+  matchNotFoundText: string
   comboBoxSearchLabel: string
   options: ExtendedOptionType[]
   multiple?: boolean
@@ -754,7 +769,7 @@ class List extends React.Component<ListProps, ListState> {
     ) {
       const [filteredOpts, addOption] = List.filterOptions(props.options, props.searchValue)
       filteredOptions = filteredOpts
-      if (addOption) {
+      if (addOption && props.canCreateOption) {
         const addOpt: ExtendedOptionType = {
           value: 'create',
           label: `Create "${props.searchValue}"`,
@@ -845,6 +860,7 @@ class List extends React.Component<ListProps, ListState> {
       triggerRect,
       onClose,
       activeDescendant: selectManagedActiveDescendant,
+      matchNotFoundText,
     } = this.props
     const { options, activeDescendant: listManagedActiveDescendant } = this.state
 
@@ -872,44 +888,50 @@ class List extends React.Component<ListProps, ListState> {
                   ref={mergeRefs}
                   aria-activedescendant={activeDescendant || undefined}
                 >
-                  {options.map(
-                    (opt): React.ReactElement => {
-                      const optId = opt.id
-                      const isSelected = opt.isSelected
-                      let ariaSelected: boolean | 'true' | 'false' | undefined =
-                        isSelected || undefined
-                      const isCreateNewOption =
-                        comboBox && optId === `create-${this.state.searchValue}`
-                      // multiselectable should have aria-select©ed on all options
-                      if (multiple) {
-                        ariaSelected = isSelected ? 'true' : 'false'
+                  {options.length === 0 && !this.props.canCreateOption ? (
+                    <NoMatch>{matchNotFoundText}</NoMatch>
+                  ) : (
+                    options.map(
+                      (opt): React.ReactElement => {
+                        const optId = opt.id
+                        const isSelected = opt.isSelected
+                        let ariaSelected: boolean | 'true' | 'false' | undefined =
+                          isSelected || undefined
+                        const isCreateNewOption =
+                          comboBox && optId === `create-${this.state.searchValue}`
+                        // multiselectable should have aria-select©ed on all options
+                        if (multiple) {
+                          ariaSelected = isSelected ? 'true' : 'false'
+                        }
+                        return (
+                          <Option
+                            id={optId}
+                            key={optId}
+                            className={
+                              activeDescendant === optId ? 'highlighted-option' : undefined
+                            }
+                            data-value={opt.value}
+                            role="option"
+                            data-role={isCreateNewOption ? 'create' : 'option'}
+                            aria-selected={ariaSelected}
+                            onMouseEnter={this.handleOptionMouseEnter}
+                          >
+                            {isCreateNewOption ? (
+                              <ActionsAdd mr={2} mb={2} />
+                            ) : multiple ? (
+                              <CheckBox
+                                id={`multiselect-option-check-${optId}`}
+                                aria-hidden="true"
+                                checked={isSelected}
+                                readOnly
+                                mr={2}
+                              />
+                            ) : null}
+                            {opt.label}
+                          </Option>
+                        )
                       }
-                      return (
-                        <Option
-                          id={optId}
-                          key={optId}
-                          className={activeDescendant === optId ? 'highlighted-option' : undefined}
-                          data-value={opt.value}
-                          role="option"
-                          data-role={isCreateNewOption ? 'create' : 'option'}
-                          aria-selected={ariaSelected}
-                          onMouseEnter={this.handleOptionMouseEnter}
-                        >
-                          {isCreateNewOption ? (
-                            <ActionsAdd mr={2} mb={2} />
-                          ) : multiple ? (
-                            <CheckBox
-                              id={`multiselect-option-check-${optId}`}
-                              aria-hidden="true"
-                              checked={isSelected}
-                              readOnly
-                              mr={2}
-                            />
-                          ) : null}
-                          {opt.label}
-                        </Option>
-                      )
-                    }
+                    )
                   )}
                 </StyledList>
                 {isResponsiveTouchDevice ? (
@@ -1419,6 +1441,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       onFocus,
       multiple,
       comboBox,
+      canCreateOption = true,
+      matchNotFoundText = 'No match found',
       extraLabel,
       value: propsValue,
       ...rest
@@ -1485,6 +1509,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
                 ref={this.listRef}
                 isOpen={isOpen}
                 comboBox={comboBox}
+                canCreateOption={canCreateOption}
+                matchNotFoundText={matchNotFoundText}
                 comboBoxSearchLabel={this.props.comboBoxSearchLabel || 'Search for an option'}
                 options={options}
                 multiple={multiple}
@@ -1545,6 +1571,8 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   multiple: PropTypes.bool,
   comboBox: PropTypes.bool,
+  canCreateOption: PropTypes.bool,
+  matchNotFoundText: PropTypes.string,
   extraLabel: PropTypes.string,
   status: StatusPropType,
   onChange: PropTypes.func,
@@ -1556,6 +1584,8 @@ Select.defaultProps = {
   placeholder: 'Select an option',
   multiple: false,
   comboBox: false,
+  canCreateOption: true,
+  matchNotFoundText: 'No match found',
   extraLabel: '+{} more',
 }
 
