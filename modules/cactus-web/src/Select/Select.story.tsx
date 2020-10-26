@@ -147,6 +147,7 @@ storiesOf('Select', module)
             onChange={onChange}
             value={value}
             comboBox
+            canCreateOption={boolean('canCreateOption', true)}
           />
         )}
       </FormHandler>
@@ -173,6 +174,7 @@ storiesOf('Select', module)
             value={value}
             comboBox
             multiple
+            canCreateOption={boolean('canCreateOption', true)}
           />
         )}
       </FormHandler>
