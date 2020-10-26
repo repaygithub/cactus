@@ -15,12 +15,10 @@ const createGetMatchOptions = (name: string) => (): MatchOptions => ({
 })
 const storyKindRegex = /^((?!.*?(Spinner)).)*$/
 
-const beforeScreenshot = () => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve()
-    }, 500)
-  )
+const imagesHaveLoaded = () => Array.from(document.images).every((i) => i.complete)
+
+const beforeScreenshot = async (page: Page) => {
+  await page.waitForFunction(imagesHaveLoaded)
 }
 
 initStoryshots({
