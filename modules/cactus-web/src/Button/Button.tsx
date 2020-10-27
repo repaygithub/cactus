@@ -4,7 +4,7 @@ import React from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
+import { AsProps, GenericComponent } from '../helpers/asProps'
 import { textStyle } from '../helpers/theme'
 import Spinner from '../Spinner/Spinner'
 
@@ -18,6 +18,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, Mar
   loading?: boolean
   loadingText?: string
 }
+
+type ButtonPropsWithAs = ButtonProps & AsProps<GenericComponent>
 
 type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
@@ -161,35 +163,36 @@ const variantOrDisabled = (props: ButtonProps) => {
   }
 }
 
-const ButtonBase: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonPropsWithAs> = ({
   loading,
   children,
-  inverse,
   disabled,
-  variant,
   loadingText,
   ...rest
 }): React.ReactElement => {
-  const props = omitMargins(rest)
   let spanProps = null
   if (loading === true) {
     spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
   }
+  if (rest.as) {
+    delete rest['inverse']
+  }
   return (
-    <button {...props} disabled={loading || disabled} aria-live="assertive">
+    <StyledButton {...rest} disabled={loading || disabled} aria-live="assertive">
       <span {...spanProps}>{children}</span>
       {loading && <Spinner iconSize="small" aria-label={loadingText} />}
-    </button>
+    </StyledButton>
   )
 }
 
-export const Button = styled(ButtonBase)<ButtonProps>`
+const StyledButton = styled.button`
   position: relative;
   padding: 2px 30px;
   outline: none;
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  text-decoration: none;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
   ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
@@ -237,6 +240,8 @@ Button.propTypes = {
   inverse: PropTypes.bool,
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
+  // @ts-ignore
+  as: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 }
 
 Button.defaultProps = {
