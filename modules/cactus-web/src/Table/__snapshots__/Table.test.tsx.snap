@@ -289,8 +289,8 @@ exports[`component: Table regular table 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -418,8 +418,8 @@ exports[`component: Table regular table 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -499,8 +499,8 @@ exports[`component: Table table with caption 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -628,8 +628,8 @@ exports[`component: Table table with caption 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -704,8 +704,8 @@ exports[`component: Table table with no header 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -833,8 +833,8 @@ exports[`component: Table table with no header 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 

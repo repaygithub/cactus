@@ -222,8 +222,8 @@ exports[`component: DataGrid snapshot 1`] = `
 .c4 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -554,8 +554,8 @@ exports[`component: DataGrid snapshot 1`] = `
 
 @media screen and (min-width:1024px) {
   .c4 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 

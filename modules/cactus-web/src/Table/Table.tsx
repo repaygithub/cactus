@@ -20,6 +20,7 @@ interface TableContextProps {
   headers?: React.ReactNode[]
   cellIndex: number
   variant: TableVariant
+  dividers?: boolean
 }
 
 interface TableProps
@@ -28,6 +29,7 @@ interface TableProps
   cardBreakpoint?: Size
   variant?: TableVariant
   as?: React.ElementType
+  dividers?: boolean
 }
 
 interface TableHeaderProps
@@ -36,6 +38,7 @@ interface TableHeaderProps
     HTMLTableSectionElement
   > {
   variant?: TableVariant
+  dividers?: boolean
 }
 
 export interface TableCellProps
@@ -67,6 +70,7 @@ const DEFAULT_CONTEXT: TableContextProps = {
   inHeader: false,
   cellIndex: 0,
   variant: 'table',
+  dividers: false,
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -127,6 +131,9 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
       context.variant = 'card'
     }
+    if (props.dividers) {
+      context.dividers = props.dividers
+    }
     props.variant = context.variant
     return (
       <TableContext.Provider value={context}>
@@ -185,7 +192,7 @@ export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeader
     const context = useContext<TableContextProps>(TableContext)
     return (
       <TableContext.Provider value={{ ...context, inHeader: true, cellType: 'th', cellIndex: 0 }}>
-        <StyledHeader {...props} variant={context.variant} ref={ref}>
+        <StyledHeader {...props} variant={context.variant} ref={ref} dividers={context.dividers}>
           <tr>{children}</tr>
         </StyledHeader>
       </TableContext.Provider>
@@ -291,7 +298,7 @@ const StyledCell = styled.td(
               ${media(p.theme, 'extraLarge')} {
                 min-width: 160px;
               }
-            `}
+            `};
     `,
     card: css`
       && {
@@ -330,17 +337,19 @@ const StyledHeader = styled.thead<TableHeaderProps>`
   &&&&& td {
     text-transform: uppercase;
     border: ${(p): string => border(p.theme, 'base')};
+    border-right: ${(p): string => (p.dividers ? border(p.theme, 'mediumContrast') : '')};
     ${(p): ColorStyle => p.theme.colorStyles.base};
   }
   ${headerVariants}
 `
 
-const table = css`
+const table = css<TableProps>`
   display: table;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   border-spacing: 0;
   td,
   th {
+    border-right: ${(p): string => (p.dividers ? border(p.theme, 'lightContrast') : '')};
     background-color: ${(p): string => p.theme.colors.white};
     border-top: ${(p): string => border(p.theme, 'transparent')};
     border-bottom: ${(p): string => border(p.theme, 'transparent')};
@@ -354,6 +363,7 @@ const table = css`
   tr:nth-of-type(even) {
     td,
     th {
+      border-right: ${(p): string => (p.dividers ? border(p.theme, 'white') : '')};
       background-color: ${(p): string => p.theme.colors.lightContrast};
     }
   }
