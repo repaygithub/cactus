@@ -1,20 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps, width } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
-import DateInput from '../DateInput/DateInput'
+import DateInput, { DateInputProps } from '../DateInput/DateInput'
 import { omitMargins } from '../helpers/omit'
 
-interface DateInputFieldProps
-  extends MarginProps,
-    WidthProps,
-    FieldProps,
-    Omit<
-      React.ComponentProps<typeof DateInput>,
-      'id' | 'status' | 'ref' | keyof MarginProps | keyof WidthProps
-    > {
+interface DateInputFieldProps extends FieldProps, Omit<DateInputProps, 'id'> {
   className?: string
   id?: string
 }

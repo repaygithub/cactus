@@ -24,13 +24,13 @@ import {
   PartialDate,
   TOKEN_SETTERS,
 } from '../helpers/dates'
+import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpers/events'
 import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
 import positionPortal from '../helpers/positionPortal'
 import { boxShadow, textStyle } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 import { Status } from '../StatusMessage/StatusMessage'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 export type IsValidDateFunc = (date: Date) => boolean
 export type ParseDateFunc = (dateStr: string) => Date
@@ -661,13 +661,14 @@ const MonthYearListWrapper = styled.div`
   }
 `
 
-interface DateInputProps
+type Target = CactusEventTarget<Date | string>
+
+export interface DateInputProps
   extends MarginProps,
     WidthProps,
-    React.AriaAttributes,
     Omit<
-      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-      'ref' | 'disabled' | 'width' | 'value' | 'onChange' | 'onBlur' | 'onFocus'
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'disabled' | 'width' | 'value' | 'onChange' | 'onBlur' | 'onFocus'
     > {
   name: string
   id: string
@@ -687,9 +688,9 @@ interface DateInputProps
   type?: 'date' | 'datetime' | 'time'
   /** !important */
   disabled?: boolean
-  onChange?: FieldOnChangeHandler<Date | string | null>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler<Date | string | null>
+  onChange?: React.ChangeEventHandler<Target>
+  onFocus?: React.FocusEventHandler<Target>
+  onBlur?: React.FocusEventHandler<Target>
 
   /**
    * Phrases to use for translations.
@@ -736,6 +737,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _inputWrapper = React.createRef<HTMLDivElement>()
   private _button = React.createRef<HTMLButtonElement>()
   private _portal = React.createRef<HTMLDivElement>()
+  private eventTarget = new CactusEventTarget<Date | string>({})
 
   public static propTypes = {
     name: PropTypes.string.isRequired,
@@ -814,10 +816,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   public componentDidMount(): void {
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
     document.body.addEventListener('click', this.handleBodyClick, false)
   }
 
   public componentDidUpdate(): void {
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
     // when the entered text is a complete value, auto focus the next input
     if (this._shouldFocusNext) {
       this._shouldFocusNext = false
@@ -901,11 +907,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const token = target.dataset.token as FormatTokenType
       const eventKey = event.key
       if (eventKey === 'ArrowUp' || eventKey === 'ArrowDown') {
-        this.handleUpdate(token, eventKey)
+        this.handleUpdate(event, token, eventKey)
       } else if (eventKey === 'Delete' || eventKey === 'Backspace') {
-        this.handleUpdate(token, 'Delete')
+        this.handleUpdate(event, token, 'Delete')
       } else if (eventKey.length === 1) {
-        this.handleUpdate(token, 'Key', eventKey)
+        this.handleUpdate(event, token, 'Key', eventKey)
       }
       if (!ALLOW_DEFAULT.includes(eventKey)) {
         event.stopPropagation()
@@ -927,30 +933,34 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     ) {
       data = String(data).substr(-1)
       const token = target.dataset.token as FormatTokenType
-      this.handleUpdate(token, 'Key', data)
+      this.handleUpdate(event, token, 'Key', data)
     }
   }
 
   private handleFocus = (event: React.FocusEvent<HTMLDivElement>): void => {
     const { relatedTarget } = event
     if (this._isOutside(relatedTarget)) {
-      const { onFocus, name } = this.props
+      const { onFocus } = this.props
       if (typeof onFocus === 'function') {
-        onFocus(name)
+        const cactusEvent = new CactusFocusEvent('focus', this.eventTarget, event)
+        onFocus(cactusEvent)
       }
     }
   }
 
-  private handleBlur = (): void => {
+  private handleBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
     // when blurring off the field
     this._lastInputKeyed = ''
     // double nested because the portal takes one turn to render
     const didClickButton = this._didClickButton
+    event.persist()
     window.requestAnimationFrame((): void => {
       if (this._isOutside(document.activeElement) && !didClickButton) {
-        const { onBlur, name } = this.props
+        const { onBlur } = this.props
         if (typeof onBlur === 'function') {
-          onBlur(name, this._convertVal(this.state.value))
+          this.eventTarget.value = this._convertVal(this.state.value)
+          const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
+          onBlur(cactusEvent)
         }
       }
     })
@@ -1009,11 +1019,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     ) {
       const dateStr = target.dataset.date
       const { type } = this.props
+      event.persist()
       this.setState(
         (state): Pick<DateInputState, 'value' | 'isOpen' | 'focusDay'> => {
           const value = state.value.clone()
           value.parse(dateStr, 'YYYY-MM-dd')
-          this.raiseChange(value)
+          this.raiseChange(event, value)
           const updates: Pick<DateInputState, 'value' | 'focusDay' | 'isOpen'> = {
             value,
             focusDay: undefined,
@@ -1107,10 +1118,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (_wrapper instanceof HTMLDivElement) {
       const activeElement = document.activeElement
       if (activeElement !== null && isOwnInput(activeElement, _wrapper)) {
-        this.handleUpdate(activeElement.dataset.token as any, currentTarget.dataset.name as any)
+        this.handleUpdate(
+          event,
+          activeElement.dataset.token as any,
+          currentTarget.dataset.name as any
+        )
       } else {
         const setFocusTo = _wrapper.querySelector('input') as HTMLInputElement
-        this.handleUpdate(setFocusTo.dataset.token as any, currentTarget.dataset.name as any)
+        this.handleUpdate(event, setFocusTo.dataset.token as any, currentTarget.dataset.name as any)
         setFocusTo.focus()
       }
     }
@@ -1147,6 +1162,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       wasHandled = true
       // in month year view, the direction is reversed from inputs
       this.handleUpdate(
+        event,
         currentTarget.dataset.token as 'YYYY' | 'MM',
         key === 'ArrowUp' ? 'ArrowDown' : 'ArrowUp'
       )
@@ -1165,13 +1181,15 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private handleTimeChange = (_: string, time: Date | string | null): void => {
+  private handleTimeChange = (event: React.ChangeEvent<Target>): void => {
+    const time = event.target.value
     if (typeof time === 'string' && time !== '') {
+      event.persist()
       this.setState(
         ({ value }): Pick<DateInputState, 'value'> => {
           const update = value.clone()
           update.parse(time, 'HH:mm')
-          this.raiseChange(update)
+          this.raiseChange(event, update)
           return { value: update }
         }
       )
@@ -1181,10 +1199,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   /** helpers */
 
   private handleUpdate = (
+    event: React.SyntheticEvent,
     token: FormatTokenType,
     type: 'ArrowUp' | 'ArrowDown' | 'Delete' | 'Key',
     change?: string | undefined
   ): void => {
+    event.persist()
     this.setState(
       ({ value, isOpen, focusDay }): Pick<DateInputState, 'value' | 'focusDay'> => {
         const update = PartialDate.from(value)
@@ -1253,7 +1273,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           }
         }
 
-        this.raiseChange(update)
+        this.raiseChange(event, update)
         if (isOpen !== false) {
           focusDay = update.format('YYYY-MM-dd')
         }
@@ -1262,11 +1282,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     )
   }
 
-  private raiseChange = (value: PartialDate): void => {
-    const { name, onChange } = this.props
+  private raiseChange = (event: React.SyntheticEvent<any>, value: PartialDate): void => {
+    const { onChange } = this.props
     if (typeof onChange === 'function') {
-      const converted = this._convertVal(value)
-      onChange(name, converted)
+      this.eventTarget.value = this._convertVal(value)
+      const cactusEvent = new CactusChangeEvent(this.eventTarget, event)
+      onChange(cactusEvent)
     }
   }
 

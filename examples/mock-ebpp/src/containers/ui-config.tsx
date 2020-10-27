@@ -12,39 +12,11 @@ import {
   TextInputField,
   ToggleField,
 } from '@repay/cactus-web'
-import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik'
+import { Field, Form, Formik, FormikHelpers } from 'formik'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import { post } from '../api'
-
-type FormikFieldProps = Omit<
-  React.ComponentProps<typeof Field>,
-  'innerRef' | 'type' | 'render' | 'component'
->
-
-const FormikField: React.FunctionComponent<FormikFieldProps> = ({
-  as: WrappedComponent,
-  name,
-  validate,
-  value: passedValue,
-  ...rest
-}) => (
-  <Field name={name} validate={validate}>
-    {({ field: { name, value }, form: { setFieldValue, setFieldTouched } }: FieldProps<any>) => {
-      const valueToUse = passedValue === undefined || passedValue === null ? value : passedValue
-      return (
-        <WrappedComponent
-          {...rest}
-          name={name}
-          value={valueToUse}
-          onChange={(_: string, val: any) => setFieldValue(name, val)}
-          onBlur={() => setFieldTouched(name, true)}
-        />
-      )
-    }}
-  </Field>
-)
 
 interface FileObject {
   fileName: string
@@ -283,7 +255,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     my={4}
                   />
 
-                  <FormikField
+                  <Field
                     as={DateInputField}
                     label="Established Date"
                     name="establishedDate"

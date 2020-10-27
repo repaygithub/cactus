@@ -14,20 +14,17 @@ export interface TargetProps<T> {
   id?: string
   name?: string
   value?: T
-  type?: string
 }
 
 export class CactusEventTarget<T> implements EventTarget {
   id?: string
   name?: string
   value: T | null
-  type?: string
 
   constructor(props: TargetProps<T>) {
     this.id = props.id
     this.name = props.name
     this.value = props.value !== undefined ? props.value : null
-    this.type = props.type
   }
 
   // I considered implementing this, but it doesn't seem worth the added complexity;
