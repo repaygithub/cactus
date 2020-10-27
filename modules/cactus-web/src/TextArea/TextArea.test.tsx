@@ -1,12 +1,10 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextArea from './TextArea'
-
-afterEach(cleanup)
 
 describe('component: TextArea', (): void => {
   test('should render a textarea', (): void => {

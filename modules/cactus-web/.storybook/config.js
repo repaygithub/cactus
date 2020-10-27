@@ -37,6 +37,7 @@ const customViewports = {
 }
 
 addParameters({
+  layout: 'fullscreen',
   options: {
     theme: storybookTheme,
   },

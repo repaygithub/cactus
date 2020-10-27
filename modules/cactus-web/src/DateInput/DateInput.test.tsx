@@ -1,5 +1,5 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -7,8 +7,6 @@ import { PartialDate } from '../helpers/dates'
 import KeyCodes from '../helpers/keyCodes'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DateInput from './DateInput'
-
-afterEach(cleanup)
 
 function animationRender(): Promise<void> {
   return new Promise((resolve): void => {

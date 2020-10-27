@@ -1,10 +1,8 @@
-import { cleanup, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import SelectField from './SelectField'
-
-afterEach(cleanup)
 
 function closest(el: HTMLElement, matcher: (el: HTMLElement) => boolean): HTMLElement | null {
   while (el && el !== document.body) {

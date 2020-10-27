@@ -1,10 +1,8 @@
-import { act, cleanup, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Tooltip from './Tooltip'
-
-afterEach(cleanup)
 
 describe('component: Tooltip', (): void => {
   test('should render tooltip icon', (): void => {

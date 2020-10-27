@@ -23,8 +23,12 @@ async function main() {
   for (const pkg of modules) {
     console.log(`\tcopying files for ${pkg.name}`)
     await cpy(
-      [modulesHelper.resolveModule(pkg.dirname, '.storybook/dist/**')],
+      [modulesHelper.resolveModule(pkg.dirname, '.storybook/dist/*')],
       path.join(dist, 'stories', pkg.dirname)
+    )
+    await cpy(
+      [modulesHelper.resolveModule(pkg.dirname, '.storybook/dist/sb_dll/*')],
+      path.join(dist, 'stories', pkg.dirname, 'sb_dll')
     )
   }
   console.log('\nStories built!\n')
