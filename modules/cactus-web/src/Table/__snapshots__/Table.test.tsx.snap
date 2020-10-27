@@ -29,6 +29,9 @@ exports[`component: Table card carousel 1`] = `
   -ms-flex-positive: 1;
   flex-grow: 1;
   text-align: right;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 20%;
 }
 
 .c8:only-child,
