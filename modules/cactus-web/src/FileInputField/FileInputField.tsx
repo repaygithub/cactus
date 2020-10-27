@@ -8,7 +8,6 @@ import FileInput, { FileInputProps, FileObject } from '../FileInput/FileInput'
 import { omitMargins } from '../helpers/omit'
 import Label from '../Label/Label'
 import Tooltip from '../Tooltip/Tooltip'
-import { Omit } from '../types'
 
 interface FileInputFieldProps extends FileInputProps, MarginProps, FieldProps {
   className?: string
