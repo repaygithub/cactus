@@ -266,6 +266,9 @@ const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
 const ContentBox = styled.div`
   flex-grow: 1;
   text-align: right;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 20%;
   &:only-child,
   ${HeaderBox}:empty + & {
     text-align: center;
