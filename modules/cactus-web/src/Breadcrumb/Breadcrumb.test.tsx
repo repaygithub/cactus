@@ -1,10 +1,8 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Breadcrumb from './Breadcrumb'
-
-afterEach(cleanup)
 
 describe('Should render Breadcrumb', (): void => {
   test('snapshot', (): void => {

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: MenuBar sidebar 1`] = `
-.c12 {
+.c13 {
   vertical-align: middle;
 }
 
@@ -131,7 +131,7 @@ exports[`component: MenuBar sidebar 1`] = `
   background-color: transparent;
 }
 
-.c7 {
+.c8 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   box-sizing: border-box;
@@ -146,7 +146,7 @@ exports[`component: MenuBar sidebar 1`] = `
   padding: 0;
 }
 
-.c7[aria-hidden='true'] {
+.c8[aria-hidden='true'] {
   display: none;
 }
 
@@ -175,13 +175,13 @@ exports[`component: MenuBar sidebar 1`] = `
   box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
 }
 
-.c10 {
+.c11 {
   -webkit-flex-shrink: 1;
   -ms-flex-negative: 1;
   flex-shrink: 1;
 }
 
-.c9 {
+.c10 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -194,7 +194,7 @@ exports[`component: MenuBar sidebar 1`] = `
   bottom: 0;
 }
 
-.c13 {
+.c14 {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -218,13 +218,13 @@ exports[`component: MenuBar sidebar 1`] = `
   overflow: visible;
 }
 
-.c6 [role='menuitem'] .c11 {
+.c6 [role='menuitem'] .c12 {
   -webkit-transform: rotateZ(-90deg);
   -ms-transform: rotateZ(-90deg);
   transform: rotateZ(-90deg);
 }
 
-.c6 [role='menuitem'][aria-expanded='true'] .c11 {
+.c6 [role='menuitem'][aria-expanded='true'] .c12 {
   -webkit-transform: rotateZ(90deg);
   -ms-transform: rotateZ(90deg);
   transform: rotateZ(90deg);
@@ -262,7 +262,7 @@ exports[`component: MenuBar sidebar 1`] = `
   padding-left: 14px;
 }
 
-.c8 {
+.c9 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -285,16 +285,16 @@ exports[`component: MenuBar sidebar 1`] = `
   height: 100%;
 }
 
-.c8:active,
-.c8:focus {
+.c9:active,
+.c9:focus {
   outline: none;
 }
 
-.c8::-moz-focus-inner {
+.c9::-moz-focus-inner {
   border: none;
 }
 
-.c8 .c11 {
+.c9 .c12 {
   width: 8px;
   height: 8px;
   margin-left: 16px;
@@ -341,7 +341,7 @@ exports[`component: MenuBar sidebar 1`] = `
         aria-hidden="true"
         aria-labelledby="mb-button"
         aria-orientation="vertical"
-        class="c6 c7"
+        class="c6 c7 c8"
         id="mb-popup"
         role="menu"
         tabindex="-1"
@@ -353,12 +353,12 @@ exports[`component: MenuBar sidebar 1`] = `
             aria-current="true"
             aria-expanded="false"
             aria-haspopup="menu"
-            class="c8"
+            class="c9"
             role="menuitem"
             tabindex="-1"
           >
             <div
-              class="c9"
+              class="c10"
             >
               <em>
                 Emphasized
@@ -366,10 +366,10 @@ exports[`component: MenuBar sidebar 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c10"
+              class="c11"
             >
               <svg
-                class="c11 c12"
+                class="c12 c13"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -384,7 +384,7 @@ exports[`component: MenuBar sidebar 1`] = `
           </button>
           <ul
             aria-orientation="vertical"
-            class="c13"
+            class="c14"
             role="menu"
           >
             <li
@@ -392,7 +392,7 @@ exports[`component: MenuBar sidebar 1`] = `
             >
               <a
                 aria-current="true"
-                class="c8"
+                class="c9"
                 href="#"
                 role="menuitem"
                 tabindex="-1"
@@ -406,21 +406,21 @@ exports[`component: MenuBar sidebar 1`] = `
               <button
                 aria-expanded="false"
                 aria-haspopup="menu"
-                class="c8"
+                class="c9"
                 role="menuitem"
                 tabindex="-1"
               >
                 <div
-                  class="c9"
+                  class="c10"
                 >
                   Nested
                 </div>
                 <div
                   aria-hidden="true"
-                  class="c10"
+                  class="c11"
                 >
                   <svg
-                    class="c11 c12"
+                    class="c12 c13"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -435,7 +435,7 @@ exports[`component: MenuBar sidebar 1`] = `
               </button>
               <ul
                 aria-orientation="vertical"
-                class="c13"
+                class="c14"
                 role="menu"
               >
                 <li
@@ -452,7 +452,7 @@ exports[`component: MenuBar sidebar 1`] = `
                 >
                   <button
                     aria-current="true"
-                    class="c8"
+                    class="c9"
                     role="menuitem"
                     tabindex="-1"
                   >
@@ -478,7 +478,7 @@ exports[`component: MenuBar sidebar 1`] = `
         >
           <button
             aria-current="true"
-            class="c8"
+            class="c9"
             role="menuitem"
             tabindex="-1"
           >
@@ -491,7 +491,7 @@ exports[`component: MenuBar sidebar 1`] = `
           role="none"
         >
           <a
-            class="c8"
+            class="c9"
             role="menuitem"
             tabindex="-1"
           >

@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: FormField should provide 16px of spacing between fields 1`] = `
-.c1 + .c0 {
+.c0 + .c0 {
   margin-top: 16px;
 }
 
 <div>
   <div>
     <div
-      class="c0 c1"
+      class="c0 "
     >
       <input />
     </div>
     <div
-      class="c0 c1"
+      class="c0 "
     >
       <input />
     </div>

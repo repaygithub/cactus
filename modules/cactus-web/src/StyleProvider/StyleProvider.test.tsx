@@ -1,5 +1,5 @@
 import cactusTheme from '@repay/cactus-theme'
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 import { DefaultTheme, withTheme } from 'styled-components'
 
@@ -14,8 +14,6 @@ const TestComponentBase = (props: TestComponentProps): React.ReactElement => {
 }
 
 const TestComponent = withTheme(TestComponentBase)
-
-afterEach(cleanup)
 
 describe('component: StyleProvider', (): void => {
   test('should provide the theme to children', (): void => {

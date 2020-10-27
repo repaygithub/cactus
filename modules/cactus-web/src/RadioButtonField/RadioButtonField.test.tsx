@@ -1,10 +1,8 @@
-import { cleanup, fireEvent, queryByAttribute, render } from '@testing-library/react'
+import { fireEvent, queryByAttribute, render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import RadioButtonField from './RadioButtonField'
-
-afterEach(cleanup)
 
 describe('component: RadioButtonField', (): void => {
   test('should render a radio button field', (): void => {

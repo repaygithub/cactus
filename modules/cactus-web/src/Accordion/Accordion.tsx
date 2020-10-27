@@ -607,7 +607,7 @@ const getSimpleBorder = (borderSize: BorderSize) => simpleBorderMap[borderSize]
 
 const accordionVariantMap: VariantMap = {
   simple: css`
-  ${(p): ReturnType<typeof css> => getSimpleBorder(p.theme.border)}
+    ${(p): ReturnType<typeof css> => getSimpleBorder(p.theme.border)}
     border-color: ${(p): string => p.theme.colors.lightContrast};
   `,
   outline: css`
@@ -633,8 +633,6 @@ export const Accordion = styled(AccordionBase)`
   &.box-shadow {
     ${(p): ReturnType<typeof css> => getBoxShadow(p.theme, p.useBoxShadows)}
   }
-
-
 
   ${variantStyles}
   ${margin}

@@ -1,13 +1,7 @@
 import cactusTheme, { TextStyleCollection } from '@repay/cactus-theme'
 import { object, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import {
-  OverflowProperty,
-  OverflowXProperty,
-  OverflowYProperty,
-  PositionProperty,
-  ZIndexProperty,
-} from 'csstype'
+import { Property } from 'csstype'
 import React from 'react'
 
 import Box from './Box'
@@ -50,7 +44,7 @@ storiesOf('Box', module)
     'Basic Usage with theme build-in values',
     (): React.ReactElement => (
       <Box
-        position={select('position', positionOptions, 'initial') as PositionProperty}
+        position={select('position', positionOptions, 'initial') as Property.Position}
         display={select('display', displayOptions, 'initial')}
         top={text('top', '')}
         right={text('right', '')}
@@ -71,10 +65,10 @@ storiesOf('Box', module)
         borderRadius={text('borderRadius', '')}
         borderStyle={text('borderStyle', 'solid')}
         textStyle={select('textStyle', textStyles, 'body') as keyof TextStyleCollection}
-        zIndex={text('zIndex', '') as ZIndexProperty}
-        overflow={text('overflow', '') as OverflowProperty}
-        overflowX={text('overflowX', '') as OverflowXProperty}
-        overflowY={text('overflowY', '') as OverflowYProperty}
+        zIndex={text('zIndex', '') as Property.ZIndex}
+        overflow={text('overflow', '') as Property.Overflow}
+        overflowX={text('overflowX', '') as Property.OverflowX}
+        overflowY={text('overflowY', '') as Property.OverflowY}
       >
         {text('children', 'Example Content')}
       </Box>
