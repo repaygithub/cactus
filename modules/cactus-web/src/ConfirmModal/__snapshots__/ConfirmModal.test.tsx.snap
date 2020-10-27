@@ -109,6 +109,8 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -560,6 +562,8 @@ exports[`Modal variant is danger snapshot 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -986,6 +990,8 @@ exports[`Modal variant is success snapshot 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -1392,6 +1398,8 @@ exports[`Modal variant is warning snapshot 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
