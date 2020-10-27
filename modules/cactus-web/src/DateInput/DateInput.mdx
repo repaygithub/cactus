@@ -24,7 +24,7 @@ When `value` is provided as a prop (i.e. controlled), the value will be raised a
 
 ### Try it out
 
-export const code = `<DateInput id="date-input-uncontrolled" name="date" onChange={(name,value)=> console.log(name, value)}/>`
+export const code = `<DateInput id="date-input-uncontrolled" name="date" onChange={({ target: { name, value } })=> console.log(name, value)}/>`
 
 <LiveProvider code={code} scope={{ DateInput }}>
   <LiveEditor style={livePreviewStyle} />
