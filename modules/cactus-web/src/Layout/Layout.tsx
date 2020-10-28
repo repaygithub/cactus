@@ -105,8 +105,6 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
   right: 0;
   top: 0;
   bottom: ${p.fixedBottom}px;
-  display: flex;
-  flex-direction: column;
 
   .cactus-layout-floatLeft {
     width: ${p.floatLeft}px;
@@ -139,15 +137,14 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
   }
 
   ${!p.floatLeft
-    ? `display: flex;
-        flex-direction: column;`
+    ? 'display:block;'
     : `
         display: -ms-grid;
         display: grid;
         -ms-grid-columns: ${p.floatLeft}px 1fr;
         grid-template-columns: ${p.floatLeft}px 1fr;
-        -ms-grid-rows: min-content min-content minmax(max-content, 1fr);
-        grid-template-rows: min-content min-content minmax(max-content, 1fr);
+        -ms-grid-rows: min-content min-content minmax(max-content, 1fr) min-content;
+        grid-template-rows: min-content min-content minmax(max-content, 1fr) min-content;
 
         & > * {
           -ms-grid-column: 1;
@@ -160,6 +157,11 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
         }
         & > *:nth-child(2) {
           -ms-grid-row: 2;
+        }
+        & > *:last-child {
+          -ms-grid-row: 4;
+          grid-row-start: 4;
+          grid-row-end: 5;
         }
         & > .cactus-layout-floatLeft {
           -ms-grid-column: 1;
