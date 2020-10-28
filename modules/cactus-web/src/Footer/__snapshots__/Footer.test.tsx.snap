@@ -154,14 +154,14 @@ exports[`component: Footer snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c4 {
+  .c6 {
     font-size: 15px;
     line-height: 1.6;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c6 .c7 {
+  .c9 .c10 {
     font-size: 15px;
     line-height: 1.6;
   }
