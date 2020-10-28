@@ -1,5 +1,12 @@
 # Changelog
 
+## [@repay/cactus-i18n@v1.1.0](https://github.com/repaygithub/cactus/commit/739282186b172a899ae1c3bd937837642fbf3596)
+
+- chore(cactus-i18n): add React v17 to peerDependencies [0d067f2](https://github.com/repaygithub/cactus/commit/0d067f282481f4aa0c310989c3aa6d52757c9b9f)
+- chore(cactus-i18n): upgrade babel dependencies and @repay/scripts [7d77ecc](https://github.com/repaygithub/cactus/commit/7d77ecc9963bc2adfb08e2bf373a148287c1b767)
+- chore(cactus-i18n): upgrade intl-pluralrules [4b6506d](https://github.com/repaygithub/cactus/commit/4b6506ddab0db802d5af5a1d7541da08e8430168)
+- chore(cactus-i18n): update changelog [917a5f4](https://github.com/repaygithub/cactus/commit/917a5f4821ca41ee466df94d090e33f06b8a2999)
+
 ## [@repay/cactus-fwk@v0.5.0](https://github.com/repaygithub/cactus/commit/dddb277015e98747c29c6bcca6eee3fde2ee36c3)
 
 - chore(cactus-fwk): add React v17 to peerDependencies [41fb2c9](https://github.com/repaygithub/cactus/commit/41fb2c92e177758ee8128e20b0bc2b077c2158c7)
