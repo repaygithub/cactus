@@ -152,12 +152,17 @@ const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
 const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
-const variantOrDisabled = (props: ButtonProps) => {
-  const map = props.inverse ? inverseVariantMap : variantMap
+interface TransientButtonProps extends Omit<ButtonProps, 'inverse' | 'variant'> {
+  $inverse?: boolean
+  $variant?: ButtonVariants
+}
+
+const variantOrDisabled = (props: TransientButtonProps) => {
+  const map = props.$inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
     return disabled
-  } else if (props.variant !== undefined) {
-    return map[props.variant]
+  } else if (props.$variant !== undefined) {
+    return map[props.$variant]
   }
 }
 
@@ -165,18 +170,17 @@ function ButtonFunc<E, C extends GenericComponent = 'button'>(
   props: AsProps<C> & ButtonProps,
   ref: React.Ref<E>
 ): React.ReactElement {
-  const { loading, children, disabled, loadingText, ...rest } = props
+  const { loading, children, disabled, loadingText, inverse, variant, ...rest } = props
   let spanProps = null
   if (loading === true) {
     spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
-  }
-  if (rest.as) {
-    delete rest['inverse']
   }
   return (
     <StyledButton
       {...(rest as any)}
       ref={ref as any}
+      $inverse={inverse}
+      $variant={variant}
       disabled={loading || disabled}
       aria-live="assertive"
     >
@@ -186,7 +190,9 @@ function ButtonFunc<E, C extends GenericComponent = 'button'>(
   )
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button.withConfig({
+  shouldForwardProp: (p) => !margin.propNames?.includes(p),
+})<{ $inverse?: boolean; $variant?: ButtonVariants }>`
   position: relative;
   padding: 2px 30px;
   outline: none;
