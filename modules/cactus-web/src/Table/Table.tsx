@@ -363,10 +363,13 @@ const table = css<TableProps>`
   tr:nth-of-type(even) {
     td,
     th {
-      border-right: ${(p): string => (p.dividers ? border(p.theme, 'white') : '')};
       background-color: ${(p): string => p.theme.colors.lightContrast};
     }
+    td:not(:last-child) {
+      border-right: ${(p): string => (p.dividers ? border(p.theme, 'white') : '')};
+    }
   }
+
   &&& tr:hover {
     th,
     td {
