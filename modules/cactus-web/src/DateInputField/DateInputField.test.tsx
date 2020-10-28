@@ -21,7 +21,7 @@ describe('component: DateInputField', (): void => {
         <DateInputField name="date_field" label="Date Field" />
       </StyleProvider>
     )
-    const [input, group] = getAllByLabelText('Date Field')
+    const [group, input] = getAllByLabelText('Date Field')
     expect(group).toHaveAttribute('role', 'group')
     expect(input).toHaveAttribute('aria-label', 'month')
   })

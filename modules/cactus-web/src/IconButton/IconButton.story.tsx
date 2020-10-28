@@ -1,10 +1,10 @@
 import * as icons from '@repay/cactus-icons'
-import { actions } from '@storybook/addon-actions'
 import { boolean, select } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
 import Grid from '../Grid/Grid'
+import actions from '../helpers/storybookActionsWorkaround'
 import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 
 const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']

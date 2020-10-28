@@ -126,8 +126,8 @@ describe('component: CheckBoxGroup', (): void => {
       ['cb1', true],
     ])
     expect(onChangeOne.mock.calls).toEqual([['cb2', true]])
-    expect(onFocus.mock.calls).toEqual([['checkboxes'], ['checkboxes']])
+    expect(onFocus.mock.calls).toEqual([['checkboxes']])
     expect(onFocusOne.mock.calls).toEqual([['cb1'], ['cb1']])
-    expect(onBlur.mock.calls).toEqual([['checkboxes']])
+    expect(onBlur).not.toHaveBeenCalled()
   })
 })

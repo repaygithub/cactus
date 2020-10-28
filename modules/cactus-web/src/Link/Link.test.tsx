@@ -1,10 +1,8 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Link from './Link'
-
-afterEach(cleanup)
 
 describe('component: Link', (): void => {
   test('should render a Link', (): void => {

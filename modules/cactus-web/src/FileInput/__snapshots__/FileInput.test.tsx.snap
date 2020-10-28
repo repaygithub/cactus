@@ -436,8 +436,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c12 .c5,
-.c12 .sc-fzqzEs,
-.c12 .sc-pZBmh {
+.c12 .sc-bTDODP,
+.c12 .sc-eHEFXm {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -526,12 +526,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c2 .c3 .sc-pZBmh {
+.c2 .c3 .sc-eHEFXm {
   height: 18px;
   width: 18px;
 }
 
-.c2 .sc-qYSYK {
+.c2 .sc-cbeQSR {
   height: 12px;
   width: 12px;
 }
@@ -753,7 +753,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c4 .sc-fzqOul {
+.c4 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -871,7 +871,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c2 .c3 .sc-fzqOul {
+.c2 .c3 .sc-kHWWFa {
   height: 16px;
   width: 16px;
 }
@@ -881,7 +881,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c2 .sc-qYSYK {
+.c2 .sc-cbeQSR {
   height: 12px;
   width: 12px;
 }
@@ -899,7 +899,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-pBolk {
+.c1 .sc-hkePoP {
   position: relative;
   margin-top: 4px;
 }
@@ -1041,7 +1041,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
 `;
 
 exports[`component: FileInput should render a loading file 1`] = `
-.c7 {
+.c8 {
   font-size: 16px;
   vertical-align: middle;
 }
@@ -1049,11 +1049,14 @@ exports[`component: FileInput should render a loading file 1`] = `
 .c4 {
   vertical-align: middle;
   font-size: 40px;
+}
+
+.c5 {
   -webkit-animation: bKPVWD 0.75s linear infinite;
   animation: bKPVWD 0.75s linear infinite;
 }
 
-.c6 {
+.c7 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1068,12 +1071,12 @@ exports[`component: FileInput should render a loading file 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c6:hover {
+.c7:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c6:focus::after {
+.c7:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1086,11 +1089,11 @@ exports[`component: FileInput should render a loading file 1`] = `
   border-radius: 20px;
 }
 
-.c6::-moz-focus-inner {
+.c7::-moz-focus-inner {
   border: 0;
 }
 
-.c6 svg {
+.c7 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -1126,17 +1129,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   line-height: 1.5;
 }
 
-.c2 .sc-psCJM {
+.c2 .sc-dTSxUT {
   height: 24px;
   width: 24px;
 }
 
-.c2 .sc-psCJM .sc-fzqOul {
+.c2 .sc-dTSxUT .sc-kHWWFa {
   height: 16px;
   width: 16px;
 }
 
-.c2 .sc-psCJM .sc-pZBmh {
+.c2 .sc-dTSxUT .sc-eHEFXm {
   height: 18px;
   width: 18px;
 }
@@ -1146,11 +1149,11 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .sc-qQxXP {
+.c2 .sc-htmbXw {
   margin-left: auto;
 }
 
-.c2 .sc-fzoxnE {
+.c2 .sc-fXazxj {
   height: 12px;
   width: 12px;
 }
@@ -1159,7 +1162,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-pBolk {
+.c1 .sc-hkePoP {
   position: relative;
   margin-top: 4px;
 }
@@ -1186,7 +1189,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   align-items: center;
 }
 
-.c0.empty .c5 {
+.c0.empty .c6 {
   position: absolute;
   left: 35%;
   bottom: 15%;
@@ -1200,7 +1203,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   padding: 0 8px;
 }
 
-.c0.notEmpty .c5 {
+.c0.notEmpty .c6 {
   position: relative;
   margin: 16px 0 16px 0;
 }
@@ -1210,7 +1213,7 @@ exports[`component: FileInput should render a loading file 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c6 {
+  .c7 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1245,7 +1248,7 @@ exports[`component: FileInput should render a loading file 1`] = `
           boolest.md
         </span>
         <svg
-          class="sc-qYiqT c3 c4"
+          class="c3 c4 c5"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -1259,11 +1262,11 @@ exports[`component: FileInput should render a loading file 1`] = `
       </div>
     </div>
     <button
-      class="c5 c6"
+      class="c6 c7"
       type="button"
     >
       <svg
-        class="c7"
+        class="c8"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
