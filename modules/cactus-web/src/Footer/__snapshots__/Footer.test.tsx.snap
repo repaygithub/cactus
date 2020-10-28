@@ -1,29 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Footer snapshot 1`] = `
-.c8 {
+.c11 {
   font-style: italic;
   outline: none;
 }
 
-.c8:link {
+.c11:link {
   color: hsl(200,96%,35%);
 }
 
-.c8:visited {
+.c11:visited {
   color: hsl(200,18%,45%);
 }
 
-.c8:hover {
+.c11:hover {
   color: hsl(200,96%,11%);
 }
 
-.c8:focus {
+.c11:focus {
   color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
 }
 
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -52,27 +52,27 @@ exports[`component: Footer snapshot 1`] = `
   justify-content: flex-start;
 }
 
-.c2 {
+.c4 {
   margin-bottom: 16px;
 }
 
-.cactus-layout-fixedBottom .c2 {
+.cactus-layout-fixedBottom .c3 {
   margin-right: 16px;
   margin-bottom: 0px;
 }
 
-.c4 {
+.c6 {
   max-width: 100%;
   font-size: 15px;
   line-height: 1.6;
 }
 
-.c3 {
+.c5 {
   max-width: 200px;
   max-height: 40px;
 }
 
-.c5 {
+.c7 {
   max-width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -93,7 +93,7 @@ exports[`component: Footer snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c6 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -117,17 +117,17 @@ exports[`component: Footer snapshot 1`] = `
   border-right: 1px solid hsl(200,96%,35%);
 }
 
-.c6 .c7 {
+.c9 .c10 {
   max-width: 100%;
   font-size: 15px;
   line-height: 1.6;
 }
 
-.cactus-layout-fixedBottom .c6 {
+.cactus-layout-fixedBottom .c8 {
   max-width: calc(100% / 2);
 }
 
-.c6:last-of-type {
+.c9:last-of-type {
   border-right: none;
 }
 
@@ -173,41 +173,41 @@ exports[`component: Footer snapshot 1`] = `
     role="contentinfo"
   >
     <div
-      class="c1"
+      class="c1 c2"
     >
       <div
-        class="c2"
+        class="c3 c4"
       >
         <img
           alt="Logo"
-          class="c3"
+          class="c5"
           src="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
         />
       </div>
       <div
-        class="c4"
+        class="c6"
       >
         Custom Content
       </div>
     </div>
     <div
-      class="c5"
+      class="c7"
     >
       <div
-        class="c6"
+        class="c8 c9"
       >
         <a
-          class="c7 c8"
+          class="c10 c11"
           href="https://google.com"
         >
           Some Link
         </a>
       </div>
       <div
-        class="c6"
+        class="c8 c9"
       >
         <a
-          class="c7 c8"
+          class="c10 c11"
           href="https://repay.com"
         >
           Some Other Link

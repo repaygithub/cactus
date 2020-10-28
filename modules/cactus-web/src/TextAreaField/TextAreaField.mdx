@@ -38,8 +38,8 @@ import { Button, TextAreaField } from '@repay/cactus-web'
 export default function Form() {
   const [values, setValues] = useState({ textArea: '' })
   const handleChange = useCallback(
-    (name, value) => {
-      setValues(state => setValues({ ...state, [name]: value }))
+    (e) => {
+      setValues(state => ({ ...state, [e.target.name]: e.target.value }))
     },
     [setValues]
   )

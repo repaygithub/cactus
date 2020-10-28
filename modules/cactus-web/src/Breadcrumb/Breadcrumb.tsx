@@ -1,12 +1,11 @@
 import { NavigationChevronRight } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
 import React from 'react'
-import styled, { StyledComponentBase } from 'styled-components'
+import styled from 'styled-components'
 
-interface BreadcrumbItemProps {
-  label: React.ReactNode
-  linkTo: string
-  className?: string
+import { AsProps, GenericComponent } from '../helpers/asProps'
+import { borderSize } from '../helpers/theme'
+
+type BreadcrumbItemProps<C extends GenericComponent> = AsProps<C> & {
   active?: boolean
 }
 
@@ -15,56 +14,73 @@ interface BreadcrumbProps {
   className?: string
 }
 
-const BreadcrumbItemBase = (props: BreadcrumbItemProps): React.ReactElement => {
-  const { active, label, linkTo, className } = props
+export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
+  props: BreadcrumbItemProps<C>
+): React.ReactElement => {
+  const { active, ...rest } = props
+
+  // The "as any" with ...rest is necessary because Styled Components' types do not like
+  // forcing an aria-current when we're not sure if the element will be an <a>
+  // Here, we're just trusting the user to use a Link-ish component for the "as" prop
   return (
-    <li className={className}>
-      <a href={linkTo} aria-current={active && 'page'}>
-        {label}
-      </a>
-      <NavigationChevronRight iconSize="tiny" />
+    <li>
+      <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
+      <StyledChevron iconSize="tiny" active={active} />
     </li>
   )
 }
-const BreadCrumbBase = (props: BreadcrumbProps): React.ReactElement => {
+
+const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { children, className } = props
   return (
-    <nav aria-label="Breadcrumb" className={className}>
+    <StyledNav aria-label="Breadcrumb" className={className}>
       <ul>{children}</ul>
-    </nav>
+    </StyledNav>
   )
 }
 
-interface BreadcrumbComponent extends StyledComponentBase<'ul', CactusTheme, BreadcrumbProps> {
-  Item: React.ComponentType<BreadcrumbItemProps>
-}
-
-export const BreadCrumbItem = styled(BreadcrumbItemBase)`
+const BreadcrumbLink = styled.a`
   color: black;
   font-style: normal;
-  a:visited,
-  a:link {
-    color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
+  outline: none;
+  &:visited,
+  &:link {
+    color: ${(p) => p.theme.colors.mediumContrast};
     font-style: normal;
     font-size: 15px;
     text-decoration: none;
   }
-
-  & > svg {
-    color: ${(p): string => (p.active ? '#2E3538' : '#5F7A88')};
-    margin: 0 3px;
-    font-size: 10px;
+  &[aria-current='page'] {
+    color: ${(p) => p.theme.colors.darkestContrast};
+  }
+  &:hover {
+    color: ${(p) => p.theme.colors.callToAction};
+  }
+  &:focus {
+    outline: ${(p) => `${p.theme.colors.callToAction} solid ${borderSize(p)}`};
   }
 `
 
-export const Breadcrumb = styled(BreadCrumbBase)`
+const StyledChevron = styled(NavigationChevronRight)<{ active?: boolean }>`
+  color: ${(p): string =>
+    p.active ? p.theme.colors.darkestContrast : p.theme.colors.mediumContrast};
+  margin: 0 3px;
+  font-size: 10px;
+`
+
+const StyledNav = styled.nav`
   > ul {
     display: flex;
     flex-direction: row;
     list-style: none;
   }
-` as any
+`
 
-Breadcrumb.Item = BreadCrumbItem
+type BreadcrumbComponent = typeof BreadcrumbBase & {
+  Item: typeof BreadcrumbItem
+}
 
-export default Breadcrumb as BreadcrumbComponent
+export const Breadcrumb = BreadcrumbBase as BreadcrumbComponent
+Breadcrumb.Item = BreadcrumbItem
+
+export default Breadcrumb

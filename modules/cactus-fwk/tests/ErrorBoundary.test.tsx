@@ -1,9 +1,7 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import React, { ReactElement } from 'react'
 
 import AppRoot, { ErrorBoundary, withErrorBoundary } from '../src/index'
-
-afterEach(cleanup)
 
 const ProblemChild = (): never => {
   throw new Error('I am throwing this error just because I can')

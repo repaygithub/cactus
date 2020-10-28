@@ -92,38 +92,23 @@ const MainActionButton = styled.button<VariantInterface>`
     cursor: not-allowed;
   `
       : ''}
-    ${(p) => p.disabled && p.theme.colorStyles.disable}
+  ${(p) => p.disabled && p.theme.colorStyles.disable}
 
     &.dd-closed {
-      ${variant({
-        standard: css`
-          border-color: ${(p): string => p.theme.colors.darkestContrast};
-        `,
-        danger: css`
-          border-color: ${(p): string => p.theme.colors.error};
-        `,
-        success: css`
-          border-color: ${(p): string => p.theme.colors.success};
-        `,
-      })}
+    ${variant({
+      standard: css`
+        border-color: ${(p): string => p.theme.colors.darkestContrast};
+      `,
+      danger: css`
+        border-color: ${(p): string => p.theme.colors.error};
+      `,
+      success: css`
+        border-color: ${(p): string => p.theme.colors.success};
+      `,
+    })}
 
-      &:hover,
+    &:hover,
       &:focus {
-        ${variant({
-          standard: css`
-            border-color: ${(p): string => p.theme.colors.callToAction};
-          `,
-          danger: css`
-            border-color: ${(p): string => p.theme.colors.errorDark};
-          `,
-          success: css`
-            border-color: ${(p): string => p.theme.colors.successDark};
-          `,
-        })}
-      }
-    }
-
-    &.dd-open {
       ${variant({
         standard: css`
           border-color: ${(p): string => p.theme.colors.callToAction};
@@ -136,7 +121,21 @@ const MainActionButton = styled.button<VariantInterface>`
         `,
       })}
     }
+  }
 
+  &.dd-open {
+    ${variant({
+      standard: css`
+        border-color: ${(p): string => p.theme.colors.callToAction};
+      `,
+      danger: css`
+        border-color: ${(p): string => p.theme.colors.errorDark};
+      `,
+      success: css`
+        border-color: ${(p): string => p.theme.colors.successDark};
+      `,
+    })}
+  }
 `
 
 const SplitButtonStyles = createGlobalStyle`

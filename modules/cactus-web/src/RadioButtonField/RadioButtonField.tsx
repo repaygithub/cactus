@@ -4,69 +4,28 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
-export interface RadioButtonFieldProps
-  extends Omit<RadioButtonProps, 'id' | 'onChange' | 'onFocus' | 'onBlur'>,
-    MarginProps {
+export interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id'>, MarginProps {
   label: React.ReactNode
   name: string
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
-  onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
 }
 
 const RadioButtonFieldBase = React.forwardRef<HTMLInputElement, RadioButtonFieldProps>(
   (props, ref) => {
-    const {
-      label,
-      labelProps,
-      id,
-      className,
-      name,
-      onChange,
-      onFocus,
-      onBlur,
-      ...radioButtonProps
-    } = omitMargins(props) as Omit<RadioButtonFieldProps, keyof MarginProps>
+    const { label, labelProps, id, className, name, ...radioButtonProps } = omitMargins(
+      props
+    ) as Omit<RadioButtonFieldProps, keyof MarginProps>
     const radioButtonId = useId(id, name)
-
-    const handleChange = React.useCallback(
-      (event: React.FormEvent<HTMLInputElement>): void => {
-        if (typeof onChange === 'function') {
-          const target = (event.target as unknown) as HTMLInputElement
-          onChange(name, target.value)
-        }
-      },
-      [name, onChange]
-    )
-
-    const handleFocus = (): void => {
-      handleEvent(onFocus, name)
-    }
-
-    const handleBlur = (): void => {
-      handleEvent(onBlur, name)
-    }
 
     return (
       <FieldWrapper className={className}>
-        <RadioButton
-          ref={ref}
-          id={radioButtonId}
-          name={name}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          {...radioButtonProps}
-        />
+        <RadioButton ref={ref} id={radioButtonId} name={name} {...radioButtonProps} />
         <Label {...labelProps} htmlFor={radioButtonId}>
           {label}
         </Label>
@@ -94,9 +53,6 @@ RadioButtonField.propTypes = {
   name: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
   id: PropTypes.string,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
 }
 
 RadioButtonField.defaultProps = {

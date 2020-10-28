@@ -28,7 +28,7 @@ test.page('http://localhost:33567?lang=en-US')(
       .expect(
         queryByText(
           'Welcome to the standard application using `@repay/cactus-i18n` demonstrating the basic usages,'
-        )
+        ).exists
       )
       .ok('Could not find translated text')
   }
@@ -42,7 +42,7 @@ test.page('http://localhost:33567?lang=en-US')(
       .expect(
         queryByText(
           'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
-        )
+        ).exists
       )
       .ok('Could not find Spanish translation')
   }
@@ -55,7 +55,7 @@ test.page('http://localhost:33567?lang=es-MX')(
       .expect(
         queryByText(
           'Bienvenido a la aplicación estándar usando `@repay/cactus-i18n` demostrando los usos básicos'
-        )
+        ).exists
       )
       .ok('Could not find translated text')
   }

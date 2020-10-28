@@ -158,7 +158,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
             <Flex borderColor="base" borderWidth="2px" borderStyle="solid" width="90%">
               <Flex width="100%">
                 <Form style={{ width: '100%', padding: '16px' }}>
-                  <FormikField
+                  <Field
                     as={TextInputField}
                     name="displayName"
                     label="Display Name"
@@ -166,14 +166,14 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     error={touched.displayName && errors.displayName}
                   />
 
-                  <FormikField
+                  <Field
                     as={TextInputField}
                     name="merchantName"
                     label="Merchant Name"
                     tooltip="Enter your merchant name"
                     error={touched.merchantName && errors.merchantName}
                   />
-                  <FormikField
+                  <Field
                     as={TextAreaField}
                     name="termsAndConditions"
                     label="Terms and Conditions"
@@ -181,14 +181,14 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     error={touched.termsAndConditions && errors.termsAndConditions}
                   />
 
-                  <FormikField
+                  <Field
                     as={TextAreaField}
                     name="welcomeContent"
                     label="Welcome Content"
                     tooltip="Enter content to be displayed on login"
                     error={touched.welcomeContent && errors.welcomeContent}
                   />
-                  <FormikField
+                  <Field
                     as={TextAreaField}
                     name="footerContent"
                     label="Footer Content"
@@ -254,7 +254,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     />
                   </Flex>
 
-                  <FormikField
+                  <Field
                     as={RadioGroup}
                     name="selectColor"
                     label="Select Color"
@@ -265,17 +265,19 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     <RadioGroup.Button value="yellow" label="Yellow" />
                     <RadioGroup.Button value="pink" label="Pink" />
                     <RadioGroup.Button value="blue" label="Blue" />
-                  </FormikField>
+                  </Field>
 
-                  <FormikField
+                  <Field
                     as={ToggleField}
+                    type="checkbox"
                     name="allowCustomerLogin"
                     label="Allow Customer Login"
                     my={4}
                   />
 
-                  <FormikField
+                  <Field
                     as={CheckBoxField}
+                    type="checkbox"
                     name="useCactusStyles"
                     label="Use Cactus Styles"
                     my={4}

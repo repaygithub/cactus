@@ -15,9 +15,9 @@ checkBoxGroupStories.add(
       id="cbg"
       label={text('label', 'My Label')}
       disabled={boolean('disabled', false)}
-      onChange={(name, value) => console.log(`'${name}' changed: ${value}`)}
-      onFocus={(name) => console.log(`'${name}' focused`)}
-      onBlur={(name) => console.log(`'${name}' blurred`)}
+      onChange={(e: any) => console.log(`'${e.target.name}' changed: ${e.target.checked}`)}
+      onFocus={(e) => console.log(`'${e.target.name}' focused`)}
+      onBlur={(e) => console.log(`'${e.target.name}' blurred`)}
       tooltip={text('tooltip', 'Check some boxes')}
       autoTooltip={boolean('autoTooltip', true)}
       error={text('error', '')}
@@ -45,7 +45,9 @@ checkBoxGroupStories.add(
           name="controller"
           label="Controller"
           checked={value}
-          onChange={(name, val) => setValue((value) => ({ ...value, [name]: val }))}
+          onChange={({ target }: any) =>
+            setValue((value) => ({ ...value, [target.name]: target.checked }))
+          }
         >
           <CheckBoxGroup.Item name="option-1" label="Option 1" />
           <CheckBoxGroup.Item name="option-2" label="Option 2" />

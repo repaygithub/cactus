@@ -46,7 +46,6 @@ If you use an intermediate component, the component will have to accept the forw
   - Pass `checked` or `defaultChecked` to `CheckBoxGroup.Item`s.
 - Passing a `ref` to `CheckBoxGroup` will be set on the `fieldset` element.
 - `onChange`, `onFocus` and `onBlur` handlers are not forwarded to individual checkboxes. They are associated with the `fieldset` and rely on event delegation to capture changes.
-  - The `name` passed to `onFocus` and `onBlur` handlers will match with the `name` of the `CheckBoxGroup`, while the `name` passed to the `onChange` handler will be the name associated with an individual checkbox.
 
 ## Properties
 
