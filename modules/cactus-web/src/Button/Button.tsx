@@ -19,8 +19,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, Mar
   loadingText?: string
 }
 
-type ButtonPropsWithAs = ButtonProps & AsProps<GenericComponent>
-
 type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
@@ -163,13 +161,11 @@ const variantOrDisabled = (props: ButtonProps) => {
   }
 }
 
-export const Button: React.FC<ButtonPropsWithAs> = ({
-  loading,
-  children,
-  disabled,
-  loadingText,
-  ...rest
-}): React.ReactElement => {
+function ButtonFunc<E, C extends GenericComponent = 'button'>(
+  props: AsProps<C> & ButtonProps,
+  ref: React.Ref<E>
+): React.ReactElement {
+  const { loading, children, disabled, loadingText, ...rest } = props
   let spanProps = null
   if (loading === true) {
     spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
@@ -178,7 +174,12 @@ export const Button: React.FC<ButtonPropsWithAs> = ({
     delete rest['inverse']
   }
   return (
-    <StyledButton {...rest} disabled={loading || disabled} aria-live="assertive">
+    <StyledButton
+      {...(rest as any)}
+      ref={ref as any}
+      disabled={loading || disabled}
+      aria-live="assertive"
+    >
       <span {...spanProps}>{children}</span>
       {loading && <Spinner iconSize="small" aria-label={loadingText} />}
     </StyledButton>
@@ -234,7 +235,13 @@ const StyledButton = styled.button`
   ${variantOrDisabled}
 `
 
-Button.propTypes = {
+type ButtonType = typeof ButtonFunc
+const ButtonFR = React.forwardRef(ButtonFunc) as any
+export const Button = ButtonFR as ButtonType
+
+ButtonFR.displayName = 'Button'
+
+ButtonFR.propTypes = {
   variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success']),
   disabled: PropTypes.bool,
   inverse: PropTypes.bool,
@@ -244,7 +251,7 @@ Button.propTypes = {
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 }
 
-Button.defaultProps = {
+ButtonFR.defaultProps = {
   variant: 'standard',
   disabled: false,
   inverse: false,
