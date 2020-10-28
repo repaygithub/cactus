@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-fwk@v0.5.0](https://github.com/repaygithub/cactus/commit/dddb277015e98747c29c6bcca6eee3fde2ee36c3)
+
+- chore(cactus-fwk): add React v17 to peerDependencies [41fb2c9](https://github.com/repaygithub/cactus/commit/41fb2c92e177758ee8128e20b0bc2b077c2158c7)
+- chore(cactus-fwk): upgrade babel dependencies and @repay/scripts [9225811](https://github.com/repaygithub/cactus/commit/9225811a0bea826765b53a3c34349502a955a891)
+- refactor(cactus-fwk): Apply TS linting rules [a0d6bdf](https://github.com/repaygithub/cactus/commit/a0d6bdf799a84bdcb4faca6e51521329d7e421bb)
+
 ## [@repay/cactus-web@v3.2.0](https://github.com/repaygithub/cactus/commit/ee16d57e7b17042a48dcce69741c02ea4b951883)
 
 - chore(cactus-web): remove ts-jest from cactus-web [b9c48c0](https://github.com/repaygithub/cactus/commit/b9c48c08d50dccfc10d64a76d18b12d6f09ab9be)
