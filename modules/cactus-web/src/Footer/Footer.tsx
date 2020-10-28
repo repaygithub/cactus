@@ -1,9 +1,10 @@
+import { TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { FlattenSimpleInterpolation } from 'styled-components'
 
 import { useSizeRef } from '../helpers/rect'
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, textStyle } from '../helpers/theme'
 import useId from '../helpers/useId'
 import { useLayout } from '../Layout/Layout'
 import Link from '../Link/Link'
@@ -55,12 +56,13 @@ const LogoWrapper = styled('div')`
 `
 
 const ContentWrapper = styled('div')`
-  max-width 100%;
+  max-width: 100%;
+  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
 `
 
 const Img = styled('img')`
   max-width: 200px;
-  max-height: 80px;
+  max-height: 40px;
 `
 
 const LinksColsContainer = styled('div')`
@@ -83,6 +85,7 @@ const LinkCol = styled('div')<LinkColProps>`
 
   ${Link} {
     max-width: 100%;
+    ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   }
 
   .cactus-layout-fixedBottom & {
@@ -199,6 +202,7 @@ const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })`
   justify-content: center;
   width: 100%;
   background-color: ${(p) => p.theme.colors.lightContrast};
+  margin-top: auto;
   ${(p) => boxShadow(p.theme, 1)};
   &.cactus-layout-fixedBottom {
     height: auto;
