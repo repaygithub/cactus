@@ -1,5 +1,23 @@
 # Changelog
 
+## [@repay/cactus-web@v3.3.0](https://github.com/repaygithub/cactus/commit/8ff51f25065cb25c5bff722f8e39b2e169d7cfb5)
+
+- chore(cactus-web): upgrade to latest versions of cactus-icons and cactus-theme [897120b](https://github.com/repaygithub/cactus/commit/897120b48847f8a45cecb779d166ecb3a236c65e)
+- fix(cactus-web): fix overflow for long words in table card view [00128e8](https://github.com/repaygithub/cactus/commit/00128e8be9441c32a1e19e2bfe9441efcf43e018)
+- feat(cactus-web): add ability to turn off add option on combobox [81705af](https://github.com/repaygithub/cactus/commit/81705af47471fa5b8d8c3a253301c8994ccc552d)
+- feat(cactus-web): add useBoxShadows prop to Accordion [49fc975](https://github.com/repaygithub/cactus/commit/49fc975c66297dd0874808caf9ff50fe0a4707ff)
+- chore(cactus-web): add React v17 to peerDependencies [1522d18](https://github.com/repaygithub/cactus/commit/1522d18d4ec7725d8ffaf2447c1dda8027dd84d0)
+- chore(cactus-web): upgrade babel dependencies and @repay/scripts [21ad899](https://github.com/repaygithub/cactus/commit/21ad899f0b92ba937542f8d5dd072616e5b5d85d)
+- build(cactus-web): manually add Select polyfills to Storybook webpack [3491559](https://github.com/repaygithub/cactus/commit/34915592894cc3d73a4406dc524fc8716d5efd0e)
+- fix(cactus-web): fix height of table with long values [ded1e93](https://github.com/repaygithub/cactus/commit/ded1e93e1630ec22a4fa40a7cc87efbf0ad269f7)
+- feat(cactus-web): add useBoxShadows prop to Accordion [8171f82](https://github.com/repaygithub/cactus/commit/8171f829b34f9d024a2c5963521e57713e2a8adc)
+- fix(cactus-web): fix issue with IE11 [bf1c932](https://github.com/repaygithub/cactus/commit/bf1c93256e8d3aeba1862574b5caa1e8360a1af2)
+- fix(cactus-web): fix cells not adjusting when text shrinks [e938ce8](https://github.com/repaygithub/cactus/commit/e938ce87c101a88cad110669ee9c91fe821c0fe3)
+- refactor(cactus-web): refactor code, not using context anymore. safer algorithm [1b79f88](https://github.com/repaygithub/cactus/commit/1b79f88c5532e5fc5645f6b959339628ccf3b775)
+- refactor(cactus-web): remove unused interface [ce5619a](https://github.com/repaygithub/cactus/commit/ce5619a6fde612f1279e64ca5a1cb09eb28f69c2)
+- fix(cactus-web): max height is calculated by column now [3f7842f](https://github.com/repaygithub/cactus/commit/3f7842f32508f9651794aa6b7fb2e1bc782d2fd3)
+- chore(cactus-web): update changelog [0f14061](https://github.com/repaygithub/cactus/commit/0f140611c3ac30c8e5c2ce5e6605aa41221f71c6)
+
 ## [@repay/cactus-icons@v2.1.0](https://github.com/repaygithub/cactus/commit/06c36b4f2c58d6910f898eb139a7f148e26bcf78)
 
 - chore(cactus-icons): add React v17 to peerDependencies [4f2a668](https://github.com/repaygithub/cactus/commit/4f2a668739a31556adb75f8d5091cdf8ae48b8b8)
