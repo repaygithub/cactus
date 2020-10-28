@@ -1,5 +1,11 @@
 # Changelog
 
+## [@repay/cactus-icons@v2.1.0](https://github.com/repaygithub/cactus/commit/06c36b4f2c58d6910f898eb139a7f148e26bcf78)
+
+- chore(cactus-icons): add React v17 to peerDependencies [4f2a668](https://github.com/repaygithub/cactus/commit/4f2a668739a31556adb75f8d5091cdf8ae48b8b8)
+- chore(cactus-icons): upgrade babel dependencies and @repay/scripts [68f4b76](https://github.com/repaygithub/cactus/commit/68f4b768a1ded0248c8929244c2675eaa948d782)
+- chore(cactus-icons): update changelog [29b903a](https://github.com/repaygithub/cactus/commit/29b903a73cc0b6963c12cb9148d0607846f9f12f)
+
 ## [@repay/cactus-i18n@v1.1.0](https://github.com/repaygithub/cactus/commit/739282186b172a899ae1c3bd937837642fbf3596)
 
 - chore(cactus-i18n): add React v17 to peerDependencies [0d067f2](https://github.com/repaygithub/cactus/commit/0d067f282481f4aa0c310989c3aa6d52757c9b9f)
