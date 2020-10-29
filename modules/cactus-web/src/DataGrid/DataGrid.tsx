@@ -57,6 +57,7 @@ interface DataGridProps extends MarginProps {
     disableNext?: boolean
   }
   sortLabels?: SortLabels
+  dividers?: boolean
 }
 
 interface PaginationOptions {
@@ -159,6 +160,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
     paginationProps,
     prevNextProps,
     sortLabels = {},
+    dividers,
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
   const sortableColumns = useMemo(() => {
@@ -236,7 +238,7 @@ const DataGridBase = (props: DataGridProps): ReactElement => {
           handleSortDirChange={handleSortDirChange}
           sortLabels={sortLabels}
         />
-        <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint}>
+        <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint} dividers={dividers}>
           <Table.Header>
             {[...columns.keys()].map((key) => {
               const column = columns.get(key)

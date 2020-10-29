@@ -64,7 +64,7 @@ tableStories.add(
 
     return (
       <ScreenSizeProvider>
-        <Table fullWidth={fullWidth} variant={variant}>
+        <Table fullWidth={fullWidth} variant={variant} dividers={boolean('dividers', false)}>
           {captionText && <caption>{captionText}</caption>}
           {header}
           <Body>{rows}</Body>

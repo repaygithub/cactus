@@ -292,8 +292,8 @@ exports[`component: Table regular table 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -325,6 +325,12 @@ exports[`component: Table regular table 1`] = `
 
 .c1.c1.c1 tr:hover th,
 .c1.c1.c1 tr:hover td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c1.c1.c1 tr:hover td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -332,9 +338,15 @@ exports[`component: Table regular table 1`] = `
   outline: 0;
 }
 
-.c1.c1.c1 tr:focus td,
-.c1.c1.c1 tr:focus th {
+.c1.c1.c1 tr:focus th,
+.c1.c1.c1 tr:focus td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
+}
+
+.c1.c1.c1 tr:focus td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -421,8 +433,8 @@ exports[`component: Table regular table 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -502,8 +514,8 @@ exports[`component: Table table with caption 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -535,6 +547,12 @@ exports[`component: Table table with caption 1`] = `
 
 .c1.c1.c1 tr:hover th,
 .c1.c1.c1 tr:hover td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c1.c1.c1 tr:hover td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -542,9 +560,15 @@ exports[`component: Table table with caption 1`] = `
   outline: 0;
 }
 
-.c1.c1.c1 tr:focus td,
-.c1.c1.c1 tr:focus th {
+.c1.c1.c1 tr:focus th,
+.c1.c1.c1 tr:focus td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
+}
+
+.c1.c1.c1 tr:focus td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -631,8 +655,8 @@ exports[`component: Table table with caption 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -707,8 +731,8 @@ exports[`component: Table table with no header 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -740,6 +764,12 @@ exports[`component: Table table with no header 1`] = `
 
 .c1.c1.c1 tr:hover th,
 .c1.c1.c1 tr:hover td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c1.c1.c1 tr:hover td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -747,9 +777,15 @@ exports[`component: Table table with no header 1`] = `
   outline: 0;
 }
 
-.c1.c1.c1 tr:focus td,
-.c1.c1.c1 tr:focus th {
+.c1.c1.c1 tr:focus th,
+.c1.c1.c1 tr:focus td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
+}
+
+.c1.c1.c1 tr:focus td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -836,8 +872,8 @@ exports[`component: Table table with no header 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 

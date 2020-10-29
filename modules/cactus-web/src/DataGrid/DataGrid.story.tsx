@@ -201,6 +201,7 @@ const DataGridContainer = ({
   return (
     <ScreenSizeProvider>
       <DataGrid
+        dividers={boolean('dividers', false)}
         data={includePaginationAndSort ? paginateData() : data}
         sortOptions={includePaginationAndSort ? sortOptions : undefined}
         onSort={onSort}
