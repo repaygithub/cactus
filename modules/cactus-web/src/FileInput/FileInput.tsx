@@ -88,7 +88,7 @@ interface EmptyPromptsProps {
 
 interface FileBoxProps {
   fileName: string
-  dispatch: React.Dispatch<FileAction>
+  onDelete: React.MouseEventHandler<HTMLElement>
   status: FileStatus
   labels: { delete?: string; loading?: string; loaded?: string }
   className?: string
@@ -166,12 +166,7 @@ const fileStatus = (props: FileBoxProps) =>
 
 const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
   (props, ref): React.ReactElement => {
-    const { fileName, className, status, errorMsg, dispatch, labels, disabled } = props
-    const onClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
-      e.currentTarget.blur()
-      e.persist()
-      dispatch({ deleteFile: fileName, event: e })
-    }
+    const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
 
     let label = fileName
     if (status === 'loaded') {
@@ -193,7 +188,12 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
         {status === 'loading' ? (
           <Spinner />
         ) : (
-          <IconButton onClick={onClick} label={labels.delete} disabled={disabled}>
+          <IconButton
+            onClick={onDelete}
+            data-filename={fileName}
+            label={labels.delete}
+            disabled={disabled}
+          >
             <NavigationClose />
           </IconButton>
         )}
@@ -332,6 +332,137 @@ function removeDuplicates(oldFiles: FileObject[], newFiles: FileList) {
   return files
 }
 
+const toFileObj = (box: PropBox) => (file: File): FileObject => {
+  const { rawFiles, accept, onError } = box
+  if (accept && !accepts(file, accept)) {
+    const errorMsg = onError(FILE_TYPE_ERR, accept)
+    return {
+      fileName: file.name,
+      contents: null,
+      status: 'error',
+      errorMsg: errorMsg,
+    }
+  } else if (rawFiles) {
+    return {
+      fileName: file.name,
+      contents: file,
+      status: 'loaded',
+    }
+  }
+  return {
+    fileName: file.name,
+    contents: file,
+    status: 'loading',
+  }
+}
+
+const loadFile = (box: PropBox) => (fileObj: FileObject): Promise<FileObject> => {
+  const { onError } = box
+  if (fileObj.status !== 'loading') {
+    return Promise.resolve(fileObj)
+  }
+  const file = fileObj.contents as File
+  const reader = new FileReader()
+  return new Promise<FileObject>((resolve): void => {
+    reader.onload = (): void => {
+      const dataURL = reader.result as string
+      if (file.size > 250000000 && dataURL === '') {
+        const errorMsg = onError(NOT_READABLE_ERR)
+        resolve({
+          fileName: file.name,
+          contents: null,
+          status: 'error',
+          errorMsg: errorMsg,
+        })
+      }
+      resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
+    }
+
+    reader.onerror = (): void => {
+      reader.abort()
+      let errorType: ErrorType = UNKNOWN_ERR
+      if (reader.error) {
+        switch (reader.error.name) {
+          case NOT_FOUND_ERR:
+            errorType = NOT_FOUND_ERR
+            break
+          case SECURITY_ERR:
+            errorType = SECURITY_ERR
+            break
+          case ABORT_ERR:
+            errorType = ABORT_ERR
+            break
+          case NOT_READABLE_ERR:
+            errorType = NOT_READABLE_ERR
+            break
+          case ENCODING_ERR:
+            errorType = ENCODING_ERR
+            break
+        }
+      }
+      const errorMsg = onError(errorType)
+      resolve({
+        fileName: file.name,
+        contents: null,
+        status: 'error',
+        errorMsg: errorMsg,
+      })
+    }
+
+    reader.readAsDataURL(file)
+  })
+}
+
+const reducer = (files: FileObject[], action: FileAction, box: PropBox) => {
+  const { disabled, isMounted, multiple } = box
+  let newFiles = files
+  if (action.control) {
+    newFiles = action.control
+  } else if (disabled || !isMounted) {
+    return files
+  }
+  if (action.deleteFile) {
+    newFiles = deleteFile(files, action.deleteFile)
+  } else if (action.files) {
+    if (action.append && multiple) {
+      const actionFiles = removeDuplicates(files, action.files)
+      if (actionFiles.length) {
+        newFiles = [...files, ...actionFiles.map(toFileObj(box))]
+      }
+    } else {
+      newFiles = Array.from(action.files).map(toFileObj(box))
+    }
+  }
+  if (!multiple && newFiles.length > 1) {
+    newFiles = [newFiles[0]]
+  }
+  return newFiles
+}
+
+const useFileState = (box: PropBox, initial: FileObject[]) => {
+  const [files, setFiles] = React.useState<FileObject[]>(initial)
+  const setter = useRef<(a: FileAction) => void>()
+  if (setter.current === undefined) {
+    const $loadFile = loadFile(box)
+    setter.current = (action) => {
+      box.event = action.event
+      box.event?.persist?.()
+      setFiles((files) => {
+        const newFiles = reducer(files, action, box)
+        if (newFiles !== files && newFiles.some((f) => f.status === 'loading')) {
+          Promise.all(newFiles.map($loadFile)).then((results) => {
+            if (box.isMounted) {
+              setFiles(results)
+            }
+          })
+        }
+        return newFiles
+      })
+    }
+  }
+  return [files, setter.current] as const
+}
+
 const FileInputBase = (props: FileInputProps): React.ReactElement => {
   const {
     className,
@@ -367,47 +498,12 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     onFocus,
     onBlur,
   })
-  const reducer = useRef<React.Reducer<FileObject[], FileAction>>()
-  if (reducer.current === undefined) {
-    reducer.current = (files: FileObject[], action: FileAction) => {
-      const { disabled, isMounted, multiple } = box
-      const event = (box.event = action.event)
-      let newFiles = files
-      if (action.control) {
-        newFiles = action.control
-      } else if (disabled || !isMounted) {
-        return files
-      }
-      if (action.deleteFile) {
-        newFiles = deleteFile(files, action.deleteFile)
-      } else if (action.files) {
-        if (action.append && multiple) {
-          const actionFiles = removeDuplicates(files, action.files)
-          if (actionFiles.length) {
-            newFiles = [...files, ...actionFiles.map(toFileObj)]
-          }
-        } else {
-          newFiles = Array.from(action.files).map(toFileObj)
-        }
-        if (newFiles.some((f) => f.status === 'loading')) {
-          Promise.all(newFiles.map(loadFile)).then((results) => {
-            if (isMounted) {
-              dispatch({ control: results, event })
-            }
-          })
-        }
-      }
-      if (!multiple && newFiles.length > 1) {
-        newFiles = [newFiles[0]]
-      }
-      return newFiles
-    }
-  }
-  const [files, dispatch] = React.useReducer(reducer.current, value || [])
+  const [files, updateFiles] = useFileState(box, value || [])
   // Not adding `multiple` or `type=file` because Formik doesn't properly support file inputs.
   const eventTarget = useBox(
     new CactusEventTarget<FileObject[]>({ id, name, value: files })
   )
+  const [inputKey, setInputKey] = React.useState<number>(0)
 
   useEffect(() => {
     box.isMounted = true
@@ -430,98 +526,16 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 
   useEffect((): void => {
     if (value) {
-      dispatch({ control: value })
+      updateFiles({ control: value })
     }
-  }, [value])
-
-  const toFileObj = (file: File): FileObject => {
-    const { rawFiles, accept, onError } = box
-    if (accept && !accepts(file, accept)) {
-      const errorMsg = onError(FILE_TYPE_ERR, accept)
-      return {
-        fileName: file.name,
-        contents: null,
-        status: 'error',
-        errorMsg: errorMsg,
-      }
-    } else if (rawFiles) {
-      return {
-        fileName: file.name,
-        contents: file,
-        status: 'loaded',
-      }
-    }
-    return {
-      fileName: file.name,
-      contents: file,
-      status: 'loading',
-    }
-  }
-
-  const loadFile = (fileObj: FileObject): Promise<FileObject> => {
-    const { onError } = box
-    if (fileObj.status !== 'loading') {
-      return Promise.resolve(fileObj)
-    }
-    const file = fileObj.contents as File
-    const reader = new FileReader()
-    return new Promise<FileObject>((resolve): void => {
-      reader.onload = (): void => {
-        const dataURL = reader.result as string
-        if (file.size > 250000000 && dataURL === '') {
-          const errorMsg = onError(NOT_READABLE_ERR)
-          resolve({
-            fileName: file.name,
-            contents: null,
-            status: 'error',
-            errorMsg: errorMsg,
-          })
-        }
-        resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
-      }
-
-      reader.onerror = (): void => {
-        reader.abort()
-        let errorType: ErrorType = UNKNOWN_ERR
-        if (reader.error) {
-          switch (reader.error.name) {
-            case NOT_FOUND_ERR:
-              errorType = NOT_FOUND_ERR
-              break
-            case SECURITY_ERR:
-              errorType = SECURITY_ERR
-              break
-            case ABORT_ERR:
-              errorType = ABORT_ERR
-              break
-            case NOT_READABLE_ERR:
-              errorType = NOT_READABLE_ERR
-              break
-            case ENCODING_ERR:
-              errorType = ENCODING_ERR
-              break
-          }
-        }
-        const errorMsg = onError(errorType)
-        resolve({
-          fileName: file.name,
-          contents: null,
-          status: 'error',
-          errorMsg: errorMsg,
-        })
-      }
-
-      reader.readAsDataURL(file)
-    })
-  }
+  }, [value, updateFiles])
 
   const handleDrop = React.useCallback<React.DragEventHandler>(
     (event) => {
       trapEvent(event)
-      event.persist()
-      dispatch({ files: event.dataTransfer.files, append: true, event })
+      updateFiles({ files: event.dataTransfer.files, append: true, event })
     },
-    [dispatch]
+    [updateFiles]
   )
 
   const handleOpenFileSelect = React.useCallback<React.MouseEventHandler>(
@@ -537,10 +551,19 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
   const handleFileSelect = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       event.stopPropagation()
-      event.persist()
-      dispatch({ files: event.target.files, event })
+      updateFiles({ files: event.target.files, event })
     },
-    [dispatch]
+    [updateFiles]
+  )
+
+  const onDelete = React.useCallback<React.MouseEventHandler<HTMLElement>>(
+    (e) => {
+      e.currentTarget.blur()
+      const fileName = e.currentTarget.getAttribute('data-filename') as string
+      updateFiles({ deleteFile: fileName, event: e })
+      setInputKey((k) => k + 1)
+    },
+    [updateFiles]
   )
 
   const handleFocus = React.useCallback(
@@ -585,6 +608,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
       onBlur={handleBlur}
     >
       <input
+        key={inputKey}
         type="file"
         ref={fileSelector}
         accept={accept && accept.join()}
@@ -602,7 +626,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
               <FileInfo
                 key={file.fileName}
                 fileName={file.fileName}
-                dispatch={dispatch}
+                onDelete={onDelete}
                 status={file.status}
                 errorMsg={file.errorMsg}
                 labels={labels}
