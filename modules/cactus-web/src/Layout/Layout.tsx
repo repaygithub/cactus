@@ -113,6 +113,8 @@ const LayoutWrapper = styled.div<LayoutProps>(
   right: 0;
   top: 0;
   bottom: ${p.fixedBottom}px;
+  display: flex;
+  flex-direction: column;
 
   .cactus-layout-floatLeft {
      width: ${p.floatLeft}px;
@@ -139,7 +141,8 @@ const LayoutWrapper = styled.div<LayoutProps>(
 
   ${
     !p.floatLeft
-      ? 'display: block;'
+      ? `display: flex;
+        flex-direction: column;`
       : `
         display: -ms-grid;
         display: grid;

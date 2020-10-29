@@ -1,6 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Breadcrumb should have label and href snapshot 1`] = `
+.c2 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
 .c1 {
   color: black;
   font-style: normal;
@@ -28,9 +33,7 @@ exports[`Breadcrumb should have label and href snapshot 1`] = `
   outline: hsl(200,96%,35%) solid 1px;
 }
 
-.c2 {
-  font-size: 8px;
-  vertical-align: middle;
+.c3 {
   color: hsl(200,18%,45%);
   margin: 0 3px;
   font-size: 10px;
@@ -61,7 +64,7 @@ exports[`Breadcrumb should have label and href snapshot 1`] = `
           Link2
         </a>
         <svg
-          class="sc-fznyYp c2"
+          class="c2 c3"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -79,6 +82,11 @@ exports[`Breadcrumb should have label and href snapshot 1`] = `
 `;
 
 exports[`Should render Breadcrumb snapshot 1`] = `
+.c2 {
+  font-size: 8px;
+  vertical-align: middle;
+}
+
 .c1 {
   color: black;
   font-style: normal;
@@ -106,17 +114,13 @@ exports[`Should render Breadcrumb snapshot 1`] = `
   outline: hsl(200,96%,35%) solid 1px;
 }
 
-.c2 {
-  font-size: 8px;
-  vertical-align: middle;
+.c3 {
   color: hsl(200,18%,45%);
   margin: 0 3px;
   font-size: 10px;
 }
 
-.c3 {
-  font-size: 8px;
-  vertical-align: middle;
+.c4 {
   color: hsl(200,10%,20%);
   margin: 0 3px;
   font-size: 10px;
@@ -147,7 +151,7 @@ exports[`Should render Breadcrumb snapshot 1`] = `
           Link2
         </a>
         <svg
-          class="sc-fznyYp c2"
+          class="c2 c3"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -168,7 +172,7 @@ exports[`Should render Breadcrumb snapshot 1`] = `
           Link2
         </a>
         <svg
-          class="sc-fznyYp c3"
+          class="c2 c4"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"

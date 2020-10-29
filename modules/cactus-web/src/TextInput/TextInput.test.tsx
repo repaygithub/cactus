@@ -1,12 +1,10 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextInput from './TextInput'
-
-afterEach(cleanup)
 
 describe('component: TextInput', (): void => {
   test('should render a text input', (): void => {

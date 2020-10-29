@@ -41,9 +41,9 @@ const getBoxShadow = (theme: CactusTheme, useBoxShadow?: boolean): ReturnType<ty
         }`}
       `
     : css`
-    ${getBorder(theme.border)}
-    border-color: ${theme.colors.lightContrast};
-  `
+        ${getBorder(theme.border)}
+        border-color: ${theme.colors.lightContrast};
+      `
 }
 
 export const Card = styled.div<CardProps>`

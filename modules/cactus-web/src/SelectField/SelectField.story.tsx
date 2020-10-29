@@ -19,6 +19,8 @@ storiesOf('SelectField', module)
         warning={text('warning', '')}
         error={text('error', '')}
         autoTooltip={boolean('autoTooltip', true)}
+        comboBox={boolean('comboBox', false)}
+        canCreateOption={boolean('canCreateOption', true)}
       />
     ),
     { knobs: { escapeHTML: false } }

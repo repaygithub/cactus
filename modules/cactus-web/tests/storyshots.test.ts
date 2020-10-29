@@ -7,6 +7,7 @@ const supportedDevices = ['iPhone 5', 'iPad']
 
 interface MatchOptions {
   customSnapshotsDir?: string
+  comparisonMethod?: 'pixelmatch' | 'ssim'
   failureThreshold?: number
   failureThresholdType?: 'pixel' | 'percent'
 }
@@ -14,17 +15,16 @@ interface MatchOptions {
 const createCustomizePage = (device: devices.Device) => (page: Page) => page.emulate(device)
 const createGetMatchOptions = (name: string) => (): MatchOptions => ({
   customSnapshotsDir: path.resolve('__image_snapshots__', name),
-  failureThreshold: 0.02, // 2% threshold
+  comparisonMethod: 'ssim',
+  failureThreshold: 0.01,
   failureThresholdType: 'percent',
 })
 const storyKindRegex = /^((?!.*?(Spinner)).)*$/
 
-const beforeScreenshot = () => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve()
-    }, 500)
-  )
+const imagesHaveLoaded = () => Array.from(document.images).every((i) => i.complete)
+
+const beforeScreenshot = async (page: Page) => {
+  await page.waitForFunction(imagesHaveLoaded)
 }
 
 initStoryshots({

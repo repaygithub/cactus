@@ -1,9 +1,9 @@
 import * as icons from '@repay/cactus-icons'
-import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { ReactElement } from 'react'
 
+import actions from '../helpers/storybookActionsWorkaround'
 import Button, { ButtonVariants } from './Button'
 
 type IconName = keyof typeof icons

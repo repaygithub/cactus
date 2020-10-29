@@ -981,6 +981,37 @@ describe('component: Select', (): void => {
       expect(trigger).toHaveTextContent('camp verde')
     })
 
+    test('should show when no match is found', async () => {
+      const { getByText, getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            canCreateOption={false}
+          />
+        </StyleProvider>
+      )
+      const trigger: HTMLElement = getByRole('button')
+      fireEvent.click(trigger)
+      rerender(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="city"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            comboBox
+            canCreateOption={false}
+          />
+        </StyleProvider>
+      )
+      await animationRender()
+      const searchBox: HTMLElement = document.activeElement as HTMLElement
+      userEvent.type(searchBox, 'abc')
+      expect(getByText('No match found')).toBeInTheDocument()
+    })
+
     test('UP/DOWN should set the active descendant', async (): Promise<void> => {
       const { getByRole, rerender } = render(
         <StyleProvider>

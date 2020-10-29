@@ -27,7 +27,7 @@ exports[`component: Avatars Alert Avatar, Alert 1`] = `
   background-color: hsla(47,82%,47%,0.3);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -77,7 +77,7 @@ exports[`component: Avatars Alert Avatar, Alert, disabled 1`] = `
   color: hsl(0,0%,70%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -127,7 +127,7 @@ exports[`component: Avatars Alert Avatar, Check 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -177,7 +177,7 @@ exports[`component: Avatars Alert Avatar, Check, disabled 1`] = `
   color: hsl(0,0%,70%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -327,7 +327,7 @@ exports[`component: Avatars Alert Avatar, Information 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -377,7 +377,7 @@ exports[`component: Avatars Alert Avatar, Information, disabled 1`] = `
   color: hsl(0,0%,70%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -427,7 +427,7 @@ exports[`component: Avatars Default Avatar 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -477,7 +477,7 @@ exports[`component: Avatars Default Avatar, disabled 1`] = `
   color: hsl(0,0%,70%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -527,7 +527,7 @@ exports[`component: Avatars Feed Back Avatar, Alert 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -577,7 +577,7 @@ exports[`component: Avatars Feed Back Avatar, Alert, disabled 1`] = `
   color: hsl(0,0%,70%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -627,7 +627,7 @@ exports[`component: Avatars Feed Back Avatar, Check 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -677,7 +677,7 @@ exports[`component: Avatars Feed Back Avatar, Check, disabled 1`] = `
   color: hsl(0,0%,70%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -827,7 +827,7 @@ exports[`component: Avatars Feed Back Avatar, Information 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 
@@ -877,7 +877,7 @@ exports[`component: Avatars Feed Back Avatar, Information, disabled 1`] = `
   color: hsl(0,0%,70%);
 }
 
-.c0 .sc-fzqOul {
+.c0 .sc-kHWWFa {
   padding-bottom: 4px;
 }
 

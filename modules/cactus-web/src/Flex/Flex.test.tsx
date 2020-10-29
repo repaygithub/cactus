@@ -1,10 +1,8 @@
-import { cleanup, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Flex from './Flex'
-
-afterEach(cleanup)
 
 describe('component: Flex', (): void => {
   test('snapshot with no props', (): void => {

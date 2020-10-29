@@ -123,6 +123,7 @@ storiesOf('Select', module)
           onChange={(e) => setValue(e.target.value)}
           value={value}
           comboBox
+          canCreateOption={boolean('canCreateOption', true)}
         />
       )
     },
@@ -143,6 +144,7 @@ storiesOf('Select', module)
           value={value}
           comboBox
           multiple
+          canCreateOption={boolean('canCreateOption', true)}
         />
       )
     },
