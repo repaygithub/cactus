@@ -10,7 +10,7 @@ import Spinner from '../Spinner/Spinner'
 
 export type ButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, MarginProps {
+interface ButtonProps extends MarginProps {
   variant?: ButtonVariants
   /** !important */
   disabled?: boolean
