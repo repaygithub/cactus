@@ -255,6 +255,12 @@ exports[`component: DataGrid snapshot 1`] = `
 
 .c4.c4.c4 tr:hover th,
 .c4.c4.c4 tr:hover td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c4.c4.c4 tr:hover td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -262,9 +268,15 @@ exports[`component: DataGrid snapshot 1`] = `
   outline: 0;
 }
 
-.c4.c4.c4 tr:focus td,
-.c4.c4.c4 tr:focus th {
+.c4.c4.c4 tr:focus th,
+.c4.c4.c4 tr:focus td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
+}
+
+.c4.c4.c4 tr:focus td:last-child {
   border-color: hsl(200,96%,35%);
 }
 

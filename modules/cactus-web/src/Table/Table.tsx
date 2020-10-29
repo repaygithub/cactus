@@ -1,7 +1,7 @@
-import { ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
+import { CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useLayoutEffect } from 'react'
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation, ThemeProps } from 'styled-components'
 import { width, WidthProps } from 'styled-system'
 
 import { useMergedRefs } from '../helpers/react'
@@ -346,6 +346,21 @@ const StyledHeader = styled.thead<TableHeaderProps>`
   ${headerVariants}
 `
 
+const getCTABorder = (p: ThemeProps<CactusTheme>, focus?: boolean): ReturnType<typeof css> => {
+  return css`
+    th,
+    td {
+      border-left-color: ${p.theme.colors.callToAction};
+      border-top-color: ${p.theme.colors.callToAction};
+      border-bottom-color: ${p.theme.colors.callToAction};
+      background-color: ${focus && p.theme.colors.transparentCTA};
+    }
+    td:last-child {
+      border-color: ${p.theme.colors.callToAction};
+    }
+  `
+}
+
 const table = css<TableProps>`
   display: table;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
@@ -374,18 +389,11 @@ const table = css<TableProps>`
   }
 
   &&& tr:hover {
-    th,
-    td {
-      border-color: ${(p): string => p.theme.colors.callToAction};
-    }
+    ${getCTABorder}
   }
   &&& tr:focus {
     outline: 0;
-    td,
-    th {
-      background-color: ${(p): string => p.theme.colors.transparentCTA};
-      border-color: ${(p): string => p.theme.colors.callToAction};
-    }
+    ${(p) => getCTABorder(p, true)}
   }
   // first row
   & > tr:first-of-type,
