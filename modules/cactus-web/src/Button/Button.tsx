@@ -17,6 +17,7 @@ interface ButtonProps extends MarginProps {
   inverse?: boolean
   loading?: boolean
   loadingText?: string
+  type?: 'submit' | 'reset' | 'button'
 }
 
 type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
@@ -242,7 +243,7 @@ const StyledButton = styled.button.withConfig({
 `
 
 type ButtonType = typeof ButtonFunc
-const ButtonFR = React.forwardRef(ButtonFunc) as any
+const ButtonFR = React.forwardRef(ButtonFunc)
 export const Button = ButtonFR as ButtonType
 
 ButtonFR.displayName = 'Button'
