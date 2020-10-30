@@ -5,7 +5,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   vertical-align: middle;
 }
 
-.c11 {
+.c10 {
   margin-right: 8px;
   vertical-align: middle;
 }
@@ -123,16 +123,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   cursor: default;
 }
 
-.c3 {
-  outline: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  display: block;
-  background-color: transparent;
-}
-
-.c9 {
+.c8 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   box-sizing: border-box;
@@ -145,33 +136,17 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   padding: 8px;
 }
 
-.c9[aria-hidden='true'] {
+.c8[aria-hidden='true'] {
   display: none;
 }
 
-.cactus-layout-fixedBottom .c8 {
-  position: fixed;
-  left: 0;
-  width: 100vw;
-  top: unset;
-  bottom: 0px;
-  max-height: calc(100vh - 0px);
-}
-
-.cactus-layout-fixedLeft .c8 {
-  position: fixed;
-  left: 0px;
-  top: 0;
-  bottom: 0px;
-  box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
-}
-
-.cactus-layout-floatLeft .c8 {
-  position: absolute;
-  left: 0px;
-  top: 0;
-  bottom: 0;
-  box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
+.c3 {
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  background-color: transparent;
 }
 
 .c0 {
@@ -209,11 +184,11 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   max-height: 100%;
 }
 
-.c12 {
+.c11 {
   outline: none;
 }
 
-.c10 {
+.c9 {
   text-align: right;
   box-sizing: border-box;
   display: block;
@@ -226,7 +201,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
 }
 
-.c10 svg {
+.c9 svg {
   font-size: 12px;
 }
 
@@ -259,7 +234,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c10 {
+  .c9 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -312,17 +287,17 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
           </span>
         </button>
         <div
-          class="c7 c8 c9"
+          class="c7 c8"
           data-reach-menu=""
           data-reach-menu-popover=""
           hidden=""
         >
           <div
             aria-hidden="true"
-            class="c10"
+            class="c9"
           >
             <svg
-              class="c11"
+              class="c10"
               fill="currentcolor"
               height="1em"
               mr="8px"
@@ -337,7 +312,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
           </div>
           <div
             aria-labelledby="menu-button--menu--7"
-            class="c12"
+            class="c11"
             data-reach-menu-items=""
             id="menu--7"
             role="menu"
