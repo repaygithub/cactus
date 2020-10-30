@@ -9,6 +9,8 @@ exports[`With theme changes  Should have intermediate border radius 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -83,6 +85,8 @@ exports[`With theme changes  Should have square border radius 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -157,6 +161,8 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -231,6 +237,8 @@ exports[`With theme changes  should have 2px border 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 2px solid;
@@ -305,6 +313,8 @@ exports[`component: Button should default to standard variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -389,13 +399,16 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
   border-radius: 20px;
-  color: hsl(200,96%,11%);
-  background-color: hsl(0,0%,100%);
-  border-color: hsl(200,96%,11%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+  border-color: hsl(0,0%,90%);
+  cursor: not-allowed;
 }
 
 .c0::-moz-focus-inner {
@@ -427,12 +440,6 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   top: 50%;
   margin-left: -8px;
   margin-top: -8px;
-}
-
-.c0:hover {
-  background-color: hsl(200,96%,11%);
-  color: hsl(0,0%,100%);
-  border-color: hsl(200,96%,11%);
 }
 
 @media screen and (min-width:1024px) {
@@ -480,6 +487,8 @@ exports[`component: Button should render call to action variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -554,6 +563,8 @@ exports[`component: Button should render danger variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -628,6 +639,8 @@ exports[`component: Button should render disabled variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -698,6 +711,8 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -772,6 +787,8 @@ exports[`component: Button should render inverse danger variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -845,6 +862,8 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -915,6 +934,8 @@ exports[`component: Button should render inverse standard variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -989,6 +1010,8 @@ exports[`component: Button should render standard variant 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
@@ -1063,6 +1086,8 @@ exports[`component: Button should support margin space props 1`] = `
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;

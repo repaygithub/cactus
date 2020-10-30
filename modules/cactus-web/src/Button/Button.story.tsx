@@ -84,3 +84,17 @@ buttonStories.add(
     )
   }
 )
+
+buttonStories.add(
+  'as Link',
+  (): ReactElement => (
+    <Button
+      variant={select('variant', buttonVariants, 'standard')}
+      disabled={boolean('disabled', false)}
+      as="a"
+      href="https://google.com"
+    >
+      Link Button
+    </Button>
+  )
+)
