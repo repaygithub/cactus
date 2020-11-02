@@ -38,6 +38,7 @@ const LogoWrapper = styled('div')`
 `
 
 const gridCell2 = `
+  -ms-grid-row-align: center;
   -ms-grid-column: 2;
   -ms-grid-row: 1;
   grid-column-start: 2;
@@ -199,7 +200,7 @@ export const FooterLink: React.FC<LinkProps> = ({ children, id, to }) => {
 
 const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })<{ isGrid: boolean }>`
   ${(p) => textStyle(p.theme, 'small')};
-  word-break: break-all;
+  word-wrap: break-word;
   overflow-wrap: anywhere;
   display: flex;
   flex-direction: column;

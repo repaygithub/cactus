@@ -98,6 +98,8 @@ const DefaultLayout = Layout as any
 DefaultLayout.Content = Main
 export default DefaultLayout as LayoutType
 
+const styles: { [K in Position]?: any[] } = {}
+
 const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
   overflow: auto;
   position: absolute;
@@ -137,7 +139,33 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
   }
 
   ${!p.floatLeft
-    ? 'display:block;'
+    ? `
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+        -ms-grid-rows: min-content minmax(max-content, 1fr) min-content;
+        grid-template-rows: min-content minmax(max-content, 1fr) min-content;
+
+        & > * {
+          -ms-grid-column: 1;
+          grid-column-start: 1;
+          grid-column-end: 2;
+        }
+        & > *:first-child {
+          -ms-grid-row: 1;
+        }
+        & > *:last-child {
+          -ms-grid-row: 3;
+          grid-row-start: 3;
+          grid-row-end: 4;
+        }
+        & > ${Main} {
+          -ms-grid-row: 2;
+          grid-row-start: 2;
+          grid-row-end: 3;
+        }
+      `
     : `
         display: -ms-grid;
         display: grid;
@@ -183,8 +211,6 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
         }
       `}
 `
-
-const styles: { [K in Position]?: any[] } = {}
 
 type LayoutStyle = ReturnType<typeof wrapperStyle>
 export const addLayoutStyle = (root: Position, style: LayoutStyle): void => {

@@ -44,6 +44,7 @@ exports[`component: Footer snapshot 1`] = `
 }
 
 .c5:not(:empty) {
+  -ms-grid-row-align: center;
   -ms-grid-column: 2;
   -ms-grid-row: 1;
   grid-column-start: 2;
@@ -97,6 +98,7 @@ exports[`component: Footer snapshot 1`] = `
 .c4:empty + .c6 {
   background-color: transparent;
   -ms-grid-column-span: 1;
+  -ms-grid-row-align: center;
   -ms-grid-column: 2;
   -ms-grid-row: 1;
   grid-column-start: 2;
@@ -138,7 +140,7 @@ exports[`component: Footer snapshot 1`] = `
 .c0 {
   font-size: 15px;
   line-height: 1.6;
-  word-break: break-all;
+  word-wrap: break-word;
   overflow-wrap: anywhere;
   display: -webkit-box;
   display: -webkit-flex;
