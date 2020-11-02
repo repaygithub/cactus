@@ -221,6 +221,10 @@ const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })<{ is
     grid-template-rows: min-content min-content;
     `
       : `
+    ${LogoWrapper} + ${ContentWrapper}:empty + ${LinksColsContainer},
+    ${LogoWrapper} + ${ContentWrapper}:not(:empty) {
+      padding-top: 0;
+    }
     ${LinksColsContainer} {
       width: 100%;
     }
@@ -244,7 +248,7 @@ export default Footer
 
 const StyledLink = styled(Link)`
   max-width: 100%;
-  margin-top: 8px;
+  margin-top: 4px;
 
   :first-child {
     margin-top: 0px;

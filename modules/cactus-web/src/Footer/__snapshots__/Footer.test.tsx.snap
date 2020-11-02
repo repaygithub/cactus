@@ -170,7 +170,7 @@ exports[`component: Footer snapshot 1`] = `
 
 .c10 {
   max-width: 100%;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .c10:first-child {
