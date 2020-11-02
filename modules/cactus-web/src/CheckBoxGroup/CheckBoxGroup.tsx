@@ -48,7 +48,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       statusMessage,
       tooltipId,
       disabled,
-    } = useAccessibleField(props)
+    } = useAccessibleField({ ...props, tooltip })
     const [showTooltip, setTooltipVisible] = React.useState<boolean>(false)
 
     const forwardProps: ForwardProps = { required }

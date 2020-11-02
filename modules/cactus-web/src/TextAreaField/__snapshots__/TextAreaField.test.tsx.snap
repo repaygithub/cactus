@@ -165,7 +165,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       class="c8"
     >
       <textarea
-        aria-describedby="boolest-tip boolest-status"
+        aria-describedby="boolest-tip"
         class="c9"
         id="boolest"
         name="boolest"
