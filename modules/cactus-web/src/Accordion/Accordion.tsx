@@ -482,7 +482,7 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     isManaged,
     managedAccordions,
   } = useContext(ProviderContext)
-  const { defaultOpen, variant, className, ...restProps } = props
+  const { defaultOpen, variant, className, useBoxShadows, ...restProps } = props
   const id = useId(props.id)
   const headerId = `${id}-header`
   const bodyId = `${id}-body`
