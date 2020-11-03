@@ -253,7 +253,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
         </span>
       </div>
       <button
-        aria-describedby="consistent-tip consistent-status"
+        aria-describedby="consistent-tip"
         class="c12 c13"
         disabled=""
         id="consistent"
@@ -735,7 +735,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
         </div>
       </div>
       <button
-        aria-describedby="consistent-tip consistent-status"
+        aria-describedby="consistent-tip"
         class="c22 c23"
         id="consistent"
         type="button"
@@ -1167,7 +1167,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
         </div>
       </div>
       <button
-        aria-describedby="consistent-tip consistent-status"
+        aria-describedby="consistent-tip"
         class="c19 c20"
         id="consistent"
         type="button"
@@ -1517,7 +1517,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
         </div>
       </div>
       <button
-        aria-describedby="consistent-tip consistent-status"
+        aria-describedby="consistent-tip"
         class="c14 c15"
         id="consistent"
         type="button"
@@ -1798,7 +1798,7 @@ exports[`component: FileInputField should render file input field 1`] = `
         </span>
       </div>
       <button
-        aria-describedby="consistent-tip consistent-status"
+        aria-describedby="consistent-tip"
         class="c12 c13"
         id="consistent"
         type="button"

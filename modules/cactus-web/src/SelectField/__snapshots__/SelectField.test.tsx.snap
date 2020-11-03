@@ -148,7 +148,6 @@ exports[`component: SelectField minimal snapshot 1`] = `
         tabindex="-1"
       >
         <button
-          aria-describedby="prevent-random-id-tip prevent-random-id-status"
           aria-haspopup="listbox"
           aria-labelledby="prevent-random-id-label"
           aria-multiselectable="false"

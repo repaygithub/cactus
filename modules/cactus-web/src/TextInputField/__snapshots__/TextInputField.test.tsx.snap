@@ -169,7 +169,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
       class="c8"
     >
       <input
-        aria-describedby="instigate-tip instigate-status"
+        aria-describedby="instigate-tip"
         class="c9"
         id="instigate"
         name="instigate"

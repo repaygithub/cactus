@@ -249,7 +249,6 @@ exports[`component: DateInputField snapshot 1`] = `
       Date Field
     </label>
     <div
-      aria-describedby="not-random-tip not-random-status"
       aria-labelledby="not-random-label"
       class="c5 c6 "
       role="group"
