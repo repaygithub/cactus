@@ -12,6 +12,18 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Button
 
+## Best practices
+
+- `Button` components typically should not be used for navigation between pages.
+- If you want to make a link look like a button, you can use the `as` prop:
+```jsx
+<Button as="a" href="https://somedestination.com">
+  Go Somewhere!
+</Button>
+```
+
+## Basic Usage
+
 ### Try it out
 
 export const code = `<Button variant='action' margin={20}>Take Some Action</Button>`
@@ -22,47 +34,6 @@ export const code = `<Button variant='action' margin={20}>Take Some Action</Butt
   <LivePreview />
 </LiveProvider>
 
-## Best practices
-
-- `Button` components typically should not be used for navigation between pages.
-- If you want to make a link look like a button, there are a couple of solutions, depending on whether or not you are using Typescript. However, this will modify the button's styles.
-  - JSX Solution:
-  ```jsx
-  <Button as={Link} to="/path/to/something">
-    Go Somewhere!
-  </Button>
-  ```
-  - TSX Solution:
-  ```tsx
-  const ButtonLink = Button.withComponent(Link)
-  <ButtonLink to='/path/to/something'>Go Somewhere!</ButtonLink>
-  ```
-
-## Basic usage
-
-```jsx
-import { Button } from '@repay/cactus-web'
-...
-// Basic usage
-<Button>
-  Basic Button
-</Button>
-
-// Call to action variant
-<Button variant="action">
-  Take Some Action
-</Button>
-
-// Inverse
-<Button inverse>
-  Inversed
-</Button>
-
-// Disabled
-<Button disabled>
-  Disabled
-</Button>
-```
 
 ## Properties
 

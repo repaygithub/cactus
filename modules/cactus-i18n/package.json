@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-i18n",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "I18n library for React using Fluent",
   "main": "dist/cactus-i18n.cjs.js",
   "module": "dist/cactus-i18n.js",

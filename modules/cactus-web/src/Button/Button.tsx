@@ -4,19 +4,20 @@ import React from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
+import { AsProps, GenericComponent } from '../helpers/asProps'
 import { textStyle } from '../helpers/theme'
 import Spinner from '../Spinner/Spinner'
 
 export type ButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, MarginProps {
+interface ButtonProps extends MarginProps {
   variant?: ButtonVariants
   /** !important */
   disabled?: boolean
   inverse?: boolean
   loading?: boolean
   loadingText?: string
+  type?: 'submit' | 'reset' | 'button'
 }
 
 type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
@@ -152,44 +153,54 @@ const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
 
 const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
-const variantOrDisabled = (props: ButtonProps) => {
-  const map = props.inverse ? inverseVariantMap : variantMap
+interface TransientButtonProps extends Omit<ButtonProps, 'inverse' | 'variant'> {
+  $inverse?: boolean
+  $variant?: ButtonVariants
+}
+
+const variantOrDisabled = (props: TransientButtonProps) => {
+  const map = props.$inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
     return disabled
-  } else if (props.variant !== undefined) {
-    return map[props.variant]
+  } else if (props.$variant !== undefined) {
+    return map[props.$variant]
   }
 }
 
-const ButtonBase: React.FC<ButtonProps> = ({
-  loading,
-  children,
-  inverse,
-  disabled,
-  variant,
-  loadingText,
-  ...rest
-}): React.ReactElement => {
-  const props = omitMargins(rest)
+function ButtonFunc<E, C extends GenericComponent = 'button'>(
+  props: AsProps<C> & ButtonProps,
+  ref: React.Ref<E>
+): React.ReactElement {
+  const { loading, children, disabled, loadingText, inverse, variant, ...rest } = props
   let spanProps = null
   if (loading === true) {
     spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
   }
   return (
-    <button {...props} disabled={loading || disabled} aria-live="assertive">
+    <StyledButton
+      {...(rest as any)}
+      ref={ref as any}
+      $inverse={inverse}
+      $variant={variant}
+      disabled={loading || disabled}
+      aria-live="assertive"
+    >
       <span {...spanProps}>{children}</span>
       {loading && <Spinner iconSize="small" aria-label={loadingText} />}
-    </button>
+    </StyledButton>
   )
 }
 
-export const Button = styled(ButtonBase)<ButtonProps>`
+const StyledButton = styled.button.withConfig({
+  shouldForwardProp: (p) => !margin.propNames?.includes(p),
+})<{ $inverse?: boolean; $variant?: ButtonVariants }>`
   position: relative;
   padding: 2px 30px;
   outline: none;
   cursor: pointer;
   overflow: visible;
   box-sizing: border-box;
+  text-decoration: none;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
   ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
@@ -231,15 +242,23 @@ export const Button = styled(ButtonBase)<ButtonProps>`
   ${variantOrDisabled}
 `
 
-Button.propTypes = {
+type ButtonType = typeof ButtonFunc
+const ButtonFR = React.forwardRef(ButtonFunc)
+export const Button = ButtonFR as ButtonType
+
+ButtonFR.displayName = 'Button'
+
+ButtonFR.propTypes = {
   variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success']),
   disabled: PropTypes.bool,
   inverse: PropTypes.bool,
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
+  // @ts-ignore
+  as: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 }
 
-Button.defaultProps = {
+ButtonFR.defaultProps = {
   variant: 'standard',
   disabled: false,
   inverse: false,

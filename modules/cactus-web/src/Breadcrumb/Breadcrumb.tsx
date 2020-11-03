@@ -25,7 +25,7 @@ export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
   return (
     <li>
       <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
-      <StyledChevron iconSize="tiny" active={active} />
+      <StyledChevron iconSize="tiny" $active={active} />
     </li>
   )
 }
@@ -61,9 +61,9 @@ const BreadcrumbLink = styled.a`
   }
 `
 
-const StyledChevron = styled(NavigationChevronRight)<{ active?: boolean }>`
+const StyledChevron = styled(NavigationChevronRight)<{ $active?: boolean }>`
   color: ${(p): string =>
-    p.active ? p.theme.colors.darkestContrast : p.theme.colors.mediumContrast};
+    p.$active ? p.theme.colors.darkestContrast : p.theme.colors.mediumContrast};
   margin: 0 3px;
   font-size: 10px;
 `

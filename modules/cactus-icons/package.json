@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-icons",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Cactus design-system icons as React elements",
   "module": "i/index.js",
   "main": "i/index.cjs.js",
@@ -36,8 +36,7 @@
       "^.+\\.(t|j)sx?$": "babel-jest"
     },
     "moduleNameMapper": {
-      "^styled-components":
-        "<rootDir>/../../node_modules/styled-components/dist/styled-components.browser.cjs.js"
+      "^styled-components": "<rootDir>/../../node_modules/styled-components/dist/styled-components.browser.cjs.js"
     },
     "setupFilesAfterEnv": [
       "<rootDir>/tests/__setup__/setup.ts"
