@@ -19,6 +19,7 @@ interface AccessibleProps {
   status?: Status
   statusMessage?: React.ReactNode
   disabled?: boolean
+  isOpen?: boolean
 }
 
 type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
@@ -33,6 +34,7 @@ export interface FieldProps {
   warning?: React.ReactNode
   success?: React.ReactNode
   autoTooltip?: boolean
+  isOpen?: boolean
 }
 
 interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
@@ -40,6 +42,7 @@ interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
   className?: string
   children: JSX.Element | RenderFunc
   disabled?: boolean
+  isOpen?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -52,6 +55,7 @@ export function useAccessibleField({
   warning,
   success,
   disabled,
+  isOpen,
 }: Partial<AccessibleFieldProps>): AccessibleProps {
   const fieldId = useId(id, name)
   const labelId = `${fieldId}-label`
@@ -81,6 +85,7 @@ export function useAccessibleField({
     statusMessage,
     tooltipId,
     disabled,
+    isOpen,
   }
 }
 
@@ -96,6 +101,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     status,
     statusMessage,
     disabled,
+    isOpen,
   } = accessibility
   const { autoTooltip = true } = props
 
@@ -139,7 +145,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
           id={tooltipId}
           maxWidth={maxWidth}
           disabled={disabled}
-          forceVisible={forceTooltipVisible}
+          forceVisible={!isOpen && forceTooltipVisible}
         />
       )}
       {typeof props.children === 'function'
