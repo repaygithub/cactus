@@ -6,7 +6,7 @@
   "repository": "https://github.com/repaygithub/cactus",
   "author": "Victoria Vyverman",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "start": "repay-scripts dev src/index.tsx -p 3437",
     "dev": "repay-scripts dev src/index.tsx -p 3437",
