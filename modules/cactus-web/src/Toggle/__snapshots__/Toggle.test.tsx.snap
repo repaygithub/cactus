@@ -34,8 +34,8 @@ exports[`component: Toggle should initialize value to true 1`] = `
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  background-color: hsl(145,89%,28%);
+  border: hsl(145,89%,28%);
   cursor: pointer;
 }
 
@@ -59,7 +59,6 @@ exports[`component: Toggle should initialize value to true 1`] = `
 }
 
 .c0[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -87,10 +86,6 @@ exports[`component: Toggle should initialize value to true 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c0[disabled] {
-  opacity: 0.5;
 }
 
 <button
@@ -162,7 +157,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(0,0%,90%);
-  border: 1px solid hsl(0,0%,90%);
+  border: hsl(0,0%,90%);
   cursor: cursor;
 }
 
@@ -186,7 +181,6 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
 }
 
 .c0[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -214,10 +208,6 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c0[disabled] {
-  opacity: 0.5;
 }
 
 <button
@@ -290,7 +280,7 @@ exports[`component: Toggle should render a toggle 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  border: hsl(353,84%,44%);
   cursor: pointer;
 }
 
@@ -314,7 +304,6 @@ exports[`component: Toggle should render a toggle 1`] = `
 }
 
 .c0[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -342,10 +331,6 @@ exports[`component: Toggle should render a toggle 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c0[disabled] {
-  opacity: 0.5;
 }
 
 <button
@@ -417,7 +402,7 @@ exports[`component: Toggle should support margin space props 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  border: hsl(353,84%,44%);
   cursor: pointer;
   margin-bottom: 16px;
 }
@@ -442,7 +427,6 @@ exports[`component: Toggle should support margin space props 1`] = `
 }
 
 .c0[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -470,10 +454,6 @@ exports[`component: Toggle should support margin space props 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c0[disabled] {
-  opacity: 0.5;
 }
 
 <button
@@ -545,7 +525,7 @@ exports[`component: Toggle with theme customization should not have box shadows 
   border-radius: 13px;
   outline: none;
   background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  border: hsl(353,84%,44%);
   cursor: pointer;
 }
 
@@ -565,7 +545,6 @@ exports[`component: Toggle with theme customization should not have box shadows 
 }
 
 .c0[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -593,10 +572,6 @@ exports[`component: Toggle with theme customization should not have box shadows 
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c0[disabled] {
-  opacity: 0.5;
 }
 
 <button

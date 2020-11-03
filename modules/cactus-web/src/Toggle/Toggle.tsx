@@ -1,7 +1,7 @@
 import { NavigationClose, StatusCheck } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
@@ -47,15 +47,31 @@ const StyledCheck = styled(StatusCheck)`
   color: ${(p): string => p.theme.colors.white};
 `
 
+const getToggleColors = (props: ToggleProps): ReturnType<typeof css> => {
+  if (props.disabled)
+    return css`
+      background-color: ${(p) => p.theme.colors.lightGray};
+      border: ${(p) => p.theme.colors.lightGray};
+    `
+  else if (props.value)
+    return css`
+      background-color: ${(p) => p.theme.colors.success};
+      border: ${(p) => p.theme.colors.success};
+    `
+  else
+    return css`
+      background-color: ${(p) => p.theme.colors.error};
+      border: ${(p) => p.theme.colors.error};
+    `
+}
+
 export const Toggle = styled(ToggleBase)`
   position: relative;
   width: 51px;
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: ${(p): string =>
-    p.disabled ? p.theme.colors.lightGray : p.theme.colors.error};
-  border: 1px solid ${(p): string => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.error)};
+  ${getToggleColors}
   cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
 
   &:focus {
@@ -76,7 +92,6 @@ export const Toggle = styled(ToggleBase)`
   }
 
   &[aria-checked='true'] {
-    background-color: ${(p): string => p.theme.colors.success};
     border-color: ${(p): string => p.theme.colors.success};
 
     ::after {
@@ -100,10 +115,6 @@ export const Toggle = styled(ToggleBase)`
   ${StyledCheck} {
     opacity: 0;
     transition: opacity 0.3s;
-  }
-
-  &[disabled] {
-    opacity: 0.5;
   }
 
   ${margin}

@@ -45,7 +45,7 @@ exports[`component: ToggleField snapshot 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  border: hsl(353,84%,44%);
   cursor: pointer;
 }
 
@@ -69,7 +69,6 @@ exports[`component: ToggleField snapshot 1`] = `
 }
 
 .c3[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -97,10 +96,6 @@ exports[`component: ToggleField snapshot 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c3[disabled] {
-  opacity: 0.5;
 }
 
 .c1 .c10 {
@@ -213,7 +208,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(0,0%,90%);
-  border: 1px solid hsl(0,0%,90%);
+  border: hsl(0,0%,90%);
   cursor: cursor;
 }
 
@@ -237,7 +232,6 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
 }
 
 .c3[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -265,10 +259,6 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c3[disabled] {
-  opacity: 0.5;
 }
 
 .c1 .c10 {
@@ -382,8 +372,8 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  background-color: hsl(145,89%,28%);
+  border: hsl(145,89%,28%);
   cursor: pointer;
 }
 
@@ -407,7 +397,6 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
 }
 
 .c3[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
   border-color: hsl(145,89%,28%);
 }
 
@@ -435,10 +424,6 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c3[disabled] {
-  opacity: 0.5;
 }
 
 .c1 .c10 {
