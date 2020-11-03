@@ -29,13 +29,14 @@ storiesOf('Layout', module).add(
     return (
       <Layout>
         {hasBrand && (
-          <BrandBar
-            isProfilePage={boolean('On profile page?', false)}
-            userMenuText={text('Menu Title', 'Hershell Jewess')}
-            logo={LOGO}
-          >
-            <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
-            <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+          <BrandBar logo={LOGO}>
+            <BrandBar.UserMenu
+              isProfilePage={boolean('On profile page?', false)}
+              label={text('Menu Title', 'Hershell Jewess')}
+            >
+              <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
+              <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+            </BrandBar.UserMenu>
           </BrandBar>
         )}
         {hasMenu && (

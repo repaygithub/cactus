@@ -21,7 +21,8 @@ export const Sidebar: SidebarType = ({ layoutRole, className, ...props }) => {
   } else if (size < SIZES.large) {
     position = 'fixedLeft'
   }
-  const { cssClass } = useLayout(layoutRole, { position, offset: WIDTH })
+  const offset = React.Children.toArray(props.children).length ? WIDTH : 0
+  const { cssClass } = useLayout(layoutRole, { position, offset })
   className = className ? `${className} ${cssClass}` : cssClass
   return <SidebarDiv {...props} className={className} />
 }

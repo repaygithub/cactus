@@ -58,9 +58,5 @@ ToggleField.propTypes = {
   disabled: PropTypes.bool,
 }
 
-ToggleField.defaultProps = {
-  checked: false,
-}
-
 ToggleField.displayName = 'ToggleField'
 export default ToggleField

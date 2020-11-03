@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: BrandBar snapshot - mobile 1`] = `
-.c6 {
+.c10 {
   vertical-align: middle;
 }
 
-.c11 {
+.c13 {
   margin-right: 8px;
   vertical-align: middle;
 }
 
-.c5 {
+.c6 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -38,36 +38,36 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   padding: 8px;
 }
 
-.c5:active,
-.c5:focus {
+.c6:active,
+.c6:focus {
   outline: none;
 }
 
-.c5::-moz-focus-inner {
+.c6::-moz-focus-inner {
   border: none;
 }
 
-.c5 img,
-.c5 svg {
+.c6 img,
+.c6 svg {
   width: 24px;
   height: 24px;
 }
 
-.c5:hover {
+.c6:hover {
   color: hsl(200,96%,35%);
 }
 
-.c5.c5.c5.c5:focus {
+.c6.c6.c6.c6:focus {
   box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
 }
 
-.c5.c5.c5.c5[aria-expanded='true'] {
+.c6.c6.c6.c6[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
   box-shadow: none;
 }
 
-.c2 {
+.c9 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   position: relative;
@@ -78,29 +78,29 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   display: flex;
 }
 
-.c2:empty {
+.c9:empty {
   display: none;
 }
 
-.c2.cactus-layout-floatLeft,
-.c2.cactus-layout-fixedLeft {
+.c9.cactus-layout-floatLeft,
+.c9.cactus-layout-fixedLeft {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
 }
 
-.c2.cactus-layout-floatLeft .c4,
-.c2.cactus-layout-fixedLeft .c4 {
+.c9.cactus-layout-floatLeft .c5,
+.c9.cactus-layout-fixedLeft .c5 {
   box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
 }
 
-.c2.cactus-layout-floatLeft .c4:hover,
-.c2.cactus-layout-fixedLeft .c4:hover {
+.c9.cactus-layout-floatLeft .c5:hover,
+.c9.cactus-layout-fixedLeft .c5:hover {
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
 }
 
-.c2.cactus-layout-fixedBottom {
+.c9.cactus-layout-fixedBottom {
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -111,7 +111,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: inset 0px 1px 0px 0px hsl(200,29%,90%);
 }
 
-.c2.cactus-layout-fixedBottom .c4[aria-expanded='true']::after {
+.c9.cactus-layout-fixedBottom .c5[aria-expanded='true']::after {
   content: '';
   z-index: 99;
   background-color: rgba(0,0,0,0.5);
@@ -123,7 +123,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   cursor: default;
 }
 
-.c3 {
+.c4 {
   outline: none;
   border: none;
   margin: 0;
@@ -132,7 +132,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   background-color: transparent;
 }
 
-.c9 {
+.c8 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   box-sizing: border-box;
@@ -145,11 +145,11 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   padding: 8px;
 }
 
-.c9[aria-hidden='true'] {
+.c8[aria-hidden='true'] {
   display: none;
 }
 
-.cactus-layout-fixedBottom .c8 {
+.cactus-layout-fixedBottom .c7 {
   position: fixed;
   left: 0;
   width: 100vw;
@@ -158,7 +158,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   max-height: calc(100vh - 0px);
 }
 
-.cactus-layout-fixedLeft .c8 {
+.cactus-layout-fixedLeft .c7 {
   position: fixed;
   left: 0px;
   top: 0;
@@ -166,7 +166,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
 }
 
-.cactus-layout-floatLeft .c8 {
+.cactus-layout-floatLeft .c7 {
   position: absolute;
   left: 0px;
   top: 0;
@@ -174,19 +174,44 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
 }
 
+.c2 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 {
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: flex-end;
-  -webkit-box-align: flex-end;
-  -ms-flex-align: flex-end;
-  align-items: flex-end;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100%;
   box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
 }
@@ -209,11 +234,11 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   max-height: 100%;
 }
 
-.c12 {
+.c14 {
   outline: none;
 }
 
-.c10 {
+.c12 {
   text-align: right;
   box-sizing: border-box;
   display: block;
@@ -226,21 +251,21 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
 }
 
-.c10 svg {
+.c12 svg {
   font-size: 12px;
 }
 
-.c7 {
+.c11 {
   font-size: 15px;
   line-height: 1.6;
   padding: 0;
 }
 
-.c7[hidden] {
+.c11[hidden] {
   display: none;
 }
 
-.c7 [role='menuitem'] {
+.c11 [role='menuitem'] {
   display: block;
   box-sizing: border-box;
   padding: 18px 16px;
@@ -253,20 +278,20 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
 }
 
-.c7 [role='menuitem'][data-selected] {
+.c11 [role='menuitem'][data-selected] {
   color: hsl(200,96%,35%);
   box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
 }
 
 @media screen and (min-width:1024px) {
-  .c10 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c7 {
+  .c11 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -280,52 +305,58 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
       class="c1"
     />
     <div
-      class="c2 cactus-layout-fixedBottom"
+      class="c2 c3"
+      display="flex"
     >
       <div
-        class="c3"
+        class="c4"
+        id="typed"
+        role="none"
+        tabindex="-1"
       >
         <button
-          aria-controls="menu--7"
-          aria-haspopup="true"
-          class="c4 c5"
-          data-reach-menu-button=""
-          id="menu-button--menu--7"
+          aria-controls="typed-popup"
+          aria-haspopup="dialog"
+          aria-label="Typing"
+          class="c5 c6"
+          id="typed-button"
           role="button"
-          type="button"
         >
-          <svg
-            class="c6"
-            fill="currentcolor"
-            height="1em"
-            viewBox="0 0 24 24"
-            width="1em"
-          >
-            <path
-              d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
-            />
-          </svg>
-          <span
-            style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
-          >
-            Test name
-          </span>
+          Type
         </button>
         <div
-          class="c7 c8 c9"
-          data-reach-menu=""
-          data-reach-menu-popover=""
-          hidden=""
+          aria-hidden="true"
+          aria-labelledby="typed-button"
+          class="c7 c8"
+          id="typed-popup"
+          role="dialog"
+          tabindex="-1"
         >
-          <div
-            aria-hidden="true"
-            class="c10"
+          <input
+            placeholder="Type Here"
+            type="text"
+          />
+        </div>
+      </div>
+      <div
+        class="c9 cactus-layout-fixedBottom"
+      >
+        <div
+          class="c4"
+        >
+          <button
+            aria-controls="menu--7"
+            aria-haspopup="true"
+            class="c5 c6"
+            data-reach-menu-button=""
+            id="menu-button--menu--7"
+            role="button"
+            type="button"
           >
             <svg
-              class="c11"
+              class="c10"
               fill="currentcolor"
               height="1em"
-              mr="8px"
               viewBox="0 0 24 24"
               width="1em"
             >
@@ -333,33 +364,62 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
                 d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
               />
             </svg>
-            Test name
-          </div>
+            <span
+              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
+            >
+              Test name
+            </span>
+          </button>
           <div
-            aria-labelledby="menu-button--menu--7"
-            class="c12"
-            data-reach-menu-items=""
-            id="menu--7"
-            role="menu"
-            tabindex="-1"
+            class="c11 c7 c8"
+            data-reach-menu=""
+            data-reach-menu-popover=""
+            hidden=""
           >
             <div
-              data-reach-menu-item=""
-              data-valuetext="Settings"
-              id="option-0--menu--7"
-              role="menuitem"
-              tabindex="-1"
+              aria-hidden="true"
+              class="c12"
             >
-              Settings
+              <svg
+                class="c13"
+                fill="currentcolor"
+                height="1em"
+                mr="8px"
+                viewBox="0 0 24 24"
+                width="1em"
+              >
+                <path
+                  d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
+                />
+              </svg>
+              Test name
             </div>
             <div
-              data-reach-menu-item=""
-              data-valuetext="Logout"
-              id="option-1--menu--7"
-              role="menuitem"
+              aria-labelledby="menu-button--menu--7"
+              class="c14"
+              data-reach-menu-items=""
+              id="menu--7"
+              role="menu"
               tabindex="-1"
             >
-              Logout
+              <div
+                data-reach-menu-item=""
+                data-valuetext="Settings"
+                id="option-0--menu--7"
+                role="menuitem"
+                tabindex="-1"
+              >
+                Settings
+              </div>
+              <div
+                data-reach-menu-item=""
+                data-valuetext="Logout"
+                id="option-1--menu--7"
+                role="menuitem"
+                tabindex="-1"
+              >
+                Logout
+              </div>
             </div>
           </div>
         </div>
@@ -370,14 +430,36 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
 `;
 
 exports[`component: BrandBar snapshot 1`] = `
-.c3 {
+.c5 {
   margin-right: 8px;
   vertical-align: middle;
 }
 
-.c5 {
+.c7 {
   margin-left: 8px;
   vertical-align: middle;
+}
+
+.c2 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c3 {
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .c0 {
@@ -385,6 +467,9 @@ exports[`component: BrandBar snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -415,7 +500,7 @@ exports[`component: BrandBar snapshot 1`] = `
   max-height: 100%;
 }
 
-.c2 {
+.c4 {
   font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
@@ -434,32 +519,32 @@ exports[`component: BrandBar snapshot 1`] = `
   cursor: pointer;
 }
 
-.c2:focus {
+.c4:focus {
   box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
   outline: none;
 }
 
-.c2[aria-expanded='true'] {
+.c4[aria-expanded='true'] {
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
   color: hsl(200,96%,35%);
 }
 
-.c2[aria-expanded='true'] .c4 {
+.c4[aria-expanded='true'] .c6 {
   -webkit-transform: scaleY(-1);
   -ms-transform: scaleY(-1);
   transform: scaleY(-1);
 }
 
-.c2:hover {
+.c4:hover {
   color: hsl(200,96%,35%);
 }
 
-.c2 svg {
+.c4 svg {
   font-size: 12px;
 }
 
 @media screen and (min-width:1024px) {
-  .c2 {
+  .c4 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -476,45 +561,54 @@ exports[`component: BrandBar snapshot 1`] = `
     <div
       class="c1"
     />
-    <button
-      aria-controls="menu--1"
-      aria-haspopup="true"
-      class="c2"
-      data-reach-menu-button=""
-      id="menu-button--menu--1"
-      type="button"
+    <div
+      class="c2 c3"
+      display="flex"
     >
-      <svg
-        aria-hidden="true"
-        class="c3"
-        fill="currentcolor"
-        height="1em"
-        mr="8px"
-        viewBox="0 0 24 24"
-        width="1em"
+      <input
+        placeholder="Type Here"
+        type="text"
+      />
+      <button
+        aria-controls="menu--1"
+        aria-haspopup="true"
+        class="c4"
+        data-reach-menu-button=""
+        id="menu-button--menu--1"
+        type="button"
       >
-        <path
-          d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
-        />
-      </svg>
-      <span>
-        Test name
-      </span>
-      <svg
-        aria-hidden="true"
-        class="c4 c5"
-        fill="currentcolor"
-        height="1em"
-        ml="8px"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-          transform="rotate(-90 12 12)"
-        />
-      </svg>
-    </button>
+        <svg
+          aria-hidden="true"
+          class="c5"
+          fill="currentcolor"
+          height="1em"
+          mr="8px"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
+          />
+        </svg>
+        <span>
+          Test name
+        </span>
+        <svg
+          aria-hidden="true"
+          class="c6 c7"
+          fill="currentcolor"
+          height="1em"
+          ml="8px"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+            transform="rotate(-90 12 12)"
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 `;
