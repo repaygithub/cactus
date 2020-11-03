@@ -19,7 +19,7 @@ program.requiredOption(
 )
 program.parse()
 
-const runIndividualTest = async (browser) => {
+const runTests = async () => {
   const testcafe = await createTestCafe()
   try {
     let runner = testcafe.createRunner()
@@ -27,7 +27,7 @@ const runIndividualTest = async (browser) => {
     runner = program.fixture
       ? runner.filter((_, fixtureName) => fixtureName === program.fixture)
       : runner
-    const numFailedTests = await runner.browsers(browser).run()
+    const numFailedTests = await runner.browsers(program.browser).run()
     await testcafe.close()
     if (numFailedTests > 0) {
       process.exit(1)
@@ -36,12 +36,6 @@ const runIndividualTest = async (browser) => {
     console.error(e)
     await testcafe.close()
     process.exit(1)
-  }
-}
-
-const runTests = async () => {
-  for (const browser of program.browser) {
-    await runIndividualTest(browser)
   }
 }
 
