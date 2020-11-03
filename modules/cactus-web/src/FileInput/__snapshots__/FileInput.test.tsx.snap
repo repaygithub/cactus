@@ -659,6 +659,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
         <button
           aria-label="ejecto seato cuz"
           class="c7 c8"
+          data-filename="boolest.md"
           type="button"
           variant="standard"
         >
@@ -1002,6 +1003,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
         <button
           aria-label="ejecto seato cuz"
           class="c7 c8"
+          data-filename="boolest.md"
           type="button"
           variant="standard"
         >

@@ -12,39 +12,11 @@ import {
   TextInputField,
   ToggleField,
 } from '@repay/cactus-web'
-import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik'
+import { Field, Form, Formik, FormikHelpers } from 'formik'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import { post } from '../api'
-
-type FormikFieldProps = Omit<
-  React.ComponentProps<typeof Field>,
-  'innerRef' | 'type' | 'render' | 'component'
->
-
-const FormikField: React.FunctionComponent<FormikFieldProps> = ({
-  as: WrappedComponent,
-  name,
-  validate,
-  value: passedValue,
-  ...rest
-}) => (
-  <Field name={name} validate={validate}>
-    {({ field: { name, value }, form: { setFieldValue, setFieldTouched } }: FieldProps<any>) => {
-      const valueToUse = passedValue === undefined || passedValue === null ? value : passedValue
-      return (
-        <WrappedComponent
-          {...rest}
-          name={name}
-          value={valueToUse}
-          onChange={(_: string, val: any) => setFieldValue(name, val)}
-          onBlur={() => setFieldTouched(name, true)}
-        />
-      )
-    }}
-  </Field>
-)
 
 interface FileObject {
   fileName: string
@@ -196,7 +168,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Enter content to be displayed in the footer"
                     error={touched.footerContent && errors.footerContent}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={emails}
                     label="Notification Email"
@@ -205,7 +177,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Select an email to receive notifications"
                     error={touched.notificationEmail && errors.notificationEmail}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={cities}
                     multiple={true}
@@ -214,7 +186,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Select all store locations"
                     error={touched.allLocations && errors.allLocations}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={cities}
                     comboBox={true}
@@ -223,7 +195,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     tooltip="Select your most popular location"
                     error={touched.mpLocation && errors.mpLocation}
                   />
-                  <FormikField
+                  <Field
                     as={SelectField}
                     options={cardBrands}
                     multiple={true}
@@ -235,7 +207,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                   />
 
                   <Flex width="50%">
-                    <FormikField
+                    <Field
                       as={FileInputField}
                       my={4}
                       label="Upload Logo"
@@ -283,7 +255,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     my={4}
                   />
 
-                  <FormikField
+                  <Field
                     as={DateInputField}
                     label="Established Date"
                     name="establishedDate"

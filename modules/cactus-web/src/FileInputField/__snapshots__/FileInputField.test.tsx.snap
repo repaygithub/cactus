@@ -696,6 +696,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
           <button
             aria-label="Delete File"
             class="c15 c16"
+            data-filename="boolest.txt"
             type="button"
             variant="standard"
           >
@@ -1147,6 +1148,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
           <button
             aria-label="Delete File"
             class="c15 c16"
+            data-filename="boolest.txt"
             type="button"
             variant="standard"
           >

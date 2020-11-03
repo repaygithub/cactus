@@ -42,7 +42,7 @@ const ModalComponent: React.FC<RouteComponentProps> = (): ReactElement => {
           options={['default', 'danger', 'warning', 'success']}
           name="variant"
           value={variant}
-          onChange={(_, value): void => setVariantName(value)}
+          onChange={({ target: { value } }): void => setVariantName(value)}
           margin="0"
         />
       </Flex>

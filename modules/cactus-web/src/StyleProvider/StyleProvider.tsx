@@ -5,7 +5,6 @@ import * as styledComponents from 'styled-components'
 
 import { breakpointOrder, breakpoints } from '../helpers/constants'
 import { textStyle } from '../helpers/theme'
-import { Omit } from '../types'
 
 interface Env {
   NODE_ENV: string

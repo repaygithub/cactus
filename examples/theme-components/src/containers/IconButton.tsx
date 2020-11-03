@@ -33,7 +33,7 @@ const IconbuttonExample: React.FC<RouteComponentProps> = (): React.ReactElement 
   }
 
   const changeVariant = useCallback(
-    (name, value): void => {
+    ({ target: { name, value } }): void => {
       setState({ ...state, [name]: value })
     },
     [state]
