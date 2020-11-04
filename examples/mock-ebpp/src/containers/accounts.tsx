@@ -16,7 +16,7 @@ import { Account, fetchAccounts } from '../api'
 interface PaginationOptions {
   currentPage: number
   pageSize: number
-  pageCount: number
+  pageCount?: number
 }
 
 interface SortOption {
