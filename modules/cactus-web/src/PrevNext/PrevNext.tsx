@@ -8,7 +8,7 @@ import { border, fontSize } from '../helpers/theme'
 
 type NavDirection = 'prev' | 'next'
 
-interface PrevNextProps extends MarginProps {
+export interface PrevNextProps extends MarginProps {
   className?: string
   disablePrev?: boolean
   disableNext?: boolean

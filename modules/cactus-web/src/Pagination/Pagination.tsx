@@ -24,7 +24,7 @@ export interface PageLinkProps {
   onClick?: () => void
 }
 
-interface PaginationProps extends MarginProps {
+export interface PaginationProps extends MarginProps {
   pageCount: number
   currentPage: number
   className?: string
