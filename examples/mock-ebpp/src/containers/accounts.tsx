@@ -1,6 +1,14 @@
 import { navigate, RouteComponentProps } from '@reach/router'
-import { Alert, DataGrid, Flex, SplitButton, Text } from '@repay/cactus-web'
-import React, { useEffect, useState } from 'react'
+import {
+  Alert,
+  DataGrid,
+  Flex,
+  ScreenSizeContext,
+  SIZES,
+  SplitButton,
+  Text,
+} from '@repay/cactus-web'
+import React, { useContext, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Account, fetchAccounts } from '../api'
@@ -36,6 +44,9 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
     const accounts = fetchAccounts()
     setState((state) => ({ ...state, accounts: accounts }))
   }, [])
+
+  const size = useContext(ScreenSizeContext)
+  const isCardView = size <= SIZES['tiny']
 
   const paginateData = (): { [key: string]: any }[] => {
     const { paginationOptions, accounts } = state
@@ -125,42 +136,48 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
           paddingBottom="40px"
         >
           <DataGrid
-            data={paginateData()}
             paginationOptions={state.paginationOptions}
             onPageChange={handlePageChange}
             sortOptions={state.sortOptions}
             onSort={handleSort}
             cardBreakpoint="small"
           >
-            <DataGrid.DataColumn id="firstName" title="First Name" sortable />
-            <DataGrid.DataColumn id="lastName" title="Last Name" sortable />
-            <DataGrid.DataColumn id="dob" title="Date of Birth" sortable />
-            <DataGrid.DataColumn id="cardLastFour" title="Last 4 of Card" />
-            <DataGrid.DataColumn id="id" title="Account ID" />
-            <DataGrid.Column>
-              {(rowData: Account) => (
-                <SplitButton
-                  mainActionLabel="View Account"
-                  onSelectMainAction={() => {
-                    navigate(`/account/${rowData.id}`)
-                  }}
-                >
-                  <SplitButton.Action
-                    onSelect={() => {
-                      setState((state) => ({
-                        ...state,
-                        accounts: state.accounts.filter(
-                          (acct: Account): boolean => acct.id !== rowData.id
-                        ),
-                        alert: `Account ${rowData.id} deleted successfully`,
-                      }))
+            <DataGrid.Table data={paginateData()}>
+              <DataGrid.DataColumn id="firstName" title="First Name" sortable />
+              <DataGrid.DataColumn id="lastName" title="Last Name" sortable />
+              <DataGrid.DataColumn id="dob" title="Date of Birth" sortable />
+              <DataGrid.DataColumn id="cardLastFour" title="Last 4 of Card" />
+              <DataGrid.DataColumn id="id" title="Account ID" />
+              <DataGrid.Column>
+                {(rowData): React.ReactElement => (
+                  <SplitButton
+                    mainActionLabel="View Account"
+                    onSelectMainAction={() => {
+                      navigate(`/account/${rowData.id}`)
                     }}
                   >
-                    {`Delete Account ${rowData.id}`}
-                  </SplitButton.Action>
-                </SplitButton>
-              )}
-            </DataGrid.Column>
+                    <SplitButton.Action
+                      onSelect={() => {
+                        setState((state) => ({
+                          ...state,
+                          accounts: state.accounts.filter(
+                            (acct: Account): boolean => acct.id !== rowData.id
+                          ),
+                          alert: `Account ${rowData.id} deleted successfully`,
+                        }))
+                      }}
+                    >
+                      {`Delete Account ${rowData.id}`}
+                    </SplitButton.Action>
+                  </SplitButton>
+                )}
+              </DataGrid.Column>
+            </DataGrid.Table>
+            <DataGrid.BottomSection>
+              <DataGrid.Pagination
+                ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
+              />
+            </DataGrid.BottomSection>
           </DataGrid>
         </Flex>
       </Flex>
