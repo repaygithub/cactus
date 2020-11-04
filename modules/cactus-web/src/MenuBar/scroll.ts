@@ -98,10 +98,9 @@ function handleArrows(event: React.KeyboardEvent<HTMLElement>, toggle: TogglePop
 }
 
 function handleButtonClick(event: React.MouseEvent<HTMLElement>, toggle: TogglePopup) {
-  if (!isExpanded(event.currentTarget)) {
-    const wrapper = event.currentTarget.nextElementSibling as HTMLElement
-    toggle(true, wrapper, { delay: true })
-  }
+  event.preventDefault()
+  const wrapper = event.currentTarget.nextElementSibling as HTMLElement
+  toggle(undefined, wrapper)
 }
 
 export function menuFocusControl(menu: HTMLElement): HTMLElement[] {
