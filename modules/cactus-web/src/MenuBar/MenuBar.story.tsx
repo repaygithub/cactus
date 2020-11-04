@@ -2,7 +2,6 @@ import { number } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import MenuBar from './MenuBar'
 
 const LABELS = [
@@ -64,5 +63,5 @@ storiesOf('MenuBar', module).add('Basic Usage', () => {
     )
   }
 
-  return <ScreenSizeProvider>{makeList(totalDepth, {}, 0, MenuBar)}</ScreenSizeProvider>
+  return <>{makeList(totalDepth, {}, 0, MenuBar)}</>
 })

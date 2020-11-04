@@ -6,7 +6,6 @@ import React from 'react'
 import Flex from '../Flex/Flex'
 import Layout from '../Layout/Layout'
 import Link from '../Link/Link'
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import Text from '../Text/Text'
 import ActionBar from './ActionBar'
 
@@ -59,16 +58,14 @@ storiesOf('ActionBar', module)
   .add('Basic Usage', () => {
     const hasItems = boolean('Has Items', true)
     return (
-      <ScreenSizeProvider>
-        <ActionBar>
-          {hasItems && (
-            <>
-              <ActionBar.Item icon={<ActionsRedo />} onClick={action('redo')} />
-              <ActionBar.Item icon={<Undo />} onClick={action('undo')} />
-            </>
-          )}
-        </ActionBar>
-      </ScreenSizeProvider>
+      <ActionBar>
+        {hasItems && (
+          <>
+            <ActionBar.Item icon={<ActionsRedo />} onClick={action('redo')} />
+            <ActionBar.Item icon={<Undo />} onClick={action('undo')} />
+          </>
+        )}
+      </ActionBar>
     )
   })
   .add('With Provider', () => {

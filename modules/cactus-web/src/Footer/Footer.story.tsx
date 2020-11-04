@@ -2,7 +2,6 @@ import { number, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React from 'react'
 
-import { ScreenSizeProvider } from '../ScreenSizeProvider/ScreenSizeProvider'
 import Footer from './Footer'
 
 const LINK_TEXT = [
@@ -40,16 +39,14 @@ storiesOf('Footer', module).add('Basic Usage', () => {
   }
 
   return (
-    <ScreenSizeProvider>
-      <Footer
-        key={`${customContent}-${numLinks}`}
-        logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
-      >
-        {customContent !== '' ? customContent : null}
-        <Footer.Link to="https://google.com">Static</Footer.Link>
-        <Footer.Link to="https://repay.com">Unchanging</Footer.Link>
-        {makeLinks(numLinks)}
-      </Footer>
-    </ScreenSizeProvider>
+    <Footer
+      key={`${customContent}-${numLinks}`}
+      logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+    >
+      {customContent !== '' ? customContent : null}
+      <Footer.Link to="https://google.com">Static</Footer.Link>
+      <Footer.Link to="https://repay.com">Unchanging</Footer.Link>
+      {makeLinks(numLinks)}
+    </Footer>
   )
 })
