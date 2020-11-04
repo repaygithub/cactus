@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DataGrid from './DataGrid'
@@ -87,6 +88,8 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
     showResultsCount = true,
     fullWidth,
   } = props
+  const size = useContext(ScreenSizeContext)
+  const isCardView = size <= SIZES['tiny']
   const [data, setData] = useState<{ [key: string]: any }[]>(TEST_DATA)
   const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([
     { id: 'created', sortAscending: false },
@@ -192,38 +195,67 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
 
   return (
     <DataGrid
-      data={paginateData()}
       sortOptions={sortOptions}
       onSort={onSort}
       paginationOptions={getPaginationOptions()}
       onPageChange={onPageChange}
       fullWidth={fullWidth}
-      resultsCountText={showResultsCount ? getResultsCountText() : undefined}
     >
-      <DataGrid.DataColumn id="name" title="Name" />
-      <DataGrid.DataColumn id="created" title="Created" sortable={true} />
-      <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
-      <DataGrid.Column>
-        {(rowData): React.ReactElement => (
-          <SplitButton
-            onSelectMainAction={(): void => {
-              return
-            }}
-            mainActionLabel="Edit"
-          >
-            <SplitButton.Action
-              onSelect={(): void => {
-                clone(rowData)
-              }}
-            >
-              Clone
-            </SplitButton.Action>
-            <SplitButton.Action onSelect={(): void => deleteRow(rowData)}>
-              Delete
-            </SplitButton.Action>
-          </SplitButton>
+      <DataGrid.TopSection>
+        {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
+        {providePageSizeOptions && (
+          <DataGrid.PageSizeSelect
+            pageSizeOptions={[4, 6, 12]}
+            ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
+          />
         )}
-      </DataGrid.Column>
+      </DataGrid.TopSection>
+      <DataGrid.Table data={paginateData()}>
+        <DataGrid.DataColumn id="name" title="Name" />
+        <DataGrid.DataColumn id="created" title="Created" sortable={true} />
+        <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
+        <DataGrid.Column>
+          {(rowData): React.ReactElement => (
+            <SplitButton
+              onSelectMainAction={(): void => {
+                return
+              }}
+              mainActionLabel="Edit"
+            >
+              <SplitButton.Action
+                onSelect={(): void => {
+                  clone(rowData)
+                }}
+              >
+                Clone
+              </SplitButton.Action>
+              <SplitButton.Action onSelect={(): void => deleteRow(rowData)}>
+                Delete
+              </SplitButton.Action>
+            </SplitButton>
+          )}
+        </DataGrid.Column>
+      </DataGrid.Table>
+      <DataGrid.BottomSection>
+        {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
+          <span>{getResultsCountText()}</span>
+        ) : null}
+        {providePageCount ? (
+          <DataGrid.Pagination
+            mb={isCardView && size.toString() === 'tiny' ? 4 : undefined}
+            ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
+          />
+        ) : (
+          <DataGrid.PrevNext
+            disableNext={paginateData().length < getPaginationOptions().pageSize}
+            mb={isCardView && size.toString() === 'tiny' ? 4 : undefined}
+            ml={isCardView && size.toString() === 'tiny' ? 'auto' : 'auto'}
+          />
+        )}
+        {isCardView && showResultsCount && size.toString() === 'tiny' ? (
+          <span>{getResultsCountText()}</span>
+        ) : null}
+      </DataGrid.BottomSection>
     </DataGrid>
   )
 }

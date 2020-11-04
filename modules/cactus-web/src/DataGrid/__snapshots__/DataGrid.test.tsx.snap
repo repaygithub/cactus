@@ -10,11 +10,11 @@ exports[`component: DataGrid snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c20 {
+.c22 {
   vertical-align: middle;
 }
 
-.c21 {
+.c23 {
   vertical-align: middle;
 }
 
@@ -106,7 +106,11 @@ exports[`component: DataGrid snapshot 1`] = `
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c17 {
+.c18 {
+  margin-left: auto;
+}
+
+.c19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -119,7 +123,7 @@ exports[`component: DataGrid snapshot 1`] = `
   padding: 0;
 }
 
-.c18 {
+.c20 {
   min-width: 15px;
   height: 24px;
   text-align: center;
@@ -133,8 +137,8 @@ exports[`component: DataGrid snapshot 1`] = `
   border-left: 1px solid hsl(200,29%,90%);
 }
 
-.c18,
-.c18:link {
+.c20,
+.c20:link {
   color: hsl(200,10%,20%);
   font-size: 15px;
   line-height: 18px;
@@ -142,17 +146,17 @@ exports[`component: DataGrid snapshot 1`] = `
   text-decoration: none;
 }
 
-.c18:last-child {
+.c20:last-child {
   border-right: 1px solid hsl(200,29%,90%);
 }
 
-.c18 svg {
+.c20 svg {
   width: 15px;
   height: 15px;
   vertical-align: middle;
 }
 
-.c19 {
+.c21 {
   cursor: pointer;
   padding: 3px;
   vertical-align: middle;
@@ -167,34 +171,128 @@ exports[`component: DataGrid snapshot 1`] = `
   font: inherit;
 }
 
-.c19:visited {
+.c21:visited {
   color: hsl(200,18%,45%);
 }
 
-.c19:hover {
+.c21:hover {
   color: hsl(200,96%,35%);
 }
 
-.c19:active,
-.c19:focus {
+.c21:active,
+.c21:focus {
   padding: 3px;
   outline: none;
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c19::-moz-focus-inner {
+.c21::-moz-focus-inner {
   border: none;
 }
 
-.c19[disabled],
-.c19[aria-disabled='true'] {
+.c21[disabled],
+.c21[aria-disabled='true'] {
   color: hsl(0,0%,90%);
   background-color: transparent;
   cursor: default;
 }
 
-.c19[aria-current='page'] {
+.c21[aria-current='page'] {
+  background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
+}
+
+.c17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 40px;
+  padding: 0 16px;
+}
+
+.c2 {
+  display: -webkit-inline-box;
+  display: inline-box;
+  margin-left: auto;
+}
+
+.c2 span {
+  margin-right: 8px;
+}
+
+.c2 .page-options-list {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.c2 .page-option {
+  min-width: 15px;
+  height: 24px;
+  text-align: center;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 2px 8px;
+  display: block;
+  border-left: 1px solid hsl(200,29%,90%);
+}
+
+.c2 .page-option:last-child {
+  border-right: 1px solid hsl(200,29%,90%);
+}
+
+.c2 .page-option,
+.c2 .page-option a {
+  color: hsl(200,10%,20%);
+  font-size: 15px;
+  line-height: 18px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c2 .page-option a {
+  cursor: pointer;
+  padding: 3px;
+  vertical-align: middle;
+  line-height: 18px;
+  display: block;
+  border-radius: 8px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c2 .page-option a:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c2 .page-option a:active,
+.c2 .page-option a:focus {
+  padding: 3px;
+  outline: none;
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c2 .page-option a[aria-selected='true'] {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
 }
@@ -362,44 +460,6 @@ exports[`component: DataGrid snapshot 1`] = `
   flex-grow: 1;
 }
 
-.c0 {
-  display: inline;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: auto;
-  overflow-x: auto;
-}
-
-.c0 th .c10 {
-  margin-left: 8px;
-}
-
-.c0 .flip-chevron .c10 {
-  -webkit-transform: rotate3d(1,0,0,180deg);
-  -ms-transform: rotate3d(1,0,0,180deg);
-  transform: rotate3d(1,0,0,180deg);
-}
-
-.c0 .bottom-section {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-top: 40px;
-}
-
-.c0 .bottom-section .results-count-text {
-  margin-top: 16px;
-}
-
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -450,88 +510,33 @@ exports[`component: DataGrid snapshot 1`] = `
   -ms-flex-align: center;
   align-items: center;
   padding: 0 16px;
+}
+
+.c1.has-content {
   margin-bottom: 40px;
 }
 
-.c1 .sort-buttons {
+.c1 .sort-buttons.has-siblings {
   margin-bottom: 16px;
 }
 
-.c2 {
-  display: -webkit-inline-box;
-  display: inline-box;
+.c0 {
+  display: inline;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: auto;
+  overflow-x: auto;
 }
 
-.c2 span {
-  margin-right: 8px;
+.c0 th .c10 {
+  margin-left: 8px;
 }
 
-.c2 .page-options-list {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.c2 .page-option {
-  min-width: 15px;
-  height: 24px;
-  text-align: center;
-  background: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 2px 8px;
-  display: block;
-  border-left: 1px solid hsl(200,29%,90%);
-}
-
-.c2 .page-option:last-child {
-  border-right: 1px solid hsl(200,29%,90%);
-}
-
-.c2 .page-option,
-.c2 .page-option a {
-  color: hsl(200,10%,20%);
-  font-size: 15px;
-  line-height: 18px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c2 .page-option a {
-  cursor: pointer;
-  padding: 3px;
-  vertical-align: middle;
-  line-height: 18px;
-  display: block;
-  border-radius: 8px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  color: inherit;
-}
-
-.c2 .page-option a:hover {
-  color: hsl(200,96%,35%);
-}
-
-.c2 .page-option a:active,
-.c2 .page-option a:focus {
-  padding: 3px;
-  outline: none;
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
-}
-
-.c2 .page-option a[aria-selected='true'] {
-  background-color: hsl(200,96%,11%);
-  color: hsl(0,0%,100%);
+.c0 .flip-chevron .c10 {
+  -webkit-transform: rotate3d(1,0,0,180deg);
+  -ms-transform: rotate3d(1,0,0,180deg);
+  transform: rotate3d(1,0,0,180deg);
 }
 
 @media screen and (min-width:1024px) {
@@ -546,8 +551,23 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c18,
-  .c18:link {
+  .c20,
+  .c20:link {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c17 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 .page-option,
+  .c2 .page-option a {
     font-size: 15px;
   }
 }
@@ -572,47 +592,6 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 @media screen and (min-width:768px) {
-  .c0 {
-    display: -webkit-inline-box;
-    display: -webkit-inline-flex;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-  }
-}
-
-@media screen and (min-width:768px) {
-  .c0 .bottom-section {
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-pack: end;
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    margin-right: 16px;
-  }
-}
-
-@media screen and (min-width:768px) {
-  .c0 .bottom-section.is-card-view {
-    -webkit-flex-direction: row-reverse;
-    -ms-flex-direction: row-reverse;
-    flex-direction: row-reverse;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    margin-right: 16px;
-    margin-top: 16px;
-  }
-
-  .c0 .bottom-section.is-card-view .results-count-text {
-    margin-top: 0px;
-    margin-left: 16px;
-  }
-}
-
-@media screen and (min-width:768px) {
   .c1 {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
@@ -621,20 +600,15 @@ exports[`component: DataGrid snapshot 1`] = `
     -webkit-box-align: flex-start;
     -ms-flex-align: flex-start;
     align-items: flex-start;
-    margin-bottom: 40px;
   }
 }
 
 @media screen and (min-width:768px) {
-  .c2 {
-    margin-left: auto;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c2 .page-option,
-  .c2 .page-option a {
-    font-size: 15px;
+  .c0 {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
   }
 }
 
@@ -643,11 +617,9 @@ exports[`component: DataGrid snapshot 1`] = `
     class="c0"
   >
     <div
-      class="c1"
+      class="c1 top-section has-content"
     >
-      <span
-        class="results-count-text"
-      >
+      <span>
         Showing 1 to 4 of 11
       </span>
       <div
@@ -1007,23 +979,23 @@ exports[`component: DataGrid snapshot 1`] = `
       </table>
     </div>
     <div
-      class="bottom-section "
+      class="c17"
     >
       <nav
         aria-label="Pages"
-        class=""
+        class="c18"
       >
         <ol
-          class="c17"
+          class="c19"
           role="list"
         >
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-disabled="true"
               aria-label="Go to page 1"
-              class="c19"
+              class="c21"
               role="link"
             >
               <svg
@@ -1040,17 +1012,17 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-disabled="true"
               aria-label="Go to previous page, 0"
-              class="c19"
+              class="c21"
               rel="prev"
               role="link"
             >
               <svg
-                class="c20"
+                class="c22"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1063,24 +1035,24 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-current="page"
               aria-disabled="true"
               aria-label="Current page, 1"
-              class="c19"
+              class="c21"
               role="link"
             >
               1
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to page 2"
-              class="c19"
+              class="c21"
               role="link"
               tabindex="0"
             >
@@ -1088,11 +1060,11 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to page 3"
-              class="c19"
+              class="c21"
               role="link"
               tabindex="0"
             >
@@ -1100,17 +1072,17 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to next page, 2"
-              class="c19"
+              class="c21"
               rel="next"
               role="link"
               tabindex="0"
             >
               <svg
-                class="c21"
+                class="c23"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1124,11 +1096,11 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to last page, 3"
-              class="c19"
+              class="c21"
               role="link"
               tabindex="0"
             >
