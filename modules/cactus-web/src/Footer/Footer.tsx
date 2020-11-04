@@ -208,7 +208,6 @@ const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })<{ is
   align-items: center;
   width: 100%;
   background-color: ${(p) => p.theme.colors.lightContrast};
-  margin-top: auto;
   ${(p) => boxShadow(p.theme, 1)};
   ${(p) =>
     p.isGrid

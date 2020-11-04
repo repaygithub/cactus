@@ -159,7 +159,6 @@ exports[`component: Footer snapshot 1`] = `
   align-items: center;
   width: 100%;
   background-color: hsl(200,29%,90%);
-  margin-top: auto;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   height: auto;
   display: -ms-grid;

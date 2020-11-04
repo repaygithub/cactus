@@ -106,7 +106,7 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
   left: ${p.fixedLeft}px;
   right: 0;
   top: 0;
-  bottom: ${p.fixedBottom}px;
+  height: calc(100vh - ${p.fixedBottom}px);
 
   .cactus-layout-floatLeft {
     width: ${p.floatLeft}px;
@@ -152,13 +152,15 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
           grid-column-start: 1;
           grid-column-end: 2;
         }
-        & > *:first-child {
-          -ms-grid-row: 1;
-        }
         & > *:last-child {
           -ms-grid-row: 3;
           grid-row-start: 3;
           grid-row-end: 4;
+        }
+        & > *:first-child {
+          -ms-grid-row: 1;
+          grid-row-start: 1;
+          grid-row-end: 2;
         }
         & > ${Main} {
           -ms-grid-row: 2;
@@ -180,16 +182,20 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
           grid-column-start: 1;
           grid-column-end: 3;
         }
-        & > *:first-child {
-          -ms-grid-row: 1;
-        }
-        & > *:nth-child(2) {
-          -ms-grid-row: 2;
-        }
         & > *:last-child {
           -ms-grid-row: 4;
           grid-row-start: 4;
           grid-row-end: 5;
+        }
+        & > *:first-child {
+          -ms-grid-row: 1;
+          grid-row-start: 1;
+          grid-row-end: 2;
+        }
+        & > *:nth-child(2) {
+          -ms-grid-row: 2;
+          grid-row-start: 2;
+          grid-row-end: 3;
         }
         & > .cactus-layout-floatLeft {
           -ms-grid-column: 1;
