@@ -1453,6 +1453,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       matchNotFoundText = 'No match found',
       extraLabel,
       value: propsValue,
+      onDropdownToggle,
       ...rest
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
     const { isOpen, searchValue, activeDescendant } = this.state
