@@ -68,11 +68,6 @@ exports[`component: ToggleField snapshot 1`] = `
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-.c3[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
-  border-color: hsl(145,89%,28%);
-}
-
 .c3[aria-checked='true']::after {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -97,10 +92,6 @@ exports[`component: ToggleField snapshot 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c3[disabled] {
-  opacity: 0.5;
 }
 
 .c1 .c10 {
@@ -236,11 +227,6 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-.c3[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
-  border-color: hsl(145,89%,28%);
-}
-
 .c3[aria-checked='true']::after {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -265,10 +251,6 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c3[disabled] {
-  opacity: 0.5;
 }
 
 .c1 .c10 {
@@ -382,8 +364,8 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   height: 26px;
   border-radius: 13px;
   outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
+  background-color: hsl(145,89%,28%);
+  border: 1px solid hsl(145,89%,28%);
   cursor: pointer;
 }
 
@@ -404,11 +386,6 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   transition: transform 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
-}
-
-.c3[aria-checked='true'] {
-  background-color: hsl(145,89%,28%);
-  border-color: hsl(145,89%,28%);
 }
 
 .c3[aria-checked='true']::after {
@@ -435,10 +412,6 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-}
-
-.c3[disabled] {
-  opacity: 0.5;
 }
 
 .c1 .c10 {
