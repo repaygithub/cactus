@@ -51,17 +51,17 @@ const getToggleColors = (props: ToggleProps): ReturnType<typeof css> => {
   if (props.disabled)
     return css`
       background-color: ${(p) => p.theme.colors.lightGray};
-      border: ${(p) => p.theme.colors.lightGray};
+      border: 1px solid ${(p) => p.theme.colors.lightGray};
     `
   else if (props.value)
     return css`
       background-color: ${(p) => p.theme.colors.success};
-      border: ${(p) => p.theme.colors.success};
+      border: 1px solid ${(p) => p.theme.colors.success};
     `
   else
     return css`
       background-color: ${(p) => p.theme.colors.error};
-      border: ${(p) => p.theme.colors.error};
+      border: 1px solid ${(p) => p.theme.colors.error};
     `
 }
 
@@ -92,8 +92,6 @@ export const Toggle = styled(ToggleBase)`
   }
 
   &[aria-checked='true'] {
-    border-color: ${(p): string => p.theme.colors.success};
-
     ::after {
       transform: translateX(26px);
     }

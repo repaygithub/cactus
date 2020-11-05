@@ -45,7 +45,7 @@ exports[`component: ToggleField snapshot 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(353,84%,44%);
-  border: hsl(353,84%,44%);
+  border: 1px solid hsl(353,84%,44%);
   cursor: pointer;
 }
 
@@ -66,10 +66,6 @@ exports[`component: ToggleField snapshot 1`] = `
   transition: transform 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
-}
-
-.c3[aria-checked='true'] {
-  border-color: hsl(145,89%,28%);
 }
 
 .c3[aria-checked='true']::after {
@@ -208,7 +204,7 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(0,0%,90%);
-  border: hsl(0,0%,90%);
+  border: 1px solid hsl(0,0%,90%);
   cursor: cursor;
 }
 
@@ -229,10 +225,6 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   transition: transform 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
-}
-
-.c3[aria-checked='true'] {
-  border-color: hsl(145,89%,28%);
 }
 
 .c3[aria-checked='true']::after {
@@ -373,7 +365,7 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   border-radius: 13px;
   outline: none;
   background-color: hsl(145,89%,28%);
-  border: hsl(145,89%,28%);
+  border: 1px solid hsl(145,89%,28%);
   cursor: pointer;
 }
 
@@ -394,10 +386,6 @@ exports[`component: ToggleField snapshot when value=true 1`] = `
   transition: transform 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
-}
-
-.c3[aria-checked='true'] {
-  border-color: hsl(145,89%,28%);
 }
 
 .c3[aria-checked='true']::after {
