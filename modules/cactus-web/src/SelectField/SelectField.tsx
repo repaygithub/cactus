@@ -62,7 +62,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
           id={fieldId}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
-          getSelectOpen={(e) => setIsOpen(e)}
+          onDropdownToggle={(newStateOpen) => setIsOpen(newStateOpen)}
         />
       )}
     </AccessibleField>

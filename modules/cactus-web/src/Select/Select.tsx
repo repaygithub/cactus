@@ -52,7 +52,7 @@ export interface SelectProps
   canCreateOption?: boolean
   matchNotFoundText?: string
   comboBoxSearchLabel?: string
-  getSelectOpen?: (prop: boolean) => void
+  onDropdownToggle?: (prop: boolean) => void
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -1110,7 +1110,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       return
     }
     this.setState({ isOpen: false })
-    this.props.getSelectOpen && this.props.getSelectOpen(false)
+    this.props.onDropdownToggle && this.props.onDropdownToggle(false)
 
     const isNotControlledBlur =
       !event.relatedTarget || event.relatedTarget !== this.triggerRef.current
@@ -1283,7 +1283,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   private openList(): void {
     this.setState({ isOpen: true }, () => {
-      this.props.getSelectOpen && this.props.getSelectOpen(true)
+      this.props.onDropdownToggle && this.props.onDropdownToggle(true)
       if (!isResponsiveTouchDevice) {
         window.requestAnimationFrame((): void => {
           if (this.listRef.current !== null && !this.props.comboBox) {
@@ -1298,7 +1298,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   private closeList = (): void => {
     this.setState({ isOpen: false })
-    this.props.getSelectOpen && this.props.getSelectOpen(false)
+    this.props.onDropdownToggle && this.props.onDropdownToggle(false)
     window.requestAnimationFrame((): void => {
       if (this.triggerRef.current !== null) {
         if (this.triggerRef.current.children.length > 0) {
