@@ -5,7 +5,7 @@ import React from 'react'
 import Pagination from './Pagination'
 
 export default {
-  title: 'Pafination',
+  title: 'Pagination',
   component: Pagination,
 } as Meta
 
