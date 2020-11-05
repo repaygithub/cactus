@@ -115,7 +115,7 @@ const Switch = styled.div`
     }
   }
 
-  input:checked:not([disabled]) ~ & {
+  input:checked:not(:disabled) ~ & {
     background-color: ${(p): string => p.theme.colors.success};
   }
 `
