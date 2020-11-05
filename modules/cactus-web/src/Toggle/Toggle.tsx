@@ -90,7 +90,6 @@ const Switch = styled.div`
   input:disabled ~ & {
     background-color: ${(p) => p.theme.colors.lightGray};
     cursor: cursor;
-    opacity: 0.5;
   }
 
   input:focus ~ & {
@@ -111,11 +110,13 @@ const Switch = styled.div`
   }
 
   input:checked ~ & {
-    background-color: ${(p): string => p.theme.colors.success};
-
     ::after {
       left: 26px;
     }
+  }
+
+  input:checked:not([disabled]) ~ & {
+    background-color: ${(p): string => p.theme.colors.success};
   }
 `
 

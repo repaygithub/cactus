@@ -90,7 +90,6 @@ input:checked ~ .c10 {
 input:disabled ~ .c5 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 input:focus ~ .c5 {
@@ -111,12 +110,12 @@ input:focus ~ .c5 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c5 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c5::after {
   left: 26px;
+}
+
+input:checked:not([disabled]) ~ .c5 {
+  background-color: hsl(145,89%,28%);
 }
 
 .c1 .c13 {
@@ -282,7 +281,6 @@ input:checked ~ .c10 {
 input:disabled ~ .c5 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 input:focus ~ .c5 {
@@ -303,12 +301,12 @@ input:focus ~ .c5 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c5 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c5::after {
   left: 26px;
+}
+
+input:checked:not([disabled]) ~ .c5 {
+  background-color: hsl(145,89%,28%);
 }
 
 .c1 .c13 {
@@ -475,7 +473,6 @@ input:checked ~ .c10 {
 input:disabled ~ .c5 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 input:focus ~ .c5 {
@@ -496,12 +493,12 @@ input:focus ~ .c5 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c5 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c5::after {
   left: 26px;
+}
+
+input:checked:not([disabled]) ~ .c5 {
+  background-color: hsl(145,89%,28%);
 }
 
 .c1 .c13 {
