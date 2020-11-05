@@ -1,37 +1,36 @@
 import { boolean, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import Flex from '../Flex/Flex'
 import RadioGroup from './RadioGroup'
 
-const radioGroupStories = storiesOf('RadioGroup', module)
-
-radioGroupStories.add(
-  'Basic Usage',
-  (): React.ReactElement => (
-    <RadioGroup
-      id="my-id"
-      name="you-are-group-one"
-      label={text('label', 'A Label')}
-      disabled={boolean('disabled', false)}
-      onChange={(name, value) => console.log(`'${name}' changed: ${value}`)}
-      onFocus={(name) => console.log(`'${name}' focused`)}
-      onBlur={(name) => console.log(`'${name}' blurred`)}
-      tooltip={text('tooltip', 'Here there be radio buttons')}
-      error={text('error', '')}
-      success={text('success', '')}
-      warning={text('warning', '')}
-      autoTooltip={boolean('autoTooltip', true)}
-    >
-      <RadioGroup.Button label="That's right" value="right" />
-      <RadioGroup.Button disabled label="That's wrong" value="left" />
-      <RadioGroup.Button label={text('button label', "That's...")} value="center" />
-    </RadioGroup>
-  )
+export default {
+  title: 'RadioGroup',
+  component: RadioGroup,
+} as Meta
+export const BasicUsage = (): React.ReactElement => (
+  <RadioGroup
+    id="my-id"
+    name="you-are-group-one"
+    label={text('label', 'A Label')}
+    disabled={boolean('disabled', false)}
+    onChange={(name, value) => console.log(`'${name}' changed: ${value}`)}
+    onFocus={(name) => console.log(`'${name}' focused`)}
+    onBlur={(name) => console.log(`'${name}' blurred`)}
+    tooltip={text('tooltip', 'Here there be radio buttons')}
+    error={text('error', '')}
+    success={text('success', '')}
+    warning={text('warning', '')}
+    autoTooltip={boolean('autoTooltip', true)}
+  >
+    <RadioGroup.Button label="That's right" value="right" />
+    <RadioGroup.Button disabled label="That's wrong" value="left" />
+    <RadioGroup.Button label={text('button label', "That's...")} value="center" />
+  </RadioGroup>
 )
 
-radioGroupStories.add('With Values', () => {
+export const WithValues = (): React.ReactElement => {
   const [value, setValue] = React.useState<string>('strong')
   return (
     <Flex>
@@ -52,9 +51,9 @@ radioGroupStories.add('With Values', () => {
       </RadioGroup>
     </Flex>
   )
-})
+}
 
-radioGroupStories.add('With Default Values', () => {
+export const WithDefaultValues = (): React.ReactElement => {
   const group = React.useRef<HTMLFormElement>(null)
   const button = React.useRef<HTMLFormElement>(null)
   return (
@@ -81,4 +80,4 @@ radioGroupStories.add('With Default Values', () => {
       </form>
     </Flex>
   )
-})
+}

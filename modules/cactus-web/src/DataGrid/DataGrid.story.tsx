@@ -1,5 +1,5 @@
 import { boolean, select, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement, useState } from 'react'
 
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -273,57 +273,64 @@ const DataGridContainer = ({
   )
 }
 
-storiesOf('DataGrid', module)
-  .add('Basic Usage', (): ReactElement => <DataGridContainer initialData={INITIAL_DATA} />, {
-    cactus: {
-      overrides: {
-        display: 'block',
-        textAlign: 'center',
-        paddingTop: '16px',
-        paddingBottom: '16px',
-      },
+export default {
+  title: 'DataGrid',
+  component: DataGrid,
+} as Meta
+
+export const BasicUsage = (): ReactElement => <DataGridContainer initialData={INITIAL_DATA} />
+
+BasicUsage.parameters = {
+  cactus: {
+    overrides: {
+      display: 'block',
+      textAlign: 'center',
+      paddingTop: '16px',
+      paddingBottom: '16px',
     },
-  })
-  .add(
-    'Lots and Lots of Rows',
-    () => (
-      <DataGridContainer
-        initialData={INITIAL_DATA.concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)
-          .concat(INITIAL_DATA)}
-        includePaginationAndSort={false}
-      />
-    ),
-    {
-      cactus: {
-        overrides: {
-          display: 'block',
-          textAlign: 'center',
-          paddingTop: '16px',
-          paddingBottom: '16px',
-        },
-      },
-    }
-  )
+  },
+}
+
+export const LotsAndLotsOfRows = (): React.ReactElement => (
+  <DataGridContainer
+    initialData={INITIAL_DATA.concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)
+      .concat(INITIAL_DATA)}
+    includePaginationAndSort={false}
+  />
+)
+
+LotsAndLotsOfRows.storyName = 'Lots and Lots of Rows'
+
+LotsAndLotsOfRows.parameters = {
+  cactus: {
+    overrides: {
+      display: 'block',
+      textAlign: 'center',
+      paddingTop: '16px',
+      paddingBottom: '16px',
+    },
+  },
+}

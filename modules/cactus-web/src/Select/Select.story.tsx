@@ -1,6 +1,6 @@
 import { actions } from '@storybook/addon-actions'
 import { array, boolean, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
 import arizonaCities from '../storySupport/arizonaCities'
@@ -17,167 +17,169 @@ const longOptions: OptionType[] = [
 
 const defaultMultiValue = arizonaCities.slice(6, 15)
 
-storiesOf('Select', module)
-  .add(
-    'Basic Usage',
-    (): ReactElement => (
-      <React.Fragment>
+export default {
+  title: 'Select',
+  component: Select,
+} as Meta
+
+export const BasicUsage = (): ReactElement => (
+  <React.Fragment>
+    <Select
+      options={array('options', ['name', 'other', 'three'])}
+      name={text('name', 'random')}
+      id={text('id', 'select-input')}
+      disabled={boolean('disabled', false)}
+      multiple={boolean('multiple', false)}
+      m={text('m', '2')}
+      {...eventLoggers}
+    />
+  </React.Fragment>
+)
+
+export const CollisionsInAnOverSizedContainer = (): ReactElement => (
+  <React.Fragment>
+    <Select
+      options={array('options', ['name', 'other', 'three'])}
+      name={text('name', 'random')}
+      id={text('id', 'select-input')}
+      disabled={boolean('disabled', false)}
+      {...eventLoggers}
+    />
+    <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
+      Scroll down and to the right
+    </div>
+  </React.Fragment>
+)
+
+CollisionsInAnOverSizedContainer.storyName = 'Collisions in an over-sized container'
+CollisionsInAnOverSizedContainer.parameters = {
+  cactus: { overrides: { height: '220vh', width: '220vw' } },
+}
+
+export const LongListOfOptions = (): ReactElement => (
+  <FormHandler
+    defaultValue={arizonaCities[6]}
+    onChange={(
+      name,
+      value: string | number | (string | number)[] | null
+    ): string | number | (string | number)[] | null => value}
+  >
+    {({ value, onChange }): ReactElement => (
+      <Select
+        options={arizonaCities}
+        name="random"
+        id="select-input"
+        disabled={boolean('disabled', false)}
+        {...eventLoggers}
+        onChange={onChange}
+        value={value}
+      />
+    )}
+  </FormHandler>
+)
+
+LongListOfOptions.storyName = 'Long list of options'
+
+export const LongOptionLabels = (): ReactElement => (
+  <FormHandler
+    defaultValue=""
+    onChange={(
+      name,
+      value: string | number | (string | number)[] | null
+    ): string | number | (string | number)[] | null => value}
+  >
+    {({ value, onChange }): ReactElement => (
+      <div style={{ width: '194px' }}>
         <Select
-          options={array('options', ['name', 'other', 'three'])}
-          name={text('name', 'random')}
-          id={text('id', 'select-input')}
-          disabled={boolean('disabled', false)}
-          multiple={boolean('multiple', false)}
-          m={text('m', '2')}
-          {...eventLoggers}
-        />
-      </React.Fragment>
-    )
-  )
-  .add(
-    'Collisions in an over-sized container',
-    (): ReactElement => (
-      <React.Fragment>
-        <Select
-          options={array('options', ['name', 'other', 'three'])}
-          name={text('name', 'random')}
-          id={text('id', 'select-input')}
+          options={longOptions}
+          name="random"
+          id="select-input"
           disabled={boolean('disabled', false)}
           {...eventLoggers}
+          onChange={onChange}
+          value={value}
         />
-        <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
-          Scroll down and to the right
-        </div>
-      </React.Fragment>
-    ),
-    { cactus: { overrides: { height: '220vh', width: '220vw' } } }
-  )
-  .add(
-    'Long list of options',
-    (): ReactElement => (
-      <FormHandler
-        defaultValue={arizonaCities[6]}
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <Select
-            options={arizonaCities}
-            name="random"
-            id="select-input"
-            disabled={boolean('disabled', false)}
-            {...eventLoggers}
-            onChange={onChange}
-            value={value}
-          />
-        )}
-      </FormHandler>
-    )
-  )
-  .add(
-    'Long option labels',
-    (): ReactElement => (
-      <FormHandler
-        defaultValue=""
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <div style={{ width: '194px' }}>
-            <Select
-              options={longOptions}
-              name="random"
-              id="select-input"
-              disabled={boolean('disabled', false)}
-              {...eventLoggers}
-              onChange={onChange}
-              value={value}
-            />
-          </div>
-        )}
-      </FormHandler>
-    )
-  )
-  .add(
-    'With Multiselect',
-    (): ReactElement => (
-      <FormHandler
-        defaultValue={defaultMultiValue}
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <Select
-            options={arizonaCities}
-            name="random"
-            id="select-input"
-            disabled={boolean('disabled', false)}
-            {...eventLoggers}
-            onChange={onChange}
-            value={value}
-            multiple
-          />
-        )}
-      </FormHandler>
-    ),
-    { cactus: { overrides: { overflow: 'hidden' } } }
-  )
-  .add(
-    'With ComboBox',
-    (): ReactElement => (
-      <FormHandler
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <Select
-            options={arizonaCities}
-            name="random"
-            id="select-input"
-            disabled={boolean('disabled', false)}
-            {...eventLoggers}
-            onChange={onChange}
-            value={value}
-            comboBox
-            canCreateOption={boolean('canCreateOption', true)}
-          />
-        )}
-      </FormHandler>
-    ),
-    { cactus: { overrides: { overflow: 'hidden' } } }
-  )
-  .add(
-    'With MultiSelect ComboBox',
-    (): ReactElement => (
-      <FormHandler
-        onChange={(
-          name,
-          value: string | number | (string | number)[] | null
-        ): string | number | (string | number)[] | null => value}
-      >
-        {({ value, onChange }): ReactElement => (
-          <Select
-            options={arizonaCities}
-            name="random"
-            id="select-input"
-            disabled={boolean('disabled', false)}
-            {...eventLoggers}
-            onChange={onChange}
-            value={value}
-            comboBox
-            multiple
-            canCreateOption={boolean('canCreateOption', true)}
-          />
-        )}
-      </FormHandler>
-    ),
-    { cactus: { overrides: { overflow: 'hidden' } } }
-  )
+      </div>
+    )}
+  </FormHandler>
+)
+
+LongOptionLabels.storyName = 'Long option labels'
+
+export const WithMultiselect = (): ReactElement => (
+  <FormHandler
+    defaultValue={defaultMultiValue}
+    onChange={(
+      name,
+      value: string | number | (string | number)[] | null
+    ): string | number | (string | number)[] | null => value}
+  >
+    {({ value, onChange }): ReactElement => (
+      <Select
+        options={arizonaCities}
+        name="random"
+        id="select-input"
+        disabled={boolean('disabled', false)}
+        {...eventLoggers}
+        onChange={onChange}
+        value={value}
+        multiple
+      />
+    )}
+  </FormHandler>
+)
+
+WithMultiselect.parameters = { cactus: { overrides: { overflow: 'hidden' } } }
+
+export const WithComboBox = (): ReactElement => (
+  <FormHandler
+    onChange={(
+      name,
+      value: string | number | (string | number)[] | null
+    ): string | number | (string | number)[] | null => value}
+  >
+    {({ value, onChange }): ReactElement => (
+      <Select
+        options={arizonaCities}
+        name="random"
+        id="select-input"
+        disabled={boolean('disabled', false)}
+        {...eventLoggers}
+        onChange={onChange}
+        value={value}
+        comboBox
+        canCreateOption={boolean('canCreateOption', true)}
+      />
+    )}
+  </FormHandler>
+)
+
+WithComboBox.storyName = 'With ComboBox'
+WithComboBox.parameters = { cactus: { overrides: { overflow: 'hidden' } } }
+
+export const WithMultiSelectComboBox = (): ReactElement => (
+  <FormHandler
+    onChange={(
+      name,
+      value: string | number | (string | number)[] | null
+    ): string | number | (string | number)[] | null => value}
+  >
+    {({ value, onChange }): ReactElement => (
+      <Select
+        options={arizonaCities}
+        name="random"
+        id="select-input"
+        disabled={boolean('disabled', false)}
+        {...eventLoggers}
+        onChange={onChange}
+        value={value}
+        comboBox
+        multiple
+        canCreateOption={boolean('canCreateOption', true)}
+      />
+    )}
+  </FormHandler>
+)
+
+WithMultiSelectComboBox.storyName = 'With MultiSelect ComboBox'
+WithMultiSelectComboBox.parameters = { cactus: { overrides: { overflow: 'hidden' } } }

@@ -1,12 +1,17 @@
 import { action } from '@storybook/addon-actions'
 import { boolean, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import Layout from '../Layout/Layout'
 import BrandBar from './BrandBar'
 
-storiesOf('BrandBar', module).add('Basic Usage', () => (
+export default {
+  title: 'BrandBar',
+  component: BrandBar,
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => (
   <Layout>
     <BrandBar
       isProfilePage={boolean('On profile page?', false)}
@@ -21,4 +26,4 @@ storiesOf('BrandBar', module).add('Basic Usage', () => (
       </BrandBar.UserMenuItem>
     </BrandBar>
   </Layout>
-))
+)
