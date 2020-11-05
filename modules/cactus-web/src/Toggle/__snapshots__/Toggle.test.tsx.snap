@@ -104,7 +104,7 @@ input:checked ~ .c2::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c2 {
+input:checked:not(:disabled) ~ .c2 {
   background-color: hsl(145,89%,28%);
 }
 
@@ -255,7 +255,7 @@ input:checked ~ .c2::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c2 {
+input:checked:not(:disabled) ~ .c2 {
   background-color: hsl(145,89%,28%);
 }
 
@@ -406,7 +406,7 @@ input:checked ~ .c2::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c2 {
+input:checked:not(:disabled) ~ .c2 {
   background-color: hsl(145,89%,28%);
 }
 
@@ -557,7 +557,7 @@ input:checked ~ .c2::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c2 {
+input:checked:not(:disabled) ~ .c2 {
   background-color: hsl(145,89%,28%);
 }
 
@@ -703,7 +703,7 @@ input:checked ~ .c2::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c2 {
+input:checked:not(:disabled) ~ .c2 {
   background-color: hsl(145,89%,28%);
 }
 

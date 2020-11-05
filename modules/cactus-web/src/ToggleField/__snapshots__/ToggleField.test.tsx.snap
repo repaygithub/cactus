@@ -114,7 +114,7 @@ input:checked ~ .c5::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c5 {
+input:checked:not(:disabled) ~ .c5 {
   background-color: hsl(145,89%,28%);
 }
 
@@ -305,7 +305,7 @@ input:checked ~ .c5::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c5 {
+input:checked:not(:disabled) ~ .c5 {
   background-color: hsl(145,89%,28%);
 }
 
@@ -497,7 +497,7 @@ input:checked ~ .c5::after {
   left: 26px;
 }
 
-input:checked:not([disabled]) ~ .c5 {
+input:checked:not(:disabled) ~ .c5 {
   background-color: hsl(145,89%,28%);
 }
 
