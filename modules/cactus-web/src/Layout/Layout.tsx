@@ -1,14 +1,12 @@
-import pick from 'lodash/pick'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import ActionProvider from '../ActionBar/ActionProvider'
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 
 export type Role = 'menubar' | 'actionbar' | 'footer' | 'brandbar'
 
-const POSITIONS = ['fixedLeft', 'floatLeft', 'fixedBottom', 'flow'] as const
-export type Position = typeof POSITIONS[number]
+export type Position = 'fixedLeft' | 'floatLeft' | 'fixedBottom' | 'flow'
 
 export type LayoutProps = { [K in Position]: number }
 
@@ -53,11 +51,6 @@ export const useLayout = (role: Role, { position, offset }: LayoutInfo): UseLayo
     }
   }, [role, position, offset, componentInfo, setLayout])
   return { ...layout, cssClass: `cactus-layout-${position}` }
-}
-
-export const useLayoutProps = (): LayoutProps => {
-  const layout = React.useContext(LayoutContext)
-  return pick(layout, POSITIONS)
 }
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -105,51 +98,83 @@ const DefaultLayout = Layout as any
 DefaultLayout.Content = Main
 export default DefaultLayout as LayoutType
 
-const LayoutWrapper = styled.div<LayoutProps>(
-  (p) => `
+const styles: { [K in Position]?: any[] } = {}
+
+const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
   overflow: auto;
   position: absolute;
   left: ${p.fixedLeft}px;
   right: 0;
   top: 0;
-  bottom: ${p.fixedBottom}px;
-  display: flex;
-  flex-direction: column;
+  height: calc(100vh - ${p.fixedBottom}px);
 
   .cactus-layout-floatLeft {
-     width: ${p.floatLeft}px;
-     height: auto;
+    width: ${p.floatLeft}px;
+    height: auto;
+    ${styles['floatLeft']};
   }
 
   .cactus-layout-fixedLeft {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: ${p.fixedLeft}px;
-     bottom: ${p.fixedBottom}px;
-     z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: ${p.fixedLeft}px;
+    bottom: ${p.fixedBottom}px;
+    z-index: 1000;
+    ${styles['fixedLeft']};
   }
 
   .cactus-layout-fixedBottom {
-     position: fixed;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     height: ${p.fixedBottom}px;
-     z-index: 1000;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: ${p.fixedBottom}px;
+    z-index: 1000;
+    ${styles['fixedBottom']};
   }
 
-  ${
-    !p.floatLeft
-      ? `display: flex;
-        flex-direction: column;`
-      : `
+  .cactus-layout-flow {
+    ${styles['flow']};
+  }
+
+  ${!p.floatLeft
+    ? `
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+        -ms-grid-rows: min-content minmax(max-content, 1fr) min-content;
+        grid-template-rows: min-content minmax(max-content, 1fr) min-content;
+
+        & > * {
+          -ms-grid-column: 1;
+          grid-column-start: 1;
+          grid-column-end: 2;
+        }
+        & > *:last-child {
+          -ms-grid-row: 3;
+          grid-row-start: 3;
+          grid-row-end: 4;
+        }
+        & > *:first-child {
+          -ms-grid-row: 1;
+          grid-row-start: 1;
+          grid-row-end: 2;
+        }
+        & > ${Main} {
+          -ms-grid-row: 2;
+          grid-row-start: 2;
+          grid-row-end: 3;
+        }
+      `
+    : `
         display: -ms-grid;
         display: grid;
         -ms-grid-columns: ${p.floatLeft}px 1fr;
         grid-template-columns: ${p.floatLeft}px 1fr;
-        -ms-grid-rows: min-content min-content minmax(max-content, 1fr);
-        grid-template-rows: min-content min-content minmax(max-content, 1fr);
+        -ms-grid-rows: min-content min-content minmax(max-content, 1fr) min-content;
+        grid-template-rows: min-content min-content minmax(max-content, 1fr) min-content;
 
         & > * {
           -ms-grid-column: 1;
@@ -157,11 +182,20 @@ const LayoutWrapper = styled.div<LayoutProps>(
           grid-column-start: 1;
           grid-column-end: 3;
         }
+        & > *:last-child {
+          -ms-grid-row: 4;
+          grid-row-start: 4;
+          grid-row-end: 5;
+        }
         & > *:first-child {
           -ms-grid-row: 1;
+          grid-row-start: 1;
+          grid-row-end: 2;
         }
         & > *:nth-child(2) {
           -ms-grid-row: 2;
+          grid-row-start: 2;
+          grid-row-end: 3;
         }
         & > .cactus-layout-floatLeft {
           -ms-grid-column: 1;
@@ -181,7 +215,13 @@ const LayoutWrapper = styled.div<LayoutProps>(
           grid-row-start: 3;
           grid-row-end: 4;
         }
-      `
-  }
+      `}
 `
-)
+
+type LayoutStyle = ReturnType<typeof wrapperStyle>
+export const addLayoutStyle = (root: Position, style: LayoutStyle): void => {
+  const styleList = styles[root] || (styles[root] = [])
+  styleList.push(style)
+}
+
+const LayoutWrapper = styled.div<LayoutProps>(wrapperStyle)
