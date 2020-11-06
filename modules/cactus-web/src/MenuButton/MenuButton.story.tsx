@@ -1,4 +1,3 @@
-import { action } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import React, { ReactElement } from 'react'
@@ -6,20 +5,23 @@ import React, { ReactElement } from 'react'
 import MenuButton from './MenuButton'
 
 const stopNav = (e: Event): void => e.preventDefault()
+const action = (msg: string) => () => console.log(msg)
 
 storiesOf('MenuButton', module)
   .add(
     'Basic Usage',
     (): ReactElement => (
+      <div style={{ overflow: 'hidden' }}>
       <MenuButton
         label={text('label', 'Demo Actions')}
         disabled={boolean('disabled?', false)}
         variant={select('variant', ['filled', 'unfilled'], 'filled')}
       >
-        <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
-        <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
-        <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>
+        <MenuButton.Item onClick={action('Action One')}>Action One</MenuButton.Item>
+        <MenuButton.Item onClick={action('Action Two')}>Action Two</MenuButton.Item>
+        <MenuButton.Item onClick={action('Action Three')}>Action Three</MenuButton.Item>
       </MenuButton>
+    </div>
     )
   )
   .add(
@@ -50,9 +52,9 @@ storiesOf('MenuButton', module)
         disabled={boolean('disabled?', false)}
         variant={select('variant', ['filled', 'unfilled'], 'filled')}
       >
-        <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
-        <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
-        <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>
+        <MenuButton.Item onClick={action('Action One')}>Action One</MenuButton.Item>
+        <MenuButton.Item onClick={action('Action Two')}>Action Two</MenuButton.Item>
+        <MenuButton.Item onClick={action('Action Three')}>Action Three</MenuButton.Item>
       </MenuButton>
     ),
     { cactus: { overrides: { height: '220vh', width: '220vw' } } }

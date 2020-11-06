@@ -1,12 +1,3 @@
-import {
-  Menu as ReachMenu,
-  MenuButton as ReachMenuButton,
-  MenuItem as ReachMenuItem,
-  MenuItems as ReachMenuItems,
-  MenuItemsProps as ReachMenuItemsProps,
-  MenuLink as ReachMenuLink,
-  MenuPopover as ReachMenuPopover,
-} from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -18,6 +9,8 @@ import { omitMargins } from '../helpers/omit'
 import { getTopPosition } from '../helpers/positionPopover'
 import { getScrollX } from '../helpers/scrollOffset'
 import { border, boxShadow, textStyle } from '../helpers/theme'
+import usePopup, { TogglePopup } from '../helpers/usePopup'
+import { keyPressAsClick } from '../helpers/a11y'
 
 const shapeMap = {
   square: 'border-radius: 1px;',
@@ -48,22 +41,18 @@ const getDropDownBorder = ({ theme }: ThemeProps) => {
   }
 }
 
-const MenuButtonStyles = createGlobalStyle`
-  :root {
-    --reach-menu-button: 1;
-  }
-`
-
 const menuListVariants: VariantMap = {
   filled: css`
     border: 0;
-    &[data-selected] {
+    &:hover,
+    &:focus {
       ${(p): ColorStyle => p.theme.colorStyles.callToAction};
     }
   `,
   unfilled: css`
     border: ${(p) => border(p.theme, 'white')};
-    &[data-selected] {
+    &:hover,
+    &:focus {
       border-color: ${(p): string => p.theme.colors.callToAction};
     }
 
@@ -77,27 +66,20 @@ interface MenuListProps extends ReachMenuItemsProps {
   variant: MenuButtonVariant
 }
 
-const MenuList = styled(ReachMenuItems)<MenuListProps>`
+const MenuList = styled.ul<MenuListProps>`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
   ${getDropDownBorder};
   ${(p) => boxShadow(p.theme, 1)};
   background-color: ${(p) => p.theme.colors.white};
+  position: absolute;
 
-  [data-reach-menu-item] {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    cursor: pointer;
-    text-decoration: none;
-    overflow-wrap: break-word;
-    ${(p) => textStyle(p.theme, 'small')};
-    ${(p) => p.theme.colorStyles.standard};
-    outline: none;
-    padding: 4px 16px;
-    text-align: center;
+  &[aria-hidden='true'] {
+    display: none;
+  }
 
+  [role='menuitem'] {
     ${(p) => menuListVariants[p.variant]}
   }
 `
@@ -115,45 +97,87 @@ interface MenuButtonProps extends MarginProps {
   disabled?: boolean
 }
 
+const enterPopup = (e: React.KeyboardEvent, toggle: TogglePopup) => {
+  const isUp = e.key === 'ArrowUp'
+  const isDown = e.key === 'ArrowDown'
+  if (isUp || isDown) {
+    const shift = isUp ? -1 : 1
+    toggle(true, shift, { shift: true })
+  }
+}
+
+const focusControl = (r: HTMLElement) => {
+  return Array.from(r.querySelectorAll('[role="menuitem"]'))
+}
+
+const positionPopup = (popup, button) => {
+  const buttonRect = button.getBoundingClientRect()
+  const buttonTop = button.offsetTop
+  const buttonLeft = button.offsetLeft
+  if (button.offsetParent === popup.offsetParent) {
+    popup.style.left = `${buttonLeft}px`
+    popup.style.top = `${buttonTop + buttonRect.height}px`
+    popup.style.minWidth = `${buttonRect.width}px`
+  }
+}
+
 function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
   const { label, children, variant = 'filled', ...rest } = omitMargins(props) as Omit<
     MenuButtonProps,
     keyof MarginProps
   >
+  const { toggle, setFocus, wrapperProps, buttonProps, popupProps } = usePopup('menu', {
+    id: props.id,
+    buttonId: props.id,
+    onButtonKeyDown: enterPopup,
+    focusControl,
+    positionPopup,
+  })
+  delete wrapperProps.id
+  const buttonId = buttonProps.id
+  popupProps.onClick = React.useCallback<React.MouseEventHandler>((e) => {
+    const button = document.getElementById(buttonId)
+    toggle(false, button)
+  }, [buttonId, toggle])
+  popupProps.onKeyDown = React.useCallback<React.KeyboardEventHandler>((e) => {
+    if (e.key === 'ArrowUp') {
+      e.stopPropagation()
+      setFocus(-1, { shift: true })
+    } else if (e.key === 'ArrowDown') {
+      e.stopPropagation()
+      setFocus(1, { shift: true })
+    }
+  }, [setFocus])
   return (
-    <ReachMenu>
-      <MenuButtonStyles />
-      <ReachMenuButton {...rest}>
+    <div {...wrapperProps}>
+      <button type="button" {...rest} {...buttonProps}>
         {label}
         <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
-      </ReachMenuButton>
-      <ReachMenuPopover
-        position={(
-          targetRect,
-          popoverRect
-        ): { minWidth?: number; maxWidth?: number; left?: number; top?: string } => {
-          if (!targetRect || !popoverRect) {
-            return {}
-          }
-
-          const scrollX = getScrollX()
-
-          return {
-            minWidth: targetRect.width,
-            maxWidth: Math.max(targetRect.width, Math.min(targetRect.width * 2, 400)),
-            left: targetRect.left + scrollX,
-            ...getTopPosition(targetRect, popoverRect),
-          }
-        }}
-      >
-        <MenuList variant={variant}>{children}</MenuList>
-      </ReachMenuPopover>
-    </ReachMenu>
+      </button>
+      <MenuList {...popupProps} variant={variant}>{children}</MenuList>
+    </div>
   )
 }
 
-MenuButtonBase.Item = ReachMenuItem
-MenuButtonBase.Link = ReachMenuLink
+MenuButtonBase.Item = styled.li`
+  list-style: none;
+  box-sizing: border-box;
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  ${(p) => textStyle(p.theme, 'small')};
+  ${(p) => p.theme.colorStyles.standard};
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+`
+MenuButtonBase.Item.defaultProps = {
+  role: 'menuitem',
+  tabIndex: -1,
+  onKeyPress: keyPressAsClick,
+}
+MenuButtonBase.Link = styled.a``
 
 type MenuButtonType = StyledComponent<
   typeof MenuButtonBase,
