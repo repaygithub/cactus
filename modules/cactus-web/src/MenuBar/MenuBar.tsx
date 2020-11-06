@@ -363,6 +363,7 @@ const Nav = styled.nav`
   }
 `
 
+// Don't need `addLayoutStyle` because there are no dynamic values in the nested style.
 const SideNav = styled.nav`
   .cactus-layout-fixedBottom & {
     position: absolute;

@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: BrandBar snapshot - mobile 1`] = `
-.c10 {
+.c9 {
   vertical-align: middle;
 }
 
-.c13 {
+.c12 {
   margin-right: 8px;
   vertical-align: middle;
 }
@@ -67,7 +67,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: none;
 }
 
-.c9 {
+.c8 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   position: relative;
@@ -78,29 +78,29 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   display: flex;
 }
 
-.c9:empty {
+.c8:empty {
   display: none;
 }
 
-.c9.cactus-layout-floatLeft,
-.c9.cactus-layout-fixedLeft {
+.c8.cactus-layout-floatLeft,
+.c8.cactus-layout-fixedLeft {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
   box-shadow: inset -1px 0px 0px 0px hsl(200,29%,90%);
 }
 
-.c9.cactus-layout-floatLeft .c5,
-.c9.cactus-layout-fixedLeft .c5 {
+.c8.cactus-layout-floatLeft .c5,
+.c8.cactus-layout-fixedLeft .c5 {
   box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
 }
 
-.c9.cactus-layout-floatLeft .c5:hover,
-.c9.cactus-layout-fixedLeft .c5:hover {
+.c8.cactus-layout-floatLeft .c5:hover,
+.c8.cactus-layout-fixedLeft .c5:hover {
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
 }
 
-.c9.cactus-layout-fixedBottom {
+.c8.cactus-layout-fixedBottom {
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -111,7 +111,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: inset 0px 1px 0px 0px hsl(200,29%,90%);
 }
 
-.c9.cactus-layout-fixedBottom .c5[aria-expanded='true']::after {
+.c8.cactus-layout-fixedBottom .c5[aria-expanded='true']::after {
   content: '';
   z-index: 99;
   background-color: rgba(0,0,0,0.5);
@@ -123,16 +123,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   cursor: default;
 }
 
-.c4 {
-  outline: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  display: block;
-  background-color: transparent;
-}
-
-.c8 {
+.c7 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   box-sizing: border-box;
@@ -145,33 +136,17 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   padding: 8px;
 }
 
-.c8[aria-hidden='true'] {
+.c7[aria-hidden='true'] {
   display: none;
 }
 
-.cactus-layout-fixedBottom .c7 {
-  position: fixed;
-  left: 0;
-  width: 100vw;
-  top: unset;
-  bottom: 0px;
-  max-height: calc(100vh - 0px);
-}
-
-.cactus-layout-fixedLeft .c7 {
-  position: fixed;
-  left: 0px;
-  top: 0;
-  bottom: 0px;
-  box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
-}
-
-.cactus-layout-floatLeft .c7 {
-  position: absolute;
-  left: 0px;
-  top: 0;
-  bottom: 0;
-  box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
+.c4 {
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  background-color: transparent;
 }
 
 .c2 {
@@ -234,11 +209,11 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   max-height: 100%;
 }
 
-.c14 {
+.c13 {
   outline: none;
 }
 
-.c12 {
+.c11 {
   text-align: right;
   box-sizing: border-box;
   display: block;
@@ -251,21 +226,21 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: inset 0px -1px 0px 0px hsl(200,96%,35%);
 }
 
-.c12 svg {
+.c11 svg {
   font-size: 12px;
 }
 
-.c11 {
+.c10 {
   font-size: 15px;
   line-height: 1.6;
   padding: 0;
 }
 
-.c11[hidden] {
+.c10[hidden] {
   display: none;
 }
 
-.c11 [role='menuitem'] {
+.c10 [role='menuitem'] {
   display: block;
   box-sizing: border-box;
   padding: 18px 16px;
@@ -278,20 +253,20 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
 }
 
-.c11 [role='menuitem'][data-selected] {
+.c10 [role='menuitem'][data-selected] {
   color: hsl(200,96%,35%);
   box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
 }
 
 @media screen and (min-width:1024px) {
-  .c12 {
+  .c11 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c11 {
+  .c10 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -327,7 +302,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
         <div
           aria-hidden="true"
           aria-labelledby="typed-button"
-          class="c7 c8"
+          class="c7"
           id="typed-popup"
           role="dialog"
           tabindex="-1"
@@ -339,7 +314,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
         </div>
       </div>
       <div
-        class="c9 cactus-layout-fixedBottom"
+        class="c8 cactus-layout-fixedBottom"
       >
         <div
           class="c4"
@@ -354,7 +329,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
             type="button"
           >
             <svg
-              class="c10"
+              class="c9"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -371,17 +346,17 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
             </span>
           </button>
           <div
-            class="c11 c7 c8"
+            class="c10 c7"
             data-reach-menu=""
             data-reach-menu-popover=""
             hidden=""
           >
             <div
               aria-hidden="true"
-              class="c12"
+              class="c11"
             >
               <svg
-                class="c13"
+                class="c12"
                 fill="currentcolor"
                 height="1em"
                 mr="8px"
@@ -396,7 +371,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
             </div>
             <div
               aria-labelledby="menu-button--menu--7"
-              class="c14"
+              class="c13"
               data-reach-menu-items=""
               id="menu--7"
               role="menu"
