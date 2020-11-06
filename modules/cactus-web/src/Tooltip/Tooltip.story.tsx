@@ -1,23 +1,20 @@
 import { boolean, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import Tooltip from './Tooltip'
 
-const tooltipStories = storiesOf('Tooltip', module)
+export default {
+  title: 'Tooltip',
+  component: Tooltip,
+} as Meta
 
-tooltipStories
-  .add(
-    'Basic Usage',
-    (): React.ReactElement => (
-      <Tooltip
-        label={text('label', 'Some tooltip text here')}
-        disabled={boolean('disabled', false)}
-      />
-    )
-  )
-  .add(
-    'Collision Detection',
-    (): React.ReactElement => <Tooltip label={text('label', 'Some tooltip text here')} />,
-    { cactus: { overrides: { height: '200vh', width: '200vw' } } }
-  )
+export const BasicUsage = (): React.ReactElement => (
+  <Tooltip label={text('label', 'Some tooltip text here')} disabled={boolean('disabled', false)} />
+)
+
+export const CollisionDetection = (): React.ReactElement => (
+  <Tooltip label={text('label', 'Some tooltip text here')} />
+)
+
+CollisionDetection.parameters = { cactus: { overrides: { height: '200vh', width: '200vw' } } }

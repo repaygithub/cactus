@@ -1,5 +1,5 @@
 import cactusTheme from '@repay/cactus-theme'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -14,11 +14,10 @@ const BreakpointBox = styled(Box)`
   width: 50px;
   height: 50px;
   border-radius: 15%
-
-  ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.small} {
+    ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.small} {
     max-width: 708px;
     width: 75px;
-    height 75px;
+    height: 75px;
     border-radius: 25%;
   }
   ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
@@ -41,41 +40,45 @@ const BreakpointBox = styled(Box)`
   }
 `
 
-storiesOf('Style Provider', module).add(
-  'Component Adjusments based on Media Queries',
-  (): React.ReactElement => {
-    return (
-      <StyleProvider theme={cactusTheme} global={true}>
-        <Grid justify="center">
-          <Grid.Item tiny={4}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={4}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={4}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={2}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={2}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={2}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={2}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={2}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-          <Grid.Item tiny={2}>
-            <BreakpointBox backgroundColor={backgroundColors} />
-          </Grid.Item>
-        </Grid>
-      </StyleProvider>
-    )
-  }
-)
+export default {
+  title: 'Style Provider',
+  component: StyleProvider,
+} as Meta
+
+export const ComponentAdjusmentsBasedOnMediaQueries = (): React.ReactElement => {
+  return (
+    <StyleProvider theme={cactusTheme} global={true}>
+      <Grid justify="center">
+        <Grid.Item tiny={4}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={4}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={4}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={2}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={2}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={2}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={2}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={2}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+        <Grid.Item tiny={2}>
+          <BreakpointBox backgroundColor={backgroundColors} />
+        </Grid.Item>
+      </Grid>
+    </StyleProvider>
+  )
+}
+
+ComponentAdjusmentsBasedOnMediaQueries.storyName = 'Component Adjusments based on Media Queries'

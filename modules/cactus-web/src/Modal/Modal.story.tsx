@@ -1,12 +1,15 @@
 import { select, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
 import Button from '../Button/Button'
 import Text from '../Text/Text'
 import Modal, { ModalType } from './Modal'
 
-const modalStories = storiesOf('Modal', module)
+export default {
+  title: 'Modal',
+  component: Modal,
+} as Meta
 
 type StatusOptions = { [k in ModalType]: ModalType }
 
@@ -39,4 +42,4 @@ const ModalWithState = (): React.ReactElement => {
     </Button>
   )
 }
-modalStories.add('Basic Usage', (): React.ReactElement => <ModalWithState />)
+export const BasicUsage = (): React.ReactElement => <ModalWithState />
