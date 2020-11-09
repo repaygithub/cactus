@@ -1,6 +1,6 @@
 import * as icons from '@repay/cactus-icons'
 import { boolean, select, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
 import actions from '../helpers/storybookActionsWorkaround'
@@ -10,43 +10,42 @@ type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const buttonVariants: ButtonVariants[] = ['standard', 'action', 'danger', 'warning', 'success']
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
-const buttonStories = storiesOf('Button', module)
 
-buttonStories.add(
-  'Basic Usage',
-  (): ReactElement => (
+export default {
+  title: 'Button',
+  component: Button,
+} as Meta
+
+export const BasicUsage = (): ReactElement => (
+  <Button
+    variant={select('variant', buttonVariants, 'standard')}
+    disabled={boolean('disabled', false)}
+    loading={boolean('loading', false)}
+    inverse={boolean('inverse', false)}
+    loadingText={text('loadingText?', 'loading')}
+    {...eventLoggers}
+  >
+    {text('children', 'A Button')}
+  </Button>
+)
+
+BasicUsage.parameters = { options: { showPanel: true } }
+
+export const WithIcon = (): ReactElement => {
+  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
+  const Icon = icons[iconName] as React.ComponentType<any>
+  return (
     <Button
       variant={select('variant', buttonVariants, 'standard')}
       disabled={boolean('disabled', false)}
       loading={boolean('loading', false)}
       inverse={boolean('inverse', false)}
-      loadingText={text('loadingText?', 'loading')}
       {...eventLoggers}
     >
-      {text('children', 'A Button')}
+      <Icon /> {text('children', 'Button')}
     </Button>
-  ),
-  { options: { showPanel: true } }
-)
-
-buttonStories.add(
-  'With Icon',
-  (): ReactElement => {
-    const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-    const Icon = icons[iconName] as React.ComponentType<any>
-    return (
-      <Button
-        variant={select('variant', buttonVariants, 'standard')}
-        disabled={boolean('disabled', false)}
-        loading={boolean('loading', false)}
-        inverse={boolean('inverse', false)}
-        {...eventLoggers}
-      >
-        <Icon /> {text('children', 'Button')}
-      </Button>
-    )
-  }
-)
+  )
+}
 
 interface TimedLoadingProps {
   children: (state: { loading: boolean; onClick: any }) => React.ReactElement<any>
@@ -64,37 +63,35 @@ const TimedLoading: React.FC<TimedLoadingProps> = ({ children }): ReactElement =
   return children({ loading, onClick })
 }
 
-buttonStories.add(
-  'Loading on click',
-  (): ReactElement => {
-    return (
-      <TimedLoading>
-        {({ loading, onClick }): ReactElement => (
-          <Button
-            variant={select('variant', buttonVariants, 'standard')}
-            disabled={boolean('disabled', false)}
-            inverse={boolean('inverse', false)}
-            loading={loading}
-            onClick={onClick}
-          >
-            {text('children', 'Submit')}
-          </Button>
-        )}
-      </TimedLoading>
-    )
-  }
+export const LoadingOnClick = (): ReactElement => {
+  return (
+    <TimedLoading>
+      {({ loading, onClick }): ReactElement => (
+        <Button
+          variant={select('variant', buttonVariants, 'standard')}
+          disabled={boolean('disabled', false)}
+          inverse={boolean('inverse', false)}
+          loading={loading}
+          onClick={onClick}
+        >
+          {text('children', 'Submit')}
+        </Button>
+      )}
+    </TimedLoading>
+  )
+}
+
+LoadingOnClick.storyName = 'Loading on click'
+
+export const AsLink = (): ReactElement => (
+  <Button
+    variant={select('variant', buttonVariants, 'standard')}
+    disabled={boolean('disabled', false)}
+    as="a"
+    href="https://google.com"
+  >
+    Link Button
+  </Button>
 )
 
-buttonStories.add(
-  'as Link',
-  (): ReactElement => (
-    <Button
-      variant={select('variant', buttonVariants, 'standard')}
-      disabled={boolean('disabled', false)}
-      as="a"
-      href="https://google.com"
-    >
-      Link Button
-    </Button>
-  )
-)
+AsLink.storyName = 'As Link'

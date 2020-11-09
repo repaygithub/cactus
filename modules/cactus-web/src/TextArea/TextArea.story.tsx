@@ -1,5 +1,5 @@
 import { boolean, select, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import actions from '../helpers/storybookActionsWorkaround'
@@ -16,15 +16,17 @@ const statusOptions: StatusOptions = {
   error: 'error',
 }
 
-storiesOf('TextArea', module).add(
-  'Basic Usage',
-  (): React.ReactElement => (
-    <TextArea
-      disabled={boolean('disabled', false)}
-      placeholder={text('placeholder', 'Placeholder')}
-      status={select('status', statusOptions, statusOptions.none)}
-      resize={boolean('resize', false)}
-      {...eventLoggers}
-    />
-  )
+export default {
+  title: 'TextArea',
+  component: TextArea,
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => (
+  <TextArea
+    disabled={boolean('disabled', false)}
+    placeholder={text('placeholder', 'Placeholder')}
+    status={select('status', statusOptions, statusOptions.none)}
+    resize={boolean('resize', false)}
+    {...eventLoggers}
+  />
 )

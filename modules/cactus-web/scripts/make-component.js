@@ -87,8 +87,8 @@ async function fileExists(filePath) {
 
 function componentTemplate(componentName) {
   return `
-import { margin, MarginProps } from 'styled-system'
 import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 interface ${componentName}Props extends MarginProps {}
 
@@ -102,9 +102,9 @@ export default ${componentName}
 
 function testTemplate(componentName) {
   return `
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { render } from '@testing-library/react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import ${componentName} from './${componentName}'
 
@@ -124,12 +124,18 @@ describe('component: ${componentName}', () => {
 
 function storyTemplate(componentName) {
   return `
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { storiesOf } from '@storybook/react'
 import ${componentName} from './${componentName}'
 
-storiesOf('${componentName}', module).add('Basic Usage', () => <${componentName} />)`
+export default {
+  title: '${componentName}',
+  component: ${componentName},
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => <${componentName} />
+`
 }
 
 function mdxTemplate(componentName) {

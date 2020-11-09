@@ -1,10 +1,13 @@
 import { boolean } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import Toggle from './Toggle'
 
-const toggleStories = storiesOf('Toggle', module)
+export default {
+  title: 'Toggle',
+  component: Toggle,
+} as Meta
 
 const ToggleManager = (props: any) => {
   const [checked, setChecked] = React.useState<boolean>(false)
@@ -18,9 +21,6 @@ const ToggleManager = (props: any) => {
   return <Toggle {...props} checked={checked} onChange={onChange} />
 }
 
-toggleStories.add(
-  'Basic Usage',
-  (): React.ReactElement => {
-    return <ToggleManager disabled={boolean('Disabled', false)} />
-  }
-)
+export const BasicUsage = (): React.ReactElement => {
+  return <ToggleManager disabled={boolean('Disabled', false)} />
+}
