@@ -33,6 +33,7 @@ export interface FieldProps {
   warning?: React.ReactNode
   success?: React.ReactNode
   autoTooltip?: boolean
+  isOpen?: boolean
 }
 
 interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
@@ -139,7 +140,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
           id={tooltipId}
           maxWidth={maxWidth}
           disabled={disabled}
-          forceVisible={forceTooltipVisible}
+          forceVisible={!props.isOpen && forceTooltipVisible}
         />
       )}
       {typeof props.children === 'function'
