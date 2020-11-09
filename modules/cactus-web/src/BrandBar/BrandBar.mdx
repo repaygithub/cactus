@@ -9,17 +9,34 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # BrandBar
 
-The `BrandBar` Components allows yout to render a Logo of your choice and a user menu with a dropdown for actions such as settings and Loggin in/out.
+The `BrandBar` components renders a logo and optional user or site controls. It is typically used as the first child of the Layout component. There are three sub-components: UserMenu, UserMenuItem, and Item.
+
+UserMenu and UserMenuItem are for user-related actions, such as log in/out or navigating to a user preferences page; you can use the `isProfilePage` prop to change the button's styling when on such a page. The `label` should be something identifying for the user, such as a name or username. In a responsive Layout, the user menu will move to the ActionBar on mobile-size screens.
+
+The Item subcomponent is similar, but more general. You can use it to add just about anything to the BrandBar, though best practice would be to limit it to user-related or site-wide controls that don't take up a lot of room. If you give a `mobileIcon`, it will be moved to the ActionBar on mobile-size screens (the `id` prop will be required as well, and any other props will be forwarded to the ActionBar.Panel used to implement this behavior). If you do _not_ give an icon, it will instead render the item's contents just below the logo on mobile screens.
 
 ### Try it out
 
 export const code = `<BrandBar
-    isProfilePage
-    userMenuText="Hershell Jewess"
     logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
   >
-    <BrandBar.UserMenuItem onSelect={() => console.log('Settings')}>Settings</BrandBar.UserMenuItem>
-    <BrandBar.UserMenuItem onSelect={() => console.log('Logout')}>Logout</BrandBar.UserMenuItem>
+    <BrandBar.Item>
+      <label style={{ display: 'flex', alignItems: 'center', height: '60px' }}>
+        <input type="checkbox" /> Example
+      </label>
+    </BrandBar.Item>
+    <BrandBar.UserMenu isProfilePage label="Hershell Jewess">
+      <BrandBar.UserMenuItem
+        onSelect={() => console.log('Settings')}
+      >
+        Settings
+      </BrandBar.UserMenuItem>
+      <BrandBar.UserMenuItem
+        onSelect={() => console.log('Logout')}
+      >
+        Logout
+      </BrandBar.UserMenuItem>
+    </BrandBar.UserMenu>
   </BrandBar>`
 
 <LiveProvider code={code} scope={{ BrandBar }}>
@@ -31,3 +48,11 @@ export const code = `<BrandBar
 ## Properties
 
 <PropsTable of={BrandBar} />
+
+### BrandBar.UserMenu
+
+<PropsTable of={BrandBar} staticProp="BrandBarUserMenu" />
+
+### BrandBar.Item
+
+<PropsTable of={BrandBar} staticProp="BrandBarItem" />

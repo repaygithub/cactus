@@ -36,6 +36,7 @@ export {
   ScreenSizeContext,
   ScreenSizeProvider,
   SIZES,
+  useScreenSize,
 } from './ScreenSizeProvider/ScreenSizeProvider'
 export { Select } from './Select/Select'
 export { SelectField } from './SelectField/SelectField'
