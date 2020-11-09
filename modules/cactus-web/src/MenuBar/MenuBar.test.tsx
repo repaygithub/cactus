@@ -50,11 +50,11 @@ const Menu = () => {
   const customRef = React.useRef<HTMLDivElement>(null)
   return (
     <MenuBar id="mb" ref={navRef} aria-label="Menu of Main-ness">
-      <MenuBar.List ref={listRef} title={<em>Emphasized</em>} aria-current>
+      <MenuBar.List id="em" ref={listRef} title={<em>Emphasized</em>} aria-current>
         <MenuBar.Item key="item" ref={linkRef} as="a" href="#" aria-current>
           Link to the Past
         </MenuBar.Item>
-        <MenuBar.List key="list" title="Nested">
+        <MenuBar.List id="nested" key="list" title="Nested">
           <MenuBar.Item key="linkish" as={Linkish} to="#">
             Birdy
           </MenuBar.Item>

@@ -103,7 +103,7 @@ function usePopup(
       // IE sets activeElement before the blur/focus events, but doesn't support
       // relatedTarget. Note that in React 17 this might change if they switch
       // from focus/blur to focusin/focusout, which DO support relatedTarget.
-      const focused = isIE ? document.activeElement : event.relatedTarget
+      const focused = event.relatedTarget || (isIE ? document.activeElement : null)
       if (!focused || !wrapper.contains(focused as Node)) {
         toggle(false)
       }
@@ -132,9 +132,11 @@ function usePopup(
 
   const toggleOnClick = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
-      toggle(undefined, focusOnClickExpand ? 0 : undefined)
       if (onButtonClick) {
         onButtonClick(event, toggle)
+      }
+      if (!event.isDefaultPrevented()) {
+        toggle(undefined, focusOnClickExpand ? 0 : undefined)
       }
     },
     [toggle, onButtonClick, focusOnClickExpand]
@@ -142,12 +144,12 @@ function usePopup(
 
   const toggleOnKey = React.useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
-      if (isActionKey(event)) {
-        event.preventDefault()
-        toggle(undefined, 0)
-      }
       if (onButtonKeyDown) {
         onButtonKeyDown(event, toggle)
+      }
+      if (!event.isDefaultPrevented() && isActionKey(event)) {
+        event.preventDefault()
+        toggle(undefined, 0)
       }
     },
     [toggle, onButtonKeyDown]
