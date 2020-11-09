@@ -1,4 +1,4 @@
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement, useCallback, useReducer } from 'react'
 
 import Box from '../Box/Box'
@@ -224,6 +224,9 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactE
   )
 }
 
-storiesOf('FormField', module)
-  .add('Basic Usage', (): ReactElement => <ExampleForm />)
-  .add('With Statuses', (): ReactElement => <ExampleForm withValidations />)
+export default {
+  title: 'FormField',
+} as Meta
+
+export const BasicUsage = (): ReactElement => <ExampleForm />
+export const WithStatuses = (): ReactElement => <ExampleForm withValidations />

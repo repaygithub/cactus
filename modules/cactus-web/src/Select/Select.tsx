@@ -58,6 +58,7 @@ export interface SelectProps
   canCreateOption?: boolean
   matchNotFoundText?: string
   comboBoxSearchLabel?: string
+  onDropdownToggle?: (prop: boolean) => void
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -1004,6 +1005,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     currentTriggerWidth: 0,
     extraOptions: [],
   }
+
   private pendingChars = ''
   private searchIndex = -1
   private keyClear: number | undefined
@@ -1124,6 +1126,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       return
     }
     this.setState({ isOpen: false })
+    this.props.onDropdownToggle && this.props.onDropdownToggle(false)
   }
 
   private handleListClick = (event: React.MouseEvent<HTMLUListElement>): void => {
@@ -1295,6 +1298,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   private openList(): void {
     this.setState({ isOpen: true }, () => {
+      this.props.onDropdownToggle && this.props.onDropdownToggle(true)
       if (!isResponsiveTouchDevice) {
         window.requestAnimationFrame((): void => {
           if (this.listRef.current !== null && !this.props.comboBox) {
@@ -1309,6 +1313,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   private closeList = (): void => {
     this.setState({ isOpen: false })
+    this.props.onDropdownToggle && this.props.onDropdownToggle(false)
     window.requestAnimationFrame((): void => {
       if (this.triggerRef.current !== null) {
         if (this.triggerRef.current.children.length > 0) {
@@ -1459,6 +1464,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       matchNotFoundText = 'No match found',
       extraLabel,
       value: propsValue,
+      onDropdownToggle,
       ...rest
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
     const { isOpen, searchValue, activeDescendant } = this.state

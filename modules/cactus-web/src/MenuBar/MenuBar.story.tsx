@@ -1,5 +1,5 @@
 import { number } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import MenuBar from './MenuBar'
@@ -34,7 +34,12 @@ function action(msg: string) {
   return () => console.log('ITEM CLICKED:', msg)
 }
 
-storiesOf('MenuBar', module).add('Basic Usage', () => {
+export default {
+  title: 'MenuBar',
+  component: MenuBar,
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => {
   const breadth = number('Breadth', 8)
   const totalDepth = number('Depth', 2)
 
@@ -64,4 +69,4 @@ storiesOf('MenuBar', module).add('Basic Usage', () => {
   }
 
   return <>{makeList(totalDepth, {}, 0, MenuBar)}</>
-})
+}

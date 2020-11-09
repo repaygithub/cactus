@@ -1,6 +1,6 @@
 import { ActionsGear, ActionsRedo, ActionsRefresh, ActionsUndo } from '@repay/cactus-icons'
 import { boolean } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import Flex from '../Flex/Flex'
@@ -54,37 +54,42 @@ const SimpleRouter = () => {
   )
 }
 
-storiesOf('ActionBar', module)
-  .add('Basic Usage', () => {
-    const hasItems = boolean('Has Items', true)
-    return (
-      <ActionBar>
-        {hasItems && (
-          <>
-            <ActionBar.Item icon={<ActionsRedo />} onClick={action('redo')} />
-            <ActionBar.Item icon={<Undo />} onClick={action('undo')} />
-          </>
-        )}
-      </ActionBar>
-    )
-  })
-  .add('With Provider', () => {
-    const hasActionBar = boolean('Has ActionBar', true)
-    return (
-      <Layout>
-        {hasActionBar && (
-          <ActionBar>
-            <ActionBar.Item
-              id="gear"
-              icon={<ActionsGear />}
-              onClick={action('gear')}
-              aria-label="Gear up"
-            />
-          </ActionBar>
-        )}
-        <Layout.Content>
-          <SimpleRouter />
-        </Layout.Content>
-      </Layout>
-    )
-  })
+export default {
+  title: 'ActionBar',
+  component: ActionBar,
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => {
+  const hasItems = boolean('Has Items', true)
+  return (
+    <ActionBar>
+      {hasItems && (
+        <>
+          <ActionBar.Item icon={<ActionsRedo />} onClick={action('redo')} />
+          <ActionBar.Item icon={<Undo />} onClick={action('undo')} />
+        </>
+      )}
+    </ActionBar>
+  )
+}
+
+export const WithProvider = (): React.ReactElement => {
+  const hasActionBar = boolean('Has ActionBar', true)
+  return (
+    <Layout>
+      {hasActionBar && (
+        <ActionBar>
+          <ActionBar.Item
+            id="gear"
+            icon={<ActionsGear />}
+            onClick={action('gear')}
+            aria-label="Gear up"
+          />
+        </ActionBar>
+      )}
+      <Layout.Content>
+        <SimpleRouter />
+      </Layout.Content>
+    </Layout>
+  )
+}

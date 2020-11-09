@@ -80,7 +80,6 @@ input:checked ~ .c7 {
 input:disabled ~ .c2 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 input:focus ~ .c2 {
@@ -101,12 +100,12 @@ input:focus ~ .c2 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c2 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c2::after {
   left: 26px;
+}
+
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
 <div
@@ -232,7 +231,6 @@ input:checked ~ .c7 {
 input:disabled ~ .c2 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 input:focus ~ .c2 {
@@ -253,12 +251,12 @@ input:focus ~ .c2 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c2 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c2::after {
   left: 26px;
+}
+
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
 <div
@@ -384,7 +382,6 @@ input:checked ~ .c7 {
 input:disabled ~ .c2 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 input:focus ~ .c2 {
@@ -405,12 +402,12 @@ input:focus ~ .c2 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c2 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c2::after {
   left: 26px;
+}
+
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
 <div
@@ -536,7 +533,6 @@ input:checked ~ .c7 {
 input:disabled ~ .c2 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 input:focus ~ .c2 {
@@ -557,12 +553,12 @@ input:focus ~ .c2 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c2 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c2::after {
   left: 26px;
+}
+
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
 <div
@@ -687,7 +683,6 @@ input:checked ~ .c7 {
 input:disabled ~ .c2 {
   background-color: hsl(0,0%,90%);
   cursor: cursor;
-  opacity: 0.5;
 }
 
 .c3::after {
@@ -704,12 +699,12 @@ input:disabled ~ .c2 {
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-input:checked ~ .c2 {
-  background-color: hsl(145,89%,28%);
-}
-
 input:checked ~ .c2::after {
   left: 26px;
+}
+
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
 <div

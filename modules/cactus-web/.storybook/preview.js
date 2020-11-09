@@ -1,6 +1,7 @@
 import { withKnobs } from '@storybook/addon-knobs'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { addDecorator, addParameters, configure } from '@storybook/react'
+import addons from '@storybook/addons'
+import { addDecorator, addParameters } from '@storybook/react'
 
 import CactusAddon from '../cactus-addon'
 import storybookTheme from './theme'
@@ -36,11 +37,12 @@ const customViewports = {
   },
 }
 
+addons.setConfig({
+  theme: storybookTheme,
+})
+
 addParameters({
   layout: 'fullscreen',
-  options: {
-    theme: storybookTheme,
-  },
   viewport: {
     viewports: {
       ...INITIAL_VIEWPORTS,
@@ -50,13 +52,3 @@ addParameters({
 })
 addDecorator(withKnobs)
 addDecorator(CactusAddon)
-
-function requireAll(req) {
-  req.keys().forEach((filename) => req(filename))
-}
-
-const componentStories = require.context('../src', true, /\.(story|stories)\.(j|t)sx?$/)
-
-configure(() => {
-  requireAll(componentStories)
-}, module)

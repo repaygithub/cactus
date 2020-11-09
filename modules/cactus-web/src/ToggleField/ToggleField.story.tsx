@@ -1,5 +1,5 @@
 import { boolean, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import ToggleField from './ToggleField'
@@ -9,6 +9,11 @@ const eventLoggers = {
   onFocus: (e: any) => console.log('onFocus:', e.target.name),
   onBlur: (e: any) => console.log('onBlur:', e.target.name),
 }
+
+export default {
+  title: 'ToggleField',
+  component: ToggleField,
+} as Meta
 
 const ToggleHandler = (props: any) => {
   const [checked, setChecked] = React.useState<boolean>(false)
@@ -22,11 +27,11 @@ const ToggleHandler = (props: any) => {
   return <ToggleField {...props} checked={checked} onChange={onChange} />
 }
 
-storiesOf('ToggleField', module).add('Basic Usage', () => (
+export const BasicUsage = (): React.ReactElement => (
   <ToggleHandler
     name={text('name', 'boolean_field')}
     label={text('label', 'Boolean Field')}
     disabled={boolean('disabled', false)}
     {...eventLoggers}
   />
-))
+)
