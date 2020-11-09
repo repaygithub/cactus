@@ -5,5 +5,6 @@ module.exports = {
     '../cactus-addon/register.jsx',
     '@storybook/addon-actions/register',
     '@storybook/addon-viewport/register',
+    '@storybook/addon-docs'
   ],
 }
