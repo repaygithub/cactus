@@ -1,6 +1,6 @@
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { boolean, number, select, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
 
 import Box from '../Box/Box'
@@ -184,174 +184,164 @@ const ReorderAccordions = (): ReactElement => {
   )
 }
 
-storiesOf('Accordion', module)
-  .add(
-    'Basic Usage',
-    (): ReactElement => (
-      <Box width="312px">
-        <Accordion
-          variant={select('variant', accordionVariants, 'simple')}
-          useBoxShadows={boolean('useBoxShadows', true)}
-        >
-          <Accordion.Header>
-            <Text as="h3">{text('header', 'Accordion')}</Text>
-          </Accordion.Header>
-          <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
-        </Accordion>
-      </Box>
-    )
-  )
-  .add(
-    'Long',
-    (): ReactElement => (
-      <Box width="960px">
-        <Accordion>
-          <Accordion.Header>
-            <Text as="h3">{text('header', 'Accordion')}</Text>
-          </Accordion.Header>
-          <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
-        </Accordion>
-      </Box>
-    )
-  )
-  .add(
-    'Provider',
-    (): ReactElement => (
-      <Box width="312px">
-        <Accordion.Provider maxOpen={number('maxOpen', 1)}>
-          <Accordion>
-            <Accordion.Header>
-              <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
-            </Accordion.Header>
-            <Accordion.Body>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-              tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-              lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
-              nec euismod augue aliquam vel.
-            </Accordion.Body>
-          </Accordion>
-          <Accordion>
-            <Accordion.Header>
-              <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
-            </Accordion.Header>
-            <Accordion.Body>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-              tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-              lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
-              nec euismod augue aliquam vel.
-            </Accordion.Body>
-          </Accordion>
-          <Accordion>
-            <Accordion.Header>
-              <Text as="h3">{text('header 3', 'Accordion 3')}</Text>
-            </Accordion.Header>
-            <Accordion.Body>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-              tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-              lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
-              nec euismod augue aliquam vel.
-            </Accordion.Body>
-          </Accordion>
-          <Accordion>
-            <Accordion.Header>
-              <Text as="h3">{text('header 4', 'Accordion 4')}</Text>
-            </Accordion.Header>
-            <Accordion.Body>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-              tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-              lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
-              nec euismod augue aliquam vel.
-            </Accordion.Body>
-          </Accordion>
-        </Accordion.Provider>
-      </Box>
-    ),
-    { cactus: { overrides: { height: '150vh' } } }
-  )
-  .add(
-    'With Dynamic Content',
-    (): ReactElement => (
-      <ContentManager>
-        {({ changeContent, ...state }): ReactElement => {
-          return (
-            <Box width="400px" maxWidth="90vw" height="100vh" py={5} style={{ overflowY: 'auto' }}>
-              <Accordion.Provider maxOpen={1}>
-                {((): JSX.Element[] => {
-                  const blocks = []
-                  let index = 0
-                  while (typeof state[index] === 'number') {
-                    const group = index
-                    blocks.push(
-                      <Accordion key={group}>
-                        <Accordion.Header>
-                          <Text as="h3">{group} Accordion</Text>
-                        </Accordion.Header>
-                        <Accordion.Body>
-                          {(!state[group] || state[group] < 10) && (
-                            <Text>
-                              <TextButton
-                                onClick={(): void => changeContent(group, true)}
-                                variant="action"
-                              >
-                                Add One Block
-                              </TextButton>
-                            </Text>
-                          )}
-                          <ContentBlocks number={state[group]} />
-                          {state[group] > 0 && (
-                            <Text>
-                              <TextButton
-                                onClick={(): void => changeContent(group)}
-                                variant="danger"
-                              >
-                                Remove One Block
-                              </TextButton>
-                            </Text>
-                          )}
-                        </Accordion.Body>
-                      </Accordion>
-                    )
-                    index++
-                  }
+export default {
+  title: 'Accordion',
+  component: Accordion,
+} as Meta
 
-                  return blocks
-                })()}
-              </Accordion.Provider>
-            </Box>
-          )
-        }}
-      </ContentManager>
-    )
-  )
-  .add(
-    'With Open Initialization',
-    (): ReactElement => (
-      <Box width="312px">
-        <Accordion.Provider maxOpen={number('maxOpen', 2)}>
-          <Accordion defaultOpen>
-            <Accordion.Header>
-              <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
-            </Accordion.Header>
-            <Accordion.Body>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-              tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-              lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
-              nec euismod augue aliquam vel.
-            </Accordion.Body>
-          </Accordion>
-          <Accordion defaultOpen>
-            <Accordion.Header>
-              <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
-            </Accordion.Header>
-            <Accordion.Body>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-              tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-              lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
-              nec euismod augue aliquam vel.
-            </Accordion.Body>
-          </Accordion>
-        </Accordion.Provider>
-      </Box>
-    )
-  )
-  .add('With Outline', (): ReactElement => <ReorderAccordions />)
+export const BasicUsage = (): ReactElement => (
+  <Box width="312px">
+    <Accordion
+      variant={select('variant', accordionVariants, 'simple')}
+      useBoxShadows={boolean('useBoxShadows', true)}
+    >
+      <Accordion.Header>
+        <Text as="h3">{text('header', 'Accordion')}</Text>
+      </Accordion.Header>
+      <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
+    </Accordion>
+  </Box>
+)
+
+export const Long = (): ReactElement => (
+  <Box width="960px">
+    <Accordion>
+      <Accordion.Header>
+        <Text as="h3">{text('header', 'Accordion')}</Text>
+      </Accordion.Header>
+      <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
+    </Accordion>
+  </Box>
+)
+export const Provider = (): ReactElement => (
+  <Box width="312px">
+    <Accordion.Provider maxOpen={number('maxOpen', 1)}>
+      <Accordion>
+        <Accordion.Header>
+          <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
+        </Accordion.Header>
+        <Accordion.Body>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+          euismod augue aliquam vel.
+        </Accordion.Body>
+      </Accordion>
+      <Accordion>
+        <Accordion.Header>
+          <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
+        </Accordion.Header>
+        <Accordion.Body>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+          euismod augue aliquam vel.
+        </Accordion.Body>
+      </Accordion>
+      <Accordion>
+        <Accordion.Header>
+          <Text as="h3">{text('header 3', 'Accordion 3')}</Text>
+        </Accordion.Header>
+        <Accordion.Body>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+          euismod augue aliquam vel.
+        </Accordion.Body>
+      </Accordion>
+      <Accordion>
+        <Accordion.Header>
+          <Text as="h3">{text('header 4', 'Accordion 4')}</Text>
+        </Accordion.Header>
+        <Accordion.Body>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+          euismod augue aliquam vel.
+        </Accordion.Body>
+      </Accordion>
+    </Accordion.Provider>
+  </Box>
+)
+
+Provider.parameters = { cactus: { overrides: { height: '150vh' } } }
+
+export const WithDynamicContent = (): ReactElement => (
+  <ContentManager>
+    {({ changeContent, ...state }): ReactElement => {
+      return (
+        <Box width="400px" maxWidth="90vw" height="100vh" py={5} style={{ overflowY: 'auto' }}>
+          <Accordion.Provider maxOpen={1}>
+            {((): JSX.Element[] => {
+              const blocks = []
+              let index = 0
+              while (typeof state[index] === 'number') {
+                const group = index
+                blocks.push(
+                  <Accordion key={group}>
+                    <Accordion.Header>
+                      <Text as="h3">{group} Accordion</Text>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      {(!state[group] || state[group] < 10) && (
+                        <Text>
+                          <TextButton
+                            onClick={(): void => changeContent(group, true)}
+                            variant="action"
+                          >
+                            Add One Block
+                          </TextButton>
+                        </Text>
+                      )}
+                      <ContentBlocks number={state[group]} />
+                      {state[group] > 0 && (
+                        <Text>
+                          <TextButton onClick={(): void => changeContent(group)} variant="danger">
+                            Remove One Block
+                          </TextButton>
+                        </Text>
+                      )}
+                    </Accordion.Body>
+                  </Accordion>
+                )
+                index++
+              }
+
+              return blocks
+            })()}
+          </Accordion.Provider>
+        </Box>
+      )
+    }}
+  </ContentManager>
+)
+export const WithOpenInitialization = (): ReactElement => (
+  <Box width="312px">
+    <Accordion.Provider maxOpen={number('maxOpen', 2)}>
+      <Accordion defaultOpen>
+        <Accordion.Header>
+          <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
+        </Accordion.Header>
+        <Accordion.Body>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+          euismod augue aliquam vel.
+        </Accordion.Body>
+      </Accordion>
+      <Accordion defaultOpen>
+        <Accordion.Header>
+          <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
+        </Accordion.Header>
+        <Accordion.Body>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
+          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
+          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
+          euismod augue aliquam vel.
+        </Accordion.Body>
+      </Accordion>
+    </Accordion.Provider>
+  </Box>
+)
+
+export const WithOutline = (): ReactElement => <ReorderAccordions />

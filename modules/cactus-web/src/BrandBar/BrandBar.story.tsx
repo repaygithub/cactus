@@ -1,6 +1,6 @@
 import { DescriptiveAt } from '@repay/cactus-icons'
 import { boolean, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import ActionBar from '../ActionBar/ActionBar'
@@ -14,53 +14,58 @@ const LOGO =
 
 const action = (msg: string) => () => console.log(msg)
 
-storiesOf('BrandBar', module)
-  .add('Basic Usage', () => (
+export default {
+  title: 'BrandBar',
+  component: BrandBar,
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => (
+  <Layout>
+    <BrandBar logo={LOGO}>
+      <BrandBar.UserMenu
+        isProfilePage={boolean('On profile page?', false)}
+        label={text('Menu Title', 'Hershell Jewess')}
+      >
+        <BrandBar.UserMenuItem onSelect={action('Settings')}>
+          {text('Action one', 'Settings')}
+        </BrandBar.UserMenuItem>
+        <BrandBar.UserMenuItem onSelect={action('Logout')}>
+          {text('Action two', 'Logout')}
+        </BrandBar.UserMenuItem>
+      </BrandBar.UserMenu>
+    </BrandBar>
+  </Layout>
+)
+
+export const CustomItems = (): React.ReactElement => {
+  const [org, setOrg] = React.useState<SelectValueType>('OWE')
+  const onOrgChange = React.useCallback(
+    (e: React.ChangeEvent<{ value: SelectValueType }>) => setOrg(e.target.value),
+    [setOrg]
+  )
+  const icon = boolean('Move to ActionBar', false) ? <DescriptiveAt /> : undefined
+  return (
     <Layout>
       <BrandBar logo={LOGO}>
-        <BrandBar.UserMenu
-          isProfilePage={boolean('On profile page?', false)}
-          label={text('Menu Title', 'Hershell Jewess')}
-        >
-          <BrandBar.UserMenuItem onSelect={action('Settings')}>
-            {text('Action one', 'Settings')}
-          </BrandBar.UserMenuItem>
-          <BrandBar.UserMenuItem onSelect={action('Logout')}>
-            {text('Action two', 'Logout')}
-          </BrandBar.UserMenuItem>
+        <BrandBar.Item id="org-item" mobileIcon={icon} aria-label="at">
+          <SelectField
+            m={3}
+            label="Organization"
+            id="org-select"
+            name="organization"
+            value={org}
+            onChange={onOrgChange}
+            comboBox
+            canCreateOption={false}
+            options={['OWE', 'REPAY', 'IPA', 'MLP Inc.']}
+          />
+        </BrandBar.Item>
+        <BrandBar.UserMenu label="Userforce One">
+          <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
+          <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
         </BrandBar.UserMenu>
       </BrandBar>
+      <ActionBar />
     </Layout>
-  ))
-  .add('Custom Items', () => {
-    const [org, setOrg] = React.useState<SelectValueType>('OWE')
-    const onOrgChange = React.useCallback(
-      (e: React.ChangeEvent<{ value: SelectValueType }>) => setOrg(e.target.value),
-      [setOrg]
-    )
-    const icon = boolean('Move to ActionBar', false) ? <DescriptiveAt /> : undefined
-    return (
-      <Layout>
-        <BrandBar logo={LOGO}>
-          <BrandBar.Item id="org-item" mobileIcon={icon} aria-label="at">
-            <SelectField
-              m={3}
-              label="Organization"
-              id="org-select"
-              name="organization"
-              value={org}
-              onChange={onOrgChange}
-              comboBox
-              canCreateOption={false}
-              options={['OWE', 'REPAY', 'IPA', 'MLP Inc.']}
-            />
-          </BrandBar.Item>
-          <BrandBar.UserMenu label="Userforce One">
-            <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
-            <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
-          </BrandBar.UserMenu>
-        </BrandBar>
-        <ActionBar />
-      </Layout>
-    )
-  })
+  )
+}

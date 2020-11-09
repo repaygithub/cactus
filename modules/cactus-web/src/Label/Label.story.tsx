@@ -1,12 +1,12 @@
 import { text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import Label from './Label'
 
-const labelStories = storiesOf('Label', module)
+export default {
+  title: 'Label',
+  component: Label,
+} as Meta
 
-labelStories.add(
-  'Basic Usage',
-  (): React.ReactElement => <Label>{text('label text', 'A Label')}</Label>
-)
+export const BasicUsage = (): React.ReactElement => <Label>{text('label text', 'A Label')}</Label>

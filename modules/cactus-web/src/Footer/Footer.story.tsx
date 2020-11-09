@@ -1,5 +1,5 @@
 import { boolean, number, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { ScreenSizeProvider } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -22,7 +22,12 @@ const LINKS = ['repay.com', 'google.com', 'microsoft.com']
 const LOGO =
   'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg'
 
-storiesOf('Footer', module).add('Basic Usage', () => {
+export default {
+  title: 'Footer',
+  component: Footer,
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => {
   const hasLogo = boolean('has logo', true)
   const customContent = text('custom content', 'Some Custom Footer Content')
   const numLinks = number('number of links', 2)
@@ -50,4 +55,4 @@ storiesOf('Footer', module).add('Basic Usage', () => {
       </Footer>
     </ScreenSizeProvider>
   )
-})
+}

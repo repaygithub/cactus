@@ -1,6 +1,6 @@
 import * as icons from '@repay/cactus-icons'
 import { select, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
 import Button from '../Button/Button'
@@ -9,7 +9,6 @@ import Text from '../Text/Text'
 import TextInput from '../TextInput/TextInput'
 import ConfirmModal from './ConfirmModal'
 
-const confirmModalStories = storiesOf('ConfirmModal', module)
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 
@@ -20,6 +19,12 @@ const statusOptions: StatusOptions = {
   warning: 'warning',
   success: 'success',
 }
+
+export default {
+  title: 'ConfirmModal',
+  component: ConfirmModal,
+} as Meta
+
 const ConfirmModalExample = (): React.ReactElement => {
   const [isOpen, setOpen] = useState(false)
   const cancelText = text('Cancel Button Text', 'Cancel')
@@ -90,5 +95,7 @@ const ConfirmModalExample2 = (): React.ReactElement => {
   )
 }
 
-confirmModalStories.add('Basic Usage', (): React.ReactElement => <ConfirmModalExample />)
-confirmModalStories.add('With text input icon', (): React.ReactElement => <ConfirmModalExample2 />)
+export const BasicUsage = (): React.ReactElement => <ConfirmModalExample />
+export const WithTextInputIcon = (): React.ReactElement => <ConfirmModalExample2 />
+
+WithTextInputIcon.storyName = 'With text input icon'
