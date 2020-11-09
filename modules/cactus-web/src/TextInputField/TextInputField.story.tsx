@@ -1,11 +1,15 @@
 import { actions } from '@storybook/addon-actions'
 import { boolean, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
 import TextInputField from './TextInputField'
 
-const textInputFieldStories = storiesOf('TextInputField', module)
+export default {
+  title: 'TextInputField',
+  component: TextInputField,
+} as Meta
+
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 
 const InputValidator = (): React.ReactElement => {
@@ -24,42 +28,38 @@ const InputValidator = (): React.ReactElement => {
   )
 }
 
-textInputFieldStories
-  .add(
-    'Basic Usage',
-    (): React.ReactElement => (
-      <TextInputField
-        label={text('label', 'Input Label')}
-        placeholder={text('placeholder', 'Placeholder')}
-        disabled={boolean('disabled', false)}
-        success={text('success', '')}
-        warning={text('warning', '')}
-        error={text('error', '')}
-        tooltip={text('tooltip', 'Enter some text')}
-        name="input-1"
-        autoTooltip={boolean('autoTooltip', true)}
-        {...eventLoggers}
-      />
-    ),
-    { cactus: { overrides: { height: '110vh', width: '110vw' } } }
-  )
-  .add(
-    'Fixed Width Container',
-    (): React.ReactElement => (
-      <div style={{ width: '235px' }}>
-        <TextInputField
-          label={text('label', 'Input Label')}
-          placeholder={text('placeholder', 'Placeholder')}
-          disabled={boolean('disabled', false)}
-          error={text(
-            'error',
-            'The input you have entered is unequivocally invalid because we absolutely do not support the information you have provided.'
-          )}
-          tooltip={text('tooltip', 'Enter some text')}
-          name="input-2"
-          {...eventLoggers}
-        />
-      </div>
-    )
-  )
-  .add('Accessibility', (): React.ReactElement => <InputValidator />)
+export const BasicUsage = (): React.ReactElement => (
+  <TextInputField
+    label={text('label', 'Input Label')}
+    placeholder={text('placeholder', 'Placeholder')}
+    disabled={boolean('disabled', false)}
+    success={text('success', '')}
+    warning={text('warning', '')}
+    error={text('error', '')}
+    tooltip={text('tooltip', 'Enter some text')}
+    name="input-1"
+    autoTooltip={boolean('autoTooltip', true)}
+    {...eventLoggers}
+  />
+)
+
+BasicUsage.parameters = { cactus: { overrides: { height: '110vh', width: '110vw' } } }
+
+export const FixedWidthContainer = (): React.ReactElement => (
+  <div style={{ width: '235px' }}>
+    <TextInputField
+      label={text('label', 'Input Label')}
+      placeholder={text('placeholder', 'Placeholder')}
+      disabled={boolean('disabled', false)}
+      error={text(
+        'error',
+        'The input you have entered is unequivocally invalid because we absolutely do not support the information you have provided.'
+      )}
+      tooltip={text('tooltip', 'Enter some text')}
+      name="input-2"
+      {...eventLoggers}
+    />
+  </div>
+)
+
+export const Accessibility = (): React.ReactElement => <InputValidator />

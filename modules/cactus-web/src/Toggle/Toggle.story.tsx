@@ -1,10 +1,13 @@
 import { boolean } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import Toggle from './Toggle'
 
-const toggleStories = storiesOf('Toggle', module)
+export default {
+  title: 'Toggle',
+  component: Toggle,
+} as Meta
 
 const initialState = { value: false }
 type State = Readonly<typeof initialState>
@@ -28,9 +31,6 @@ class ToggleManager extends React.Component {
   }
 }
 
-toggleStories.add(
-  'Basic Usage',
-  (): React.ReactElement => {
-    return <ToggleManager />
-  }
-)
+export const BasicUsage = (): React.ReactElement => {
+  return <ToggleManager />
+}

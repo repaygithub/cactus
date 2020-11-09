@@ -1,15 +1,15 @@
 import { StyleProvider } from '@repay/cactus-web'
 import { withKnobs } from '@storybook/addon-knobs'
+import addons from '@storybook/addons'
 import { addDecorator, addParameters, configure } from '@storybook/react'
 import * as React from 'react'
 
 import storybookTheme from './theme'
 
-addParameters({
-  options: {
-    theme: storybookTheme,
-  },
+addons.setConfig({
+  theme: storybookTheme,
 })
+
 addDecorator(withKnobs)
 addDecorator((story) => (
   <div
@@ -26,7 +26,3 @@ addDecorator((story) => (
     <StyleProvider>{story()}</StyleProvider>
   </div>
 ))
-
-configure(() => {
-  require('../stories/Icons.story.tsx')
-}, module)

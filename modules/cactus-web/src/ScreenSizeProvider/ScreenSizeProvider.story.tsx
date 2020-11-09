@@ -1,5 +1,5 @@
 import cactusTheme, { ColorStyle } from '@repay/cactus-theme'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -19,8 +19,8 @@ const BreakpointBox = styled(Box)`
   ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.small} {
     max-width: 708px;
     width: 75px;
-    height 75px;
-    line-height 75px;
+    height: 75px;
+    line-height: 75px;
     border-radius: 25%;
   }
   ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
@@ -51,17 +51,21 @@ const ScreenSize = (): React.ReactElement => {
   return <>{size.size}</>
 }
 
-storiesOf('ScreenSize Provider', module).add(
-  'Display current screen size',
-  (): React.ReactElement => {
-    return (
-      <StyleProvider theme={cactusTheme} global={true}>
-        <ScreenSizeProvider>
-          <BreakpointBox>
-            <ScreenSize />
-          </BreakpointBox>
-        </ScreenSizeProvider>
-      </StyleProvider>
-    )
-  }
-)
+export default {
+  title: 'ScreenSize Provider',
+  component: ScreenSizeProvider,
+} as Meta
+
+export const DisplayCurrentScreenSize = (): React.ReactElement => {
+  return (
+    <StyleProvider theme={cactusTheme} global={true}>
+      <ScreenSizeProvider>
+        <BreakpointBox>
+          <ScreenSize />
+        </BreakpointBox>
+      </ScreenSizeProvider>
+    </StyleProvider>
+  )
+}
+
+DisplayCurrentScreenSize.storyName = 'Display current screen size'

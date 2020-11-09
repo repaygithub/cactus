@@ -1,5 +1,5 @@
 import { number, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { ScreenSizeProvider } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -20,7 +20,12 @@ const LINK_TEXT = [
 
 const LINKS = ['repay.com', 'google.com', 'microsoft.com']
 
-storiesOf('Footer', module).add('Basic Usage', () => {
+export default {
+  title: 'Footer',
+  component: Footer,
+} as Meta
+
+export const BasicUsage = (): React.ReactElement => {
   const customContent = text('custom content', 'Some Custom Footer Content')
   let numLinks = number('number of links', 2)
   numLinks -= 2
@@ -52,4 +57,4 @@ storiesOf('Footer', module).add('Basic Usage', () => {
       </Footer>
     </ScreenSizeProvider>
   )
-})
+}

@@ -198,6 +198,10 @@ exports[`component: MenuBar sidebar 1`] = `
   list-style: none;
   padding: 0;
   margin: 0;
+  display: block;
+}
+
+.c14[aria-hidden='true'] {
   display: none;
 }
 
@@ -348,12 +352,14 @@ exports[`component: MenuBar sidebar 1`] = `
       >
         <li
           role="none"
+          tabindex="-1"
         >
           <button
+            aria-controls="em-popup"
             aria-current="true"
-            aria-expanded="false"
             aria-haspopup="menu"
             class="c9"
+            id="em"
             role="menuitem"
             tabindex="-1"
           >
@@ -383,9 +389,13 @@ exports[`component: MenuBar sidebar 1`] = `
             </div>
           </button>
           <ul
+            aria-hidden="true"
+            aria-labelledby="em"
             aria-orientation="vertical"
             class="c14"
+            id="em-popup"
             role="menu"
+            tabindex="-1"
           >
             <li
               role="none"
@@ -402,11 +412,13 @@ exports[`component: MenuBar sidebar 1`] = `
             </li>
             <li
               role="none"
+              tabindex="-1"
             >
               <button
-                aria-expanded="false"
+                aria-controls="nested-popup"
                 aria-haspopup="menu"
                 class="c9"
+                id="nested"
                 role="menuitem"
                 tabindex="-1"
               >
@@ -434,9 +446,13 @@ exports[`component: MenuBar sidebar 1`] = `
                 </div>
               </button>
               <ul
+                aria-hidden="true"
+                aria-labelledby="nested"
                 aria-orientation="vertical"
                 class="c14"
+                id="nested-popup"
                 role="menu"
+                tabindex="-1"
               >
                 <li
                   role="none"
@@ -654,7 +670,6 @@ exports[`component: MenuBar typechecks 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  visibility: visible;
   position: absolute;
   top: 100%;
   left: 0;
@@ -678,7 +693,7 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 .c9[aria-hidden='true'] {
-  visibility: hidden;
+  display: none;
 }
 
 .c9 [role='menuitem'] {
@@ -837,12 +852,14 @@ exports[`component: MenuBar typechecks 1`] = `
     >
       <li
         role="none"
+        tabindex="-1"
       >
         <button
+          aria-controls="em-popup"
           aria-current="true"
-          aria-expanded="false"
           aria-haspopup="menu"
           class="c4"
+          id="em"
           role="menuitem"
           tabindex="0"
         >
@@ -894,8 +911,10 @@ exports[`component: MenuBar typechecks 1`] = `
             </svg>
           </div>
           <ul
+            aria-labelledby="em"
             aria-orientation="vertical"
             class="c11"
+            id="em-popup"
             role="menu"
           >
             <li
@@ -913,11 +932,13 @@ exports[`component: MenuBar typechecks 1`] = `
             </li>
             <li
               role="none"
+              tabindex="-1"
             >
               <button
-                aria-expanded="false"
+                aria-controls="nested-popup"
                 aria-haspopup="menu"
                 class="c4"
+                id="nested"
                 role="menuitem"
                 tabindex="-1"
               >
@@ -967,8 +988,10 @@ exports[`component: MenuBar typechecks 1`] = `
                   </svg>
                 </div>
                 <ul
+                  aria-labelledby="nested"
                   aria-orientation="vertical"
                   class="c11"
+                  id="nested-popup"
                   role="menu"
                 >
                   <li
