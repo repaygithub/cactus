@@ -127,9 +127,11 @@ function usePopup(
 
   const toggleOnClick = React.useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
-      toggle(undefined, focusOnClickExpand ? 0 : undefined)
       if (onButtonClick) {
         onButtonClick(event, toggle)
+      }
+      if (!event.isDefaultPrevented()) {
+        toggle(undefined, focusOnClickExpand ? 0 : undefined)
       }
     },
     [toggle, onButtonClick, focusOnClickExpand]
@@ -137,12 +139,12 @@ function usePopup(
 
   const toggleOnKey = React.useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
-      if (isActionKey(event)) {
-        event.preventDefault()
-        toggle(undefined, 0)
-      }
       if (onButtonKeyDown) {
         onButtonKeyDown(event, toggle)
+      }
+      if (!event.isDefaultPrevented() && isActionKey(event)) {
+        event.preventDefault()
+        toggle(undefined, 0)
       }
     },
     [toggle, onButtonKeyDown]

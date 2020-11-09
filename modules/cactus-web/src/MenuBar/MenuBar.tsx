@@ -13,29 +13,27 @@ import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
 import { keyPressAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
+import { useFocusControl } from '../helpers/focus'
+import { useMergedRefs } from '../helpers/react'
 import { border, borderSize, boxShadow, radius, textStyle } from '../helpers/theme'
-import usePopup from '../helpers/usePopup'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
   focusMenu,
   ITEM_SELECTOR,
-  menuKeyHandler,
+  menuFocusControl,
+  useMenu,
+  useMenuKeyHandler,
   useScrollButtons,
-  useSubmenuHandlers,
-  useSubmenuToggle,
+  useSubmenu,
 } from './scroll'
 
 interface ListProps {
+  id?: string
   children: React.ReactNode
   title: React.ReactNode
   'aria-current'?: boolean
-}
-
-interface MenuProps {
-  children: React.ReactNode
-  expanded: boolean
 }
 
 interface MenuBarProps {
@@ -111,36 +109,20 @@ const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {
     const variant = useVariant()
     const isTopbar = variant === 'top'
-    const [expanded, toggle] = useSubmenuToggle(isTopbar)
-
-    const [toggleOnKey, toggleOnClick, closeOnBlur, handleSubmenu] = useSubmenuHandlers(toggle)
+    const { wrapperProps, buttonProps, popupProps } = useSubmenu(props.id, isTopbar)
 
     return (
-      <li role="none" onKeyDown={handleSubmenu} onBlur={closeOnBlur}>
-        <MenuButton
-          {...props}
-          ref={ref}
-          aria-haspopup="menu"
-          aria-expanded={expanded}
-          onClick={toggleOnClick}
-          onKeyDown={toggleOnKey}
-          onKeyUp={preventAction}
-        >
+      <li {...wrapperProps}>
+        <MenuButton {...props} {...buttonProps} ref={ref}>
           <TextWrapper>{title}</TextWrapper>
           <IconWrapper aria-hidden>
             <NavigationChevronDown />
           </IconWrapper>
         </MenuButton>
         {isTopbar ? (
-          <FloatingMenu expanded={expanded}>{children}</FloatingMenu>
+          <FloatingMenu {...popupProps}>{children}</FloatingMenu>
         ) : (
-          <InlineMenu
-            expanded={expanded}
-            role="menu"
-            aria-orientation="vertical"
-            onFocus={focusMenu}
-            onKeyDown={menuKeyHandler}
-          >
+          <InlineMenu {...popupProps} aria-orientation="vertical">
             {children}
           </InlineMenu>
         )}
@@ -161,20 +143,20 @@ const TextWrapper = styled.div`
   flex-grow: 1;
 `
 
-const FloatingMenu: React.FC<MenuProps> = ({ children, expanded }) => {
-  const [scroll, menuRef] = useScrollButtons('vertical', expanded)
+const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
+  children,
+  'aria-hidden': hidden,
+  tabIndex,
+  onKeyDown,
+  ...props
+}) => {
+  const [menuRef, scroll] = useScrollButtons('vertical', !hidden)
   return (
-    <MenuWrapper aria-hidden={!expanded || undefined} tabIndex={-1}>
+    <MenuWrapper aria-hidden={hidden} tabIndex={tabIndex} onKeyDown={onKeyDown}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
-      <MenuList
-        role="menu"
-        aria-orientation="vertical"
-        ref={menuRef}
-        onFocus={focusMenu}
-        onKeyDown={menuKeyHandler}
-      >
+      <MenuList {...props} aria-orientation="vertical" ref={menuRef}>
         {children}
       </MenuList>
       <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
@@ -211,24 +193,21 @@ const setTabIndex = (menu: HTMLElement | null, isSidebar: boolean) => {
 
 const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
   const orientation = 'horizontal'
-  const [scroll, menuRef, menu] = useScrollButtons(orientation, true)
+  const [menuRef, scroll] = useScrollButtons(orientation, true)
+  const [setFocus, rootRef] = useFocusControl(menuFocusControl)
+  const menuKeyHandler = useMenuKeyHandler(setFocus)
+  const mergedRef = useMergedRefs(menuRef, rootRef)
 
-  React.useEffect(() => setTabIndex(menu, false), [menu])
+  React.useEffect(() => setTabIndex(menuRef.current, false), [menuRef])
 
   useLayout('menubar', { position: 'flow', offset: 0 })
 
   return (
-    <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler}>
+    <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler} onKeyDown={menuKeyHandler}>
       <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
-      <MenuList
-        role="menubar"
-        aria-orientation={orientation}
-        ref={menuRef}
-        onFocus={focusMenu}
-        onKeyDown={menuKeyHandler}
-      >
+      <MenuList role="menubar" aria-orientation={orientation} ref={mergedRef} onFocus={focusMenu}>
         {children}
       </MenuList>
       <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
@@ -246,13 +225,9 @@ const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
 
 const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ...props }, ref) => {
   const orientation = 'vertical'
-  const { expanded, wrapperProps, buttonProps, popupProps } = usePopup('menu', {
-    id,
-    focusControl: getMenuItems,
-  })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, menuRef, menu] = useScrollButtons(orientation, expanded)
-  React.useEffect(() => setTabIndex(menu, true), [menu])
+  const { expanded, wrapperProps, buttonProps, popupProps } = useMenu(id)
+  const [menuRef] = useScrollButtons(orientation, expanded)
+  React.useEffect(() => setTabIndex(menuRef.current, true), [menuRef])
 
   delete wrapperProps.role
   return (
@@ -272,8 +247,6 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
         width="350px"
         as={SidebarMenu}
         aria-orientation={orientation}
-        onFocus={focusMenu}
-        onKeyDown={menuKeyHandler}
         ref={menuRef}
         {...popupProps}
       >
@@ -378,9 +351,12 @@ const listStyle = `
   margin: 0;
 `
 
-const InlineMenu = styled.ul<MenuProps>`
+const InlineMenu = styled.ul`
   ${listStyle}
-  display: ${(p) => (p.expanded ? 'block' : 'none')};
+  display: block;
+  &[aria-hidden='true'] {
+    display: none;
+  }
 `
 
 const SidebarMenu = styled.ul`
@@ -433,9 +409,8 @@ const SidebarMenu = styled.ul`
 const MenuWrapper = styled.div`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
-  visibility: visible;
   &[aria-hidden='true'] {
-    visibility: hidden;
+    display: none;
   }
   position: absolute;
   top: 100%;
@@ -510,7 +485,7 @@ const buttonStyles = `
   }
 `
 
-const MenuButton = styled.button.attrs({ role: 'menuitem' })`
+const MenuButton = styled.button.attrs({ role: 'menuitem' as string })`
   ${buttonStyles}
   width: 100%;
   height: 100%;
