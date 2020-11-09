@@ -6,7 +6,7 @@ export function isFocusOut(event: ReactFocusEvent<HTMLElement>): boolean {
   // IE sets activeElement before the blur/focus events, but doesn't support
   // relatedTarget. Note that in React 17 this might change if they switch
   // from focus/blur to focusin/focusout, which DO support relatedTarget.
-  const focused = isIE ? document.activeElement : event.relatedTarget
+  const focused = event.relatedTarget || (isIE ? document.activeElement : null)
   return !focused || !event.currentTarget.contains(focused as Node)
 }
 
