@@ -1,4 +1,4 @@
-# This repo-wide changelog is deprecated as of 10/5/2020.
+# This repo-wide changelog is deprecated as of 11/10/2020.
 
 ## For newer updates, see individual changelogs inside package folders (`/modules/<package name>`) or the release notes in GitHub.
 
