@@ -15,7 +15,8 @@
         "**/*.story.tsx",
         "**/*.test.tsx",
         "**/__snapshots__/**",
-        "**/__image_snapshots__/**"
+        "**/__image_snapshots__/**",
+        "**/CHANGELOG.md"
       ]
     }
   }
