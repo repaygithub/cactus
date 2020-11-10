@@ -4,7 +4,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { cloneElement, useRef } from 'react'
+import React, { cloneElement, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
@@ -108,6 +108,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const { className, disabled, label, ariaLabel, id, maxWidth, position, forceVisible } = props
   const triggerRef = useRef<HTMLSpanElement | null>(null)
   const [trigger, tooltip] = useTooltip({ ref: triggerRef })
+  const [hovering, setHovering] = useState<boolean>(false)
 
   return (
     <>
@@ -121,7 +122,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
         <>
           <TooltipPopup
             {...tooltip}
-            isVisible={forceVisible || tooltip.isVisible}
+            isVisible={hovering || forceVisible || tooltip.isVisible}
             label={label}
             ariaLabel={ariaLabel}
             position={
@@ -131,6 +132,12 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
               })
             }
             style={{ maxWidth }}
+            onMouseEnter={() => {
+              setHovering(true)
+            }}
+            onMouseLeave={() => {
+              setHovering(false)
+            }}
           />
           <VisuallyHidden role="tooltip" id={id}>
             {label}
@@ -148,7 +155,6 @@ const shapeMap: { [K in Shape]: string } = {
 
 export const TooltipPopup = styled(ReachTooltipPopup)`
   z-index: 100;
-  pointer-events: none;
   position: absolute;
   padding: 16px;
   ${(p): string => boxShadow(p.theme, 1)};
