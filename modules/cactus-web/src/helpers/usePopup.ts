@@ -101,8 +101,7 @@ function usePopup(
     (event: React.FocusEvent<HTMLElement>) => {
       const wrapper = event.currentTarget
       // IE sets activeElement before the blur/focus events, but doesn't support
-      // relatedTarget. Note that in React 17 this might change if they switch
-      // from focus/blur to focusin/focusout, which DO support relatedTarget.
+      // relatedTarget with versions of React lower than v17.
       const focused = event.relatedTarget || (isIE ? document.activeElement : null)
       if (!focused || !wrapper.contains(focused as Node)) {
         toggle(false)
