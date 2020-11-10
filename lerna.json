@@ -6,5 +6,18 @@
   ],
   "version": "independent",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "**/tests/**",
+        "**/.storybook/**",
+        "**/*.story.tsx",
+        "**/*.test.tsx",
+        "**/__snapshots__/**",
+        "**/__image_snapshots__/**",
+        "**/CHANGELOG.md"
+      ]
+    }
+  }
 }

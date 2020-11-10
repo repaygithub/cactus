@@ -1,3 +1,7 @@
+# This repo-wide changelog is deprecated as of 11/10/2020.
+
+## For newer updates, see individual changelogs inside package folders (`/modules/<package name>`) or the release notes in GitHub.
+
 # Changelog
 
 ## [@repay/cactus-web@v3.3.0](https://github.com/repaygithub/cactus/commit/8ff51f25065cb25c5bff722f8e39b2e169d7cfb5)
