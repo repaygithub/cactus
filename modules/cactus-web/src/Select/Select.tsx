@@ -1172,8 +1172,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       return
     }
 
-    // In IE, there's no relatedTarget on blur...it's already moved on to activeElement
-    if (isIE()) {
+    // In IE, there's no relatedTarget on blur with React versions lower than v17...it's already moved on to activeElement
+    const isReact17 = event.nativeEvent.type === 'focusout'
+    if (isIE() && !isReact17) {
       setTimeout(() => {
         const focusTarget = document.activeElement
         this.closeListIfNotFocused(focusTarget)
