@@ -76,7 +76,7 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
               (key): ReactElement => {
                 const col = sortableColumns.get(key) as DataColumnObject
                 return (
-                  <MenuButton.Item onSelect={() => handleSortColChange(key)}>
+                  <MenuButton.Item key={key} onSelect={() => handleSortColChange(key)}>
                     {col.title}
                   </MenuButton.Item>
                 )

@@ -227,7 +227,10 @@ const DataGridContainer = ({
           )}
         </DataGrid.TopSection>
       )}
-      <DataGrid.Table data={includePaginationAndSort ? paginateData() : data}>
+      <DataGrid.Table
+        data={includePaginationAndSort ? paginateData() : data}
+        dividers={boolean('dividers', false)}
+      >
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} />
         <DataGrid.DataColumn

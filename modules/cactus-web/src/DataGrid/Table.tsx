@@ -11,6 +11,7 @@ import { ColumnObject, DataColumnObject, SortOption } from './types'
 export interface DataGridTableProps {
   children: React.ReactNode
   data: { [key: string]: any }[]
+  dividers?: boolean
 }
 
 const isDataColumn = (col: any): col is DataColumnObject => {
@@ -21,7 +22,7 @@ const isColumn = (col: any): col is ColumnObject => {
 }
 
 const DataGridTable: React.FC<DataGridTableProps> = (props) => {
-  const { children, data } = props
+  const { children, data, dividers } = props
 
   const { columns, isCardView, cardBreakpoint, fullWidth, sortOptions, onSort } = useContext(
     DataGridContext
@@ -38,7 +39,7 @@ const DataGridTable: React.FC<DataGridTableProps> = (props) => {
   return (
     <>
       {children}
-      <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint}>
+      <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint} dividers={dividers}>
         <Table.Header>
           {[...columns.keys()].map((key) => {
             const column = columns.get(key)
@@ -162,6 +163,7 @@ const HeaderButton = styled.button`
 DataGridTable.propTypes = {
   children: PropTypes.node.isRequired,
   data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  dividers: PropTypes.bool,
 }
 
 DataGridTable.displayName = 'Table'
