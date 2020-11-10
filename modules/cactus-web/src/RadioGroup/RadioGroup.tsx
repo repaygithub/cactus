@@ -69,6 +69,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       statusMessage,
       tooltipId,
       disabled,
+      disableTooltip,
     } = useAccessibleField(props)
     const [showTooltip, setTooltipVisible] = React.useState<boolean>(false)
 
@@ -145,7 +146,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
           <Tooltip
             id={tooltipId}
             label={tooltip}
-            disabled={disabled}
+            disabled={disableTooltip}
             forceVisible={autoTooltip ? showTooltip : false}
           />
         )}

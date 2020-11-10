@@ -24,6 +24,7 @@ export const BasicUsage = (): React.ReactElement => (
     tooltip={text('tooltip', 'Some tooltip text')}
     resize={boolean('resize', false)}
     autoTooltip={boolean('autoTooltip', true)}
+    disableTooltip={boolean('disableTooltip', false)}
     {...eventLoggers}
   />
 )

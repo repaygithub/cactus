@@ -23,6 +23,7 @@ export const BasicUsage = (): React.ReactElement => (
     success={text('success', '')}
     warning={text('warning', '')}
     autoTooltip={boolean('autoTooltip', true)}
+    disableTooltip={boolean('disableTooltip', false)}
   >
     <RadioGroup.Button label="That's right" value="right" />
     <RadioGroup.Button disabled label="That's wrong" value="left" />

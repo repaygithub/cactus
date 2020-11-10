@@ -19,6 +19,7 @@ interface AccessibleProps {
   status?: Status
   statusMessage?: React.ReactNode
   disabled?: boolean
+  disableTooltip?: boolean
 }
 
 type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
@@ -34,6 +35,7 @@ export interface FieldProps {
   success?: React.ReactNode
   autoTooltip?: boolean
   isOpen?: boolean
+  disableTooltip?: boolean
 }
 
 interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
@@ -53,6 +55,7 @@ export function useAccessibleField({
   warning,
   success,
   disabled,
+  disableTooltip,
 }: Partial<AccessibleFieldProps>): AccessibleProps {
   const fieldId = useId(id, name)
   const labelId = `${fieldId}-label`
@@ -82,6 +85,7 @@ export function useAccessibleField({
     statusMessage,
     tooltipId,
     disabled,
+    disableTooltip,
   }
 }
 
@@ -97,6 +101,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     status,
     statusMessage,
     disabled,
+    disableTooltip = undefined,
   } = accessibility
   const { autoTooltip = true } = props
 
@@ -139,7 +144,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
           label={props.tooltip}
           id={tooltipId}
           maxWidth={maxWidth}
-          disabled={disabled}
+          disabled={disableTooltip}
           forceVisible={!props.isOpen && forceTooltipVisible}
         />
       )}
@@ -200,6 +205,7 @@ AccessibleField.propTypes = {
   tooltip: PropTypes.node,
   disabled: PropTypes.bool,
   autoTooltip: PropTypes.bool,
+  disableTooltip: PropTypes.bool,
 }
 
 export default AccessibleField

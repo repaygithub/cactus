@@ -10,10 +10,10 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => {
-  const disabled = boolean('disabled', false)
   return (
     <AccessibleField
-      disabled={disabled}
+      disabled={boolean('disabled', false)}
+      disableTooltip={boolean('disableTooltip', false)}
       name={text('name', 'field_name')}
       label={text('label', 'Field Label')}
       error={text('error (will show field error)', '')}

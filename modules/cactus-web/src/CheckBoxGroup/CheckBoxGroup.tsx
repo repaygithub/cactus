@@ -26,6 +26,7 @@ interface CheckBoxGroupProps
   onChange?: FieldOnChangeHandler<boolean>
   onFocus?: FieldOnFocusHandler
   onBlur?: FieldOnBlurHandler
+  disableTooltip?: boolean
 }
 
 type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
@@ -50,6 +51,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       onChange,
       onFocus,
       onBlur,
+      disableTooltip,
       autoTooltip = true,
       ...props
     },
@@ -133,7 +135,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
           <Tooltip
             id={tooltipId}
             label={tooltip}
-            disabled={disabled}
+            disabled={disableTooltip}
             forceVisible={autoTooltip ? showTooltip : false}
           />
         )}

@@ -39,6 +39,7 @@ export const BasicUsage = (): React.ReactElement => (
     tooltip={text('tooltip', 'Enter some text')}
     name="input-1"
     autoTooltip={boolean('autoTooltip', true)}
+    disableTooltip={boolean('disableTooltip', false)}
     {...eventLoggers}
   />
 )

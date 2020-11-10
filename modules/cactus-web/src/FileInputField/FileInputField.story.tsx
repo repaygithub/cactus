@@ -29,5 +29,6 @@ export const BasicUsage = (): React.ReactElement => (
     warning={text('warning', '')}
     error={text('error', '')}
     autoTooltip={boolean('autoTooltip', false)}
+    disableTooltip={boolean('disableTooltip', false)}
   />
 )

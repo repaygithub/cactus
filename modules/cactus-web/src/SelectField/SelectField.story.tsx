@@ -24,6 +24,7 @@ export const BasicUsage = (): React.ReactElement => (
     autoTooltip={boolean('autoTooltip', true)}
     comboBox={boolean('comboBox', false)}
     canCreateOption={boolean('canCreateOption', true)}
+    disableTooltip={boolean('disableTooltip', false)}
   />
 )
 
