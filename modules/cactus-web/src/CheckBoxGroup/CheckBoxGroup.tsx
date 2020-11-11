@@ -135,7 +135,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
           <Tooltip
             id={tooltipId}
             label={tooltip}
-            disabled={disableTooltip}
+            disabled={disableTooltip ?? disabled}
             forceVisible={autoTooltip ? showTooltip : false}
           />
         )}

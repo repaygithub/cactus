@@ -1,4 +1,4 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -23,7 +23,7 @@ export const BasicUsage = (): React.ReactElement => (
     success={text('success', '')}
     warning={text('warning', '')}
     autoTooltip={boolean('autoTooltip', true)}
-    disableTooltip={boolean('disableTooltip', false)}
+    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
   >
     <RadioGroup.Button label="That's right" value="right" />
     <RadioGroup.Button disabled label="That's wrong" value="left" />

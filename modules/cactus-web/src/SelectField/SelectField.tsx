@@ -53,7 +53,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
       width={width}
       autoTooltip={autoTooltip}
       isOpen={isOpen}
-      disableTooltip={disableTooltip}
+      disableTooltip={disableTooltip ?? disabled}
     >
       {({ fieldId, labelId, name, ariaDescribedBy, status, disabled }): React.ReactElement => (
         <Select

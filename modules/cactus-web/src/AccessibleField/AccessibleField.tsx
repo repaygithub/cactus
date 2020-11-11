@@ -55,7 +55,6 @@ export function useAccessibleField({
   warning,
   success,
   disabled,
-  disableTooltip,
 }: Partial<AccessibleFieldProps>): AccessibleProps {
   const fieldId = useId(id, name)
   const labelId = `${fieldId}-label`
@@ -85,7 +84,6 @@ export function useAccessibleField({
     statusMessage,
     tooltipId,
     disabled,
-    disableTooltip,
   }
 }
 
@@ -101,9 +99,8 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     status,
     statusMessage,
     disabled,
-    disableTooltip = undefined,
   } = accessibility
-  const { autoTooltip = true } = props
+  const { autoTooltip = true, disableTooltip } = props
 
   const ref = React.useRef<HTMLDivElement | null>(null)
   const [forceTooltipVisible, setTooltipVisible] = React.useState<boolean>(false)
@@ -144,7 +141,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
           label={props.tooltip}
           id={tooltipId}
           maxWidth={maxWidth}
-          disabled={disableTooltip}
+          disabled={disableTooltip ?? disabled}
           forceVisible={!props.isOpen && forceTooltipVisible}
         />
       )}

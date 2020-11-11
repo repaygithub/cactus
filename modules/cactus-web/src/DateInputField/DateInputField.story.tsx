@@ -32,7 +32,7 @@ export const ExtendedProps = (): React.ReactElement => (
     success={text('success?', '')}
     warning={text('warning?', '')}
     autoTooltip={boolean('autoTooltip', true)}
-    disableTooltip={boolean('disableTooltip', false)}
+    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
   />
 )
 
