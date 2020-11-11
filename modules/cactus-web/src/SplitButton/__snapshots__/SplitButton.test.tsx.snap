@@ -8,6 +8,10 @@ exports[`component: SplitButton snapshot 1`] = `
 
 .c1 {
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
@@ -46,6 +50,36 @@ exports[`component: SplitButton snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
+.c7 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  z-index: 1000;
+  background-color: hsl(0,0%,100%);
+  border: 0;
+}
+
+.c7 [data-reach-menu-item] {
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+}
+
+.c7 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
 .c3 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -77,21 +111,23 @@ exports[`component: SplitButton snapshot 1`] = `
 }
 
 .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c0 .c2[aria-expanded='true'] {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
 }
 
 .c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
@@ -102,7 +138,10 @@ exports[`component: SplitButton snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-
+  .c7 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -139,6 +178,41 @@ exports[`component: SplitButton snapshot 1`] = `
         />
       </svg>
     </button>
+    <div
+      class="c6"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--1"
+        class="c7"
+        data-reach-menu-items=""
+        id="menu--1"
+        role="menu"
+        tabindex="-1"
+        variant="standard"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="One Action"
+          id="option-0--menu--1"
+          role="menuitem"
+          tabindex="-1"
+        >
+          One Action
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Another Action"
+          id="option-1--menu--1"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Another Action
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -151,6 +225,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 
 .c1 {
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
@@ -189,6 +267,35 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   border-color: hsl(200,96%,35%);
 }
 
+.c7 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 8px;
+  z-index: 1000;
+  background-color: hsl(0,0%,100%);
+  border: 1px solid hsl(200,29%,90%);
+}
+
+.c7 [data-reach-menu-item] {
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+}
+
+.c7 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
 .c3 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -220,21 +327,23 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 }
 
 .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c0 .c2[aria-expanded='true'] {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
 }
 
 .c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
@@ -245,7 +354,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 }
 
 @media screen and (min-width:1024px) {
-
+  .c7 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -259,12 +371,12 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       Test
     </button>
     <button
-      aria-controls="menu--44"
+      aria-controls="menu--43"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--44"
+      id="menu-button--menu--43"
       type="button"
       variant="standard"
     >
@@ -282,6 +394,41 @@ exports[`component: SplitButton with theme customization dropdown should not hav
         />
       </svg>
     </button>
+    <div
+      class="c6"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--43"
+        class="c7"
+        data-reach-menu-items=""
+        id="menu--43"
+        role="menu"
+        tabindex="-1"
+        variant="standard"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="One Action"
+          id="option-0--menu--43"
+          role="menuitem"
+          tabindex="-1"
+        >
+          One Action
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Another Action"
+          id="option-1--menu--43"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Another Action
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -294,6 +441,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
 
 .c1 {
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   border: 2px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
@@ -332,6 +483,36 @@ exports[`component: SplitButton with theme customization should have 2px borders
   border-color: hsl(200,96%,35%);
 }
 
+.c7 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  z-index: 1000;
+  background-color: hsl(0,0%,100%);
+  border: 0;
+}
+
+.c7 [data-reach-menu-item] {
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+}
+
+.c7 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
 .c3 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -363,21 +544,23 @@ exports[`component: SplitButton with theme customization should have 2px borders
 }
 
 .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c0 .c2[aria-expanded='true'] {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
 }
 
 .c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
@@ -388,7 +571,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
 }
 
 @media screen and (min-width:1024px) {
-
+  .c7 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -402,12 +588,12 @@ exports[`component: SplitButton with theme customization should have 2px borders
       Test
     </button>
     <button
-      aria-controls="menu--49"
+      aria-controls="menu--48"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--49"
+      id="menu-button--menu--48"
       type="button"
       variant="standard"
     >
@@ -425,6 +611,41 @@ exports[`component: SplitButton with theme customization should have 2px borders
         />
       </svg>
     </button>
+    <div
+      class="c6"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--48"
+        class="c7"
+        data-reach-menu-items=""
+        id="menu--48"
+        role="menu"
+        tabindex="-1"
+        variant="standard"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="One Action"
+          id="option-0--menu--48"
+          role="menuitem"
+          tabindex="-1"
+        >
+          One Action
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Another Action"
+          id="option-1--menu--48"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Another Action
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -437,6 +658,10 @@ exports[`component: SplitButton with theme customization should have intermediat
 
 .c1 {
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   border: 1px solid;
   border-radius: 8px 1px 1px 8px;
   background-color: hsl(0,0%,100%);
@@ -475,6 +700,36 @@ exports[`component: SplitButton with theme customization should have intermediat
   border-color: hsl(200,96%,35%);
 }
 
+.c7 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 4px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  z-index: 1000;
+  background-color: hsl(0,0%,100%);
+  border: 0;
+}
+
+.c7 [data-reach-menu-item] {
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+}
+
+.c7 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
 .c3 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -506,21 +761,23 @@ exports[`component: SplitButton with theme customization should have intermediat
 }
 
 .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c0 .c2[aria-expanded='true'] {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
 }
 
 .c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
@@ -531,7 +788,10 @@ exports[`component: SplitButton with theme customization should have intermediat
 }
 
 @media screen and (min-width:1024px) {
-
+  .c7 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -545,12 +805,12 @@ exports[`component: SplitButton with theme customization should have intermediat
       Test
     </button>
     <button
-      aria-controls="menu--39"
+      aria-controls="menu--38"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--39"
+      id="menu-button--menu--38"
       type="button"
       variant="standard"
     >
@@ -568,6 +828,41 @@ exports[`component: SplitButton with theme customization should have intermediat
         />
       </svg>
     </button>
+    <div
+      class="c6"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--38"
+        class="c7"
+        data-reach-menu-items=""
+        id="menu--38"
+        role="menu"
+        tabindex="-1"
+        variant="standard"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="One Action"
+          id="option-0--menu--38"
+          role="menuitem"
+          tabindex="-1"
+        >
+          One Action
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Another Action"
+          id="option-1--menu--38"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Another Action
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -580,6 +875,10 @@ exports[`component: SplitButton with theme customization should have square shap
 
 .c1 {
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   border: 1px solid;
   border-radius: 1px;
   background-color: hsl(0,0%,100%);
@@ -618,6 +917,36 @@ exports[`component: SplitButton with theme customization should have square shap
   border-color: hsl(200,96%,35%);
 }
 
+.c7 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 1px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  z-index: 1000;
+  background-color: hsl(0,0%,100%);
+  border: 0;
+}
+
+.c7 [data-reach-menu-item] {
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+}
+
+.c7 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
 .c3 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -649,21 +978,23 @@ exports[`component: SplitButton with theme customization should have square shap
 }
 
 .c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c0 .c2[aria-expanded='true'] {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
 }
 
 .c0 .c2[aria-expanded='true'] .c4 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
+}
+
+.c6 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
@@ -674,7 +1005,10 @@ exports[`component: SplitButton with theme customization should have square shap
 }
 
 @media screen and (min-width:1024px) {
-
+  .c7 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -688,12 +1022,12 @@ exports[`component: SplitButton with theme customization should have square shap
       Test
     </button>
     <button
-      aria-controls="menu--34"
+      aria-controls="menu--33"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--34"
+      id="menu-button--menu--33"
       type="button"
       variant="standard"
     >
@@ -711,6 +1045,41 @@ exports[`component: SplitButton with theme customization should have square shap
         />
       </svg>
     </button>
+    <div
+      class="c6"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--33"
+        class="c7"
+        data-reach-menu-items=""
+        id="menu--33"
+        role="menu"
+        tabindex="-1"
+        variant="standard"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="One Action"
+          id="option-0--menu--33"
+          role="menuitem"
+          tabindex="-1"
+        >
+          One Action
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Another Action"
+          id="option-1--menu--33"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Another Action
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

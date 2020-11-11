@@ -10,16 +10,20 @@ exports[`component: DataGrid snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c20 {
+.c22 {
   vertical-align: middle;
 }
 
-.c21 {
+.c23 {
   vertical-align: middle;
 }
 
 .c13 {
   box-sizing: border-box;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
   border: 1px solid;
   border-radius: 20px 1px 1px 20px;
   background-color: hsl(0,0%,100%);
@@ -58,6 +62,36 @@ exports[`component: DataGrid snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
+.c18 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  z-index: 1000;
+  background-color: hsl(0,0%,100%);
+  border: 0;
+}
+
+.c18 [data-reach-menu-item] {
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+}
+
+.c18 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
 .c15 {
   box-sizing: border-box;
   background-color: hsl(200,10%,20%);
@@ -89,15 +123,12 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 .c12 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c12 .c14[aria-expanded='true'] {
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
 }
 
 .c12 .c14[aria-expanded='true'] .c10 {
@@ -107,6 +138,11 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 .c17 {
+  position: fixed;
+  z-index: 500;
+}
+
+.c19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -119,7 +155,7 @@ exports[`component: DataGrid snapshot 1`] = `
   padding: 0;
 }
 
-.c18 {
+.c20 {
   min-width: 15px;
   height: 24px;
   text-align: center;
@@ -133,8 +169,8 @@ exports[`component: DataGrid snapshot 1`] = `
   border-left: 1px solid hsl(200,29%,90%);
 }
 
-.c18,
-.c18:link {
+.c20,
+.c20:link {
   color: hsl(200,10%,20%);
   font-size: 15px;
   line-height: 18px;
@@ -142,17 +178,17 @@ exports[`component: DataGrid snapshot 1`] = `
   text-decoration: none;
 }
 
-.c18:last-child {
+.c20:last-child {
   border-right: 1px solid hsl(200,29%,90%);
 }
 
-.c18 svg {
+.c20 svg {
   width: 15px;
   height: 15px;
   vertical-align: middle;
 }
 
-.c19 {
+.c21 {
   cursor: pointer;
   padding: 3px;
   vertical-align: middle;
@@ -167,34 +203,34 @@ exports[`component: DataGrid snapshot 1`] = `
   font: inherit;
 }
 
-.c19:visited {
+.c21:visited {
   color: hsl(200,18%,45%);
 }
 
-.c19:hover {
+.c21:hover {
   color: hsl(200,96%,35%);
 }
 
-.c19:active,
-.c19:focus {
+.c21:active,
+.c21:focus {
   padding: 3px;
   outline: none;
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c19::-moz-focus-inner {
+.c21::-moz-focus-inner {
   border: none;
 }
 
-.c19[disabled],
-.c19[aria-disabled='true'] {
+.c21[disabled],
+.c21[aria-disabled='true'] {
   color: hsl(0,0%,90%);
   background-color: transparent;
   cursor: default;
 }
 
-.c19[aria-current='page'] {
+.c21[aria-current='page'] {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
 }
@@ -530,12 +566,15 @@ exports[`component: DataGrid snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-
+  .c18 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 @media screen and (min-width:1024px) {
-  .c18,
-  .c18:link {
+  .c20,
+  .c20:link {
     font-size: 15px;
   }
 }
@@ -811,6 +850,41 @@ exports[`component: DataGrid snapshot 1`] = `
                     />
                   </svg>
                 </button>
+                <div
+                  class="c17"
+                  data-reach-menu=""
+                  data-reach-menu-popover=""
+                  hidden=""
+                >
+                  <div
+                    aria-labelledby="menu-button--menu--1"
+                    class="c18"
+                    data-reach-menu-items=""
+                    id="menu--1"
+                    role="menu"
+                    tabindex="-1"
+                    variant="standard"
+                  >
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Clone"
+                      id="option-0--menu--1"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Clone
+                    </div>
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Delete"
+                      id="option-1--menu--1"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Delete
+                    </div>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -870,6 +944,41 @@ exports[`component: DataGrid snapshot 1`] = `
                     />
                   </svg>
                 </button>
+                <div
+                  class="c17"
+                  data-reach-menu=""
+                  data-reach-menu-popover=""
+                  hidden=""
+                >
+                  <div
+                    aria-labelledby="menu-button--menu--2"
+                    class="c18"
+                    data-reach-menu-items=""
+                    id="menu--2"
+                    role="menu"
+                    tabindex="-1"
+                    variant="standard"
+                  >
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Clone"
+                      id="option-0--menu--2"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Clone
+                    </div>
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Delete"
+                      id="option-1--menu--2"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Delete
+                    </div>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -929,6 +1038,41 @@ exports[`component: DataGrid snapshot 1`] = `
                     />
                   </svg>
                 </button>
+                <div
+                  class="c17"
+                  data-reach-menu=""
+                  data-reach-menu-popover=""
+                  hidden=""
+                >
+                  <div
+                    aria-labelledby="menu-button--menu--3"
+                    class="c18"
+                    data-reach-menu-items=""
+                    id="menu--3"
+                    role="menu"
+                    tabindex="-1"
+                    variant="standard"
+                  >
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Clone"
+                      id="option-0--menu--3"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Clone
+                    </div>
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Delete"
+                      id="option-1--menu--3"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Delete
+                    </div>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -988,6 +1132,41 @@ exports[`component: DataGrid snapshot 1`] = `
                     />
                   </svg>
                 </button>
+                <div
+                  class="c17"
+                  data-reach-menu=""
+                  data-reach-menu-popover=""
+                  hidden=""
+                >
+                  <div
+                    aria-labelledby="menu-button--menu--4"
+                    class="c18"
+                    data-reach-menu-items=""
+                    id="menu--4"
+                    role="menu"
+                    tabindex="-1"
+                    variant="standard"
+                  >
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Clone"
+                      id="option-0--menu--4"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Clone
+                    </div>
+                    <div
+                      data-reach-menu-item=""
+                      data-valuetext="Delete"
+                      id="option-1--menu--4"
+                      role="menuitem"
+                      tabindex="-1"
+                    >
+                      Delete
+                    </div>
+                  </div>
+                </div>
               </div>
             </td>
           </tr>
@@ -1002,16 +1181,16 @@ exports[`component: DataGrid snapshot 1`] = `
         class=""
       >
         <ol
-          class="c17"
+          class="c19"
           role="list"
         >
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-disabled="true"
               aria-label="Go to page 1"
-              class="c19"
+              class="c21"
               role="link"
             >
               <svg
@@ -1028,17 +1207,17 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-disabled="true"
               aria-label="Go to previous page, 0"
-              class="c19"
+              class="c21"
               rel="prev"
               role="link"
             >
               <svg
-                class="c20"
+                class="c22"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1051,24 +1230,24 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-current="page"
               aria-disabled="true"
               aria-label="Current page, 1"
-              class="c19"
+              class="c21"
               role="link"
             >
               1
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to page 2"
-              class="c19"
+              class="c21"
               role="link"
               tabindex="0"
             >
@@ -1076,11 +1255,11 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to page 3"
-              class="c19"
+              class="c21"
               role="link"
               tabindex="0"
             >
@@ -1088,17 +1267,17 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to next page, 2"
-              class="c19"
+              class="c21"
               rel="next"
               role="link"
               tabindex="0"
             >
               <svg
-                class="c21"
+                class="c23"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1112,11 +1291,11 @@ exports[`component: DataGrid snapshot 1`] = `
             </a>
           </li>
           <li
-            class="c18"
+            class="c20"
           >
             <a
               aria-label="Go to last page, 3"
-              class="c19"
+              class="c21"
               role="link"
               tabindex="0"
             >

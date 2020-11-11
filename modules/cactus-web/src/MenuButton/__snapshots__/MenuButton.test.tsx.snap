@@ -2,14 +2,46 @@
 
 exports[`With theme changes  Border should be 2px 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c3 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c0 {
+.c5 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  background-color: hsl(0,0%,100%);
+}
+
+.c5 [data-reach-menu-item] {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+  border: 0;
+}
+
+.c5 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c1 {
   position: relative;
   box-sizing: border-box;
+  width: 100%;
   border-radius: 20px;
   border: 2px solid;
   padding: 2px 24px 2px 14px;
@@ -26,13 +58,13 @@ exports[`With theme changes  Border should be 2px 1`] = `
   border-color: hsl(200,9%,35%);
 }
 
-.c0:hover,
-.c0[aria-expanded='true'] {
+.c1:hover,
+.c1[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c0:focus::after {
+.c1:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -45,76 +77,178 @@ exports[`With theme changes  Border should be 2px 1`] = `
   border: 2px solid hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c0:disabled {
+.c1:disabled {
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
 
-.c0[aria-expanded='true'] .c1 {
+.c1[aria-expanded='true'] .c2 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c1 {
+.c1 .c2 {
   position: absolute;
   right: 10px;
   top: 12px;
 }
 
-@media screen and (min-width:1024px) {
+.c0 {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
 
+.c4 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
-  .c0 {
+  .c5 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
-<button
-    aria-controls="menu--39"
-    aria-haspopup="true"
+<div
     class="c0"
-    data-reach-menu-button=""
-    id="menu-button--menu--39"
-    type="button"
   >
-    Demo
-    <svg
-      aria-hidden="true"
-      class="c1 c2"
-      fill="currentcolor"
-      height="1em"
-      viewBox="0 0 24 24"
-      width="1em"
+    <button
+      aria-controls="menu--38"
+      aria-haspopup="true"
+      class="c1"
+      data-reach-menu-button=""
+      id="menu-button--menu--38"
+      type="button"
+      variant="filled"
     >
-      <path
-        d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-        transform="rotate(-90 12 12)"
-      />
-    </svg>
-  </button>
+      Demo
+      <svg
+        aria-hidden="true"
+        class="c2 c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+    <div
+      class="c4"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--38"
+        class="c5"
+        data-reach-menu-items=""
+        id="menu--38"
+        role="menu"
+        tabindex="-1"
+        variant="filled"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action One"
+          id="option-0--menu--38"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action One
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action Two"
+          id="option-1--menu--38"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action Two
+        </div>
+        <div
+          role="none"
+          tabindex="-1"
+        >
+          <a
+            data-reach-menu-item=""
+            data-reach-menu-link=""
+            data-valuetext="Action Three"
+            href="#"
+            id="option-2--menu--38"
+            role="menuitem"
+            tabindex="-1"
+          >
+            Action Three
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c3 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c0 {
+.c5 {
+  padding: 8px 0;
+  outline: none;
+  border: 1px solid hsl(200,29%,90%);
+  border-radius: 0 0 8px 8px;
+  background-color: hsl(0,0%,100%);
+}
+
+.c5 [data-reach-menu-item] {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+  border: 0;
+}
+
+.c5 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c1 {
   position: relative;
   box-sizing: border-box;
+  width: 100%;
   border-radius: 20px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
@@ -131,13 +265,13 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   border-color: hsl(200,9%,35%);
 }
 
-.c0:hover,
-.c0[aria-expanded='true'] {
+.c1:hover,
+.c1[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c0:focus::after {
+.c1:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -150,76 +284,178 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   border: 1px solid hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c0:disabled {
+.c1:disabled {
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
 
-.c0[aria-expanded='true'] .c1 {
+.c1[aria-expanded='true'] .c2 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c1 {
+.c1 .c2 {
   position: absolute;
   right: 10px;
   top: 12px;
 }
 
-@media screen and (min-width:1024px) {
+.c0 {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
 
+.c4 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
-  .c0 {
+  .c5 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
-<button
-    aria-controls="menu--34"
-    aria-haspopup="true"
+<div
     class="c0"
-    data-reach-menu-button=""
-    id="menu-button--menu--34"
-    type="button"
   >
-    Demo
-    <svg
-      aria-hidden="true"
-      class="c1 c2"
-      fill="currentcolor"
-      height="1em"
-      viewBox="0 0 24 24"
-      width="1em"
+    <button
+      aria-controls="menu--33"
+      aria-haspopup="true"
+      class="c1"
+      data-reach-menu-button=""
+      id="menu-button--menu--33"
+      type="button"
+      variant="filled"
     >
-      <path
-        d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-        transform="rotate(-90 12 12)"
-      />
-    </svg>
-  </button>
+      Demo
+      <svg
+        aria-hidden="true"
+        class="c2 c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+    <div
+      class="c4"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--33"
+        class="c5"
+        data-reach-menu-items=""
+        id="menu--33"
+        role="menu"
+        tabindex="-1"
+        variant="filled"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action One"
+          id="option-0--menu--33"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action One
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action Two"
+          id="option-1--menu--33"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action Two
+        </div>
+        <div
+          role="none"
+          tabindex="-1"
+        >
+          <a
+            data-reach-menu-item=""
+            data-reach-menu-link=""
+            data-valuetext="Action Three"
+            href="#"
+            id="option-2--menu--33"
+            role="menuitem"
+            tabindex="-1"
+          >
+            Action Three
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`With theme changes  Should have intermediate borders 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c3 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c0 {
+.c5 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  background-color: hsl(0,0%,100%);
+}
+
+.c5 [data-reach-menu-item] {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+  border: 0;
+}
+
+.c5 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c1 {
   position: relative;
   box-sizing: border-box;
+  width: 100%;
   border-radius: 8px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
@@ -236,13 +472,13 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   border-color: hsl(200,9%,35%);
 }
 
-.c0:hover,
-.c0[aria-expanded='true'] {
+.c1:hover,
+.c1[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c0:focus::after {
+.c1:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -255,76 +491,178 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
   border: 1px solid hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c0:disabled {
+.c1:disabled {
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
 
-.c0[aria-expanded='true'] .c1 {
+.c1[aria-expanded='true'] .c2 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c1 {
+.c1 .c2 {
   position: absolute;
   right: 10px;
   top: 12px;
 }
 
-@media screen and (min-width:1024px) {
+.c0 {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
 
+.c4 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
-  .c0 {
+  .c5 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
-<button
-    aria-controls="menu--29"
-    aria-haspopup="true"
+<div
     class="c0"
-    data-reach-menu-button=""
-    id="menu-button--menu--29"
-    type="button"
   >
-    Demo
-    <svg
-      aria-hidden="true"
-      class="c1 c2"
-      fill="currentcolor"
-      height="1em"
-      viewBox="0 0 24 24"
-      width="1em"
+    <button
+      aria-controls="menu--28"
+      aria-haspopup="true"
+      class="c1"
+      data-reach-menu-button=""
+      id="menu-button--menu--28"
+      type="button"
+      variant="filled"
     >
-      <path
-        d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-        transform="rotate(-90 12 12)"
-      />
-    </svg>
-  </button>
+      Demo
+      <svg
+        aria-hidden="true"
+        class="c2 c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+    <div
+      class="c4"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--28"
+        class="c5"
+        data-reach-menu-items=""
+        id="menu--28"
+        role="menu"
+        tabindex="-1"
+        variant="filled"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action One"
+          id="option-0--menu--28"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action One
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action Two"
+          id="option-1--menu--28"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action Two
+        </div>
+        <div
+          role="none"
+          tabindex="-1"
+        >
+          <a
+            data-reach-menu-item=""
+            data-reach-menu-link=""
+            data-valuetext="Action Three"
+            href="#"
+            id="option-2--menu--28"
+            role="menuitem"
+            tabindex="-1"
+          >
+            Action Three
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`With theme changes  Should have square borders 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c3 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c0 {
+.c5 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 0 0 1px 1px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  background-color: hsl(0,0%,100%);
+}
+
+.c5 [data-reach-menu-item] {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+  border: 0;
+}
+
+.c5 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c1 {
   position: relative;
   box-sizing: border-box;
+  width: 100%;
   border-radius: 1px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
@@ -341,13 +679,13 @@ exports[`With theme changes  Should have square borders 1`] = `
   border-color: hsl(200,9%,35%);
 }
 
-.c0:hover,
-.c0[aria-expanded='true'] {
+.c1:hover,
+.c1[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c0:focus::after {
+.c1:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -360,75 +698,177 @@ exports[`With theme changes  Should have square borders 1`] = `
   border: 1px solid hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c0:disabled {
+.c1:disabled {
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
 
-.c0[aria-expanded='true'] .c1 {
+.c1[aria-expanded='true'] .c2 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c1 {
+.c1 .c2 {
   position: absolute;
   right: 10px;
   top: 12px;
 }
 
-@media screen and (min-width:1024px) {
+.c0 {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
 
+.c4 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
-  .c0 {
+  .c5 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
-<button
-    aria-controls="menu--24"
-    aria-haspopup="true"
+<div
     class="c0"
-    data-reach-menu-button=""
-    id="menu-button--menu--24"
-    type="button"
   >
-    Demo
-    <svg
-      aria-hidden="true"
-      class="c1 c2"
-      fill="currentcolor"
-      height="1em"
-      viewBox="0 0 24 24"
-      width="1em"
+    <button
+      aria-controls="menu--23"
+      aria-haspopup="true"
+      class="c1"
+      data-reach-menu-button=""
+      id="menu-button--menu--23"
+      type="button"
+      variant="filled"
     >
-      <path
-        d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-        transform="rotate(-90 12 12)"
-      />
-    </svg>
-  </button>
+      Demo
+      <svg
+        aria-hidden="true"
+        class="c2 c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+    <div
+      class="c4"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--23"
+        class="c5"
+        data-reach-menu-items=""
+        id="menu--23"
+        role="menu"
+        tabindex="-1"
+        variant="filled"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action One"
+          id="option-0--menu--23"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action One
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action Two"
+          id="option-1--menu--23"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action Two
+        </div>
+        <div
+          role="none"
+          tabindex="-1"
+        >
+          <a
+            data-reach-menu-item=""
+            data-reach-menu-link=""
+            data-valuetext="Action Three"
+            href="#"
+            id="option-2--menu--23"
+            role="menuitem"
+            tabindex="-1"
+          >
+            Action Three
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`component: MenuButton snapshot 1`] = `
-.c2 {
+.c3 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c0 {
+.c5 {
+  padding: 8px 0;
+  outline: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  background-color: hsl(0,0%,100%);
+}
+
+.c5 [data-reach-menu-item] {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+  border: 0;
+}
+
+.c5 [data-reach-menu-item][data-selected] {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c1 {
   position: relative;
   box-sizing: border-box;
+  width: 100%;
   border-radius: 20px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
@@ -445,13 +885,13 @@ exports[`component: MenuButton snapshot 1`] = `
   border-color: hsl(200,9%,35%);
 }
 
-.c0:hover,
-.c0[aria-expanded='true'] {
+.c1:hover,
+.c1[aria-expanded='true'] {
   background-color: hsl(200,96%,35%);
   border-color: hsl(200,96%,35%);
 }
 
-.c0:focus::after {
+.c1:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -464,63 +904,133 @@ exports[`component: MenuButton snapshot 1`] = `
   border: 1px solid hsl(200,96%,35%);
 }
 
-.c0::-moz-focus-inner {
+.c1::-moz-focus-inner {
   border: 0;
 }
 
-.c0:disabled {
+.c1:disabled {
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
   cursor: not-allowed;
 }
 
-.c0[aria-expanded='true'] .c1 {
+.c1[aria-expanded='true'] .c2 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c0 .c1 {
+.c1 .c2 {
   position: absolute;
   right: 10px;
   top: 12px;
 }
 
-@media screen and (min-width:1024px) {
+.c0 {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
 
+.c4 {
+  position: fixed;
+  z-index: 500;
 }
 
 @media screen and (min-width:1024px) {
-  .c0 {
+  .c5 [data-reach-menu-item] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c1 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 <div>
-  <button
-    aria-controls="menu--1"
-    aria-haspopup="true"
+  <div
     class="c0"
-    data-reach-menu-button=""
-    id="menu-button--menu--1"
-    type="button"
   >
-    Demo
-    <svg
-      aria-hidden="true"
-      class="c1 c2"
-      fill="currentcolor"
-      height="1em"
-      viewBox="0 0 24 24"
-      width="1em"
+    <button
+      aria-controls="menu--1"
+      aria-haspopup="true"
+      class="c1"
+      data-reach-menu-button=""
+      id="menu-button--menu--1"
+      type="button"
+      variant="filled"
     >
-      <path
-        d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-        transform="rotate(-90 12 12)"
-      />
-    </svg>
-  </button>
+      Demo
+      <svg
+        aria-hidden="true"
+        class="c2 c3"
+        fill="currentcolor"
+        height="1em"
+        viewBox="0 0 24 24"
+        width="1em"
+      >
+        <path
+          d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+          transform="rotate(-90 12 12)"
+        />
+      </svg>
+    </button>
+    <div
+      class="c4"
+      data-reach-menu=""
+      data-reach-menu-popover=""
+      hidden=""
+    >
+      <div
+        aria-labelledby="menu-button--menu--1"
+        class="c5"
+        data-reach-menu-items=""
+        id="menu--1"
+        role="menu"
+        tabindex="-1"
+        variant="filled"
+      >
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action One"
+          id="option-0--menu--1"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action One
+        </div>
+        <div
+          data-reach-menu-item=""
+          data-valuetext="Action Two"
+          id="option-1--menu--1"
+          role="menuitem"
+          tabindex="-1"
+        >
+          Action Two
+        </div>
+        <div
+          role="none"
+          tabindex="-1"
+        >
+          <a
+            data-reach-menu-item=""
+            data-reach-menu-link=""
+            data-valuetext="Action Three"
+            href="#"
+            id="option-2--menu--1"
+            role="menuitem"
+            tabindex="-1"
+          >
+            Action Three
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 `;

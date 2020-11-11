@@ -5,8 +5,11 @@ import React from 'react'
 
 import ActionBar from '../ActionBar/ActionBar'
 import BrandBar from '../BrandBar/BrandBar'
+import Flex from '../Flex/Flex'
 import Footer from '../Footer/Footer'
 import MenuBar from '../MenuBar/MenuBar'
+import MenuButton from '../MenuButton/MenuButton'
+import SplitButton from '../SplitButton/SplitButton'
 import TextInputField from '../TextInputField/TextInputField'
 import Layout from './Layout'
 
@@ -70,7 +73,28 @@ export const BasicUsage = (): React.ReactElement => {
             popupType="dialog"
             aria-label="Settings"
           >
-            <TextInputField label="Some Setting" name="setting" />
+            <Flex flexDirection="column" flexWrap="nowrap">
+              <SplitButton
+                mb={3}
+                onSelectMainAction={action('Main Action')}
+                mainActionLabel="Main Action"
+              >
+                <SplitButton.Action onSelect={action('SplitButton One')}>
+                  Action One
+                </SplitButton.Action>
+                <SplitButton.Action onSelect={action('SplitButton Two')}>
+                  Action Two
+                </SplitButton.Action>
+              </SplitButton>
+              <MenuButton mb={3} label="Z-index Test">
+                <MenuButton.Item onSelect={action('MenuButton One')}>Action One</MenuButton.Item>
+                <MenuButton.Item onSelect={action('MenuButton Two')}>Action Two</MenuButton.Item>
+                <MenuButton.Item onSelect={action('MenuButton Three')}>
+                  Action Three
+                </MenuButton.Item>
+              </MenuButton>
+              <TextInputField label="Some Setting" name="setting" />
+            </Flex>
           </ActionBar.Panel>
         </ActionBar>
       )}
