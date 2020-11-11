@@ -2,6 +2,14 @@ import { Size } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { TableCellProps } from '../Table/Table'
 
 export type ColumnFn = (rowData: { [key: string]: any }) => React.ReactNode
+export type JustifyContent =
+  | 'unset'
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
 
 export interface TransientProps {
   $isCardView: boolean

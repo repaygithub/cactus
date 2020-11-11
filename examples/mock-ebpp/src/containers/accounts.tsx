@@ -173,10 +173,8 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
                 )}
               </DataGrid.Column>
             </DataGrid.Table>
-            <DataGrid.BottomSection>
-              <DataGrid.Pagination
-                ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
-              />
+            <DataGrid.BottomSection justifyContent="flex-end">
+              <DataGrid.Pagination />
             </DataGrid.BottomSection>
           </DataGrid>
         </Flex>

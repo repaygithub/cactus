@@ -5,6 +5,7 @@ import React, { ReactElement, useContext, useState } from 'react'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
 import DataGrid from './DataGrid'
+import { JustifyContent } from './types'
 
 interface Datum {
   name: string
@@ -205,6 +206,15 @@ const DataGridContainer = ({
 
   const usableData = includePaginationAndSort ? paginateData() : data
   const topSection = boolean('topSection', true)
+  const justifyOptions: JustifyContent[] = [
+    'unset',
+    'flex-start',
+    'flex-end',
+    'center',
+    'space-between',
+    'space-around',
+    'space-evenly',
+  ]
 
   return (
     <DataGrid
@@ -216,13 +226,15 @@ const DataGridContainer = ({
       cardBreakpoint={cardBreakpoint}
     >
       {topSection && (
-        <DataGrid.TopSection>
+        <DataGrid.TopSection
+          justifyContent={select('justifyContent Top', justifyOptions, 'space-between')}
+          spacing={select('spacing top', [0, 1, 2, 3, 4, 5, 6, 7], 4)}
+        >
           {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
           {includePaginationAndSort && providePageSizeSelect && (
             <DataGrid.PageSizeSelect
               pageSizeOptions={[4, 6, 12]}
               pageSizeSelectLabel={text('pageSizeSelectLabel', '')}
-              ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
             />
           )}
         </DataGrid.TopSection>
@@ -262,7 +274,10 @@ const DataGridContainer = ({
           )}
         </DataGrid.Column>
       </DataGrid.Table>
-      <DataGrid.BottomSection>
+      <DataGrid.BottomSection
+        justifyContent={select('justifyContent bottom', justifyOptions, 'flex-end')}
+        spacing={select('spacing bottom', [0, 1, 2, 3, 4, 5, 6, 7], 4)}
+      >
         {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
           <span>{getResultsCountText()}</span>
         ) : null}
@@ -274,16 +289,12 @@ const DataGridContainer = ({
               prevPageLabel={text('Pagination: prevPageLabel', '')}
               nextPageLabel={text('Pagination: nextPageLabel', '')}
               lastPageLabel={text('Pagination: lastPageLabel', '')}
-              mb={isCardView && size.toString() === 'tiny' ? 4 : undefined}
-              ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
             />
           ) : (
             <DataGrid.PrevNext
               prevText={prevText}
               nextText={nextText}
               disableNext={usableData.length < getPaginationOptions().pageSize || disableNext}
-              mb={isCardView && size.toString() === 'tiny' ? 4 : undefined}
-              ml={isCardView && size.toString() === 'tiny' ? 'auto' : 'auto'}
             />
           )
         ) : null}

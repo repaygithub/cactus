@@ -203,12 +203,7 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
     >
       <DataGrid.TopSection>
         {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
-        {providePageSizeOptions && (
-          <DataGrid.PageSizeSelect
-            pageSizeOptions={[4, 6, 12]}
-            ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
-          />
-        )}
+        {providePageSizeOptions && <DataGrid.PageSizeSelect pageSizeOptions={[4, 6, 12]} />}
       </DataGrid.TopSection>
       <DataGrid.Table data={paginateData()}>
         <DataGrid.DataColumn id="name" title="Name" />
@@ -236,20 +231,15 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
           )}
         </DataGrid.Column>
       </DataGrid.Table>
-      <DataGrid.BottomSection>
+      <DataGrid.BottomSection justifyContent="flex-end">
         {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
           <span>{getResultsCountText()}</span>
         ) : null}
         {providePageCount ? (
-          <DataGrid.Pagination
-            mb={isCardView && size.toString() === 'tiny' ? 4 : undefined}
-            ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
-          />
+          <DataGrid.Pagination />
         ) : (
           <DataGrid.PrevNext
             disableNext={paginateData().length < getPaginationOptions().pageSize}
-            mb={isCardView && size.toString() === 'tiny' ? 4 : undefined}
-            ml={isCardView && size.toString() === 'tiny' ? 'auto' : 'auto'}
           />
         )}
         {isCardView && showResultsCount && size.toString() === 'tiny' ? (

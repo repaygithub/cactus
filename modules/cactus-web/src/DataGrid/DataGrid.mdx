@@ -35,7 +35,9 @@ The `DataGrid` is a wrapper for `Table` that allows you to easily define table c
 The `DataGrid` component has several sub-components to help define your grid structure:
   - `DataGrid.TopSection` - A flex container to be rendered above the table. You can use this space to render other `DataGrid` components in whatever order you like.
     The `TopSection` will always include the sort buttons as the first element in card view.
+    You can use the `justifyContent` and `spacing` props to help with arranging elements and spacing them out from each other.
   - `DataGrid.BottomSection` - A flex container to be rendered below the table. You can use this space to render other `DataGrid` components in whatever order you like.
+    You can use the `justifyContent` and `spacing` props to help with arranging elements and spacing them out from each other.
   - `DataGrid.Table` - A wrapper for our `Table` component which maps the data you pass to the columns that have been configured.
   - `DataGrid.DataColumn` - Receives an `id` prop and renders data from the `data` prop when the key matches `id`. Requires no children.
   - `DataGrid.Column` - Receives a child render function which will be to render anything in this column's cells.
@@ -167,7 +169,7 @@ const DataGridContainer = () => {
       onPageChange={onPageChange}
       cardBreakpoint="tiny"
     >
-      <DataGrid.TopSection>
+      <DataGrid.TopSection justifyContent="flex-end" spacing={4}>
         <DataGrid.PageSizeSelect
           pageSizeOptions={[4, 6, 12]}
         />
@@ -185,11 +187,8 @@ const DataGridContainer = () => {
           )}
         </DataGrid.Column>
       </DataGrid.Table>
-      <DataGrid.BottomSection>
-        <DataGrid.Pagination
-          mb={isCardView && size.toString() === 'tiny' ? 4 : undefined}
-          ml={isCardView && size.toString() === 'tiny' ? undefined : 'auto'}
-        />
+      <DataGrid.BottomSection justifyContent="flex-end">
+        <DataGrid.Pagination />
       </DataGrid.BottomSection>
     </DataGrid>
   )

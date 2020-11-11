@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { ReactElement, useContext, useEffect, useMemo, useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
+import { cloneAll } from '../helpers/react'
 import MenuButton from '../MenuButton/MenuButton'
+import { ScreenSizeContext } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { DataGridContext, getMediaQuery } from './helpers'
-import { DataColumnObject, TransientProps } from './types'
+import { DataColumnObject, JustifyContent, TransientProps } from './types'
 
 export interface TopSectionProps {
   sortLabels?: SortLabels
+  justifyContent?: JustifyContent
+  spacing?: string | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
   children?: React.ReactNode
 }
 
@@ -20,8 +24,10 @@ interface SortLabels {
 
 const TopSection = (props: TopSectionProps): ReactElement | null => {
   const [hasChildren, setHasChildren] = useState<boolean>(false)
-  const { sortLabels = {}, children } = props
+  const { sortLabels = {}, children, justifyContent = 'space-between', spacing = 4 } = props
   const { columns, sortOptions, onSort, isCardView, cardBreakpoint } = useContext(DataGridContext)
+  const screenSize = useContext(ScreenSizeContext)
+  const { space } = useTheme()
   const sortableColumns = useMemo(() => {
     const sortableCols: Map<string, DataColumnObject> = new Map()
     for (const k of columns.keys()) {
@@ -61,6 +67,9 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
     })
   }, [children])
 
+  const margin = typeof spacing === 'number' ? `${space[spacing]}px` : spacing
+  const isTinyScreen = screenSize.toString() === 'tiny'
+
   return (
     <StyledTopSection
       className={`top-section ${
@@ -68,9 +77,10 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
       }`}
       $isCardView={isCardView}
       $cardBreakpoint={cardBreakpoint}
+      $justifyContent={justifyContent}
     >
       {isCardView && sortableColumns.size > 0 && (
-        <div className={`sort-buttons ${hasChildren && 'has-siblings'}`}>
+        <div className="sort-buttons">
           <MenuButton variant="unfilled" label={sortLabels.sortBy || 'Sort by'} mr={4}>
             {[...sortableColumns.keys()].map(
               (key): ReactElement => {
@@ -93,12 +103,23 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
           </MenuButton>
         </div>
       )}
-      {children}
+      {cloneAll(
+        children,
+        {
+          style: isTinyScreen ? { marginTop: margin } : { marginLeft: margin },
+        },
+        (element: React.ReactElement, props: any): React.ReactElement => {
+          if (!isTinyScreen && element.key === '.0') {
+            return element
+          }
+          return React.cloneElement(element, props)
+        }
+      )}
     </StyledTopSection>
   )
 }
 
-const StyledTopSection = styled.div<TransientProps>`
+const StyledTopSection = styled.div<TransientProps & { $justifyContent: JustifyContent }>`
   // Card view styles
   display: flex;
   flex-direction: column;
@@ -113,12 +134,7 @@ const StyledTopSection = styled.div<TransientProps>`
   ${getMediaQuery} {
     flex-direction: row;
     align-items: flex-start;
-  }
-
-  .sort-buttons {
-    &.has-siblings {
-      margin-bottom: 16px;
-    }
+    ${(p) => `justify-content: ${p.$justifyContent};`}
   }
 
   // Card view styles when screen is larger than tiny
@@ -126,6 +142,7 @@ const StyledTopSection = styled.div<TransientProps>`
     p.$isCardView &&
     `${p.theme.mediaQueries && p.theme.mediaQueries.small} {
       flex-direction: row;
+      justify-content: ${p.$justifyContent};
 
       &.has-content {
         margin-bottom: 16px;
@@ -143,6 +160,8 @@ TopSection.defaultProps = {
     ascending: 'Ascending',
     descending: 'Descending',
   },
+  justifyContent: 'space-between',
+  spacing: 4,
 }
 
 TopSection.propTypes = {
@@ -152,6 +171,16 @@ TopSection.propTypes = {
     ascending: PropTypes.node,
     descending: PropTypes.node,
   }),
+  justifyContent: PropTypes.oneOf([
+    'unset',
+    'flex-start',
+    'flex-end',
+    'center',
+    'space-between',
+    'space-around',
+    'space-evenly',
+  ]),
+  spacing: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6, 7])]),
   children: PropTypes.node,
 }
 
