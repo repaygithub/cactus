@@ -50,5 +50,7 @@ addParameters({
     },
   },
 })
+export const parameters = { docs: { inlineStories: false, iframeHeight: 'auto' } }
+
 addDecorator(withKnobs)
 addDecorator(CactusAddon)

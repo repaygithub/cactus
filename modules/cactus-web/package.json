@@ -65,6 +65,7 @@
     "@repay/babel-preset": "^1.0.1",
     "@repay/scripts": "^2.0.1",
     "@storybook/addon-actions": "^6.0.26",
+    "@storybook/addon-docs": "^6.0.26",
     "@storybook/addon-knobs": "^6.0.26",
     "@storybook/addon-storyshots": "6.0.26",
     "@storybook/addon-storyshots-puppeteer": "6.0.26",
