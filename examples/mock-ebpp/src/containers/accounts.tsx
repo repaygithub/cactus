@@ -1,14 +1,6 @@
 import { navigate, RouteComponentProps } from '@reach/router'
-import {
-  Alert,
-  DataGrid,
-  Flex,
-  ScreenSizeContext,
-  SIZES,
-  SplitButton,
-  Text,
-} from '@repay/cactus-web'
-import React, { useContext, useEffect, useState } from 'react'
+import { Alert, DataGrid, Flex, SplitButton, Text } from '@repay/cactus-web'
+import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Account, fetchAccounts } from '../api'
@@ -44,9 +36,6 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
     const accounts = fetchAccounts()
     setState((state) => ({ ...state, accounts: accounts }))
   }, [])
-
-  const size = useContext(ScreenSizeContext)
-  const isCardView = size <= SIZES['tiny']
 
   const paginateData = (): { [key: string]: any }[] => {
     const { paginationOptions, accounts } = state
