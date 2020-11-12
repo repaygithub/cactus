@@ -45,12 +45,20 @@ input,
 select,
 textarea {
   font-family: ${(p) => p.theme.font};
-  ${(p) => textStyle(p.theme, 'body')};
   font-weight: 400;
   color: ${(p): string => p.theme.colors.darkestContrast};
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
+}
+
+/* Inexplicably, applying this to <button> causes integration tests to fail. */
+html,
+body,
+input,
+select,
+textarea {
+  ${(p) => textStyle(p.theme, 'body')};
 }
 
 html,
