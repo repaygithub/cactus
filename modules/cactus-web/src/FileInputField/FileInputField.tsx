@@ -46,7 +46,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
       error={error}
       width={width}
       autoTooltip={autoTooltip}
-      disableTooltip={disableTooltip ?? disabled}
+      disableTooltip={disableTooltip}
     >
       {({ fieldId, labelId, name, ariaDescribedBy, disabled }) => (
         <FileInput

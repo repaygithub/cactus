@@ -69,7 +69,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       error={error}
       tooltip={tooltip}
       autoTooltip={autoTooltip}
-      disableTooltip={disableTooltip ?? disabled}
+      disableTooltip={disableTooltip}
     >
       {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextArea

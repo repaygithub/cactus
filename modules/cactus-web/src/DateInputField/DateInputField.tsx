@@ -50,7 +50,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       warning={warning}
       success={success}
       autoTooltip={autoTooltip}
-      disableTooltip={disableTooltip ?? disabled}
+      disableTooltip={disableTooltip}
     >
       {({ fieldId, status, labelId, ariaDescribedBy, disabled }): React.ReactElement => (
         <DateInput
