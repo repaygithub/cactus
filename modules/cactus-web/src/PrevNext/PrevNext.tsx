@@ -78,8 +78,9 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   },
   prevText,
   nextText,
+  ...rest
 }): React.ReactElement => (
-  <div className={className}>
+  <div className={className} {...rest}>
     <PrevNextLink
       as={linkAs}
       disabled={disablePrev}

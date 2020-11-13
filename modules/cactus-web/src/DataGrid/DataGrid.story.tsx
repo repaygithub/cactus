@@ -275,12 +275,14 @@ const DataGridContainer = ({
         </DataGrid.Column>
       </DataGrid.Table>
       <DataGrid.BottomSection
-        justifyContent={select('justifyContent bottom', justifyOptions, 'flex-end')}
+        justifyContent={select('justifyContent bottom', justifyOptions, 'space-between')}
         spacing={select('spacing bottom', [0, 1, 2, 3, 4, 5, 6, 7], 4)}
       >
         {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
           <span>{getResultsCountText()}</span>
-        ) : null}
+        ) : (
+          <div />
+        )}
         {includePaginationAndSort ? (
           providePageCount ? (
             <DataGrid.Pagination
