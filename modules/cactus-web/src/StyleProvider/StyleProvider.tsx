@@ -1,4 +1,4 @@
-import cactusTheme, { CactusTheme, TextStyle } from '@repay/cactus-theme'
+import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import * as styledComponents from 'styled-components'
@@ -39,36 +39,51 @@ const queries = {
 
 const GlobalStyle = createGlobalStyle`
 html,
-body {
-  font-family: ${(p): styledComponents.Interpolation<styledComponents.ThemeProps<CactusTheme>> =>
-    p.theme.font as styledComponents.Interpolation<styledComponents.ThemeProps<CactusTheme>>};
-  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+body,
+button,
+input,
+select,
+textarea {
+  font-family: ${(p) => p.theme.font};
   font-weight: 400;
   color: ${(p): string => p.theme.colors.darkestContrast};
   font-style: normal;
   font-stretch: normal;
   letter-spacing: normal;
+}
+
+/* Inexplicably, applying this to <button> causes integration tests to fail. */
+html,
+body,
+input,
+select,
+textarea {
+  ${(p) => textStyle(p.theme, 'body')};
+}
+
+html,
+body {
   margin: 0;
 }
 
 small {
-  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')}
+  ${(p) => textStyle(p.theme, 'small')}
 }
 
 h1 {
-  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h1')};
+  ${(p) => textStyle(p.theme, 'h1')};
 }
 
 h2 {
-  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h2')};
+  ${(p) => textStyle(p.theme, 'h2')};
 }
 
 h3 {
-  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h3')};
+  ${(p) => textStyle(p.theme, 'h3')};
 }
 
 h4, h5, h6 {
-  ${(p): styledComponents.FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'h4')};
+  ${(p) => textStyle(p.theme, 'h4')};
 }
 `
 
