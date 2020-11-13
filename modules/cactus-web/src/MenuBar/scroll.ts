@@ -200,8 +200,7 @@ export const useMenuKeyHandler = (setFocus: FocusSetter): KeyHandler =>
   )
 
 interface Scroll {
-  showFore?: boolean
-  showBack?: boolean
+  showButtons?: boolean
   clickFore?: () => void
   clickBack?: () => void
   offset: number
@@ -248,112 +247,85 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
         scrollAttr = 'scrollTop'
         scrollWidth = 'scrollHeight'
       }
-      const updateScrollState: (s: Scroll, b?: number) => Scroll = (scroll, button) => {
+      const updateScrollState = (scroll: Scroll, target?: number | HTMLElement): Scroll => {
         const [wrapper, buttonWidth, items] = getScrollInfo(menu)
-        let maxButton = items.length - 1
-        button = Math.min(maxButton, button === undefined ? scroll.current : button)
+
         const parentRect = wrapper.getBoundingClientRect()
-        let maxTrailingWidth = Math.ceil(parentRect[width] - buttonWidth)
+        const itemRects = items.map((i) => i.getBoundingClientRect())
+        let maxButton = items.length - 1
+        const showButtons = menu[scrollWidth] > Math.round(parentRect[width])
+        const maxWidth = parentRect[width] - (showButtons ? buttonWidth * 2 : 0)
+        let button: number = scroll.current
+        if (typeof target === 'number') {
+          button = target
+        } else if (target) {
+          button = items.indexOf(target)
+          if (button < 0) {
+            return scroll
+          } else if (button > 0 && showButtons) {
+            const span = itemRects[button][fore] - itemRects[scroll.current][back]
+            if (span > maxWidth) {
+              maxButton = button
+            } else if (button > scroll.current) {
+              button = scroll.current
+            }
+          }
+        }
+
         let menuWidth = 0
         let offset = 0
         for (let i = maxButton; i >= 0; i--) {
-          const itemWidth = items[i].getBoundingClientRect()[width]
+          const itemWidth = itemRects[i][width]
           menuWidth += itemWidth
-          if (i === 0) {
-            maxTrailingWidth += buttonWidth
-          }
-          if (menuWidth < maxTrailingWidth) {
+          if (menuWidth < maxWidth) {
             maxButton = i
             button = Math.min(button, maxButton)
           } else if (i < button) {
             offset += itemWidth
           }
         }
-        if (button === 1 && items[0].getBoundingClientRect()[width] < buttonWidth) {
-          if (button > scroll.current && maxButton > 1) {
-            return updateScrollState(scroll, 2)
-          } else if (button < scroll.current) {
-            return updateScrollState(scroll, 0)
-          }
-        }
-
-        const showBack = button > 0
-        let $buttonWidth = showBack ? buttonWidth : 0
-        const showFore = greaterThan(menuWidth - offset, parentRect[width] - $buttonWidth)
-        if (showFore) {
-          $buttonWidth += buttonWidth
-        }
 
         // This is a fix for an IE bug with nested flex items.
+        // TODO Do I still need this now that buttons are always visible?
         if (
           buttonWidth &&
           parentRect[width] > 0 &&
           /MSIE|Trident/.test(window.navigator.userAgent)
         ) {
-          menu.style.maxHeight = `calc(70vh - ${$buttonWidth}px)`
+          menu.style.maxHeight = `calc(70vh - ${buttonWidth * 2}px)`
         }
 
         // If the offset/button state is unchanged, don't update the state.
         if (
-          showFore === scroll.showFore &&
+          showButtons === scroll.showButtons &&
           equals(scroll.offset, offset) &&
           button === scroll.current
         ) {
           return scroll
         }
-        // Set the actual scroll offset on the menu.
-        const scrollElement = buttonWidth ? menu : wrapper
-        scrollElement[scrollAttr] = offset
         const result: Scroll = {
-          showFore,
-          showBack,
+          showButtons,
           offset,
           current: button,
         }
-        result.clickFore = () => {
-          setScroll(updateScrollState(result, result.current + 1))
+        if (greaterThan(menu[scrollWidth] - offset, maxWidth)) {
+          result.clickFore = () => {
+            setScroll(updateScrollState(result, result.current + 1))
+          }
         }
-        result.clickBack = () => {
-          setScroll(updateScrollState(result, result.current - 1))
+        if (button > 0) {
+          result.clickBack = () => {
+            setScroll(updateScrollState(result, result.current - 1))
+          }
         }
+        // Set the actual scroll offset on the menu.
+        const scrollElement = buttonWidth ? menu : wrapper
+        scrollElement[scrollAttr] = offset
         return result
       }
 
-      type Calc = (r: DOMRect[], i: number, t: boolean, m: number, w: number) => number
-      const calcNextButton: Calc = (itemRects, index, toTop, minBack, buttonWidth) => {
-        for (let i = index; i >= 0; i--) {
-          if (Math.round(itemRects[i][back]) < minBack) {
-            // If we run calculations to the top and get an index > 0, we guessed wrong.
-            if (toTop) {
-              return calcNextButton(itemRects, index, false, minBack + buttonWidth, 0)
-            }
-            return Math.min(i + 1, index)
-          }
-        }
-        return 0
-      }
-
       menu.scrollToMenuItem = (target) => {
-        const [wrapper, buttonWidth, items] = getScrollInfo(menu)
-        const index = items.indexOf(target)
-        const parentRect = wrapper.getBoundingClientRect()
-        let next = 0
-        if (index < 0) {
-          return
-        } else if (index > 0 && menu[scrollWidth] > Math.round(parentRect[width])) {
-          const itemRects = items.map((i) => i.getBoundingClientRect())
-          const max = Math.round(parentRect[fore])
-          // If the button is offscreen, shift all calculations to where it's onscreen;
-          // start by assuming the button is visible, then adjust if that's impossible.
-          let shift = Math.min(0, max - buttonWidth - Math.round(itemRects[index][fore]))
-          const end = Math.round(itemRects[itemRects.length - 1][fore])
-          if (end + shift <= max) {
-            shift = Math.min(0, shift + buttonWidth)
-          }
-          const min = Math.round(parentRect[back]) - shift
-          next = calcNextButton(itemRects, index, true, min, buttonWidth)
-        }
-        setScroll((s) => updateScrollState(s, next))
+        setScroll((s) => updateScrollState(s, target))
       }
 
       const observer = observeRect(menu, () => {
