@@ -1,4 +1,4 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -32,5 +32,6 @@ export const BasicUsage = (): React.ReactElement => (
     onChange={({ target }) => console.log(`onChange '${target.name}':`, target.value)}
     onFocus={({ target }) => console.log('onFocus:', target.name)}
     onBlur={({ target }) => console.log('onBlur:', target.name)}
+    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
   />
 )

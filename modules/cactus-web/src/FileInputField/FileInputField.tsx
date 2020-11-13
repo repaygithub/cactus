@@ -27,6 +27,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
     error,
     width,
     autoTooltip = false,
+    disableTooltip,
     ...rest
   } = omitMargins(props) as Omit<FileInputFieldProps, keyof MarginProps>
 
@@ -44,6 +45,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
       error={error}
       width={width}
       autoTooltip={autoTooltip}
+      disableTooltip={disableTooltip}
     >
       {({ fieldId, labelId, name, ariaDescribedBy, disabled }) => (
         <FileInput

@@ -1,4 +1,4 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
@@ -24,6 +24,7 @@ export const BasicUsage = (): React.ReactElement => (
     error={text('error', '')}
     success={text('success', '')}
     warning={text('warning', '')}
+    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
   >
     <CheckBoxGroup.Item name="option-1" label="Option 1" />
     <CheckBoxGroup.Item name="option-2" label="Option 2" />
