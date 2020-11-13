@@ -108,8 +108,8 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
         {
           style: isTinyScreen ? { marginTop: margin } : { marginLeft: margin },
         },
-        (element: React.ReactElement, props: any): React.ReactElement => {
-          if (!isTinyScreen && element.key === '.0') {
+        (element: React.ReactElement, props: any, index): React.ReactElement => {
+          if (!isTinyScreen && !isCardView && index === 0) {
             return element
           }
           return React.cloneElement(element, props)
