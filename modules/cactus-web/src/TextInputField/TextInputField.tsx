@@ -34,6 +34,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     onBlur,
     disabled,
     autoTooltip,
+    disableTooltip,
     ...inputProps
   } = omitMargins(props) as Omit<TextInputFieldProps, keyof MarginProps>
 
@@ -68,6 +69,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       error={error}
       tooltip={tooltip}
       autoTooltip={autoTooltip}
+      disableTooltip={disableTooltip}
     >
       {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextInput

@@ -1,4 +1,4 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -10,10 +10,10 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => {
-  const disabled = boolean('disabled', false)
   return (
     <AccessibleField
-      disabled={disabled}
+      disabled={boolean('disabled', false)}
+      disableTooltip={select('disableTooltip', [false, true, undefined], false)}
       name={text('name', 'field_name')}
       label={text('label', 'Field Label')}
       error={text('error (will show field error)', '')}

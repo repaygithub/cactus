@@ -1,5 +1,5 @@
 import { actions } from '@storybook/addon-actions'
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -24,6 +24,7 @@ export const BasicUsage = (): React.ReactElement => (
     tooltip={text('tooltip', 'Some tooltip text')}
     resize={boolean('resize', false)}
     autoTooltip={boolean('autoTooltip', true)}
+    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
     {...eventLoggers}
   />
 )
