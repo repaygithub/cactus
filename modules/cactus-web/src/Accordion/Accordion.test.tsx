@@ -22,6 +22,59 @@ const closeAccordion = async (accordionLabel: string) => {
 const getAccordionButton = (accordionLabel: string) =>
   screen.getByLabelText(accordionLabel, { selector: '[data-role="accordion-button"]' })
 
+const ControlledAccordion: React.FC<{
+  initOpenId?: string[]
+  maxOpen?: number
+  useDefaultOpen?: boolean
+  changeHook?: (id: string) => void
+}> = ({ changeHook, initOpenId = [], maxOpen, useDefaultOpen }) => {
+  const [open, setOpen] = React.useState<string[]>(initOpenId)
+
+  const toggleAccordion = (toggleId: string) => {
+    changeHook?.(toggleId)
+    setOpen((currentOpen) => {
+      if (currentOpen.includes(toggleId)) {
+        return currentOpen.filter((id) => id !== toggleId)
+      }
+      return [...currentOpen, toggleId]
+    })
+  }
+
+  return (
+    <Accordion.Provider openId={open} maxOpen={maxOpen} onChange={toggleAccordion}>
+      <Accordion id="A1">
+        <Accordion.Header>
+          <Text as="h3">Accordion 1</Text>
+        </Accordion.Header>
+        <Accordion.Body>Should show A1</Accordion.Body>
+      </Accordion>
+      <Accordion defaultOpen={useDefaultOpen} id="A2">
+        <Accordion.Header>
+          <Text as="h3">Accordion 2</Text>
+        </Accordion.Header>
+        <Accordion.Body>Should show A2</Accordion.Body>
+      </Accordion>
+    </Accordion.Provider>
+  )
+}
+
+const UncontrolledAccordion = () => (
+  <Accordion.Provider maxOpen={2}>
+    <Accordion>
+      <Accordion.Header>
+        <Text as="h3">Accordion 1</Text>
+      </Accordion.Header>
+      <Accordion.Body>A1 Content</Accordion.Body>
+    </Accordion>
+    <Accordion>
+      <Accordion.Header>
+        <Text as="h3">Accordion 2</Text>
+      </Accordion.Header>
+      <Accordion.Body>A2 Content</Accordion.Body>
+    </Accordion>
+  </Accordion.Provider>
+)
+
 describe('component: Accordion', (): void => {
   describe('Component', (): void => {
     test('Should render Accordion', (): void => {
@@ -144,9 +197,10 @@ describe('component: Accordion', (): void => {
     })
 
     test('Should close one Accordion when another opens', async (): Promise<void> => {
+      const onChange = jest.fn()
       const { container } = render(
         <StyleProvider>
-          <Accordion.Provider>
+          <Accordion.Provider onChange={onChange}>
             <Accordion id="A1">
               <Accordion.Header>
                 <Text as="h3">Accordion 1</Text>
@@ -169,25 +223,31 @@ describe('component: Accordion', (): void => {
       await openAccordion()
       expect(container).toHaveTextContent('Should show first and not second')
       expect(container).not.toHaveTextContent('Should show second and not first')
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenLastCalledWith('A1')
 
       userEvent.click(a2Button)
       await openAccordion()
       await closeAccordion('Accordion 1')
       expect(container).toHaveTextContent('Should show second and not first')
       expect(container).not.toHaveTextContent('Should show first and not second')
+      expect(onChange).toHaveBeenCalledTimes(3)
+      expect(onChange).toHaveBeenNthCalledWith(2, 'A2')
+      expect(onChange).toHaveBeenNthCalledWith(3, 'A1')
     })
 
     test('Should allow two Accordions to be open at the same time', async (): Promise<void> => {
+      const onChange = jest.fn()
       const { container } = render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion data-testid="A1">
+          <Accordion.Provider maxOpen={2} onChange={onChange}>
+            <Accordion id="A1">
               <Accordion.Header>
                 <Text as="h3">Accordion 1</Text>
               </Accordion.Header>
               <Accordion.Body>Should show A1</Accordion.Body>
             </Accordion>
-            <Accordion data-testid="A2">
+            <Accordion id="A2">
               <Accordion.Header>
                 <Text as="h3">Accordion 2</Text>
               </Accordion.Header>
@@ -203,17 +263,22 @@ describe('component: Accordion', (): void => {
       await openAccordion()
       expect(container).toHaveTextContent('Should show A1')
       expect(container).not.toHaveTextContent('Should show A2')
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenLastCalledWith('A1')
 
       userEvent.click(a2Button)
       await openAccordion()
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
+      expect(onChange).toHaveBeenCalledTimes(2)
+      expect(onChange).toHaveBeenLastCalledWith('A2')
     })
 
     test('should allow the user to initialize accordions as open', async () => {
+      const onChange = jest.fn()
       const { container } = render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
+          <Accordion.Provider maxOpen={2} onChange={onChange}>
             <Accordion defaultOpen>
               <Accordion.Header>
                 <Text as="h3">Accordion 1</Text>
@@ -233,27 +298,191 @@ describe('component: Accordion', (): void => {
       await openAccordion()
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
+    test('should allow the user to control which accordions are open', async () => {
+      const changeHook = jest.fn()
+      const { container } = render(
+        <StyleProvider>
+          <ControlledAccordion initOpenId={['A2']} changeHook={changeHook} />
+        </StyleProvider>
+      )
+
+      expect(container).not.toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+      expect(changeHook).not.toHaveBeenCalled()
+
+      userEvent.click(getAccordionButton('Accordion 1'))
+      await openAccordion()
+
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+      expect(changeHook).toHaveBeenCalledTimes(1)
+      expect(changeHook).toHaveBeenLastCalledWith('A1')
+
+      userEvent.click(getAccordionButton('Accordion 2'))
+      await closeAccordion('Accordion 2')
+
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).not.toHaveTextContent('Should show A2')
+      expect(changeHook).toHaveBeenCalledTimes(2)
+      expect(changeHook).toHaveBeenLastCalledWith('A2')
+    })
+
+    test('should ignore any non-existent IDs', (): void => {
+      const { container } = render(
+        <StyleProvider>
+          <ControlledAccordion initOpenId={['foo']} />
+        </StyleProvider>
+      )
+
+      expect(container).not.toHaveTextContent('Should show A1')
+      expect(container).not.toHaveTextContent('Should show A2')
+    })
+
+    test('should ignore maxOpen if the user controls the open accordions', async () => {
+      const error = console.error
+      console.error = jest.fn()
+
+      const { container } = render(
+        <StyleProvider>
+          <ControlledAccordion initOpenId={['A1']} maxOpen={1} />
+        </StyleProvider>
+      )
+
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).not.toHaveTextContent('Should show A2')
+
+      userEvent.click(getAccordionButton('Accordion 2'))
+      await openAccordion()
+
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+
+      console.error = error
+    })
+
+    test('should ignore defaultOpen props on children if the user controls open accordions', (): void => {
+      const warn = console.warn
+      console.warn = jest.fn()
+
+      const { container } = render(
+        <StyleProvider>
+          <ControlledAccordion initOpenId={['A1']} useDefaultOpen={true} />
+        </StyleProvider>
+      )
+
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).not.toHaveTextContent('Should show A2')
+
+      console.warn = warn
     })
   })
 
-  const UncontrolledAccordion = () => (
-    <Accordion.Provider maxOpen={2}>
-      <Accordion>
-        <Accordion.Header>
-          <Text as="h3">Accordion 1</Text>
-        </Accordion.Header>
-        <Accordion.Body>A1 Content</Accordion.Body>
-      </Accordion>
-      <Accordion>
-        <Accordion.Header>
-          <Text as="h3">Accordion 2</Text>
-        </Accordion.Header>
-        <Accordion.Body>A2 Content</Accordion.Body>
-      </Accordion>
-    </Accordion.Provider>
-  )
+  describe('Keyboard Interactions - Controlled', (): void => {
+    test('DOWN arrow should move focus to the next accordion', (): void => {
+      render(
+        <StyleProvider>
+          <ControlledAccordion />
+        </StyleProvider>
+      )
 
-  describe('Keyboard Interactions', (): void => {
+      const a1 = getAccordionButton('Accordion 1')
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(document.activeElement).toBe(getAccordionButton('Accordion 2'))
+    })
+
+    test('UP arrow should move focus to the previous accordion', (): void => {
+      render(
+        <StyleProvider>
+          <ControlledAccordion />
+        </StyleProvider>
+      )
+
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(document.activeElement).toBe(getAccordionButton('Accordion 1'))
+    })
+
+    test('UP/DOWN arrows should loop on the accordions', (): void => {
+      render(
+        <StyleProvider>
+          <ControlledAccordion />
+        </StyleProvider>
+      )
+
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(document.activeElement).toBe(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(document.activeElement).toBe(a1)
+    })
+
+    test('SPACE should open/close the accordion', (): void => {
+      render(
+        <StyleProvider>
+          <ControlledAccordion />
+        </StyleProvider>
+      )
+
+      const a = getAccordionButton('Accordion 1')
+      fireEvent.focus(a)
+      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      expect(a.getAttribute('aria-expanded')).toBe('true')
+      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      expect(a.getAttribute('aria-expanded')).toBe('false')
+    })
+
+    test('RETURN should open/close the accordion', (): void => {
+      render(
+        <StyleProvider>
+          <ControlledAccordion />
+        </StyleProvider>
+      )
+
+      const a = getAccordionButton('Accordion 1')
+      fireEvent.focus(a)
+      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      expect(a.getAttribute('aria-expanded')).toBe('true')
+      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      expect(a.getAttribute('aria-expanded')).toBe('false')
+    })
+
+    test('HOME should focus on the first accordion', (): void => {
+      render(
+        <StyleProvider>
+          <ControlledAccordion />
+        </StyleProvider>
+      )
+
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      expect(document.activeElement).toBe(a1)
+    })
+
+    test('END should focus on the last accordion', (): void => {
+      render(
+        <StyleProvider>
+          <ControlledAccordion />
+        </StyleProvider>
+      )
+
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      expect(document.activeElement).toBe(a2)
+    })
+  })
+
+  describe('Keyboard Interactions - Uncontrolled', (): void => {
     test('DOWN arrow should move focus to the next accordion', (): void => {
       render(
         <StyleProvider>

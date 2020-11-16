@@ -10,6 +10,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -31,6 +32,9 @@ interface AccordionProps
     MaxWidthProps,
     WidthProps,
     React.HTMLAttributes<HTMLDivElement> {
+  /** Does not apply when Accordion descends from a controlled Provider.  If true, the
+   * Accordion will begin in the open state when first rendered.
+   */
   defaultOpen?: boolean
   variant?: AccordionVariants
   useBoxShadows?: boolean
@@ -44,27 +48,45 @@ interface AccordionBodyProps extends MarginProps, React.HTMLAttributes<HTMLDivEl
 
 interface AccordionContext {
   isOpen: boolean
-  variant: string | undefined
-  bodyId: string | undefined
-  headerId: string | undefined
-  handleToggle: (() => void) | undefined
-  handleFocus: ((offset: number) => void) | undefined
-  focusFirst: (() => void) | undefined
-  focusLast: (() => void) | undefined
+  variant?: string
+  bodyId?: string
+  headerId?: string
+  handleToggle?: () => void
+  handleFocus?: (offset: number) => void
+  focusFirst?: () => void
+  focusLast?: () => void
 }
 
 interface AccordionProviderProps {
+  /** Only used in uncontrolled variant.  Determines maximum number of Accordions that
+   * can be open at one time.
+   */
   maxOpen?: number
+  /** Only used in controlled variant.  Contains the IDs of all Accordions that should be
+   * in an open state.
+   */
+  openId?: string | string[]
+  /** Called whenever an Accordion is toggled from open to closed or vice versa.  The ID
+   * of the toggled Accordion is passed to the function.
+   */
+  onChange?: (changedId: string) => void
   children?: React.ReactNode
 }
 
+interface ManagedAccordions {
+  [key: string]: { order: number }
+}
+
 interface AccordionProviderContext {
-  manageOpen: ((name: string, open: boolean) => void) | undefined
-  manageFocus: ((id: string, offset: number) => void) | undefined
-  focusFirst: (() => void) | undefined
-  focusLast: (() => void) | undefined
+  manageOpen?: (name: string, open: boolean) => void
+  manageFocus?: (id: string, offset: number) => void
+  focusFirst?: () => void
+  focusLast?: () => void
   isManaged: boolean
-  managedAccordions: { [key: string]: { open: boolean; order: number } } | undefined
+  isControlled: boolean
+  openAccordions?: string[]
+  registerAccordion?: (id: string, defaultOpen: boolean) => void
+  unregisterAccordion?: (id: string) => void
 }
 
 const AccordionContext = createContext<AccordionContext>({
@@ -283,8 +305,8 @@ const AccordionBodyBase = (props: AccordionBodyProps): ReactElement | null => {
     window.requestAnimationFrame((): void => {
       if (previousIsOpen.current !== isOpen && isSubscribed) {
         setState('animating')
+        previousIsOpen.current = isOpen
       }
-      previousIsOpen.current = isOpen
 
       const currentHeight = getHeight(innerRef.current)
       if (currentHeight !== height && isSubscribed) {
@@ -363,38 +385,89 @@ const ProviderContext = createContext<AccordionProviderContext>({
   focusFirst: undefined,
   focusLast: undefined,
   isManaged: false,
-  managedAccordions: undefined,
+  isControlled: false,
+  openAccordions: undefined,
+  registerAccordion: undefined,
+  unregisterAccordion: undefined,
 })
 
 let order = 0
 
 export const AccordionProvider = (props: AccordionProviderProps): ReactElement => {
-  const { maxOpen = 1 } = props
-  const [update, makeUpdate] = useState<boolean>(false)
+  const { maxOpen = 1, onChange, openId } = props
+  const isControlled = typeof openId !== 'undefined'
 
-  const managedAccordions = useRef<{ [key: string]: { open: boolean; order: number } }>({})
+  const [uncontrolledOpen, setUncontrolledOpen] = useState<string[]>([])
+  const openAccordions = useMemo(() => {
+    if (isControlled) {
+      const openIds = Array.isArray(openId) ? openId : [openId]
+      return openIds as string[]
+    }
+    return uncontrolledOpen
+  }, [isControlled, openId, uncontrolledOpen])
 
-  const manageOpen = (id: string, open: boolean): void => {
-    managedAccordions.current[id] = { open: open, order: order++ }
-    const accordions = managedAccordions.current
-    if (open) {
-      const allOpen = Object.keys(accordions).filter(
-        (accordionId): boolean => accordions[accordionId].open === true
-      )
-      if (allOpen.length > maxOpen) {
-        allOpen.sort((a, b): number => {
-          if (accordions[a].order < accordions[b].order) {
-            return -1
-          } else if (accordions[a].order > accordions[b].order) {
-            return 1
-          }
-          return 0
-        })
-        managedAccordions.current[allOpen[0]].open = false
+  const managedAccordions = useRef<ManagedAccordions>({})
+
+  useEffect(() => {
+    const closeOldestOpenAccordion = () => {
+      const accordions = managedAccordions.current
+      let allOpen = [...uncontrolledOpen]
+      allOpen.sort((a, b): number => {
+        if (accordions[a].order < accordions[b].order) {
+          return -1
+        } else if (accordions[a].order > accordions[b].order) {
+          return 1
+        }
+        return 0
+      })
+
+      const accordionToClose = allOpen[0]
+      allOpen = allOpen.slice(1)
+      onChange?.(accordionToClose)
+      setUncontrolledOpen(allOpen)
+    }
+
+    if (!isControlled) {
+      if (uncontrolledOpen.length > maxOpen) {
+        closeOldestOpenAccordion()
       }
     }
-    makeUpdate(!update)
-  }
+  }, [isControlled, maxOpen, onChange, uncontrolledOpen])
+
+  const registerAccordion = useCallback(
+    (id: string, defaultOpen: boolean) => {
+      managedAccordions.current[id] = { order: order++ }
+      if (!isControlled) {
+        setUncontrolledOpen((previousOpen) => {
+          if (!defaultOpen || previousOpen.includes(id)) {
+            return previousOpen
+          }
+          return [...previousOpen, id]
+        })
+      }
+    },
+    [isControlled]
+  )
+
+  const unregisterAccordion = useCallback((id: string) => {
+    delete managedAccordions.current[id]
+  }, [])
+
+  const manageOpen = useCallback(
+    (id: string, open: boolean): void => {
+      onChange?.(id)
+      if (!isControlled) {
+        managedAccordions.current[id] = { order: order++ }
+        setUncontrolledOpen((previousOpen) => {
+          if (open) {
+            return [...previousOpen, id]
+          }
+          return previousOpen.filter((existingId) => existingId !== id)
+        })
+      }
+    },
+    [isControlled, onChange]
+  )
 
   const focusById = (id: string): void => {
     const focusAccordion = document.getElementById(id)
@@ -447,7 +520,10 @@ export const AccordionProvider = (props: AccordionProviderProps): ReactElement =
         focusFirst,
         focusLast,
         isManaged: true,
-        managedAccordions: managedAccordions.current,
+        isControlled,
+        openAccordions,
+        registerAccordion,
+        unregisterAccordion,
       }}
     >
       {props.children}
@@ -455,12 +531,58 @@ export const AccordionProvider = (props: AccordionProviderProps): ReactElement =
   )
 }
 
-AccordionProvider.defaultProps = {
-  maxOpen: 1,
-}
-
 AccordionProvider.propTypes = {
-  maxOpen: PropTypes.number,
+  maxOpen: (
+    props: AccordionProviderProps,
+    name: keyof AccordionProviderProps,
+    compName: string
+  ) => {
+    const val = props[name]
+    if (val) {
+      if (props.openId) {
+        return new Error(
+          'You provided a maxOpen prop to a controlled AccordionProvider.  This prop only has an effect on uncontrolled providers.'
+        )
+      }
+
+      if (typeof val !== 'number') {
+        return new Error(
+          `Invalid prop "${name}" supplied to "${compName}". Expected "number", received "${
+            Array.isArray(val) ? 'array' : typeof val
+          }".`
+        )
+      }
+    }
+
+    return null
+  },
+  onChange: PropTypes.func,
+  openId: (props: AccordionProviderProps, name: keyof AccordionProviderProps, compName: string) => {
+    const val = props[name]
+    if (val) {
+      if (!props.onChange) {
+        return new Error(
+          'You provided an openId prop to AccordionProvider without an onChange handler. This will render a read-only accordion element. If the accordion should be functional, remove the index value to render an uncontrolled accordion or set an onChange handler to set an index when a change occurs.'
+        )
+      }
+
+      if (Array.isArray(val)) {
+        return val.some((i: any) => typeof i !== 'string')
+          ? new Error(
+              'You provided an array as an openId in AccordionProvider but one or more of the values are not strings. Please check to make sure all openId values are valid strings.'
+            )
+          : null
+      } else if (typeof val !== 'string') {
+        return new Error(
+          `Invalid prop "${name}" supplied to "${compName}". Expected "string" or "string[]", received "${
+            Array.isArray(val) ? 'array' : typeof val
+          }".`
+        )
+      }
+    }
+
+    return null
+  },
 }
 
 interface AccordionComponent extends StyledComponentBase<'div', CactusTheme, AccordionProps> {
@@ -480,66 +602,74 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     focusFirst,
     focusLast,
     isManaged,
-    managedAccordions,
+    isControlled,
+    openAccordions,
+    registerAccordion,
+    unregisterAccordion,
   } = useContext(ProviderContext)
-  const { defaultOpen, variant, className, ...restProps } = props
+  const { defaultOpen = false, variant, className, ...restProps } = props
   const id = useId(props.id)
   const headerId = `${id}-header`
   const bodyId = `${id}-body`
-  let isOpen = defaultOpen || false
 
-  if (isManaged && managedAccordions !== undefined && managedAccordions[id] !== undefined) {
-    isOpen = managedAccordions[id].open
-  }
-  const [state, setState] = useState<AccordionState>({ isOpen: isOpen })
-
-  useEffect((): void => {
-    if (isManaged && typeof manageOpen === 'function') {
-      manageOpen(id, defaultOpen || false)
-    }
-  }, [defaultOpen]) // eslint-disable-line react-hooks/exhaustive-deps
+  const [unmanagedState, setUnmanagedState] = useState<AccordionState>({ isOpen: defaultOpen })
+  const isInitialRender = useRef<boolean>(true)
 
   useEffect((): (() => void) => {
-    if (managedAccordions) {
-      managedAccordions[id] = { open: isOpen, order: order++ }
+    isInitialRender.current = true
+    if (isManaged) {
+      registerAccordion?.(id, defaultOpen)
     }
     return (): void => {
-      if (managedAccordions) {
-        delete managedAccordions[id]
-      }
+      unregisterAccordion?.(id)
     }
-  }, [id, managedAccordions]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [defaultOpen, id, isManaged, registerAccordion, unregisterAccordion])
+
+  useEffect(() => {
+    isInitialRender.current = false
+  })
+
+  if (process.env.NODE_ENV !== 'production' && isControlled && defaultOpen) {
+    console.warn(
+      'The defaultOpen prop on Accordion has no effect when the state of the component is controlled.'
+    )
+  }
+
+  const getManagedOpen = () => {
+    if (!isControlled && isInitialRender.current) {
+      return defaultOpen
+    }
+    return openAccordions ? openAccordions.includes(id) : false
+  }
 
   const toggleOpen = (): void => {
     if (isManaged) {
-      if (manageOpen && typeof manageOpen === 'function') {
-        manageOpen(id, !isOpen)
-      }
+      manageOpen?.(id, !getManagedOpen())
     } else {
-      setState((state): AccordionState => ({ ...state, isOpen: !state.isOpen }))
+      setUnmanagedState((state): AccordionState => ({ ...state, isOpen: !state.isOpen }))
     }
   }
 
   const shiftFocus = (offset: number): void => {
-    if (isManaged && typeof manageFocus === 'function') {
-      manageFocus(id, offset)
+    if (isManaged) {
+      manageFocus?.(id, offset)
     }
   }
 
   const focusFirstAccordion = (): void => {
-    if (isManaged && typeof focusFirst === 'function') {
-      focusFirst()
+    if (isManaged) {
+      focusFirst?.()
     }
   }
 
   const focusLastAccordion = (): void => {
-    if (isManaged && typeof focusLast === 'function') {
-      focusLast()
+    if (isManaged) {
+      focusLast?.()
     }
   }
 
   const rest = omitMargins(restProps, 'width', 'maxWidth')
-  const open = isManaged ? isOpen : state.isOpen
+  const open = isManaged ? getManagedOpen() : unmanagedState.isOpen
 
   return (
     <div
