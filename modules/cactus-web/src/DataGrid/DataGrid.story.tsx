@@ -1,10 +1,11 @@
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useContext, useState } from 'react'
 
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
 import DataGrid from './DataGrid'
+import { JustifyContent } from './types'
 
 interface Datum {
   name: string
@@ -81,11 +82,18 @@ const DataGridContainer = ({
   initialData: Record<string, any>[]
   includePaginationAndSort?: boolean
 }): ReactElement => {
+  const cardBreakpoint = select(
+    'cardBreakpoint',
+    ['tiny', 'small', 'medium', 'large', 'extraLarge'],
+    'tiny'
+  )
+  const size = useContext(ScreenSizeContext)
+  const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
   const showResultsCount = includePaginationAndSort
     ? boolean('Show Results Count', true)
     : undefined
-  const providePageSizeOptions = includePaginationAndSort
-    ? boolean('Provide Page Size Options', true)
+  const providePageSizeSelect = includePaginationAndSort
+    ? boolean('Provide Page Size Select', true)
     : undefined
   const providePageCount = includePaginationAndSort
     ? boolean('Provide Page Count', true)
@@ -103,8 +111,7 @@ const DataGridContainer = ({
     currentPage: number
     pageSize: number
     pageCount?: number
-    pageSizeOptions?: number[]
-  }>({ currentPage: 1, pageCount: 3, pageSize: 4, pageSizeOptions: [4, 6, 12] })
+  }>({ currentPage: 1, pageCount: 3, pageSize: 4 })
 
   const clone = (rowData: { [key: string]: any }): void => {
     setData((currentData): { [key: string]: any }[] => [
@@ -184,10 +191,9 @@ const DataGridContainer = ({
     currentPage: number
     pageSize: number
     pageCount?: number
-    pageSizeOptions?: number[]
   } => {
     const paginationOptsCopy = JSON.parse(JSON.stringify(paginationOptions))
-    if (!providePageSizeOptions) {
+    if (!providePageSizeSelect) {
       paginationOptsCopy.pageSizeOptions = undefined
     }
 
@@ -198,46 +204,44 @@ const DataGridContainer = ({
     return paginationOptsCopy
   }
 
+  const usableData = includePaginationAndSort ? paginateData() : data
+  const topSection = boolean('topSection', true)
+  const justifyOptions: JustifyContent[] = [
+    'unset',
+    'flex-start',
+    'flex-end',
+    'center',
+    'space-between',
+    'space-around',
+    'space-evenly',
+  ]
+
   return (
-    <ScreenSizeProvider>
-      <DataGrid
-        dividers={boolean('dividers', false)}
+    <DataGrid
+      sortOptions={includePaginationAndSort ? sortOptions : undefined}
+      onSort={onSort}
+      paginationOptions={includePaginationAndSort ? getPaginationOptions() : undefined}
+      onPageChange={onPageChange}
+      fullWidth={boolean('fullWidth', false)}
+      cardBreakpoint={cardBreakpoint}
+    >
+      {topSection && (
+        <DataGrid.TopSection
+          justifyContent={select('justifyContent Top', justifyOptions, 'space-between')}
+          spacing={select('spacing top', [0, 1, 2, 3, 4, 5, 6, 7], 4)}
+        >
+          {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
+          {includePaginationAndSort && providePageSizeSelect && (
+            <DataGrid.PageSizeSelect
+              pageSizeOptions={[4, 6, 12]}
+              pageSizeSelectLabel={text('pageSizeSelectLabel', '')}
+            />
+          )}
+        </DataGrid.TopSection>
+      )}
+      <DataGrid.Table
         data={includePaginationAndSort ? paginateData() : data}
-        sortOptions={includePaginationAndSort ? sortOptions : undefined}
-        onSort={onSort}
-        paginationOptions={includePaginationAndSort ? getPaginationOptions() : undefined}
-        onPageChange={onPageChange}
-        fullWidth={boolean('fullWidth', false)}
-        cardBreakpoint={select(
-          'cardBreakpoint',
-          ['tiny', 'small', 'medium', 'large', 'extraLarge'],
-          'tiny'
-        )}
-        resultsCountText={showResultsCount ? getResultsCountText() : undefined}
-        pageSizeSelectLabel={includePaginationAndSort ? text('pageSizeSelectLabel', '') : undefined}
-        paginationProps={
-          includePaginationAndSort
-            ? {
-                label: text('Pagination: label', ''),
-                currentPageLabel: text('Pagination: currentPageLabel', ''),
-                prevPageLabel: text('Pagination: prevPageLabel', ''),
-                nextPageLabel: text('Pagination: nextPageLabel', ''),
-                lastPageLabel: text('Pagination: lastPageLabel', ''),
-              }
-            : undefined
-        }
-        prevNextProps={
-          disableNext
-            ? {
-                prevText,
-                nextText,
-                disableNext,
-              }
-            : {
-                prevText,
-                nextText,
-              }
-        }
+        dividers={boolean('dividers', false)}
       >
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} />
@@ -269,8 +273,36 @@ const DataGridContainer = ({
             </SplitButton>
           )}
         </DataGrid.Column>
-      </DataGrid>
-    </ScreenSizeProvider>
+      </DataGrid.Table>
+      <DataGrid.BottomSection
+        justifyContent={select('justifyContent bottom', justifyOptions, 'flex-end')}
+        spacing={select('spacing bottom', [0, 1, 2, 3, 4, 5, 6, 7], 4)}
+      >
+        {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
+          <span>{getResultsCountText()}</span>
+        ) : null}
+        {includePaginationAndSort ? (
+          providePageCount ? (
+            <DataGrid.Pagination
+              label={text('Pagination: label', '')}
+              currentPageLabel={text('Pagination: currentPageLabel', '')}
+              prevPageLabel={text('Pagination: prevPageLabel', '')}
+              nextPageLabel={text('Pagination: nextPageLabel', '')}
+              lastPageLabel={text('Pagination: lastPageLabel', '')}
+            />
+          ) : (
+            <DataGrid.PrevNext
+              prevText={prevText}
+              nextText={nextText}
+              disableNext={usableData.length < getPaginationOptions().pageSize || disableNext}
+            />
+          )
+        ) : null}
+        {isCardView && showResultsCount && size.toString() === 'tiny' ? (
+          <span>{getResultsCountText()}</span>
+        ) : null}
+      </DataGrid.BottomSection>
+    </DataGrid>
   )
 }
 

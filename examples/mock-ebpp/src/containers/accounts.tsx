@@ -8,7 +8,7 @@ import { Account, fetchAccounts } from '../api'
 interface PaginationOptions {
   currentPage: number
   pageSize: number
-  pageCount: number
+  pageCount?: number
 }
 
 interface SortOption {
@@ -125,42 +125,46 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
           paddingBottom="40px"
         >
           <DataGrid
-            data={paginateData()}
             paginationOptions={state.paginationOptions}
             onPageChange={handlePageChange}
             sortOptions={state.sortOptions}
             onSort={handleSort}
             cardBreakpoint="small"
           >
-            <DataGrid.DataColumn id="firstName" title="First Name" sortable />
-            <DataGrid.DataColumn id="lastName" title="Last Name" sortable />
-            <DataGrid.DataColumn id="dob" title="Date of Birth" sortable />
-            <DataGrid.DataColumn id="cardLastFour" title="Last 4 of Card" />
-            <DataGrid.DataColumn id="id" title="Account ID" />
-            <DataGrid.Column>
-              {(rowData: Account) => (
-                <SplitButton
-                  mainActionLabel="View Account"
-                  onSelectMainAction={() => {
-                    navigate(`/account/${rowData.id}`)
-                  }}
-                >
-                  <SplitButton.Action
-                    onSelect={() => {
-                      setState((state) => ({
-                        ...state,
-                        accounts: state.accounts.filter(
-                          (acct: Account): boolean => acct.id !== rowData.id
-                        ),
-                        alert: `Account ${rowData.id} deleted successfully`,
-                      }))
+            <DataGrid.Table data={paginateData()}>
+              <DataGrid.DataColumn id="firstName" title="First Name" sortable />
+              <DataGrid.DataColumn id="lastName" title="Last Name" sortable />
+              <DataGrid.DataColumn id="dob" title="Date of Birth" sortable />
+              <DataGrid.DataColumn id="cardLastFour" title="Last 4 of Card" />
+              <DataGrid.DataColumn id="id" title="Account ID" />
+              <DataGrid.Column>
+                {(rowData): React.ReactElement => (
+                  <SplitButton
+                    mainActionLabel="View Account"
+                    onSelectMainAction={() => {
+                      navigate(`/account/${rowData.id}`)
                     }}
                   >
-                    {`Delete Account ${rowData.id}`}
-                  </SplitButton.Action>
-                </SplitButton>
-              )}
-            </DataGrid.Column>
+                    <SplitButton.Action
+                      onSelect={() => {
+                        setState((state) => ({
+                          ...state,
+                          accounts: state.accounts.filter(
+                            (acct: Account): boolean => acct.id !== rowData.id
+                          ),
+                          alert: `Account ${rowData.id} deleted successfully`,
+                        }))
+                      }}
+                    >
+                      {`Delete Account ${rowData.id}`}
+                    </SplitButton.Action>
+                  </SplitButton>
+                )}
+              </DataGrid.Column>
+            </DataGrid.Table>
+            <DataGrid.BottomSection justifyContent="flex-end">
+              <DataGrid.Pagination />
+            </DataGrid.BottomSection>
           </DataGrid>
         </Flex>
       </Flex>

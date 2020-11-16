@@ -2,7 +2,6 @@ import { number } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import MenuBar from './MenuBar'
 
 const LABELS = [
@@ -69,5 +68,5 @@ export const BasicUsage = (): React.ReactElement => {
     )
   }
 
-  return <ScreenSizeProvider>{makeList(totalDepth, {}, 0, MenuBar)}</ScreenSizeProvider>
+  return <>{makeList(totalDepth, {}, 0, MenuBar)}</>
 }

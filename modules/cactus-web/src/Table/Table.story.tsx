@@ -2,7 +2,6 @@ import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import Table from './Table'
 
 type CellAlignment = 'left' | 'right' | 'center'
@@ -64,13 +63,11 @@ export const Layout = (): React.ReactElement => {
   }
 
   return (
-    <ScreenSizeProvider>
-      <Table fullWidth={fullWidth} variant={variant} dividers={boolean('dividers', false)}>
-        {captionText && <caption>{captionText}</caption>}
-        {header}
-        <Body>{rows}</Body>
-      </Table>
-    </ScreenSizeProvider>
+    <Table fullWidth={fullWidth} variant={variant} dividers={boolean('dividers', false)}>
+      {captionText && <caption>{captionText}</caption>}
+      {header}
+      <Body>{rows}</Body>
+    </Table>
   )
 }
 
@@ -104,60 +101,56 @@ export const StylesOnly = (): React.ReactElement => {
   }
 
   return (
-    <ScreenSizeProvider>
-      <Table as="table" fullWidth={fullWidth}>
-        {captionText && <caption>{captionText}</caption>}
-        {header}
-        <Body>{rows}</Body>
-      </Table>
-    </ScreenSizeProvider>
+    <Table as="table" fullWidth={fullWidth}>
+      {captionText && <caption>{captionText}</caption>}
+      {header}
+      <Body>{rows}</Body>
+    </Table>
   )
 }
 
 export const WithLongValues = (): React.ReactElement => {
   return (
-    <ScreenSizeProvider>
-      <Table variant="card">
-        <Table.Header>
-          <Table.Cell>Header Cell</Table.Cell>
-          <Table.Cell>Header Cell</Table.Cell>
-          <Table.Cell>Header Cell</Table.Cell>
-          <Table.Cell>Header Cell</Table.Cell>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell>
-              {text(
-                'text 1',
-                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
-              )}
-            </Table.Cell>
-            <Table.Cell>Data cell</Table.Cell>
-            <Table.Cell>Data cell</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Data cell</Table.Cell>
-            <Table.Cell>
-              {text(
-                'text 2',
-                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
-              )}
-            </Table.Cell>
-            <Table.Cell>Data cell</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Data cell</Table.Cell>
-            <Table.Cell>Data cell</Table.Cell>
-            <Table.Cell>Data cell</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Data cell</Table.Cell>
-            <Table.Cell>Data cell</Table.Cell>
-            <Table.Cell>Data cell</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
-    </ScreenSizeProvider>
+    <Table variant="card">
+      <Table.Header>
+        <Table.Cell>Header Cell</Table.Cell>
+        <Table.Cell>Header Cell</Table.Cell>
+        <Table.Cell>Header Cell</Table.Cell>
+        <Table.Cell>Header Cell</Table.Cell>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>
+            {text(
+              'text 1',
+              'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
+            )}
+          </Table.Cell>
+          <Table.Cell>Data cell</Table.Cell>
+          <Table.Cell>Data cell</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Data cell</Table.Cell>
+          <Table.Cell>
+            {text(
+              'text 2',
+              'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
+            )}
+          </Table.Cell>
+          <Table.Cell>Data cell</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Data cell</Table.Cell>
+          <Table.Cell>Data cell</Table.Cell>
+          <Table.Cell>Data cell</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell>Data cell</Table.Cell>
+          <Table.Cell>Data cell</Table.Cell>
+          <Table.Cell>Data cell</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table>
   )
 }
 

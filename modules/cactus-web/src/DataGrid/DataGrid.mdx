@@ -5,7 +5,9 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import DataGrid from './DataGrid'
+import Table from './Table'
 import SplitButton from '../SplitButton/SplitButton'
+import ScreenSizeProvider, { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { Component } from 'react'
 import { livePreviewStyle } from '../helpers/constants'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
@@ -18,115 +20,119 @@ The `DataGrid` is a wrapper for `Table` that allows you to easily define table c
 
 - It is the responsibility of the developer to save changes to `sortOptions` & `paginationOptions` and pass the updated values back
   through the props; the `DataGrid` component does not manage those values internally.
-- Use `paginationProps` and `prevNextProps` to manage labels & text for the `Pagination` and `PrevNext` components, respectively. This
-  makes features such as internationalization possible.
-- Use the `sortLabels` prop to pass internationalized labels for the sorting dropdowns used in the card view.
+- Use the `sortLabels` prop on `TopSection` to pass internationalized labels for the sorting dropdowns used in the card view.
 - Just like the `Table`, the `DataGrid` should be rendered as a descendant of `ScreenSizeProvider` to take advantage of the card carousel feature.
-- If `pageSizeOptions` is omitted from `paginationOptions`, the component will not render the selection of page sizes to choose from.
-- If `pageCount` is omitted from `paginationOptions`, `DataGrid` will render the `PrevNext` component to handle pagination instead of the `Pagination` component.
-- You can provide text describing how many rows are displayed using the `resultsCountText` prop. It will display this text above the `DataGrid`.
+- If you would like to use the `DataGrid.Pagination` component, you must include `pageCount` in `paginationOptions`. If no `pageCount` is provided, the pagination component will not render.
 - The `DataGrid.DataColumn` exposes an `as` prop which can be used to render a column's cells using a certain component. The component rendered will
   receive a single `value` prop which is the data value to be rendered in the cell.
 - Similar to the `Table` component, the `DataGrid` exposes the `cardBreakpoint` prop, where you can define at what breakpoint you would like to switch to card
   view. It default to `tiny` but you can select from any of our breakpoints: `tiny`, `small`, `medium`, `large` and `extraLarge`.
+- Make sure the sub-components that are rendered with the table are positioned as expected in both table view and card view. You may need to make use of `ScreenSizeContext`
+  to accomplish the positioning you desire depending on the screen's size.
 
 ## Basic usage
 
-The `DataGrid` component has two sub-components to help define your grid structure:
+The `DataGrid` component has several sub-components to help define your grid structure:
+  - `DataGrid.TopSection` - A flex container to be rendered above the table. You can use this space to render other `DataGrid` components in whatever order you like.
+    The `TopSection` will always include the sort buttons as the first element in card view.
+    You can use the `justifyContent` and `spacing` props to help with arranging elements and spacing them out from each other.
+  - `DataGrid.BottomSection` - A flex container to be rendered below the table. You can use this space to render other `DataGrid` components in whatever order you like.
+    You can use the `justifyContent` and `spacing` props to help with arranging elements and spacing them out from each other.
+  - `DataGrid.Table` - A wrapper for our `Table` component which maps the data you pass to the columns that have been configured.
   - `DataGrid.DataColumn` - Receives an `id` prop and renders data from the `data` prop when the key matches `id`. Requires no children.
   - `DataGrid.Column` - Receives a child render function which will be to render anything in this column's cells.
-Any extra props passed to `Column` or `DataColumn` will be passed on to `Table.Cell` internally.
+    Any extra props passed to `Column` or `DataColumn` will be passed on to `Table.Cell` internally.
+  - `DataGrid.PageSizeSelect` - Renders a component that can be used to pick the number of rows per page.
+  - `DataGrid.Pagination` - A wrapper for our `Pagination` component. This piece allows users to change pages. **Note: If you are using this component for pagination,
+    you must provide `pageCount` in `paginationOptions`.
+  - `DataGrid.PrevNext` - A wrapper for our `PrevNext` component, which is a simpler form of pagination. This method of pagination does not require a `pageCount`.
 
 ### Try It Out
 
 export const code = `
-const BoolComponent = ({ value }) => (<div>{value ? 'YES' : 'NO'}</div>)
-class DataGridContainer extends React.Component {
-  constructor(props) {
-    const INITIAL_DATA = [
-      {
-        name: 'Config 1',
-        created: '4/13/2020',
-        active: true,
-      },
-      {
-        name: 'Config 2',
-        created: '5/25/2019',
-        active: true,
-      },
-      {
-        name: 'Config 3',
-        created: '8/16/2019',
-        active: false,
-      },
-      {
-        name: 'Config 4',
-        created: '2/20/2019',
-        active: true,
-      },
-      {
-        name: 'Config 5',
-        created: '5/16/2019',
-        active: false,
-      },
-      {
-        name: 'Config 6',
-        created: '10/31/2019',
-        active: true,
-      },
-      {
-        name: 'Config 7',
-        created: '11/23/2019',
-        active: true,
-      },
-      {
-        name: 'Config 8',
-        created: '3/20/2020',
-        active: false,
-      },
-      {
-        name: 'Config 9',
-        created: '6/13/2020',
-        active: false,
-      },
-      {
-        name: 'Config 10',
-        created: '7/1/2020',
-        active: true,
-      },
-      {
-        name: 'Config 11',
-        created: '3/3/2020',
-        active: true,
-      },
-    ]
-    super(props)
-    this.state = {
-      data: INITIAL_DATA,
-      sortOptions: [{ id: 'created', sortAscending: false }],
-      paginationOptions: { currentPage: 1, pageCount: 3, pageSize: 4, pageSizeOptions: [4, 6, 12] },
-    }
-    this.paginateData = this.paginateData.bind(this)
-    this.onSort = this.onSort.bind(this)
-    this.onPageChange = this.onPageChange.bind(this)
+const INITIAL_DATA = [
+  {
+    name: 'Config 1',
+    created: '4/13/2020',
+    active: true,
+  },
+  {
+    name: 'Config 2',
+    created: '5/25/2019',
+    active: true,
+  },
+  {
+    name: 'Config 3',
+    created: '8/16/2019',
+    active: false,
+  },
+  {
+    name: 'Config 4',
+    created: '2/20/2019',
+    active: true,
+  },
+  {
+    name: 'Config 5',
+    created: '5/16/2019',
+    active: false,
+  },
+  {
+    name: 'Config 6',
+    created: '10/31/2019',
+    active: true,
+  },
+  {
+    name: 'Config 7',
+    created: '11/23/2019',
+    active: true,
+  },
+  {
+    name: 'Config 8',
+    created: '3/20/2020',
+    active: false,
+  },
+  {
+    name: 'Config 9',
+    created: '6/13/2020',
+    active: false,
+  },
+  {
+    name: 'Config 10',
+    created: '7/1/2020',
+    active: true,
+  },
+  {
+    name: 'Config 11',
+    created: '3/3/2020',
+    active: true,
+  },
+]
+const BoolComponent = ({ value }) => <div>{value ? 'YES' : 'NO'}</div>
+const DataGridContainer = () => {
+  const [state, setState] = React.useState({
+    data: INITIAL_DATA,
+    sortOptions: [{ id: 'created', sortAscending: false }],
+    paginationOptions: { currentPage: 1, pageCount: 3, pageSize: 4 },
+  })
+  const size = React.useContext(ScreenSizeContext)
+  const isCardView = size <= SIZES['tiny']
+  paginateData = () => {
+    const index1 = (state.paginationOptions.currentPage - 1) * state.paginationOptions.pageSize
+    const index2 = index1 + state.paginationOptions.pageSize
+    return state.data.slice(index1, index2)
   }
-  paginateData() {
-    const index1 = (this.state.paginationOptions.currentPage - 1) * this.state.paginationOptions.pageSize
-    const index2 = index1 + this.state.paginationOptions.pageSize
-    return this.state.data.slice(index1, index2)
-  }
-  onSort(newSortOptions) {
+  onSort = (newSortOptions) => {
     const sortId = newSortOptions[0].id
     const sortAscending = newSortOptions[0].sortAscending
-    const dataCopy = JSON.parse(JSON.stringify(this.state.data))
+    const dataCopy = JSON.parse(JSON.stringify(state.data))
     if (sortId === 'created') {
       if (sortAscending) {
         dataCopy.sort((a, b) => {
-          return (new Date(a.created)) - (new Date(b.created))
+          return new Date(a.created) - new Date(b.created)
         })
       } else {
         dataCopy.sort((a, b) => {
-          return (new Date(b.created)) - (new Date(a.created))
+          return new Date(b.created) - new Date(a.created)
         })
       }
     } else if (sortId === 'active') {
@@ -140,53 +146,57 @@ class DataGridContainer extends React.Component {
         })
       }
     }
-    this.setState(state => ({
+    setState((state) => ({
       ...state,
       data: dataCopy,
       sortOptions: newSortOptions,
     }))
   }
-  onPageChange(newPaginationOptions) {
-    if (newPaginationOptions.pageSize !== this.state.paginationOptions.pageSize) {
-      newPaginationOptions.pageCount = Math.ceil(this.state.data.length / newPaginationOptions.pageSize)
+  onPageChange = (newPaginationOptions) => {
+    if (newPaginationOptions.pageSize !== state.paginationOptions.pageSize) {
+      newPaginationOptions.pageCount = Math.ceil(state.data.length / newPaginationOptions.pageSize)
     }
-    this.setState(state => ({
+    setState((state) => ({
       ...state,
       paginationOptions: newPaginationOptions,
     }))
   }
-  render() {
-    return (
-      <DataGrid
-        data={this.paginateData()}
-        paginationOptions={this.state.paginationOptions}
-        sortOptions={this.state.sortOptions}
-        onSort={this.onSort}
-        onPageChange={this.onPageChange}
-      >
+  return (
+    <DataGrid
+      paginationOptions={state.paginationOptions}
+      sortOptions={state.sortOptions}
+      onSort={onSort}
+      onPageChange={onPageChange}
+      cardBreakpoint="tiny"
+    >
+      <DataGrid.TopSection justifyContent="flex-end" spacing={4}>
+        <DataGrid.PageSizeSelect
+          pageSizeOptions={[4, 6, 12]}
+        />
+      </DataGrid.TopSection>
+      <DataGrid.Table data={paginateData()}>
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
         <DataGrid.DataColumn id="active" title="Active" sortable={true} as={BoolComponent} />
         <DataGrid.Column>
           {(rowData) => (
             <SplitButton onSelectMainAction={() => {}} mainActionLabel="Edit">
-              <SplitButton.Action
-                onSelect={() => {}}
-              >
-                Clone
-              </SplitButton.Action>
+              <SplitButton.Action onSelect={() => {}}>Clone</SplitButton.Action>
               <SplitButton.Action onSelect={() => {}}>Delete</SplitButton.Action>
             </SplitButton>
           )}
         </DataGrid.Column>
-      </DataGrid>
-    )
-  }
+      </DataGrid.Table>
+      <DataGrid.BottomSection justifyContent="flex-end">
+        <DataGrid.Pagination />
+      </DataGrid.BottomSection>
+    </DataGrid>
+  )
 }
-render(<DataGridContainer />)
+render(<ScreenSizeProvider><DataGridContainer /></ScreenSizeProvider>)
 `
 
-<LiveProvider code={code} scope={{ DataGrid, SplitButton }} noInline={true}>
+<LiveProvider code={code} scope={{ DataGrid, Table, SplitButton, ScreenSizeProvider, ScreenSizeContext, SIZES }} noInline={true}>
   <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
@@ -197,5 +207,17 @@ render(<DataGridContainer />)
 ### DataGrid
 <PropsTable of={DataGrid} />
 
+### DataGrid.TopSection
+<PropsTable of={DataGrid} staticProp="DataGrid.TopSection" />
+
+### DataGrid.Table
+<PropsTable of={Table} />
+
+### DataGrid.Pagination
+<PropsTable of={DataGrid} staticProp="Pagination" />
+
+### DataGrid.PrevNext
+<PropsTable of={DataGrid} staticProp="PrevNext" />
+
 ### DataGrid.DataColumn
-<PropsTable of={DataGrid} staticProp="DataColumn" />
+<PropsTable of={DataGrid} staticProp="DataGrid.DataColumn" />

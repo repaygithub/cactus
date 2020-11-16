@@ -2,7 +2,6 @@ import { boolean, number, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { ScreenSizeProvider } from '../ScreenSizeProvider/ScreenSizeProvider'
 import Footer from './Footer'
 
 const LINK_TEXT = [
@@ -48,11 +47,9 @@ export const BasicUsage = (): React.ReactElement => {
   }
 
   return (
-    <ScreenSizeProvider>
-      <Footer key={`${customContent}-${numLinks}`} logo={hasLogo ? LOGO : undefined}>
-        {customContent !== '' ? customContent : null}
-        {makeLinks(numLinks)}
-      </Footer>
-    </ScreenSizeProvider>
+    <Footer key={`${customContent}-${numLinks}`} logo={hasLogo ? LOGO : undefined}>
+      {customContent !== '' ? customContent : null}
+      {makeLinks(numLinks)}
+    </Footer>
   )
 }
