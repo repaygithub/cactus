@@ -1,4 +1,4 @@
-import { array, boolean, text } from '@storybook/addon-knobs'
+import { array, boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -23,6 +23,7 @@ export const BasicUsage = (): React.ReactElement => (
     autoTooltip={boolean('autoTooltip', true)}
     comboBox={boolean('comboBox', false)}
     canCreateOption={boolean('canCreateOption', true)}
+    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
   />
 )
 

@@ -54,4 +54,25 @@ describe('component: Tooltip', (): void => {
     expect(portal).not.toBeNull()
     expect(portal.firstChild).toMatchSnapshot()
   })
+
+  test('should continue to render tooltip when content is hovered', async (): Promise<void> => {
+    jest.useFakeTimers()
+    render(
+      <StyleProvider>
+        <Tooltip label="This should be displayed" />
+      </StyleProvider>
+    )
+    act((): void => {
+      fireEvent.mouseEnter(document.querySelector('span') as Element)
+      setTimeout(jest.fn(), 2000)
+      jest.runAllTimers()
+    })
+    act((): void => {
+      fireEvent.mouseEnter(document.querySelector('div[role="tooltip"]') as Element)
+      setTimeout(jest.fn(), 2000)
+      jest.runAllTimers()
+    })
+    const tooltip = document.querySelector('div[role="tooltip"]') as Element
+    expect(tooltip).not.toBeNull()
+  })
 })

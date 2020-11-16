@@ -27,7 +27,7 @@
     "docs:publish": "gh-pages -d ./website/public",
     "cleanup": "yarn ws run cleanup",
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
-    "release": "lerna publish --no-private --registry https://registry.yarnpkg.com",
+    "release": "npm login && yarn install --registry https://registry.yarnpkg.com && yarn cleanup && yarn build && lerna publish --no-private --registry https://registry.yarnpkg.com",
     "commit": "git-cz",
     "postinstall": "patch-package",
     "test:build": "docker build -t tests .",

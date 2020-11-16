@@ -18,6 +18,7 @@ interface CheckBoxGroupProps
     Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'defaultValue'> {
   checked?: { [K: string]: boolean }
   required?: boolean
+  disableTooltip?: boolean
 }
 
 type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
@@ -35,7 +36,18 @@ const noop = () => undefined
 
 export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
   (
-    { label, children, tooltip, required, checked, onFocus, onBlur, autoTooltip = true, ...props },
+    {
+      label,
+      children,
+      tooltip,
+      required,
+      checked,
+      onFocus,
+      onBlur,
+      disableTooltip,
+      autoTooltip = true,
+      ...props
+    },
     ref
   ) => {
     const {
@@ -111,7 +123,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
           <Tooltip
             id={tooltipId}
             label={tooltip}
-            disabled={disabled}
+            disabled={disableTooltip ?? disabled}
             forceVisible={autoTooltip ? showTooltip : false}
           />
         )}

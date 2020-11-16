@@ -13,14 +13,21 @@ import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 
 import { ActionBar } from '../ActionBar/ActionBar'
-import { useAction } from '../ActionBar/ActionProvider'
+import { OrderHint, useAction } from '../ActionBar/ActionProvider'
+import Flex from '../Flex/Flex'
 import { getTopPosition } from '../helpers/positionPopover'
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { Sidebar } from '../Layout/Sidebar'
-import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
+
+interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  id?: string
+  mobileIcon?: React.ReactElement
+  orderHint?: OrderHint
+}
 
 interface UserMenuProps {
-  userMenuText: string
+  label: React.ReactNode
   isProfilePage?: boolean
 }
 
@@ -28,7 +35,7 @@ interface ProfileStyleProp {
   $isProfilePage?: boolean
 }
 
-interface BrandBarProps extends UserMenuProps, React.HTMLAttributes<HTMLDivElement> {
+interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
 }
 interface MenuItemProps {
@@ -47,48 +54,79 @@ const MenuItem = (props: MenuItemProps) => {
   return <ReachMenuItem onSelect={onSelect}>{children}</ReachMenuItem>
 }
 
-type BrandBarType = React.FC<BrandBarProps> & { UserMenuItem: typeof MenuItem }
-
-const BrandBar: BrandBarType = ({ logo, userMenuText, isProfilePage, children, ...props }) => {
-  const menuProps = { userMenuText, isProfilePage, children }
-  const isTiny = SIZES.tiny === React.useContext(ScreenSizeContext)
+export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
+  const isTiny = SIZES.tiny === useScreenSize()
   const MenuComponent = isTiny ? ActionBarUserMenu : UserMenu
+  return <MenuComponent {...props} />
+}
 
+export const BrandBarItem: React.FC<ItemProps> = ({ mobileIcon, ...props }) => {
+  const isTiny = SIZES.tiny === useScreenSize()
+  if (isTiny && mobileIcon) {
+    return <ActionBar.Panel {...props} icon={mobileIcon} />
+  }
+  return <>{props.children}</>
+}
+
+type BrandBarType = React.FC<BrandBarProps> & {
+  Item: typeof BrandBarItem
+  UserMenu: typeof BrandBarUserMenu
+  UserMenuItem: typeof MenuItem
+}
+
+export const BrandBar: BrandBarType = ({ logo, children, ...props }) => {
+  const isTiny = SIZES.tiny === useScreenSize()
+  const justify = isTiny ? 'center' : 'flex-end'
   return (
-    <StyledBrandBar {...props} isTiny={isTiny}>
+    <StyledBrandBar {...props} $isTiny={isTiny}>
       <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
       <MenuButtonStyles />
-      <MenuComponent {...menuProps} />
+      <Flex alignItems="flex-end" justifyContent={justify}>
+        {children}
+      </Flex>
     </StyledBrandBar>
   )
 }
 
+BrandBar.displayName = 'BrandBar'
+BrandBar.Item = BrandBarItem
+BrandBar.UserMenu = BrandBarUserMenu
 BrandBar.UserMenuItem = MenuItem
 
 BrandBar.propTypes = {
   logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  userMenuText: PropTypes.string.isRequired,
+}
+
+BrandBarItem.propTypes = {
+  mobileIcon: PropTypes.element,
+  orderHint: ActionBar.Panel.propTypes?.orderHint,
+}
+
+BrandBarItem.defaultProps = { orderHint: 'low' }
+
+BrandBarUserMenu.propTypes = {
+  label: PropTypes.node.isRequired,
   isProfilePage: PropTypes.bool,
 }
 
-BrandBar.defaultProps = {
+BrandBarUserMenu.defaultProps = {
   isProfilePage: false,
 }
 
 export default BrandBar
 
-const ActionBarUserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, isProfilePage }) => {
+const ActionBarUserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage }) => {
   const button = (
     <ActionBar.PanelWrapper key="cactus-user-menu">
       <Menu>
         <ActionMenuButton as={ReachMenuButton as any} $isProfilePage={isProfilePage}>
           <DescriptiveProfile />
-          <VisuallyHidden>{userMenuText}</VisuallyHidden>
+          <VisuallyHidden>{label}</VisuallyHidden>
         </ActionMenuButton>
         <ActionBar.PanelPopup as={ActionMenuPopup} portal={false}>
           <PopupHeader aria-hidden>
             <DescriptiveProfile mr="8px" />
-            {userMenuText}
+            {label}
           </PopupHeader>
           <ActionMenuList>{children}</ActionMenuList>
         </ActionBar.PanelPopup>
@@ -99,7 +137,7 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, is
   return renderButton && <Sidebar layoutRole="brandbar">{renderButton}</Sidebar>
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, isProfilePage }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage }) => {
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const position = React.useCallback<Position>(
     (targetRect, popoverRect) => {
@@ -122,7 +160,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, isProfilePa
     <Menu>
       <MenuButton $isProfilePage={isProfilePage} ref={buttonRef}>
         <DescriptiveProfile aria-hidden mr="8px" />
-        <span>{userMenuText}</span>
+        <span>{label}</span>
         <NavigationChevronDown aria-hidden ml="8px" />
       </MenuButton>
       <MenuPopover position={position}>
@@ -132,10 +170,20 @@ const UserMenu: React.FC<UserMenuProps> = ({ userMenuText, children, isProfilePa
   )
 }
 
-const StyledBrandBar = styled.div<{ isTiny: boolean }>`
+const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
   display: flex;
-  justify-content: ${(p) => (p.isTiny ? 'center' : 'space-between')};
-  align-items: flex-end;
+  ${(p) =>
+    p.$isTiny
+      ? `
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  `
+      : `
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  `}
   width: 100%;
   ${(p): string => insetBorder(p.theme, 'lightContrast', 'bottom')};
 `

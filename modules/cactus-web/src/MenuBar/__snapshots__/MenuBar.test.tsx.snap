@@ -545,14 +545,11 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  cursor: pointer;
   background-color: transparent;
   text-align: center;
   outline: none;
-}
-
-.c1:hover {
-  color: hsl(200,96%,35%);
+  cursor: not-allowed;
+  color: hsl(0,0%,90%);
 }
 
 .c1 svg {
@@ -564,10 +561,7 @@ exports[`component: MenuBar typechecks 1`] = `
 .c12 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -579,10 +573,10 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  cursor: pointer;
   background-color: transparent;
   text-align: center;
   outline: none;
+  cursor: pointer;
 }
 
 .c12:hover {

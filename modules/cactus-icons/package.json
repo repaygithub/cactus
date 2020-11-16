@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-icons",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "description": "Cactus design-system icons as React elements",
   "module": "i/index.js",
   "main": "i/index.cjs.js",
@@ -57,7 +57,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@repay/babel-preset": "^1.0.1",
-    "@repay/cactus-theme": "^1.0.0",
+    "@repay/cactus-theme": "^1.1.1",
     "@repay/scripts": "^2.0.1",
     "@storybook/addon-knobs": "^6.0.26",
     "@storybook/react": "6.0.26",
