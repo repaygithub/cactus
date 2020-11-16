@@ -9,6 +9,7 @@ import Flex from '../Flex/Flex'
 import Footer from '../Footer/Footer'
 import MenuBar from '../MenuBar/MenuBar'
 import MenuButton from '../MenuButton/MenuButton'
+import Select from '../Select/Select'
 import SplitButton from '../SplitButton/SplitButton'
 import TextInputField from '../TextInputField/TextInputField'
 import Layout from './Layout'
@@ -86,6 +87,12 @@ export const BasicUsage = (): React.ReactElement => {
                   Action Two
                 </SplitButton.Action>
               </SplitButton>
+              <Select
+                id="select-number"
+                name="number"
+                mb={3}
+                options={['one', 'two', 'four', 'hundred', 'seventy-six', 'zero']}
+              />
               <MenuButton mb={3} label="Z-index Test">
                 <MenuButton.Item onSelect={action('MenuButton One')}>Action One</MenuButton.Item>
                 <MenuButton.Item onSelect={action('MenuButton Two')}>Action Two</MenuButton.Item>
