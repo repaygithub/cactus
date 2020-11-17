@@ -1,12 +1,26 @@
 import { RestEndpointMethodTypes } from '@octokit/rest'
 import on from 'await-to-js'
+import { execSync } from 'child_process'
+import endent from 'endent'
 import { gitlogPromise as gitlog } from 'gitlog'
+import { chunk } from 'lodash'
 import path from 'path'
 
 import execPromise from './exec-promise'
 import github from './github'
+import { normalizeCommit, normalizeCommits } from './log-parse'
+import { buildSearchQuery, ISearchQuery, ISearchResult, processQueryResult } from './match-pr'
 
-export interface ICommitAuthor {
+const OWNER = 'repaygithub'
+const REPO = 'cactus'
+
+class GitAPIError extends Error {
+  /** Extend the base error */
+  constructor(api: string, args: Record<string, unknown> | unknown[], origError: Error) {
+    super(`Error calling github: ${api}\n\twith: ${JSON.stringify(args)}.\n\t${origError.message}`)
+  }
+}
+interface ICommitAuthor {
   /** Author's name */
   name?: string
   /** Author's email */
@@ -19,7 +33,7 @@ export interface ICommitAuthor {
   type?: 'Bot' | 'User' | string
 }
 
-export interface IPullRequest {
+interface IPullRequest {
   /** The issue number for the pull request */
   number: number
   /** The base branch the pull request is on */
@@ -28,7 +42,7 @@ export interface IPullRequest {
   body?: string
 }
 
-export interface ICommit {
+interface ICommit {
   hash: string
   authorName?: string
   authorEmail?: string
@@ -38,7 +52,7 @@ export interface ICommit {
   files: string[]
 }
 
-export type IExtendedCommit = ICommit & {
+type IExtendedCommit = ICommit & {
   /** The authors that contributed to the pull request */
   authors: ICommitAuthor[]
   /** The pull request information */
@@ -47,69 +61,40 @@ export type IExtendedCommit = ICommit & {
   labels: string[]
 }
 
-export type PromiseValue<PromiseType, Otherwise = PromiseType> = PromiseType extends Promise<
-  infer Value
->
+type PromiseValue<PromiseType, Otherwise = PromiseType> = PromiseType extends Promise<infer Value>
   ? { 0: PromiseValue<Value>; 1: Value }[PromiseType extends Promise<unknown> ? 0 : 1]
   : Otherwise
 type AsyncFunction = (...args: any[]) => Promise<unknown>
 type AsyncReturnType<Target extends AsyncFunction> = PromiseValue<ReturnType<Target>>
 
-class GitAPIError extends Error {
-  /** Extend the base error */
-  constructor(api: string, args: Record<string, unknown> | unknown[], origError: Error) {
-    super(`Error calling github: ${api}\n\twith: ${JSON.stringify(args)}.\n\t${origError.message}`)
+const shaExists = async (sha?: string): Promise<boolean> => {
+  try {
+    await execPromise('git', ['rev-parse', '--verify', sha])
+    return true
+  } catch (error) {
+    return false
   }
 }
 
-const getCommitsForPR = async (pr: number) =>
-  github.paginate(github.pulls.listCommits, {
-    owner: 'repaygithub',
-    repo: 'cactus',
+const getFirstCommit = async (): Promise<string> => {
+  const list = await execPromise('git', ['rev-list', '--max-parents=0', 'HEAD'])
+  return list.split('\n').pop() as string
+}
+
+const getPullRequest = async (pr: number) => {
+  const args: RestEndpointMethodTypes['pulls']['get']['parameters'] = {
+    owner: OWNER,
+    repo: REPO,
     pull_number: pr,
-  })
-
-const getUserByUsername = async (username: string) => {
-  try {
-    const user = await github.users.getByUsername({
-      username,
-    })
-
-    return user.data
-  } catch (error) {}
-}
-
-const getCommit = async (sha: string) => {
-  try {
-    return github.repos.getCommit({
-      owner: 'repaygithub',
-      repo: 'cactus',
-      ref: sha,
-    })
-  } catch (e) {
-    throw new GitAPIError('getCommit', [], e)
-  }
-}
-
-const getPr = async (prNumber: number) => {
-  const args: RestEndpointMethodTypes['issues']['get']['parameters'] = {
-    owner: 'repaygithub',
-    repo: 'cactus',
-    issue_number: prNumber,
   }
 
-  try {
-    const info = await github.issues.get(args)
-    return info
-  } catch (e) {
-    throw new GitAPIError('getPr', args, e)
-  }
+  return github.pulls.get(args)
 }
 
 const getLatestReleaseInfo = async () => {
   const latestRelease = await github.repos.getLatestRelease({
-    owner: 'repaygithub',
-    repo: 'cactus',
+    owner: OWNER,
+    repo: REPO,
   })
 
   return latestRelease.data
@@ -133,59 +118,48 @@ const searchRepo = async (
   return result.data
 }
 
-const getPullRequest = async (pr: number) => {
-  const args: RestEndpointMethodTypes['pulls']['get']['parameters'] = {
-    owner: 'repaygithub',
-    repo: 'cactus',
+const getPr = async (prNumber: number) => {
+  const args: RestEndpointMethodTypes['issues']['get']['parameters'] = {
+    owner: OWNER,
+    repo: REPO,
+    issue_number: prNumber,
+  }
+
+  try {
+    const info = await github.issues.get(args)
+    return info
+  } catch (e) {
+    throw new GitAPIError('getPr', args, e)
+  }
+}
+
+const getCommit = async (sha: string) => {
+  try {
+    return github.repos.getCommit({
+      owner: OWNER,
+      repo: REPO,
+      ref: sha,
+    })
+  } catch (e) {
+    throw new GitAPIError('getCommit', [], e)
+  }
+}
+
+const getCommitsForPR = async (pr: number) =>
+  github.paginate(github.pulls.listCommits, {
+    owner: OWNER,
+    repo: REPO,
     pull_number: pr,
-  }
+  })
 
-  return github.pulls.get(args)
-}
+const getUserByUsername = async (username: string) => {
+  try {
+    const user = await github.users.getByUsername({
+      username,
+    })
 
-const parsePR = (commit: IExtendedCommit): IExtendedCommit => {
-  const merge = /Merge pull request #(\d+) from (.+)\n([\S\s]+)/
-  const prMatch = commit.subject.match(merge)
-
-  if (!prMatch) {
-    return commit
-  }
-
-  return {
-    ...commit,
-    pullRequest: {
-      number: Number(prMatch[1]),
-      base: prMatch[2],
-    },
-    subject: prMatch[3].trim(),
-  }
-}
-
-const parseSquashPR = (commit: IExtendedCommit): IExtendedCommit => {
-  const firstLine = commit.subject.split('\n')[0]
-  const squashMerge = /\(#(\d+)\)$/
-
-  const squashMergeMatch = firstLine.match(squashMerge)
-
-  if (!squashMergeMatch) {
-    return commit
-  }
-
-  return {
-    ...commit,
-    pullRequest: {
-      number: Number(squashMergeMatch[1]),
-    },
-    subject: firstLine.substr(0, firstLine.length - squashMergeMatch[0].length).trim(),
-  }
-}
-
-const stripWhitespace = (commit: IExtendedCommit) => {
-  const [firstLine, ...lines] = commit.subject.split('\n')
-
-  commit.subject = [firstLine.replace(/[^\S\r\n]{2,}/g, ' '), ...lines].join('\n')
-
-  return commit
+    return user.data
+  } catch (error) {}
 }
 
 const attachAuthor = async (commit: IExtendedCommit) => {
@@ -252,7 +226,7 @@ const attachAuthor = async (commit: IExtendedCommit) => {
   return modifiedCommit
 }
 
-const addPrInfoToCommit = async (commit: IExtendedCommit) => {
+const addPRInfoToCommit = async (commit: IExtendedCommit) => {
   const modifiedCommit = { ...commit }
 
   if (!modifiedCommit.labels) {
@@ -343,45 +317,9 @@ const getPRForRebasedCommits = (
   return commit
 }
 
-const parseCommit = async (commit: IExtendedCommit) => {
-  let parsedCommit = commit
-  parsedCommit = parsePR(parsedCommit)
-  parsedCommit = parseSquashPR(parsedCommit)
-  parsedCommit = stripWhitespace(parsedCommit)
-  parsedCommit = await attachAuthor(parsedCommit)
-  parsedCommit = await addPrInfoToCommit(parsedCommit)
+const parseRebasePRs = async (commit: IExtendedCommit) => {
   const prsSinceLastRelease = await getPRsSinceLastRelease()
-  parsedCommit = getPRForRebasedCommits(commit, prsSinceLastRelease)
-  return parsedCommit
-}
-
-/** Run the log parser over a set of commits */
-const normalizeCommits = async (commits: ICommit[]): Promise<IExtendedCommit[]> => {
-  const eCommits = await Promise.all(commits.map(async (commit) => normalizeCommit(commit)))
-
-  return eCommits.filter(Boolean) as IExtendedCommit[]
-}
-
-/** Process a commit to find it's labels and PR information */
-const normalizeCommit = (commit: ICommit): Promise<IExtendedCommit | undefined> =>
-  parseCommit({
-    labels: [],
-    ...commit,
-    authors: [{ name: commit.authorName, email: commit.authorEmail }],
-  })
-
-const getFirstCommit = async (): Promise<string> => {
-  const list = await execPromise('git', ['rev-list', '--max-parents=0', 'HEAD'])
-  return list.split('\n').pop() as string
-}
-
-const shaExists = async (sha?: string): Promise<boolean> => {
-  try {
-    await execPromise('git', ['rev-parse', '--verify', sha])
-    return true
-  } catch (error) {
-    return false
-  }
+  return getPRForRebasedCommits(commit, prsSinceLastRelease)
 }
 
 const getGitLog = async (start: string, end = 'HEAD'): Promise<ICommit[]> => {
@@ -432,7 +370,11 @@ const getGitLog = async (start: string, end = 'HEAD'): Promise<ICommit[]> => {
 
     if (tag) {
       console.error(
-        'Missing tag "${tag[1]}" so the command could not run.  To fix this run the following command: git fetch --tags\n'
+        endent`
+            Missing tag "${tag[1]}" so the command could not run.
+            To fix this run the following command:
+            git fetch --tags\n
+          `
       )
       process.exit(1)
     }
@@ -441,10 +383,18 @@ const getGitLog = async (start: string, end = 'HEAD'): Promise<ICommit[]> => {
   }
 }
 
+const postParseCommit = async (commit: IExtendedCommit) => {
+  let parsedCommit = commit
+  parsedCommit = await attachAuthor(parsedCommit)
+  parsedCommit = await addPRInfoToCommit(parsedCommit)
+  parsedCommit = await parseRebasePRs(parsedCommit)
+  return parsedCommit
+}
+
 const getCommits = async (from: string, to = 'HEAD'): Promise<IExtendedCommit[]> => {
   const gitlog = await getGitLog(from, to)
 
-  const commits = (await normalizeCommits(gitlog)).filter((commit) => {
+  const commits = (await normalizeCommits(gitlog, postParseCommit)).filter((commit) => {
     let released: boolean
 
     try {
@@ -470,30 +420,31 @@ const getCommits = async (from: string, to = 'HEAD'): Promise<IExtendedCommit[]>
       }
     }
 
-    if (released) {
-      const shortHash = commit.hash.slice(0, 8)
-      this.logger.verbose.warn(
-        `Commit already released, omitting: ${shortHash}: "${commit.subject}"`
-      )
-    }
-
     return !released
   })
-
-  this.logger.veryVerbose.info('Added labels to commits:\n', commits)
 
   return commits
 }
 
-const getCommitsInRelease = async (from: string, to = 'HEAD') => {
+const graphql = async <T>(query: string) =>
+  github.graphql<T>(query, {
+    baseUrl: 'https://api.github.com',
+    headers: {
+      authorization: `token ${process.env.GITHUB_AUTH}`,
+    },
+  })
+
+export const getCommitsInRelease = async (
+  from: string,
+  to = 'HEAD',
+  prereleaseBranches: string[] = []
+): Promise<IExtendedCommit[]> => {
   const allCommits = await getCommits(from, to)
   const allPrCommits = await Promise.all(
     allCommits
       .filter((commit) => commit.pullRequest)
       .map(async (commit) => {
-        const [err, commits = []] = await on(
-          this.git.getCommitsForPR(Number(commit.pullRequest!.number))
-        )
+        const [err, commits = []] = await on(getCommitsForPR(Number(commit.pullRequest?.number)))
         return err ? [] : commits
       })
   )
@@ -513,13 +464,13 @@ const getCommitsInRelease = async (from: string, to = 'HEAD') => {
     batches
       .map((batch) =>
         buildSearchQuery(
-          this.git.options.owner,
-          this.git.options.repo,
+          OWNER,
+          REPO,
           batch.map((c) => c.hash)
         )
       )
       .filter((q): q is string => Boolean(q))
-      .map((q) => this.git.graphql<ISearchQuery>(q))
+      .map((q) => graphql<ISearchQuery>(q))
   )
   const data = queries.filter((q): q is ISearchQuery => Boolean(q))
 
@@ -528,7 +479,6 @@ const getCommitsInRelease = async (from: string, to = 'HEAD') => {
   }
 
   const commitsInRelease: Array<IExtendedCommit | undefined> = [...uniqueCommits]
-  const logParse = await this.createLogParse()
 
   type QueryEntry = [string, ISearchResult]
 
@@ -545,15 +495,15 @@ const getCommitsInRelease = async (from: string, to = 'HEAD') => {
           sha: key,
           result,
           commitsWithoutPR,
-          owner: this.git.options.owner,
-          prereleaseBranches: this.config.prereleaseBranches,
+          owner: OWNER,
+          prereleaseBranches: prereleaseBranches,
         })
       )
       .filter((commit): commit is IExtendedCommit => Boolean(commit))
       .map(async (commit) => {
         const index = commitsInRelease.findIndex((c) => c && c.hash === commit.hash)
 
-        commitsInRelease[index] = await logParse.normalizeCommit(commit)
+        commitsInRelease[index] = await normalizeCommit(commit, postParseCommit)
       })
   )
 

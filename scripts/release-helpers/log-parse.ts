@@ -39,14 +39,6 @@ export type IExtendedCommit = ICommit & {
   labels: string[]
 }
 
-export type PromiseValue<PromiseType, Otherwise = PromiseType> = PromiseType extends Promise<
-  infer Value
->
-  ? { 0: PromiseValue<Value>; 1: Value }[PromiseType extends Promise<unknown> ? 0 : 1]
-  : Otherwise
-type AsyncFunction = (...args: any[]) => Promise<unknown>
-type AsyncReturnType<Target extends AsyncFunction> = PromiseValue<ReturnType<Target>>
-
 const parsePR = (commit: IExtendedCommit): IExtendedCommit => {
   const merge = /Merge pull request #(\d+) from (.+)\n([\S\s]+)/
   const prMatch = commit.subject.match(merge)
@@ -65,6 +57,25 @@ const parsePR = (commit: IExtendedCommit): IExtendedCommit => {
   }
 }
 
+const parseSquashPR = (commit: IExtendedCommit): IExtendedCommit => {
+  const firstLine = commit.subject.split('\n')[0]
+  const squashMerge = /\(#(\d+)\)$/
+
+  const squashMergeMatch = firstLine.match(squashMerge)
+
+  if (!squashMergeMatch) {
+    return commit
+  }
+
+  return {
+    ...commit,
+    pullRequest: {
+      number: Number(squashMergeMatch[1]),
+    },
+    subject: firstLine.substr(0, firstLine.length - squashMergeMatch[0].length).trim(),
+  }
+}
+
 const stripWhitespace = (commit: IExtendedCommit) => {
   const [firstLine, ...lines] = commit.subject.split('\n')
 
@@ -73,91 +84,40 @@ const stripWhitespace = (commit: IExtendedCommit) => {
   return commit
 }
 
-const attachAuthor = async (commit: IExtendedCommit) => {
-  const modifiedCommit = { ...commit }
-  let resolvedAuthors: Array<
-    | (ICommitAuthor & {
-        /** The GitHub user name of the git committer */
-        login?: string
-      })
-    | Partial<AsyncReturnType<Git['getUserByUsername']>>
-  > = []
-
-  // If there is a pull request we will attempt to get the authors
-  // from any commit in the PR
-  if (modifiedCommit.pullRequest) {
-    const [prCommitsErr, prCommits] = await on(
-      getCommitsForPR(Number(modifiedCommit.pullRequest.number))
-    )
-
-    if (prCommitsErr || !prCommits) {
-      return commit
-    }
-
-    resolvedAuthors = await Promise.all(
-      prCommits.map(async (prCommit) => {
-        if (!prCommit.author) {
-          return prCommit.commit.author
-        }
-
-        return {
-          ...prCommit.author,
-          ...(await getUserByUsername(prCommit.author.login)),
-          hash: prCommit.sha,
-        }
-      })
-    )
-  } else {
-    const [, response] = await on(getCommit(commit.hash))
-
-    if (response?.data?.author?.login) {
-      const username = response.data.author.login
-      const author = await getUserByUsername(username)
-
-      resolvedAuthors.push({
-        name: commit.authorName,
-        email: commit.authorEmail,
-        ...author,
-        hash: commit.hash,
-      })
-    } else if (commit.authorEmail) {
-      resolvedAuthors.push({
-        email: commit.authorEmail,
-        name: commit.authorName,
-        hash: commit.hash,
-      })
-    }
-  }
-
-  modifiedCommit.authors = resolvedAuthors.map((author) => ({
-    ...author,
-    ...(author && 'login' in author ? { username: author.login } : {}),
-  }))
-
-  return modifiedCommit
-}
-
-const parseCommit = async (commit: IExtendedCommit) => {
+const parseCommit = (commit: IExtendedCommit) => {
   let parsedCommit = commit
   parsedCommit = parsePR(parsedCommit)
   parsedCommit = parseSquashPR(parsedCommit)
   parsedCommit = stripWhitespace(parsedCommit)
-  parsedCommit = await attachAuthor(parsedCommit)
-  parsedCommit = await addPRInfo(parsedCommit)
+
   return parsedCommit
 }
 
-/** Run the log parser over a set of commits */
-const normalizeCommits = async (commits: ICommit[]): Promise<IExtendedCommit[]> => {
-  const eCommits = await Promise.all(commits.map(async (commit) => normalizeCommit(commit)))
-
-  return eCommits.filter(Boolean) as IExtendedCommit[]
-}
-
 /** Process a commit to find it's labels and PR information */
-const normalizeCommit = (commit: ICommit): Promise<IExtendedCommit | undefined> =>
-  parseCommit({
+export const normalizeCommit = async (
+  commit: ICommit,
+  postParseCommit?: (commit: IExtendedCommit) => Promise<IExtendedCommit>
+): Promise<IExtendedCommit | undefined> => {
+  const parsedCommit = parseCommit({
     labels: [],
     ...commit,
     authors: [{ name: commit.authorName, email: commit.authorEmail }],
   })
+
+  if (postParseCommit) {
+    return postParseCommit(parsedCommit)
+  }
+  return parsedCommit
+}
+
+/** Run the log parser over a set of commits */
+export const normalizeCommits = async (
+  commits: ICommit[],
+  postParseCommit?: (commit: IExtendedCommit) => Promise<IExtendedCommit>
+): Promise<IExtendedCommit[]> => {
+  const eCommits = await Promise.all(
+    commits.map(async (commit) => normalizeCommit(commit, postParseCommit))
+  )
+
+  return eCommits.filter(Boolean) as IExtendedCommit[]
+}

@@ -2,6 +2,7 @@
 import describe from '@lerna/describe-ref'
 import prompts from 'prompts'
 
+import { getCommitsInRelease } from './release-helpers/commits'
 import execPromise from './release-helpers/exec-promise'
 
 const main = async () => {
@@ -16,6 +17,9 @@ const main = async () => {
     )
     process.exit(0)
   }
+
+  const commits = await getCommitsInRelease(lastReleaseTag)
+  console.log(commits)
 }
 
 main()
