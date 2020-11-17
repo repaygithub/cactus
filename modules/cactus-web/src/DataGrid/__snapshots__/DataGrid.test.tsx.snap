@@ -215,83 +215,6 @@ exports[`component: DataGrid snapshot 1`] = `
   padding: 0 16px;
 }
 
-.c2 {
-  display: -webkit-inline-box;
-  display: inline-box;
-}
-
-.c2 span {
-  margin-right: 8px;
-}
-
-.c2 .page-options-list {
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.c2 .page-option {
-  min-width: 15px;
-  height: 24px;
-  text-align: center;
-  background: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 2px 8px;
-  display: block;
-  border-left: 1px solid hsl(200,29%,90%);
-}
-
-.c2 .page-option:last-child {
-  border-right: 1px solid hsl(200,29%,90%);
-}
-
-.c2 .page-option,
-.c2 .page-option a {
-  color: hsl(200,10%,20%);
-  font-size: 15px;
-  line-height: 18px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c2 .page-option a {
-  cursor: pointer;
-  padding: 3px;
-  vertical-align: middle;
-  line-height: 18px;
-  display: block;
-  border-radius: 8px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  color: inherit;
-}
-
-.c2 .page-option a:hover {
-  color: hsl(200,96%,35%);
-}
-
-.c2 .page-option a:active,
-.c2 .page-option a:focus {
-  padding: 3px;
-  outline: none;
-  background-color: hsl(200,96%,35%);
-  color: hsl(0,0%,100%);
-}
-
-.c2 .page-option a[aria-selected='true'] {
-  background-color: hsl(200,96%,11%);
-  color: hsl(0,0%,100%);
-}
-
 .c3 {
   max-width: 100%;
   overflow-x: auto;
@@ -492,6 +415,83 @@ exports[`component: DataGrid snapshot 1`] = `
   border-radius: 20px;
 }
 
+.c2 {
+  display: -webkit-inline-box;
+  display: inline-box;
+}
+
+.c2 span {
+  margin-right: 8px;
+}
+
+.c2 .page-options-list {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.c2 .page-option {
+  min-width: 15px;
+  height: 24px;
+  text-align: center;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 2px 8px;
+  display: block;
+  border-left: 1px solid hsl(200,29%,90%);
+}
+
+.c2 .page-option:last-child {
+  border-right: 1px solid hsl(200,29%,90%);
+}
+
+.c2 .page-option,
+.c2 .page-option a {
+  color: hsl(200,10%,20%);
+  font-size: 15px;
+  line-height: 18px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c2 .page-option a {
+  cursor: pointer;
+  padding: 3px;
+  vertical-align: middle;
+  line-height: 18px;
+  display: block;
+  border-radius: 8px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c2 .page-option a:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c2 .page-option a:active,
+.c2 .page-option a:focus {
+  padding: 3px;
+  outline: none;
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c2 .page-option a[aria-selected='true'] {
+  background-color: hsl(200,96%,11%);
+  color: hsl(0,0%,100%);
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -560,13 +560,6 @@ exports[`component: DataGrid snapshot 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
-  .c2 .page-option,
-  .c2 .page-option a {
-    font-size: 15px;
-  }
-}
-
 @media screen and (min-width:1200px) {
   .c6 {
     min-width: calc(160px * 0.875);
@@ -583,6 +576,13 @@ exports[`component: DataGrid snapshot 1`] = `
   .c4 {
     font-size: 18px;
     line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 .page-option,
+  .c2 .page-option a {
+    font-size: 15px;
   }
 }
 

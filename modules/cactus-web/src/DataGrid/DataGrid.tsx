@@ -9,9 +9,9 @@ import Pagination, { PaginationProps } from '../Pagination/Pagination'
 import PrevNext, { PrevNextProps } from '../PrevNext/PrevNext'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import BottomSection, { BottomSectionProps } from './BottomSection'
+import DataGridTable, { DataGridTableProps } from './DataGridTable'
 import { DataGridContext, getMediaQuery } from './helpers'
 import PageSizeSelect, { PageSizeSelectProps } from './PageSizeSelect'
-import DataGridTable, { DataGridTableProps } from './Table'
 import TopSection, { TopSectionProps } from './TopSection'
 import {
   ColumnObject,
