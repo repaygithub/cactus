@@ -21,7 +21,7 @@ exports[`component: Select snapshot 1`] = `
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  border-radius: 20px;
+  border-radius: 8px;
   border-width: 1px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
@@ -141,7 +141,7 @@ exports[`component: Select with theme customization should have 2px border 1`] =
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  border-radius: 20px;
+  border-radius: 8px;
   border-width: 2px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
@@ -501,7 +501,7 @@ exports[`component: Select with theme customization should not have box shadows 
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  border-radius: 20px;
+  border-radius: 8px;
   border-width: 1px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
