@@ -28,6 +28,7 @@
     "cleanup": "yarn ws run cleanup",
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
     "release": "npm login && yarn install --registry https://registry.yarnpkg.com && yarn cleanup && yarn build && lerna publish --no-private --registry https://registry.yarnpkg.com",
+    "release:beta": "yarn release --include-merged-tags --preid beta --pre-dist-tag next",
     "commit": "git-cz",
     "postinstall": "patch-package",
     "test:build": "docker build -t tests .",
