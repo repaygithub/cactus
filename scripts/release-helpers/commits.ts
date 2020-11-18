@@ -20,7 +20,7 @@ class GitAPIError extends Error {
     super(`Error calling github: ${api}\n\twith: ${JSON.stringify(args)}.\n\t${origError.message}`)
   }
 }
-interface ICommitAuthor {
+export interface ICommitAuthor {
   /** Author's name */
   name?: string
   /** Author's email */
@@ -52,7 +52,7 @@ interface ICommit {
   files: string[]
 }
 
-type IExtendedCommit = ICommit & {
+export type IExtendedCommit = ICommit & {
   /** The authors that contributed to the pull request */
   authors: ICommitAuthor[]
   /** The pull request information */
@@ -508,4 +508,18 @@ export const getCommitsInRelease = async (
   )
 
   return commitsInRelease.filter((commit): commit is IExtendedCommit => Boolean(commit))
+}
+
+export const getLatestRelease = async (): Promise<string> => {
+  try {
+    const latestRelease = await getLatestReleaseInfo()
+
+    return latestRelease.tag_name
+  } catch (e) {
+    if (e.status === 404) {
+      return getFirstCommit()
+    }
+
+    throw e
+  }
 }

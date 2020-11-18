@@ -2573,7 +2573,7 @@
     validate-npm-package-name "^3.0.0"
     whatwg-url "^7.0.0"
 
-"@lerna/describe-ref@3.16.5", "@lerna/describe-ref@^3.16.5":
+"@lerna/describe-ref@3.16.5":
   version "3.16.5"
   resolved "https://registry.yarnpkg.com/@lerna/describe-ref/-/describe-ref-3.16.5.tgz#a338c25aaed837d3dc70b8a72c447c5c66346ac0"
   integrity sha512-c01+4gUF0saOOtDBzbLMFOTJDHTKbDFNErEY6q6i9QaXuzy9LNN62z+Hw4acAAZuJQhrVWncVathcmkkjvSVGw==

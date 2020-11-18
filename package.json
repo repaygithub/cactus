@@ -53,7 +53,6 @@
   },
   "devDependencies": {
     "@actions/core": "^1.2.6",
-    "@lerna/describe-ref": "^3.16.5",
     "@octokit/core": "^3.2.1",
     "@octokit/plugin-enterprise-compatibility": "^1.2.6",
     "@octokit/plugin-paginate-rest": "^2.6.0",
