@@ -44,13 +44,15 @@ RUN apt-get update && apt-get install -y \
   wget
 WORKDIR /code
 COPY package.json yarn.lock /code/
+COPY modules/cactus-fwk/package.json /code/modules/cactus-fwk/
+COPY modules/cactus-i18n/package.json /code/modules/cactus-i18n/
+COPY modules/cactus-icons/package.json /code/modules/cactus-icons/
+COPY modules/cactus-theme/package.json /code/modules/cactus-theme/
 COPY modules/cactus-web/package.json /code/modules/cactus-web/
 RUN yarn --frozen-lockfile
-COPY modules/cactus-web/.jest/ /code/modules/cactus-web/.jest/
-COPY modules/cactus-web/.storybook/ /code/modules/cactus-web/.storybook/
-COPY modules/cactus-web/cactus-addon/ /code/modules/cactus-web/cactus-addon/
-COPY modules/cactus-web/.babelrc /code/modules/cactus-web/
-COPY modules/cactus-web/dist/helpers/polyfills.js /code/modules/cactus-web/dist/helpers/
-COPY modules/cactus-web/src/ /code/modules/cactus-web/src/
-COPY modules/cactus-web/tests/ /code/modules/cactus-web/tests/
+COPY ["docs/Icons/Available Icons.md", "/code/docs/Icons/"]
+COPY modules/ /code/modules/
+COPY scripts/ /code/scripts/
+COPY .prettierrc .prettierignore tsconfig.json /code/
+RUN yarn cleanup && yarn build
 CMD yarn web test:visual
