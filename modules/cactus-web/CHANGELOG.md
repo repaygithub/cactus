@@ -1,3 +1,19 @@
+# v4.0.0-beta.1 (Wed Nov 18 2020)
+
+#### 💥 Breaking Change
+
+- Allow more customization with placement of DataGrid sub-components.
+[#385](https://github.com/repaygithub/cactus/pull/385)
+  - All DataGride sub-components are no longer placed automatically and will need to be
+placed manually. See https://repaygithub.github.io/cactus/components/datagrid/ for a
+description of the new API.
+
+#### Authors: 1
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v4.0.0-beta.0 (Fri Nov 13 2020)
 
 #### 💥 Breaking Change
