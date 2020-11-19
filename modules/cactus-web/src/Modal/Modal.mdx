@@ -19,19 +19,19 @@ The `Modal` component acts just as a container, and is usefull when no action fr
 ### Try it out
 
 export const code = ` () => {
-  const [open, setOpen] = React.useState(false)
-  return open ? (
+  const [modalOpen, setModalOpen] = React.useState(false)
+  return modalOpen ? (
     <Modal
       variant="action"
-      isOpen={open}
-      onClose={() => setOpen(false)}
+      isOpen={modalOpen}
+      onClose={() => setModalOpen(false)}
       modalLabel="Modal Label"
       closeLabel="Close Label"
     >
       <Text as="h1">This is a Modal</Text>
     </Modal>
   ) : (
-    <Button variant="action" onClick={() => setOpen(true)}>
+    <Button variant="action" onClick={() => setModalOpen(true)}>
       Open Modal
     </Button>
   )
@@ -57,12 +57,12 @@ A basic modal is just an empty container. In this example it has a `Text` compon
 ```jsx
 import { Modal } from '@repay/cactus-web'
 const ComponentWithModal = () => {
-  const [open, setOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   return (
     <Modal
       variant="action"
-      isOpen={open}
-      onClose={() => setOpen(false)}
+      isOpen={modalOpen}
+      onClose={() => setModalOpen(false)}
       modalLabel="Modal Label"
       closeLabel="Close Label"
     />
