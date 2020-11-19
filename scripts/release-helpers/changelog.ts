@@ -1,5 +1,5 @@
-import { execSync } from 'child_process'
 import prompts from 'prompts'
+import join from 'url-join'
 
 import { ICommitAuthor, IExtendedCommit } from './commits'
 import SEMVER from './semver'
@@ -7,12 +7,28 @@ import SEMVER from './semver'
 const OWNER = 'repaygithub'
 const REPO = 'cactus'
 
+const AUTOMATED_COMMENT_IDENTIFIER = '<!-- GITHUB_RELEASE'
+
+const BOT_LIST = [
+  'dependabot-preview[bot]',
+  'greenkeeper[bot]',
+  'dependabot[bot]',
+  'fossabot',
+  'renovate',
+  'renovate-bot',
+  'renovate[bot]',
+  'renovate-pro[bot]',
+  'renovate-approve',
+  'invalid-email-address',
+  'snyk-bot',
+]
+
 const SECTIONS = [
-  { name: 'breakingChange', displayName: '💥 Breaking Change' },
-  { name: 'enhancement', displayName: '🚀 Enhancement' },
-  { name: 'bugFix', displayName: '🐛 Bug Fix' },
-  { name: 'internal', displayName: '🏠 Internal' },
-  { name: 'dependencyUpdates', displayName: '🔩 Dependency Updates' },
+  { name: 'breakingChange', changelogTitle: '💥 Breaking Change' },
+  { name: 'enhancement', changelogTitle: '🚀 Enhancement' },
+  { name: 'bugFix', changelogTitle: '🐛 Bug Fix' },
+  { name: 'internal', changelogTitle: '🏠 Internal' },
+  { name: 'dependencyUpdates', changelogTitle: '🔩 Dependency Updates' },
 ]
 
 export interface IGenerateReleaseNotesOptions {
@@ -32,25 +48,21 @@ interface ICommitSplit {
   [key: string]: IExtendedCommit[]
 }
 
-const getCurrentBranch = () => {
-  try {
-    return execSync('git symbolic-ref --short HEAD', {
-      encoding: 'utf8',
-      stdio: 'ignore',
-    })
-  } catch (error) {}
-}
+/** Determine how deep the markdown headers are in a string */
+const getHeaderDepth = (line: string) =>
+  line.split('').reduce((count, char) => (char === '#' ? count + 1 : count), 0)
 
 const getSection = async (commit: IExtendedCommit) => {
   const prefix = 'Which type of change applies to the following commit?'
   const commitName = commit.pullRequest ? `PR #${commit.pullRequest.number}` : commit.subject
   const text = `${prefix} ${commitName}`
-  return prompts<string>({
+  const answers = await prompts({
     type: 'select',
     name: 'section',
     message: text,
-    choices: SECTIONS.map(({ name, displayName }) => ({ title: displayName, value: name })),
-  })['section']
+    choices: SECTIONS.map(({ name, changelogTitle }) => ({ title: changelogTitle, value: name })),
+  })
+  return answers.section
 }
 
 class Changelog {
@@ -74,21 +86,14 @@ class Changelog {
 
     const sections: string[] = []
 
-    const extraNotes = (await this.hooks.addToBody.promise([], commits)) || []
-    extraNotes.filter(Boolean).forEach((note) => sections.push(note))
-
     await this.createReleaseNotesSection(commits, sections)
-    this.logger.verbose.info('Added release notes to changelog')
 
     this.authors = this.getAllAuthors(split)
-    await this.createLabelSection(split, sections)
-    this.logger.verbose.info('Added groups to changelog')
+    await this.createChangelogSection(split, sections)
 
     await this.createAuthorSection(sections)
-    this.logger.verbose.info('Added authors to changelog')
 
     const result = sections.join('\n\n')
-    this.logger.verbose.info('Successfully generated release notes.')
 
     return result
   }
@@ -107,11 +112,9 @@ class Changelog {
   }
 
   /** Split commits into changelogTitle sections. */
-  private async splitCommits(commits: IExtendedCommit[]): ICommitSplit {
-    let currentCommits = [...commits]
-
-    const splitCommits: ICommitSplit = Object.keys(SECTIONS).reduce(
-      (fullObject, section) => ({ ...fullObject, [section]: [] }),
+  private async splitCommits(commits: IExtendedCommit[]): Promise<ICommitSplit> {
+    const splitCommits: ICommitSplit = SECTIONS.reduce(
+      (fullObject, section) => ({ ...fullObject, [section.name]: [] }),
       {}
     )
     for (let i = 0; i < commits.length; i++) {
@@ -119,24 +122,22 @@ class Changelog {
       splitCommits[section].push(commits[i])
     }
 
-    return Object.assign(
-      {},
-      ...sections.map((label) => {
-        const matchedCommits = filterLabel(currentCommits, label.name)
-        currentCommits = currentCommits.filter((commit) => !matchedCommits.includes(commit))
-
-        return matchedCommits.length === 0 ? {} : { [label.name]: matchedCommits }
-      })
-    )
+    return splitCommits
   }
 
   /** Create a list of users */
   private async createUserLinkList(commit: IExtendedCommit) {
     const result = new Set<string>()
 
+    if (!this.authors) {
+      throw new Error('Changelog authors is undefined')
+    }
+
+    const authors = this.authors as [IExtendedCommit, ICommitAuthor][]
+
     await Promise.all(
       commit.authors.map(async (rawAuthor) => {
-        const data = (this.authors!.find(
+        const data = (authors.find(
           ([, commitAuthor]) =>
             (commitAuthor.name && rawAuthor.name && commitAuthor.name === rawAuthor.name) ||
             (commitAuthor.email && rawAuthor.email && commitAuthor.email === rawAuthor.email) ||
@@ -145,7 +146,7 @@ class Changelog {
               commitAuthor.username === rawAuthor.username)
         ) as [IExtendedCommit, ICommitAuthor]) || [{}, rawAuthor]
 
-        const link = await this.hooks.renderChangelogAuthor.promise(data[1], commit, this.options)
+        const link = this.createUserLink(data[1], commit)
 
         if (link) {
           result.add(link)
@@ -197,22 +198,31 @@ class Changelog {
       .sort((a) => ('id' in a[1] ? 0 : 1))
   }
 
+  private renderChangelogAuthorLine(author: ICommitAuthor, user?: string) {
+    const authorString = author.name && user ? `${author.name} (${user})` : user
+    return authorString ? `- ${authorString}` : undefined
+  }
+
   /** Create a section in the changelog to showcase contributing authors */
   private async createAuthorSection(sections: string[]) {
+    if (!this.authors) {
+      throw new Error('Changelog authors is undefined')
+    }
+
     const authors = new Set<string>()
-    const authorsWithFullData = this.authors!.map(([, author]) => author).filter(
-      (author) => 'id' in author
-    )
+    const authorsWithFullData = this.authors
+      .map(([, author]) => author)
+      .filter((author) => 'id' in author)
 
     await Promise.all(
-      this.authors!.map(async ([commit, author]) => {
+      this.authors.map(async ([commit, author]) => {
         const info =
           authorsWithFullData.find(
             (u) =>
               (author.name && u.name === author.name) || (author.email && u.email === author.email)
           ) || author
-        const user = await this.hooks.renderChangelogAuthor.promise(info, commit, this.options)
-        const authorEntry = await this.hooks.renderChangelogAuthorLine.promise(info, user as string)
+        const user = this.createUserLink(info, commit)
+        const authorEntry = this.renderChangelogAuthorLine(info, user)
 
         if (authorEntry && !authors.has(authorEntry)) {
           authors.add(authorEntry)
@@ -230,50 +240,30 @@ class Changelog {
   }
 
   /** Create a section in the changelog to with all of the changelog notes organized by change type */
-  private async createLabelSection(split: ICommitSplit, sections: string[]) {
-    const changelogTitles = this.options.labels.reduce<Record<string, string>>((titles, label) => {
-      if (label.changelogTitle) {
-        titles[label.name] = label.changelogTitle
-      }
+  private async createChangelogSection(split: ICommitSplit, sections: string[]) {
+    const changelogTitles = SECTIONS.reduce<Record<string, string>>(
+      (titles, section) => ({ ...titles, [section.name]: section.changelogTitle }),
+      {}
+    )
 
-      return titles
-    }, {})
-
-    const labelSections = await Promise.all(
+    const changelogSections = await Promise.all(
       Object.entries(split).map(async ([label, labelCommits]) => {
-        const title = await this.hooks.renderChangelogTitle.promise(label, changelogTitles)
+        const title = `#### ${changelogTitles[label]}\n`
 
         const lines = new Set<string>()
 
         await Promise.all(
           labelCommits.map(async (commit) => {
-            const base = commit.pullRequest?.base || ''
-            const branch = base.includes('/') ? base.split('/')[1] : base
-
-            // We want to keep the release notes for a prerelease branch but
-            // omit the changelog item
-            if (branch && this.options.prereleaseBranches.includes(branch)) {
-              return true
-            }
-
-            const line = await this.hooks.renderChangelogLine.promise(
-              await this.generateCommitNote(commit),
-              commit
-            )
+            const line = await this.generateCommitNote(commit)
 
             lines.add(line)
           })
         )
-
-        const sortedLines = await this.hooks.sortChangelogLines.promise(
-          [...lines].sort((a, b) => a.split('\n').length - b.split('\n').length)
-        )
-
-        return [title || '', sortedLines] as const
+        return [title || '', lines] as const
       })
     )
 
-    const mergedSections = labelSections.reduce<Record<string, string[]>>(
+    const mergedSections = changelogSections.reduce<Record<string, string[]>>(
       (acc, [title, commits]) => ({
         ...acc,
         [title]: [...(acc[title] || []), ...commits],
@@ -286,6 +276,18 @@ class Changelog {
       .map((section) => sections.push(section))
   }
 
+  private omitReleaseNotes(commit: IExtendedCommit) {
+    if (
+      commit.authors.some(
+        (author) =>
+          (author.name && BOT_LIST.includes(author.name)) ||
+          (author.username && BOT_LIST.includes(author.username))
+      )
+    ) {
+      return true
+    }
+  }
+
   /** Gather extra release notes to display at the top of the changelog */
   private async createReleaseNotesSection(commits: IExtendedCommit[], sections: string[]) {
     if (!commits.length) {
@@ -296,7 +298,7 @@ class Changelog {
     const visited = new Set<number>()
     const included = await Promise.all(
       commits.map(async (commit) => {
-        const omit = await this.hooks.omitReleaseNotes.promise(commit)
+        const omit = this.omitReleaseNotes(commit)
 
         if (!omit) {
           return commit
@@ -333,7 +335,7 @@ class Changelog {
 
         if (
           (line.startsWith('#') && getHeaderDepth(line) <= depth && !isTitle) ||
-          line.startsWith(automatedCommentIdentifier)
+          line.startsWith(AUTOMATED_COMMENT_IDENTIFIER)
         ) {
           break
         }
@@ -354,16 +356,11 @@ class Changelog {
   }
 }
 
-export const createChangelog = async (version?: SEMVER) => {
-  const changelog = new Changelog({
+export const createChangelog = (): Changelog => {
+  return new Changelog({
     owner: OWNER,
     repo: REPO,
-    baseUrl: project.html_url,
+    baseUrl: 'https://github.com/repaygithub/cactus',
     baseBranch: 'master',
   })
-
-  this.hooks.onCreateChangelog.call(changelog, version)
-  changelog.loadDefaultHooks()
-
-  return changelog
 }

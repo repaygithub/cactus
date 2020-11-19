@@ -1,16 +1,13 @@
 /// <reference types="./custom" />
 
+import { createChangelog } from './release-helpers/changelog'
 import { getCommitsInRelease, getLatestRelease } from './release-helpers/commits'
 import execPromise from './release-helpers/exec-promise'
 import SEMVER from './release-helpers/semver'
 
-const generateReleaseNotes = async (
-  from: string,
-  to = 'HEAD',
-  version?: SEMVER
-): Promise<string> => {
+const generateReleaseNotes = async (from: string, to = 'HEAD'): Promise<string> => {
   const commits = await getCommitsInRelease(from, to)
-  const changelog = await createChangelog(version)
+  const changelog = createChangelog()
 
   return changelog.generateReleaseNotes(commits)
 }
@@ -30,44 +27,39 @@ const getGitUser = async () => {
 }
 
 const makeChangelog = async (releaseName: string, from: string, to = 'HEAD') => {
-  const dryRun = false
+  const dryRun = true
   const message = 'Update CHANGELOG.md [skip ci]'
 
   await getGitUser()
 
   const lastRelease = from || (await getLatestRelease())
-  const releaseNotes = await this.release.generateReleaseNotes(lastRelease, to, this.versionBump)
+  const releaseNotes = await generateReleaseNotes(lastRelease, to)
 
   if (dryRun) {
-    this.logger.log.info('Potential Changelog Addition:\n', releaseNotes)
-    this.logger.verbose.info('`changelog` dry run complete.')
+    console.log('Potential Changelog Addition:\n', releaseNotes)
     return
   }
 
-  if (args.quiet) {
-    console.log(releaseNotes)
-  } else {
-    this.logger.log.info('New Release Notes\n', releaseNotes)
-  }
+  console.log('New Release Notes\n', releaseNotes)
 
-  const currentVersion = await this.getCurrentVersion(lastRelease)
-  const context = {
-    bump,
-    commits: await this.release.getCommits(lastRelease, to || undefined),
-    releaseNotes,
-    lastRelease,
-    currentVersion,
-  }
+  // const currentVersion = await this.getCurrentVersion(lastRelease)
+  // const context = {
+  //   bump,
+  //   commits: await this.release.getCommits(lastRelease, to || undefined),
+  //   releaseNotes,
+  //   lastRelease,
+  //   currentVersion,
+  // }
 
-  if (!noCommit) {
-    await this.release.addToChangelog(releaseNotes, lastRelease, currentVersion)
+  // if (!noCommit) {
+  //   await this.release.addToChangelog(releaseNotes, lastRelease, currentVersion)
 
-    await this.hooks.beforeCommitChangelog.promise(context)
-    await execPromise('git', ['commit', '-m', `"${message}"`, '--no-verify'])
-    this.logger.verbose.info('Committed new changelog.')
-  }
+  //   await this.hooks.beforeCommitChangelog.promise(context)
+  //   await execPromise('git', ['commit', '-m', `"${message}"`, '--no-verify'])
+  //   this.logger.verbose.info('Committed new changelog.')
+  // }
 
-  await this.hooks.afterChangelog.promise(context)
+  // await this.hooks.afterChangelog.promise(context)
 }
 
 const main = async () => {
@@ -83,6 +75,8 @@ const main = async () => {
   const lastReleaseTag = await getLatestRelease()
   const commits = await getCommitsInRelease(lastReleaseTag)
   console.log(commits)
+
+  await makeChangelog('foo', lastReleaseTag)
 }
 
 main()

@@ -14,6 +14,8 @@ import { buildSearchQuery, ISearchQuery, ISearchResult, processQueryResult } fro
 const OWNER = 'repaygithub'
 const REPO = 'cactus'
 
+const AUTOMATED_COMMENT_IDENTIFIER = '<!-- GITHUB_RELEASE'
+
 class GitAPIError extends Error {
   /** Extend the base error */
   constructor(api: string, args: Record<string, unknown> | unknown[], origError: Error) {
