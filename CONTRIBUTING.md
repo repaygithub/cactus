@@ -34,6 +34,9 @@ We use the Prettier defaults for this, but there is no validation and will not b
 
 The style is based on the [Angular Repository](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits) to improve readability and for changelog maintanance.
 
+When committing, you can run `yarn commit` instead of `git commit -m <message>`, and a script will
+walk you through your commit message and handle formatting for you.
+
 #### Message Format
 
 ```
