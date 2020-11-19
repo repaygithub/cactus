@@ -261,13 +261,6 @@ const getHeight = (element: Element | null): number => {
   return 0
 }
 
-/**
- * determines animation duration based on pixels travelled with
- * a min of 200ms and max of 700ms otherwise x / 2 + 100
- */
-const getDuration = (delta: number): number =>
-  Math.min(Math.max(Math.abs(delta / 2) + 100, 200), 700)
-
 type AnimationStateType = 'open' | 'animating' | 'closed'
 
 const AccordionBodyBase = (props: AccordionBodyProps): ReactElement | null => {
@@ -314,7 +307,7 @@ const AccordionBodyBase = (props: AccordionBodyProps): ReactElement | null => {
   }
 
   const outerHeight = (isOpen && state === 'animating') || state === 'open' ? height : 0
-  const transitionDuration = state === 'animating' ? getDuration(getHeight(innerRef.current)) : 0
+  const transitionDuration = state === 'animating' ? 200 : 0
   const rest = omitMargins(restProps, 'width', 'maxWidth')
   return state !== 'closed' ? (
     <div
