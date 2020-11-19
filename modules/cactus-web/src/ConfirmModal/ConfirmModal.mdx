@@ -19,13 +19,13 @@ It also allows to pass an Icon as prop, that can be large or medium
 ### Try it out
 
 export const code = `() => {
-  const [open, setOpen] = React.useState(false)
-   return open?(
+  const [modalOpen, setModalOpen] = React.useState(false)
+   return modalOpen?(
      <ConfirmModal
-      isOpen={open}
-      onClose={() => setOpen(false)}
+      isOpen={modalOpen}
+      onClose={() => setModalOpen(false)}
       variant='action'
-      onConfirm={() => setOpen(false)}
+      onConfirm={() => setModalOpen(false)}
       confirmButtonText='Confirm'
       cancelButtonText="Cancel"
       iconName="DescriptiveEnvelope"
@@ -36,7 +36,7 @@ export const code = `() => {
       </Text>
     </ConfirmModal>
   ) : (
-    <Button variant="action" onClick={() => setOpen(true)}>
+    <Button variant="action" onClick={() => setModalOpen(true)}>
       Open Modal
     </Button>
   )
@@ -54,13 +54,13 @@ export const code = `() => {
 import React from 'react'
 import { ConfirmModal, Text} from '@repay/cactus-web'
 const ConfirmModalExample = () => {
-const [open, setOpen] = React.useState(false)
+const [modalOpen, setModalOpen] = React.useState(false)
 return(
   <ConfirmModal
-    isOpen={open}
-    onClose={() => setOpen(false)}
+    isOpen={modalOpen}
+    onClose={() => setModalOpen(false)}
     variant='warning'
-    onConfirm={() => setOpen(false)}
+    onConfirm={() => setModalOpen(false)}
     confirmButtonText='Confrim'
     cancelButtonText='Cancel'
     iconName="DescriptiveEnvelope"

@@ -15,7 +15,6 @@ The `Tag` Component is a chip that let users present text inside it that can be 
 ### Try it out
 
 export const code = `() => {
-  const [open, setOpen] = React.useState(false)
   const [values, setValues] = React.useState([{label:'Cactus', id:'1'}, {label:'Web', id:'2'}])
   const deleteTag = (id) => {
       setValues(values.filter((e) => e.id !== id))
