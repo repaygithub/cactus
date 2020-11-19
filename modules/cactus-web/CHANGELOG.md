@@ -1,9 +1,31 @@
+# v4.0.0-beta.2 (Thu Nov 19 2020)
+
+#### 💥 Breaking Change
+
+- Upgrade `@repay/cactus-theme` to `v2.0.0-beta-0`
+[#401](https://github.com/repaygithub/cactus/pull/401) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+  - If you don't pass a `shape` value to `generateTheme`, or if you use the default
+export from `@repay/cactus-theme` as your theme, then the shape of all of your
+components will change from `round` to `intermediate` when you upgrade.
+
+#### 🚀 Enhancement
+
+- Change Accordion transition time from a dynamic value, based on Accordion height, to
+a static value of 200ms. [#403](https://github.com/repaygithub/cactus/pull/403)
+([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+
+#### Authors: 1
+
+- Nicolas Simmonds ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+
+---
+
 # v4.0.0-beta.1 (Wed Nov 18 2020)
 
 #### 💥 Breaking Change
 
 - Allow more customization with placement of DataGrid sub-components.
-[#385](https://github.com/repaygithub/cactus/pull/385)
+[#385](https://github.com/repaygithub/cactus/pull/385)  ([@Dhalton](https://github.com/Dhalton))
   - All DataGride sub-components are no longer placed automatically and will need to be
 placed manually. See https://repaygithub.github.io/cactus/components/datagrid/ for a
 description of the new API.
