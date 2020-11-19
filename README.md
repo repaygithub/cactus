@@ -42,7 +42,9 @@ npm install --save-dev @repay/cactus-fwk
 
 ## Contributing
 
-You will need to install [Node.js](https://nodejs.org/en/) runtime and [Yarn](https://yarnpkg.com/en/docs/install) for package management. Next clone the repository and install the dependencies.
+**Before contributing, please read our [guidelines for contributing](./CONTRIBUTING.md)**
+
+You will need to install [Node.js](https://nodejs.org/en/) runtime and [Yarn](https://yarnpkg.com/en/docs/install) for package management. Next clone the repository and install the dependencies.  **Be sure to do this from the repository root.**
 
 ```
 yarn install
@@ -161,10 +163,12 @@ yarn <lib> build:types
 To publish a release, open Terminal or command prompt and call:
 
 ```bash
-yarn release [module] [new version]
+yarn release
 ```
 
-Where you can optionally provide the module `[module]` and the version `[new version]` to publish. If you don't provide these values you will be prompted for them instead. The `module` parameter accepts the package name, folder, or short codes listed above. The `new version` parameter accepts any semver value execpt pre-releases since pre-releases are expected to be used rarely and without a changelog at this point.
+This command will install all dependencies, build packages, and then call [Lerna](https://lerna.js.org/) to handle the release process.  Lerna will automatically determine which packages have changed and will prompt you for the type of version bump (major/minor/patch).   It will then publish the updated packages, create commits with `package.json` changes, and create git tags.
+
+We also have a `yarn release:beta` command that will do roughly the same thing, but will pass additional options to Lerna that are needed for beta versions/pre-releases.
 
 ### Integration Testing
 
@@ -187,5 +191,5 @@ To obtain the actual value of those secrets, you can get in touch with a member 
 will send them to you via onetimesecret.
 
 ```bash
-yarn w <app-name...i.e. mock-ebpp> test:local -b "Chrome -incognito"
+yarn w <app-name...i.e. mock-ebpp> test -b "Chrome -incognito"
 ```
