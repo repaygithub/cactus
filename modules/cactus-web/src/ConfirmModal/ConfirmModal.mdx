@@ -20,7 +20,7 @@ It also allows to pass an Icon as prop, that can be large or medium
 
 export const code = `() => {
   const [open, setOpen] = React.useState(false)
-   return open?( 
+   return open?(
      <ConfirmModal
       isOpen={open}
       onClose={() => setOpen(false)}
@@ -53,7 +53,7 @@ export const code = `() => {
 ```jsx
 import React from 'react'
 import { ConfirmModal, Text} from '@repay/cactus-web'
-const ConfriModalExample = () => {
+const ConfirmModalExample = () => {
 const [open, setOpen] = React.useState(false)
 return(
   <ConfirmModal
