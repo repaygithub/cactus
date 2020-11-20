@@ -19,7 +19,7 @@ const alignOptions = ['unset', 'flex-start', 'flex-end', 'center', 'baseline', '
 
 const directionOptions = ['unset', 'row', 'row-reverse', 'column', 'column-reverse']
 
-const flexWrapOptions = ['unset', 'initial', 'wrap', 'nowrap', 'wrap-reverse']
+const flexWrapOptions = ['unset', 'inherit', 'wrap', 'nowrap', 'wrap-reverse']
 
 export default {
   title: 'Flex',
