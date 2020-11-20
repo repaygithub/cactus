@@ -101,8 +101,9 @@ export const positionDropDown: PositionCallback = (dd, button) => {
   }
 
   const expectedBottom = bottom + ddHeight
-  const expectedTop = top - ddHeight
-  if (expectedBottom > maxBottom && expectedTop > 0) {
+  const availableBelow = maxBottom - bottom
+  dd.style.maxHeight = `${Math.max(availableBelow, top) - MARGIN}px`
+  if (expectedBottom > maxBottom && availableBelow < top) {
     dd.style.top = ''
     dd.style.bottom = `${maxBottom + MARGIN - top}px`
   } else {
