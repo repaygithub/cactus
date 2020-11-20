@@ -2,7 +2,6 @@ import prompts from 'prompts'
 import join from 'url-join'
 
 import { ICommitAuthor, IExtendedCommit } from './commits'
-import SEMVER from './semver'
 
 const OWNER = 'repaygithub'
 const REPO = 'cactus'

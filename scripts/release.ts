@@ -1,16 +1,8 @@
 /// <reference types="./custom" />
 
-import { createChangelog } from './release-helpers/changelog'
-import { getCommitsInRelease, getLatestRelease } from './release-helpers/commits'
+import { getLatestRelease } from './release-helpers/commits'
 import execPromise from './release-helpers/exec-promise'
-import SEMVER from './release-helpers/semver'
-
-const generateReleaseNotes = async (from: string, to = 'HEAD'): Promise<string> => {
-  const commits = await getCommitsInRelease(from, to)
-  const changelog = createChangelog()
-
-  return changelog.generateReleaseNotes(commits)
-}
+import generateReleaseNotes from './release-helpers/release-notes'
 
 const getGitUser = async () => {
   try {
@@ -26,9 +18,9 @@ const getGitUser = async () => {
   }
 }
 
-const makeChangelog = async (releaseName: string, from: string, to = 'HEAD') => {
+const makeChangelog = async (from: string, to = 'HEAD') => {
   const dryRun = true
-  const message = 'Update CHANGELOG.md [skip ci]'
+  const createCommitMessage = (scope: string) => `chore(${scope}): update changelog [skip ci]`
 
   await getGitUser()
 
@@ -73,10 +65,12 @@ const main = async () => {
   }
 
   const lastReleaseTag = await getLatestRelease()
-  const commits = await getCommitsInRelease(lastReleaseTag)
-  console.log(commits)
 
-  await makeChangelog('foo', lastReleaseTag)
+  // console.log(lastReleaseTag)
+  // const commits = await getCommitsInRelease(lastReleaseTag)
+  // console.log(commits)
+
+  await makeChangelog(lastReleaseTag)
 }
 
 main()
