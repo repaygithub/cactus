@@ -1,5 +1,3 @@
-import Portal from '@reach/portal'
-import Rect from '@reach/rect'
 import {
   DescriptiveCalendar,
   NavigationChevronDown,
@@ -26,6 +24,7 @@ import {
 } from '../helpers/dates'
 import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
+import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { boxShadow, textStyle } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
@@ -69,7 +68,6 @@ interface DateInputPhrasesType {
 const IS_FIREFOX = typeof window !== 'undefined' && window.navigator.userAgent.match(/firefox/i)
 const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
 
-const portalStyleOptions = { offset: 8 }
 const noop = function (): void {
   return
 }
@@ -335,9 +333,27 @@ const getPopupBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => 
       `
 }
 
-const CalendarPopup = styled.div`
+interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
+  anchorRef: React.RefObject<HTMLDivElement>
+  popupRef: React.RefObject<HTMLDivElement>
+  isOpen: boolean
+}
+
+const BasePopup: React.FC<PopupProps> = ({ anchorRef, popupRef, isOpen, ...props }) => {
+  usePositioning({
+    anchorRef,
+    ref: popupRef,
+    visible: isOpen,
+    position: positionPortal,
+    updateOnScroll: true,
+  })
+  return <FocusLock ref={popupRef} {...props} />
+}
+
+const CalendarPopup = styled(BasePopup)`
+  display: ${(p) => (p.isOpen ? 'block' : 'none')};
   box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   background-color: ${(p): string => p.theme.colors.white};
   ${(p): ReturnType<typeof css> => getPopupShape(p.theme.shape)}
@@ -1436,13 +1452,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     } = this.props
     const formatArray = parseFormat(value.getLocaleFormat())
     let isFirstInput = true
-    const inputRect =
-      this._inputWrapper.current !== null
-        ? this._inputWrapper.current.getBoundingClientRect()
-        : null
     const hasTime = type === 'datetime' || type === 'time'
     const hasDate = type === 'date' || type === 'datetime'
     const phrases = this.getPhrases()
+
+    const monthYearId = id + '-monthyear-label'
+    const timeId = id + '-time'
+    const { month: focusMonth, year: focusYear, days } = this._getMonthData()
+    const selectedStr = value.format('YYYY-MM-dd')
 
     return (
       <Fragment>
@@ -1506,182 +1523,158 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             />
           </ToggleButtons>
         </InputWrapper>
-        {hasDate && isOpen && (
-          <Portal>
-            <Rect observe={Boolean(isOpen)}>
-              {({ rect, ref }): ReactElement => {
-                const monthYearId = id + '-monthyear-label'
-                const timeId = id + '-time'
-                const { month: focusMonth, year: focusYear, days } = this._getMonthData()
-                const selectedStr = value.format('YYYY-MM-dd')
-
-                return (
-                  <FocusLock
-                    ref={this._portal}
-                    role="dialog"
-                    aria-labelledby={monthYearId}
-                    onKeyDownCapture={this.handlePortalKeydownCapture}
+        {hasDate && (
+          <CalendarPopup
+            anchorRef={this._inputWrapper}
+            popupRef={this._portal}
+            isOpen={!!isOpen}
+            role="dialog"
+            aria-labelledby={monthYearId}
+            onKeyDownCapture={this.handlePortalKeydownCapture}
+          >
+            <div onClick={this.handleCalendarClick}>
+              <MonthYearSelect
+                className={isOpen || undefined}
+                tabIndex={0}
+                onClick={this.handleSelectMonthClick}
+                aria-label={isOpen === 'calendar' ? phrases.showMonthYear : phrases.showCalendar}
+                aria-roledescription="toggles between calendar and month year selectors"
+              >
+                <span id={monthYearId}>
+                  {phrases.months[focusMonth].long} {focusYear}
+                </span>
+                <NavigationChevronDown data-is-open={isOpen} iconSize="small" ml={3} />
+              </MonthYearSelect>
+              {isOpen === 'calendar' ? (
+                <Fragment>
+                  <Calendar
+                    role="grid"
+                    onKeyDownCapture={this.handleCalendarKeydownCapture}
+                    aria-roledescription={phrases.calendarKeyboardDirections}
+                    days={days}
+                    ariaDisabledDate={phrases.ariaDisabledDate}
+                    focusMonth={focusMonth}
+                    focusDay={focusDay || ''}
+                    selected={selectedStr}
+                    onDayMouseEnter={this.handleDayMouseEnter}
+                    isValidDate={isValidDate}
                   >
-                    <CalendarPopup
-                      ref={ref}
-                      onClick={this.handleCalendarClick}
-                      style={{
-                        ...positionPortal(Boolean(isOpen), inputRect, rect, portalStyleOptions),
-                        width: 'auto',
-                      }}
-                    >
-                      <MonthYearSelect
-                        className={isOpen}
-                        tabIndex={0}
-                        onClick={this.handleSelectMonthClick}
-                        aria-label={
-                          isOpen === 'calendar' ? phrases.showMonthYear : phrases.showCalendar
-                        }
-                        aria-roledescription="toggles between calendar and month year selectors"
-                      >
-                        <span id={monthYearId}>
-                          {phrases.months[focusMonth].long} {focusYear}
-                        </span>
-                        <NavigationChevronDown data-is-open={isOpen} iconSize="small" ml={3} />
-                      </MonthYearSelect>
-                      {isOpen === 'calendar' ? (
-                        <Fragment>
-                          <Calendar
-                            role="grid"
-                            onKeyDownCapture={this.handleCalendarKeydownCapture}
-                            aria-roledescription={phrases.calendarKeyboardDirections}
-                            days={days}
-                            ariaDisabledDate={phrases.ariaDisabledDate}
-                            focusMonth={focusMonth}
-                            focusDay={focusDay || ''}
-                            selected={selectedStr}
-                            onDayMouseEnter={this.handleDayMouseEnter}
-                            isValidDate={isValidDate}
+                    <div role="row">
+                      {phrases.weekdays.map(
+                        (weekday): ReactElement => (
+                          <CalendarDay
+                            key={weekday.long}
+                            role="columnheader"
+                            longLabel={weekday.long}
                           >
-                            <div role="row">
-                              {phrases.weekdays.map(
-                                (weekday): ReactElement => (
-                                  <CalendarDay
-                                    key={weekday.long}
-                                    role="columnheader"
-                                    longLabel={weekday.long}
-                                  >
-                                    {weekday.short}
-                                  </CalendarDay>
-                                )
-                              )}
-                            </div>
-                          </Calendar>
-                          {hasTime && (
-                            <TimeInputWrapper>
-                              <DateInput
-                                id={timeId}
-                                name={timeId}
-                                type="time"
-                                format="HH:mm"
-                                value={value.format('HH:mm')}
-                                onChange={this.handleTimeChange}
-                                phrases={phrases}
-                              />
-                            </TimeInputWrapper>
-                          )}
-                        </Fragment>
-                      ) : (
-                        <MonthYearListWrapper>
-                          <div>
-                            {((): ReactElement => {
-                              const monthList: React.ReactNodeArray = []
-                              let activeDescendant = ''
-
-                              for (
-                                let monthIndex = 0;
-                                monthIndex < phrases.months.length;
-                                ++monthIndex
-                              ) {
-                                const monthPhrase = phrases.months[monthIndex]
-                                const monthId = `${id}-${monthPhrase.long}`
-                                const isSelected = monthIndex === focusMonth
-                                if (isSelected) {
-                                  activeDescendant = monthId
-                                }
-                                monthList.push(
-                                  <li
-                                    key={monthId}
-                                    id={monthId}
-                                    role="option"
-                                    data-value={monthIndex}
-                                    aria-selected={isSelected ? 'true' : undefined}
-                                  >
-                                    <span>{monthPhrase.long}</span>
-                                  </li>
-                                )
-                              }
-
-                              return (
-                                <ul
-                                  tabIndex={0}
-                                  role="listbox"
-                                  aria-activedescendant={activeDescendant}
-                                  aria-label="Select a month"
-                                  data-name="setMonth"
-                                  data-token="MM"
-                                  onClick={this.handleListClick}
-                                  onKeyDownCapture={this.handleListKeyDown}
-                                >
-                                  {monthList}
-                                </ul>
-                              )
-                            })()}
-                          </div>
-                          <div>
-                            {((): ReactElement => {
-                              const monthList: React.ReactNodeArray = []
-                              let activeDescendant = ''
-                              const years = this.getYears()
-
-                              for (const year of years) {
-                                const yearId = `${id}-${year}`
-                                const isSelected = year === focusYear
-                                if (isSelected) {
-                                  activeDescendant = yearId
-                                }
-                                monthList.push(
-                                  <li
-                                    key={yearId}
-                                    id={yearId}
-                                    role="option"
-                                    data-value={year}
-                                    aria-selected={isSelected ? 'true' : undefined}
-                                  >
-                                    <span>{year}</span>
-                                  </li>
-                                )
-                              }
-
-                              return (
-                                <ul
-                                  tabIndex={0}
-                                  role="listbox"
-                                  aria-activedescendant={activeDescendant}
-                                  aria-label="Select a year"
-                                  data-name="setYear"
-                                  data-token="YYYY"
-                                  onClick={this.handleListClick}
-                                  onKeyDownCapture={this.handleListKeyDown}
-                                >
-                                  {monthList}
-                                </ul>
-                              )
-                            })()}
-                          </div>
-                        </MonthYearListWrapper>
+                            {weekday.short}
+                          </CalendarDay>
+                        )
                       )}
-                    </CalendarPopup>
-                  </FocusLock>
-                )
-              }}
-            </Rect>
-          </Portal>
+                    </div>
+                  </Calendar>
+                  {hasTime && (
+                    <TimeInputWrapper>
+                      <DateInput
+                        id={timeId}
+                        name={timeId}
+                        type="time"
+                        format="HH:mm"
+                        value={value.format('HH:mm')}
+                        onChange={this.handleTimeChange}
+                        phrases={phrases}
+                      />
+                    </TimeInputWrapper>
+                  )}
+                </Fragment>
+              ) : (
+                <MonthYearListWrapper>
+                  <div>
+                    {((): ReactElement => {
+                      const monthList: React.ReactNodeArray = []
+                      let activeDescendant = ''
+
+                      for (let monthIndex = 0; monthIndex < phrases.months.length; ++monthIndex) {
+                        const monthPhrase = phrases.months[monthIndex]
+                        const monthId = `${id}-${monthPhrase.long}`
+                        const isSelected = monthIndex === focusMonth
+                        if (isSelected) {
+                          activeDescendant = monthId
+                        }
+                        monthList.push(
+                          <li
+                            key={monthId}
+                            id={monthId}
+                            role="option"
+                            data-value={monthIndex}
+                            aria-selected={isSelected ? 'true' : undefined}
+                          >
+                            <span>{monthPhrase.long}</span>
+                          </li>
+                        )
+                      }
+
+                      return (
+                        <ul
+                          tabIndex={0}
+                          role="listbox"
+                          aria-activedescendant={activeDescendant}
+                          aria-label="Select a month"
+                          data-name="setMonth"
+                          data-token="MM"
+                          onClick={this.handleListClick}
+                          onKeyDownCapture={this.handleListKeyDown}
+                        >
+                          {monthList}
+                        </ul>
+                      )
+                    })()}
+                  </div>
+                  <div>
+                    {((): ReactElement => {
+                      const monthList: React.ReactNodeArray = []
+                      let activeDescendant = ''
+                      const years = this.getYears()
+
+                      for (const year of years) {
+                        const yearId = `${id}-${year}`
+                        const isSelected = year === focusYear
+                        if (isSelected) {
+                          activeDescendant = yearId
+                        }
+                        monthList.push(
+                          <li
+                            key={yearId}
+                            id={yearId}
+                            role="option"
+                            data-value={year}
+                            aria-selected={isSelected ? 'true' : undefined}
+                          >
+                            <span>{year}</span>
+                          </li>
+                        )
+                      }
+
+                      return (
+                        <ul
+                          tabIndex={0}
+                          role="listbox"
+                          aria-activedescendant={activeDescendant}
+                          aria-label="Select a year"
+                          data-name="setYear"
+                          data-token="YYYY"
+                          onClick={this.handleListClick}
+                          onKeyDownCapture={this.handleListKeyDown}
+                        >
+                          {monthList}
+                        </ul>
+                      )
+                    })()}
+                  </div>
+                </MonthYearListWrapper>
+              )}
+            </div>
+          </CalendarPopup>
         )}
       </Fragment>
     )
