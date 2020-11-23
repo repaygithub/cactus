@@ -1,6 +1,7 @@
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { generateTheme } from '@repay/cactus-theme'
-import { act, fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
@@ -10,6 +11,69 @@ import IconButton from '../IconButton/IconButton'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Text from '../Text/Text'
 import Accordion from './Accordion'
+
+const openAccordion = async () => animationRender()
+
+const closeAccordion = async (accordionLabel: string) => {
+  await animationRender()
+  fireEvent.transitionEnd(screen.getByLabelText(accordionLabel, { selector: '[role="region"]' }))
+}
+
+const getAccordionButton = (accordionLabel: string) =>
+  screen.getByLabelText(accordionLabel, { selector: '[data-role="accordion-button"]' })
+
+const ControlledAccordion: React.FC<{
+  initOpenId?: string[]
+  maxOpen?: number
+  useDefaultOpen?: boolean
+  changeHook?: (id: string) => void
+}> = ({ changeHook, initOpenId = [], maxOpen, useDefaultOpen }) => {
+  const [open, setOpen] = React.useState<string[]>(initOpenId)
+
+  const toggleAccordion = (toggleId: string) => {
+    changeHook?.(toggleId)
+    setOpen((currentOpen) => {
+      if (currentOpen.includes(toggleId)) {
+        return currentOpen.filter((id) => id !== toggleId)
+      }
+      return [...currentOpen, toggleId]
+    })
+  }
+
+  return (
+    <Accordion.Provider openId={open} maxOpen={maxOpen} onChange={toggleAccordion}>
+      <Accordion id="A1">
+        <Accordion.Header>
+          <Text as="h3">Accordion 1</Text>
+        </Accordion.Header>
+        <Accordion.Body>Should show A1</Accordion.Body>
+      </Accordion>
+      <Accordion defaultOpen={useDefaultOpen} id="A2">
+        <Accordion.Header>
+          <Text as="h3">Accordion 2</Text>
+        </Accordion.Header>
+        <Accordion.Body>Should show A2</Accordion.Body>
+      </Accordion>
+    </Accordion.Provider>
+  )
+}
+
+const UncontrolledAccordion = () => (
+  <Accordion.Provider maxOpen={2}>
+    <Accordion>
+      <Accordion.Header>
+        <Text as="h3">Accordion 1</Text>
+      </Accordion.Header>
+      <Accordion.Body>A1 Content</Accordion.Body>
+    </Accordion>
+    <Accordion>
+      <Accordion.Header>
+        <Text as="h3">Accordion 2</Text>
+      </Accordion.Header>
+      <Accordion.Body>A2 Content</Accordion.Body>
+    </Accordion>
+  </Accordion.Provider>
+)
 
 describe('component: Accordion', (): void => {
   describe('Component', (): void => {
@@ -59,13 +123,9 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      const toggleButton = container.querySelector('button') as HTMLButtonElement
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(toggleButton)
-          await animationRender()
-        }
-      )
+      const toggleButton = getAccordionButton('Test Header')
+      userEvent.click(toggleButton)
+      await openAccordion()
       expect(container).toHaveTextContent('Test Body')
     })
 
@@ -85,14 +145,14 @@ describe('component: Accordion', (): void => {
     })
 
     test('should support nested accordions', async (): Promise<void> => {
-      const { container, getByTestId } = render(
+      const { container } = render(
         <StyleProvider>
-          <Accordion data-testid="parent">
+          <Accordion>
             <Accordion.Header>
               <Text as="h3">Parent</Text>
             </Accordion.Header>
             <Accordion.Body>
-              <Accordion data-testid="child">
+              <Accordion>
                 <Accordion.Header>
                   <Text as="h4">Child</Text>
                 </Accordion.Header>
@@ -103,24 +163,14 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      const parentAccordion = getByTestId('parent')
-      const parentButton = parentAccordion.querySelector('button') as HTMLElement
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(parentButton)
-          await animationRender()
-        }
-      )
+      const parentButton = getAccordionButton('Parent')
+      userEvent.click(parentButton)
+      await openAccordion()
       expect(container).toHaveTextContent('Child')
 
-      const childAccordion = getByTestId('child')
-      const childButton = childAccordion.querySelector('button') as HTMLElement
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(childButton)
-          await animationRender()
-        }
-      )
+      const childButton = getAccordionButton('Child')
+      userEvent.click(childButton)
+      await openAccordion()
       expect(container).toHaveTextContent('Child Content')
     })
   })
@@ -140,27 +190,24 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      const toggleButton = container.querySelector('button') as HTMLButtonElement
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(toggleButton)
-          await animationRender()
-        }
-      )
+      const toggleButton = getAccordionButton('Test Header')
+      userEvent.click(toggleButton)
+      await openAccordion()
       expect(container).toHaveTextContent('Test Body')
     })
 
     test('Should close one Accordion when another opens', async (): Promise<void> => {
-      const { container, getByTestId } = render(
+      const onChange = jest.fn()
+      const { container } = render(
         <StyleProvider>
-          <Accordion.Provider>
-            <Accordion data-testid="A1">
+          <Accordion.Provider onChange={onChange}>
+            <Accordion id="A1">
               <Accordion.Header>
                 <Text as="h3">Accordion 1</Text>
               </Accordion.Header>
               <Accordion.Body>Should show first and not second</Accordion.Body>
             </Accordion>
-            <Accordion data-testid="A2">
+            <Accordion id="A2">
               <Accordion.Header>
                 <Text as="h3">Accordion 2</Text>
               </Accordion.Header>
@@ -170,42 +217,37 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      const a1Accordion = getByTestId('A1')
-      const a1Button = a1Accordion.querySelector('button') as HTMLButtonElement
-      const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(a1Button)
-          await animationRender()
-        }
-      )
+      const a1Button = getAccordionButton('Accordion 1')
+      const a2Button = getAccordionButton('Accordion 2')
+      userEvent.click(a1Button)
+      await openAccordion()
       expect(container).toHaveTextContent('Should show first and not second')
       expect(container).not.toHaveTextContent('Should show second and not first')
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenLastCalledWith('A1')
 
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(a2Button)
-          await animationRender()
-          // @ts-ignore
-          fireEvent.transitionEnd(a1Accordion.childNodes[1])
-          await animationRender()
-        }
-      )
+      userEvent.click(a2Button)
+      await openAccordion()
+      await closeAccordion('Accordion 1')
       expect(container).toHaveTextContent('Should show second and not first')
       expect(container).not.toHaveTextContent('Should show first and not second')
+      expect(onChange).toHaveBeenCalledTimes(3)
+      expect(onChange).toHaveBeenNthCalledWith(2, 'A2')
+      expect(onChange).toHaveBeenNthCalledWith(3, 'A1')
     })
 
     test('Should allow two Accordions to be open at the same time', async (): Promise<void> => {
-      const { container, getByTestId } = render(
+      const onChange = jest.fn()
+      const { container } = render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion data-testid="A1">
+          <Accordion.Provider maxOpen={2} onChange={onChange}>
+            <Accordion id="A1">
               <Accordion.Header>
                 <Text as="h3">Accordion 1</Text>
               </Accordion.Header>
               <Accordion.Body>Should show A1</Accordion.Body>
             </Accordion>
-            <Accordion data-testid="A2">
+            <Accordion id="A2">
               <Accordion.Header>
                 <Text as="h3">Accordion 2</Text>
               </Accordion.Header>
@@ -215,127 +257,165 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      const a1Button = getByTestId('A1').querySelector('button') as HTMLButtonElement
-      const a2Button = getByTestId('A2').querySelector('button') as HTMLButtonElement
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(a1Button)
-          await animationRender()
-        }
+      const a1Button = getAccordionButton('Accordion 1')
+      const a2Button = getAccordionButton('Accordion 2')
+      userEvent.click(a1Button)
+      await openAccordion()
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).not.toHaveTextContent('Should show A2')
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenLastCalledWith('A1')
+
+      userEvent.click(a2Button)
+      await openAccordion()
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+      expect(onChange).toHaveBeenCalledTimes(2)
+      expect(onChange).toHaveBeenLastCalledWith('A2')
+    })
+
+    test('should allow the user to initialize accordions as open', async () => {
+      const onChange = jest.fn()
+      const { container } = render(
+        <StyleProvider>
+          <Accordion.Provider maxOpen={2} onChange={onChange}>
+            <Accordion defaultOpen>
+              <Accordion.Header>
+                <Text as="h3">Accordion 1</Text>
+              </Accordion.Header>
+              <Accordion.Body>Should show A1</Accordion.Body>
+            </Accordion>
+            <Accordion defaultOpen>
+              <Accordion.Header>
+                <Text as="h3">Accordion 2</Text>
+              </Accordion.Header>
+              <Accordion.Body>Should show A2</Accordion.Body>
+            </Accordion>
+          </Accordion.Provider>
+        </StyleProvider>
       )
+
+      await openAccordion()
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
+    test('should allow the user to control which accordions are open', async () => {
+      const changeHook = jest.fn()
+      const { container } = render(
+        <StyleProvider>
+          <ControlledAccordion initOpenId={['A2']} changeHook={changeHook} />
+        </StyleProvider>
+      )
+
+      expect(container).not.toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+      expect(changeHook).not.toHaveBeenCalled()
+
+      userEvent.click(getAccordionButton('Accordion 1'))
+      await openAccordion()
+
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).toHaveTextContent('Should show A2')
+      expect(changeHook).toHaveBeenCalledTimes(1)
+      expect(changeHook).toHaveBeenLastCalledWith('A1')
+
+      userEvent.click(getAccordionButton('Accordion 2'))
+      await closeAccordion('Accordion 2')
+
+      expect(container).toHaveTextContent('Should show A1')
+      expect(container).not.toHaveTextContent('Should show A2')
+      expect(changeHook).toHaveBeenCalledTimes(2)
+      expect(changeHook).toHaveBeenLastCalledWith('A2')
+    })
+
+    test('should ignore any non-existent IDs', (): void => {
+      const { container } = render(
+        <StyleProvider>
+          <ControlledAccordion initOpenId={['foo']} />
+        </StyleProvider>
+      )
+
+      expect(container).not.toHaveTextContent('Should show A1')
+      expect(container).not.toHaveTextContent('Should show A2')
+    })
+
+    test('should ignore maxOpen if the user controls the open accordions', async () => {
+      const error = console.error
+      console.error = jest.fn()
+
+      const { container } = render(
+        <StyleProvider>
+          <ControlledAccordion initOpenId={['A1']} maxOpen={1} />
+        </StyleProvider>
+      )
+
       expect(container).toHaveTextContent('Should show A1')
       expect(container).not.toHaveTextContent('Should show A2')
 
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(a2Button)
-          await animationRender()
-        }
-      )
+      userEvent.click(getAccordionButton('Accordion 2'))
+      await openAccordion()
+
       expect(container).toHaveTextContent('Should show A1')
       expect(container).toHaveTextContent('Should show A2')
+
+      console.error = error
     })
 
-    test('should allow the user to initialize accordions as open', (): void => {
+    test('should ignore defaultOpen props on children if the user controls open accordions', (): void => {
+      const warn = console.warn
+      console.warn = jest.fn()
+
       const { container } = render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion defaultOpen>
-              <Accordion.Header>
-                <Text as="h3">Accordion 1</Text>
-              </Accordion.Header>
-              <Accordion.Body>Should show A1</Accordion.Body>
-            </Accordion>
-            <Accordion defaultOpen>
-              <Accordion.Header>
-                <Text as="h3">Accordion 2</Text>
-              </Accordion.Header>
-              <Accordion.Body>Should show A2</Accordion.Body>
-            </Accordion>
-          </Accordion.Provider>
+          <ControlledAccordion initOpenId={['A1']} useDefaultOpen={true} />
         </StyleProvider>
       )
 
       expect(container).toHaveTextContent('Should show A1')
-      expect(container).toHaveTextContent('Should show A2')
+      expect(container).not.toHaveTextContent('Should show A2')
+
+      console.warn = warn
     })
   })
 
-  describe('Keyboard Interactions', (): void => {
+  describe('Keyboard Interactions - Controlled', (): void => {
     test('DOWN arrow should move focus to the next accordion', (): void => {
-      const { getByTestId } = render(
+      render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion data-testid="A1">
-              <Accordion.Header>
-                <Text as="h3">Accordion 1</Text>
-              </Accordion.Header>
-              <Accordion.Body>A1 Content</Accordion.Body>
-            </Accordion>
-            <Accordion data-testid="A2">
-              <Accordion.Header>
-                <Text as="h3">Accordion 2</Text>
-              </Accordion.Header>
-              <Accordion.Body>A2 Content</Accordion.Body>
-            </Accordion>
-          </Accordion.Provider>
+          <ControlledAccordion />
         </StyleProvider>
       )
 
-      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
+      const a1 = getAccordionButton('Accordion 1')
       fireEvent.focus(a1)
       fireEvent.keyUp(a1, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      expect(document.activeElement).toBe(getByTestId('A2').querySelector('button'))
+      expect(document.activeElement).toBe(getAccordionButton('Accordion 2'))
     })
 
     test('UP arrow should move focus to the previous accordion', (): void => {
-      const { getByTestId } = render(
+      render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion data-testid="A1">
-              <Accordion.Header>
-                <Text as="h3">Accordion 1</Text>
-              </Accordion.Header>
-              <Accordion.Body>A1 Content</Accordion.Body>
-            </Accordion>
-            <Accordion data-testid="A2">
-              <Accordion.Header>
-                <Text as="h3">Accordion 2</Text>
-              </Accordion.Header>
-              <Accordion.Body>A2 Content</Accordion.Body>
-            </Accordion>
-          </Accordion.Provider>
+          <ControlledAccordion />
         </StyleProvider>
       )
 
-      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a2)
       fireEvent.keyUp(a2, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
-      expect(document.activeElement).toBe(getByTestId('A1').querySelector('button'))
+      expect(document.activeElement).toBe(getAccordionButton('Accordion 1'))
     })
 
     test('UP/DOWN arrows should loop on the accordions', (): void => {
-      const { getByTestId } = render(
+      render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion data-testid="A1">
-              <Accordion.Header>
-                <Text as="h3">Accordion 1</Text>
-              </Accordion.Header>
-              <Accordion.Body>A1 Content</Accordion.Body>
-            </Accordion>
-            <Accordion data-testid="A2">
-              <Accordion.Header>
-                <Text as="h3">Accordion 2</Text>
-              </Accordion.Header>
-              <Accordion.Body>A2 Content</Accordion.Body>
-            </Accordion>
-          </Accordion.Provider>
+          <ControlledAccordion />
         </StyleProvider>
       )
 
-      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
-      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a1)
       fireEvent.keyUp(a1, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
       expect(document.activeElement).toBe(a2)
@@ -344,16 +424,13 @@ describe('component: Accordion', (): void => {
     })
 
     test('SPACE should open/close the accordion', (): void => {
-      const { getByTestId } = render(
+      render(
         <StyleProvider>
-          <Accordion data-testid="Accordion">
-            <Accordion.Header>My Accordion</Accordion.Header>
-            <Accordion.Body>My Accordion Content</Accordion.Body>
-          </Accordion>
+          <ControlledAccordion />
         </StyleProvider>
       )
 
-      const a = getByTestId('Accordion').querySelector('button') as HTMLButtonElement
+      const a = getAccordionButton('Accordion 1')
       fireEvent.focus(a)
       fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
       expect(a.getAttribute('aria-expanded')).toBe('true')
@@ -362,18 +439,13 @@ describe('component: Accordion', (): void => {
     })
 
     test('RETURN should open/close the accordion', (): void => {
-      const { getByTestId } = render(
+      render(
         <StyleProvider>
-          <Accordion data-testid="Accordion">
-            <Accordion.Header>
-              <Text as="h3">My Accordion</Text>
-            </Accordion.Header>
-            <Accordion.Body>My Accordion Content</Accordion.Body>
-          </Accordion>
+          <ControlledAccordion />
         </StyleProvider>
       )
 
-      const a = getByTestId('Accordion').querySelector('button') as HTMLButtonElement
+      const a = getAccordionButton('Accordion 1')
       fireEvent.focus(a)
       fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
       expect(a.getAttribute('aria-expanded')).toBe('true')
@@ -382,54 +454,130 @@ describe('component: Accordion', (): void => {
     })
 
     test('HOME should focus on the first accordion', (): void => {
-      const { getByTestId } = render(
+      render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion data-testid="A1">
-              <Accordion.Header>
-                <Text as="h3">Accordion 1</Text>
-              </Accordion.Header>
-              <Accordion.Body>A1 Content</Accordion.Body>
-            </Accordion>
-            <Accordion data-testid="A2">
-              <Accordion.Header>
-                <Text as="h3">Accordion 2</Text>
-              </Accordion.Header>
-              <Accordion.Body>A2 Content</Accordion.Body>
-            </Accordion>
-          </Accordion.Provider>
+          <ControlledAccordion />
         </StyleProvider>
       )
 
-      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
-      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a2)
       fireEvent.keyUp(a2, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
       expect(document.activeElement).toBe(a1)
     })
 
     test('END should focus on the last accordion', (): void => {
-      const { getByTestId } = render(
+      render(
         <StyleProvider>
-          <Accordion.Provider maxOpen={2}>
-            <Accordion data-testid="A1">
-              <Accordion.Header>
-                <Text as="h3">Accordion 1</Text>
-              </Accordion.Header>
-              <Accordion.Body>A1 Content</Accordion.Body>
-            </Accordion>
-            <Accordion data-testid="A2">
-              <Accordion.Header>
-                <Text as="h3">Accordion 2</Text>
-              </Accordion.Header>
-              <Accordion.Body>A2 Content</Accordion.Body>
-            </Accordion>
-          </Accordion.Provider>
+          <ControlledAccordion />
         </StyleProvider>
       )
 
-      const a1 = getByTestId('A1').querySelector('button') as HTMLButtonElement
-      const a2 = getByTestId('A2').querySelector('button') as HTMLButtonElement
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      expect(document.activeElement).toBe(a2)
+    })
+  })
+
+  describe('Keyboard Interactions - Uncontrolled', (): void => {
+    test('DOWN arrow should move focus to the next accordion', (): void => {
+      render(
+        <StyleProvider>
+          <UncontrolledAccordion />
+        </StyleProvider>
+      )
+
+      const a1 = getAccordionButton('Accordion 1')
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(document.activeElement).toBe(getAccordionButton('Accordion 2'))
+    })
+
+    test('UP arrow should move focus to the previous accordion', (): void => {
+      render(
+        <StyleProvider>
+          <UncontrolledAccordion />
+        </StyleProvider>
+      )
+
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(document.activeElement).toBe(getAccordionButton('Accordion 1'))
+    })
+
+    test('UP/DOWN arrows should loop on the accordions', (): void => {
+      render(
+        <StyleProvider>
+          <UncontrolledAccordion />
+        </StyleProvider>
+      )
+
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a1)
+      fireEvent.keyUp(a1, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(document.activeElement).toBe(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(document.activeElement).toBe(a1)
+    })
+
+    test('SPACE should open/close the accordion', (): void => {
+      render(
+        <StyleProvider>
+          <UncontrolledAccordion />
+        </StyleProvider>
+      )
+
+      const a = getAccordionButton('Accordion 1')
+      fireEvent.focus(a)
+      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      expect(a.getAttribute('aria-expanded')).toBe('true')
+      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      expect(a.getAttribute('aria-expanded')).toBe('false')
+    })
+
+    test('RETURN should open/close the accordion', (): void => {
+      render(
+        <StyleProvider>
+          <UncontrolledAccordion />
+        </StyleProvider>
+      )
+
+      const a = getAccordionButton('Accordion 1')
+      fireEvent.focus(a)
+      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      expect(a.getAttribute('aria-expanded')).toBe('true')
+      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      expect(a.getAttribute('aria-expanded')).toBe('false')
+    })
+
+    test('HOME should focus on the first accordion', (): void => {
+      render(
+        <StyleProvider>
+          <UncontrolledAccordion />
+        </StyleProvider>
+      )
+
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
+      fireEvent.focus(a2)
+      fireEvent.keyUp(a2, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      expect(document.activeElement).toBe(a1)
+    })
+
+    test('END should focus on the last accordion', (): void => {
+      render(
+        <StyleProvider>
+          <UncontrolledAccordion />
+        </StyleProvider>
+      )
+
+      const a1 = getAccordionButton('Accordion 1')
+      const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a1)
       fireEvent.keyUp(a1, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
       expect(document.activeElement).toBe(a2)
@@ -494,14 +642,11 @@ describe('component: Accordion', (): void => {
       expect(accordion.querySelector('button[aria-label="Move Up"]')).toBeInTheDocument()
       expect(accordion.querySelector('button[aria-label=Delete]')).not.toBeInTheDocument()
 
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(
-            accordion.querySelector('button[data-role="accordion-button"]') as HTMLButtonElement
-          )
-          await animationRender()
-        }
-      )
+      const accordionButton = accordion.querySelector(
+        'button[data-role="accordion-button"]'
+      ) as HTMLButtonElement
+      userEvent.click(accordionButton)
+      await openAccordion()
 
       expect(accordion.querySelector('button[aria-label=Delete]')).toBeInTheDocument()
     })
@@ -536,12 +681,8 @@ describe('component: Accordion', (): void => {
       )
 
       const deleteButton = getByTestId('delete')
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(deleteButton)
-          await animationRender()
-        }
-      )
+      userEvent.click(deleteButton)
+      await openAccordion()
       expect(noop).toHaveBeenCalled()
       expect(container).not.toHaveTextContent('Should not show')
     })
