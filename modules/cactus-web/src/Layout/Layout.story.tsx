@@ -128,7 +128,7 @@ BasicUsage.parameters = {
 export const ShortContent = (): React.ReactElement => {
   const hasBrand = boolean('Show Brand Bar', true)
   const hasMenu = boolean('Show Menu', true)
-  const hasActions = boolean('Show Action Bar', true)
+  const hasActions = boolean('Show Action Bar', false)
   const hasFooter = boolean('Show Footer', true)
 
   return (

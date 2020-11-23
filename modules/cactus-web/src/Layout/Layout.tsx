@@ -182,11 +182,6 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
           grid-column-start: 1;
           grid-column-end: 3;
         }
-        & > *:first-child {
-          -ms-grid-row: 1;
-          grid-row-start: 1;
-          grid-row-end: 2;
-        }
         & > *:nth-child(2) {
           -ms-grid-row: 2;
           grid-row-start: 2;
@@ -196,6 +191,11 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
           -ms-grid-row: 4;
           grid-row-start: 4;
           grid-row-end: 5;
+        }
+        & > *:first-child {
+          -ms-grid-row: 1;
+          grid-row-start: 1;
+          grid-row-end: 2;
         }
         & > .cactus-layout-floatLeft {
           -ms-grid-column: 1;
