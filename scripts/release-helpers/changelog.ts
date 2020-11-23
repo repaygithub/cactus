@@ -47,10 +47,6 @@ interface ICommitSplit {
   [key: string]: IExtendedCommit[]
 }
 
-/** Determine how deep the markdown headers are in a string */
-const getHeaderDepth = (line: string) =>
-  line.split('').reduce((count, char) => (char === '#' ? count + 1 : count), 0)
-
 const getSection = async (commit: IExtendedCommit) => {
   const prefix = 'Which type of change applies to the following commit?'
   const commitName = commit.pullRequest ? `PR #${commit.pullRequest.number}` : commit.subject
@@ -84,8 +80,6 @@ class Changelog {
     const split = await this.splitCommits(commits)
 
     const sections: string[] = []
-
-    await this.createReleaseNotesSection(commits, sections)
 
     this.authors = this.getAllAuthors(split)
     await this.createChangelogSection(split, sections)
@@ -263,95 +257,19 @@ class Changelog {
     )
 
     const mergedSections = changelogSections.reduce<Record<string, string[]>>(
-      (acc, [title, commits]) => ({
-        ...acc,
-        [title]: [...(acc[title] || []), ...commits],
-      }),
+      (acc, [title, commits]) =>
+        commits.size
+          ? {
+              ...acc,
+              [title]: [...(acc[title] || []), ...commits],
+            }
+          : acc,
       {}
     )
 
     Object.entries(mergedSections)
       .map(([title, lines]) => [title, ...lines].join('\n'))
       .map((section) => sections.push(section))
-  }
-
-  private omitReleaseNotes(commit: IExtendedCommit) {
-    if (
-      commit.authors.some(
-        (author) =>
-          (author.name && BOT_LIST.includes(author.name)) ||
-          (author.username && BOT_LIST.includes(author.username))
-      )
-    ) {
-      return true
-    }
-  }
-
-  /** Gather extra release notes to display at the top of the changelog */
-  private async createReleaseNotesSection(commits: IExtendedCommit[], sections: string[]) {
-    if (!commits.length) {
-      return
-    }
-
-    let section = ''
-    const visited = new Set<number>()
-    const included = await Promise.all(
-      commits.map(async (commit) => {
-        const omit = this.omitReleaseNotes(commit)
-
-        if (!omit) {
-          return commit
-        }
-      })
-    )
-
-    included.forEach((commit) => {
-      if (!commit) {
-        return
-      }
-
-      const pr = commit.pullRequest
-
-      if (!pr || !pr.body) {
-        return
-      }
-
-      const title = /^[#]{0,5}[ ]*[R|r]elease [N|n]otes$/
-      const lines = pr.body.split('\n').map((line) => line.replace(/\r$/, ''))
-      const notesStart = lines.findIndex((line) => Boolean(line.match(title)))
-
-      if (notesStart === -1 || visited.has(pr.number)) {
-        return
-      }
-
-      const depth = getHeaderDepth(lines[notesStart])
-      visited.add(pr.number)
-      let notes = ''
-
-      for (let index = notesStart; index < lines.length; index++) {
-        const line = lines[index]
-        const isTitle = line.match(title)
-
-        if (
-          (line.startsWith('#') && getHeaderDepth(line) <= depth && !isTitle) ||
-          line.startsWith(AUTOMATED_COMMENT_IDENTIFIER)
-        ) {
-          break
-        }
-
-        if (!isTitle) {
-          notes += `${line}\n`
-        }
-      }
-
-      section += `_From #${pr.number}_\n\n${notes.trim()}\n\n`
-    })
-
-    if (!section) {
-      return
-    }
-
-    sections.push(`### Release Notes\n\n${section}---`)
   }
 }
 

@@ -6,6 +6,7 @@ import { gitlogPromise as gitlog } from 'gitlog'
 import { chunk } from 'lodash'
 import path from 'path'
 
+import { getCached } from './cache'
 import execPromise from './exec-promise'
 import github from './github'
 import { normalizeCommit, normalizeCommits } from './log-parse'
@@ -13,8 +14,6 @@ import { buildSearchQuery, ISearchQuery, ISearchResult, processQueryResult } fro
 
 const OWNER = 'repaygithub'
 const REPO = 'cactus'
-
-const AUTOMATED_COMMENT_IDENTIFIER = '<!-- GITHUB_RELEASE'
 
 class GitAPIError extends Error {
   /** Extend the base error */
@@ -90,14 +89,16 @@ const getPullRequest = async (pr: number) => {
     pull_number: pr,
   }
 
-  return github.pulls.get(args)
+  return getCached(`pr - ${pr}`, () => github.pulls.get(args))
 }
 
 const getLatestReleaseInfo = async () => {
-  const latestRelease = await github.repos.getLatestRelease({
-    owner: OWNER,
-    repo: REPO,
-  })
+  const latestRelease = await getCached('latestRelease', () =>
+    github.repos.getLatestRelease({
+      owner: OWNER,
+      repo: REPO,
+    })
+  )
 
   return latestRelease.data
 }
@@ -115,7 +116,9 @@ const searchRepo = async (
   const repo = 'repo:repaygithub/cactus'
   options.q = `${repo} ${options.q}`
 
-  const result = await github.search.issuesAndPullRequests(options)
+  const result = await getCached(`searchRepo - ${options.q}`, () =>
+    github.search.issuesAndPullRequests(options)
+  )
 
   return result.data
 }
@@ -128,7 +131,7 @@ const getPr = async (prNumber: number) => {
   }
 
   try {
-    const info = await github.issues.get(args)
+    const info = await getCached(`issue - ${prNumber}`, () => github.issues.get(args))
     return info
   } catch (e) {
     throw new GitAPIError('getPr', args, e)
@@ -137,28 +140,34 @@ const getPr = async (prNumber: number) => {
 
 const getCommit = async (sha: string) => {
   try {
-    return github.repos.getCommit({
-      owner: OWNER,
-      repo: REPO,
-      ref: sha,
-    })
+    return getCached(`commit - ${sha}`, () =>
+      github.repos.getCommit({
+        owner: OWNER,
+        repo: REPO,
+        ref: sha,
+      })
+    )
   } catch (e) {
     throw new GitAPIError('getCommit', [], e)
   }
 }
 
 const getCommitsForPR = async (pr: number) =>
-  github.paginate(github.pulls.listCommits, {
-    owner: OWNER,
-    repo: REPO,
-    pull_number: pr,
-  })
+  getCached(`prCommits - ${pr}`, () =>
+    github.paginate(github.pulls.listCommits, {
+      owner: OWNER,
+      repo: REPO,
+      pull_number: pr,
+    })
+  )
 
 const getUserByUsername = async (username: string) => {
   try {
-    const user = await github.users.getByUsername({
-      username,
-    })
+    const user = await getCached(`user - ${username}`, () =>
+      github.users.getByUsername({
+        username,
+      })
+    )
 
     return user.data
   } catch (error) {}
@@ -203,7 +212,7 @@ const attachAuthor = async (commit: IExtendedCommit) => {
 
     if (response?.data?.author?.login) {
       const username = response.data.author.login
-      const author = await getUserByUsername(username)
+      const author = await getCached(`user - ${username}`, () => getUserByUsername(username))
 
       resolvedAuthors.push({
         name: commit.authorName,
@@ -394,6 +403,9 @@ const postParseCommit = async (commit: IExtendedCommit) => {
 }
 
 const getCommits = async (from: string, to = 'HEAD'): Promise<IExtendedCommit[]> => {
+  console.log(`Getting all commits from ${from} to ${to}`)
+  console.log('')
+
   const gitlog = await getGitLog(from, to)
 
   const commits = (await normalizeCommits(gitlog, postParseCommit)).filter((commit) => {
@@ -462,6 +474,8 @@ export const getCommitsInRelease = async (
   const commitsWithoutPR = uniqueCommits.filter((commit) => !commit.pullRequest)
   const batches = chunk(commitsWithoutPR, 10)
 
+  console.log('Making GitHub GraphQL queries')
+  console.log('')
   const queries = await Promise.all(
     batches
       .map((batch) =>
@@ -489,6 +503,8 @@ export const getCommitsInRelease = async (
     []
   )
 
+  console.log('Processing GitHub GraphQL queries...')
+  console.log('')
   await Promise.all(
     entries
       .filter((result): result is QueryEntry => Boolean(result[1]))
@@ -513,6 +529,8 @@ export const getCommitsInRelease = async (
 }
 
 export const getLatestRelease = async (): Promise<string> => {
+  console.log('Getting latest release')
+  console.log('')
   try {
     const latestRelease = await getLatestReleaseInfo()
 

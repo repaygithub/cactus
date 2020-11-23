@@ -75,6 +75,8 @@ export const getLernaPackages = async (): Promise<LernaPackage[]> => {
 // }
 
 export const getChangedPackages = async (): Promise<string[]> => {
+  console.log('Getting changed packages from Lerna')
+  console.log('')
   const [, changedPackagesResult = ''] = await on(execPromise('yarn', ['lerna', 'changed']))
   return changedPackagesResult.split('\n')
 }
