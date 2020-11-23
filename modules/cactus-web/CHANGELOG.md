@@ -1,3 +1,18 @@
+# v4.0.0-beta.3 (Mon Nov 23 2020)
+
+#### 🚀 Enhancement
+
+- Allow the use of controlled Accordion components, if desired.  See
+[the docs](https://repaygithub.github.io/cactus/components/accordion/) for examples of
+both the controlled and uncontrolled variants. [#398](https://github.com/repaygithub/cactus/pull/398)
+([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 1
+
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v4.0.0-beta.2 (Thu Nov 19 2020)
 
 #### 💥 Breaking Change
