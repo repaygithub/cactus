@@ -4,7 +4,7 @@
     "outDir": "dist",
     "rootDir": ".",
     "lib": ["esnext", "dom"],
-    "types": ["react", "jest"]
+    "types": ["react", "jest", "node"]
   },
   "include": ["src", "stories", "custom.d.ts", "styled.d.ts", "tests"]
 }
