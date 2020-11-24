@@ -1,3 +1,16 @@
+# v4.0.0-beta.4 (Tue Nov 24 2020)
+
+#### 🐛 Bug Fix
+
+- Fix bug in Layout where nav menu would occasionally display below conent
+[#408](https://github.com/repaygithub/cactus/pull/408) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v4.0.0-beta.3 (Mon Nov 23 2020)
 
 #### 🚀 Enhancement
