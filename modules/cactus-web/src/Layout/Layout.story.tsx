@@ -22,59 +22,67 @@ export default {
   component: Layout,
 } as Meta
 
+const StoryBrandBar = () => (
+  <BrandBar logo={LOGO}>
+    <BrandBar.UserMenu
+      isProfilePage={boolean('On profile page?', false)}
+      label={text('Menu Title', 'Hershell Jewess')}
+    >
+      <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
+      <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+    </BrandBar.UserMenu>
+  </BrandBar>
+)
+
+const StoryMenuBar = () => (
+  <MenuBar>
+    <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
+    <MenuBar.Item onClick={action('Mill')}>I saw</MenuBar.Item>
+    <MenuBar.List title="A Bear">
+      <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
+      <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
+      <MenuBar.Item onClick={action('ZZZZ')}>Giant Panda</MenuBar.Item>
+      <MenuBar.Item onClick={action('SIZZLE')}>Sun Bear</MenuBar.Item>
+    </MenuBar.List>
+    <MenuBar.Item onClick={action('And Powerful')}>A Great</MenuBar.Item>
+    <MenuBar.Item onClick={action('Iorek Byrnison')}>Big Bear</MenuBar.Item>
+    <MenuBar.Item onClick={action('Dao de jing')}>A Way</MenuBar.Item>
+    <MenuBar.Item onClick={action('Stars')}>Up There</MenuBar.Item>
+  </MenuBar>
+)
+
+const StoryActionBar = () => (
+  <ActionBar>
+    <ActionBar.Item
+      id="whattime"
+      icon={<DescriptiveClock />}
+      onClick={() => alert(`It is now ${new Date()}.`)}
+    />
+    <ActionBar.Panel id="settings" icon={<ActionsGear />} popupType="dialog" aria-label="Settings">
+      <TextInputField label="Some Setting" name="setting" />
+    </ActionBar.Panel>
+  </ActionBar>
+)
+
+const StoryFooter = () => (
+  <Footer logo={LOGO}>
+    <em>{text('Footer', 'How will you REPAY us?')}</em>
+    <Footer.Link to="#">The Link To Nowhere</Footer.Link>
+    <Footer.Link to="https://google.com">The Giant</Footer.Link>
+  </Footer>
+)
+
 export const BasicUsage = (): React.ReactElement => {
   const hasBrand = boolean('Show Brand Bar', true)
   const hasMenu = boolean('Show Menu', true)
   const hasActions = boolean('Show Action Bar', true)
   const hasFooter = boolean('Show Footer', true)
-  const footerText = text('Footer', 'How will you REPAY us?')
 
   return (
     <Layout>
-      {hasBrand && (
-        <BrandBar logo={LOGO}>
-          <BrandBar.UserMenu
-            isProfilePage={boolean('On profile page?', false)}
-            label={text('Menu Title', 'Hershell Jewess')}
-          >
-            <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
-            <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
-          </BrandBar.UserMenu>
-        </BrandBar>
-      )}
-      {hasMenu && (
-        <MenuBar>
-          <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
-          <MenuBar.Item onClick={action('Mill')}>I saw</MenuBar.Item>
-          <MenuBar.List title="A Bear">
-            <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
-            <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
-            <MenuBar.Item onClick={action('ZZZZ')}>Giant Panda</MenuBar.Item>
-            <MenuBar.Item onClick={action('SIZZLE')}>Sun Bear</MenuBar.Item>
-          </MenuBar.List>
-          <MenuBar.Item onClick={action('And Powerful')}>A Great</MenuBar.Item>
-          <MenuBar.Item onClick={action('Iorek Byrnison')}>Big Bear</MenuBar.Item>
-          <MenuBar.Item onClick={action('Dao de jing')}>A Way</MenuBar.Item>
-          <MenuBar.Item onClick={action('Stars')}>Up There</MenuBar.Item>
-        </MenuBar>
-      )}
-      {hasActions && (
-        <ActionBar>
-          <ActionBar.Item
-            id="whattime"
-            icon={<DescriptiveClock />}
-            onClick={() => alert(`It is now ${new Date()}.`)}
-          />
-          <ActionBar.Panel
-            id="settings"
-            icon={<ActionsGear />}
-            popupType="dialog"
-            aria-label="Settings"
-          >
-            <TextInputField label="Some Setting" name="setting" />
-          </ActionBar.Panel>
-        </ActionBar>
-      )}
+      {hasBrand && <StoryBrandBar />}
+      {hasMenu && <StoryMenuBar />}
+      {hasActions && <StoryActionBar />}
       <Layout.Content>
         <h1>Latin Or Something</h1>
         <TextInputField name="foo" label="Foo" />
@@ -108,13 +116,7 @@ export const BasicUsage = (): React.ReactElement => {
           Morbi eget tortor a orci finibus vulputate eu id felis.
         </p>
       </Layout.Content>
-      {hasFooter && (
-        <Footer logo={LOGO}>
-          <em>{footerText}</em>
-          <Footer.Link to="#">The Link To Nowhere</Footer.Link>
-          <Footer.Link to="https://google.com">The Giant</Footer.Link>
-        </Footer>
-      )}
+      {hasFooter && <StoryFooter />}
     </Layout>
   )
 }
@@ -126,66 +128,18 @@ BasicUsage.parameters = {
 export const ShortContent = (): React.ReactElement => {
   const hasBrand = boolean('Show Brand Bar', true)
   const hasMenu = boolean('Show Menu', true)
-  const hasActions = boolean('Show Action Bar', true)
+  const hasActions = boolean('Show Action Bar', false)
   const hasFooter = boolean('Show Footer', true)
-  const footerText = text('Footer', 'How will you REPAY us?')
 
   return (
     <Layout>
-      {hasBrand && (
-        <BrandBar logo={LOGO}>
-          <BrandBar.UserMenu
-            isProfilePage={boolean('On profile page?', false)}
-            label={text('Menu Title', 'Hershell Jewess')}
-          >
-            <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
-            <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
-          </BrandBar.UserMenu>
-        </BrandBar>
-      )}
-      {hasMenu && (
-        <MenuBar>
-          <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
-          <MenuBar.Item onClick={action('Mill')}>I saw</MenuBar.Item>
-          <MenuBar.List title="A Bear">
-            <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
-            <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
-            <MenuBar.Item onClick={action('ZZZZ')}>Giant Panda</MenuBar.Item>
-            <MenuBar.Item onClick={action('SIZZLE')}>Sun Bear</MenuBar.Item>
-          </MenuBar.List>
-          <MenuBar.Item onClick={action('And Powerful')}>A Great</MenuBar.Item>
-          <MenuBar.Item onClick={action('Iorek Byrnison')}>Big Bear</MenuBar.Item>
-          <MenuBar.Item onClick={action('Dao de jing')}>A Way</MenuBar.Item>
-          <MenuBar.Item onClick={action('Stars')}>Up There</MenuBar.Item>
-        </MenuBar>
-      )}
-      {hasActions && (
-        <ActionBar>
-          <ActionBar.Item
-            id="whattime"
-            icon={<DescriptiveClock />}
-            onClick={() => alert(`It is now ${new Date()}.`)}
-          />
-          <ActionBar.Panel
-            id="settings"
-            icon={<ActionsGear />}
-            popupType="dialog"
-            aria-label="Settings"
-          >
-            <TextInputField label="Some Setting" name="setting" />
-          </ActionBar.Panel>
-        </ActionBar>
-      )}
+      {hasBrand && <StoryBrandBar />}
+      {hasMenu && <StoryMenuBar />}
+      {hasActions && <StoryActionBar />}
       <Layout.Content>
         <h1>Latin Or Something</h1>
       </Layout.Content>
-      {hasFooter && (
-        <Footer logo={LOGO}>
-          <em>{footerText}</em>
-          <Footer.Link to="#">The Link To Nowhere</Footer.Link>
-          <Footer.Link to="https://google.com">The Giant</Footer.Link>
-        </Footer>
-      )}
+      {hasFooter && <StoryFooter />}
     </Layout>
   )
 }
