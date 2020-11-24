@@ -1,4 +1,3 @@
-import path from 'path'
 import prompts from 'prompts'
 import { inc, ReleaseType } from 'semver'
 
@@ -45,18 +44,8 @@ export default async (from: string, to = 'HEAD'): Promise<Record<string, string>
     const includedCommits = commits.filter((commit) =>
       commit.files.some((file) => inFolder(lernaPackage.path, file))
     )
-    const bump = await getBump(lernaPackage)
-    const title = `v${inc(lernaPackage.version, bump as ReleaseType)}`
     const releaseNotes = await changelog.generateReleaseNotes(includedCommits)
-    console.log(releaseNotes)
     allReleaseNotes[lernaPackage.name] = releaseNotes
-    // if (releaseNotes.trim()) {
-    //   await auto.release!.updateChangelogFile(
-    //     title,
-    //     releaseNotes,
-    //     path.join(lernaPackage.path, 'CHANGELOG.md')
-    //   )
-    // }
   }, Promise.resolve())
 
   return allReleaseNotes

@@ -6,22 +6,6 @@ import { ICommitAuthor, IExtendedCommit } from './commits'
 const OWNER = 'repaygithub'
 const REPO = 'cactus'
 
-const AUTOMATED_COMMENT_IDENTIFIER = '<!-- GITHUB_RELEASE'
-
-const BOT_LIST = [
-  'dependabot-preview[bot]',
-  'greenkeeper[bot]',
-  'dependabot[bot]',
-  'fossabot',
-  'renovate',
-  'renovate-bot',
-  'renovate[bot]',
-  'renovate-pro[bot]',
-  'renovate-approve',
-  'invalid-email-address',
-  'snyk-bot',
-]
-
 const SECTIONS = [
   { name: 'breakingChange', changelogTitle: '💥 Breaking Change' },
   { name: 'enhancement', changelogTitle: '🚀 Enhancement' },
@@ -51,11 +35,16 @@ const getSection = async (commit: IExtendedCommit) => {
   const prefix = 'Which type of change applies to the following commit?'
   const commitName = commit.pullRequest ? `PR #${commit.pullRequest.number}` : commit.subject
   const text = `${prefix} ${commitName}`
+
+  const formattedSections = SECTIONS.map(({ name, changelogTitle }) => ({
+    title: changelogTitle,
+    value: name,
+  }))
   const answers = await prompts({
     type: 'select',
     name: 'section',
     message: text,
-    choices: SECTIONS.map(({ name, changelogTitle }) => ({ title: changelogTitle, value: name })),
+    choices: [...formattedSections, { title: 'IGNORE THIS COMMIT', value: 'ignore' }],
   })
   return answers.section
 }
@@ -112,7 +101,9 @@ class Changelog {
     )
     for (let i = 0; i < commits.length; i++) {
       const section = await getSection(commits[i])
-      splitCommits[section].push(commits[i])
+      if (section !== 'ignore') {
+        splitCommits[section].push(commits[i])
+      }
     }
 
     return splitCommits
@@ -152,9 +143,16 @@ class Changelog {
 
   /** Transform a commit into a line in the changelog */
   private async generateCommitNote(commit: IExtendedCommit) {
-    const subject = commit.subject
+    const defaultSubject = commit.subject
       ? commit.subject.split('\n')[0].trim().replace('[skip ci]', '\\[skip ci\\]')
       : ''
+
+    const { subject } = await prompts({
+      type: 'text',
+      name: 'subject',
+      message: `Please provide a short description for this commit/PR (${defaultSubject})`,
+      initial: defaultSubject,
+    })
 
     let pr = ''
 
@@ -239,22 +237,20 @@ class Changelog {
       {}
     )
 
-    const changelogSections = await Promise.all(
-      Object.entries(split).map(async ([label, labelCommits]) => {
-        const title = `#### ${changelogTitles[label]}\n`
+    const changelogSections = []
 
-        const lines = new Set<string>()
+    for (const [label, labelCommits] of Object.entries(split)) {
+      const title = `#### ${changelogTitles[label]}\n`
 
-        await Promise.all(
-          labelCommits.map(async (commit) => {
-            const line = await this.generateCommitNote(commit)
+      const lines = new Set<string>()
 
-            lines.add(line)
-          })
-        )
-        return [title || '', lines] as const
-      })
-    )
+      for (const commit of labelCommits) {
+        const line = await this.generateCommitNote(commit)
+        lines.add(line)
+      }
+
+      changelogSections.push([title || '', lines] as const)
+    }
 
     const mergedSections = changelogSections.reduce<Record<string, string[]>>(
       (acc, [title, commits]) =>
