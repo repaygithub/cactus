@@ -89,6 +89,11 @@ export const positionDropDown: PositionCallback = (dd, button) => {
   const ddWidth = Math.round(ddRect.width)
   const ddHeight = Math.round(ddRect.height) + MARGIN
   const expectedWidth = Math.max(minWidth, Math.min(maxWidth, ddWidth))
+  const minPx = `${minWidth}px`
+  const maxPx = `${maxWidth}px`
+  // Changing the width may change the positioning, so we call it again after the styles update.
+  const needsRound2 =
+    expectedWidth !== ddWidth || dd.style.minWidth !== minPx || dd.style.maxWidth !== maxPx
 
   // Assumes fixed positioning.
   const expectedRight = left + expectedWidth
@@ -111,10 +116,9 @@ export const positionDropDown: PositionCallback = (dd, button) => {
     dd.style.top = `${bottom + MARGIN}px`
   }
 
-  dd.style.minWidth = `${minWidth}px`
-  dd.style.maxWidth = `${maxWidth}px`
-  // Changing the width will likely change the height, and therefore the positioning.
-  if (expectedWidth !== ddWidth) {
+  dd.style.minWidth = minPx
+  dd.style.maxWidth = maxPx
+  if (needsRound2) {
     window.requestAnimationFrame(() => positionDropDown(dd, button))
   }
 }
