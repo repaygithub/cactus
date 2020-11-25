@@ -5,60 +5,87 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   margin-top: 16px;
 }
 
+.c3 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .c4 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c6 {
   font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
-.c11 {
+.c13 {
   font-size: 40px;
   vertical-align: middle;
 }
 
-.c14 {
+.c16 {
   font-size: 16px;
   vertical-align: middle;
 }
 
-.c6 {
+.c8 {
   vertical-align: middle;
 }
 
-.c7 {
+.c9 {
   outline: none;
   color: hsl(0,0%,70%);
 }
 
-.c7:hover {
+.c9:hover {
   color: hsl(0,0%,70%);
 }
 
 .c1 {
   position: relative;
-}
-
-.c1 .c3 {
-  display: block;
-  box-sizing: border-box;
-  padding-left: 16px;
-  padding-right: 28px;
-  color: hsl(0,0%,70%);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c1 .c5 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 5px;
+  color: hsl(0,0%,70%);
+}
+
+.c1 .c7 {
+  position: relative;
   font-size: 16px;
 }
 
-.c1 .sc-cbeQSR {
+.c1 .sc-gVFdEO {
   margin-top: 4px;
 }
 
-.c13 {
+.c15 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -74,7 +101,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   cursor: not-allowed;
 }
 
-.c13:focus::after {
+.c15:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -87,36 +114,36 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   border-radius: 20px;
 }
 
-.c13::-moz-focus-inner {
+.c15::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c15 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c9 {
+.c11 {
   width: 300px;
   height: 100px;
 }
 
-.c9 .c10 {
+.c11 .c12 {
   position: absolute;
   top: 30%;
   left: 15%;
   color: hsl(0,0%,70%);
 }
 
-.c9 span {
+.c11 span {
   position: absolute;
   top: 20%;
   left: 37%;
   color: hsl(0,0%,70%);
 }
 
-.c8 {
+.c10 {
   box-sizing: border-box;
   border-radius: 8px;
   border: none;
@@ -139,13 +166,13 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   background-color: hsl(0,0%,90%);
 }
 
-.c8.empty .c12 {
+.c10.empty .c14 {
   position: absolute;
   left: 35%;
   bottom: 15%;
 }
 
-.c8.notEmpty {
+.c10.notEmpty {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -153,12 +180,12 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   padding: 0 8px;
 }
 
-.c8.notEmpty .c12 {
+.c10.notEmpty .c14 {
   position: relative;
   margin: 16px 0 16px 0;
 }
 
-.c8 input {
+.c10 input {
   display: none;
 }
 
@@ -166,7 +193,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   position: relative;
 }
 
-.c2 .c3 {
+.c2 .c5 {
   display: block;
   position: relative;
   bottom: 4px;
@@ -174,23 +201,22 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   color: hsl(0,0%,70%);
 }
 
-.c2 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
+.c2 .c7 {
+  display: block;
+  bottom: 4px;
   font-size: 16px;
   color: hsl(0,0%,70%);
 }
 
 @media screen and (min-width:1024px) {
-  .c4 {
+  .c6 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c15 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -200,33 +226,38 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   <div
     class="c0 c1 c2"
   >
-    <label
+    <div
       class="c3 c4"
-      for="consistent"
-      id="consistent-label"
+      display="flex"
     >
-      Just Boolin
-    </label>
-    <span
-      class="c5 "
-      data-reach-tooltip-trigger=""
-    >
-      <svg
-        class="c6 c7"
-        disabled=""
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
+      <label
+        class="c5 c6"
+        for="consistent"
+        id="consistent-label"
       >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </span>
+        Just Boolin
+      </label>
+      <span
+        class="c7 "
+        data-reach-tooltip-trigger=""
+      >
+        <svg
+          class="c8 c9"
+          disabled=""
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+          />
+        </svg>
+      </span>
+    </div>
     <div
       aria-labelledby="consistent-label"
-      class="c8 empty"
+      class="c10 empty"
     >
       <input
         accept=".txt"
@@ -235,10 +266,10 @@ exports[`component: FileInputField should render a disabled file input field 1`]
         type="file"
       />
       <div
-        class="c9"
+        class="c11"
       >
         <svg
-          class="c10 c11"
+          class="c12 c13"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -254,13 +285,13 @@ exports[`component: FileInputField should render a disabled file input field 1`]
       </div>
       <button
         aria-describedby="consistent-tip consistent-status"
-        class="c12 c13"
+        class="c14 c15"
         disabled=""
         id="consistent"
         type="button"
       >
         <svg
-          class="c14"
+          class="c16"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -282,36 +313,58 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   margin-top: 16px;
 }
 
+.c3 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .c4 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c6 {
   font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
-.c24 {
+.c26 {
   font-size: 16px;
   vertical-align: middle;
 }
 
-.c18 {
+.c20 {
   vertical-align: middle;
 }
 
-.c14 {
+.c16 {
   font-size: 24px;
   vertical-align: middle;
 }
 
-.c21 {
+.c23 {
   vertical-align: middle;
 }
 
-.c6 {
+.c8 {
   vertical-align: middle;
 }
 
-.c20 {
+.c22 {
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
@@ -322,45 +375,50 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   background-color: hsla(353,84%,44%,0.3);
 }
 
-.c20 .c13,
-.c20 .sc-hOPghE,
-.c20 .sc-kYQaHc {
+.c22 .c15,
+.c22 .sc-daBvwG,
+.c22 .sc-dWBSoC {
   margin-right: 4px;
   vertical-align: -2px;
 }
 
-.c7 {
+.c9 {
   outline: none;
   color: hsl(200,10%,20%);
 }
 
-.c7:hover {
+.c9:hover {
   color: hsl(200,96%,35%);
 }
 
 .c1 {
   position: relative;
-}
-
-.c1 .c3 {
-  display: block;
-  box-sizing: border-box;
-  padding-left: 16px;
-  padding-right: 28px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c1 .c5 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 5px;
+}
+
+.c1 .c7 {
+  position: relative;
   font-size: 16px;
 }
 
-.c1 .c19 {
+.c1 .c21 {
   margin-top: 4px;
 }
 
-.c12 {
+.c14 {
   box-sizing: border-box;
   width: 40px;
   height: 40px;
@@ -381,11 +439,11 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   background-color: hsla(353,84%,44%,0.3);
 }
 
-.c12 .c13 {
+.c14 .c15 {
   padding-bottom: 4px;
 }
 
-.c16 {
+.c18 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -408,19 +466,19 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   font-size: 24px;
 }
 
-.c16::-moz-focus-inner {
+.c18::-moz-focus-inner {
   border: 0;
 }
 
-.c16:focus {
+.c18:focus {
   background-color: hsla(200,96%,35%,0.3);
 }
 
-.c16:hover {
+.c18:hover {
   color: hsl(200,96%,35%);
 }
 
-.c23 {
+.c25 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -435,12 +493,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c23:hover {
+.c25:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c23:focus::after {
+.c25:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -453,17 +511,17 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   border-radius: 20px;
 }
 
-.c23::-moz-focus-inner {
+.c25::-moz-focus-inner {
   border: 0;
 }
 
-.c23 svg {
+.c25 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c10 {
+.c12 {
   box-sizing: border-box;
   width: 100%;
   min-height: 36px;
@@ -487,52 +545,52 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   background-color: hsla(353,84%,44%,0.3);
 }
 
-.c10 span {
+.c12 span {
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
   line-height: 1.5;
 }
 
-.c10 .c11 {
+.c12 .c13 {
   height: 24px;
   width: 24px;
 }
 
-.c10 .c11 .c13 {
+.c12 .c13 .c15 {
   height: 16px;
   width: 16px;
 }
 
-.c10 .c11 .sc-kYQaHc {
+.c12 .c13 .sc-dWBSoC {
   height: 18px;
   width: 18px;
 }
 
-.c10 .sc-flUlJl {
+.c12 .sc-iGkqGz {
   height: 12px;
   width: 12px;
 }
 
-.c10 .c15 {
+.c12 .c17 {
   margin-left: auto;
 }
 
-.c10 .c17 {
+.c12 .c19 {
   height: 12px;
   width: 12px;
 }
 
-.c9 {
+.c11 {
   width: 100%;
 }
 
-.c9 .c19 {
+.c11 .c21 {
   position: relative;
   margin-top: 4px;
 }
 
-.c8 {
+.c10 {
   box-sizing: border-box;
   border-radius: 8px;
   border: 2px dotted;
@@ -554,13 +612,13 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   align-items: center;
 }
 
-.c8.empty .c22 {
+.c10.empty .c24 {
   position: absolute;
   left: 35%;
   bottom: 15%;
 }
 
-.c8.notEmpty {
+.c10.notEmpty {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -568,12 +626,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   padding: 0 8px;
 }
 
-.c8.notEmpty .c22 {
+.c10.notEmpty .c24 {
   position: relative;
   margin: 16px 0 16px 0;
 }
 
-.c8 input {
+.c10 input {
   display: none;
 }
 
@@ -581,43 +639,42 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   position: relative;
 }
 
-.c2 .c3 {
+.c2 .c5 {
   display: block;
   position: relative;
   bottom: 4px;
   padding-left: 16px;
 }
 
-.c2 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
+.c2 .c7 {
+  display: block;
+  bottom: 4px;
   font-size: 16px;
 }
 
 @media screen and (min-width:1024px) {
-  .c4 {
+  .c6 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c20 {
+  .c22 {
     font-size: 15px;
     line-height: 1.6;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c23 {
+  .c25 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c10 span {
+  .c12 span {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -627,39 +684,44 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   <div
     class="c0 c1 c2"
   >
-    <label
+    <div
       class="c3 c4"
-      for="consistent"
-      id="consistent-label"
+      display="flex"
     >
-      Just Boolin
-    </label>
-    <span
-      class="c5 "
-      data-reach-tooltip-trigger=""
-    >
-      <svg
-        class="c6 c7"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
+      <label
+        class="c5 c6"
+        for="consistent"
+        id="consistent-label"
       >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </span>
-    <span
-      id="consistent-tip"
-      role="tooltip"
-      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
-    >
-      upload something
-    </span>
+        Just Boolin
+      </label>
+      <span
+        class="c7 "
+        data-reach-tooltip-trigger=""
+      >
+        <svg
+          class="c8 c9"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+          />
+        </svg>
+      </span>
+      <span
+        id="consistent-tip"
+        role="tooltip"
+        style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
+      >
+        upload something
+      </span>
+    </div>
     <div
       aria-labelledby="consistent-label"
-      class="c8 notEmpty"
+      class="c10 notEmpty"
     >
       <input
         accept=".txt"
@@ -667,19 +729,19 @@ exports[`component: FileInputField should render a file with an error 1`] = `
         type="file"
       />
       <div
-        class="c9"
+        class="c11"
       >
         <div
           aria-disabled="false"
           aria-label="boolest.txt, Get it together, man"
-          class="c10"
+          class="c12"
           tabindex="0"
         >
           <div
-            class="c11 c12"
+            class="c13 c14"
           >
             <svg
-              class="c13 c14"
+              class="c15 c16"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -695,12 +757,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
           </span>
           <button
             aria-label="Delete File"
-            class="c15 c16"
+            class="c17 c18"
             type="button"
             variant="standard"
           >
             <svg
-              class="c17 c18"
+              class="c19 c20"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -713,12 +775,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
           </button>
         </div>
         <div
-          class="c19 c20"
+          class="c21 c22"
           role="alert"
         >
           <svg
             aria-hidden="true"
-            class="c13 c21"
+            class="c15 c23"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -735,12 +797,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
       </div>
       <button
         aria-describedby="consistent-tip consistent-status"
-        class="c22 c23"
+        class="c24 c25"
         id="consistent"
         type="button"
       >
         <svg
-          class="c24"
+          class="c26"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -762,63 +824,90 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   margin-top: 16px;
 }
 
+.c3 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .c4 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c6 {
   font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
-.c21 {
+.c23 {
   font-size: 16px;
   vertical-align: middle;
 }
 
-.c18 {
+.c20 {
   vertical-align: middle;
 }
 
-.c6 {
+.c8 {
   vertical-align: middle;
 }
 
-.c14 {
+.c16 {
   font-size: 24px;
   vertical-align: middle;
 }
 
-.c7 {
+.c9 {
   outline: none;
   color: hsl(200,10%,20%);
 }
 
-.c7:hover {
+.c9:hover {
   color: hsl(200,96%,35%);
 }
 
 .c1 {
   position: relative;
-}
-
-.c1 .c3 {
-  display: block;
-  box-sizing: border-box;
-  padding-left: 16px;
-  padding-right: 28px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c1 .c5 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 5px;
+}
+
+.c1 .c7 {
+  position: relative;
   font-size: 16px;
 }
 
-.c1 .sc-cbeQSR {
+.c1 .sc-gVFdEO {
   margin-top: 4px;
 }
 
-.c12 {
+.c14 {
   box-sizing: border-box;
   width: 40px;
   height: 40px;
@@ -839,11 +928,11 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c12 .sc-dsXyEt {
+.c14 .sc-jUfxsr {
   padding-bottom: 4px;
 }
 
-.c16 {
+.c18 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -866,19 +955,19 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   font-size: 24px;
 }
 
-.c16::-moz-focus-inner {
+.c18::-moz-focus-inner {
   border: 0;
 }
 
-.c16:focus {
+.c18:focus {
   background-color: hsla(200,96%,35%,0.3);
 }
 
-.c16:hover {
+.c18:hover {
   color: hsl(200,96%,35%);
 }
 
-.c20 {
+.c22 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -893,12 +982,12 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c20:hover {
+.c22:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c20:focus::after {
+.c22:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -911,17 +1000,17 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   border-radius: 20px;
 }
 
-.c20::-moz-focus-inner {
+.c22::-moz-focus-inner {
   border: 0;
 }
 
-.c20 svg {
+.c22 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c10 {
+.c12 {
   box-sizing: border-box;
   width: 100%;
   min-height: 36px;
@@ -945,52 +1034,52 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c10 span {
+.c12 span {
   margin-left: 8px;
   margin-right: 8px;
   font-size: 18px;
   line-height: 1.5;
 }
 
-.c10 .c11 {
+.c12 .c13 {
   height: 24px;
   width: 24px;
 }
 
-.c10 .c11 .sc-dsXyEt {
+.c12 .c13 .sc-jUfxsr {
   height: 16px;
   width: 16px;
 }
 
-.c10 .c11 .c13 {
+.c12 .c13 .c15 {
   height: 18px;
   width: 18px;
 }
 
-.c10 .sc-flUlJl {
+.c12 .sc-iGkqGz {
   height: 12px;
   width: 12px;
 }
 
-.c10 .c15 {
+.c12 .c17 {
   margin-left: auto;
 }
 
-.c10 .c17 {
+.c12 .c19 {
   height: 12px;
   width: 12px;
 }
 
-.c9 {
+.c11 {
   width: 100%;
 }
 
-.c9 .sc-cbeQSR {
+.c11 .sc-gVFdEO {
   position: relative;
   margin-top: 4px;
 }
 
-.c8 {
+.c10 {
   box-sizing: border-box;
   border-radius: 8px;
   border: 2px dotted;
@@ -1012,13 +1101,13 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   align-items: center;
 }
 
-.c8.empty .c19 {
+.c10.empty .c21 {
   position: absolute;
   left: 35%;
   bottom: 15%;
 }
 
-.c8.notEmpty {
+.c10.notEmpty {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1026,12 +1115,12 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   padding: 0 8px;
 }
 
-.c8.notEmpty .c19 {
+.c10.notEmpty .c21 {
   position: relative;
   margin: 16px 0 16px 0;
 }
 
-.c8 input {
+.c10 input {
   display: none;
 }
 
@@ -1039,36 +1128,35 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   position: relative;
 }
 
-.c2 .c3 {
+.c2 .c5 {
   display: block;
   position: relative;
   bottom: 4px;
   padding-left: 16px;
 }
 
-.c2 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
+.c2 .c7 {
+  display: block;
+  bottom: 4px;
   font-size: 16px;
 }
 
 @media screen and (min-width:1024px) {
-  .c4 {
+  .c6 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c20 {
+  .c22 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c10 span {
+  .c12 span {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1078,39 +1166,44 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   <div
     class="c0 c1 c2"
   >
-    <label
+    <div
       class="c3 c4"
-      for="consistent"
-      id="consistent-label"
+      display="flex"
     >
-      Just Boolin
-    </label>
-    <span
-      class="c5 "
-      data-reach-tooltip-trigger=""
-    >
-      <svg
-        class="c6 c7"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
+      <label
+        class="c5 c6"
+        for="consistent"
+        id="consistent-label"
       >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </span>
-    <span
-      id="consistent-tip"
-      role="tooltip"
-      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
-    >
-      upload something
-    </span>
+        Just Boolin
+      </label>
+      <span
+        class="c7 "
+        data-reach-tooltip-trigger=""
+      >
+        <svg
+          class="c8 c9"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+          />
+        </svg>
+      </span>
+      <span
+        id="consistent-tip"
+        role="tooltip"
+        style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
+      >
+        upload something
+      </span>
+    </div>
     <div
       aria-labelledby="consistent-label"
-      class="c8 notEmpty"
+      class="c10 notEmpty"
     >
       <input
         accept=".txt"
@@ -1118,19 +1211,19 @@ exports[`component: FileInputField should render a loaded file 1`] = `
         type="file"
       />
       <div
-        class="c9"
+        class="c11"
       >
         <div
           aria-disabled="false"
           aria-label="boolest.txt, Successful"
-          class="c10"
+          class="c12"
           tabindex="0"
         >
           <div
-            class="c11 c12"
+            class="c13 c14"
           >
             <svg
-              class="c13 c14"
+              class="c15 c16"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -1146,12 +1239,12 @@ exports[`component: FileInputField should render a loaded file 1`] = `
           </span>
           <button
             aria-label="Delete File"
-            class="c15 c16"
+            class="c17 c18"
             type="button"
             variant="standard"
           >
             <svg
-              class="c17 c18"
+              class="c19 c20"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -1166,12 +1259,12 @@ exports[`component: FileInputField should render a loaded file 1`] = `
       </div>
       <button
         aria-describedby="consistent-tip consistent-status"
-        class="c19 c20"
+        class="c21 c22"
         id="consistent"
         type="button"
       >
         <svg
-          class="c21"
+          class="c23"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -1193,11 +1286,419 @@ exports[`component: FileInputField should render a loading file 1`] = `
   margin-top: 16px;
 }
 
+.c3 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .c4 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c6 {
   font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
+}
+
+.c18 {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.c8 {
+  vertical-align: middle;
+}
+
+.c14 {
+  vertical-align: middle;
+  font-size: 40px;
+}
+
+.c9 {
+  outline: none;
+  color: hsl(200,10%,20%);
+}
+
+.c9:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c1 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c1 .c5 {
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 5px;
+}
+
+.c1 .c7 {
+  position: relative;
+  font-size: 16px;
+}
+
+.c1 .sc-gVFdEO {
+  margin-top: 4px;
+}
+
+.c15 {
+  -webkit-animation: bKPVWD 0.75s linear infinite;
+  animation: bKPVWD 0.75s linear infinite;
+}
+
+.c17 {
+  font-size: 18px;
+  line-height: 1.5;
+  position: relative;
+  border: none;
+  padding: 4px;
+  outline: none;
+  background-color: transparent;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: hsl(200,96%,35%);
+}
+
+.c17:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c17:focus::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border: 1px solid hsl(200,96%,35%);
+  border-radius: 20px;
+}
+
+.c17::-moz-focus-inner {
+  border: 0;
+}
+
+.c17 svg {
+  display: inline-block;
+  margin-top: -4px;
+  margin-right: 4px;
+}
+
+.c12 {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  margin-top: 8px;
+  padding: 0 8px 0 8px;
+  border-radius: 4px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: hsl(200,10%,20%);
+  background-color: hsl(200,29%,90%);
+}
+
+.c12 span {
+  margin-left: 8px;
+  margin-right: 8px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.c12 .sc-flUlJl {
+  height: 24px;
+  width: 24px;
+}
+
+.c12 .sc-flUlJl .sc-jUfxsr {
+  height: 16px;
+  width: 16px;
+}
+
+.c12 .sc-flUlJl .sc-dWBSoC {
+  height: 18px;
+  width: 18px;
+}
+
+.c12 .c13 {
+  height: 12px;
+  width: 12px;
+}
+
+.c12 .sc-eXuzZk {
+  margin-left: auto;
+}
+
+.c12 .sc-amjdv {
+  height: 12px;
+  width: 12px;
+}
+
+.c11 {
+  width: 100%;
+}
+
+.c11 .sc-gVFdEO {
+  position: relative;
+  margin-top: 4px;
+}
+
+.c10 {
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 2px dotted;
+  border-color: hsl(200,10%,20%);
+  min-width: 300px;
+  min-height: 100px;
+  position: relative;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c10.empty .c16 {
+  position: absolute;
+  left: 35%;
+  bottom: 15%;
+}
+
+.c10.notEmpty {
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  border-color: hsl(200,96%,35%);
+  padding: 0 8px;
+}
+
+.c10.notEmpty .c16 {
+  position: relative;
+  margin: 16px 0 16px 0;
+}
+
+.c10 input {
+  display: none;
+}
+
+.c2 {
+  position: relative;
+}
+
+.c2 .c5 {
+  display: block;
+  position: relative;
+  bottom: 4px;
+  padding-left: 16px;
+}
+
+.c2 .c7 {
+  display: block;
+  bottom: 4px;
+  font-size: 16px;
+}
+
+@media screen and (min-width:1024px) {
+  .c6 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c17 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c12 span {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+<div>
+  <div
+    class="c0 c1 c2"
+  >
+    <div
+      class="c3 c4"
+      display="flex"
+    >
+      <label
+        class="c5 c6"
+        for="consistent"
+        id="consistent-label"
+      >
+        Just Boolin
+      </label>
+      <span
+        class="c7 "
+        data-reach-tooltip-trigger=""
+      >
+        <svg
+          class="c8 c9"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+          />
+        </svg>
+      </span>
+      <span
+        id="consistent-tip"
+        role="tooltip"
+        style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
+      >
+        upload something
+      </span>
+    </div>
+    <div
+      aria-labelledby="consistent-label"
+      class="c10 notEmpty"
+    >
+      <input
+        accept=".txt"
+        name="bears"
+        type="file"
+      />
+      <div
+        class="c11"
+      >
+        <div
+          aria-disabled="false"
+          aria-label="boolest.txt, Loading"
+          class="c12"
+          tabindex="0"
+        >
+          <span>
+            boolest.txt
+          </span>
+          <svg
+            class="c13 c14 c15"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+          >
+            <path
+              d="M12,0 C5.372583,0 0,5.372583 0,12 C0,18.627417 5.372583,24 12,24 C18.627417,24 24,18.627417 24,12 C24,11.4477153 23.5522847,11 23,11 C22.4477153,11 22,11.4477153 22,12 C22,17.5228475 17.5228475,22 12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C12.5522847,2 13,1.55228475 13,1 C13,0.44771525 12.5522847,0 12,0 Z"
+              transform="rotate(-177 12 12)"
+            />
+          </svg>
+        </div>
+      </div>
+      <button
+        aria-describedby="consistent-tip consistent-status"
+        class="c16 c17"
+        id="consistent"
+        type="button"
+      >
+        <svg
+          class="c18"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M3,9 L3,2 C3,1.44771525 3.44771525,1 4,1 L8.86956522,1 C9.13300396,1 9.38580138,1.10395302 9.57303415,1.28927399 L10.6720803,2.37709802 L20,2.37709802 C20.5522847,2.37709802 21,2.82481327 21,3.37709802 L21,9 L22,9 C22.6077887,9 23.0750324,9.5377097 22.9902149,10.1395511 L21.2857687,22.2338171 C21.2162209,22.7273084 20.7939217,23.094266 20.2955538,23.094266 L3.92354726,23.094266 C3.43189906,23.094266 3.01318427,22.7368835 2.9359601,22.251338 L1.01241285,10.157072 C0.915823617,9.5497691 1.38506399,9 2,9 L3,9 Z M4,11 L3.17161508,11 L4.7770699,21.094266 L19.4266021,21.094266 L20.8491881,11 L20,11 L4,11 Z M19,9 L19,4.37709802 L10.2608696,4.37709802 C9.99743082,4.37709802 9.7446334,4.27314501 9.55740063,4.08782403 L8.45835446,3 L5,3 L5,9 L19,9 Z"
+          />
+        </svg>
+        Select Files...
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`component: FileInputField should render file input field 1`] = `
+.c0 + .c0 {
+  margin-top: 16px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c6 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
+.c13 {
+  font-size: 40px;
+  vertical-align: middle;
 }
 
 .c16 {
@@ -1205,49 +1706,44 @@ exports[`component: FileInputField should render a loading file 1`] = `
   vertical-align: middle;
 }
 
-.c6 {
+.c8 {
   vertical-align: middle;
 }
 
-.c12 {
-  vertical-align: middle;
-  font-size: 40px;
-}
-
-.c7 {
+.c9 {
   outline: none;
   color: hsl(200,10%,20%);
 }
 
-.c7:hover {
+.c9:hover {
   color: hsl(200,96%,35%);
 }
 
 .c1 {
   position: relative;
-}
-
-.c1 .c3 {
-  display: block;
-  box-sizing: border-box;
-  padding-left: 16px;
-  padding-right: 28px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c1 .c5 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
+  display: block;
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-right: 5px;
+}
+
+.c1 .c7 {
+  position: relative;
   font-size: 16px;
 }
 
-.c1 .sc-cbeQSR {
+.c1 .sc-gVFdEO {
   margin-top: 4px;
-}
-
-.c13 {
-  -webkit-animation: bKPVWD 0.75s linear infinite;
-  animation: bKPVWD 0.75s linear infinite;
 }
 
 .c15 {
@@ -1293,75 +1789,26 @@ exports[`component: FileInputField should render a loading file 1`] = `
   margin-right: 4px;
 }
 
+.c11 {
+  width: 300px;
+  height: 100px;
+}
+
+.c11 .c12 {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  color: hsl(200,96%,35%);
+}
+
+.c11 span {
+  position: absolute;
+  top: 20%;
+  left: 37%;
+  color: hsl(200,18%,45%);
+}
+
 .c10 {
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 36px;
-  margin-top: 8px;
-  padding: 0 8px 0 8px;
-  border-radius: 4px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  color: hsl(200,10%,20%);
-  background-color: hsl(200,29%,90%);
-}
-
-.c10 span {
-  margin-left: 8px;
-  margin-right: 8px;
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-.c10 .sc-gzcbGf {
-  height: 24px;
-  width: 24px;
-}
-
-.c10 .sc-gzcbGf .sc-dsXyEt {
-  height: 16px;
-  width: 16px;
-}
-
-.c10 .sc-gzcbGf .sc-kYQaHc {
-  height: 18px;
-  width: 18px;
-}
-
-.c10 .c11 {
-  height: 12px;
-  width: 12px;
-}
-
-.c10 .sc-gkCpWe {
-  margin-left: auto;
-}
-
-.c10 .sc-TtZHJ {
-  height: 12px;
-  width: 12px;
-}
-
-.c9 {
-  width: 100%;
-}
-
-.c9 .sc-cbeQSR {
-  position: relative;
-  margin-top: 4px;
-}
-
-.c8 {
   box-sizing: border-box;
   border-radius: 8px;
   border: 2px dotted;
@@ -1383,13 +1830,13 @@ exports[`component: FileInputField should render a loading file 1`] = `
   align-items: center;
 }
 
-.c8.empty .c14 {
+.c10.empty .c14 {
   position: absolute;
   left: 35%;
   bottom: 15%;
 }
 
-.c8.notEmpty {
+.c10.notEmpty {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1397,12 +1844,12 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding: 0 8px;
 }
 
-.c8.notEmpty .c14 {
+.c10.notEmpty .c14 {
   position: relative;
   margin: 16px 0 16px 0;
 }
 
-.c8 input {
+.c10 input {
   display: none;
 }
 
@@ -1410,22 +1857,21 @@ exports[`component: FileInputField should render a loading file 1`] = `
   position: relative;
 }
 
-.c2 .c3 {
+.c2 .c5 {
   display: block;
   position: relative;
   bottom: 4px;
   padding-left: 16px;
 }
 
-.c2 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
+.c2 .c7 {
+  display: block;
+  bottom: 4px;
   font-size: 16px;
 }
 
 @media screen and (min-width:1024px) {
-  .c4 {
+  .c6 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1438,339 +1884,48 @@ exports[`component: FileInputField should render a loading file 1`] = `
   }
 }
 
-@media screen and (min-width:1024px) {
-  .c10 span {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
 <div>
   <div
     class="c0 c1 c2"
   >
-    <label
-      class="c3 c4"
-      for="consistent"
-      id="consistent-label"
-    >
-      Just Boolin
-    </label>
-    <span
-      class="c5 "
-      data-reach-tooltip-trigger=""
-    >
-      <svg
-        class="c6 c7"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </span>
-    <span
-      id="consistent-tip"
-      role="tooltip"
-      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
-    >
-      upload something
-    </span>
     <div
-      aria-labelledby="consistent-label"
-      class="c8 notEmpty"
+      class="c3 c4"
+      display="flex"
     >
-      <input
-        accept=".txt"
-        name="bears"
-        type="file"
-      />
-      <div
-        class="c9"
+      <label
+        class="c5 c6"
+        for="consistent"
+        id="consistent-label"
       >
-        <div
-          aria-disabled="false"
-          aria-label="boolest.txt, Loading"
-          class="c10"
-          tabindex="0"
-        >
-          <span>
-            boolest.txt
-          </span>
-          <svg
-            class="c11 c12 c13"
-            fill="currentcolor"
-            height="1em"
-            viewBox="0 0 24 24"
-            width="1em"
-          >
-            <path
-              d="M12,0 C5.372583,0 0,5.372583 0,12 C0,18.627417 5.372583,24 12,24 C18.627417,24 24,18.627417 24,12 C24,11.4477153 23.5522847,11 23,11 C22.4477153,11 22,11.4477153 22,12 C22,17.5228475 17.5228475,22 12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C12.5522847,2 13,1.55228475 13,1 C13,0.44771525 12.5522847,0 12,0 Z"
-              transform="rotate(-177 12 12)"
-            />
-          </svg>
-        </div>
-      </div>
-      <button
-        aria-describedby="consistent-tip consistent-status"
-        class="c14 c15"
-        id="consistent"
-        type="button"
+        Just Boolin
+      </label>
+      <span
+        class="c7 "
+        data-reach-tooltip-trigger=""
       >
         <svg
-          class="c16"
+          class="c8 c9"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
           width="1em"
         >
           <path
-            d="M3,9 L3,2 C3,1.44771525 3.44771525,1 4,1 L8.86956522,1 C9.13300396,1 9.38580138,1.10395302 9.57303415,1.28927399 L10.6720803,2.37709802 L20,2.37709802 C20.5522847,2.37709802 21,2.82481327 21,3.37709802 L21,9 L22,9 C22.6077887,9 23.0750324,9.5377097 22.9902149,10.1395511 L21.2857687,22.2338171 C21.2162209,22.7273084 20.7939217,23.094266 20.2955538,23.094266 L3.92354726,23.094266 C3.43189906,23.094266 3.01318427,22.7368835 2.9359601,22.251338 L1.01241285,10.157072 C0.915823617,9.5497691 1.38506399,9 2,9 L3,9 Z M4,11 L3.17161508,11 L4.7770699,21.094266 L19.4266021,21.094266 L20.8491881,11 L20,11 L4,11 Z M19,9 L19,4.37709802 L10.2608696,4.37709802 C9.99743082,4.37709802 9.7446334,4.27314501 9.55740063,4.08782403 L8.45835446,3 L5,3 L5,9 L19,9 Z"
+            d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
           />
         </svg>
-        Select Files...
-      </button>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`component: FileInputField should render file input field 1`] = `
-.c0 + .c0 {
-  margin-top: 16px;
-}
-
-.c4 {
-  font-size: 18px;
-  line-height: 1.5;
-  font-weight: 600;
-  color: hsl(200,10%,20%);
-}
-
-.c11 {
-  font-size: 40px;
-  vertical-align: middle;
-}
-
-.c14 {
-  font-size: 16px;
-  vertical-align: middle;
-}
-
-.c6 {
-  vertical-align: middle;
-}
-
-.c7 {
-  outline: none;
-  color: hsl(200,10%,20%);
-}
-
-.c7:hover {
-  color: hsl(200,96%,35%);
-}
-
-.c1 {
-  position: relative;
-}
-
-.c1 .c3 {
-  display: block;
-  box-sizing: border-box;
-  padding-left: 16px;
-  padding-right: 28px;
-}
-
-.c1 .c5 {
-  position: absolute;
-  right: 8px;
-  top: 2px;
-  font-size: 16px;
-}
-
-.c1 .sc-cbeQSR {
-  margin-top: 4px;
-}
-
-.c13 {
-  font-size: 18px;
-  line-height: 1.5;
-  position: relative;
-  border: none;
-  padding: 4px;
-  outline: none;
-  background-color: transparent;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  cursor: pointer;
-  box-sizing: border-box;
-  color: hsl(200,96%,35%);
-}
-
-.c13:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c13:focus::after {
-  content: '';
-  display: block;
-  box-sizing: border-box;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0px;
-  left: 0px;
-  border: 1px solid hsl(200,96%,35%);
-  border-radius: 20px;
-}
-
-.c13::-moz-focus-inner {
-  border: 0;
-}
-
-.c13 svg {
-  display: inline-block;
-  margin-top: -4px;
-  margin-right: 4px;
-}
-
-.c9 {
-  width: 300px;
-  height: 100px;
-}
-
-.c9 .c10 {
-  position: absolute;
-  top: 30%;
-  left: 15%;
-  color: hsl(200,96%,35%);
-}
-
-.c9 span {
-  position: absolute;
-  top: 20%;
-  left: 37%;
-  color: hsl(200,18%,45%);
-}
-
-.c8 {
-  box-sizing: border-box;
-  border-radius: 8px;
-  border: 2px dotted;
-  border-color: hsl(200,10%,20%);
-  min-width: 300px;
-  min-height: 100px;
-  position: relative;
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c8.empty .c12 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
-}
-
-.c8.notEmpty {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  border-color: hsl(200,96%,35%);
-  padding: 0 8px;
-}
-
-.c8.notEmpty .c12 {
-  position: relative;
-  margin: 16px 0 16px 0;
-}
-
-.c8 input {
-  display: none;
-}
-
-.c2 {
-  position: relative;
-}
-
-.c2 .c3 {
-  display: block;
-  position: relative;
-  bottom: 4px;
-  padding-left: 16px;
-}
-
-.c2 .c5 {
-  position: absolute;
-  top: -2px;
-  right: 8px;
-  font-size: 16px;
-}
-
-@media screen and (min-width:1024px) {
-  .c4 {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c13 {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-<div>
-  <div
-    class="c0 c1 c2"
-  >
-    <label
-      class="c3 c4"
-      for="consistent"
-      id="consistent-label"
-    >
-      Just Boolin
-    </label>
-    <span
-      class="c5 "
-      data-reach-tooltip-trigger=""
-    >
-      <svg
-        class="c6 c7"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
+      </span>
+      <span
+        id="consistent-tip"
+        role="tooltip"
+        style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
       >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </span>
-    <span
-      id="consistent-tip"
-      role="tooltip"
-      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
-    >
-      upload something
-    </span>
+        upload something
+      </span>
+    </div>
     <div
       aria-labelledby="consistent-label"
-      class="c8 empty"
+      class="c10 empty"
     >
       <input
         accept=".txt"
@@ -1778,10 +1933,10 @@ exports[`component: FileInputField should render file input field 1`] = `
         type="file"
       />
       <div
-        class="c9"
+        class="c11"
       >
         <svg
-          class="c10 c11"
+          class="c12 c13"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -1797,12 +1952,12 @@ exports[`component: FileInputField should render file input field 1`] = `
       </div>
       <button
         aria-describedby="consistent-tip consistent-status"
-        class="c12 c13"
+        class="c14 c15"
         id="consistent"
         type="button"
       >
         <svg
-          class="c14"
+          class="c16"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
