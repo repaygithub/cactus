@@ -35,6 +35,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
     disabled,
     autoTooltip,
     disableTooltip,
+    alignTooltip,
     ...textAreaProps
   } = omitMargins(props) as Omit<TextAreaFieldProps, keyof MarginProps>
 
@@ -70,6 +71,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       tooltip={tooltip}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
+      alignTooltip={alignTooltip}
     >
       {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextArea

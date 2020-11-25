@@ -40,6 +40,7 @@ export const BasicUsage = (): React.ReactElement => (
     name="input-1"
     autoTooltip={boolean('autoTooltip', true)}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
     {...eventLoggers}
   />
 )

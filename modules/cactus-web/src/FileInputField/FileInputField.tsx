@@ -29,6 +29,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
     width,
     autoTooltip = false,
     disableTooltip,
+    alignTooltip,
     ...rest
   } = omitMargins(props) as Omit<FileInputFieldProps, keyof MarginProps>
 
@@ -47,6 +48,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
       width={width}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
+      alignTooltip={alignTooltip}
     >
       {({ fieldId, labelId, name, ariaDescribedBy, disabled }) => (
         <FileInput
@@ -74,9 +76,8 @@ export const FileInputField = styled(FileInputFieldBase)`
   }
 
   ${Tooltip} {
-    position: absolute;
-    top: -2px;
-    right: 8px;
+    display: block;
+    bottom: 4px;
     font-size: 16px;
     ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
   }

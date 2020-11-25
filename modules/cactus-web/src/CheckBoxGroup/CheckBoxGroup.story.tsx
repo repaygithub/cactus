@@ -25,6 +25,7 @@ export const BasicUsage = (): React.ReactElement => (
     success={text('success', '')}
     warning={text('warning', '')}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
   >
     <CheckBoxGroup.Item name="option-1" label="Option 1" />
     <CheckBoxGroup.Item name="option-2" label="Option 2" />

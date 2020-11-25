@@ -34,6 +34,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     disabled,
     autoTooltip,
     disableTooltip,
+    alignTooltip,
     ...rest
   } = omitMargins(props) as Omit<DateInputFieldProps, keyof MarginProps>
 
@@ -51,6 +52,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       success={success}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
+      alignTooltip={alignTooltip}
     >
       {({ fieldId, status, labelId, ariaDescribedBy, disabled }): React.ReactElement => (
         <DateInput

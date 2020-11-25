@@ -30,5 +30,6 @@ export const BasicUsage = (): React.ReactElement => (
     error={text('error', '')}
     autoTooltip={boolean('autoTooltip', false)}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
   />
 )

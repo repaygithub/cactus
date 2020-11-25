@@ -33,6 +33,7 @@ export const ExtendedProps = (): React.ReactElement => (
     warning={text('warning?', '')}
     autoTooltip={boolean('autoTooltip', true)}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
   />
 )
 

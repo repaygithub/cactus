@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
 import { MarginProps, WidthProps } from 'styled-system'
 
 import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
+import { TooltipAlignment } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
 import Fieldset from '../Fieldset/Fieldset'
+import Flex from '../Flex/Flex'
 import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
 import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
-
 interface CheckBoxGroupProps
   extends MarginProps,
     WidthProps,
@@ -27,6 +29,10 @@ interface CheckBoxGroupProps
   onFocus?: FieldOnFocusHandler
   onBlur?: FieldOnBlurHandler
   disableTooltip?: boolean
+}
+
+interface LabelWrapper {
+  alignTooltip?: TooltipAlignment
 }
 
 type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
@@ -53,6 +59,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       onBlur,
       disableTooltip,
       autoTooltip = true,
+      alignTooltip = 'right',
       ...props
     },
     ref
@@ -125,20 +132,27 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Label id={labelId} as="legend">
-          {label}
-        </Label>
+        <LabelWrapper
+          alignTooltip={alignTooltip}
+          justifyContent={alignTooltip === 'right' ? 'space-between' : 'flex-start'}
+        >
+          <Label id={labelId} as="legend">
+            {label}
+          </Label>
+          {tooltip && (
+            <Tooltip
+              id={tooltipId}
+              label={tooltip}
+              disabled={disableTooltip ?? disabled}
+              forceVisible={autoTooltip ? showTooltip : false}
+            />
+          )}
+        </LabelWrapper>
+
         <Box mx={4} pt={3}>
           {children}
         </Box>
-        {tooltip && (
-          <Tooltip
-            id={tooltipId}
-            label={tooltip}
-            disabled={disableTooltip ?? disabled}
-            forceVisible={autoTooltip ? showTooltip : false}
-          />
-        )}
+
         {status && (
           <div>
             <StatusMessage status={status} id={statusId}>
@@ -150,6 +164,25 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
     )
   }
 )
+
+const LabelWrapper = styled(Flex)<LabelWrapper>`
+  flex-wrap: nowrap;
+  border-bottom: 1px solid currentColor;
+  ${Tooltip} {
+    position: relative;
+    right: 0;
+    bottom: 0;
+  }
+  ${Label} {
+    border: 0;
+    width: auto;
+    display: block;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: ${(p) => (p.alignTooltip === 'right' ? '28px' : '5px')};
+    padding-right: ${(p) => (p.alignTooltip === 'right' ? '28px' : '5px')};
+  }
+`
 
 CheckBoxGroup.displayName = 'CheckBoxGroup'
 
