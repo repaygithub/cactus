@@ -19,11 +19,11 @@ export const BasicUsage = (): ReactElement => {
   return (
     <Flex width="80%">
       <Alert
-        status={select('Status', status, 'error')}
+        status={select('Status', status, 'success')}
         type={select('Type', type, 'general')}
         shadow={boolean('Shadow', false)}
       >
-        {text('Message', 'Message goes here')}
+        {text('Message', 'Me')}
       </Alert>
     </Flex>
   )
