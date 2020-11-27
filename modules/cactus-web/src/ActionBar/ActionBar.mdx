@@ -24,11 +24,11 @@ const MySite = () => (
     <ActionBar>
       <ActionBar.Item
         id="ab-print"
-        icon={<ActionsPrint/>}
+        icon={<ActionsPrint />}
         onClick={printThisPage}
         aria-label="Print this page"
       />
-      <ActionBar.Panel icon={<ActionsGear/>} aria-label="Settings">
+      <ActionBar.Panel icon={<ActionsGear />} aria-label="Settings">
         <h3>I am a settings panel</h3>
         <input name="enable_the_awesome" type="checkbox" />
       </ActionBar.Panel>
@@ -48,17 +48,15 @@ There are two types of items that typically go on the ActionBar: a simple button
 Panel dialog popups are opened and closed by clicking the button; they can also be closed by pressing Escape while focus is on the button or within the dialog, or by shifting focus to any element outside the dialog. If you want additional control over the behavior of the dialog, you can use a render prop instead of a component tree:
 
 ```jsx
-(
-  <ActionBar.Panel icon={<ActionsGear/>} aria-label="Settings">
-    {(toggle, expanded) => (
-      <>
-        <h3>I am a settings panel</h3>
-        <input name="enable_the_awesome" type="checkbox" />
-        <button onClick={() => toggle(false)}>Close</button>
-      </>
-    )}
-  </ActionBar.Panel>
-)
+<ActionBar.Panel icon={<ActionsGear />} aria-label="Settings">
+  {(toggle, expanded) => (
+    <>
+      <h3>I am a settings panel</h3>
+      <input name="enable_the_awesome" type="checkbox" />
+      <button onClick={() => toggle(false)}>Close</button>
+    </>
+  )}
+</ActionBar.Panel>
 ```
 
 By default, the dialog popup is positioned right next to the ActionBar. The width and padding can be changed via styled-system props, but you can also change the positioning by passing a `positionPopup` callback. This will be called every time the popup becomes visible, with two arguments: the popup div, and the control button.
@@ -78,11 +76,11 @@ const MyPage = () => (
   <>
     <ActionBar.Item
       id="page-action"
-      icon={<ActionsKey/>}
+      icon={<ActionsKey />}
       orderHint="high"
       onClick={doSomethingPageSpecific}
     />
-    <PageContent/>
+    <PageContent />
   </>
 )
 ```
@@ -93,6 +91,26 @@ const MyPage = () => (
   - Items with the same hint are rendered in the order they're added, according to how React renders the entire document tree.
 - If this technique is used but there is no ActionProvider to capture the item and move it to the ActionBar, the item will instead render inline. (This is how an ActionBar having direct children can be used with no ActionProvider.)
 - Works with ActionBar.Panel as well.
+
+```jsx
+import React from 'react'
+import { ActionBar, Layout } from '@repay/cactus-web'
+import MyPage from './Mypage'
+
+const App = () =>(
+  <Layout>
+    // Other layout components
+    <ActionBar>
+      //Action bar options
+    </ActionBar>
+    <Layout.Content>
+      <MyPage />
+    <Layout.Content>
+  </Layout>
+)
+```
+
+The above example shows how to use the ActionBar inside a Layout component and render `MyPage` compontnet inside the `Layout.Content`
 
 ### useAction Hook
 
@@ -117,18 +135,15 @@ import { Layout, useAction } from '@repay/cactus-web'
 
 const MyPage = () => {
   const pageAction = (
-    <ActionBar.Button
-      key="page-action"
-      onClick={doSomethingPageSpecific}
-    >
-      <ActionsKey/>
+    <ActionBar.Button key="page-action" onClick={doSomethingPageSpecific}>
+      <ActionsKey />
     </ActionBar.Button>
   )
   const renderButton = useAction(pageAction, 'high')
   return (
     <>
-      (renderButton && <AlternativeDoSomethingImplementation/>)
-      <PageContent/>
+      (renderButton && <AlternativeDoSomethingImplementation />)
+      <PageContent />
     </>
   )
 }
