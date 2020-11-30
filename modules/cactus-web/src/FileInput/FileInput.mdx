@@ -51,8 +51,8 @@ const FileForm = () => {
   const [state, setState] = useState({})
 
   const handleChange = useCallback(
-    (name, files) => {
-      setState(state => ({ ...state, [name]: files }))
+    ({ target }) => {
+      setState(state => ({ ...state, [target.name]: target.value }))
     },
     [setState]
   )
@@ -115,6 +115,27 @@ const FileForm = () => {
   )
 }
 ```
+
+### onChange Event
+
+Because of limitations in the functionality of a standard `<input type="file"/>`, the FileInput component uses a slightly modified interface. The `event` object passed to the handler is a standard `React.ChangeEvent`, but the `target` and `currentTarget` are a custom object with the following interface:
+
+```tsx
+{
+  id: props.id,
+  name: props.name,
+  value: [
+    {
+      fileName: file.name,
+      contents: file,
+      status: 'loaded',
+      errorMsg: undefined,
+    }
+  ]
+}
+```
+
+The `value` is always an array, even if `multiple=false`; the contents will either be a Javascript File object (if `rawFiles=true`) or the contents of the file as a string. The `status` will be "loaded", "loading", or "error", in which case the `errorMsg` will be populated using the `onError` handler.
 
 ## Properties
 

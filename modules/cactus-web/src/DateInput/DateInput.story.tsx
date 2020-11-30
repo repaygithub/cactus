@@ -1,12 +1,14 @@
-import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
-import FormHandler from '../storySupport/FormHandler'
 import DateInput from './DateInput'
 
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+const eventLoggers = {
+  onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
+  onFocus: (e: any) => console.log('onFocus:', e.target.name),
+  onBlur: (e: any) => console.log('onBlur:', e.target.name),
+}
 
 export default {
   title: 'DateInput',
@@ -26,46 +28,38 @@ BasicUsage.parameters = {
   cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
 }
 
-export const ControlledWithDate = (): ReactElement => (
-  <FormHandler
-    defaultValue={new Date('10/1/2020')}
-    onChange={(_, value: string | Date | null): string | Date | null => value}
-  >
-    {({ value, onChange }): ReactElement => (
-      <DateInput
-        disabled={boolean('disabled', false)}
-        id="date-input-1"
-        name={text('name', 'date-input')}
-        type={select('type', ['date', 'datetime', 'time'], 'date')}
-        value={value}
-        onChange={onChange}
-      />
-    )}
-  </FormHandler>
-)
+export const ControlledWithDate = (): ReactElement => {
+  const [value, setValue] = React.useState<Date | string | null>(new Date('10/1/2020'))
+  return (
+    <DateInput
+      disabled={boolean('disabled', false)}
+      id="date-input-1"
+      name={text('name', 'date-input')}
+      type={select('type', ['date', 'datetime', 'time'], 'date')}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  )
+}
 
 ControlledWithDate.storyName = 'Controlled with Date'
 ControlledWithDate.parameters = {
   cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
 }
 
-export const ControlledWithString = (): ReactElement => (
-  <FormHandler
-    defaultValue="2019-09-16"
-    onChange={(_, value: string | Date | null): string | Date | null => value}
-  >
-    {({ value, onChange }): ReactElement => (
-      <DateInput
-        disabled={boolean('disabled', false)}
-        id="date-input-with-string-value"
-        name={text('name', 'date-input-with-string-value')}
-        value={value}
-        format="YYYY-MM-dd"
-        onChange={onChange}
-      />
-    )}
-  </FormHandler>
-)
+export const ControlledWithString = (): ReactElement => {
+  const [value, setValue] = React.useState<Date | string | null>('2019-09-16')
+  return (
+    <DateInput
+      disabled={boolean('disabled', false)}
+      id="date-input-with-string-value"
+      name={text('name', 'date-input-with-string-value')}
+      value={value}
+      format="YYYY-MM-dd"
+      onChange={(e) => setValue(e.target.value)}
+    />
+  )
+}
 
 ControlledWithString.storyName = 'Controlled with string'
 ControlledWithString.parameters = {

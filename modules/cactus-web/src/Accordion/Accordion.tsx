@@ -600,7 +600,7 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     registerAccordion,
     unregisterAccordion,
   } = useContext(ProviderContext)
-  const { defaultOpen = false, variant, className, ...restProps } = props
+  const { defaultOpen = false, variant, className, useBoxShadows, ...restProps } = props
   const id = useId(props.id)
   const headerId = `${id}-header`
   const bodyId = `${id}-body`

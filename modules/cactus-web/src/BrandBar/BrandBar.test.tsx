@@ -11,13 +11,18 @@ describe('component: BrandBar', () => {
   test('snapshot', () => {
     const { container } = render(
       <StyleProvider>
-        <BrandBar userMenuText="Test name">
-          <BrandBar.UserMenuItem onSelect={(): void => console.log('Settings')}>
-            Settings
-          </BrandBar.UserMenuItem>
-          <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
-            Logout
-          </BrandBar.UserMenuItem>
+        <BrandBar>
+          <BrandBar.Item>
+            <input type="text" placeholder="Type Here" />
+          </BrandBar.Item>
+          <BrandBar.UserMenu label="Test name">
+            <BrandBar.UserMenuItem onSelect={(): void => console.log('Settings')}>
+              Settings
+            </BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
+              Logout
+            </BrandBar.UserMenuItem>
+          </BrandBar.UserMenu>
         </BrandBar>
       </StyleProvider>
     )
@@ -29,13 +34,18 @@ describe('component: BrandBar', () => {
     const { container } = render(
       <StyleProvider>
         <ScreenSizeContext.Provider value={SIZES.tiny}>
-          <BrandBar userMenuText="Test name">
-            <BrandBar.UserMenuItem onSelect={(): void => console.log('Settings')}>
-              Settings
-            </BrandBar.UserMenuItem>
-            <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
-              Logout
-            </BrandBar.UserMenuItem>
+          <BrandBar>
+            <BrandBar.Item aria-label="Typing" id="typed" mobileIcon={<>Type</>}>
+              <input type="text" placeholder="Type Here" />
+            </BrandBar.Item>
+            <BrandBar.UserMenu label="Test name">
+              <BrandBar.UserMenuItem onSelect={(): void => console.log('Settings')}>
+                Settings
+              </BrandBar.UserMenuItem>
+              <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
+                Logout
+              </BrandBar.UserMenuItem>
+            </BrandBar.UserMenu>
           </BrandBar>
         </ScreenSizeContext.Provider>
       </StyleProvider>
@@ -49,11 +59,13 @@ describe('component: BrandBar', () => {
       const actionOne = jest.fn()
       const { getByText } = render(
         <StyleProvider>
-          <BrandBar userMenuText="Test name">
-            <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
-            <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
-              Logout
-            </BrandBar.UserMenuItem>
+          <BrandBar>
+            <BrandBar.UserMenu label="Test name">
+              <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
+              <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
+                Logout
+              </BrandBar.UserMenuItem>
+            </BrandBar.UserMenu>
           </BrandBar>
         </StyleProvider>
       )
@@ -72,9 +84,11 @@ describe('component: BrandBar', () => {
 
       const { getByText } = render(
         <StyleProvider>
-          <BrandBar userMenuText="Test name">
-            <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
-            <BrandBar.UserMenuItem onSelect={actionTwo}>Logout</BrandBar.UserMenuItem>
+          <BrandBar>
+            <BrandBar.UserMenu label="Test name">
+              <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
+              <BrandBar.UserMenuItem onSelect={actionTwo}>Logout</BrandBar.UserMenuItem>
+            </BrandBar.UserMenu>
           </BrandBar>
         </StyleProvider>
       )

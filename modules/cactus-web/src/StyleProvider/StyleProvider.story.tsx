@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Box from '../Box/Box'
+import Flex from '../Flex/Flex'
 import Grid from '../Grid/Grid'
 import StyleProvider from './StyleProvider'
 
@@ -82,3 +83,21 @@ export const ComponentAdjusmentsBasedOnMediaQueries = (): React.ReactElement => 
 }
 
 ComponentAdjusmentsBasedOnMediaQueries.storyName = 'Component Adjusments based on Media Queries'
+
+export const StyleReset = (): React.ReactElement => (
+  <Flex flexDirection="column">
+    <span>Regular Text</span>
+    <p>Paragraph</p>
+    <a>Anchor</a>
+    <a href="#">Link</a>
+    <button type="button">A Button</button>
+    <input type="button" value="An Input Button" />
+    <input type="text" placeholder="An Input" />
+    <textarea placeholder="A Textarea" />
+    <select placeholder="Select Any">
+      <optgroup label="Choose ye this day">
+        <option>Four</option>
+      </optgroup>
+    </select>
+  </Flex>
+)

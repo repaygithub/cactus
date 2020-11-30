@@ -61,15 +61,17 @@ const post = (data: { [k: string]: any }): void => {
 const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
   const [values, setValues] = React.useState<FieldsTypes>(getInitialValues)
 
+  const onCheckboxChange = React.useCallback(
+    ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
+      setValues((s) => ({ ...s, data: { ...s.data, [target.name]: target.checked } }))
+    },
+    [setValues]
+  )
+
   const onChange = React.useCallback(
-    (name: string, value: any): void => {
-      setValues(
-        (s): FieldsTypes => ({
-          ...s,
-          data: { ...s.data, [name]: value },
-          status: { ...s.status },
-        })
-      )
+    (e: React.ChangeEvent<any>): void => {
+      const { name, value } = e.target
+      setValues((s) => ({ ...s, data: { ...s.data, [name]: value } }))
     },
     [setValues]
   )
@@ -158,7 +160,7 @@ const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
             name="checkbox"
             label="CheckBox Field"
             checked={values.data.checkbox}
-            onChange={onChange}
+            onChange={onCheckboxChange}
           />
           <RadioGroup
             name="radiobuttonGroup"
@@ -190,8 +192,8 @@ const FormExample: React.FC<RouteComponentProps> = (): ReactElement => {
             mt={4}
             label="Toggle Field"
             name="togglefield"
-            value={values.data.togglefield}
-            onChange={onChange}
+            checked={values.data.togglefield}
+            onChange={onCheckboxChange}
           />
           <Button mt={5} ml="25%" type="submit" variant="action">
             Submit

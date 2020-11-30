@@ -17,6 +17,7 @@ describe('component: AccessibleField', (): void => {
     const input = getByLabelText('Accessible Label')
     expect(input).toHaveAttribute('data-is', 'accessible')
     expect(input).toHaveAttribute('name', 'text_field')
+    expect(input).not.toHaveAttribute('aria-describedby')
   })
 
   test('provides accessible status message', (): void => {
@@ -28,7 +29,7 @@ describe('component: AccessibleField', (): void => {
       </StyleProvider>
     )
 
-    expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toContain(
+    expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toBe(
       getByText('This field has an error').closest('[id]')?.id
     )
   })
@@ -42,7 +43,7 @@ describe('component: AccessibleField', (): void => {
       </StyleProvider>
     )
 
-    expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toContain(
+    expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toBe(
       getByText('woot tooltips!').closest('[id]')?.id
     )
   })

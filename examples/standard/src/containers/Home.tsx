@@ -43,7 +43,7 @@ const Home: React.FC<RouteComponentProps> = (): React.ReactElement => {
             label="Language"
             name="termsLang"
             value={termsLang}
-            onChange={(_, value: any): void => setTermsLang(value as string)}
+            onChange={({ target: { value } }): void => setTermsLang(value as string)}
             options={languageOptions}
           />
         </Box>

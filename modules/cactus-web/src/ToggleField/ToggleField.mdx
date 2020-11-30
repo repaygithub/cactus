@@ -20,8 +20,8 @@ export const code = `() => {
     <ToggleField
       name="enabled"
       label={state ? 'On' : 'Off'}
-      value={state}
-      onClick={() => setState(!state)}
+      checked={state}
+      onChange={(e) => setState(e.target.checked)}
     />
   )
 }`
@@ -33,17 +33,11 @@ export const code = `() => {
 </LiveProvider>
 <Wrapper />
 
-The ToggleField is a Field component to be used in a Form, is composed of a [`Toggle`](../Toggle.mdx) and a `Label` and requires a `name` and `label`. It also implements our standardized `FieldChangeHandler` interface defined as:
-
-```ts
-type FieldOnChangeHandler<ValueType> = (fieldName: string, fieldValue: ValueType) => void
-```
-
-`ValueType` is a `boolean` for Toggles.
+The ToggleField is a Field component to be used in a Form, is composed of a [`Toggle`](../Toggle.mdx) and a `Label` and requires a `name` and `label`.
 
 ## Best practices
 
-The Toggle cannot manage it's own state, therefore this field **must** be controlled via an onChange handler and value. Any provided `id` will be automatically added to the label and toggle for accessibility; if an id is not provided, one will be created.
+Any provided `id` will be automatically added to the label and toggle for accessibility; if an id is not provided, one will be created.
 
 ## Basic usage
 
@@ -54,8 +48,8 @@ import { Button, ToggleField } from '@repay/cactus-web'
 export default function Form() {
   const [values, setValues] = useState({ enabled: false })
   const handleChange = useCallback(
-    (name, value) => {
-      setValues(state => setValues({ ...state, [name]: value }))
+    (e) => {
+      setValues(state => ({ ...state, [e.target.name]: e.target.checked }))
     },
     [setValues]
   )
@@ -74,7 +68,7 @@ export default function Form() {
         name="enabled"
         label="Is Enabled"
         onChange={handleChange}
-        value={values.enabled}
+        checked={values.enabled}
       />
       <Button type="submit" variant="action">
         Submit

@@ -35,10 +35,10 @@ import React, { useState } from 'react'
 import { Button, CheckBoxField } from '@repay/cactus-web'
 
 export default function Form() {
-  const [values, setValues] = useState({ checked: false })
+  const [values, setValues] = useState({ checkboxfield: false })
   const handleChange = useCallback(
-    (name, value) => {
-      setValues(state => setValues({ ...state, [name]: value }))
+    (e) => {
+      setValues(state => ({ ...state, [e.target.name]: e.target.checked }))
     },
     [setValues]
   )
@@ -57,7 +57,7 @@ export default function Form() {
         name="checkboxfield"
         label="Is Checked"
         onChange={handleChange}
-        value={values.checked}
+        value={values.checkboxfield}
       />
       <Button type="submit" variant="action">
         Submit
