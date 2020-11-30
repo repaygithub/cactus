@@ -34,3 +34,4 @@ export const AddMoreBreadcrumbs = (): ReactElement => {
 }
 
 AddMoreBreadcrumbs.storyName = 'Add more Breadcrumbs'
+AddMoreBreadcrumbs.parameters = { storyshots: false }

@@ -39,6 +39,7 @@ export const CustomStyles = (): React.ReactElement => (
     margin={text('margin', '3')}
   />
 )
+CustomStyles.parameters = { storyshots: false }
 
 export const ControlledForm = (): React.ReactElement => (
   <FormHandler onChange={(name: string, value: SelectValueType): SelectValueType => value}>
