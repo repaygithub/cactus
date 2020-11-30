@@ -29,7 +29,7 @@ class Panel extends React.Component {
       primary: '#96D35F',
       secondary: '#FFFFFF',
       border: 'thin',
-      shape: 'round',
+      shape: 'intermediate',
       font: 'Helvetica',
       boxShadows: true,
     },

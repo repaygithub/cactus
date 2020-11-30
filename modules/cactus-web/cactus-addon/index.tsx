@@ -3,6 +3,7 @@ import addons, { makeDecorator } from '@storybook/addons'
 import * as React from 'react'
 import styled, { CSSObject } from 'styled-components'
 
+import { ScreenSizeProvider } from '../src/ScreenSizeProvider/ScreenSizeProvider'
 import { StyleProvider } from '../src/StyleProvider/StyleProvider'
 import {
   BACKGROUND_CHANGE,
@@ -92,7 +93,9 @@ const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({
 
   return (
     <StyleProvider theme={theme} global>
-      <StyledContainer {...props} inverse={inverse} borderBox={borderBox} />
+      <ScreenSizeProvider>
+        <StyledContainer {...props} inverse={inverse} borderBox={borderBox} />
+      </ScreenSizeProvider>
     </StyleProvider>
   )
 }

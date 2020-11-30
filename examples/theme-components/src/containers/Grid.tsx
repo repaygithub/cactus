@@ -19,7 +19,7 @@ const GridExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [state, setState] = useState(initialState)
 
   const changeState = useCallback(
-    (name, value): void => {
+    ({ target: { name, value } }): void => {
       setState({ ...state, [name]: value as ColumnNum })
     },
     [state]

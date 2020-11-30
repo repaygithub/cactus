@@ -33,11 +33,14 @@ const IconbuttonExample: React.FC<RouteComponentProps> = (): React.ReactElement 
   }
 
   const changeVariant = useCallback(
-    (name, value): void => {
+    ({ target: { name, value } }): void => {
       setState({ ...state, [name]: value })
     },
     [state]
   )
+  const onToggleChange = useCallback(({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    setState((s) => ({ ...s, [target.name]: target.checked }))
+  }, [])
   return (
     <div>
       <Link to="/">
@@ -66,14 +69,14 @@ const IconbuttonExample: React.FC<RouteComponentProps> = (): React.ReactElement 
         <ToggleField
           name="disabled"
           label="Disabled"
-          onChange={changeVariant}
-          value={state.disabled}
+          onChange={onToggleChange}
+          checked={state.disabled}
         />
         <ToggleField
           name="inverse"
           label="Inverse"
-          onChange={changeVariant}
-          value={state.inverse}
+          onChange={onToggleChange}
+          checked={state.inverse}
         />
       </Flex>
       <Grid justify="center" style={state.inverse ? containerStyle : {}}>

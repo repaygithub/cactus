@@ -166,7 +166,7 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -185,7 +185,7 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -242,7 +242,7 @@ exports[`With theme changes  should have 2px border 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 2px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -261,7 +261,7 @@ exports[`With theme changes  should have 2px border 1`] = `
   top: -5px;
   left: -5px;
   border: 2px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -318,7 +318,7 @@ exports[`component: Button should default to standard variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -337,7 +337,7 @@ exports[`component: Button should default to standard variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -404,7 +404,7 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
@@ -424,7 +424,7 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -492,7 +492,7 @@ exports[`component: Button should render call to action variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,35%);
@@ -511,7 +511,7 @@ exports[`component: Button should render call to action variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -568,7 +568,7 @@ exports[`component: Button should render danger variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: hsl(353,84%,44%);
   color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
@@ -587,7 +587,7 @@ exports[`component: Button should render danger variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -644,7 +644,7 @@ exports[`component: Button should render disabled variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
@@ -664,7 +664,7 @@ exports[`component: Button should render disabled variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -716,7 +716,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,35%);
@@ -735,7 +735,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -792,7 +792,7 @@ exports[`component: Button should render inverse danger variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   color: hsl(353,84%,44%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(353,84%,44%);
@@ -811,7 +811,7 @@ exports[`component: Button should render inverse danger variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -867,7 +867,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
   border-color: hsl(0,0%,90%);
@@ -887,7 +887,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -939,7 +939,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(0,0%,100%);
@@ -958,7 +958,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -1015,7 +1015,7 @@ exports[`component: Button should render standard variant 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -1034,7 +1034,7 @@ exports[`component: Button should render standard variant 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -1091,7 +1091,7 @@ exports[`component: Button should support margin space props 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   margin-top: 24px;
   color: hsl(200,96%,11%);
   background-color: hsl(0,0%,100%);
@@ -1111,7 +1111,7 @@ exports[`component: Button should support margin space props 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }

@@ -2,7 +2,6 @@ import { number } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import MenuBar from './MenuBar'
 
 const LABELS = [
@@ -52,12 +51,16 @@ export const BasicUsage = (): React.ReactElement => {
   ) => {
     const items = []
     for (let i = 0; i < breadth; i++) {
-      if ((Math.random() * depth) / 1.5 > 0.5) {
-        items.push(makeList(depth - 1, { title: getLabel() }, i))
+      // We need the default to be 100% reproducible for storyshots.
+      const useStatic = depth === totalDepth && i < 8
+      const useList = useStatic ? i % 3 === 0 : (Math.random() * depth) / 1.5 > 0.5
+      const title = useStatic ? LABELS[i] : getLabel()
+      if (useList) {
+        items.push(makeList(depth - 1, { title }, i))
       } else {
         items.push(
           <MenuBar.Item key={i} onClick={action(`x: ${i}, y: ${totalDepth - depth}`)}>
-            {getLabel()}
+            {title}
           </MenuBar.Item>
         )
       }
@@ -69,5 +72,5 @@ export const BasicUsage = (): React.ReactElement => {
     )
   }
 
-  return <ScreenSizeProvider>{makeList(totalDepth, {}, 0, MenuBar)}</ScreenSizeProvider>
+  return <>{makeList(totalDepth, {}, 0, MenuBar)}</>
 }

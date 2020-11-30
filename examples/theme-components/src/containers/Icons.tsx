@@ -24,14 +24,14 @@ const IconsPage: React.FC<RouteComponentProps & { theme: CactusTheme }> = ({
           label="Icon Color"
           value={color}
           options={themeColors}
-          onChange={(_, value): void => setColor(value as CactusColor)}
+          onChange={({ target: { value } }): void => setColor(value as CactusColor)}
         />
         <SelectField
           name="icon_size"
           label="Icon Size"
           value={size}
           options={iconSizes}
-          onChange={(_, value): void => setSize(value as IconSize)}
+          onChange={({ target: { value } }): void => setSize(value as IconSize)}
           ml={4}
         />
       </Flex>

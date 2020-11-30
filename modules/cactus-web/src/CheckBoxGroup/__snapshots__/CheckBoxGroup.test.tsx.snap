@@ -191,7 +191,7 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
 
 <div>
   <fieldset
-    aria-describedby="cbg-tip cbg-status"
+    aria-describedby="cbg-tip"
     class="c0"
     id="cbg"
     name="checkboxes"
@@ -502,7 +502,7 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
 
 <div>
   <fieldset
-    aria-describedby="cbg-tip cbg-status"
+    aria-describedby="cbg-status"
     class="c0"
     disabled=""
     id="cbg"

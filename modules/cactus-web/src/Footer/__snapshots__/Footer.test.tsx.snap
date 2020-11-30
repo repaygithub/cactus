@@ -1,76 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Footer snapshot 1`] = `
-.c11 {
+.c9 {
   font-style: italic;
   outline: none;
 }
 
-.c11:link {
+.c9:link {
   color: hsl(200,96%,35%);
 }
 
-.c11:visited {
+.c9:visited {
   color: hsl(200,18%,45%);
 }
 
-.c11:hover {
+.c9:hover {
   color: hsl(200,96%,11%);
 }
 
-.c11:focus {
+.c9:focus {
   color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
 }
 
 .c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 16px 24px 16px 24px;
-}
-
-.cactus-layout-fixedBottom .c1 {
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-
-.c4 {
-  margin-bottom: 16px;
-}
-
-.cactus-layout-fixedBottom .c3 {
-  margin-right: 16px;
-  margin-bottom: 0px;
-}
-
-.c6 {
-  max-width: 100%;
+  padding: 16px 24px;
+  -ms-grid-column: 1;
+  -ms-grid-row: 1;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
 }
 
 .c5 {
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 16px 24px;
+}
+
+.c5:empty {
+  display: none;
+}
+
+.c5:not(:empty) {
+  -ms-grid-row-align: center;
+  -ms-grid-column: 2;
+  -ms-grid-row: 1;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.c1 + .c4 {
+  padding-left: 0;
+}
+
+.c3 {
   max-width: 200px;
-  max-height: 80px;
+  max-height: 40px;
 }
 
 .c7 {
+  box-sizing: border-box;
   max-width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -87,11 +80,35 @@ exports[`component: Footer snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 16px 24px 16px 24px;
+  padding: 16px 24px;
   background-color: hsl(0,0%,100%);
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  -ms-grid-row: 2;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
 }
 
-.c9 {
+.c1 + .c4:empty + .c6 {
+  padding-left: 0;
+}
+
+.c4:empty + .c6 {
+  background-color: transparent;
+  -ms-grid-column-span: 1;
+  -ms-grid-row-align: center;
+  -ms-grid-column: 2;
+  -ms-grid-row: 1;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.c8 {
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -112,22 +129,19 @@ exports[`component: Footer snapshot 1`] = `
   -ms-flex-positive: 1;
   flex-grow: 1;
   padding: 0 16px 0 16px;
-  border-right: 1px solid hsl(200,96%,35%);
-}
-
-.c9 .c10 {
-  max-width: 100%;
-}
-
-.cactus-layout-fixedBottom .c8 {
   max-width: calc(100% / 2);
+  border-right: 1px solid hsl(200,96%,11%);
 }
 
-.c9:last-of-type {
+.c8:last-of-type {
   border-right: none;
 }
 
 .c0 {
+  font-size: 15px;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -139,56 +153,92 @@ exports[`component: Footer snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   width: 100%;
   background-color: hsl(200,29%,90%);
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  height: auto;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: min-content 1fr;
+  grid-template-columns: min-content 1fr;
+  -ms-grid-rows: min-content min-content;
+  grid-template-rows: min-content min-content;
 }
 
-.c0.cactus-layout-fixedBottom {
-  height: auto;
+.c10 {
+  max-width: 100%;
+  margin-top: 4px;
+}
+
+.c10:first-child {
+  margin-top: 0px;
+}
+
+.c10:link {
+  color: hsl(200,96%,11%);
+}
+
+.c10:visited {
+  color: hsl(200,9%,35%);
+}
+
+.c10:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c10:focus {
+  background-color: hsla(200,96%,35%,0.3);
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
   <footer
-    class="c0 cactus-layout-fixedBottom"
+    class="c0"
     role="contentinfo"
   >
     <div
       class="c1 c2"
     >
-      <div
-        class="c3 c4"
-      >
-        <img
-          alt="Logo"
-          class="c5"
-          src="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
-        />
-      </div>
-      <div
-        class="c6"
-      >
-        Custom Content
-      </div>
+      <img
+        alt="Logo"
+        class="c3"
+        src="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+      />
     </div>
     <div
-      class="c7"
+      class="c4 c5"
+    >
+      Custom Content
+    </div>
+    <div
+      class="c6 c7"
     >
       <div
-        class="c8 c9"
+        class="c8"
       >
         <a
-          class="c10 c11"
+          class="c9 c10"
           href="https://google.com"
         >
           Some Link
         </a>
       </div>
       <div
-        class="c8 c9"
+        class="c8"
       >
         <a
-          class="c10 c11"
+          class="c9 c10"
           href="https://repay.com"
         >
           Some Other Link
