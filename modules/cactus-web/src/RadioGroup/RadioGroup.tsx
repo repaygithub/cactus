@@ -7,7 +7,6 @@ import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleFie
 import { TooltipAlignment } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import Fieldset from '../Fieldset/Fieldset'
-import Flex from '../Flex/Flex'
 import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
@@ -143,13 +142,8 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <LabelWrapper
-          alignTooltip={alignTooltip}
-          justifyContent={alignTooltip === 'right' ? 'space-between' : 'flex-start'}
-        >
-          <Label id={labelId} as="legend">
-            {label}
-          </Label>
+        <LabelWrapper id={labelId} as="legend" alignTooltip={alignTooltip}>
+          {label}
           {tooltip && (
             <Tooltip
               id={tooltipId}
@@ -175,22 +169,16 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
   }
 )
 
-const LabelWrapper = styled(Flex)<LabelWrapper>`
+const LabelWrapper = styled(Label)<LabelWrapper>`
   flex-wrap: nowrap;
-  border-bottom: 1px solid currentColor;
+  display: flex;
+  justify-content: ${(p) => (p.alignTooltip === 'right' ? 'space-between' : 'flex-start')};
+  padding-right: 8px;
   ${Tooltip} {
     position: relative;
     right: 0;
     bottom: 0;
-  }
-  ${Label} {
-    border: 0;
-    width: auto;
-    display: block;
-    box-sizing: border-box;
-    padding-left: 16px;
-    padding-right: ${(p) => (p.alignTooltip === 'right' ? '28px' : '5px')};
-    padding-right: ${(p) => (p.alignTooltip === 'right' ? '28px' : '5px')};
+    padding-left: ${(p) => (p.alignTooltip === 'right' ? 0 : '8px')};
   }
 `
 

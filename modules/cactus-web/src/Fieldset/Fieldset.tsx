@@ -19,7 +19,6 @@ const Fieldset = styled(FieldWrapper)<{ disabled?: boolean }>`
     box-sizing: border-box;
     border-bottom: ${(p) => border(p.theme, 'currentcolor')};
     padding-left: 16px;
-    padding-right: 28px;
     width: 100%;
     float: left;
     + * {

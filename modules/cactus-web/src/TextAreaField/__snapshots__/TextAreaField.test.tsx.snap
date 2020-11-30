@@ -62,12 +62,13 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
 .c1 .c7 {
   position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
 .c1 .sc-gVFdEO {

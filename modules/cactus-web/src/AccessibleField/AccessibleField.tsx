@@ -184,13 +184,14 @@ export const AccessibleField = styled(AccessibleFieldBase)`
     display: block;
     box-sizing: border-box;
     padding-left: 16px;
-    padding-right: ${(p) => (p.alignTooltip === 'right' ? '28px' : '5px')};
+    padding-right: 8px;
     color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 
   ${Tooltip} {
     position: relative;
     font-size: 16px;
+    padding-right: 8px;
   }
 
   ${StatusMessage} {

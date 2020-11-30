@@ -54,12 +54,13 @@ exports[`component: SelectField minimal snapshot 1`] = `
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
 .c1 .sc-gzcbGf {
   position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
 .c1 .sc-gVFdEO {

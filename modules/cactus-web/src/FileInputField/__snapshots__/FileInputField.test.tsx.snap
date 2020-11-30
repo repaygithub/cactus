@@ -72,13 +72,14 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 5px;
+  padding-right: 8px;
   color: hsl(0,0%,70%);
 }
 
 .c1 .c7 {
   position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
 .c1 .sc-gVFdEO {
@@ -406,12 +407,13 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
 .c1 .c7 {
   position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
 .c1 .c21 {
@@ -895,12 +897,13 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
 .c1 .c7 {
   position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
 .c1 .sc-gVFdEO {
@@ -1353,12 +1356,13 @@ exports[`component: FileInputField should render a loading file 1`] = `
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
 .c1 .c7 {
   position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
 .c1 .sc-gVFdEO {
@@ -1734,12 +1738,13 @@ exports[`component: FileInputField should render file input field 1`] = `
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
 .c1 .c7 {
   position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
 .c1 .sc-gVFdEO {
