@@ -7,28 +7,20 @@ import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleFie
 import { TooltipAlignment } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import Fieldset from '../Fieldset/Fieldset'
-import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
 import RadioButtonField, { RadioButtonFieldProps } from '../RadioButtonField/RadioButtonField'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
 
 interface RadioGroupProps
   extends MarginProps,
     WidthProps,
     Omit<FieldProps, 'labelProps'>,
-    Omit<
-      React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
-      'name' | 'onChange' | 'onFocus' | 'onBlur'
-    > {
+    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name'> {
   value?: string | number
   defaultValue?: string | number
   required?: boolean
-  onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
 }
 interface LabelWrapper {
   alignTooltip?: TooltipAlignment
@@ -47,6 +39,8 @@ type ForwardProps = {
   required?: boolean
 }
 
+const noop = () => undefined
+
 export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>(
   (
     {
@@ -56,7 +50,6 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       required,
       defaultValue,
       value,
-      onChange,
       onFocus,
       onBlur,
       autoTooltip = true,
@@ -76,13 +69,14 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       statusMessage,
       tooltipId,
       disabled,
-    } = useAccessibleField(props)
+    } = useAccessibleField({ ...props, tooltip })
     const [showTooltip, setTooltipVisible] = React.useState<boolean>(false)
 
     const forwardProps: ForwardProps = { name, required }
     if (disabled === true) {
       forwardProps.disabled = disabled
     }
+    const hasOnChange = !!props.onChange
     const cloneWithValue = (element: React.ReactElement, props: any) => {
       if (value !== undefined) {
         if (element.props.value !== undefined) {
@@ -97,36 +91,32 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
           props = { ...props, defaultValue }
         }
       }
+      // This is to avert a PropTypes warning regarding missing onChange handler.
+      const hasChecked = props.checked !== undefined || element.props.checked !== undefined
+      if (hasChecked && hasOnChange && !element.props.onChange) {
+        props = { ...props, onChange: noop }
+      }
       return React.cloneElement(element, props)
     }
     children = cloneAll(children, forwardProps, cloneWithValue)
 
-    const handleChange = React.useCallback(
-      (event: React.FormEvent<HTMLFieldSetElement>): void => {
-        if (typeof onChange === 'function') {
-          const target = (event.target as unknown) as HTMLInputElement
-          onChange(name, target.value)
-        }
-      },
-      [name, onChange]
-    )
     const handleFocus = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
+        onFocus?.(e)
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          handleEvent(onFocus, name)
           setTooltipVisible(() => true)
         }
       },
-      [onFocus, name, setTooltipVisible]
+      [onFocus, setTooltipVisible]
     )
     const handleBlur = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
+        onBlur?.(e)
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          handleEvent(onBlur, name)
           setTooltipVisible(() => false)
         }
       },
-      [onBlur, name, setTooltipVisible]
+      [onBlur, setTooltipVisible]
     )
 
     return (
@@ -138,7 +128,6 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
         aria-describedby={ariaDescribedBy}
         name={name}
         disabled={disabled}
-        onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
@@ -193,18 +182,7 @@ RadioGroup.propTypes = {
   success: PropTypes.node,
   warning: PropTypes.node,
   error: PropTypes.node,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  value: function (props: Record<string, any>): Error | null {
-    if (props.value !== undefined) {
-      const proptype = typeof props.value
-      if (!(proptype === 'string' || proptype === 'number')) {
-        return new Error('The `value` prop must be a string or number.')
-      }
-    }
-    return null
-  },
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: function (props: Record<string, any>): Error | null {
     if (props.defaultValue !== undefined) {
       const proptype = typeof props.defaultValue

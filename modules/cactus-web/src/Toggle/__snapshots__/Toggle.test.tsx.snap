@@ -1,98 +1,131 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`component: Toggle should initialize value to true 1`] = `
+exports[`component: Toggle should initialize checked to true 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c5 {
   vertical-align: middle;
 }
 
-.c5 {
+.c8 {
   vertical-align: middle;
 }
 
-.c3 {
-  width: 12px;
-  height: 12px;
+.c1 {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  margin: 0;
+  z-index: 1;
   position: absolute;
-  top: 6px;
-  right: 8px;
-  color: hsl(0,0%,100%);
-}
-
-.c6 {
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 4px;
-  left: 5px;
-  color: hsl(0,0%,100%);
-}
-
-.c0 {
-  position: relative;
-  width: 51px;
-  height: 26px;
-  border-radius: 13px;
-  outline: none;
-  background-color: hsl(145,89%,28%);
-  border: 1px solid hsl(145,89%,28%);
   cursor: pointer;
 }
 
-.c0:focus {
+.c1:disabled {
+  cursor: not-allowed;
+}
+
+.c6 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  color: hsl(0,0%,100%);
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c4 {
+  opacity: 0;
+}
+
+.c9 {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  color: hsl(0,0%,100%);
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c7 {
+  opacity: 1;
+}
+
+.c0 {
+  display: inline-block;
+  position: relative;
+  width: 51px;
+  height: 26px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.c3 {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  background-color: hsl(353,84%,44%);
+  cursor: pointer;
+}
+
+input:disabled ~ .c2 {
+  background-color: hsl(0,0%,90%);
+  cursor: cursor;
+}
+
+input:focus ~ .c2 {
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c0::after {
+.c3::after {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   content: '';
-  top: -1px;
-  left: -1px;
+  top: 0;
+  left: 0;
   position: absolute;
-  -webkit-transition: -webkit-transform 0.3s;
-  -webkit-transition: transform 0.3s;
-  transition: transform 0.3s;
+  -webkit-transition: left 0.3s;
+  transition: left 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-.c0[aria-checked='true']::after {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked ~ .c2::after {
+  left: 26px;
 }
 
-.c0[aria-checked='true'] .c1 {
-  opacity: 0;
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
-.c0[aria-checked='true'] .c4 {
-  opacity: 1;
-}
-
-.c0 .c1 {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c0 .c4 {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-<button
-    aria-checked="true"
+<div
     class="c0"
-    role="switch"
-    type="button"
+    role="none"
   >
+    <input
+      aria-checked="true"
+      checked=""
+      class="c1"
+      role="switch"
+      type="checkbox"
+    />
+    <div
+      aria-hidden="true"
+      class="c2 c3"
+    />
     <svg
       aria-hidden="true"
-      class="c1 c2 c3"
+      class="c4 c5 c6"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -104,7 +137,7 @@ exports[`component: Toggle should initialize value to true 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="c4 c5 c6"
+      class="c7 c8 c9"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -114,104 +147,136 @@ exports[`component: Toggle should initialize value to true 1`] = `
         d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
       />
     </svg>
-  </button>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`component: Toggle should render a disabled toggle 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c5 {
   vertical-align: middle;
 }
 
-.c5 {
+.c8 {
   vertical-align: middle;
 }
 
-.c3 {
-  width: 12px;
-  height: 12px;
+.c1 {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  margin: 0;
+  z-index: 1;
   position: absolute;
-  top: 6px;
-  right: 8px;
-  color: hsl(0,0%,100%);
+  cursor: pointer;
+}
+
+.c1:disabled {
+  cursor: not-allowed;
 }
 
 .c6 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  color: hsl(0,0%,100%);
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c4 {
+  opacity: 0;
+}
+
+.c9 {
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 4px;
-  left: 5px;
+  top: 5px;
+  left: 6px;
   color: hsl(0,0%,100%);
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c7 {
+  opacity: 1;
 }
 
 .c0 {
+  display: inline-block;
   position: relative;
   width: 51px;
   height: 26px;
-  border-radius: 13px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
   outline: none;
+}
+
+.c3 {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  background-color: hsl(353,84%,44%);
+  cursor: pointer;
+}
+
+input:disabled ~ .c2 {
   background-color: hsl(0,0%,90%);
-  border: 1px solid hsl(0,0%,90%);
   cursor: cursor;
 }
 
-.c0:focus {
+input:focus ~ .c2 {
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c0::after {
+.c3::after {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   content: '';
-  top: -1px;
-  left: -1px;
+  top: 0;
+  left: 0;
   position: absolute;
-  -webkit-transition: -webkit-transform 0.3s;
-  -webkit-transition: transform 0.3s;
-  transition: transform 0.3s;
+  -webkit-transition: left 0.3s;
+  transition: left 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-.c0[aria-checked='true']::after {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked ~ .c2::after {
+  left: 26px;
 }
 
-.c0[aria-checked='true'] .c1 {
-  opacity: 0;
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
-.c0[aria-checked='true'] .c4 {
-  opacity: 1;
-}
-
-.c0 .c1 {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c0 .c4 {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-<button
-    aria-checked="false"
+<div
     class="c0"
-    disabled=""
-    role="switch"
-    type="button"
+    role="none"
   >
+    <input
+      aria-checked="false"
+      class="c1"
+      disabled=""
+      role="switch"
+      type="checkbox"
+    />
+    <div
+      aria-hidden="true"
+      class="c2 c3"
+    />
     <svg
       aria-hidden="true"
-      class="c1 c2 c3"
+      class="c4 c5 c6"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -223,7 +288,7 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="c4 c5 c6"
+      class="c7 c8 c9"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -233,103 +298,135 @@ exports[`component: Toggle should render a disabled toggle 1`] = `
         d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
       />
     </svg>
-  </button>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`component: Toggle should render a toggle 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c5 {
   vertical-align: middle;
 }
 
-.c5 {
+.c8 {
   vertical-align: middle;
 }
 
-.c3 {
-  width: 12px;
-  height: 12px;
+.c1 {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  margin: 0;
+  z-index: 1;
   position: absolute;
-  top: 6px;
-  right: 8px;
-  color: hsl(0,0%,100%);
-}
-
-.c6 {
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 4px;
-  left: 5px;
-  color: hsl(0,0%,100%);
-}
-
-.c0 {
-  position: relative;
-  width: 51px;
-  height: 26px;
-  border-radius: 13px;
-  outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
   cursor: pointer;
 }
 
-.c0:focus {
+.c1:disabled {
+  cursor: not-allowed;
+}
+
+.c6 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  color: hsl(0,0%,100%);
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c4 {
+  opacity: 0;
+}
+
+.c9 {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  color: hsl(0,0%,100%);
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c7 {
+  opacity: 1;
+}
+
+.c0 {
+  display: inline-block;
+  position: relative;
+  width: 51px;
+  height: 26px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.c3 {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  background-color: hsl(353,84%,44%);
+  cursor: pointer;
+}
+
+input:disabled ~ .c2 {
+  background-color: hsl(0,0%,90%);
+  cursor: cursor;
+}
+
+input:focus ~ .c2 {
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c0::after {
+.c3::after {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   content: '';
-  top: -1px;
-  left: -1px;
+  top: 0;
+  left: 0;
   position: absolute;
-  -webkit-transition: -webkit-transform 0.3s;
-  -webkit-transition: transform 0.3s;
-  transition: transform 0.3s;
+  -webkit-transition: left 0.3s;
+  transition: left 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-.c0[aria-checked='true']::after {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked ~ .c2::after {
+  left: 26px;
 }
 
-.c0[aria-checked='true'] .c1 {
-  opacity: 0;
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
-.c0[aria-checked='true'] .c4 {
-  opacity: 1;
-}
-
-.c0 .c1 {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c0 .c4 {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-<button
-    aria-checked="false"
+<div
     class="c0"
-    role="switch"
-    type="button"
+    role="none"
   >
+    <input
+      aria-checked="false"
+      class="c1"
+      role="switch"
+      type="checkbox"
+    />
+    <div
+      aria-hidden="true"
+      class="c2 c3"
+    />
     <svg
       aria-hidden="true"
-      class="c1 c2 c3"
+      class="c4 c5 c6"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -341,7 +438,7 @@ exports[`component: Toggle should render a toggle 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="c4 c5 c6"
+      class="c7 c8 c9"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -351,104 +448,136 @@ exports[`component: Toggle should render a toggle 1`] = `
         d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
       />
     </svg>
-  </button>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`component: Toggle should support margin space props 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c5 {
   vertical-align: middle;
 }
 
-.c5 {
+.c8 {
   vertical-align: middle;
 }
 
-.c3 {
-  width: 12px;
-  height: 12px;
+.c1 {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  margin: 0;
+  z-index: 1;
   position: absolute;
-  top: 6px;
-  right: 8px;
-  color: hsl(0,0%,100%);
+  cursor: pointer;
+}
+
+.c1:disabled {
+  cursor: not-allowed;
 }
 
 .c6 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  color: hsl(0,0%,100%);
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c4 {
+  opacity: 0;
+}
+
+.c9 {
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 4px;
-  left: 5px;
+  top: 5px;
+  left: 6px;
   color: hsl(0,0%,100%);
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c7 {
+  opacity: 1;
 }
 
 .c0 {
+  display: inline-block;
   position: relative;
   width: 51px;
   height: 26px;
-  border-radius: 13px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
   outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
-  cursor: pointer;
   margin-bottom: 16px;
 }
 
-.c0:focus {
+.c3 {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  background-color: hsl(353,84%,44%);
+  cursor: pointer;
+}
+
+input:disabled ~ .c2 {
+  background-color: hsl(0,0%,90%);
+  cursor: cursor;
+}
+
+input:focus ~ .c2 {
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c0::after {
+.c3::after {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   content: '';
-  top: -1px;
-  left: -1px;
+  top: 0;
+  left: 0;
   position: absolute;
-  -webkit-transition: -webkit-transform 0.3s;
-  -webkit-transition: transform 0.3s;
-  transition: transform 0.3s;
+  -webkit-transition: left 0.3s;
+  transition: left 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-.c0[aria-checked='true']::after {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked ~ .c2::after {
+  left: 26px;
 }
 
-.c0[aria-checked='true'] .c1 {
-  opacity: 0;
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
-.c0[aria-checked='true'] .c4 {
-  opacity: 1;
-}
-
-.c0 .c1 {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c0 .c4 {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-<button
-    aria-checked="false"
+<div
     class="c0"
-    role="switch"
-    type="button"
+    role="none"
   >
+    <input
+      aria-checked="false"
+      class="c1"
+      role="switch"
+      type="checkbox"
+    />
+    <div
+      aria-hidden="true"
+      class="c2 c3"
+    />
     <svg
       aria-hidden="true"
-      class="c1 c2 c3"
+      class="c4 c5 c6"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -460,7 +589,7 @@ exports[`component: Toggle should support margin space props 1`] = `
     </svg>
     <svg
       aria-hidden="true"
-      class="c4 c5 c6"
+      class="c7 c8 c9"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -470,98 +599,130 @@ exports[`component: Toggle should support margin space props 1`] = `
         d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
       />
     </svg>
-  </button>
+  </div>
 </DocumentFragment>
 `;
 
 exports[`component: Toggle with theme customization should not have box shadows on focus 1`] = `
 <DocumentFragment>
-  .c2 {
+  .c5 {
   vertical-align: middle;
 }
 
-.c5 {
+.c8 {
   vertical-align: middle;
 }
 
-.c3 {
-  width: 12px;
-  height: 12px;
+.c1 {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  margin: 0;
+  z-index: 1;
   position: absolute;
-  top: 6px;
-  right: 8px;
-  color: hsl(0,0%,100%);
-}
-
-.c6 {
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: 4px;
-  left: 5px;
-  color: hsl(0,0%,100%);
-}
-
-.c0 {
-  position: relative;
-  width: 51px;
-  height: 26px;
-  border-radius: 13px;
-  outline: none;
-  background-color: hsl(353,84%,44%);
-  border: 1px solid hsl(353,84%,44%);
   cursor: pointer;
 }
 
-.c0::after {
+.c1:disabled {
+  cursor: not-allowed;
+}
+
+.c6 {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  color: hsl(0,0%,100%);
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c4 {
+  opacity: 0;
+}
+
+.c9 {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  color: hsl(0,0%,100%);
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+
+input:checked ~ .c7 {
+  opacity: 1;
+}
+
+.c0 {
+  display: inline-block;
+  position: relative;
+  width: 51px;
+  height: 26px;
+  box-sizing: border-box;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.c3 {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  background-color: hsl(353,84%,44%);
+  cursor: pointer;
+}
+
+input:disabled ~ .c2 {
+  background-color: hsl(0,0%,90%);
+  cursor: cursor;
+}
+
+.c3::after {
   width: 26px;
   height: 26px;
   border-radius: 50%;
   content: '';
-  top: -1px;
-  left: -1px;
+  top: 0;
+  left: 0;
   position: absolute;
-  -webkit-transition: -webkit-transform 0.3s;
-  -webkit-transition: transform 0.3s;
-  transition: transform 0.3s;
+  -webkit-transition: left 0.3s;
+  transition: left 0.3s;
   background-color: hsl(0,0%,100%);
   box-shadow: 0 0 3px hsl(200,10%,20%);
 }
 
-.c0[aria-checked='true']::after {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+input:checked ~ .c2::after {
+  left: 26px;
 }
 
-.c0[aria-checked='true'] .c1 {
-  opacity: 0;
+input:checked:not(:disabled) ~ .c2 {
+  background-color: hsl(145,89%,28%);
 }
 
-.c0[aria-checked='true'] .c4 {
-  opacity: 1;
-}
-
-.c0 .c1 {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-.c0 .c4 {
-  opacity: 0;
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-}
-
-<button
+<div
     class="c0"
-    role="switch"
-    type="button"
+    role="none"
   >
+    <input
+      class="c1"
+      role="switch"
+      type="checkbox"
+    />
+    <div
+      aria-hidden="true"
+      class="c2 c3"
+    />
     <svg
       aria-hidden="true"
-      class="c1 c2 c3"
+      class="c4 c5 c6"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -573,7 +734,7 @@ exports[`component: Toggle with theme customization should not have box shadows 
     </svg>
     <svg
       aria-hidden="true"
-      class="c4 c5 c6"
+      class="c7 c8 c9"
       fill="currentcolor"
       height="1em"
       viewBox="0 0 24 24"
@@ -583,6 +744,6 @@ exports[`component: Toggle with theme customization should not have box shadows 
         d="M9.81384674,19.7396292 C9.5249491,19.7396292 9.24415138,19.6325301 9.02725315,19.4381317 L3.38789908,14.3504731 C2.906403,13.9166766 2.86770331,13.1741827 3.30239977,12.6926866 C3.73619624,12.2120905 4.47869019,12.1724908 4.96018627,12.6071873 L9.67974783,16.8641526 L18.9127726,5.4369457 C19.3204693,4.93204981 20.0593633,4.85285046 20.5642592,5.26144713 C21.0682551,5.66914381 21.1465544,6.40803779 20.7388578,6.91293368 L10.7273393,19.3040328 C10.524841,19.5542307 10.2269434,19.7108295 9.90654599,19.7369292 C9.87504624,19.7387292 9.84444649,19.7396292 9.81384674,19.7396292"
       />
     </svg>
-  </button>
+  </div>
 </DocumentFragment>
 `;

@@ -81,7 +81,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  border-radius: 20px;
+  border-radius: 8px;
   border-width: 1px;
   border-style: solid;
   border-color: hsl(200,9%,35%);
@@ -186,9 +186,10 @@ exports[`component: SelectField minimal snapshot 1`] = `
     <div
       class="c8 c9"
     >
-      <div>
+      <div
+        tabindex="-1"
+      >
         <button
-          aria-describedby="prevent-random-id-tip prevent-random-id-status"
           aria-haspopup="listbox"
           aria-labelledby="prevent-random-id-label"
           aria-multiselectable="false"

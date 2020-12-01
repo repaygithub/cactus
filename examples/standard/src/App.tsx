@@ -7,7 +7,7 @@ import React, { Component, ReactElement } from 'react'
 
 interface AppProps extends RouteComponentProps {
   onLangChange: (lang: string) => void
-  onChangeFeature: (name: string, enabled: boolean) => void
+  onChangeFeature: (event: React.ChangeEvent<HTMLInputElement>) => void
   lang: string
   include_carrot_snacks?: boolean
   children?: React.ReactNode
@@ -56,7 +56,7 @@ class App extends Component<AppProps> {
                   id="feature-include-carrots"
                   label={label || ''}
                   onChange={this.props.onChangeFeature}
-                  value={Boolean(this.props.include_carrot_snacks)}
+                  checked={Boolean(this.props.include_carrot_snacks)}
                 />
               )}
             </I18nResource>

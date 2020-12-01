@@ -14,7 +14,7 @@ export type TooltipAlignment = 'left' | 'right'
 interface AccessibleProps {
   name: string
   fieldId: string
-  ariaDescribedBy: string
+  ariaDescribedBy?: string
   labelId: string
   tooltipId: string
   statusId: string
@@ -58,6 +58,7 @@ export function useAccessibleField({
   warning,
   success,
   disabled,
+  tooltip,
 }: Partial<AccessibleFieldProps>): AccessibleProps {
   const fieldId = useId(id, name)
   const labelId = `${fieldId}-label`
@@ -77,9 +78,11 @@ export function useAccessibleField({
     statusMessage = success
   }
 
+  const describedByIds = [tooltip && tooltipId, status && statusId].filter(Boolean)
+
   return {
     fieldId,
-    ariaDescribedBy: `${tooltipId} ${statusId}`,
+    ariaDescribedBy: describedByIds.join(' ') || undefined,
     labelId,
     statusId,
     name: name || '',

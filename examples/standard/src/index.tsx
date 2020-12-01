@@ -27,10 +27,10 @@ class RootWrapper extends Component<
 
   private handleLangChange = (lang: string): void => this.setState({ lang })
 
-  private handleChangeFeature = (name: string, enabled: boolean): void => {
+  private handleChangeFeature = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState((s): { lang: string; features: FeatureFlagsObject } => ({
       ...s,
-      features: { ...s.features, [name]: enabled },
+      features: { ...s.features, [target.name]: target.checked },
     }))
   }
   public render(): React.ReactElement {

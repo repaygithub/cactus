@@ -60,8 +60,8 @@ export function CactusThemeWidget(): ReactElement {
     primary: '',
     secondary: '',
   })
-  const handleOnChange = (name: string, value: any): void => {
-    setValues((v): { [k: string]: any } => ({ ...v, [name]: value }))
+  const handleOnChange = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
+    setValues((v) => ({ ...v, [target.name]: target.value }))
   }
 
   useEffect((): (() => void) => {
@@ -150,9 +150,7 @@ export function CactusThemeWidget(): ReactElement {
                     min="0"
                     max="360"
                     value={values.primaryHue}
-                    onChange={(e): void =>
-                      handleOnChange(e.currentTarget.name, e.currentTarget.value)
-                    }
+                    onChange={handleOnChange}
                   />
                 </AccessibleField>
                 <Box

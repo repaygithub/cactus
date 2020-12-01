@@ -15,9 +15,9 @@ export const BasicUsage = (): React.ReactElement => (
     name="you-are-group-one"
     label={text('label', 'A Label')}
     disabled={boolean('disabled', false)}
-    onChange={(name, value) => console.log(`'${name}' changed: ${value}`)}
-    onFocus={(name) => console.log(`'${name}' focused`)}
-    onBlur={(name) => console.log(`'${name}' blurred`)}
+    onChange={(e: any) => console.log(`'${e.target.name}' changed: ${e.target.value}`)}
+    onFocus={(e: any) => console.log(`'${e.target.value}' focused`)}
+    onBlur={(e: any) => console.log(`'${e.target.value}' blurred`)}
     tooltip={text('tooltip', 'Here there be radio buttons')}
     error={text('error', '')}
     success={text('success', '')}
@@ -40,7 +40,7 @@ export const WithValues = (): React.ReactElement => {
         name="youAreGroupTwo"
         label="Controller"
         value={value}
-        onChange={(name, value) => setValue(value)}
+        onChange={(e: any) => setValue(e.target.value)}
       >
         <RadioGroup.Button label="Empty" value="" />
         <RadioGroup.Button label={<sup>Strong</sup>} value="strong" />

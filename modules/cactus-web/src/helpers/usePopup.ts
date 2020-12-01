@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { isActionKey, preventAction } from './a11y'
-import { isIE } from './constants'
+import { isFocusOut } from './events'
 import { FocusControl, FocusHint, FocusOpts, FocusSetter, useFocusControl } from './focus'
 import { useBox } from './react'
 import useId from './useId'
@@ -99,11 +99,7 @@ function usePopup(
 
   const closeOnBlur = React.useCallback(
     (event: React.FocusEvent<HTMLElement>) => {
-      const wrapper = event.currentTarget
-      // IE sets activeElement before the blur/focus events, but doesn't support
-      // relatedTarget with versions of React lower than v17.
-      const focused = event.relatedTarget || (isIE ? document.activeElement : null)
-      if (!focused || !wrapper.contains(focused as Node)) {
+      if (isFocusOut(event)) {
         toggle(false)
       }
       if (onWrapperBlur) {

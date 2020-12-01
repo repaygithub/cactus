@@ -6,7 +6,6 @@ import React from 'react'
 import Flex from '../Flex/Flex'
 import Layout from '../Layout/Layout'
 import Link from '../Link/Link'
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import Text from '../Text/Text'
 import ActionBar from './ActionBar'
 
@@ -63,16 +62,14 @@ export default {
 export const BasicUsage = (): React.ReactElement => {
   const hasItems = boolean('Has Items', true)
   return (
-    <ScreenSizeProvider>
-      <ActionBar>
-        {hasItems && (
-          <>
-            <ActionBar.Item icon={<ActionsRedo />} onClick={action('redo')} />
-            <ActionBar.Item icon={<Undo />} onClick={action('undo')} />
-          </>
-        )}
-      </ActionBar>
-    </ScreenSizeProvider>
+    <ActionBar>
+      {hasItems && (
+        <>
+          <ActionBar.Item icon={<ActionsRedo />} onClick={action('redo')} />
+          <ActionBar.Item icon={<Undo />} onClick={action('undo')} />
+        </>
+      )}
+    </ActionBar>
   )
 }
 

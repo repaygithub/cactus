@@ -172,7 +172,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
 
 <div>
   <fieldset
-    aria-describedby="rg-tip rg-status"
+    aria-describedby="rg-status"
     class="c0"
     disabled=""
     id="rg"
@@ -567,7 +567,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
 
 <div>
   <fieldset
-    aria-describedby="rg-tip rg-status"
+    aria-describedby="rg-tip"
     class="c0"
     id="rg"
     name="places"

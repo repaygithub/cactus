@@ -1,4 +1,5 @@
 import { fireEvent, queryByAttribute, render } from '@testing-library/react'
+import pick from 'lodash/pick'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
@@ -50,7 +51,8 @@ describe('component: RadioButtonField', (): void => {
   })
 
   test('should trigger onChange event', (): void => {
-    const onChange = jest.fn()
+    const box: any = {}
+    const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
     const { getByLabelText } = render(
       <StyleProvider>
         <RadioButtonField id="Ackermann" name="rbf" label="Levi" onChange={onChange} />
@@ -58,7 +60,8 @@ describe('component: RadioButtonField', (): void => {
     )
 
     fireEvent.click(getByLabelText('Levi'))
-    expect(onChange).toHaveBeenCalledWith('rbf', 'on')
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(box).toEqual({ name: 'rbf', value: 'on' })
   })
 
   test('should trigger onFocus event', (): void => {

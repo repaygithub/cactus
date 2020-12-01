@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: MenuBar sidebar 1`] = `
-.c13 {
+.c12 {
   vertical-align: middle;
 }
 
@@ -122,16 +122,7 @@ exports[`component: MenuBar sidebar 1`] = `
   cursor: default;
 }
 
-.c2 {
-  outline: none;
-  border: none;
-  margin: 0;
-  padding: 0;
-  display: block;
-  background-color: transparent;
-}
-
-.c8 {
+.c7 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   box-sizing: border-box;
@@ -146,42 +137,26 @@ exports[`component: MenuBar sidebar 1`] = `
   padding: 0;
 }
 
-.c8[aria-hidden='true'] {
+.c7[aria-hidden='true'] {
   display: none;
 }
 
-.cactus-layout-fixedBottom .c7 {
-  position: fixed;
-  left: 0;
-  width: 100vw;
-  top: unset;
-  bottom: 0px;
-  max-height: calc(100vh - 0px);
+.c2 {
+  outline: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  background-color: transparent;
 }
 
-.cactus-layout-fixedLeft .c7 {
-  position: fixed;
-  left: 0px;
-  top: 0;
-  bottom: 0px;
-  box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
-}
-
-.cactus-layout-floatLeft .c7 {
-  position: absolute;
-  left: 0px;
-  top: 0;
-  bottom: 0;
-  box-shadow: 12px 0 24px -12px hsla(200,96%,35%,0.3);
-}
-
-.c11 {
+.c10 {
   -webkit-flex-shrink: 1;
   -ms-flex-negative: 1;
   flex-shrink: 1;
 }
 
-.c10 {
+.c9 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -194,14 +169,14 @@ exports[`component: MenuBar sidebar 1`] = `
   bottom: 0;
 }
 
-.c14 {
+.c13 {
   list-style: none;
   padding: 0;
   margin: 0;
   display: block;
 }
 
-.c14[aria-hidden='true'] {
+.c13[aria-hidden='true'] {
   display: none;
 }
 
@@ -222,13 +197,13 @@ exports[`component: MenuBar sidebar 1`] = `
   overflow: visible;
 }
 
-.c6 [role='menuitem'] .c12 {
+.c6 [role='menuitem'] .c11 {
   -webkit-transform: rotateZ(-90deg);
   -ms-transform: rotateZ(-90deg);
   transform: rotateZ(-90deg);
 }
 
-.c6 [role='menuitem'][aria-expanded='true'] .c12 {
+.c6 [role='menuitem'][aria-expanded='true'] .c11 {
   -webkit-transform: rotateZ(90deg);
   -ms-transform: rotateZ(90deg);
   transform: rotateZ(90deg);
@@ -266,7 +241,7 @@ exports[`component: MenuBar sidebar 1`] = `
   padding-left: 14px;
 }
 
-.c9 {
+.c8 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -289,16 +264,16 @@ exports[`component: MenuBar sidebar 1`] = `
   height: 100%;
 }
 
-.c9:active,
-.c9:focus {
+.c8:active,
+.c8:focus {
   outline: none;
 }
 
-.c9::-moz-focus-inner {
+.c8::-moz-focus-inner {
   border: none;
 }
 
-.c9 .c12 {
+.c8 .c11 {
   width: 8px;
   height: 8px;
   margin-left: 16px;
@@ -345,7 +320,7 @@ exports[`component: MenuBar sidebar 1`] = `
         aria-hidden="true"
         aria-labelledby="mb-button"
         aria-orientation="vertical"
-        class="c6 c7 c8"
+        class="c6 c7"
         id="mb-popup"
         role="menu"
         tabindex="-1"
@@ -358,13 +333,13 @@ exports[`component: MenuBar sidebar 1`] = `
             aria-controls="em-popup"
             aria-current="true"
             aria-haspopup="menu"
-            class="c9"
+            class="c8"
             id="em"
             role="menuitem"
             tabindex="-1"
           >
             <div
-              class="c10"
+              class="c9"
             >
               <em>
                 Emphasized
@@ -372,10 +347,10 @@ exports[`component: MenuBar sidebar 1`] = `
             </div>
             <div
               aria-hidden="true"
-              class="c11"
+              class="c10"
             >
               <svg
-                class="c12 c13"
+                class="c11 c12"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -392,7 +367,7 @@ exports[`component: MenuBar sidebar 1`] = `
             aria-hidden="true"
             aria-labelledby="em"
             aria-orientation="vertical"
-            class="c14"
+            class="c13"
             id="em-popup"
             role="menu"
             tabindex="-1"
@@ -402,7 +377,7 @@ exports[`component: MenuBar sidebar 1`] = `
             >
               <a
                 aria-current="true"
-                class="c9"
+                class="c8"
                 href="#"
                 role="menuitem"
                 tabindex="-1"
@@ -417,22 +392,22 @@ exports[`component: MenuBar sidebar 1`] = `
               <button
                 aria-controls="nested-popup"
                 aria-haspopup="menu"
-                class="c9"
+                class="c8"
                 id="nested"
                 role="menuitem"
                 tabindex="-1"
               >
                 <div
-                  class="c10"
+                  class="c9"
                 >
                   Nested
                 </div>
                 <div
                   aria-hidden="true"
-                  class="c11"
+                  class="c10"
                 >
                   <svg
-                    class="c12 c13"
+                    class="c11 c12"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -449,7 +424,7 @@ exports[`component: MenuBar sidebar 1`] = `
                 aria-hidden="true"
                 aria-labelledby="nested"
                 aria-orientation="vertical"
-                class="c14"
+                class="c13"
                 id="nested-popup"
                 role="menu"
                 tabindex="-1"
@@ -468,7 +443,7 @@ exports[`component: MenuBar sidebar 1`] = `
                 >
                   <button
                     aria-current="true"
-                    class="c9"
+                    class="c8"
                     role="menuitem"
                     tabindex="-1"
                   >
@@ -494,7 +469,7 @@ exports[`component: MenuBar sidebar 1`] = `
         >
           <button
             aria-current="true"
-            class="c9"
+            class="c8"
             role="menuitem"
             tabindex="-1"
           >
@@ -507,7 +482,7 @@ exports[`component: MenuBar sidebar 1`] = `
           role="none"
         >
           <a
-            class="c9"
+            class="c8"
             role="menuitem"
             tabindex="-1"
           >
@@ -570,14 +545,11 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  cursor: pointer;
   background-color: transparent;
   text-align: center;
   outline: none;
-}
-
-.c1:hover {
-  color: hsl(200,96%,35%);
+  cursor: not-allowed;
+  color: hsl(0,0%,90%);
 }
 
 .c1 svg {
@@ -589,10 +561,7 @@ exports[`component: MenuBar typechecks 1`] = `
 .c12 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -604,10 +573,10 @@ exports[`component: MenuBar typechecks 1`] = `
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  cursor: pointer;
   background-color: transparent;
   text-align: center;
   outline: none;
+  cursor: pointer;
 }
 
 .c12:hover {
@@ -675,7 +644,7 @@ exports[`component: MenuBar typechecks 1`] = `
   left: 0;
   outline: none;
   border: 1px solid hsl(200,29%,90%);
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   white-space: normal;
   -webkit-flex-flow: column nowrap;
