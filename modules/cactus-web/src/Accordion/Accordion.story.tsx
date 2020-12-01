@@ -72,7 +72,17 @@ const ContentBlocks = ({ number }: { number: number }): ReactElement | null => {
   return <Fragment>{children}</Fragment>
 }
 
-const ReorderAccordions = (): ReactElement => {
+const ReorderAccordions: React.FC<{ isControlled?: boolean }> = ({ isControlled }) => {
+  const [open, setOpen] = useState<string[]>([])
+  const toggleAccordion = (toggleId: string) => {
+    setOpen((currentOpen) => {
+      if (currentOpen.includes(toggleId)) {
+        return currentOpen.filter((id) => id !== toggleId)
+      }
+      return [...currentOpen, toggleId]
+    })
+  }
+
   const [accordionHeaders, setAccordionHeaders] = useState([
     'First Accordion',
     'Second Accordion',
@@ -80,6 +90,14 @@ const ReorderAccordions = (): ReactElement => {
     'Fourth Accordion',
     'Fifth Accordion',
   ])
+
+  const handleChange = (id: string) => {
+    console.log(`onChange: ${id}`)
+
+    if (isControlled) {
+      toggleAccordion(id)
+    }
+  }
 
   const handleUpClick = (index: number): void => {
     const headersCopy = [...accordionHeaders]
@@ -105,7 +123,11 @@ const ReorderAccordions = (): ReactElement => {
 
   return (
     <Box width="968px">
-      <Accordion.Provider>
+      <Accordion.Provider
+        openId={isControlled ? open : undefined}
+        onChange={handleChange}
+        maxOpen={isControlled ? undefined : 2}
+      >
         {accordionHeaders.map(
           (header, index): ReactElement => (
             <Accordion
@@ -317,7 +339,10 @@ export const WithDynamicContent = (): ReactElement => (
 )
 export const WithOpenInitialization = (): ReactElement => (
   <Box width="312px">
-    <Accordion.Provider maxOpen={number('maxOpen', 2)}>
+    <Accordion.Provider
+      maxOpen={number('maxOpen', 2)}
+      onChange={(id: string) => console.log(`onChange: ${id}`)}
+    >
       <Accordion defaultOpen>
         <Accordion.Header>
           <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
@@ -345,3 +370,5 @@ export const WithOpenInitialization = (): ReactElement => (
 )
 
 export const WithOutline = (): ReactElement => <ReorderAccordions />
+
+export const WithControlledOutline = (): ReactElement => <ReorderAccordions isControlled={true} />

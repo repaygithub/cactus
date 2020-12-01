@@ -1,13 +1,12 @@
 import pick from 'lodash/pick'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { layout, LayoutProps as LayoutStyleProps, padding, PaddingProps } from 'styled-system'
 
-import { AsProps, GenericComponent } from '../helpers/asProps'
 import { border, boxShadow } from '../helpers/theme'
 import usePopup, { PopupType, PositionPopup, TogglePopup } from '../helpers/usePopup'
-import { LayoutProps, useLayoutProps } from '../Layout/Layout'
+import { addLayoutStyle, LayoutProps } from '../Layout/Layout'
 import { Sidebar } from '../Layout/Sidebar'
 import { OrderHint, OrderHintKey, useAction, useActionBarItems } from './ActionProvider'
 
@@ -91,20 +90,34 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
   }
 )
 
-// We'll add forwardRef down below, but the generic is what we want Typescript to see.
-function PanelPopup<E, C extends GenericComponent = 'div'>(
-  props: AsProps<C> & StyleProps,
-  ref: React.Ref<E>
-) {
-  const layoutProps = useLayoutProps()
-  return <StyledPopup {...layoutProps} {...(props as any)} ref={ref as any} />
-}
+// The box shadow is #2, but shifted to be only on the right side.
+const StyledPopup = styled.div.withConfig({
+  shouldForwardProp: (prop) => !stylePropNames.includes(prop),
+})<StyleProps>`
+  ${(p) => p.theme.colorStyles.standard};
+  box-sizing: border-box;
+  z-index: 100;
+  outline: none;
+
+  display: block;
+  &[aria-hidden='true'] {
+    display: none;
+  }
+
+  height: auto;
+  width: auto;
+  overflow: auto;
+  ${layout}
+
+  padding: 8px;
+  ${padding}
+`
 
 interface ActionBarType extends React.FC<React.HTMLAttributes<HTMLDivElement>> {
   Item: typeof ActionBarItem
   Panel: typeof ActionBarPanel
   Button: typeof Sidebar.Button
-  PanelPopup: typeof PanelPopup
+  PanelPopup: typeof StyledPopup
   PanelWrapper: ReturnType<typeof styled.div>
 }
 
@@ -121,7 +134,7 @@ export const ActionBar: ActionBarType = ({ children, ...props }) => {
 ActionBar.Item = ActionBarItem
 ActionBar.Panel = ActionBarPanel
 ActionBar.Button = Sidebar.Button
-ActionBar.PanelPopup = React.forwardRef(PanelPopup) as any
+ActionBar.PanelPopup = StyledPopup
 ActionBar.PanelWrapper = styled.div`
   outline: none;
   border: none;
@@ -151,55 +164,46 @@ ActionBarPanel.propTypes = {
 
 ActionBarPanel.defaultProps = { popupType: 'dialog' }
 
-const styleOnlyProps = stylePropNames.concat(['fixedLeft', 'floatLeft', 'fixedBottom', 'flow'])
-// The box shadow is #2, but shifted to be only on the right side.
-const StyledPopup = styled.div.withConfig({
-  shouldForwardProp: (prop) => !styleOnlyProps.includes(prop),
-})<LayoutProps & StyleProps>`
-  ${(p) => p.theme.colorStyles.standard};
-  box-sizing: border-box;
-  z-index: 100;
-  outline: none;
+addLayoutStyle(
+  'fixedBottom',
+  css<LayoutProps>`
+    ${StyledPopup} {
+      position: fixed;
+      left: 0;
+      width: 100vw;
+      top: unset;
+      bottom: ${(p) => p.fixedBottom}px;
+      max-height: calc(100vh - ${(p) => p.fixedBottom}px);
+    }
+  `
+)
 
-  display: block;
-  &[aria-hidden='true'] {
-    display: none;
-  }
+addLayoutStyle(
+  'fixedLeft',
+  css<LayoutProps>`
+    ${StyledPopup} {
+      position: fixed;
+      left: ${(p) => p.fixedLeft}px;
+      top: 0;
+      bottom: ${(p) => p.fixedBottom}px;
+      ${(p) =>
+        boxShadow(p.theme, '12px 0 24px -12px') ||
+        `border-right: ${border(p.theme, 'lightContrast')}`};
+    }
+  `
+)
 
-  height: auto;
-  width: auto;
-  overflow: auto;
-  ${layout}
-
-  padding: 8px;
-  ${padding}
-
-  .cactus-layout-fixedBottom & {
-    position: fixed;
-    left: 0;
-    width: 100vw;
-    top: unset;
-    bottom: ${(p) => p.fixedBottom}px;
-    max-height: calc(100vh - ${(p) => p.fixedBottom}px);
-  }
-
-  .cactus-layout-fixedLeft & {
-    position: fixed;
-    left: ${(p) => p.fixedLeft}px;
-    top: 0;
-    bottom: ${(p) => p.fixedBottom}px;
-    ${(p) =>
-      boxShadow(p.theme, '12px 0 24px -12px') ||
-      `border-right: ${border(p.theme, 'lightContrast')}`};
-  }
-
-  .cactus-layout-floatLeft & {
-    position: absolute;
-    left: ${(p) => p.floatLeft}px;
-    top: 0;
-    bottom: 0;
-    ${(p) =>
-      boxShadow(p.theme, '12px 0 24px -12px') ||
-      `border-right: ${border(p.theme, 'lightContrast')}`};
-  }
-`
+addLayoutStyle(
+  'floatLeft',
+  css<LayoutProps>`
+    ${StyledPopup} {
+      position: absolute;
+      left: ${(p) => p.floatLeft}px;
+      top: 0;
+      bottom: 0;
+      ${(p) =>
+        boxShadow(p.theme, '12px 0 24px -12px') ||
+        `border-right: ${border(p.theme, 'lightContrast')}`};
+    }
+  `
+)

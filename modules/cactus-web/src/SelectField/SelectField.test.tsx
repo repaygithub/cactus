@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/react'
+import pick from 'lodash/pick'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
@@ -191,7 +192,8 @@ describe('component: SelectField', (): void => {
 
   describe('should accept form event', (): void => {
     test('onChange', (): void => {
-      const onChange = jest.fn()
+      const box: any = {}
+      const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByLabelText, getByText } = render(
         <StyleProvider>
           <SelectField
@@ -206,11 +208,13 @@ describe('component: SelectField', (): void => {
       const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.click(select)
       fireEvent.click(getByText('basic'))
-      expect(onChange).toHaveBeenCalledWith('the-test-select-field', 'basic')
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'the-test-select-field', value: 'basic' })
     })
 
     test('onBlur', async (): Promise<void> => {
-      const onBlur = jest.fn()
+      const box: any = {}
+      const onBlur = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByLabelText } = render(
         <StyleProvider>
           <SelectField
@@ -224,11 +228,15 @@ describe('component: SelectField', (): void => {
       )
       const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.blur(select)
-      expect(onBlur).toHaveBeenCalledWith('the-test-select-field')
+      expect(onBlur).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'the-test-select-field', value: null })
     })
 
     test('onFocus', async (): Promise<void> => {
-      const onFocus = jest.fn()
+      const box: any = {}
+      const onFocus = jest.fn((e) => {
+        box.name = e.target.name
+      })
       const { getByLabelText } = render(
         <StyleProvider>
           <SelectField
@@ -242,7 +250,8 @@ describe('component: SelectField', (): void => {
       )
       const select = getByLabelText('Requires a label') as HTMLElement
       fireEvent.focus(select)
-      expect(onFocus).toHaveBeenCalledWith('the-test-select-field')
+      expect(onFocus).toHaveBeenCalledTimes(1)
+      expect(box).toEqual({ name: 'the-test-select-field' })
     })
   })
 })

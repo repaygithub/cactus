@@ -5,6 +5,13 @@ import puppeteer, { devices, Page } from 'puppeteer'
 
 const supportedDevices = ['iPhone 5', 'iPad']
 
+// Window 10/Microsoft Edge user agent.
+const defaultDevice = {
+  userAgent:
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19041',
+  viewport: { width: 1200, height: 750, isLandscape: true },
+}
+
 interface MatchOptions {
   customSnapshotsDir?: string
   comparisonMethod?: 'pixelmatch' | 'ssim'
@@ -32,6 +39,7 @@ initStoryshots({
   test: imageSnapshot({
     storybookUrl: 'http://localhost:9001',
     getMatchOptions: createGetMatchOptions('default'),
+    customizePage: (page: Page) => page.emulate(defaultDevice),
     beforeScreenshot,
   }),
   storyKindRegex,

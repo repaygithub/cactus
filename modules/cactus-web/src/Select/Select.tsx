@@ -11,7 +11,12 @@ import { width, WidthProps } from 'styled-system'
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
 import { isResponsiveTouchDevice } from '../helpers/constants'
-import handleEvent from '../helpers/eventHandler'
+import {
+  CactusChangeEvent,
+  CactusEventTarget,
+  CactusFocusEvent,
+  isFocusOut,
+} from '../helpers/events'
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
@@ -19,7 +24,6 @@ import { boxShadow, fontSize, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 export type SelectValueType = string | number | (string | number)[] | null
 export interface OptionType {
@@ -28,6 +32,8 @@ export interface OptionType {
 }
 
 type ExtendedOptionType = OptionType & { id: string; isSelected: boolean }
+
+type Target = CactusEventTarget<SelectValueType>
 
 export interface SelectProps
   extends MarginProps,
@@ -55,9 +61,9 @@ export interface SelectProps
    */
   extraLabel?: string
   status?: Status
-  onChange?: FieldOnChangeHandler<SelectValueType>
-  onBlur?: FieldOnBlurHandler
-  onFocus?: FieldOnFocusHandler
+  onChange?: React.ChangeEventHandler<Target>
+  onBlur?: React.FocusEventHandler<Target>
+  onFocus?: React.FocusEventHandler<Target>
 }
 
 type StatusMap = { [K in Status]: ReturnType<typeof css> }
@@ -488,7 +494,7 @@ interface ListProps {
   searchValue: string
   onBlur: (event: React.FocusEvent<HTMLUListElement>) => void
   onClick: (event: React.MouseEvent<HTMLUListElement>) => void
-  raiseChange: (active: OptionType | null, noToggle?: boolean) => void
+  raiseChange: (event: React.SyntheticEvent, active: OptionType | null, noToggle?: boolean) => void
   onClose: () => void
   anchorRef: React.RefObject<HTMLDivElement>
   activeDescendant: string
@@ -600,13 +606,13 @@ class List extends React.Component<ListProps, ListState> {
       case KeyCodes.SPACE:
         event.preventDefault()
         if (this.props.multiple) {
-          this.props.raiseChange(active)
+          this.props.raiseChange(event, active)
         }
         break
       case KeyCodes.RETURN: {
         event.preventDefault()
         this.setActiveDescendant('')
-        this.props.raiseChange(active, true)
+        this.props.raiseChange(event, active, true)
         this.props.onClose()
         break
       }
@@ -956,12 +962,16 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   private listRef = React.createRef<List>()
   private triggerRef = React.createRef<HTMLDivElement>()
   private comboInputRef = React.createRef<HTMLInputElement>()
+  private isFocused = false
+  private eventTarget = new CactusEventTarget<SelectValueType>({})
 
   public componentDidMount(): void {
     if (this.triggerRef.current !== null) {
       this.setState({ currentTriggerWidth: this.triggerRef.current.getBoundingClientRect().width })
     }
     this.detectOptionsFromValue()
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
   }
 
   public componentDidUpdate(prevProps: SelectProps): void {
@@ -976,6 +986,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (JSON.stringify(this.props.value) !== JSON.stringify(prevProps.value)) {
       this.detectOptionsFromValue()
     }
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
   }
 
   public static getDerivedStateFromProps(
@@ -997,17 +1009,22 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END life-cycle methods */
   /** START event handlers */
 
-  private handleBlur = (event: React.FocusEvent<HTMLButtonElement>): void => {
-    const isNotControlledBlur = !event.relatedTarget || !this.isList(event.relatedTarget)
-    if (isNotControlledBlur) {
-      handleEvent(this.props.onBlur, this.props.name)
+  private handleBlur = (event: React.FocusEvent<HTMLElement>): void => {
+    const isListElem = this.listRef.current?.isList(event.relatedTarget as HTMLElement)
+    if (isFocusOut(event) && !isListElem) {
+      this.isFocused = false
+      const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
+      const { onBlur } = this.props
+      onBlur?.(cactusEvent)
     }
   }
 
-  private handleFocus = (event: React.FocusEvent<HTMLButtonElement>): void => {
-    const isNotControlledFocus = !event.relatedTarget || !this.isList(event.relatedTarget)
-    if (isNotControlledFocus) {
-      handleEvent(this.props.onFocus, this.props.name)
+  private handleFocus = (event: React.FocusEvent): void => {
+    if (!this.isFocused) {
+      this.isFocused = true
+      const cactusEvent = new CactusFocusEvent('focus', this.eventTarget, event)
+      const { onFocus } = this.props
+      onFocus?.(cactusEvent)
     }
   }
 
@@ -1041,9 +1058,8 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         optId = optId.split('::')[1]
       }
       const option = this.getExtOptions().find((opt): boolean => opt.id === optId)
-      this.raiseChange(option || null)
+      this.raiseChange(event, option || null)
     } else {
-      handleEvent(this.props.onFocus, this.props.name)
       this.openList()
     }
   }
@@ -1060,12 +1076,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     this.setState({ isOpen: false })
     this.props.onDropdownToggle && this.props.onDropdownToggle(false)
-
-    const isNotControlledBlur =
-      !event.relatedTarget || event.relatedTarget !== this.triggerRef.current
-    if (isNotControlledBlur && typeof this.props.onBlur === 'function') {
-      this.props.onBlur(this.props.name)
-    }
   }
 
   private handleListClick = (event: React.MouseEvent<HTMLUListElement>): void => {
@@ -1076,7 +1086,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     if (target.getAttribute('data-role') === 'create') {
       event.preventDefault()
-      this.createOption(this.state.searchValue)
+      this.createOption(event, this.state.searchValue)
       if (!this.props.multiple) {
         this.closeList()
         this.setState({ searchValue: '' })
@@ -1088,7 +1098,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       const activeId = target.id as string
       const active = this.getExtOptions().find((o): boolean => o.id === activeId)
 
-      this.raiseChange(active || null)
+      this.raiseChange(event, active || null)
       if (!this.props.multiple) {
         this.closeList()
         this.setState({ searchValue: '' })
@@ -1167,7 +1177,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         case KeyCodes.RETURN: {
           event.preventDefault()
           if (this.state.activeDescendant === `create-${this.state.searchValue}`) {
-            this.createOption(this.state.searchValue)
+            this.createOption(event, this.state.searchValue)
             this.setState({ activeDescendant: '' })
             break
           }
@@ -1176,7 +1186,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
             this.setState({ activeDescendant: '', searchValue: '' })
             this.closeList()
           }
-          this.raiseChange(active, event.metaKey)
+          this.raiseChange(event, active, event.metaKey)
           break
         }
         case KeyCodes.ESC: {
@@ -1188,11 +1198,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  private createOption = (value: string | number): void => {
+  private createOption = (event: React.SyntheticEvent, value: string | number): void => {
     const newOption = asOption(value)
     const extraOptions = (this.state.extraOptions as OptionType[]).concat(newOption)
     this.setState({ extraOptions })
-    this.raiseChange(newOption, true)
+    this.raiseChange(event, newOption, true)
     if (this.comboInputRef.current !== null) {
       this.comboInputRef.current.focus()
     }
@@ -1202,7 +1212,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   /** END event handlers */
   /** START helpers */
 
-  private raiseChange = (option: OptionType | null, onlyAdd = false): void => {
+  private raiseChange = (
+    event: React.SyntheticEvent,
+    option: OptionType | null,
+    onlyAdd = false
+  ): void => {
     if (option === null) {
       return
     }
@@ -1226,9 +1240,10 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     this.resetMemo()
     this.setState({ value })
-    if (typeof this.props.onChange === 'function') {
-      this.props.onChange(this.props.name, value)
-    }
+    this.eventTarget.value = value
+    const { onChange } = this.props
+    const cactusEvent = new CactusChangeEvent(this.eventTarget, event)
+    onChange?.(cactusEvent)
   }
 
   private openList(): void {
@@ -1276,10 +1291,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       (Array.isArray(this.state.value) && this.state.value.includes(option.value)) ||
       this.state.value === option.value
     )
-  }
-
-  private isList(node: any): boolean {
-    return this.listRef.current ? this.listRef.current.isList(node) : false
   }
 
   private getOptByValue(value: string | number): OptionType | null {
@@ -1410,9 +1421,16 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     const options = this.getExtOptions()
     const noOptsDisable = !comboBox && options.length === 0
 
+    // Added `tabIndex=-1` on the wrapper element to compensate for
+    // the fact that Safari cannot focus buttons on click.
     return (
       <div className={className}>
-        <div ref={this.triggerRef}>
+        <div
+          ref={this.triggerRef}
+          tabIndex={-1}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+        >
           {isOpen && comboBox ? (
             <ComboInput
               ref={this.comboInputRef}
@@ -1439,8 +1457,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
               name={name}
               onKeyUp={this.handleKeyUp}
               onClick={this.handleClick}
-              onBlur={this.handleBlur}
-              onFocus={this.handleFocus}
               disabled={noOptsDisable ? true : disabled}
               type="button"
               aria-haspopup="listbox"

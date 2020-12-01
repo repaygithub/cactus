@@ -249,10 +249,7 @@ const Rules = (props: RouteComponentProps): ReactElement => {
                                   name="variable"
                                   options={['A variable', 'Another variable', 'Final variable']}
                                   value={rules[ruleIndex].conditions[conditionIndex].variable}
-                                  onChange={(
-                                    name: string,
-                                    value: string | number | (string | number)[] | null
-                                  ): void =>
+                                  onChange={({ target: { value } }): void =>
                                     handleConditionChange(
                                       ruleIndex,
                                       conditionIndex,
@@ -266,10 +263,7 @@ const Rules = (props: RouteComponentProps): ReactElement => {
                                   name="operator"
                                   options={['Greater than', 'Less than', 'Equal to']}
                                   value={rules[ruleIndex].conditions[conditionIndex].operator}
-                                  onChange={(
-                                    name: string,
-                                    value: string | number | (string | number)[] | null
-                                  ): void =>
+                                  onChange={({ target: { value } }): void =>
                                     handleConditionChange(
                                       ruleIndex,
                                       conditionIndex,
@@ -283,10 +277,7 @@ const Rules = (props: RouteComponentProps): ReactElement => {
                                   name="value"
                                   options={['-1', '0', '1']}
                                   value={rules[ruleIndex].conditions[conditionIndex].value}
-                                  onChange={(
-                                    name: string,
-                                    value: string | number | (string | number)[] | null
-                                  ): void =>
+                                  onChange={({ target: { value } }): void =>
                                     handleConditionChange(
                                       ruleIndex,
                                       conditionIndex,
@@ -345,10 +336,7 @@ const Rules = (props: RouteComponentProps): ReactElement => {
                                 name="action"
                                 options={['Do the thing', 'Do another thing', 'Do no things']}
                                 value={rules[ruleIndex].actions[actionIndex].action}
-                                onChange={(
-                                  name: string,
-                                  value: string | number | (string | number)[] | null
-                                ): void =>
+                                onChange={({ target: { value } }): void =>
                                   handleActionChange(
                                     ruleIndex,
                                     actionIndex,

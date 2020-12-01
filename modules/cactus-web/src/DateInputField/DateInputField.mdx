@@ -11,7 +11,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # DateInputField
 
-This is the field version of the `DateInput` which already has standardized `onFocus`, `onChange`, and `onBlur` events; but in addition it no longer requires the `id` but it still requires `name` and now requires a `label`.
+This is the field version of the `DateInput` which no longer requires the `id` but it still requires `name` and now requires a `label`.
 
 ### Try it out
 
@@ -45,8 +45,8 @@ function initValues() {
 export default function Form() {
   const [values, setValues] = React.useState(initValues)
   const handleChange = React.useCallback(
-    (name, value) => {
-      setValues(v => ({ ...v, [name]: value }))
+    ({ target }) => {
+      setValues(v => ({ ...v, [target.name]: target.value }))
     },
     [setValues]
   )

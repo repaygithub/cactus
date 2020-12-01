@@ -29,6 +29,9 @@ export const BasicUsage = (): React.ReactElement => (
     warning={text('warning', '')}
     error={text('error', '')}
     autoTooltip={boolean('autoTooltip', false)}
+    onChange={({ target }) => console.log(`onChange '${target.name}':`, target.value)}
+    onFocus={({ target }) => console.log('onFocus:', target.name)}
+    onBlur={({ target }) => console.log('onBlur:', target.name)}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
   />
 )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-type CloneFunc = (e: React.ReactElement, p?: Record<string, any>) => React.ReactElement
+type CloneFunc = (e: React.ReactElement, p?: Record<string, any>, ix?: number) => React.ReactElement
 
 // This can also be used just to flatten the children, but cloning seems the more likely use case.
 export function cloneAll(
@@ -10,7 +10,7 @@ export function cloneAll(
 ): React.ReactChild[] {
   const hasKeyPrefix = cloneProps && (cloneProps.key || cloneProps.key === 0)
   const childArray = React.Children.toArray(children) as React.ReactChild[]
-  return childArray.reduce((children, child) => {
+  return childArray.reduce((children, child, index) => {
     if (!child || typeof child === 'string' || typeof child === 'number') {
       children.push(child)
     } else {
@@ -26,7 +26,7 @@ export function cloneAll(
           children.push(...cloneAll(child.props.children, props, makeClone))
         }
       } else {
-        children.push(makeClone(child, props))
+        children.push(makeClone(child, props, index))
       }
     }
     return children

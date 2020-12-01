@@ -136,7 +136,7 @@ exports[`component: Table card carousel 1`] = `
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(200,29%,90%);
-  border-radius: 8px;
+  border-radius: 4px;
   margin: 4px;
   outline: 0;
 }
@@ -292,8 +292,8 @@ exports[`component: Table regular table 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -325,6 +325,12 @@ exports[`component: Table regular table 1`] = `
 
 .c1.c1.c1 tr:hover th,
 .c1.c1.c1 tr:hover td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c1.c1.c1 tr:hover td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -332,9 +338,15 @@ exports[`component: Table regular table 1`] = `
   outline: 0;
 }
 
-.c1.c1.c1 tr:focus td,
-.c1.c1.c1 tr:focus th {
+.c1.c1.c1 tr:focus th,
+.c1.c1.c1 tr:focus td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
+}
+
+.c1.c1.c1 tr:focus td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -353,7 +365,7 @@ exports[`component: Table regular table 1`] = `
 .c1 > tr:first-of-type td:first-child,
 .c1 tbody > tr:first-child td:first-child,
 .c1 thead > tr:first-child td:first-child {
-  border-top-left-radius: 8px;
+  border-top-left-radius: 4px;
 }
 
 .c1 > tr:first-of-type th:last-child,
@@ -362,7 +374,7 @@ exports[`component: Table regular table 1`] = `
 .c1 > tr:first-of-type td:last-child,
 .c1 tbody > tr:first-child td:last-child,
 .c1 thead > tr:first-child td:last-child {
-  border-top-right-radius: 8px;
+  border-top-right-radius: 4px;
 }
 
 .c1.c1 > thead + tr:first-of-type th,
@@ -393,7 +405,7 @@ exports[`component: Table regular table 1`] = `
 .c1 tbody:last-child > tr:last-child td:first-child,
 .c1 thead:last-child > tr:last-child td:first-child,
 .c1 tfoot:last-child > tr:last-child td:first-child {
-  border-bottom-left-radius: 8px;
+  border-bottom-left-radius: 4px;
 }
 
 .c1 > tr:last-child th:last-child,
@@ -404,7 +416,7 @@ exports[`component: Table regular table 1`] = `
 .c1 tbody:last-child > tr:last-child td:last-child,
 .c1 thead:last-child > tr:last-child td:last-child,
 .c1 tfoot:last-child > tr:last-child td:last-child {
-  border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 4px;
 }
 
 @media screen and (min-width:1200px) {
@@ -421,8 +433,8 @@ exports[`component: Table regular table 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -502,8 +514,8 @@ exports[`component: Table table with caption 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -535,6 +547,12 @@ exports[`component: Table table with caption 1`] = `
 
 .c1.c1.c1 tr:hover th,
 .c1.c1.c1 tr:hover td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c1.c1.c1 tr:hover td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -542,9 +560,15 @@ exports[`component: Table table with caption 1`] = `
   outline: 0;
 }
 
-.c1.c1.c1 tr:focus td,
-.c1.c1.c1 tr:focus th {
+.c1.c1.c1 tr:focus th,
+.c1.c1.c1 tr:focus td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
+}
+
+.c1.c1.c1 tr:focus td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -563,7 +587,7 @@ exports[`component: Table table with caption 1`] = `
 .c1 > tr:first-of-type td:first-child,
 .c1 tbody > tr:first-child td:first-child,
 .c1 thead > tr:first-child td:first-child {
-  border-top-left-radius: 8px;
+  border-top-left-radius: 4px;
 }
 
 .c1 > tr:first-of-type th:last-child,
@@ -572,7 +596,7 @@ exports[`component: Table table with caption 1`] = `
 .c1 > tr:first-of-type td:last-child,
 .c1 tbody > tr:first-child td:last-child,
 .c1 thead > tr:first-child td:last-child {
-  border-top-right-radius: 8px;
+  border-top-right-radius: 4px;
 }
 
 .c1.c1 > thead + tr:first-of-type th,
@@ -603,7 +627,7 @@ exports[`component: Table table with caption 1`] = `
 .c1 tbody:last-child > tr:last-child td:first-child,
 .c1 thead:last-child > tr:last-child td:first-child,
 .c1 tfoot:last-child > tr:last-child td:first-child {
-  border-bottom-left-radius: 8px;
+  border-bottom-left-radius: 4px;
 }
 
 .c1 > tr:last-child th:last-child,
@@ -614,7 +638,7 @@ exports[`component: Table table with caption 1`] = `
 .c1 tbody:last-child > tr:last-child td:last-child,
 .c1 thead:last-child > tr:last-child td:last-child,
 .c1 tfoot:last-child > tr:last-child td:last-child {
-  border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 4px;
 }
 
 @media screen and (min-width:1200px) {
@@ -631,8 +655,8 @@ exports[`component: Table table with caption 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -707,8 +731,8 @@ exports[`component: Table table with no header 1`] = `
 .c1 {
   color: hsl(200,10%,20%);
   display: table;
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.5;
   border-spacing: 0;
 }
 
@@ -740,6 +764,12 @@ exports[`component: Table table with no header 1`] = `
 
 .c1.c1.c1 tr:hover th,
 .c1.c1.c1 tr:hover td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c1.c1.c1 tr:hover td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -747,9 +777,15 @@ exports[`component: Table table with no header 1`] = `
   outline: 0;
 }
 
-.c1.c1.c1 tr:focus td,
-.c1.c1.c1 tr:focus th {
+.c1.c1.c1 tr:focus th,
+.c1.c1.c1 tr:focus td {
+  border-left-color: hsl(200,96%,35%);
+  border-top-color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
+}
+
+.c1.c1.c1 tr:focus td:last-child {
   border-color: hsl(200,96%,35%);
 }
 
@@ -768,7 +804,7 @@ exports[`component: Table table with no header 1`] = `
 .c1 > tr:first-of-type td:first-child,
 .c1 tbody > tr:first-child td:first-child,
 .c1 thead > tr:first-child td:first-child {
-  border-top-left-radius: 8px;
+  border-top-left-radius: 4px;
 }
 
 .c1 > tr:first-of-type th:last-child,
@@ -777,7 +813,7 @@ exports[`component: Table table with no header 1`] = `
 .c1 > tr:first-of-type td:last-child,
 .c1 tbody > tr:first-child td:last-child,
 .c1 thead > tr:first-child td:last-child {
-  border-top-right-radius: 8px;
+  border-top-right-radius: 4px;
 }
 
 .c1.c1 > thead + tr:first-of-type th,
@@ -808,7 +844,7 @@ exports[`component: Table table with no header 1`] = `
 .c1 tbody:last-child > tr:last-child td:first-child,
 .c1 thead:last-child > tr:last-child td:first-child,
 .c1 tfoot:last-child > tr:last-child td:first-child {
-  border-bottom-left-radius: 8px;
+  border-bottom-left-radius: 4px;
 }
 
 .c1 > tr:last-child th:last-child,
@@ -819,7 +855,7 @@ exports[`component: Table table with no header 1`] = `
 .c1 tbody:last-child > tr:last-child td:last-child,
 .c1 thead:last-child > tr:last-child td:last-child,
 .c1 tfoot:last-child > tr:last-child td:last-child {
-  border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 4px;
 }
 
 @media screen and (min-width:1200px) {
@@ -836,8 +872,8 @@ exports[`component: Table table with no header 1`] = `
 
 @media screen and (min-width:1024px) {
   .c1 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 

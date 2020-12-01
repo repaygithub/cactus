@@ -11,6 +11,7 @@ export default {
 
 export const BasicUsage = (): React.ReactElement => {
   const fileTypes = ['.doc', '.txt', '.md']
+  const [files, setState] = React.useState<any>()
   return (
     <FileInput
       name="my-file-loader"
@@ -25,10 +26,13 @@ export const BasicUsage = (): React.ReactElement => {
       }}
       prompt={text('prompt', 'Drag files here or')}
       buttonText={text('buttonText', 'Select Files...')}
-      onChange={(name, files): void => {
-        console.log(name)
-        console.log(files)
+      onChange={({ target }) => {
+        console.log(`onChange '${target.name}':`, target.value)
+        setState(target.value)
       }}
+      onFocus={({ target }) => console.log('onFocus:', target.name)}
+      onBlur={({ target }) => console.log('onBlur:', target.name)}
+      value={files}
     />
   )
 }

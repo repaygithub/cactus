@@ -8,7 +8,7 @@ import { border, fontSize } from '../helpers/theme'
 
 type NavDirection = 'prev' | 'next'
 
-interface PrevNextProps extends MarginProps {
+export interface PrevNextProps extends MarginProps {
   className?: string
   disablePrev?: boolean
   disableNext?: boolean
@@ -78,8 +78,9 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   },
   prevText,
   nextText,
+  ...rest
 }): React.ReactElement => (
-  <div className={className}>
+  <div className={className} {...rest}>
     <PrevNextLink
       as={linkAs}
       disabled={disablePrev}

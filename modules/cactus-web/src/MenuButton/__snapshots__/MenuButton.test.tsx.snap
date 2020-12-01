@@ -10,7 +10,7 @@ exports[`With theme changes  Border should be 2px 1`] = `
 .c5 {
   padding: 8px 0;
   outline: none;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 4px 4px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   background-color: hsl(0,0%,100%);
 }
@@ -42,7 +42,7 @@ exports[`With theme changes  Border should be 2px 1`] = `
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 8px;
   border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -73,7 +73,7 @@ exports[`With theme changes  Border should be 2px 1`] = `
   top: -5px;
   left: -5px;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 8px;
   border: 2px solid hsl(200,96%,35%);
 }
 
@@ -218,7 +218,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   padding: 8px 0;
   outline: none;
   border: 1px solid hsl(200,29%,90%);
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 4px 4px;
   background-color: hsl(0,0%,100%);
 }
 
@@ -249,7 +249,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 8px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -280,7 +280,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   top: -5px;
   left: -5px;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 8px;
   border: 1px solid hsl(200,96%,35%);
 }
 
@@ -837,7 +837,7 @@ exports[`component: MenuButton snapshot 1`] = `
 .c5 {
   padding: 8px 0;
   outline: none;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 4px 4px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   background-color: hsl(0,0%,100%);
 }
@@ -869,7 +869,7 @@ exports[`component: MenuButton snapshot 1`] = `
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 8px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -900,7 +900,7 @@ exports[`component: MenuButton snapshot 1`] = `
   top: -5px;
   left: -5px;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 8px;
   border: 1px solid hsl(200,96%,35%);
 }
 

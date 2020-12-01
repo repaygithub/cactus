@@ -2,6 +2,7 @@
 *.log
 *.swp
 **/dist
+!actions/create-pull-request/dist
 **/coverage
 .cache
 .DS_Store

@@ -54,9 +54,59 @@ const SingleAccordion = props => {
 
 ### Accordion Provider
 
-You can also use `Accordion.Provider` to display multiple Accordions at the same time, and the Provider will manage their open/closed states for you:
+You can also use `Accordion.Provider` to display multiple Accordions at the same time.  The provider
+will manage the focus for you in an accessible way and allows for both controlled and uncontrolled
+management of open/closed state.
 
-When using `Accordion.Provider`, you can set the maximum number of Accordions that can be open at the same time using the `maxOpen` prop, which defaults to 1.
+To use a controlled provider, be sure to give each of your Accordions an `id` prop.  You can
+then pass in an array of IDs to the `openId` prop of the provider.  You'll also want to pass an
+`onChange` handler to respond to the toggling of Accordions.
+
+If you'd rather use an uncontrolled provider, you won't need to pass in an `openId` prop, as the
+provider will manage the open/closed state for you.  You can set the maximum number of Accordions
+that can be open at the same time using the `maxOpen` prop, which defaults to 1.  You can also pass
+`defaultOpen={true}` to any `Accordion` that you'd like to initialize in an open state.
+
+Controlled Example:
+
+```jsx
+const ControlledAccordions = () => {
+  const [open, setOpen] = useState<string[]>(['accordion2'])
+  const toggleAccordion = (toggleId: string) => {
+    setOpen((currentOpen) => {
+      if (currentOpen.includes(toggleId)) {
+        return currentOpen.filter((id) => id !== toggleId)
+      }
+      return [...currentOpen, toggleId]
+    })
+  }
+
+  return (
+    <Accordion.Provider openId={open} onChange={toggleAccordion}>
+      <Accordion id="accordion1">
+        <Accordion.Header>
+          <Text as="h3">My Header 1</Text>
+        </Accordion.Header>
+        <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
+      </Accordion>
+      <Accordion id="accordion2">
+        <Accordion.Header>
+          <Text as="h3">My Header 2</Text>
+        </Accordion.Header>
+        <Accordion.Body>I default to open because "openId" was initialized with my ID.</Accordion.Body>
+      </Accordion>
+      <Accordion id="accordion3">
+        <Accordion.Header>
+          <Text as="h3">My Header 3</Text>
+        </Accordion.Header>
+        <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
+      </Accordion>
+    </Accordion.Provider>
+  )
+}
+```
+
+Uncontrolled Example:
 
 ```jsx
 import React from 'react'
@@ -71,11 +121,11 @@ const MultipleAccordions = props => {
         </Accordion.Header>
         <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
       </Accordion>
-      <Accordion>
+      <Accordion defaultOpen={true}>
         <Accordion.Header>
           <Text as="h3">My Header 2</Text>
         </Accordion.Header>
-        <Accordion.Body>Accordion Content Goes Here</Accordion.Body>
+        <Accordion.Body>I default to open because "defaultOpen" was set to true.</Accordion.Body>
       </Accordion>
       <Accordion>
         <Accordion.Header>

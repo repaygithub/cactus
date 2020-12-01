@@ -153,13 +153,13 @@ const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   const [menuRef, scroll] = useScrollButtons('vertical', !hidden)
   return (
     <MenuWrapper aria-hidden={hidden} tabIndex={tabIndex} onKeyDown={onKeyDown}>
-      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
+      <ScrollButton show={scroll.showButtons} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
       <MenuList {...props} aria-orientation="vertical" ref={menuRef}>
         {children}
       </MenuList>
-      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
+      <ScrollButton show={scroll.showButtons} onClick={scroll.clickFore}>
         <NavigationChevronDown />
       </ScrollButton>
     </MenuWrapper>
@@ -204,13 +204,13 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
 
   return (
     <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler} onKeyDown={menuKeyHandler}>
-      <ScrollButton show={scroll.showBack} onClick={scroll.clickBack}>
+      <ScrollButton show={scroll.showButtons} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
       <MenuList role="menubar" aria-orientation={orientation} ref={mergedRef} onFocus={focusMenu}>
         {children}
       </MenuList>
-      <ScrollButton show={scroll.showFore} onClick={scroll.clickFore}>
+      <ScrollButton show={scroll.showButtons} onClick={scroll.clickFore}>
         <NavigationChevronRight />
       </ScrollButton>
     </Nav>
@@ -292,13 +292,21 @@ const ScrollButton = styled.div.attrs({ 'aria-hidden': true })<{ show?: boolean 
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  cursor: pointer;
   background-color: transparent;
   text-align: center;
   outline: none;
-  :hover {
-    color: ${(p) => p.theme.colors.callToAction};
-  }
+  ${(p) =>
+    !!p.onClick
+      ? `
+    cursor: pointer;
+    :hover {
+      color: ${p.theme.colors.callToAction};
+    }
+    `
+      : `
+    cursor: not-allowed;
+    color: ${p.theme.colors.lightGray};
+    `}
   svg {
     width: 18px;
     height: 18px;
@@ -336,6 +344,7 @@ const Nav = styled.nav`
   }
 `
 
+// Don't need `addLayoutStyle` because there are no dynamic values in the nested style.
 const SideNav = styled.nav`
   .cactus-layout-fixedBottom & {
     position: absolute;

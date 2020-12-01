@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import Box from '../Box/Box'
 import StyleProvider from '../StyleProvider/StyleProvider'
-import ScreenSizeProvider, { ScreenSizeContext } from './ScreenSizeProvider'
+import { ScreenSizeContext, ScreenSizeProvider } from './ScreenSizeProvider'
 
 const BreakpointBox = styled(Box)`
   max-width: 320px;
@@ -59,11 +59,9 @@ export default {
 export const DisplayCurrentScreenSize = (): React.ReactElement => {
   return (
     <StyleProvider theme={cactusTheme} global={true}>
-      <ScreenSizeProvider>
-        <BreakpointBox>
-          <ScreenSize />
-        </BreakpointBox>
-      </ScreenSizeProvider>
+      <BreakpointBox>
+        <ScreenSize />
+      </BreakpointBox>
     </StyleProvider>
   )
 }
