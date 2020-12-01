@@ -1,6 +1,7 @@
 import { DescriptiveAt } from '@repay/cactus-icons'
 import { boolean, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
+import { Page } from 'puppeteer'
 import React from 'react'
 
 import ActionBar from '../ActionBar/ActionBar'
@@ -68,4 +69,10 @@ export const CustomItems = (): React.ReactElement => {
       <ActionBar />
     </Layout>
   )
+}
+
+CustomItems.parameters = {
+  beforeScreenshot: async (page: Page) => {
+    await page.click('[data-reach-menu-button]')
+  },
 }

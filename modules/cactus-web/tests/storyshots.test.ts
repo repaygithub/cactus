@@ -1,5 +1,5 @@
 import initStoryshots from '@storybook/addon-storyshots'
-import { imageSnapshot } from '@storybook/addon-storyshots-puppeteer'
+import { Context, imageSnapshot } from '@storybook/addon-storyshots-puppeteer'
 import path from 'path'
 import puppeteer, { devices, Page } from 'puppeteer'
 
@@ -30,8 +30,12 @@ const storyKindRegex = /^((?!.*?(Spinner)).)*$/
 
 const imagesHaveLoaded = () => Array.from(document.images).every((i) => i.complete)
 
-const beforeScreenshot = async (page: Page) => {
+const beforeScreenshot = async (page: Page, options: { context: Context }) => {
   await page.waitForFunction(imagesHaveLoaded)
+  const callback = options.context.parameters?.beforeScreenshot
+  if (callback) {
+    await callback(page, options)
+  }
 }
 
 initStoryshots({
