@@ -1,3 +1,3 @@
 #!/bin/bash
 
-yarn w @repay/cactus-web test:visual
+yarn w @repay/cactus-web test:visual-update

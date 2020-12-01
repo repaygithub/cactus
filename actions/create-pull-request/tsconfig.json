@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "lib": ["esnext", "dom"],
+      "strict": true,
+      "declaration": true,
+      "target": "es5",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "esModuleInterop": true
+    },
+    "exclude": ["node_modules"]
+  }
