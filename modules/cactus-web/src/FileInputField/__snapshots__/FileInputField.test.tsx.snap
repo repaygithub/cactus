@@ -112,7 +112,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .c15::-moz-focus-inner {
@@ -146,7 +146,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 4px;
   border: none;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -510,7 +510,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .c25::-moz-focus-inner {
@@ -594,7 +594,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -1001,7 +1001,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .c22::-moz-focus-inner {
@@ -1085,7 +1085,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -1406,7 +1406,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .c17::-moz-focus-inner {
@@ -1489,7 +1489,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -1783,7 +1783,7 @@ exports[`component: FileInputField should render file input field 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .c15::-moz-focus-inner {
@@ -1817,7 +1817,7 @@ exports[`component: FileInputField should render file input field 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
