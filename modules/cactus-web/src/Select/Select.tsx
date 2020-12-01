@@ -1,8 +1,5 @@
 import '../helpers/polyfills'
 
-import Portal from '@reach/portal'
-import Rect, { PRect } from '@reach/rect'
-import { assignRef } from '@reach/utils'
 import { ActionsAdd, NavigationChevronDown } from '@repay/cactus-icons'
 import { BorderSize, CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -22,7 +19,7 @@ import {
 } from '../helpers/events'
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
-import { getScrollX, getScrollY } from '../helpers/scrollOffset'
+import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { boxShadow, fontSize, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import Tag from '../Tag/Tag'
@@ -415,10 +412,37 @@ const Option = styled.li`
   }
 `
 
-const ListWrapper = styled.div`
-  position: absolute;
+interface ListWrapperProps {
+  isOpen: boolean
+  anchorRef: React.RefObject<HTMLDivElement>
+  children: React.ReactNode
+}
+
+const ListWrapper: React.FC<ListWrapperProps> = ({ isOpen, children, anchorRef }) => {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const position = isResponsiveTouchDevice ? positionResponsive : positionDropDown
+  usePositioning({
+    position,
+    ref,
+    anchorRef,
+    visible: isOpen,
+    updateOnScroll: !isResponsiveTouchDevice,
+  })
+  return (
+    <StyledListWrapper role="dialog" aria-hidden={isOpen ? undefined : true} ref={ref}>
+      {children}
+    </StyledListWrapper>
+  )
+}
+
+const StyledListWrapper = styled.div`
+  position: fixed;
   z-index: 1000;
   box-sizing: border-box;
+  display: block;
+  &[aria-hidden='true'] {
+    display: none;
+  }
   ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
   max-height: 400px;
   max-width: 100vw;
@@ -427,7 +451,8 @@ const ListWrapper = styled.div`
   ${(): string =>
     isResponsiveTouchDevice
       ? `
-    position: fixed;
+    left: 0;
+    bottom: 0;
     border-radius: 0;
     box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
     &:after {
@@ -471,7 +496,7 @@ interface ListProps {
   onClick: (event: React.MouseEvent<HTMLUListElement>) => void
   raiseChange: (event: React.SyntheticEvent, active: OptionType | null, noToggle?: boolean) => void
   onClose: () => void
-  triggerRect: PRect | null
+  anchorRef: React.RefObject<HTMLDivElement>
   activeDescendant: string
   setActiveDescendant?: (activeDescendant: string) => void
   handleComboInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -507,69 +532,9 @@ function findMatchInRange(
   return null
 }
 
-const OFFSET = 8
-const SCROLLBAR_WIDTH = 10
-function positionList(
-  isOpen: boolean,
-  comboBox: boolean | undefined,
-  triggerRect: PRect | null,
-  listRect: PRect | null
-): React.CSSProperties | undefined {
-  if (!listRect) {
-    return {}
-  }
-  if (!isOpen || triggerRect == null) {
-    return { visibility: 'hidden', display: 'none', height: 0, width: 0 }
-  }
-
-  const scrollY = getScrollY()
-  const scrollX = getScrollX()
-
-  if (isResponsiveTouchDevice) {
-    return {
-      bottom: 0,
-      height: RESPONSIVE_HEIGHT + 'px',
-      width: window.innerWidth + 'px',
-    }
-  }
-
-  // default assumes no collisions bottom
-  const style: React.CSSProperties = {
-    top: scrollY + triggerRect.top + triggerRect.height + OFFSET + 'px',
-    left: scrollX + triggerRect.left + 'px',
-    minWidth: triggerRect.width,
-    maxWidth: Math.max(triggerRect.width, Math.min(triggerRect.width * 2, 400)),
-  }
-  if (listRect === undefined) {
-    return style
-  }
-
-  const collisions = {
-    top: triggerRect.top - listRect.height - OFFSET < 0,
-    right: window.innerWidth < triggerRect.left + triggerRect.width,
-    bottom: window.innerHeight < triggerRect.bottom + listRect.height,
-    left: triggerRect.left < 0,
-  }
-  if (collisions.right && window.innerWidth < triggerRect.width) {
-    collisions.left = true
-  }
-
-  if (collisions.bottom && !collisions.top) {
-    style.top = scrollY + triggerRect.top - listRect.height - OFFSET + 'px'
-  } else if (collisions.top && collisions.bottom && !comboBox) {
-    style.top = scrollY + 'px'
-    style.maxHeight = window.innerHeight - SCROLLBAR_WIDTH + 'px'
-  }
-  if (collisions.right && !collisions.left) {
-    style.left = window.innerWidth + scrollX - listRect.width + 'px'
-  } else if (collisions.left && !collisions.right) {
-    style.left = scrollX + 'px'
-  } else if (collisions.right && collisions.left) {
-    style.left = scrollX + 'px'
-    style.width = window.innerWidth - SCROLLBAR_WIDTH + 'px'
-  }
-
-  return style
+function positionResponsive(dd: HTMLElement) {
+  dd.style.height = `${RESPONSIVE_HEIGHT}px`
+  dd.style.width = `${window.innerWidth}px`
 }
 
 interface ListState {
@@ -866,7 +831,7 @@ class List extends React.Component<ListProps, ListState> {
       isOpen,
       comboBox,
       multiple,
-      triggerRect,
+      anchorRef,
       onClose,
       activeDescendant: selectManagedActiveDescendant,
       matchNotFoundText,
@@ -874,100 +839,84 @@ class List extends React.Component<ListProps, ListState> {
     const { options, activeDescendant: listManagedActiveDescendant } = this.state
 
     const activeDescendant = comboBox ? selectManagedActiveDescendant : listManagedActiveDescendant
+    const setListRef = (n: HTMLUListElement | null): void => {
+      this.listRef = n
+    }
 
     return (
-      <Portal>
-        <Rect observe={isOpen}>
-          {({ ref: listRef, rect: listRect }): React.ReactElement => {
-            const mergeRefs = (n: HTMLUListElement | null): void => {
-              this.listRef = n
-              assignRef(listRef, n)
-            }
-            return (
-              <ListWrapper
-                style={positionList(isOpen, comboBox, triggerRect, listRect)}
-                role="dialog"
-              >
-                <StyledList
-                  onBlur={this.handleBlur}
-                  onClick={this.props.onClick}
-                  onKeyDown={this.handleKeyDown}
-                  role="listbox"
-                  tabIndex={-1}
-                  ref={mergeRefs}
-                  aria-activedescendant={activeDescendant || undefined}
-                >
-                  {options.length === 0 && !this.props.canCreateOption ? (
-                    <NoMatch>{matchNotFoundText}</NoMatch>
-                  ) : (
-                    options.map(
-                      (opt): React.ReactElement => {
-                        const optId = opt.id
-                        const isSelected = opt.isSelected
-                        let ariaSelected: boolean | 'true' | 'false' | undefined =
-                          isSelected || undefined
-                        const isCreateNewOption =
-                          comboBox && optId === `create-${this.state.searchValue}`
-                        // multiselectable should have aria-select©ed on all options
-                        if (multiple) {
-                          ariaSelected = isSelected ? 'true' : 'false'
-                        }
-                        return (
-                          <Option
-                            id={optId}
-                            key={optId}
-                            className={
-                              activeDescendant === optId ? 'highlighted-option' : undefined
-                            }
-                            data-value={opt.value}
-                            role="option"
-                            data-role={isCreateNewOption ? 'create' : 'option'}
-                            aria-selected={ariaSelected}
-                            onMouseEnter={this.handleOptionMouseEnter}
-                          >
-                            {isCreateNewOption ? (
-                              <ActionsAdd mr={2} mb={2} />
-                            ) : multiple ? (
-                              <CheckBox
-                                id={`multiselect-option-check-${optId}`}
-                                aria-hidden="true"
-                                checked={isSelected}
-                                readOnly
-                                mr={2}
-                              />
-                            ) : null}
-                            {opt.label}
-                          </Option>
-                        )
-                      }
-                    )
-                  )}
-                </StyledList>
-                {isResponsiveTouchDevice ? (
-                  <Flex justifyContent={comboBox ? 'space-between' : 'center'}>
-                    {comboBox ? (
-                      <ComboInput
-                        data-role="mobile-search"
-                        type="text"
-                        role="textbox"
-                        ref={this.mobileInputRef}
-                        value={this.props.searchValue}
-                        onChange={this.props.handleComboInputChange}
-                        onBlur={this.props.handleComboInputBlur}
-                        style={{ width: '40%', marginLeft: '16px' }}
-                        aria-label={this.props.comboBoxSearchLabel}
+      <ListWrapper isOpen={isOpen} anchorRef={anchorRef}>
+        <StyledList
+          onBlur={this.handleBlur}
+          onClick={this.props.onClick}
+          onKeyDown={this.handleKeyDown}
+          role="listbox"
+          tabIndex={-1}
+          ref={setListRef}
+          aria-activedescendant={activeDescendant || undefined}
+        >
+          {options.length === 0 && !this.props.canCreateOption ? (
+            <NoMatch>{matchNotFoundText}</NoMatch>
+          ) : (
+            options.map(
+              (opt): React.ReactElement => {
+                const optId = opt.id
+                const isSelected = opt.isSelected
+                let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
+                const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
+                // multiselectable should have aria-select©ed on all options
+                if (multiple) {
+                  ariaSelected = isSelected ? 'true' : 'false'
+                }
+                return (
+                  <Option
+                    id={optId}
+                    key={optId}
+                    className={activeDescendant === optId ? 'highlighted-option' : undefined}
+                    data-value={opt.value}
+                    role="option"
+                    data-role={isCreateNewOption ? 'create' : 'option'}
+                    aria-selected={ariaSelected}
+                    onMouseEnter={this.handleOptionMouseEnter}
+                  >
+                    {isCreateNewOption ? (
+                      <ActionsAdd mr={2} mb={2} />
+                    ) : multiple ? (
+                      <CheckBox
+                        id={`multiselect-option-check-${optId}`}
+                        aria-hidden="true"
+                        checked={isSelected}
+                        readOnly
+                        mr={2}
                       />
                     ) : null}
-                    <TextButton onClick={onClose} variant="action" mr={comboBox ? 4 : 0}>
-                      Done
-                    </TextButton>
-                  </Flex>
-                ) : null}
-              </ListWrapper>
+                    {opt.label}
+                  </Option>
+                )
+              }
             )
-          }}
-        </Rect>
-      </Portal>
+          )}
+        </StyledList>
+        {isResponsiveTouchDevice ? (
+          <Flex justifyContent={comboBox ? 'space-between' : 'center'}>
+            {comboBox ? (
+              <ComboInput
+                data-role="mobile-search"
+                type="text"
+                role="textbox"
+                ref={this.mobileInputRef}
+                value={this.props.searchValue}
+                onChange={this.props.handleComboInputChange}
+                onBlur={this.props.handleComboInputBlur}
+                style={{ width: '40%', marginLeft: '16px' }}
+                aria-label={this.props.comboBoxSearchLabel}
+              />
+            ) : null}
+            <TextButton onClick={onClose} variant="action" mr={comboBox ? 4 : 0}>
+              Done
+            </TextButton>
+          </Flex>
+        ) : null}
+      </ListWrapper>
     )
   }
 }
@@ -1011,7 +960,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   private keyClear: number | undefined
   private scrollClear: number | undefined
   private listRef = React.createRef<List>()
-  private triggerRef = React.createRef<HTMLButtonElement>()
+  private triggerRef = React.createRef<HTMLDivElement>()
   private comboInputRef = React.createRef<HTMLInputElement>()
   private isFocused = false
   private eventTarget = new CactusEventTarget<SelectValueType>({})
@@ -1476,82 +1425,74 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     // the fact that Safari cannot focus buttons on click.
     return (
       <div className={className}>
-        <Rect observe={isOpen}>
-          {({ ref: triggerRef, rect: triggerRect }): React.ReactElement => (
-            <div
-              ref={(node): void => {
-                assignRef(triggerRef, node)
-                // @ts-ignore
-                this.triggerRef.current = node
-              }}
-              tabIndex={-1}
-              onFocus={this.handleFocus}
-              onBlur={this.handleBlur}
+        <div
+          ref={this.triggerRef}
+          tabIndex={-1}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+        >
+          {isOpen && comboBox ? (
+            <ComboInput
+              ref={this.comboInputRef}
+              id={`${id}-input`}
+              name={name}
+              autoComplete="off"
+              autoFocus={isResponsiveTouchDevice ? true : false}
+              value={searchValue}
+              style={{ width: `${this.state.currentTriggerWidth}px` }}
+              onChange={this.handleComboInputChange}
+              onBlur={this.handleComboInputBlur}
+              onKeyDown={this.handleComboInputKeyDown}
+              role="textbox"
+              aria-haspopup="listbox"
+              aria-expanded={isOpen || undefined}
+              aria-multiselectable={multiple}
+              aria-activedescendant={activeDescendant ? activeDescendant : undefined}
+              aria-label={this.props.comboBoxSearchLabel || 'Search for an option'}
+            />
+          ) : (
+            <SelectTrigger
+              {...rest}
+              id={id}
+              name={name}
+              onKeyUp={this.handleKeyUp}
+              onClick={this.handleClick}
+              disabled={noOptsDisable ? true : disabled}
+              type="button"
+              aria-haspopup="listbox"
+              aria-expanded={isOpen || undefined}
+              aria-multiselectable={multiple}
             >
-              {isOpen && comboBox ? (
-                <ComboInput
-                  ref={this.comboInputRef}
-                  id={`${id}-input`}
-                  name={name}
-                  autoComplete="off"
-                  autoFocus={isResponsiveTouchDevice ? true : false}
-                  value={searchValue}
-                  style={{ width: `${this.state.currentTriggerWidth}px` }}
-                  onChange={this.handleComboInputChange}
-                  onBlur={this.handleComboInputBlur}
-                  onKeyDown={this.handleComboInputKeyDown}
-                  role="textbox"
-                  aria-haspopup="listbox"
-                  aria-expanded={isOpen || undefined}
-                  aria-multiselectable={multiple}
-                  aria-activedescendant={activeDescendant ? activeDescendant : undefined}
-                  aria-label={this.props.comboBoxSearchLabel || 'Search for an option'}
-                />
-              ) : (
-                <SelectTrigger
-                  {...rest}
-                  id={id}
-                  name={name}
-                  onKeyUp={this.handleKeyUp}
-                  onClick={this.handleClick}
-                  disabled={noOptsDisable ? true : disabled}
-                  type="button"
-                  aria-haspopup="listbox"
-                  aria-expanded={isOpen || undefined}
-                  aria-multiselectable={multiple}
-                >
-                  <ValueSwitch
-                    extraLabel={extraLabel || '+{} more'}
-                    options={options}
-                    placeholder={noOptsDisable ? 'No options available.' : placeholder}
-                    multiple={multiple}
-                  />
-                  <NavigationChevronDown iconSize="tiny" />
-                </SelectTrigger>
-              )}
-              <List
-                ref={this.listRef}
-                isOpen={isOpen}
-                comboBox={comboBox}
-                canCreateOption={canCreateOption}
-                matchNotFoundText={matchNotFoundText}
-                comboBoxSearchLabel={this.props.comboBoxSearchLabel || 'Search for an option'}
+              <ValueSwitch
+                extraLabel={extraLabel || '+{} more'}
                 options={options}
+                placeholder={noOptsDisable ? 'No options available.' : placeholder}
                 multiple={multiple}
-                searchValue={searchValue}
-                activeDescendant={activeDescendant}
-                setActiveDescendant={comboBox ? this.setActiveDescendant : undefined}
-                handleComboInputChange={comboBox ? this.handleComboInputChange : undefined}
-                handleComboInputBlur={comboBox ? this.handleComboInputBlur : undefined}
-                onBlur={this.handleListBlur}
-                onClick={this.handleListClick}
-                raiseChange={this.raiseChange}
-                onClose={this.closeList}
-                triggerRect={triggerRect}
               />
-            </div>
+              <NavigationChevronDown iconSize="tiny" />
+            </SelectTrigger>
           )}
-        </Rect>
+          <List
+            ref={this.listRef}
+            isOpen={isOpen}
+            comboBox={comboBox}
+            canCreateOption={canCreateOption}
+            matchNotFoundText={matchNotFoundText}
+            comboBoxSearchLabel={this.props.comboBoxSearchLabel || 'Search for an option'}
+            options={options}
+            multiple={multiple}
+            searchValue={searchValue}
+            activeDescendant={activeDescendant}
+            setActiveDescendant={comboBox ? this.setActiveDescendant : undefined}
+            handleComboInputChange={comboBox ? this.handleComboInputChange : undefined}
+            handleComboInputBlur={comboBox ? this.handleComboInputBlur : undefined}
+            onBlur={this.handleListBlur}
+            onClick={this.handleListClick}
+            raiseChange={this.raiseChange}
+            onClose={this.closeList}
+            anchorRef={this.triggerRef}
+          />
+        </div>
       </div>
     )
   }

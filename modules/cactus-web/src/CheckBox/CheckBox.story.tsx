@@ -25,3 +25,4 @@ export const ControllingValueThroughProps = (): React.ReactElement => (
     {...eventLoggers}
   />
 )
+ControllingValueThroughProps.parameters = { storyshots: false }

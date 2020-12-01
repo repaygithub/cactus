@@ -372,3 +372,4 @@ export const WithOpenInitialization = (): ReactElement => (
 export const WithOutline = (): ReactElement => <ReorderAccordions />
 
 export const WithControlledOutline = (): ReactElement => <ReorderAccordions isControlled={true} />
+WithControlledOutline.parameters = { storyshots: false }

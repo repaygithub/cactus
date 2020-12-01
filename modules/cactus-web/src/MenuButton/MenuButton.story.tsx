@@ -56,11 +56,16 @@ export const WithCollisions = (): ReactElement => (
     disabled={boolean('disabled?', false)}
     variant={select('variant', ['filled', 'unfilled'], 'filled')}
   >
-    <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
+    <MenuButton.Item onSelect={action('Action One')}>
+      {text('Action Label', 'Action One')}
+    </MenuButton.Item>
     <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
     <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>
   </MenuButton>
 )
 
 WithCollisions.storyName = 'with Collisions'
-WithCollisions.parameters = { cactus: { overrides: { height: '220vh', width: '220vw' } } }
+WithCollisions.parameters = {
+  cactus: { overrides: { height: '220vh', width: '220vw' } },
+  storyshots: false,
+}
