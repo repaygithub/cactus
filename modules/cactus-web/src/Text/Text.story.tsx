@@ -52,4 +52,4 @@ export const BasicUsageOfSpan = (): React.ReactElement => (
 )
 
 BasicUsageOfSpan.storyName = 'Basic Usage of Span'
-BasicUsageOfSpan.parameters = { knobs: { escapeHTML: false } }
+BasicUsageOfSpan.parameters = { knobs: { escapeHTML: false }, storyshots: false }

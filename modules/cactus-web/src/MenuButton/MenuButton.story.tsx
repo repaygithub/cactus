@@ -57,4 +57,7 @@ export const WithCollisions = (): ReactElement => (
 )
 
 WithCollisions.storyName = 'with Collisions'
-WithCollisions.parameters = { cactus: { overrides: { height: '220vh', width: '220vw' } } }
+WithCollisions.parameters = {
+  cactus: { overrides: { height: '220vh', width: '220vw' } },
+  storyshots: false,
+}

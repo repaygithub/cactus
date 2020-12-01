@@ -56,6 +56,7 @@ export const CollisionsInAnOverSizedContainer = (): ReactElement => (
 CollisionsInAnOverSizedContainer.storyName = 'Collisions in an over-sized container'
 CollisionsInAnOverSizedContainer.parameters = {
   cactus: { overrides: { height: '220vh', width: '220vw' } },
+  storyshots: false,
 }
 
 export const LongListOfOptions = (): ReactElement => {
@@ -93,7 +94,7 @@ export const LongOptionLabels = (): ReactElement => {
 }
 
 LongOptionLabels.storyName = 'Long option labels'
-
+LongOptionLabels.parameters = { storyshots: false }
 export const WithMultiselect = (): ReactElement => {
   const [value, setValue] = React.useState<SelectValueType>(defaultMultiValue)
   return (
@@ -130,7 +131,7 @@ export const WithComboBox = (): ReactElement => {
 }
 
 WithComboBox.storyName = 'With ComboBox'
-WithComboBox.parameters = { cactus: { overrides: { overflow: 'hidden' } } }
+WithComboBox.parameters = { cactus: { overrides: { overflow: 'hidden' } }, storyshots: false }
 
 export const WithMultiSelectComboBox = (): ReactElement => {
   const [value, setValue] = React.useState<SelectValueType>([])
@@ -151,4 +152,7 @@ export const WithMultiSelectComboBox = (): ReactElement => {
 }
 
 WithMultiSelectComboBox.storyName = 'With MultiSelect ComboBox'
-WithMultiSelectComboBox.parameters = { cactus: { overrides: { overflow: 'hidden' } } }
+WithMultiSelectComboBox.parameters = {
+  cactus: { overrides: { overflow: 'hidden' } },
+  storyshots: false,
+}

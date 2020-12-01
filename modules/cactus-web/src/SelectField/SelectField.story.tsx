@@ -38,6 +38,7 @@ export const CustomStyles = (): React.ReactElement => (
     margin={text('margin', '3')}
   />
 )
+CustomStyles.parameters = { storyshots: false }
 
 export const ControlledForm = (): React.ReactElement => {
   const [value, setValue] = React.useState<SelectValueType>(null)
@@ -58,3 +59,4 @@ export const ControlledForm = (): React.ReactElement => {
 }
 
 ControlledForm.parameters = { knobs: { escapeHTML: false } }
+ControlledForm.parameters = { storyshots: false }

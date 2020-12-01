@@ -82,6 +82,7 @@ export const LoadingOnClick = (): ReactElement => {
 }
 
 LoadingOnClick.storyName = 'Loading on click'
+LoadingOnClick.parameters = { storyshots: false }
 
 export const AsLink = (): ReactElement => (
   <Button
