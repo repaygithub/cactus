@@ -88,7 +88,10 @@ export const WithCollisions = (): React.ReactElement => (
   </React.Fragment>
 )
 
-WithCollisions.parameters = { cactus: { overrides: { height: '220vh', width: '220vw' } } }
+WithCollisions.parameters = {
+  cactus: { overrides: { height: '220vh', width: '220vw' } },
+  storyshots: false,
+}
 
 export const FixedWidthContainer = (): React.ReactElement => (
   <div style={{ width: '125px' }}>

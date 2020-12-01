@@ -17,4 +17,7 @@ export const CollisionDetection = (): React.ReactElement => (
   <Tooltip label={text('label', 'Some tooltip text here')} />
 )
 
-CollisionDetection.parameters = { cactus: { overrides: { height: '200vh', width: '200vw' } } }
+CollisionDetection.parameters = {
+  cactus: { overrides: { height: '200vh', width: '200vw' } },
+  storyshots: false,
+}
