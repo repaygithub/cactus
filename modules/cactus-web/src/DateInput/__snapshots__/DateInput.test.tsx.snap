@@ -103,7 +103,7 @@ exports[`component: DateInput snapshot 1`] = `
   align-items: center;
   border: 1px solid;
   border-color: hsl(200,10%,20%);
-  border-radius: 8px;
+  border-radius: 20px;
   background-color: hsl(0,0%,100%);
   height: 36px;
   outline: none;
@@ -393,7 +393,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
   align-items: center;
   border: 2px solid;
   border-color: hsl(200,10%,20%);
-  border-radius: 8px;
+  border-radius: 20px;
   background-color: hsl(0,0%,100%);
   height: 36px;
   outline: none;
@@ -1260,7 +1260,7 @@ exports[`component: DateInput with theme customization should not have box shado
   align-items: center;
   border: 1px solid;
   border-color: hsl(200,10%,20%);
-  border-radius: 8px;
+  border-radius: 20px;
   background-color: hsl(0,0%,100%);
   height: 36px;
   outline: none;

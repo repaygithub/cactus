@@ -40,7 +40,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 .c12 {
   box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
   height: 32px;
   outline: none;
   box-sizing: border-box;
@@ -114,7 +114,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   margin-right: 24px;
   background-color: hsl(353,84%,44%);
   color: hsl(0,0%,100%);
@@ -134,7 +134,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -285,7 +285,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   flex-basis: 100%;
   width: 100%;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
@@ -334,7 +334,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c16::-moz-focus-inner {
@@ -567,7 +567,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   margin-right: 24px;
   background-color: hsl(353,84%,44%);
   color: hsl(0,0%,100%);
@@ -587,7 +587,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -738,7 +738,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   flex-basis: 100%;
   width: 100%;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
@@ -787,7 +787,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c13::-moz-focus-inner {
@@ -995,7 +995,7 @@ exports[`Modal variant is success snapshot 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   margin-right: 24px;
   background-color: hsl(145,89%,28%);
   color: hsl(0,0%,100%);
@@ -1015,7 +1015,7 @@ exports[`Modal variant is success snapshot 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -1166,7 +1166,7 @@ exports[`Modal variant is success snapshot 1`] = `
   flex-basis: 100%;
   width: 100%;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
@@ -1215,7 +1215,7 @@ exports[`Modal variant is success snapshot 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c13::-moz-focus-inner {
@@ -1403,7 +1403,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   font-size: 18px;
   line-height: 1.5;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   margin-right: 24px;
   background-color: hsl(47,82%,47%);
   color: hsl(200,10%,20%);
@@ -1423,7 +1423,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   top: -5px;
   left: -5px;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
 }
@@ -1574,7 +1574,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-basis: 100%;
   width: 100%;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 20px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
@@ -1623,7 +1623,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c13::-moz-focus-inner {

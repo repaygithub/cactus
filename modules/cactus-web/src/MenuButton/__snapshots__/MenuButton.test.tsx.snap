@@ -10,7 +10,7 @@ exports[`With theme changes  Border should be 2px 1`] = `
 .c0 {
   position: relative;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 2px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -41,7 +41,7 @@ exports[`With theme changes  Border should be 2px 1`] = `
   top: -5px;
   left: -5px;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 2px solid hsl(200,96%,35%);
 }
 
@@ -115,7 +115,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
 .c0 {
   position: relative;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -146,7 +146,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
   top: -5px;
   left: -5px;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 1px solid hsl(200,96%,35%);
 }
 
@@ -429,7 +429,7 @@ exports[`component: MenuButton snapshot 1`] = `
 .c0 {
   position: relative;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 1px solid;
   padding: 2px 24px 2px 14px;
   outline: none;
@@ -460,7 +460,7 @@ exports[`component: MenuButton snapshot 1`] = `
   top: -5px;
   left: -5px;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 1px solid hsl(200,96%,35%);
 }
 

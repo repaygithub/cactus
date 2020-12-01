@@ -78,7 +78,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 .c11 {
   box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
   height: 32px;
   outline: none;
   box-sizing: border-box;
@@ -202,7 +202,7 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
       class="c10"
     >
       <input
-        aria-describedby="instigate-tip instigate-status"
+        aria-describedby="instigate-tip"
         class="c11"
         id="instigate"
         name="instigate"

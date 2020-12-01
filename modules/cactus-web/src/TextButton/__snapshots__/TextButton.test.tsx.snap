@@ -32,7 +32,7 @@ exports[`With theme changes  Should have 2px border 1`] = `
   top: 0px;
   left: 0px;
   border: 2px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -215,7 +215,7 @@ exports[`component: TextButton should default to standard variant 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -280,7 +280,7 @@ exports[`component: TextButton should render a disabled text+icon button 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -356,7 +356,7 @@ exports[`component: TextButton should render a text+icon button 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -428,7 +428,7 @@ exports[`component: TextButton should render call to action variant 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -489,7 +489,7 @@ exports[`component: TextButton should render danger variant 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -546,7 +546,7 @@ exports[`component: TextButton should render disabled variant 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -609,7 +609,7 @@ exports[`component: TextButton should render inverse call to action variant 1`] 
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -666,7 +666,7 @@ exports[`component: TextButton should render inverse disabled variant 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -728,7 +728,7 @@ exports[`component: TextButton should render inverse standard variant 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -789,7 +789,7 @@ exports[`component: TextButton should render standard variant 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {
@@ -851,7 +851,7 @@ exports[`component: TextButton should support space props 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c0::-moz-focus-inner {

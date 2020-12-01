@@ -6,7 +6,7 @@ exports[`component: Card should support margin space props 1`] = `
   margin: 4px;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 16px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
@@ -29,7 +29,7 @@ exports[`component: Card snapshot 1`] = `
   box-sizing: border-box;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 16px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
@@ -93,7 +93,7 @@ exports[`component: Card with theme customization should have no box shadow & 2p
   box-sizing: border-box;
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 16px;
   border: 2px solid;
   border-color: hsl(200,29%,90%);

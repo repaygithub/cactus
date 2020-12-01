@@ -77,7 +77,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
 
 .c11 {
   border: 1px solid hsl(200,9%,35%);
-  border-radius: 4px;
+  border-radius: 8px;
   min-height: 100px;
   box-sizing: border-box;
   font-size: 18px;
@@ -198,7 +198,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       class="c10"
     >
       <textarea
-        aria-describedby="boolest-tip boolest-status"
+        aria-describedby="boolest-tip"
         class="c11"
         id="boolest"
         name="boolest"

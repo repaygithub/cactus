@@ -112,7 +112,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c15::-moz-focus-inner {
@@ -146,7 +146,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 8px;
   border: none;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -285,7 +285,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
         </span>
       </div>
       <button
-        aria-describedby="consistent-tip consistent-status"
+        aria-describedby="consistent-tip"
         class="c14 c15"
         disabled=""
         id="consistent"
@@ -510,7 +510,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c25::-moz-focus-inner {
@@ -594,7 +594,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -759,12 +759,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
           </span>
           <button
             aria-label="Delete File"
-<<<<<<< HEAD
             class="c17 c18"
-=======
-            class="c15 c16"
             data-filename="boolest.txt"
->>>>>>> master
             type="button"
             variant="standard"
           >
@@ -803,13 +799,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
         </div>
       </div>
       <button
-<<<<<<< HEAD
-        aria-describedby="consistent-tip consistent-status"
-        class="c24 c25"
-=======
         aria-describedby="consistent-tip"
-        class="c22 c23"
->>>>>>> master
+        class="c24 c25"
         id="consistent"
         type="button"
       >
@@ -1010,7 +1001,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c22::-moz-focus-inner {
@@ -1094,7 +1085,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -1252,12 +1243,8 @@ exports[`component: FileInputField should render a loaded file 1`] = `
           </span>
           <button
             aria-label="Delete File"
-<<<<<<< HEAD
             class="c17 c18"
-=======
-            class="c15 c16"
             data-filename="boolest.txt"
->>>>>>> master
             type="button"
             variant="standard"
           >
@@ -1276,13 +1263,8 @@ exports[`component: FileInputField should render a loaded file 1`] = `
         </div>
       </div>
       <button
-<<<<<<< HEAD
-        aria-describedby="consistent-tip consistent-status"
-        class="c21 c22"
-=======
         aria-describedby="consistent-tip"
-        class="c19 c20"
->>>>>>> master
+        class="c21 c22"
         id="consistent"
         type="button"
       >
@@ -1424,7 +1406,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c17::-moz-focus-inner {
@@ -1507,7 +1489,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -1663,13 +1645,8 @@ exports[`component: FileInputField should render a loading file 1`] = `
         </div>
       </div>
       <button
-<<<<<<< HEAD
-        aria-describedby="consistent-tip consistent-status"
-        class="c16 c17"
-=======
         aria-describedby="consistent-tip"
-        class="c14 c15"
->>>>>>> master
+        class="c16 c17"
         id="consistent"
         type="button"
       >
@@ -1806,7 +1783,7 @@ exports[`component: FileInputField should render file input field 1`] = `
   top: 0px;
   left: 0px;
   border: 1px solid hsl(200,96%,35%);
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .c15::-moz-focus-inner {
@@ -1840,7 +1817,7 @@ exports[`component: FileInputField should render file input field 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 2px dotted;
   border-color: hsl(200,10%,20%);
   min-width: 300px;
@@ -1981,13 +1958,8 @@ exports[`component: FileInputField should render file input field 1`] = `
         </span>
       </div>
       <button
-<<<<<<< HEAD
-        aria-describedby="consistent-tip consistent-status"
-        class="c14 c15"
-=======
         aria-describedby="consistent-tip"
-        class="c12 c13"
->>>>>>> master
+        class="c14 c15"
         id="consistent"
         type="button"
       >
