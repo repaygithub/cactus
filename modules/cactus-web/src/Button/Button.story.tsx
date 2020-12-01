@@ -96,4 +96,3 @@ export const AsLink = (): ReactElement => (
 )
 
 AsLink.storyName = 'As Link'
-AsLink.parameters = { storyshots: false }

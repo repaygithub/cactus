@@ -59,3 +59,4 @@ export const ControlledForm = (): React.ReactElement => {
 }
 
 ControlledForm.parameters = { knobs: { escapeHTML: false } }
+ControlledForm.parameters = { storyshots: false }

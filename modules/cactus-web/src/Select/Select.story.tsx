@@ -94,7 +94,7 @@ export const LongOptionLabels = (): ReactElement => {
 }
 
 LongOptionLabels.storyName = 'Long option labels'
-
+LongOptionLabels.parameters = { storyshots: false }
 export const WithMultiselect = (): ReactElement => {
   const [value, setValue] = React.useState<SelectValueType>(defaultMultiValue)
   return (
