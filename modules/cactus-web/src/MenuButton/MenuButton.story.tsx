@@ -50,7 +50,9 @@ export const WithCollisions = (): ReactElement => (
     disabled={boolean('disabled?', false)}
     variant={select('variant', ['filled', 'unfilled'], 'filled')}
   >
-    <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
+    <MenuButton.Item onSelect={action('Action One')}>
+      {text('Action Label', 'Action One')}
+    </MenuButton.Item>
     <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
     <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>
   </MenuButton>

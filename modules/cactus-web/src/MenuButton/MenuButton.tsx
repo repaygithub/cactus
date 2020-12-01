@@ -11,12 +11,11 @@ import { NavigationChevronDown } from '@repay/cactus-icons'
 import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { createGlobalStyle, css, StyledComponent } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
-import { getTopPosition } from '../helpers/positionPopover'
-import { getScrollX } from '../helpers/scrollOffset'
+import { extractMargins } from '../helpers/omit'
+import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { border, boxShadow, textStyle } from '../helpers/theme'
 
 const shapeMap = {
@@ -79,7 +78,6 @@ interface MenuListProps extends ReachMenuItemsProps {
 
 const MenuList = styled(ReachMenuItems)<MenuListProps>`
   padding: 8px 0;
-  margin-top: 8px;
   outline: none;
   ${getDropDownBorder};
   ${(p) => boxShadow(p.theme, 1)};
@@ -104,10 +102,16 @@ const MenuList = styled(ReachMenuItems)<MenuListProps>`
 
 type MenuButtonVariant = 'filled' | 'unfilled'
 
+interface DropDownProps {
+  isOpen: boolean
+  anchorRef: React.RefObject<HTMLElement | null>
+  variant: MenuButtonVariant
+  children?: React.ReactNode
+}
+
 interface MenuButtonProps extends MarginProps {
   label: React.ReactNode
   variant?: MenuButtonVariant
-  className?: string
   /**
    * Must be a MenuButton.Item or MenuButton.Link
    */
@@ -115,55 +119,53 @@ interface MenuButtonProps extends MarginProps {
   disabled?: boolean
 }
 
-function MenuButtonBase(props: MenuButtonProps): React.ReactElement {
-  const { label, children, variant = 'filled', ...rest } = omitMargins(props) as Omit<
-    MenuButtonProps,
-    keyof MarginProps
-  >
+type MenuButtonType = React.FC<MenuButtonProps> & {
+  Item: typeof ReachMenuItem
+  Link: typeof ReachMenuLink
+}
+
+export const MenuButton: MenuButtonType = (props) => {
+  const { label, children, variant = 'filled', ...rest } = props
+  const marginProps = extractMargins(rest)
+  const anchorRef = React.useRef<HTMLButtonElement>(null)
   return (
-    <ReachMenu>
-      <MenuButtonStyles />
-      <ReachMenuButton {...rest}>
-        {label}
-        <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
-      </ReachMenuButton>
-      <ReachMenuPopover
-        position={(
-          targetRect,
-          popoverRect
-        ): { minWidth?: number; maxWidth?: number; left?: number; top?: string } => {
-          if (!targetRect || !popoverRect) {
-            return {}
-          }
-
-          const scrollX = getScrollX()
-
-          return {
-            minWidth: targetRect.width,
-            maxWidth: Math.max(targetRect.width, Math.min(targetRect.width * 2, 400)),
-            left: targetRect.left + scrollX,
-            ...getTopPosition(targetRect, popoverRect),
-          }
-        }}
-      >
-        <MenuList variant={variant}>{children}</MenuList>
-      </ReachMenuPopover>
-    </ReachMenu>
+    <Wrapper {...marginProps}>
+      <ReachMenu>
+        {({ isOpen }) => (
+          <>
+            <MenuButtonStyles />
+            <StyledButton as={ReachMenuButton as any} variant={variant} ref={anchorRef} {...rest}>
+              {label}
+              <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
+            </StyledButton>
+            <DropDown isOpen={isOpen} variant={variant} anchorRef={anchorRef}>
+              {children}
+            </DropDown>
+          </>
+        )}
+      </ReachMenu>
+    </Wrapper>
   )
 }
 
-MenuButtonBase.Item = ReachMenuItem
-MenuButtonBase.Link = ReachMenuLink
-
-type MenuButtonType = StyledComponent<
-  typeof MenuButtonBase,
-  any,
-  Record<string, unknown>,
-  never
-> & {
-  Item: typeof MenuButtonBase['Item']
-  Link: typeof MenuButtonBase['Link']
+const DropDown: React.FC<DropDownProps> = ({ isOpen, variant, anchorRef, children }) => {
+  const ref = React.useRef<HTMLElement>(null)
+  usePositioning({
+    position: positionDropDown,
+    visible: isOpen,
+    ref,
+    anchorRef,
+    updateOnScroll: true,
+  })
+  return (
+    <StyledPopover portal={false} ref={ref}>
+      <MenuList variant={variant}>{children}</MenuList>
+    </StyledPopover>
+  )
 }
+
+MenuButton.Item = ReachMenuItem
+MenuButton.Link = ReachMenuLink
 
 type VariantMap = { [K in MenuButtonVariant]: ReturnType<typeof css> }
 
@@ -212,9 +214,10 @@ const buttonVariantMap: VariantMap = {
   `,
 }
 
-const MenuButton = styled(MenuButtonBase)`
+const StyledButton = styled.button<MenuButtonProps>`
   position: relative;
   box-sizing: border-box;
+  width: 100%;
   ${getShape};
   border: ${(p) => border(p.theme, '')};
   padding: 2px 24px 2px 14px;
@@ -246,9 +249,19 @@ const MenuButton = styled(MenuButtonBase)`
     right: 10px; // 8 + 2px from border
     top: 12px;
   }
+`
 
+const Wrapper = styled.div<MarginProps>`
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
   ${margin}
-` as MenuButtonType
+`
+
+const StyledPopover = styled(ReachMenuPopover)`
+  position: fixed;
+  z-index: 500;
+`
 
 MenuButton.propTypes = {
   label: PropTypes.node.isRequired,
@@ -260,7 +273,5 @@ MenuButton.propTypes = {
 MenuButton.defaultProps = {
   variant: 'filled',
 }
-
-export { MenuButton }
 
 export default MenuButton

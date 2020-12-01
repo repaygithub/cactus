@@ -9,12 +9,11 @@ import {
 import { NavigationChevronDown } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { MutableRefObject, useRef } from 'react'
-import styled, { createGlobalStyle, css, DefaultTheme, StyledComponent } from 'styled-components'
+import React from 'react'
+import styled, { createGlobalStyle, css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { getTopPosition } from '../helpers/positionPopover'
-import { getScrollX } from '../helpers/scrollOffset'
+import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { border, boxShadow, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
 
@@ -23,8 +22,18 @@ export interface IconProps {
   iconSize: 'tiny' | 'small' | 'medium' | 'large'
 }
 
+interface IsOpenProp {
+  isOpen: boolean
+}
+
+interface DropDownProps extends IsOpenProp {
+  anchorRef: React.RefObject<HTMLElement | null>
+  variant?: SplitButtonVariant
+  children?: React.ReactNode
+}
+
 interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
-  mainActionLabel: React.ReactChild
+  mainActionLabel: React.ReactNode
   onSelectMainAction: (event: React.MouseEvent<HTMLButtonElement>) => void
   mainActionIcon?: React.FunctionComponent<IconProps>
   disabled?: boolean
@@ -62,6 +71,7 @@ const getVariantDark = variant({
 
 const MainActionButton = styled.button<VariantInterface>`
   box-sizing: border-box;
+  flex-grow: 1;
   border: ${(p) => border(p.theme, '')};
   ${(p) => mainShapeMap[p.theme.shape]}
   background-color: ${(p): string => p.theme.colors.white};
@@ -152,7 +162,6 @@ const dropdownShapeMap: { [K in Shape]: string } = {
 
 const SplitButtonList = styled(ReachMenuItems)<VariantInterface>`
   padding: 8px 0;
-  margin-top: 8px;
   outline: none;
   ${(p) => dropdownShapeMap[p.theme.shape]}
   ${(p): string => boxShadow(p.theme, 1)};
@@ -161,7 +170,6 @@ const SplitButtonList = styled(ReachMenuItems)<VariantInterface>`
   border: ${(p) => (!p.theme.boxShadows ? border(p.theme, 'lightContrast') : '0')};
 
   [data-reach-menu-item] {
-    position: relative;
     display: block;
     cursor: pointer;
     text-decoration: none;
@@ -226,9 +234,12 @@ const DropdownButton = styled(ReachMenuButton)<VariantInterface>`
   }
 `
 
-const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
+type SplitButtonType = React.FC<SplitButtonProps> & {
+  Action: React.ComponentType<SplitButtonActionProps>
+}
+
+export const SplitButton: SplitButtonType = (props) => {
   const {
-    className,
     mainActionLabel,
     mainActionIcon: MainActionIcon,
     onSelectMainAction,
@@ -238,16 +249,15 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
     variant,
     ...rest
   } = props
-  const mainActionRef: MutableRefObject<null | HTMLButtonElement> = useRef(null)
+  const anchorRef = React.useRef<HTMLDivElement>(null)
   return (
-    <div className={className} {...rest}>
+    <Wrapper {...rest} ref={anchorRef}>
       <ReachMenu>
-        {({ isOpen }: { isOpen: boolean }): React.ReactElement => {
+        {({ isOpen }: IsOpenProp): React.ReactElement => {
           return (
             <>
               <MainActionButton
                 className={isOpen ? 'dd-open' : !disabled ? 'dd-closed' : ''}
-                ref={mainActionRef}
                 type="button"
                 disabled={disabled}
                 onClick={onSelectMainAction}
@@ -260,60 +270,52 @@ const SplitButtonBase = (props: SplitButtonProps): React.ReactElement => {
               <DropdownButton disabled={disabled} aria-label={ariaLabel} variant={variant}>
                 <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
               </DropdownButton>
-              <ReachMenuPopover
-                position={(
-                  targetRect,
-                  popoverRect
-                ): { minWidth?: number; maxWidth?: number; left?: number; top?: string } => {
-                  if (!targetRect || !popoverRect || !mainActionRef.current) {
-                    return {}
-                  }
-
-                  const mainActionButtonWidth = mainActionRef.current.clientWidth
-                  const splitButtonWidth = mainActionButtonWidth + targetRect.width + 5
-                  const scrollX = getScrollX()
-
-                  return {
-                    minWidth: splitButtonWidth,
-                    maxWidth: Math.max(splitButtonWidth, Math.min(splitButtonWidth * 2, 400)),
-                    left: targetRect.left - mainActionButtonWidth + scrollX - 6,
-                    ...getTopPosition(targetRect, popoverRect),
-                  }
-                }}
-              >
-                <SplitButtonList variant={variant}>{children}</SplitButtonList>
-              </ReachMenuPopover>
+              <DropDown isOpen={isOpen} variant={variant} anchorRef={anchorRef}>
+                {children}
+              </DropDown>
             </>
           )
         }}
       </ReachMenu>
-    </div>
+    </Wrapper>
   )
 }
 
-const SplitButtonActionBase = (props: SplitButtonActionProps): React.ReactElement => {
+const DropDown: React.FC<DropDownProps> = ({ isOpen, variant, anchorRef, children }) => {
+  const ref = React.useRef<HTMLElement>(null)
+  usePositioning({
+    position: positionDropDown,
+    visible: isOpen,
+    ref,
+    anchorRef,
+    updateOnScroll: true,
+  })
+  return (
+    <StyledPopover portal={false} ref={ref}>
+      <SplitButtonList variant={variant}>{children}</SplitButtonList>
+    </StyledPopover>
+  )
+}
+
+export const SplitButtonAction: React.FC<SplitButtonActionProps> = (props) => {
   const { children, icon: Icon, ...rest } = props
   return (
     <ReachMenuItem {...rest}>
-      {Icon && <Icon iconSize="small" aria-hidden="true" />}
+      {Icon && <StyledIcon as={Icon} iconSize="small" aria-hidden="true" />}
       {children}
     </ReachMenuItem>
   )
 }
 
-export const SplitButtonAction = styled(SplitButtonActionBase)`
-  svg {
-    margin-right: 4px;
-    margin-bottom: 3px;
-  }
+const StyledIcon = styled.svg`
+  margin-right: 4px;
+  margin-bottom: 3px;
 `
 
-type SplitButtonType = StyledComponent<typeof SplitButtonBase, DefaultTheme, SplitButtonProps> & {
-  Action: React.ComponentType<SplitButtonActionProps>
-}
-
-export const SplitButton = styled(SplitButtonBase)`
-  display: flex;
+const Wrapper = styled.div<VariantInterface & MarginProps>`
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
   ${margin}
 
   ${DropdownButton}[aria-expanded='true'] {
@@ -322,12 +324,17 @@ export const SplitButton = styled(SplitButtonBase)`
     }
     ${getVariantDark};
   }
-` as any
+`
+
+const StyledPopover = styled(ReachMenuPopover)`
+  position: fixed;
+  z-index: 500;
+`
 
 SplitButton.propTypes = {
   mainActionLabel: PropTypes.node.isRequired,
   onSelectMainAction: PropTypes.func.isRequired,
-  mainActionIcon: PropTypes.elementType,
+  mainActionIcon: PropTypes.elementType as any,
   disabled: PropTypes.bool,
   variant: PropTypes.oneOf(['standard', 'danger', 'success']),
 }
@@ -338,4 +345,4 @@ SplitButton.defaultProps = {
 
 SplitButton.Action = SplitButtonAction
 
-export default SplitButton as SplitButtonType
+export default SplitButton
