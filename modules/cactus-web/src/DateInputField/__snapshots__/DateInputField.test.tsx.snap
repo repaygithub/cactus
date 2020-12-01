@@ -231,7 +231,7 @@ exports[`component: DateInputField snapshot 1`] = `
   position: fixed;
   z-index: 1000;
   background-color: hsl(0,0%,100%);
-  border-radius: 0 32px 16px 16px;
+  border-radius: 0 20px 10px 10px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   overflow: hidden;
 }
@@ -309,7 +309,7 @@ exports[`component: DateInputField snapshot 1`] = `
 }
 
 .c19 > div:last-child ul {
-  border-bottom-right-radius: 14px;
+  border-bottom-right-radius: 8px;
 }
 
 .c19 ul {
@@ -497,7 +497,7 @@ exports[`component: DateInputField snapshot 1`] = `
           <span
             id="not-random-monthyear-label"
           >
-            November
+            December
              
             2020
           </span>
@@ -521,7 +521,7 @@ exports[`component: DateInputField snapshot 1`] = `
         >
           <div>
             <ul
-              aria-activedescendant="not-random-November"
+              aria-activedescendant="not-random-December"
               aria-label="Select a month"
               data-name="setMonth"
               data-token="MM"
@@ -619,7 +619,6 @@ exports[`component: DateInputField snapshot 1`] = `
                 </span>
               </li>
               <li
-                aria-selected="true"
                 data-value="10"
                 id="not-random-November"
                 role="option"
@@ -629,6 +628,7 @@ exports[`component: DateInputField snapshot 1`] = `
                 </span>
               </li>
               <li
+                aria-selected="true"
                 data-value="11"
                 id="not-random-December"
                 role="option"

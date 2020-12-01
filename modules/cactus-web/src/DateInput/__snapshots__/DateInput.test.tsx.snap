@@ -198,7 +198,7 @@ exports[`component: DateInput snapshot 1`] = `
   position: fixed;
   z-index: 1000;
   background-color: hsl(0,0%,100%);
-  border-radius: 0 32px 16px 16px;
+  border-radius: 0 20px 10px 10px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   overflow: hidden;
 }
@@ -276,7 +276,7 @@ exports[`component: DateInput snapshot 1`] = `
 }
 
 .c13 > div:last-child ul {
-  border-bottom-right-radius: 14px;
+  border-bottom-right-radius: 8px;
 }
 
 .c13 ul {
@@ -442,7 +442,7 @@ exports[`component: DateInput snapshot 1`] = `
         <span
           id="date-input-monthyear-label"
         >
-          November
+          December
            
           2020
         </span>
@@ -466,7 +466,7 @@ exports[`component: DateInput snapshot 1`] = `
       >
         <div>
           <ul
-            aria-activedescendant="date-input-November"
+            aria-activedescendant="date-input-December"
             aria-label="Select a month"
             data-name="setMonth"
             data-token="MM"
@@ -564,7 +564,6 @@ exports[`component: DateInput snapshot 1`] = `
               </span>
             </li>
             <li
-              aria-selected="true"
               data-value="10"
               id="date-input-November"
               role="option"
@@ -574,6 +573,7 @@ exports[`component: DateInput snapshot 1`] = `
               </span>
             </li>
             <li
+              aria-selected="true"
               data-value="11"
               id="date-input-December"
               role="option"
@@ -2699,7 +2699,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
   position: fixed;
   z-index: 1000;
   background-color: hsl(0,0%,100%);
-  border-radius: 0 32px 16px 16px;
+  border-radius: 0 20px 10px 10px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   overflow: hidden;
 }
@@ -2777,7 +2777,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
 }
 
 .c3 > div:last-child ul {
-  border-bottom-right-radius: 14px;
+  border-bottom-right-radius: 8px;
 }
 
 .c3 ul {
@@ -2847,7 +2847,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
         <span
           id="not-thicc-monthyear-label"
         >
-          November 2020
+          December 2020
         </span>
         <svg
           class="c2"
@@ -2869,7 +2869,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
       >
         <div>
           <ul
-            aria-activedescendant="not-thicc-November"
+            aria-activedescendant="not-thicc-December"
             aria-label="Select a month"
             data-name="setMonth"
             data-token="MM"
@@ -2967,7 +2967,6 @@ exports[`component: DateInput with theme customization should have 2px border 1`
               </span>
             </li>
             <li
-              aria-selected="true"
               data-value="10"
               id="not-thicc-November"
               role="option"
@@ -2977,6 +2976,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
               </span>
             </li>
             <li
+              aria-selected="true"
               data-value="11"
               id="not-thicc-December"
               role="option"
@@ -5250,7 +5250,7 @@ exports[`component: DateInput with theme customization should match intermediate
         <span
           id="not-round-monthyear-label"
         >
-          November 2020
+          December 2020
         </span>
         <svg
           class="c2"
@@ -5272,7 +5272,7 @@ exports[`component: DateInput with theme customization should match intermediate
       >
         <div>
           <ul
-            aria-activedescendant="not-round-November"
+            aria-activedescendant="not-round-December"
             aria-label="Select a month"
             data-name="setMonth"
             data-token="MM"
@@ -5370,7 +5370,6 @@ exports[`component: DateInput with theme customization should match intermediate
               </span>
             </li>
             <li
-              aria-selected="true"
               data-value="10"
               id="not-round-November"
               role="option"
@@ -5380,6 +5379,7 @@ exports[`component: DateInput with theme customization should match intermediate
               </span>
             </li>
             <li
+              aria-selected="true"
               data-value="11"
               id="not-round-December"
               role="option"
@@ -7653,7 +7653,7 @@ exports[`component: DateInput with theme customization should match square shape
         <span
           id="not-round-monthyear-label"
         >
-          November 2020
+          December 2020
         </span>
         <svg
           class="c2"
@@ -7675,7 +7675,7 @@ exports[`component: DateInput with theme customization should match square shape
       >
         <div>
           <ul
-            aria-activedescendant="not-round-November"
+            aria-activedescendant="not-round-December"
             aria-label="Select a month"
             data-name="setMonth"
             data-token="MM"
@@ -7773,7 +7773,6 @@ exports[`component: DateInput with theme customization should match square shape
               </span>
             </li>
             <li
-              aria-selected="true"
               data-value="10"
               id="not-round-November"
               role="option"
@@ -7783,6 +7782,7 @@ exports[`component: DateInput with theme customization should match square shape
               </span>
             </li>
             <li
+              aria-selected="true"
               data-value="11"
               id="not-round-December"
               role="option"
@@ -9908,7 +9908,7 @@ exports[`component: DateInput with theme customization should not have box shado
   position: fixed;
   z-index: 1000;
   background-color: hsl(0,0%,100%);
-  border-radius: 0 32px 16px 16px;
+  border-radius: 0 20px 10px 10px;
   border: 1px solid;
   border-color: hsl(200,29%,90%);
   overflow: hidden;
@@ -9987,7 +9987,7 @@ exports[`component: DateInput with theme customization should not have box shado
 }
 
 .c3 > div:last-child ul {
-  border-bottom-right-radius: 14px;
+  border-bottom-right-radius: 8px;
 }
 
 .c3 ul {
@@ -10057,7 +10057,7 @@ exports[`component: DateInput with theme customization should not have box shado
         <span
           id="none-of-em-monthyear-label"
         >
-          November 2020
+          December 2020
         </span>
         <svg
           class="c2"
@@ -10079,7 +10079,7 @@ exports[`component: DateInput with theme customization should not have box shado
       >
         <div>
           <ul
-            aria-activedescendant="none-of-em-November"
+            aria-activedescendant="none-of-em-December"
             aria-label="Select a month"
             data-name="setMonth"
             data-token="MM"
@@ -10177,7 +10177,6 @@ exports[`component: DateInput with theme customization should not have box shado
               </span>
             </li>
             <li
-              aria-selected="true"
               data-value="10"
               id="none-of-em-November"
               role="option"
@@ -10187,6 +10186,7 @@ exports[`component: DateInput with theme customization should not have box shado
               </span>
             </li>
             <li
+              aria-selected="true"
               data-value="11"
               id="none-of-em-December"
               role="option"
