@@ -26,7 +26,7 @@ All the children except `Layout.Content` are optional, though ActionBar is highl
 ```jsx
 import React from 'react'
 import { ActionBar, BrandBar, Footer, Layout, MenuBar } from '@repay/cactus-web'
-import { Router } from '@reach/router'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Home from './Home'
 import Customer from './Customer'
 
@@ -34,26 +34,36 @@ const LOGO = 'https://mysite.com/logo'
 
 const MySite = () => (
   <Layout>
-    <BrandBar logo={LOGO} />
-    <MenuBar>
-      <MenuBar.Item>Teenage Mutant</MenuBar.Item>
-      <MenuBar.Item>Ninja Turtles</MenuBar.Item>
-    </MenuBar>
-    <ActionBar />
-    <Layout.Content>
-      <Router>
-        <Home path="/home">Home </Home>
-        <Customer path="/other/path">Customer</Home>
-      </Router>
-    </Layout.Content>
-    <Footer logo={LOGO}>The Foot clan returns.</Footer>
-  </Layout>
+      <BrandBar logo={LOGO} />
+      <MenuBar>
+        <MenuBar.Item>
+          <Link to="/home">Teenage Mutant</Link>
+        </MenuBar.Item>
+        <MenuBar.Item>
+          <Link to="/other/path">Ninja Turtles</Link>
+        </MenuBar.Item>
+      </MenuBar>
+      <ActionBar />
+      <Layout.Content>
+        <Router>
+          <Switch>
+            <Route path="/home">
+              <Home />
+            </Route>
+            <Route path="/other/path">
+              <Customer />
+            </Route>
+          </Switch>
+        </Router>
+      </Layout.Content>
+      <Footer logo={LOGO}>The Foot clan returns.</Footer>
+    </Layout>
+  )
 )
 ```
 
 The `Router` inside `Layout.Content` is used to navigate between different pages and components.
-Note that `Home` and `Customer` are made-up components, just to show you the functionality.
-Also, we use `@reach/router` in this example, but you are free to use any routing library that you want.
+Depending on the library, the MenuBar may also need to be connected to the Router so that links will work.
 
 ## Properties
 
