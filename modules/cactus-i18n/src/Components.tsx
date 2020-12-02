@@ -18,6 +18,8 @@ interface I18nProviderProps {
   lang?: string
 }
 
+const flopFlip = (x: boolean) => !x
+
 const I18nProvider: React.FC<I18nProviderProps> = (props): ReactElement => {
   const controller = props.controller
   if (!(controller instanceof BaseI18nController)) {
@@ -27,26 +29,26 @@ const I18nProvider: React.FC<I18nProviderProps> = (props): ReactElement => {
     controller.setLang(props.lang)
   }
   const lang = controller.lang
-  const [loadingState, setLoading] = useState({})
-  const i18nContext: I18nContextType | null = {
-    controller: controller,
-    lang,
-    section: 'global',
-    loadingState,
+  const [flipFlop, toggle] = useState(false)
+  const i18nContext: I18nContextType = { controller, lang, section: 'global' }
+  const { current: stable } = React.useRef({ flipFlop, i18nContext })
+  if (
+    flipFlop !== stable.flipFlop ||
+    controller !== stable.i18nContext.controller ||
+    lang !== stable.i18nContext.lang
+  ) {
+    stable.flipFlop = flipFlop
+    stable.i18nContext = i18nContext
   }
-  useEffect((): (() => void) | undefined => {
+  useEffect(() => {
     if (controller instanceof BaseI18nController) {
-      controller.addListener(setLoading)
-      return (): void => controller.removeListener(setLoading)
+      const triggerUpdate = () => toggle(flopFlip)
+      controller.addListener(triggerUpdate)
+      return (): void => controller.removeListener(triggerUpdate)
     }
   }, [controller])
-  useEffect((): void => {
-    if (controller instanceof BaseI18nController) {
-      controller._load({ lang, section: 'global' })
-    }
-  }, [controller, lang])
   return (
-    <I18nContext.Provider value={i18nContext}>
+    <I18nContext.Provider value={stable.i18nContext}>
       <React.Fragment>{props.children}</React.Fragment>
     </I18nContext.Provider>
   )
@@ -172,9 +174,9 @@ const I18nElement = function <Elem extends TagNameOrReactComp>(
   props: I18nElementProps<Elem>
 ): ReactElement {
   const { get, args = {}, section, as, ...rest } = props
-  const [message, attrs] = useI18nResource(get, args, section)
+  const { text, attrs } = useI18nResource(get, args, section)
   const elemProps = { ...rest, ...attrs }
-  return React.createElement(as, elemProps, message || get)
+  return React.createElement(as, elemProps, text || get)
 }
 
 I18nElement.propTypes = {
@@ -190,7 +192,7 @@ interface I18nResourceProps extends I18nTextProps {
 }
 
 const I18nResource: React.FC<I18nResourceProps> = (props): ReactElement => {
-  const [message, attrs] = useI18nResource(props.get, props.args, props.section)
+  const { text, attrs } = useI18nResource(props.get, props.args, props.section)
   let renderer = null
   if (typeof props.children === 'function') {
     renderer = props.children
@@ -199,9 +201,7 @@ const I18nResource: React.FC<I18nResourceProps> = (props): ReactElement => {
   }
 
   return (
-    <React.Fragment>
-      {renderer !== null ? renderer(message || props.get, attrs) : null}
-    </React.Fragment>
+    <React.Fragment>{renderer !== null ? renderer(text || props.get, attrs) : null}</React.Fragment>
   )
 }
 
