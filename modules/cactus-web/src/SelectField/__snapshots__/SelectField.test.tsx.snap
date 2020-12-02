@@ -129,7 +129,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   top: 10px;
 }
 
-.c13 {
+.c16 {
   position: relative;
   box-sizing: border-box;
   z-index: 100;
@@ -145,7 +145,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   border-style: solid;
 }
 
-.c14 {
+.c17 {
   cursor: pointer;
   display: list-item;
   border: none;
@@ -158,22 +158,22 @@ exports[`component: SelectField minimal snapshot 1`] = `
   overflow-wrap: break-word;
 }
 
-.c14.highlighted-option {
+.c17.highlighted-option {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c14.highlighted-option .sc-flUlJl > input:not(:checked) + span {
+.c17.highlighted-option .sc-iGkqGz > input:not(:checked) + span {
   border-color: white;
 }
 
-.c14 .sc-flUlJl {
+.c17 .sc-iGkqGz {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
 }
 
-.c12 {
+.c15 {
   position: fixed;
   z-index: 1000;
   box-sizing: border-box;
@@ -185,11 +185,11 @@ exports[`component: SelectField minimal snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c12[aria-hidden='true'] {
+.c15[aria-hidden='true'] {
   display: none;
 }
 
-.c12 .sc-iGkqGz {
+.c15 .c3 {
   bottom: 0;
   position: fixed;
   height: 52px;
@@ -198,7 +198,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   padding: 8px 0;
 }
 
-.c6 {
+.c9 {
   max-width: 100%;
 }
 
@@ -224,7 +224,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c14 {
+  .c17 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -281,16 +281,16 @@ exports[`component: SelectField minimal snapshot 1`] = `
         </button>
         <div
           aria-hidden="true"
-          class="c12"
+          class="c15"
           role="dialog"
         >
           <ul
-            class="c13"
+            class="c16"
             role="listbox"
             tabindex="-1"
           >
             <li
-              class="c14"
+              class="c17"
               data-role="option"
               data-value="basic"
               id="prevent-random-id-basic-basic"
@@ -299,7 +299,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
               basic
             </li>
             <li
-              class="c14"
+              class="c17"
               data-role="option"
               data-value="options"
               id="prevent-random-id-options-options"
