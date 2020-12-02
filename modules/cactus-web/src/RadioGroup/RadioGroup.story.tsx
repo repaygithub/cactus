@@ -24,10 +24,11 @@ export const BasicUsage = (): React.ReactElement => (
     warning={text('warning', '')}
     autoTooltip={boolean('autoTooltip', true)}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
   >
     <RadioGroup.Button label="That's right" value="right" />
     <RadioGroup.Button disabled label="That's wrong" value="left" />
-    <RadioGroup.Button label={text('button label', "That's...")} value="center" />
+    <RadioGroup.Button label={text('button label', 'That is... ')} value="center" />
   </RadioGroup>
 )
 

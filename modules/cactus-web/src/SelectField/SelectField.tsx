@@ -33,6 +33,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
     disabled,
     autoTooltip,
     disableTooltip,
+    alignTooltip,
     ...rest
   } = omitMargins(props) as Omit<SelectFieldProps, keyof MarginProps>
   const [isOpen, setIsOpen] = React.useState(false)
@@ -52,6 +53,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
       autoTooltip={autoTooltip}
       isOpen={isOpen}
       disableTooltip={disableTooltip}
+      alignTooltip={alignTooltip}
     >
       {({ fieldId, labelId, name, ariaDescribedBy, status, disabled }): React.ReactElement => (
         <Select

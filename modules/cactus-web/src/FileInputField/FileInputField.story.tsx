@@ -33,5 +33,6 @@ export const BasicUsage = (): React.ReactElement => (
     onFocus={({ target }) => console.log('onFocus:', target.name)}
     onBlur={({ target }) => console.log('onBlur:', target.name)}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
   />
 )

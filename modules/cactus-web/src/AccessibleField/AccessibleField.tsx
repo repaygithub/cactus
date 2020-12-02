@@ -4,11 +4,13 @@ import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
+import { Flex } from '../Flex/Flex'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 import { Tooltip } from '../Tooltip/Tooltip'
 
+export type TooltipAlignment = 'left' | 'right'
 interface AccessibleProps {
   name: string
   fieldId: string
@@ -36,6 +38,7 @@ export interface FieldProps {
   autoTooltip?: boolean
   isOpen?: boolean
   disableTooltip?: boolean
+  alignTooltip?: TooltipAlignment
 }
 
 interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
@@ -103,7 +106,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     statusMessage,
     disabled,
   } = accessibility
-  const { autoTooltip = true, disableTooltip } = props
+  const { autoTooltip = true, disableTooltip, alignTooltip = 'right' } = props
 
   const ref = React.useRef<HTMLDivElement | null>(null)
   const [forceTooltipVisible, setTooltipVisible] = React.useState<boolean>(false)
@@ -136,18 +139,23 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
       onFocus={handleFieldFocus}
       onBlur={handleFieldBlur}
     >
-      <Label {...props.labelProps} id={labelId} htmlFor={fieldId}>
-        {props.label}
-      </Label>
-      {props.tooltip && (
-        <Tooltip
-          label={props.tooltip}
-          id={tooltipId}
-          maxWidth={maxWidth}
-          disabled={disableTooltip ?? disabled}
-          forceVisible={!props.isOpen && forceTooltipVisible}
-        />
-      )}
+      <Flex
+        justifyContent={alignTooltip === 'right' ? 'space-between' : 'flex-start'}
+        alignItems="center"
+      >
+        <Label {...props.labelProps} id={labelId} htmlFor={fieldId}>
+          {props.label}
+        </Label>
+        {props.tooltip && (
+          <Tooltip
+            label={props.tooltip}
+            id={tooltipId}
+            maxWidth={maxWidth}
+            disabled={disableTooltip ?? disabled}
+            forceVisible={!props.isOpen && forceTooltipVisible}
+          />
+        )}
+      </Flex>
       {typeof props.children === 'function'
         ? props.children(accessibility)
         : React.cloneElement(React.Children.only(props.children), {
@@ -172,20 +180,21 @@ export const AccessibleField = styled(AccessibleFieldBase)`
   position: relative;
   ${margin}
   ${width}
+  display: flex;
+  flex-direction: column;
 
   ${Label} {
     display: block;
     box-sizing: border-box;
     padding-left: 16px;
-    padding-right: 28px;
+    padding-right: 8px;
     color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 
   ${Tooltip} {
-    position: absolute;
-    right: 8px;
-    top: 2px;
+    position: relative;
     font-size: 16px;
+    padding-right: 8px;
   }
 
   ${StatusMessage} {

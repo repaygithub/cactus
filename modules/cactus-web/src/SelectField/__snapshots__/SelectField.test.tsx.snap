@@ -6,46 +6,74 @@ exports[`component: SelectField minimal snapshot 1`] = `
 }
 
 .c4 {
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c5 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c7 {
   font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
   color: hsl(200,10%,20%);
 }
 
-.c11 {
+.c14 {
   font-size: 8px;
   vertical-align: middle;
 }
 
 .c1 {
   position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
-.c1 .c3 {
+.c1 .c6 {
   display: block;
   box-sizing: border-box;
   padding-left: 16px;
-  padding-right: 28px;
+  padding-right: 8px;
 }
 
-.c1 .sc-fWWZrV {
-  position: absolute;
-  right: 8px;
-  top: 2px;
+.c1 .sc-gzcbGf {
+  position: relative;
   font-size: 16px;
+  padding-right: 8px;
 }
 
-.c1 .sc-cbeQSR {
+.c1 .sc-gVFdEO {
   margin-top: 4px;
 }
 
-.c9 {
+.c12 {
   font-style: italic;
   color: hsl(200,9%,35%);
   font-size: 18px;
 }
 
-.c7 {
+.c10 {
   position: relative;
   box-sizing: border-box;
   min-width: 194px;
@@ -65,43 +93,43 @@ exports[`component: SelectField minimal snapshot 1`] = `
   cursor: pointer;
 }
 
-.c7:disabled {
+.c10:disabled {
   border-color: hsl(0,0%,70%);
   color: hsl(0,0%,70%);
   cursor: not-allowed;
 }
 
-.c7:disabled .c8 {
+.c10:disabled .c11 {
   color: hsl(0,0%,70%);
 }
 
-.c7::-moz-focus-inner {
+.c10::-moz-focus-inner {
   border: 0;
 }
 
-.c7:focus,
-.c7[aria-expanded] {
+.c10:focus,
+.c10[aria-expanded] {
   border-color: hsl(200,96%,35%);
 }
 
-.c7:focus .c10,
-.c7[aria-expanded] .c10 {
+.c10:focus .c13,
+.c10[aria-expanded] .c13 {
   color: hsl(200,96%,35%);
 }
 
-.c7[aria-expanded] .c10 {
+.c10[aria-expanded] .c13 {
   -webkit-transform: rotate3d(1,0,0,180deg);
   -ms-transform: rotate3d(1,0,0,180deg);
   transform: rotate3d(1,0,0,180deg);
 }
 
-.c7 .c10 {
+.c10 .c13 {
   position: absolute;
   right: 14px;
   top: 10px;
 }
 
-.c13 {
+.c16 {
   position: relative;
   box-sizing: border-box;
   z-index: 100;
@@ -117,7 +145,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   border-style: solid;
 }
 
-.c14 {
+.c17 {
   cursor: pointer;
   display: list-item;
   border: none;
@@ -130,22 +158,22 @@ exports[`component: SelectField minimal snapshot 1`] = `
   overflow-wrap: break-word;
 }
 
-.c14.highlighted-option {
+.c17.highlighted-option {
   background-color: hsl(200,96%,35%);
   color: hsl(0,0%,100%);
 }
 
-.c14.highlighted-option .sc-flUlJl > input:not(:checked) + span {
+.c17.highlighted-option .sc-iGkqGz > input:not(:checked) + span {
   border-color: white;
 }
 
-.c14 .sc-flUlJl {
+.c17 .sc-iGkqGz {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
 }
 
-.c12 {
+.c15 {
   position: fixed;
   z-index: 1000;
   box-sizing: border-box;
@@ -157,11 +185,11 @@ exports[`component: SelectField minimal snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c12[aria-hidden='true'] {
+.c15[aria-hidden='true'] {
   display: none;
 }
 
-.c12 .sc-iGkqGz {
+.c15 .c3 {
   bottom: 0;
   position: fixed;
   height: 52px;
@@ -170,7 +198,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   padding: 8px 0;
 }
 
-.c6 {
+.c9 {
   max-width: 100%;
 }
 
@@ -178,25 +206,25 @@ exports[`component: SelectField minimal snapshot 1`] = `
   position: relative;
 }
 
-.c2 .c5 {
+.c2 .c8 {
   width: 100%;
 }
 
 @media screen and (min-width:1024px) {
-  .c4 {
+  .c7 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c9 {
+  .c12 {
     font-size: 18px;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c14 {
+  .c17 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -206,15 +234,20 @@ exports[`component: SelectField minimal snapshot 1`] = `
   <div
     class="c0 c1 c2"
   >
-    <label
-      class="c3 c4"
-      for="prevent-random-id"
-      id="prevent-random-id-label"
-    >
-      Requires a label
-    </label>
     <div
-      class="c5 c6"
+      class="c3 c4 c5"
+      display="flex"
+    >
+      <label
+        class="c6 c7"
+        for="prevent-random-id"
+        id="prevent-random-id-label"
+      >
+        Requires a label
+      </label>
+    </div>
+    <div
+      class="c8 c9"
     >
       <div
         tabindex="-1"
@@ -223,18 +256,18 @@ exports[`component: SelectField minimal snapshot 1`] = `
           aria-haspopup="listbox"
           aria-labelledby="prevent-random-id-label"
           aria-multiselectable="false"
-          class="c7"
+          class="c10"
           id="prevent-random-id"
           name="the-test-select-field"
           type="button"
         >
           <span
-            class="c8 c9"
+            class="c11 c12"
           >
             Select an option
           </span>
           <svg
-            class="c10 c11"
+            class="c13 c14"
             fill="currentcolor"
             height="1em"
             viewBox="0 0 24 24"
@@ -248,16 +281,16 @@ exports[`component: SelectField minimal snapshot 1`] = `
         </button>
         <div
           aria-hidden="true"
-          class="c12"
+          class="c15"
           role="dialog"
         >
           <ul
-            class="c13"
+            class="c16"
             role="listbox"
             tabindex="-1"
           >
             <li
-              class="c14"
+              class="c17"
               data-role="option"
               data-value="basic"
               id="prevent-random-id-basic-basic"
@@ -266,7 +299,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
               basic
             </li>
             <li
-              class="c14"
+              class="c17"
               data-role="option"
               data-value="options"
               id="prevent-random-id-options-options"

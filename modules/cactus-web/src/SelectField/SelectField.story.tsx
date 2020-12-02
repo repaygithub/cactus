@@ -25,6 +25,7 @@ export const BasicUsage = (): React.ReactElement => (
     comboBox={boolean('comboBox', false)}
     canCreateOption={boolean('canCreateOption', true)}
     disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
   />
 )
 

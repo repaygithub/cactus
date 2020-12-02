@@ -51,8 +51,11 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
 
   const directionRight = collisions.left && !collisions.right
   const directionBottom = collisions.top && !collisions.bottom
+  const center = collisions.right && collisions.left
 
-  if (directionRight && !directionBottom) {
+  if (center) {
+    styles.marginLeft = -tooltipRect.width / 2
+  } else if (directionRight && !directionBottom) {
     styles.borderBottomLeftRadius = '0px'
   } else if (directionRight && directionBottom) {
     styles.borderTopLeftRadius = '0px'
@@ -64,7 +67,9 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
 
   return {
     ...styles,
-    left: directionRight
+    left: center
+      ? '50%'
+      : directionRight
       ? triggerRect.left + OFFSET + scrollX
       : triggerRect.right - OFFSET - tooltipRect.width + scrollX,
     top: directionBottom

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
 import { MarginProps, WidthProps } from 'styled-system'
 
 import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
+import { TooltipAlignment } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import Fieldset from '../Fieldset/Fieldset'
 import { cloneAll } from '../helpers/react'
@@ -19,6 +21,9 @@ interface RadioGroupProps
   value?: string | number
   defaultValue?: string | number
   required?: boolean
+}
+interface LabelWrapper {
+  alignTooltip?: TooltipAlignment
 }
 
 // This allows omitting the required `name` prop, since it'll be injected by the RadioGroup.
@@ -49,6 +54,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       onBlur,
       autoTooltip = true,
       disableTooltip,
+      alignTooltip = 'right',
       ...props
     },
     ref
@@ -125,20 +131,21 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Label as="legend" id={labelId}>
+        <LabelWrapper id={labelId} as="legend" alignTooltip={alignTooltip}>
           {label}
-        </Label>
+          {tooltip && (
+            <Tooltip
+              id={tooltipId}
+              label={tooltip}
+              disabled={disableTooltip ?? disabled}
+              forceVisible={autoTooltip ? showTooltip : false}
+            />
+          )}
+        </LabelWrapper>
+
         <Box mx={4} pt={3}>
           {children}
         </Box>
-        {tooltip && (
-          <Tooltip
-            id={tooltipId}
-            label={tooltip}
-            disabled={disableTooltip ?? disabled}
-            forceVisible={autoTooltip ? showTooltip : false}
-          />
-        )}
         {status && (
           <div>
             <StatusMessage status={status} id={statusId}>
@@ -150,6 +157,19 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
     )
   }
 )
+
+const LabelWrapper = styled(Label)<LabelWrapper>`
+  flex-wrap: nowrap;
+  display: flex;
+  justify-content: ${(p) => (p.alignTooltip === 'right' ? 'space-between' : 'flex-start')};
+  padding-right: 8px;
+  ${Tooltip} {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    padding-left: ${(p) => (p.alignTooltip === 'right' ? 0 : '8px')};
+  }
+`
 
 RadioGroup.displayName = 'RadioGroup'
 RadioGroup.propTypes = {
