@@ -5,16 +5,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DateInputField from './DateInputField'
 
 describe('component: DateInputField', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <DateInputField name="date_field" label="Date Field" id="not-random" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('accessible label points to div[role=group] and month input', (): void => {
     const { getAllByLabelText } = render(
       <StyleProvider>
