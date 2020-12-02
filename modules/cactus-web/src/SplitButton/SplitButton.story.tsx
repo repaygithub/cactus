@@ -79,7 +79,7 @@ export const WithCollisions = (): React.ReactElement => (
       mainActionLabel="Main Action"
     >
       <SplitButton.Action onSelect={(): void => console.log('Action One')}>
-        Action One
+        {text('Action Label', 'Action One')}
       </SplitButton.Action>
       <SplitButton.Action onSelect={(): void => console.log('Action Two')}>
         Action Two

@@ -17,16 +17,6 @@ function animationRender(): Promise<void> {
 }
 
 describe('component: DateInput', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <DateInput name="date-input" id="date-input" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   describe('can be controlled', (): void => {
     test('with value as a Date', (): void => {
       const value = new Date(2018, 8, 30)
@@ -676,7 +666,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="thin" id="not-thicc" />
+          <DateInput name="thin" id="not-thicc" value="2020-01-01" />
         </StyleProvider>
       )
 
@@ -687,7 +677,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="intermediate" id="not-round" />
+          <DateInput name="intermediate" id="not-round" value="2020-01-01" />
         </StyleProvider>
       )
 
@@ -698,7 +688,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="square" id="not-round" />
+          <DateInput name="square" id="not-round" value="2020-01-01" />
         </StyleProvider>
       )
 
@@ -709,7 +699,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="shadows" id="none-of-em" />
+          <DateInput name="shadows" id="none-of-em" value="2020-01-01" />
         </StyleProvider>
       )
 

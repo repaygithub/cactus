@@ -1,5 +1,6 @@
 import { array, boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
+import { Page } from 'puppeteer'
 import React from 'react'
 
 import { SelectValueType } from '../Select/Select'
@@ -28,7 +29,12 @@ export const BasicUsage = (): React.ReactElement => (
   />
 )
 
-BasicUsage.parameters = { knobs: { escapeHTML: false } }
+BasicUsage.parameters = {
+  knobs: { escapeHTML: false },
+  beforeScreenshot: async (page: Page) => {
+    await page.click('button[name="ufo"]')
+  },
+}
 
 export const CustomStyles = (): React.ReactElement => (
   <SelectField

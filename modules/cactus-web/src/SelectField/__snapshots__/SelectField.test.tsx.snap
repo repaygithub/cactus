@@ -129,7 +129,67 @@ exports[`component: SelectField minimal snapshot 1`] = `
   top: 10px;
 }
 
-.c15 .c3 {
+.c13 {
+  position: relative;
+  box-sizing: border-box;
+  z-index: 100;
+  max-height: inherit;
+  max-width: 100vw;
+  padding: 8px 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow-y: auto;
+  outline: none;
+  border-radius: 4px;
+  border: 0px;
+  border-style: solid;
+}
+
+.c14 {
+  cursor: pointer;
+  display: list-item;
+  border: none;
+  height: auto;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: left;
+  box-shadow: none;
+  padding: 4px 16px;
+  overflow-wrap: break-word;
+}
+
+.c14.highlighted-option {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c14.highlighted-option .sc-flUlJl > input:not(:checked) + span {
+  border-color: white;
+}
+
+.c14 .sc-flUlJl {
+  pointer-events: none;
+  margin-right: 4px;
+  vertical-align: -2px;
+}
+
+.c12 {
+  position: fixed;
+  z-index: 1000;
+  box-sizing: border-box;
+  display: block;
+  border-radius: 4px;
+  max-height: 400px;
+  max-width: 100vw;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  background-color: hsl(0,0%,100%);
+}
+
+.c12[aria-hidden='true'] {
+  display: none;
+}
+
+.c12 .sc-iGkqGz {
   bottom: 0;
   position: fixed;
   height: 52px;
@@ -138,7 +198,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
   padding: 8px 0;
 }
 
-.c9 {
+.c6 {
   max-width: 100%;
 }
 
@@ -164,7 +224,10 @@ exports[`component: SelectField minimal snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-
+  .c14 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -216,6 +279,36 @@ exports[`component: SelectField minimal snapshot 1`] = `
             />
           </svg>
         </button>
+        <div
+          aria-hidden="true"
+          class="c12"
+          role="dialog"
+        >
+          <ul
+            class="c13"
+            role="listbox"
+            tabindex="-1"
+          >
+            <li
+              class="c14"
+              data-role="option"
+              data-value="basic"
+              id="prevent-random-id-basic-basic"
+              role="option"
+            >
+              basic
+            </li>
+            <li
+              class="c14"
+              data-role="option"
+              data-value="options"
+              id="prevent-random-id-options-options"
+              role="option"
+            >
+              options
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
