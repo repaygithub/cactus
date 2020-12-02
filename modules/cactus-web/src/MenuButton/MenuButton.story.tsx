@@ -1,6 +1,7 @@
 import { action } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
+import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
 import MenuButton from './MenuButton'
@@ -43,6 +44,11 @@ export const WithLinks = (): ReactElement => (
 )
 
 WithLinks.storyName = 'with Links'
+WithLinks.parameters = {
+  beforeScreenshot: async (page: Page) => {
+    await page.click('button')
+  },
+}
 
 export const WithCollisions = (): ReactElement => (
   <MenuButton

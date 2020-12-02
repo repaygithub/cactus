@@ -1,5 +1,6 @@
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
+import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
 import DateInput from './DateInput'
@@ -45,6 +46,9 @@ export const ControlledWithDate = (): ReactElement => {
 ControlledWithDate.storyName = 'Controlled with Date'
 ControlledWithDate.parameters = {
   cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
+  beforeScreenshot: async (page: Page) => {
+    await page.click('button')
+  },
 }
 
 export const ControlledWithString = (): ReactElement => {
