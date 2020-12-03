@@ -3,7 +3,7 @@ import * as path from 'path'
 import { ClientFunction } from 'testcafe'
 
 import { UIConfigData } from '../types'
-import makeActions from './helpers/actions'
+import makeActions, { clickWorkaround } from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 
 const getApiData = ClientFunction((): UIConfigData => (window as any).apiData)
@@ -42,12 +42,13 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
   await t.click(queryByText('Blue'))
   await t.click(queryByText('Allow Customer Login'))
   await t.click(queryByText('Use Cactus Styles'))
-  await t.click(queryByText('Submit'))
+  await clickWorkaround(queryByText('Submit'))
 
   const apiData: UIConfigData = await getApiData()
-  if (apiData.fileInput[0].contents === null) {
-    // IE spits out null for the contents if the file is 0 bytes
-    apiData.fileInput[0].contents = 'data:'
+  const fileContents = apiData.fileInput[0].contents
+  // IE spits out null for the contents if the file is 0 bytes; other browsers vary.
+  if (fileContents !== null) {
+    await t.expect(fileContents.startsWith('data:')).ok()
   }
 
   await t.expect(apiData).eql({
@@ -63,7 +64,7 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
     allowCustomerLogin: true,
     useCactusStyles: true,
     selectColor: 'blue',
-    fileInput: [{ fileName: 'test-logo.jpg', contents: 'data:', status: 'loaded' }],
+    fileInput: [{ fileName: 'test-logo.jpg', contents: fileContents, status: 'loaded' }],
     establishedDate: '2019-10-16',
   })
 })
