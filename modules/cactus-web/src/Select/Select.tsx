@@ -56,6 +56,7 @@ export interface SelectProps
   matchNotFoundText?: string
   comboBoxSearchLabel?: string
   onDropdownToggle?: (prop: boolean) => void
+  noOptionsText?: string
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -1414,12 +1415,14 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       matchNotFoundText = 'No match found',
       extraLabel,
       value: propsValue,
+      noOptionsText = 'No options available',
       onDropdownToggle,
       ...rest
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
     const { isOpen, searchValue, activeDescendant } = this.state
     const options = this.getExtOptions()
-    const noOptsDisable = !comboBox && options.length === 0
+    const noOptsDisable =
+      (!comboBox && options.length === 0) || (comboBox && !canCreateOption && options.length === 0)
 
     // Added `tabIndex=-1` on the wrapper element to compensate for
     // the fact that Safari cannot focus buttons on click.
@@ -1466,7 +1469,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
               <ValueSwitch
                 extraLabel={extraLabel || '+{} more'}
                 options={options}
-                placeholder={noOptsDisable ? 'No options available.' : placeholder}
+                placeholder={noOptsDisable ? noOptionsText : placeholder}
                 multiple={multiple}
               />
               <NavigationChevronDown iconSize="tiny" />
