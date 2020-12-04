@@ -33,31 +33,27 @@ import Customer from './Customer'
 const LOGO = 'https://mysite.com/logo'
 
 const MySite = () => (
-  <Layout>
-      <BrandBar logo={LOGO} />
-      <MenuBar>
-        <MenuBar.Item>
-          <Link to="/home">Teenage Mutant</Link>
-        </MenuBar.Item>
-        <MenuBar.Item>
-          <Link to="/other/path">Ninja Turtles</Link>
-        </MenuBar.Item>
-      </MenuBar>
-      <ActionBar />
-      <Layout.Content>
-        <Router>
-          <Switch>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Route path="/other/path">
-              <Customer />
-            </Route>
-          </Switch>
-        </Router>
-      </Layout.Content>
-      <Footer logo={LOGO}>The Foot clan returns.</Footer>
-    </Layout>
+  <Router>
+    <Layout>
+        <BrandBar logo={LOGO} />
+        <MenuBar>
+          <MenuBar.Item as={Link} to="/home">Teenage Mutant</MenuBar.Item>
+          <MenuBar.Item as={Link} to="/other/path">Ninja Turtles</MenuBar.Item>
+        </MenuBar>
+        <ActionBar />
+        <Layout.Content>
+            <Switch>
+              <Route path="/home">
+                <Home />
+              </Route>
+              <Route path="/other/path">
+                <Customer />
+              </Route>
+            </Switch>
+        </Layout.Content>
+        <Footer logo={LOGO}>The Foot clan returns.</Footer>
+      </Layout>
+    </Router>
   )
 )
 ```
