@@ -2,7 +2,9 @@
 *.log
 *.swp
 **/dist
+!actions/create-pull-request/dist
 **/coverage
+**/test-report.xml
 .cache
 .DS_Store
 local.env

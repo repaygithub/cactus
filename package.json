@@ -22,12 +22,14 @@
     "test": "yarn test:local",
     "test:ci": "yarn lint && yarn ws run test:ci",
     "test:local": "yarn lint && yarn ws run test:local",
+    "test:sonar": "yarn fwk test --coverage && yarn i18n test --coverage && yarn icons test --coverage && yarn theme test --coverage && yarn web test --coverage",
     "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build",
     "predocs:publish": "yarn docs build",
     "docs:publish": "gh-pages -d ./website/public",
     "cleanup": "yarn ws run cleanup",
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
-    "release": "yarn install --registry https://registry.yarnpkg.com && yarn cleanup && yarn build && lerna publish --no-private --registry https://registry.yarnpkg.com",
+    "release": "npm login && yarn install --registry https://registry.yarnpkg.com && yarn cleanup && yarn build && lerna publish --no-private --registry https://registry.yarnpkg.com",
+    "release:beta": "yarn release --include-merged-tags --preid beta --pre-dist-tag next",
     "commit": "git-cz",
     "postinstall": "patch-package",
     "test:build": "docker build -t tests .",
@@ -49,6 +51,10 @@
     ]
   },
   "devDependencies": {
+    "@actions/core": "^1.2.6",
+    "@octokit/core": "^3.2.1",
+    "@octokit/plugin-paginate-rest": "^2.6.0",
+    "@octokit/plugin-rest-endpoint-methods": "^4.2.1",
     "@repay/eslint-config": "^3.1.1",
     "commitizen": "^4.2.2",
     "conventional-commits-parser": "^3.1.0",
@@ -61,7 +67,8 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.1.2",
     "prompts": "^2.3.2",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
+    "uuid": "^8.3.1"
   },
   "dependencies": {},
   "config": {

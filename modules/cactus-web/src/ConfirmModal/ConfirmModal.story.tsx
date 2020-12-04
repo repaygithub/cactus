@@ -26,7 +26,7 @@ export default {
 } as Meta
 
 const ConfirmModalExample = (): React.ReactElement => {
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(true)
   const cancelText = text('Cancel Button Text', 'Cancel')
   const confirmText = text('Confirm Button Text', 'Confirm')
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
@@ -61,7 +61,7 @@ const ConfirmModalExample = (): React.ReactElement => {
 }
 
 const ConfirmModalExample2 = (): React.ReactElement => {
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(true)
   const cancelText = text('Cancel Button Text', 'Cancel')
   const confirmText = text('Confirm Button Text', 'Confirm')
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')

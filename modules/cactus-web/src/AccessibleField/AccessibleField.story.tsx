@@ -12,6 +12,7 @@ export default {
 export const BasicUsage = (): React.ReactElement => {
   return (
     <AccessibleField
+      alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
       disabled={boolean('disabled', false)}
       disableTooltip={select('disableTooltip', [false, true, undefined], false)}
       name={text('name', 'field_name')}

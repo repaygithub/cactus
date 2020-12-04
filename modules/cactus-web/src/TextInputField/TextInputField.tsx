@@ -4,19 +4,13 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
-import handleEvent from '../helpers/eventHandler'
 import { omitMargins } from '../helpers/omit'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
 
 interface TextInputFieldProps
   extends MarginProps,
     FieldProps,
-    Omit<TextInputProps, 'name' | 'status' | 'onChange' | 'onFocus' | 'onBlur'> {
-  onChange?: FieldOnChangeHandler<string>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
-}
+    Omit<TextInputProps, 'name' | 'status'> {}
 
 const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
   const {
@@ -29,32 +23,12 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     warning,
     error,
     tooltip,
-    onChange,
-    onFocus,
-    onBlur,
     disabled,
     autoTooltip,
     disableTooltip,
+    alignTooltip,
     ...inputProps
   } = omitMargins(props) as Omit<TextInputFieldProps, keyof MarginProps>
-
-  const handleChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if (typeof onChange === 'function') {
-        const currentTarget = (event.currentTarget as unknown) as HTMLInputElement
-        onChange(name, currentTarget.value)
-      }
-    },
-    [onChange, name]
-  )
-
-  const handleFocus = (): void => {
-    handleEvent(onFocus, name)
-  }
-
-  const handleBlur = (): void => {
-    handleEvent(onBlur, name)
-  }
 
   return (
     <AccessibleField
@@ -70,6 +44,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       tooltip={tooltip}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
+      alignTooltip={alignTooltip}
     >
       {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
         <TextInput
@@ -78,9 +53,6 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
           id={fieldId}
           width="100%"
           status={status}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           name={name}
           aria-describedby={ariaDescribedBy}
         />
@@ -103,9 +75,6 @@ TextInputField.propTypes = {
   warning: PropTypes.string,
   error: PropTypes.string,
   tooltip: PropTypes.string,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
 }
 
 TextInputField.defaultProps = {

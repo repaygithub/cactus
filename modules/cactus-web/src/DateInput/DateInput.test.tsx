@@ -17,16 +17,6 @@ function animationRender(): Promise<void> {
 }
 
 describe('component: DateInput', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <DateInput name="date-input" id="date-input" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   describe('can be controlled', (): void => {
     test('with value as a Date', (): void => {
       const value = new Date(2018, 8, 30)
@@ -53,9 +43,9 @@ describe('component: DateInput', (): void => {
     })
 
     test('when initial value = null then a Date is raised', (): void => {
-      let value = null
-      const handleChange = jest.fn((_, v): void => {
-        value = v
+      let value: any = null
+      const handleChange = jest.fn((e): void => {
+        value = e.target.value
       })
       const { getByLabelText } = render(
         <StyleProvider>
@@ -64,12 +54,14 @@ describe('component: DateInput', (): void => {
       )
 
       userEvent.type(getByLabelText('month'), '2')
+      expect(isNaN(value)).toBe(true)
+      expect(value instanceof Date).toBe(true)
       userEvent.type(getByLabelText('day of month'), '14')
+      expect(isNaN(value)).toBe(true)
       userEvent.type(getByLabelText('year'), '2019')
+      expect(value).toEqual(new Date(2019, 1, 14))
 
-      expect(handleChange).not.toHaveBeenCalledWith('date-input', expect.any(String))
-      expect(handleChange).toHaveBeenLastCalledWith('date-input', expect.any(Date))
-      expect(handleChange).toHaveBeenLastCalledWith('date-input', new Date(2019, 1, 14))
+      expect(handleChange).toHaveBeenCalledTimes(7)
     })
 
     test('with value as a string', (): void => {
@@ -105,8 +97,8 @@ describe('component: DateInput', (): void => {
 
     test('when initial value = undefined then a string is raised', (): void => {
       let value = undefined
-      const handleChange = jest.fn((_, v): void => {
-        value = v
+      const handleChange = jest.fn((e): void => {
+        value = e.target.value
       })
       const { getByLabelText } = render(
         <StyleProvider>
@@ -115,20 +107,21 @@ describe('component: DateInput', (): void => {
       )
 
       userEvent.type(getByLabelText('month'), '2')
+      expect(value).toEqual('')
       userEvent.type(getByLabelText('day of month'), '14')
+      expect(value).toEqual('')
       userEvent.type(getByLabelText('year'), '2019')
+      expect(value).toEqual('2019-02-14')
 
-      expect(handleChange).not.toHaveBeenCalledWith('date-input', expect.any(Date))
-      expect(handleChange).toHaveBeenLastCalledWith('date-input', expect.any(String))
-      expect(handleChange).toHaveBeenLastCalledWith('date-input', '2019-02-14')
+      expect(handleChange).toHaveBeenCalledTimes(7)
     })
   })
 
   describe('using inputs', (): void => {
     test('the up arrow increases value', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      const onChange = jest.fn((_, v): void => {
-        value = v
+      const onChange = jest.fn((e): void => {
+        value = e.target.value
       })
       const { getByLabelText } = render(
         <StyleProvider>
@@ -144,13 +137,14 @@ describe('component: DateInput', (): void => {
       // @ts-ignore
       fireEvent.keyDown(MM, { key: 'ArrowUp', target: MM })
 
-      expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 9, 30))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(value).toEqual(new Date(2018, 9, 30))
     })
 
     test('the down arrow decreases value', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      const onChange = jest.fn((_, v): void => {
-        value = v
+      const onChange = jest.fn((e): void => {
+        value = e.target.value
       })
       const { getByLabelText } = render(
         <StyleProvider>
@@ -166,13 +160,14 @@ describe('component: DateInput', (): void => {
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowDown', target: dd })
 
-      expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 8, 29))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(value).toEqual(new Date(2018, 8, 29))
     })
 
     test('the down arrow will loop when value is 1', async (): Promise<void> => {
       let value = new Date(2018, 8, 1)
-      const onChange = jest.fn((_, v): void => {
-        value = v
+      const onChange = jest.fn((e): void => {
+        value = e.target.value
       })
       const { getByLabelText } = render(
         <StyleProvider>
@@ -188,13 +183,14 @@ describe('component: DateInput', (): void => {
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowDown', target: dd })
 
-      expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 8, 30))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(value).toEqual(new Date(2018, 8, 30))
     })
 
     test('the up arrow will loop when value is last day of month', async (): Promise<void> => {
       let value = new Date(2018, 8, 30)
-      const onChange = jest.fn((_, v): void => {
-        value = v
+      const onChange = jest.fn((e): void => {
+        value = e.target.value
       })
       const { getByLabelText } = render(
         <StyleProvider>
@@ -210,13 +206,14 @@ describe('component: DateInput', (): void => {
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowUp', target: dd })
 
-      expect(onChange).toHaveBeenCalledWith('date-input', new Date(2018, 8, 1))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(value).toEqual(new Date(2018, 8, 1))
     })
 
     test('looping works with February and leap year', async (): Promise<void> => {
       let value = new Date(2020, 1, 28)
-      const onChange = jest.fn((_, v): void => {
-        value = v
+      const onChange = jest.fn((e): void => {
+        value = e.target.value
       })
       const { getByLabelText, rerender } = render(
         <StyleProvider>
@@ -232,7 +229,8 @@ describe('component: DateInput', (): void => {
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowUp', target: dd })
 
-      expect(onChange).toHaveBeenCalledWith('date-input', new Date(2020, 1, 29))
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(value).toEqual(new Date(2020, 1, 29))
 
       rerender(
         <StyleProvider>
@@ -246,7 +244,8 @@ describe('component: DateInput', (): void => {
       )
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowUp', target: dd })
-      expect(onChange).toHaveBeenCalledWith('date-input', new Date(2020, 1, 1))
+      expect(onChange).toHaveBeenCalledTimes(2)
+      expect(value).toEqual(new Date(2020, 1, 1))
     })
   })
 
@@ -297,7 +296,10 @@ describe('component: DateInput', (): void => {
     test('can select date from date picker and use month year selection', async (): Promise<
       void
     > => {
-      const handleChange = jest.fn()
+      let value: any
+      const handleChange = jest.fn((e) => {
+        value = e.target.value
+      })
       const { getByLabelText, getByText } = render(
         <StyleProvider>
           <DateInput
@@ -328,7 +330,8 @@ describe('component: DateInput', (): void => {
           fireEvent.click(getByText(desiredDate.toLocaleSpoken('date')).parentElement)
         }
       )
-      expect(handleChange).toHaveBeenCalledWith('date_input', '2018-03-23')
+      expect(handleChange).toHaveBeenCalledTimes(1)
+      expect(value).toEqual('2018-03-23')
     })
 
     /**
@@ -337,7 +340,10 @@ describe('component: DateInput', (): void => {
      */
     describe('keyboard usage', (): void => {
       test('can navigate and select dates using the keyboard', async (): Promise<void> => {
-        const handleChange = jest.fn()
+        let value: any
+        const handleChange = jest.fn((e) => {
+          value = e.target.value
+        })
         const { getByLabelText } = render(
           <StyleProvider>
             <DateInput
@@ -372,13 +378,14 @@ describe('component: DateInput', (): void => {
             })
           }
         )
-        expect(handleChange).toHaveBeenCalledWith('date_input', '2018-03-23')
+        expect(handleChange).toHaveBeenCalledTimes(1)
+        expect(value).toEqual('2018-03-23')
       })
 
       test('can change months using keyboard', async (): Promise<void> => {
         const pd = PartialDate.from('2018-03-22', 'YYYY-MM-dd')
-        const handleChange = jest.fn((_, value): void => {
-          pd.parse(value, 'YYYY-MM-dd')
+        const handleChange = jest.fn((e): void => {
+          pd.parse(e.target.value, 'YYYY-MM-dd')
         })
         const { getByLabelText, rerender } = render(
           <StyleProvider>
@@ -438,8 +445,8 @@ describe('component: DateInput', (): void => {
 
       test('can change years using keyboard', async (): Promise<void> => {
         const pd = PartialDate.from('2018-03-22', 'YYYY-MM-dd')
-        const handleChange = jest.fn((_, value): void => {
-          pd.parse(value, 'YYYY-MM-dd')
+        const handleChange = jest.fn((e): void => {
+          pd.parse(e.target.value, 'YYYY-MM-dd')
         })
         const { getByLabelText, rerender } = render(
           <StyleProvider>
@@ -573,8 +580,8 @@ describe('component: DateInput', (): void => {
 
     test('can type into time input in portal', (): void => {
       const value = PartialDate.from('2018-03-01 20:18', 'YYYY-MM-dd HH:mm')
-      const handleChange = jest.fn((_, update): void => {
-        value.parse(update, 'YYYY-MM-dd HH:mm')
+      const handleChange = jest.fn((e): void => {
+        value.parse(e.target.value, 'YYYY-MM-dd HH:mm')
       })
       const { getByLabelText, getAllByLabelText, rerender } = render(
         <StyleProvider>
@@ -622,7 +629,8 @@ describe('component: DateInput', (): void => {
         renderNewValue()
       })
 
-      expect(handleChange).toHaveBeenLastCalledWith('date_input', '2018-03-01 13:33')
+      expect(handleChange).toHaveBeenCalledTimes(4)
+      expect(value.format()).toEqual('2018-03-01 13:33')
     })
   })
 
@@ -658,7 +666,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="thin" id="not-thicc" />
+          <DateInput name="thin" id="not-thicc" value="2020-01-01" />
         </StyleProvider>
       )
 
@@ -669,7 +677,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="intermediate" id="not-round" />
+          <DateInput name="intermediate" id="not-round" value="2020-01-01" />
         </StyleProvider>
       )
 
@@ -680,7 +688,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="square" id="not-round" />
+          <DateInput name="square" id="not-round" value="2020-01-01" />
         </StyleProvider>
       )
 
@@ -691,7 +699,7 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="shadows" id="none-of-em" />
+          <DateInput name="shadows" id="none-of-em" value="2020-01-01" />
         </StyleProvider>
       )
 

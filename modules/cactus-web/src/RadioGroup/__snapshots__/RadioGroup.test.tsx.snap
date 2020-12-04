@@ -1,8 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: RadioGroup should render a disabled radio group 1`] = `
-.c4 + .c4 {
+.c5 + .c5 {
   margin-top: 16px;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding-top: 8px;
 }
 
 .c2 {
@@ -12,11 +19,11 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c13 {
+.c14 {
   vertical-align: middle;
 }
 
-.c11 {
+.c12 {
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
@@ -27,18 +34,11 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   background-color: hsla(47,82%,47%,0.3);
 }
 
-.c11 .sc-dsXyEt,
-.c11 .c12,
-.c11 .sc-kYQaHc {
+.c12 .sc-jUfxsr,
+.c12 .c13,
+.c12 .sc-dWBSoC {
   margin-right: 4px;
   vertical-align: -2px;
-}
-
-.c3 {
-  box-sizing: border-box;
-  margin-left: 16px;
-  margin-right: 16px;
-  padding-top: 8px;
 }
 
 .c0 {
@@ -52,7 +52,6 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   box-sizing: border-box;
   border-bottom: 1px solid currentcolor;
   padding-left: 16px;
-  padding-right: 28px;
   width: 100%;
   float: left;
   color: hsl(0,0%,70%);
@@ -62,18 +61,18 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   clear: both;
 }
 
-.c0 .sc-fWWZrV {
+.c0 .sc-gzcbGf {
   position: absolute;
   right: 8px;
   top: 2px;
   font-size: 16px;
 }
 
-.c0 .c10 {
+.c0 .c11 {
   margin-top: 4px;
 }
 
-.c8 {
+.c9 {
   opacity: 0;
   height: 0;
   width: 0;
@@ -81,7 +80,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   position: absolute;
 }
 
-.c9 {
+.c10 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -91,7 +90,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   border: 2px solid hsl(0,0%,90%);
 }
 
-.c9::after {
+.c10::after {
   position: absolute;
   content: '';
   display: none;
@@ -103,7 +102,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   box-sizing: border-box;
 }
 
-.c7 {
+.c8 {
   position: relative;
   display: inline-block;
   vertical-align: -1px;
@@ -113,26 +112,48 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   cursor: cursor;
 }
 
-.c7 input:checked ~ span {
+.c8 input:checked ~ span {
   background-color: transparent;
 }
 
-.c7 input:checked ~ span::after {
+.c8 input:checked ~ span::after {
   display: block;
 }
 
-.c7 input:focus ~ span {
+.c8 input:focus ~ span {
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c5 + .c5 {
+.c6 + .c6 {
   margin-top: 8px;
 }
 
-.c6 .c1 {
+.c7 .c1 {
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
+}
+
+.c3 {
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding-right: 8px;
+}
+
+.c3 .sc-gzcbGf {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  padding-left: 0;
 }
 
 @media screen and (min-width:1024px) {
@@ -143,7 +164,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c11 {
+  .c12 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -151,7 +172,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
 
 <div>
   <fieldset
-    aria-describedby="rg-tip rg-status"
+    aria-describedby="rg-status"
     class="c0"
     disabled=""
     id="rg"
@@ -159,23 +180,23 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
     role="radiogroup"
   >
     <legend
-      class="c1 c2"
+      class="c1 c2 c3"
       id="rg-label"
     >
       Captitol
     </legend>
     <div
-      class="c3"
+      class="c4"
     >
       <div
-        class="c4 c5 c6"
+        class="c5 c6 c7"
       >
         <label
-          class="c7"
+          class="c8"
           for="earth"
         >
           <input
-            class="c8"
+            class="c9"
             disabled=""
             id="earth"
             name="cities"
@@ -184,7 +205,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c10"
             disabled=""
           />
         </label>
@@ -196,14 +217,14 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c6"
+        class="c5 c6 c7"
       >
         <label
-          class="c7"
+          class="c8"
           for="life"
         >
           <input
-            class="c8"
+            class="c9"
             disabled=""
             id="life"
             name="cities"
@@ -212,7 +233,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c10"
             disabled=""
           />
         </label>
@@ -224,15 +245,15 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c6"
+        class="c5 c6 c7"
       >
         <label
-          class="c7"
+          class="c8"
           for="air"
         >
           <input
             checked=""
-            class="c8"
+            class="c9"
             disabled=""
             id="air"
             name="cities"
@@ -241,7 +262,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c10"
             disabled=""
           />
         </label>
@@ -253,14 +274,14 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c6"
+        class="c5 c6 c7"
       >
         <label
-          class="c7"
+          class="c8"
           for="fire"
         >
           <input
-            class="c8"
+            class="c9"
             disabled=""
             id="fire"
             name="cities"
@@ -269,7 +290,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c10"
             disabled=""
           />
         </label>
@@ -281,14 +302,14 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c6"
+        class="c5 c6 c7"
       >
         <label
-          class="c7"
+          class="c8"
           for="death"
         >
           <input
-            class="c8"
+            class="c9"
             disabled=""
             id="death"
             name="cities"
@@ -297,7 +318,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c10"
             disabled=""
           />
         </label>
@@ -311,13 +332,13 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
     </div>
     <div>
       <div
-        class="c10 c11"
+        class="c11 c12"
         id="rg-status"
         role="alert"
       >
         <svg
           aria-hidden="true"
-          class="c12 c13"
+          class="c13 c14"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -337,8 +358,15 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
 `;
 
 exports[`component: RadioGroup should render a radio group 1`] = `
-.c4 + .c4 {
+.c8 + .c8 {
   margin-top: 16px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding-top: 8px;
 }
 
 .c2 {
@@ -348,24 +376,17 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c14 {
+.c5 {
   vertical-align: middle;
 }
 
-.c15 {
+.c6 {
   outline: none;
   color: hsl(200,10%,20%);
 }
 
-.c15:hover {
+.c6:hover {
   color: hsl(200,96%,35%);
-}
-
-.c3 {
-  box-sizing: border-box;
-  margin-left: 16px;
-  margin-right: 16px;
-  padding-top: 8px;
 }
 
 .c0 {
@@ -379,7 +400,6 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   box-sizing: border-box;
   border-bottom: 1px solid currentcolor;
   padding-left: 16px;
-  padding-right: 28px;
   width: 100%;
   float: left;
   color: currentcolor;
@@ -389,18 +409,18 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   clear: both;
 }
 
-.c0 .c13 {
+.c0 .c4 {
   position: absolute;
   right: 8px;
   top: 2px;
   font-size: 16px;
 }
 
-.c0 .sc-cbeQSR {
+.c0 .sc-gVFdEO {
   margin-top: 4px;
 }
 
-.c8 {
+.c12 {
   opacity: 0;
   height: 0;
   width: 0;
@@ -408,7 +428,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   position: absolute;
 }
 
-.c9 {
+.c13 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -418,7 +438,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   border: 2px solid hsl(200,96%,11%);
 }
 
-.c9::after {
+.c13::after {
   position: absolute;
   content: '';
   display: none;
@@ -430,7 +450,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   box-sizing: border-box;
 }
 
-.c12 {
+.c16 {
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
@@ -440,7 +460,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   border: 2px solid hsl(0,0%,90%);
 }
 
-.c12::after {
+.c16::after {
   position: absolute;
   content: '';
   display: none;
@@ -452,7 +472,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   box-sizing: border-box;
 }
 
-.c7 {
+.c11 {
   position: relative;
   display: inline-block;
   vertical-align: -1px;
@@ -462,30 +482,8 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   cursor: pointer;
 }
 
-.c7 input:checked ~ span {
-  border-color: hsl(200,96%,35%);
-  background-color: transparent;
-}
-
-.c7 input:checked ~ span::after {
-  display: block;
-}
-
-.c7 input:focus ~ span {
-  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
-}
-
-.c11 {
-  position: relative;
-  display: inline-block;
-  vertical-align: -1px;
-  line-height: 16px;
-  width: 16px;
-  height: 16px;
-  cursor: cursor;
-}
-
 .c11 input:checked ~ span {
+  border-color: hsl(200,96%,35%);
   background-color: transparent;
 }
 
@@ -497,23 +495,67 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
-.c5 + .c5 {
-  margin-top: 8px;
+.c15 {
+  position: relative;
+  display: inline-block;
+  vertical-align: -1px;
+  line-height: 16px;
+  width: 16px;
+  height: 16px;
+  cursor: cursor;
 }
 
-.c6 .c1 {
-  cursor: pointer;
-  padding-left: 8px;
+.c15 input:checked ~ span {
+  background-color: transparent;
 }
 
-.c5 + .c5 {
+.c15 input:checked ~ span::after {
+  display: block;
+}
+
+.c15 input:focus ~ span {
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+.c9 + .c9 {
   margin-top: 8px;
 }
 
 .c10 .c1 {
+  cursor: pointer;
+  padding-left: 8px;
+}
+
+.c9 + .c9 {
+  margin-top: 8px;
+}
+
+.c14 .c1 {
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
+}
+
+.c3 {
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding-right: 8px;
+}
+
+.c3 .c4 {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  padding-left: 0;
 }
 
 @media screen and (min-width:1024px) {
@@ -525,30 +567,53 @@ exports[`component: RadioGroup should render a radio group 1`] = `
 
 <div>
   <fieldset
-    aria-describedby="rg-tip rg-status"
+    aria-describedby="rg-tip"
     class="c0"
     id="rg"
     name="places"
     role="radiogroup"
   >
     <legend
-      class="c1 c2"
+      class="c1 c2 c3"
       id="rg-label"
     >
       Realm
+      <span
+        class="c4 "
+        data-reach-tooltip-trigger=""
+      >
+        <svg
+          class="c5 c6"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+        >
+          <path
+            d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
+          />
+        </svg>
+      </span>
+      <span
+        id="rg-tip"
+        role="tooltip"
+        style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
+      >
+        Select your preferred realm
+      </span>
     </legend>
     <div
-      class="c3"
+      class="c7"
     >
       <div
-        class="c4 c5 c6"
+        class="c8 c9 c10"
       >
         <label
-          class="c7"
+          class="c11"
           for="earth"
         >
           <input
-            class="c8"
+            class="c12"
             id="earth"
             name="places"
             required=""
@@ -557,7 +622,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c13"
           />
         </label>
         <label
@@ -568,15 +633,15 @@ exports[`component: RadioGroup should render a radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c6"
+        class="c8 c9 c10"
       >
         <label
-          class="c7"
+          class="c11"
           for="life"
         >
           <input
             checked=""
-            class="c8"
+            class="c12"
             id="life"
             name="places"
             required=""
@@ -585,7 +650,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c13"
           />
         </label>
         <label
@@ -596,14 +661,14 @@ exports[`component: RadioGroup should render a radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c6"
+        class="c8 c9 c10"
       >
         <label
-          class="c7"
+          class="c11"
           for="air"
         >
           <input
-            class="c8"
+            class="c12"
             id="air"
             name="places"
             required=""
@@ -612,7 +677,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c13"
           />
         </label>
         <label
@@ -623,14 +688,14 @@ exports[`component: RadioGroup should render a radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c6"
+        class="c8 c9 c10"
       >
         <label
-          class="c7"
+          class="c11"
           for="fire"
         >
           <input
-            class="c8"
+            class="c12"
             id="fire"
             name="places"
             required=""
@@ -639,7 +704,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c9"
+            class="c13"
           />
         </label>
         <label
@@ -650,14 +715,14 @@ exports[`component: RadioGroup should render a radio group 1`] = `
         </label>
       </div>
       <div
-        class="c4 c5 c10"
+        class="c8 c9 c14"
       >
         <label
-          class="c11"
+          class="c15"
           for="death"
         >
           <input
-            class="c8"
+            class="c12"
             disabled=""
             id="death"
             name="places"
@@ -667,7 +732,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
           />
           <span
             aria-hidden="true"
-            class="c12"
+            class="c16"
             disabled=""
           />
         </label>
@@ -679,29 +744,6 @@ exports[`component: RadioGroup should render a radio group 1`] = `
         </label>
       </div>
     </div>
-    <span
-      class="c13 "
-      data-reach-tooltip-trigger=""
-    >
-      <svg
-        class="c14 c15"
-        fill="currentcolor"
-        height="1em"
-        viewBox="0 0 24 24"
-        width="1em"
-      >
-        <path
-          d="M22,12 C22,6.47714622 17.5223159,2 12,2 C6.47523326,2 2,6.47577095 2,12 C2,17.524229 6.47523326,22 12,22 C17.5223159,22 22,17.5228538 22,12 Z M24,12 C24,18.6274771 18.6268316,24 12,24 C5.37060996,24 0,18.6287448 0,12 C0,5.37125524 5.37060996,0 12,0 C18.6268316,0 24,5.37252293 24,12 Z M11.057,15.6442233 L11.057,12.5 L9.27493729,12.5 C8.72265254,12.5 8.27493729,12.0522847 8.27493729,11.5 C8.27493729,10.9477153 8.72265254,10.5 9.27493729,10.5 L12.057,10.5 C12.6092847,10.5 13.057,10.9477153 13.057,11.5 L13.057,15.6442233 L15.0505322,15.6442233 C15.602817,15.6442233 16.0505322,16.0919386 16.0505322,16.6442233 C16.0505322,17.1965081 15.602817,17.6442233 15.0505322,17.6442233 L9,17.6442233 C8.44771525,17.6442233 8,17.1965081 8,16.6442233 C8,16.0919386 8.44771525,15.6442233 9,15.6442233 L11.057,15.6442233 Z M11.5,9 C10.6715729,9 10,8.32842712 10,7.5 C10,6.67157288 10.6715729,6 11.5,6 C12.3284271,6 13,6.67157288 13,7.5 C13,8.32842712 12.3284271,9 11.5,9 Z"
-        />
-      </svg>
-    </span>
-    <span
-      id="rg-tip"
-      role="tooltip"
-      style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
-    >
-      Select your preferred realm
-    </span>
   </fieldset>
 </div>
 `;

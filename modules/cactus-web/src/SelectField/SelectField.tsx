@@ -5,19 +5,17 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import { omitMargins } from '../helpers/omit'
-import Select, { OptionType, SelectProps, SelectValueType } from '../Select/Select'
-import { FieldOnChangeHandler } from '../types'
+import Select, { OptionType, SelectProps } from '../Select/Select'
 
 interface SelectFieldProps
   extends MarginProps,
     WidthProps,
     FieldProps,
-    Omit<SelectProps, 'id' | 'onChange' | keyof MarginProps | keyof WidthProps> {
+    Omit<SelectProps, 'id' | keyof MarginProps | keyof WidthProps> {
   options: (OptionType | string | number)[]
   className?: string
   id?: string
   multiple?: boolean
-  onChange?: FieldOnChangeHandler<SelectValueType>
 }
 
 const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement => {
@@ -35,6 +33,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
     disabled,
     autoTooltip,
     disableTooltip,
+    alignTooltip,
     ...rest
   } = omitMargins(props) as Omit<SelectFieldProps, keyof MarginProps>
   const [isOpen, setIsOpen] = React.useState(false)
@@ -54,6 +53,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
       autoTooltip={autoTooltip}
       isOpen={isOpen}
       disableTooltip={disableTooltip}
+      alignTooltip={alignTooltip}
     >
       {({ fieldId, labelId, name, ariaDescribedBy, status, disabled }): React.ReactElement => (
         <Select
@@ -94,7 +94,6 @@ SelectField.propTypes = {
   warning: PropTypes.string,
   error: PropTypes.string,
   tooltip: PropTypes.string,
-  onChange: PropTypes.func,
 }
 
 export default SelectField

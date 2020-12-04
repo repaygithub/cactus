@@ -1,5 +1,3 @@
-import Portal from '@reach/portal'
-import Rect from '@reach/rect'
 import {
   DescriptiveCalendar,
   NavigationChevronDown,
@@ -24,13 +22,14 @@ import {
   PartialDate,
   TOKEN_SETTERS,
 } from '../helpers/dates'
+import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpers/events'
 import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
+import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { boxShadow, textStyle } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 import { Status } from '../StatusMessage/StatusMessage'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler, Omit } from '../types'
 
 export type IsValidDateFunc = (date: Date) => boolean
 export type ParseDateFunc = (dateStr: string) => Date
@@ -69,7 +68,6 @@ interface DateInputPhrasesType {
 const IS_FIREFOX = typeof window !== 'undefined' && window.navigator.userAgent.match(/firefox/i)
 const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
 
-const portalStyleOptions = { offset: 8 }
 const noop = function (): void {
   return
 }
@@ -335,9 +333,27 @@ const getPopupBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => 
       `
 }
 
-const CalendarPopup = styled.div`
+interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
+  anchorRef: React.RefObject<HTMLDivElement>
+  popupRef: React.RefObject<HTMLDivElement>
+  isOpen: boolean
+}
+
+const BasePopup: React.FC<PopupProps> = ({ anchorRef, popupRef, isOpen, ...props }) => {
+  usePositioning({
+    anchorRef,
+    ref: popupRef,
+    visible: isOpen,
+    position: positionPortal,
+    updateOnScroll: true,
+  })
+  return <FocusLock ref={popupRef} {...props} />
+}
+
+const CalendarPopup = styled(BasePopup)`
+  display: ${(p) => (p.isOpen ? 'block' : 'none')};
   box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   z-index: 1000;
   background-color: ${(p): string => p.theme.colors.white};
   ${(p): ReturnType<typeof css> => getPopupShape(p.theme.shape)}
@@ -661,13 +677,14 @@ const MonthYearListWrapper = styled.div`
   }
 `
 
-interface DateInputProps
+type Target = CactusEventTarget<Date | string>
+
+export interface DateInputProps
   extends MarginProps,
     WidthProps,
-    React.AriaAttributes,
     Omit<
-      React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-      'ref' | 'disabled' | 'width' | 'value' | 'onChange' | 'onBlur' | 'onFocus'
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'disabled' | 'width' | 'value' | 'onChange' | 'onBlur' | 'onFocus'
     > {
   name: string
   id: string
@@ -687,9 +704,9 @@ interface DateInputProps
   type?: 'date' | 'datetime' | 'time'
   /** !important */
   disabled?: boolean
-  onChange?: FieldOnChangeHandler<Date | string | null>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler<Date | string | null>
+  onChange?: React.ChangeEventHandler<Target>
+  onFocus?: React.FocusEventHandler<Target>
+  onBlur?: React.FocusEventHandler<Target>
 
   /**
    * Phrases to use for translations.
@@ -736,6 +753,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _inputWrapper = React.createRef<HTMLDivElement>()
   private _button = React.createRef<HTMLButtonElement>()
   private _portal = React.createRef<HTMLDivElement>()
+  private eventTarget = new CactusEventTarget<Date | string>({})
 
   public static propTypes = {
     name: PropTypes.string.isRequired,
@@ -814,10 +832,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   public componentDidMount(): void {
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
     document.body.addEventListener('click', this.handleBodyClick, false)
   }
 
   public componentDidUpdate(): void {
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
     // when the entered text is a complete value, auto focus the next input
     if (this._shouldFocusNext) {
       this._shouldFocusNext = false
@@ -901,11 +923,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const token = target.dataset.token as FormatTokenType
       const eventKey = event.key
       if (eventKey === 'ArrowUp' || eventKey === 'ArrowDown') {
-        this.handleUpdate(token, eventKey)
+        this.handleUpdate(event, token, eventKey)
       } else if (eventKey === 'Delete' || eventKey === 'Backspace') {
-        this.handleUpdate(token, 'Delete')
+        this.handleUpdate(event, token, 'Delete')
       } else if (eventKey.length === 1) {
-        this.handleUpdate(token, 'Key', eventKey)
+        this.handleUpdate(event, token, 'Key', eventKey)
       }
       if (!ALLOW_DEFAULT.includes(eventKey)) {
         event.stopPropagation()
@@ -927,30 +949,34 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     ) {
       data = String(data).substr(-1)
       const token = target.dataset.token as FormatTokenType
-      this.handleUpdate(token, 'Key', data)
+      this.handleUpdate(event, token, 'Key', data)
     }
   }
 
   private handleFocus = (event: React.FocusEvent<HTMLDivElement>): void => {
     const { relatedTarget } = event
     if (this._isOutside(relatedTarget)) {
-      const { onFocus, name } = this.props
+      const { onFocus } = this.props
       if (typeof onFocus === 'function') {
-        onFocus(name)
+        const cactusEvent = new CactusFocusEvent('focus', this.eventTarget, event)
+        onFocus(cactusEvent)
       }
     }
   }
 
-  private handleBlur = (): void => {
+  private handleBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
     // when blurring off the field
     this._lastInputKeyed = ''
     // double nested because the portal takes one turn to render
     const didClickButton = this._didClickButton
+    event.persist()
     window.requestAnimationFrame((): void => {
       if (this._isOutside(document.activeElement) && !didClickButton) {
-        const { onBlur, name } = this.props
+        const { onBlur } = this.props
         if (typeof onBlur === 'function') {
-          onBlur(name, this._convertVal(this.state.value))
+          this.eventTarget.value = this._convertVal(this.state.value)
+          const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
+          onBlur(cactusEvent)
         }
       }
     })
@@ -1009,11 +1035,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     ) {
       const dateStr = target.dataset.date
       const { type } = this.props
+      event.persist()
       this.setState(
         (state): Pick<DateInputState, 'value' | 'isOpen' | 'focusDay'> => {
           const value = state.value.clone()
           value.parse(dateStr, 'YYYY-MM-dd')
-          this.raiseChange(value)
+          this.raiseChange(event, value)
           const updates: Pick<DateInputState, 'value' | 'focusDay' | 'isOpen'> = {
             value,
             focusDay: undefined,
@@ -1107,10 +1134,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (_wrapper instanceof HTMLDivElement) {
       const activeElement = document.activeElement
       if (activeElement !== null && isOwnInput(activeElement, _wrapper)) {
-        this.handleUpdate(activeElement.dataset.token as any, currentTarget.dataset.name as any)
+        this.handleUpdate(
+          event,
+          activeElement.dataset.token as any,
+          currentTarget.dataset.name as any
+        )
       } else {
         const setFocusTo = _wrapper.querySelector('input') as HTMLInputElement
-        this.handleUpdate(setFocusTo.dataset.token as any, currentTarget.dataset.name as any)
+        this.handleUpdate(event, setFocusTo.dataset.token as any, currentTarget.dataset.name as any)
         setFocusTo.focus()
       }
     }
@@ -1147,6 +1178,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       wasHandled = true
       // in month year view, the direction is reversed from inputs
       this.handleUpdate(
+        event,
         currentTarget.dataset.token as 'YYYY' | 'MM',
         key === 'ArrowUp' ? 'ArrowDown' : 'ArrowUp'
       )
@@ -1165,13 +1197,15 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private handleTimeChange = (_: string, time: Date | string | null): void => {
+  private handleTimeChange = (event: React.ChangeEvent<Target>): void => {
+    const time = event.target.value
     if (typeof time === 'string' && time !== '') {
+      event.persist()
       this.setState(
         ({ value }): Pick<DateInputState, 'value'> => {
           const update = value.clone()
           update.parse(time, 'HH:mm')
-          this.raiseChange(update)
+          this.raiseChange(event, update)
           return { value: update }
         }
       )
@@ -1181,10 +1215,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   /** helpers */
 
   private handleUpdate = (
+    event: React.SyntheticEvent,
     token: FormatTokenType,
     type: 'ArrowUp' | 'ArrowDown' | 'Delete' | 'Key',
     change?: string | undefined
   ): void => {
+    event.persist()
     this.setState(
       ({ value, isOpen, focusDay }): Pick<DateInputState, 'value' | 'focusDay'> => {
         const update = PartialDate.from(value)
@@ -1253,7 +1289,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           }
         }
 
-        this.raiseChange(update)
+        this.raiseChange(event, update)
         if (isOpen !== false) {
           focusDay = update.format('YYYY-MM-dd')
         }
@@ -1262,11 +1298,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     )
   }
 
-  private raiseChange = (value: PartialDate): void => {
-    const { name, onChange } = this.props
+  private raiseChange = (event: React.SyntheticEvent<any>, value: PartialDate): void => {
+    const { onChange } = this.props
     if (typeof onChange === 'function') {
-      const converted = this._convertVal(value)
-      onChange(name, converted)
+      this.eventTarget.value = this._convertVal(value)
+      const cactusEvent = new CactusChangeEvent(this.eventTarget, event)
+      onChange(cactusEvent)
     }
   }
 
@@ -1436,13 +1473,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     } = this.props
     const formatArray = parseFormat(value.getLocaleFormat())
     let isFirstInput = true
-    const inputRect =
-      this._inputWrapper.current !== null
-        ? this._inputWrapper.current.getBoundingClientRect()
-        : null
     const hasTime = type === 'datetime' || type === 'time'
     const hasDate = type === 'date' || type === 'datetime'
     const phrases = this.getPhrases()
+
+    const monthYearId = id + '-monthyear-label'
+    const timeId = id + '-time'
+    const { month: focusMonth, year: focusYear, days } = this._getMonthData()
+    const selectedStr = value.format('YYYY-MM-dd')
 
     return (
       <Fragment>
@@ -1506,182 +1544,158 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             />
           </ToggleButtons>
         </InputWrapper>
-        {hasDate && isOpen && (
-          <Portal>
-            <Rect observe={Boolean(isOpen)}>
-              {({ rect, ref }): ReactElement => {
-                const monthYearId = id + '-monthyear-label'
-                const timeId = id + '-time'
-                const { month: focusMonth, year: focusYear, days } = this._getMonthData()
-                const selectedStr = value.format('YYYY-MM-dd')
-
-                return (
-                  <FocusLock
-                    ref={this._portal}
-                    role="dialog"
-                    aria-labelledby={monthYearId}
-                    onKeyDownCapture={this.handlePortalKeydownCapture}
+        {hasDate && (
+          <CalendarPopup
+            anchorRef={this._inputWrapper}
+            popupRef={this._portal}
+            isOpen={!!isOpen}
+            role="dialog"
+            aria-labelledby={monthYearId}
+            onKeyDownCapture={this.handlePortalKeydownCapture}
+          >
+            <div onClick={this.handleCalendarClick}>
+              <MonthYearSelect
+                className={isOpen || undefined}
+                tabIndex={0}
+                onClick={this.handleSelectMonthClick}
+                aria-label={isOpen === 'calendar' ? phrases.showMonthYear : phrases.showCalendar}
+                aria-roledescription="toggles between calendar and month year selectors"
+              >
+                <span id={monthYearId}>
+                  {phrases.months[focusMonth].long} {focusYear}
+                </span>
+                <NavigationChevronDown data-is-open={isOpen} iconSize="small" ml={3} />
+              </MonthYearSelect>
+              {isOpen === 'calendar' ? (
+                <Fragment>
+                  <Calendar
+                    role="grid"
+                    onKeyDownCapture={this.handleCalendarKeydownCapture}
+                    aria-roledescription={phrases.calendarKeyboardDirections}
+                    days={days}
+                    ariaDisabledDate={phrases.ariaDisabledDate}
+                    focusMonth={focusMonth}
+                    focusDay={focusDay || ''}
+                    selected={selectedStr}
+                    onDayMouseEnter={this.handleDayMouseEnter}
+                    isValidDate={isValidDate}
                   >
-                    <CalendarPopup
-                      ref={ref}
-                      onClick={this.handleCalendarClick}
-                      style={{
-                        ...positionPortal(Boolean(isOpen), inputRect, rect, portalStyleOptions),
-                        width: 'auto',
-                      }}
-                    >
-                      <MonthYearSelect
-                        className={isOpen}
-                        tabIndex={0}
-                        onClick={this.handleSelectMonthClick}
-                        aria-label={
-                          isOpen === 'calendar' ? phrases.showMonthYear : phrases.showCalendar
-                        }
-                        aria-roledescription="toggles between calendar and month year selectors"
-                      >
-                        <span id={monthYearId}>
-                          {phrases.months[focusMonth].long} {focusYear}
-                        </span>
-                        <NavigationChevronDown data-is-open={isOpen} iconSize="small" ml={3} />
-                      </MonthYearSelect>
-                      {isOpen === 'calendar' ? (
-                        <Fragment>
-                          <Calendar
-                            role="grid"
-                            onKeyDownCapture={this.handleCalendarKeydownCapture}
-                            aria-roledescription={phrases.calendarKeyboardDirections}
-                            days={days}
-                            ariaDisabledDate={phrases.ariaDisabledDate}
-                            focusMonth={focusMonth}
-                            focusDay={focusDay || ''}
-                            selected={selectedStr}
-                            onDayMouseEnter={this.handleDayMouseEnter}
-                            isValidDate={isValidDate}
+                    <div role="row">
+                      {phrases.weekdays.map(
+                        (weekday): ReactElement => (
+                          <CalendarDay
+                            key={weekday.long}
+                            role="columnheader"
+                            longLabel={weekday.long}
                           >
-                            <div role="row">
-                              {phrases.weekdays.map(
-                                (weekday): ReactElement => (
-                                  <CalendarDay
-                                    key={weekday.long}
-                                    role="columnheader"
-                                    longLabel={weekday.long}
-                                  >
-                                    {weekday.short}
-                                  </CalendarDay>
-                                )
-                              )}
-                            </div>
-                          </Calendar>
-                          {hasTime && (
-                            <TimeInputWrapper>
-                              <DateInput
-                                id={timeId}
-                                name={timeId}
-                                type="time"
-                                format="HH:mm"
-                                value={value.format('HH:mm')}
-                                onChange={this.handleTimeChange}
-                                phrases={phrases}
-                              />
-                            </TimeInputWrapper>
-                          )}
-                        </Fragment>
-                      ) : (
-                        <MonthYearListWrapper>
-                          <div>
-                            {((): ReactElement => {
-                              const monthList: React.ReactNodeArray = []
-                              let activeDescendant = ''
-
-                              for (
-                                let monthIndex = 0;
-                                monthIndex < phrases.months.length;
-                                ++monthIndex
-                              ) {
-                                const monthPhrase = phrases.months[monthIndex]
-                                const monthId = `${id}-${monthPhrase.long}`
-                                const isSelected = monthIndex === focusMonth
-                                if (isSelected) {
-                                  activeDescendant = monthId
-                                }
-                                monthList.push(
-                                  <li
-                                    key={monthId}
-                                    id={monthId}
-                                    role="option"
-                                    data-value={monthIndex}
-                                    aria-selected={isSelected ? 'true' : undefined}
-                                  >
-                                    <span>{monthPhrase.long}</span>
-                                  </li>
-                                )
-                              }
-
-                              return (
-                                <ul
-                                  tabIndex={0}
-                                  role="listbox"
-                                  aria-activedescendant={activeDescendant}
-                                  aria-label="Select a month"
-                                  data-name="setMonth"
-                                  data-token="MM"
-                                  onClick={this.handleListClick}
-                                  onKeyDownCapture={this.handleListKeyDown}
-                                >
-                                  {monthList}
-                                </ul>
-                              )
-                            })()}
-                          </div>
-                          <div>
-                            {((): ReactElement => {
-                              const monthList: React.ReactNodeArray = []
-                              let activeDescendant = ''
-                              const years = this.getYears()
-
-                              for (const year of years) {
-                                const yearId = `${id}-${year}`
-                                const isSelected = year === focusYear
-                                if (isSelected) {
-                                  activeDescendant = yearId
-                                }
-                                monthList.push(
-                                  <li
-                                    key={yearId}
-                                    id={yearId}
-                                    role="option"
-                                    data-value={year}
-                                    aria-selected={isSelected ? 'true' : undefined}
-                                  >
-                                    <span>{year}</span>
-                                  </li>
-                                )
-                              }
-
-                              return (
-                                <ul
-                                  tabIndex={0}
-                                  role="listbox"
-                                  aria-activedescendant={activeDescendant}
-                                  aria-label="Select a year"
-                                  data-name="setYear"
-                                  data-token="YYYY"
-                                  onClick={this.handleListClick}
-                                  onKeyDownCapture={this.handleListKeyDown}
-                                >
-                                  {monthList}
-                                </ul>
-                              )
-                            })()}
-                          </div>
-                        </MonthYearListWrapper>
+                            {weekday.short}
+                          </CalendarDay>
+                        )
                       )}
-                    </CalendarPopup>
-                  </FocusLock>
-                )
-              }}
-            </Rect>
-          </Portal>
+                    </div>
+                  </Calendar>
+                  {hasTime && (
+                    <TimeInputWrapper>
+                      <DateInput
+                        id={timeId}
+                        name={timeId}
+                        type="time"
+                        format="HH:mm"
+                        value={value.format('HH:mm')}
+                        onChange={this.handleTimeChange}
+                        phrases={phrases}
+                      />
+                    </TimeInputWrapper>
+                  )}
+                </Fragment>
+              ) : (
+                <MonthYearListWrapper>
+                  <div>
+                    {((): ReactElement => {
+                      const monthList: React.ReactNodeArray = []
+                      let activeDescendant = ''
+
+                      for (let monthIndex = 0; monthIndex < phrases.months.length; ++monthIndex) {
+                        const monthPhrase = phrases.months[monthIndex]
+                        const monthId = `${id}-${monthPhrase.long}`
+                        const isSelected = monthIndex === focusMonth
+                        if (isSelected) {
+                          activeDescendant = monthId
+                        }
+                        monthList.push(
+                          <li
+                            key={monthId}
+                            id={monthId}
+                            role="option"
+                            data-value={monthIndex}
+                            aria-selected={isSelected ? 'true' : undefined}
+                          >
+                            <span>{monthPhrase.long}</span>
+                          </li>
+                        )
+                      }
+
+                      return (
+                        <ul
+                          tabIndex={0}
+                          role="listbox"
+                          aria-activedescendant={activeDescendant}
+                          aria-label="Select a month"
+                          data-name="setMonth"
+                          data-token="MM"
+                          onClick={this.handleListClick}
+                          onKeyDownCapture={this.handleListKeyDown}
+                        >
+                          {monthList}
+                        </ul>
+                      )
+                    })()}
+                  </div>
+                  <div>
+                    {((): ReactElement => {
+                      const monthList: React.ReactNodeArray = []
+                      let activeDescendant = ''
+                      const years = this.getYears()
+
+                      for (const year of years) {
+                        const yearId = `${id}-${year}`
+                        const isSelected = year === focusYear
+                        if (isSelected) {
+                          activeDescendant = yearId
+                        }
+                        monthList.push(
+                          <li
+                            key={yearId}
+                            id={yearId}
+                            role="option"
+                            data-value={year}
+                            aria-selected={isSelected ? 'true' : undefined}
+                          >
+                            <span>{year}</span>
+                          </li>
+                        )
+                      }
+
+                      return (
+                        <ul
+                          tabIndex={0}
+                          role="listbox"
+                          aria-activedescendant={activeDescendant}
+                          aria-label="Select a year"
+                          data-name="setYear"
+                          data-token="YYYY"
+                          onClick={this.handleListClick}
+                          onKeyDownCapture={this.handleListKeyDown}
+                        >
+                          {monthList}
+                        </ul>
+                      )
+                    })()}
+                  </div>
+                </MonthYearListWrapper>
+              )}
+            </div>
+          </CalendarPopup>
         )}
       </Fragment>
     )

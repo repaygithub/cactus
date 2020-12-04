@@ -10,6 +10,11 @@ interface Values {
   isValid: boolean
 }
 
+interface DateTarget {
+  name?: string
+  value: Date | string | null
+}
+
 function initValues(): Values {
   return {
     dateField: '',
@@ -19,13 +24,14 @@ function initValues(): Values {
 
 const DateInputFieldExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [values, setValues] = React.useState(initValues)
-  const handleChange = React.useCallback((name, value): void => {
+  const handleChange = React.useCallback(({ target }: React.ChangeEvent<DateTarget>): void => {
+    const value = target.value as string
     if (new Date() < new Date(value)) {
       setValues((v): Values => ({ ...v, isValid: true }))
     } else {
       setValues((v): Values => ({ ...v, isValid: false }))
     }
-    setValues((v): Values => ({ ...v, [name]: value }))
+    setValues((v): Values => ({ ...v, [target.name as string]: value }))
   }, [])
 
   return (

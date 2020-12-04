@@ -1,32 +1,29 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
 import { MarginProps, WidthProps } from 'styled-system'
 
 import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
+import { TooltipAlignment } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
 import Fieldset from '../Fieldset/Fieldset'
-import handleEvent from '../helpers/eventHandler'
 import { cloneAll } from '../helpers/react'
 import Label from '../Label/Label'
 import StatusMessage from '../StatusMessage/StatusMessage'
 import Tooltip from '../Tooltip/Tooltip'
-import { FieldOnBlurHandler, FieldOnChangeHandler, FieldOnFocusHandler } from '../types'
-
 interface CheckBoxGroupProps
   extends MarginProps,
     WidthProps,
     Omit<FieldProps, 'labelProps'>,
-    Omit<
-      React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
-      'name' | 'onChange' | 'onFocus' | 'onBlur' | 'defaultValue'
-    > {
+    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'defaultValue'> {
   checked?: { [K: string]: boolean }
   required?: boolean
-  onChange?: FieldOnChangeHandler<boolean>
-  onFocus?: FieldOnFocusHandler
-  onBlur?: FieldOnBlurHandler
   disableTooltip?: boolean
+}
+
+interface LabelWrapper {
+  alignTooltip?: TooltipAlignment
 }
 
 type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
@@ -40,6 +37,8 @@ type ForwardProps = {
   required?: boolean
 }
 
+const noop = () => undefined
+
 export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
   (
     {
@@ -48,11 +47,11 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       tooltip,
       required,
       checked,
-      onChange,
       onFocus,
       onBlur,
       disableTooltip,
       autoTooltip = true,
+      alignTooltip = 'right',
       ...props
     },
     ref
@@ -67,7 +66,7 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       statusMessage,
       tooltipId,
       disabled,
-    } = useAccessibleField(props)
+    } = useAccessibleField({ ...props, tooltip })
     const [showTooltip, setTooltipVisible] = React.useState<boolean>(false)
 
     const forwardProps: ForwardProps = { required }
@@ -75,42 +74,38 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       forwardProps.disabled = disabled
     }
 
+    const hasOnChange = !!props.onChange
     const cloneWithValue = (element: React.ReactElement, props: any) => {
       if (checked !== undefined) {
         props = { ...props, checked: checked[element.props.name] || false }
+      }
+      // This is to avert a PropTypes warning regarding missing onChange handler.
+      const hasChecked = props.checked !== undefined || element.props.checked !== undefined
+      if (hasChecked && hasOnChange && !element.props.onChange) {
+        props = { ...props, onChange: noop }
       }
       return React.cloneElement(element, props)
     }
     children = cloneAll(children, forwardProps, cloneWithValue)
 
-    const handleChange = React.useCallback(
-      (event: React.FormEvent<HTMLFieldSetElement>): void => {
-        if (typeof onChange === 'function') {
-          const target = (event.target as unknown) as HTMLInputElement
-          onChange(target.name, target.checked)
-        }
-      },
-      [onChange]
-    )
-
     const handleFocus = React.useCallback(
       (event: React.FocusEvent<HTMLFieldSetElement>): void => {
+        onFocus?.(event)
         if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-          handleEvent(onFocus, name)
           setTooltipVisible(() => true)
         }
       },
-      [name, onFocus]
+      [onFocus]
     )
 
     const handleBlur = React.useCallback(
       (e: React.FocusEvent<HTMLFieldSetElement>) => {
+        onBlur?.(e)
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          handleEvent(onBlur, name)
           setTooltipVisible(() => false)
         }
       },
-      [onBlur, name, setTooltipVisible]
+      [onBlur, setTooltipVisible]
     )
 
     return (
@@ -121,24 +116,25 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
         aria-describedby={ariaDescribedBy}
         name={name}
         disabled={disabled}
-        onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Label id={labelId} as="legend">
+        <LabelWrapper id={labelId} as="legend" alignTooltip={alignTooltip}>
           {label}
-        </Label>
+          {tooltip && (
+            <Tooltip
+              id={tooltipId}
+              label={tooltip}
+              disabled={disableTooltip ?? disabled}
+              forceVisible={autoTooltip ? showTooltip : false}
+            />
+          )}
+        </LabelWrapper>
+
         <Box mx={4} pt={3}>
           {children}
         </Box>
-        {tooltip && (
-          <Tooltip
-            id={tooltipId}
-            label={tooltip}
-            disabled={disableTooltip ?? disabled}
-            forceVisible={autoTooltip ? showTooltip : false}
-          />
-        )}
+
         {status && (
           <div>
             <StatusMessage status={status} id={statusId}>
@@ -150,6 +146,19 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
     )
   }
 )
+
+const LabelWrapper = styled(Label)<LabelWrapper>`
+  flex-wrap: nowrap;
+  display: flex;
+  justify-content: ${(p) => (p.alignTooltip === 'right' ? 'space-between' : 'flex-start')};
+  padding-right: 8px;
+  ${Tooltip} {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    padding-left: ${(p) => (p.alignTooltip === 'right' ? 0 : '8px')};
+  }
+`
 
 CheckBoxGroup.displayName = 'CheckBoxGroup'
 
@@ -163,9 +172,6 @@ CheckBoxGroup.propTypes = {
   success: PropTypes.node,
   warning: PropTypes.node,
   error: PropTypes.node,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
   checked: PropTypes.objectOf(PropTypes.bool.isRequired),
 }
 

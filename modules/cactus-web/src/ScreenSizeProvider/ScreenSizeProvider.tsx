@@ -52,6 +52,8 @@ const DEFAULT_SIZE: Size = 'large'
 
 export const ScreenSizeContext = React.createContext<ScreenSize>(SIZES[DEFAULT_SIZE])
 
+export const useScreenSize = (): ScreenSize => React.useContext(ScreenSizeContext)
+
 export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }): React.ReactElement => {

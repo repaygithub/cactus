@@ -54,8 +54,8 @@ const FileForm = () => {
   const [state, setState] = useState({})
 
   const handleChange = useCallback(
-    (name, files) => {
-      setState(state => ({ ...state, [name]: files }))
+    ({ target }) => {
+      setState(state => ({ ...state, [target.name]: target.value }))
     },
     [setState]
   )

@@ -41,8 +41,8 @@ import React, { useState, useCallback } from 'react'
 export default () => {
   const [values, setValues] = useState({ ufo: undefined })
   const handleChange = useCallback(
-    (name, value) => {
-      setValues(state => setValues({ ...state, [name]: value }))
+    ({ target }) => {
+      setValues(state => setValues({ ...state, [target.name]: target.value }))
     },
     [setValues]
   )
