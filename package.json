@@ -22,6 +22,7 @@
     "test": "yarn test:local",
     "test:ci": "yarn lint && yarn ws run test:ci",
     "test:local": "yarn lint && yarn ws run test:local",
+    "test:sonar": "yarn fwk test --coverage && yarn i18n test --coverage && yarn icons test --coverage && yarn theme test --coverage && yarn web test --coverage",
     "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build",
     "predocs:publish": "yarn docs build",
     "docs:publish": "gh-pages -d ./website/public",
