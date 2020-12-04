@@ -129,8 +129,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
     const { target } = event
     if (
       !(target instanceof Node) ||
-      (!(triggerRef.current && triggerRef.current.contains(target)) &&
-        !(widgetRef.current && widgetRef.current.contains(target)))
+      (!triggerRef.current?.contains(target) && !widgetRef.current?.contains(target))
     ) {
       setStayOpen(false)
     }
@@ -160,14 +159,10 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
             }
             style={{ maxWidth }}
             onMouseEnter={() => {
-              if (!stayOpen) {
-                setHovering(true)
-              }
+              setHovering(true)
             }}
             onMouseLeave={() => {
-              if (!stayOpen) {
-                setHovering(false)
-              }
+              setHovering(false)
             }}
           />
           <VisuallyHidden role="tooltip" id={id}>
