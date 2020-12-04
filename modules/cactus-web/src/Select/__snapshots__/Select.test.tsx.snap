@@ -19,7 +19,7 @@ exports[`component: Select snapshot 1`] = `
   min-width: 194px;
   width: 100%;
   height: 32px;
-  padding: 0 24px 0 16px;
+  padding: 0 28px 0 16px;
   background-color: transparent;
   border-radius: 8px;
   border-width: 1px;
@@ -250,7 +250,7 @@ exports[`component: Select with theme customization should have 2px border 1`] =
   min-width: 194px;
   width: 100%;
   height: 32px;
-  padding: 0 24px 0 16px;
+  padding: 0 28px 0 16px;
   background-color: transparent;
   border-radius: 8px;
   border-width: 2px;
@@ -472,7 +472,7 @@ exports[`component: Select with theme customization should match intermediate sh
   min-width: 194px;
   width: 100%;
   height: 32px;
-  padding: 0 24px 0 16px;
+  padding: 0 28px 0 16px;
   background-color: transparent;
   border-radius: 8px;
   border-width: 1px;
@@ -694,7 +694,7 @@ exports[`component: Select with theme customization should match square shape st
   min-width: 194px;
   width: 100%;
   height: 32px;
-  padding: 0 24px 0 16px;
+  padding: 0 28px 0 16px;
   background-color: transparent;
   border-radius: 1px;
   border-width: 1px;
@@ -916,7 +916,7 @@ exports[`component: Select with theme customization should not have box shadows 
   min-width: 194px;
   width: 100%;
   height: 32px;
-  padding: 0 24px 0 16px;
+  padding: 0 28px 0 16px;
   background-color: transparent;
   border-radius: 8px;
   border-width: 1px;

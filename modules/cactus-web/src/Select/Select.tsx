@@ -251,7 +251,7 @@ const SelectTrigger = styled.button`
   min-width: 194px;
   width: 100%;
   height: 32px;
-  padding: 0 24px 0 16px;
+  padding: 0 28px 0 16px;
   background-color: transparent;
   ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
@@ -1546,6 +1546,7 @@ Select.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+  noOptionsText: PropTypes.string,
 }
 
 Select.defaultProps = {
@@ -1555,6 +1556,7 @@ Select.defaultProps = {
   canCreateOption: true,
   matchNotFoundText: 'No match found',
   extraLabel: '+{} more',
+  noOptionsText: 'No options available',
 }
 
 export default Select
