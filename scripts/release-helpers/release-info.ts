@@ -1,31 +1,41 @@
+import prompts from 'prompts'
+import { inc, ReleaseType } from 'semver'
+
 import { createChangelog } from './changelog'
 import { getCommitsInRelease } from './commits'
 import inFolder from './in-folder'
-import { getChangedPackages, getLernaPackages, shouldIgnoreCommit } from './lerna'
-import { IExtendedCommit } from './types'
+import { getChangedPackages, getLernaPackages, LernaPackage } from './lerna'
+import SEMVER from './semver'
 
-// const getBump = async (lernaPackage: LernaPackage) => {
-//   const message = `What kind of version bump should apply to ${lernaPackage.name}? (curren version: ${lernaPackage.version})`
-//   const answers = await prompts({
-//     type: 'select',
-//     name: 'bump',
-//     message,
-//     choices: Object.keys(SEMVER).map((bumpType) => ({
-//       title: `${bumpType} - ${inc(lernaPackage.version, bumpType as ReleaseType)}`,
-//       value: bumpType,
-//     })),
-//   })
-//   return answers.bump
-// }
+const getBump = async (lernaPackage: LernaPackage) => {
+  const message = `What kind of version bump should apply to ${lernaPackage.name}? (current version: ${lernaPackage.version})`
+  const answers = await prompts({
+    type: 'select',
+    name: 'bump',
+    message,
+    choices: Object.keys(SEMVER).map((bumpType) => ({
+      title: `${bumpType} - ${inc(lernaPackage.version, bumpType as ReleaseType)}`,
+      value: bumpType,
+    })),
+  })
+  return answers.bump as ReleaseType
+}
 
-export default async (from: string, to = 'HEAD'): Promise<Record<string, string>> => {
+export type ReleaseInfo = {
+  name: string
+  newVersion: string | null
+  notes: string
+  packagePath: string
+}[]
+
+export default async (from: string, to = 'HEAD'): Promise<ReleaseInfo> => {
   const commits = await getCommitsInRelease(from, to)
   const changelog = createChangelog()
 
   const changedPackages = await getChangedPackages()
   const lernaPackages = await getLernaPackages()
 
-  const allReleaseNotes: Record<string, string> = {}
+  const releaseInfo: ReleaseInfo = []
 
   await lernaPackages.reduce(async (last, lernaPackage) => {
     await last
@@ -46,8 +56,14 @@ export default async (from: string, to = 'HEAD'): Promise<Record<string, string>
     console.log('----------------------------------------------')
     console.log('')
     const releaseNotes = await changelog.generateReleaseNotes(includedCommits)
-    allReleaseNotes[lernaPackage.name] = releaseNotes
+    const bump = await getBump(lernaPackage)
+    releaseInfo.push({
+      name: lernaPackage.name,
+      newVersion: inc(lernaPackage.version, bump),
+      notes: releaseNotes,
+      packagePath: lernaPackage.path,
+    })
   }, Promise.resolve())
 
-  return allReleaseNotes
+  return releaseInfo
 }

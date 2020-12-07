@@ -1,8 +1,11 @@
 /// <reference types="./custom" />
 
+import * as fs from 'fs'
+import path from 'path'
+
 import { getLatestRelease } from './release-helpers/commits'
 import execPromise from './release-helpers/exec-promise'
-import generateReleaseNotes from './release-helpers/release-notes'
+import generateReleaseInfo from './release-helpers/release-info'
 
 const getGitUser = async () => {
   try {
@@ -18,40 +21,47 @@ const getGitUser = async () => {
   }
 }
 
-const makeChangelog = async (from: string, to = 'HEAD') => {
-  const dryRun = true
-  const createCommitMessage = (scope: string) => `chore(${scope}): update changelog [skip ci]`
+const updateChangelogFile = async (title: string, releaseNotes: string, changelogPath: string) => {
+  const date = new Date().toDateString()
+  let newChangelog = '#'
 
+  if (title) {
+    newChangelog += ` ${title}`
+  }
+
+  newChangelog += ` (${date})\n\n${releaseNotes}`
+
+  if (fs.existsSync(changelogPath)) {
+    const oldChangelog = fs.readFileSync(changelogPath, 'utf8')
+    newChangelog = `${newChangelog}\n\n---\n\n${oldChangelog}`
+  } else {
+    newChangelog += '\n'
+  }
+
+  fs.writeFileSync(changelogPath, newChangelog)
+  await execPromise('git', ['add', changelogPath])
+}
+
+const createCommitMessage = (scope: string) => `chore(${scope}): update changelog [skip ci]`
+
+const createChangelogs = async (from: string, to = 'HEAD') => {
   await getGitUser()
 
   const lastRelease = from || (await getLatestRelease())
-  const releaseNotes = await generateReleaseNotes(lastRelease, to)
+  const releaseInfo = await generateReleaseInfo(lastRelease, to)
 
-  if (dryRun) {
-    console.log('Potential Changelog Addition:\n', releaseNotes)
-    return
+  for (const packageInfo of releaseInfo) {
+    const title = `v${packageInfo.newVersion}`
+    if (packageInfo.notes.trim()) {
+      await updateChangelogFile(
+        title,
+        packageInfo.notes,
+        path.join(packageInfo.packagePath, 'CHANGELOG.md')
+      )
+      const scope = path.basename(packageInfo.packagePath)
+      await execPromise('git', ['commit', '-m', `"${createCommitMessage(scope)}"`, '--no-verify'])
+    }
   }
-
-  console.log('New Release Notes\n', releaseNotes)
-
-  // const currentVersion = await this.getCurrentVersion(lastRelease)
-  // const context = {
-  //   bump,
-  //   commits: await this.release.getCommits(lastRelease, to || undefined),
-  //   releaseNotes,
-  //   lastRelease,
-  //   currentVersion,
-  // }
-
-  // if (!noCommit) {
-  //   await this.release.addToChangelog(releaseNotes, lastRelease, currentVersion)
-
-  //   await this.hooks.beforeCommitChangelog.promise(context)
-  //   await execPromise('git', ['commit', '-m', `"${message}"`, '--no-verify'])
-  //   this.logger.verbose.info('Committed new changelog.')
-  // }
-
-  // await this.hooks.afterChangelog.promise(context)
 }
 
 const main = async () => {
@@ -70,7 +80,7 @@ const main = async () => {
   // const commits = await getCommitsInRelease(lastReleaseTag)
   // console.log(commits)
 
-  await makeChangelog(lastReleaseTag)
+  await createChangelogs(lastReleaseTag)
 }
 
 main()
