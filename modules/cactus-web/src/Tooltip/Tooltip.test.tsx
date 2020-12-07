@@ -45,7 +45,7 @@ describe('component: Tooltip', (): void => {
       </StyleProvider>
     )
     act((): void => {
-      fireEvent.mouseEnter(document.querySelector('span') as Element)
+      fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
     })
@@ -63,7 +63,7 @@ describe('component: Tooltip', (): void => {
       </StyleProvider>
     )
     act((): void => {
-      fireEvent.mouseEnter(document.querySelector('span') as Element)
+      fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
     })
@@ -84,7 +84,7 @@ describe('component: Tooltip', (): void => {
         <button>Something Else to Focus</button>
       </StyleProvider>
     )
-    const tooltipTrigger = document.querySelector('span') as Element
+    const tooltipTrigger = document.querySelector('span[data-reach-tooltip-trigger]') as Element
     const btn = document.querySelector('button') as Element
     act((): void => {
       fireEvent.click(tooltipTrigger)
