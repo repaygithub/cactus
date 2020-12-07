@@ -24,20 +24,24 @@ export default {
   component: Select,
 } as Meta
 
-export const BasicUsage = (): ReactElement => (
-  <React.Fragment>
-    <Select
-      options={array('options', ['name', 'other', 'three'])}
-      name={text('name', 'random')}
-      id={text('id', 'select-input')}
-      disabled={boolean('disabled', false)}
-      multiple={boolean('multiple', false)}
-      m={text('m', '2')}
-      {...eventLoggers}
-    />
-  </React.Fragment>
-)
-
+export const BasicUsage = (): ReactElement => {
+  const optionsAvailable = boolean('Show options?', true)
+  const options = array('options', ['name', 'other', 'three'])
+  return (
+    <React.Fragment>
+      <Select
+        options={optionsAvailable ? options : []}
+        noOptionsText={text('No option text', 'No options available')}
+        name={text('name', 'random')}
+        id={text('id', 'select-input')}
+        disabled={boolean('disabled', false)}
+        multiple={boolean('multiple', false)}
+        m={text('m', '2')}
+        {...eventLoggers}
+      />
+    </React.Fragment>
+  )
+}
 export const CollisionsInAnOverSizedContainer = (): ReactElement => (
   <React.Fragment>
     <Select
@@ -115,9 +119,11 @@ WithMultiselect.parameters = { cactus: { overrides: { overflow: 'hidden' } } }
 
 export const WithComboBox = (): ReactElement => {
   const [value, setValue] = React.useState<SelectValueType>(null)
+  const optionsAvailable = boolean('Show options?', true)
   return (
     <Select
-      options={arizonaCities}
+      options={optionsAvailable ? arizonaCities : []}
+      noOptionsText={text('No option text', 'No options available')}
       name="random"
       id="select-input"
       disabled={boolean('disabled', false)}

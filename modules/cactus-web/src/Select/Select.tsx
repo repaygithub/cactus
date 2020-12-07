@@ -56,6 +56,7 @@ export interface SelectProps
   matchNotFoundText?: string
   comboBoxSearchLabel?: string
   onDropdownToggle?: (prop: boolean) => void
+  noOptionsText?: string
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -250,7 +251,7 @@ const SelectTrigger = styled.button`
   min-width: 194px;
   width: 100%;
   height: 32px;
-  padding: 0 24px 0 16px;
+  padding: 0 28px 0 16px;
   background-color: transparent;
   ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
@@ -1414,12 +1415,14 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       matchNotFoundText = 'No match found',
       extraLabel,
       value: propsValue,
+      noOptionsText = 'No options available',
       onDropdownToggle,
       ...rest
     } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
     const { isOpen, searchValue, activeDescendant } = this.state
     const options = this.getExtOptions()
-    const noOptsDisable = !comboBox && options.length === 0
+    const noOptsDisable =
+      (!comboBox && options.length === 0) || (comboBox && !canCreateOption && options.length === 0)
 
     // Added `tabIndex=-1` on the wrapper element to compensate for
     // the fact that Safari cannot focus buttons on click.
@@ -1466,7 +1469,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
               <ValueSwitch
                 extraLabel={extraLabel || '+{} more'}
                 options={options}
-                placeholder={noOptsDisable ? 'No options available.' : placeholder}
+                placeholder={noOptsDisable ? noOptionsText : placeholder}
                 multiple={multiple}
               />
               <NavigationChevronDown iconSize="tiny" />
@@ -1543,6 +1546,7 @@ Select.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+  noOptionsText: PropTypes.string,
 }
 
 Select.defaultProps = {
@@ -1552,6 +1556,7 @@ Select.defaultProps = {
   canCreateOption: true,
   matchNotFoundText: 'No match found',
   extraLabel: '+{} more',
+  noOptionsText: 'No options available',
 }
 
 export default Select
