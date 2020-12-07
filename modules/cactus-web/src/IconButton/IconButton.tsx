@@ -1,10 +1,16 @@
 import { iconSizes } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, {
+  css,
+  FlattenInterpolation,
+  FlattenSimpleInterpolation,
+  ThemeProps,
+} from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { isIE } from '../helpers/constants'
 import { omitMargins } from '../helpers/omit'
 
 export type IconButtonVariants = 'standard' | 'action' | 'danger'
@@ -27,8 +33,7 @@ const variantMap: VariantMap = {
   action: css`
     color: ${(p): string => p.theme.colors.callToAction};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${(p): string => p.theme.colors.base};
     }
   `,
@@ -81,6 +86,20 @@ const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
   cursor: not-allowed;
 `
 
+const shapeMap = {
+  square: css`
+    border-radius: 1px;
+  `,
+  intermediate: css`
+    border-radius: 8px;
+  `,
+  round: css`
+    border-radius: 20px;
+  `,
+}
+
+const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
+
 const variantOrDisabled = (
   props: IconButtonProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
@@ -110,18 +129,37 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
 
   &::-moz-focus-inner {
     border: 0;
   }
 
   &:focus {
-    background-color: ${(p): string => p.theme.colors.transparentCTA};
+    ::after {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 40px;
+      width: 40px;
+      ${() => {
+        if (isIE) {
+          return `
+            top: -8px;
+            left: 0px;
+          `
+        }
+      }}
+      border: 1px solid;
+      ${(p) => getShape(p.theme.shape)}
+      border-color: ${(p): string => p.theme.colors.callToAction};
+      box-sizing: border-box;
+    }
   }
 
   ${variantOrDisabled}
