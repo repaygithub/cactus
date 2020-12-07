@@ -459,11 +459,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -472,8 +473,16 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   border: 0;
 }
 
-.c18:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c18:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c18:hover {
@@ -950,11 +959,12 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -963,8 +973,16 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   border: 0;
 }
 
-.c18:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c18:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c18:hover {

@@ -239,11 +239,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -252,8 +253,16 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border: 0;
 }
 
-.c3:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c3:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c3:hover {
@@ -692,11 +701,12 @@ exports[`Modal variant is danger snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -705,8 +715,16 @@ exports[`Modal variant is danger snapshot 1`] = `
   border: 0;
 }
 
-.c3:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c3:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c3:hover {
@@ -1120,11 +1138,12 @@ exports[`Modal variant is success snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -1133,8 +1152,16 @@ exports[`Modal variant is success snapshot 1`] = `
   border: 0;
 }
 
-.c3:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c3:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c3:hover {
@@ -1528,11 +1555,12 @@ exports[`Modal variant is warning snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -1541,8 +1569,16 @@ exports[`Modal variant is warning snapshot 1`] = `
   border: 0;
 }
 
-.c3:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c3:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c3:hover {
