@@ -24,11 +24,11 @@ const MySite = () => (
     <ActionBar>
       <ActionBar.Item
         id="ab-print"
-        icon={<ActionsPrint/>}
+        icon={<ActionsPrint />}
         onClick={printThisPage}
         aria-label="Print this page"
       />
-      <ActionBar.Panel id="ab-settings" icon={<ActionsGear/>} aria-label="Settings">
+      <ActionBar.Panel id="ab-settings" icon={<ActionsGear />} aria-label="Settings">
         <h3>I am a settings panel</h3>
         <input name="enable_the_awesome" type="checkbox" />
       </ActionBar.Panel>
@@ -48,17 +48,15 @@ There are two types of items that typically go on the ActionBar: a simple button
 Panel dialog popups are opened and closed by clicking the button; they can also be closed by pressing Escape while focus is on the button or within the dialog, or by shifting focus to any element outside the dialog. If you want additional control over the behavior of the dialog, you can use a render prop instead of a component tree:
 
 ```jsx
-(
-  <ActionBar.Panel icon={<ActionsGear/>} aria-label="Settings">
-    {(toggle, expanded) => (
-      <>
-        <h3>I am a settings panel</h3>
-        <input name="enable_the_awesome" type="checkbox" />
-        <button onClick={() => toggle(false)}>Close</button>
-      </>
-    )}
-  </ActionBar.Panel>
-)
+<ActionBar.Panel icon={<ActionsGear />} aria-label="Settings">
+  {(toggle, expanded) => (
+    <>
+      <h3>I am a settings panel</h3>
+      <input name="enable_the_awesome" type="checkbox" />
+      <button onClick={() => toggle(false)}>Close</button>
+    </>
+  )}
+</ActionBar.Panel>
 ```
 
 By default, the dialog popup is positioned right next to the ActionBar. The width and padding can be changed via styled-system props, but you can also change the positioning by passing a `positionPopup` callback. This will be called every time the popup becomes visible, with two arguments: the popup div, and the control button.
@@ -74,17 +72,36 @@ import React from 'react'
 import { ActionsKey } from '@repay/cactus-icons'
 import { ActionBar } from '@repay/cactus-web'
 
+//MyPage.tsx
 const MyPage = () => (
   <>
     <ActionBar.Item
       id="page-action"
-      icon={<ActionsKey/>}
+      icon={<ActionsKey />}
       orderHint="high"
       onClick={doSomethingPageSpecific}
     />
-    <PageContent/>
+    <PageContent />
   </>
 )
+
+// App.tsx
+import React from 'react'
+import { ActionBar, Layout } from '@repay/cactus-web'
+import MyPage from './Mypage'
+
+const App = () =>(
+  <Layout>
+    // Other layout components
+    <ActionBar>
+      //Global action bar options
+    </ActionBar>
+    <Layout.Content>
+      <MyPage />
+    <Layout.Content>
+  </Layout>
+)
+
 ```
 
 - You must provide an _id_ prop to uniquely identify the action on the ActionBar; if it is not present, an error will be thrown. (We would use _key_ as well, but React doesn't forward it with the props.)
@@ -117,18 +134,15 @@ import { Layout, useAction } from '@repay/cactus-web'
 
 const MyPage = () => {
   const pageAction = (
-    <ActionBar.Button
-      key="page-action"
-      onClick={doSomethingPageSpecific}
-    >
-      <ActionsKey/>
+    <ActionBar.Button key="page-action" onClick={doSomethingPageSpecific}>
+      <ActionsKey />
     </ActionBar.Button>
   )
   const renderButton = useAction(pageAction, 'high')
   return (
     <>
-      (renderButton && <AlternativeDoSomethingImplementation/>)
-      <PageContent/>
+      (renderButton && <AlternativeDoSomethingImplementation />)
+      <PageContent />
     </>
   )
 }

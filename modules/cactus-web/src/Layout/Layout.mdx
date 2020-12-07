@@ -14,6 +14,7 @@ The site's main content should be wrapped in `Layout.Content`; for example, if u
 ## Basic Usage
 
 Acceptable children are:
+
 - BrandBar
 - MenuBar
 - ActionBar
@@ -25,25 +26,40 @@ All the children except `Layout.Content` are optional, though ActionBar is highl
 ```jsx
 import React from 'react'
 import { ActionBar, BrandBar, Footer, Layout, MenuBar } from '@repay/cactus-web'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import Home from './Home'
+import Customer from './Customer'
 
-const LOGO = "https://mysite.com/logo"
+const LOGO = 'https://mysite.com/logo'
 
 const MySite = () => (
-  <Layout>
-    <BrandBar logo={LOGO} />
-    <MenuBar>
-      <MenuBar.Item>Teenage Mutant</MenuBar.Item>
-      <MenuBar.Item>Ninja Turtles</MenuBar.Item>
-    </MenuBar>
-    <ActionBar />
-    <Layout.Content>
-      <h1>Latin Or Something</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </Layout.Content>
-    <Footer logo={LOGO}>The Foot clan returns.</Footer>
-  </Layout>
+  <Router>
+    <Layout>
+        <BrandBar logo={LOGO} />
+        <MenuBar>
+          <MenuBar.Item as={Link} to="/home">Teenage Mutant</MenuBar.Item>
+          <MenuBar.Item as={Link} to="/other/path">Ninja Turtles</MenuBar.Item>
+        </MenuBar>
+        <ActionBar />
+        <Layout.Content>
+            <Switch>
+              <Route path="/home">
+                <Home />
+              </Route>
+              <Route path="/other/path">
+                <Customer />
+              </Route>
+            </Switch>
+        </Layout.Content>
+        <Footer logo={LOGO}>The Foot clan returns.</Footer>
+      </Layout>
+    </Router>
+  )
 )
 ```
+
+The `Router` inside `Layout.Content` is used to navigate between different pages and components.
+Depending on the library, the MenuBar may also need to be connected to the Router so that links will work.
 
 ## Properties
 
