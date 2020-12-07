@@ -33,8 +33,7 @@ interface ICommitSplit {
 
 const getSection = async (commit: IExtendedCommit) => {
   const prefix = 'Which type of change applies to the following commit?'
-  const commitName = commit.pullRequest ? `PR #${commit.pullRequest.number}` : commit.subject
-  const text = `${prefix} ${commitName}`
+  const text = `${prefix} ${commit.subject}`
 
   const formattedSections = SECTIONS.map(({ name, changelogTitle }) => ({
     title: changelogTitle,

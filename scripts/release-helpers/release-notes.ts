@@ -1,7 +1,8 @@
 import { createChangelog } from './changelog'
 import { getCommitsInRelease } from './commits'
 import inFolder from './in-folder'
-import { getChangedPackages, getLernaPackages } from './lerna'
+import { getChangedPackages, getLernaPackages, shouldIgnoreCommit } from './lerna'
+import { IExtendedCommit } from './types'
 
 // const getBump = async (lernaPackage: LernaPackage) => {
 //   const message = `What kind of version bump should apply to ${lernaPackage.name}? (curren version: ${lernaPackage.version})`
@@ -40,6 +41,10 @@ export default async (from: string, to = 'HEAD'): Promise<Record<string, string>
     const includedCommits = commits.filter((commit) =>
       commit.files.some((file) => inFolder(lernaPackage.path, file))
     )
+    console.log('')
+    console.log(`Generating changelog for ${lernaPackage.name}`)
+    console.log('----------------------------------------------')
+    console.log('')
     const releaseNotes = await changelog.generateReleaseNotes(includedCommits)
     allReleaseNotes[lernaPackage.name] = releaseNotes
   }, Promise.resolve())
