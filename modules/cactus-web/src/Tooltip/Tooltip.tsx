@@ -118,22 +118,22 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const [stayOpen, setStayOpen] = useState<boolean>(false)
 
   useEffect(() => {
+    const handleBodyClick = (event: MouseEvent): void => {
+      const { target } = event
+      if (
+        !(target instanceof Node) ||
+        (!triggerRef.current?.contains(target) && !widgetRef.current?.contains(target))
+      ) {
+        setStayOpen(false)
+      }
+    }
+
     document.body.addEventListener('click', handleBodyClick)
 
     return () => {
       document.body.removeEventListener('click', handleBodyClick)
     }
   }, [])
-
-  const handleBodyClick = (event: MouseEvent): void => {
-    const { target } = event
-    if (
-      !(target instanceof Node) ||
-      (!triggerRef.current?.contains(target) && !widgetRef.current?.contains(target))
-    ) {
-      setStayOpen(false)
-    }
-  }
 
   return (
     <>
