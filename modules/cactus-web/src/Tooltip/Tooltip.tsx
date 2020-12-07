@@ -137,12 +137,6 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
 
   return (
     <>
-      {cloneElement(
-        <span className={className} onClick={() => setStayOpen(true)}>
-          <StyledInfo disabled={disabled} forceVisible={stayOpen || hovering || forceVisible} />
-        </span>,
-        trigger
-      )}
       {!disabled && (
         <>
           <TooltipPopup
@@ -169,6 +163,12 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
             {label}
           </VisuallyHidden>
         </>
+      )}
+      {cloneElement(
+        <span className={className} onClick={() => setStayOpen(true)}>
+          <StyledInfo disabled={disabled} forceVisible={stayOpen || hovering || forceVisible} />
+        </span>,
+        trigger
       )}
     </>
   )
