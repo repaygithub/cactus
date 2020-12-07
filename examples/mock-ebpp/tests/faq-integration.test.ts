@@ -2,7 +2,7 @@ import { queryByText } from '@testing-library/testcafe'
 import * as path from 'path'
 import { Selector } from 'testcafe'
 
-import makeActions from './helpers/actions'
+import makeActions, { clickWorkaround } from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 
 // eslint-disable-next-line no-undef
@@ -27,7 +27,7 @@ test('use the DOWN arrow key to navigate even after the order changes', async (t
   void
 > => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
-  await t.click(queryByText('Insert Accordion'))
+  await clickWorkaround(queryByText('Insert Accordion'))
   await focusAccordionHeaderByText('Lorem Ipsum?')
   await t.pressKey('down')
   const accordionButtonActiveEl = await getActiveElement()
@@ -91,7 +91,7 @@ test('use the HOME key to focus on the first accordion after the order changes',
 > => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
-  await t.click(queryByText('Insert Accordion'))
+  await clickWorkaround(queryByText('Insert Accordion'))
   await focusAccordionHeaderByText('Office Ipsum?')
   await t.pressKey('home')
   const accordionButtonActiveEl = await getActiveElement()
@@ -110,7 +110,7 @@ test('use the END key to focus on the first accordion after the order changes', 
 > => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
-  await t.click(queryByText('Insert Accordion'))
+  await clickWorkaround(queryByText('Insert Accordion'))
   await focusAccordionHeaderByText('Lorem Ipsum?')
   await t.pressKey('end')
   const accordionButtonActiveEl = await getActiveElement()

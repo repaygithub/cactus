@@ -93,3 +93,7 @@ export default (
   selectDropdownOption: selectDropdownOption(t),
   uploadFile: uploadFile(t),
 })
+
+export const clickWorkaround = (selector: ReturnType<typeof Selector>): Promise<any> =>
+  // @ts-ignore
+  ClientFunction(() => button().click(), { dependencies: { button: selector } })()
