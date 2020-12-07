@@ -1,11 +1,6 @@
 import on from 'await-to-js'
-import { execSync } from 'child_process'
-import path from 'path'
-import { inc, ReleaseType } from 'semver'
 
 import execPromise from './exec-promise'
-import { IExtendedCommit } from './log-parse'
-import SEMVER from './semver'
 
 // interface IMonorepoPackage {
 //   /** Path to the monorepo package */

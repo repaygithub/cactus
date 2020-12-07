@@ -1,6 +1,6 @@
 import endent from 'endent'
 
-import { IExtendedCommit } from './log-parse'
+import { IExtendedCommit } from './types'
 
 interface ISearchEdge {
   /** Graphql search node */

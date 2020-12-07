@@ -1,25 +1,21 @@
-import prompts from 'prompts'
-import { inc, ReleaseType } from 'semver'
-
 import { createChangelog } from './changelog'
 import { getCommitsInRelease } from './commits'
 import inFolder from './in-folder'
-import { getChangedPackages, getLernaPackages, LernaPackage } from './lerna'
-import SEMVER from './semver'
+import { getChangedPackages, getLernaPackages } from './lerna'
 
-const getBump = async (lernaPackage: LernaPackage) => {
-  const message = `What kind of version bump should apply to ${lernaPackage.name}? (curren version: ${lernaPackage.version})`
-  const answers = await prompts({
-    type: 'select',
-    name: 'bump',
-    message,
-    choices: Object.keys(SEMVER).map((bumpType) => ({
-      title: `${bumpType} - ${inc(lernaPackage.version, bumpType as ReleaseType)}`,
-      value: bumpType,
-    })),
-  })
-  return answers.bump
-}
+// const getBump = async (lernaPackage: LernaPackage) => {
+//   const message = `What kind of version bump should apply to ${lernaPackage.name}? (curren version: ${lernaPackage.version})`
+//   const answers = await prompts({
+//     type: 'select',
+//     name: 'bump',
+//     message,
+//     choices: Object.keys(SEMVER).map((bumpType) => ({
+//       title: `${bumpType} - ${inc(lernaPackage.version, bumpType as ReleaseType)}`,
+//       value: bumpType,
+//     })),
+//   })
+//   return answers.bump
+// }
 
 export default async (from: string, to = 'HEAD'): Promise<Record<string, string>> => {
   const commits = await getCommitsInRelease(from, to)

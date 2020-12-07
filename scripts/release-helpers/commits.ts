@@ -11,6 +11,7 @@ import execPromise from './exec-promise'
 import github from './github'
 import { normalizeCommit, normalizeCommits } from './log-parse'
 import { buildSearchQuery, ISearchQuery, ISearchResult, processQueryResult } from './match-pr'
+import { ICommit, ICommitAuthor, IExtendedCommit } from './types'
 
 const OWNER = 'repaygithub'
 const REPO = 'cactus'
@@ -20,46 +21,6 @@ class GitAPIError extends Error {
   constructor(api: string, args: Record<string, unknown> | unknown[], origError: Error) {
     super(`Error calling github: ${api}\n\twith: ${JSON.stringify(args)}.\n\t${origError.message}`)
   }
-}
-export interface ICommitAuthor {
-  /** Author's name */
-  name?: string
-  /** Author's email */
-  email?: string
-  /** Author's username */
-  username?: string
-  /** The commit this author created */
-  hash?: string
-  /** The type of user */
-  type?: 'Bot' | 'User' | string
-}
-
-interface IPullRequest {
-  /** The issue number for the pull request */
-  number: number
-  /** The base branch the pull request is on */
-  base?: string
-  /** The body of the PR (opening comment) */
-  body?: string
-}
-
-interface ICommit {
-  hash: string
-  authorName?: string
-  authorEmail?: string
-  subject: string
-  rawBody?: string
-  labels?: string[]
-  files: string[]
-}
-
-export type IExtendedCommit = ICommit & {
-  /** The authors that contributed to the pull request */
-  authors: ICommitAuthor[]
-  /** The pull request information */
-  pullRequest?: IPullRequest
-  /** Labels associated with the commit */
-  labels: string[]
 }
 
 type PromiseValue<PromiseType, Otherwise = PromiseType> = PromiseType extends Promise<infer Value>
@@ -181,6 +142,7 @@ const attachAuthor = async (commit: IExtendedCommit) => {
         login?: string
       })
     | Partial<AsyncReturnType<typeof getUserByUsername>>
+    | null
   > = []
 
   // If there is a pull request we will attempt to get the authors
@@ -251,18 +213,31 @@ const addPRInfoToCommit = async (commit: IExtendedCommit) => {
       return modifiedCommit
     }
 
-    const labels = info ? info.data.labels.map((l) => l.name) : []
-    modifiedCommit.labels = [...new Set([...labels, ...modifiedCommit.labels])]
+    const labels = info
+      ? info.data.labels.map((l) => {
+          if (typeof l === 'string') {
+            return l
+          }
+          return l.name
+        })
+      : []
+
+    const filteredLabels: string[] = labels.filter((l): l is string => typeof l !== 'undefined')
+
+    modifiedCommit.labels = [...new Set([...filteredLabels, ...modifiedCommit.labels])]
     modifiedCommit.pullRequest.body = info.data.body
     modifiedCommit.subject = info.data.title || modifiedCommit.subject
     const hasPrOpener = modifiedCommit.authors.some(
-      (author) => author.username === info.data.user.login
+      (author) => author.username === info.data.user?.login
     )
 
     // If we can't find the use who opened the PR in authors attempt
     // to add that user.
     if (!hasPrOpener) {
-      const user = await getUserByUsername(info.data.user.login)
+      let user
+      if (info.data.user) {
+        user = await getUserByUsername(info.data.user.login)
+      }
 
       if (user) {
         modifiedCommit.authors.push({ ...user, username: user.login })
@@ -276,7 +251,7 @@ const addPRInfoToCommit = async (commit: IExtendedCommit) => {
 const getPRsSinceLastRelease = async () => {
   let lastRelease: {
     /** Date the last release was published */
-    published_at: string
+    published_at: string | null
   }
 
   try {
@@ -319,7 +294,8 @@ const getPRForRebasedCommits = (
 
   if (!commit.pullRequest && matchPr) {
     const labels = matchPr.labels.map((label) => label.name) || []
-    commit.labels = [...new Set([...labels, ...commit.labels])]
+    const filteredLabels: string[] = labels.filter((l): l is string => typeof l !== 'undefined')
+    commit.labels = [...new Set([...filteredLabels, ...commit.labels])]
     commit.pullRequest = {
       number: matchPr.number,
     }
@@ -464,7 +440,7 @@ export const getCommitsInRelease = async (
   )
   const allPrCommitHashes = allPrCommits
     .filter(Boolean)
-    .reduce<string[]>((all, pr) => [...all, ...pr.map((subCommit) => subCommit.sha)], [])
+    .reduce<(string | null)[]>((all, pr) => [...all, ...pr.map((subCommit) => subCommit.sha)], [])
   const uniqueCommits = allCommits.filter(
     (commit) =>
       (commit.pullRequest || !allPrCommitHashes.includes(commit.hash)) &&

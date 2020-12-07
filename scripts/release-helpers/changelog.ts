@@ -1,7 +1,7 @@
 import prompts from 'prompts'
 import join from 'url-join'
 
-import { ICommitAuthor, IExtendedCommit } from './commits'
+import { ICommitAuthor, IExtendedCommit } from './types'
 
 const OWNER = 'repaygithub'
 const REPO = 'cactus'
