@@ -5,7 +5,7 @@ import path from 'path'
 
 import { getLatestRelease } from './release-helpers/commits'
 import execPromise from './release-helpers/exec-promise'
-import generateReleaseInfo from './release-helpers/release-info'
+import generateReleaseInfo, { ReleaseInfo } from './release-helpers/release-info'
 
 const getGitUser = async () => {
   try {
@@ -44,12 +44,7 @@ const updateChangelogFile = async (title: string, releaseNotes: string, changelo
 
 const createCommitMessage = (scope: string) => `chore(${scope}): update changelog [skip ci]`
 
-const createChangelogs = async (from: string, to = 'HEAD') => {
-  await getGitUser()
-
-  const lastRelease = from || (await getLatestRelease())
-  const releaseInfo = await generateReleaseInfo(lastRelease, to)
-
+const createChangelogs = async (releaseInfo: ReleaseInfo) => {
   for (const packageInfo of releaseInfo) {
     const title = `v${packageInfo.newVersion}`
     if (packageInfo.notes.trim()) {
@@ -62,26 +57,29 @@ const createChangelogs = async (from: string, to = 'HEAD') => {
       await execPromise('git', ['commit', '-m', `"${createCommitMessage(scope)}"`, '--no-verify'])
     }
   }
+
+  return releaseInfo
 }
 
 const main = async () => {
-  // try {
-  //   await execPromise('yarn', ['lerna', 'updated'])
-  // } catch (error) {
-  //   console.warn(
-  //     'Lerna detected no changes in project. Aborting release since nothing would be published.'
-  //   )
-  //   process.exit(0)
-  // }
+  try {
+    await execPromise('yarn', ['lerna', 'updated'])
+  } catch (error) {
+    console.warn(
+      'Lerna detected no changes in project. Aborting release since nothing would be published.'
+    )
+    process.exit(0)
+  }
 
-  // const lastReleaseTag = await getLatestRelease()
-  // await createChangelogs(lastReleaseTag)
+  await getGitUser()
 
+  const lastReleaseTag = await getLatestRelease()
+  const releaseInfo = await generateReleaseInfo(lastReleaseTag, 'HEAD')
+  await createChangelogs(releaseInfo)
   console.log('')
   console.log('Logging into npm')
   console.log('')
   await execPromise('npm', ['login'], { stdio: 'inherit' })
-
   console.log('')
   console.log('Install, cleanup, and build...')
   await execPromise('yarn', ['install'])
