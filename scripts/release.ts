@@ -65,20 +65,21 @@ const createChangelogs = async (from: string, to = 'HEAD') => {
 }
 
 const main = async () => {
-  try {
-    await execPromise('yarn', ['lerna', 'updated'])
-  } catch (error) {
-    console.warn(
-      'Lerna detected no changes in project. Aborting release since nothing would be published.'
-    )
-    process.exit(0)
-  }
+  // try {
+  //   await execPromise('yarn', ['lerna', 'updated'])
+  // } catch (error) {
+  //   console.warn(
+  //     'Lerna detected no changes in project. Aborting release since nothing would be published.'
+  //   )
+  //   process.exit(0)
+  // }
 
-  const lastReleaseTag = await getLatestRelease()
-  await createChangelogs(lastReleaseTag)
+  // const lastReleaseTag = await getLatestRelease()
+  // await createChangelogs(lastReleaseTag)
 
   console.log('')
   console.log('Logging into npm')
+  console.log('')
   await execPromise('npm', ['login'], { stdio: 'inherit' })
 
   console.log('')
