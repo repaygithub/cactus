@@ -31,7 +31,8 @@ import { spawn } from 'child_process'
  */
 export default async function execPromise(
   cmd: string,
-  args: Array<string | undefined | false> = []
+  args: Array<string | undefined | false> = [],
+  options?: { stdio?: 'pipe' | 'inherit' | 'ignore' }
 ): Promise<string> {
   const callSite = new Error().stack
   const filteredArgs = args.filter((arg): arg is string => typeof arg === 'string')
@@ -41,6 +42,7 @@ export default async function execPromise(
       cwd: process.cwd(),
       env: process.env,
       shell: true,
+      stdio: options?.stdio,
     })
 
     let allStdout = ''

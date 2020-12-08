@@ -75,12 +75,18 @@ const main = async () => {
   }
 
   const lastReleaseTag = await getLatestRelease()
-
-  // console.log(lastReleaseTag)
-  // const commits = await getCommitsInRelease(lastReleaseTag)
-  // console.log(commits)
-
   await createChangelogs(lastReleaseTag)
+
+  console.log('')
+  console.log('Logging into npm')
+  await execPromise('npm', ['login'], { stdio: 'inherit' })
+
+  console.log('')
+  console.log('Install, cleanup, and build...')
+  await execPromise('yarn', ['install'])
+  await execPromise('yarn', ['cleanup'])
+  await execPromise('yarn', ['build'])
+  await execPromise('yarn', ['lerna', 'publish', '--no-private'], { stdio: 'inherit' })
 }
 
 main()
