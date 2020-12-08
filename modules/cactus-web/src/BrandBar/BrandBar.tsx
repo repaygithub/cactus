@@ -192,6 +192,7 @@ const LogoWrapper = styled.div`
   max-width: 200px;
   max-height: 80px;
   display: flex;
+  align-items: flex-start;
   & > * {
     flex-shrink: 0;
     max-width: 100%;
