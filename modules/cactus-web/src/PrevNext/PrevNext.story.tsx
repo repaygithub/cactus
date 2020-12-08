@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions'
-import { boolean, text } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -11,11 +11,30 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => (
-  <PrevNext
-    disablePrev={boolean('Disable Prev', false)}
-    disableNext={boolean('Disable Next', false)}
-    onNavigate={action('PrevNext Navigate')}
-    prevText={text('Prev Text', 'Prev')}
-    nextText={text('Next Text', 'Next')}
-  />
+  <div>
+    <PrevNext
+      onNavigate={action('PrevNext Navigate')}
+      prevText={text('Prev Text', 'Prev')}
+      nextText={text('Next Text', 'Next')}
+    />
+    <PrevNext
+      disablePrev
+      onNavigate={action('PrevNext Navigate')}
+      prevText={text('Prev Text', 'Prev')}
+      nextText={text('Next Text', 'Next')}
+    />
+    <PrevNext
+      disableNext
+      onNavigate={action('PrevNext Navigate')}
+      prevText={text('Prev Text', 'Prev')}
+      nextText={text('Next Text', 'Next')}
+    />
+    <PrevNext
+      disablePrev
+      disableNext
+      onNavigate={action('PrevNext Navigate')}
+      prevText={text('Prev Text', 'Prev')}
+      nextText={text('Next Text', 'Next')}
+    />
+  </div>
 )

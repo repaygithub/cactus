@@ -12,21 +12,29 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => (
-  <SelectField
-    label={text('label', `What's that in the sky?`)}
-    name={text('name', 'ufo')}
-    options={array('options', ['bird', 'plane', 'superman'])}
-    disabled={boolean('disabled', false)}
-    tooltip={text('tooltip', 'Select what you think you see in the sky.')}
-    success={text('success', '')}
-    warning={text('warning', '')}
-    error={text('error', '')}
-    autoTooltip={boolean('autoTooltip', true)}
-    comboBox={boolean('comboBox', false)}
-    canCreateOption={boolean('canCreateOption', true)}
-    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
-    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-  />
+  <div>
+    <SelectField
+      label={text('label', `What's that in the sky?`)}
+      name={text('name', 'ufo')}
+      options={array('options', ['bird', 'plane', 'superman'])}
+      tooltip={text('tooltip', 'Select what you think you see in the sky.')}
+      success={text('success', '')}
+      warning={text('warning', '')}
+      error={text('error', '')}
+      autoTooltip={boolean('autoTooltip', true)}
+      comboBox={boolean('comboBox', false)}
+      canCreateOption={boolean('canCreateOption', true)}
+      disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+      alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
+    />
+    <SelectField
+      label={text('label', `Disabled`)}
+      name="ufo"
+      options={array('options', ['bird', 'plane', 'superman'])}
+      disabled
+      tooltip="Select what you think you see in the sky."
+    />
+  </div>
 )
 
 BasicUsage.parameters = {

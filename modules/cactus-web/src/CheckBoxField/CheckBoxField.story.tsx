@@ -1,4 +1,4 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -10,12 +10,14 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => (
-  <CheckBoxField
-    name={text('name', 'CheckBoxFormField')}
-    id={text('id', 'checkbox-1')}
-    label={text('label', 'A Label')}
-    disabled={boolean('disabled', false)}
-  />
+  <div>
+    <CheckBoxField
+      name={text('name', 'CheckBoxFormField')}
+      id={text('id', 'checkbox-1')}
+      label={text('label', 'A Label')}
+    />
+    <CheckBoxField name="CheckBoxFormFieldDisabled" label="Disabled" disabled />
+  </div>
 )
 
 export const MultipleCheckBoxFields = (): React.ReactElement => (

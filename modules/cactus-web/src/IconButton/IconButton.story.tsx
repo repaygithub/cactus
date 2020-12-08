@@ -3,12 +3,12 @@ import { boolean, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import Flex from '../Flex/Flex'
 import Grid from '../Grid/Grid'
 import actions from '../helpers/storybookActionsWorkaround'
-import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
+import IconButton, { IconButtonVariants } from './IconButton'
 
 const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']
-const iconButtonSizes: IconButtonSizes[] = ['tiny', 'small', 'medium', 'large']
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
@@ -22,16 +22,58 @@ export const BasicUsage = (): React.ReactElement => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const Icon = icons[iconName] as React.ComponentType<any>
   return (
-    <IconButton
-      variant={select('variant', iconButtonVariants, 'standard')}
-      iconSize={select('size', iconButtonSizes, 'medium')}
-      disabled={boolean('disabled', false)}
-      inverse={boolean('inverse', false)}
-      label="add"
-      {...eventLoggers}
-    >
-      <Icon />
-    </IconButton>
+    <Flex flexDirection="column">
+      <IconButton
+        variant={select('variant', iconButtonVariants, 'standard')}
+        disabled={boolean('disabled', false)}
+        inverse={boolean('inverse', false)}
+        iconSize="tiny"
+        label="add"
+        {...eventLoggers}
+      >
+        <Icon />
+      </IconButton>
+      <IconButton
+        variant={select('variant', iconButtonVariants, 'standard')}
+        disabled={boolean('disabled', false)}
+        inverse={boolean('inverse', false)}
+        iconSize="small"
+        label="add"
+        {...eventLoggers}
+      >
+        <Icon />
+      </IconButton>
+      <IconButton
+        variant={select('variant', iconButtonVariants, 'standard')}
+        disabled={boolean('disabled', false)}
+        inverse={boolean('inverse', false)}
+        iconSize="medium"
+        label="add"
+        {...eventLoggers}
+      >
+        <Icon />
+      </IconButton>
+      <IconButton
+        variant={select('variant', iconButtonVariants, 'standard')}
+        disabled={boolean('disabled', false)}
+        inverse={boolean('inverse', false)}
+        iconSize="large"
+        label="add"
+        {...eventLoggers}
+      >
+        <Icon />
+      </IconButton>
+      <IconButton
+        variant={select('variant', iconButtonVariants, 'standard')}
+        disabled
+        inverse={boolean('inverse', false)}
+        iconSize="large"
+        label="add"
+        {...eventLoggers}
+      >
+        <Icon />
+      </IconButton>
+    </Flex>
   )
 }
 

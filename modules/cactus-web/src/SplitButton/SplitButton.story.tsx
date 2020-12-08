@@ -1,10 +1,10 @@
 import * as icons from '@repay/cactus-icons'
-import { boolean, select, text } from '@storybook/addon-knobs'
+import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import { Flex } from '../index'
 import SplitButton, { IconProps, SplitButtonVariant } from './SplitButton'
-
 type IconName = keyof typeof icons | 'None'
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 
@@ -41,31 +41,40 @@ export const BasicUsage = (): React.ReactElement => {
     ActionIcon2 = icons[actionIconName2] as React.FunctionComponent<IconProps>
   }
   return (
-    <SplitButton
-      onSelectMainAction={(): void => {
-        console.log('Main Action')
-      }}
-      mainActionLabel={text('mainActionLabel', 'Main Action')}
-      // @ts-ignore
-      mainActionIcon={MainIcon ? MainIcon : undefined}
-      disabled={boolean('disabled', false)}
-      variant={variant}
-    >
-      <SplitButton.Action
-        onSelect={(): void => console.log('Action One')}
+    <Flex flexWrap="wrap" justifyContent="center" alignItems="center" width="95%">
+      <SplitButton
+        onSelectMainAction={(): void => {
+          console.log('Main Action')
+        }}
+        mainActionLabel={text('mainActionLabel', 'Main Action')}
         // @ts-ignore
-        icon={ActionIcon1 && ActionIcon1}
+        mainActionIcon={MainIcon ? MainIcon : undefined}
+        variant={variant}
       >
-        Action One
-      </SplitButton.Action>
-      <SplitButton.Action
-        onSelect={(): void => console.log('Action Two')}
-        // @ts-ignore
-        icon={ActionIcon2 && ActionIcon2}
-      >
-        Action Two
-      </SplitButton.Action>
-    </SplitButton>
+        <SplitButton.Action
+          onSelect={(): void => console.log('Action One')}
+          // @ts-ignore
+          icon={ActionIcon1 && ActionIcon1}
+        >
+          Action One
+        </SplitButton.Action>
+        <SplitButton.Action
+          onSelect={(): void => console.log('Action Two')}
+          // @ts-ignore
+          icon={ActionIcon2 && ActionIcon2}
+        >
+          Action Two
+        </SplitButton.Action>
+      </SplitButton>
+      <SplitButton
+        marginTop="5px"
+        disabled
+        mainActionLabel="Main Action"
+        onSelectMainAction={(): void => {
+          console.log('Main Action')
+        }}
+      />
+    </Flex>
   )
 }
 

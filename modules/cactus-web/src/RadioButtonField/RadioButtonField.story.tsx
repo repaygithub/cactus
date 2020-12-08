@@ -1,5 +1,5 @@
 import { actions } from '@storybook/addon-actions'
-import { boolean, text } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -13,13 +13,16 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => (
-  <RadioButtonField
-    id="my-id"
-    name="rbf"
-    label={text('label', 'A Label')}
-    disabled={boolean('disabled', false)}
-    {...eventLoggers}
-  />
+  <div>
+    <RadioButtonField id="my-id" name="rbf" label={text('label', 'A Label')} {...eventLoggers} />
+    <RadioButtonField
+      id="my-id"
+      name="rbf"
+      label={text('label', 'A Label')}
+      disabled
+      {...eventLoggers}
+    />
+  </div>
 )
 
 export const MultipleRadioButtonFields = (): React.ReactElement => (

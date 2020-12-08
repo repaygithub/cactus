@@ -13,13 +13,9 @@ export const BasicUsage = (): React.ReactElement => {
   return (
     <AccessibleField
       alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-      disabled={boolean('disabled', false)}
       disableTooltip={select('disableTooltip', [false, true, undefined], false)}
       name={text('name', 'field_name')}
       label={text('label', 'Field Label')}
-      error={text('error (will show field error)', '')}
-      warning={text('warning (will show field warning)', '')}
-      success={text('success (will show field success)', '')}
       tooltip={text('tooltip?', 'Will only show a tooltip when text is provided.')}
       autoTooltip={boolean('autoTooltip', true)}
     >
@@ -27,3 +23,24 @@ export const BasicUsage = (): React.ReactElement => {
     </AccessibleField>
   )
 }
+
+export const DifferentVariants = (): React.ReactElement => (
+  <div>
+    <span>Disabled</span>
+    <AccessibleField disabled label="Field Label" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+    <span>Error status</span>
+    <AccessibleField error="Error message" label="Field Label" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+    <span>Success status</span>
+    <AccessibleField success="Success message" label="Field Label" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+    <span>Warning</span>
+    <AccessibleField warning="Warning message" label="Field Label" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+  </div>
+)

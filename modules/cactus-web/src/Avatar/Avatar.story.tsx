@@ -1,11 +1,8 @@
-import { boolean, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Avatar, { AvatarStatus, AvatarType } from './Avatar'
-
-const avatarIcon: AvatarStatus[] = ['error', 'warning', 'info', 'success']
-const avatarUse: AvatarType[] = ['alert', 'feedback']
+import { Grid } from '../index'
+import Avatar from './Avatar'
 
 export default {
   title: 'Avatar',
@@ -14,10 +11,34 @@ export default {
 
 export const BasicUsage = (): React.ReactElement => {
   return (
-    <Avatar
-      type={select('usage', avatarUse, 'feedback')}
-      status={select('icon', avatarIcon, 'error')}
-      disabled={boolean('disabled', false)}
-    />
+    <Grid justify="center">
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="feedback" status="error" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="feedback" status="warning" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="feedback" status="info" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="feedback" status="success" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="alert" status="error" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="alert" status="warning" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="alert" status="info" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="alert" status="success" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Avatar type="alert" status="info" disabled />
+      </Grid.Item>
+    </Grid>
   )
 }

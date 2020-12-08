@@ -17,15 +17,41 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => (
-  <TextButton
-    variant={select('variant', textButtonVariants, 'danger')}
-    disabled={boolean('disabled', false)}
-    inverse={boolean('inverse', false)}
-    m={text('m', '')}
-    {...eventLoggers}
-  >
-    {text('children', 'Cancel')}
-  </TextButton>
+  <div>
+    <TextButton
+      variant="standard"
+      inverse={boolean('inverse', false)}
+      m={text('m', '')}
+      {...eventLoggers}
+    >
+      {text('children', 'Cancel')}
+    </TextButton>
+    <TextButton
+      variant="danger"
+      inverse={boolean('inverse', false)}
+      m={text('m', '')}
+      {...eventLoggers}
+    >
+      {text('children', 'Cancel')}
+    </TextButton>
+    <TextButton
+      variant="action"
+      inverse={boolean('inverse', false)}
+      m={text('m', '')}
+      {...eventLoggers}
+    >
+      {text('children', 'Cancel')}
+    </TextButton>
+    <TextButton
+      variant="standard"
+      disabled
+      inverse={boolean('inverse', false)}
+      m={text('m', '')}
+      {...eventLoggers}
+    >
+      {text('children', 'Cancel')}
+    </TextButton>
+  </div>
 )
 
 export const Multiple = (): React.ReactElement => (
