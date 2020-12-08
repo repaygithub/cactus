@@ -4,7 +4,7 @@ import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { cloneElement, useRef, useState } from 'react'
+import React, { cloneElement, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
@@ -112,22 +112,37 @@ const StyledInfo = styled(({ forceVisible, ...props }) => <NotificationInfo {...
 const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const { className, disabled, label, ariaLabel, id, maxWidth, position, forceVisible } = props
   const triggerRef = useRef<HTMLSpanElement | null>(null)
+  const widgetRef = useRef<HTMLDivElement | null>(null)
   const [trigger, tooltip] = useTooltip({ ref: triggerRef })
   const [hovering, setHovering] = useState<boolean>(false)
+  const [stayOpen, setStayOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    const handleBodyClick = (event: MouseEvent): void => {
+      const { target } = event
+      if (
+        !(target instanceof Node) ||
+        (!triggerRef.current?.contains(target) && !widgetRef.current?.contains(target))
+      ) {
+        setStayOpen(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleBodyClick)
+
+    return () => {
+      document.body.removeEventListener('click', handleBodyClick)
+    }
+  }, [])
 
   return (
     <>
-      {cloneElement(
-        <span className={className}>
-          <StyledInfo disabled={disabled} forceVisible={forceVisible} />
-        </span>,
-        trigger
-      )}
       {!disabled && (
         <>
           <TooltipPopup
             {...tooltip}
-            isVisible={hovering || forceVisible || tooltip.isVisible}
+            ref={widgetRef}
+            isVisible={stayOpen || hovering || forceVisible || tooltip.isVisible}
             label={label}
             ariaLabel={ariaLabel}
             position={
@@ -148,6 +163,12 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
             {label}
           </VisuallyHidden>
         </>
+      )}
+      {cloneElement(
+        <span className={className} onClick={() => setStayOpen(true)}>
+          <StyledInfo disabled={disabled} forceVisible={stayOpen || hovering || forceVisible} />
+        </span>,
+        trigger
       )}
     </>
   )
