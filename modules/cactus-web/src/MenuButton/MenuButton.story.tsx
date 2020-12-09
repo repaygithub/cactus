@@ -15,19 +15,17 @@ export default {
 
 export const BasicUsage = (): ReactElement => (
   <div>
-    <MenuButton
-      label={text('label', 'Demo Actions')}
-      variant={select('variant', ['filled', 'unfilled'], 'filled')}
-    >
+    <MenuButton label={text('label-filled', 'Filled ')} variant="filled" marginRight="5px">
       <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
       <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
       <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>
     </MenuButton>
-    <MenuButton
-      label={text('label', 'Demo Actions')}
-      disabled
-      variant={select('variant', ['filled', 'unfilled'], 'filled')}
-    >
+    <MenuButton label={text('label-unfilled', 'Unfilled')} variant="unfilled" marginRight="5px">
+      <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
+      <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
+      <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>
+    </MenuButton>
+    <MenuButton label={text('label-disabled', 'Disabled')} disabled>
       <MenuButton.Item onSelect={action('Action One')}>Action One</MenuButton.Item>
       <MenuButton.Item onSelect={action('Action Two')}>Action Two</MenuButton.Item>
       <MenuButton.Item onSelect={action('Action Three')}>Action Three</MenuButton.Item>

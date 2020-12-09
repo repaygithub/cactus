@@ -26,20 +26,16 @@ export const BasicUsage = (): React.ReactElement => {
 
 export const DifferentVariants = (): React.ReactElement => (
   <div>
-    <span>Disabled</span>
-    <AccessibleField disabled label="Field Label" name="field_name">
+    <AccessibleField disabled label="Disabled" name="field_name">
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>
-    <span>Error status</span>
-    <AccessibleField error="Error message" label="Field Label" name="field_name">
+    <AccessibleField error="Error message" label="Error Message" name="field_name">
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>
-    <span>Success status</span>
-    <AccessibleField success="Success message" label="Field Label" name="field_name">
+    <AccessibleField success="Success message" label="Success Message" name="field_name">
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>
-    <span>Warning</span>
-    <AccessibleField warning="Warning message" label="Field Label" name="field_name">
+    <AccessibleField warning="Warning message" label="waring Message" name="field_name">
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>
   </div>

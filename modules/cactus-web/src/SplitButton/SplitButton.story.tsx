@@ -8,26 +8,22 @@ import SplitButton, { IconProps, SplitButtonVariant } from './SplitButton'
 type IconName = keyof typeof icons | 'None'
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 
-type VariantOptions = { [k in SplitButtonVariant]: SplitButtonVariant }
-
-const variantOptions: VariantOptions = {
-  standard: 'standard',
-  danger: 'danger',
-  success: 'success',
-}
-
 export default {
   title: 'SplitButton',
   component: SplitButton,
 } as Meta
 
-export const BasicUsage = (): React.ReactElement => {
+const SplitButtonBase = ({
+  variant,
+  disabled,
+}: {
+  disabled?: boolean
+  variant: SplitButtonVariant
+}) => {
   iconNames.unshift('None')
   const mainIconName: IconName = select('mainActionIcon', iconNames, 'None')
   const actionIconName1: IconName = select('actionIcon1', iconNames, 'None')
   const actionIconName2: IconName = select('actionIcon2', iconNames, 'None')
-  const variant = select('variant', variantOptions, variantOptions.standard)
-
   let MainIcon: React.FunctionComponent<IconProps>
   let ActionIcon1: React.FunctionComponent<IconProps>
   let ActionIcon2: React.FunctionComponent<IconProps>
@@ -41,39 +37,41 @@ export const BasicUsage = (): React.ReactElement => {
     ActionIcon2 = icons[actionIconName2] as React.FunctionComponent<IconProps>
   }
   return (
-    <Flex flexWrap="wrap" justifyContent="center" alignItems="center" width="95%">
-      <SplitButton
-        onSelectMainAction={(): void => {
-          console.log('Main Action')
-        }}
-        mainActionLabel={text('mainActionLabel', 'Main Action')}
+    <SplitButton
+      disabled={disabled}
+      margin="5px"
+      onSelectMainAction={(): void => {
+        console.log('Main Action')
+      }}
+      mainActionLabel={text('mainActionLabel', 'Main Action')}
+      // @ts-ignore
+      mainActionIcon={MainIcon ? MainIcon : undefined}
+      variant={variant}
+    >
+      <SplitButton.Action
+        onSelect={(): void => console.log('Action One')}
         // @ts-ignore
-        mainActionIcon={MainIcon ? MainIcon : undefined}
-        variant={variant}
+        icon={ActionIcon1 && ActionIcon1}
       >
-        <SplitButton.Action
-          onSelect={(): void => console.log('Action One')}
-          // @ts-ignore
-          icon={ActionIcon1 && ActionIcon1}
-        >
-          Action One
-        </SplitButton.Action>
-        <SplitButton.Action
-          onSelect={(): void => console.log('Action Two')}
-          // @ts-ignore
-          icon={ActionIcon2 && ActionIcon2}
-        >
-          Action Two
-        </SplitButton.Action>
-      </SplitButton>
-      <SplitButton
-        marginTop="5px"
-        disabled
-        mainActionLabel="Main Action"
-        onSelectMainAction={(): void => {
-          console.log('Main Action')
-        }}
-      />
+        Action One
+      </SplitButton.Action>
+      <SplitButton.Action
+        onSelect={(): void => console.log('Action Two')}
+        // @ts-ignore
+        icon={ActionIcon2 && ActionIcon2}
+      >
+        Action Two
+      </SplitButton.Action>
+    </SplitButton>
+  )
+}
+export const BasicUsage = (): React.ReactElement => {
+  return (
+    <Flex flexWrap="wrap" justifyContent="center" alignItems="center" width="95%">
+      <SplitButtonBase variant="standard" />
+      <SplitButtonBase variant="danger" />
+      <SplitButtonBase variant="success" />
+      <SplitButtonBase variant="standard" disabled />
     </Flex>
   )
 }

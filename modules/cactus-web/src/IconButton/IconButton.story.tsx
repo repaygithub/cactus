@@ -18,14 +18,13 @@ export default {
   component: IconButton,
 } as Meta
 
-export const BasicUsage = (): React.ReactElement => {
+const IconButtonBase = ({ variant }: { variant: IconButtonVariants }) => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const Icon = icons[iconName] as React.ComponentType<any>
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="row">
       <IconButton
-        variant={select('variant', iconButtonVariants, 'standard')}
-        disabled={boolean('disabled', false)}
+        variant={variant}
         inverse={boolean('inverse', false)}
         iconSize="tiny"
         label="add"
@@ -34,8 +33,7 @@ export const BasicUsage = (): React.ReactElement => {
         <Icon />
       </IconButton>
       <IconButton
-        variant={select('variant', iconButtonVariants, 'standard')}
-        disabled={boolean('disabled', false)}
+        variant={variant}
         inverse={boolean('inverse', false)}
         iconSize="small"
         label="add"
@@ -44,8 +42,7 @@ export const BasicUsage = (): React.ReactElement => {
         <Icon />
       </IconButton>
       <IconButton
-        variant={select('variant', iconButtonVariants, 'standard')}
-        disabled={boolean('disabled', false)}
+        variant={variant}
         inverse={boolean('inverse', false)}
         iconSize="medium"
         label="add"
@@ -54,8 +51,7 @@ export const BasicUsage = (): React.ReactElement => {
         <Icon />
       </IconButton>
       <IconButton
-        variant={select('variant', iconButtonVariants, 'standard')}
-        disabled={boolean('disabled', false)}
+        variant={variant}
         inverse={boolean('inverse', false)}
         iconSize="large"
         label="add"
@@ -64,7 +60,7 @@ export const BasicUsage = (): React.ReactElement => {
         <Icon />
       </IconButton>
       <IconButton
-        variant={select('variant', iconButtonVariants, 'standard')}
+        variant={variant}
         disabled
         inverse={boolean('inverse', false)}
         iconSize="large"
@@ -74,6 +70,15 @@ export const BasicUsage = (): React.ReactElement => {
         <Icon />
       </IconButton>
     </Flex>
+  )
+}
+export const BasicUsage = (): React.ReactElement => {
+  return (
+    <div>
+      <IconButtonBase variant="standard" />
+      <IconButtonBase variant="action" />
+      <IconButtonBase variant="danger" />
+    </div>
   )
 }
 
