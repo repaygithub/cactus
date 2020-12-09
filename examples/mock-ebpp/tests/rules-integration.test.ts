@@ -3,7 +3,7 @@ import * as path from 'path'
 import { ClientFunction } from 'testcafe'
 
 import { RulesData } from '../types'
-import makeActions from './helpers/actions'
+import makeActions, { clickWorkaround } from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 
 const getApiData = ClientFunction((): RulesData => (window as any).apiData)
@@ -35,7 +35,7 @@ test('fill out and submit the form sequentially', async (t: TestController): Pro
   await selectDropdownOption('Value', '-1')
   await t.click(queryByText('Condition #1')).click(queryByText('Add Action'))
   await selectDropdownOption('Name', 'Do the thing')
-  await t.click(queryByText('Submit'))
+  await clickWorkaround(queryByText('Submit'))
 
   const apiData: RulesData = await getApiData()
   await t.expect(apiData).eql([
@@ -69,7 +69,8 @@ test('fill out and submit the form with deleting and reordering', async (t: Test
   await selectDropdownOption('Name', 'Do the thing')
   await t.click(queryByText('Add Action'))
   await selectDropdownOption('Name', 'Do another thing')
-  await t.click(queryByLabelText('Move Action #1 down')).click(queryByText('Submit'))
+  await t.click(queryByLabelText('Move Action #1 down'))
+  await clickWorkaround(queryByText('Submit'))
 
   const apiData: RulesData = await getApiData()
   await t.expect(apiData).eql([

@@ -2,6 +2,7 @@ import { queryAllByText, queryByLabelText, queryByText } from '@testing-library/
 import * as path from 'path'
 import { Selector } from 'testcafe'
 
+import { clickWorkaround } from './helpers/actions'
 import startStaticServer from './helpers/static-server'
 
 // eslint-disable-next-line no-undef
@@ -25,14 +26,13 @@ fixture('Account Integration Tests')
 test('DataGrid interactions in table view', async (t: TestController): Promise<void> => {
   // Set desktop screen size
   await t.resizeWindow(1600, 994)
-  // Sort by first name
-  await t.click(queryByText('First Name'))
+  await clickWorkaround(queryByText('First Name'))
   await t.expect(queryByText('Victoria').exists).ok()
   await t.expect(queryByText('Chris').exists).ok()
   await t.expect(queryByText('Anita').exists).notOk()
 
   // Change sort order
-  await t.click(queryByText('First Name'))
+  await clickWorkaround(queryByText('First Name'))
   await t.expect(queryByText('Anita').exists).ok()
   await t.expect(queryByText('James').exists).ok()
   await t.expect(queryByText('Victoria').exists).notOk()

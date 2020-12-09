@@ -45,7 +45,7 @@ describe('component: Tooltip', (): void => {
       </StyleProvider>
     )
     act((): void => {
-      fireEvent.mouseEnter(document.querySelector('span') as Element)
+      fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
     })
@@ -63,7 +63,7 @@ describe('component: Tooltip', (): void => {
       </StyleProvider>
     )
     act((): void => {
-      fireEvent.mouseEnter(document.querySelector('span') as Element)
+      fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
     })
@@ -74,5 +74,26 @@ describe('component: Tooltip', (): void => {
     })
     const tooltip = document.querySelector('div[role="tooltip"]') as Element
     expect(tooltip).not.toBeNull()
+  })
+
+  test('should stay open when tooltip icon is clicked', async (): Promise<void> => {
+    jest.useFakeTimers()
+    render(
+      <StyleProvider>
+        <Tooltip label="Show me the money" />
+        <button>Something Else to Focus</button>
+      </StyleProvider>
+    )
+    const tooltipTrigger = document.querySelector('span[data-reach-tooltip-trigger]') as Element
+    const btn = document.querySelector('button') as Element
+    act((): void => {
+      fireEvent.click(tooltipTrigger)
+      fireEvent.mouseEnter(btn)
+      setTimeout(jest.fn(), 2000)
+      jest.runAllTimers()
+    })
+    expect(document.querySelector('div[role="tooltip"]') as Element).toBeInTheDocument()
+    fireEvent.click(btn)
+    expect(document.querySelector('div[role="tooltip"]') as Element).not.toBeInTheDocument()
   })
 })
