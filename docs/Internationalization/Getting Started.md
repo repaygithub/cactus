@@ -24,7 +24,7 @@ welcome-message = Welcome, { $user }!`
 
 // en/accounts.js
 export default `
-accounts__welcome-message = Welcome to the accounts page, { $user }!`
+welcome-message = Welcome to the accounts page, { $user }!`
 
 // es/global.js
 export default `
@@ -32,7 +32,7 @@ welcome-message = ¡Bienvenido, { $user }!`
 
 // es/accounts.js
 export default `
-accounts__welcome-message =
+welcome-message =
   ¡Bienvenido a la página de cuentas, { $user }!`
 ```
 
@@ -49,13 +49,13 @@ Let's see what this might look like:
 import { BaseI18nController } from '@repay/cactus-i18n'
 
 class I18nController extends BaseI18nController {
- async load(args) {
-    const { lang, section } = args
+ async load(sectionInfo) {
+    const { lang, section } = sectionInfo
     // load ftl translations from the source
     const { default: ftl } = await import(`./locales/${lang}/${section}.ftl`)
-    
-    return [{ lang, ftl }]
-    
+
+    return { resources: [ftl] }
+
   }
 }
 
@@ -87,7 +87,7 @@ Here, we make `<I18nProvider />` the top-level component in our app, and we prov
 
 ## Using I18n Components
 
-Now that our setup is complete, we can add on to the work we did in the last step to render some translations. We'll use two extra components: `I18nSection` and `I18nText`. `I18nSection` can be used to tell the controller which section to load (In this case, we have either "global" or "accounts"). If you don't use `I18nSection` to specify a section to choose a translation from, the controller will use the "global" translations. Let's add on to what we did in the previous step with some examples.
+Now that our setup is complete, we can add on to the work we did in the last step to render some translations. We'll use two extra components: `I18nSection` and `I18nText`. `I18nSection` can be used to tell the controller which section to load (In this case, we have either "global" or "accounts"). If you don't use `I18nSection` to specify a section to choose a translation from, the controller will use the section specified by the `I18nProvider` (default "global"). Let's add on to what we did in the previous step with some examples.
 
 ```jsx
 // index.js
@@ -101,7 +101,7 @@ const mainComponent = () => {
 } // Welcome, CS Human!
 ```
 
-Notice that we told `I18nText` that we wanted to get the `welcome-message` translation, but we didn't use an `I18nSection` component. This means the controller will look for the global translation. We also made use of the `args` prop to pass an object that contains the value for the `user` variable in the translation. But what if we had used a section? Let's check it out:
+Notice that we told `I18nText` that we wanted to get the `welcome-message` translation, but we didn't use an `I18nSection` component. This means the controller will look for the translation in the default section "global". We also made use of the `args` prop to pass an object that contains the value for the `user` variable in the translation. But what if we had used a section? Let's check it out:
 
 ```jsx
 // index.js
@@ -117,7 +117,7 @@ const mainComponent = () => {
 } // Welcome to the accounts page, CS Human!
 ```
 
-Notice that we used the same `get` value on `I18nText`, but by making the `I18nText` component as a child of `I18nSection`, we told the controller that we should be loading translations for the "accounts" section, instead of global, the library then merges the section name and the get key to find the scopped message under `accounts__welcome-message`. What if we wanted to load translations for a different language, though? To do so, we'll just need to change the `lang` prop on `I18nProvider`:
+Notice that we used the same `get` value on `I18nText`, but by making the `I18nText` component as a child of `I18nSection`, we told the controller that we should be loading translations for the "accounts" section, instead of the default. What if we wanted to load translations for a different language, though? To do so, we'll just need to change the `lang` prop on `I18nProvider`:
 
 ```jsx
 // index.js
