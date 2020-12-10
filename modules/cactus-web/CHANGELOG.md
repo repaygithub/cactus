@@ -1,3 +1,34 @@
+# v4.1.0 (Thu Dec 10 2020)
+
+#### 🚀 Enhancement
+
+- Allow Tooltips attached to form elements to be left-aligned
+[#411](https://github.com/repaygithub/cactus/pull/411) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+- The "no options available" text on the Select element can now be customized
+[#421](https://github.com/repaygithub/cactus/pull/421) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+- Allow Tooltips to be shown on click/tap in addition to hover
+[#420](https://github.com/repaygithub/cactus/pull/420) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Fix Tooltip alignment bug in IE11
+[#425](https://github.com/repaygithub/cactus/pull/425) ([@mikesoltow](https://github.com/mikesoltow))
+- Fix bug that prevented DateInputs from being used inside ActionBar Panels
+[#409](https://github.com/repaygithub/cactus/pull/409) ([@wilysword](https://github.com/wilysword))
+- Fix bug that prevented components with dropdowns from being used inside ActionBar Panels
+[#399](https://github.com/repaygithub/cactus/pull/399) ([@wilysword](https://github.com/wilysword))
+- Fix BrandBar logo stretching issue in Safari
+[#431](https://github.com/repaygithub/cactus/pull/431) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+
+#### Authors: 4
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+- Nicolas Simmonds ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v4.0.0 (Mon Nov 30 2020)
 
 #### 💥 Breaking Change
