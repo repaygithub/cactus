@@ -511,7 +511,7 @@ override = I'm invisible
         // @ts-ignore
         const mockLoad = (controller.load = jest.fn<Loader>(() => Promise.resolve({ resources })))
         render(
-          <I18nProvider controller={controller}>
+          <I18nProvider controller={controller} section="">
             <I18nSection name="kleenex" dynamic>
               <I18nText get="runny-nose" />
             </I18nSection>
@@ -554,7 +554,7 @@ override = I'm invisible
 
       const i18nDependencies = [{ section: 'needed', extra: 'data', for: 'load function' }]
       render(
-        <I18nProvider controller={controller}>
+        <I18nProvider controller={controller} section="">
           <I18nSection name="kleenex" dependencies={i18nDependencies}>
             <I18nText get="runny-nose" section="needed" />
           </I18nSection>

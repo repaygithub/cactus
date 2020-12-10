@@ -16,11 +16,12 @@ import { I18nContextType } from './types'
 interface I18nProviderProps {
   controller: BaseI18nController
   lang?: string
+  section?: string
 }
 
 const flopFlip = (x: boolean) => !x
 
-const I18nProvider: React.FC<I18nProviderProps> = (props): ReactElement => {
+const I18nProvider: React.FC<I18nProviderProps> = ({ section = 'global', ...props }) => {
   const controller = props.controller
   if (!(controller instanceof BaseI18nController)) {
     throw Error('I18nProvider must be given a controller which extends BaseI18nController')
@@ -30,7 +31,7 @@ const I18nProvider: React.FC<I18nProviderProps> = (props): ReactElement => {
   }
   const lang = controller.lang
   const [flipFlop, toggle] = useState(false)
-  const i18nContext: I18nContextType = { controller, lang, section: 'global' }
+  const i18nContext: I18nContextType = { controller, lang, section }
   const { current: stable } = React.useRef({ flipFlop, i18nContext })
   if (
     flipFlop !== stable.flipFlop ||
@@ -47,11 +48,12 @@ const I18nProvider: React.FC<I18nProviderProps> = (props): ReactElement => {
       return (): void => controller.removeListener(triggerUpdate)
     }
   }, [controller])
-  return (
-    <I18nContext.Provider value={stable.i18nContext}>
-      <React.Fragment>{props.children}</React.Fragment>
-    </I18nContext.Provider>
-  )
+  useEffect(() => {
+    if (section) {
+      controller._load({ section, lang })
+    }
+  }, [controller, section, lang])
+  return <I18nContext.Provider value={stable.i18nContext}>{props.children}</I18nContext.Provider>
 }
 
 I18nProvider.propTypes = {
