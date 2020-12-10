@@ -28,7 +28,7 @@ export default {
 
 export const BasicUsage = (): React.ReactElement => (
   <Flex
-    justifyContent={select('justifyContent', justifyOptions, 'flex-end')}
+    justifyContent={select('justifyContent', justifyOptions, 'flex-start')}
     alignItems={select('alignItems', alignOptions, 'center')}
     flexWrap={select('flexWrap', flexWrapOptions, 'wrap') as Property.FlexWrap}
     flexDirection={select('flexDirection', directionOptions, 'row') as Property.FlexDirection}

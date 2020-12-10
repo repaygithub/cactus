@@ -47,23 +47,29 @@ jobs:
       - name: Build cactus-web
         run: yarn web build
 
-      - name: Test Modules
-        run: |
-          yarn theme test:ci
-          yarn fwk test:ci
-          yarn i18n test:ci
-          yarn icons test:ci
-          yarn web test:ci
+      # - name: Test Modules
+      #   run: |
+      #     yarn theme test:ci
+      #     yarn fwk test:ci
+      #     yarn i18n test:ci
+      #     yarn icons test:ci
+      #     yarn web test:ci
       - name: Visual Tests
         uses: ./actions/storyshots
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Create Pull Request
         uses: ./actions/create-pull-request
+        with:
+          branch: ${{ steps.extract_branch.outputs.branch }}-patch
 
-      - name: Integration Tests
-        uses: ./actions/integration-tests
-        env:
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      # - name: Integration Tests
+      #   uses: ./actions/integration-tests
+      #   env:
+      #     BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      #     BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
 
-      - name: Test Docs Website
-        run: yarn docs test:ci
+      # - name: Test Docs Website
+      #   run: yarn docs test:ci
