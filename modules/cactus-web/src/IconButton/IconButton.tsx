@@ -1,13 +1,8 @@
 import { iconSizes } from '@repay/cactus-icons'
-import { CactusTheme, Shape } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, {
-  css,
-  FlattenInterpolation,
-  FlattenSimpleInterpolation,
-  ThemeProps,
-} from 'styled-components'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { isIE } from '../helpers/constants'
