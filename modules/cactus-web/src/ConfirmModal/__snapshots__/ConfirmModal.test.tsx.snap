@@ -239,6 +239,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  padding: 0px;
   border: none;
   background: transparent;
   outline: none;
@@ -257,8 +258,8 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: 40px;
-  width: 40px;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
   border: 1px solid;
   border-radius: 8px;
   border-color: hsl(200,96%,35%);
@@ -701,6 +702,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  padding: 0px;
   border: none;
   background: transparent;
   outline: none;
@@ -719,8 +721,8 @@ exports[`Modal variant is danger snapshot 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: 40px;
-  width: 40px;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
   border: 1px solid;
   border-radius: 8px;
   border-color: hsl(200,96%,35%);
@@ -1138,6 +1140,7 @@ exports[`Modal variant is success snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  padding: 0px;
   border: none;
   background: transparent;
   outline: none;
@@ -1156,8 +1159,8 @@ exports[`Modal variant is success snapshot 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: 40px;
-  width: 40px;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
   border: 1px solid;
   border-radius: 8px;
   border-color: hsl(200,96%,35%);
@@ -1555,6 +1558,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  padding: 0px;
   border: none;
   background: transparent;
   outline: none;
@@ -1573,8 +1577,8 @@ exports[`Modal variant is warning snapshot 1`] = `
   content: '';
   display: block;
   position: absolute;
-  height: 40px;
-  width: 40px;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
   border: 1px solid;
   border-radius: 8px;
   border-color: hsl(200,96%,35%);
