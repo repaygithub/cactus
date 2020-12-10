@@ -24,7 +24,7 @@ class I18nController extends BaseI18nController {
     if (opts.defaults) {
       return { resources: [opts.defaults] }
     } else if (typeof opts.content === 'string') {
-      return { resources: [new FluentResource(opts.content)] }
+      return { resources: [opts.content] }
     }
   }
 

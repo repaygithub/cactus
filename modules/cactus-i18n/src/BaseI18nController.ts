@@ -55,7 +55,7 @@ export interface LoadResult {
 
 export type AsyncLoadResult = Promise<LoadResult | undefined>
 
-export type Resource = BundleInfo | FluentResource
+export type Resource = BundleInfo | FluentResource | string
 
 interface BundleOpts {
   /**
@@ -328,8 +328,14 @@ export class BundleInfo {
       return this.bundle
     }
     const resources: FluentResource[] = []
-    for (const maybeRef of this.resources) {
-      if (isRef(maybeRef)) {
+    const resourceCount = this.resources.length
+    for (let i = 0; i < resourceCount; i++) {
+      const maybeRef = this.resources[i]
+      if (typeof maybeRef === 'string') {
+        // Overwrite the value in `this.resources` so we only parse it once.
+        const res = this.resources[i] = new FluentResource(maybeRef)
+        resources.push(res)
+      } else if (isRef(maybeRef)) {
         if (!maybeRef.compile(bundleOpts)) {
           // When it finishes loading it should mark this as dirty, leading to recompile.
           continue
