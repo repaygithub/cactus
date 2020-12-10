@@ -87,18 +87,17 @@ const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
 `
 
 const shapeMap = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 8px;',
+  round: 'border-radius: 50%;',
 }
 
-const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
+const focusOutlineSpacing = {
+  tiny: 4,
+  small: 8,
+  medium: 8,
+  large: 12,
+}
 
 const variantOrDisabled = (
   props: IconButtonProps
@@ -129,6 +128,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
+  padding: 0px;
   border: none;
   background: transparent;
   outline: none;
@@ -145,18 +145,21 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
       content: '';
       display: block;
       position: absolute;
-      height: 40px;
-      width: 40px;
-      ${() => {
+      ${(p) => `
+        height: calc(100% + ${focusOutlineSpacing[p.iconSize || 'medium']}px);
+        width: calc(100% + ${focusOutlineSpacing[p.iconSize || 'medium']}px);
+      `}
+      ${(p) => {
         if (isIE) {
+          const IEOffset = focusOutlineSpacing[p.iconSize || 'medium'] / 2
           return `
-            top: -8px;
-            left: 0px;
+            top: -${IEOffset}px;
+            left: -${IEOffset}px;
           `
         }
       }}
       border: 1px solid;
-      ${(p) => getShape(p.theme.shape)}
+      ${(p) => shapeMap[p.theme.shape]}
       border-color: ${(p): string => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
