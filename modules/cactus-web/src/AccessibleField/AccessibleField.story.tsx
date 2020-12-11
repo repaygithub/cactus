@@ -35,7 +35,7 @@ export const DifferentVariants = (): React.ReactElement => (
     <AccessibleField success="Success message" label="Success Message" name="field_name">
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>
-    <AccessibleField warning="Warning message" label="waring Message" name="field_name">
+    <AccessibleField warning="Warning message" label="warning Message" name="field_name">
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>
   </div>
