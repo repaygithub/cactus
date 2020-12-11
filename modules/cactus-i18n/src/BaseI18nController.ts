@@ -5,7 +5,6 @@ import 'intl-pluralrules' // eslint-disable-line simple-import-sort/sort
 
 import { FluentBundle, FluentFunction, FluentResource, FluentVariable } from '@fluent/bundle'
 import { negotiateLanguages } from '@fluent/langneg'
-import lodashSet from 'lodash/set'
 
 interface HasI18nArgs {
   section: string
@@ -13,10 +12,8 @@ interface HasI18nArgs {
   lang?: string
 }
 
-type SplitFunc = (key: string) => string | string[]
 interface GetI18nArgs extends HasI18nArgs {
   args?: Record<string, FluentVariable>
-  mapAttrs?: string | RegExp | SplitFunc
 }
 
 export interface I18nMessage {
@@ -155,13 +152,7 @@ export default abstract class BaseI18nController {
     this.lang = this._languages[0]
   }
 
-  public get({
-    args,
-    section,
-    id,
-    lang: overrideLang = this.lang,
-    mapAttrs,
-  }: GetI18nArgs): I18nMessage {
+  public get({ args, section, id, lang: overrideLang = this.lang }: GetI18nArgs): I18nMessage {
     const langs = this.negotiateLang(overrideLang, true)
     const result: I18nMessage = { text: null, attrs: {}, found: false }
     for (const lang of langs) {
@@ -177,13 +168,7 @@ export default abstract class BaseI18nController {
           }
           if (attributes) {
             for (const [attr, val] of Object.entries(attributes)) {
-              const key =
-                typeof mapAttrs === 'function'
-                  ? mapAttrs(attr)
-                  : mapAttrs
-                  ? attr.split(mapAttrs)
-                  : attr
-              lodashSet(result.attrs, key, bundle.formatPattern(val, args, errors))
+              result.attrs[attr] = bundle.formatPattern(val, args, errors)
             }
           }
           if (errors.length) {
@@ -333,7 +318,7 @@ export class BundleInfo {
       const maybeRef = this.resources[i]
       if (typeof maybeRef === 'string') {
         // Overwrite the value in `this.resources` so we only parse it once.
-        const res = this.resources[i] = new FluentResource(maybeRef)
+        const res = (this.resources[i] = new FluentResource(maybeRef))
         resources.push(res)
       } else if (isRef(maybeRef)) {
         if (!maybeRef.compile(bundleOpts)) {

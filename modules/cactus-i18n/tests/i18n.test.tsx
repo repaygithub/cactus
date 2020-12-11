@@ -180,28 +180,6 @@ key-for-no-people = blah blah blue stew`)
       expect(controller.getText({ section: 'local', id: 'key' })).toBe('local value')
     })
 
-    test('can customize attr nesting', async () => {
-      const section = 'attr'
-      const controller = new I18nController({ lang: 'es', supportedLangs: ['es'] })
-      const content = 'key =\n .options__one = uno\n .options__two = dos\n .label__a = lento'
-      await controller.loadAll({ section, lang: 'es', content })
-      const withString = controller.get({ section, id: 'key', mapAttrs: '__' })
-      expect(withString).toEqual({
-        text: null,
-        found: true,
-        attrs: { options: { one: 'uno', two: 'dos' }, label: { a: 'lento' } },
-      })
-      const withRegex = controller.get({ section, id: 'key', mapAttrs: /__/ })
-      expect(withRegex).toEqual(withString)
-      const mapAttrs = (attr: string) => (attr.startsWith('options') ? attr.split('__') : attr)
-      const withFunc = controller.get({ section, id: 'key', mapAttrs })
-      expect(withFunc).toEqual({
-        text: null,
-        found: true,
-        attrs: { options: { one: 'uno', two: 'dos' }, label__a: 'lento' },
-      })
-    })
-
     test('defaults to use bidi isolating', async () => {
       const global = `for-all-to-see = You can't see why this fails { $foo }`
       const controller = new I18nController({
