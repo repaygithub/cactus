@@ -98,6 +98,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
       right: 24px;
       top: 24px;
       width: 16px;
+      font-size: 16px;
     }
     ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
       padding: 40px 88px;

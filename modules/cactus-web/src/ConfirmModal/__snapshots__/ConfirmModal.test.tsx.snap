@@ -302,6 +302,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   right: 24px;
   top: 24px;
   width: 16px;
+  font-size: 16px;
 }
 
 .c16 {
@@ -755,6 +756,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   right: 24px;
   top: 24px;
   width: 16px;
+  font-size: 16px;
 }
 
 .c13 {
@@ -1183,6 +1185,7 @@ exports[`Modal variant is success snapshot 1`] = `
   right: 24px;
   top: 24px;
   width: 16px;
+  font-size: 16px;
 }
 
 .c13 {
@@ -1591,6 +1594,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   right: 24px;
   top: 24px;
   width: 16px;
+  font-size: 16px;
 }
 
 .c13 {

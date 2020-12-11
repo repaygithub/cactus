@@ -131,18 +131,19 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <LabelWrapper id={labelId} as="legend" alignTooltip={alignTooltip}>
-          {label}
-          {tooltip && (
-            <Tooltip
-              id={tooltipId}
-              label={tooltip}
-              disabled={disableTooltip ?? disabled}
-              forceVisible={autoTooltip ? showTooltip : false}
-            />
-          )}
-        </LabelWrapper>
-
+        <Label id={labelId} as="legend">
+          <LabelWrapper alignTooltip={alignTooltip}>
+            {label}
+            {tooltip && (
+              <Tooltip
+                id={tooltipId}
+                label={tooltip}
+                disabled={disableTooltip ?? disabled}
+                forceVisible={autoTooltip ? showTooltip : false}
+              />
+            )}
+          </LabelWrapper>
+        </Label>
         <Box mx={4} pt={3}>
           {children}
         </Box>

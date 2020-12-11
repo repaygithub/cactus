@@ -92,6 +92,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   right: 24px;
   top: 24px;
   width: 16px;
+  font-size: 16px;
 }
 
 @media screen and (min-width:1024px) {
