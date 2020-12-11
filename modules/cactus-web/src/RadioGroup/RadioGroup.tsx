@@ -159,7 +159,7 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
   }
 )
 
-const LabelWrapper = styled(Label)<LabelWrapper>`
+const LabelWrapper = styled.span<LabelWrapper>`
   flex-wrap: nowrap;
   display: flex;
   justify-content: ${(p) => (p.alignTooltip === 'right' ? 'space-between' : 'flex-start')};

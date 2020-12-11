@@ -183,11 +183,11 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
       class="c1 c2"
       id="rg-label"
     >
-      <label
-        class="c1 c2 c3"
+      <span
+        class="c3"
       >
         Captitol
-      </label>
+      </span>
     </legend>
     <div
       class="c4"
@@ -581,8 +581,8 @@ exports[`component: RadioGroup should render a radio group 1`] = `
       class="c1 c2"
       id="rg-label"
     >
-      <label
-        class="c1 c2 c3"
+      <span
+        class="c3"
       >
         Realm
         <span
@@ -608,7 +608,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
             />
           </svg>
         </span>
-      </label>
+      </span>
     </legend>
     <div
       class="c7"
