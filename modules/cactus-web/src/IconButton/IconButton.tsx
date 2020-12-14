@@ -7,6 +7,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { isIE } from '../helpers/constants'
 import { omitMargins } from '../helpers/omit'
+import { borderSize } from '../helpers/theme'
 
 export type IconButtonVariants = 'standard' | 'action' | 'danger'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
@@ -123,7 +124,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -148,12 +149,12 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
         if (isIE) {
           const IEOffset = focusOutlineSpacing[p.iconSize || 'medium'] / 2
           return `
-            top: -${IEOffset}px;
+            top: -${IEOffset + 1}px;
             left: -${IEOffset}px;
           `
         }
       }}
-      border: 1px solid;
+      ${(p) => `border: ${borderSize(p)} solid;`}
       ${(p) => shapeMap[p.theme.shape as Shape]}
       border-color: ${(p): string => p.theme.colors.callToAction};
       box-sizing: border-box;

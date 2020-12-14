@@ -983,7 +983,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private handleClick = (): void => {
-    //if (this._didClickButton) this._open()
     window.requestAnimationFrame((): void => {
       // if not focusing in portal, try to focus first input
       if (this._didClickButton) {
