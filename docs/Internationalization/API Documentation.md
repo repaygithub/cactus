@@ -15,6 +15,10 @@ capabilities to provide translations for an application. There are a few pieces 
 The `load` function is what will load your translations into the controller. You must extend `BaseI18nController` in order to provide an implementation of the `load` function.
 
 - The developer is responsible for handling failures when loading resources in the load function. (e.g. retry loading, or loading from an alternate source)
+  - You can either handle the error within the `load` method, or return a rejected Promise and handle the error in the `onLoad` method or an error listener.
+- The return value is a Promise that resolves to an object with one required and one optional property:
+  - `resources` is an array of Fluent translation strings; you can also put instances of the `FluentResource` class, or the return value of the `loadRef` method (more below). The array is combined such that if the same Fluent translation key exists in two of the resources, the later resource will override the earlier one.
+  - `version` if present should be a number indicating the version of the translations. This is tracked per section, and if (when reloading a section) the returned version is less than the current version, the translations will not be updated.
 - The `load` function accepts two arguments: an object that represents the section being loaded, and an options object. The section info argument has following properties:
 
 | Property  | Type   | Required | Description                                                                   |
@@ -22,9 +26,6 @@ The `load` function is what will load your translations into the controller. You
 | `lang`    | String | Y        | The language that should be loaded                                            |
 | `section` | String | Y        | The section of the app that the controller should be loading translations for |
 
-- The return value is a Promise that resolves to an object with one required and one optional property:
-  - `resources` is an array of Fluent translation strings; you can also put instances of the `FluentResource` class, and the return value of the `loadRef` method (more below). The array is combined such that if the same Fluent translation key exists in two of the resources, the later resource will override the earlier one.
-  - `version` if present should be a number indicating the version of the translations. This is tracked per section, and if (when reloading a section) the returned version is less than the current version, the translations will not be updated.
 - The options object is completely customizable for your use case: for instance, if you have a mix of hard-coded and stored-in-database translations, you might set `options.dynamic = true` to tell the loader it should look in the DB for a particular section.
 - There are two "built-in" options that are useless in `load` but can be passed to `_load` or `I18nSection`:
   - `loader` is a function that replaces the `load` method; it can be used if you have a section with a very different loading mechanism than the rest, and you don't want to special case it in your controller class.
@@ -69,6 +70,25 @@ Another use case could be if you have two languages that are mostly the same wit
 | `section`  | Y        | The section to be included as a reference                            |
 | `loadOpts` | Y        | The options that were passed as the second argument to `load`        |
 | `lang`     | N        | The language of the reference section (defaults to same as referrer) |
+
+#### Example
+
+All values in a section's resource array are combined into a single Fluent bundle; this not only serves as a lookup fallback mechanism (where you can have a section with default values, and then override them), but also allows referencing messages in other sections. For example, a greeting lookup:
+
+```
+// Section "user", generated dynamically from user preferences
+-title = mister
+-title-short = Mr.
+
+// Section "welcome"/en-US, references section "user"
+-color = color
+welcome = Welcome, { -title-short } { $name }! Pick a { -color } for your background:
+
+// Section "welcome"/en-GB, references "welcome"/en-US
+-color = colour
+```
+
+Rendering the `welcome` message in British English with `$name=John` would yield "Welcome, Mr. John! Pick a colour for your background:".
 
 ### Get
 
@@ -260,7 +280,7 @@ const Page = () => {
 
 ## I18nText
 
-The `<I18nText />` component is used for rendering translated text in an application. It's common to use `I18nText` in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, global translations will be used.
+The `<I18nText />` component is used for rendering translated text in an application. It's common to use `I18nText` in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, the default section from `I18nProvider` will be used.
 
 ### Props
 
@@ -275,7 +295,7 @@ The `<I18nText />` component is used for rendering translated text in an applica
 ```jsx
 import { I18nText, I18nSection } from '@repay/cactus-i18n'
 ...
-// No section provided; global translations will be loaded
+// No section provided; default section will be used
 const text = () => {
   return (
     <I18nText get="translation-key" args={{ groupName: "example" }} />
@@ -289,7 +309,7 @@ const section = () => {
     </I18nSection>
   )
 }
-// Section overridden; translation for "my-section__translation-key" will be rendered instead
+// Section overridden; translation for "translation-key" from "my-section" will be rendered instead
 // NOTE: the "my-section" should be loaded separately because the text element will not trigger a load
 const override = () => {
   return (
@@ -303,7 +323,7 @@ const override = () => {
 
 ## I18nElement
 
-The `<I18nElement />` component was created to allow translations to be rendered as DOM elements with support for attributes in an ftl translation. It's common to use the `I18nElement` component in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, global translations will be used.
+The `<I18nElement />` component was created to allow translations to be rendered as DOM elements with support for attributes in an ftl translation. It's common to use the `I18nElement` component in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, the default section from `I18nProvider` will be used.
 
 ### Props
 
@@ -319,7 +339,7 @@ The `<I18nElement />` component was created to allow translations to be rendered
 ```jsx
 import { I18nElement, I18nSection } from '@repay/cactus-i18n'
 ...
-// No section provided; global translations will be loaded
+// No section provided; default section will be used
 const element = () => {
   return (
     <I18nElement as="div" get="translation-key" args={{ groupName: "example" }} />
@@ -333,7 +353,7 @@ const section = () => {
     </I18NSection>
   )
 }
-// Section overridden; translations for "my-section" will be loaded
+// Section overridden; translations for "my-section" will be used
 const override = () => {
   return (
     <I18nSection name="example">
