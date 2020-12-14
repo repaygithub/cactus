@@ -456,6 +456,7 @@ exports[`component: DateInput with theme customization should have 2px border 1`
         aria-roledescription="toggles between calendar and month year selectors"
         class="c1"
         tabindex="0"
+        type="button"
       >
         <span
           id="not-thicc-monthyear-label"
@@ -2869,6 +2870,7 @@ exports[`component: DateInput with theme customization should match intermediate
         aria-roledescription="toggles between calendar and month year selectors"
         class="c1"
         tabindex="0"
+        type="button"
       >
         <span
           id="not-round-monthyear-label"
@@ -5282,6 +5284,7 @@ exports[`component: DateInput with theme customization should match square shape
         aria-roledescription="toggles between calendar and month year selectors"
         class="c1"
         tabindex="0"
+        type="button"
       >
         <span
           id="not-round-monthyear-label"
@@ -7696,6 +7699,7 @@ exports[`component: DateInput with theme customization should not have box shado
         aria-roledescription="toggles between calendar and month year selectors"
         class="c1"
         tabindex="0"
+        type="button"
       >
         <span
           id="none-of-em-monthyear-label"

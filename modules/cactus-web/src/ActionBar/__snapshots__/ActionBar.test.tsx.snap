@@ -165,6 +165,7 @@ exports[`component: ActionBar typechecks 1`] = `
         class="c2 c3"
         id="one-button"
         role="button"
+        type="button"
       >
         <svg
           class="c4"
@@ -196,6 +197,7 @@ exports[`component: ActionBar typechecks 1`] = `
       class="c2 c3"
       id="two"
       role="button"
+      type="button"
     >
       <svg
         class="c6"

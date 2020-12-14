@@ -303,6 +303,7 @@ exports[`component: MenuBar sidebar 1`] = `
         class="c3 c4"
         id="mb-button"
         role="button"
+        type="button"
       >
         <svg
           class="c5"
@@ -337,6 +338,7 @@ exports[`component: MenuBar sidebar 1`] = `
             id="em"
             role="menuitem"
             tabindex="-1"
+            type="button"
           >
             <div
               class="c9"
@@ -381,6 +383,7 @@ exports[`component: MenuBar sidebar 1`] = `
                 href="#"
                 role="menuitem"
                 tabindex="-1"
+                type="button"
               >
                 Link to the Past
               </a>
@@ -396,6 +399,7 @@ exports[`component: MenuBar sidebar 1`] = `
                 id="nested"
                 role="menuitem"
                 tabindex="-1"
+                type="button"
               >
                 <div
                   class="c9"
@@ -446,6 +450,7 @@ exports[`component: MenuBar sidebar 1`] = `
                     class="c8"
                     role="menuitem"
                     tabindex="-1"
+                    type="button"
                   >
                     The Mighty
                   </button>
@@ -472,6 +477,7 @@ exports[`component: MenuBar sidebar 1`] = `
             class="c8"
             role="menuitem"
             tabindex="-1"
+            type="button"
           >
             <em>
               A button
@@ -485,6 +491,7 @@ exports[`component: MenuBar sidebar 1`] = `
             class="c8"
             role="menuitem"
             tabindex="-1"
+            type="button"
           >
             Styled Link
           </a>
@@ -831,6 +838,7 @@ exports[`component: MenuBar typechecks 1`] = `
           id="em"
           role="menuitem"
           tabindex="0"
+          type="button"
         >
           <div
             class="c5"
@@ -895,6 +903,7 @@ exports[`component: MenuBar typechecks 1`] = `
                 href="#"
                 role="menuitem"
                 tabindex="-1"
+                type="button"
               >
                 Link to the Past
               </a>
@@ -910,6 +919,7 @@ exports[`component: MenuBar typechecks 1`] = `
                 id="nested"
                 role="menuitem"
                 tabindex="-1"
+                type="button"
               >
                 <div
                   class="c5"
@@ -980,6 +990,7 @@ exports[`component: MenuBar typechecks 1`] = `
                       class="c4"
                       role="menuitem"
                       tabindex="-1"
+                      type="button"
                     >
                       The Mighty
                     </button>
@@ -1042,6 +1053,7 @@ exports[`component: MenuBar typechecks 1`] = `
           class="c4"
           role="menuitem"
           tabindex="-1"
+          type="button"
         >
           <em>
             A button
@@ -1055,6 +1067,7 @@ exports[`component: MenuBar typechecks 1`] = `
           class="c4"
           role="menuitem"
           tabindex="-1"
+          type="button"
         >
           Styled Link
         </a>

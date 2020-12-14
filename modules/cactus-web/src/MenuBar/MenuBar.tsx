@@ -505,3 +505,4 @@ const MenuButton = styled.button.attrs({ role: 'menuitem' as string })`
     ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
   }
 `
+MenuButton.defaultProps = { type: 'button' }

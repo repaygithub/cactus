@@ -361,7 +361,7 @@ const CalendarPopup = styled(BasePopup)`
   overflow: hidden;
 `
 
-const MonthYearSelect = styled.button`
+const MonthYearSelect = styled.button.attrs({ type: 'button' })`
   box-sizing: border-box;
   appearance: none;
   background-color: transparent;
@@ -381,7 +381,7 @@ const MonthYearSelect = styled.button`
   }
 `
 
-const CalendarDayBase = styled.button`
+const CalendarDayBase = styled.button.attrs({ type: 'button' })`
   box-sizing: border-box;
   appearance: none;
   background-color: transparent;
