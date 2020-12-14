@@ -24,15 +24,10 @@ export const BasicUsage = (): React.ReactElement => (
       m={text('m', '')}
       {...eventLoggers}
     >
-      {text('children', 'Cancel')}
+      {text('children', 'Standard')}
     </TextButton>
-    <TextButton
-      variant="danger"
-      inverse={boolean('inverse', false)}
-      m={text('m', '')}
-      {...eventLoggers}
-    >
-      {text('children', 'Cancel')}
+    <TextButton variant="danger" m={text('m', '')} {...eventLoggers}>
+      Danger
     </TextButton>
     <TextButton
       variant="action"
@@ -40,7 +35,7 @@ export const BasicUsage = (): React.ReactElement => (
       m={text('m', '')}
       {...eventLoggers}
     >
-      {text('children', 'Cancel')}
+      Action
     </TextButton>
     <TextButton
       variant="standard"
@@ -49,7 +44,7 @@ export const BasicUsage = (): React.ReactElement => (
       m={text('m', '')}
       {...eventLoggers}
     >
-      {text('children', 'Cancel')}
+      Disabled
     </TextButton>
   </div>
 )

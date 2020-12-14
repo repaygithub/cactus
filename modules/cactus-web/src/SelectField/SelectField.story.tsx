@@ -14,6 +14,13 @@ export default {
 export const BasicUsage = (): React.ReactElement => (
   <div>
     <SelectField
+      label={text('label', `Disabled`)}
+      name="disabled"
+      options={array('options', ['bird', 'plane', 'superman'])}
+      disabled
+      tooltip="Select what you think you see in the sky."
+    />
+    <SelectField
       label={text('label', `What's that in the sky?`)}
       name={text('name', 'ufo')}
       options={array('options', ['bird', 'plane', 'superman'])}
@@ -26,13 +33,6 @@ export const BasicUsage = (): React.ReactElement => (
       canCreateOption={boolean('canCreateOption', true)}
       disableTooltip={select('disableTooltip', [false, true, undefined], false)}
       alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-    />
-    <SelectField
-      label={text('label', `Disabled`)}
-      name="ufo"
-      options={array('options', ['bird', 'plane', 'superman'])}
-      disabled
-      tooltip="Select what you think you see in the sky."
     />
   </div>
 )

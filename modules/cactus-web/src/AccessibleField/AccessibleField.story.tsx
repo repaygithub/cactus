@@ -18,6 +18,7 @@ export const BasicUsage = (): React.ReactElement => {
       label={text('label', 'Field Label')}
       tooltip={text('tooltip?', 'Will only show a tooltip when text is provided.')}
       autoTooltip={boolean('autoTooltip', true)}
+      disabled={boolean('disabled', false)}
     >
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>

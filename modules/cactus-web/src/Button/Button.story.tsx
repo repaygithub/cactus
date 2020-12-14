@@ -127,7 +127,7 @@ export const LoadingOnClick = (): ReactElement => {
           inverse={boolean('inverse', false)}
           loading={loading}
           onClick={onClick}
-        ></Button>
+        />
       )}
     </TimedLoading>
   )
