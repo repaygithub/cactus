@@ -3,12 +3,12 @@ import { boolean, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Flex from '../Flex/Flex'
-import Grid from '../Grid/Grid'
 import actions from '../helpers/storybookActionsWorkaround'
-import IconButton, { IconButtonVariants } from './IconButton'
+import { Grid, Text } from '../index'
+import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 
 const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']
+
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
@@ -18,67 +18,104 @@ export default {
   component: IconButton,
 } as Meta
 
-const IconButtonBase = ({ variant }: { variant: IconButtonVariants }) => {
+const IconButtonBase = ({ size, disabled }: { size: IconButtonSizes; disabled?: boolean }) => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const Icon = icons[iconName] as React.ComponentType<any>
   return (
-    <Flex flexDirection="row">
-      <IconButton
-        variant={variant}
-        inverse={boolean('inverse', false)}
-        iconSize="tiny"
-        label="add"
-        {...eventLoggers}
-      >
-        <Icon />
-      </IconButton>
-      <IconButton
-        variant={variant}
-        inverse={boolean('inverse', false)}
-        iconSize="small"
-        label="add"
-        {...eventLoggers}
-      >
-        <Icon />
-      </IconButton>
-      <IconButton
-        variant={variant}
-        inverse={boolean('inverse', false)}
-        iconSize="medium"
-        label="add"
-        {...eventLoggers}
-      >
-        <Icon />
-      </IconButton>
-      <IconButton
-        variant={variant}
-        inverse={boolean('inverse', false)}
-        iconSize="large"
-        label="add"
-        {...eventLoggers}
-      >
-        <Icon />
-      </IconButton>
-      <IconButton
-        variant={variant}
-        disabled
-        inverse={boolean('inverse', false)}
-        iconSize="large"
-        label="add"
-        {...eventLoggers}
-      >
-        <Icon />
-      </IconButton>
-    </Flex>
+    <>
+      <Grid.Item tiny={3}>
+        <IconButton
+          variant="standard"
+          inverse={boolean('inverse', false)}
+          iconSize={size}
+          label="add"
+          disabled={disabled}
+          {...eventLoggers}
+        >
+          <Icon />
+        </IconButton>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <IconButton
+          variant="action"
+          inverse={boolean('inverse', false)}
+          iconSize={size}
+          label="add"
+          disabled={disabled}
+          {...eventLoggers}
+        >
+          <Icon />
+        </IconButton>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <IconButton
+          variant="danger"
+          inverse={boolean('inverse', false)}
+          iconSize={size}
+          label="add"
+          disabled={disabled}
+          {...eventLoggers}
+        >
+          <Icon />
+        </IconButton>
+      </Grid.Item>
+    </>
   )
 }
 export const BasicUsage = (): React.ReactElement => {
   return (
-    <div>
-      <IconButtonBase variant="standard" />
-      <IconButtonBase variant="action" />
-      <IconButtonBase variant="danger" />
-    </div>
+    <Grid justify="center">
+      <Grid.Item tiny={3}>
+        <Text textStyle="tiny" margin="0">
+          Size
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="tiny" margin="0">
+          Standard
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Action
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Danger
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Tiny
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="tiny" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Small
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="small" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Medium
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="medium" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Large
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="large" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Disabled
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="large" disabled />
+    </Grid>
   )
 }
 

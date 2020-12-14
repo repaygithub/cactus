@@ -26,7 +26,7 @@ export const BasicUsage = (): ReactElement => (
       margin="5px"
       {...eventLoggers}
     >
-      {text('children', 'A Button')}
+      {text('Text', 'Standard')}
     </Button>
     <Button
       variant="action"
@@ -36,7 +36,7 @@ export const BasicUsage = (): ReactElement => (
       margin="5px"
       {...eventLoggers}
     >
-      {text('children', 'A Button')}
+      Action
     </Button>
     <Button
       variant="danger"
@@ -46,7 +46,7 @@ export const BasicUsage = (): ReactElement => (
       margin="5px"
       {...eventLoggers}
     >
-      {text('children', 'A Button')}
+      Danger
     </Button>
     <Button
       variant="warning"
@@ -56,8 +56,9 @@ export const BasicUsage = (): ReactElement => (
       margin="5px"
       {...eventLoggers}
     >
-      {text('children', 'A Button')}
+      Warning
     </Button>
+
     <Button
       variant="success"
       loading={boolean('loading', false)}
@@ -66,7 +67,7 @@ export const BasicUsage = (): ReactElement => (
       margin="5px"
       {...eventLoggers}
     >
-      {text('children', 'A Button')}
+      Success
     </Button>
     <Button
       variant="standard"
@@ -77,7 +78,7 @@ export const BasicUsage = (): ReactElement => (
       margin="5px"
       {...eventLoggers}
     >
-      {text('children', 'A Button')}
+      Disabled
     </Button>
   </Flex>
 )
@@ -126,9 +127,7 @@ export const LoadingOnClick = (): ReactElement => {
           inverse={boolean('inverse', false)}
           loading={loading}
           onClick={onClick}
-        >
-          {text('children', 'Submit')}
-        </Button>
+        ></Button>
       )}
     </TimedLoading>
   )

@@ -36,6 +36,15 @@ const SplitButtonBase = ({
   if (actionIconName2 !== 'None') {
     ActionIcon2 = icons[actionIconName2] as React.FunctionComponent<IconProps>
   }
+  const getMainActionLabel = () => {
+    if (disabled) {
+      return 'Disabled'
+    } else if (variant === 'standard') {
+      return text('MainActionLabel', 'standard')
+    } else {
+      return variant
+    }
+  }
   return (
     <SplitButton
       disabled={disabled}
@@ -43,7 +52,7 @@ const SplitButtonBase = ({
       onSelectMainAction={(): void => {
         console.log('Main Action')
       }}
-      mainActionLabel={text('mainActionLabel', 'Main Action')}
+      mainActionLabel={getMainActionLabel()}
       // @ts-ignore
       mainActionIcon={MainIcon ? MainIcon : undefined}
       variant={variant}
@@ -67,7 +76,7 @@ const SplitButtonBase = ({
 }
 export const BasicUsage = (): React.ReactElement => {
   return (
-    <Flex flexWrap="wrap" justifyContent="center" alignItems="center" width="95%">
+    <Flex flexWrap="wrap" justifyContent="center" alignItems="center" width="80%">
       <SplitButtonBase variant="standard" />
       <SplitButtonBase variant="danger" />
       <SplitButtonBase variant="success" />

@@ -30,7 +30,7 @@ export const BasicUsage = (): React.ReactElement => (
       {...eventLoggers}
     />
     <TextAreaField
-      label="Field Label"
+      label="Field Label Disabled"
       name="taf-1-diabled"
       placeholder="Placeholder"
       disabled

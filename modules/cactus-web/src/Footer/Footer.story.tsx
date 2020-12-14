@@ -2,6 +2,7 @@ import { number, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import Box from '../Box/Box'
 import Footer from './Footer'
 
 const LINK_TEXT = [
@@ -46,7 +47,7 @@ export const BasicUsage = (): React.ReactElement => {
   }
 
   return (
-    <div>
+    <Box width="100%">
       With logo links and custom content
       <Footer key={`${customContent}-${numLinks}`} logo={LOGO}>
         {customContent !== '' ? customContent : null}
@@ -64,6 +65,6 @@ export const BasicUsage = (): React.ReactElement => {
           {makeLinks(numLinks)}
         </Footer>
       </div>
-    </div>
+    </Box>
   )
 }

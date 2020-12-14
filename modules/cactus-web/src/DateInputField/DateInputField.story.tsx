@@ -21,8 +21,8 @@ export const DefaultUsage = (): React.ReactElement => (
 
     <DateInputField
       disabled
-      label={text('label', 'Date Input Field Disabled')}
-      name={text('name', 'date_input_field_disabled')}
+      label={text('label-disabled', 'Date Input Field Disabled')}
+      name="date_input_field_disabled"
       type={select('type?', dateInputTypes, 'date')}
     />
   </Box>

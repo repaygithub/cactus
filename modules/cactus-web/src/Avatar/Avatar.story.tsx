@@ -1,44 +1,46 @@
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { Grid } from '../index'
-import Avatar from './Avatar'
-
+import { Flex, Grid, Text } from '../index'
+import Avatar, { AvatarStatus, AvatarType } from './Avatar'
 export default {
   title: 'Avatar',
   component: Avatar,
 } as Meta
 
+const dictionary: AvatarStatus[] = ['error', 'warning', 'info', 'success']
+
+const AvatarGenerator = ({
+  status,
+  type,
+  disabled,
+}: {
+  status: AvatarStatus
+  type: AvatarType
+  disabled?: boolean
+}) => {
+  return (
+    <Grid.Item tiny={3} medium={1}>
+      <Flex flexDirection="column" alignItems="center" width="99%">
+        <Text textStyle="tiny" textAlign="center">
+          {disabled ? 'disabled' : `${type} ${status}`}
+        </Text>
+        <Avatar status={status} type={type} disabled={disabled} />
+      </Flex>
+    </Grid.Item>
+  )
+}
+
 export const BasicUsage = (): React.ReactElement => {
   return (
     <Grid justify="center">
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="feedback" status="error" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="feedback" status="warning" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="feedback" status="info" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="feedback" status="success" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="alert" status="error" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="alert" status="warning" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="alert" status="info" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="alert" status="success" />
-      </Grid.Item>
-      <Grid.Item tiny={3} medium={1}>
-        <Avatar type="alert" status="info" disabled />
-      </Grid.Item>
+      {dictionary.map((status) => (
+        <AvatarGenerator type="feedback" status={status} />
+      ))}
+      {dictionary.map((status) => (
+        <AvatarGenerator type="alert" status={status} />
+      ))}
+      <AvatarGenerator type="feedback" status="info" disabled />
     </Grid>
   )
 }

@@ -17,14 +17,14 @@ export default {
 
 export const BasicUsage = (): ReactElement => {
   return (
-    <div>
+    <Flex flexDirection="column" alignItems="center" width="80%">
       <Alert
         status="error"
         type={select('Type', type, 'general')}
         shadow={boolean('Shadow', false)}
         marginY="5px"
       >
-        {text('Message', 'Message goes here')}
+        {text('Message 1', 'Error')}
       </Alert>
       <Alert
         status="warning"
@@ -32,7 +32,7 @@ export const BasicUsage = (): ReactElement => {
         shadow={boolean('Shadow', false)}
         marginY="5px"
       >
-        {text('Message', 'Message goes here')}
+        {text('Message 2', 'Warning')}
       </Alert>
       <Alert
         status="info"
@@ -40,12 +40,12 @@ export const BasicUsage = (): ReactElement => {
         shadow={boolean('Shadow', false)}
         marginY="5px"
       >
-        {text('Message', 'Message goes here')}
+        {text('Message 3', 'Info')}
       </Alert>
       <Alert status="success" type={select('Type', type, 'general')} shadow marginY="5px">
-        {text('Message', 'Message goes here')}
+        {text('Message 4', 'Success')}
       </Alert>
-    </div>
+    </Flex>
   )
 }
 

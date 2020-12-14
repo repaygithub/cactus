@@ -15,13 +15,7 @@ export default {
 export const BasicUsage = (): React.ReactElement => (
   <div>
     <RadioButtonField id="my-id" name="rbf" label={text('label', 'A Label')} {...eventLoggers} />
-    <RadioButtonField
-      id="my-id"
-      name="rbf"
-      label={text('label', 'A Label')}
-      disabled
-      {...eventLoggers}
-    />
+    <RadioButtonField id="my-id" name="rbf" label="Disabled" disabled {...eventLoggers} />
   </div>
 )
 

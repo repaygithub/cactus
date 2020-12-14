@@ -10,7 +10,7 @@ export default {
   component: Card,
 } as Meta
 
-const BaseComponent = ({ boxShadows }: { boxShadows: boolean }) => {
+const BaseComponent = ({ boxShadows, title }: { boxShadows: boolean; title: string }) => {
   return (
     <Card
       margin="30px"
@@ -19,7 +19,7 @@ const BaseComponent = ({ boxShadows }: { boxShadows: boolean }) => {
       paddingX={text('paddingX', '')}
       paddingY={text('paddingY', '')}
     >
-      <h2 style={{ margin: 0 }}>{text('Title', 'Title')}</h2>
+      <h2 style={{ margin: 0 }}>{text(title, title)}</h2>
       <h4 style={{ margin: '0 0 8px', fontWeight: 400, fontSize: '12px' }}>
         {text('Subtitle', 'Subtitle')}
       </h4>
@@ -38,10 +38,7 @@ const BaseComponent = ({ boxShadows }: { boxShadows: boolean }) => {
           </tr>
 
           <tr>
-            <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}>
-              {' '}
-              Due Date{' '}
-            </th>
+            <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}>Due Date</th>
             <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>
               {new Date(date('Date', new Date('10/5/2020'))).toLocaleDateString()}
             </td>
@@ -63,8 +60,8 @@ const BaseComponent = ({ boxShadows }: { boxShadows: boolean }) => {
 
 export const BasicUsage = (): React.ReactElement => (
   <div>
-    <BaseComponent boxShadows />
-    <BaseComponent boxShadows={false} />
+    <BaseComponent boxShadows title="With Shadows on" />
+    <BaseComponent boxShadows={false} title="With Shadows off" />
   </div>
 )
 
