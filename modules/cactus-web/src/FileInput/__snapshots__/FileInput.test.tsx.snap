@@ -403,7 +403,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -782,7 +782,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;

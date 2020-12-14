@@ -239,7 +239,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -702,7 +702,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -1140,7 +1140,7 @@ exports[`Modal variant is success snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -1558,7 +1558,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;

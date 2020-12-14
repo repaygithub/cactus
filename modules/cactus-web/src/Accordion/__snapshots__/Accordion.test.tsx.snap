@@ -19,7 +19,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -169,7 +169,7 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -321,7 +321,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -472,7 +472,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -494,7 +494,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   position: absolute;
   height: calc(100% + 8px);
   width: calc(100% + 8px);
-  border: 1px solid;
+  border: 2px solid;
   border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;
@@ -623,7 +623,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -774,7 +774,7 @@ exports[`component: Accordion with theme customization outline accordion should 
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -920,7 +920,7 @@ exports[`component: Accordion with theme customization simple accordion should h
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
@@ -942,7 +942,7 @@ exports[`component: Accordion with theme customization simple accordion should h
   position: absolute;
   height: calc(100% + 8px);
   width: calc(100% + 8px);
-  border: 1px solid;
+  border: 2px solid;
   border-radius: 8px;
   border-color: hsl(200,96%,35%);
   box-sizing: border-box;

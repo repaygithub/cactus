@@ -29,7 +29,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  padding: 0px;
+  padding: 1px;
   border: none;
   background: transparent;
   outline: none;
