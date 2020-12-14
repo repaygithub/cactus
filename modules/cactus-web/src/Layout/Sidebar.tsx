@@ -73,7 +73,7 @@ Sidebar.Button = styled.button`
     box-shadow: none;
   }
 `
-Sidebar.Button.defaultProps = { role: 'button' }
+Sidebar.Button.defaultProps = { role: 'button', type: 'button' }
 
 // `position: relative` to make it easier to position panel popups.
 const SidebarDiv = styled.div`

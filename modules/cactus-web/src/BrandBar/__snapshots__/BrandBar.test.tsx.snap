@@ -300,6 +300,7 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
           class="c5 c6"
           id="typed-button"
           role="button"
+          type="button"
         >
           Type
         </button>

@@ -65,7 +65,10 @@ const DataGridTable: React.FC<DataGridTableProps> = (props) => {
                   {...column.cellProps}
                 >
                   {column.sortable && sortOptions !== undefined && !isCardView ? (
-                    <HeaderButton onClick={(): void => handleSort(key, sortOpt !== undefined)}>
+                    <HeaderButton
+                      onClick={(): void => handleSort(key, sortOpt !== undefined)}
+                      type="button"
+                    >
                       <TextWrapper>{column.title}</TextWrapper>
                       <IconWrapper aria-hidden>
                         {sortOpt !== undefined && <NavigationChevronDown />}
