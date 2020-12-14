@@ -983,7 +983,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private handleClick = (): void => {
-    if (this._didClickButton) this._open()
     window.requestAnimationFrame((): void => {
       // if not focusing in portal, try to focus first input
       if (this._didClickButton) {
@@ -1016,7 +1015,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     event.stopPropagation()
   }
 
-  private handleButtonMouseDown = (): void => {
+  private handleButtonClick = (): void => {
+    this._open()
     this._didClickButton = true
   }
 
@@ -1500,8 +1500,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             <IconButton
               disabled={disabled}
               ref={this._button}
-              onMouseDown={!disabled ? this.handleButtonMouseDown : undefined}
-              onTouchStart={!disabled ? this.handleButtonMouseDown : undefined}
+              onClick={!disabled ? this.handleButtonClick : undefined}
+              onTouchStart={!disabled ? this.handleButtonClick : undefined}
               onKeyDown={!disabled ? this.handleButtonKeyDown : undefined}
               label={phrases.pickerLabel}
             >

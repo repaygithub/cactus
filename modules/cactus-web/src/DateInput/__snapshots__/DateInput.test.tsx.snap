@@ -33,6 +33,8 @@ exports[`component: DateInput with theme customization should have 2px border 1`
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -41,8 +43,16 @@ exports[`component: DateInput with theme customization should have 2px border 1`
   border: 0;
 }
 
-.c2:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c2:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+  border: 2px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c2:hover {
@@ -2436,6 +2446,8 @@ exports[`component: DateInput with theme customization should match intermediate
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -2444,8 +2456,16 @@ exports[`component: DateInput with theme customization should match intermediate
   border: 0;
 }
 
-.c2:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c2:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c2:hover {
@@ -4839,6 +4859,8 @@ exports[`component: DateInput with theme customization should match square shape
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -4847,8 +4869,16 @@ exports[`component: DateInput with theme customization should match square shape
   border: 0;
 }
 
-.c2:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c2:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+  border: 1px solid;
+  border-radius: 1px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c2:hover {
@@ -7242,6 +7272,8 @@ exports[`component: DateInput with theme customization should not have box shado
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -7250,8 +7282,16 @@ exports[`component: DateInput with theme customization should not have box shado
   border: 0;
 }
 
-.c2:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c2:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c2:hover {

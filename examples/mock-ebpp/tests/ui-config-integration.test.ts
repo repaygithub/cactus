@@ -71,8 +71,8 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
 
 test('moves focus to date picker on click', async (t): Promise<void> => {
   const { getActiveElement } = makeActions(t)
-  const datePickerTrigger = queryByLabelText('Open date picker')
-  await t.click(datePickerTrigger).pressKey('tab')
+  await clickWorkaround(queryByLabelText('Open date picker'))
+  await t.pressKey('tab')
   const activeEl = await getActiveElement()
 
   await t
@@ -87,7 +87,7 @@ test('moves focus to date picker on click', async (t): Promise<void> => {
 test('locks focus to date picker', async (t: TestController): Promise<void> => {
   const { getActiveElement } = makeActions(t)
   const datePickerTrigger = queryByLabelText('Open date picker')
-  await t.click(datePickerTrigger)
+  await clickWorkaround(datePickerTrigger)
 
   const dateButtonActiveEl = await getActiveElement()
   await t
@@ -115,7 +115,7 @@ test('locks focus to date picker', async (t: TestController): Promise<void> => {
 test('move and select date with keyboard', async (t: TestController): Promise<void> => {
   const { getActiveElement } = makeActions(t)
   const datePickerTrigger = queryByLabelText('Open date picker')
-  await t.click(datePickerTrigger)
+  await clickWorkaround(datePickerTrigger)
 
   // move right
   await t.pressKey('right')

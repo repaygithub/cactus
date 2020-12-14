@@ -1,11 +1,13 @@
 import { iconSizes } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { isIE } from '../helpers/constants'
 import { omitMargins } from '../helpers/omit'
+import { borderSize } from '../helpers/theme'
 
 export type IconButtonVariants = 'standard' | 'action' | 'danger'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
@@ -27,8 +29,7 @@ const variantMap: VariantMap = {
   action: css`
     color: ${(p): string => p.theme.colors.callToAction};
 
-    &:hover,
-    &:focus {
+    &:hover {
       color: ${(p): string => p.theme.colors.base};
     }
   `,
@@ -81,6 +82,19 @@ const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
   cursor: not-allowed;
 `
 
+const shapeMap = {
+  square: 'border-radius: 1px;',
+  intermediate: 'border-radius: 8px;',
+  round: 'border-radius: 50%;',
+}
+
+const focusOutlineSpacing = {
+  tiny: 4,
+  small: 8,
+  medium: 8,
+  large: 12,
+}
+
 const variantOrDisabled = (
   props: IconButtonProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
@@ -115,13 +129,36 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
 
   &::-moz-focus-inner {
     border: 0;
   }
 
   &:focus {
-    background-color: ${(p): string => p.theme.colors.transparentCTA};
+    ::after {
+      content: '';
+      display: block;
+      position: absolute;
+      ${(p) => `
+        height: calc(100% + ${focusOutlineSpacing[p.iconSize || 'medium']}px);
+        width: calc(100% + ${focusOutlineSpacing[p.iconSize || 'medium']}px);
+      `}
+      ${(p) => {
+        if (isIE) {
+          const IEOffset = focusOutlineSpacing[p.iconSize || 'medium'] / 2
+          return `
+            top: -${IEOffset + 1}px;
+            left: -${IEOffset}px;
+          `
+        }
+      }}
+      ${(p) => `border: ${borderSize(p)} solid;`}
+      ${(p) => shapeMap[p.theme.shape as Shape]}
+      border-color: ${(p): string => p.theme.colors.callToAction};
+      box-sizing: border-box;
+    }
   }
 
   ${variantOrDisabled}

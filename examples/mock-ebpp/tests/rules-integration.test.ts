@@ -69,7 +69,7 @@ test('fill out and submit the form with deleting and reordering', async (t: Test
   await selectDropdownOption('Name', 'Do the thing')
   await t.click(queryByText('Add Action'))
   await selectDropdownOption('Name', 'Do another thing')
-  await t.click(queryByLabelText('Move Action #1 down'))
+  await clickWorkaround(queryByLabelText('Move Action #1 down'))
   await clickWorkaround(queryByText('Submit'))
 
   const apiData: RulesData = await getApiData()

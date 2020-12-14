@@ -408,6 +408,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -416,8 +418,16 @@ exports[`component: FileInput should render a file with an error 1`] = `
   border: 0;
 }
 
-.c8:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c8:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c8:hover {
@@ -777,6 +787,8 @@ exports[`component: FileInput should render a loaded file 1`] = `
   background: transparent;
   outline: none;
   cursor: pointer;
+  position: relative;
+  overflow: visible;
   color: hsl(200,96%,11%);
   font-size: 24px;
 }
@@ -785,8 +797,16 @@ exports[`component: FileInput should render a loaded file 1`] = `
   border: 0;
 }
 
-.c8:focus {
-  background-color: hsla(200,96%,35%,0.3);
+.c8:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 8px);
+  width: calc(100% + 8px);
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
 }
 
 .c8:hover {
