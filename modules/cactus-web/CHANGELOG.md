@@ -1,3 +1,27 @@
+# v4.2.0 (Tue Dec 15 2020)
+
+#### 🚀 Enhancement
+
+- Change focus style on IconButtons to an outline [#440](https://github.com/repaygithub/cactus/pull/440) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Fix bug where some components would incorrectly submit forms when clicked [#448](https://github.com/repaygithub/cactus/pull/448) ([@wilysword](https://github.com/wilysword))
+- Fix tooltip alignment in Safari [#444](https://github.com/repaygithub/cactus/pull/444) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+
+#### 🔩 Dependency Updates
+
+- Bump ini package [#438](https://github.com/repaygithub/cactus/pull/438) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 4
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@Dhalton](https://github.com/Dhalton)
+- [@NicolasSimmonds](https://github.com/NicolasSimmonds)
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v4.1.0 (Thu Dec 10 2020)
 
 #### 🚀 Enhancement
