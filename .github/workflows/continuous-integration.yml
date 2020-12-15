@@ -54,10 +54,19 @@ jobs:
           yarn i18n test:ci
           yarn icons test:ci
           yarn web test:ci
+
       - name: Visual Tests
         uses: ./actions/storyshots
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Create Pull Request
         uses: ./actions/create-pull-request
+        with:
+          branch: ${{ steps.extract_branch.outputs.branch }}-patch
 
       - name: Integration Tests
         uses: ./actions/integration-tests
