@@ -37,6 +37,7 @@ export const BasicUsage = (): ReactElement => {
         disabled={boolean('disabled', false)}
         multiple={boolean('multiple', false)}
         m={text('m', '2')}
+        placeholder={text('placeHolder', 'Select an option')}
         {...eventLoggers}
       />
     </React.Fragment>

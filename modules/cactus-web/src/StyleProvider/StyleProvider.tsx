@@ -44,7 +44,6 @@ button,
 input,
 select,
 textarea {
-  font-family: ${(p) => p.theme.font};
   font-weight: 400;
   color: ${(p): string => p.theme.colors.darkestContrast};
   font-style: normal;
@@ -59,6 +58,7 @@ input,
 select,
 textarea {
   ${(p) => textStyle(p.theme, 'body')};
+  font-family: ${(p) => p.theme.font};
 }
 
 html,
