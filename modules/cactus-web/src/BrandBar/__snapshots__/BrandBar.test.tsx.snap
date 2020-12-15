@@ -501,6 +501,8 @@ exports[`component: BrandBar snapshot 1`] = `
   align-items: center;
   padding: 16px;
   cursor: pointer;
+  margin: 0;
+  border-radius: 0;
 }
 
 .c4:focus {
