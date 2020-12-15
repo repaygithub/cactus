@@ -14,7 +14,7 @@ export default {
 export const BasicUsage = (): React.ReactElement => (
   <div>
     <SelectField
-      label={text('label', `Disabled`)}
+      label="Disabled"
       name="disabled"
       options={array('options', ['bird', 'plane', 'superman'])}
       disabled
