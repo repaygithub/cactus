@@ -215,9 +215,10 @@ interface MenuWithScroll extends HTMLUListElement {
 
 type MenuRef = React.RefObject<HTMLUListElement>
 
-type ScrollButtonHook = (o: Orientation, e: boolean) => [MenuRef, Scroll]
+type ScrollInfo = (e: HTMLElement) => [HTMLElement, number, HTMLElement[]]
+type ScrollButtonHook = (o: Orientation, e: boolean, si?: ScrollInfo) => [MenuRef, Scroll]
 
-function getScrollInfo(element: HTMLElement): [HTMLElement, number, HTMLElement[]] {
+const getScrollInfo: ScrollInfo = (element) => {
   const overflow = window.getComputedStyle(element).overflow
   if (overflow === 'hidden') {
     return [element.parentElement as HTMLElement, BUTTON_WIDTH, getMenuItems(element, true)]
@@ -227,7 +228,11 @@ function getScrollInfo(element: HTMLElement): [HTMLElement, number, HTMLElement[
   return getScrollInfo(element.parentElement as HTMLElement)
 }
 
-export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
+export const useScrollButtons: ScrollButtonHook = (
+  orientation,
+  expanded,
+  getSI = getScrollInfo
+) => {
   const menuRef = React.useRef<HTMLUListElement>(null)
   const [scroll, setScroll] = React.useState<Scroll>(DEFAULT_SCROLL)
   React.useEffect(() => {
@@ -248,7 +253,7 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
         scrollWidth = 'scrollHeight'
       }
       const updateScrollState = (scroll: Scroll, target?: number | HTMLElement): Scroll => {
-        const [wrapper, buttonWidth, items] = getScrollInfo(menu)
+        const [wrapper, buttonWidth, items] = getSI(menu)
 
         const parentRect = wrapper.getBoundingClientRect()
         const itemRects = items.map((i) => i.getBoundingClientRect())
@@ -334,7 +339,7 @@ export const useScrollButtons: ScrollButtonHook = (orientation, expanded) => {
       observer.observe()
       return () => observer.unobserve()
     }
-  }, [expanded, menuRef, orientation])
+  }, [expanded, menuRef, orientation, getSI])
   return [menuRef, scroll]
 }
 

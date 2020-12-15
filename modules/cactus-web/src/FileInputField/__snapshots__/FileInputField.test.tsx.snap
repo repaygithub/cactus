@@ -7,13 +7,13 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 
 .c3 {
   box-sizing: border-box;
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c4 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -229,7 +229,6 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   >
     <div
       class="c3 c4"
-      display="flex"
     >
       <label
         class="c5 c6"
@@ -316,13 +315,13 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 
 .c3 {
   box-sizing: border-box;
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c4 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -698,7 +697,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   >
     <div
       class="c3 c4"
-      display="flex"
     >
       <label
         class="c5 c6"
@@ -839,13 +837,13 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 
 .c3 {
   box-sizing: border-box;
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c4 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -1192,7 +1190,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   >
     <div
       class="c3 c4"
-      display="flex"
     >
       <label
         class="c5 c6"
@@ -1313,13 +1310,13 @@ exports[`component: FileInputField should render a loading file 1`] = `
 
 .c3 {
   box-sizing: border-box;
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c4 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -1596,7 +1593,6 @@ exports[`component: FileInputField should render a loading file 1`] = `
   >
     <div
       class="c3 c4"
-      display="flex"
     >
       <label
         class="c5 c6"
@@ -1695,13 +1691,13 @@ exports[`component: FileInputField should render file input field 1`] = `
 
 .c3 {
   box-sizing: border-box;
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c4 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -1917,7 +1913,6 @@ exports[`component: FileInputField should render file input field 1`] = `
   >
     <div
       class="c3 c4"
-      display="flex"
     >
       <label
         class="c5 c6"

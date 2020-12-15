@@ -7,13 +7,13 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
 
 .c3 {
   box-sizing: border-box;
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c4 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -165,7 +165,6 @@ exports[`component: TextInputField should render a TextInputField 1`] = `
   >
     <div
       class="c3 c4"
-      display="flex"
     >
       <label
         class="c5 c6"

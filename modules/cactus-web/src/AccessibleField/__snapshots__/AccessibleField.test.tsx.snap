@@ -7,13 +7,13 @@ exports[`component: AccessibleField alternate prop types 1`] = `
 
 .c2 {
   box-sizing: border-box;
+}
+
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c3 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -117,7 +117,6 @@ exports[`component: AccessibleField alternate prop types 1`] = `
   >
     <div
       class="c2 c3"
-      display="flex"
     >
       <label
         class="c4 c5"
