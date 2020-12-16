@@ -26,11 +26,11 @@ export const BasicUsage = (): React.ReactElement => {
   return <ToggleManager disabled={boolean('Disabled', false)} />
 }
 
-export const InCenteredTable = (): React.ReactElement => (
+export const InAlignedTable = (): React.ReactElement => (
   <Table fullWidth={true}>
     <Table.Body>
       <Table.Row>
-        <Table.Cell align="center">
+        <Table.Cell align="left">
           <Toggle />
         </Table.Cell>
       </Table.Row>
@@ -40,7 +40,7 @@ export const InCenteredTable = (): React.ReactElement => (
         </Table.Cell>
       </Table.Row>
       <Table.Row>
-        <Table.Cell align="center">
+        <Table.Cell align="right">
           <Toggle />
         </Table.Cell>
       </Table.Row>
