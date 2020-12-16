@@ -2,6 +2,7 @@ import { boolean } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import Table from '../Table/Table'
 import Toggle from './Toggle'
 
 export default {
@@ -24,3 +25,25 @@ const ToggleManager = (props: any) => {
 export const BasicUsage = (): React.ReactElement => {
   return <ToggleManager disabled={boolean('Disabled', false)} />
 }
+
+export const InCenteredTable = (): React.ReactElement => (
+  <Table fullWidth={true}>
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell align="center">
+          <Toggle />
+        </Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell align="center">
+          <Toggle />
+        </Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell align="center">
+          <Toggle />
+        </Table.Cell>
+      </Table.Row>
+    </Table.Body>
+  </Table>
+)
