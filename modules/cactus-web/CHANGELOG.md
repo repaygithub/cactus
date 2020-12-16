@@ -1,3 +1,15 @@
+# v4.2.1 (Wed Dec 16 2020)
+
+#### 🐛 Bug Fix
+
+- Fix a misalignment of the Toggle checkbox when Toggles are rendered inside Tables [#455](https://github.com/repaygithub/cactus/pull/455) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 1
+
+- [@mikesoltow](https://github.com/mikesoltow)
+
+---
+
 # v4.2.0 (Tue Dec 15 2020)
 
 #### 🚀 Enhancement
