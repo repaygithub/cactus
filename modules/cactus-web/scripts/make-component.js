@@ -20,6 +20,10 @@ const prettier = require('prettier')
 async function main() {
   const srcDir = path.join(__dirname, '..', 'src')
   const componentName = args.pop()
+  if (!componentName.match(/^[a-zA-Z0-9 .-]+$/)) {
+    throw new Error('Invalid argument')
+  }
+
   const componentDir = path.join(srcDir, componentName)
   const doesComponentExist = await fileExists(componentDir)
   if (doesComponentExist) {
