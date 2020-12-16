@@ -538,7 +538,7 @@ export class PartialDate implements FormatTokenMap {
         return this.year === date.year && this.month === date.month && this.day === date.day
       } else if (type === 'time') {
         return (
-          this.hours === date.hours && this.minutes === date.minutes && this.period === this.period
+          this.hours === date.hours && this.minutes === date.minutes && this.period === date.period
         )
       }
     }

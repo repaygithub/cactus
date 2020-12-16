@@ -93,34 +93,34 @@ function hasLoadedAll(
 
 const I18nSection: React.FC<I18nSectionProps> = ({
   name,
-  lang,
+  lang: propsLang,
   dependencies,
   children,
-  ...extra
+  ...extraProps
 }): ReactElement | null => {
   const context = useContext(I18nContext)
   const sectionContext = context === null ? null : { ...context }
   if (sectionContext !== null) {
     sectionContext.section = name
-    if (lang) {
-      sectionContext.lang = lang
+    if (propsLang) {
+      sectionContext.lang = propsLang
     }
   }
   useEffect((): void => {
     if (sectionContext !== null) {
-      const { lang, section, controller } = sectionContext
-      controller._load({ lang, section }, extra)
+      const { lang: contextLang, section: contextSection, controller } = sectionContext
+      controller._load({ lang: contextLang, section: contextSection }, extraProps)
       if (Array.isArray(dependencies)) {
         dependencies.forEach((dep): void => {
           if (!dep) return
-          let section: string
-          let extra: { [key: string]: any } | undefined
+          let depSection: string
+          let depExtra: { [key: string]: any } | undefined
           if (typeof dep === 'string') {
-            section = dep
+            depSection = dep
           } else {
-            ;({ section, ...extra } = dep)
+            ;({ section: depSection, ...depExtra } = dep)
           }
-          controller._load({ lang, section }, extra)
+          controller._load({ lang: contextLang, section: depSection }, depExtra)
         })
       }
     }
@@ -128,7 +128,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
   // wait to render until section is loaded
   if (
     sectionContext !== null &&
-    !hasLoadedAll(sectionContext.controller, name, lang, dependencies)
+    !hasLoadedAll(sectionContext.controller, name, propsLang, dependencies)
   ) {
     return null
   }

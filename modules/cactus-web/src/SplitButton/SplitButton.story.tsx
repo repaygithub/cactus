@@ -29,8 +29,8 @@ export const BasicUsage = (): React.ReactElement => {
   const variant = select('variant', variantOptions, variantOptions.standard)
 
   let MainIcon: React.FunctionComponent<IconProps>
-  let ActionIcon1: React.FunctionComponent<IconProps>
-  let ActionIcon2: React.FunctionComponent<IconProps>
+  let ActionIcon1: React.FunctionComponent<IconProps> | undefined = undefined
+  let ActionIcon2: React.FunctionComponent<IconProps> | undefined = undefined
   if (mainIconName !== 'None') {
     MainIcon = icons[mainIconName] as React.FunctionComponent<IconProps>
   }
@@ -51,18 +51,10 @@ export const BasicUsage = (): React.ReactElement => {
       disabled={boolean('disabled', false)}
       variant={variant}
     >
-      <SplitButton.Action
-        onSelect={(): void => console.log('Action One')}
-        // @ts-ignore
-        icon={ActionIcon1 && ActionIcon1}
-      >
+      <SplitButton.Action onSelect={(): void => console.log('Action One')} icon={ActionIcon1}>
         Action One
       </SplitButton.Action>
-      <SplitButton.Action
-        onSelect={(): void => console.log('Action Two')}
-        // @ts-ignore
-        icon={ActionIcon2 && ActionIcon2}
-      >
+      <SplitButton.Action onSelect={(): void => console.log('Action Two')} icon={ActionIcon2}>
         Action Two
       </SplitButton.Action>
     </SplitButton>

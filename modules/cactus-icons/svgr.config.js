@@ -3,7 +3,7 @@ const prettierConfig = JSON.parse(
 )
 prettierConfig.parser = 'typescript'
 
-const template = ({ template }, opts, { componentName, jsx }) => {
+const exportedTemplate = ({ template }, opts, { componentName, jsx }) => {
   const code = `
 import PropTypes from 'prop-types'
 import * as React from 'react'
@@ -64,7 +64,7 @@ export default COMPONENT_NAME
 module.exports = {
   icon: true,
   ext: 'tsx',
-  template,
+  template: exportedTemplate,
   svgProps: {
     fill: 'currentcolor',
   },
