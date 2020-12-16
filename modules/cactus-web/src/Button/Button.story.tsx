@@ -4,8 +4,8 @@ import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
 import actions from '../helpers/storybookActionsWorkaround'
+import { Flex } from '../index'
 import Button, { ButtonVariants } from './Button'
-
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const buttonVariants: ButtonVariants[] = ['standard', 'action', 'danger', 'warning', 'success']
@@ -17,16 +17,70 @@ export default {
 } as Meta
 
 export const BasicUsage = (): ReactElement => (
-  <Button
-    variant={select('variant', buttonVariants, 'standard')}
-    disabled={boolean('disabled', false)}
-    loading={boolean('loading', false)}
-    inverse={boolean('inverse', false)}
-    loadingText={text('loadingText?', 'loading')}
-    {...eventLoggers}
-  >
-    {text('children', 'A Button')}
-  </Button>
+  <Flex justifyContent="space-around">
+    <Button
+      variant="standard"
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
+      loadingText={text('loadingText?', 'loading')}
+      margin="5px"
+      {...eventLoggers}
+    >
+      {text('Text', 'Standard')}
+    </Button>
+    <Button
+      variant="action"
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
+      loadingText={text('loadingText?', 'loading')}
+      margin="5px"
+      {...eventLoggers}
+    >
+      Action
+    </Button>
+    <Button
+      variant="danger"
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
+      loadingText={text('loadingText?', 'loading')}
+      margin="5px"
+      {...eventLoggers}
+    >
+      Danger
+    </Button>
+    <Button
+      variant="warning"
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
+      loadingText={text('loadingText?', 'loading')}
+      margin="5px"
+      {...eventLoggers}
+    >
+      Warning
+    </Button>
+
+    <Button
+      variant="success"
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
+      loadingText={text('loadingText?', 'loading')}
+      margin="5px"
+      {...eventLoggers}
+    >
+      Success
+    </Button>
+    <Button
+      variant="standard"
+      disabled
+      loading={boolean('loading', false)}
+      inverse={boolean('inverse', false)}
+      loadingText={text('loadingText?', 'loading')}
+      margin="5px"
+      {...eventLoggers}
+    >
+      Disabled
+    </Button>
+  </Flex>
 )
 
 BasicUsage.parameters = { options: { showPanel: true } }

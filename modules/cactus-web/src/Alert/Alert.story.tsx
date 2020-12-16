@@ -17,13 +17,33 @@ export default {
 
 export const BasicUsage = (): ReactElement => {
   return (
-    <Flex width="80%">
+    <Flex flexDirection="column" alignItems="center" width="80%">
       <Alert
-        status={select('Status', status, 'error')}
+        status="error"
         type={select('Type', type, 'general')}
         shadow={boolean('Shadow', false)}
+        marginY="5px"
       >
-        {text('Message', 'Message goes here')}
+        {text('Message 1', 'Error')}
+      </Alert>
+      <Alert
+        status="warning"
+        type={select('Type', type, 'general')}
+        shadow={boolean('Shadow', false)}
+        marginY="5px"
+      >
+        {text('Message 2', 'Warning')}
+      </Alert>
+      <Alert
+        status="info"
+        type={select('Type', type, 'general')}
+        shadow={boolean('Shadow', false)}
+        marginY="5px"
+      >
+        {text('Message 3', 'Info')}
+      </Alert>
+      <Alert status="success" type={select('Type', type, 'general')} shadow marginY="5px">
+        {text('Message 4', 'Success')}
       </Alert>
     </Flex>
   )

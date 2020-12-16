@@ -2,8 +2,8 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import { Box } from '../index'
 import DateInputField from './DateInputField'
-
 const dateInputTypes: ('date' | 'datetime' | 'time')[] = ['date', 'datetime', 'time']
 
 export default {
@@ -12,13 +12,20 @@ export default {
 } as Meta
 
 export const DefaultUsage = (): React.ReactElement => (
-  <DateInputField
-    disabled={boolean('disabled', false)}
-    label={text('label', 'Date Input Field')}
-    name={text('name', 'date_input_field')}
-    type={select('type?', dateInputTypes, 'date')}
-    width="350px"
-  />
+  <Box width="350px">
+    <DateInputField
+      label={text('label', 'Date Input Field')}
+      name={text('name', 'date_input_field')}
+      type={select('type?', dateInputTypes, 'date')}
+    />
+
+    <DateInputField
+      disabled
+      label={text('label-disabled', 'Date Input Field Disabled')}
+      name="date_input_field_disabled"
+      type={select('type?', dateInputTypes, 'date')}
+    />
+  </Box>
 )
 
 export const ExtendedProps = (): React.ReactElement => (

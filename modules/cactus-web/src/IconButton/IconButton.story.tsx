@@ -3,12 +3,12 @@ import { boolean, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Grid from '../Grid/Grid'
 import actions from '../helpers/storybookActionsWorkaround'
+import { Grid, Text } from '../index'
 import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 
 const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']
-const iconButtonSizes: IconButtonSizes[] = ['tiny', 'small', 'medium', 'large']
+
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
@@ -18,20 +18,104 @@ export default {
   component: IconButton,
 } as Meta
 
-export const BasicUsage = (): React.ReactElement => {
+const IconButtonBase = ({ size, disabled }: { size: IconButtonSizes; disabled?: boolean }) => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const Icon = icons[iconName] as React.ComponentType<any>
   return (
-    <IconButton
-      variant={select('variant', iconButtonVariants, 'standard')}
-      iconSize={select('size', iconButtonSizes, 'medium')}
-      disabled={boolean('disabled', false)}
-      inverse={boolean('inverse', false)}
-      label="add"
-      {...eventLoggers}
-    >
-      <Icon />
-    </IconButton>
+    <>
+      <Grid.Item tiny={3}>
+        <IconButton
+          variant="standard"
+          inverse={boolean('inverse', false)}
+          iconSize={size}
+          label="add"
+          disabled={disabled}
+          {...eventLoggers}
+        >
+          <Icon />
+        </IconButton>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <IconButton
+          variant="action"
+          inverse={boolean('inverse', false)}
+          iconSize={size}
+          label="add"
+          disabled={disabled}
+          {...eventLoggers}
+        >
+          <Icon />
+        </IconButton>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <IconButton
+          variant="danger"
+          inverse={boolean('inverse', false)}
+          iconSize={size}
+          label="add"
+          disabled={disabled}
+          {...eventLoggers}
+        >
+          <Icon />
+        </IconButton>
+      </Grid.Item>
+    </>
+  )
+}
+export const BasicUsage = (): React.ReactElement => {
+  return (
+    <Grid justify="center">
+      <Grid.Item tiny={3}>
+        <Text textStyle="tiny" margin="0">
+          Size
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="tiny" margin="0">
+          Standard
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Action
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Danger
+        </Text>
+      </Grid.Item>
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Tiny
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="tiny" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Small
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="small" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Medium
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="medium" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Large
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="large" />
+      <Grid.Item tiny={3}>
+        <Text textStyle="small" margin="0">
+          Disabled
+        </Text>
+      </Grid.Item>
+      <IconButtonBase size="large" disabled />
+    </Grid>
   )
 }
 

@@ -1,4 +1,4 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -28,10 +28,12 @@ const ToggleHandler = (props: any) => {
 }
 
 export const BasicUsage = (): React.ReactElement => (
-  <ToggleHandler
-    name={text('name', 'boolean_field')}
-    label={text('label', 'Boolean Field')}
-    disabled={boolean('disabled', false)}
-    {...eventLoggers}
-  />
+  <div>
+    <ToggleHandler
+      name={text('name', 'boolean_field')}
+      label={text('label', 'Boolean Field')}
+      {...eventLoggers}
+    />
+    <ToggleHandler name="boolean_field_disabled" label="Disabled" disabled />
+  </div>
 )

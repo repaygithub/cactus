@@ -13,17 +13,31 @@ export const BasicUsage = (): React.ReactElement => {
   return (
     <AccessibleField
       alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-      disabled={boolean('disabled', false)}
       disableTooltip={select('disableTooltip', [false, true, undefined], false)}
       name={text('name', 'field_name')}
       label={text('label', 'Field Label')}
-      error={text('error (will show field error)', '')}
-      warning={text('warning (will show field warning)', '')}
-      success={text('success (will show field success)', '')}
       tooltip={text('tooltip?', 'Will only show a tooltip when text is provided.')}
       autoTooltip={boolean('autoTooltip', true)}
+      disabled={boolean('disabled', false)}
     >
       <input style={{ minWidth: '300px' }} />
     </AccessibleField>
   )
 }
+
+export const DifferentVariants = (): React.ReactElement => (
+  <div>
+    <AccessibleField disabled label="Disabled" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+    <AccessibleField error="Error message" label="Error Message" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+    <AccessibleField success="Success message" label="Success Message" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+    <AccessibleField warning="Warning message" label="warning Message" name="field_name">
+      <input style={{ minWidth: '300px' }} />
+    </AccessibleField>
+  </div>
+)

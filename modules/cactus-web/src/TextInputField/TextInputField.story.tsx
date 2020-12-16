@@ -32,23 +32,31 @@ const InputValidator = (): React.ReactElement => {
 }
 
 export const BasicUsage = (): React.ReactElement => (
-  <TextInputField
-    label={text('label', 'Input Label')}
-    placeholder={text('placeholder', 'Placeholder')}
-    disabled={boolean('disabled', false)}
-    success={text('success', '')}
-    warning={text('warning', '')}
-    error={text('error', '')}
-    tooltip={text('tooltip', 'Enter some text')}
-    name="input-1"
-    autoTooltip={boolean('autoTooltip', true)}
-    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
-    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-    {...eventLoggers}
-  />
+  <div>
+    <TextInputField
+      label={text('label', 'Input Label')}
+      placeholder={text('placeholder', 'Placeholder')}
+      disabled={boolean('disabled', false)}
+      success={text('success', '')}
+      warning={text('warning', '')}
+      error={text('error', '')}
+      tooltip={text('tooltip', 'Enter some text')}
+      name="input-1"
+      autoTooltip={boolean('autoTooltip', true)}
+      disableTooltip={select('disableTooltip', [false, true, undefined], false)}
+      alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
+      {...eventLoggers}
+    />
+    <TextInputField
+      label="Input Label Disabled"
+      placeholder="Placeholder"
+      disabled
+      tooltip="Enter some text"
+      name="input-1"
+      disableTooltip
+    />
+  </div>
 )
-
-BasicUsage.parameters = { cactus: { overrides: { height: '110vh', width: '110vw' } } }
 
 export const FixedWidthContainer = (): React.ReactElement => (
   <div style={{ width: '235px' }}>

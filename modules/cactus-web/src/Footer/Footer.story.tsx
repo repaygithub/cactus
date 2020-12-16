@@ -1,7 +1,8 @@
-import { boolean, number, text } from '@storybook/addon-knobs'
+import { number, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import Box from '../Box/Box'
 import Footer from './Footer'
 
 const LINK_TEXT = [
@@ -27,7 +28,6 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => {
-  const hasLogo = boolean('has logo', true)
   const customContent = text('custom content', 'Some Custom Footer Content')
   const numLinks = number('number of links', 2)
 
@@ -47,9 +47,24 @@ export const BasicUsage = (): React.ReactElement => {
   }
 
   return (
-    <Footer key={`${customContent}-${numLinks}`} logo={hasLogo ? LOGO : undefined}>
-      {customContent !== '' ? customContent : null}
-      {makeLinks(numLinks)}
-    </Footer>
+    <Box width="100%">
+      With logo links and custom content
+      <Footer key={`${customContent}-${numLinks}`} logo={LOGO}>
+        {customContent !== '' ? customContent : null}
+        {makeLinks(numLinks)}
+      </Footer>
+      <div style={{ marginTop: '20px' }}>
+        Without logo and custom content
+        <Footer key={`${customContent}-${numLinks}`} logo={undefined}>
+          {makeLinks(numLinks)}
+        </Footer>
+      </div>
+      <div style={{ marginTop: '20px' }}>
+        Without custom content
+        <Footer key={`${customContent}-${numLinks}`} logo={LOGO}>
+          {makeLinks(numLinks)}
+        </Footer>
+      </div>
+    </Box>
   )
 }

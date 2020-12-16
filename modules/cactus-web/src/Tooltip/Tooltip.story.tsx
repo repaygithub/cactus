@@ -1,7 +1,8 @@
-import { boolean, text } from '@storybook/addon-knobs'
+import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import Flex from '../Flex/Flex'
 import Tooltip from './Tooltip'
 
 export default {
@@ -10,7 +11,10 @@ export default {
 } as Meta
 
 export const BasicUsage = (): React.ReactElement => (
-  <Tooltip label={text('label', 'Some tooltip text here')} disabled={boolean('disabled', false)} />
+  <Flex flexDirection="column">
+    <Tooltip label={text('label', 'Some tooltip text here')} />
+    <Tooltip disabled label="disabled" />
+  </Flex>
 )
 
 export const CollisionDetection = (): React.ReactElement => (
