@@ -203,7 +203,6 @@ const LogoWrapper = styled.div`
 const MenuButton = styled(ReachMenuButton)<ProfileStyleProp>`
   ${(p) => textStyle(p.theme, 'body')};
   font-weight: 600;
-
   margin-right: 5px;
   background-color: transparent;
   border: 0;
@@ -211,7 +210,8 @@ const MenuButton = styled(ReachMenuButton)<ProfileStyleProp>`
   align-items: center;
   padding: 16px;
   cursor: pointer;
-
+  margin: 0;
+  border-radius: 0;
   ${(p) =>
     p.$isProfilePage &&
     `
