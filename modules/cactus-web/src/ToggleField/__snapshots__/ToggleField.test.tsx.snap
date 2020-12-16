@@ -29,6 +29,10 @@ exports[`component: ToggleField snapshot 1`] = `
   margin: 0;
   z-index: 1;
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   cursor: pointer;
 }
 
@@ -220,6 +224,10 @@ exports[`component: ToggleField snapshot when checked=true 1`] = `
   margin: 0;
   z-index: 1;
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   cursor: pointer;
 }
 
@@ -412,6 +420,10 @@ exports[`component: ToggleField snapshot when disabled 1`] = `
   margin: 0;
   z-index: 1;
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   cursor: pointer;
 }
 
