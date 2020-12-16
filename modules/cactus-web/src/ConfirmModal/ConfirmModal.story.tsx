@@ -1,5 +1,5 @@
 import * as icons from '@repay/cactus-icons'
-import { select, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
@@ -32,6 +32,8 @@ const ConfirmModalExample = (): React.ReactElement => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const iconSize = select('Icon size', ['medium', 'large'], 'medium')
   const variant = select('variant', statusOptions, statusOptions.action)
+  const shrinkToContent = boolean('ShrinkToContent', false)
+
   const descriptionText = text(
     'Description text',
     'Your actions can override past setting causing unintended consequences.'
@@ -48,6 +50,7 @@ const ConfirmModalExample = (): React.ReactElement => {
       iconName={iconName}
       iconSize={iconSize}
       title={text('Title', '')}
+      shrinkToContent={shrinkToContent}
     >
       <Text as="h4" fontWeight="normal">
         {descriptionText}

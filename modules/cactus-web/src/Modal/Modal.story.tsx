@@ -1,4 +1,4 @@
-import { select, text } from '@storybook/addon-knobs'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
@@ -25,6 +25,7 @@ const ModalWithState = (): React.ReactElement => {
   const variant = select('variant', statusOptions, statusOptions.action)
   const modalLabel = text('Modal Label', 'Modal Label')
   const closeLabel = text('Close icon label', 'Close Label')
+  const shrinkToContent = boolean('ShrinkToContent', false)
 
   return open ? (
     <Modal
@@ -33,6 +34,7 @@ const ModalWithState = (): React.ReactElement => {
       onClose={(): void => setOpen(false)}
       modalLabel={modalLabel}
       closeLabel={closeLabel}
+      shrinkToContent={shrinkToContent}
     >
       <Text as="h3">This is a Modal</Text>
     </Modal>

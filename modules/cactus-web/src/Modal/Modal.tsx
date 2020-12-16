@@ -18,9 +18,12 @@ export interface ModalProps {
   modalLabel?: string
   onClose: () => void
   variant?: ModalType
+  shrinkToContent?: boolean
 }
+
 interface ModalPopupProps extends DialogProps {
   variant: ModalType
+  shrinkToContent: boolean
 }
 
 const shapeMap = {
@@ -30,7 +33,16 @@ const shapeMap = {
 }
 
 const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
-  const { variant = 'action', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
+  const {
+    variant = 'action',
+    children,
+    isOpen,
+    onClose,
+    modalLabel,
+    closeLabel,
+    shrinkToContent = false,
+    ...rest
+  } = props
   const hasChildren = !!React.Children.count(children)
 
   return (
@@ -40,6 +52,7 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
       onDismiss={onClose}
       variant={variant}
       {...rest}
+      shrinkToContent={shrinkToContent}
     >
       <DialogContent aria-label={modalLabel}>
         <IconButton onClick={onClose} label={closeLabel}>
@@ -67,8 +80,8 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
   align-items: center;
   z-index: 52;
   > [data-reach-dialog-content] {
-    flex-basis: 100%;
-    width: 100%;
+    flex-basis: ${(p) => !p.shrinkToContent && '100%'};
+    width: ${(p) => !p.shrinkToContent && '100%'};
     border: ${(p) => border(p.theme, '')};
     ${(p) => shapeMap[p.theme.shape]};
     background: white;
@@ -122,6 +135,7 @@ Modal.propTypes = {
   modalLabel: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['action', 'danger', 'warning', 'success']),
+  shrinkToContent: PropTypes.bool,
 }
 
 Modal.defaultProps = {
@@ -129,5 +143,6 @@ Modal.defaultProps = {
   isOpen: false,
   modalLabel: 'Modal',
   variant: 'action',
+  shrinkToContent: false,
 }
 export default Modal
