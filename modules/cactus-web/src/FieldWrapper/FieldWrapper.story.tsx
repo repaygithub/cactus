@@ -1,3 +1,4 @@
+import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement, useCallback, useReducer } from 'react'
 
@@ -187,7 +188,7 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactE
     >
       <Box
         as="form"
-        width="50vw"
+        width={text('widht', '50vw')}
         minWidth="350px"
         margin="0 auto"
         py={5}
