@@ -12,5 +12,6 @@ Array [
   "useI18nResource",
   "I18nContext",
   "BaseI18nController",
+  "BundleInfo",
 ]
 `;

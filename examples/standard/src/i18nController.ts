@@ -1,18 +1,14 @@
-import { BaseI18nController } from '@repay/cactus-i18n'
-
-interface ResourceDefinition {
-  lang: string
-  ftl: string
-}
+import { BaseI18nController, BundleInfo, LoadResult } from '@repay/cactus-i18n'
 
 class I18nController extends BaseI18nController {
-  public load(args: { lang: string; section: string }): Promise<ResourceDefinition[]> {
+  protected getKey(id: string, section: string) {
+    return section === 'global' ? id : `${section}__${id}`
+  }
+
+  protected async load(args: BundleInfo): Promise<LoadResult> {
     const [lang] = args.lang.split('-')
-    return import(`./locales/${lang}/${args.section}.js`).then(({ default: ftl }): [
-      { lang: string; ftl: string }
-    ] => {
-      return [{ lang, ftl }]
-    })
+    const { default: ftl } = await import(`./locales/${lang}/${args.section}.js`)
+    return { resources: [ftl] }
   }
 }
 

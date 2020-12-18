@@ -12,124 +12,153 @@ capabilities to provide translations for an application. There are a few pieces 
 
 ### Load
 
-The `load` function is what will load your translations into the controller. You must extend this class because the `load` function should be overridden to provide the correct translations.
+The `load` function is what will load your translations into the controller. You must extend `BaseI18nController` in order to provide an implementation of the `load` function.
 
-- The developer is responsible for handling failures when loading resources in the load function. (e.g. retry loading languages or loading the fallback languages)
-- The developer is also responsible for handling the case in which all translations fail to load for a given section (e.g. reload browser or redirect to error page)
-- The `load` function accepts a single object argument with the following attributes:
+- The developer is responsible for handling failures when loading resources in the load function. (e.g. retry loading, or loading from an alternate source)
+  - You can either handle the error within the `load` method, or return a rejected Promise and handle the error in the `onLoad` method or an error listener.
+- The return value is a Promise that resolves to an object with one required and one optional property:
+  - `resources` is an array of Fluent translation strings; you can also put instances of the `FluentResource` class, or the return value of the `loadRef` method (more below). The array is combined such that if the same Fluent translation key exists in two of the resources, the later resource will override the earlier one.
+  - `version` if present should be a number indicating the version of the translations. This is tracked per section, and if (when reloading a section) the returned version is less than the current version, the translations will not be updated.
+- The `load` function accepts two arguments: an object that represents the section being loaded, and an options object. The section info argument has following properties:
 
-| Attr      | Type   | Required | Description                                                                   |
+| Property  | Type   | Required | Description                                                                   |
 | --------- | ------ | -------- | ----------------------------------------------------------------------------- |
 | `lang`    | String | Y        | The language that should be loaded                                            |
 | `section` | String | Y        | The section of the app that the controller should be loading translations for |
 
-### SetDict
+- The options object is completely customizable for your use case: for instance, if you have a mix of hard-coded and stored-in-database translations, you might set `options.dynamic = true` to tell the loader it should look in the DB for a particular section.
+- There are two "built-in" options that are useless in `load` but can be passed to `_load` or `I18nSection`:
+  - `loader` is a function that replaces the `load` method; it can be used if you have a section with a very different loading mechanism than the rest, and you don't want to special case it in your controller class.
+  - `onLoad` is a function that is called once the section is loaded (or an error occurred while loading). It takes three arguments: the section info object, the state the section was in before loading (usually "new", but could be "error" if you're retrying), and the error (if there was one). The default `onLoad` behavior is to call any listeners that have been set on the controller.
+  - Both functions bind `this` to the controller when called, which can enable you to keep the default behavior and just do something custom on the side:
 
-The `setDict` function can be used to load a specific translation resource into the controller manually. This function accepts three arguments:
+```js
+// Add an extra translation source on top of the normal ones:
+const loader = async (sectionInfo, opts) => {
+  const { resources } = await this.load(sectionInfo, opts)
+  const ftl = getSuperSpecialTranslations(sectionInfo)
+  return { resources: [...resources, ftl] }
+}
 
-| Arg       | Type   | Required | Description                                                     |
-| --------- | ------ | -------- | --------------------------------------------------------------- |
-| `lang`    | String | Y        | The language that is being loaded                               |
-| `section` | String | Y        | The section of the app that the translation is being loaded for |
-| `ftl`     | String | Y        | The actual ftl-formatted translation                            |
+// Do some custom onLoad logic, but still call the controller's listeners:
+const onLoad = (sectionInfo, prevState, error) => {
+  doCustomLogic()
+  this.onLoad(sectionInfo, prevState, error)
+}
+```
+
+### LoadRef
+
+The `loadRef` function is meant as a supplement to `load` for specific use cases. Say you have some common translations that appear on multiple pages. They're not quite global enough to wrap the entire app in an `I18nSection`, but it's also inconvenient to put a section everyplace they're used; instead, you can include those translations as a reference. The "common" section will only be loaded once, but can be referenced by as many other sections as needed:
+
+```
+load(sectionInfo, opts) {
+  const resources = []
+  if (needsCommonTranslations(sectionInfo.section)) {
+    resources.push(this.loadRef(sectionInfo, 'common', opts))
+  }
+  resources.push(getTranslations(sectionInfo.section, sectionInfo.lang))
+  return Promise.resolve({ resources })
+}
+```
+
+Another use case could be if you have two languages that are mostly the same with only a few differences, like en-US and en-GB: one language can include a ref to the other, and only the Fluent keys that are actually different need to be overridden.
+
+| Argument   | Required | Description                                                          |
+| ---------- | -------- | -------------------------------------------------------------------- |
+| `referrer` | Y        | The object that was received as the first argument to `load`         |
+| `section`  | Y        | The section to be included as a reference                            |
+| `loadOpts` | Y        | The options that were passed as the second argument to `load`        |
+| `lang`     | N        | The language of the reference section (defaults to same as referrer) |
+
+#### Example
+
+All values in a section's resource array are combined into a single Fluent bundle; this not only serves as a lookup fallback mechanism (where you can have a section with default values, and then override them), but also allows referencing messages in other sections. For example, a greeting lookup:
+
+```
+// Section "user", generated dynamically from user preferences
+-title = mister
+-title-short = Mr.
+
+// Section "welcome"/en-US, references section "user"
+-color = color
+welcome = Welcome, { -title-short } { $name }! Pick a { -color } for your background:
+
+// Section "welcome"/en-GB, references "welcome"/en-US
+-color = colour
+```
+
+Rendering the `welcome` message in British English with `$name=John` would yield "Welcome, Mr. John! Pick a colour for your background:".
 
 ### Get
 
-The `get` function will search language bundles for the requested message, then return the message and an object of attached attributes.
+The `get` function will search for the requested translation. It searches through all matching languages (see [language matching](https://www.projectfluent.org/fluent.js/langneg/#matching)), plus the `defaultLang` if there is one. It accepts a single object argument with the following properties:
 
-#### Params
+| Property   | Type        | Required | Description                                           |
+| ---------- | ----------- | -------- | ----------------------------------------------------- |
+| `lang`     | String      | N        | Override the controller's current language            |
+| `section`  | String      | Y        | The section to search in                              |
+| `id`       | String      | Y        | ID of the message (see `getKey` method)               |
+| `args`     | Object      | N        | Used to resolve variables in the translations         |
 
-The `get()` function accepts one argument which is an object with the following properties.
+The return value is always an object with three properties:
 
-| Attr      | Type   | Required | Description                                                                        |
-| --------- | ------ | -------- | ---------------------------------------------------------------------------------- |
-| `lang`    | String | N        | Override the currently selected language                                           |
-| `section` | String | N        | The section where the id resides, defaults to `global`                             |
-| `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
-| `args`    | Object | N        | Used to resolve variables in the translations                                      |
+| Property   | Type     | Description                                                                      |
+| ---------- | -------- | -------------------------------------------------------------------------------- |
+| `text`     | Str/null | The main line from the Fluent translation, null if empty or no translation found |
+| `attrs`    | Object   | Any attrs included with the translation                                          |
+| `found`    | Boolean  | Indicates if a translation was found or not                                      |
 
-#### Returns
+### getKey
 
-The `get()` function will always return a tuple but if the requested message doesn't exist the first value will be `null` and if there are no associated attributes with the message the second argument will be an empty object.
+In some cases the `id` you pass into `get` may not be the same as the Fluent translation key. In that case, you can override the `getKey` method to transform the `id` into the correct format. This mostly exists for backwards compatibility, because in previous versions the key format was hardcoded:
 
-```ts
-type GetReturn = [string | null, { [key: string]: string }]
 ```
+// Implementation to maintain the old key format.
+getKey(id, section, lang) {
+  return section === 'global' ? id : `${section}__${id}`
+}
+```
+Other use cases might be if you use IDs that contain invalid Fluent characters like "." and you need to sanitize the ID before passing it to Fluent.
 
 ### GetText
 
-The `getText` function will search language bundles for the requested message, then return the message only.
-
-#### Params
-
-The `getText(params)` function accepts one argument which is an object with the following properties.
-
-| Attr      | Type   | Required | Description                                                                        |
-| --------- | ------ | -------- | ---------------------------------------------------------------------------------- |
-| `lang`    | String | N        | Override the currently selected language                                           |
-| `section` | String | N        | The section where the id resides, defaults to `global`                             |
-| `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
-| `args`    | Object | N        | Used to resolve variables in the translations                                      |
-
-#### Returns
-
-The `getText(params)` function will return either a string or null.
-
-```ts
-type GetTextReturn = null | string
-```
+The `getText` has the same purpose and arguments as `get`, but only returns the main message (or null).
 
 ### HasText
 
-The `hasText` function will search language bundles for the requested message, then return a boolean signifying it was found or not.
-
-#### Params
-
-The `hasText(params)` function accepts one argument which is an object with the following properties.
-
-| Attr      | Type   | Required | Description                                                                        |
-| --------- | ------ | -------- | ---------------------------------------------------------------------------------- |
-| `lang`    | String | N        | Override the currently selected language                                           |
-| `section` | String | N        | The section where the id resides, defaults to `global`                             |
-| `id`      | String | Y        | `id` of the message, if section is not `global` they will be concatenated together |
-
-#### Returns
-
-The `hasText(params)` function will return either `true` if the message exists or `false` if it does not.
+The `hasText` returns the same as the `get` method's `found` property. It has the same arguments, except it doesn't take the `args` variables (because it doesn't actually do any translating).
 
 ### Constructor
 
-The `BaseI18nController` constructor accepts a single options object with the following attributes:
+The `BaseI18nController` constructor accepts a single options object with the following properties:
 
-| Attr             | Type     | Required | Description                                                                                                   |
-| ---------------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------- |
-| `defaultLang`    | String   | Y        | The default language                                                                                          |
-| `supportedLangs` | String[] | Y        | A list of all languages the application supports                                                              |
-| `lang`           | String   | N        | The current language that should be rendered                                                                  |
-| `global`         | String   | N        | A global ftl translation, used for loading the initial global dictionary at time of instantiation             |
-| `debugMode`      | Boolean  | N        | A flag to indicate whether or not certain console warnings should be displayed. This flag defaults to `false` |
+| Property         | Type     | Required | Description                                                                                     |
+| ---------------- | -------- | -------- | ----------------------------------------------------------------------------------------------- |
+| `supportedLangs` | String[] | Y        | A list of all languages the application supports                                                |
+| `defaultLang`    | String   | N        | The default & fallback language; if not given, then `lang` becomes a required argument          |
+| `lang`           | String   | N        | The current language that should be rendered; defaults to `defaultLang`                         |
+| `debugMode`      | Boolean  | N        | A flag to indicate whether or not certain console warnings should be displayed; default `false` |
+| `useIsolating`   | Boolean  | N        | Passed directly to `FluentBundle` class; default `true` for using bidi isolation marks          |
+| `functions`      | Object   | N        | Passed directly to `FluentBundle` class; provide custom functions to use in Fluent translations |
 
 ### Extending The Base
 
 ```js
 class I18nController extends BaseI18nController {
-  // This is the minimum implementation, load() must be implemented or
-  // the constructor will throw
-  load(args) {
-    const { lang, section } = args
+  // Minimum implementation with required load() method
+  load(sectionInfo) {
+    const { lang, section } = sectionInfo
     // Load ftl translations from the source
-    import(`./locales/${lang}/${section}.js`).then(({ default: ftl }) => {
-      return [{ lang, ftl }]
-    })
+    return import(`./locales/${lang}/${section}.js`)
+      .then(({ default: ftl }) => ({ resources: [ftl] }))
   }
 }
 
-const enGlobalFTL = 'greeting = Hello and welcome'
 const controller = new I18nController({
   defaultLang: 'en',
   supportedLangs: ['en', 'es'],
-  lang: 'en',
-  global: enGlobalFTL,
+  useIsolating: false,
 })
 export default controller
 ```
@@ -145,14 +174,14 @@ class I18nController extends BaseI18nController {
   }
 
   get(args) {
-    const tuple = super.get(args)
-    if (tuple[0] === null) {
-      const key = args.section === 'global' ? args.id : `${args.section}__${args.id}`
+    const result = super.get(args)
+    if (!result.found) {
+      const key = this.getKey(args.id, args.section, args.lang)
       if (!missingKeys.has(key)) {
         missingKeys.add(key)
       }
     }
-    return tuple
+    return result
   }
 }
 ```
@@ -163,10 +192,13 @@ The `<I18nProvider />` component is a top-level component that is used to provid
 
 ### Props
 
-| Prop         | Type   | Required | Description                                                    |
-| ------------ | ------ | -------- | -------------------------------------------------------------- |
-| `controller` | String | Y        | Used for passing the controller to the `I18nProvider`.         |
-| `lang`       | String | N        | Used for setting the current language that should be rendered. |
+| Prop         | Type   | Required | Description                                                   |
+| ------------ | ------ | -------- | ------------------------------------------------------------- |
+| `controller` | String | Y        | Used for passing the controller to the `I18nProvider`         |
+| `lang`       | String | N        | Used for setting the current language that should be rendered |
+| `section`    | String | N        | Sets a default section for the entire app; default "global"   |
+
+Unlike `I18nSection`, `I18nProvider` doesn't accept any extra section load arguments, so if you need those (or just don't need a default section) you should set `section=""`.
 
 ### Example Usage
 
@@ -206,15 +238,17 @@ function App(props) {
 
 ## I18nSection
 
-The `<I18nSection />` component was designed to allow the translations to be broken up into separate sections and loaded only when a specific section is needed. A section component alone will not render anything; it must be used with other internationalization components like `I18nText` or `I18nElement` in order to render any actual translations. This component is really there to tell any of its children i18n components where to look for translated text. It can also be used to manually change the rendered language in cases where a user wants to present information to another person.
+The `<I18nSection />` component was designed to allow the translations to be broken up into separate sections and loaded only when a specific section is needed. A section component alone will not render anything; it must be used with other internationalization components like `I18nText` or `I18nElement` in order to render any actual translations. This component is really there to tell any of its children i18n components where to look for translated text. It can also be used to locally change the rendered language, for example in cases where a user wants to present information to another person in the second person's language.
 
 ### Props
 
-| Prop           | Type                | Required | Description                                                                                                                 |
-| -------------- | ------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `name`         | String              | Y        | Used for telling the component which section is to be loaded                                                                |
-| `lang`         | String              | N        | Used to override the globally selected language                                                                             |
-| `dependencies` | Array<String \| {}> | N        | Used to provide additional section dependencies that will not become the default `section` for components lower in the tree |
+| Prop           | Type                | Required | Description                                                                                             |
+| -------------- | ------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
+| `name`         | String              | Y        | Name of the section to load and use as the default in descendant components                             |
+| `lang`         | String              | N        | Used to override the globally selected language                                                         |
+| `dependencies` | Array<String \| {}> | N        | Load additional sections that will be used in descendants, but should not be set as the default section |
+
+Any additional props will be passed as part of the `loadOpts` argument to the `load` function.
 
 ### Example Usage
 
@@ -246,13 +280,13 @@ const Page = () => {
 
 ## I18nText
 
-The `<I18nText />` component is used for rendering translated text in an application. It's common to use `I18nText` in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, global translations will be used.
+The `<I18nText />` component is used for rendering translated text in an application. It's common to use `I18nText` in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, the default section from `I18nProvider` will be used.
 
 ### Props
 
 | Prop      | Type   | Required | Description                                                                              |
 | --------- | ------ | -------- | ---------------------------------------------------------------------------------------- |
-| `get`     | String | Y        | Tells the component which translation to look for in the loaded section                  |
+| `get`     | String | Y        | Equivalent to the `id` arg to the controller's `get` method                              |
 | `args`    | Object | N        | Provides a key-value mapping for any variables that should be displayed in a translation |
 | `section` | String | N        | Used for overriding the current section to load translations from another                |
 
@@ -261,7 +295,7 @@ The `<I18nText />` component is used for rendering translated text in an applica
 ```jsx
 import { I18nText, I18nSection } from '@repay/cactus-i18n'
 ...
-// No section provided; global translations will be loaded
+// No section provided; default section will be used
 const text = () => {
   return (
     <I18nText get="translation-key" args={{ groupName: "example" }} />
@@ -275,7 +309,7 @@ const section = () => {
     </I18nSection>
   )
 }
-// Section overridden; translation for "my-section__translation-key" will be rendered instead
+// Section overridden; translation for "translation-key" from "my-section" will be rendered instead
 // NOTE: the "my-section" should be loaded separately because the text element will not trigger a load
 const override = () => {
   return (
@@ -285,27 +319,17 @@ const override = () => {
     </I18nSection>
   )
 }
-
-// The developer may also write the entire key out while providing the section as "global"
-const alsoOverride = () => {
-  return (
-    <I18nSection name="example">
-      ...
-      <I18nText get="my-section__translation-key" section="global" args={{ groupName: "example" }} />
-    </I18nSection>
-  )
-}
 ```
 
 ## I18nElement
 
-The `<I18nElement />` component was created to allow translations to be rendered as dom elements with support for attributes in an ftl translation. It's common to use the `I18nElement` component in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, global translations will be used.
+The `<I18nElement />` component was created to allow translations to be rendered as DOM elements with support for attributes in an ftl translation. It's common to use the `I18nElement` component in conjunction with the `I18nSection` component to pull a translation from a certain section. If no section is defined, the default section from `I18nProvider` will be used.
 
 ### Props
 
 | Prop      | Type   | Required | Description                                                                              |
 | --------- | ------ | -------- | ---------------------------------------------------------------------------------------- |
-| `get`     | String | Y        | Tells the component which translation to look for in the loaded section                  |
+| `get`     | String | Y        | Equivalent to the `id` arg to the controller's `get` method                              |
 | `args`    | Object | N        | Provides a key-value mapping for any variables that should be displayed in a translation |
 | `section` | String | N        | Used for overriding the current section to load translations from another                |
 | `as`      | String | Y        | Tells the component what type of dom element should be rendered                          |
@@ -315,7 +339,7 @@ The `<I18nElement />` component was created to allow translations to be rendered
 ```jsx
 import { I18nElement, I18nSection } from '@repay/cactus-i18n'
 ...
-// No section provided; global translations will be loaded
+// No section provided; default section will be used
 const element = () => {
   return (
     <I18nElement as="div" get="translation-key" args={{ groupName: "example" }} />
@@ -329,7 +353,7 @@ const section = () => {
     </I18NSection>
   )
 }
-// Section overridden; translations for "my-section" will be loaded
+// Section overridden; translations for "my-section" will be used
 const override = () => {
   return (
     <I18nSection name="example">
@@ -343,13 +367,13 @@ const override = () => {
 ## I18nFormatted
 
 The `<I18nFormatted />` component can be used to carry out any custom formatting on the translations by providing a formatter function to the component. You can
-write your formatter function such that it returns a formatted string or a dom element.
+write your formatter function such that it returns a formatted string or a DOM element.
 
 ### Props
 
 | Prop        | Type     | Required | Description                                                                              |
 | ----------- | -------- | -------- | ---------------------------------------------------------------------------------------- |
-| `get`       | String   | Y        | Tells the component which translation to look for in the loaded section                  |
+| `get`       | String   | Y        | Equivalent to the `id` arg to the controller's `get` method                              |
 | `args`      | Object   | N        | Provides a key-value mapping for any variables that should be displayed in a translation |
 | `section`   | String   | N        | Used for overriding the current section to load translations from another                |
 | `formatter` | Function | Y        | Function to do any extra formatting                                                      |
@@ -378,7 +402,7 @@ The `<I18nResource />` component is used to access the message and attributes wh
 
 | Prop       | Type       | Required | Description                                                                              |
 | ---------- | ---------- | -------- | ---------------------------------------------------------------------------------------- |
-| `get`      | String     | Y        | Tells the component which translation to look for in the loaded section                  |
+| `get`      | String     | Y        | Equivalent to the `id` arg to the controller's `get` method                              |
 | `args`     | Object     | N        | Provides a key-value mapping for any variables that should be displayed in a translation |
 | `section`  | String     | N        | Used for overriding the current section to load translations from another                |
 | `children` | RenderFunc | N        | A function that receives message and attributes and returns React elements               |
@@ -439,8 +463,10 @@ The translation has an `aria-label` attribute associated with it, meaning you co
 ```js
 import { useI18nText, useI18nResource } from '@repay/cactus-i18n'
 ...
-const message = useI18nText('welcome-message', { user: 'CS Human' }) // "Welcome, CS Human"
-const [message, attrs] = useI18nResource('welcome-message', { user: 'CS Human' }) // ["Welcome, CS Human", { aria-label: "Greetings" }]
+// "Welcome, CS Human"
+const message = useI18nText('welcome-message', { user: 'CS Human' })
+// { text: "Welcome, CS Human", attrs: { aria-label: "Greetings" }, found: true }
+const { text, attrs, found } = useI18nResource('welcome-message', { user: 'CS Human' })
 ```
 
 ## Testing
@@ -448,13 +474,12 @@ const [message, attrs] = useI18nResource('welcome-message', { user: 'CS Human' }
 Fluent supports BiDi text by default by wrapping provided values (placeables) in bi-directional unicode characters, specifically the _First Strong Isolate_ and _Pop Directional Isolate_ characters. To test exact text matches you must account for these extra characters.
 
 ```js
-const global = `key-for-the-group= We are the { $groupName }!`
-const controller = new I18nController({
-  defaultLang: 'en-US',
-  supportedLangs: ['en-US'],
-  global,
-})
-const translatedText = controller.get({ id: 'key-for-the-group', args: { groupName: 'people' } })
+// Assume the following global section:
+`
+key-for-the-group= We are the { $groupName }!
+`
+...
+const translatedText = controller.get({ section: 'global', id: 'key-for-the-group', args: { groupName: 'people' } })
 expect(translatedText).toBe('We are the \u2068people\u2069!')
 expect(translatedText).toMatch(/We are the .people.!/)
 ```
