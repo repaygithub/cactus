@@ -1,3 +1,16 @@
+# v4.2.2 (Mon Dec 21 2020)
+
+#### 🐛 Bug Fix
+
+- Fix Select text alignment in Firefox [#452](https://github.com/repaygithub/cactus/pull/452) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+- Fix bottom border of BrandBar user menu in Safari and Edge [#450](https://github.com/repaygithub/cactus/pull/450) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+
+#### Authors: 1
+
+- [@NicolasSimmonds](https://github.com/NicolasSimmonds)
+
+---
+
 # v4.2.1 (Wed Dec 16 2020)
 
 #### 🐛 Bug Fix
