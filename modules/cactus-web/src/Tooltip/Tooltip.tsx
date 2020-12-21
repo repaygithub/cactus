@@ -188,6 +188,7 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   ${(p): ColorStyle => p.theme.colorStyles.standard};
   box-sizing: border-box;
   overflow-wrap: break-word;
+  word-wrap: break-word;
   border: ${(p) => border(p.theme, 'callToAction')};
   ${(p): string => shapeMap[p.theme.shape]}
 `
