@@ -15,7 +15,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 
 .c14 {
   box-sizing: border-box;
-  width: 100%;
+  margin: 8px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -159,10 +159,10 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c11 .c12 {
@@ -306,7 +306,6 @@ exports[`component: FileInputField should render a disabled file input field 1`]
         <div
           class="c14 c15"
           display="flex"
-          width="100%"
         >
           <span>
             Drag files here or
@@ -1726,7 +1725,7 @@ exports[`component: FileInputField should render file input field 1`] = `
 
 .c14 {
   box-sizing: border-box;
-  width: 100%;
+  margin: 8px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1873,10 +1872,10 @@ exports[`component: FileInputField should render file input field 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c11 .c12 {
@@ -2022,7 +2021,6 @@ exports[`component: FileInputField should render file input field 1`] = `
         <div
           class="c14 c15"
           display="flex"
-          width="100%"
         >
           <span>
             Drag files here or
