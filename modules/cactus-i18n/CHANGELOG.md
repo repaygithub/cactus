@@ -3,6 +3,8 @@
 #### 💥 Breaking Change
 
 - Add support for fallback and hierarches in BaseI18nController [#436](https://github.com/repaygithub/cactus/pull/436) ([@wilysword](https://github.com/wilysword))
+  - New API and behavior for BaseI18nController
+  - New API for I18nProvider and useI18nResource
 
 #### 🏠 Internal
 
