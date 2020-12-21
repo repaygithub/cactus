@@ -121,7 +121,7 @@ interface FileAction {
 const EmptyPromptsBase = (props: EmptyPromptsProps): React.ReactElement => (
   <div className={props.className}>
     <ActionsUpload iconSize="large" />
-    <Flex flexDirection="column" alignItems="center" width="100%">
+    <Flex flexDirection="column" alignItems="center" m={3}>
       <span>{props.prompt}</span>
       {props.children}
     </Flex>
@@ -134,7 +134,7 @@ const EmptyPrompts = styled(EmptyPromptsBase)`
   margin: 0 15%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   ${ActionsUpload} {
     color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
   }
@@ -650,19 +650,17 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
               />
             )
           )}
+          <TextButton
+            variant="action"
+            id={id}
+            aria-describedby={describedBy}
+            disabled={disabled}
+            onClick={handleOpenFileSelect}
+          >
+            <BatchstatusOpen iconSize="small" />
+            {buttonText}
+          </TextButton>
         </React.Fragment>
-      )}
-      {files.length !== 0 && (
-        <TextButton
-          variant="action"
-          id={id}
-          aria-describedby={describedBy}
-          disabled={disabled}
-          onClick={handleOpenFileSelect}
-        >
-          <BatchstatusOpen iconSize="small" />
-          {buttonText}
-        </TextButton>
       )}
     </div>
   )

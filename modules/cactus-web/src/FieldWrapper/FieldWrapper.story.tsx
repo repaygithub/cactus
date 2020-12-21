@@ -1,4 +1,4 @@
-import { text } from '@storybook/addon-knobs'
+import { boolean } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement, useCallback, useReducer } from 'react'
 
@@ -161,7 +161,7 @@ const formReducer = (state: FormState, action: FormAction): FormState | never =>
 
 const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactElement => {
   const [{ values, statuses }, dispatch] = useReducer(formReducer, null, initForm)
-
+  const fullWidth = boolean('fullWidth', false)
   const handleChange = useCallback(
     (name: string, value: any): void => {
       dispatch({ type: 'change', name, value })
@@ -188,7 +188,7 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactE
     >
       <Box
         as="form"
-        width={text('widht', '50vw')}
+        width={fullWidth ? '100vw' : '50vw'}
         minWidth="350px"
         margin="0 auto"
         py={5}
