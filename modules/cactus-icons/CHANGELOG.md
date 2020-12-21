@@ -1,3 +1,15 @@
+# v2.1.5 (Mon Dec 21 2020)
+
+#### 🏠 Internal
+
+- Minor refactoring to address SonarQube issues [#454](https://github.com/repaygithub/cactus/pull/454) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 1
+
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v2.1.3 (Mon Nov 30 2020)
 
 #### 🔩 Dependency Updates
