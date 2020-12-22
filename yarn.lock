@@ -3818,6 +3818,16 @@
     webpack-dev-server "^3.11.0"
     yargs "^16.0.3"
 
+"@repay/testing-tools@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@repay/testing-tools/-/testing-tools-0.1.0.tgz#0ee23bd1acf661fea53966473a3c66d51e43305d"
+  integrity sha512-khrNO003vj08CXO3IXdJqJZKm6G0Cr+uvrUymJuwR9XNejWM7flGFgDu8nDIJA8ST47klUlduiXEIfCO5lghqQ==
+  dependencies:
+    arg "^5.0.0"
+    dotenv "^8.2.0"
+    esm "^3.2.25"
+    testcafe-browser-provider-browserstack "^1.13.1"
+
 "@rollup/plugin-babel@^5.2.1":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-babel/-/plugin-babel-5.2.1.tgz#20fc8f8864dc0eaa1c5578408459606808f72924"
@@ -6307,6 +6317,11 @@ arg@^4.1.0:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/arg/-/arg-4.1.3.tgz#269fc7ad5b8e42cb63c896d5666017261c144089"
   integrity sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==
+
+arg@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/arg/-/arg-5.0.0.tgz#a20e2bb5710e82950a516b3f933fee5ed478be90"
+  integrity sha512-4P8Zm2H+BRS+c/xX1LrHw0qKpEhdlZjLCgWy+d78T9vqa2Z2SiD2wMrYuWIAFy5IZUD7nnNXroRttz+0RzlrzQ==
 
 argparse@^1.0.7:
   version "1.0.10"
@@ -11750,6 +11765,11 @@ eslint@^7.11.0:
     table "^5.2.3"
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
+
+esm@^3.2.25:
+  version "3.2.25"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
+  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
 
 esotope-hammerhead@0.5.6:
   version "0.5.6"
