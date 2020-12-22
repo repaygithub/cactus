@@ -28,3 +28,12 @@ export const isResponsiveTouchDevice: boolean =
 
 export const isIE: boolean =
   typeof window !== 'undefined' && /MSIE|Trident/.test(window.navigator.userAgent)
+
+export const supportsScopeQuery: boolean = (function () {
+  try {
+    document.querySelector(':scope')
+  } catch {
+    return false
+  }
+  return true
+})()

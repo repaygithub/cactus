@@ -42,16 +42,46 @@ const StoryMenuBar = () => (
   <MenuBar>
     <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
     <MenuBar.Item onClick={action('Mill')}>I saw</MenuBar.Item>
-    <MenuBar.List title="A Bear">
+    <MenuBar.Item onClick={action('Growl')}>A Bear</MenuBar.Item>
+    <MenuBar.Item onClick={action('And Powerful')}>A Great</MenuBar.Item>
+    <MenuBar.Item onClick={action('Iorek Byrnison')}>Big Bear</MenuBar.Item>
+    <MenuBar.Item onClick={action('Dao de jing')}>A Way</MenuBar.Item>
+    <MenuBar.Item onClick={action('Stars')}>Up There</MenuBar.Item>
+    <MenuBar.Item onClick={action('Over There')}>He Looked</MenuBar.Item>
+    <MenuBar.Item onClick={action('Myself And I')}>At Me</MenuBar.Item>
+    <MenuBar.Item onClick={action('In a Mirror')}>I Looked</MenuBar.Item>
+    <MenuBar.Item onClick={action('Reflected')}>At Him</MenuBar.Item>
+    <MenuBar.Item onClick={action('Mouthful')}>He Sized Me Up</MenuBar.Item>
+    <MenuBar.Item onClick={action('Scary')}>I Sized Up Him</MenuBar.Item>
+    <MenuBar.List title="Interlude: About Bears">
+      <MenuBar.List title="Kuma">
+        <MenuBar.Item>Ichi</MenuBar.Item>
+        <MenuBar.Item>Ni</MenuBar.Item>
+        <MenuBar.Item>San</MenuBar.Item>
+        <MenuBar.Item>Shi</MenuBar.Item>
+        <MenuBar.Item>Go</MenuBar.Item>
+        <MenuBar.Item>Roku</MenuBar.Item>
+        <MenuBar.Item>Shichi</MenuBar.Item>
+        <MenuBar.Item>Haku</MenuBar.Item>
+        <MenuBar.Item>Kyuu</MenuBar.Item>
+        <MenuBar.Item>Juu</MenuBar.Item>
+        <MenuBar.Item>Juu-Ichi</MenuBar.Item>
+        <MenuBar.Item>Juu-Ni</MenuBar.Item>
+      </MenuBar.List>
       <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
       <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
       <MenuBar.Item onClick={action('ZZZZ')}>Giant Panda</MenuBar.Item>
       <MenuBar.Item onClick={action('SIZZLE')}>Sun Bear</MenuBar.Item>
     </MenuBar.List>
-    <MenuBar.Item onClick={action('And Powerful')}>A Great</MenuBar.Item>
-    <MenuBar.Item onClick={action('Iorek Byrnison')}>Big Bear</MenuBar.Item>
-    <MenuBar.Item onClick={action('Dao de jing')}>A Way</MenuBar.Item>
-    <MenuBar.Item onClick={action('Stars')}>Up There</MenuBar.Item>
+    <MenuBar.Item onClick={action('Yo Dude')}>He Said to Me</MenuBar.Item>
+    <MenuBar.Item onClick={action('AHHHH')}>Why Don't You Run</MenuBar.Item>
+    <MenuBar.Item onClick={action('Nai wa')}>I See You Ain't</MenuBar.Item>
+    <MenuBar.Item onClick={action('Boomstick')}>Got Any Gun</MenuBar.Item>
+    <MenuBar.Item onClick={action('WHOOSH')}>And So I Ran</MenuBar.Item>
+    <MenuBar.Item onClick={action('Escape')}>Away From There</MenuBar.Item>
+    <MenuBar.Item onClick={action('No, Left')}>And Right</MenuBar.Item>
+    <MenuBar.Item onClick={action('Jump Scare')}>Behind Me</MenuBar.Item>
+    <MenuBar.Item onClick={action('Hunger')}>Was That Bear</MenuBar.Item>
   </MenuBar>
 )
 
