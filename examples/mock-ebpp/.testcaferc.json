@@ -1,11 +1,3 @@
 {
-  "assertionTimeout": 15000,
-  "selectorTimeout": 15000,
-  "clientScripts": [
-    "./tests/testing-library-client-scripts/matches-polyfill.js",
-    "./tests/testing-library-client-scripts/core.min.js",
-    "./tests/testing-library-client-scripts/dom.js"
-  ],
-  "src": ["tests/**/*.test.ts"],
   "tsConfigPath": "tsconfig.json"
 }

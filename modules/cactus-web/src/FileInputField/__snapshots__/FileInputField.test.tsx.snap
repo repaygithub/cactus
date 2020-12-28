@@ -9,6 +9,11 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   box-sizing: border-box;
 }
 
+.c14 {
+  box-sizing: border-box;
+  margin: 8px;
+}
+
 .c4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -18,6 +23,23 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -39,7 +61,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   vertical-align: middle;
 }
 
-.c16 {
+.c18 {
   font-size: 16px;
   vertical-align: middle;
 }
@@ -86,7 +108,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   margin-top: 4px;
 }
 
-.c15 {
+.c17 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -102,7 +124,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   cursor: not-allowed;
 }
 
-.c15:focus::after {
+.c17:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -115,32 +137,39 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   border-radius: 8px;
 }
 
-.c15::-moz-focus-inner {
+.c17::-moz-focus-inner {
   border: 0;
 }
 
-.c15 svg {
+.c17 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
 .c11 {
-  width: 300px;
+  width: 100%;
   height: 100px;
+  margin: 0 15%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c11 .c12 {
-  position: absolute;
-  top: 30%;
-  left: 15%;
   color: hsl(0,0%,70%);
 }
 
 .c11 span {
-  position: absolute;
-  top: 20%;
-  left: 37%;
   color: hsl(0,0%,70%);
 }
 
@@ -167,12 +196,6 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   background-color: hsl(0,0%,90%);
 }
 
-.c10.empty .c14 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
-}
-
 .c10.notEmpty {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
@@ -181,7 +204,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   padding: 0 8px;
 }
 
-.c10.notEmpty .c14 {
+.c10.notEmpty .c16 {
   position: relative;
   margin: 16px 0 16px 0;
 }
@@ -217,7 +240,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
 }
 
 @media screen and (min-width:1024px) {
-  .c15 {
+  .c17 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -279,30 +302,34 @@ exports[`component: FileInputField should render a disabled file input field 1`]
             d="M13,4.41421356 L13,17.108 C13,17.6602847 12.5522847,18.108 12,18.108 C11.4477153,18.108 11,17.6602847 11,17.108 L11,4.41421356 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6834175,0.902368927 12.3165825,0.902368927 12.7071068,1.29289322 L17.7071068,6.29289322 C18.0976311,6.68341751 18.0976311,7.31658249 17.7071068,7.70710678 C17.3165825,8.09763107 16.6834175,8.09763107 16.2928932,7.70710678 L13,4.41421356 Z M21,17 C21,16.4477153 21.4477153,16 22,16 C22.5522847,16 23,16.4477153 23,17 L23,19.0002091 C23,21.1800298 21.4176187,23 19.3918182,23 L4.60818182,23 C2.58172509,23 1,21.1803466 1,19.0002091 L1,17 C1,16.4477153 1.44771525,16 2,16 C2.55228475,16 3,16.4477153 3,17 L3,19.0002091 C3,20.1332156 3.75344824,21 4.60818182,21 L19.3918182,21 C20.2460177,21 21,20.13281 21,19.0002091 L21,17 Z"
           />
         </svg>
-        <span>
-          Drag files here or
-        </span>
-      </div>
-      <button
-        aria-describedby="consistent-tip"
-        class="c14 c15"
-        disabled=""
-        id="consistent"
-        type="button"
-      >
-        <svg
-          class="c16"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
+        <div
+          class="c14 c15"
         >
-          <path
-            d="M3,9 L3,2 C3,1.44771525 3.44771525,1 4,1 L8.86956522,1 C9.13300396,1 9.38580138,1.10395302 9.57303415,1.28927399 L10.6720803,2.37709802 L20,2.37709802 C20.5522847,2.37709802 21,2.82481327 21,3.37709802 L21,9 L22,9 C22.6077887,9 23.0750324,9.5377097 22.9902149,10.1395511 L21.2857687,22.2338171 C21.2162209,22.7273084 20.7939217,23.094266 20.2955538,23.094266 L3.92354726,23.094266 C3.43189906,23.094266 3.01318427,22.7368835 2.9359601,22.251338 L1.01241285,10.157072 C0.915823617,9.5497691 1.38506399,9 2,9 L3,9 Z M4,11 L3.17161508,11 L4.7770699,21.094266 L19.4266021,21.094266 L20.8491881,11 L20,11 L4,11 Z M19,9 L19,4.37709802 L10.2608696,4.37709802 C9.99743082,4.37709802 9.7446334,4.27314501 9.55740063,4.08782403 L8.45835446,3 L5,3 L5,9 L19,9 Z"
-          />
-        </svg>
-        Select Files...
-      </button>
+          <span>
+            Drag files here or
+          </span>
+          <button
+            aria-describedby="consistent-tip"
+            class="c16 c17"
+            disabled=""
+            id="consistent"
+            type="button"
+          >
+            <svg
+              class="c18"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M3,9 L3,2 C3,1.44771525 3.44771525,1 4,1 L8.86956522,1 C9.13300396,1 9.38580138,1.10395302 9.57303415,1.28927399 L10.6720803,2.37709802 L20,2.37709802 C20.5522847,2.37709802 21,2.82481327 21,3.37709802 L21,9 L22,9 C22.6077887,9 23.0750324,9.5377097 22.9902149,10.1395511 L21.2857687,22.2338171 C21.2162209,22.7273084 20.7939217,23.094266 20.2955538,23.094266 L3.92354726,23.094266 C3.43189906,23.094266 3.01318427,22.7368835 2.9359601,22.251338 L1.01241285,10.157072 C0.915823617,9.5497691 1.38506399,9 2,9 L3,9 Z M4,11 L3.17161508,11 L4.7770699,21.094266 L19.4266021,21.094266 L20.8491881,11 L20,11 L4,11 Z M19,9 L19,4.37709802 L10.2608696,4.37709802 C9.99743082,4.37709802 9.7446334,4.27314501 9.55740063,4.08782403 L8.45835446,3 L5,3 L5,9 L19,9 Z"
+              />
+            </svg>
+            Select Files...
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -563,6 +590,10 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   line-height: 1.5;
 }
 
+.c12 button {
+  padding: 0;
+}
+
 .c12 .c13 {
   height: 24px;
   width: 24px;
@@ -621,12 +652,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c10.empty .c24 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
 }
 
 .c10.notEmpty {
@@ -1063,6 +1088,10 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   line-height: 1.5;
 }
 
+.c12 button {
+  padding: 0;
+}
+
 .c12 .c13 {
   height: 24px;
   width: 24px;
@@ -1121,12 +1150,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c10.empty .c21 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
 }
 
 .c10.notEmpty {
@@ -1466,6 +1489,10 @@ exports[`component: FileInputField should render a loading file 1`] = `
   line-height: 1.5;
 }
 
+.c12 button {
+  padding: 0;
+}
+
 .c12 .sc-flUlJl {
   height: 24px;
   width: 24px;
@@ -1524,12 +1551,6 @@ exports[`component: FileInputField should render a loading file 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c10.empty .c16 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
 }
 
 .c10.notEmpty {
@@ -1693,6 +1714,11 @@ exports[`component: FileInputField should render file input field 1`] = `
   box-sizing: border-box;
 }
 
+.c14 {
+  box-sizing: border-box;
+  margin: 8px;
+}
+
 .c4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1702,6 +1728,23 @@ exports[`component: FileInputField should render file input field 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -1723,7 +1766,7 @@ exports[`component: FileInputField should render file input field 1`] = `
   vertical-align: middle;
 }
 
-.c16 {
+.c18 {
   font-size: 16px;
   vertical-align: middle;
 }
@@ -1769,7 +1812,7 @@ exports[`component: FileInputField should render file input field 1`] = `
   margin-top: 4px;
 }
 
-.c15 {
+.c17 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1784,12 +1827,12 @@ exports[`component: FileInputField should render file input field 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c15:hover {
+.c17:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c15:focus::after {
+.c17:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1802,32 +1845,39 @@ exports[`component: FileInputField should render file input field 1`] = `
   border-radius: 8px;
 }
 
-.c15::-moz-focus-inner {
+.c17::-moz-focus-inner {
   border: 0;
 }
 
-.c15 svg {
+.c17 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
 .c11 {
-  width: 300px;
+  width: 100%;
   height: 100px;
+  margin: 0 15%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c11 .c12 {
-  position: absolute;
-  top: 30%;
-  left: 15%;
   color: hsl(200,96%,35%);
 }
 
 .c11 span {
-  position: absolute;
-  top: 20%;
-  left: 37%;
   color: hsl(200,18%,45%);
 }
 
@@ -1853,12 +1903,6 @@ exports[`component: FileInputField should render file input field 1`] = `
   align-items: center;
 }
 
-.c10.empty .c14 {
-  position: absolute;
-  left: 35%;
-  bottom: 15%;
-}
-
 .c10.notEmpty {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
@@ -1867,7 +1911,7 @@ exports[`component: FileInputField should render file input field 1`] = `
   padding: 0 8px;
 }
 
-.c10.notEmpty .c14 {
+.c10.notEmpty .c16 {
   position: relative;
   margin: 16px 0 16px 0;
 }
@@ -1901,7 +1945,7 @@ exports[`component: FileInputField should render file input field 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c15 {
+  .c17 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1968,29 +2012,33 @@ exports[`component: FileInputField should render file input field 1`] = `
             d="M13,4.41421356 L13,17.108 C13,17.6602847 12.5522847,18.108 12,18.108 C11.4477153,18.108 11,17.6602847 11,17.108 L11,4.41421356 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6834175,0.902368927 12.3165825,0.902368927 12.7071068,1.29289322 L17.7071068,6.29289322 C18.0976311,6.68341751 18.0976311,7.31658249 17.7071068,7.70710678 C17.3165825,8.09763107 16.6834175,8.09763107 16.2928932,7.70710678 L13,4.41421356 Z M21,17 C21,16.4477153 21.4477153,16 22,16 C22.5522847,16 23,16.4477153 23,17 L23,19.0002091 C23,21.1800298 21.4176187,23 19.3918182,23 L4.60818182,23 C2.58172509,23 1,21.1803466 1,19.0002091 L1,17 C1,16.4477153 1.44771525,16 2,16 C2.55228475,16 3,16.4477153 3,17 L3,19.0002091 C3,20.1332156 3.75344824,21 4.60818182,21 L19.3918182,21 C20.2460177,21 21,20.13281 21,19.0002091 L21,17 Z"
           />
         </svg>
-        <span>
-          Drag files here or
-        </span>
-      </div>
-      <button
-        aria-describedby="consistent-tip"
-        class="c14 c15"
-        id="consistent"
-        type="button"
-      >
-        <svg
-          class="c16"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
+        <div
+          class="c14 c15"
         >
-          <path
-            d="M3,9 L3,2 C3,1.44771525 3.44771525,1 4,1 L8.86956522,1 C9.13300396,1 9.38580138,1.10395302 9.57303415,1.28927399 L10.6720803,2.37709802 L20,2.37709802 C20.5522847,2.37709802 21,2.82481327 21,3.37709802 L21,9 L22,9 C22.6077887,9 23.0750324,9.5377097 22.9902149,10.1395511 L21.2857687,22.2338171 C21.2162209,22.7273084 20.7939217,23.094266 20.2955538,23.094266 L3.92354726,23.094266 C3.43189906,23.094266 3.01318427,22.7368835 2.9359601,22.251338 L1.01241285,10.157072 C0.915823617,9.5497691 1.38506399,9 2,9 L3,9 Z M4,11 L3.17161508,11 L4.7770699,21.094266 L19.4266021,21.094266 L20.8491881,11 L20,11 L4,11 Z M19,9 L19,4.37709802 L10.2608696,4.37709802 C9.99743082,4.37709802 9.7446334,4.27314501 9.55740063,4.08782403 L8.45835446,3 L5,3 L5,9 L19,9 Z"
-          />
-        </svg>
-        Select Files...
-      </button>
+          <span>
+            Drag files here or
+          </span>
+          <button
+            aria-describedby="consistent-tip"
+            class="c16 c17"
+            id="consistent"
+            type="button"
+          >
+            <svg
+              class="c18"
+              fill="currentcolor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
+            >
+              <path
+                d="M3,9 L3,2 C3,1.44771525 3.44771525,1 4,1 L8.86956522,1 C9.13300396,1 9.38580138,1.10395302 9.57303415,1.28927399 L10.6720803,2.37709802 L20,2.37709802 C20.5522847,2.37709802 21,2.82481327 21,3.37709802 L21,9 L22,9 C22.6077887,9 23.0750324,9.5377097 22.9902149,10.1395511 L21.2857687,22.2338171 C21.2162209,22.7273084 20.7939217,23.094266 20.2955538,23.094266 L3.92354726,23.094266 C3.43189906,23.094266 3.01318427,22.7368835 2.9359601,22.251338 L1.01241285,10.157072 C0.915823617,9.5497691 1.38506399,9 2,9 L3,9 Z M4,11 L3.17161508,11 L4.7770699,21.094266 L19.4266021,21.094266 L20.8491881,11 L20,11 L4,11 Z M19,9 L19,4.37709802 L10.2608696,4.37709802 C9.99743082,4.37709802 9.7446334,4.27314501 9.55740063,4.08782403 L8.45835446,3 L5,3 L5,9 L19,9 Z"
+              />
+            </svg>
+            Select Files...
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
