@@ -6,7 +6,7 @@ import Box, { BoxProps } from '../Box/Box'
 import Flex, { JustifyContent } from '../Flex/Flex'
 import { keyPressAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { isResponsiveTouchDevice } from '../helpers/constants'
+import { isIE, isResponsiveTouchDevice } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useValue } from '../helpers/react'
 import { border, insetBorder, media, textStyle } from '../helpers/theme'
@@ -116,10 +116,15 @@ function TabFunc<E, C extends GenericComponent = 'div'>(
     props.id = props.id || generateId(ctx.id, name, 'tab')
     panelId = panelId || generateId(ctx.id, name, 'panel')
   }
+  const keyProps: React.DOMAttributes<HTMLElement> = { onKeyUp: preventAction }
+  if (isIE) {
+    keyProps.onKeyDown = keyPressAsClick
+  } else {
+    keyProps.onKeyPress = keyPressAsClick
+  }
   return (
     <StyledTab
-      onKeyPress={keyPressAsClick}
-      onKeyUp={preventAction}
+      {...keyProps}
       onClick={ctx?.setCurrent}
       aria-selected={!!props.id && props.id === ctx?.currentTab}
       aria-controls={panelId}
@@ -294,6 +299,10 @@ const StyledTab = styled.div`
     bottom: 8px;
     background-color: transparent;
     outline: ${(p) => border(p.theme, 'callToAction')};
+  }
+
+  &:focus:not(:focus-visible)::after {
+    outline: none;
   }
 
   ${(p) => media(p.theme, 'small')} {
