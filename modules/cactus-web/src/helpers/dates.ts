@@ -40,7 +40,7 @@ const TOKEN_MATCHERS: { [value: string]: FormatTokenType } = {
   '3': 'd',
   '03': 'dd',
   '1970': 'YYYY',
-  '08': 'h',
+  '08': 'hh',
   '8': 'h',
   '21': 'H',
   '41': 'mm',
