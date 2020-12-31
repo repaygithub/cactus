@@ -15,12 +15,12 @@ describe('date helpers', (): void => {
 
     test('getLocaleFormat("en", { type: "datetime" }) returns correct format', (): void => {
       const format = getLocaleFormat('en', { type: 'datetime' })
-      expect(format).toEqual('MM/dd/YYYY, h:mm aa')
+      expect(format).toEqual('MM/dd/YYYY, hh:mm aa')
     })
 
     test('getLocaleFormat("en", { type: "time" }) returns correct format', (): void => {
       const format = getLocaleFormat('en', { type: 'time' })
-      expect(format).toEqual('h:mm aa')
+      expect(format).toEqual('hh:mm aa')
     })
 
     // TODO move to integration tests when available since Intl is not fully included in Node
