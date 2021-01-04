@@ -1,7 +1,6 @@
+import observeRect from '@reach/observe-rect'
 import React from 'react'
 import styled from 'styled-components'
-
-import { observeSize } from './rect'
 
 type Orientation = 'horizontal' | 'vertical'
 
@@ -146,9 +145,10 @@ export function useScroll<T extends HTMLElement>(
         setScroll((s) => updateScrollState(s, target as HTMLElement))
       }
       list.addEventListener('focusin', onFocus)
-      const unobserve = observeSize(list, () => setScroll(updateScrollState))
+      const observer = observeRect(list, () => setScroll(updateScrollState))
+      observer.observe()
       return () => {
-        unobserve()
+        observer.unobserve()
         list.removeEventListener('focusin', onFocus)
       }
     }
