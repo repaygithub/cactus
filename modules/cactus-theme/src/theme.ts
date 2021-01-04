@@ -141,6 +141,30 @@ const lightGray = `hsl(0, 0%, 90%)`
 const mediumGray = `hsl(0, 0%, 70%)`
 const darkGray = `hsl(0, 0%, 50%)`
 
+/** Notification Colors */
+const success = `hsl(145, 89%, 28%)`
+const error = `hsl(353, 84%, 44%)`
+const warning = `hsl(47, 82%, 47%)`
+const transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
+const transparentError = `hsla(353, 84%, 44%, 0.3)`
+const transparentWarning = `hsla(47, 82%, 47%, 0.3)`
+const errorDark = `hsl(353, 96%, 11%)`
+const warningDark = `hsl(47, 96%, 11%)`
+const successDark = `hsl(145, 96%, 11%)`
+
+const status: StatusColors = {
+  background: {
+    success: transparentSuccess,
+    warning: transparentWarning,
+    error: transparentError,
+  },
+  avatar: {
+    success: `hsla(145, 89%, 28%, 0.3)`,
+    warning: `hsla(47, 82%, 47%, 0.3)`,
+    error: `hsla(353, 84%, 44%, 0.3)`,
+  },
+}
+
 interface SharedGeneratorOptions {
   border?: BorderSize
   shape?: Shape
@@ -167,30 +191,6 @@ function fromHue({
   const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
   const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
   const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
-
-  /** Notification Colors */
-  const success = `hsl(145, 89%, 28%)`
-  const error = `hsl(353, 84%, 44%)`
-  const warning = `hsl(47, 82%, 47%)`
-  const transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
-  const transparentError = `hsla(353, 84%, 44%, 0.3)`
-  const transparentWarning = `hsla(47, 82%, 47%, 0.3)`
-  const errorDark = `hsl(353, 96%, 11%)`
-  const warningDark = `hsl(47, 96%, 11%)`
-  const successDark = `hsl(145, 96%, 11%)`
-
-  const status: StatusColors = {
-    background: {
-      success: transparentSuccess,
-      warning: transparentWarning,
-      error: transparentError,
-    },
-    avatar: {
-      success: transparentSuccess,
-      warning: transparentWarning,
-      error: transparentError,
-    },
-  }
 
   return [
     {
@@ -301,298 +301,151 @@ interface TwoColorGeneratorOptions extends SharedGeneratorOptions {
   secondary?: string
 }
 
-function fromTwoColor({
-  primary,
-  secondary,
-}: TwoColorGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
-  const primaryRgb = hexToRgb(primary)
-  const secondaryRgb = hexToRgb(secondary)
-  const [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
-  let [secondaryHue, secondarySaturation, secondaryLightness] = rgbToHsl(...secondaryRgb)
-  const isSecondaryWhite = secondaryLightness === 100
+interface Color {
+  hue: number
+  saturation: number
+  lightness: number
+  rgb: [number, number, number]
+}
 
-  /** Notification Colors */
-  // TODO determine colors to contrast with CTA hue
-  const success = `hsl(145, 89%, 28%)`
-  const error = `hsl(353, 84%, 44%)`
-  const warning = `hsl(47, 82%, 47%)`
-  const transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
-  const transparentError = `hsla(353, 84%, 44%, 0.3)`
-  const transparentWarning = `hsla(47, 82%, 47%, 0.3)`
-  const errorDark = `hsl(353, 96%, 11%)`
-  const warningDark = `hsl(47, 96%, 11%)`
-  const successDark = `hsl(145, 96%, 11%)`
-
-  const status: StatusColors = {
-    background: {
-      success: transparentSuccess,
-      warning: transparentWarning,
-      error: transparentError,
-    },
-    avatar: {
-      success: `hsla(145, 89%, 28%, 0.3)`,
-      warning: `hsla(47, 82%, 47%, 0.3)`,
-      error: `hsla(353, 84%, 44%, 0.3)`,
-    },
-  }
-
-  // both colors are undefined or white
-  if (primaryLightness === 100 && isSecondaryWhite) {
-    /** Contrasts */
-    const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
-    const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
-    const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
-    const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
-
-    const callToAction = `hsl(244, 48%, 26%)`
-    const transparentCTA = `hsla(244, 48%, 26%, 0.3)`
-    const callToActionText = white
-
-    return [
-      {
-        /** Core colors */
-        base: white,
-        baseText: darkestContrast,
-        callToAction: callToAction,
-        callToActionText: callToActionText,
-        transparentCTA: transparentCTA,
-
-        /** Contrasts */
-        lightContrast,
-        mediumContrast,
-        darkContrast,
-        darkestContrast,
-
-        /** Neutrals */
-        white,
-        lightGray,
-        mediumGray,
-        darkGray,
-
-        /** Notification Colors */
-        success,
-        error,
-        warning,
-        transparentSuccess,
-        transparentError,
-        transparentWarning,
-        errorDark,
-        warningDark,
-        successDark,
-
-        /** Status Colors */
-        status,
-      },
-      {
-        base: {
-          backgroundColor: white,
-          color: darkestContrast,
-        },
-        callToAction: {
-          backgroundColor: callToAction,
-          color: callToActionText,
-        },
-        standard: {
-          backgroundColor: white,
-          color: darkestContrast,
-        },
-        lightContrast: {
-          backgroundColor: lightContrast,
-          color: darkestContrast,
-        },
-        darkestContrast: {
-          backgroundColor: darkestContrast,
-          color: white,
-        },
-        success: {
-          backgroundColor: success,
-          color: white,
-        },
-        error: {
-          backgroundColor: error,
-          color: white,
-        },
-        warning: {
-          backgroundColor: warning,
-          color: darkestContrast,
-        },
-        disable: {
-          backgroundColor: lightGray,
-          color: mediumGray,
-        },
-        transparentCTA: {
-          backgroundColor: transparentCTA,
-          color: darkestContrast,
-        },
-        transparentError: {
-          backgroundColor: transparentError,
-          color: darkestContrast,
-        },
-        transparentSuccess: {
-          backgroundColor: transparentSuccess,
-          color: darkestContrast,
-        },
-        transparentWarning: {
-          backgroundColor: transparentWarning,
-          color: darkestContrast,
-        },
-        errorDark: {
-          backgroundColor: errorDark,
-          color: white,
-        },
-        warningDark: {
-          backgroundColor: warningDark,
-          color: white,
-        },
-        successDark: {
-          backgroundColor: successDark,
-          color: white,
-        },
-      },
-    ]
-  }
-
-  // primary is non-black and secondary is light or white
-  if (isSecondaryWhite || !isDark(...secondaryRgb)) {
-    /** Core colors */
-    const base = `hsl(${primaryHue}, ${primarySaturation}%, ${primaryLightness}%)`
-    const contrastHue = isSecondaryWhite ? primaryHue : secondaryHue
-
-    /** Contrasts */
-    const lightContrast = `hsl(${contrastHue}, 29%, 90%)`
-    const mediumContrast = `hsl(${contrastHue}, 18%, 45%)`
-    const darkContrast = `hsl(${contrastHue}, 9%, 35%)`
-    const darkestContrast = `hsl(${contrastHue}, 10%, 20%)`
-
-    const baseText = isDark(...primaryRgb) ? white : darkestContrast
-
-    // create secondary color from primary
-    secondaryHue = primaryLightness !== 0 ? primaryHue : 244
-    secondarySaturation = primaryLightness > 21 ? 98 : 96
-    secondaryLightness = primaryLightness > 21 ? 10 : 35
-    const callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
-    const callToActionText = white
-    const transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
-
-    return [
-      {
-        /** Core colors */
-        base,
-        baseText,
-        callToAction,
-        callToActionText,
-        transparentCTA,
-
-        /** Contrasts */
-        lightContrast,
-        mediumContrast,
-        darkContrast,
-        darkestContrast,
-
-        /** Neutrals */
-        white,
-        lightGray,
-        mediumGray,
-        darkGray,
-
-        /** Notification Colors */
-        success,
-        error,
-        warning,
-        transparentSuccess,
-        transparentError,
-        transparentWarning,
-        errorDark,
-        warningDark,
-        successDark,
-
-        /** Status Colors */
-        status,
-      },
-      {
-        base: {
-          backgroundColor: base,
-          color: baseText,
-        },
-        callToAction: {
-          backgroundColor: callToAction,
-          color: callToActionText,
-        },
-        standard: {
-          backgroundColor: white,
-          color: darkestContrast,
-        },
-        lightContrast: {
-          backgroundColor: lightContrast,
-          color: darkestContrast,
-        },
-        darkestContrast: {
-          backgroundColor: darkestContrast,
-          color: white,
-        },
-        success: {
-          backgroundColor: success,
-          color: white,
-        },
-        error: {
-          backgroundColor: error,
-          color: white,
-        },
-        warning: {
-          backgroundColor: warning,
-          color: darkestContrast,
-        },
-        disable: {
-          backgroundColor: lightGray,
-          color: mediumGray,
-        },
-        transparentCTA: {
-          backgroundColor: transparentCTA,
-          color: darkestContrast,
-        },
-        transparentError: {
-          backgroundColor: transparentError,
-          color: darkestContrast,
-        },
-        transparentSuccess: {
-          backgroundColor: transparentSuccess,
-          color: darkestContrast,
-        },
-        transparentWarning: {
-          backgroundColor: transparentWarning,
-          color: darkContrast,
-        },
-        errorDark: {
-          backgroundColor: errorDark,
-          color: white,
-        },
-        warningDark: {
-          backgroundColor: warningDark,
-          color: white,
-        },
-        successDark: {
-          backgroundColor: successDark,
-          color: white,
-        },
-      },
-    ]
-  }
-
-  // both primary and secondary are non-white colors
-  /** Core colors */
-  const base = `hsl(${primaryHue}, ${primarySaturation}%, ${primaryLightness}%)`
-
+function fromTwoWhite(primaryHue: number): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   /** Contrasts */
   const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
   const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
   const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
   const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
 
-  const baseText = isDark(...primaryRgb) ? white : darkestContrast
+  const callToAction = `hsl(244, 48%, 26%)`
+  const transparentCTA = `hsla(244, 48%, 26%, 0.3)`
+  const callToActionText = white
 
-  const callToAction = `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`
-  const callToActionText = isDark(...secondaryRgb) ? white : darkestContrast
-  const transparentCTA = `hsla(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%, 0.3)`
+  return [
+    {
+      /** Core colors */
+      base: white,
+      baseText: darkestContrast,
+      callToAction: callToAction,
+      callToActionText: callToActionText,
+      transparentCTA: transparentCTA,
+
+      /** Contrasts */
+      lightContrast,
+      mediumContrast,
+      darkContrast,
+      darkestContrast,
+
+      /** Neutrals */
+      white,
+      lightGray,
+      mediumGray,
+      darkGray,
+
+      /** Notification Colors */
+      success,
+      error,
+      warning,
+      transparentSuccess,
+      transparentError,
+      transparentWarning,
+      errorDark,
+      warningDark,
+      successDark,
+
+      /** Status Colors */
+      status,
+    },
+    {
+      base: {
+        backgroundColor: white,
+        color: darkestContrast,
+      },
+      callToAction: {
+        backgroundColor: callToAction,
+        color: callToActionText,
+      },
+      standard: {
+        backgroundColor: white,
+        color: darkestContrast,
+      },
+      lightContrast: {
+        backgroundColor: lightContrast,
+        color: darkestContrast,
+      },
+      darkestContrast: {
+        backgroundColor: darkestContrast,
+        color: white,
+      },
+      success: {
+        backgroundColor: success,
+        color: white,
+      },
+      error: {
+        backgroundColor: error,
+        color: white,
+      },
+      warning: {
+        backgroundColor: warning,
+        color: darkestContrast,
+      },
+      disable: {
+        backgroundColor: lightGray,
+        color: mediumGray,
+      },
+      transparentCTA: {
+        backgroundColor: transparentCTA,
+        color: darkestContrast,
+      },
+      transparentError: {
+        backgroundColor: transparentError,
+        color: darkestContrast,
+      },
+      transparentSuccess: {
+        backgroundColor: transparentSuccess,
+        color: darkestContrast,
+      },
+      transparentWarning: {
+        backgroundColor: transparentWarning,
+        color: darkestContrast,
+      },
+      errorDark: {
+        backgroundColor: errorDark,
+        color: white,
+      },
+      warningDark: {
+        backgroundColor: warningDark,
+        color: white,
+      },
+      successDark: {
+        backgroundColor: successDark,
+        color: white,
+      },
+    },
+  ]
+}
+
+function fromWhiteSecondary(
+  primary: Color,
+  secondary: Color
+): [CactusTheme['colors'], CactusTheme['colorStyles']] {
+  /** Core colors */
+  const base = `hsl(${primary.hue}, ${primary.saturation}%, ${primary.lightness}%)`
+  const contrastHue = secondary.lightness === 100 ? primary.hue : secondary.hue
+
+  /** Contrasts */
+  const lightContrast = `hsl(${contrastHue}, 29%, 90%)`
+  const mediumContrast = `hsl(${contrastHue}, 18%, 45%)`
+  const darkContrast = `hsl(${contrastHue}, 9%, 35%)`
+  const darkestContrast = `hsl(${contrastHue}, 10%, 20%)`
+
+  const baseText = isDark(...primary.rgb) ? white : darkestContrast
+
+  // create secondary color from primary
+  const updatedSecondaryHue = primary.lightness !== 0 ? primary.hue : 244
+  const updatedSecondarySaturation = primary.lightness > 21 ? 98 : 96
+  const updatedSecondaryLightness = primary.lightness > 21 ? 10 : 35
+  const callToAction = `hsl(${updatedSecondaryHue}, ${updatedSecondarySaturation}%, ${updatedSecondaryLightness}%)`
+  const callToActionText = white
+  const transparentCTA = `hsla(${updatedSecondaryHue}, ${updatedSecondarySaturation}%, ${updatedSecondaryLightness}%, 0.3)`
 
   return [
     {
@@ -696,6 +549,167 @@ function fromTwoColor({
       },
     },
   ]
+}
+
+function fromTwoNonWhite(
+  primary: Color,
+  secondary: Color
+): [CactusTheme['colors'], CactusTheme['colorStyles']] {
+  /** Core colors */
+  const base = `hsl(${primary.hue}, ${primary.saturation}%, ${primary.lightness}%)`
+
+  /** Contrasts */
+  const lightContrast = `hsl(${primary.hue}, 29%, 90%)`
+  const mediumContrast = `hsl(${primary.hue}, 18%, 45%)`
+  const darkContrast = `hsl(${primary.hue}, 9%, 35%)`
+  const darkestContrast = `hsl(${primary.hue}, 10%, 20%)`
+
+  const baseText = isDark(...primary.rgb) ? white : darkestContrast
+
+  const callToAction = `hsl(${secondary.hue}, ${secondary.saturation}%, ${secondary.lightness}%)`
+  const callToActionText = isDark(...secondary.rgb) ? white : darkestContrast
+  const transparentCTA = `hsla(${secondary.hue}, ${secondary.saturation}%, ${secondary.lightness}%, 0.3)`
+
+  return [
+    {
+      /** Core colors */
+      base,
+      baseText,
+      callToAction,
+      callToActionText,
+      transparentCTA,
+
+      /** Contrasts */
+      lightContrast,
+      mediumContrast,
+      darkContrast,
+      darkestContrast,
+
+      /** Neutrals */
+      white,
+      lightGray,
+      mediumGray,
+      darkGray,
+
+      /** Notification Colors */
+      success,
+      error,
+      warning,
+      transparentSuccess,
+      transparentError,
+      transparentWarning,
+      errorDark,
+      warningDark,
+      successDark,
+
+      /** Status Colors */
+      status,
+    },
+    {
+      base: {
+        backgroundColor: base,
+        color: baseText,
+      },
+      callToAction: {
+        backgroundColor: callToAction,
+        color: callToActionText,
+      },
+      standard: {
+        backgroundColor: white,
+        color: darkestContrast,
+      },
+      lightContrast: {
+        backgroundColor: lightContrast,
+        color: darkestContrast,
+      },
+      darkestContrast: {
+        backgroundColor: darkestContrast,
+        color: white,
+      },
+      success: {
+        backgroundColor: success,
+        color: white,
+      },
+      error: {
+        backgroundColor: error,
+        color: white,
+      },
+      warning: {
+        backgroundColor: warning,
+        color: darkestContrast,
+      },
+      disable: {
+        backgroundColor: lightGray,
+        color: mediumGray,
+      },
+      transparentCTA: {
+        backgroundColor: transparentCTA,
+        color: darkestContrast,
+      },
+      transparentError: {
+        backgroundColor: transparentError,
+        color: darkestContrast,
+      },
+      transparentSuccess: {
+        backgroundColor: transparentSuccess,
+        color: darkestContrast,
+      },
+      transparentWarning: {
+        backgroundColor: transparentWarning,
+        color: darkContrast,
+      },
+      errorDark: {
+        backgroundColor: errorDark,
+        color: white,
+      },
+      warningDark: {
+        backgroundColor: warningDark,
+        color: white,
+      },
+      successDark: {
+        backgroundColor: successDark,
+        color: white,
+      },
+    },
+  ]
+}
+
+function fromTwoColor({
+  primary,
+  secondary,
+}: TwoColorGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
+  const primaryRgb = hexToRgb(primary)
+  const secondaryRgb = hexToRgb(secondary)
+  const [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
+  const [secondaryHue, secondarySaturation, secondaryLightness] = rgbToHsl(...secondaryRgb)
+  const isSecondaryWhite = secondaryLightness === 100
+
+  const primaryColor: Color = {
+    hue: primaryHue,
+    saturation: primarySaturation,
+    lightness: primaryLightness,
+    rgb: primaryRgb,
+  }
+
+  const secondaryColor: Color = {
+    hue: secondaryHue,
+    saturation: secondarySaturation,
+    lightness: secondaryLightness,
+    rgb: secondaryRgb,
+  }
+
+  // both colors are undefined or white
+  if (primaryLightness === 100 && isSecondaryWhite) {
+    return fromTwoWhite(primaryHue)
+  }
+
+  // primary is non-black and secondary is light or white
+  if (isSecondaryWhite || !isDark(...secondaryRgb)) {
+    return fromWhiteSecondary(primaryColor, secondaryColor)
+  }
+
+  // both primary and secondary are non-white colors
+  return fromTwoNonWhite(primaryColor, secondaryColor)
 }
 
 export type GeneratorOptions = HueGeneratorOptions | TwoColorGeneratorOptions
