@@ -311,8 +311,8 @@ function trapEvent(e: React.DragEvent) {
   e.stopPropagation()
 }
 
-function deleteFile(files: FileObject[], deleteFile: string) {
-  const filtered = files.filter((file) => file.fileName !== deleteFile)
+function deleteFile(files: FileObject[], fileToDelete: string) {
+  const filtered = files.filter((file) => file.fileName !== fileToDelete)
   // If nothing was actually deleted, no reason to change the state.
   return filtered.length === files.length ? files : filtered
 }
@@ -451,9 +451,9 @@ const useFileState = (box: PropBox, initial: FileObject[]) => {
     setter.current = (action) => {
       box.event = action.event
       box.event?.persist?.()
-      setFiles((files) => {
-        const newFiles = reducer(files, action, box)
-        if (newFiles !== files && newFiles.some((f) => f.status === 'loading')) {
+      setFiles((existingFiles) => {
+        const newFiles = reducer(existingFiles, action, box)
+        if (newFiles !== existingFiles && newFiles.some((f) => f.status === 'loading')) {
           Promise.all(newFiles.map($loadFile)).then((results) => {
             if (box.isMounted) {
               setFiles(results)
@@ -517,11 +517,11 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
   }, [box])
 
   useEffect((): void => {
-    const { onChange, event } = box
-    if (onChange && event && !files.some((f) => f.status === 'loading')) {
+    const { onChange: boxOnChange, event } = box
+    if (boxOnChange && event && !files.some((f) => f.status === 'loading')) {
       box.event = undefined
       const cactusEvent = new CactusChangeEvent(eventTarget, event)
-      onChange(cactusEvent)
+      boxOnChange(cactusEvent)
     }
     if (topFileBox.current) {
       topFileBox.current.focus()
@@ -572,12 +572,12 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 
   const handleFocus = React.useCallback(
     (event: React.FocusEvent) => {
-      const { isFocused, onFocus } = box
+      const { isFocused, onFocus: boxOnFocus } = box
       if (!isFocused) {
         box.isFocused = true
-        if (onFocus) {
+        if (boxOnFocus) {
           const cactusEvent = new CactusFocusEvent('focus', eventTarget, event)
-          onFocus(cactusEvent)
+          boxOnFocus(cactusEvent)
         }
       }
     },
@@ -588,10 +588,10 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     (event: React.FocusEvent<HTMLElement>) => {
       if (isFocusOut(event)) {
         box.isFocused = false
-        const { onBlur } = box
-        if (onBlur) {
+        const { onBlur: boxOnBlur } = box
+        if (boxOnBlur) {
           const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
-          onBlur(cactusEvent)
+          boxOnBlur(cactusEvent)
         }
       }
     },

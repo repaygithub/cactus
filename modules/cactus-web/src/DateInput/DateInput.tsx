@@ -729,6 +729,16 @@ interface DateInputState {
   focusDay?: string
 }
 
+const isFormatValid = (format: string, type: DateType): boolean => {
+  const isInvalidDate = /[HhmaDy]/.test(format)
+  const isInvalidTime = /[YMdD]/.test(format)
+  return (
+    type === 'datetime' ||
+    (type === 'date' && !isInvalidDate) ||
+    (type === 'time' && !isInvalidTime)
+  )
+}
+
 class DateInputBase extends Component<DateInputProps, DateInputState> {
   public constructor(props: DateInputProps) {
     super(props)
@@ -765,11 +775,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           return new Error(`Provided prop 'format' must be a string.`)
         } else if (typeof props.value === 'string') {
           const type = props.type || 'date'
-          if (type === 'date' && /[HhmaDy]/.test(props.format)) {
-            return new Error(
-              `Provided format '${props.format}' contains unexpected tokens for type '${type}'.`
-            )
-          } else if (type === 'time' && /[YMdD]/.test(props.format)) {
+          if (!isFormatValid(props.format, props.type)) {
             return new Error(
               `Provided format '${props.format}' contains unexpected tokens for type '${type}'.`
             )
@@ -1262,11 +1268,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                   // hours
                   const military = token === 'HH' || token === 'H'
                   const max = military ? 23 : 12
-                  const together = current * 10 + asNum
                   current = together <= max ? together : asNum
                 } else if (/m{1,2}/.test(token)) {
                   // minutes
-                  const together = current * 10 + asNum
                   const mod = (current % 10) * 10 + asNum
                   if (together <= 59) {
                     current = together

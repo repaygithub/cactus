@@ -87,9 +87,9 @@ const ActionProvider: React.FC = ({ children }) => {
     if (element.key === null) {
       element = React.cloneElement(element, { key })
     }
-    setActions((actions) => {
+    setActions((existingActions) => {
       const action = { element, order: HINT_ORDER.center }
-      if (actions[key] === undefined) {
+      if (existingActions[key] === undefined) {
         let $order = action.order
         if (typeof orderHint === 'number') {
           $order = orderHint
@@ -97,24 +97,24 @@ const ActionProvider: React.FC = ({ children }) => {
           $order = HINT_ORDER[orderHint]
         }
         // Because Javascript sort is not guaranteed stable, we want `order` to be unique.
-        const orders = new Set(Object.keys(actions).map((k) => actions[k].order))
+        const orders = new Set(Object.keys(existingActions).map((k) => existingActions[k].order))
         while (orders.has($order)) {
           $order++
         }
         action.order = $order
       } else {
-        action.order = actions[key].order
+        action.order = existingActions[key].order
       }
-      return { ...actions, [key]: action }
+      return { ...existingActions, [key]: action }
     })
   }
   const removeAction: RemoveAction = (key) =>
-    setActions((actions) => {
-      if (actions[key] !== undefined) {
-        actions = { ...actions }
-        delete actions[key]
+    setActions((existingActions) => {
+      if (existingActions[key] !== undefined) {
+        existingActions = { ...existingActions }
+        delete existingActions[key]
       }
-      return actions
+      return existingActions
     })
   const [control, setControl] = React.useState<ActionControl>({
     addAction,

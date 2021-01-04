@@ -54,8 +54,8 @@ const useVariant = (): Variant => {
   return 'top'
 }
 
-const getMenuItems = (menu: HTMLElement) =>
-  Array.from(menu.querySelectorAll(ITEM_SELECTOR)) as HTMLElement[]
+const getMenuItems = (menu: HTMLElement): HTMLElement[] =>
+  Array.from(menu.querySelectorAll(ITEM_SELECTOR))
 
 function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
   props: AsProps<C>,
@@ -258,8 +258,8 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const variant = useVariant()
-  const Nav = variant === 'top' ? Topbar : Sidebar
-  return <Nav {...props} ref={ref} />
+  const NavComponent = variant === 'top' ? Topbar : Sidebar
+  return <NavComponent {...props} ref={ref} />
 })
 
 const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {

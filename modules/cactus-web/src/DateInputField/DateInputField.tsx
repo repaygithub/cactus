@@ -23,7 +23,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     success,
     warning,
     error,
-    width,
+    width: widthProp,
     disabled,
     autoTooltip,
     disableTooltip,
@@ -47,9 +47,15 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
     >
-      {({ fieldId, status, labelId, ariaDescribedBy, disabled }): React.ReactElement => (
+      {({
+        fieldId,
+        status,
+        labelId,
+        ariaDescribedBy,
+        disabled: accessibilityDisabled,
+      }): React.ReactElement => (
         <DateInput
-          disabled={disabled}
+          disabled={accessibilityDisabled}
           {...rest}
           name={name}
           id={fieldId}

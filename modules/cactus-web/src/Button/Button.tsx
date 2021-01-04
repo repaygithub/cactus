@@ -123,7 +123,7 @@ const inverseVariantMap: VariantMap = {
   `,
 }
 
-const disabled = css`
+const disabledCss = css`
   ${(p): ColorStyle => p.theme.colorStyles.disable};
   border-color: ${(p): string => p.theme.colors.lightGray};
   cursor: not-allowed;
@@ -161,7 +161,7 @@ interface TransientButtonProps extends Omit<ButtonProps, 'inverse' | 'variant'> 
 const variantOrDisabled = (props: TransientButtonProps) => {
   const map = props.$inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
-    return disabled
+    return disabledCss
   } else if (props.$variant !== undefined) {
     return map[props.$variant]
   }

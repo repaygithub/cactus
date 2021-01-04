@@ -21,11 +21,11 @@ type ContentManagerParams = ContentManagerState & {
 const accordionVariants: AccordionVariants[] = ['simple', 'outline']
 
 const initializeContent = (): ContentManagerState => {
-  let number = 4
+  let num = 4
   const state: ContentManagerState = {}
   do {
-    state[number] = 0
-  } while (--number >= 0)
+    state[num] = 0
+  } while (--num >= 0)
   return state
 }
 
@@ -57,12 +57,12 @@ const textContent = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ma
 tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
 lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
 nec euismod augue aliquam vel.`
-const ContentBlocks = ({ number }: { number: number }): ReactElement | null => {
-  if (number < 1) {
+const ContentBlocks = ({ number: num }: { number: number }): ReactElement | null => {
+  if (num < 1) {
     return null
   }
   const children = []
-  for (let i = 0; i < number; ++i) {
+  for (let i = 0; i < num; ++i) {
     children.push(
       <Text key={i} tabIndex={0}>
         {textContent}

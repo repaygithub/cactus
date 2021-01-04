@@ -71,12 +71,12 @@ const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({
       setTheme(generateTheme(params))
     }
 
-    const updateBackground = ({ inverse }: any): void => {
-      setInverse(inverse)
+    const updateBackground = ({ inverse: newInverse }: any): void => {
+      setInverse(newInverse)
     }
 
-    const updateBorderBox = ({ borderBox }: any): void => {
-      setBorderBox(borderBox)
+    const updateBorderBox = ({ borderBox: newBorderBox }: any): void => {
+      setBorderBox(newBorderBox)
     }
 
     channel.on(THEME_CHANGE, updateTheme)
