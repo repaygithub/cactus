@@ -151,13 +151,13 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
 
 .c2 {
   box-sizing: border-box;
+}
+
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c3 {
   -webkit-align-items: flex-end;
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
@@ -285,7 +285,6 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
     />
     <div
       class="c2 c3"
-      display="flex"
     >
       <div
         class="c4"
@@ -422,13 +421,13 @@ exports[`component: BrandBar snapshot 1`] = `
 
 .c2 {
   box-sizing: border-box;
+}
+
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c3 {
   -webkit-align-items: flex-end;
   -webkit-box-align: flex-end;
   -ms-flex-align: flex-end;
@@ -549,7 +548,6 @@ exports[`component: BrandBar snapshot 1`] = `
     />
     <div
       class="c2 c3"
-      display="flex"
     >
       <input
         placeholder="Type Here"

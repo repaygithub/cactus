@@ -14,13 +14,13 @@ exports[`component: FileInput should render a disabled file input 1`] = `
 .c4 {
   box-sizing: border-box;
   margin: 8px;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c5 {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -171,7 +171,6 @@ exports[`component: FileInput should render a disabled file input 1`] = `
       </svg>
       <div
         class="c4 c5"
-        display="flex"
       >
         <span>
           Drag files here or
@@ -214,13 +213,13 @@ exports[`component: FileInput should render a file input 1`] = `
 .c4 {
   box-sizing: border-box;
   margin: 8px;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c5 {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -373,7 +372,6 @@ exports[`component: FileInput should render a file input 1`] = `
       </svg>
       <div
         class="c4 c5"
-        display="flex"
       >
         <span>
           Drag files here or

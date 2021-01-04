@@ -160,22 +160,18 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 
 .c5 {
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c13 {
   box-sizing: border-box;
   margin-top: 40px;
+}
+
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c6 {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -189,6 +185,10 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -199,6 +199,10 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 .c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -216,6 +220,10 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 .c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -469,11 +477,9 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
             </button>
             <div
               class="c5 c6"
-              display="flex"
             >
               <div
                 class="c5 c7 title-icon"
-                display="flex"
               >
                 <h1
                   class="c8"
@@ -483,7 +489,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </div>
               <div
                 class="c5 c9 children"
-                display="flex"
               >
                 <h4
                   class="c10"
@@ -505,7 +510,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </div>
               <div
                 class="c13 c14"
-                display="flex"
               >
                 <button
                   aria-live="assertive"
@@ -624,22 +628,18 @@ exports[`Modal variant is danger snapshot 1`] = `
 
 .c5 {
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c10 {
   box-sizing: border-box;
   margin-top: 40px;
+}
+
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c6 {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -653,6 +653,10 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -663,6 +667,10 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 .c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -680,6 +688,10 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 .c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -926,11 +938,9 @@ exports[`Modal variant is danger snapshot 1`] = `
             </button>
             <div
               class="c5 c6"
-              display="flex"
             >
               <div
                 class="c5 c7 title-icon"
-                display="flex"
               >
                 <h1
                   class="c8"
@@ -940,11 +950,9 @@ exports[`Modal variant is danger snapshot 1`] = `
               </div>
               <div
                 class="c5 c9 children"
-                display="flex"
               />
               <div
                 class="c10 c11"
-                display="flex"
               >
                 <button
                   aria-live="assertive"
@@ -1063,22 +1071,18 @@ exports[`Modal variant is success snapshot 1`] = `
 
 .c5 {
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c10 {
   box-sizing: border-box;
   margin-top: 40px;
+}
+
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c6 {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1092,6 +1096,10 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -1102,6 +1110,10 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 .c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1119,6 +1131,10 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 .c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -1365,11 +1381,9 @@ exports[`Modal variant is success snapshot 1`] = `
             </button>
             <div
               class="c5 c6"
-              display="flex"
             >
               <div
                 class="c5 c7 title-icon"
-                display="flex"
               >
                 <h1
                   class="c8"
@@ -1379,11 +1393,9 @@ exports[`Modal variant is success snapshot 1`] = `
               </div>
               <div
                 class="c5 c9 children"
-                display="flex"
               />
               <div
                 class="c10 c11"
-                display="flex"
               >
                 <button
                   aria-live="assertive"
@@ -1482,22 +1494,18 @@ exports[`Modal variant is warning snapshot 1`] = `
 
 .c5 {
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c10 {
   box-sizing: border-box;
   margin-top: 40px;
+}
+
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c6 {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1511,6 +1519,10 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -1521,6 +1533,10 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 .c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1538,6 +1554,10 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 .c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -1788,11 +1808,9 @@ exports[`Modal variant is warning snapshot 1`] = `
             </button>
             <div
               class="c5 c6"
-              display="flex"
             >
               <div
                 class="c5 c7 title-icon"
-                display="flex"
               >
                 <h1
                   class="c8"
@@ -1802,11 +1820,9 @@ exports[`Modal variant is warning snapshot 1`] = `
               </div>
               <div
                 class="c5 c9 children"
-                display="flex"
               />
               <div
                 class="c10 c11"
-                display="flex"
               >
                 <button
                   aria-live="assertive"

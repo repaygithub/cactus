@@ -7,13 +7,13 @@ exports[`component: SelectField minimal snapshot 1`] = `
 
 .c4 {
   box-sizing: border-box;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c5 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -236,7 +236,6 @@ exports[`component: SelectField minimal snapshot 1`] = `
   >
     <div
       class="c3 c4 c5"
-      display="flex"
     >
       <label
         class="c6 c7"

@@ -6,7 +6,19 @@ import { Box, BoxProps } from '../Box/Box'
 
 interface FlexBoxProps extends BoxProps, Omit<FlexboxProps, 'justifySelf'> {}
 
+export const justifyOptions = [
+  'unset',
+  'flex-start',
+  'flex-end',
+  'center',
+  'space-between',
+  'space-around',
+  'space-evenly',
+] as const
+export type JustifyContent = typeof justifyOptions[number]
+
 export const Flex = styled(Box)<FlexBoxProps>`
+  display: flex;
   ${flexbox}
 
   ${(p): ReturnType<typeof css> | undefined => {
@@ -24,20 +36,11 @@ export const Flex = styled(Box)<FlexBoxProps>`
 `
 
 Flex.defaultProps = {
-  display: 'flex',
   flexWrap: 'wrap',
 }
 
 Flex.propTypes = {
-  justifyContent: PropTypes.oneOf([
-    'unset',
-    'flex-start',
-    'flex-end',
-    'center',
-    'space-between',
-    'space-around',
-    'space-evenly',
-  ]),
+  justifyContent: PropTypes.oneOf(justifyOptions),
   alignItems: PropTypes.oneOf(['unset', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']),
   alignSelf: PropTypes.oneOf(['unset', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']),
   flexWrap: PropTypes.oneOf(['unset', 'inherit', 'wrap', 'nowrap', 'wrap-reverse']),
