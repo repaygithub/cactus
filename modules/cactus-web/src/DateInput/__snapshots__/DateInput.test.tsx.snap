@@ -611,15 +611,6 @@ exports[`component: DateInput with theme customization should have 2px border 1`
             tabindex="0"
           >
             <li
-              data-value="1921"
-              id="not-thicc-1921"
-              role="option"
-            >
-              <span>
-                1921
-              </span>
-            </li>
-            <li
               data-value="1922"
               id="not-thicc-1922"
               role="option"
@@ -2402,6 +2393,15 @@ exports[`component: DateInput with theme customization should have 2px border 1`
                 2119
               </span>
             </li>
+            <li
+              data-value="2120"
+              id="not-thicc-2120"
+              role="option"
+            >
+              <span>
+                2120
+              </span>
+            </li>
           </ul>
         </div>
       </div>
@@ -3024,15 +3024,6 @@ exports[`component: DateInput with theme customization should match intermediate
             role="listbox"
             tabindex="0"
           >
-            <li
-              data-value="1921"
-              id="not-round-1921"
-              role="option"
-            >
-              <span>
-                1921
-              </span>
-            </li>
             <li
               data-value="1922"
               id="not-round-1922"
@@ -4814,6 +4805,15 @@ exports[`component: DateInput with theme customization should match intermediate
             >
               <span>
                 2119
+              </span>
+            </li>
+            <li
+              data-value="2120"
+              id="not-round-2120"
+              role="option"
+            >
+              <span>
+                2120
               </span>
             </li>
           </ul>
@@ -5439,15 +5439,6 @@ exports[`component: DateInput with theme customization should match square shape
             tabindex="0"
           >
             <li
-              data-value="1921"
-              id="not-round-1921"
-              role="option"
-            >
-              <span>
-                1921
-              </span>
-            </li>
-            <li
               data-value="1922"
               id="not-round-1922"
               role="option"
@@ -7230,6 +7221,15 @@ exports[`component: DateInput with theme customization should match square shape
                 2119
               </span>
             </li>
+            <li
+              data-value="2120"
+              id="not-round-2120"
+              role="option"
+            >
+              <span>
+                2120
+              </span>
+            </li>
           </ul>
         </div>
       </div>
@@ -7853,15 +7853,6 @@ exports[`component: DateInput with theme customization should not have box shado
             role="listbox"
             tabindex="0"
           >
-            <li
-              data-value="1921"
-              id="none-of-em-1921"
-              role="option"
-            >
-              <span>
-                1921
-              </span>
-            </li>
             <li
               data-value="1922"
               id="none-of-em-1922"
@@ -9643,6 +9634,15 @@ exports[`component: DateInput with theme customization should not have box shado
             >
               <span>
                 2119
+              </span>
+            </li>
+            <li
+              data-value="2120"
+              id="none-of-em-2120"
+              role="option"
+            >
+              <span>
+                2120
               </span>
             </li>
           </ul>
