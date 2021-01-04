@@ -142,30 +142,13 @@ export function useScroll<T extends HTMLElement>(
         return result
       }
 
-      let isMouseEvent = false
-
-      const onMouseDown = () => {
-        isMouseEvent = true
-      }
-      const onClick = (e: MouseEvent) => {
-        // Ignore any lower-level layout/style elements (hopefully).
-        const target = (e.target as HTMLElement).closest('[role]')
-        isMouseEvent = false
+      const onFocus = ({ target }: FocusEvent) => {
         setScroll((s) => updateScrollState(s, target as HTMLElement))
       }
-      const onFocus = ({ target }: FocusEvent) => {
-        if (!isMouseEvent) {
-          setScroll((s) => updateScrollState(s, target as HTMLElement))
-        }
-      }
-      list.addEventListener('mousedown', onMouseDown)
-      list.addEventListener('click', onClick)
       list.addEventListener('focusin', onFocus)
       const unobserve = observeSize(list, () => setScroll(updateScrollState))
       return () => {
         unobserve()
-        list.removeEventListener('mousedown', onMouseDown)
-        list.removeEventListener('click', onClick)
         list.removeEventListener('focusin', onFocus)
       }
     }
