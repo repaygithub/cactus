@@ -345,21 +345,17 @@ exports[`component: DateInput with theme customization should have 2px border 1`
 .c1 {
   box-sizing: border-box;
   padding: 16px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c6 {
   box-sizing: border-box;
+}
+
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c2 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -374,6 +370,10 @@ exports[`component: DateInput with theme customization should have 2px border 1`
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -591,7 +591,6 @@ exports[`component: DateInput with theme customization should have 2px border 1`
     <div>
       <div
         class="c1 c2"
-        display="flex"
       >
         <button
           aria-label="Click to go back one month"
@@ -615,7 +614,6 @@ exports[`component: DateInput with theme customization should have 2px border 1`
         </button>
         <div
           class="c6 c7"
-          display="flex"
         >
           <button
             aria-label="Click to use calendar picker"
@@ -2855,21 +2853,17 @@ exports[`component: DateInput with theme customization should match intermediate
 .c1 {
   box-sizing: border-box;
   padding: 16px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c6 {
   box-sizing: border-box;
+}
+
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c2 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -2884,6 +2878,10 @@ exports[`component: DateInput with theme customization should match intermediate
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -3101,7 +3099,6 @@ exports[`component: DateInput with theme customization should match intermediate
     <div>
       <div
         class="c1 c2"
-        display="flex"
       >
         <button
           aria-label="Click to go back one month"
@@ -3125,7 +3122,6 @@ exports[`component: DateInput with theme customization should match intermediate
         </button>
         <div
           class="c6 c7"
-          display="flex"
         >
           <button
             aria-label="Click to use calendar picker"
@@ -5365,21 +5361,17 @@ exports[`component: DateInput with theme customization should match square shape
 .c1 {
   box-sizing: border-box;
   padding: 16px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c6 {
   box-sizing: border-box;
+}
+
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c2 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -5394,6 +5386,10 @@ exports[`component: DateInput with theme customization should match square shape
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -5611,7 +5607,6 @@ exports[`component: DateInput with theme customization should match square shape
     <div>
       <div
         class="c1 c2"
-        display="flex"
       >
         <button
           aria-label="Click to go back one month"
@@ -5635,7 +5630,6 @@ exports[`component: DateInput with theme customization should match square shape
         </button>
         <div
           class="c6 c7"
-          display="flex"
         >
           <button
             aria-label="Click to use calendar picker"
@@ -7875,21 +7869,17 @@ exports[`component: DateInput with theme customization should not have box shado
 .c1 {
   box-sizing: border-box;
   padding: 16px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .c6 {
   box-sizing: border-box;
+}
+
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c2 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -7904,6 +7894,10 @@ exports[`component: DateInput with theme customization should not have box shado
 }
 
 .c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -8122,7 +8116,6 @@ exports[`component: DateInput with theme customization should not have box shado
     <div>
       <div
         class="c1 c2"
-        display="flex"
       >
         <button
           aria-label="Click to go back one month"
@@ -8146,7 +8139,6 @@ exports[`component: DateInput with theme customization should not have box shado
         </button>
         <div
           class="c6 c7"
-          display="flex"
         >
           <button
             aria-label="Click to use calendar picker"

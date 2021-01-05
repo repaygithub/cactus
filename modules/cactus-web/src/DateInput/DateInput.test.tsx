@@ -331,7 +331,7 @@ describe('component: DateInput', (): void => {
           fireEvent.click(getByText(desiredDate.toLocaleSpoken('date')).parentElement)
         }
       )
-      expect(handleChange).toHaveBeenCalledTimes(1)
+      expect(handleChange).toHaveBeenCalledTimes(3)
       expect(value).toEqual('2018-03-23')
     })
 
