@@ -46,7 +46,7 @@ export const WithValues = (): React.ReactElement => {
         label="Controller"
         checked={value}
         onChange={({ target }: any) =>
-          setValue((value) => ({ ...value, [target.name]: target.checked }))
+          setValue((existingValue) => ({ ...existingValue, [target.name]: target.checked }))
         }
       >
         <CheckBoxGroup.Item name="option-1" label="Option 1" />

@@ -75,16 +75,16 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
     }
 
     const hasOnChange = !!props.onChange
-    const cloneWithValue = (element: React.ReactElement, props: any) => {
+    const cloneWithValue = (element: React.ReactElement, cloneProps: any) => {
       if (checked !== undefined) {
-        props = { ...props, checked: checked[element.props.name] || false }
+        cloneProps = { ...cloneProps, checked: checked[element.props.name] || false }
       }
       // This is to avert a PropTypes warning regarding missing onChange handler.
-      const hasChecked = props.checked !== undefined || element.props.checked !== undefined
+      const hasChecked = cloneProps.checked !== undefined || element.props.checked !== undefined
       if (hasChecked && hasOnChange && !element.props.onChange) {
-        props = { ...props, onChange: noop }
+        cloneProps = { ...cloneProps, onChange: noop }
       }
-      return React.cloneElement(element, props)
+      return React.cloneElement(element, cloneProps)
     }
     children = cloneAll(children, forwardProps, cloneWithValue)
 

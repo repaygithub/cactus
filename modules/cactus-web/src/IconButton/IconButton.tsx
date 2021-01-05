@@ -1,5 +1,5 @@
 import { iconSizes } from '@repay/cactus-icons'
-import { CactusTheme, Shape } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -155,7 +155,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
         }
       }}
       ${(p) => `border: ${borderSize(p)} solid;`}
-      ${(p) => shapeMap[p.theme.shape as Shape]}
+      ${(p) => shapeMap[p.theme.shape]}
       border-color: ${(p): string => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
