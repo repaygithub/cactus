@@ -2,7 +2,7 @@ import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/
 import { generateTheme } from '@repay/cactus-theme'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import * as React from 'react'
+import React, { ReactElement } from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
 import Flex from '../Flex/Flex'
@@ -377,6 +377,96 @@ describe('component: Accordion', (): void => {
       expect(container).not.toHaveTextContent('Should show A2')
 
       console.warn = warn
+    })
+
+    test('should properly handle Accordion deletion', async () => {
+      const TestAccordion = () => {
+        const [accordionHeaders, setAccordionHeaders] = React.useState([
+          'First Accordion',
+          'Second Accordion',
+          'Third Accordion',
+          'Fourth Accordion',
+          'Fifth Accordion',
+        ])
+
+        const handleDelete = (index: number): void => {
+          const headersCopy = [...accordionHeaders]
+          headersCopy.splice(index, 1)
+          setAccordionHeaders(headersCopy)
+        }
+
+        return (
+          <Accordion.Provider maxOpen={1}>
+            {accordionHeaders.map(
+              (header, index): ReactElement => (
+                <Accordion variant="outline" key={header}>
+                  <Accordion.Header
+                    render={({ isOpen, headerId }): ReactElement => {
+                      return (
+                        <Flex alignItems="center" width="100%">
+                          <Text as="h3" id={headerId}>
+                            {header}
+                          </Text>
+                          {isOpen && (
+                            <IconButton
+                              iconSize="medium"
+                              variant="danger"
+                              ml="auto"
+                              mr={4}
+                              label={`Delete ${header}`}
+                              onClick={(e: React.MouseEvent<HTMLButtonElement>): void => {
+                                handleDelete(index)
+                                e.stopPropagation()
+                              }}
+                            >
+                              <ActionsDelete aria-hidden="true" />
+                            </IconButton>
+                          )}
+                        </Flex>
+                      )
+                    }}
+                  />
+                  <Accordion.Body>This is the body of the {header}</Accordion.Body>
+                </Accordion>
+              )
+            )}
+          </Accordion.Provider>
+        )
+      }
+
+      const { getByLabelText, getByText, queryByText } = render(
+        <StyleProvider>
+          <TestAccordion />
+        </StyleProvider>
+      )
+
+      const a1Button = getAccordionButton('First Accordion')
+      userEvent.click(a1Button)
+      await openAccordion()
+      expect(getByText('This is the body of the First Accordion')).toBeVisible()
+
+      const a1DeleteButton = getByLabelText('Delete First Accordion')
+      userEvent.click(a1DeleteButton)
+
+      const a2Button = getAccordionButton('Second Accordion')
+      userEvent.click(a2Button)
+      await openAccordion()
+      expect(getByText('This is the body of the Second Accordion')).toBeVisible()
+
+      const a2DeleteButton = getByLabelText('Delete Second Accordion')
+      userEvent.click(a2DeleteButton)
+
+      expect(queryByText('First Accordion')).toBeNull()
+      expect(queryByText('Second Accordion')).toBeNull()
+
+      expect(getByText('Third Accordion')).toBeVisible()
+      expect(queryByText('This is the body of the Third Accordion')).toBeNull()
+
+      expect(getByText('Fourth Accordion')).toBeVisible()
+      expect(queryByText('This is the body of the Fourth Accordion')).toBeNull()
+
+      expect(getByText('Fifth Accordion')).toBeVisible()
+      expect(queryByText('This is the body of the Fifth Accordion')).toBeNull()
     })
   })
 
