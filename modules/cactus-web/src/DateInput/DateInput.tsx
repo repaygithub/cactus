@@ -811,6 +811,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _lastInputKeyed = ''
   private _shouldUpdateFocusDay = false
   private _didClickButton = false
+  private _shouldFocusMonthYearList = false
   private _transitionTimeout: ReturnType<typeof setTimeout> | null = null
 
   private _inputWrapper = React.createRef<HTMLDivElement>()
@@ -939,24 +940,26 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     if (this.state.isOpen === 'month' || this.state.isOpen === 'year') {
       window.requestAnimationFrame((): void => {
         const _portal = this._portal.current
-        const listboxes = _portal && _portal.querySelectorAll('[role="listbox"]')
-        if (listboxes && listboxes.length) {
-          for (let i = 0; i < listboxes.length; ++i) {
-            const $list = listboxes[i]
-            const activeDescendant = $list.getAttribute('aria-activedescendant')
-            if (!activeDescendant) continue
-            const $selected = document.getElementById(activeDescendant)
-            if (!$selected) continue
+        const list = _portal && (_portal.querySelector('[role="listbox"]') as HTMLElement)
+        if (list) {
+          const activeDescendant = list.getAttribute('aria-activedescendant')
+          if (!activeDescendant) return
+          const $selected = document.getElementById(activeDescendant)
+          if (!$selected) return
 
-            if ($list.scrollHeight > $list.clientHeight) {
-              const scrollBottom = $list.clientHeight + $list.scrollTop
-              const optionBottom = $selected.offsetTop + $selected.offsetHeight
-              if (optionBottom > scrollBottom) {
-                $list.scrollTop = optionBottom - $list.clientHeight
-              } else if ($selected.offsetTop < $list.scrollTop) {
-                $list.scrollTop = $selected.offsetTop
-              }
+          if (list.scrollHeight > list.clientHeight) {
+            const scrollBottom = list.clientHeight + list.scrollTop
+            const optionBottom = $selected.offsetTop + $selected.offsetHeight
+            if (optionBottom > scrollBottom) {
+              list.scrollTop = optionBottom - list.clientHeight
+            } else if ($selected.offsetTop < list.scrollTop) {
+              list.scrollTop = $selected.offsetTop
             }
+          }
+
+          if (this._shouldFocusMonthYearList) {
+            list.focus()
+            this._shouldFocusMonthYearList = false
           }
         }
       })
@@ -1078,11 +1081,17 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private handleSelectMonthClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     this.togglePortalView('month')
+    if (event.detail === 0) {
+      this._shouldFocusMonthYearList = true
+    }
     event.stopPropagation()
   }
 
   private handleSelectYearClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     this.togglePortalView('year')
+    if (event.detail === 0) {
+      this._shouldFocusMonthYearList = true
+    }
     event.stopPropagation()
   }
 
