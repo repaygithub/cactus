@@ -1238,16 +1238,26 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
     if (target instanceof HTMLLIElement) {
       const name = currentTarget.dataset.name as 'setYear' | 'setMonth'
-      const value = Number(target.dataset.value)
-      this.setState(
-        (state): Pick<DateInputState, 'focusDay'> => {
-          const { focusDay } = state
-          const pd = PartialDate.from(focusDay, 'YYYY-MM-dd')
-          pd[name](value)
-          pd.ensureDayOfMonth()
-          return { focusDay: pd.format() }
-        }
-      )
+      const optionValue = Number(target.dataset.value)
+      const list = target.closest('ul')
+      const token = list?.getAttribute('data-token') as FormatTokenType
+      const { value } = this.state
+      if (name === 'setMonth' && !value.isValid() && token) {
+        this.handleUpdate(event, token, 'Key', String(optionValue + 1))
+      } else if (name === 'setYear' && !value.isValid() && token) {
+        this.handleUpdate(event, token, 'Key', String(optionValue))
+      } else {
+        this.setState(
+          (state): Pick<DateInputState, 'focusDay' | 'value'> => {
+            const { focusDay } = state
+            const pd = PartialDate.from(focusDay, 'YYYY-MM-dd')
+            pd[name](optionValue)
+            pd.ensureDayOfMonth()
+            this.raiseChange(event, pd)
+            return { focusDay: pd.format(), value: pd }
+          }
+        )
+      }
       this.togglePortalView()
       event.stopPropagation()
     }
@@ -1356,7 +1366,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               update[token] = change
             } else if (token === 'aa') {
               update[token] = change
-            } else if (/^[0-9]$/.test(change)) {
+            } else if (/^[0-9]+$/.test(change)) {
               let current = update[token]
               const asNum = Number(change)
               if (current === '' || current === undefined || this._lastInputKeyed !== token) {
@@ -1426,12 +1436,28 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private _open(): void {
     this.setState(
-      ({ value }): Pick<DateInputState, 'isOpen' | 'focusDay'> => ({
-        isOpen: 'calendar',
-        focusDay: value.isValid()
-          ? `${value.YYYY}-${value.MM}-${value.dd}`
-          : PartialDate.from(new Date(), 'YYYY-MM-dd').format(),
-      })
+      ({ value }): Pick<DateInputState, 'isOpen' | 'focusDay'> => {
+        let focusDay: string
+        if (value.isValid()) {
+          focusDay = `${value.YYYY}-${value.MM}-${value.dd}`
+        } else {
+          const pd = PartialDate.from(new Date(), 'YYYY-MM-dd')
+          if (value.MM) {
+            pd.setMonth(Number(value.MM) - 1)
+          }
+          if (value.dd) {
+            pd.setDate(Number(value.dd))
+          }
+          if (value.YYYY) {
+            pd.setYear(Number(value.YYYY))
+          }
+          focusDay = pd.format()
+        }
+        return {
+          isOpen: 'calendar',
+          focusDay,
+        }
+      }
     )
   }
 
@@ -1466,9 +1492,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private togglePortalView(triggerType?: 'month' | 'year'): void {
     this.setState(
-      (state): Pick<DateInputState, 'isOpen' | 'focusDay'> => {
+      (state): Pick<DateInputState, 'isOpen'> => {
         const toggleToCal = state.isOpen === 'month' || state.isOpen === 'year'
-        const updates: Pick<DateInputState, 'isOpen' | 'focusDay'> = toggleToCal
+        const updates: Pick<DateInputState, 'isOpen'> = toggleToCal
           ? { isOpen: 'calendar' }
           : { isOpen: triggerType === 'month' ? 'month' : 'year' }
         this._shouldUpdateFocusDay = toggleToCal
