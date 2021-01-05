@@ -1,3 +1,20 @@
+# v4.4.0 (Tue Jan 05 2021)
+
+#### 🚀 Enhancement
+
+- Add Tab, TabList, and TabController components [#468](https://github.com/repaygithub/cactus/pull/468) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- Fix a bug where the page would crash after deleting Accordions [#475](https://github.com/repaygithub/cactus/pull/475) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v4.3.0 (Mon Dec 28 2020)
 
 #### 🚀 Enhancement
