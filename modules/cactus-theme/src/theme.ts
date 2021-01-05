@@ -159,9 +159,9 @@ const status: StatusColors = {
     error: transparentError,
   },
   avatar: {
-    success: `hsla(145, 89%, 28%, 0.3)`,
-    warning: `hsla(47, 82%, 47%, 0.3)`,
-    error: `hsla(353, 84%, 44%, 0.3)`,
+    success: transparentSuccess,
+    warning: transparentWarning,
+    error: transparentError,
   },
 }
 
