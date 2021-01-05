@@ -54,8 +54,8 @@ const useVariant = (): Variant => {
   return 'top'
 }
 
-const getMenuItems = (menu: HTMLElement): HTMLElement[] =>
-  Array.from(menu.querySelectorAll(ITEM_SELECTOR))
+const getMenuItems = (menu: HTMLElement) =>
+  Array.from(menu.querySelectorAll<HTMLElement>(ITEM_SELECTOR))
 
 function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
   props: AsProps<C>,
