@@ -1,3 +1,38 @@
+# v4.4.0 (Tue Jan 05 2021)
+
+#### 🚀 Enhancement
+
+- Add Tab, TabList, and TabController components [#468](https://github.com/repaygithub/cactus/pull/468) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- Fix a bug where the page would crash after deleting Accordions [#475](https://github.com/repaygithub/cactus/pull/475) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
+# v4.3.0 (Mon Dec 28 2020)
+
+#### 🚀 Enhancement
+
+- Allow devs to override default Modal widths with a width prop [#469](https://github.com/repaygithub/cactus/pull/469) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Fix misaligned text in FileInput component [#465](https://github.com/repaygithub/cactus/pull/465) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+- Fix Tooltip overflow issue in IE11 [#461](https://github.com/repaygithub/cactus/pull/461) ([@NicolasSimmonds](https://github.com/NicolasSimmonds))
+
+#### Authors: 2
+
+- [@Dhalton](https://github.com/Dhalton)
+- [@NicolasSimmonds](https://github.com/NicolasSimmonds)
+
+---
+
 # v4.2.2 (Mon Dec 21 2020)
 
 #### 🐛 Bug Fix

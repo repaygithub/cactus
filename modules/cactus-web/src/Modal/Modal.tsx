@@ -3,6 +3,7 @@ import { NavigationClose } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
+import { width, WidthProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
 import { border, boxShadow } from '../helpers/theme'
@@ -11,7 +12,7 @@ import IconButton from '../IconButton/IconButton'
 
 export type ModalType = 'action' | 'danger' | 'warning' | 'success'
 
-export interface ModalProps {
+export interface ModalProps extends WidthProps {
   className?: string
   closeLabel?: string
   isOpen: boolean
@@ -19,7 +20,7 @@ export interface ModalProps {
   onClose: () => void
   variant?: ModalType
 }
-interface ModalPopupProps extends DialogProps {
+interface ModalPopupProps extends DialogProps, WidthProps {
   variant: ModalType
 }
 
@@ -67,14 +68,16 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
   align-items: center;
   z-index: 52;
   > [data-reach-dialog-content] {
-    flex-basis: 100%;
-    width: 100%;
+    ${(p) => p.width && 'box-sizing: border-box;'}
+    flex-basis: ${(p) => !p.width && '100%'};
+    width: ${(p) => !p.width && '100%'};
     border: ${(p) => border(p.theme, '')};
     ${(p) => shapeMap[p.theme.shape]};
     background: white;
     ${(p): string => boxShadow(p.theme, 2)};
     margin: auto;
-    max-width: 80%;
+    max-width: ${(p) => !p.width && '80%'};
+    ${width}
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
@@ -102,7 +105,7 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     }
     ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
       padding: 40px 88px;
-      max-width: 30%;
+      max-width: ${(p) => !p.width && '30%'};
       ${IconButton} {
         height: 24px;
         position: absolute;

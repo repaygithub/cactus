@@ -286,7 +286,7 @@ export { TypedMenuBar as MenuBar, MenuBarList, MenuBarItem }
 
 export default TypedMenuBar
 
-const ScrollButton = styled.div.attrs({ 'aria-hidden': true })<{ show?: boolean }>`
+export const ScrollButton = styled.div.attrs({ 'aria-hidden': true })<{ show?: boolean }>`
   ${(p) => p.theme.colorStyles.standard};
   display: ${(p) => (p.show ? 'flex' : 'none')};
   justify-content: center;

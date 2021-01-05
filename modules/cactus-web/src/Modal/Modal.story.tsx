@@ -33,6 +33,7 @@ const ModalWithState = (): React.ReactElement => {
       onClose={(): void => setOpen(false)}
       modalLabel={modalLabel}
       closeLabel={closeLabel}
+      width={text('width', '')}
     >
       <Text as="h3">This is a Modal</Text>
     </Modal>

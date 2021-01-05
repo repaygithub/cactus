@@ -33,7 +33,7 @@ interface FocusState {
   control: FocusControl
 }
 
-interface SearchState {
+export interface SearchState {
   focusHint: string | number
   focusIndex: number
   shift: boolean

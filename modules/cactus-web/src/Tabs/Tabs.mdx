@@ -1,0 +1,88 @@
+---
+name: Tabs
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Box from '../Box/Box'
+import { Tab, TabController, TabList, TabPanel } from './Tabs'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# Tabs
+
+A set of components that represent tabs for showing one piece of content at a time and swapping between which content is visible and which is hidden.
+
+## Basic Usage
+
+There are four components:
+- `TabList` is the wrapper component around the tabs
+- `Tab` is the visual "button" that triggers the visible switch
+- `TabController` is a context provider that can automate some of the accessibility functions for tabs by keeping track of the active tag and setting ARIA attributes accordingly
+- `TabPanel` is basically just a `Box`, or a div with styling options, but when used with `TabController` it sets visibility and some of the accessibility props automatically
+
+### Try it out
+
+export const code = `
+<Box border="1px solid black" height="175px">
+  <TabController id="idPrefix" initialTabId="idPrefix-rank-tab">
+    <TabList fullWidth fillGaps justifyContent="space-evenly">
+      <Tab name="name">Name</Tab>
+      <Tab name="rank">Rank</Tab>
+      <Tab name="serial">Serial #</Tab>
+    </TabList>
+    <TabPanel tab="name" mx={5} my={4}>
+      <h1>Nebby Nebulous</h1>
+    </TabPanel>
+    <TabPanel tab="rank" mx={5} my={4}>
+      <h2>Cloudy Nebula</h2>
+    </TabPanel>
+    <TabPanel tab="serial" mx={5} my={4}>
+      <p>N3BU14</p>
+    </TabPanel>
+  </TabController>
+</Box>
+`
+
+<LiveProvider code={code} scope={{ Box, Tab, TabController, TabList, TabPanel }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+### Accessibility/Display
+
+ARIA roles are set on the components automatically, so you only have to be aware of a few things:
+
+- `TabController`
+  - The `id` prop serves as a prefix for auto-generated IDs, as well as the default `id` for the `TabList` (since there's no DOM element associated with the controller)
+  - The `initialTabId` prop has to be the full ID, not just the tab name; auto-generated IDs have the format `${controller.id}-${tabName}-tab` (replace "tab" with "panel" for TabPanel IDs)
+- `TabList`
+  - It's basically a flex container which fully exposes the `justifyContent` prop; you can also control the `flex-grow` CSS property of all the tabs at once using the `fillGaps` prop
+  - `aria-orientation` can be horizontal or vertical, though the styles/functionality of vertical are not entirely complete at this point
+- `Tab`
+  - `aria-selected` should be true for the current tab and false for all others (set by controller)
+  - `panelId`/`aria-controls` should be the ID of an element with the "tabpanel" ARIA role; set by controller/can be auto-generated from `name` prop
+- `TabPanel`
+  - `tabId`/`aria-labelledby` should be the ID of an element with the "tab" ARIA role; set by controller/can be auto-generated from `tab` prop
+  - `hidden` should be set on all but the currently active tab; set by controller
+
+The IDs are critical to ensure the link between tabs and panels, so be sure to always set the `id`/`panelId` on tabs and `id`/`tabId` on panels (or the `tab`/`name` shortcut if you're using the controller to auto-generate IDs).
+
+## Properties
+
+### TabList
+
+<PropsTable of={TabList} staticProp="TabList" />
+
+### Tab
+
+For some reason our doc generator won't work on this component. The only two custom props are `name` and `panelId` mentioned above in the "Accessibility" section; both are optional strings.
+
+### TabController
+
+<PropsTable of={TabController} staticProp="TabController" />
+
+### TabPanel
+
+<PropsTable of={TabPanel} staticProp="TabPanel" />
