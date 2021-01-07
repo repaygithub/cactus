@@ -353,10 +353,7 @@ describe('component: DateInput', (): void => {
       )
 
       const portalTrigger = getByLabelText('Open date picker')
-      act((): void => {
-        fireEvent.mouseDown(portalTrigger)
-        fireEvent.click(portalTrigger)
-      })
+      userEvent.click(portalTrigger)
       await animationRender()
       await act(
         async (): Promise<void> => {
@@ -386,10 +383,7 @@ describe('component: DateInput', (): void => {
       )
 
       const portalTrigger = getByLabelText('Open date picker')
-      act((): void => {
-        fireEvent.mouseDown(portalTrigger)
-        fireEvent.click(portalTrigger)
-      })
+      userEvent.click(portalTrigger)
       await animationRender()
       await act(
         async (): Promise<void> => {
