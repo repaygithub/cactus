@@ -34,7 +34,7 @@ import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { boxShadow, textStyle } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
-import { Status } from '../StatusMessage/StatusMessage'
+import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 
 export type IsValidDateFunc = (date: Date) => boolean
 export type ParseDateFunc = (dateStr: string) => Date
@@ -66,6 +66,7 @@ interface DateInputPhrasesType {
   prevMonth: string
   nextMonth: string
   showCalendar: string
+  invalidDateLabel: string
   ariaDisabledDate: (date: string) => string
 }
 
@@ -778,6 +779,12 @@ export interface DateInputProps
    * function to determine whether a specific date should render as disabled.
    */
   isValidDate?: (date: Date) => boolean
+  /**
+   * Handler called when the value switches from valid
+   * to invalid or vice versa.
+   * This function is called on blur events.
+   */
+  onInvalidDate?: (isDateInvalid: boolean) => void
 }
 
 interface DateInputState {
@@ -786,6 +793,7 @@ interface DateInputState {
   type: DateType
   isOpen: false | 'month' | 'year' | 'calendar'
   transitioning: false | 'slide-left' | 'slide-right'
+  invalidDate: boolean
   // YYYY-MM-dd
   focusDay?: string
 }
@@ -804,6 +812,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       locale,
       isOpen: false,
       transitioning: false,
+      invalidDate: false,
     }
   }
 
@@ -848,6 +857,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     onChange: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
+    onInvalidDate: PropTypes.func,
     phrases: PropTypes.object,
   }
 
@@ -1049,6 +1059,19 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         }
       }
     })
+    const { value, invalidDate } = this.state
+    const { onInvalidDate } = this.props
+    if (!value.isValid() && value.MM && value.dd && value.YYYY && !invalidDate) {
+      this.setState({ invalidDate: true })
+      if (onInvalidDate && typeof onInvalidDate === 'function') {
+        onInvalidDate(true)
+      }
+    } else if (value.isValid() && invalidDate) {
+      this.setState({ invalidDate: false })
+      if (onInvalidDate && typeof onInvalidDate === 'function') {
+        onInvalidDate(false)
+      }
+    }
   }
 
   private handleClick = (): void => {
@@ -1579,6 +1602,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         prevMonth: 'Click to go back one month',
         nextMonth: 'Click to go forward one month',
         showCalendar: 'Click to use calendar picker',
+        invalidDateLabel: 'The selected date is invalid. Please pick another date.',
         ariaDisabledDate: function (date): string {
           return `${date} can't be selected.`
         },
@@ -1607,7 +1631,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   public render(): ReactElement {
-    const { value, isOpen, focusDay } = this.state
+    const { value, isOpen, focusDay, invalidDate } = this.state
     const {
       id,
       name,
@@ -1627,74 +1651,89 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const monthId = id + '-month-label'
     const yearId = id + '-year-label'
     const timeId = id + '-time'
+    const statusId = id + '-status-message'
     const { month: focusMonth, year: focusYear, days } = this._getMonthData()
     const selectedStr = value.format('YYYY-MM-dd')
 
     return (
       <Fragment>
-        <InputWrapper
-          className={className}
-          role="group"
-          ref={this._inputWrapper}
-          aria-describedby={ariaDescribedBy}
-          aria-labelledby={ariaLabelledBy}
-          onKeyDownCapture={this.handleKeydownCapture}
-          onInputCapture={this.handleInputCapture}
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-          onClick={this.handleClick}
-        >
-          {hasDate ? (
-            <IconButton
-              disabled={disabled}
-              ref={this._button}
-              onClick={!disabled ? this.handleButtonClick : undefined}
-              onTouchStart={!disabled ? this.handleButtonClick : undefined}
-              onKeyDown={!disabled ? this.handleButtonKeyDown : undefined}
-              label={phrases.pickerLabel}
-            >
-              <DescriptiveCalendar />
-            </IconButton>
-          ) : (
-            !id.endsWith('-time') &&
-            !name.endsWith('-time') && <DescriptiveClock aria-hidden="true" />
-          )}
-          {formatArray.map(
-            (token, index): ReactElement => {
-              const key = `${token}-${index}`
-              if (isToken(token)) {
-                const inputId = isFirstInput ? id : undefined
-                isFirstInput = false
-                return (
-                  <input
-                    disabled={disabled}
-                    key={key}
-                    type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
-                    id={inputId}
-                    data-token={token}
-                    aria-label={getInputLabel(token, phrases)}
-                    placeholder={getInputPlaceholder(token)}
-                    value={value[token]}
-                    autoComplete="off"
-                    onChange={noop}
-                  />
-                )
+        <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
+          <InputWrapper
+            className={className}
+            role="group"
+            ref={this._inputWrapper}
+            aria-describedby={`${ariaDescribedBy} ${statusId}`}
+            aria-labelledby={ariaLabelledBy}
+            onKeyDownCapture={this.handleKeydownCapture}
+            onInputCapture={this.handleInputCapture}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            onClick={this.handleClick}
+          >
+            {hasDate ? (
+              <IconButton
+                disabled={disabled}
+                ref={this._button}
+                onClick={!disabled ? this.handleButtonClick : undefined}
+                onTouchStart={!disabled ? this.handleButtonClick : undefined}
+                onKeyDown={!disabled ? this.handleButtonKeyDown : undefined}
+                label={phrases.pickerLabel}
+              >
+                <DescriptiveCalendar />
+              </IconButton>
+            ) : (
+              !id.endsWith('-time') &&
+              !name.endsWith('-time') && <DescriptiveClock aria-hidden="true" />
+            )}
+            {formatArray.map(
+              (token, index): ReactElement => {
+                const key = `${token}-${index}`
+                if (isToken(token)) {
+                  const inputId = isFirstInput ? id : undefined
+                  isFirstInput = false
+                  return (
+                    <input
+                      disabled={disabled}
+                      key={key}
+                      type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
+                      id={inputId}
+                      data-token={token}
+                      aria-label={getInputLabel(token, phrases)}
+                      placeholder={getInputPlaceholder(token)}
+                      value={value[token]}
+                      autoComplete="off"
+                      onChange={noop}
+                    />
+                  )
+                }
+                return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
               }
-              return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
-            }
+            )}
+            <span aria-hidden="true" />
+            <ToggleButtons aria-hidden="true">
+              <NavigationChevronUp
+                data-name="ArrowUp"
+                onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
+              />
+              <NavigationChevronDown
+                data-name="ArrowDown"
+                onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
+              />
+            </ToggleButtons>
+          </InputWrapper>
+          {invalidDate && (
+            <StatusMessage
+              status="error"
+              id={statusId}
+              style={{
+                marginTop: '4px',
+                maxWidth: this._inputWrapper.current?.getBoundingClientRect().width,
+              }}
+            >
+              {phrases.invalidDateLabel}
+            </StatusMessage>
           )}
-          <span aria-hidden="true" />
-          <ToggleButtons aria-hidden="true">
-            <NavigationChevronUp
-              data-name="ArrowUp"
-              onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
-            />
-            <NavigationChevronDown
-              data-name="ArrowDown"
-              onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
-            />
-          </ToggleButtons>
-        </InputWrapper>
+        </Flex>
         {hasDate && (
           <CalendarPopup
             anchorRef={this._inputWrapper}
