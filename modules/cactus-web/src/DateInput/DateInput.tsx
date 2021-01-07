@@ -1272,8 +1272,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       } else {
         this.setState(
           (state): Pick<DateInputState, 'focusDay' | 'value'> => {
-            const { focusDay } = state
-            const pd = PartialDate.from(focusDay, 'YYYY-MM-dd')
+            const { value } = state
+            const pd = PartialDate.from(value, 'YYYY-MM-dd')
             pd[name](optionValue)
             pd.ensureDayOfMonth()
             this.raiseChange(event, pd)
