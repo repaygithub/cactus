@@ -1,3 +1,21 @@
+# v5.0.0-beta.0 (Thu Jan 08 2021)
+
+#### 💥 Breaking Change
+
+- Remove left padding from Breadcrumb component
+[#477](https://github.com/repaygithub/cactus/pull/477) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🔩 Dependency Updates
+
+- Upgrade `@repay/cactus-theme` to `v2.0.2-beta-0` and `@repay/cactus-icons` to `v2.1.6-beta.0`
+
+#### Authors: 2
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v4.4.0 (Tue Jan 05 2021)
 
 #### 🚀 Enhancement
