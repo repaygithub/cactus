@@ -1,3 +1,4 @@
+import VisuallyHidden from '@reach/visually-hidden'
 import {
   DescriptiveCalendar,
   DescriptiveClock,
@@ -507,11 +508,7 @@ const CalendarDay = React.forwardRef<HTMLButtonElement, CalendarDayProps>(
     }
     return (
       <CalendarDayBase {...rest} ref={ref}>
-        {enableInteraction && (
-          <span aria-hidden="false" hidden>
-            {longLabel}
-          </span>
-        )}
+        {enableInteraction && <VisuallyHidden>{longLabel}</VisuallyHidden>}
         <span aria-hidden="true">{children}</span>
       </CalendarDayBase>
     )
