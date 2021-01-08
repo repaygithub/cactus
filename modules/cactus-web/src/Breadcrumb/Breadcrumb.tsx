@@ -73,6 +73,8 @@ const StyledNav = styled.nav`
     display: flex;
     flex-direction: row;
     list-style: none;
+    padding: 0;
+    margin: 0;
   }
 `
 
