@@ -43,6 +43,7 @@ export function rgbToHsl(red: number, green: number, blue: number): [number, num
 }
 
 export function hexToRgb(hex: string): [number, number, number] {
+  hex = hex?.trim?.()
   if (/^#?([a-f\d]{3}){1,2}$/i.test(hex)) {
     let result
     if (hex.length < 6) {

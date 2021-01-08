@@ -62,12 +62,12 @@ describe('@repay/cactus-theme', (): void => {
   })
 
   test('generates a theme when primary color is provided', (): void => {
-    const theme = generateTheme({ primary: '#012537' })
+    const theme = generateTheme({ primary: '#012537 ' })
     expect(theme).toEqual(cactusTheme)
   })
 
   test('generates a theme when two colors are provided', (): void => {
-    const theme = generateTheme({ primary: '#012537', secondary: '#0000FF' })
+    const theme = generateTheme({ primary: '#012537', secondary: ' #0000FF' })
     expect(theme).toMatchObject({
       colors: {
         base: 'hsl(200, 96%, 11%)',
