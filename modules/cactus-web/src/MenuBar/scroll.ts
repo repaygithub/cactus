@@ -1,40 +1,33 @@
-import observeRect from '@reach/observe-rect'
 import React from 'react'
 
+import { supportsScopeQuery } from '../helpers/constants'
 import { FocusControl, FocusSetter } from '../helpers/focus'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 
-type Orientation = 'horizontal' | 'vertical'
-
 const IS_CHAR = /^\S$/
-const BUTTON_WIDTH = 34 // 16 padding, 18 icon
-export const ITEM_SELECTOR = '[role="menuitem"]'
+const MENU_SELECTOR = 'nav [aria-orientation]'
+const ITEM_SELECTOR = '[role="menuitem"]'
+const ITEM_SCOPE_SELECTOR = `:scope > li > ${ITEM_SELECTOR}`
+const VISIBLE_ITEM_SELECTOR = `[role="menu"]:not([aria-hidden]) > li > ${ITEM_SELECTOR}`
 
-const equals = (left: number, right: number) => Math.abs(left - right) < 0.1
+const getMenu = (fromNode: HTMLElement) => fromNode.parentElement?.closest?.(MENU_SELECTOR)
 
-const greaterThan = (left: number, right: number) => left + 0.1 - right > 0
+const query = (scope: Element, selector: string) =>
+  Array.from(scope.querySelectorAll<HTMLElement>(selector))
 
-const getMenu: (f: HTMLElement) => HTMLElement | undefined = (fromNode) => {
-  const parent = fromNode.parentElement
-  if (parent) {
-    if (parent.matches('[role^="menu"]')) {
-      return parent
-    } else if (fromNode.matches('nav')) {
-      return fromNode
-      // Don't bother searching past the menubar.
-    } else if (fromNode.getAttribute('role') !== 'menubar') {
-      return getMenu(parent)
-    }
+export const getOwnedMenuItems = (menu: HTMLElement): HTMLElement[] => {
+  if (supportsScopeQuery) {
+    return query(menu, ITEM_SCOPE_SELECTOR)
+  } else if (menu.id) {
+    const idSelector = `#${menu.id} > li > ${ITEM_SELECTOR}`
+    return query(menu, idSelector)
   }
+  const elements = query(menu, ITEM_SELECTOR)
+  return elements.filter((e) => e.closest(MENU_SELECTOR) === menu)
 }
 
-const getMenuItems = (menu: HTMLElement, directChildrenOnly: boolean): HTMLElement[] => {
-  const elements = Array.from(menu.querySelectorAll(ITEM_SELECTOR)) as HTMLElement[]
-  if (directChildrenOnly) {
-    return elements.filter((e) => getMenu(e) === menu)
-  }
-  return elements.filter((e) => e.offsetWidth)
-}
+export const getVisibleMenuItems = (menu: HTMLElement): HTMLElement[] =>
+  query(menu, VISIBLE_ITEM_SELECTOR)
 
 function positionMenu(menuWrapper: HTMLElement, menuButton: HTMLElement | null) {
   if (!menuButton) return
@@ -44,8 +37,7 @@ function positionMenu(menuWrapper: HTMLElement, menuButton: HTMLElement | null) 
   const offsetRect = (menuWrapper.offsetParent as HTMLElement).getBoundingClientRect()
   const buttonRect = menuButton.getBoundingClientRect()
   const menuRect = menuWrapper.getBoundingClientRect()
-  const parentMenu = getMenu(menuButton)
-  const orientation = parentMenu && parentMenu.getAttribute('aria-orientation')
+  const orientation = getOrientation(menuButton)
   let left, top
   if (orientation === 'horizontal') {
     const expectedRight = buttonRect.left + menuRect.width
@@ -103,10 +95,6 @@ function handleButtonClick(event: React.MouseEvent<HTMLElement>, toggle: ToggleP
   toggle(undefined, wrapper)
 }
 
-export function menuFocusControl(menu: HTMLElement): HTMLElement[] {
-  return getMenuItems(menu, true)
-}
-
 export function useSubmenu(
   id: string | undefined,
   usePositioning: boolean
@@ -116,13 +104,12 @@ export function useSubmenu(
     buttonId: id,
     onWrapperKeyDown: handleArrows,
     onButtonClick: handleButtonClick,
-    focusControl: menuFocusControl,
+    focusControl: getOwnedMenuItems,
     positionPopup: usePositioning ? positionMenu : undefined,
   })
   delete popup.wrapperProps.id
   popup.buttonProps.role = 'menuitem'
-  popup.popupProps.onFocus = focusMenu
-  popup.popupProps.onKeyDown = useMenuKeyHandler(popup.setFocus)
+  popup.popupProps.onKeyDown = useMenuKeyHandler(popup.setFocus, usePositioning)
   return popup
 }
 
@@ -130,27 +117,25 @@ export function useMenu(id: string | undefined): ReturnType<typeof usePopup> {
   const popup = usePopup('menu', {
     id,
     onButtonClick: handleButtonClick,
-    focusControl: menuFocusControl,
+    focusControl: getOwnedMenuItems,
   })
-  popup.popupProps.onFocus = focusMenu
-  popup.popupProps.onKeyDown = useMenuKeyHandler(popup.setFocus)
+  popup.popupProps.onKeyDown = useMenuKeyHandler(popup.setFocus, false)
   return popup
 }
 
 type KeyHandler = React.KeyboardEventHandler<HTMLElement>
 
-export const useMenuKeyHandler = (setFocus: FocusSetter): KeyHandler =>
+export const useMenuKeyHandler = (setFocus: FocusSetter, isWrapper: boolean): KeyHandler =>
   React.useCallback<KeyHandler>(
     (event) => {
-      const menu = (event.currentTarget.matches('ul')
+      const menu = (!isWrapper
         ? event.currentTarget
-        : event.currentTarget.querySelector('ul')) as MenuWithScroll
-      const parentMenu = getMenu(menu)
+        : event.currentTarget.querySelector('ul')) as HTMLElement
       const orientation = menu.getAttribute('aria-orientation')
       const scrollForward = orientation === 'vertical' ? 'ArrowDown' : 'ArrowRight'
       const scrollBack = orientation === 'vertical' ? 'ArrowUp' : 'ArrowLeft'
-      const allowWrapBack =
-        !parentMenu || parentMenu.getAttribute('aria-orientation') === orientation
+      const parentOrientation = getOrientation(menu)
+      const allowWrapBack = !parentOrientation || parentOrientation === orientation
       let propagate = false
       switch (event.key) {
         case scrollForward:
@@ -164,7 +149,7 @@ export const useMenuKeyHandler = (setFocus: FocusSetter): KeyHandler =>
                 propagate = true
                 return
               }
-              return menuFocusControl(root)
+              return getOwnedMenuItems(root)
             }
           }
           setFocus(-1, { shift: true, control })
@@ -196,158 +181,5 @@ export const useMenuKeyHandler = (setFocus: FocusSetter): KeyHandler =>
         event.stopPropagation()
       }
     },
-    [setFocus]
+    [isWrapper, setFocus]
   )
-
-interface Scroll {
-  showButtons?: boolean
-  clickFore?: () => void
-  clickBack?: () => void
-  offset: number
-  current: number
-}
-
-const DEFAULT_SCROLL: Scroll = { offset: 0, current: 0 }
-
-interface MenuWithScroll extends HTMLUListElement {
-  scrollToMenuItem?: (target: HTMLElement) => void
-}
-
-type MenuRef = React.RefObject<HTMLUListElement>
-
-type ScrollInfo = (e: HTMLElement) => [HTMLElement, number, HTMLElement[]]
-type ScrollButtonHook = (o: Orientation, e: boolean, si?: ScrollInfo) => [MenuRef, Scroll]
-
-const getScrollInfo: ScrollInfo = (element) => {
-  const overflow = window.getComputedStyle(element).overflow
-  if (overflow === 'hidden') {
-    return [element.parentElement as HTMLElement, BUTTON_WIDTH, getMenuItems(element, true)]
-  } else if (overflow === 'auto') {
-    return [element, 0, getMenuItems(element, false)]
-  }
-  return getScrollInfo(element.parentElement as HTMLElement)
-}
-
-export const useScrollButtons: ScrollButtonHook = (
-  orientation,
-  expanded,
-  getSI = getScrollInfo
-) => {
-  const menuRef = React.useRef<HTMLUListElement>(null)
-  const [scroll, setScroll] = React.useState<Scroll>(DEFAULT_SCROLL)
-  React.useEffect(() => {
-    if (!expanded) {
-      setScroll(() => DEFAULT_SCROLL)
-    } else if (menuRef.current) {
-      const menu = menuRef.current as MenuWithScroll
-      let back: 'left' | 'top' = 'left'
-      let fore: 'right' | 'bottom' = 'right'
-      let width: 'width' | 'height' = 'width'
-      let scrollAttr: 'scrollLeft' | 'scrollTop' = 'scrollLeft'
-      let scrollWidth: 'scrollWidth' | 'scrollHeight' = 'scrollWidth'
-      if (orientation === 'vertical') {
-        back = 'top'
-        fore = 'bottom'
-        width = 'height'
-        scrollAttr = 'scrollTop'
-        scrollWidth = 'scrollHeight'
-      }
-      const updateScrollState = (scroll: Scroll, target?: number | HTMLElement): Scroll => {
-        const [wrapper, buttonWidth, items] = getSI(menu)
-
-        const parentRect = wrapper.getBoundingClientRect()
-        const itemRects = items.map((i) => i.getBoundingClientRect())
-        let maxButton = items.length - 1
-        const showButtons = menu[scrollWidth] > Math.round(parentRect[width])
-        const maxWidth = parentRect[width] - (showButtons ? buttonWidth * 2 : 0)
-        let button: number = scroll.current
-        if (typeof target === 'number') {
-          button = target
-        } else if (target) {
-          button = items.indexOf(target)
-          if (button < 0) {
-            return scroll
-          } else if (button > 0 && showButtons) {
-            const span = itemRects[button][fore] - itemRects[scroll.current][back]
-            if (span > maxWidth) {
-              maxButton = button
-            } else if (button > scroll.current) {
-              button = scroll.current
-            }
-          }
-        }
-
-        let menuWidth = 0
-        let offset = 0
-        for (let i = maxButton; i >= 0; i--) {
-          const itemWidth = itemRects[i][width]
-          menuWidth += itemWidth
-          if (menuWidth < maxWidth) {
-            maxButton = i
-            button = Math.min(button, maxButton)
-          } else if (i < button) {
-            offset += itemWidth
-          }
-        }
-
-        // This is a fix for an IE bug with nested flex items.
-        // TODO Do I still need this now that buttons are always visible?
-        if (
-          buttonWidth &&
-          parentRect[width] > 0 &&
-          /MSIE|Trident/.test(window.navigator.userAgent)
-        ) {
-          menu.style.maxHeight = `calc(70vh - ${buttonWidth * 2}px)`
-        }
-
-        // If the offset/button state is unchanged, don't update the state.
-        if (
-          showButtons === scroll.showButtons &&
-          equals(scroll.offset, offset) &&
-          button === scroll.current
-        ) {
-          return scroll
-        }
-        const result: Scroll = {
-          showButtons,
-          offset,
-          current: button,
-        }
-        if (greaterThan(menu[scrollWidth] - offset, maxWidth)) {
-          result.clickFore = () => {
-            setScroll(updateScrollState(result, result.current + 1))
-          }
-        }
-        if (button > 0) {
-          result.clickBack = () => {
-            setScroll(updateScrollState(result, result.current - 1))
-          }
-        }
-        // Set the actual scroll offset on the menu.
-        const scrollElement = buttonWidth ? menu : wrapper
-        scrollElement[scrollAttr] = offset
-        return result
-      }
-
-      menu.scrollToMenuItem = (target) => {
-        setScroll((s) => updateScrollState(s, target))
-      }
-
-      const observer = observeRect(menu, () => {
-        setScroll(updateScrollState)
-      })
-      observer.observe()
-      return () => observer.unobserve()
-    }
-  }, [expanded, menuRef, orientation, getSI])
-  return [menuRef, scroll]
-}
-
-export const focusMenu = (event: React.FocusEvent<HTMLElement>): void => {
-  if (event.target.matches(ITEM_SELECTOR)) {
-    const menu = event.currentTarget as MenuWithScroll
-    if (menu.scrollToMenuItem) {
-      menu.scrollToMenuItem(event.target as HTMLElement)
-    }
-  }
-}
