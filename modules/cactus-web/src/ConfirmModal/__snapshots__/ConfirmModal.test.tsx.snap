@@ -314,6 +314,10 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
+.c0 > [data-reach-dialog-content] .modal-children {
+  word-break: break-word;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -476,7 +480,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
                 class="c5 c7 title-icon"
@@ -782,6 +786,10 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
+.c0 > [data-reach-dialog-content] .modal-children {
+  word-break: break-word;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -937,7 +945,7 @@ exports[`Modal variant is danger snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
                 class="c5 c7 title-icon"
@@ -1225,6 +1233,10 @@ exports[`Modal variant is success snapshot 1`] = `
   border-color: hsl(145,89%,28%);
 }
 
+.c0 > [data-reach-dialog-content] .modal-children {
+  word-break: break-word;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -1380,7 +1392,7 @@ exports[`Modal variant is success snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
                 class="c5 c7 title-icon"
@@ -1648,6 +1660,10 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-color: hsl(47,82%,47%);
 }
 
+.c0 > [data-reach-dialog-content] .modal-children {
+  word-break: break-word;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -1807,7 +1823,7 @@ exports[`Modal variant is warning snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
                 class="c5 c7 title-icon"
