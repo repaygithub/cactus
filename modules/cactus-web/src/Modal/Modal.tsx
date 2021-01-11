@@ -31,7 +31,16 @@ const shapeMap = {
 }
 
 const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
-  const { variant = 'action', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
+  const {
+    variant = 'action',
+    children,
+    isOpen,
+    onClose,
+    modalLabel,
+    closeLabel,
+    maxHeight = '90%',
+    ...rest
+  } = props
   const hasChildren = !!React.Children.count(children)
 
   return (
@@ -40,6 +49,7 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
       isOpen={isOpen}
       onDismiss={onClose}
       variant={variant}
+      maxHeight={maxHeight}
       {...rest}
     >
       <DialogContent aria-label={modalLabel}>
@@ -47,8 +57,8 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
           <NavigationClose />
         </IconButton>
         {hasChildren && (
-          <Flex className="modal-children" flexDirection="column" alignItems="center">
-            {children}
+          <Flex flexDirection="column" alignItems="center">
+            <div className="modal-children">{children}</div>
           </Flex>
         )}
       </DialogContent>
@@ -85,11 +95,15 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
     ${width}
     ${height}
     ${maxHeight}
+    overflow: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
     .modal-children {
-      word-break: break-word;
+      max-width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
     ${variant({
       action: css`
@@ -142,5 +156,6 @@ Modal.defaultProps = {
   isOpen: false,
   modalLabel: 'Modal',
   variant: 'action',
+  maxHeight: '90%',
 }
 export default Modal
