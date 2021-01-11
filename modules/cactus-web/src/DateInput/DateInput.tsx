@@ -971,6 +971,19 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         }
       })
     }
+    const { value, invalidDate } = this.state
+    const { onInvalidDate } = this.props
+    if (!value.isValid() && value.MM && value.dd && value.YYYY && !invalidDate) {
+      this.setState({ invalidDate: true })
+      if (onInvalidDate && typeof onInvalidDate === 'function') {
+        onInvalidDate(true)
+      }
+    } else if (value.isValid() && invalidDate) {
+      this.setState({ invalidDate: false })
+      if (onInvalidDate && typeof onInvalidDate === 'function') {
+        onInvalidDate(false)
+      }
+    }
   }
 
   public componentWillUnmount(): void {
@@ -1058,17 +1071,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     })
     const { value, invalidDate } = this.state
     const { onInvalidDate } = this.props
-    if (!value.isValid() && value.MM && value.dd && value.YYYY && !invalidDate) {
-      this.setState({ invalidDate: true })
-      if (onInvalidDate && typeof onInvalidDate === 'function') {
-        onInvalidDate(true)
-      }
-    } else if (value.isValid() && invalidDate) {
-      this.setState({ invalidDate: false })
-      if (onInvalidDate && typeof onInvalidDate === 'function') {
-        onInvalidDate(false)
-      }
-    }
   }
 
   private handleClick = (): void => {
