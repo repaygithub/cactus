@@ -13,19 +13,19 @@ import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
 import { keyPressAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { useFocusControl } from '../helpers/focus'
+import { isIE } from '../helpers/constants'
+import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
+import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
 import { border, borderSize, boxShadow, radius, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import {
-  focusMenu,
-  ITEM_SELECTOR,
-  menuFocusControl,
+  getOwnedMenuItems,
+  getVisibleMenuItems,
   useMenu,
   useMenuKeyHandler,
-  useScrollButtons,
   useSubmenu,
 } from './scroll'
 
@@ -53,9 +53,6 @@ const useVariant = (): Variant => {
   }
   return 'top'
 }
-
-const getMenuItems = (menu: HTMLElement) =>
-  Array.from(menu.querySelectorAll<HTMLElement>(ITEM_SELECTOR))
 
 function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
   props: AsProps<C>,
@@ -89,21 +86,6 @@ const MenuBarItemFR = React.forwardRef(MenuBarItemFunc) as any
 const MenuBarItem = MenuBarItemFR as MenuBarItemType
 
 MenuBarItemFR.displayName = 'MenuBarItem'
-
-MenuBarItemFR.propTypes = {
-  tabIndex: function (props: Record<string, any>): Error | null {
-    if (props.tabIndex !== undefined) {
-      return new Error('`tabIndex` is set programmatically, not using props')
-    }
-    return null
-  },
-  role: function (props: Record<string, any>): Error | null {
-    if (props.role && props.role !== 'menuitem') {
-      return new Error('`menuitem` is the only allowable ARIA role')
-    }
-    return null
-  },
-}
 
 const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
   ({ title, children, ...props }, ref) => {
@@ -143,6 +125,17 @@ const TextWrapper = styled.div`
   flex-grow: 1;
 `
 
+const getWrappedScrollInfo: GetScrollInfo = (e) => ({
+  listWrapper: e.parentElement as HTMLElement,
+  buttonWidth: BUTTON_WIDTH,
+  listItems: getOwnedMenuItems(e),
+})
+const getPanelScrollInfo: GetScrollInfo = (menu) => ({
+  listWrapper: menu,
+  buttonWidth: 0,
+  listItems: getVisibleMenuItems(menu),
+})
+
 const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   children,
   'aria-hidden': hidden,
@@ -150,67 +143,63 @@ const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   onKeyDown,
   ...props
 }) => {
-  const [menuRef, scroll] = useScrollButtons('vertical', !hidden)
+  const [menuRef, scroll] = useScroll<HTMLUListElement>('vertical', !hidden, getWrappedScrollInfo)
   return (
     <MenuWrapper aria-hidden={hidden} tabIndex={tabIndex} onKeyDown={onKeyDown}>
-      <ScrollButton show={scroll.showButtons} onClick={scroll.clickBack}>
+      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
       <MenuList {...props} aria-orientation="vertical" ref={menuRef}>
         {children}
       </MenuList>
-      <ScrollButton show={scroll.showButtons} onClick={scroll.clickFore}>
+      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
         <NavigationChevronDown />
       </ScrollButton>
     </MenuWrapper>
   )
 }
 
-const setTabIndex = (menu: HTMLElement | null, isSidebar: boolean) => {
-  if (menu) {
-    // There doesn't seem to be any way in React to consistently identify the
-    // first descendent of a particular type, so instead we'll use this event
-    // to ensure that even if elements are dynamically added or removed, the
-    // first menuitem will always get tab focus for the whole component.
-    const mutationCallback = () => {
-      const menuItems = getMenuItems(menu)
-      if (menuItems.length) {
-        let i = 0
-        if (!isSidebar) {
-          menuItems[i++].tabIndex = 0
-        }
-        for (; i < menuItems.length; i++) {
-          menuItems[i].tabIndex = -1
-        }
-      }
-    }
-    const observer = new MutationObserver(mutationCallback)
-    observer.observe(menu, { childList: true, subtree: true })
-    mutationCallback()
-    return () => observer.disconnect()
-  }
+const onMenuBlur = (e: React.FocusEvent<HTMLElement>) => {
+  e.currentTarget.tabIndex = 0
 }
+const useFocusHandler = (setFocus: FocusSetter) =>
+  React.useCallback(
+    (e: React.FocusEvent<HTMLElement>) => {
+      e.currentTarget.tabIndex = -1
+      if (e.currentTarget === e.target) {
+        setFocus(0) // Set focus on the first menuitem.
+      }
+    },
+    [setFocus]
+  )
 
 const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
   const orientation = 'horizontal'
-  const [menuRef, scroll] = useScrollButtons(orientation, true)
-  const [setFocus, rootRef] = useFocusControl(menuFocusControl)
-  const menuKeyHandler = useMenuKeyHandler(setFocus)
+  const [menuRef, scroll] = useScroll<HTMLUListElement>(orientation, true, getWrappedScrollInfo)
+  const [setFocus, rootRef] = useFocusControl(getOwnedMenuItems)
+  const menuKeyHandler = useMenuKeyHandler(setFocus, true)
   const mergedRef = useMergedRefs(menuRef, rootRef)
 
-  React.useEffect(() => setTabIndex(menuRef.current, false), [menuRef])
+  const onMenuFocus = useFocusHandler(setFocus)
 
   useLayout('menubar', { position: 'flow', offset: 0 })
 
   return (
     <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler} onKeyDown={menuKeyHandler}>
-      <ScrollButton show={scroll.showButtons} onClick={scroll.clickBack}>
+      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
-      <MenuList role="menubar" aria-orientation={orientation} ref={mergedRef} onFocus={focusMenu}>
+      <MenuList
+        role="menubar"
+        aria-orientation={orientation}
+        ref={mergedRef}
+        tabIndex={0}
+        onFocus={onMenuFocus}
+        onBlur={onMenuBlur}
+      >
         {children}
       </MenuList>
-      <ScrollButton show={scroll.showButtons} onClick={scroll.clickFore}>
+      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
         <NavigationChevronRight />
       </ScrollButton>
     </Nav>
@@ -226,8 +215,7 @@ const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
 const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ...props }, ref) => {
   const orientation = 'vertical'
   const { expanded, wrapperProps, buttonProps, popupProps } = useMenu(id)
-  const [menuRef] = useScrollButtons(orientation, expanded)
-  React.useEffect(() => setTabIndex(menuRef.current, true), [menuRef])
+  const [menuRef] = useScroll<HTMLUListElement>(orientation, expanded, getPanelScrollInfo)
 
   delete wrapperProps.role
   return (
@@ -237,7 +225,6 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
       {...props}
       {...wrapperProps}
       onClick={navClickHandler}
-      aria-orientation={orientation}
     >
       <ActionBar.Button {...buttonProps}>
         <NavigationHamburger />
@@ -285,34 +272,6 @@ TypedMenuBar.Item = MenuBarItem
 export { TypedMenuBar as MenuBar, MenuBarList, MenuBarItem }
 
 export default TypedMenuBar
-
-export const ScrollButton = styled.div.attrs({ 'aria-hidden': true })<{ show?: boolean }>`
-  ${(p) => p.theme.colorStyles.standard};
-  display: ${(p) => (p.show ? 'flex' : 'none')};
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  background-color: transparent;
-  text-align: center;
-  outline: none;
-  ${(p) =>
-    !!p.onClick
-      ? `
-    cursor: pointer;
-    :hover {
-      color: ${p.theme.colors.callToAction};
-    }
-    `
-      : `
-    cursor: not-allowed;
-    color: ${p.theme.colors.lightGray};
-    `}
-  svg {
-    width: 18px;
-    height: 18px;
-    margin: 8px;
-  }
-`
 
 const Nav = styled.nav`
   width: 100%;
@@ -468,6 +427,13 @@ const MenuList = styled.ul`
   align-items: stretch;
 
   overflow: hidden;
+
+  ${(p) => {
+    // Fix for an IE bug with nested flex items.
+    if (isIE && p['aria-orientation'] === 'vertical') {
+      return `max-height: calc(70vh - ${BUTTON_WIDTH * 2}px);`
+    }
+  }}
 `
 
 const buttonStyles = `
@@ -493,7 +459,7 @@ const buttonStyles = `
   }
 `
 
-const MenuButton = styled.button.attrs({ role: 'menuitem' as string })`
+const MenuButton = styled.button.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
   ${buttonStyles}
   width: 100%;
   height: 100%;

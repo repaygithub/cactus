@@ -9,9 +9,8 @@ import { AsProps, GenericComponent } from '../helpers/asProps'
 import { isIE, isResponsiveTouchDevice } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useValue } from '../helpers/react'
+import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
 import { border, insetBorder, media, textStyle } from '../helpers/theme'
-import { ScrollButton } from '../MenuBar/MenuBar'
-import { useScrollButtons } from '../MenuBar/scroll'
 
 interface TabListProps extends Omit<React.HTMLAttributes<HTMLElement>, 'role'> {
   fullWidth?: boolean
@@ -56,13 +55,13 @@ export const TabList: React.FC<TabListProps> = ({
 }) => {
   const id = React.useContext(TabContext)?.id
   const orientation = props['aria-orientation'] || 'horizontal'
-  const [listRef, scroll] = useScrollButtons(orientation, true, getScrollInfo)
+  const [listRef, scroll] = useScroll<HTMLDivElement>(orientation, true, getScrollInfo)
   const [setFocus, rootRef] = useFocusControl(getTabs)
   // Other values may center things strangely resulting in inaccessible tabs.
-  if (scroll.showButtons) {
+  if (scroll.showScroll) {
     props.justifyContent = 'flex-start'
   }
-  const showScroll = scroll.showButtons && !isResponsiveTouchDevice
+  const showScroll = scroll.showScroll && !isResponsiveTouchDevice
   const keyHandler = useKeyHandler(setFocus)
   const focusHandler = useFocusHandler(setFocus, onFocus)
   const blurHandler = React.useCallback<FocusHandler>(
@@ -81,19 +80,19 @@ export const TabList: React.FC<TabListProps> = ({
       $isVertical={orientation === 'vertical'}
       $grow={fillGaps}
     >
-      <ScrollButton show={showScroll} onClick={scroll.clickBack}>
+      <ScrollButton hidden={!showScroll} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
       <StyledTabList
         id={id}
         {...props}
         tabIndex={0}
-        ref={listRef as any}
+        ref={listRef}
         role="tablist"
         onFocus={focusHandler}
         onBlur={blurHandler}
       />
-      <ScrollButton show={showScroll} onClick={scroll.clickFore}>
+      <ScrollButton hidden={!showScroll} onClick={scroll.clickFore}>
         <NavigationChevronRight />
       </ScrollButton>
     </ScrollWrapper>
@@ -174,8 +173,11 @@ const generateId = (...parts: (string | undefined)[]): string => parts.filter(Bo
 const getTabs = (root: HTMLElement) =>
   Array.from(root.querySelectorAll('[role="tab"]')) as HTMLElement[]
 
-type SI = (l: HTMLElement) => [HTMLElement, number, HTMLElement[]]
-const getScrollInfo: SI = (list) => [list.parentElement as HTMLElement, 34, getTabs(list)]
+const getScrollInfo: GetScrollInfo = (list) => ({
+  listWrapper: list.parentElement as HTMLElement,
+  buttonWidth: BUTTON_WIDTH,
+  listItems: getTabs(list),
+})
 
 const IS_CHAR = /^\S$/
 
@@ -217,29 +219,22 @@ const useKeyHandler = (setFocus: FocusSetter) =>
   )
 
 type FocusHandler = React.FocusEventHandler<HTMLElement>
-type ScrollableList = HTMLElement & { scrollToMenuItem?(e: HTMLElement): void }
 
 const useFocusHandler = (setFocus: FocusSetter, onFocus?: FocusHandler) =>
   React.useCallback<FocusHandler>(
     (e) => {
-      const target = e.target as HTMLElement
-      const list = e.currentTarget as ScrollableList
+      const target = e.target
+      const list = e.currentTarget
       // Prevent getting trapped when pressing tab while focus is within the list.
       list.tabIndex = -1
       if (list === target) {
         // Refocus on whatever the last focused tab was.
-        // TODO Or should it focus on the active tab instead?
         setFocus(0, { shift: true })
       } else {
         const index = getTabs(list).indexOf(target)
         if (index >= 0) {
           // Keep the focusIndex accurate.
           setFocus(index)
-          if (!isResponsiveTouchDevice) {
-            if (list.scrollToMenuItem) {
-              list.scrollToMenuItem(target)
-            }
-          }
         }
       }
       onFocus?.(e)
