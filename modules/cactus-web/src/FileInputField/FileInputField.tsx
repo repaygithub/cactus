@@ -49,12 +49,18 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
     >
-      {({ fieldId, labelId, name, ariaDescribedBy, disabled }) => (
+      {({
+        fieldId,
+        labelId,
+        name: accessibilityName,
+        ariaDescribedBy,
+        disabled: accessibilityDisabled,
+      }) => (
         <FileInput
           {...rest}
           id={fieldId}
-          name={name}
-          disabled={disabled}
+          name={accessibilityName}
+          disabled={accessibilityDisabled}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
         />

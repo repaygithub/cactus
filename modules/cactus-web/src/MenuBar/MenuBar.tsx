@@ -155,6 +155,20 @@ const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   )
 }
 
+const onMenuBlur = (e: React.FocusEvent<HTMLElement>) => {
+  e.currentTarget.tabIndex = 0
+}
+const useFocusHandler = (setFocus: FocusSetter) =>
+  React.useCallback(
+    (e: React.FocusEvent<HTMLElement>) => {
+      e.currentTarget.tabIndex = -1
+      if (e.currentTarget === e.target) {
+        setFocus(0) // Set focus on the first menuitem.
+      }
+    },
+    [setFocus]
+  )
+
 const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
   const orientation = 'horizontal'
   const [menuRef, scroll] = useScroll<HTMLUListElement>(orientation, true, getWrappedScrollInfo)
@@ -187,20 +201,6 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
     </Nav>
   )
 })
-
-const onMenuBlur = (e: React.FocusEvent<HTMLElement>) => {
-  e.currentTarget.tabIndex = 0
-}
-const useFocusHandler = (setFocus: FocusSetter) =>
-  React.useCallback(
-    (e: React.FocusEvent<HTMLElement>) => {
-      e.currentTarget.tabIndex = -1
-      if (e.currentTarget === e.target) {
-        setFocus(0) // Set focus on the first menuitem.
-      }
-    },
-    [setFocus]
-  )
 
 const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const nav = <NavPanel key="cactus-web-menubar" {...props} ref={ref} />
@@ -241,8 +241,8 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const variant = useVariant()
-  const Nav = variant === 'top' ? Topbar : Sidebar
-  return <Nav {...props} ref={ref} />
+  const NavComponent = variant === 'top' ? Topbar : Sidebar
+  return <NavComponent {...props} ref={ref} />
 })
 
 const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {

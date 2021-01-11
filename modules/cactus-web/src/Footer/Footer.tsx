@@ -148,12 +148,12 @@ export const Footer: FooterType = (props) => {
   useLayout('footer', { position: 'flow', offset: 0 })
 
   React.useEffect(() => {
-    let maxCols = columnsMap[screenSize.size]
+    let newMaxCols = columnsMap[screenSize.size]
     // If the links are next to the logo, not as many can fit on one line.
-    if (maxCols > 1 && logo && ref.current?.querySelector?.(`${ContentWrapper}:empty`)) {
-      maxCols -= 1
+    if (newMaxCols > 1 && logo && ref.current?.querySelector?.(`${ContentWrapper}:empty`)) {
+      newMaxCols -= 1
     }
-    setMaxCols(() => maxCols)
+    setMaxCols(() => newMaxCols)
   }, [logo, screenSize, ref])
 
   return (
@@ -167,9 +167,9 @@ export const Footer: FooterType = (props) => {
 
       {links.size > 0 && (
         <LinksColsContainer>
-          {dividedLinks.map((links, colIndex) => (
+          {dividedLinks.map((linkGroup, colIndex) => (
             <LinkCol key={colIndex} maxCols={dividedLinks.length}>
-              {links.map((link, i) => (
+              {linkGroup.map((link, i) => (
                 <StyledLink key={i} {...link} />
               ))}
             </LinkCol>

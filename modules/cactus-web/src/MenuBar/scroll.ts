@@ -13,7 +13,7 @@ const VISIBLE_ITEM_SELECTOR = `[role="menu"]:not([aria-hidden]) > li > ${ITEM_SE
 const getMenu = (fromNode: HTMLElement) => fromNode.parentElement?.closest?.(MENU_SELECTOR)
 
 const query = (scope: Element, selector: string) =>
-  Array.from(scope.querySelectorAll(selector)) as HTMLElement[]
+  Array.from(scope.querySelectorAll<HTMLElement>(selector))
 
 export const getOwnedMenuItems = (menu: HTMLElement): HTMLElement[] => {
   if (supportsScopeQuery) {

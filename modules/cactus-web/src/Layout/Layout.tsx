@@ -58,7 +58,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [layout, setLayout] = React.useState<LayoutCtx>({ ...DEFAULT_CTX, componentInfo })
   layout.setLayout = React.useCallback(
     (newLayout: Partial<LayoutProps>) =>
-      setLayout((layout) => {
+      setLayout((existingLayout) => {
         for (const role of Object.keys(componentInfo) as Role[]) {
           const position = componentInfo[role]?.position
           if (position) {
@@ -66,10 +66,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
           }
         }
         const keys = Object.keys(newLayout) as Position[]
-        if (keys.some((k) => newLayout[k] !== layout[k])) {
-          return { ...layout, ...newLayout }
+        if (keys.some((k) => newLayout[k] !== existingLayout[k])) {
+          return { ...existingLayout, ...newLayout }
         }
-        return layout
+        return existingLayout
       }),
     [setLayout, componentInfo]
   )

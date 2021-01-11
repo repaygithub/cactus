@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components'
 
 import Button from '../Button/Button'
 import Flex from '../Flex/Flex'
-import variant from '../helpers/variant'
+import cssVariant from '../helpers/variant'
 import Modal, { ModalProps } from '../Modal/Modal'
 import Text from '../Text/Text'
 import TextButton from '../TextButton/TextButton'
@@ -32,9 +32,9 @@ interface IconProps {
 }
 
 const IconBase = ({ className, iconSize, iconName }: IconProps): React.ReactElement => {
-  const Icon = iconName && (icons[iconName] as React.ComponentType<any>)
+  const IconComponent = iconName && (icons[iconName] as React.ComponentType<any>)
 
-  return <div className={className}>{Icon && <Icon iconSize={iconSize} />}</div>
+  return <div className={className}>{IconComponent && <IconComponent iconSize={iconSize} />}</div>
 }
 
 const getIconWidthAndHeight = ({ iconSize }: IconProps): '56px' | '88px' | undefined => {
@@ -119,7 +119,7 @@ const Icon = styled(IconBase)<IconProps>`
   justify-content: center;
   align-items: center;
   color: white;
-  ${variant({
+  ${cssVariant({
     action: css`
       ${(p): ColorStyle => p.theme.colorStyles.callToAction};
     `,

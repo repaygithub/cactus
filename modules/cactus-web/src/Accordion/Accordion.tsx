@@ -404,7 +404,7 @@ export const AccordionProvider = (props: AccordionProviderProps): ReactElement =
   useEffect(() => {
     const closeOldestOpenAccordion = () => {
       const accordions = managedAccordions.current
-      let allOpen = [...uncontrolledOpen]
+      let allOpen = uncontrolledOpen.filter((o) => Object.keys(accordions).includes(o))
       allOpen.sort((a, b): number => {
         if (accordions[a].order < accordions[b].order) {
           return -1
@@ -443,6 +443,7 @@ export const AccordionProvider = (props: AccordionProviderProps): ReactElement =
   )
 
   const unregisterAccordion = useCallback((id: string) => {
+    setUncontrolledOpen((previousOpen) => previousOpen.filter((openId) => openId !== id))
     delete managedAccordions.current[id]
   }, [])
 

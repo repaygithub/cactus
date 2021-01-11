@@ -31,9 +31,9 @@ export const BasicUsage = (): React.ReactElement => {
   const customContent = text('custom content', 'Some Custom Footer Content')
   const numLinks = number('number of links', 2)
 
-  const makeLinks = (numLinks: number) => {
+  const makeLinks = (numToMake: number) => {
     const links = []
-    for (let i = 0; i < numLinks; i++) {
+    for (let i = 0; i < numToMake; i++) {
       // Keep the values the same for the default links to match the storyshot.
       const textIndex = i < 2 ? i : Math.floor(Math.random() * LINK_TEXT.length)
       const linkIndex = i < 2 ? i : Math.floor(Math.random() * LINKS.length)
