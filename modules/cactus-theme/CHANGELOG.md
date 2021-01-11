@@ -1,3 +1,15 @@
+# v2.0.2-beta.1 (Mon Jan 11 2021)
+
+#### 🐛 Bug Fix
+
+- Trim leading and trailing spaces from hex codes passed into generateTheme [#478](https://github.com/repaygithub/cactus/pull/478) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v2.0.2-beta.0 (Fri Jan 08 2021)
 
 #### 🏠 Internal
