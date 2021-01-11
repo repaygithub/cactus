@@ -308,6 +308,9 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
+  max-height: 90%;
+  overflow: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -315,7 +318,9 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 .c0 > [data-reach-dialog-content] .modal-children {
-  word-break: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .c0 > [data-reach-dialog-content] .c2 {
@@ -480,56 +485,60 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c5 c6"
             >
               <div
-                class="c5 c7 title-icon"
+                class="modal-children"
               >
-                <h1
-                  class="c8"
-                >
-                  Modal Title
-                </h1>
-              </div>
-              <div
-                class="c5 c9 children"
-              >
-                <h4
-                  class="c10"
-                  data-testid="description"
-                  font-weight="normal"
-                >
-                  Description text
-                </h4>
                 <div
-                  class="c11"
+                  class="c5 c7 title-icon"
                 >
-                  <input
-                    class="c12"
-                    data-testid="input"
-                    placeholder="Placeholder"
-                    width="90%"
-                  />
+                  <h1
+                    class="c8"
+                  >
+                    Modal Title
+                  </h1>
                 </div>
-              </div>
-              <div
-                class="c13 c14"
-              >
-                <button
-                  aria-live="assertive"
-                  class="c15"
-                  type="button"
+                <div
+                  class="c5 c9 children"
                 >
-                  <span>
-                    Confirm
-                  </span>
-                </button>
-                <button
-                  class="c16"
-                  type="button"
+                  <h4
+                    class="c10"
+                    data-testid="description"
+                    font-weight="normal"
+                  >
+                    Description text
+                  </h4>
+                  <div
+                    class="c11"
+                  >
+                    <input
+                      class="c12"
+                      data-testid="input"
+                      placeholder="Placeholder"
+                      width="90%"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="c13 c14"
                 >
-                  Cancel
-                </button>
+                  <button
+                    aria-live="assertive"
+                    class="c15"
+                    type="button"
+                  >
+                    <span>
+                      Confirm
+                    </span>
+                  </button>
+                  <button
+                    class="c16"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -780,6 +789,9 @@ exports[`Modal variant is danger snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
+  max-height: 90%;
+  overflow: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -787,7 +799,9 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 .c0 > [data-reach-dialog-content] .modal-children {
-  word-break: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .c0 > [data-reach-dialog-content] .c2 {
@@ -945,38 +959,42 @@ exports[`Modal variant is danger snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c5 c6"
             >
               <div
-                class="c5 c7 title-icon"
+                class="modal-children"
               >
-                <h1
-                  class="c8"
+                <div
+                  class="c5 c7 title-icon"
                 >
-                  Modal Title
-                </h1>
-              </div>
-              <div
-                class="c5 c9 children"
-              />
-              <div
-                class="c10 c11"
-              >
-                <button
-                  aria-live="assertive"
-                  class="c12"
-                  type="button"
+                  <h1
+                    class="c8"
+                  >
+                    Modal Title
+                  </h1>
+                </div>
+                <div
+                  class="c5 c9 children"
+                />
+                <div
+                  class="c10 c11"
                 >
-                  <span>
-                    Confirm
-                  </span>
-                </button>
-                <button
-                  class="c13"
-                  type="button"
-                >
-                  Cancel
-                </button>
+                  <button
+                    aria-live="assertive"
+                    class="c12"
+                    type="button"
+                  >
+                    <span>
+                      Confirm
+                    </span>
+                  </button>
+                  <button
+                    class="c13"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1227,6 +1245,9 @@ exports[`Modal variant is success snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
+  max-height: 90%;
+  overflow: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -1234,7 +1255,9 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 .c0 > [data-reach-dialog-content] .modal-children {
-  word-break: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .c0 > [data-reach-dialog-content] .c2 {
@@ -1392,38 +1415,42 @@ exports[`Modal variant is success snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c5 c6"
             >
               <div
-                class="c5 c7 title-icon"
+                class="modal-children"
               >
-                <h1
-                  class="c8"
+                <div
+                  class="c5 c7 title-icon"
                 >
-                  Modal Title
-                </h1>
-              </div>
-              <div
-                class="c5 c9 children"
-              />
-              <div
-                class="c10 c11"
-              >
-                <button
-                  aria-live="assertive"
-                  class="c12"
-                  type="button"
+                  <h1
+                    class="c8"
+                  >
+                    Modal Title
+                  </h1>
+                </div>
+                <div
+                  class="c5 c9 children"
+                />
+                <div
+                  class="c10 c11"
                 >
-                  <span>
-                    Confirm
-                  </span>
-                </button>
-                <button
-                  class="c13"
-                  type="button"
-                >
-                  Cancel
-                </button>
+                  <button
+                    aria-live="assertive"
+                    class="c12"
+                    type="button"
+                  >
+                    <span>
+                      Confirm
+                    </span>
+                  </button>
+                  <button
+                    class="c13"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1654,6 +1681,9 @@ exports[`Modal variant is warning snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
+  max-height: 90%;
+  overflow: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -1661,7 +1691,9 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 .c0 > [data-reach-dialog-content] .modal-children {
-  word-break: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .c0 > [data-reach-dialog-content] .c2 {
@@ -1823,38 +1855,42 @@ exports[`Modal variant is warning snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c5 c6"
             >
               <div
-                class="c5 c7 title-icon"
+                class="modal-children"
               >
-                <h1
-                  class="c8"
+                <div
+                  class="c5 c7 title-icon"
                 >
-                  Modal Title
-                </h1>
-              </div>
-              <div
-                class="c5 c9 children"
-              />
-              <div
-                class="c10 c11"
-              >
-                <button
-                  aria-live="assertive"
-                  class="c12"
-                  type="button"
+                  <h1
+                    class="c8"
+                  >
+                    Modal Title
+                  </h1>
+                </div>
+                <div
+                  class="c5 c9 children"
+                />
+                <div
+                  class="c10 c11"
                 >
-                  <span>
-                    Confirm
-                  </span>
-                </button>
-                <button
-                  class="c13"
-                  type="button"
-                >
-                  Cancel
-                </button>
+                  <button
+                    aria-live="assertive"
+                    class="c12"
+                    type="button"
+                  >
+                    <span>
+                      Confirm
+                    </span>
+                  </button>
+                  <button
+                    class="c13"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
