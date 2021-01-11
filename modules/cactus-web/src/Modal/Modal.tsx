@@ -3,7 +3,7 @@ import { NavigationClose } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
-import { width, WidthProps } from 'styled-system'
+import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
 import { border, boxShadow } from '../helpers/theme'
@@ -12,7 +12,7 @@ import IconButton from '../IconButton/IconButton'
 
 export type ModalType = 'action' | 'danger' | 'warning' | 'success'
 
-export interface ModalProps extends WidthProps {
+export interface ModalProps extends WidthProps, HeightProps, MaxHeightProps {
   className?: string
   closeLabel?: string
   isOpen: boolean
@@ -78,6 +78,8 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     margin: auto;
     max-width: ${(p) => !p.width && '80%'};
     ${width}
+    ${height}
+    ${maxHeight}
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
