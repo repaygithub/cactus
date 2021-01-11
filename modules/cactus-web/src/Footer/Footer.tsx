@@ -35,6 +35,12 @@ const LogoWrapper = styled('div')`
   grid-column-end: 2;
   grid-row-start: 1;
   grid-row-end: 2;
+  &,
+  * {
+    display: block;
+    max-width: 200px;
+    max-height: 40px;
+  }
 `
 
 const gridCell2 = `
@@ -60,11 +66,6 @@ const ContentWrapper = styled('div')`
   ${LogoWrapper} + & {
     padding-left: 0;
   }
-`
-
-const Img = styled('img')`
-  max-width: 200px;
-  max-height: 40px;
 `
 
 const LinksColsContainer = styled('div')`
@@ -159,7 +160,7 @@ export const Footer: FooterType = (props) => {
   return (
     <StyledFooter ref={ref} className={className} isGrid={screenSize > SIZES.tiny}>
       {logo && (
-        <LogoWrapper>{typeof logo === 'string' ? <Img alt="Logo" src={logo} /> : logo}</LogoWrapper>
+        <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
       )}
       <ContentWrapper>
         <FooterContext.Provider value={setLinks}>{children}</FooterContext.Provider>
@@ -224,6 +225,7 @@ const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })<{ is
     ${LogoWrapper} + ${ContentWrapper}:empty + ${LinksColsContainer},
     ${LogoWrapper} + ${ContentWrapper}:not(:empty) {
       padding-top: 0;
+      padding-left: 24px;
     }
     ${LinksColsContainer} {
       width: 100%;

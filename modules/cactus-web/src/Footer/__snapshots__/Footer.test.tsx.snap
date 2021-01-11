@@ -1,24 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Footer snapshot 1`] = `
-.c9 {
+.c8 {
   font-style: italic;
   outline: none;
 }
 
-.c9:link {
+.c8:link {
   color: hsl(200,96%,35%);
 }
 
-.c9:visited {
+.c8:visited {
   color: hsl(200,18%,45%);
 }
 
-.c9:hover {
+.c8:hover {
   color: hsl(200,96%,11%);
 }
 
-.c9:focus {
+.c8:focus {
   color: hsl(200,96%,35%);
   background-color: hsla(200,96%,35%,0.3);
 }
@@ -33,17 +33,24 @@ exports[`component: Footer snapshot 1`] = `
   grid-row-end: 2;
 }
 
-.c5 {
+.c2,
+.c2 * {
+  display: block;
+  max-width: 200px;
+  max-height: 40px;
+}
+
+.c4 {
   box-sizing: border-box;
   max-width: 100%;
   padding: 16px 24px;
 }
 
-.c5:empty {
+.c4:empty {
   display: none;
 }
 
-.c5:not(:empty) {
+.c4:not(:empty) {
   -ms-grid-row-align: center;
   -ms-grid-column: 2;
   -ms-grid-row: 1;
@@ -53,16 +60,11 @@ exports[`component: Footer snapshot 1`] = `
   grid-row-end: 2;
 }
 
-.c1 + .c4 {
+.c1 + .c3 {
   padding-left: 0;
 }
 
-.c3 {
-  max-width: 200px;
-  max-height: 40px;
-}
-
-.c7 {
+.c6 {
   box-sizing: border-box;
   max-width: 100%;
   display: -webkit-box;
@@ -91,11 +93,11 @@ exports[`component: Footer snapshot 1`] = `
   grid-row-end: 3;
 }
 
-.c1 + .c4:empty + .c6 {
+.c1 + .c3:empty + .c5 {
   padding-left: 0;
 }
 
-.c4:empty + .c6 {
+.c3:empty + .c5 {
   background-color: transparent;
   -ms-grid-column-span: 1;
   -ms-grid-row-align: center;
@@ -107,7 +109,7 @@ exports[`component: Footer snapshot 1`] = `
   grid-row-end: 2;
 }
 
-.c8 {
+.c7 {
   box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
@@ -133,7 +135,7 @@ exports[`component: Footer snapshot 1`] = `
   border-right: 1px solid hsl(200,96%,11%);
 }
 
-.c8:last-of-type {
+.c7:last-of-type {
   border-right: none;
 }
 
@@ -169,29 +171,29 @@ exports[`component: Footer snapshot 1`] = `
   grid-template-rows: min-content min-content;
 }
 
-.c10 {
+.c9 {
   max-width: 100%;
   margin-top: 4px;
 }
 
-.c10:first-child {
+.c9:first-child {
   margin-top: 0px;
 }
 
-.c10:link {
+.c9:link {
   color: hsl(200,96%,11%);
 }
 
-.c10:visited {
+.c9:visited {
   color: hsl(200,9%,35%);
 }
 
-.c10:hover {
+.c9:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c10:focus {
+.c9:focus {
   background-color: hsla(200,96%,35%,0.3);
 }
 
@@ -212,33 +214,32 @@ exports[`component: Footer snapshot 1`] = `
     >
       <img
         alt="Logo"
-        class="c3"
         src="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
       />
     </div>
     <div
-      class="c4 c5"
+      class="c3 c4"
     >
       Custom Content
     </div>
     <div
-      class="c6 c7"
+      class="c5 c6"
     >
       <div
-        class="c8"
+        class="c7"
       >
         <a
-          class="c9 c10"
+          class="c8 c9"
           href="https://google.com"
         >
           Some Link
         </a>
       </div>
       <div
-        class="c8"
+        class="c7"
       >
         <a
-          class="c9 c10"
+          class="c8 c9"
           href="https://repay.com"
         >
           Some Other Link
