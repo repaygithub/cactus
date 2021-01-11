@@ -35,7 +35,7 @@ const ModalWithState = (): React.ReactElement => {
       closeLabel={closeLabel}
       width={text('width', '')}
     >
-      <Text as="h3">This is a Modal</Text>
+      <Text as="h3">{text('modal content', 'This is a Modal')}</Text>
     </Modal>
   ) : (
     <Button variant="action" onClick={(): void => setOpen(true)}>
