@@ -20,7 +20,7 @@ export interface ModalProps extends WidthProps, HeightProps, MaxHeightProps {
   onClose: () => void
   variant?: ModalType
 }
-interface ModalPopupProps extends DialogProps, WidthProps {
+interface ModalPopupProps extends DialogProps, WidthProps, HeightProps, MaxHeightProps {
   variant: ModalType
 }
 
@@ -56,7 +56,12 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
   )
 }
 
-export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
+export const ModalPopUp = styled(DialogOverlay).withConfig({
+  shouldForwardProp: (prop) => {
+    // @ts-ignore
+    return prop !== 'maxHeight'
+  },
+})<ModalPopupProps>`
   background: rgba(46, 53, 56, 0.33);
   bottom: 0;
   display: flex;
