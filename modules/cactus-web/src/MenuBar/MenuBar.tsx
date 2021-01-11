@@ -125,12 +125,16 @@ const TextWrapper = styled.div`
   flex-grow: 1;
 `
 
-const getWrappedScrollInfo: GetScrollInfo = (e) => [
-  e.parentElement as HTMLElement,
-  BUTTON_WIDTH,
-  getOwnedMenuItems(e),
-]
-const getPanelScrollInfo: GetScrollInfo = (menu) => [menu, 0, getVisibleMenuItems(menu)]
+const getWrappedScrollInfo: GetScrollInfo = (e) => ({
+  listWrapper: e.parentElement as HTMLElement,
+  buttonWidth: BUTTON_WIDTH,
+  listItems: getOwnedMenuItems(e),
+})
+const getPanelScrollInfo: GetScrollInfo = (menu) => ({
+  listWrapper: menu,
+  buttonWidth: 0,
+  listItems: getVisibleMenuItems(menu),
+})
 
 const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   children,

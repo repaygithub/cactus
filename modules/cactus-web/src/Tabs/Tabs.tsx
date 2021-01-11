@@ -173,11 +173,11 @@ const generateId = (...parts: (string | undefined)[]): string => parts.filter(Bo
 const getTabs = (root: HTMLElement) =>
   Array.from(root.querySelectorAll('[role="tab"]')) as HTMLElement[]
 
-const getScrollInfo: GetScrollInfo = (list) => [
-  list.parentElement as HTMLElement,
-  BUTTON_WIDTH,
-  getTabs(list),
-]
+const getScrollInfo: GetScrollInfo = (list) => ({
+  listWrapper: list.parentElement as HTMLElement,
+  buttonWidth: BUTTON_WIDTH,
+  listItems: getTabs(list),
+})
 
 const IS_CHAR = /^\S$/
 

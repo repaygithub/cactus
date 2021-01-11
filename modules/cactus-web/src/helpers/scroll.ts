@@ -19,7 +19,13 @@ const DEFAULT_SCROLL: Scroll = { showScroll: false, offset: 0, currentIndex: 0 }
 //    or the container of the list + buttons if it's `overflow: hidden`.
 // 2. The width of one button, or 0 (zero) if it's a regular scroll element.
 // 3. The list of items that can be scrolled to.
-export type GetScrollInfo = (e: HTMLElement) => [HTMLElement, number, HTMLElement[]]
+export type GetScrollInfo = (
+  e: HTMLElement
+) => {
+  listWrapper: HTMLElement
+  buttonWidth: number
+  listItems: HTMLElement[]
+}
 
 interface Rect {
   left: number
@@ -52,9 +58,9 @@ export function useScroll<T extends HTMLElement>(
       const scrollOffset = isHorizontal ? 'scrollLeft' : 'scrollTop'
 
       const updateScrollState = (scroll: Scroll, target?: number | HTMLElement): Scroll => {
-        const [wrapper, buttonWidth, items] = getScrollInfo(list)
+        const { listWrapper, buttonWidth, listItems } = getScrollInfo(list)
 
-        const parentRect = getMappedRect(wrapper)
+        const parentRect = getMappedRect(listWrapper)
         const scrollWidth = isHorizontal ? list.scrollWidth : list.scrollHeight
         if (greaterThan(parentRect.width, scrollWidth)) {
           return DEFAULT_SCROLL
@@ -63,9 +69,9 @@ export function useScroll<T extends HTMLElement>(
         let nextIndex: number = scroll.currentIndex
         const currentOffset = list[scrollOffset]
         const visibleWidth = parentRect.width - buttonWidth * 2
-        const itemRects = items.map(getMappedRect)
+        const itemRects = listItems.map(getMappedRect)
         if (typeof target === 'object') {
-          nextIndex = items.indexOf(target)
+          nextIndex = listItems.indexOf(target)
           if (nextIndex < 0) {
             return scroll
           } else if (nextIndex > 0) {
@@ -98,7 +104,7 @@ export function useScroll<T extends HTMLElement>(
         } else if (typeof target === 'number') {
           nextIndex = target
           let menuWidth = 0
-          for (let i = items.length - 1; i >= 0; i--) {
+          for (let i = itemRects.length - 1; i >= 0; i--) {
             const itemWidth = itemRects[i].width
             menuWidth += itemWidth
             if (menuWidth < visibleWidth) {
