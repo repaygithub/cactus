@@ -22,6 +22,7 @@
 
 import on from 'await-to-js'
 
+import { getCached } from './cache'
 import execPromise from './exec-promise'
 
 export interface LernaPackage {
@@ -42,9 +43,27 @@ export const getLernaPackages = async (): Promise<LernaPackage[]> => {
   )
 }
 
-export const getChangedPackages = async (): Promise<string[]> => {
+export const getChangedPackages = async (isPrerelease: boolean): Promise<string[]> => {
   console.log('Getting changed packages from Lerna')
   console.log('')
-  const [, changedPackagesResult = ''] = await on(execPromise('yarn', ['lerna', 'changed']))
-  return changedPackagesResult.split('\n')
+  const cmd = ['lerna', 'changed']
+
+  if (!isPrerelease) {
+    cmd.push('--conventional-graduate')
+  }
+
+  return getCached(`changedPackages - ${isPrerelease}`, async () => {
+    const [, changedPackagesResult = ''] = await on(execPromise('yarn', cmd))
+    return changedPackagesResult.split('\n').filter(Boolean)
+  })
+}
+
+export const release = async (isPrerelease: boolean): Promise<void> => {
+  let cmd = ['lerna', 'publish', '--no-private']
+
+  if (isPrerelease) {
+    cmd = [...cmd, '--include-merged-tags', '--preid', 'beta', '--pre-dist-tag', 'next']
+  }
+
+  await execPromise('yarn', cmd, { stdio: 'inherit' })
 }

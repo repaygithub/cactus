@@ -27,6 +27,7 @@ enum SEMVER {
   preminor = 'preminor',
   patch = 'patch',
   prepatch = 'prepatch',
+  prerelease = 'prerelease',
   noVersion = '',
 }
 

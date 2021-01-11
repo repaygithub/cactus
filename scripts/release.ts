@@ -24,24 +24,11 @@ import { RestEndpointMethodTypes } from '@octokit/rest'
 import * as fs from 'fs'
 import path from 'path'
 
-import { getLatestRelease } from './release-helpers/commits'
 import execPromise from './release-helpers/exec-promise'
+import { getCurrentBranch, getGitUser } from './release-helpers/git-utils'
 import github from './release-helpers/github'
+import { getChangedPackages, release } from './release-helpers/lerna'
 import generateReleaseInfo, { ReleaseInfo } from './release-helpers/release-info'
-
-const getGitUser = async () => {
-  try {
-    return {
-      /** The git user is already set in the current env */
-      system: true,
-      email: await execPromise('git', ['config', 'user.email']),
-      name: await execPromise('git', ['config', 'user.name']),
-    }
-  } catch (error) {
-    console.error('Could not find git user or email configured in git config')
-    process.exit(1)
-  }
-}
 
 const updateChangelogFile = async (title: string, releaseNotes: string, changelogPath: string) => {
   const date = new Date().toDateString()
@@ -113,9 +100,12 @@ const makeGithubRelease = async (releaseInfo: ReleaseInfo) => {
 }
 
 const main = async () => {
-  try {
-    await execPromise('yarn', ['lerna', 'updated'])
-  } catch (error) {
+  const isPrerelease = getCurrentBranch() !== 'master'
+  console.log(`Creating a ${isPrerelease ? 'PRE-RELEASE' : 'FULL RELEASE'}`)
+  console.log('')
+
+  const changedPackages = await getChangedPackages(isPrerelease)
+  if (!changedPackages.length) {
     console.warn(
       'Lerna detected no changes in project. Aborting release since nothing would be published.'
     )
@@ -124,8 +114,7 @@ const main = async () => {
 
   await getGitUser()
 
-  const lastReleaseTag = await getLatestRelease()
-  const releaseInfo = await generateReleaseInfo(lastReleaseTag, 'HEAD')
+  const releaseInfo = await generateReleaseInfo(isPrerelease)
   await createChangelogs(releaseInfo)
   console.log('')
   console.log('Logging into npm')
@@ -136,7 +125,7 @@ const main = async () => {
   await execPromise('yarn', ['install'])
   await execPromise('yarn', ['cleanup'])
   await execPromise('yarn', ['build'])
-  await execPromise('yarn', ['lerna', 'publish', '--no-private'], { stdio: 'inherit' })
+  await release(isPrerelease)
 
   await makeGithubRelease(releaseInfo)
 }
