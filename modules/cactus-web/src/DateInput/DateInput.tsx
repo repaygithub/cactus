@@ -1069,8 +1069,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         }
       }
     })
-    const { value, invalidDate } = this.state
-    const { onInvalidDate } = this.props
   }
 
   private handleClick = (): void => {
