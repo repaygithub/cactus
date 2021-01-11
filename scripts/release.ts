@@ -70,7 +70,7 @@ const createChangelogs = async (releaseInfo: ReleaseInfo) => {
   return releaseInfo
 }
 
-const makeGithubRelease = async (releaseInfo: ReleaseInfo) => {
+const makeGithubRelease = async (releaseInfo: ReleaseInfo, isPrerelease: boolean) => {
   const newTags = (await execPromise('git', ['tag', '--points-at', 'HEAD'])).split('\n')
 
   const releases = await Promise.all(
@@ -88,7 +88,7 @@ const makeGithubRelease = async (releaseInfo: ReleaseInfo) => {
         tag_name: tag,
         name: tag,
         body: releasedPackage.notes,
-        prerelease: false,
+        prerelease: isPrerelease,
       })
     })
   )
@@ -127,7 +127,7 @@ const main = async () => {
   await execPromise('yarn', ['build'])
   await release(isPrerelease)
 
-  await makeGithubRelease(releaseInfo)
+  await makeGithubRelease(releaseInfo, isPrerelease)
 }
 
 main()
