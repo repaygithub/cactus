@@ -179,9 +179,9 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c7 {
@@ -308,9 +308,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
-  max-height: 90%;
-  overflow: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -321,6 +318,9 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  max-height: 60vh;
 }
 
 .c0 > [data-reach-dialog-content] .modal-children > * {
@@ -660,9 +660,9 @@ exports[`Modal variant is danger snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c7 {
@@ -789,9 +789,6 @@ exports[`Modal variant is danger snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
-  max-height: 90%;
-  overflow: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -802,6 +799,9 @@ exports[`Modal variant is danger snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  max-height: 60vh;
 }
 
 .c0 > [data-reach-dialog-content] .modal-children > * {
@@ -1116,9 +1116,9 @@ exports[`Modal variant is success snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c7 {
@@ -1245,9 +1245,6 @@ exports[`Modal variant is success snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
-  max-height: 90%;
-  overflow: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -1258,6 +1255,9 @@ exports[`Modal variant is success snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  max-height: 60vh;
 }
 
 .c0 > [data-reach-dialog-content] .modal-children > * {
@@ -1552,9 +1552,9 @@ exports[`Modal variant is warning snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c7 {
@@ -1681,9 +1681,6 @@ exports[`Modal variant is warning snapshot 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
   margin: auto;
   max-width: 80%;
-  max-height: 90%;
-  overflow: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
   outline: none;
   padding: 64px 24px 40px 24px;
   position: relative;
@@ -1694,6 +1691,9 @@ exports[`Modal variant is warning snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  max-height: 60vh;
 }
 
 .c0 > [data-reach-dialog-content] .modal-children > * {
