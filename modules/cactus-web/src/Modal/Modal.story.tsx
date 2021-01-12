@@ -34,8 +34,8 @@ const ModalWithState = (): React.ReactElement => {
       modalLabel={modalLabel}
       closeLabel={closeLabel}
       width={text('width', '')}
-      height={text('height', '')}
-      maxHeight={text('maxHeight', '')}
+      innerHeight={text('innerHeight', '')}
+      innerMaxHeight={text('innerMaxHeight', '')}
     >
       <Text as="h3">{text('modal content', 'This is a Modal')}</Text>
     </Modal>
