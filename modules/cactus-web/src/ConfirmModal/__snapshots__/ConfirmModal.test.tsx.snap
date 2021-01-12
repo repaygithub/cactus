@@ -318,7 +318,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  overflow-y: auto;
+  overflow: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   max-height: 60vh;
 }
@@ -799,7 +799,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  overflow-y: auto;
+  overflow: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   max-height: 60vh;
 }
@@ -1255,7 +1255,7 @@ exports[`Modal variant is success snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  overflow-y: auto;
+  overflow: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   max-height: 60vh;
 }
@@ -1691,7 +1691,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  overflow-y: auto;
+  overflow: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   max-height: 60vh;
 }

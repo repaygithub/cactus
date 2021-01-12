@@ -100,7 +100,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  overflow-y: auto;
+  overflow: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   max-height: 60vh;
 }
