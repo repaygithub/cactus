@@ -27,8 +27,7 @@ import execPromise from './exec-promise'
 export const getCurrentBranch = (): string => {
   return execSync('git symbolic-ref --short HEAD', {
     encoding: 'utf8',
-    stdio: 'ignore',
-  })
+  }).trim()
 }
 
 export const getGitUser = async (): Promise<{ system: boolean; email: string; name: string }> => {
