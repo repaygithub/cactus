@@ -118,8 +118,8 @@
     "@reach/tooltip": "0.11.2",
     "@reach/utils": "^0.11.2",
     "@reach/visually-hidden": "^0.11.1",
-    "@repay/cactus-icons": "^2.1.6-beta.0",
-    "@repay/cactus-theme": "^2.0.2-beta.0",
+    "@repay/cactus-icons": "^2.1.6",
+    "@repay/cactus-theme": "^2.0.2",
     "lodash": "^4.17.19",
     "styled-system": "^5.1.5"
   }

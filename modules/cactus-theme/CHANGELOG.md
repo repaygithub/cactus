@@ -1,3 +1,20 @@
+# v2.0.2 (Tue Jan 12 2021)
+
+#### 🐛 Bug Fix
+
+- Trim leading and trailing spaces from hex codes passed into generateTheme [#478](https://github.com/repaygithub/cactus/pull/478) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- Refactor theme generators to fix SonarQube code smells [#473](https://github.com/repaygithub/cactus/pull/473) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- [@wilysword](https://github.com/wilysword)
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v2.0.2-beta.0 (Fri Jan 08 2021)
 
 #### 🏠 Internal
@@ -10,6 +27,7 @@
 - Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
 
 ---
+
 
 # v2.0.0 (Mon Nov 30 2020)
 
