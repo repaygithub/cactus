@@ -109,7 +109,7 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
       max-width: 100%;
       overflow-wrap: break-word;
       word-wrap: break-word;
-      overflow-y: auto;
+      overflow: auto;
       -ms-overflow-style: -ms-autohiding-scrollbar;
       ${height}
       ${maxHeight}
