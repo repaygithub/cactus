@@ -65,12 +65,15 @@ exports[`component: Alert should render general error alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -168,12 +171,15 @@ exports[`component: Alert should render general info alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -271,12 +277,15 @@ exports[`component: Alert should render general success alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -374,12 +383,15 @@ exports[`component: Alert should render general warning alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -476,12 +488,15 @@ exports[`component: Alert should render push notification error alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -578,12 +593,15 @@ exports[`component: Alert should render push notification info alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -680,12 +698,15 @@ exports[`component: Alert should render push notification success alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -782,12 +803,15 @@ exports[`component: Alert should render push notification warning alert 1`] = `
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
@@ -885,12 +909,15 @@ exports[`component: Alert should render the default props, general info alert 1`
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 1px;
 }
 
 .c0 .sc-htmbXw {
-  -webkit-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
   margin-left: auto;
   margin-top: 10px;
 }
