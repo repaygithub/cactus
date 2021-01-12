@@ -1,3 +1,20 @@
+# v4.4.1 (Tue Jan 12 2021)
+
+#### 🐛 Bug Fix
+
+- Fix issue where mobile/tablet menu would scroll unexpectedly when sub-menus were expanded [#474](https://github.com/repaygithub/cactus/pull/474) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- Fix SonarQube code smells [#473](https://github.com/repaygithub/cactus/pull/473) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- [@wilysword](https://github.com/wilysword)
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v4.4.0 (Tue Jan 05 2021)
 
 #### 🚀 Enhancement
