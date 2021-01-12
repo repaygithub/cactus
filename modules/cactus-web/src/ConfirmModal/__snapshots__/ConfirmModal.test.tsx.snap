@@ -323,6 +323,10 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   word-wrap: break-word;
 }
 
+.c0 > [data-reach-dialog-content] .modal-children > * {
+  max-width: 100%;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -485,60 +489,56 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
-                class="modal-children"
+                class="c5 c7 title-icon"
               >
-                <div
-                  class="c5 c7 title-icon"
+                <h1
+                  class="c8"
                 >
-                  <h1
-                    class="c8"
-                  >
-                    Modal Title
-                  </h1>
-                </div>
-                <div
-                  class="c5 c9 children"
+                  Modal Title
+                </h1>
+              </div>
+              <div
+                class="c5 c9 children"
+              >
+                <h4
+                  class="c10"
+                  data-testid="description"
+                  font-weight="normal"
                 >
-                  <h4
-                    class="c10"
-                    data-testid="description"
-                    font-weight="normal"
-                  >
-                    Description text
-                  </h4>
-                  <div
-                    class="c11"
-                  >
-                    <input
-                      class="c12"
-                      data-testid="input"
-                      placeholder="Placeholder"
-                      width="90%"
-                    />
-                  </div>
-                </div>
+                  Description text
+                </h4>
                 <div
-                  class="c13 c14"
+                  class="c11"
                 >
-                  <button
-                    aria-live="assertive"
-                    class="c15"
-                    type="button"
-                  >
-                    <span>
-                      Confirm
-                    </span>
-                  </button>
-                  <button
-                    class="c16"
-                    type="button"
-                  >
-                    Cancel
-                  </button>
+                  <input
+                    class="c12"
+                    data-testid="input"
+                    placeholder="Placeholder"
+                    width="90%"
+                  />
                 </div>
+              </div>
+              <div
+                class="c13 c14"
+              >
+                <button
+                  aria-live="assertive"
+                  class="c15"
+                  type="button"
+                >
+                  <span>
+                    Confirm
+                  </span>
+                </button>
+                <button
+                  class="c16"
+                  type="button"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
@@ -804,6 +804,10 @@ exports[`Modal variant is danger snapshot 1`] = `
   word-wrap: break-word;
 }
 
+.c0 > [data-reach-dialog-content] .modal-children > * {
+  max-width: 100%;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -959,42 +963,38 @@ exports[`Modal variant is danger snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
-                class="modal-children"
+                class="c5 c7 title-icon"
               >
-                <div
-                  class="c5 c7 title-icon"
+                <h1
+                  class="c8"
                 >
-                  <h1
-                    class="c8"
-                  >
-                    Modal Title
-                  </h1>
-                </div>
-                <div
-                  class="c5 c9 children"
-                />
-                <div
-                  class="c10 c11"
+                  Modal Title
+                </h1>
+              </div>
+              <div
+                class="c5 c9 children"
+              />
+              <div
+                class="c10 c11"
+              >
+                <button
+                  aria-live="assertive"
+                  class="c12"
+                  type="button"
                 >
-                  <button
-                    aria-live="assertive"
-                    class="c12"
-                    type="button"
-                  >
-                    <span>
-                      Confirm
-                    </span>
-                  </button>
-                  <button
-                    class="c13"
-                    type="button"
-                  >
-                    Cancel
-                  </button>
-                </div>
+                  <span>
+                    Confirm
+                  </span>
+                </button>
+                <button
+                  class="c13"
+                  type="button"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
@@ -1260,6 +1260,10 @@ exports[`Modal variant is success snapshot 1`] = `
   word-wrap: break-word;
 }
 
+.c0 > [data-reach-dialog-content] .modal-children > * {
+  max-width: 100%;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -1415,42 +1419,38 @@ exports[`Modal variant is success snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
-                class="modal-children"
+                class="c5 c7 title-icon"
               >
-                <div
-                  class="c5 c7 title-icon"
+                <h1
+                  class="c8"
                 >
-                  <h1
-                    class="c8"
-                  >
-                    Modal Title
-                  </h1>
-                </div>
-                <div
-                  class="c5 c9 children"
-                />
-                <div
-                  class="c10 c11"
+                  Modal Title
+                </h1>
+              </div>
+              <div
+                class="c5 c9 children"
+              />
+              <div
+                class="c10 c11"
+              >
+                <button
+                  aria-live="assertive"
+                  class="c12"
+                  type="button"
                 >
-                  <button
-                    aria-live="assertive"
-                    class="c12"
-                    type="button"
-                  >
-                    <span>
-                      Confirm
-                    </span>
-                  </button>
-                  <button
-                    class="c13"
-                    type="button"
-                  >
-                    Cancel
-                  </button>
-                </div>
+                  <span>
+                    Confirm
+                  </span>
+                </button>
+                <button
+                  class="c13"
+                  type="button"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
@@ -1696,6 +1696,10 @@ exports[`Modal variant is warning snapshot 1`] = `
   word-wrap: break-word;
 }
 
+.c0 > [data-reach-dialog-content] .modal-children > * {
+  max-width: 100%;
+}
+
 .c0 > [data-reach-dialog-content] .c2 {
   height: 16px;
   position: absolute;
@@ -1855,42 +1859,38 @@ exports[`Modal variant is warning snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6"
+              class="c5 c6 modal-children"
             >
               <div
-                class="modal-children"
+                class="c5 c7 title-icon"
               >
-                <div
-                  class="c5 c7 title-icon"
+                <h1
+                  class="c8"
                 >
-                  <h1
-                    class="c8"
-                  >
-                    Modal Title
-                  </h1>
-                </div>
-                <div
-                  class="c5 c9 children"
-                />
-                <div
-                  class="c10 c11"
+                  Modal Title
+                </h1>
+              </div>
+              <div
+                class="c5 c9 children"
+              />
+              <div
+                class="c10 c11"
+              >
+                <button
+                  aria-live="assertive"
+                  class="c12"
+                  type="button"
                 >
-                  <button
-                    aria-live="assertive"
-                    class="c12"
-                    type="button"
-                  >
-                    <span>
-                      Confirm
-                    </span>
-                  </button>
-                  <button
-                    class="c13"
-                    type="button"
-                  >
-                    Cancel
-                  </button>
-                </div>
+                  <span>
+                    Confirm
+                  </span>
+                </button>
+                <button
+                  class="c13"
+                  type="button"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
