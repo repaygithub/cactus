@@ -17,13 +17,25 @@
 - Remove left padding from Breadcrumb component
 [#477](https://github.com/repaygithub/cactus/pull/477) ([@Dhalton](https://github.com/Dhalton))
 
-#### 🔩 Dependency Updates
+#### Authors: 1
 
-- Upgrade `@repay/cactus-theme` to `v2.0.2-beta-0` and `@repay/cactus-icons` to `v2.1.6-beta.0`
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
+# v4.4.1 (Tue Jan 12 2021)
+
+#### 🐛 Bug Fix
+
+- Fix issue where mobile/tablet menu would scroll unexpectedly when sub-menus were expanded [#474](https://github.com/repaygithub/cactus/pull/474) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- Fix SonarQube code smells [#473](https://github.com/repaygithub/cactus/pull/473) ([@mikesoltow](https://github.com/mikesoltow))
 
 #### Authors: 2
 
-- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- [@wilysword](https://github.com/wilysword)
 - Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
 
 ---
