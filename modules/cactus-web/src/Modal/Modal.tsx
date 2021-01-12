@@ -57,8 +57,8 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
           <NavigationClose />
         </IconButton>
         {hasChildren && (
-          <Flex flexDirection="column" alignItems="center">
-            <div className="modal-children">{children}</div>
+          <Flex className="modal-children" flexDirection="column" alignItems="center">
+            {children}
           </Flex>
         )}
       </DialogContent>
@@ -104,6 +104,9 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
       max-width: 100%;
       overflow-wrap: break-word;
       word-wrap: break-word;
+      > * {
+        max-width: 100%;
+      }
     }
     ${variant({
       action: css`
