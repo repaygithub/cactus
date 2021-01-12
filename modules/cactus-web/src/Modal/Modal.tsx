@@ -12,13 +12,15 @@ import IconButton from '../IconButton/IconButton'
 
 export type ModalType = 'action' | 'danger' | 'warning' | 'success'
 
-export interface ModalProps extends WidthProps, HeightProps, MaxHeightProps {
+export interface ModalProps extends WidthProps {
   className?: string
   closeLabel?: string
   isOpen: boolean
   modalLabel?: string
   onClose: () => void
   variant?: ModalType
+  innerHeight?: HeightProps['height']
+  innerMaxHeight?: MaxHeightProps['maxHeight']
 }
 interface ModalPopupProps extends DialogProps, WidthProps, HeightProps, MaxHeightProps {
   variant: ModalType
@@ -38,7 +40,8 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
     onClose,
     modalLabel,
     closeLabel,
-    maxHeight = '90%',
+    innerHeight,
+    innerMaxHeight = '60vh',
     ...rest
   } = props
   const hasChildren = !!React.Children.count(children)
@@ -49,7 +52,8 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
       isOpen={isOpen}
       onDismiss={onClose}
       variant={variant}
-      maxHeight={maxHeight}
+      height={innerHeight}
+      maxHeight={innerMaxHeight}
       {...rest}
     >
       <DialogContent aria-label={modalLabel}>
@@ -57,7 +61,12 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
           <NavigationClose />
         </IconButton>
         {hasChildren && (
-          <Flex className="modal-children" flexDirection="column" alignItems="center">
+          <Flex
+            className="modal-children"
+            flexDirection="column"
+            alignItems="center"
+            flexWrap="nowrap"
+          >
             {children}
           </Flex>
         )}
@@ -93,10 +102,6 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
     margin: auto;
     max-width: ${(p) => !p.width && '80%'};
     ${width}
-    ${height}
-    ${maxHeight}
-    overflow: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
@@ -104,6 +109,10 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
       max-width: 100%;
       overflow-wrap: break-word;
       word-wrap: break-word;
+      overflow-y: auto;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+      ${height}
+      ${maxHeight}
       > * {
         max-width: 100%;
       }
@@ -159,6 +168,6 @@ Modal.defaultProps = {
   isOpen: false,
   modalLabel: 'Modal',
   variant: 'action',
-  maxHeight: '90%',
+  innerMaxHeight: '60vh',
 }
 export default Modal
