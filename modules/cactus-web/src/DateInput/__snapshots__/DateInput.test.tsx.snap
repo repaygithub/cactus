@@ -265,7 +265,6 @@ exports[`component: DateInput with theme customization should have 2px border 1`
     class="c0 c1"
   >
     <div
-      aria-describedby="undefined not-thicc-status-message"
       class="c2 "
       role="group"
     >
@@ -2803,7 +2802,6 @@ exports[`component: DateInput with theme customization should match intermediate
     class="c0 c1"
   >
     <div
-      aria-describedby="undefined not-round-status-message"
       class="c2 "
       role="group"
     >
@@ -5341,7 +5339,6 @@ exports[`component: DateInput with theme customization should match square shape
     class="c0 c1"
   >
     <div
-      aria-describedby="undefined not-round-status-message"
       class="c2 "
       role="group"
     >
@@ -7879,7 +7876,6 @@ exports[`component: DateInput with theme customization should not have box shado
     class="c0 c1"
   >
     <div
-      aria-describedby="undefined none-of-em-status-message"
       class="c2 "
       role="group"
     >
