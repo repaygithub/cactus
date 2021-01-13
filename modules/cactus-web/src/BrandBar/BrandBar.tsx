@@ -189,14 +189,11 @@ const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
 `
 const LogoWrapper = styled.div`
   padding: 16px;
-  max-width: 200px;
-  max-height: 80px;
-  display: flex;
-  align-items: flex-start;
-  & > * {
-    flex-shrink: 0;
-    max-width: 100%;
-    max-height: 100%;
+  &,
+  * {
+    display: block;
+    max-width: 200px;
+    max-height: 80px;
   }
 `
 
