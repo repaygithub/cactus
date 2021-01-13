@@ -193,24 +193,13 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
 
 .c1 {
   padding: 16px;
-  max-width: 200px;
-  max-height: 80px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
 }
 
-.c1 > * {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  max-width: 100%;
-  max-height: 100%;
+.c1,
+.c1 * {
+  display: block;
+  max-width: 200px;
+  max-height: 80px;
 }
 
 .c13 {
@@ -463,24 +452,13 @@ exports[`component: BrandBar snapshot 1`] = `
 
 .c1 {
   padding: 16px;
-  max-width: 200px;
-  max-height: 80px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
 }
 
-.c1 > * {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  max-width: 100%;
-  max-height: 100%;
+.c1,
+.c1 * {
+  display: block;
+  max-width: 200px;
+  max-height: 80px;
 }
 
 .c4 {
