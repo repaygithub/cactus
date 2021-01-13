@@ -67,7 +67,6 @@ interface DateInputPhrasesType {
   prevMonth: string
   nextMonth: string
   showCalendar: string
-  invalidDateLabel: string
   ariaDisabledDate: (date: string) => string
 }
 
@@ -267,7 +266,8 @@ const InputWrapper = styled.div`
 
   > ${LiteralPunctuation} {
     margin-left: 0;
-    ${IS_FIREFOX && 'align-self: flex-end'}
+    ${IS_FIREFOX && 'align-self: center;'}
+    ${isIE && 'align-self: flex-end;'}
   }
 
   input {
@@ -972,8 +972,13 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       })
     }
     const { value, invalidDate } = this.state
-    const { onInvalidDate } = this.props
-    if (!value.isValid() && value.MM && value.dd && value.YYYY && !invalidDate) {
+    const { onInvalidDate, type } = this.props
+    const dateFilled = value.MM && value.dd && value.YYYY
+    const timeFilled = value.hh && value.mm && value.aa
+    if (
+      (type !== 'datetime' && dateFilled && !value.isValid() && !invalidDate) ||
+      (type === 'datetime' && dateFilled && timeFilled && !value.isValid() && !invalidDate)
+    ) {
       this.setState({ invalidDate: true })
       if (onInvalidDate && typeof onInvalidDate === 'function') {
         onInvalidDate(true)
@@ -1228,20 +1233,31 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private handleToggleMouseDown = (event: React.MouseEvent<SVGSVGElement>): void => {
-    const currentTarget = event.currentTarget
+  private handleUpArrowClick = (event: React.MouseEvent<SVGSVGElement>): void => {
     const _wrapper = this._inputWrapper.current
     if (_wrapper instanceof HTMLDivElement) {
       const activeElement = document.activeElement
       if (activeElement !== null && isOwnInput(activeElement, _wrapper)) {
-        this.handleUpdate(
-          event,
-          activeElement.dataset.token as any,
-          currentTarget.dataset.name as any
-        )
+        this.handleUpdate(event, activeElement.dataset.token as any, 'ArrowUp')
       } else {
         const setFocusTo = _wrapper.querySelector('input') as HTMLInputElement
-        this.handleUpdate(event, setFocusTo.dataset.token as any, currentTarget.dataset.name as any)
+        this.handleUpdate(event, setFocusTo.dataset.token as any, 'ArrowUp')
+        setFocusTo.focus()
+      }
+    }
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  private handleDownArrowClick = (event: React.MouseEvent<SVGSVGElement>): void => {
+    const _wrapper = this._inputWrapper.current
+    if (_wrapper instanceof HTMLDivElement) {
+      const activeElement = document.activeElement
+      if (activeElement !== null && isOwnInput(activeElement, _wrapper)) {
+        this.handleUpdate(event, activeElement.dataset.token as any, 'ArrowDown')
+      } else {
+        const setFocusTo = _wrapper.querySelector('input') as HTMLInputElement
+        this.handleUpdate(event, setFocusTo.dataset.token as any, 'ArrowDown')
         setFocusTo.focus()
       }
     }
@@ -1278,7 +1294,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           }
         )
       }
-      this.togglePortalView()
+      this.togglePortalView('calendar')
       event.stopPropagation()
     }
   }
@@ -1296,7 +1312,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       )
     } else if (key === ' ' || key === 'Enter') {
       wasHandled = true
-      this.togglePortalView()
+      this.togglePortalView('calendar')
     }
     if (wasHandled) {
       event.preventDefault()
@@ -1310,9 +1326,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       (state): Pick<DateInputState, 'focusDay' | 'value' | 'transitioning'> => {
         const { value } = state
         const pd = PartialDate.from(value, 'YYYY-MM-dd')
-        pd['setMonth'](focusMonth === 0 ? 11 : focusMonth - 1)
+        pd.setMonth(focusMonth === 0 ? 11 : focusMonth - 1)
         if (focusMonth === 0) {
-          pd['setYear'](focusYear - 1)
+          pd.setYear(focusYear - 1)
         }
         pd.ensureDayOfMonth()
         this.raiseChange(event, pd)
@@ -1321,7 +1337,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     )
     this._transitionTimeout = setTimeout(() => {
       this.setState({ transitioning: false })
-    }, 400)
+    }, 300)
   }
 
   private handleRightMonthArrowClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -1330,9 +1346,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       (state): Pick<DateInputState, 'focusDay' | 'value' | 'transitioning'> => {
         const { value } = state
         const pd = PartialDate.from(value, 'YYYY-MM-dd')
-        pd['setMonth'](focusMonth === 11 ? 0 : focusMonth + 1)
+        pd.setMonth(focusMonth === 11 ? 0 : focusMonth + 1)
         if (focusMonth === 11) {
-          pd['setYear'](focusYear + 1)
+          pd.setYear(focusYear + 1)
         }
         pd.ensureDayOfMonth()
         this.raiseChange(event, pd)
@@ -1510,14 +1526,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     )
   }
 
-  private togglePortalView(triggerType?: 'month' | 'year'): void {
+  private togglePortalView(triggerType: 'month' | 'year' | 'calendar'): void {
     this.setState(
-      (state): Pick<DateInputState, 'isOpen'> => {
-        const toggleToCal = state.isOpen === 'month' || state.isOpen === 'year'
-        const updates: Pick<DateInputState, 'isOpen'> = toggleToCal
-          ? { isOpen: 'calendar' }
-          : { isOpen: triggerType === 'month' ? 'month' : 'year' }
-        this._shouldUpdateFocusDay = toggleToCal
+      (): Pick<DateInputState, 'isOpen'> => {
+        const updates: Pick<DateInputState, 'isOpen'> = { isOpen: triggerType }
+        this._shouldUpdateFocusDay = triggerType === 'calendar'
         return updates
       }
     )
@@ -1599,7 +1612,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         prevMonth: 'Click to go back one month',
         nextMonth: 'Click to go forward one month',
         showCalendar: 'Click to use calendar picker',
-        invalidDateLabel: 'The selected date is invalid. Please pick another date.',
         ariaDisabledDate: function (date): string {
           return `${date} can't be selected.`
         },
@@ -1628,7 +1640,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   public render(): ReactElement {
-    const { value, isOpen, focusDay, invalidDate } = this.state
+    const { value, isOpen, focusDay } = this.state
     const {
       id,
       name,
@@ -1648,7 +1660,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const monthId = id + '-month-label'
     const yearId = id + '-year-label'
     const timeId = id + '-time'
-    const statusId = id + '-status-message'
     const { month: focusMonth, year: focusYear, days } = this._getMonthData()
     const selectedStr = value.format('YYYY-MM-dd')
 
@@ -1659,7 +1670,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             className={className}
             role="group"
             ref={this._inputWrapper}
-            aria-describedby={`${ariaDescribedBy} ${statusId}`}
+            aria-describedby={ariaDescribedBy}
             aria-labelledby={ariaLabelledBy}
             onKeyDownCapture={this.handleKeydownCapture}
             onInputCapture={this.handleInputCapture}
@@ -1710,26 +1721,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             <ToggleButtons aria-hidden="true">
               <NavigationChevronUp
                 data-name="ArrowUp"
-                onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
+                onMouseDownCapture={!disabled ? this.handleUpArrowClick : undefined}
               />
               <NavigationChevronDown
                 data-name="ArrowDown"
-                onMouseDownCapture={!disabled ? this.handleToggleMouseDown : undefined}
+                onMouseDownCapture={!disabled ? this.handleDownArrowClick : undefined}
               />
             </ToggleButtons>
           </InputWrapper>
-          {invalidDate && (
-            <StatusMessage
-              status="error"
-              id={statusId}
-              style={{
-                marginTop: '4px',
-                maxWidth: this._inputWrapper.current?.getBoundingClientRect().width,
-              }}
-            >
-              {phrases.invalidDateLabel}
-            </StatusMessage>
-          )}
         </Flex>
         {hasDate && (
           <CalendarPopup
@@ -1759,7 +1758,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                     aria-label={isOpen === 'calendar' ? phrases.showMonth : phrases.showCalendar}
                     aria-roledescription="toggles between calendar and month selectors"
                   >
-                    <span id={monthId}>{phrases.months[focusMonth].long}</span>
+                    <span id={monthId}>
+                      {phrases.months[focusMonth]
+                        ? phrases.months[focusMonth].long
+                        : phrases.months[PartialDate.from(new Date()).getMonth()].long}
+                    </span>
                     <NavigationChevronDown data-is-open={isOpen} iconSize="tiny" ml={3} />
                   </MonthSelect>
                   <YearSelect
