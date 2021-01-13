@@ -4,7 +4,7 @@ import React, { ReactElement, useContext } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { keyPressAsClick } from '../helpers/a11y'
+import { keyDownAsClick } from '../helpers/a11y'
 import { border, fontSize } from '../helpers/theme'
 import { DataGridContext } from './helpers'
 
@@ -41,7 +41,7 @@ const PageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
                     onClick={(): void => {
                       onPageChange({ ...paginationOptions, pageSize: pageSize })
                     }}
-                    onKeyPress={keyPressAsClick}
+                    onKeyDown={keyDownAsClick}
                     tabIndex={isCurrentPageSize ? undefined : 0}
                     aria-label={makePageSizeLabel(pageSize)}
                   >

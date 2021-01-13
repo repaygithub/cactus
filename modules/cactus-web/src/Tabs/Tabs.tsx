@@ -4,9 +4,9 @@ import styled from 'styled-components'
 
 import Box, { BoxProps } from '../Box/Box'
 import Flex, { JustifyContent } from '../Flex/Flex'
-import { keyPressAsClick, preventAction } from '../helpers/a11y'
+import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { isIE, isResponsiveTouchDevice } from '../helpers/constants'
+import { isResponsiveTouchDevice } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useValue } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
@@ -115,15 +115,10 @@ function TabFunc<E, C extends GenericComponent = 'div'>(
     props.id = props.id || generateId(ctx.id, name, 'tab')
     panelId = panelId || generateId(ctx.id, name, 'panel')
   }
-  const keyProps: React.DOMAttributes<HTMLElement> = { onKeyUp: preventAction }
-  if (isIE) {
-    keyProps.onKeyDown = keyPressAsClick
-  } else {
-    keyProps.onKeyPress = keyPressAsClick
-  }
   return (
     <StyledTab
-      {...keyProps}
+      onKeyDown={keyDownAsClick}
+      onKeyUp={preventAction}
       onClick={ctx?.setCurrent}
       aria-selected={!!props.id && props.id === ctx?.currentTab}
       aria-controls={panelId}
