@@ -35,7 +35,6 @@ import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { boxShadow, textStyle } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
-import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
 
 export type IsValidDateFunc = (date: Date) => boolean
 export type ParseDateFunc = (dateStr: string) => Date
