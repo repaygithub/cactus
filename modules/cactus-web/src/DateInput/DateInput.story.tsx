@@ -111,3 +111,84 @@ export const WithIsValidDate = (): ReactElement => (
 )
 
 WithIsValidDate.storyname = 'with isValidDate'
+
+const FakeScroll = () => {
+  const [values, setValues] = React.useState({})
+  const [list, setList] = React.useState({ start: -2, offset: 0, items: [] })
+  const onWheel = React.useCallback((e) => {
+    const scroll = getScroll(e)
+    setValues(scroll)
+    if (scroll.y) {
+      setList(({ start, offset, items }) => {
+        offset += scroll.y
+        const itemHeight = 27
+        const itemCount = items.length
+        while (offset > itemHeight) {
+          start += 1
+          offset -= itemHeight
+        }
+        if (offset > 0) {
+          offset -= itemHeight
+        }
+        while (offset <= -itemHeight) {
+          start -= 1
+          offset += itemHeight
+        }
+        items = []
+        for (let i = 0; i < itemCount; i++) {
+          items.push(i - 1 + start)
+        }
+        return { start, offset, items }
+      })
+    }
+  }, [])
+  const listRef = React.useRef(null)
+  React.useLayoutEffect(() => {
+    if (listRef.current) {
+      const height = 156 //listRef.current.clientHeight
+      const itemHeight = 27
+      const itemCount = Math.ceil(height / itemHeight) + 1
+      setList((l) => {
+        const items = []
+        for (let i = 0; i < itemCount; i++) {
+          items.push(i + l.start)
+        }
+        return { ...l, items }
+      })
+    }
+  }, [listRef])
+  return (
+    <div onWheel={onWheel} onScrollCapture={(e) => e.preventDefault()} style={{ height: '300px', width: '300px', backgroundColor: 'red', display: 'flex', flexDirection: 'column' }}>
+      <span>MultX: {values.multX}</span>
+      <span>DeltaX: {values.x}</span>
+      <span>MultY: {values.multY}</span>
+      <span>DeltaY: {values.y}</span>
+      <ul ref={listRef} style={{ height: '156px', overflow: 'hidden', position: 'relative' }}>
+        {!list.items.length ? (
+          <li>test</li>
+        ) : (
+          list.items.map((i, ix) => (<li style={{ position: 'relative', top: list.offset }} key={ix}>{i}</li>))
+        )}
+      </ul>
+    </div>
+  )
+}
+
+const getScroll = (e) => {
+  let multX = 1, multY = 1
+  if (e.deltaMode === WheelEvent.DOM_DELTA_LINE) {
+    multX = multY = 20 //parseFloat(window.getComputedStyle(e.target).lineHeight)
+  } else if (e.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+    const view = getViewport()
+    multX = view.clientWidth
+    multY = view.clientHeight
+  }
+  return { multX, multY, x: e.deltaX * multX, y: e.deltaY * multY }
+}
+
+const getViewport = () =>
+  document.compatMode === 'BackCompat' ? document.querySelector('body') : document.documentElement
+
+export const ScrollTest = (): ReactElement => {
+  return <FakeScroll/>
+}
