@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, width } from 'styled-system'
 
@@ -10,6 +10,7 @@ import { omitMargins } from '../helpers/omit'
 interface DateInputFieldProps extends FieldProps, Omit<DateInputProps, 'id'> {
   className?: string
   id?: string
+  invalidDateLabel?: React.ReactNode
 }
 
 function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
@@ -28,8 +29,15 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     autoTooltip,
     disableTooltip,
     alignTooltip,
+    invalidDateLabel = 'The date you have selected is invalid. Please pick another date.',
     ...rest
   } = omitMargins(props) as Omit<DateInputFieldProps, keyof MarginProps>
+
+  const [invalidDate, setInvalidDate] = useState<boolean>(false)
+
+  const onInvalidDate = (isDateInvalid: boolean) => {
+    setInvalidDate(isDateInvalid)
+  }
 
   return (
     <AccessibleField
@@ -40,9 +48,9 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       label={label}
       labelProps={labelProps}
       tooltip={tooltip}
-      error={error}
-      warning={warning}
-      success={success}
+      error={invalidDate ? invalidDateLabel : error}
+      warning={!invalidDate && warning}
+      success={!invalidDate && success}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
@@ -62,6 +70,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
           status={status}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
+          onInvalidDate={onInvalidDate}
         />
       )}
     </AccessibleField>
@@ -90,6 +99,7 @@ DateInputField.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  invalidDateLabel: PropTypes.node,
 }
 
 DateInputField.defaultProps = {

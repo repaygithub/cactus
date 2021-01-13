@@ -1,8 +1,10 @@
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 
+import Flex from '../Flex/Flex'
+import StatusMessage from '../StatusMessage/StatusMessage'
 import DateInput from './DateInput'
 
 const eventLoggers = {
@@ -16,14 +18,25 @@ export default {
   component: DateInput,
 } as Meta
 
-export const BasicUsage = (): ReactElement => (
-  <DateInput
-    id="date-input-uncontrolled"
-    name="date"
-    {...eventLoggers}
-    disabled={boolean('disabled', false)}
-  />
-)
+export const BasicUsage = (): ReactElement => {
+  const [invalidDate, setInvalidDate] = useState<boolean>(false)
+  return (
+    <Flex flexDirection="column" alignItems="flex-start">
+      <DateInput
+        id="date-input-uncontrolled"
+        name="date"
+        {...eventLoggers}
+        disabled={boolean('disabled', false)}
+        onInvalidDate={(isDateInvalid) => setInvalidDate(isDateInvalid)}
+      />
+      {invalidDate && (
+        <StatusMessage status="error" style={{ marginTop: '4px' }}>
+          The date you've selected is invalid. Please pick another date.
+        </StatusMessage>
+      )}
+    </Flex>
+  )
+}
 
 BasicUsage.parameters = {
   cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
@@ -82,15 +95,26 @@ export const TypeTime = (): ReactElement => (
 
 TypeTime.storyName = 'type="time"'
 
-export const TypeDatetime = (): ReactElement => (
-  <DateInput
-    id="datetime-input"
-    name="datetime"
-    type="datetime"
-    {...eventLoggers}
-    disabled={boolean('disabled', false)}
-  />
-)
+export const TypeDatetime = (): ReactElement => {
+  const [invalidDate, setInvalidDate] = useState<boolean>(false)
+  return (
+    <Flex flexDirection="column" alignItems="flex-start">
+      <DateInput
+        id="datetime-input"
+        name="datetime"
+        type="datetime"
+        {...eventLoggers}
+        disabled={boolean('disabled', false)}
+        onInvalidDate={(isDateInvalid) => setInvalidDate(isDateInvalid)}
+      />
+      {invalidDate && (
+        <StatusMessage status="error" style={{ marginTop: '4px' }}>
+          The date you've selected is invalid. Please pick another date.
+        </StatusMessage>
+      )}
+    </Flex>
+  )
+}
 
 TypeDatetime.storyName = 'type="datetime"'
 
