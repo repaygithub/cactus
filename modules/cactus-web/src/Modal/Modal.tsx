@@ -3,7 +3,7 @@ import { NavigationClose } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
-import { width, WidthProps } from 'styled-system'
+import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
 import { border, boxShadow } from '../helpers/theme'
@@ -19,8 +19,10 @@ export interface ModalProps extends WidthProps {
   modalLabel?: string
   onClose: () => void
   variant?: ModalType
+  innerHeight?: HeightProps['height']
+  innerMaxHeight?: MaxHeightProps['maxHeight']
 }
-interface ModalPopupProps extends DialogProps, WidthProps {
+interface ModalPopupProps extends DialogProps, WidthProps, HeightProps, MaxHeightProps {
   variant: ModalType
 }
 
@@ -31,7 +33,17 @@ const shapeMap = {
 }
 
 const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
-  const { variant = 'action', children, isOpen, onClose, modalLabel, closeLabel, ...rest } = props
+  const {
+    variant = 'action',
+    children,
+    isOpen,
+    onClose,
+    modalLabel,
+    closeLabel,
+    innerHeight,
+    innerMaxHeight = '60vh',
+    ...rest
+  } = props
   const hasChildren = !!React.Children.count(children)
 
   return (
@@ -40,6 +52,8 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
       isOpen={isOpen}
       onDismiss={onClose}
       variant={variant}
+      height={innerHeight}
+      maxHeight={innerMaxHeight}
       {...rest}
     >
       <DialogContent aria-label={modalLabel}>
@@ -47,7 +61,12 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
           <NavigationClose />
         </IconButton>
         {hasChildren && (
-          <Flex flexDirection="column" alignItems="center">
+          <Flex
+            className="modal-children"
+            flexDirection="column"
+            alignItems="center"
+            flexWrap="nowrap"
+          >
             {children}
           </Flex>
         )}
@@ -56,7 +75,12 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
   )
 }
 
-export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
+export const ModalPopUp = styled(DialogOverlay).withConfig({
+  shouldForwardProp: (prop) => {
+    // @ts-ignore
+    return prop !== 'maxHeight'
+  },
+})<ModalPopupProps>`
   background: rgba(46, 53, 56, 0.33);
   bottom: 0;
   display: flex;
@@ -81,6 +105,18 @@ export const ModalPopUp = styled(DialogOverlay)<ModalPopupProps>`
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
+    .modal-children {
+      max-width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      overflow: auto;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+      ${height}
+      ${maxHeight}
+      > * {
+        max-width: 100%;
+      }
+    }
     ${variant({
       action: css`
         border-color: ${(p): string => p.theme.colors.callToAction};
@@ -132,5 +168,6 @@ Modal.defaultProps = {
   isOpen: false,
   modalLabel: 'Modal',
   variant: 'action',
+  innerMaxHeight: '60vh',
 }
 export default Modal

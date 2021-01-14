@@ -96,6 +96,19 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
+.c0 > [data-reach-dialog-content] .modal-children {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  max-height: 60vh;
+}
+
+.c0 > [data-reach-dialog-content] .modal-children > * {
+  max-width: 100%;
+}
+
 .c0 > [data-reach-dialog-content] .c1 {
   height: 16px;
   position: absolute;
