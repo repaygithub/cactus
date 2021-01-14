@@ -106,10 +106,13 @@ export const Alert = styled(AlertBase)<AlertProps>`
     margin-left: 16px;
     margin-right: 16px;
     margin-top: 8px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    min-width: 1px;
   }
 
   ${IconButton} {
-    flex: 0;
+    flex-shrink: 0;
     margin-left: auto;
     margin-top: 10px;
   }
