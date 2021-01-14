@@ -1,4 +1,3 @@
-import { actions } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
@@ -8,7 +7,7 @@ import Alert, { Status, Type } from './Alert'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 const type: Type[] = ['general', 'push']
-const eventLoggers = actions('onClose')
+const onClose = () => console.log('CLOSE pressed')
 
 export default {
   title: 'Alert',
@@ -56,7 +55,7 @@ export const CloseButton = (): ReactElement => {
         status={select('Status', status, 'error')}
         type={select('Type', type, 'general')}
         shadow={boolean('Shadow', false)}
-        {...eventLoggers}
+        onClose={onClose}
       >
         {text('Message', 'Message goes here')}
       </Alert>
@@ -71,7 +70,7 @@ export const SmallPushAlert = (): ReactElement => {
         status={select('Status', status, 'error')}
         type={select('Type', type, 'push')}
         shadow={boolean('Shadow', false)}
-        {...eventLoggers}
+        onClose={onClose}
       >
         {text('Message', 'Message goes here')}
       </Alert>
