@@ -108,7 +108,7 @@ exports[`With theme changes  Border should be 2px 1`] = `
 
 .c4 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -315,7 +315,7 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
 
 .c4 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -522,7 +522,7 @@ exports[`With theme changes  Should have intermediate borders 1`] = `
 
 .c4 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -729,7 +729,7 @@ exports[`With theme changes  Should have square borders 1`] = `
 
 .c4 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -935,7 +935,7 @@ exports[`component: MenuButton snapshot 1`] = `
 
 .c4 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {

@@ -9,9 +9,11 @@ import Flex from '../Flex/Flex'
 import Footer from '../Footer/Footer'
 import MenuBar from '../MenuBar/MenuBar'
 import MenuButton from '../MenuButton/MenuButton'
+import Modal from '../Modal/Modal'
 import Select from '../Select/Select'
 import SplitButton from '../SplitButton/SplitButton'
 import TextInputField from '../TextInputField/TextInputField'
+import ToggleField from '../ToggleField/ToggleField'
 import Layout from './Layout'
 
 function action(msg: string) {
@@ -132,6 +134,7 @@ export const BasicUsage = (): React.ReactElement => {
   const hasMenu = boolean('Show Menu', true)
   const hasActions = boolean('Show Action Bar', true)
   const hasFooter = boolean('Show Footer', true)
+  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false)
 
   return (
     <Layout>
@@ -141,7 +144,17 @@ export const BasicUsage = (): React.ReactElement => {
       <Layout.Content>
         <h1>Latin Or Something</h1>
         <TextInputField name="foo" label="Foo" />
-        <TextInputField name="bar" label="Bar" />
+        <ToggleField
+          ml="150px"
+          name="modalToggle"
+          label="Show Me The Modal"
+          checked={modalIsOpen}
+          onChange={(e) => setModalIsOpen(e.target.checked)}
+        />
+        <Modal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+          I am the very model of a modern major modal.
+          <Select mt={3} name="modalSelect" id="modalSelect" options={['True', 'False']} />
+        </Modal>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas augue ex, dignissim sed
           fringilla nec, tincidunt fermentum libero. Mauris ut enim ornare, euismod nibh at,

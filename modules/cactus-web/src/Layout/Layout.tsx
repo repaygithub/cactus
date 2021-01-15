@@ -120,7 +120,7 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
     left: 0;
     width: ${p.fixedLeft}px;
     bottom: ${p.fixedBottom}px;
-    z-index: 1000;
+    z-index: 100;
     ${styles['fixedLeft']};
   }
 
@@ -130,7 +130,7 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
     right: 0;
     bottom: 0;
     height: ${p.fixedBottom}px;
-    z-index: 1000;
+    z-index: 100;
     ${styles['fixedBottom']};
   }
 

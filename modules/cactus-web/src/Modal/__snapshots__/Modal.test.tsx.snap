@@ -76,7 +76,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  z-index: 52;
+  z-index: 101;
 }
 
 .c0 > [data-reach-dialog-content] {
