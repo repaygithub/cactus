@@ -1,3 +1,28 @@
+# v5.0.0-beta.1 (Mon Jan 11 2021)
+
+#### 🐛 Bug Fix
+
+- Fix issue where mobile/tablet menu would scroll unexpectedly when sub-menus were expanded [#474](https://github.com/repaygithub/cactus/pull/474) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- [@wilysword](https://github.com/wilysword)
+
+---
+
+# v5.0.0-beta.0 (Thu Jan 08 2021)
+
+#### 💥 Breaking Change
+
+- Remove left padding from Breadcrumb component
+[#477](https://github.com/repaygithub/cactus/pull/477) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 1
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v4.4.1 (Tue Jan 12 2021)
 
 #### 🐛 Bug Fix

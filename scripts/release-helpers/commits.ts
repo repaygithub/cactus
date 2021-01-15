@@ -60,7 +60,7 @@ const shaExists = async (sha?: string): Promise<boolean> => {
   }
 }
 
-const getFirstCommit = async (): Promise<string> => {
+export const getFirstCommit = async (): Promise<string> => {
   const list = await execPromise('git', ['rev-list', '--max-parents=0', 'HEAD'])
   return list.split('\n').pop() as string
 }
@@ -75,7 +75,7 @@ const getPullRequest = async (pr: number) => {
   return getCached(`pr - ${pr}`, () => github.pulls.get(args))
 }
 
-const getLatestReleaseInfo = async () => {
+const getLatestReleaseData = async () => {
   const latestRelease = await getCached('latestRelease', () =>
     github.repos.getLatestRelease({
       owner: OWNER,
@@ -277,7 +277,7 @@ const getPRsSinceLastRelease = async () => {
   }
 
   try {
-    lastRelease = await getLatestReleaseInfo()
+    lastRelease = await getLatestReleaseData()
   } catch (error) {
     const firstCommit = await getFirstCommit()
 
@@ -530,7 +530,7 @@ export const getLatestRelease = async (): Promise<string> => {
   console.log('Getting latest release')
   console.log('')
   try {
-    const latestRelease = await getLatestReleaseInfo()
+    const latestRelease = await getLatestReleaseData()
 
     return latestRelease.tag_name
   } catch (e) {

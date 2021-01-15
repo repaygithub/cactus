@@ -77,9 +77,9 @@ test('moves focus to date picker on click', async (t): Promise<void> => {
 
   await t
     .expect(activeEl.attributes?.['aria-label'])
-    .eql('Click to change month and year')
+    .eql('Click to go back one month')
     .expect(activeEl.attributes?.['aria-roledescription'])
-    .eql('toggles between calendar and month year selectors')
+    .eql('moves date back one month')
     .expect(activeEl.focused)
     .ok('Date picker is not focused')
 })
@@ -105,9 +105,9 @@ test('locks focus to date picker', async (t: TestController): Promise<void> => {
     .expect(monthSelectActiveEl.tagName)
     .eql('button')
     .expect(monthSelectActiveEl.attributes?.['aria-label'])
-    .eql('Click to change month and year')
+    .eql('Click to go back one month')
     .expect(monthSelectActiveEl.attributes?.['aria-roledescription'])
-    .eql('toggles between calendar and month year selectors')
+    .eql('moves date back one month')
     .expect(monthSelectActiveEl.focused)
     .ok('Date button not focused')
 })

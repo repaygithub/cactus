@@ -20,14 +20,17 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
+import on from 'await-to-js'
 import prompts from 'prompts'
 import { inc, ReleaseType } from 'semver'
 
 import { createChangelog } from './changelog'
-import { getCommitsInRelease } from './commits'
+import { getCommitsInRelease, getFirstCommit, getLatestRelease } from './commits'
+import { getCurrentBranch } from './git-utils'
 import inFolder from './in-folder'
 import { getChangedPackages, getLernaPackages, LernaPackage } from './lerna'
 import SEMVER from './semver'
+import { getLastTagNotInBaseBranch, getLatestTagInBranch } from './tags'
 
 const getBump = async (lernaPackage: LernaPackage) => {
   const message = `What kind of version bump should apply to ${lernaPackage.name}? (current version: ${lernaPackage.version})`
@@ -36,7 +39,7 @@ const getBump = async (lernaPackage: LernaPackage) => {
     name: 'bump',
     message,
     choices: Object.keys(SEMVER).map((bumpType) => ({
-      title: `${bumpType} - ${inc(lernaPackage.version, bumpType as ReleaseType)}`,
+      title: `${bumpType} - ${inc(lernaPackage.version, bumpType as ReleaseType, 'beta')}`,
       value: bumpType,
     })),
   })
@@ -50,11 +53,25 @@ export type ReleaseInfo = {
   packagePath: string
 }[]
 
-export default async (from: string, to = 'HEAD'): Promise<ReleaseInfo> => {
-  const commits = await getCommitsInRelease(from, to)
+const getFrom = async (isPrerelease: boolean) => {
+  const currentBranch = getCurrentBranch()
+  if (isPrerelease) {
+    const [, lastTagNotInBaseBranch] = await on(getLastTagNotInBaseBranch(currentBranch))
+    const [, latestTagInBranch] = await on(getLatestTagInBranch(currentBranch))
+    const lastTag = lastTagNotInBaseBranch || latestTagInBranch || (await getFirstCommit())
+
+    return lastTag
+  }
+
+  return getLatestRelease()
+}
+
+export default async (isPrerelease: boolean): Promise<ReleaseInfo> => {
+  const from = await getFrom(isPrerelease)
+  const commits = await getCommitsInRelease(from, 'HEAD')
   const changelog = createChangelog()
 
-  const changedPackages = await getChangedPackages()
+  const changedPackages = await getChangedPackages(isPrerelease)
   const lernaPackages = await getLernaPackages()
 
   const releaseInfo: ReleaseInfo = []

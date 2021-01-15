@@ -1,3 +1,15 @@
+# v2.1.6-beta.0 (Fri Jan 08 2021)
+
+#### 🔩 Dependency Updates
+
+- Upgrade `@repay/cactus-theme` to `v2.0.2-beta-0`
+
+#### Authors: 1
+
+- Mike Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v2.1.5 (Mon Dec 21 2020)
 
 #### 🏠 Internal
