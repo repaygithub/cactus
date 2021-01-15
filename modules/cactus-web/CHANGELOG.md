@@ -1,3 +1,26 @@
+# v5.0.0 (Fri Jan 15 2021)
+
+#### 💥 Breaking Change
+
+- Redesign DateInput component [#470](https://github.com/repaygithub/cactus/pull/470) ([@Dhalton](https://github.com/Dhalton))
+- Remove left padding from Breadcrumb component [#477](https://github.com/repaygithub/cactus/pull/477) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🚀 Enhancement
+
+- Add innerHeight and innerMaxHeight props to Modal component.  Fix text overflow for Modal. [#479](https://github.com/repaygithub/cactus/pull/479) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Fix bug where Alert close buttons were not visible in IE11 [#483](https://github.com/repaygithub/cactus/pull/483) ([@wilysword](https://github.com/wilysword))
+- Fix issue where logo could overflow BrandBar [#481](https://github.com/repaygithub/cactus/pull/481) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 2
+
+- [@Dhalton](https://github.com/Dhalton)
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v5.0.0-beta.1 (Mon Jan 11 2021)
 
 #### 🐛 Bug Fix
