@@ -2,7 +2,8 @@
 
 #### 💥 Breaking Change
 
-- Redesign DateInput component [#470](https://github.com/repaygithub/cactus/pull/470) ([@Dhalton](https://github.com/Dhalton))
+- Re-design DateInput component [#470](https://github.com/repaygithub/cactus/pull/470) ([@Dhalton](https://github.com/Dhalton))
+  - `showMonthYear` is no longer valid in the `phrases` prop.  It has been split into `showMonth` and `showYear`, since the select month/year dropdowns are now separate.
 - Remove left padding from Breadcrumb component [#477](https://github.com/repaygithub/cactus/pull/477) ([@Dhalton](https://github.com/Dhalton))
 
 #### 🚀 Enhancement
