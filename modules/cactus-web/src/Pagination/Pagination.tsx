@@ -10,7 +10,7 @@ import React, { ReactElement } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { keyPressAsClick } from '../helpers/a11y'
+import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { border, fontSize } from '../helpers/theme'
 
 export interface PageLinkProps {
@@ -133,7 +133,8 @@ const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps): ReactEleme
     linkProps.tabIndex = 0
   }
   if (onClick) {
-    linkProps.onKeyPress = keyPressAsClick
+    linkProps.onKeyDown = keyDownAsClick
+    linkProps.onKeyUp = preventAction
   }
   return (
     <a role="link" onClick={onClick} {...linkProps}>

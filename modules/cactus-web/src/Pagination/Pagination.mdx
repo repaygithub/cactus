@@ -77,7 +77,7 @@ There are several accessibility-related props, specifically for setting `aria-la
 - The `aria-label` and `aria-current` props should be passed on as-is to the underlying HTML element.
 - If the HTML element doesn't support `disabled` directly, you should set `aria-disabled="true"` on disabled links.
 - Set `tabIndex="0"` to allow focus on elements that normally can't be focused.
-- To make keyboard-only navigation possible, consider adding an `onKeyPress` handler for elements that don't already equate clicking and pressing the &lt;Enter&gt; or &lt;space&gt; keys.
+- To make keyboard-only navigation possible, consider adding an `onKeyDown` handler for elements that don't already equate clicking and pressing the &lt;Enter&gt; or &lt;space&gt; keys.
 - If not using an anchor element with `href`, you should set `role="link"`.
 
 ## Properties

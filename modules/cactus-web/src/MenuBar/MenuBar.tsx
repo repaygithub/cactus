@@ -11,7 +11,7 @@ import styled from 'styled-components'
 
 import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
-import { keyPressAsClick, preventAction } from '../helpers/a11y'
+import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
 import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
@@ -61,8 +61,8 @@ function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
   // The `as any` here is to enable proper use of link substition,
   // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
   const propsCopy = { ...props } as any
-  if (!propsCopy.onKeyPress) {
-    propsCopy.onKeyPress = keyPressAsClick
+  if (!propsCopy.onKeyDown) {
+    propsCopy.onKeyDown = keyDownAsClick
   }
   const original = propsCopy.onKeyUp
   propsCopy.onKeyUp = !original

@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { keyPressAsClick } from '../helpers/a11y'
+import { keyDownAsClick } from '../helpers/a11y'
 import { border, fontSize } from '../helpers/theme'
 
 type NavDirection = 'prev' | 'next'
@@ -35,7 +35,7 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
     aria-disabled={disabled ? 'true' : 'false'}
     className={className}
     onClick={onClick}
-    onKeyPress={onClick && keyPressAsClick}
+    onKeyDown={onClick && keyDownAsClick}
     tabIndex={disabled ? undefined : 0}
   >
     {children}
