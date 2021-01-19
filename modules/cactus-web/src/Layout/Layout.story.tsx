@@ -89,6 +89,7 @@ const StoryActionBar = () => (
   <ActionBar>
     <ActionBar.Item
       id="whattime"
+      aria-label="Current Time"
       icon={<DescriptiveClock />}
       onClick={() => alert(`It is now ${new Date()}.`)}
     />

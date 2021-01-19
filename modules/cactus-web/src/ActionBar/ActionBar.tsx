@@ -15,6 +15,7 @@ interface ItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   id?: string
   icon: React.ReactElement
   orderHint?: OrderHint
+  'aria-label': string
 }
 
 type StyleProps = LayoutStyleProps & PaddingProps
@@ -152,6 +153,7 @@ ActionBarItem.propTypes = {
     PropTypes.number,
     PropTypes.oneOf<OrderHintKey>(['top', 'high', 'center', 'low', 'bottom']),
   ]),
+  'aria-label': PropTypes.string.isRequired,
 }
 
 ActionBarPanel.propTypes = {

@@ -43,6 +43,7 @@ const SimpleRouter = () => {
       <ActionBar.Item
         id="refresh"
         icon={<ActionsRefresh />}
+        aria-label="Refresh"
         orderHint="high"
         onClick={() => setCount((c) => c + 1)}
       />
@@ -65,8 +66,8 @@ export const BasicUsage = (): React.ReactElement => {
     <ActionBar>
       {hasItems && (
         <>
-          <ActionBar.Item icon={<ActionsRedo />} onClick={action('redo')} />
-          <ActionBar.Item icon={<Undo />} onClick={action('undo')} />
+          <ActionBar.Item icon={<ActionsRedo />} aria-label="Redo" onClick={action('redo')} />
+          <ActionBar.Item icon={<Undo />} aria-label="Undo" onClick={action('undo')} />
         </>
       )}
     </ActionBar>
