@@ -165,7 +165,6 @@ const SplitButtonList = styled(ReachMenuItems)<VariantInterface>`
   outline: none;
   ${(p) => dropdownShapeMap[p.theme.shape]}
   ${(p): string => boxShadow(p.theme, 1)};
-  z-index: 1000;
   background-color: ${(p): string => p.theme.colors.white};
   border: ${(p) => (!p.theme.boxShadows ? border(p.theme, 'lightContrast') : '0')};
 
@@ -328,7 +327,7 @@ const Wrapper = styled.div<VariantInterface & MarginProps>`
 
 const StyledPopover = styled(ReachMenuPopover)`
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 `
 
 SplitButton.propTypes = {

@@ -55,7 +55,6 @@ exports[`component: SplitButton snapshot 1`] = `
   outline: none;
   border-radius: 4px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
-  z-index: 1000;
   background-color: hsl(0,0%,100%);
   border: 0;
 }
@@ -127,7 +126,7 @@ exports[`component: SplitButton snapshot 1`] = `
 
 .c6 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -271,7 +270,6 @@ exports[`component: SplitButton with theme customization dropdown should not hav
   padding: 8px 0;
   outline: none;
   border-radius: 4px;
-  z-index: 1000;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(200,29%,90%);
 }
@@ -343,7 +341,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
 
 .c6 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -488,7 +486,6 @@ exports[`component: SplitButton with theme customization should have 2px borders
   outline: none;
   border-radius: 4px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
-  z-index: 1000;
   background-color: hsl(0,0%,100%);
   border: 0;
 }
@@ -560,7 +557,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
 
 .c6 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -705,7 +702,6 @@ exports[`component: SplitButton with theme customization should have intermediat
   outline: none;
   border-radius: 4px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
-  z-index: 1000;
   background-color: hsl(0,0%,100%);
   border: 0;
 }
@@ -777,7 +773,7 @@ exports[`component: SplitButton with theme customization should have intermediat
 
 .c6 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {
@@ -922,7 +918,6 @@ exports[`component: SplitButton with theme customization should have square shap
   outline: none;
   border-radius: 1px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
-  z-index: 1000;
   background-color: hsl(0,0%,100%);
   border: 0;
 }
@@ -994,7 +989,7 @@ exports[`component: SplitButton with theme customization should have square shap
 
 .c6 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 @media screen and (min-width:1024px) {

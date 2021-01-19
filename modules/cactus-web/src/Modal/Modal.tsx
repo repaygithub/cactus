@@ -90,7 +90,7 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
   right: 0;
   top: 0;
   align-items: center;
-  z-index: 52;
+  z-index: 101;
   > [data-reach-dialog-content] {
     ${(p) => p.width && 'box-sizing: border-box;'}
     flex-basis: ${(p) => !p.width && '100%'};

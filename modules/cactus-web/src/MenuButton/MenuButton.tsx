@@ -260,7 +260,7 @@ const Wrapper = styled.div<MarginProps>`
 
 const StyledPopover = styled(ReachMenuPopover)`
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 `
 
 MenuButton.propTypes = {

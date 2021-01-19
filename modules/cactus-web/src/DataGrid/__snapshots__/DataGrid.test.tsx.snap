@@ -67,7 +67,6 @@ exports[`component: DataGrid snapshot 1`] = `
   outline: none;
   border-radius: 4px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
-  z-index: 1000;
   background-color: hsl(0,0%,100%);
   border: 0;
 }
@@ -139,7 +138,7 @@ exports[`component: DataGrid snapshot 1`] = `
 
 .c17 {
   position: fixed;
-  z-index: 500;
+  z-index: 1000;
 }
 
 .c20 {

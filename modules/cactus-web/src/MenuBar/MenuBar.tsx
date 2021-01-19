@@ -393,7 +393,7 @@ const MenuWrapper = styled.div`
   min-width: 200px;
   max-width: 320px;
   max-height: 70vh;
-  z-index: 1;
+  z-index: 100;
 
   [role='menuitem'] {
     padding: 4px 8px;
