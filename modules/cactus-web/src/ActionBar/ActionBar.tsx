@@ -30,6 +30,7 @@ interface PanelProps extends StyleProps, React.HTMLAttributes<HTMLElement> {
   popupType?: PopupType
   positionPopup?: PositionPopup
   children?: React.ReactNode | RenderFn
+  'aria-label': string
 }
 
 export const ActionBarItem = React.forwardRef<HTMLButtonElement, ItemProps>(

@@ -63,7 +63,7 @@ export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
 export const BrandBarItem: React.FC<ItemProps> = ({ mobileIcon, ...props }) => {
   const isTiny = SIZES.tiny === useScreenSize()
   if (isTiny && mobileIcon) {
-    return <ActionBar.Panel {...props} icon={mobileIcon} />
+    return <ActionBar.Panel aria-label="" {...props} icon={mobileIcon} />
   }
   return <>{props.children}</>
 }
