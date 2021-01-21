@@ -15,6 +15,7 @@ interface ItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   id?: string
   icon: React.ReactElement
   orderHint?: OrderHint
+  'aria-label': string
 }
 
 type StyleProps = LayoutStyleProps & PaddingProps
@@ -29,6 +30,7 @@ interface PanelProps extends StyleProps, React.HTMLAttributes<HTMLElement> {
   popupType?: PopupType
   positionPopup?: PositionPopup
   children?: React.ReactNode | RenderFn
+  'aria-label': string
 }
 
 export const ActionBarItem = React.forwardRef<HTMLButtonElement, ItemProps>(
@@ -152,6 +154,7 @@ ActionBarItem.propTypes = {
     PropTypes.number,
     PropTypes.oneOf<OrderHintKey>(['top', 'high', 'center', 'low', 'bottom']),
   ]),
+  'aria-label': PropTypes.string.isRequired,
 }
 
 ActionBarPanel.propTypes = {
