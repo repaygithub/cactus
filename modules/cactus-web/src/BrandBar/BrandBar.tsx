@@ -240,7 +240,7 @@ const MenuList = styled(ReachMenuList)`
   padding: 8px 0;
   margin-top: 8px;
   outline: none;
-  border-radius: ${radius};
+  border-radius: ${radius(8)};
   ${(p) => boxShadow(p.theme, 1) || `border: ${border(p.theme, 'lightContrast')}`};
   background-color: ${(p) => p.theme.colors.white};
 

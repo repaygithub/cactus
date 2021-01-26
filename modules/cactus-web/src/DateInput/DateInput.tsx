@@ -33,7 +33,7 @@ import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
-import { boxShadow, textStyle } from '../helpers/theme'
+import { boxShadow, radius, textStyle } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 import { Status } from '../StatusMessage/StatusMessage'
 
@@ -225,20 +225,7 @@ const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   `,
 }
 
-const inputShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
-}
-
 const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
-const getInputShape = (shape: Shape): ReturnType<typeof css> => inputShapeMap[shape]
 
 const InputWrapper = styled.div`
   position: relative;
@@ -249,7 +236,7 @@ const InputWrapper = styled.div`
   align-items: center;
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
   border-color: ${(p): string => p.theme.colors.darkestContrast};
-  ${(p): ReturnType<typeof css> => getInputShape(p.theme.shape)}
+  border-radius: ${radius(20)};
   background-color: ${(p): string => p.theme.colors.white};
   height: 36px;
   outline: none;

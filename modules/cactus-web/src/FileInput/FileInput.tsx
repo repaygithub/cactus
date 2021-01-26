@@ -668,7 +668,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 
 export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
-  border-radius: ${radius};
+  border-radius: ${radius(8)};
   border: ${(p): string => (p.disabled ? 'none' : '2px dotted')};
   border-color: ${(p): string => p.theme.colors.darkestContrast};
   min-width: 300px;

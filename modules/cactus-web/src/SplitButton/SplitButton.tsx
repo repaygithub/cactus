@@ -14,8 +14,8 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { border, boxShadow, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
+import { border, boxShadow, radius, textStyle } from '../helpers/theme'
 
 export type SplitButtonVariant = 'standard' | 'danger' | 'success'
 export interface IconProps {
@@ -154,16 +154,10 @@ const SplitButtonStyles = createGlobalStyle`
   }
 `
 
-const dropdownShapeMap: { [K in Shape]: string } = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 4px;',
-  round: 'border-radius: 8px;',
-}
-
 const SplitButtonList = styled(ReachMenuItems)<VariantInterface>`
   padding: 8px 0;
   outline: none;
-  ${(p) => dropdownShapeMap[p.theme.shape]}
+  border-radius: ${radius(8)};
   ${(p): string => boxShadow(p.theme, 1)};
   background-color: ${(p): string => p.theme.colors.white};
   border: ${(p) => (!p.theme.boxShadows ? border(p.theme, 'lightContrast') : '0')};

@@ -1,7 +1,7 @@
 import '../helpers/polyfills'
 
 import { ActionsAdd, NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
@@ -20,7 +20,7 @@ import {
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { boxShadow, fontSize, textStyle } from '../helpers/theme'
+import { boxShadow, fontSize, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
@@ -230,20 +230,7 @@ const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   `,
 }
 
-const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
-}
-
 const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
-const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
 
 const SelectTrigger = styled.button`
   position: relative;
@@ -253,7 +240,7 @@ const SelectTrigger = styled.button`
   height: 32px;
   padding: 0 28px 0 16px;
   background-color: transparent;
-  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+  border-radius: ${radius(20)};
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
   border-style: solid;
   border-color: ${(p): string => p.theme.colors.darkContrast};
@@ -299,7 +286,7 @@ const ComboInput = styled.input`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+  border-radius: ${radius(20)};
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
   border-style: solid;
   border-color: ${(p): string => p.theme.colors.darkContrast};
@@ -323,19 +310,6 @@ function responsiveHeight(): number {
   return (typeof window !== 'undefined' && window.innerHeight * 0.4) || 0
 }
 
-const listShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
-}
-
-const getListShape = (shape: Shape): ReturnType<typeof css> => listShapeMap[shape]
 const getListBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => {
   return theme.boxShadows
     ? css`
@@ -358,7 +332,7 @@ const StyledList = styled.ul`
   margin-bottom: 0;
   overflow-y: auto;
   outline: none;
-  ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
+  border-radius: ${radius(8)};
   ${(p): ReturnType<typeof css> => getListBoxShadowStyles(p.theme)}
   border-style: solid;
   ${(): string =>
@@ -444,7 +418,7 @@ const StyledListWrapper = styled.div`
   &[aria-hidden='true'] {
     display: none;
   }
-  ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
+  border-radius: ${radius(8)};
   max-height: 400px;
   max-width: 100vw;
   ${(p): string => boxShadow(p.theme, 1)};

@@ -16,13 +16,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { border, boxShadow, textStyle } from '../helpers/theme'
-
-const shapeMap = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 8px;',
-  round: 'border-radius: 20px;',
-}
+import { border, boxShadow, radius, textStyle } from '../helpers/theme'
 
 const dropShapeMap = {
   square: 'border-radius: 0 0 1px 1px;',
@@ -31,8 +25,6 @@ const dropShapeMap = {
 }
 
 type ThemeProps = { theme: CactusTheme }
-
-const getShape = ({ theme }: ThemeProps) => shapeMap[theme.shape]
 
 const getDropShape = ({ theme }: ThemeProps) => dropShapeMap[theme.shape]
 
@@ -191,7 +183,7 @@ const buttonVariantMap: VariantMap = {
         top: -5px;
         left: -5px;
         box-sizing: border-box;
-        ${getShape};
+        border-radius: ${radius(20)};
         border: ${(p) => border(p.theme, 'callToAction')};
       }
     }
@@ -218,7 +210,7 @@ const StyledButton = styled.button<MenuButtonProps>`
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  ${getShape};
+  border-radius: ${radius(20)};
   border: ${(p) => border(p.theme, '')};
   padding: 2px 24px 2px 14px;
   outline: none;

@@ -1,11 +1,11 @@
-import { CactusTheme, Shape } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { border, textStyle } from '../helpers/theme'
+import { border, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
 export interface TextAreaProps
@@ -45,15 +45,9 @@ const displayStatus = (
   }
 }
 
-const shapeMap: { [K in Shape]: string } = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 4px;',
-  round: 'border-radius: 8px;',
-}
-
 const Area = styled.textarea<TextAreaProps>`
   border: ${(p) => border(p.theme, p.disabled ? 'lightGray' : 'darkContrast')};
-  ${(p) => shapeMap[p.theme.shape]}
+  border-radius: ${radius(8)};
   min-height: 100px;
   ${(p): string => (p.theme.mediaQueries ? p.theme.mediaQueries.small : '')} {
     min-width: 336px;

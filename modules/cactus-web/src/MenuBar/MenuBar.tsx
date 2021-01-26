@@ -384,7 +384,7 @@ const MenuWrapper = styled.div`
   left: 0;
   outline: none;
   border: ${(p) => border(p.theme, 'lightContrast')};
-  border-radius: ${radius};
+  border-radius: ${radius(8)};
   ${(p) => boxShadow(p.theme, 1)};
   white-space: normal;
   flex-flow: column nowrap;
