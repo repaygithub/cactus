@@ -15,7 +15,7 @@ Component that represents a web site's main navigation menu. It's designed to be
 
 The `MenuBar` component has two sub-components:
 - `MenuBar.List` - a drop-down sub-menu; it can be nested multiple times
-- `MenuBar.Item` - a `button` that can have an `onClick` handler to control behavior; also takes an `as` prop that can be used to change it to a link
+- `MenuBar.Item` - a `span` that can have an `onClick` handler to control behavior; also takes an `as` prop that can be used to change it to a link
 
 By default, clicking a MenuBar.Item will close any open submenus and return focus to the main nav; you can prevent this behavior by calling `event.stopPropagation()` in the item's `onClick` handler.
 
@@ -50,13 +50,13 @@ All props are optional except for `MenuBar.List.title`.
 
 ### MenuBar.List
 
-- `ref` - attaches a React ref to the `button` element that toggles the submenu; the submenu itself is the DOM tree starting from `button.nextElementSibling`
-- `title` - the contents of the button (equivalent to `MenuBar.Item`'s children)
+- `ref` - attaches a React ref to the `span` element that toggles the submenu; the submenu itself is the DOM tree starting from `span.nextElementSibling`
+- `title` - the contents of the span (equivalent to `MenuBar.Item`'s children)
 - `aria-current=true` - when used at the top level, adds some extra styling to indicate to the user which page the user is on; the menubar does _not_ keep track of that for the dev
 
 ### MenuBar.Item
 
-- `ref` - attaches a React ref to the `button` element
+- `ref` - attaches a React ref to the `span` element
 - `aria-current=true` - when used at the top level, adds some extra styling to indicate to the user which page the user is on; the menubar does _not_ keep track of that for the dev
 - `as` - pass an element/component type to change the behavior while keeping the styling
 - any other props accepted by the underlying component type (e.g. `href` if you pass `as="a"`)
