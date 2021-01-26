@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
-import { width, WidthProps } from 'styled-system'
+import { width as styledSystemWidth, WidthProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
@@ -20,6 +20,7 @@ import {
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
+import { textFieldStatusMap } from '../helpers/status'
 import { boxShadow, fontSize, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import Tag from '../Tag/Tag'
@@ -67,23 +68,6 @@ export interface SelectProps
   onFocus?: React.FocusEventHandler<Target>
 }
 
-type StatusMap = { [K in Status]: ReturnType<typeof css> }
-
-const statusMap: StatusMap = {
-  success: css`
-    border-color: ${(p): string => p.theme.colors.success};
-    background: ${(p): string => p.theme.colors.transparentSuccess};
-  `,
-  warning: css`
-    border-color: ${(p): string => p.theme.colors.warning};
-    background: ${(p): string => p.theme.colors.transparentWarning};
-  `,
-  error: css`
-    border-color: ${(p): string => p.theme.colors.error};
-    background: ${(p): string => p.theme.colors.transparentError};
-  `,
-}
-
 // Thank you, Stack Overflow https://stackoverflow.com/questions/49986720/how-to-detect-internet-explorer-11-and-below-versions
 const isIE = () => {
   const ua = window.navigator.userAgent //Check the userAgent property of the window.navigator object
@@ -93,10 +77,9 @@ const isIE = () => {
   return msie > 0 || trident > 0
 }
 
-// @ts-ignore
-const displayStatus: any = (props): ReturnType<typeof css> | string => {
+const displayStatus: any = (props: SelectProps): ReturnType<typeof css> | string => {
   if (props.status && !props.disabled) {
-    return statusMap[props.status as Status]
+    return textFieldStatusMap[props.status as Status]
   } else {
     return ''
   }
@@ -611,7 +594,7 @@ class List extends React.Component<ListProps, ListState> {
     const currentTarget = event.currentTarget
     // prevent triggering by automated scrolling
     if (!this.didScroll) {
-      this.setActiveDescendant(currentTarget.id as string)
+      this.setActiveDescendant(currentTarget.id)
     }
   }
 
@@ -904,7 +887,7 @@ function asOption(opt: number | string | OptionType): OptionType {
     const option: OptionType = { label: String(opt), value: opt }
     return option
   }
-  return opt as OptionType
+  return opt
 }
 
 function getOptionId(selectId: string, option: OptionType): string {
@@ -1070,7 +1053,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     if (target.getAttribute('role') === 'option') {
       event.preventDefault()
-      const activeId = target.id as string
+      const activeId = target.id
       const active = this.getExtOptions().find((o): boolean => o.id === activeId)
 
       this.raiseChange(event, active || null)
@@ -1486,7 +1469,7 @@ export const Select = styled(SelectBase)`
     border-color: ${(p) => p.disabled && p.theme.colors.lightGray};
   }
   ${margin}
-  ${width}
+  ${styledSystemWidth}
   ${SelectTrigger} {
     ${displayStatus}
   }

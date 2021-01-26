@@ -443,7 +443,7 @@ export const AccordionProvider = (props: AccordionProviderProps): ReactElement =
   )
 
   const unregisterAccordion = useCallback((id: string) => {
-    setUncontrolledOpen((previousOpen) => previousOpen.filter((openId) => openId !== id))
+    setUncontrolledOpen((previousOpen) => previousOpen.filter((o) => o !== id))
     delete managedAccordions.current[id]
   }, [])
 

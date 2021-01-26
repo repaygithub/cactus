@@ -1277,9 +1277,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         this.handleUpdate(event, token, 'Key', String(optionValue))
       } else {
         this.setState(
-          (state): Pick<DateInputState, 'focusDay' | 'value'> => {
-            const { value } = state
-            const pd = PartialDate.from(value, 'YYYY-MM-dd')
+          (prevState): Pick<DateInputState, 'focusDay' | 'value'> => {
+            const { value: prevValue } = prevState
+            const pd = PartialDate.from(prevValue, 'YYYY-MM-dd')
             pd[name](optionValue)
             pd.ensureDayOfMonth()
             this.raiseChange(event, pd)
@@ -1648,8 +1648,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const hasDate = type === 'date' || type === 'datetime'
     const phrases = this.getPhrases()
 
-    const monthId = id + '-month-label'
-    const yearId = id + '-year-label'
+    const currentMonthId = id + '-month-label'
+    const currentYearId = id + '-year-label'
     const timeId = id + '-time'
     const { month: focusMonth, year: focusYear, days } = this._getMonthData()
     const selectedStr = value.format('YYYY-MM-dd')
@@ -1727,7 +1727,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             popupRef={this._portal}
             isOpen={!!isOpen}
             role="dialog"
-            aria-labelledby={`${monthId} ${yearId}`}
+            aria-labelledby={`${currentMonthId} ${currentYearId}`}
             onKeyDownCapture={this.handlePortalKeydownCapture}
           >
             <div onClick={this.handleCalendarClick}>
@@ -1749,7 +1749,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                     aria-label={isOpen === 'calendar' ? phrases.showMonth : phrases.showCalendar}
                     aria-roledescription="toggles between calendar and month selectors"
                   >
-                    <span id={monthId}>
+                    <span id={currentMonthId}>
                       {phrases.months[focusMonth]
                         ? phrases.months[focusMonth].long
                         : phrases.months[PartialDate.from(new Date()).getMonth()].long}
@@ -1763,7 +1763,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                     aria-label={isOpen === 'calendar' ? phrases.showYear : phrases.showCalendar}
                     aria-roledescription="toggles between calendar and year selectors"
                   >
-                    <span id={yearId}>{focusYear}</span>
+                    <span id={currentYearId}>{focusYear}</span>
                     <NavigationChevronDown data-is-open={isOpen} iconSize="tiny" ml={3} />
                   </YearSelect>
                 </Flex>

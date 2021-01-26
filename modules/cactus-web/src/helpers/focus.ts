@@ -19,7 +19,7 @@ export function getFocusable(root?: Element | Document): FocusList {
   } else {
     searchFrom = document
   }
-  const result = Array.from(searchFrom.querySelectorAll(FOCUS_SELECTOR)) as HTMLElement[]
+  const result = Array.from(searchFrom.querySelectorAll<HTMLElement>(FOCUS_SELECTOR))
   return result.filter((el) => !(el.hasAttribute('tabindex') && el.tabIndex < 0))
 }
 
@@ -78,18 +78,18 @@ export function useFocusControl(focusControl: FocusControl = getFocusable, rootI
 
   const setFocus = React.useCallback<FocusSetter>(
     (focusHint, opts = {}) => {
-      const { state, focusControl } = box
-      const { shift = false, delay = false, control = focusControl } = opts
+      const { state: boxState, focusControl: boxFocusControl } = box
+      const { shift = false, delay = false, control = boxFocusControl } = opts
       // No point in delaying setting the state to null.
       if (delay && focusHint !== null) {
-        return setState({ ...state, focusHint, shift, control })
+        return setState({ ...boxState, focusHint, shift, control })
       }
       // Modify in-place to prevent re-render; in truth, we treat this more
       // like a ref than state, but `delay` is easier to implement this way.
-      state.focusHint = focusHint
-      state.shift = shift
-      state.control = control
-      applyFocusState(state, focusRootRef.current)
+      boxState.focusHint = focusHint
+      boxState.shift = shift
+      boxState.control = control
+      applyFocusState(boxState, focusRootRef.current)
     },
     [box, focusRootRef, setState]
   )
@@ -114,7 +114,7 @@ function applyFocusState(state: FocusState, focusRoot: RootHint) {
     if (focus instanceof HTMLElement) {
       focusElement = focus
     } else if (focus?.length) {
-      const nextIndex = getFocusIndex(focus as FocusList, state as SearchState)
+      const nextIndex = getFocusIndex(focus, state as SearchState)
       if (nextIndex !== undefined) {
         focusIndex = wrapIndex(nextIndex, focus.length)
         focusElement = focus[focusIndex]

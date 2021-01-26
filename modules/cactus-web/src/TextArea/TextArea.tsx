@@ -1,10 +1,11 @@
 import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
+import { textFieldStatusMap } from '../helpers/status'
 import { border, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
@@ -18,28 +19,11 @@ export interface TextAreaProps
   resize?: boolean
 }
 
-type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
-
-const statusMap: StatusMap = {
-  success: css`
-    border-color: ${(p): string => p.theme.colors.success};
-    background: ${(p): string => p.theme.colors.transparentSuccess};
-  `,
-  warning: css`
-    border-color: ${(p): string => p.theme.colors.warning};
-    background: ${(p): string => p.theme.colors.transparentWarning};
-  `,
-  error: css`
-    border-color: ${(p): string => p.theme.colors.error};
-    background: ${(p): string => p.theme.colors.transparentError};
-  `,
-}
-
 const displayStatus = (
   props: TextAreaProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | string => {
   if (props.status && !props.disabled) {
-    return statusMap[props.status]
+    return textFieldStatusMap[props.status]
   } else {
     return ''
   }

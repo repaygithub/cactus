@@ -6,8 +6,8 @@ import styled, { css } from 'styled-components'
 import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
-import variant from '../helpers/variant'
 import { border, boxShadow, radius } from '../helpers/theme'
+import cssVariant from '../helpers/variant'
 import IconButton from '../IconButton/IconButton'
 
 export type ModalType = 'action' | 'danger' | 'warning' | 'success'
@@ -111,7 +111,7 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
         max-width: 100%;
       }
     }
-    ${variant({
+    ${cssVariant({
       action: css`
         border-color: ${(p): string => p.theme.colors.callToAction};
       `,

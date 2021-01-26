@@ -14,8 +14,8 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import variant from '../helpers/variant'
 import { border, boxShadow, radius, textStyle } from '../helpers/theme'
+import cssVariant from '../helpers/variant'
 
 export type SplitButtonVariant = 'standard' | 'danger' | 'success'
 export interface IconProps {
@@ -57,7 +57,7 @@ const mainShapeMap: { [K in Shape]: string } = {
   round: 'border-radius: 20px 1px 1px 20px;',
 }
 
-const getVariantDark = variant({
+const getVariantDark = cssVariant({
   standard: css`
     ${(p): ColorStyle => p.theme.colorStyles.callToAction};
   `,
@@ -105,7 +105,7 @@ const MainActionButton = styled.button<VariantInterface>`
   ${(p) => p.disabled && p.theme.colorStyles.disable}
 
     &.dd-closed {
-    ${variant({
+    ${cssVariant({
       standard: css`
         border-color: ${(p): string => p.theme.colors.darkestContrast};
       `,
@@ -119,7 +119,7 @@ const MainActionButton = styled.button<VariantInterface>`
 
     &:hover,
       &:focus {
-      ${variant({
+      ${cssVariant({
         standard: css`
           border-color: ${(p): string => p.theme.colors.callToAction};
         `,
@@ -134,7 +134,7 @@ const MainActionButton = styled.button<VariantInterface>`
   }
 
   &.dd-open {
-    ${variant({
+    ${cssVariant({
       standard: css`
         border-color: ${(p): string => p.theme.colors.callToAction};
       `,
@@ -198,16 +198,10 @@ const DropdownButton = styled(ReachMenuButton)<VariantInterface>`
   ${(p) =>
     p.disabled
       ? p.theme.colorStyles.disable
-      : variant({
-          standard: css`
-            ${(p): ColorStyle => p.theme.colorStyles.darkestContrast};
-          `,
-          danger: css`
-            ${(p): ColorStyle => p.theme.colorStyles.error};
-          `,
-          success: css`
-            ${(p): ColorStyle => p.theme.colorStyles.success};
-          `,
+      : cssVariant({
+          standard: p.theme.colorStyles.darkestContrast,
+          danger: p.theme.colorStyles.error,
+          success: p.theme.colorStyles.success,
         })};
 
   ${(p): string =>
