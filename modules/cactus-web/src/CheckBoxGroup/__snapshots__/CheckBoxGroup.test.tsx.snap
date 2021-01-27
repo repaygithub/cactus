@@ -177,7 +177,7 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
   font-size: 16px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-fWWZrV {
   margin-top: 4px;
 }
 
@@ -414,7 +414,7 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
 }
 
 .c14 .c15,
-.c14 .sc-daBvwG,
+.c14 .sc-jUfxsr,
 .c14 .c11 {
   margin-right: 4px;
   vertical-align: -2px;
@@ -499,7 +499,7 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
   clear: both;
 }
 
-.c0 .sc-gzcbGf {
+.c0 .sc-gkCpWe {
   position: absolute;
   right: 8px;
   top: 2px;
@@ -525,7 +525,7 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
   padding-right: 8px;
 }
 
-.c3 .sc-gzcbGf {
+.c3 .sc-gkCpWe {
   position: relative;
   right: 0;
   bottom: 0;
