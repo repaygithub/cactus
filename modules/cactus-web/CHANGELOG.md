@@ -1,3 +1,20 @@
+# v5.0.1 (Wed Jan 27 2021)
+
+#### 🐛 Bug Fix
+
+- Fix z-index bug that caused covered up elements to be clickable [#487](https://github.com/repaygithub/cactus/pull/487) ([@wilysword](https://github.com/wilysword))
+- Fix a keypress bug in IE11 [#484](https://github.com/repaygithub/cactus/pull/484) ([@wilysword](https://github.com/wilysword))
+
+#### 🔩 Dependency Updates
+
+- Upgrade various dev dependencies [#486](https://github.com/repaygithub/cactus/pull/486) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v5.0.0 (Fri Jan 15 2021)
 
 #### 💥 Breaking Change
