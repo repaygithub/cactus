@@ -7,7 +7,13 @@ import actions from '../helpers/storybookActionsWorkaround'
 import { Grid, Text } from '../index'
 import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
 
-const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger', 'warning', 'success']
+const iconButtonVariants: IconButtonVariants[] = [
+  'standard',
+  'action',
+  'danger',
+  'warning',
+  'success',
+]
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]

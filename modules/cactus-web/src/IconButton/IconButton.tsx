@@ -56,11 +56,11 @@ const variantMap: VariantMap = {
   `,
   success: css`
     color: ${(p): string => p.theme.colors.success};
-    
+
     &:hover {
       color: ${(p): string => p.theme.colors.successDark};
     }
-  `
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -98,11 +98,11 @@ const inverseVariantMap: VariantMap = {
   `,
   success: css`
     color: ${(p): string => p.theme.colors.success};
-    
+
     &:hover {
       color: ${(p): string => p.theme.colors.successDark};
     }
-  `
+  `,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
