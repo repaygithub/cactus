@@ -1172,6 +1172,24 @@ describe('component: Select', (): void => {
       expect(listbox).toHaveTextContent('superior')
       expect(listbox).toHaveTextContent('globe')
     })
+
+    test('values added should not be duplicated', async (): Promise<void> => {
+      const DelayedOptions = () => {
+        const [options, setOptions] = React.useState<string[]>([])
+        React.useEffect(() => setOptions(['phoenix', 'tucson', 'flagstaff']), [])
+        return <Select id="test-id" name="city" options={options} value="phoenix" comboBox />
+      }
+      const { getByRole, getAllByRole } = render(
+        <StyleProvider>
+          <DelayedOptions />
+        </StyleProvider>
+      )
+      const trigger = getByRole('button')
+      expect(trigger).toHaveTextContent('phoenix')
+      fireEvent.click(trigger)
+      const options = getAllByRole('option')
+      expect(options).toHaveLength(3)
+    })
   })
 
   describe('with multiple=true && comboBox=true', (): void => {

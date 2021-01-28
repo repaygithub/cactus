@@ -1310,7 +1310,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.getExtOptions().forEach((opt): void => {
       this.optionsMap[opt.value] = opt
     })
-    if (this.props.comboBox && this.props.value) {
+    if (this.props.comboBox && this.props.canCreateOption && this.props.value) {
       const newOptions: OptionType[] = []
 
       if (Array.isArray(this.props.value)) {
@@ -1358,9 +1358,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     ) {
       return this.memoizedExtOptions.memo
     }
+    const propValues = new Set<string | number>()
     let memo = this.props.options.map(
       (o): ExtendedOptionType => {
         const opt = asOption(o)
+        propValues.add(opt.value)
         const extendedOpt: ExtendedOptionType = {
           ...opt,
           id: getOptionId(selectId, opt),
@@ -1369,13 +1371,15 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         return extendedOpt
       }
     )
-    const extraOpts = (this.state.extraOptions as OptionType[]).map(
-      (opt): ExtendedOptionType => ({
-        ...opt,
-        id: getOptionId(selectId, opt),
-        isSelected: this.isSelected(opt),
-      })
-    )
+    const extraOpts = (this.state.extraOptions as OptionType[])
+      .filter((opt) => !propValues.has(opt.value))
+      .map(
+        (opt): ExtendedOptionType => ({
+          ...opt,
+          id: getOptionId(selectId, opt),
+          isSelected: this.isSelected(opt),
+        })
+      )
     memo = memo.concat(extraOpts)
     this.memoizedExtOptions = {
       id: selectId,

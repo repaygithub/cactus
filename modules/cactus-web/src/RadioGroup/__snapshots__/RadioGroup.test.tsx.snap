@@ -34,9 +34,9 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   background-color: hsla(47,82%,47%,0.3);
 }
 
-.c12 .sc-jUfxsr,
+.c12 .sc-jQAyEw,
 .c12 .c13,
-.c12 .sc-dWBSoC {
+.c12 .sc-jHcYrh {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -61,7 +61,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   clear: both;
 }
 
-.c0 .sc-gzcbGf {
+.c0 .sc-gkCpWe {
   position: absolute;
   right: 8px;
   top: 2px;
@@ -149,7 +149,7 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   padding-right: 8px;
 }
 
-.c3 .sc-gzcbGf {
+.c3 .sc-gkCpWe {
   position: relative;
   right: 0;
   bottom: 0;
@@ -420,7 +420,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   font-size: 16px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-fWWZrV {
   margin-top: 4px;
 }
 

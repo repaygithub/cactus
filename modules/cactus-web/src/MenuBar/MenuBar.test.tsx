@@ -44,9 +44,9 @@ class Class extends React.Component<Sample, unknown> {
 
 const Menu = () => {
   const navRef = React.useRef<HTMLElement>(null)
-  const listRef = React.useRef<HTMLButtonElement>(null)
+  const listRef = React.useRef<HTMLSpanElement>(null)
   const linkRef = React.useRef<HTMLAnchorElement>(null)
-  const itemRef = React.useRef<HTMLButtonElement>(null)
+  const itemRef = React.useRef<HTMLSpanElement>(null)
   const customRef = React.useRef<HTMLDivElement>(null)
   return (
     <MenuBar id="mb" ref={navRef} aria-label="Menu of Main-ness">
