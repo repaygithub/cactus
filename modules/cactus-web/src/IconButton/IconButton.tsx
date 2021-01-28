@@ -9,7 +9,7 @@ import { isIE } from '../helpers/constants'
 import { omitMargins } from '../helpers/omit'
 import { borderSize } from '../helpers/theme'
 
-export type IconButtonVariants = 'standard' | 'action' | 'danger'
+export type IconButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
 interface IconButtonProps
@@ -47,6 +47,20 @@ const variantMap: VariantMap = {
       color: ${(p): string => p.theme.colors.errorDark};
     }
   `,
+  warning: css`
+    color: ${(p): string => p.theme.colors.warningDark};
+
+    &:hover {
+      color: ${(p): string => p.theme.colors.warning};
+    }
+  `,
+  success: css`
+    color: ${(p): string => p.theme.colors.success};
+
+    &:hover {
+      color: ${(p): string => p.theme.colors.successDark};
+    }
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -73,6 +87,20 @@ const inverseVariantMap: VariantMap = {
     &:hover,
     &:focus {
       color: ${(p): string => p.theme.colors.white};
+    }
+  `,
+  warning: css`
+    color: ${(p): string => p.theme.colors.warningDark};
+
+    &:hover {
+      color: ${(p): string => p.theme.colors.warning};
+    }
+  `,
+  success: css`
+    color: ${(p): string => p.theme.colors.success};
+
+    &:hover {
+      color: ${(p): string => p.theme.colors.successDark};
     }
   `,
 }
