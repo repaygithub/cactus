@@ -54,7 +54,7 @@ const useVariant = (): Variant => {
   return 'top'
 }
 
-function MenuBarItemFunc<E, C extends GenericComponent = 'button'>(
+function MenuBarItemFunc<E, C extends GenericComponent = 'span'>(
   props: AsProps<C>,
   ref: React.Ref<E>
 ) {
@@ -87,7 +87,7 @@ const MenuBarItem = MenuBarItemFR as MenuBarItemType
 
 MenuBarItemFR.displayName = 'MenuBarItem'
 
-const MenuBarList = React.forwardRef<HTMLButtonElement, ListProps>(
+const MenuBarList = React.forwardRef<HTMLSpanElement, ListProps>(
   ({ title, children, ...props }, ref) => {
     const variant = useVariant()
     const isTopbar = variant === 'top'
@@ -459,7 +459,7 @@ const buttonStyles = `
   }
 `
 
-const MenuButton = styled.button.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
+const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
   ${buttonStyles}
   width: 100%;
   height: 100%;
@@ -471,4 +471,3 @@ const MenuButton = styled.button.attrs({ tabIndex: -1 as number, role: 'menuitem
     ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
   }
 `
-MenuButton.defaultProps = { type: 'button' }
