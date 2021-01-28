@@ -143,7 +143,11 @@ test('select date with popup', async (t): Promise<void> => {
   await clickWorkaround(queryByLabelText('Click to change year'))
   await t.click('#date-test-2005')
   await clickWorkaround(Selector('[data-date="2005-02-28"]'))
-  await t.expect(textField.value).eql('2005-02-28')
+  await t
+    .expect(textField.value)
+    .eql('2005-02-28')
+    .expect(Selector(dateDialog).filterHidden().exists)
+    .ok('Dialog is hidden')
 })
 
 test('select datetime with popup', async (t): Promise<void> => {
@@ -158,7 +162,11 @@ test('select datetime with popup', async (t): Promise<void> => {
     .click(scopedSelector(dateDialog, 'svg[data-name="ArrowUp"]'))
     .pressKey('tab')
     .pressKey('down')
-  await t.expect(textField.value).eql('2019-09-29T23:04')
+  await t
+    .expect(textField.value)
+    .eql('2019-09-29T23:04')
+    .expect(Selector(dateDialog).filterVisible().exists)
+    .ok('Dialog is visible')
 })
 
 test('scroll months back', async (t): Promise<void> => {
