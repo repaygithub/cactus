@@ -58,7 +58,7 @@ const initialValues: FormData = {
   useCactusStyles: false,
   selectColor: '',
   fileInput: undefined,
-  establishedDate: '2019-10-16',
+  establishedDate: '',
 }
 
 const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {

@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet'
 import MenuBar from './components/MenuBar'
 import Account from './containers/account'
 import Accounts from './containers/accounts'
+import DateTest from './containers/date'
 import Faq from './containers/faq'
 import Home from './containers/home'
 import PaymentHistoryReport from './containers/payment-history-report'
@@ -34,6 +35,7 @@ const App = (): React.ReactElement => {
             <Faq path="/faq" />
             <Rules path="/rules" />
             <Account path="/account/:accountId" />
+            <DateTest path="/date-test" />
           </MenuBar>
         </Router>
       </ScreenSizeProvider>
