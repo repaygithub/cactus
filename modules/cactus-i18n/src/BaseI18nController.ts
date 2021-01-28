@@ -133,7 +133,7 @@ export default abstract class BaseI18nController {
     return id
   }
 
-  protected negotiateLang(lang?: string, strict = false): string[] {
+  public negotiateLang(lang?: string, strict = false): string[] {
     if (lang === undefined) {
       return this._languages
     }
