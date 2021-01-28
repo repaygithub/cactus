@@ -1,5 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+// @ts-ignore The types library doesn't have `overflowX` & `overflowY` for some reason.
+import { overflow, OverflowProps, overflowX, overflowY } from 'styled-system'
 
 import ActionProvider from '../ActionBar/ActionProvider'
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -84,10 +86,15 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   )
 }
 
-const Main = styled.main`
+// For some completely insane Typescript reason I can't use `OverflowProps` directly.
+type MainProps = OverflowProps
+const Main = styled.main<MainProps>`
   display: block;
   box-sizing: border-box;
   width: 100%;
+  ${overflow};
+  ${overflowX};
+  ${overflowY};
 `
 Main.defaultProps = { role: 'main' }
 
@@ -142,8 +149,8 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
     ? `
         display: -ms-grid;
         display: grid;
-        -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
+        -ms-grid-columns: minmax(1px, 1fr);
+        grid-template-columns: minmax(1px, 1fr);
         -ms-grid-rows: min-content minmax(max-content, 1fr) min-content;
         grid-template-rows: min-content minmax(max-content, 1fr) min-content;
 
@@ -171,8 +178,8 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
     : `
         display: -ms-grid;
         display: grid;
-        -ms-grid-columns: ${p.floatLeft}px 1fr;
-        grid-template-columns: ${p.floatLeft}px 1fr;
+        -ms-grid-columns: ${p.floatLeft}px minmax(1px, 1fr);
+        grid-template-columns: ${p.floatLeft}px minmax(1px, 1fr);
         -ms-grid-rows: min-content min-content minmax(max-content, 1fr) min-content;
         grid-template-rows: min-content min-content minmax(max-content, 1fr) min-content;
 
