@@ -68,20 +68,25 @@ function usePopup(
   const toggle = React.useCallback<TogglePopup>(
     (expand, focusHint, focusOpt) => {
       let isExpanded = box.expanded
+      const shouldUpdateState = expand !== isExpanded
 
-      if (expand !== isExpanded) {
+      if (shouldUpdateState) {
         isExpanded = !isExpanded
+      }
 
-        // A closed element can't focus by index or text search.
-        if (!isExpanded && typeof focusHint !== 'object') {
-          focusHint = null
-        }
+      // A closed element can't focus by index or text search.
+      if (!isExpanded && typeof focusHint !== 'object') {
+        focusHint = null
+      }
 
+      if (shouldUpdateState) {
         setExpanded(isExpanded, () => {
           if (focusHint !== undefined) {
             box.setFocus(focusHint, focusOpt)
           }
         })
+      } else if (focusHint !== undefined) {
+        box.setFocus(focusHint, focusOpt)
       }
     },
     [box, setExpanded]
