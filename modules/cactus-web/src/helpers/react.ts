@@ -78,7 +78,7 @@ export function useBox<T>(box: T): T {
   return current
 }
 
-type StateSetterWithCallback<S> = (v: SetStateAction<S>, callback: () => void) => void
+type StateSetterWithCallback<S> = (v: SetStateAction<S>, callback?: () => void) => void
 
 const noop = () => undefined
 
@@ -88,10 +88,13 @@ export function useStateWithCallback<S>(
   const [state, setState] = React.useState<S>(initialState)
   const storedCallback = React.useRef<() => void>(noop)
 
-  const setStateWithCallback = React.useCallback((v: SetStateAction<S>, callback: () => void) => {
-    storedCallback.current = callback
-    setState(v)
-  }, [])
+  const setStateWithCallback = React.useCallback<StateSetterWithCallback<S>>(
+    (v, callback = noop) => {
+      storedCallback.current = callback
+      setState(v)
+    },
+    []
+  )
 
   React.useEffect(() => {
     storedCallback.current()

@@ -23,6 +23,9 @@ describe('React Helper Tests', () => {
           <button type="button" onClick={() => setMainState('updatedAgain', otherCallback)}>
             Update Main State with Other Callback
           </button>
+          <button type="button" onClick={() => setMainState('updatedAnotherTime')}>
+            Update Main State with No Callback
+          </button>
           <div aria-label="Main State">{mainState}</div>
           <div aria-label="Other State">{otherState}</div>
         </>
@@ -35,6 +38,9 @@ describe('React Helper Tests', () => {
       const updateOtherStateButton = screen.getByText('Update Other State')
       const updateMainStateWithOtherCallbackButton = screen.getByText(
         'Update Main State with Other Callback'
+      )
+      const updateMainStateWithNoCallbackButton = screen.getByText(
+        'Update Main State with No Callback'
       )
       const currentMainState = screen.getByLabelText('Main State')
       const currentOtherState = screen.getByLabelText('Other State')
@@ -60,6 +66,12 @@ describe('React Helper Tests', () => {
       expect(callback).toHaveBeenCalledTimes(1)
       expect(otherCallback).toHaveBeenCalledTimes(1)
       expect(currentMainState).toHaveTextContent('updatedAgain')
+      expect(currentOtherState).toHaveTextContent('otherUpdated')
+
+      userEvent.click(updateMainStateWithNoCallbackButton)
+      expect(callback).toHaveBeenCalledTimes(1)
+      expect(otherCallback).toHaveBeenCalledTimes(1)
+      expect(currentMainState).toHaveTextContent('updatedAnotherTime')
       expect(currentOtherState).toHaveTextContent('otherUpdated')
     })
   })
