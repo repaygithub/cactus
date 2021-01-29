@@ -82,7 +82,7 @@ export const ActivePageDimmer = (): React.ReactElement => {
   )
 }
 
-export const modalWithDimmer = (): React.ReactElement => {
+export const ModalWithDimmer = (): React.ReactElement => {
   const [open, setOpen] = useState(false)
 
   return (
