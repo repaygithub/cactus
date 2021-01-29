@@ -5,6 +5,7 @@ import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
 import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
+import Dimmer from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
 import { border, boxShadow } from '../helpers/theme'
 import variant from '../helpers/variant'
@@ -47,31 +48,33 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
   const hasChildren = !!React.Children.count(children)
 
   return (
-    <ModalPopUp
-      aria-label={modalLabel}
-      isOpen={isOpen}
-      onDismiss={onClose}
-      variant={variant}
-      height={innerHeight}
-      maxHeight={innerMaxHeight}
-      {...rest}
-    >
-      <DialogContent aria-label={modalLabel}>
-        <IconButton onClick={onClose} label={closeLabel}>
-          <NavigationClose />
-        </IconButton>
-        {hasChildren && (
-          <Flex
-            className="modal-children"
-            flexDirection="column"
-            alignItems="center"
-            flexWrap="nowrap"
-          >
-            {children}
-          </Flex>
-        )}
-      </DialogContent>
-    </ModalPopUp>
+    <Dimmer active={isOpen} page>
+      <ModalPopUp
+        aria-label={modalLabel}
+        isOpen={isOpen}
+        onDismiss={onClose}
+        variant={variant}
+        height={innerHeight}
+        maxHeight={innerMaxHeight}
+        {...rest}
+      >
+        <DialogContent aria-label={modalLabel}>
+          <IconButton onClick={onClose} label={closeLabel}>
+            <NavigationClose />
+          </IconButton>
+          {hasChildren && (
+            <Flex
+              className="modal-children"
+              flexDirection="column"
+              alignItems="center"
+              flexWrap="nowrap"
+            >
+              {children}
+            </Flex>
+          )}
+        </DialogContent>
+      </ModalPopUp>
+    </Dimmer>
   )
 }
 
@@ -81,7 +84,6 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
     return prop !== 'maxHeight'
   },
 })<ModalPopupProps>`
-  background: rgba(46, 53, 56, 0.33);
   bottom: 0;
   display: flex;
   left: 0;

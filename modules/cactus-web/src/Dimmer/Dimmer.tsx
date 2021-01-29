@@ -42,7 +42,7 @@ const DimmerStyled = styled.div<DimmerProps>`
   vertical-align: middle;
   flex-direction: column;
   justify-content: center;
-  z-index: 1000;
+  z-index: 100;
 `
 
 Dimmer.propTypes = {
