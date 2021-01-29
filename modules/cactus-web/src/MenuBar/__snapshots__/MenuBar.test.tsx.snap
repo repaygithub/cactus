@@ -329,7 +329,7 @@ exports[`component: MenuBar sidebar 1`] = `
           role="none"
           tabindex="-1"
         >
-          <button
+          <span
             aria-controls="em-popup"
             aria-current="true"
             aria-haspopup="menu"
@@ -337,7 +337,6 @@ exports[`component: MenuBar sidebar 1`] = `
             id="em"
             role="menuitem"
             tabindex="-1"
-            type="button"
           >
             <div
               class="c9"
@@ -363,7 +362,7 @@ exports[`component: MenuBar sidebar 1`] = `
                 />
               </svg>
             </div>
-          </button>
+          </span>
           <ul
             aria-hidden="true"
             aria-labelledby="em"
@@ -382,7 +381,6 @@ exports[`component: MenuBar sidebar 1`] = `
                 href="#"
                 role="menuitem"
                 tabindex="-1"
-                type="button"
               >
                 Link to the Past
               </a>
@@ -391,14 +389,13 @@ exports[`component: MenuBar sidebar 1`] = `
               role="none"
               tabindex="-1"
             >
-              <button
+              <span
                 aria-controls="nested-popup"
                 aria-haspopup="menu"
                 class="c8"
                 id="nested"
                 role="menuitem"
                 tabindex="-1"
-                type="button"
               >
                 <div
                   class="c9"
@@ -422,7 +419,7 @@ exports[`component: MenuBar sidebar 1`] = `
                     />
                   </svg>
                 </div>
-              </button>
+              </span>
               <ul
                 aria-hidden="true"
                 aria-labelledby="nested"
@@ -444,15 +441,14 @@ exports[`component: MenuBar sidebar 1`] = `
                 <li
                   role="none"
                 >
-                  <button
+                  <span
                     aria-current="true"
                     class="c8"
                     role="menuitem"
                     tabindex="-1"
-                    type="button"
                   >
                     The Mighty
-                  </button>
+                  </span>
                 </li>
                 <li
                   role="none"
@@ -471,17 +467,16 @@ exports[`component: MenuBar sidebar 1`] = `
         <li
           role="none"
         >
-          <button
+          <span
             aria-current="true"
             class="c8"
             role="menuitem"
             tabindex="-1"
-            type="button"
           >
             <em>
               A button
             </em>
-          </button>
+          </span>
         </li>
         <li
           role="none"
@@ -490,7 +485,6 @@ exports[`component: MenuBar sidebar 1`] = `
             class="c8"
             role="menuitem"
             tabindex="-1"
-            type="button"
           >
             Styled Link
           </a>
@@ -807,7 +801,7 @@ exports[`component: MenuBar typechecks 1`] = `
         role="none"
         tabindex="-1"
       >
-        <button
+        <span
           aria-controls="em-popup"
           aria-current="true"
           aria-haspopup="menu"
@@ -815,7 +809,6 @@ exports[`component: MenuBar typechecks 1`] = `
           id="em"
           role="menuitem"
           tabindex="-1"
-          type="button"
         >
           <div
             class="c5"
@@ -841,7 +834,7 @@ exports[`component: MenuBar typechecks 1`] = `
               />
             </svg>
           </div>
-        </button>
+        </span>
         <div
           aria-hidden="true"
           class="c9"
@@ -881,7 +874,6 @@ exports[`component: MenuBar typechecks 1`] = `
                 href="#"
                 role="menuitem"
                 tabindex="-1"
-                type="button"
               >
                 Link to the Past
               </a>
@@ -890,14 +882,13 @@ exports[`component: MenuBar typechecks 1`] = `
               role="none"
               tabindex="-1"
             >
-              <button
+              <span
                 aria-controls="nested-popup"
                 aria-haspopup="menu"
                 class="c4"
                 id="nested"
                 role="menuitem"
                 tabindex="-1"
-                type="button"
               >
                 <div
                   class="c5"
@@ -921,7 +912,7 @@ exports[`component: MenuBar typechecks 1`] = `
                     />
                   </svg>
                 </div>
-              </button>
+              </span>
               <div
                 aria-hidden="true"
                 class="c9"
@@ -964,15 +955,14 @@ exports[`component: MenuBar typechecks 1`] = `
                   <li
                     role="none"
                   >
-                    <button
+                    <span
                       aria-current="true"
                       class="c4"
                       role="menuitem"
                       tabindex="-1"
-                      type="button"
                     >
                       The Mighty
-                    </button>
+                    </span>
                   </li>
                   <li
                     role="none"
@@ -1029,17 +1019,16 @@ exports[`component: MenuBar typechecks 1`] = `
       <li
         role="none"
       >
-        <button
+        <span
           aria-current="true"
           class="c4"
           role="menuitem"
           tabindex="-1"
-          type="button"
         >
           <em>
             A button
           </em>
-        </button>
+        </span>
       </li>
       <li
         role="none"
@@ -1048,7 +1037,6 @@ exports[`component: MenuBar typechecks 1`] = `
           class="c4"
           role="menuitem"
           tabindex="-1"
-          type="button"
         >
           Styled Link
         </a>

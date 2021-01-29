@@ -35,7 +35,7 @@ test('Navigate to faq page', async (t: TestController): Promise<void> => {
 })
 
 test('Interact with dropdown', async (t: TestController): Promise<void> => {
-  await t.click(Selector('button').withText('Accounts'))
+  await t.click(Selector('span').withText('Accounts'))
   await t.click(Selector('a').withText('Dhalton Huber'))
   const url = await getUrl()
   await t.expect(url).eql('http://localhost:33567/account/45789')
@@ -47,6 +47,6 @@ test('Can click item when MenuBar is overflowed', async (t: TestController): Pro
   const scrollIcon = Selector('nav').child('div').nth(-1)
   await t.click(scrollIcon)
   await t.click(scrollIcon)
-  await t.click(Selector('button').withText('Explore our modules on GitHub'))
+  await t.click(Selector('span').withText('Explore our modules on GitHub'))
   await t.expect(queryByText('Cactus Framework').exists).ok()
 })

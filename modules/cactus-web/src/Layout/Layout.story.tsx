@@ -4,6 +4,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import ActionBar from '../ActionBar/ActionBar'
+import Box from '../Box/Box'
 import BrandBar from '../BrandBar/BrandBar'
 import Flex from '../Flex/Flex'
 import Footer from '../Footer/Footer'
@@ -198,14 +199,17 @@ export const ShortContent = (): React.ReactElement => {
   const hasMenu = boolean('Show Menu', true)
   const hasActions = boolean('Show Action Bar', false)
   const hasFooter = boolean('Show Footer', true)
+  const overflow = boolean('Main Scrollbar', true)
 
   return (
     <Layout>
       {hasBrand && <StoryBrandBar />}
       {hasMenu && <StoryMenuBar />}
       {hasActions && <StoryActionBar />}
-      <Layout.Content>
-        <h1>Latin Or Something</h1>
+      <Layout.Content overflowX={overflow ? 'auto' : undefined}>
+        <Box padding={3} minWidth="2000px" backgroundColor="lightContrast">
+          <h1>Latin Or Something</h1>
+        </Box>
       </Layout.Content>
       {hasFooter && <StoryFooter />}
     </Layout>
