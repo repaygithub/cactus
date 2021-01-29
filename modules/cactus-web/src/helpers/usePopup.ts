@@ -3,8 +3,7 @@ import React from 'react'
 import { isActionKey, preventAction } from './a11y'
 import { isFocusOut } from './events'
 import { FocusControl, FocusHint, FocusOpts, FocusSetter, useFocusControl } from './focus'
-import { useBox } from './react'
-import { useStateWithSetterCallback } from './state'
+import { useBox, useStateWithCallback } from './react'
 import useId from './useId'
 
 export type PopupType = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog'
@@ -62,7 +61,7 @@ function usePopup(
   const buttonId = useId(inputButtonId || (id && `${id}-button`))
   const popupId = useId(inputPopupId || (id && `${id}-popup`))
   const setFocus = useFocusControl(focusControl, popupId)
-  const [expanded, setExpanded] = useStateWithSetterCallback<boolean>(initialExpanded)
+  const [expanded, setExpanded] = useStateWithCallback<boolean>(initialExpanded)
   const box = useBox({ expanded, setFocus })
 
   // For convenience, you can control focus & visibility with a single call.
