@@ -26,20 +26,21 @@ The first step to creating a new route is to create a new component to render at
 
 ```jsx
 // Favorites.jsx
+import { Box } from '@repay/cactus-web'
 import React from 'react'
 
 const Favorites = () => (
-  <div style={{ padding: '16px' }}>
+  <Box padding={4}>
     <h1>Favorites</h1>
-  </div>
+  </Box>
 )
 
 export default Favorites
 ```
 
-At this time, we are simply rendering a `<div />` with some padding and a page header, but we'll add on to this later. For now, leave that as-is and open up the `src/App.jsx` file. This is where we will add our route.
+At this time, we are simply rendering a `<Box />` with some padding and a page header. The Box component is a generic box with some spacing and alignment props which is available in `@repay/cactus-web`. For a more detailed explanation of `Box`, see the [Box documentation](https://repaygithub.github.io/cactus/components/box/). The `Favorites` component is pretty basic right now, but we'll add on to this later. For now, leave that as-is and open up the `src/App.jsx` file. This is where we will add our route.
 
-Start by creating a lazy version of the component using React's `lazy` function:
+Start by creating a lazy version of the component in `App.jsx` using React's `lazy` function:
 
 `const LazyFavorites = lazy(() => import('./components/Favorites'))`
 
@@ -48,7 +49,7 @@ The `lazy` function helps improve performance in a React application by loading 
 Now that we have our lazy component defined, we're ready to add a new route using React Router. Add the following snippet as a child of `<Switch />` in `App.jsx`, before the Home route:
 
 ```jsx
-<Route path="/responsive-page">
+<Route path="/favorites">
   <LazyFavorites />
 </Route>
 ```
@@ -110,9 +111,9 @@ Now, return to your browser. Notice that there's a new item called "Favorites" i
 
 We've generated a new application and added a route to our favorites page. Now the only thing left to do is list our favorite foods and drinks using a responsive design. To do this, we'll use the `Grid` component from `@repay/cactus-web`. The Grid component is based on a 12 column system. The API allows you to specify how many of those 12 columns each Grid Item should occupy at different screen sizes. For a more detailed explanation of the `Grid` component, see the [docs](https://repaygithub.github.io/cactus/components/grid/).
 
-Let's open back up the `Favorites.jsx` file and import a couple of components from cactus:
+Let's open back up the `Favorites.jsx` file and modify the first line to import the `Card` and `Grid` components from Cactus:
 
-`import { Card, Grid } from '@repay/cactus-web'`
+`import { Box, Card, Grid } from '@repay/cactus-web'`
 
 Now, we'll render a couple of cards listing favorite foods & drinks using the `Grid` layout. Paste the following snippet just below the `<h1 />` tag in `Favorites.jsx`:
 
@@ -149,7 +150,7 @@ This concludes the responsive web design tutorial.
 
 In this tutorial, we've learned how to:
 - generate a new UI application using `@repay/create-ui`
-- add a new route using React Router and hook it up to a link in the `MenuBar`.
+- add a new route using React Router and hook it up to a link in the `MenuBar`
 - use the `Grid` component to implement a responsive page design
 
 It's important to consider website responsiveness as more and more users are turning to their smartphones and tablets to browse the web. A user's experience should be no more difficult when using a mobile device than it is using a desktop. Elements within a given page should be laid out differently on mobile to account for the limited screen space in order to give your users the best possible experience.
