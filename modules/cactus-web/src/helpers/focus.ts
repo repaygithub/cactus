@@ -41,7 +41,6 @@ export interface SearchState {
 
 export interface FocusOpts {
   shift?: boolean
-  delay?: boolean
   /** Allow overriding on a per-call basis. */
   control?: FocusControl
 }
@@ -73,28 +72,23 @@ export function useFocusControl(fc: FocusControl | undefined, rootId: string): F
 export function useFocusControl(fc?: FocusControl): [FocusSetter, React.RefObject<HTMLElement>]
 export function useFocusControl(focusControl: FocusControl = getFocusable, rootId?: string): any {
   const focusRootRef = React.useRef<RootHint>(rootId || null)
-  const [state, setState] = React.useState(initialState(focusControl))
-  const box = useBox({ state, focusControl })
+  const focusState = React.useRef(initialState(focusControl))
+  const box = useBox({ focusState, focusControl })
 
   const setFocus = React.useCallback<FocusSetter>(
     (focusHint, opts = {}) => {
-      const { state, focusControl } = box
-      const { shift = false, delay = false, control = focusControl } = opts
-      // No point in delaying setting the state to null.
-      if (delay && focusHint !== null) {
-        return setState({ ...state, focusHint, shift, control })
-      }
+      const { focusState, focusControl } = box
+      const { shift = false, control = focusControl } = opts
       // Modify in-place to prevent re-render; in truth, we treat this more
       // like a ref than state, but `delay` is easier to implement this way.
-      state.focusHint = focusHint
-      state.shift = shift
-      state.control = control
-      applyFocusState(state, focusRootRef.current)
+      focusState.current.focusHint = focusHint
+      focusState.current.shift = shift
+      focusState.current.control = control
+      applyFocusState(focusState.current, focusRootRef.current)
     },
-    [box, focusRootRef, setState]
+    [box, focusRootRef]
   )
 
-  React.useEffect(() => applyFocusState(state, focusRootRef.current), [state, focusRootRef])
   return rootId ? setFocus : [setFocus, focusRootRef as React.RefObject<HTMLElement>]
 }
 
