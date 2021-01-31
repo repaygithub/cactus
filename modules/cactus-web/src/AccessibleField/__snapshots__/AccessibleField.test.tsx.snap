@@ -139,6 +139,7 @@ exports[`component: AccessibleField alternate prop types 1`] = `
       <span
         class="c6 "
         data-reach-tooltip-trigger=""
+        data-state="tooltip-hidden"
       >
         <svg
           class="c7 c8"

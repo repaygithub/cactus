@@ -2,7 +2,7 @@ import {
   Menu as ReachMenu,
   MenuButton as ReachMenuButton,
   MenuItem as ReachMenuItem,
-  MenuItemImplProps,
+  MenuItemProps,
   MenuItems as ReachMenuItems,
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
@@ -42,7 +42,7 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginP
   variant?: SplitButtonVariant
 }
 
-interface SplitButtonActionProps extends Omit<MenuItemImplProps, 'onSelect'> {
+interface SplitButtonActionProps extends Omit<MenuItemProps, 'onSelect'> {
   // !important
   onSelect: () => any
   icon?: React.FunctionComponent<IconProps>
