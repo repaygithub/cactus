@@ -179,6 +179,7 @@ exports[`component: TextAreaField should render a TextAreaField 1`] = `
       <span
         class="c7 "
         data-reach-tooltip-trigger=""
+        data-state="tooltip-hidden"
       >
         <svg
           class="c8 c9"

@@ -369,12 +369,12 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       Test
     </button>
     <button
-      aria-controls="menu--43"
+      aria-controls="menu--44"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--43"
+      id="menu-button--menu--44"
       type="button"
       variant="standard"
     >
@@ -399,10 +399,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--43"
+        aria-labelledby="menu-button--menu--44"
         class="c7"
         data-reach-menu-items=""
-        id="menu--43"
+        id="menu--44"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -410,7 +410,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--43"
+          id="option-0--menu--44"
           role="menuitem"
           tabindex="-1"
         >
@@ -419,7 +419,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--43"
+          id="option-1--menu--44"
           role="menuitem"
           tabindex="-1"
         >
@@ -585,12 +585,12 @@ exports[`component: SplitButton with theme customization should have 2px borders
       Test
     </button>
     <button
-      aria-controls="menu--48"
+      aria-controls="menu--49"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--48"
+      id="menu-button--menu--49"
       type="button"
       variant="standard"
     >
@@ -615,10 +615,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--48"
+        aria-labelledby="menu-button--menu--49"
         class="c7"
         data-reach-menu-items=""
-        id="menu--48"
+        id="menu--49"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -626,7 +626,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--48"
+          id="option-0--menu--49"
           role="menuitem"
           tabindex="-1"
         >
@@ -635,7 +635,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--48"
+          id="option-1--menu--49"
           role="menuitem"
           tabindex="-1"
         >
@@ -801,12 +801,12 @@ exports[`component: SplitButton with theme customization should have intermediat
       Test
     </button>
     <button
-      aria-controls="menu--38"
+      aria-controls="menu--39"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--38"
+      id="menu-button--menu--39"
       type="button"
       variant="standard"
     >
@@ -831,10 +831,10 @@ exports[`component: SplitButton with theme customization should have intermediat
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--38"
+        aria-labelledby="menu-button--menu--39"
         class="c7"
         data-reach-menu-items=""
-        id="menu--38"
+        id="menu--39"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -842,7 +842,7 @@ exports[`component: SplitButton with theme customization should have intermediat
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--38"
+          id="option-0--menu--39"
           role="menuitem"
           tabindex="-1"
         >
@@ -851,7 +851,7 @@ exports[`component: SplitButton with theme customization should have intermediat
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--38"
+          id="option-1--menu--39"
           role="menuitem"
           tabindex="-1"
         >
@@ -1017,12 +1017,12 @@ exports[`component: SplitButton with theme customization should have square shap
       Test
     </button>
     <button
-      aria-controls="menu--33"
+      aria-controls="menu--34"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--33"
+      id="menu-button--menu--34"
       type="button"
       variant="standard"
     >
@@ -1047,10 +1047,10 @@ exports[`component: SplitButton with theme customization should have square shap
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--33"
+        aria-labelledby="menu-button--menu--34"
         class="c7"
         data-reach-menu-items=""
-        id="menu--33"
+        id="menu--34"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -1058,7 +1058,7 @@ exports[`component: SplitButton with theme customization should have square shap
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--33"
+          id="option-0--menu--34"
           role="menuitem"
           tabindex="-1"
         >
@@ -1067,7 +1067,7 @@ exports[`component: SplitButton with theme customization should have square shap
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--33"
+          id="option-1--menu--34"
           role="menuitem"
           tabindex="-1"
         >

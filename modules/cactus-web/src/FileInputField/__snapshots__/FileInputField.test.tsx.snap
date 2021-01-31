@@ -263,6 +263,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
       <span
         class="c7 "
         data-reach-tooltip-trigger=""
+        data-state="tooltip-hidden"
       >
         <svg
           class="c8 c9"
@@ -740,6 +741,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
       <span
         class="c7 "
         data-reach-tooltip-trigger=""
+        data-state="tooltip-hidden"
       >
         <svg
           class="c8 c9"
@@ -1231,6 +1233,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
       <span
         class="c7 "
         data-reach-tooltip-trigger=""
+        data-state="tooltip-hidden"
       >
         <svg
           class="c8 c9"
@@ -1632,6 +1635,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
       <span
         class="c7 "
         data-reach-tooltip-trigger=""
+        data-state="tooltip-hidden"
       >
         <svg
           class="c8 c9"
@@ -1975,6 +1979,7 @@ exports[`component: FileInputField should render file input field 1`] = `
       <span
         class="c7 "
         data-reach-tooltip-trigger=""
+        data-state="tooltip-hidden"
       >
         <svg
           class="c8 c9"
