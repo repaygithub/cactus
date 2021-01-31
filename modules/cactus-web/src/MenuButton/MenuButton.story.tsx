@@ -6,7 +6,7 @@ import React, { ReactElement } from 'react'
 
 import MenuButton from './MenuButton'
 
-const stopNav = (e: Event): void => e.preventDefault()
+const stopNav = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => e.preventDefault()
 
 export default {
   title: 'MenuButton',

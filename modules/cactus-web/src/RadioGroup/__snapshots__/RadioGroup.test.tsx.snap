@@ -595,6 +595,7 @@ exports[`component: RadioGroup should render a radio group 1`] = `
         <span
           class="c4 "
           data-reach-tooltip-trigger=""
+          data-state="tooltip-hidden"
         >
           <svg
             class="c5 c6"

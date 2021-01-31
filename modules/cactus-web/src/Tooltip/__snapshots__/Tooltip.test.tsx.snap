@@ -18,6 +18,7 @@ exports[`component: Tooltip should render a disabled tooltip 1`] = `
   <span
     class=""
     data-reach-tooltip-trigger=""
+    data-state="tooltip-hidden"
   >
     <svg
       class="c0 c1"
@@ -59,6 +60,7 @@ exports[`component: Tooltip should render tooltip icon 1`] = `
   <span
     class=""
     data-reach-tooltip-trigger=""
+    data-state="tooltip-hidden"
   >
     <svg
       class="c0 c1"

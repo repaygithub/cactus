@@ -9,7 +9,7 @@ const MenuButtonExample: React.FC<RouteComponentProps> = (): ReactElement => {
   const [action, setAction] = useState('')
   const [nav, setNav] = useState('')
 
-  const stopNav = (e: Event, name: string): void => {
+  const stopNav = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, name: string): void => {
     e.preventDefault()
     setNav(name)
   }
@@ -26,16 +26,13 @@ const MenuButtonExample: React.FC<RouteComponentProps> = (): ReactElement => {
       <Flex height="80px" justifyContent="space-evenly" width="100%" alignItems="center">
         <Flex height="80px" justifyContent="flex-start" flexDirection="row" alignItems="center">
           <MenuButton label="Demo Actions" mr={5}>
-            <MenuButton.Item onSelect={(): void => setAction('Action one clicked')} name="action1">
+            <MenuButton.Item onSelect={(): void => setAction('Action one clicked')}>
               Action One
             </MenuButton.Item>
-            <MenuButton.Item onSelect={(): void => setAction('Action two clicked')} name="action1">
+            <MenuButton.Item onSelect={(): void => setAction('Action two clicked')}>
               Action two
             </MenuButton.Item>
-            <MenuButton.Item
-              onSelect={(): void => setAction('Action three clicked')}
-              name="action1"
-            >
+            <MenuButton.Item onSelect={(): void => setAction('Action three clicked')}>
               Action one
             </MenuButton.Item>
           </MenuButton>
@@ -43,13 +40,28 @@ const MenuButtonExample: React.FC<RouteComponentProps> = (): ReactElement => {
         </Flex>
         <Flex height="80px" justifyContent="flex-start" flexDirection="row" alignItems="center">
           <MenuButton label="Demo Links" mr={5}>
-            <MenuButton.Link href="#" onClick={(e: Event): void => stopNav(e, '/Link')}>
+            <MenuButton.Link
+              href="#"
+              onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void =>
+                stopNav(e, '/Link')
+              }
+            >
               Link
             </MenuButton.Link>
-            <MenuButton.Link href="#" onClick={(e: Event): void => stopNav(e, '/Label')}>
+            <MenuButton.Link
+              href="#"
+              onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void =>
+                stopNav(e, '/Label')
+              }
+            >
               Label
             </MenuButton.Link>
-            <MenuButton.Link href="#" onClick={(e: Event): void => stopNav(e, '/IconButton')}>
+            <MenuButton.Link
+              href="#"
+              onClick={(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void =>
+                stopNav(e, '/IconButton')
+              }
+            >
               IconButton
             </MenuButton.Link>
           </MenuButton>
