@@ -58,7 +58,7 @@ export const ActivePageDimmer = (): React.ReactElement => {
 
   return (
     <Layout>
-      <Layout.Content>
+      <>
         <BrandBar logo={LOGO} />
         <h1>Page Dimmer</h1>
         <p>
@@ -77,7 +77,7 @@ export const ActivePageDimmer = (): React.ReactElement => {
             </Box>
           </div>
         </Dimmer>
-      </Layout.Content>
+      </>
     </Layout>
   )
 }
@@ -87,7 +87,7 @@ export const ModalWithDimmer = (): React.ReactElement => {
 
   return (
     <Layout>
-      <Layout.Content>
+      <Flex mx={15} justifyContent="start" alignItems="flex-start" flexDirection="column">
         <h1>Modal with dimmer</h1>
         <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
         <Dimmer active={open} page>
@@ -101,7 +101,7 @@ export const ModalWithDimmer = (): React.ReactElement => {
             <Text as="h3">This is a modal</Text>
           </Modal>
         </Dimmer>
-      </Layout.Content>
+      </Flex>
     </Layout>
   )
 }
