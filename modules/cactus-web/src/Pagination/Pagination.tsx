@@ -1,6 +1,8 @@
 import {
   NavigationChevronLeft,
   NavigationChevronRight,
+  NavigationFirst,
+  NavigationLast,
   NavigationMenuDots,
 } from '@repay/cactus-icons'
 import { ColorStyle } from '@repay/cactus-theme'
@@ -246,35 +248,6 @@ Pagination.defaultProps = {
 }
 
 export default Pagination
-
-// TODO Use the real icons once they're added to the library
-const NavigationFirst = (): ReactElement => {
-  return (
-    <svg
-      fill="currentcolor"
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M2.66671 1.33335C2.66671 0.965164 2.36823 0.666687 2.00004 0.666687C1.63185 0.666687 1.33337 0.965164 1.33337 1.33335V14.6667C1.33337 15.0349 1.63185 15.3334 2.00004 15.3334C2.36823 15.3334 2.66671 15.0349 2.66671 14.6667L2.66671 1.33335ZM13.5286 0.861949C13.789 0.6016 14.2111 0.6016 14.4714 0.861949C14.7318 1.1223 14.7318 1.54441 14.4714 1.80476L8.27618 8.00002L14.4714 14.1953C14.7318 14.4556 14.7318 14.8777 14.4714 15.1381C14.2111 15.3984 13.789 15.3984 13.5286 15.1381L6.86197 8.47142C6.60162 8.21107 6.60162 7.78897 6.86197 7.52862L13.5286 0.861949Z" />
-    </svg>
-  )
-}
-
-const NavigationLast = (): ReactElement => {
-  return (
-    <svg
-      fill="currentcolor"
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M14.6667 1.33335C14.6667 0.965164 14.3682 0.666687 14 0.666687C13.6319 0.666687 13.3334 0.965164 13.3334 1.33335L13.3334 14.6667C13.3334 15.0349 13.6318 15.3334 14 15.3334C14.3682 15.3334 14.6667 15.0349 14.6667 14.6667L14.6667 1.33335ZM1.52864 0.861949C1.26829 1.1223 1.26829 1.54441 1.52864 1.80476L7.7239 8.00002L1.52864 14.1953C1.26829 14.4556 1.26829 14.8777 1.52864 15.1381C1.78899 15.3984 2.2111 15.3984 2.47144 15.1381L9.13811 8.47142C9.39846 8.21107 9.39846 7.78897 9.13811 7.52862L2.47144 0.861949C2.2111 0.6016 1.78899 0.6016 1.52864 0.861949Z" />
-    </svg>
-  )
-}
 
 const RotatedMenuDots = styled(NavigationMenuDots)`
   margin-top: 5px;
