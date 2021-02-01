@@ -96,51 +96,50 @@ function hasLoadedAll(
 }
 
 const I18nSection: React.FC<I18nSectionProps> = ({
-  name,
-  lang: propsLang,
+  name: section,
+  lang,
   dependencies,
   children,
   ...extraProps
 }): ReactElement | null => {
   const context = useContext(I18nContext)
-  const sectionContext = context === null ? null : { ...context }
-  if (sectionContext !== null) {
-    sectionContext.section = name
-    if (propsLang) {
-      sectionContext.lang = propsLang
+  const ctxRef = React.useRef<I18nContextType | null>(null)
+  if (context === null) {
+    ctxRef.current = null
+  } else {
+    const { controller, lang: ctxLang } = context
+    lang = controller.negotiateLang(lang || ctxLang, true)[0]
+    // Don't change the context until everything is loaded.
+    if (hasLoadedAll(controller, section, lang, dependencies)) {
+      if (section === context.section && lang === ctxLang) {
+        ctxRef.current = context
+      } else {
+        ctxRef.current = { controller, section, lang }
+      }
     }
   }
   useEffect((): void => {
-    if (sectionContext !== null) {
-      const { lang: contextLang, section: contextSection, controller } = sectionContext
-      controller._load({ lang: contextLang, section: contextSection }, extraProps)
+    if (lang && context !== null) {
+      const { controller } = context
+      controller._load({ lang, section }, extraProps)
       if (Array.isArray(dependencies)) {
-        dependencies.forEach((dep): void => {
-          if (!dep) return
-          let depSection: string
-          let depExtra: { [key: string]: any } | undefined
-          if (typeof dep === 'string') {
-            depSection = dep
+        for (const dep of dependencies) {
+          if (!dep) continue
+          else if (typeof dep === 'string') {
+            controller._load({ lang, section: dep })
           } else {
-            ;({ section: depSection, ...depExtra } = dep)
+            const { section: depSection, ...depExtra } = dep
+            controller._load({ lang, section: depSection }, depExtra)
           }
-          controller._load({ lang: contextLang, section: depSection }, depExtra)
-        })
+        }
       }
     }
   })
   // wait to render until section is loaded
-  if (
-    sectionContext !== null &&
-    !hasLoadedAll(sectionContext.controller, name, propsLang, dependencies)
-  ) {
+  if (context !== null && ctxRef.current === null) {
     return null
   }
-  return (
-    <I18nContext.Provider value={sectionContext}>
-      <React.Fragment>{children}</React.Fragment>
-    </I18nContext.Provider>
-  )
+  return <I18nContext.Provider value={ctxRef.current}>{children}</I18nContext.Provider>
 }
 
 I18nSection.propTypes = {
