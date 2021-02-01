@@ -2,7 +2,30 @@
 
 exports[`Modal renders TextInput and Description snapshot 1`] = `
 <body>
-  @media screen and (min-width:1024px) {
+  .c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+@media screen and (min-width:1024px) {
 
 }
 
@@ -24,7 +47,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 
 <div
     aria-hidden="true"
-  />
+  >
+    <div
+      class="c0"
+    />
+  </div>
   .c8 {
   margin: 0;
 }
@@ -280,7 +307,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 .c0 {
-  background: rgba(46,53,56,0.33);
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -557,7 +583,30 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 
 exports[`Modal variant is danger snapshot 1`] = `
 <body>
-  @media screen and (min-width:1024px) {
+  .c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+@media screen and (min-width:1024px) {
 
 }
 
@@ -575,7 +624,11 @@ exports[`Modal variant is danger snapshot 1`] = `
 
 <div
     aria-hidden="true"
-  />
+  >
+    <div
+      class="c0"
+    />
+  </div>
   .c8 {
   margin: 0;
 }
@@ -762,7 +815,6 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 .c0 {
-  background: rgba(46,53,56,0.33);
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1014,7 +1066,30 @@ exports[`Modal variant is danger snapshot 1`] = `
 
 exports[`Modal variant is success snapshot 1`] = `
 <body>
-  @media screen and (min-width:1024px) {
+  .c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+@media screen and (min-width:1024px) {
 
 }
 
@@ -1032,7 +1107,11 @@ exports[`Modal variant is success snapshot 1`] = `
 
 <div
     aria-hidden="true"
-  />
+  >
+    <div
+      class="c0"
+    />
+  </div>
   .c8 {
   margin: 0;
 }
@@ -1219,7 +1298,6 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 .c0 {
-  background: rgba(46,53,56,0.33);
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1470,15 +1548,15 @@ exports[`Modal variant is success snapshot 1`] = `
 `;
 
 exports[`Modal variant is warning snapshot 1`] = `
-.c8 {
+.c9 {
   margin: 0;
 }
 
-.c4 {
+.c5 {
   vertical-align: middle;
 }
 
-.c12 {
+.c13 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -1497,11 +1575,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-color: hsl(47,82%,47%);
 }
 
-.c12::-moz-focus-inner {
+.c13::-moz-focus-inner {
   border: 0;
 }
 
-.c12:focus::after {
+.c13:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1515,12 +1593,12 @@ exports[`Modal variant is warning snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c12 svg {
+.c13 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c12 .sc-fWWZrV {
+.c13 .sc-fWWZrV {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1528,23 +1606,23 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c12:hover {
+.c13:hover {
   background-color: hsl(47,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(47,96%,11%);
 }
 
-.c5 {
+.c6 {
   box-sizing: border-box;
 }
 
-.c10 {
+.c11 {
   box-sizing: border-box;
   margin-top: 40px;
   margin-bottom: 4px;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1561,7 +1639,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1575,7 +1653,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1596,7 +1674,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1610,7 +1688,30 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c3 {
+.c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.c4 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -1635,11 +1736,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   font-size: 24px;
 }
 
-.c3::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c4:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1651,12 +1752,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c3:hover {
+.c4:hover {
   color: hsl(200,96%,35%);
 }
 
-.c0 {
-  background: rgba(46,53,56,0.33);
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1674,7 +1774,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -1691,7 +1791,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-color: hsl(47,82%,47%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -1700,11 +1800,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .c3 {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -1713,7 +1813,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   font-size: 16px;
 }
 
-.c13 {
+.c14 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1728,12 +1828,12 @@ exports[`Modal variant is warning snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c13:hover {
+.c14:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c13:focus::after {
+.c14:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1746,17 +1846,17 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c13::-moz-focus-inner {
+.c14::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c14 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1764,37 +1864,15 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
-}
-
-@media screen and (min-width:1024px) {
-  .c12 {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
-    padding: 40px 88px;
-    max-width: 30%;
-  }
-
-  .c0 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
 }
 
 @media screen and (min-width:1024px) {
@@ -1805,7 +1883,29 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c1 > [data-reach-dialog-content] {
+    padding: 40px 88px;
+    max-width: 30%;
+  }
+
+  .c1 > [data-reach-dialog-content] .c3 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c14 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -1815,7 +1915,11 @@ exports[`Modal variant is warning snapshot 1`] = `
 <body>
   <div
     aria-hidden="true"
-  />
+  >
+    <div
+      class="c0"
+    />
+  </div>
   <reach-portal>
     <div
       data-focus-guard="true"
@@ -1833,7 +1937,7 @@ exports[`Modal variant is warning snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c1 c2"
           data-reach-dialog-overlay=""
           variant="warning"
         >
@@ -1846,12 +1950,12 @@ exports[`Modal variant is warning snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 c4"
               type="button"
               variant="standard"
             >
               <svg
-                class="c4"
+                class="c5"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1863,26 +1967,26 @@ exports[`Modal variant is warning snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c6 c7 modal-children"
             >
               <div
-                class="c5 c7 title-icon"
+                class="c6 c8 title-icon"
               >
                 <h1
-                  class="c8"
+                  class="c9"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c5 c9 children"
+                class="c6 c10 children"
               />
               <div
-                class="c10 c11"
+                class="c11 c12"
               >
                 <button
                   aria-live="assertive"
-                  class="c12"
+                  class="c13"
                   type="button"
                 >
                   <span>
@@ -1890,7 +1994,7 @@ exports[`Modal variant is warning snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c13"
+                  class="c14"
                   type="button"
                 >
                   Cancel
