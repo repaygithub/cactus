@@ -48,37 +48,35 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
   const hasChildren = !!React.Children.count(children)
 
   return (
-    <Dimmer active={isOpen} page>
-      <ModalPopUp
-        aria-label={modalLabel}
-        isOpen={isOpen}
-        onDismiss={onClose}
-        variant={variant}
-        height={innerHeight}
-        maxHeight={innerMaxHeight}
-        {...rest}
-      >
-        <DialogContent aria-label={modalLabel}>
-          <IconButton onClick={onClose} label={closeLabel}>
-            <NavigationClose />
-          </IconButton>
-          {hasChildren && (
-            <Flex
-              className="modal-children"
-              flexDirection="column"
-              alignItems="center"
-              flexWrap="nowrap"
-            >
-              {children}
-            </Flex>
-          )}
-        </DialogContent>
-      </ModalPopUp>
-    </Dimmer>
+    <ModalPopUp
+      aria-label={modalLabel}
+      isOpen={isOpen}
+      onDismiss={onClose}
+      variant={variant}
+      height={innerHeight}
+      maxHeight={innerMaxHeight}
+      {...rest}
+    >
+      <DialogContent aria-label={modalLabel}>
+        <IconButton onClick={onClose} label={closeLabel}>
+          <NavigationClose />
+        </IconButton>
+        {hasChildren && (
+          <Flex
+            className="modal-children"
+            flexDirection="column"
+            alignItems="center"
+            flexWrap="nowrap"
+          >
+            {children}
+          </Flex>
+        )}
+      </DialogContent>
+    </ModalPopUp>
   )
 }
 
-export const ModalPopUp = styled(DialogOverlay).withConfig({
+export const ModalPopUp = styled(Dimmer).withConfig({
   shouldForwardProp: (prop) => {
     // @ts-ignore
     return prop !== 'maxHeight'
@@ -153,7 +151,7 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
       }
     }
   }
-`
+`.withComponent(DialogOverlay)
 export const Modal = styled(Modalbase)``
 
 Modal.propTypes = {
