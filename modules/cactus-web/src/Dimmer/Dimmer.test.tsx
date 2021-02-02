@@ -8,20 +8,7 @@ describe('Dimmer when page=true', () => {
   test('Snapshot Page Dimmer ', () => {
     const { baseElement } = render(
       <StyleProvider>
-        <Dimmer active page></Dimmer>
-      </StyleProvider>
-    )
-    expect(baseElement).toMatchSnapshot()
-  })
-})
-
-describe('Dimmer when page=false', () => {
-  test('Snapshot Content Dimmer', () => {
-    const { baseElement } = render(
-      <StyleProvider>
-        <Dimmer.DimmableContent>
-          <Dimmer active></Dimmer>
-        </Dimmer.DimmableContent>
+        <Dimmer active></Dimmer>
       </StyleProvider>
     )
     expect(baseElement).toMatchSnapshot()
@@ -32,43 +19,19 @@ describe('Dimmer render content as children', () => {
   test('Page Dimmer: Should render content when active=true', () => {
     const { container } = render(
       <StyleProvider>
-        <Dimmer active page>
+        <Dimmer active>
           <h2>Children is here!</h2>
         </Dimmer>
       </StyleProvider>
     )
     expect(container).toHaveTextContent('Children is here!')
   })
-  test('Page Dimmer: Should NOT render content when active=true', () => {
+  test('Page Dimmer: Should NOT render content when active=false', () => {
     const { container } = render(
       <StyleProvider>
-        <Dimmer active={false} page>
+        <Dimmer active={false}>
           <h2>Children is here!</h2>
         </Dimmer>
-      </StyleProvider>
-    )
-    expect(container).not.toHaveTextContent('Children is here!')
-  })
-  test('Content Dimmer: Should render content when active=true', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Dimmer.DimmableContent>
-          <Dimmer active>
-            <h2>Children is here!</h2>
-          </Dimmer>
-        </Dimmer.DimmableContent>
-      </StyleProvider>
-    )
-    expect(container).toHaveTextContent('Children is here!')
-  })
-  test('Content Dimmer: Should NOT render content when active=true', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Dimmer.DimmableContent>
-          <Dimmer active={false}>
-            <h2>Children is here!</h2>
-          </Dimmer>
-        </Dimmer.DimmableContent>
       </StyleProvider>
     )
     expect(container).not.toHaveTextContent('Children is here!')
