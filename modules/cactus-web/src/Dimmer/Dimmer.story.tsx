@@ -21,46 +21,8 @@ export const ContentDimmer = (): React.ReactElement => {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <Layout>
-        <BrandBar logo={LOGO} />
-        <Flex mx={15} justifyContent="start" alignItems="flex-start" flexDirection="column">
-          <h1>Something</h1>
-          <p>
-            Mauris eu felis fringilla tortor scelerisque tincidunt et quis risus. Proin dui arcu,
-            tincidunt nec rhoncus eu, blandit ut odio. Donec ac tristique felis. Morbi vel urna
-            commodo, efficitur orci in, condimentum augue. Morbi neque felis, consequat sit amet mi
-            eget, imperdiet consectetur augue. Sed dignissim congue ex at vestibulum. Etiam rutrum,
-            mauris rutrum maximus congue, lectus sem molestie est, eget gravida orci ligula tempus
-            dolor.
-          </p>
-          <Dimmer.DimmableContent>
-            <h3>Content Dimmer</h3>
-            <p>
-              Mauris eu felis fringilla tortor scelerisque tincidunt et quis risus. Proin dui arcu,
-              tincidunt nec rhoncus eu, blandit ut odio. Donec ac tristique felis. Morbi vel urna
-              commodo, efficitur orci in, condimentum augue.
-            </p>
-            <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
-            <Dimmer active={open}>
-              <div>
-                <Button onClick={() => setOpen(false)}>Click me!</Button>
-              </div>
-            </Dimmer>
-          </Dimmer.DimmableContent>
-        </Flex>
-      </Layout>
-    </>
-  )
-}
-
-export const ActivePageDimmer = (): React.ReactElement => {
-  const [open, setOpen] = useState(false)
-
-  return (
-    <Layout>
-      <>
-        <BrandBar logo={LOGO} />
-        <h1>Page Dimmer</h1>
+      <Flex mx={15} justifyContent="start" alignItems="flex-start" flexDirection="column">
+        <h1>Something</h1>
         <p>
           Mauris eu felis fringilla tortor scelerisque tincidunt et quis risus. Proin dui arcu,
           tincidunt nec rhoncus eu, blandit ut odio. Donec ac tristique felis. Morbi vel urna
@@ -69,16 +31,47 @@ export const ActivePageDimmer = (): React.ReactElement => {
           mauris rutrum maximus congue, lectus sem molestie est, eget gravida orci ligula tempus
           dolor.
         </p>
-        <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
-        <Dimmer active={open} page>
-          <div>
-            <Box>
+        <Dimmer.DimmableContent>
+          <h3>Content Dimmer</h3>
+          <p>
+            Mauris eu felis fringilla tortor scelerisque tincidunt et quis risus. Proin dui arcu,
+            tincidunt nec rhoncus eu, blandit ut odio. Donec ac tristique felis. Morbi vel urna
+            commodo, efficitur orci in, condimentum augue.
+          </p>
+          <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
+          <Dimmer active={open}>
+            <div>
               <Button onClick={() => setOpen(false)}>Click me!</Button>
-            </Box>
-          </div>
-        </Dimmer>
-      </>
-    </Layout>
+            </div>
+          </Dimmer>
+        </Dimmer.DimmableContent>
+      </Flex>
+    </>
+  )
+}
+
+export const ActivePageDimmer = (): React.ReactElement => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <h1>Page Dimmer</h1>
+      <p>
+        Mauris eu felis fringilla tortor scelerisque tincidunt et quis risus. Proin dui arcu,
+        tincidunt nec rhoncus eu, blandit ut odio. Donec ac tristique felis. Morbi vel urna commodo,
+        efficitur orci in, condimentum augue. Morbi neque felis, consequat sit amet mi eget,
+        imperdiet consectetur augue. Sed dignissim congue ex at vestibulum. Etiam rutrum, mauris
+        rutrum maximus congue, lectus sem molestie est, eget gravida orci ligula tempus dolor.
+      </p>
+      <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
+      <Dimmer active={open} page>
+        <div>
+          <Box>
+            <Button onClick={() => setOpen(false)}>Click me!</Button>
+          </Box>
+        </div>
+      </Dimmer>
+    </>
   )
 }
 
@@ -86,22 +79,20 @@ export const ModalWithDimmer = (): React.ReactElement => {
   const [open, setOpen] = useState(false)
 
   return (
-    <Layout>
-      <Flex mx={15} justifyContent="start" alignItems="flex-start" flexDirection="column">
-        <h1>Modal with dimmer</h1>
-        <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
-        <Dimmer active={open} page>
-          <Modal
-            variant="action"
-            isOpen={open}
-            modalLabel="Modal Label"
-            closeLabel="Close Label"
-            onClose={() => setOpen(false)}
-          >
-            <Text as="h3">This is a modal</Text>
-          </Modal>
-        </Dimmer>
-      </Flex>
-    </Layout>
+    <Flex mx={15} justifyContent="start" alignItems="flex-start" flexDirection="column">
+      <h1>Modal with dimmer</h1>
+      <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
+      <Dimmer active={open} page>
+        <Modal
+          variant="action"
+          isOpen={open}
+          modalLabel="Modal Label"
+          closeLabel="Close Label"
+          onClose={() => setOpen(false)}
+        >
+          <Text as="h3">This is a modal</Text>
+        </Modal>
+      </Dimmer>
+    </Flex>
   )
 }
