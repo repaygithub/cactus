@@ -6,12 +6,27 @@ export interface DimmerProps {
   active: boolean
 }
 
-const Dimmer: React.FC<DimmerProps> = (props) => {
-  const { active, children } = props
-  return active ? <DimmerStyled>{children}</DimmerStyled> : null
+class Dimmer extends React.Component<DimmerProps> {
+  public static propTypes = {
+    active: PropTypes.bool.isRequired,
+  }
+  public static defaultProps = {
+    active: false,
+  }
+  componentDidUpdate(prevProps: DimmerProps): void {
+    if (prevProps.active === false && this.props.active === true && document.activeElement) {
+      try {
+        ;(document.activeElement as HTMLElement).blur()
+      } catch {}
+    }
+  }
+  render(): React.ReactElement {
+    const { active, children } = this.props
+    return active ? <DimmerStyled>{children}</DimmerStyled> : <></>
+  }
 }
 
-const DimmerStyled = styled.div`
+export const DimmerStyled = styled.div`
   position: fixed;
   display: flex;
   background: rgba(46, 53, 56, 0.9);
