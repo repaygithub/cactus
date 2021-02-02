@@ -41,6 +41,28 @@ describe('component: Select', (): void => {
     expect(getByText('Who?')).not.toBeNull()
   })
 
+  test('can receive options as children, with altText', (): void => {
+    const { queryByText } = render(
+      <StyleProvider>
+        <Select id="options-children" name="test-options" value="second">
+          <Select.Option value="first" altText="Locke">
+            Peter
+          </Select.Option>
+          <Select.Option value="second" altText="Demosthenes">
+            Valentine
+          </Select.Option>
+          <Select.Option value="third">Ender</Select.Option>
+        </Select>
+      </StyleProvider>
+    )
+
+    expect(queryByText('Peter')).not.toBeNull()
+    expect(queryByText('Valentine')).not.toBeNull()
+    expect(queryByText('Ender')).not.toBeNull()
+    expect(queryByText('Locke')).toBeNull()
+    expect(document.querySelector('#options-children')).toHaveTextContent('Demosthenes')
+  })
+
   test('should set placeholder when options are empty', async (): Promise<void> => {
     const { getByRole } = render(
       <StyleProvider>
@@ -1028,12 +1050,12 @@ describe('component: Select', (): void => {
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-phoenix-phoenix')
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-phoenix')
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-flagstaff-flagstaff')
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-flagstaff')
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
-      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson-tucson')
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson')
     })
 
     test('RETURN should select an option and focus on the trigger', async (): Promise<void> => {

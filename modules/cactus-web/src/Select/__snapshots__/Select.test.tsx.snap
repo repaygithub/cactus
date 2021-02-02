@@ -201,7 +201,7 @@ exports[`component: Select snapshot 1`] = `
             class="c8"
             data-role="option"
             data-value="phoenix"
-            id="test-id-phoenix-phoenix"
+            id="test-id-phoenix"
             role="option"
           >
             phoenix
@@ -210,7 +210,7 @@ exports[`component: Select snapshot 1`] = `
             class="c8"
             data-role="option"
             data-value="tucson"
-            id="test-id-tucson-tucson"
+            id="test-id-tucson"
             role="option"
           >
             tucson
@@ -219,7 +219,7 @@ exports[`component: Select snapshot 1`] = `
             class="c8"
             data-role="option"
             data-value="flagstaff"
-            id="test-id-flagstaff-flagstaff"
+            id="test-id-flagstaff"
             role="option"
           >
             flagstaff
@@ -432,7 +432,7 @@ exports[`component: Select with theme customization should have 2px border 1`] =
             class="c8"
             data-role="option"
             data-value="thin"
-            id="test-id-thin-thin"
+            id="test-id-thin"
             role="option"
           >
             thin
@@ -441,7 +441,7 @@ exports[`component: Select with theme customization should have 2px border 1`] =
             class="c8"
             data-role="option"
             data-value="thick"
-            id="test-id-thick-thick"
+            id="test-id-thick"
             role="option"
           >
             thick
@@ -654,7 +654,7 @@ exports[`component: Select with theme customization should match intermediate sh
             class="c8"
             data-role="option"
             data-value="shape"
-            id="test-id-shape-shape"
+            id="test-id-shape"
             role="option"
           >
             shape
@@ -663,7 +663,7 @@ exports[`component: Select with theme customization should match intermediate sh
             class="c8"
             data-role="option"
             data-value="border"
-            id="test-id-border-border"
+            id="test-id-border"
             role="option"
           >
             border
@@ -876,7 +876,7 @@ exports[`component: Select with theme customization should match square shape st
             class="c8"
             data-role="option"
             data-value="shape"
-            id="test-id-shape-shape"
+            id="test-id-shape"
             role="option"
           >
             shape
@@ -885,7 +885,7 @@ exports[`component: Select with theme customization should match square shape st
             class="c8"
             data-role="option"
             data-value="border"
-            id="test-id-border-border"
+            id="test-id-border"
             role="option"
           >
             border
@@ -1098,7 +1098,7 @@ exports[`component: Select with theme customization should not have box shadows 
             class="c8"
             data-role="option"
             data-value="shape"
-            id="test-id-shape-shape"
+            id="test-id-shape"
             role="option"
           >
             shape
@@ -1107,7 +1107,7 @@ exports[`component: Select with theme customization should not have box shadows 
             class="c8"
             data-role="option"
             data-value="border"
-            id="test-id-border-border"
+            id="test-id-border"
             role="option"
           >
             border
