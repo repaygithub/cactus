@@ -66,8 +66,15 @@ const typeVariant = (props: AlertProps): ReturnType<typeof css> | undefined => {
   }
 }
 
+const statusToVariantMap: { [K in Status]: 'success' | 'warning' | 'danger' | 'action' } = {
+  success: 'success',
+  warning: 'warning',
+  error: 'danger',
+  info: 'action',
+}
+
 const AlertBase = (props: AlertProps): React.ReactElement => {
-  const { className, status, onClose, closeLabel, children } = props
+  const { className, status = 'info', onClose, closeLabel, children } = props
 
   return (
     <div className={className}>
@@ -76,7 +83,12 @@ const AlertBase = (props: AlertProps): React.ReactElement => {
       </div>
       <div>{children}</div>
       {typeof onClose === 'function' && (
-        <IconButton onClick={onClose} iconSize="small" label={closeLabel}>
+        <IconButton
+          variant={statusToVariantMap[status]}
+          onClick={onClose}
+          iconSize="small"
+          label={closeLabel}
+        >
           <NavigationClose />
         </IconButton>
       )}
