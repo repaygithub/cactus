@@ -2,7 +2,239 @@
 
 exports[`Modal renders TextInput and Description snapshot 1`] = `
 <body>
-  .c0 {
+  @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+<div
+    aria-hidden="true"
+  />
+  .c9 {
+  margin: 0;
+}
+
+.c11 {
+  font-weight: normal;
+}
+
+.c5 {
+  vertical-align: middle;
+}
+
+.c13 {
+  box-sizing: border-box;
+  border: 1px solid hsl(200,9%,35%);
+  border-radius: 8px;
+  height: 32px;
+  outline: none;
+  box-sizing: border-box;
+  padding: 0px 28px 0px 15px;
+  font-size: 18px;
+  line-height: 1.5;
+  width: 90%;
+  background-color: hsl(0,0%,100%);
+}
+
+.c13:disabled {
+  cursor: not-allowed;
+  border-color: hsl(0,0%,90%);
+  background-color: hsl(0,0%,90%);
+  color: hsl(0,0%,70%);
+}
+
+.c13:disabled::-webkit-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c13:disabled::-moz-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c13:disabled:-ms-input-placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c13:disabled::placeholder {
+  color: hsl(0,0%,70%);
+}
+
+.c13:focus {
+  border-color: hsl(200,96%,35%);
+}
+
+.c13::-webkit-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c13::-moz-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c13:-ms-input-placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c13::placeholder {
+  color: hsl(200,18%,45%);
+  font-style: oblique;
+}
+
+.c12 {
+  box-sizing: border-box;
+}
+
+.c16 {
+  position: relative;
+  padding: 2px 30px;
+  outline: none;
+  cursor: pointer;
+  overflow: visible;
+  box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.5;
+  border: 1px solid;
+  border-radius: 8px;
+  margin-right: 24px;
+  background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
+  border-color: hsl(353,84%,44%);
+}
+
+.c16::-moz-focus-inner {
+  border: 0;
+}
+
+.c16:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c16 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c16 .sc-fWWZrV {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c16:hover {
+  background-color: hsl(353,96%,11%);
+  color: hsl(0,0%,100%);
+  border-color: hsl(353,96%,11%);
+}
+
+.c6 {
+  box-sizing: border-box;
+}
+
+.c14 {
+  box-sizing: border-box;
+  margin-top: 40px;
+  margin-bottom: 4px;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 {
   position: fixed;
   display: -webkit-box;
   display: -webkit-flex;
@@ -25,243 +257,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   z-index: 100;
 }
 
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-<div
-    aria-hidden="true"
-  >
-    <div
-      class="c0"
-    />
-  </div>
-  .c8 {
-  margin: 0;
-}
-
-.c10 {
-  font-weight: normal;
-}
-
 .c4 {
-  vertical-align: middle;
-}
-
-.c12 {
-  box-sizing: border-box;
-  border: 1px solid hsl(200,9%,35%);
-  border-radius: 8px;
-  height: 32px;
-  outline: none;
-  box-sizing: border-box;
-  padding: 0px 28px 0px 15px;
-  font-size: 18px;
-  line-height: 1.5;
-  width: 90%;
-  background-color: hsl(0,0%,100%);
-}
-
-.c12:disabled {
-  cursor: not-allowed;
-  border-color: hsl(0,0%,90%);
-  background-color: hsl(0,0%,90%);
-  color: hsl(0,0%,70%);
-}
-
-.c12:disabled::-webkit-input-placeholder {
-  color: hsl(0,0%,70%);
-}
-
-.c12:disabled::-moz-placeholder {
-  color: hsl(0,0%,70%);
-}
-
-.c12:disabled:-ms-input-placeholder {
-  color: hsl(0,0%,70%);
-}
-
-.c12:disabled::placeholder {
-  color: hsl(0,0%,70%);
-}
-
-.c12:focus {
-  border-color: hsl(200,96%,35%);
-}
-
-.c12::-webkit-input-placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c12::-moz-placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c12:-ms-input-placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c12::placeholder {
-  color: hsl(200,18%,45%);
-  font-style: oblique;
-}
-
-.c11 {
-  box-sizing: border-box;
-}
-
-.c15 {
-  position: relative;
-  padding: 2px 30px;
-  outline: none;
-  cursor: pointer;
-  overflow: visible;
-  box-sizing: border-box;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 1.5;
-  border: 1px solid;
-  border-radius: 8px;
-  margin-right: 24px;
-  background-color: hsl(353,84%,44%);
-  color: hsl(0,0%,100%);
-  border-color: hsl(353,84%,44%);
-}
-
-.c15::-moz-focus-inner {
-  border: 0;
-}
-
-.c15:focus::after {
-  content: '';
-  display: block;
-  position: absolute;
-  height: calc(100% + 10px);
-  width: calc(100% + 10px);
-  top: -5px;
-  left: -5px;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: hsl(200,96%,35%);
-  box-sizing: border-box;
-}
-
-.c15 svg {
-  display: inline-block;
-  margin-top: -4px;
-}
-
-.c15 .sc-fWWZrV {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c15:hover {
-  background-color: hsl(353,96%,11%);
-  color: hsl(0,0%,100%);
-  border-color: hsl(353,96%,11%);
-}
-
-.c5 {
-  box-sizing: border-box;
-}
-
-.c13 {
-  box-sizing: border-box;
-  margin-top: 40px;
-  margin-bottom: 4px;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c9 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c14 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -286,11 +282,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   font-size: 24px;
 }
 
-.c3::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c4:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -302,11 +298,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c3:hover {
+.c4:hover {
   color: hsl(200,96%,35%);
 }
 
-.c0 {
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -321,10 +317,13 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -341,7 +340,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -350,11 +349,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .c3 {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -363,7 +362,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   font-size: 16px;
 }
 
-.c16 {
+.c17 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -378,12 +377,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c16:hover {
+.c17:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c16:focus::after {
+.c17:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -396,17 +395,17 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c16::-moz-focus-inner {
+.c17::-moz-focus-inner {
   border: 0;
 }
 
-.c16 svg {
+.c17 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -414,43 +413,21 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
 }
 
 @media screen and (min-width:1024px) {
-  .c12 {
+  .c13 {
     font-size: 18px;
     line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c15 {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
-    padding: 40px 88px;
-    max-width: 30%;
-  }
-
-  .c0 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
   }
 }
 
@@ -462,7 +439,29 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c1 > [data-reach-dialog-content] {
+    padding: 40px 88px;
+    max-width: 30%;
+  }
+
+  .c1 > [data-reach-dialog-content] .c3 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c17 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -486,7 +485,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="danger"
         >
@@ -499,12 +498,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 c4"
               type="button"
               variant="standard"
             >
               <svg
-                class="c4"
+                class="c5"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -516,32 +515,32 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c6 c7 modal-children"
             >
               <div
-                class="c5 c7 title-icon"
+                class="c6 c8 title-icon"
               >
                 <h1
-                  class="c8"
+                  class="c9"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c5 c9 children"
+                class="c6 c10 children"
               >
                 <h4
-                  class="c10"
+                  class="c11"
                   data-testid="description"
                   font-weight="normal"
                 >
                   Description text
                 </h4>
                 <div
-                  class="c11"
+                  class="c12"
                 >
                   <input
-                    class="c12"
+                    class="c13"
                     data-testid="input"
                     placeholder="Placeholder"
                     width="90%"
@@ -549,11 +548,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="c13 c14"
+                class="c14 c15"
               >
                 <button
                   aria-live="assertive"
-                  class="c15"
+                  class="c16"
                   type="button"
                 >
                   <span>
@@ -561,7 +560,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c16"
+                  class="c17"
                   type="button"
                 >
                   Cancel
@@ -583,7 +582,166 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 
 exports[`Modal variant is danger snapshot 1`] = `
 <body>
-  .c0 {
+  @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+<div
+    aria-hidden="true"
+  />
+  .c9 {
+  margin: 0;
+}
+
+.c5 {
+  vertical-align: middle;
+}
+
+.c13 {
+  position: relative;
+  padding: 2px 30px;
+  outline: none;
+  cursor: pointer;
+  overflow: visible;
+  box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.5;
+  border: 1px solid;
+  border-radius: 8px;
+  margin-right: 24px;
+  background-color: hsl(353,84%,44%);
+  color: hsl(0,0%,100%);
+  border-color: hsl(353,84%,44%);
+}
+
+.c13::-moz-focus-inner {
+  border: 0;
+}
+
+.c13:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c13 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c13 .sc-fWWZrV {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c13:hover {
+  background-color: hsl(353,96%,11%);
+  color: hsl(0,0%,100%);
+  border-color: hsl(353,96%,11%);
+}
+
+.c6 {
+  box-sizing: border-box;
+}
+
+.c11 {
+  box-sizing: border-box;
+  margin-top: 40px;
+  margin-bottom: 4px;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 {
   position: fixed;
   display: -webkit-box;
   display: -webkit-flex;
@@ -606,170 +764,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   z-index: 100;
 }
 
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-<div
-    aria-hidden="true"
-  >
-    <div
-      class="c0"
-    />
-  </div>
-  .c8 {
-  margin: 0;
-}
-
 .c4 {
-  vertical-align: middle;
-}
-
-.c12 {
-  position: relative;
-  padding: 2px 30px;
-  outline: none;
-  cursor: pointer;
-  overflow: visible;
-  box-sizing: border-box;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 1.5;
-  border: 1px solid;
-  border-radius: 8px;
-  margin-right: 24px;
-  background-color: hsl(353,84%,44%);
-  color: hsl(0,0%,100%);
-  border-color: hsl(353,84%,44%);
-}
-
-.c12::-moz-focus-inner {
-  border: 0;
-}
-
-.c12:focus::after {
-  content: '';
-  display: block;
-  position: absolute;
-  height: calc(100% + 10px);
-  width: calc(100% + 10px);
-  top: -5px;
-  left: -5px;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: hsl(200,96%,35%);
-  box-sizing: border-box;
-}
-
-.c12 svg {
-  display: inline-block;
-  margin-top: -4px;
-}
-
-.c12 .sc-fWWZrV {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c12:hover {
-  background-color: hsl(353,96%,11%);
-  color: hsl(0,0%,100%);
-  border-color: hsl(353,96%,11%);
-}
-
-.c5 {
-  box-sizing: border-box;
-}
-
-.c10 {
-  box-sizing: border-box;
-  margin-top: 40px;
-  margin-bottom: 4px;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c9 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c11 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -794,11 +789,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   font-size: 24px;
 }
 
-.c3::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c4:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -810,11 +805,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c3:hover {
+.c4:hover {
   color: hsl(200,96%,35%);
 }
 
-.c0 {
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -829,10 +824,13 @@ exports[`Modal variant is danger snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -849,7 +847,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -858,11 +856,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .c3 {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -871,7 +869,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   font-size: 16px;
 }
 
-.c13 {
+.c14 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -886,12 +884,12 @@ exports[`Modal variant is danger snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c13:hover {
+.c14:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c13:focus::after {
+.c14:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -904,17 +902,17 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c13::-moz-focus-inner {
+.c14::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c14 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -922,37 +920,15 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
-}
-
-@media screen and (min-width:1024px) {
-  .c12 {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
-    padding: 40px 88px;
-    max-width: 30%;
-  }
-
-  .c0 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
 }
 
 @media screen and (min-width:1024px) {
@@ -963,7 +939,29 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c1 > [data-reach-dialog-content] {
+    padding: 40px 88px;
+    max-width: 30%;
+  }
+
+  .c1 > [data-reach-dialog-content] .c3 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c14 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -987,7 +985,7 @@ exports[`Modal variant is danger snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="danger"
         >
@@ -1000,12 +998,12 @@ exports[`Modal variant is danger snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 c4"
               type="button"
               variant="standard"
             >
               <svg
-                class="c4"
+                class="c5"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1017,26 +1015,26 @@ exports[`Modal variant is danger snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c6 c7 modal-children"
             >
               <div
-                class="c5 c7 title-icon"
+                class="c6 c8 title-icon"
               >
                 <h1
-                  class="c8"
+                  class="c9"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c5 c9 children"
+                class="c6 c10 children"
               />
               <div
-                class="c10 c11"
+                class="c11 c12"
               >
                 <button
                   aria-live="assertive"
-                  class="c12"
+                  class="c13"
                   type="button"
                 >
                   <span>
@@ -1044,7 +1042,7 @@ exports[`Modal variant is danger snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c13"
+                  class="c14"
                   type="button"
                 >
                   Cancel
@@ -1066,7 +1064,166 @@ exports[`Modal variant is danger snapshot 1`] = `
 
 exports[`Modal variant is success snapshot 1`] = `
 <body>
-  .c0 {
+  @media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+@media screen and (min-width:1024px) {
+
+}
+
+<div
+    aria-hidden="true"
+  />
+  .c9 {
+  margin: 0;
+}
+
+.c5 {
+  vertical-align: middle;
+}
+
+.c13 {
+  position: relative;
+  padding: 2px 30px;
+  outline: none;
+  cursor: pointer;
+  overflow: visible;
+  box-sizing: border-box;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.5;
+  border: 1px solid;
+  border-radius: 8px;
+  margin-right: 24px;
+  background-color: hsl(145,89%,28%);
+  color: hsl(0,0%,100%);
+  border-color: hsl(145,89%,28%);
+}
+
+.c13::-moz-focus-inner {
+  border: 0;
+}
+
+.c13:focus::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+  border: 1px solid;
+  border-radius: 8px;
+  border-color: hsl(200,96%,35%);
+  box-sizing: border-box;
+}
+
+.c13 svg {
+  display: inline-block;
+  margin-top: -4px;
+}
+
+.c13 .sc-fWWZrV {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+}
+
+.c13:hover {
+  background-color: hsl(145,96%,11%);
+  color: hsl(0,0%,100%);
+  border-color: hsl(145,96%,11%);
+}
+
+.c6 {
+  box-sizing: border-box;
+}
+
+.c11 {
+  box-sizing: border-box;
+  margin-top: 40px;
+  margin-bottom: 4px;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c0 {
   position: fixed;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1089,170 +1246,7 @@ exports[`Modal variant is success snapshot 1`] = `
   z-index: 100;
 }
 
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-@media screen and (min-width:1024px) {
-
-}
-
-<div
-    aria-hidden="true"
-  >
-    <div
-      class="c0"
-    />
-  </div>
-  .c8 {
-  margin: 0;
-}
-
 .c4 {
-  vertical-align: middle;
-}
-
-.c12 {
-  position: relative;
-  padding: 2px 30px;
-  outline: none;
-  cursor: pointer;
-  overflow: visible;
-  box-sizing: border-box;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 1.5;
-  border: 1px solid;
-  border-radius: 8px;
-  margin-right: 24px;
-  background-color: hsl(145,89%,28%);
-  color: hsl(0,0%,100%);
-  border-color: hsl(145,89%,28%);
-}
-
-.c12::-moz-focus-inner {
-  border: 0;
-}
-
-.c12:focus::after {
-  content: '';
-  display: block;
-  position: absolute;
-  height: calc(100% + 10px);
-  width: calc(100% + 10px);
-  top: -5px;
-  left: -5px;
-  border: 1px solid;
-  border-radius: 8px;
-  border-color: hsl(200,96%,35%);
-  box-sizing: border-box;
-}
-
-.c12 svg {
-  display: inline-block;
-  margin-top: -4px;
-}
-
-.c12 .sc-fWWZrV {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-}
-
-.c12:hover {
-  background-color: hsl(145,96%,11%);
-  color: hsl(0,0%,100%);
-  border-color: hsl(145,96%,11%);
-}
-
-.c5 {
-  box-sizing: border-box;
-}
-
-.c10 {
-  box-sizing: border-box;
-  margin-top: 40px;
-  margin-bottom: 4px;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c9 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c11 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -1277,11 +1271,11 @@ exports[`Modal variant is success snapshot 1`] = `
   font-size: 24px;
 }
 
-.c3::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c4:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1293,11 +1287,11 @@ exports[`Modal variant is success snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c3:hover {
+.c4:hover {
   color: hsl(200,96%,35%);
 }
 
-.c0 {
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1312,10 +1306,13 @@ exports[`Modal variant is success snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -1332,7 +1329,7 @@ exports[`Modal variant is success snapshot 1`] = `
   border-color: hsl(145,89%,28%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -1341,11 +1338,11 @@ exports[`Modal variant is success snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .c3 {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -1354,7 +1351,7 @@ exports[`Modal variant is success snapshot 1`] = `
   font-size: 16px;
 }
 
-.c13 {
+.c14 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1369,12 +1366,12 @@ exports[`Modal variant is success snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c13:hover {
+.c14:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c13:focus::after {
+.c14:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1387,17 +1384,17 @@ exports[`Modal variant is success snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c13::-moz-focus-inner {
+.c14::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c14 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1405,37 +1402,15 @@ exports[`Modal variant is success snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
-}
-
-@media screen and (min-width:1024px) {
-  .c12 {
-    font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
-    padding: 40px 88px;
-    max-width: 30%;
-  }
-
-  .c0 > [data-reach-dialog-content] .c2 {
-    height: 24px;
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    width: 24px;
-  }
 }
 
 @media screen and (min-width:1024px) {
@@ -1446,7 +1421,29 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c1 > [data-reach-dialog-content] {
+    padding: 40px 88px;
+    max-width: 30%;
+  }
+
+  .c1 > [data-reach-dialog-content] .c3 {
+    height: 24px;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    width: 24px;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c14 {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -1470,7 +1467,7 @@ exports[`Modal variant is success snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="success"
         >
@@ -1483,12 +1480,12 @@ exports[`Modal variant is success snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 c4"
               type="button"
               variant="standard"
             >
               <svg
-                class="c4"
+                class="c5"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1500,26 +1497,26 @@ exports[`Modal variant is success snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c5 c6 modal-children"
+              class="c6 c7 modal-children"
             >
               <div
-                class="c5 c7 title-icon"
+                class="c6 c8 title-icon"
               >
                 <h1
-                  class="c8"
+                  class="c9"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c5 c9 children"
+                class="c6 c10 children"
               />
               <div
-                class="c10 c11"
+                class="c11 c12"
               >
                 <button
                   aria-live="assertive"
-                  class="c12"
+                  class="c13"
                   type="button"
                 >
                   <span>
@@ -1527,7 +1524,7 @@ exports[`Modal variant is success snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c13"
+                  class="c14"
                   type="button"
                 >
                   Cancel
@@ -1771,6 +1768,9 @@ exports[`Modal variant is warning snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
@@ -1915,11 +1915,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 <body>
   <div
     aria-hidden="true"
-  >
-    <div
-      class="c0"
-    />
-  </div>
+  />
   <reach-portal>
     <div
       data-focus-guard="true"
@@ -1937,7 +1933,7 @@ exports[`Modal variant is warning snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c1 c2"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="warning"
         >
