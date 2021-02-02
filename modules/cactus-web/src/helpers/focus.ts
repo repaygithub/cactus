@@ -19,7 +19,7 @@ export function getFocusable(root?: Element | Document): FocusList {
   } else {
     searchFrom = document
   }
-  const result = Array.from(searchFrom.querySelectorAll(FOCUS_SELECTOR)) as HTMLElement[]
+  const result = Array.from(searchFrom.querySelectorAll<HTMLElement>(FOCUS_SELECTOR))
   return result.filter((el) => !(el.hasAttribute('tabindex') && el.tabIndex < 0))
 }
 
@@ -108,7 +108,7 @@ function applyFocusState(state: FocusState, focusRoot: RootHint) {
     if (focus instanceof HTMLElement) {
       focusElement = focus
     } else if (focus?.length) {
-      const nextIndex = getFocusIndex(focus as FocusList, state as SearchState)
+      const nextIndex = getFocusIndex(focus, state as SearchState)
       if (nextIndex !== undefined) {
         focusIndex = wrapIndex(nextIndex, focus.length)
         focusElement = focus[focusIndex]

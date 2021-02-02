@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps, width as styledSystemWidth, WidthProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import { omitMargins } from '../helpers/omit'
@@ -55,12 +55,19 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
     >
-      {({ fieldId, labelId, name, ariaDescribedBy, status, disabled }): React.ReactElement => (
+      {({
+        fieldId,
+        labelId,
+        name: accessibilityName,
+        ariaDescribedBy,
+        status,
+        disabled: accessibilityDisabled,
+      }): React.ReactElement => (
         <Select
           {...rest}
-          disabled={disabled}
+          disabled={accessibilityDisabled}
           status={status}
-          name={name}
+          name={accessibilityName}
           id={fieldId}
           aria-labelledby={labelId}
           aria-describedby={ariaDescribedBy}
@@ -74,7 +81,7 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
 export const SelectField = styled(SelectFieldBase)`
   position: relative;
   ${margin}
-  ${width}
+  ${styledSystemWidth}
 
   ${Select} {
     width: 100%;

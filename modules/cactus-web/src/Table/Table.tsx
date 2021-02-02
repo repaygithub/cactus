@@ -1,11 +1,17 @@
-import { CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
+import { CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useLayoutEffect } from 'react'
-import styled, { css, FlattenSimpleInterpolation, ThemeProps } from 'styled-components'
+import styled, {
+  css,
+  DefaultTheme,
+  FlattenInterpolation,
+  FlattenSimpleInterpolation,
+  ThemeProps,
+} from 'styled-components'
 import { width, WidthProps } from 'styled-system'
 
 import { useMergedRefs } from '../helpers/react'
-import { border, boxShadow, media, textStyle } from '../helpers/theme'
+import { border, boxShadow, media, radius, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -249,14 +255,8 @@ Table.defaultProps = {
 
 export default DefaultTable
 
-const shapeMap = {
-  square: '1px',
-  intermediate: '4px',
-  round: '8px',
-}
-
-const getShape = (shape: Shape, location: BorderCorner): string =>
-  `border-${location}-radius: ${shapeMap[shape]}`
+const getShape = (location: BorderCorner): FlattenInterpolation<ThemeProps<DefaultTheme>> =>
+  css`border-${location}-radius: ${radius(8)}`
 
 const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
   text-transform: uppercase;
@@ -403,10 +403,10 @@ const table = css<TableProps>`
     td {
       border-top-color: ${(p): string => p.theme.colors.lightContrast};
       :first-child {
-        ${(p): string => getShape(p.theme.shape, 'top-left')};
+        ${getShape('top-left')};
       }
       :last-child {
-        ${(p): string => getShape(p.theme.shape, 'top-right')};
+        ${getShape('top-right')};
       }
     }
   }
@@ -430,10 +430,10 @@ const table = css<TableProps>`
       td {
         border-bottom-color: ${(p): string => p.theme.colors.lightContrast};
         :first-child {
-          ${(p): string => getShape(p.theme.shape, 'bottom-left')};
+          ${getShape('bottom-left')};
         }
         :last-child {
-          ${(p): string => getShape(p.theme.shape, 'bottom-right')};
+          ${getShape('bottom-right')};
         }
       }
     }
@@ -459,7 +459,7 @@ const card = css`
     ${(p): string => boxShadow(p.theme, 1)};
     background-color: ${(p): string => p.theme.colors.white};
     border: ${(p): string => border(p.theme, 'lightContrast')};
-    border-radius: ${(p): string => shapeMap[p.theme.shape]};
+    border-radius: ${radius(8)};
     margin: 4px;
     outline: 0;
     :focus {

@@ -6,8 +6,8 @@ import styled, { css } from 'styled-components'
 import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
-import { border, boxShadow } from '../helpers/theme'
-import variant from '../helpers/variant'
+import { border, boxShadow, radius } from '../helpers/theme'
+import cssVariant from '../helpers/variant'
 import IconButton from '../IconButton/IconButton'
 
 export type ModalType = 'action' | 'danger' | 'warning' | 'success'
@@ -24,12 +24,6 @@ export interface ModalProps extends WidthProps {
 }
 interface ModalPopupProps extends DialogProps, WidthProps, HeightProps, MaxHeightProps {
   variant: ModalType
-}
-
-const shapeMap = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 8px;',
-  round: 'border-radius: 20px;',
 }
 
 const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
@@ -96,7 +90,7 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
     flex-basis: ${(p) => !p.width && '100%'};
     width: ${(p) => !p.width && '100%'};
     border: ${(p) => border(p.theme, '')};
-    ${(p) => shapeMap[p.theme.shape]};
+    border-radius: ${radius(20)};
     background: white;
     ${(p): string => boxShadow(p.theme, 2)};
     margin: auto;
@@ -117,7 +111,7 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
         max-width: 100%;
       }
     }
-    ${variant({
+    ${cssVariant({
       action: css`
         border-color: ${(p): string => p.theme.colors.callToAction};
       `,

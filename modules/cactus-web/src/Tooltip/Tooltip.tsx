@@ -2,14 +2,14 @@ import { Position } from '@reach/popover'
 import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
 import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
-import { ColorStyle, Shape } from '@repay/cactus-theme'
+import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { cloneElement, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
-import { border, boxShadow } from '../helpers/theme'
+import { border, boxShadow, radius } from '../helpers/theme'
 
 interface TooltipProps extends MarginProps {
   /** Text to be displayed */
@@ -173,11 +173,6 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
     </>
   )
 }
-const shapeMap: { [K in Shape]: string } = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 4px;',
-  round: 'border-radius: 8px;',
-}
 
 export const TooltipPopup = styled(ReachTooltipPopup)`
   z-index: 100;
@@ -190,7 +185,7 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   overflow-wrap: break-word;
   word-wrap: break-word;
   border: ${(p) => border(p.theme, 'callToAction')};
-  ${(p): string => shapeMap[p.theme.shape]}
+  border-radius: ${radius(8)};
 `
 
 export const Tooltip = styled(TooltipBase)`

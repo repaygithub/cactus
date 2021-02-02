@@ -200,17 +200,17 @@ Pagination.displayName = 'Pagination'
 
 Pagination.propTypes = {
   pageCount: function (props: Record<string, any>): Error | null {
-    const pageCount = parseInt(props.pageCount as any)
-    if (pageCount < 1 || pageCount !== parseFloat(props.pageCount as any)) {
+    const pageCount = parseInt(props.pageCount)
+    if (pageCount < 1 || pageCount !== parseFloat(props.pageCount)) {
       return new Error('Prop `pageCount` must be a positive integer')
     }
 
     return null
   },
   currentPage: function (props: Record<string, any>): Error | null {
-    const pageCount = parseInt(props.pageCount as any)
-    const current = parseInt(props.currentPage as any)
-    if (current < 1 || current > pageCount || current !== parseFloat(props.currentPage as any)) {
+    const pageCount = parseInt(props.pageCount)
+    const current = parseInt(props.currentPage)
+    if (current < 1 || current > pageCount || current !== parseFloat(props.currentPage)) {
       return new Error('Prop `currentPage` must be an integer in the range [1, `pageCount`]')
     }
 

@@ -57,7 +57,7 @@ export function useScroll<T extends HTMLElement>(
       const getMappedRect = isHorizontal ? getRect : getVerticalRect
       const scrollOffset = isHorizontal ? 'scrollLeft' : 'scrollTop'
 
-      const updateScrollState = (scroll: Scroll, target?: number | HTMLElement): Scroll => {
+      const updateScrollState = (scrollState: Scroll, target?: number | HTMLElement): Scroll => {
         const { listWrapper, buttonWidth, listItems } = getScrollInfo(list)
 
         const parentRect = getMappedRect(listWrapper)
@@ -66,14 +66,14 @@ export function useScroll<T extends HTMLElement>(
           return DEFAULT_SCROLL
         }
         let offset = 0
-        let nextIndex: number = scroll.currentIndex
+        let nextIndex: number = scrollState.currentIndex
         const currentOffset = list[scrollOffset]
         const visibleWidth = parentRect.width - buttonWidth * 2
         const itemRects = listItems.map(getMappedRect)
         if (typeof target === 'object') {
           nextIndex = listItems.indexOf(target)
           if (nextIndex < 0) {
-            return scroll
+            return scrollState
           } else if (nextIndex > 0) {
             const itemRect = itemRects[nextIndex]
             const visibleLeft = parentRect.left + buttonWidth
@@ -115,19 +115,19 @@ export function useScroll<T extends HTMLElement>(
           }
         } else {
           // No target, keep the offset the same.
-          offset = scroll.offset
+          offset = scrollState.offset
         }
 
         // Set the actual scroll offset on the list.
         if (!equals(offset, currentOffset)) {
           list[scrollOffset] = offset
         } else if (
-          equals(offset, scroll.offset) &&
-          scroll.showScroll &&
-          nextIndex === scroll.currentIndex
+          equals(offset, scrollState.offset) &&
+          scrollState.showScroll &&
+          nextIndex === scrollState.currentIndex
         ) {
           // If the offset/index state is unchanged, don't update the state.
-          return scroll
+          return scrollState
         }
         const result: Scroll = {
           offset,

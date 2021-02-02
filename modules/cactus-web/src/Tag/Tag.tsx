@@ -1,11 +1,11 @@
 import { NavigationClose } from '@repay/cactus-icons'
-import { Shape, TextStyle } from '@repay/cactus-theme'
+import { TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, CSSObject, FlattenSimpleInterpolation } from 'styled-components'
+import styled, { CSSObject, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { textStyle } from '../helpers/theme'
+import { radius, textStyle } from '../helpers/theme'
 
 interface TagProps extends MarginProps {
   id?: string
@@ -29,25 +29,12 @@ const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
   }
 )
 
-const valueShapeMap: { [K in Shape]: FlattenSimpleInterpolation } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
-}
-const getValueShape = (shape: Shape): FlattenSimpleInterpolation => valueShapeMap[shape]
-
 export const Tag = styled(TagBase)`
   box-sizing: border-box;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   padding: 0 8px 0 8px;
   border: 1px solid ${(p): string => p.theme.colors.lightContrast};
-  ${(p): FlattenSimpleInterpolation => getValueShape(p.theme.shape as Shape)}
+  border-radius: ${radius(8)};
   margin-right: 2px;
   display: inline-block;
   height: 24px;
