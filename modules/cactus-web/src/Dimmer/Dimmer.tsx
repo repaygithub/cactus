@@ -17,11 +17,7 @@ const DimmableContent: React.FC = ({ children }) => {
 
 const Dimmer: DimmerType = (props): React.ReactElement => {
   const { active, page, children } = props
-  return (
-    <DimmerStyled active={active} page={page}>
-      {active && children}
-    </DimmerStyled>
-  )
+  return active && (<DimmerStyled page={page}>{children}</DimmerStyled>)
 }
 
 Dimmer.DimmableContent = DimmableContent
