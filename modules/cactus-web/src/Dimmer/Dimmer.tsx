@@ -6,14 +6,14 @@ export interface DimmerProps {
   active: boolean
 }
 
-const Dimmer: React.FC<DimmerProps> = (props): React.ReactElement => {
+const Dimmer: React.FC<DimmerProps> = (props) => {
   const { active, children } = props
-  return active ? <DimmerStyled active>{children}</DimmerStyled> : <></>
+  return active ? <DimmerStyled>{children}</DimmerStyled> : null
 }
 
-const DimmerStyled = styled.div<DimmerProps>`
+const DimmerStyled = styled.div`
   position: fixed;
-  display: ${(p): string => (!p.active ? 'none' : 'flex')};
+  display: flex;
   background: rgba(46, 53, 56, 0.9);
   top: 0;
   left: 0;
