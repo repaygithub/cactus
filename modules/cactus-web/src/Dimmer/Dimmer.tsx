@@ -4,30 +4,15 @@ import styled from 'styled-components'
 
 export interface DimmerProps {
   active: boolean
-  page?: boolean
 }
 
-type DimmerType = React.FC<DimmerProps> & {
-  DimmableContent: typeof DimmableContent
+const Dimmer: React.FC<DimmerProps> = (props): React.ReactElement => {
+  const { active, children } = props
+  return active ? <DimmerStyled active>{children}</DimmerStyled> : <></>
 }
-
-const DimmableContent: React.FC = ({ children }) => {
-  return <Container>{children}</Container>
-}
-
-const Dimmer: DimmerType = (props): React.ReactElement => {
-  const { active, page, children } = props
-  return active && (<DimmerStyled page={page}>{children}</DimmerStyled>)
-}
-
-Dimmer.DimmableContent = DimmableContent
-
-const Container = styled.div`
-  position: relative;
-`
 
 const DimmerStyled = styled.div<DimmerProps>`
-  position: ${(p): string => (p.page ? 'fixed' : 'absolute')};
+  position: fixed;
   display: ${(p): string => (!p.active ? 'none' : 'flex')};
   background: rgba(46, 53, 56, 0.9);
   top: 0;
@@ -43,19 +28,9 @@ const DimmerStyled = styled.div<DimmerProps>`
 
 Dimmer.propTypes = {
   active: PropTypes.bool.isRequired,
-  page: PropTypes.bool,
 }
 
 Dimmer.defaultProps = {
-  active: false,
-  page: false,
-}
-
-DimmableContent.propTypes = {
-  active: PropTypes.bool.isRequired,
-}
-
-DimmableContent.defaultProps = {
   active: false,
 }
 
