@@ -5,9 +5,10 @@ import {
   NavigationChevronUp,
   NavigationHamburger,
 } from '@repay/cactus-icons'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 
 import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
@@ -40,9 +41,49 @@ interface MenuBarProps {
   id?: string
   children: React.ReactNode
   'aria-label'?: string
+  variant: MenuBarVariants
 }
 
 type Variant = 'mobile' | 'sidebar' | 'top'
+
+export type MenuBarVariants = 'light' | 'dark'
+
+type VariantMap = { [K in MenuBarVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+
+const variantMap: VariantMap = {
+  light: css`
+    [role='menuitem'] {
+      ${(p) => textStyle(p.theme, 'body')};
+      color: ${(p) => p.theme.colors.darkestContrast};
+      font-weight: 600;
+      text-transform: uppercase;
+
+      background-color: ${(p): string => p.theme.colors.white};
+
+      &:hover {
+        ${(p): string => boxShadow(p.theme, 2)};
+      }
+    }
+  `,
+  dark: css`
+    [role='menubar'] > li > [role='menuitem'] {
+      ${(p) => textStyle(p.theme, 'body')};
+      color: ${(p) => p.theme.colors.white};
+      font-weight: 600;
+      text-transform: uppercase;
+
+      background-color: ${(p): string => p.theme.colors.base};
+
+      &:hover {
+        ${(p): string => boxShadow(p.theme, 2)};
+      }
+    }
+  `,
+}
+
+const variantSelector = (props: MenuBarProps) => {
+  return variantMap[props.variant]
+}
 
 const useVariant = (): Variant => {
   const size = React.useContext(ScreenSizeContext)
@@ -257,8 +298,11 @@ const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
 }
 
 MenuBar.displayName = 'MenuBar'
-MenuBar.propTypes = { 'aria-label': PropTypes.string }
-MenuBar.defaultProps = { 'aria-label': 'Main Menu' }
+MenuBar.propTypes = {
+  'aria-label': PropTypes.string,
+  variant: PropTypes.string,
+}
+MenuBar.defaultProps = { 'aria-label': 'Main Menu', variant: 'dark' }
 
 type ExportedMenuBarType = typeof MenuBar & {
   List: typeof MenuBarList
@@ -273,7 +317,7 @@ export { TypedMenuBar as MenuBar, MenuBarList, MenuBarItem }
 
 export default TypedMenuBar
 
-const Nav = styled.nav`
+const Nav = styled.nav<MenuBarProps>`
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -283,6 +327,8 @@ const Nav = styled.nav`
   ${(p) => textStyle(p.theme, 'small')};
   ${(p) => p.theme.colorStyles.standard};
   box-shadow: inset 0 -${(p) => border(p.theme, 'lightContrast').replace('solid', '0')};
+
+  ${variantSelector}
 
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
