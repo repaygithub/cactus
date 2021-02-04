@@ -103,11 +103,11 @@ exports[`component: Select snapshot 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c8.highlighted-option .sc-hkePoP > input:not(:checked) + span {
+.c8.highlighted-option .sc-fWWZrV > input:not(:checked) + span {
   border-color: white;
 }
 
-.c8 .sc-hkePoP {
+.c8 .sc-fWWZrV {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
@@ -129,7 +129,7 @@ exports[`component: Select snapshot 1`] = `
   display: none;
 }
 
-.c6 .sc-fWWZrV {
+.c6 .sc-gzcbGf {
   bottom: 0;
   position: fixed;
   height: 52px;
@@ -334,11 +334,11 @@ exports[`component: Select with theme customization should have 2px border 1`] =
   color: hsl(0,0%,100%);
 }
 
-.c8.highlighted-option .sc-hkePoP > input:not(:checked) + span {
+.c8.highlighted-option .sc-fWWZrV > input:not(:checked) + span {
   border-color: white;
 }
 
-.c8 .sc-hkePoP {
+.c8 .sc-fWWZrV {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
@@ -360,7 +360,7 @@ exports[`component: Select with theme customization should have 2px border 1`] =
   display: none;
 }
 
-.c6 .sc-fWWZrV {
+.c6 .sc-gzcbGf {
   bottom: 0;
   position: fixed;
   height: 52px;
@@ -556,11 +556,11 @@ exports[`component: Select with theme customization should match intermediate sh
   color: hsl(0,0%,100%);
 }
 
-.c8.highlighted-option .sc-hkePoP > input:not(:checked) + span {
+.c8.highlighted-option .sc-fWWZrV > input:not(:checked) + span {
   border-color: white;
 }
 
-.c8 .sc-hkePoP {
+.c8 .sc-fWWZrV {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
@@ -582,7 +582,7 @@ exports[`component: Select with theme customization should match intermediate sh
   display: none;
 }
 
-.c6 .sc-fWWZrV {
+.c6 .sc-gzcbGf {
   bottom: 0;
   position: fixed;
   height: 52px;
@@ -778,11 +778,11 @@ exports[`component: Select with theme customization should match square shape st
   color: hsl(0,0%,100%);
 }
 
-.c8.highlighted-option .sc-hkePoP > input:not(:checked) + span {
+.c8.highlighted-option .sc-fWWZrV > input:not(:checked) + span {
   border-color: white;
 }
 
-.c8 .sc-hkePoP {
+.c8 .sc-fWWZrV {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
@@ -804,7 +804,7 @@ exports[`component: Select with theme customization should match square shape st
   display: none;
 }
 
-.c6 .sc-fWWZrV {
+.c6 .sc-gzcbGf {
   bottom: 0;
   position: fixed;
   height: 52px;
@@ -1001,11 +1001,11 @@ exports[`component: Select with theme customization should not have box shadows 
   color: hsl(0,0%,100%);
 }
 
-.c8.highlighted-option .sc-hkePoP > input:not(:checked) + span {
+.c8.highlighted-option .sc-fWWZrV > input:not(:checked) + span {
   border-color: white;
 }
 
-.c8 .sc-hkePoP {
+.c8 .sc-fWWZrV {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
@@ -1026,7 +1026,7 @@ exports[`component: Select with theme customization should not have box shadows 
   display: none;
 }
 
-.c6 .sc-fWWZrV {
+.c6 .sc-gzcbGf {
   bottom: 0;
   position: fixed;
   height: 52px;

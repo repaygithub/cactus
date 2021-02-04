@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React, { ReactElement, useContext } from 'react'
 import styled from 'styled-components'
 
-import { border } from '../helpers/theme'
+import { border, radius } from '../helpers/theme'
 import Table from '../Table/Table'
 import { DataGridContext } from './helpers'
 import { ColumnObject, DataColumnObject, SortOption } from './types'
@@ -126,12 +126,6 @@ const TextWrapper = styled.div`
   flex-grow: 1;
 `
 
-const shapeMap = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 8px;',
-  round: 'border-radius: 20px;',
-}
-
 const HeaderButton = styled.button`
   display: flex;
   align-items: center;
@@ -158,7 +152,7 @@ const HeaderButton = styled.button`
       bottom: -4px;
       right: -8px;
       border: ${(p) => border(p.theme, 'lightContrast')};
-      ${(p) => shapeMap[p.theme.shape]}
+      border-radius: ${radius(20)};
     }
   }
 `

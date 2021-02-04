@@ -1,11 +1,11 @@
-import { BorderSize, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
+import { BorderSize, ColorStyle, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { textStyle } from '../helpers/theme'
+import { radius, textStyle } from '../helpers/theme'
 import Spinner from '../Spinner/Spinner'
 
 export type ButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
@@ -138,19 +138,6 @@ const borderMap = {
   `,
 }
 
-const shapeMap = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
-}
-const getShape = (shape: Shape): FlattenSimpleInterpolation => shapeMap[shape]
-
 const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
 
 interface TransientButtonProps extends Omit<ButtonProps, 'inverse' | 'variant'> {
@@ -203,7 +190,7 @@ const StyledButton = styled.button.withConfig({
   text-decoration: none;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
-  ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+  border-radius: ${radius(20)};
 
   &::-moz-focus-inner {
     border: 0;
@@ -219,7 +206,7 @@ const StyledButton = styled.button.withConfig({
       top: -5px;
       left: -5px;
       ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
-      ${(p): FlattenSimpleInterpolation => getShape(p.theme.shape)};
+      border-radius: ${radius(20)};
       border-color: ${(p): string => p.theme.colors.callToAction};
       box-sizing: border-box;
     }

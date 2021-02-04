@@ -73,7 +73,7 @@ const decideBorderRadius = (props: ThemedStyledProps<BoxProps, DefaultTheme>) =>
   } = props
 
   if (borderRadius && borderRadius === 'themed') {
-    return `border-radius: ${radius(props)};`
+    return `border-radius: ${radius(8)(props)};`
   } else if (isInstanceOfCustomBR(borderRadius)) {
     return `border-radius: ${borderRadius[props.theme.shape]};`
   }

@@ -46,9 +46,14 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
     >
-      {({ fieldId, status, ariaDescribedBy, disabled }): React.ReactElement => (
+      {({
+        fieldId,
+        status,
+        ariaDescribedBy,
+        disabled: accessibilityDisabled,
+      }): React.ReactElement => (
         <TextArea
-          disabled={disabled}
+          disabled={accessibilityDisabled}
           id={fieldId}
           width="100%"
           status={status}

@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
-import { JustifyContent, justifyOptions } from '../Flex/Flex'
+import { justifyOptions } from '../Flex/Flex'
 import { Tab, TabController, TabList, TabPanel } from './Tabs'
 
 const LABELS = [
@@ -38,7 +38,7 @@ export default {
 export const BasicUsage = (): React.ReactElement => {
   const breadth = number('Tab Count', 6)
   const fullWidth = boolean('Full Width', true)
-  const justify = select('Justify Content', justifyOptions, 'space-evenly') as JustifyContent
+  const justify = select('Justify Content', justifyOptions, 'space-evenly')
   const fillGaps = boolean('Fill Gaps', false)
   const [active, setActive] = React.useState(-1)
 
@@ -70,7 +70,7 @@ export const BasicUsage = (): React.ReactElement => {
 }
 
 export const WithController = (): React.ReactElement => {
-  const justify = select('Justify Content', justifyOptions, 'space-evenly') as JustifyContent
+  const justify = select('Justify Content', justifyOptions, 'space-evenly')
   return (
     <TabController id="the-tabs" initialTabId="the-tabs-name-tab">
       <TabList justifyContent={justify}>

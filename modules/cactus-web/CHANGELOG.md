@@ -1,3 +1,24 @@
+# v5.1.0 (Mon Feb 01 2021)
+
+#### 🚀 Enhancement
+
+- Add warning and success variants to IconButton [#496](https://github.com/repaygithub/cactus/pull/496) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🐛 Bug Fix
+
+- Fix bug where collapsing a sub-menu in tablet/mobile mode would close the menu panel [#489](https://github.com/repaygithub/cactus/pull/489) ([@mikesoltow](https://github.com/mikesoltow))
+- Fix content overflow bug in mobile mode [#494](https://github.com/repaygithub/cactus/pull/494) ([@wilysword](https://github.com/wilysword))
+- Fix Firefox bug where incorrect menu items would flash when the menu was clicked [#493](https://github.com/repaygithub/cactus/pull/493) ([@wilysword](https://github.com/wilysword))
+- Fix bug where loading Select options asynchronously would result in duplicate options  [#492](https://github.com/repaygithub/cactus/pull/492) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 3
+
+- [@wilysword](https://github.com/wilysword)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v5.0.1 (Wed Jan 27 2021)
 
 #### 🐛 Bug Fix
