@@ -1,5 +1,5 @@
 import {
-  NavigationChevronDown,
+  NavigationArrowDown,
   NavigationChevronLeft,
   NavigationChevronRight,
   NavigationChevronUp,
@@ -18,7 +18,7 @@ import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import { border, borderSize, boxShadow, radius, textStyle } from '../helpers/theme'
+import { border, borderSize, boxShadow, radius, shadowTypes, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -52,7 +52,7 @@ type VariantMap = { [K in MenuBarVariants]: FlattenInterpolation<ThemeProps<Cact
 
 const variantMap: VariantMap = {
   light: css`
-    [role='menuitem'] {
+    [role='menubar'] > li > [role='menuitem'] {
       ${(p) => textStyle(p.theme, 'body')};
       color: ${(p) => p.theme.colors.darkestContrast};
       font-weight: 600;
@@ -61,13 +61,28 @@ const variantMap: VariantMap = {
       background-color: ${(p): string => p.theme.colors.white};
 
       &:hover {
-        ${(p): string => boxShadow(p.theme, 2)};
+        box-shadow: ${shadowTypes[2]} hsla(200, 96%, 35%, 0.3);
+        ${(p): string => `
+          border-bottom:  4px solid ${p.theme.colors.callToAction};
+        `}
+      }
+
+      &:focus {
+        border: ${(p) => border(p.theme, 'callToAction')};
+      }
+    }
+    [role='menubar'] > li {
+      &:hover {
+        z-index: 100;
       }
     }
   `,
   dark: css`
     [role='menubar'] > li > [role='menuitem'] {
-      ${(p) => textStyle(p.theme, 'body')};
+      ${(p) => {
+        console.log(textStyle(p.theme, 'body'))
+        return textStyle(p.theme, 'body')
+      }};
       color: ${(p) => p.theme.colors.white};
       font-weight: 600;
       text-transform: uppercase;
@@ -75,7 +90,19 @@ const variantMap: VariantMap = {
       background-color: ${(p): string => p.theme.colors.base};
 
       &:hover {
-        ${(p): string => boxShadow(p.theme, 2)};
+        box-shadow: ${shadowTypes[0]} hsla(200, 96%, 35%, 0.3);
+        ${(p): string => `
+          border-bottom:  4px solid ${p.theme.colors.white};
+        `}
+      }
+      &:focus,
+      &:hover {
+        border: ${(p) => border(p.theme, 'lightgray')};
+      }
+    }
+    [role='menubar'] > li {
+      &:hover {
+        z-index: 100;
       }
     }
   `,
@@ -139,7 +166,7 @@ const MenuBarList = React.forwardRef<HTMLSpanElement, ListProps>(
         <MenuButton {...props} {...buttonProps} ref={ref}>
           <TextWrapper>{title}</TextWrapper>
           <IconWrapper aria-hidden>
-            <NavigationChevronDown />
+            <NavigationArrowDown />
           </IconWrapper>
         </MenuButton>
         {isTopbar ? (
@@ -194,7 +221,7 @@ const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
         {children}
       </MenuList>
       <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
-        <NavigationChevronDown />
+        <NavigationArrowDown />
       </ScrollButton>
     </MenuWrapper>
   )
@@ -328,8 +355,6 @@ const Nav = styled.nav<MenuBarProps>`
   ${(p) => p.theme.colorStyles.standard};
   box-shadow: inset 0 -${(p) => border(p.theme, 'lightContrast').replace('solid', '0')};
 
-  ${variantSelector}
-
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 20px 8px;
@@ -340,13 +365,13 @@ const Nav = styled.nav<MenuBarProps>`
       color: ${(p) => p.theme.colors.callToAction};
       border-bottom-color: ${(p) => p.theme.colors.callToAction};
     }
-    &:focus {
-      border: ${(p) => border(p.theme, 'callToAction')};
-    }
+
     &[aria-current='true'] {
       font-weight: bold;
     }
   }
+
+  ${variantSelector}
 `
 
 // Don't need `addLayoutStyle` because there are no dynamic values in the nested style.
@@ -380,10 +405,10 @@ const SidebarMenu = styled.ul`
   [role='menuitem'] {
     padding: 18px 16px;
     border-bottom: ${(p) => border(p.theme, 'lightContrast')};
-    ${NavigationChevronDown} {
+    ${NavigationArrowDown} {
       transform: rotateZ(-90deg);
     }
-    &[aria-expanded='true'] ${NavigationChevronDown} {
+    &[aria-expanded='true'] ${NavigationArrowDown} {
       transform: rotateZ(90deg);
     }
     &:hover,
@@ -444,12 +469,12 @@ const MenuWrapper = styled.div`
   [role='menuitem'] {
     padding: 4px 8px;
 
-    ${NavigationChevronDown} {
+    ${NavigationArrowDown} {
       transform: rotateZ(-90deg);
     }
     &[aria-expanded='true'] {
       background-color: ${(p) => p.theme.colors.lightContrast};
-      ${NavigationChevronDown} {
+      ${NavigationArrowDown} {
         transform: rotateZ(90deg);
       }
     }
@@ -471,7 +496,6 @@ const MenuList = styled.ul`
   justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: stretch;
-
   overflow: hidden;
 
   ${(p) => {
@@ -510,7 +534,7 @@ const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' 
   width: 100%;
   height: 100%;
 
-  ${NavigationChevronDown} {
+  ${NavigationArrowDown} {
     width: 8px;
     height: 8px;
     margin-left: 16px;
