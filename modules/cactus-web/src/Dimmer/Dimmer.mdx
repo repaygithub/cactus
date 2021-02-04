@@ -4,6 +4,9 @@ menu: Components
 ---
 
 import Dimmer from './Dimmer'
+import { Flex } from '../Flex/Flex'
+import { Button } from '../Button/Button'
+import { Box } from '../Box/Box'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import PropsTable from 'website-src/components/PropsTable'
@@ -11,35 +14,6 @@ import PropsTable from 'website-src/components/PropsTable'
 # Dimmer
 
 The `Dimmer` component helps by attenuating any distraction to focus the attention on a specific Component. It works by darkening the entire page and displaying their child component over the darkened area.
-
-### Try it out
-
-export const code = `
-    <Flex mx={15} justifyContent="start" alignItems="flex-start" flexDirection="column">
-        <p>
-          Mauris eu felis fringilla tortor scelerisque tincidunt et quis risus. Proin dui arcu,
-          tincidunt nec rhoncus eu, blandit ut odio. Donec ac tristique felis. Morbi vel urna
-          commodo, efficitur orci in, condimentum augue. Morbi neque felis, consequat sit amet mi
-          eget, imperdiet consectetur augue. Sed dignissim congue ex at vestibulum. Etiam rutrum,
-          mauris rutrum maximus congue, lectus sem molestie est, eget gravida orci ligula tempus
-          dolor.
-        </p>
-        <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
-        <Dimmer active={open}>
-          <div>
-            <Box>
-              <Button onClick={() => setOpen(false)}>Click me!</Button>
-            </Box>
-          </div>
-        </Dimmer>
-      </Flex>
-`
-
-<LiveProvider code={code} scope={{ Dimmer }}>
-  <LiveEditor style={livePreviewStyle} />
-  <LiveError />
-  <LivePreview />
-</LiveProvider>
 
 ## Basic usage
 
