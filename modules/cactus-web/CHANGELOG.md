@@ -1,3 +1,22 @@
+# v5.1.1 (Thu Feb 04 2021)
+
+#### 🐛 Bug Fix
+
+- Fix wonky colors of the Alert close icons [#500](https://github.com/repaygithub/cactus/pull/500) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🏠 Internal
+
+- Use the new NavigationFirst and NavigationLast icons in Pagination [#504](https://github.com/repaygithub/cactus/pull/504) ([@wilysword](https://github.com/wilysword))
+- Refactor to clean up SonarQube issues [#501](https://github.com/repaygithub/cactus/pull/501) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 3
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v5.1.0 (Mon Feb 01 2021)
 
 #### 🚀 Enhancement
