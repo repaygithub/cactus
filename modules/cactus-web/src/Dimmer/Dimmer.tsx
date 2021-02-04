@@ -41,12 +41,4 @@ export const DimmerStyled = styled.div`
   z-index: 100;
 `
 
-Dimmer.propTypes = {
-  active: PropTypes.bool.isRequired,
-}
-
-Dimmer.defaultProps = {
-  active: false,
-}
-
 export default Dimmer
