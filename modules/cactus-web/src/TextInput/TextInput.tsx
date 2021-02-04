@@ -1,11 +1,12 @@
-import { CactusTheme, ColorStyle, Shape } from '@repay/cactus-theme'
+import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { border, textStyle } from '../helpers/theme'
+import { textFieldStatusMap } from '../helpers/status'
+import { border, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
 export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
@@ -19,26 +20,9 @@ interface InputProps {
   status?: Status | null
 }
 
-type StatusMap = { [K in Status]: FlattenInterpolation<ThemeProps<CactusTheme>> }
-
-const statusMap: StatusMap = {
-  success: css`
-    border-color: ${(p): string => p.theme.colors.success};
-    background: ${(p): string => p.theme.colors.transparentSuccess};
-  `,
-  warning: css`
-    border-color: ${(p): string => p.theme.colors.warning};
-    background: ${(p): string => p.theme.colors.transparentWarning};
-  `,
-  error: css`
-    border-color: ${(p): string => p.theme.colors.error};
-    background: ${(p): string => p.theme.colors.transparentError};
-  `,
-}
-
 const displayStatus = (props: TextInputProps) => {
   if (props.status && !props.disabled) {
-    return statusMap[props.status]
+    return textFieldStatusMap[props.status]
   } else {
     return ''
   }
@@ -56,16 +40,10 @@ const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
   }
 )
 
-const shapeMap: { [K in Shape]: string } = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 8px;',
-  round: 'border-radius: 20px;',
-}
-
 const Input = styled.input<InputProps>`
   box-sizing: border-box;
   border: ${(p) => border(p.theme, p.disabled ? 'lightGray' : 'darkContrast')};
-  ${(p) => shapeMap[p.theme.shape]};
+  border-radius: ${radius(20)};
   height: 32px;
   outline: none;
   box-sizing: border-box;

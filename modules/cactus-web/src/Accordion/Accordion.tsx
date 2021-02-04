@@ -1,7 +1,7 @@
 import Rect, { PRect } from '@reach/rect'
 import { assignRef } from '@reach/utils'
 import { NavigationChevronDown, NavigationChevronRight } from '@repay/cactus-icons'
-import { BorderSize, Shape } from '@repay/cactus-theme'
+import { BorderSize } from '@repay/cactus-theme'
 import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, {
@@ -19,7 +19,7 @@ import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 
 
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
-import { boxShadow } from '../helpers/theme'
+import { boxShadow, radius } from '../helpers/theme'
 import useId from '../helpers/useId'
 import IconButton from '../IconButton/IconButton'
 
@@ -443,7 +443,7 @@ export const AccordionProvider = (props: AccordionProviderProps): ReactElement =
   )
 
   const unregisterAccordion = useCallback((id: string) => {
-    setUncontrolledOpen((previousOpen) => previousOpen.filter((openId) => openId !== id))
+    setUncontrolledOpen((previousOpen) => previousOpen.filter((o) => o !== id))
     delete managedAccordions.current[id]
   }, [])
 
@@ -689,18 +689,6 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
   )
 }
 
-const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
-}
-
 const outlineBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   thin: css`
     border: 1px solid;
@@ -725,7 +713,6 @@ const simpleBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   `,
 }
 
-const getShape = (shape: Shape) => shapeMap[shape]
 const getOutlineBorder = (borderSize: BorderSize) => outlineBorderMap[borderSize]
 const getSimpleBorder = (borderSize: BorderSize) => simpleBorderMap[borderSize]
 
@@ -737,7 +724,7 @@ const accordionVariantMap: VariantMap = {
   outline: css`
     ${(p): ReturnType<typeof css> => getOutlineBorder(p.theme.border)}
     border-color: ${(p): string => p.theme.colors.lightContrast};
-    ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+    border-radius: ${radius(8)};
     & + & {
       margin-top: 8px;
     }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { border, textStyle } from '../helpers/theme'
+import { border, radius, textStyle } from '../helpers/theme'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger'
 
@@ -27,12 +27,6 @@ const variantMap: VariantMap = {
   danger: css`
     color: ${(p): string => p.theme.colors.error};
   `,
-}
-
-const shapeMap = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 8px;',
-  round: 'border-radius: 20px;',
 }
 
 const inverseVariantMap: VariantMap = {
@@ -90,7 +84,7 @@ export const TextButton = styled.button<TextButtonProps>`
       top: 0px;
       left: 0px;
       border: ${(p) => border(p.theme, 'callToAction')};
-      ${(p) => shapeMap[p.theme.shape]};
+      border-radius: ${radius(20)};
     }
   }
 

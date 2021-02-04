@@ -2,6 +2,7 @@ import {
   CactusColor,
   CactusTheme,
   ColorStyle,
+  Shape,
   TextStyle,
   TextStyleCollection,
 } from '@repay/cactus-theme'
@@ -38,14 +39,23 @@ export const insetBorder = (theme: CactusTheme, color: string, direction?: Direc
   return `box-shadow: inset ${hOffset}px ${vOffset}px 0px ${spread}px ${color}`
 }
 
-const radii = {
-  square: '1px',
-  intermediate: '4px',
-  round: '8px',
+type MaxRadius = 8 | 20
+
+const radiiMap: Record<MaxRadius, Record<Shape, string>> = {
+  8: {
+    square: '1px',
+    intermediate: '4px',
+    round: '8px',
+  },
+  20: {
+    square: '1px',
+    intermediate: '8px',
+    round: '20px',
+  },
 }
 
-// There are elements with other radius patterns, but this seems like the most common.
-export const radius = ({ theme }: Props): string => radii[theme.shape]
+export const radius = (maxRadius: MaxRadius) => ({ theme }: Props): string =>
+  radiiMap[maxRadius][theme.shape]
 
 export const invertColors = (style: ColorStyle): ColorStyle => {
   return { color: style.backgroundColor, backgroundColor: style.color }

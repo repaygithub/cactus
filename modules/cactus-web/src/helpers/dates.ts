@@ -582,16 +582,16 @@ export class PartialDate implements FormatTokenMap {
 
   public isValid(): boolean {
     const type = this._type
-    const isValidDate =
+    const isDateValid =
       type === 'time' ||
       ([this.year, this.month, this.day].every(isNumber) && this.isDayOfMonth(this.day || 0))
-    const isValidTime =
+    const isTimeValid =
       type === 'date' ||
       (this.hours !== undefined &&
         this.minutes !== undefined &&
         (!this._format.includes('aa') || this.period !== undefined))
 
-    return isValidDate && isValidTime
+    return isDateValid && isTimeValid
   }
 
   public isDayOfMonth(day: number): boolean {

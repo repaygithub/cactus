@@ -104,7 +104,7 @@ exports[`component: FileInputField should render a disabled file input field 1`]
   padding-right: 8px;
 }
 
-.c1 .sc-gVFdEO {
+.c1 .sc-gzcbGf {
   margin-top: 4px;
 }
 
@@ -403,8 +403,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 .c22 .c15,
-.c22 .sc-daBvwG,
-.c22 .sc-dWBSoC {
+.c22 .sc-fuIRbl,
+.c22 .sc-fXgAFM {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -604,12 +604,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c12 .c13 .sc-dWBSoC {
+.c12 .c13 .sc-fXgAFM {
   height: 18px;
   width: 18px;
 }
 
-.c12 .sc-iGkqGz {
+.c12 .sc-kTCrpv {
   height: 12px;
   width: 12px;
 }
@@ -940,7 +940,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   padding-right: 8px;
 }
 
-.c1 .sc-gVFdEO {
+.c1 .sc-gzcbGf {
   margin-top: 4px;
 }
 
@@ -965,7 +965,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c14 .sc-jUfxsr {
+.c14 .sc-fcmNTy {
   padding-bottom: 4px;
 }
 
@@ -1097,7 +1097,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c12 .c13 .sc-jUfxsr {
+.c12 .c13 .sc-fcmNTy {
   height: 16px;
   width: 16px;
 }
@@ -1107,7 +1107,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c12 .sc-iGkqGz {
+.c12 .sc-kTCrpv {
   height: 12px;
   width: 12px;
 }
@@ -1125,7 +1125,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c11 .sc-gVFdEO {
+.c11 .sc-gzcbGf {
   position: relative;
   margin-top: 4px;
 }
@@ -1407,7 +1407,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding-right: 8px;
 }
 
-.c1 .sc-gVFdEO {
+.c1 .sc-gzcbGf {
   margin-top: 4px;
 }
 
@@ -1493,17 +1493,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding: 0;
 }
 
-.c12 .sc-flUlJl {
+.c12 .sc-irKEWy {
   height: 24px;
   width: 24px;
 }
 
-.c12 .sc-flUlJl .sc-jUfxsr {
+.c12 .sc-irKEWy .sc-fcmNTy {
   height: 16px;
   width: 16px;
 }
 
-.c12 .sc-flUlJl .sc-dWBSoC {
+.c12 .sc-irKEWy .sc-fXgAFM {
   height: 18px;
   width: 18px;
 }
@@ -1513,11 +1513,11 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 12px;
 }
 
-.c12 .sc-eXuzZk {
+.c12 .sc-eWnSVe {
   margin-left: auto;
 }
 
-.c12 .sc-amjdv {
+.c12 .sc-jOFreG {
   height: 12px;
   width: 12px;
 }
@@ -1526,7 +1526,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 100%;
 }
 
-.c11 .sc-gVFdEO {
+.c11 .sc-gzcbGf {
   position: relative;
   margin-top: 4px;
 }
@@ -1808,7 +1808,7 @@ exports[`component: FileInputField should render file input field 1`] = `
   padding-right: 8px;
 }
 
-.c1 .sc-gVFdEO {
+.c1 .sc-gzcbGf {
   margin-top: 4px;
 }
 

@@ -4,6 +4,7 @@ exports[`Exports should match snapshot of exported icons 1`] = `
 Array [
   "ActionsAdd",
   "ActionsCoachmarks",
+  "ActionsCopy",
   "ActionsDelete",
   "ActionsDownload",
   "ActionsEdit",
@@ -73,7 +74,9 @@ Array [
   "NavigationCircleUp",
   "NavigationClose",
   "NavigationDragDrop",
+  "NavigationFirst",
   "NavigationHamburger",
+  "NavigationLast",
   "NavigationLess",
   "NavigationLogout",
   "NavigationMenuDots",

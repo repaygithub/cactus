@@ -77,26 +77,26 @@ export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>
       forwardProps.disabled = disabled
     }
     const hasOnChange = !!props.onChange
-    const cloneWithValue = (element: React.ReactElement, props: any) => {
+    const cloneWithValue = (element: React.ReactElement, cloneProps: any) => {
       if (value !== undefined) {
         if (element.props.value !== undefined) {
-          props = { ...props, checked: element.props.value === value }
+          cloneProps = { ...cloneProps, checked: element.props.value === value }
         } else {
-          props = { ...props, value }
+          cloneProps = { ...cloneProps, value }
         }
       } else if (defaultValue !== undefined) {
         if (element.props.value !== undefined) {
-          props = { ...props, defaultChecked: element.props.value === defaultValue }
+          cloneProps = { ...cloneProps, defaultChecked: element.props.value === defaultValue }
         } else {
-          props = { ...props, defaultValue }
+          cloneProps = { ...cloneProps, defaultValue }
         }
       }
       // This is to avert a PropTypes warning regarding missing onChange handler.
-      const hasChecked = props.checked !== undefined || element.props.checked !== undefined
+      const hasChecked = cloneProps.checked !== undefined || element.props.checked !== undefined
       if (hasChecked && hasOnChange && !element.props.onChange) {
-        props = { ...props, onChange: noop }
+        cloneProps = { ...cloneProps, onChange: noop }
       }
-      return React.cloneElement(element, props)
+      return React.cloneElement(element, cloneProps)
     }
     children = cloneAll(children, forwardProps, cloneWithValue)
 

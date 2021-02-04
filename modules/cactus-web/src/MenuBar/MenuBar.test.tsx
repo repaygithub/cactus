@@ -19,9 +19,6 @@ global.MutationObserver = class {
   }
 }
 
-// @ts-ignore
-window.getComputedStyle = () => ({ overflow: 'auto' })
-
 // Example for typescript how to use a custom component with MenuBar.Item.
 const Linkish = (props: { to: string; children: string }) => <a href={props.to}>{props.children}</a>
 
@@ -44,9 +41,9 @@ class Class extends React.Component<Sample, unknown> {
 
 const Menu = () => {
   const navRef = React.useRef<HTMLElement>(null)
-  const listRef = React.useRef<HTMLButtonElement>(null)
+  const listRef = React.useRef<HTMLSpanElement>(null)
   const linkRef = React.useRef<HTMLAnchorElement>(null)
-  const itemRef = React.useRef<HTMLButtonElement>(null)
+  const itemRef = React.useRef<HTMLSpanElement>(null)
   const customRef = React.useRef<HTMLDivElement>(null)
   return (
     <MenuBar id="mb" ref={navRef} aria-label="Menu of Main-ness">
@@ -97,6 +94,36 @@ describe('component: MenuBar', () => {
     expect(container).toMatchSnapshot()
     const hamburger = container.querySelectorAll('[role="button"]')
     expect(hamburger).toHaveLength(1)
+  })
+
+  test('sidebar collapse', () => {
+    const { getByText, container } = render(
+      <StyleProvider>
+        <ScreenSizeContext.Provider value={SIZES.medium}>
+          <Menu />
+        </ScreenSizeContext.Provider>
+      </StyleProvider>
+    )
+
+    const hamburger = container.querySelector('[role="button"]') as HTMLElement
+    const nestedList = getByText('Emphasized').closest('span') as HTMLElement
+    const nestedItem = getByText('Nested')
+
+    expect(hamburger).toBeVisible()
+    expect(nestedList).not.toBeVisible()
+    expect(nestedItem).not.toBeVisible()
+
+    userEvent.click(hamburger)
+    expect(nestedList).toBeVisible()
+    expect(nestedItem).not.toBeVisible()
+
+    userEvent.click(nestedList)
+    expect(nestedList).toBeVisible()
+    expect(nestedItem).toBeVisible()
+
+    userEvent.click(nestedList)
+    expect(nestedList).toBeVisible()
+    expect(nestedItem).not.toBeVisible()
   })
 
   test('focus', () => {

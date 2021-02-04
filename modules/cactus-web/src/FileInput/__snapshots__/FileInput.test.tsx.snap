@@ -500,8 +500,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c12 .c5,
-.c12 .sc-bTDODP,
-.c12 .sc-eHEFXm {
+.c12 .sc-dsXyEt,
+.c12 .sc-xGAYn {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -594,12 +594,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c2 .c3 .sc-eHEFXm {
+.c2 .c3 .sc-xGAYn {
   height: 18px;
   width: 18px;
 }
 
-.c2 .sc-gVFdEO {
+.c2 .sc-gzcbGf {
   height: 12px;
   width: 12px;
 }
@@ -816,7 +816,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c4 .sc-kHWWFa {
+.c4 .sc-daBvwG {
   padding-bottom: 4px;
 }
 
@@ -948,7 +948,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c2 .c3 .sc-kHWWFa {
+.c2 .c3 .sc-daBvwG {
   height: 16px;
   width: 16px;
 }
@@ -958,7 +958,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c2 .sc-gVFdEO {
+.c2 .sc-gzcbGf {
   height: 12px;
   width: 12px;
 }
@@ -976,7 +976,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-fWWZrV {
+.c1 .sc-gkCpWe {
   position: relative;
   margin-top: 4px;
 }
@@ -1205,17 +1205,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   padding: 0;
 }
 
-.c2 .sc-dTSxUT {
+.c2 .sc-hkePoP {
   height: 24px;
   width: 24px;
 }
 
-.c2 .sc-dTSxUT .sc-kHWWFa {
+.c2 .sc-hkePoP .sc-daBvwG {
   height: 16px;
   width: 16px;
 }
 
-.c2 .sc-dTSxUT .sc-eHEFXm {
+.c2 .sc-hkePoP .sc-xGAYn {
   height: 18px;
   width: 18px;
 }
@@ -1225,11 +1225,11 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .sc-hkePoP {
+.c2 .sc-fIxnHU {
   margin-left: auto;
 }
 
-.c2 .sc-fXazxj {
+.c2 .sc-dvXXZy {
   height: 12px;
   width: 12px;
 }
@@ -1238,7 +1238,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-fWWZrV {
+.c1 .sc-gkCpWe {
   position: relative;
   margin-top: 4px;
 }

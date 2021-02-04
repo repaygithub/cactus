@@ -129,6 +129,12 @@ function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
           items: [],
         })),
       },
+      {
+        title: 'Tutorials',
+        url: '/tutorials/',
+        order: 100,
+        items: [],
+      },
     ],
   }
   pages

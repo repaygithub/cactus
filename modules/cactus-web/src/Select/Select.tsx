@@ -1,12 +1,12 @@
 import '../helpers/polyfills'
 
 import { ActionsAdd, NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
-import { width, WidthProps } from 'styled-system'
+import { width as styledSystemWidth, WidthProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
@@ -20,7 +20,8 @@ import {
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { boxShadow, fontSize, textStyle } from '../helpers/theme'
+import { textFieldStatusMap } from '../helpers/status'
+import { boxShadow, fontSize, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
@@ -67,23 +68,6 @@ export interface SelectProps
   onFocus?: React.FocusEventHandler<Target>
 }
 
-type StatusMap = { [K in Status]: ReturnType<typeof css> }
-
-const statusMap: StatusMap = {
-  success: css`
-    border-color: ${(p): string => p.theme.colors.success};
-    background: ${(p): string => p.theme.colors.transparentSuccess};
-  `,
-  warning: css`
-    border-color: ${(p): string => p.theme.colors.warning};
-    background: ${(p): string => p.theme.colors.transparentWarning};
-  `,
-  error: css`
-    border-color: ${(p): string => p.theme.colors.error};
-    background: ${(p): string => p.theme.colors.transparentError};
-  `,
-}
-
 // Thank you, Stack Overflow https://stackoverflow.com/questions/49986720/how-to-detect-internet-explorer-11-and-below-versions
 const isIE = () => {
   const ua = window.navigator.userAgent //Check the userAgent property of the window.navigator object
@@ -93,10 +77,9 @@ const isIE = () => {
   return msie > 0 || trident > 0
 }
 
-// @ts-ignore
-const displayStatus: any = (props): ReturnType<typeof css> | string => {
+const displayStatus: any = (props: SelectProps): ReturnType<typeof css> | string => {
   if (props.status && !props.disabled) {
-    return statusMap[props.status as Status]
+    return textFieldStatusMap[props.status as Status]
   } else {
     return ''
   }
@@ -230,20 +213,7 @@ const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
   `,
 }
 
-const shapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 8px;
-  `,
-  round: css`
-    border-radius: 20px;
-  `,
-}
-
 const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
-const getShape = (shape: Shape): ReturnType<typeof css> => shapeMap[shape]
 
 const SelectTrigger = styled.button`
   position: relative;
@@ -253,7 +223,7 @@ const SelectTrigger = styled.button`
   height: 32px;
   padding: 0 28px 0 16px;
   background-color: transparent;
-  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+  border-radius: ${radius(20)};
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
   border-style: solid;
   border-color: ${(p): string => p.theme.colors.darkContrast};
@@ -299,7 +269,7 @@ const ComboInput = styled.input`
   height: 32px;
   padding: 0 24px 0 16px;
   background-color: transparent;
-  ${(p): ReturnType<typeof css> => getShape(p.theme.shape)}
+  border-radius: ${radius(20)};
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
   border-style: solid;
   border-color: ${(p): string => p.theme.colors.darkContrast};
@@ -323,19 +293,6 @@ function responsiveHeight(): number {
   return (typeof window !== 'undefined' && window.innerHeight * 0.4) || 0
 }
 
-const listShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 1px;
-  `,
-  intermediate: css`
-    border-radius: 4px;
-  `,
-  round: css`
-    border-radius: 8px;
-  `,
-}
-
-const getListShape = (shape: Shape): ReturnType<typeof css> => listShapeMap[shape]
 const getListBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => {
   return theme.boxShadows
     ? css`
@@ -358,7 +315,7 @@ const StyledList = styled.ul`
   margin-bottom: 0;
   overflow-y: auto;
   outline: none;
-  ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
+  border-radius: ${radius(8)};
   ${(p): ReturnType<typeof css> => getListBoxShadowStyles(p.theme)}
   border-style: solid;
   ${(): string =>
@@ -444,7 +401,7 @@ const StyledListWrapper = styled.div`
   &[aria-hidden='true'] {
     display: none;
   }
-  ${(p): ReturnType<typeof css> => getListShape(p.theme.shape)}
+  border-radius: ${radius(8)};
   max-height: 400px;
   max-width: 100vw;
   ${(p): string => boxShadow(p.theme, 1)};
@@ -637,7 +594,7 @@ class List extends React.Component<ListProps, ListState> {
     const currentTarget = event.currentTarget
     // prevent triggering by automated scrolling
     if (!this.didScroll) {
-      this.setActiveDescendant(currentTarget.id as string)
+      this.setActiveDescendant(currentTarget.id)
     }
   }
 
@@ -930,7 +887,7 @@ function asOption(opt: number | string | OptionType): OptionType {
     const option: OptionType = { label: String(opt), value: opt }
     return option
   }
-  return opt as OptionType
+  return opt
 }
 
 function getOptionId(selectId: string, option: OptionType): string {
@@ -1096,7 +1053,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     if (target.getAttribute('role') === 'option') {
       event.preventDefault()
-      const activeId = target.id as string
+      const activeId = target.id
       const active = this.getExtOptions().find((o): boolean => o.id === activeId)
 
       this.raiseChange(event, active || null)
@@ -1310,7 +1267,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.getExtOptions().forEach((opt): void => {
       this.optionsMap[opt.value] = opt
     })
-    if (this.props.comboBox && this.props.value) {
+    if (this.props.comboBox && this.props.canCreateOption && this.props.value) {
       const newOptions: OptionType[] = []
 
       if (Array.isArray(this.props.value)) {
@@ -1358,9 +1315,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     ) {
       return this.memoizedExtOptions.memo
     }
+    const propValues = new Set<string | number>()
     let memo = this.props.options.map(
       (o): ExtendedOptionType => {
         const opt = asOption(o)
+        propValues.add(opt.value)
         const extendedOpt: ExtendedOptionType = {
           ...opt,
           id: getOptionId(selectId, opt),
@@ -1369,13 +1328,15 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         return extendedOpt
       }
     )
-    const extraOpts = (this.state.extraOptions as OptionType[]).map(
-      (opt): ExtendedOptionType => ({
-        ...opt,
-        id: getOptionId(selectId, opt),
-        isSelected: this.isSelected(opt),
-      })
-    )
+    const extraOpts = (this.state.extraOptions as OptionType[])
+      .filter((opt) => !propValues.has(opt.value))
+      .map(
+        (opt): ExtendedOptionType => ({
+          ...opt,
+          id: getOptionId(selectId, opt),
+          isSelected: this.isSelected(opt),
+        })
+      )
     memo = memo.concat(extraOpts)
     this.memoizedExtOptions = {
       id: selectId,
@@ -1508,7 +1469,7 @@ export const Select = styled(SelectBase)`
     border-color: ${(p) => p.disabled && p.theme.colors.lightGray};
   }
   ${margin}
-  ${width}
+  ${styledSystemWidth}
   ${SelectTrigger} {
     ${displayStatus}
   }

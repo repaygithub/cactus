@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 
 type CloneFunc = (e: React.ReactElement, p?: Record<string, any>, ix?: number) => React.ReactElement
 
@@ -10,9 +10,9 @@ export function cloneAll(
 ): React.ReactChild[] {
   const hasKeyPrefix = cloneProps && (cloneProps.key || cloneProps.key === 0)
   const childArray = React.Children.toArray(children) as React.ReactChild[]
-  return childArray.reduce((children, child, index) => {
+  return childArray.reduce((returnVal, child, index) => {
     if (!child || typeof child === 'string' || typeof child === 'number') {
-      children.push(child)
+      returnVal.push(child)
     } else {
       const key = hasKeyPrefix ? `${cloneProps?.key}${child.key}` : child.key
       let props: Record<string, any> | undefined
@@ -23,13 +23,13 @@ export function cloneAll(
       }
       if (child.type === React.Fragment) {
         if (child.props.children) {
-          children.push(...cloneAll(child.props.children, props, makeClone))
+          returnVal.push(...cloneAll(child.props.children, props, makeClone))
         }
       } else {
-        children.push(makeClone(child, props, index))
+        returnVal.push(makeClone(child, props, index))
       }
     }
-    return children
+    return returnVal
   }, [] as React.ReactChild[])
 }
 
@@ -76,4 +76,30 @@ export function useBox<T>(box: T): T {
     }
   }
   return current
+}
+
+type StateSetterWithCallback<S> = (v: SetStateAction<S>, callback?: () => void) => void
+
+const noop = () => undefined
+
+export function useStateWithCallback<S>(
+  initialState: S | (() => S)
+): [S, StateSetterWithCallback<S>] {
+  const [state, setState] = React.useState<S>(initialState)
+  const storedCallback = React.useRef<() => void>(noop)
+
+  const setStateWithCallback = React.useCallback<StateSetterWithCallback<S>>(
+    (v, callback = noop) => {
+      storedCallback.current = callback
+      setState(v)
+    },
+    []
+  )
+
+  React.useEffect(() => {
+    storedCallback.current()
+    storedCallback.current = noop
+  }, [state])
+
+  return [state, setStateWithCallback]
 }

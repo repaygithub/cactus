@@ -1,4 +1,4 @@
-import { queryByLabelText, queryByText } from '@testing-library/testcafe'
+import { queryByText } from '@testing-library/testcafe'
 import * as path from 'path'
 import { ClientFunction } from 'testcafe'
 
@@ -42,6 +42,9 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
   await t.click(queryByText('Blue'))
   await t.click(queryByText('Allow Customer Login'))
   await t.click(queryByText('Use Cactus Styles'))
+  await fillTextField('month', '2')
+  await fillTextField('day of month', '28')
+  await fillTextField('year', '2019')
   await clickWorkaround(queryByText('Submit'))
 
   const apiData: UIConfigData = await getApiData()
@@ -65,87 +68,6 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
     useCactusStyles: true,
     selectColor: 'blue',
     fileInput: [{ fileName: 'test-logo.jpg', contents: fileContents, status: 'loaded' }],
-    establishedDate: '2019-10-16',
+    establishedDate: '2019-02-28',
   })
-})
-
-test('moves focus to date picker on click', async (t): Promise<void> => {
-  const { getActiveElement } = makeActions(t)
-  await clickWorkaround(queryByLabelText('Open date picker'))
-  await t.pressKey('tab')
-  const activeEl = await getActiveElement()
-
-  await t
-    .expect(activeEl.attributes?.['aria-label'])
-    .eql('Click to go back one month')
-    .expect(activeEl.attributes?.['aria-roledescription'])
-    .eql('moves date back one month')
-    .expect(activeEl.focused)
-    .ok('Date picker is not focused')
-})
-
-test('locks focus to date picker', async (t: TestController): Promise<void> => {
-  const { getActiveElement } = makeActions(t)
-  const datePickerTrigger = queryByLabelText('Open date picker')
-  await clickWorkaround(datePickerTrigger)
-
-  const dateButtonActiveEl = await getActiveElement()
-  await t
-    .expect(dateButtonActiveEl.attributes?.role)
-    .eql('gridcell')
-    .expect(dateButtonActiveEl.attributes?.['data-date'])
-    .eql('2019-10-16')
-    .expect(dateButtonActiveEl.focused)
-    .ok('Date button not focused')
-
-  // tab and expect focus to circle back to Month select
-  await t.pressKey('tab')
-  const monthSelectActiveEl = await getActiveElement()
-  await t
-    .expect(monthSelectActiveEl.tagName)
-    .eql('button')
-    .expect(monthSelectActiveEl.attributes?.['aria-label'])
-    .eql('Click to go back one month')
-    .expect(monthSelectActiveEl.attributes?.['aria-roledescription'])
-    .eql('moves date back one month')
-    .expect(monthSelectActiveEl.focused)
-    .ok('Date button not focused')
-})
-
-test('move and select date with keyboard', async (t: TestController): Promise<void> => {
-  const { getActiveElement } = makeActions(t)
-  const datePickerTrigger = queryByLabelText('Open date picker')
-  await clickWorkaround(datePickerTrigger)
-
-  // move right
-  await t.pressKey('right')
-  const dateButtonActiveEl = await getActiveElement()
-  await t
-    .expect(dateButtonActiveEl.attributes?.role)
-    .eql('gridcell')
-    .expect(dateButtonActiveEl.attributes?.['data-date'])
-    .eql('2019-10-17')
-    .expect(dateButtonActiveEl.focused)
-    .ok('Date button not focused')
-
-  // move up
-  await t.pressKey('up')
-  const dateButtonActiveEl2 = await getActiveElement()
-  await t
-    .expect(dateButtonActiveEl2.attributes?.role)
-    .eql('gridcell')
-    .expect(dateButtonActiveEl2.attributes?.['data-date'])
-    .eql('2019-10-10')
-    .expect(dateButtonActiveEl2.focused)
-    .ok('Date button not focused')
-
-  // select currently focused date
-  await t.pressKey('enter')
-  await t
-    .expect(queryByLabelText('year').value)
-    .eql('2019')
-    .expect(queryByLabelText('month').value)
-    .eql('10')
-    .expect(queryByLabelText('day of month').value)
-    .eql('10')
 })

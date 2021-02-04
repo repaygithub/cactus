@@ -166,7 +166,7 @@ export const TabController: React.FC<TabControllerProps> = ({
 const generateId = (...parts: (string | undefined)[]): string => parts.filter(Boolean).join('-')
 
 const getTabs = (root: HTMLElement) =>
-  Array.from(root.querySelectorAll('[role="tab"]')) as HTMLElement[]
+  Array.from(root.querySelectorAll<HTMLElement>('[role="tab"]'))
 
 const getScrollInfo: GetScrollInfo = (list) => ({
   listWrapper: list.parentElement as HTMLElement,

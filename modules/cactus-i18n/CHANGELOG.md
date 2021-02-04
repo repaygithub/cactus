@@ -1,3 +1,15 @@
+# v2.0.1 (Mon Feb 01 2021)
+
+#### 🐛 Bug Fix
+
+- Fix bug where children of I18nSection would un-mount/re-mount on language change [#499](https://github.com/repaygithub/cactus/pull/499) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v2.0.0 (Mon Dec 21 2020)
 
 #### 💥 Breaking Change
