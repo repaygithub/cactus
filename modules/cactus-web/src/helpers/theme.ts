@@ -51,7 +51,7 @@ export const invertColors = (style: ColorStyle): ColorStyle => {
   return { color: style.backgroundColor, backgroundColor: style.color }
 }
 
-const shadowTypes = [
+export const shadowTypes = [
   '0px 0px 3px',
   '0px 3px 8px',
   '0px 9px 24px',
