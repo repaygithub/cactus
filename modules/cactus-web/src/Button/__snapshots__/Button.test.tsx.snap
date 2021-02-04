@@ -43,7 +43,7 @@ exports[`With theme changes  Should have intermediate border radius 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -119,7 +119,7 @@ exports[`With theme changes  Should have square border radius 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -195,7 +195,7 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -271,7 +271,7 @@ exports[`With theme changes  should have 2px border 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -347,7 +347,7 @@ exports[`component: Button should default to standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -521,7 +521,7 @@ exports[`component: Button should render call to action variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -597,7 +597,7 @@ exports[`component: Button should render danger variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -674,7 +674,7 @@ exports[`component: Button should render disabled variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -745,7 +745,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -821,7 +821,7 @@ exports[`component: Button should render inverse danger variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -897,7 +897,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -968,7 +968,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1044,7 +1044,7 @@ exports[`component: Button should render standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1121,7 +1121,7 @@ exports[`component: Button should support margin space props 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-dTSxUT {
+.c0 .sc-htmbXw {
   position: absolute;
   left: 50%;
   top: 50%;

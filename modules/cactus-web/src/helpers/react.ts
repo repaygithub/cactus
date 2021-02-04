@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { SetStateAction } from 'react'
 
 type CloneFunc = (e: React.ReactElement, p?: Record<string, any>, ix?: number) => React.ReactElement
 
@@ -76,4 +76,30 @@ export function useBox<T>(box: T): T {
     }
   }
   return current
+}
+
+type StateSetterWithCallback<S> = (v: SetStateAction<S>, callback?: () => void) => void
+
+const noop = () => undefined
+
+export function useStateWithCallback<S>(
+  initialState: S | (() => S)
+): [S, StateSetterWithCallback<S>] {
+  const [state, setState] = React.useState<S>(initialState)
+  const storedCallback = React.useRef<() => void>(noop)
+
+  const setStateWithCallback = React.useCallback<StateSetterWithCallback<S>>(
+    (v, callback = noop) => {
+      storedCallback.current = callback
+      setState(v)
+    },
+    []
+  )
+
+  React.useEffect(() => {
+    storedCallback.current()
+    storedCallback.current = noop
+  }, [state])
+
+  return [state, setStateWithCallback]
 }

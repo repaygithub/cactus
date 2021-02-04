@@ -3,7 +3,7 @@ import React from 'react'
 import { isActionKey, preventAction } from './a11y'
 import { isFocusOut } from './events'
 import { FocusControl, FocusHint, FocusOpts, FocusSetter, useFocusControl } from './focus'
-import { useBox } from './react'
+import { useBox, useStateWithCallback } from './react'
 import useId from './useId'
 
 export type PopupType = 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog'
@@ -61,26 +61,31 @@ function usePopup(
   const buttonId = useId(inputButtonId || (id && `${id}-button`))
   const popupId = useId(inputPopupId || (id && `${id}-popup`))
   const setFocus = useFocusControl(focusControl, popupId)
-  const [expanded, setExpanded] = React.useState<boolean>(initialExpanded)
+  const [expanded, setExpanded] = useStateWithCallback<boolean>(initialExpanded)
   const box = useBox({ expanded, setFocus })
 
   // For convenience, you can control focus & visibility with a single call.
   const toggle = React.useCallback<TogglePopup>(
     (expand, focusHint, focusOpt) => {
       let isExpanded = box.expanded
-      if (expand !== isExpanded) {
+      const shouldUpdateState = expand !== isExpanded
+
+      if (shouldUpdateState) {
         isExpanded = !isExpanded
-        // Delay focus so popup has time to become visible.
-        if (isExpanded && focusHint !== undefined && focusOpt?.delay === undefined) {
-          focusOpt = focusOpt ? { ...focusOpt, delay: true } : { delay: true }
-        }
-        setExpanded(isExpanded)
       }
+
       // A closed element can't focus by index or text search.
       if (!isExpanded && typeof focusHint !== 'object') {
         focusHint = null
       }
-      if (focusHint !== undefined) {
+
+      if (shouldUpdateState) {
+        setExpanded(isExpanded, () => {
+          if (focusHint !== undefined) {
+            box.setFocus(focusHint, focusOpt)
+          }
+        })
+      } else if (focusHint !== undefined) {
         box.setFocus(focusHint, focusOpt)
       }
     },

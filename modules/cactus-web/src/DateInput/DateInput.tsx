@@ -1582,8 +1582,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       do {
         testDate.setMonth(month)
         months.push({
-          long: monthOnlyFmt.format(testDate),
-          short: monthOnlyFmtShort.format(testDate),
+          long: monthOnlyFmt.format(testDate).replace('\u200e', ''),
+          short: monthOnlyFmtShort.format(testDate).replace('\u200e', ''),
         })
       } while (++month < 12)
       // get weekday names
