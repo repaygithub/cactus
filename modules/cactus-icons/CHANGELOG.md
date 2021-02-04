@@ -1,3 +1,15 @@
+# v2.3.0 (Thu Feb 04 2021)
+
+#### 🚀 Enhancement
+
+- Add NavigationFirst and NavigationLast icons [#504](https://github.com/repaygithub/cactus/pull/504) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v2.2.0 (Mon Feb 01 2021)
 
 #### 🚀 Enhancement
