@@ -60,10 +60,13 @@ const variantMap: VariantMap = {
 
       background-color: ${(p): string => p.theme.colors.white};
 
+      border: ${(p) => border(p.theme, 'transparent')};
+      border-bottom: 3px solid ${(p) => p.theme.colors.lightContrast};
+
       &:hover {
         box-shadow: ${shadowTypes[2]} hsla(200, 96%, 35%, 0.3);
         ${(p): string => `
-          border-bottom:  4px solid ${p.theme.colors.callToAction};
+          border-bottom:  3px solid ${p.theme.colors.callToAction};
         `}
       }
 
@@ -79,25 +82,24 @@ const variantMap: VariantMap = {
   `,
   dark: css`
     [role='menubar'] > li > [role='menuitem'] {
-      ${(p) => {
-        console.log(textStyle(p.theme, 'body'))
-        return textStyle(p.theme, 'body')
-      }};
+      ${(p) => textStyle(p.theme, 'body')};
       color: ${(p) => p.theme.colors.white};
       font-weight: 600;
       text-transform: uppercase;
 
       background-color: ${(p): string => p.theme.colors.base};
+      border: ${(p) => border(p.theme, 'transparent')};
 
-      &:hover {
-        box-shadow: ${shadowTypes[0]} hsla(200, 96%, 35%, 0.3);
-        ${(p): string => `
-          border-bottom:  4px solid ${p.theme.colors.white};
-        `}
-      }
       &:focus,
       &:hover {
         border: ${(p) => border(p.theme, 'lightgray')};
+      }
+
+      &:hover {
+        box-shadow: ${shadowTypes[2]} hsla(200, 96%, 35%, 0.3);
+        ${(p): string => `
+          border-bottom:  3px solid ${p.theme.colors.white};
+        `}
       }
     }
     [role='menubar'] > li {
@@ -353,13 +355,10 @@ const Nav = styled.nav<MenuBarProps>`
   outline: none;
   ${(p) => textStyle(p.theme, 'small')};
   ${(p) => p.theme.colorStyles.standard};
-  box-shadow: inset 0 -${(p) => border(p.theme, 'lightContrast').replace('solid', '0')};
 
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 20px 8px;
-    border: ${(p) => border(p.theme, 'transparent')};
-    border-bottom-color: ${(p) => p.theme.colors.lightContrast};
     &:hover,
     &[aria-expanded='true'] {
       color: ${(p) => p.theme.colors.callToAction};
