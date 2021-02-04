@@ -1,8 +1,10 @@
-import { number } from '@storybook/addon-knobs'
+import { number, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import MenuBar from './MenuBar'
+import MenuBar, { MenuBarVariants } from './MenuBar'
+
+const menuBarVariants: MenuBarVariants[] = ['light', 'dark']
 
 const LABELS = [
   'Ready!',
@@ -42,6 +44,7 @@ export default {
 export const BasicUsage = (): React.ReactElement => {
   const breadth = number('Breadth', 8)
   const totalDepth = number('Depth', 2)
+  const variantSelection = select('variant', menuBarVariants, 'light')
 
   const makeList = (
     depth: number,
@@ -66,7 +69,7 @@ export const BasicUsage = (): React.ReactElement => {
       }
     }
     return (
-      <Component key={ix} {...props}>
+      <Component key={ix} variant={variantSelection} {...props}>
         {items}
       </Component>
     )
