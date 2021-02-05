@@ -42,7 +42,7 @@ interface MenuBarProps {
   id?: string
   children: React.ReactNode
   'aria-label'?: string
-  variant: MenuBarVariants
+  variant?: MenuBarVariants
 }
 
 type Variant = 'mobile' | 'sidebar' | 'top'
@@ -247,45 +247,47 @@ const useFocusHandler = (setFocus: FocusSetter) =>
     [setFocus]
   )
 
-const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
-  const orientation = 'horizontal'
-  const [menuRef, scroll] = useScroll<HTMLUListElement>(orientation, true, getWrappedScrollInfo)
-  const [setFocus, rootRef] = useFocusControl(getOwnedMenuItems)
-  const menuKeyHandler = useMenuKeyHandler(setFocus, true)
-  const mergedRef = useMergedRefs(menuRef, rootRef)
+const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(
+  ({ children, variant = 'light', ...props }, ref) => {
+    const orientation = 'horizontal'
+    const [menuRef, scroll] = useScroll<HTMLUListElement>(orientation, true, getWrappedScrollInfo)
+    const [setFocus, rootRef] = useFocusControl(getOwnedMenuItems)
+    const menuKeyHandler = useMenuKeyHandler(setFocus, true)
+    const mergedRef = useMergedRefs(menuRef, rootRef)
 
-  const onMenuFocus = useFocusHandler(setFocus)
+    const onMenuFocus = useFocusHandler(setFocus)
 
-  useLayout('menubar', { position: 'flow', offset: 0 })
+    useLayout('menubar', { position: 'flow', offset: 0 })
 
-  return (
-    <Nav
-      {...props}
-      variant={props.variant}
-      ref={ref}
-      tabIndex={-1}
-      onClick={navClickHandler}
-      onKeyDown={menuKeyHandler}
-    >
-      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
-        <NavigationChevronLeft />
-      </ScrollButton>
-      <MenuList
-        role="menubar"
-        aria-orientation={orientation}
-        ref={mergedRef}
-        tabIndex={0}
-        onFocus={onMenuFocus}
-        onBlur={onMenuBlur}
+    return (
+      <Nav
+        {...props}
+        variant={variant}
+        ref={ref}
+        tabIndex={-1}
+        onClick={navClickHandler}
+        onKeyDown={menuKeyHandler}
       >
-        {children}
-      </MenuList>
-      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
-        <NavigationChevronRight />
-      </ScrollButton>
-    </Nav>
-  )
-})
+        <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
+          <NavigationChevronLeft />
+        </ScrollButton>
+        <MenuList
+          role="menubar"
+          aria-orientation={orientation}
+          ref={mergedRef}
+          tabIndex={0}
+          onFocus={onMenuFocus}
+          onBlur={onMenuBlur}
+        >
+          {children}
+        </MenuList>
+        <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
+          <NavigationChevronRight />
+        </ScrollButton>
+      </Nav>
+    )
+  }
+)
 
 const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const nav = <NavPanel key="cactus-web-menubar" {...props} ref={ref} />
