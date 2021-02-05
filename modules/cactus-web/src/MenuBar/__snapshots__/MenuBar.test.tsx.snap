@@ -356,8 +356,9 @@ exports[`component: MenuBar sidebar 1`] = `
                 viewBox="0 0 24 24"
                 width="1em"
               >
-                <path
-                  d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                <polygon
+                  fill-rule="evenodd"
+                  points="7 12 17 2 17 22"
                   transform="rotate(-90 12 12)"
                 />
               </svg>
@@ -413,8 +414,9 @@ exports[`component: MenuBar sidebar 1`] = `
                     viewBox="0 0 24 24"
                     width="1em"
                   >
-                    <path
-                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                    <polygon
+                      fill-rule="evenodd"
+                      points="7 12 17 2 17 22"
                       transform="rotate(-90 12 12)"
                     />
                   </svg>
@@ -505,11 +507,15 @@ exports[`component: MenuBar typechecks 1`] = `
   vertical-align: middle;
 }
 
+.c12 {
+  vertical-align: middle;
+}
+
 .c2 {
   vertical-align: middle;
 }
 
-.c12 {
+.c13 {
   vertical-align: middle;
 }
 
@@ -580,24 +586,37 @@ exports[`component: MenuBar typechecks 1`] = `
   align-items: stretch;
   position: relative;
   outline: none;
-  font-size: 15px;
-  line-height: 1.6;
-  background-color: hsl(0,0%,100%);
-  color: hsl(200,10%,20%);
-  box-shadow: inset 0 -1px 0 hsl(200,29%,90%);
+}
+
+.c0 [role='menubar'] {
+  padding-bottom: 35px;
+  margin-bottom: -35px;
 }
 
 .c0 [role='menubar'] > li > [role='menuitem'] {
   white-space: nowrap;
   padding: 20px 8px;
+}
+
+.c0 [role='menubar'] > li:hover {
+  z-index: 100;
+}
+
+.c0 [role='menubar'] > li > [role='menuitem'] {
+  font-size: 18px;
+  line-height: 1.5;
+  color: hsl(200,10%,20%);
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: hsl(0,0%,100%);
   border: 1px solid transparent;
-  border-bottom-color: hsl(200,29%,90%);
+  border-bottom: 3px solid hsl(200,29%,90%);
 }
 
 .c0 [role='menubar'] > li > [role='menuitem']:hover,
 .c0 [role='menubar'] > li > [role='menuitem'][aria-expanded='true'] {
-  color: hsl(200,96%,35%);
-  border-bottom-color: hsl(200,96%,35%);
+  box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
+  border-bottom: 3px solid hsl(200,96%,35%);
 }
 
 .c0 [role='menubar'] > li > [role='menuitem']:focus {
@@ -605,7 +624,7 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 .c0 [role='menubar'] > li > [role='menuitem'][aria-current='true'] {
-  font-weight: bold;
+  background-color: hsl(200,29%,90%);
 }
 
 .c9 {
@@ -694,6 +713,9 @@ exports[`component: MenuBar typechecks 1`] = `
   -ms-flex-align: stretch;
   align-items: stretch;
   overflow: hidden;
+  color: hsl(200,10%,20%);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .c11 {
@@ -720,6 +742,9 @@ exports[`component: MenuBar typechecks 1`] = `
   -ms-flex-align: stretch;
   align-items: stretch;
   overflow: hidden;
+  color: hsl(200,10%,20%);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .c4 {
@@ -761,7 +786,21 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c0 {
+  .c0 [role='menubar'] > li > [role='menuitem'] {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c3 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c11 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -828,8 +867,9 @@ exports[`component: MenuBar typechecks 1`] = `
               viewBox="0 0 24 24"
               width="1em"
             >
-              <path
-                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              <polygon
+                fill-rule="evenodd"
+                points="7 12 17 2 17 22"
                 transform="rotate(-90 12 12)"
               />
             </svg>
@@ -906,8 +946,9 @@ exports[`component: MenuBar typechecks 1`] = `
                     viewBox="0 0 24 24"
                     width="1em"
                   >
-                    <path
-                      d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+                    <polygon
+                      fill-rule="evenodd"
+                      points="7 12 17 2 17 22"
                       transform="rotate(-90 12 12)"
                     />
                   </svg>
@@ -981,7 +1022,7 @@ exports[`component: MenuBar typechecks 1`] = `
                   hidden=""
                 >
                   <svg
-                    class="c7 c8"
+                    class="c12"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -1002,7 +1043,7 @@ exports[`component: MenuBar typechecks 1`] = `
             hidden=""
           >
             <svg
-              class="c7 c8"
+              class="c12"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -1053,7 +1094,7 @@ exports[`component: MenuBar typechecks 1`] = `
       hidden=""
     >
       <svg
-        class="c12"
+        class="c13"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
