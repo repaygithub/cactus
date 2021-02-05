@@ -1,5 +1,6 @@
 import {
   NavigationArrowDown,
+  NavigationChevronDown,
   NavigationChevronLeft,
   NavigationChevronRight,
   NavigationChevronUp,
@@ -63,7 +64,8 @@ const variantMap: VariantMap = {
       border: ${(p) => border(p.theme, 'transparent')};
       border-bottom: 3px solid ${(p) => p.theme.colors.lightContrast};
 
-      &:hover {
+      &:hover,
+      &[aria-expanded='true'] {
         box-shadow: ${shadowTypes[2]} hsla(200, 96%, 35%, 0.3);
         ${(p): string => `
           border-bottom:  3px solid ${p.theme.colors.callToAction};
@@ -73,10 +75,9 @@ const variantMap: VariantMap = {
       &:focus {
         border: ${(p) => border(p.theme, 'callToAction')};
       }
-    }
-    [role='menubar'] > li {
-      &:hover {
-        z-index: 100;
+
+      &[aria-current='true'] {
+        background-color: ${(p) => p.theme.colors.lightContrast};
       }
     }
   `,
@@ -101,17 +102,20 @@ const variantMap: VariantMap = {
           border-bottom:  3px solid ${p.theme.colors.white};
         `}
       }
-    }
-    [role='menubar'] > li {
-      &:hover {
-        z-index: 100;
+
+      &[aria-current='true'] {
+        background-color: ${(p) => p.theme.colors.mediumContrast};
       }
     }
   `,
 }
 
-const variantSelector = (props: MenuBarProps) => {
-  return variantMap[props.variant]
+const variantSelector = (
+  props: MenuBarProps
+): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
+  if (props.variant !== undefined) {
+    return variantMap[props.variant]
+  }
 }
 
 const useVariant = (): Variant => {
@@ -223,7 +227,7 @@ const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
         {children}
       </MenuList>
       <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
-        <NavigationArrowDown />
+        <NavigationChevronDown />
       </ScrollButton>
     </MenuWrapper>
   )
@@ -255,7 +259,14 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props
   useLayout('menubar', { position: 'flow', offset: 0 })
 
   return (
-    <Nav {...props} ref={ref} tabIndex={-1} onClick={navClickHandler} onKeyDown={menuKeyHandler}>
+    <Nav
+      {...props}
+      variant={props.variant}
+      ref={ref}
+      tabIndex={-1}
+      onClick={navClickHandler}
+      onKeyDown={menuKeyHandler}
+    >
       <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
         <NavigationChevronLeft />
       </ScrollButton>
@@ -327,11 +338,7 @@ const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
 }
 
 MenuBar.displayName = 'MenuBar'
-MenuBar.propTypes = {
-  'aria-label': PropTypes.string,
-  variant: PropTypes.string,
-}
-MenuBar.defaultProps = { 'aria-label': 'Main Menu', variant: 'dark' }
+MenuBar.defaultProps = { 'aria-label': 'Main Menu', variant: 'light' }
 
 type ExportedMenuBarType = typeof MenuBar & {
   List: typeof MenuBarList
@@ -353,23 +360,20 @@ const Nav = styled.nav<MenuBarProps>`
   align-items: stretch;
   position: relative;
   outline: none;
-  ${(p) => textStyle(p.theme, 'small')};
-  ${(p) => p.theme.colorStyles.standard};
-
+  [role='menubar'] {
+    padding-bottom: 35px;
+    margin-bottom: -35px;
+  }
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 20px 8px;
-    &:hover,
-    &[aria-expanded='true'] {
-      color: ${(p) => p.theme.colors.callToAction};
-      border-bottom-color: ${(p) => p.theme.colors.callToAction};
-    }
-
-    &[aria-current='true'] {
-      font-weight: bold;
-    }
   }
 
+  [role='menubar'] > li {
+    &:hover {
+      z-index: 100;
+    }
+  }
   ${variantSelector}
 `
 
@@ -496,7 +500,8 @@ const MenuList = styled.ul`
   flex-wrap: nowrap;
   align-items: stretch;
   overflow: hidden;
-
+  color: ${(p) => p.theme.colors.darkestContrast};
+  ${(p) => textStyle(p.theme, 'small')};
   ${(p) => {
     // Fix for an IE bug with nested flex items.
     if (isIE && p['aria-orientation'] === 'vertical') {
