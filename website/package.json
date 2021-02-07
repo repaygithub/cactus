@@ -30,7 +30,7 @@
     "@types/react-motion": "^0.0.29",
     "@types/styled-components": "^5.1.4",
     "babel-plugin-export-metadata": "^2.3.0",
-    "babel-plugin-styled-components": "^1.11.1",
+    "babel-plugin-styled-components": "^1.12.0",
     "chokidar": "^3.4.1",
     "cpy": "^8.1.1",
     "fast-glob": "^3.2.4",
