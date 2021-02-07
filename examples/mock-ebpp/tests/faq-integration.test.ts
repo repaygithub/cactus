@@ -23,9 +23,7 @@ fixture('FAQ Integration Tests')
   )
   .page('http://localhost:33567/faq')
 
-test('use the DOWN arrow key to navigate even after the order changes', async (t: TestController): Promise<
-  void
-> => {
+test('use the DOWN arrow key to navigate even after the order changes', async (t: TestController): Promise<void> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
   await clickWorkaround(queryByText('Insert Accordion'))
   await focusAccordionHeaderByText('Lorem Ipsum?')
@@ -54,9 +52,7 @@ test('use the DOWN arrow key to navigate even after the order changes', async (t
     .eql('Why EBPP?')
 })
 
-test('use the UP arrow key to navigate even after the order changes', async (t: TestController): Promise<
-  void
-> => {
+test('use the UP arrow key to navigate even after the order changes', async (t: TestController): Promise<void> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
   await t.click(queryByText('Insert Accordion'))
@@ -86,9 +82,7 @@ test('use the UP arrow key to navigate even after the order changes', async (t: 
     .eql('What is Bill Presentment?')
 })
 
-test('use the HOME key to focus on the first accordion after the order changes', async (t: TestController): Promise<
-  void
-> => {
+test('use the HOME key to focus on the first accordion after the order changes', async (t: TestController): Promise<void> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
   await clickWorkaround(queryByText('Insert Accordion'))
@@ -105,9 +99,7 @@ test('use the HOME key to focus on the first accordion after the order changes',
     .eql('Lorem Ipsum?')
 })
 
-test('use the END key to focus on the first accordion after the order changes', async (t: TestController): Promise<
-  void
-> => {
+test('use the END key to focus on the first accordion after the order changes', async (t: TestController): Promise<void> => {
   const { focusAccordionHeaderByText, getActiveElement } = makeActions(t)
 
   await clickWorkaround(queryByText('Insert Accordion'))

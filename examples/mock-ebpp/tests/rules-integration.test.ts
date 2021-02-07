@@ -49,9 +49,7 @@ test('fill out and submit the form sequentially', async (t: TestController): Pro
   ])
 })
 
-test('fill out and submit the form with deleting and reordering', async (t: TestController): Promise<
-  void
-> => {
+test('fill out and submit the form with deleting and reordering', async (t: TestController): Promise<void> => {
   const { selectDropdownOption } = makeActions(t)
 
   await t.click(queryByText('Add Rule')).click(queryByText('Add Condition'))

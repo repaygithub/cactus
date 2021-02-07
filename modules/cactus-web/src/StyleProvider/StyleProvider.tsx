@@ -16,9 +16,9 @@ interface Process {
 
 declare let process: Process
 
-const { createGlobalStyle } = styledComponents as styledComponents.ThemedStyledComponentsModule<
-  CactusTheme
->
+const {
+  createGlobalStyle,
+} = styledComponents as styledComponents.ThemedStyledComponentsModule<CactusTheme>
 
 const DebugStyle = createGlobalStyle`
   body {

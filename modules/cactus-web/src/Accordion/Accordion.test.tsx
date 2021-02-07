@@ -741,9 +741,7 @@ describe('component: Accordion', (): void => {
       expect(accordion.querySelector('button[aria-label=Delete]')).toBeInTheDocument()
     })
 
-    test('clicking icon buttons inside header should not trigger opening/closing', async (): Promise<
-      void
-    > => {
+    test('clicking icon buttons inside header should not trigger opening/closing', async (): Promise<void> => {
       const noop = jest.fn()
       const { getByTestId, container } = render(
         <StyleProvider>

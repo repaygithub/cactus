@@ -99,9 +99,9 @@ const getStyledInfoColor = (props: StyledInfoProps): ReturnType<typeof css> => {
     color: ${(p): string => p.theme.colors.darkestContrast};
   `
 }
-const StyledInfo = styled(({ forceVisible, ...props }) => <NotificationInfo {...props} />)<
-  StyledInfoProps
->`
+const StyledInfo = styled(({ forceVisible, ...props }) => (
+  <NotificationInfo {...props} />
+))<StyledInfoProps>`
   outline: none;
   ${getStyledInfoColor};
   &:hover {

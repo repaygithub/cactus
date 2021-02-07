@@ -1,7 +1,7 @@
 import 'intl'
 import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/es.js'
-import 'intl-pluralrules' // eslint-disable-line simple-import-sort/sort
+import 'intl-pluralrules' // eslint-disable-line simple-import-sort/imports
 
 import { FluentBundle, FluentFunction, FluentResource, FluentVariable } from '@fluent/bundle'
 import { negotiateLanguages } from '@fluent/langneg'
