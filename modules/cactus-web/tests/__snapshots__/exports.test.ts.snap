@@ -21,6 +21,7 @@ Array [
   "DataGrid",
   "DateInput",
   "DateInputField",
+  "Dimmer",
   "FieldWrapper",
   "FileInput",
   "FileInputField",

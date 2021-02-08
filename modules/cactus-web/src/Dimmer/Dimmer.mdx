@@ -1,0 +1,45 @@
+---
+name: Dimmer
+menu: Components
+---
+
+import Dimmer from './Dimmer'
+import { Flex } from '../Flex/Flex'
+import { Button } from '../Button/Button'
+import { Box } from '../Box/Box'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import PropsTable from 'website-src/components/PropsTable'
+
+# Dimmer
+
+The `Dimmer` component helps by attenuating any distraction to focus the attention on a specific Component. It works by darkening the entire page and displaying their child component over the darkened area.
+
+## Basic usage
+
+The only thing that you have to do is implement the Dimmer and pass the content as as child. At the moment the `Dimmer` only works with one boolean prop `active` and it is `false` by default.
+
+When `active` is `true`, the content inside the Dimmer will be displayed over a full-page darkened area.
+
+```js
+import React, { useState } from 'react'
+import { Dimmer } from '@repay/cactus-web'
+
+export default () => {
+  const [open, setOpen] = useState(false)
+
+  //...Your implementation to manage if the Dimmer is active or not (By default should not be)
+
+  return (
+    <Dimmer active={open}>
+      {
+        //...Content
+      }
+    </Dimmer>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={Dimmer} />

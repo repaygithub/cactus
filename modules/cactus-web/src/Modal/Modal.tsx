@@ -5,6 +5,7 @@ import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
 import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
+import { DimmerStyled } from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
 import { border, boxShadow, radius } from '../helpers/theme'
 import cssVariant from '../helpers/variant'
@@ -48,6 +49,7 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
       variant={variant}
       height={innerHeight}
       maxHeight={innerMaxHeight}
+      as={DialogOverlay}
       {...rest}
     >
       <DialogContent aria-label={modalLabel}>
@@ -69,13 +71,12 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
   )
 }
 
-export const ModalPopUp = styled(DialogOverlay).withConfig({
+export const ModalPopUp = styled(DimmerStyled).withConfig({
   shouldForwardProp: (prop) => {
     // @ts-ignore
     return prop !== 'maxHeight'
   },
 })<ModalPopupProps>`
-  background: rgba(46, 53, 56, 0.33);
   bottom: 0;
   display: flex;
   left: 0;
@@ -84,6 +85,7 @@ export const ModalPopUp = styled(DialogOverlay).withConfig({
   right: 0;
   top: 0;
   align-items: center;
+  flex-direction: row;
   z-index: 101;
   > [data-reach-dialog-content] {
     ${(p) => p.width && 'box-sizing: border-box;'}
