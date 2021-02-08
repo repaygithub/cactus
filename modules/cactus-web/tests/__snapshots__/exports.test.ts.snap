@@ -18,6 +18,7 @@ Array [
   "CheckBox",
   "CheckBoxField",
   "CheckBoxGroup",
+  "ColorPicker",
   "DataGrid",
   "DateInput",
   "DateInputField",
