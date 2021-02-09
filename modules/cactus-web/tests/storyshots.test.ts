@@ -3,6 +3,8 @@ import { Context, imageSnapshot } from '@storybook/addon-storyshots-puppeteer'
 import path from 'path'
 import puppeteer, { devices, Page } from 'puppeteer'
 
+const TIMEOUT = 60000
+
 const supportedDevices = ['iPhone 5', 'iPad']
 
 // Window 10/Microsoft Edge user agent.
@@ -19,7 +21,15 @@ interface MatchOptions {
   failureThresholdType?: 'pixel' | 'percent'
 }
 
-const createCustomizePage = (device: devices.Device) => (page: Page) => page.emulate(device)
+const createCustomizePage = (device?: devices.Device) => async (page: Page) => {
+  page.setDefaultNavigationTimeout(0)
+  if (device) {
+    await page.emulate(device)
+  } else {
+    await page.emulate(defaultDevice)
+  }
+}
+
 const createGetMatchOptions = (name: string) => (): MatchOptions => ({
   customSnapshotsDir: path.resolve('__image_snapshots__', name),
   comparisonMethod: 'ssim',
@@ -43,8 +53,10 @@ initStoryshots({
   test: imageSnapshot({
     storybookUrl: 'http://localhost:9001',
     getMatchOptions: createGetMatchOptions('default'),
-    customizePage: (page: Page) => page.emulate(defaultDevice),
+    customizePage: createCustomizePage(),
     beforeScreenshot,
+    setupTimeout: TIMEOUT,
+    testTimeout: TIMEOUT,
   }),
   storyKindRegex,
 })
@@ -66,6 +78,8 @@ supportedDevices.forEach((device: string) => {
       customizePage,
       getMatchOptions,
       beforeScreenshot,
+      setupTimeout: TIMEOUT,
+      testTimeout: TIMEOUT,
     }),
     storyKindRegex,
   })
