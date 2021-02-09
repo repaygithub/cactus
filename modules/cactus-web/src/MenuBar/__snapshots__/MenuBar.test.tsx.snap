@@ -623,10 +623,6 @@ exports[`component: MenuBar typechecks 1`] = `
   border: 1px solid hsl(200,96%,35%);
 }
 
-.c0 [role='menubar'] > li > [role='menuitem'][aria-current='true'] {
-  background-color: hsl(200,29%,90%);
-}
-
 .c9 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
