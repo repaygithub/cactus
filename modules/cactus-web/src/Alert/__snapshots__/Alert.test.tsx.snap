@@ -70,7 +70,7 @@ exports[`component: Alert should render general error alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -134,7 +134,7 @@ exports[`component: Alert should render general info alert 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c1 .sc-daBvwG {
+.c1 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -177,7 +177,7 @@ exports[`component: Alert should render general info alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -241,7 +241,7 @@ exports[`component: Alert should render general success alert 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c1 .sc-daBvwG {
+.c1 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -284,7 +284,7 @@ exports[`component: Alert should render general success alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -348,7 +348,7 @@ exports[`component: Alert should render general warning alert 1`] = `
   background-color: hsla(47,82%,47%,0.3);
 }
 
-.c1 .sc-daBvwG {
+.c1 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -391,7 +391,7 @@ exports[`component: Alert should render general warning alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -497,7 +497,7 @@ exports[`component: Alert should render push notification error alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -561,7 +561,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
   color: hsl(200,10%,20%);
 }
 
-.c1 .sc-daBvwG {
+.c1 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -603,7 +603,7 @@ exports[`component: Alert should render push notification info alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -667,7 +667,7 @@ exports[`component: Alert should render push notification success alert 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c1 .sc-daBvwG {
+.c1 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -709,7 +709,7 @@ exports[`component: Alert should render push notification success alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -773,7 +773,7 @@ exports[`component: Alert should render push notification warning alert 1`] = `
   background-color: hsla(47,82%,47%,0.3);
 }
 
-.c1 .sc-daBvwG {
+.c1 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -815,7 +815,7 @@ exports[`component: Alert should render push notification warning alert 1`] = `
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -879,7 +879,7 @@ exports[`component: Alert should render the default props, general info alert 1`
   color: hsl(200,10%,20%);
 }
 
-.c1 .sc-daBvwG {
+.c1 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -922,7 +922,7 @@ exports[`component: Alert should render the default props, general info alert 1`
   min-width: 1px;
 }
 
-.c0 .sc-gVFdEO {
+.c0 .sc-gVgnHT {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
