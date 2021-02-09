@@ -504,8 +504,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c12 .c5,
-.c12 .sc-dsXyEt,
-.c12 .sc-xGAYn {
+.c12 .sc-dtwoBo,
+.c12 .sc-xyEjG {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -598,12 +598,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c2 .c3 .sc-xGAYn {
+.c2 .c3 .sc-xyEjG {
   height: 18px;
   width: 18px;
 }
 
-.c2 .sc-gzcbGf {
+.c2 .sc-gyUeRy {
   height: 12px;
   width: 12px;
 }
@@ -824,7 +824,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c4 .sc-daBvwG {
+.c4 .sc-dacFzL {
   padding-bottom: 4px;
 }
 
@@ -956,7 +956,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c2 .c3 .sc-daBvwG {
+.c2 .c3 .sc-dacFzL {
   height: 16px;
   width: 16px;
 }
@@ -966,7 +966,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c2 .sc-gzcbGf {
+.c2 .sc-gyUeRy {
   height: 12px;
   width: 12px;
 }
@@ -984,7 +984,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-gkCpWe {
+.c1 .sc-gkdzZj {
   position: relative;
   margin-top: 4px;
 }
@@ -1216,17 +1216,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   padding: 0;
 }
 
-.c2 .sc-hkePoP {
+.c2 .sc-hjWSAi {
   height: 24px;
   width: 24px;
 }
 
-.c2 .sc-hkePoP .sc-daBvwG {
+.c2 .sc-hjWSAi .sc-dacFzL {
   height: 16px;
   width: 16px;
 }
 
-.c2 .sc-hkePoP .sc-xGAYn {
+.c2 .sc-hjWSAi .sc-xyEjG {
   height: 18px;
   width: 18px;
 }
@@ -1236,11 +1236,11 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .sc-fIxnHU {
+.c2 .sc-fHYxKZ {
   margin-left: auto;
 }
 
-.c2 .sc-dvXXZy {
+.c2 .sc-dwfUOf {
   height: 12px;
   width: 12px;
 }
@@ -1249,7 +1249,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-gkCpWe {
+.c1 .sc-gkdzZj {
   position: relative;
   margin-top: 4px;
 }
