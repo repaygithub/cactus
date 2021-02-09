@@ -69,10 +69,7 @@ describe('component: ColorPicker', () => {
     )
 
     const trigger = getByLabelText('Click to open the color picker')
-    act((): void => {
-      fireEvent.mouseDown(trigger)
-      fireEvent.click(trigger)
-    })
+    userEvent.click(trigger)
     expect(getByRole('dialog')).toBeInTheDocument()
     // Should focus the hex input when initially opened
     await animationRender()
@@ -89,10 +86,7 @@ describe('component: ColorPicker', () => {
       )
 
       const trigger = getByLabelText('Click to open the color picker')
-      act((): void => {
-        fireEvent.mouseDown(trigger)
-        fireEvent.click(trigger)
-      })
+      userEvent.click(trigger)
 
       const redInput = getByLabelText('R') as HTMLInputElement
       const greenInput = getByLabelText('G') as HTMLInputElement
@@ -114,10 +108,7 @@ describe('component: ColorPicker', () => {
 
       const applyButton = getByText('Apply')
 
-      act(() => {
-        fireEvent.mouseDown(applyButton)
-        fireEvent.click(applyButton)
-      })
+      userEvent.click(applyButton)
 
       expect(onChange).toHaveBeenCalledTimes(1)
     })
@@ -135,6 +126,42 @@ describe('component: ColorPicker', () => {
       userEvent.type(outerHexInput, 'FF0000')
 
       expect(onChange).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('does not call onChange', () => {
+    test('when cancel button is clicked', () => {
+      const onChange = jest.fn()
+      const { getByLabelText, getByText } = render(
+        <StyleProvider>
+          <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
+        </StyleProvider>
+      )
+
+      const trigger = getByLabelText('Click to open the color picker')
+      userEvent.click(trigger)
+
+      const redInput = getByLabelText('R') as HTMLInputElement
+      const greenInput = getByLabelText('G') as HTMLInputElement
+      const blueInput = getByLabelText('B') as HTMLInputElement
+
+      userEvent.clear(redInput)
+      userEvent.type(redInput, '0')
+      fireEvent.blur(redInput)
+
+      userEvent.clear(greenInput)
+      userEvent.type(greenInput, '0')
+      fireEvent.blur(greenInput)
+
+      userEvent.clear(blueInput)
+      userEvent.type(blueInput, '255')
+      fireEvent.blur(blueInput)
+
+      const cancelButton = getByText('Cancel')
+
+      userEvent.click(cancelButton)
+
+      expect(onChange).not.toHaveBeenCalled()
     })
   })
 
@@ -162,11 +189,7 @@ describe('component: ColorPicker', () => {
       )
 
       const trigger = getByLabelText('Click to open the color picker')
-      act((): void => {
-        fireEvent.mouseDown(trigger)
-        fireEvent.focus(trigger)
-        fireEvent.click(trigger)
-      })
+      userEvent.click(trigger)
       expect(onFocus).toHaveBeenCalledTimes(1)
       expect(onBlur).toHaveBeenCalledTimes(0)
     })
@@ -197,11 +220,7 @@ describe('component: ColorPicker', () => {
       )
 
       const trigger = getByLabelText('Click to open the color picker')
-      act((): void => {
-        fireEvent.mouseDown(trigger)
-        fireEvent.focus(trigger)
-        fireEvent.click(trigger)
-      })
+      userEvent.click(trigger)
 
       const cancelButton = getByText('Cancel')
       userEvent.click(cancelButton)
@@ -218,11 +237,7 @@ describe('component: ColorPicker', () => {
       )
 
       const trigger = getByLabelText('Click to open the color picker')
-      act((): void => {
-        fireEvent.mouseDown(trigger)
-        fireEvent.focus(trigger)
-        fireEvent.click(trigger)
-      })
+      userEvent.click(trigger)
 
       const applyButton = getByText('Apply')
       userEvent.click(applyButton)
@@ -258,10 +273,7 @@ describe('component: ColorPicker', () => {
       )
 
       const trigger = getByLabelText('Click to open the color picker')
-      act((): void => {
-        fireEvent.mouseDown(trigger)
-        fireEvent.click(trigger)
-      })
+      userEvent.click(trigger)
 
       const outerHexInput = getAllByLabelText('Hex')[0] as HTMLInputElement
       const innerHexInput = getAllByLabelText('Hex')[1] as HTMLInputElement
@@ -282,10 +294,7 @@ describe('component: ColorPicker', () => {
       )
 
       const trigger = getByLabelText('Click to open the color picker')
-      act((): void => {
-        fireEvent.mouseDown(trigger)
-        fireEvent.click(trigger)
-      })
+      userEvent.click(trigger)
 
       const outerHexInput = getAllByLabelText('Hex')[0] as HTMLInputElement
       const innerHexInput = getAllByLabelText('Hex')[1] as HTMLInputElement

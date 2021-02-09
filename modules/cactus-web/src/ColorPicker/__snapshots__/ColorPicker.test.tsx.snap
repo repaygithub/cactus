@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: ColorPicker snapshot 1`] = `
-.c14 {
+.c15 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -19,11 +19,11 @@ exports[`component: ColorPicker snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c14::-moz-focus-inner {
+.c15::-moz-focus-inner {
   border: 0;
 }
 
-.c14:focus::after {
+.c15:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -37,12 +37,12 @@ exports[`component: ColorPicker snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c14 svg {
+.c15 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c14 .sc-hkePoP {
+.c15 .sc-hkePoP {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -50,7 +50,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c14:hover {
+.c15:hover {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -61,13 +61,13 @@ exports[`component: ColorPicker snapshot 1`] = `
   width: 100%;
 }
 
-.c8 {
+.c9 {
   box-sizing: border-box;
   width: 100%;
   margin-top: 40px;
 }
 
-.c11 {
+.c12 {
   box-sizing: border-box;
   width: 100%;
   margin-top: 16px;
@@ -94,7 +94,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -111,7 +111,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -125,7 +125,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -161,7 +161,6 @@ exports[`component: ColorPicker snapshot 1`] = `
   position: relative;
   overflow: visible;
   color: hsl(200,96%,11%);
-  margin-left: auto;
   font-size: 16px;
 }
 
@@ -185,7 +184,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c13 {
+.c14 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -200,12 +199,12 @@ exports[`component: ColorPicker snapshot 1`] = `
   color: hsl(353,84%,44%);
 }
 
-.c13:hover {
+.c14:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c13:focus::after {
+.c14:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -218,11 +217,11 @@ exports[`component: ColorPicker snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c13::-moz-focus-inner {
+.c14::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c14 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -240,6 +239,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   border-radius: 0 20px 10px 10px;
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
   overflow: hidden;
+  outline: none;
 }
 
 .c2 input {
@@ -274,10 +274,10 @@ exports[`component: ColorPicker snapshot 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -287,7 +287,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   height: 36px;
   outline: none;
   padding: 0 16px 0 12px;
-  min-width: 180px;
+  min-width: 160px;
 }
 
 .c0:focus-within {
@@ -321,36 +321,36 @@ exports[`component: ColorPicker snapshot 1`] = `
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: white;
-  -webkit-transform: translate(-16px,-8px);
-  -ms-transform: translate(-16px,-8px);
-  transform: translate(-16px,-8px);
-  border: 1px solid hsl(0,0%,70%);
+  background-color: transparent;
+  border: 8px solid hsl(0,0%,100%);
+  box-shadow: 0 0 3px hsl(0,0%,70%);
+  -webkit-transform: translate(-24px,-8px);
+  -ms-transform: translate(-24px,-8px);
+  transform: translate(-24px,-8px);
 }
 
-.c6::after {
-  content: '';
-  display: block;
-  position: absolute;
+.c8 {
   box-sizing: border-box;
-  width: 16px;
-  height: 16px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  top: 7px;
-  left: 7px;
-  border: 1px solid hsl(0,0%,70%);
-  background-color: hsl(0,100%,50%);
+  background-color: transparent;
+  border: 8px solid hsl(0,0%,100%);
+  box-shadow: 0 0 3px hsl(0,0%,70%);
+  -webkit-transform: translate(-8px,-8px);
+  -ms-transform: translate(-8px,-8px);
+  transform: translate(-8px,-8px);
 }
 
 @media screen and (min-width:1024px) {
-  .c14 {
+  .c15 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c14 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -361,24 +361,13 @@ exports[`component: ColorPicker snapshot 1`] = `
     class="c0"
     id="color-picker"
   >
-    <div
-      style="position: relative;"
-    >
-      <input
-        id="rc-editable-input-76"
-        spellcheck="false"
-        value="#FF0000"
-      />
-      <label
-        for="rc-editable-input-76"
-        style="visibility: hidden;"
-      >
-        Hex
-      </label>
-    </div>
     <button
+      aria-controls="color-picker-popup"
+      aria-haspopup="dialog"
       aria-label="Click to open the color picker"
       class="c1"
+      id="color-picker-button"
+      role="button"
       type="button"
       variant="standard"
     >
@@ -394,10 +383,29 @@ exports[`component: ColorPicker snapshot 1`] = `
         />
       </svg>
     </button>
+    <div
+      style="position: relative;"
+    >
+      <input
+        id="rc-editable-input-81"
+        spellcheck="false"
+        value="#FF0000"
+      />
+      <label
+        for="rc-editable-input-81"
+        style="visibility: hidden; width: 0px; height: 0px; position: absolute;"
+      >
+        Hex
+      </label>
+    </div>
   </div>
   <div
+    aria-hidden="true"
+    aria-labelledby="color-picker-button"
     class="c2"
+    id="color-picker-popup"
     role="dialog"
+    tabindex="-1"
   >
     <div
       data-cactus-focus-guard="start"
@@ -474,44 +482,44 @@ exports[`component: ColorPicker snapshot 1`] = `
               style="position: absolute; left: 0%;"
             >
               <div
-                class="c6"
+                class="c8"
               />
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c8 c9 hex-wrapper"
+        class="c9 c10 hex-wrapper"
         width="100%"
       >
         <div
           style="position: relative;"
         >
           <input
-            id="rc-editable-input-77"
+            id="rc-editable-input-82"
             spellcheck="false"
             value="#FF0000"
           />
           <label
-            for="rc-editable-input-77"
+            for="rc-editable-input-82"
           >
             Hex
           </label>
         </div>
         <div
-          class="c8 c10 rgb-wrapper"
+          class="c9 c11 rgb-wrapper"
           width="100%"
         >
           <div
             style="position: relative;"
           >
             <input
-              id="rc-editable-input-78"
+              id="rc-editable-input-83"
               spellcheck="false"
               value="255"
             />
             <label
-              for="rc-editable-input-78"
+              for="rc-editable-input-83"
             >
               R
             </label>
@@ -520,12 +528,12 @@ exports[`component: ColorPicker snapshot 1`] = `
             style="position: relative;"
           >
             <input
-              id="rc-editable-input-79"
+              id="rc-editable-input-84"
               spellcheck="false"
               value="0"
             />
             <label
-              for="rc-editable-input-79"
+              for="rc-editable-input-84"
             >
               G
             </label>
@@ -534,12 +542,12 @@ exports[`component: ColorPicker snapshot 1`] = `
             style="position: relative;"
           >
             <input
-              id="rc-editable-input-80"
+              id="rc-editable-input-85"
               spellcheck="false"
               value="0"
             />
             <label
-              for="rc-editable-input-80"
+              for="rc-editable-input-85"
             >
               B
             </label>
@@ -548,18 +556,18 @@ exports[`component: ColorPicker snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c11 c12"
+      class="c12 c13"
       width="100%"
     >
       <button
-        class="c13"
+        class="c14"
         type="button"
       >
         Cancel
       </button>
       <button
         aria-live="assertive"
-        class="c14"
+        class="c15"
         type="button"
       >
         <span>
