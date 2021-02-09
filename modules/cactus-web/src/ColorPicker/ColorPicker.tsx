@@ -15,6 +15,7 @@ import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { useBox } from '../helpers/react'
 import { border, borderSize, boxShadow, radius } from '../helpers/theme'
+import usePopup from '../helpers/usePopup'
 import IconButton from '../IconButton/IconButton'
 import TextButton from '../TextButton/TextButton'
 
@@ -131,6 +132,7 @@ const ColorPickerPopup = styled(BasePopup)`
   ${(p): ReturnType<typeof css> => getPopupShape(p.theme.shape)}
   ${(p): ReturnType<typeof css> => getPopupBoxShadowStyles(p.theme)}
   overflow: hidden;
+  outline: none;
 
   input {
     border: ${(p) => border(p.theme, 'darkestContrast')};
@@ -161,14 +163,14 @@ const ColorPickerPopup = styled(BasePopup)`
 const InputWrapper = styled.div<{ $disabled: boolean }>`
   box-sizing: border-box;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border: ${(p) => border(p.theme, 'darkestContrast')};
   border-radius: ${radius(20)};
   height: 36px;
   outline: none;
   padding: 0 16px 0 12px;
-  min-width: 180px;
+  min-width: 160px;
   ${margin}
 
   &:focus-within {
@@ -212,41 +214,36 @@ const HueWrapper = styled.div`
   margin-top: 32px;
 `
 
-const Pointer = styled.div<{ $hsl: HSL; $saturation: boolean }>`
+const Pointer = styled.div<{ $type: 'hue' | 'saturation'; $hsl: HSLColor }>`
   box-sizing: border-box;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: white;
-  transform: translate(-16px, -8px);
-  border: 1px solid ${(p) => p.theme.colors.mediumGray};
-
-  ::after {
-    content: '';
-    display: block;
-    position: absolute;
-    box-sizing: border-box;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    top: 7px;
-    left: 7px;
-    border: 1px solid ${(p) => p.theme.colors.mediumGray};
-    background-color: ${(p) =>
-      p.$saturation
-        ? `hsl(${p.$hsl.h}, ${p.$hsl.s * 100}%, ${p.$hsl.l * 100}%)`
-        : `hsl(${p.$hsl.h}, 100%, 50%)`};
-  }
+  background-color: transparent;
+  border: 8px solid ${(p) => p.theme.colors.white};
+  box-shadow: 0 0 3px ${(p) => p.theme.colors.mediumGray};
+  ${(p) => {
+    // Adjust pointer translation based on where the pointer is at so it
+    // doesn't leave the hue/saturation element visually
+    if (p.$type === 'hue') {
+      const xOffset = p.$hsl.h > 160 ? '-24px' : '-8px'
+      return `transform: translate(${xOffset}, -8px);`
+    } else {
+      const xOffset = p.$hsl.s > 0.3 ? '-24px' : '-8px'
+      const yOffset = p.$hsl.l > 0.25 ? '-8px' : '-24px'
+      return `transform: translate(${xOffset}, ${yOffset});`
+    }
+  }}
 `
 
 const HuePointer: React.FC<PointerProps> = (props) => {
   const { hsl = { h: 0, s: 0, l: 0 } } = props
-  return <Pointer $hsl={hsl} $saturation={false} />
+  return <Pointer $hsl={hsl} $type="hue" />
 }
 
 const SaturationPointer: React.FC<PointerProps> = (props) => {
   const { hsl = { h: 0, s: 0, l: 0 } } = props
-  return <Pointer $hsl={hsl} $saturation={true} />
+  return <Pointer $hsl={hsl} $type="saturation" />
 }
 
 // TODO: Move this to the icon library
@@ -349,6 +346,13 @@ const Picker = CustomPicker(PickerBase)
 
 const isValidHex = (hex: string): boolean => /^#?[0-9A-F]{6}$/i.test(hex)
 
+const initialState: Color = {
+  hsl: { h: 0, s: 1, l: 0.5 },
+  hsv: { h: 0, s: 1, v: 1 },
+  rgb: { r: 255, g: 0, b: 0 },
+  hex: 'FF0000',
+}
+
 export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
   const {
     id,
@@ -360,15 +364,11 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
     onChange,
     onFocus,
     onBlur,
+    ...rest
   } = props
 
-  const [state, setState] = useState<Color>({
-    hsl: { h: 0, s: 1, l: 0.5 },
-    hsv: { h: 0, s: 1, v: 1 },
-    rgb: { r: 255, g: 0, b: 0 },
-    hex: 'FF0000',
-  })
-  const [open, setOpen] = useState<boolean>(false)
+  const [state, setState] = useState<Color>(initialState)
+  const [openedState, setOpenedState] = useState<Color>(initialState)
   const buttonClicked = useRef<boolean>(false)
 
   const eventTarget = useBox(
@@ -380,21 +380,25 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
 
   const phrases: Phrases = { ...defaultPhrases, ...passedPhrases }
 
+  const { expanded, toggle, buttonProps, popupProps } = usePopup('dialog', {
+    id,
+  })
+
   useEffect(() => {
     if (value) {
       const passedColor = tinycolor(value)
       saveColor(passedColor)
     }
-  }, [value, open])
+  }, [value, expanded])
 
-  const handleIconButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpen(true)
-    buttonClicked.current = true
-    event.currentTarget.blur()
-    const hexInput = document.querySelector('.hex-wrapper')?.querySelector('input') as HTMLElement
-    window.setTimeout(() => {
-      hexInput.focus()
-    }, 0)
+  const handleIconButtonClick = () => {
+    if (!expanded) {
+      // Save state popup was opened with in case we need to reset on cancel
+      setOpenedState(state)
+      const hexInput = document.querySelector('.hex-wrapper')?.querySelector('input') as HTMLElement
+      toggle(true, hexInput)
+      buttonClicked.current = true
+    }
   }
 
   const saveColor = (color: tinycolor.Instance): void => {
@@ -415,6 +419,12 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
       const color = tinycolor(hex)
       saveColor(color)
       if (onChange && typeof onChange === 'function') {
+        eventTarget.value = {
+          hsl: color.toHsl(),
+          hsv: color.toHsv(),
+          rgb: color.toRgb(),
+          hex: color.toHex().toUpperCase(),
+        }
         const cactusEvent = new CactusChangeEvent(eventTarget, event)
         onChange(cactusEvent)
       }
@@ -426,7 +436,8 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
       const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
       onBlur(cactusEvent)
     }
-    setOpen(false)
+    setState(openedState)
+    toggle(false)
   }
 
   const handleApplyClick = (event: React.MouseEvent) => {
@@ -438,7 +449,7 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
       const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
       onBlur(cactusEvent)
     }
-    setOpen(false)
+    toggle(false)
   }
 
   const isOutside = (element: EventTarget | null) => {
@@ -448,7 +459,7 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
       !(element instanceof Node) ||
       !input ||
       !input.contains(element) ||
-      (open && (!portal || !portal.contains(element)))
+      (expanded && (!portal || !portal.contains(element)))
     )
   }
 
@@ -485,28 +496,29 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
         $disabled={disabled || false}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        {...rest}
       >
+        <IconButton
+          disabled={disabled}
+          iconSize="small"
+          label={phrases.triggerLabel}
+          {...buttonProps}
+          onClick={handleIconButtonClick}
+        >
+          <DescriptivePalette />
+        </IconButton>
         {!disabled ? (
           <EditableInput
             label={phrases.hexLabel || 'Hex'}
             value={`#${state.hex}`}
-            style={{ label: { visibility: 'hidden' } }}
+            style={{ label: { visibility: 'hidden', width: 0, height: 0, position: 'absolute' } }}
             onChange={handleOuterHexChange as (change: { [k: string]: string }) => void} // Type definitions are a little off. TS thinks no event is passed to the handler but it is.
           />
         ) : (
           <input value={`#${state.hex}`} disabled />
         )}
-        <IconButton
-          disabled={disabled}
-          iconSize="small"
-          ml="auto"
-          label={phrases.triggerLabel}
-          onClick={handleIconButtonClick}
-        >
-          <DescriptivePalette />
-        </IconButton>
       </InputWrapper>
-      <ColorPickerPopup anchorRef={inputRef} popupRef={portalRef} isOpen={open} role="dialog">
+      <ColorPickerPopup anchorRef={inputRef} popupRef={portalRef} isOpen={expanded} {...popupProps}>
         <Picker theme={theme} saveColor={saveColor} currentColor={state} phrases={phrases} />
         <Flex justifyContent="space-around" width="100%" mt={4}>
           <TextButton variant="danger" onClick={handleCancelClick}>

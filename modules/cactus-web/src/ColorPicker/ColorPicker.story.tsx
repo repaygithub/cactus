@@ -1,5 +1,6 @@
 import { select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
+import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
 import ColorPicker from './ColorPicker'
@@ -23,10 +24,18 @@ const eventLoggers = {
 }
 
 export const BasicUsage = (): React.ReactElement => (
-  <ColorPicker id="color-picker" name="color" {...eventLoggers} />
+  <div>
+    <ColorPicker id="disabled-picker" name="disabled" disabled />
+    <ColorPicker id="color-picker" name="color" mt={3} {...eventLoggers} />
+  </div>
 )
 
-BasicUsage.parameters = storyParams
+BasicUsage.parameters = {
+  ...storyParams,
+  beforeScreenshot: async (page: Page) => {
+    await page.click('button[id="color-picker-button"]')
+  },
+}
 
 export const Controlled = (): React.ReactElement => {
   const [state, setState] = useState({
@@ -53,8 +62,4 @@ export const Controlled = (): React.ReactElement => {
   )
 }
 
-Controlled.parameters = storyParams
-
-export const Disabled = (): React.ReactElement => (
-  <ColorPicker id="color-picker" name="disabled" disabled />
-)
+Controlled.parameters = { ...storyParams, storyshots: false }
