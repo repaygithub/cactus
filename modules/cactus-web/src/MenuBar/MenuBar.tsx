@@ -75,10 +75,6 @@ const variantMap: VariantMap = {
       &:focus {
         border: ${(p) => border(p.theme, 'callToAction')};
       }
-
-      &[aria-current='true'] {
-        background-color: ${(p) => p.theme.colors.lightContrast};
-      }
     }
   `,
   dark: css`
@@ -101,10 +97,6 @@ const variantMap: VariantMap = {
         ${(p): string => `
           border-bottom:  3px solid ${p.theme.colors.white};
         `}
-      }
-
-      &[aria-current='true'] {
-        background-color: ${(p) => p.theme.colors.mediumContrast};
       }
     }
   `,
