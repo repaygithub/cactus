@@ -57,13 +57,13 @@ exports[`component: SelectField minimal snapshot 1`] = `
   padding-right: 8px;
 }
 
-.c1 .sc-eXuzZk {
+.c1 .sc-eWVKcp {
   position: relative;
   font-size: 16px;
   padding-right: 8px;
 }
 
-.c1 .sc-gzcbGf {
+.c1 .sc-gyUeRy {
   margin-top: 4px;
 }
 
@@ -163,11 +163,11 @@ exports[`component: SelectField minimal snapshot 1`] = `
   color: hsl(0,0%,100%);
 }
 
-.c17.highlighted-option .sc-kTCrpv > input:not(:checked) + span {
+.c17.highlighted-option .sc-kUbhmq > input:not(:checked) + span {
   border-color: white;
 }
 
-.c17 .sc-kTCrpv {
+.c17 .sc-kUbhmq {
   pointer-events: none;
   margin-right: 4px;
   vertical-align: -2px;
