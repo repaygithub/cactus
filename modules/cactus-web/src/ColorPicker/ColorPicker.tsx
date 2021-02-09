@@ -1,4 +1,5 @@
 import { CactusTheme, Shape } from '@repay/cactus-theme'
+import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
 import { ColorChangeHandler, CustomPicker, HSLColor, HSVColor } from 'react-color'
 import { EditableInput, Hue, Saturation } from 'react-color/lib/components/common'
@@ -532,5 +533,42 @@ const defaultPhrases: Phrases = {
 
 export const ColorPicker = withTheme(ColorPickerBase)
 ColorPicker.displayName = 'ColorPicker'
+
+ColorPicker.propTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      h: PropTypes.number.isRequired,
+      s: PropTypes.number.isRequired,
+      l: PropTypes.number.isRequired,
+    }),
+    PropTypes.shape({
+      h: PropTypes.number.isRequired,
+      s: PropTypes.number.isRequired,
+      v: PropTypes.number.isRequired,
+    }),
+    PropTypes.shape({
+      r: PropTypes.number.isRequired,
+      g: PropTypes.number.isRequired,
+      b: PropTypes.number.isRequired,
+    }),
+  ]),
+  // @ts-ignore
+  phrases: PropTypes.shape({
+    hexLabel: PropTypes.string,
+    redLabel: PropTypes.string,
+    greenLabel: PropTypes.string,
+    blueLabel: PropTypes.string,
+    triggerLabel: PropTypes.string,
+    applyLabel: PropTypes.string,
+    cancelLabel: PropTypes.string,
+  }),
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
+  disabled: PropTypes.bool,
+}
 
 export default ColorPicker
