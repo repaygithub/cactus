@@ -1322,7 +1322,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   private extendedOptions: ExtendedOptionType[] | null = null
   private optionsMap: OptMap = new Map()
 
-  private getOptsFromChildren(children: React.ReactNode, prevOpts: OptMap) {
+  private buildOptsFromChildren(children: React.ReactNode, prevOpts: OptMap) {
     const childArray = React.Children.toArray(children) as React.ReactChild[]
     if (!childArray?.length) return
 
@@ -1332,7 +1332,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       if (typeof child === 'string' || typeof child === 'number') {
         optList.push(this.asExtOpt(child))
       } else if (child?.type === React.Fragment) {
-        this.getOptsFromChildren(child.props.children, prevOpts)
+        this.buildOptsFromChildren(child.props.children, prevOpts)
       } else if (child?.props) {
         const value = child.props.value
         if (typeof value === 'string' || typeof value === 'number') {
@@ -1400,7 +1400,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
     const optList: ExtendedOptionType[] = (this.extendedOptions = [])
     if (this.props.children) {
-      this.getOptsFromChildren(this.props.children, prevOpts)
+      this.buildOptsFromChildren(this.props.children, prevOpts)
     } else if (this.props.options?.length) {
       for (const o of this.props.options) {
         optList.push(this.asExtOpt(o))
