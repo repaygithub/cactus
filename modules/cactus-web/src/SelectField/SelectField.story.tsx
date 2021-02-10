@@ -57,11 +57,11 @@ CustomStyles.parameters = { storyshots: false }
 
 export const ControlledForm = (): React.ReactElement => {
   const [value, setValue] = React.useState<SelectValueType>(null)
+  const opts = array('options', ['bird', 'plane', 'superman'])
   return (
     <SelectField
       label={text('label', `What's that in the sky?`)}
       name={text('name', 'ufo')}
-      options={array('options', ['bird', 'plane', 'superman'])}
       disabled={boolean('disabled', false)}
       tooltip={text('tooltip', 'Select what you think you see in the sky.')}
       success={text('success', '')}
@@ -69,7 +69,11 @@ export const ControlledForm = (): React.ReactElement => {
       error={text('error', '')}
       onChange={(e) => setValue(e.target.value)}
       value={value}
-    />
+    >
+      {opts.map((val) => (
+        <option value={val} key={val} />
+      ))}
+    </SelectField>
   )
 }
 

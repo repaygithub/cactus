@@ -1,21 +1,16 @@
+import { DescriptiveLocation } from '@repay/cactus-icons'
 import { array, boolean, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
 import arizonaCities from '../storySupport/arizonaCities'
-import Select, { OptionType, SelectValueType } from './Select'
+import Select, { SelectValueType } from './Select'
 
 const eventLoggers = {
   onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
   onFocus: (e: any) => console.log('onFocus:', e.target.name),
   onBlur: (e: any) => console.log('onBlur:', e.target.name),
 }
-
-const longOptions: OptionType[] = [
-  { label: 'This should be the longest option available', value: 'long-option' },
-  { label: 'Here is another option', value: 'another-option' },
-  { label: 'One more option', value: 'the-last-option' },
-]
 
 const defaultMultiValue = arizonaCities.slice(6, 15)
 
@@ -86,14 +81,17 @@ export const LongOptionLabels = (): ReactElement => {
   return (
     <div style={{ width: '194px' }}>
       <Select
-        options={longOptions}
         name="random"
         id="select-input"
         disabled={boolean('disabled', false)}
         {...eventLoggers}
         onChange={(e) => setValue(e.target.value)}
         value={value}
-      />
+      >
+        <option value="long-option">This should be the longest option available</option>
+        <option value="another-option">Here is another option</option>
+        <option value="the-last-option">One more option</option>
+      </Select>
     </div>
   )
 }
@@ -104,7 +102,6 @@ export const WithMultiselect = (): ReactElement => {
   const [value, setValue] = React.useState<SelectValueType>(defaultMultiValue)
   return (
     <Select
-      options={arizonaCities}
       name="random"
       id="select-input"
       disabled={boolean('disabled', false)}
@@ -112,7 +109,13 @@ export const WithMultiselect = (): ReactElement => {
       onChange={(e) => setValue(e.target.value)}
       value={value}
       multiple
-    />
+    >
+      {arizonaCities.map((city, ix) => (
+        <option key={ix} value={city}>
+          <DescriptiveLocation /> {city}
+        </option>
+      ))}
+    </Select>
   )
 }
 
@@ -123,7 +126,6 @@ export const WithComboBox = (): ReactElement => {
   const optionsAvailable = boolean('Show options?', true)
   return (
     <Select
-      options={optionsAvailable ? arizonaCities : []}
       noOptionsText={text('No option text', 'No options available')}
       name="random"
       id="select-input"
@@ -133,7 +135,14 @@ export const WithComboBox = (): ReactElement => {
       value={value}
       comboBox
       canCreateOption={boolean('canCreateOption', true)}
-    />
+    >
+      {optionsAvailable &&
+        arizonaCities.map((city, ix) => (
+          <Select.Option key={ix} value={city} altText={city.toLowerCase()}>
+            <DescriptiveLocation iconSize="medium" /> {city}
+          </Select.Option>
+        ))}
+    </Select>
   )
 }
 
