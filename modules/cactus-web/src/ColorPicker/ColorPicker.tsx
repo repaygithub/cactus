@@ -368,7 +368,7 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
   } = props
 
   const [state, setState] = useState<Color>(initialState)
-  const [openedState, setOpenedState] = useState<Color>(initialState)
+  const openedState = useRef<Color>(initialState)
   const buttonClicked = useRef<boolean>(false)
 
   const eventTarget = useBox(
@@ -394,8 +394,8 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
   const handleIconButtonClick = () => {
     if (!expanded) {
       // Save state popup was opened with in case we need to reset on cancel
-      setOpenedState(state)
-      const hexInput = document.querySelector('.hex-wrapper')?.querySelector('input') as HTMLElement
+      openedState.current = state
+      const hexInput = document.querySelector(`#${popupProps.id} input`) as HTMLInputElement
       toggle(true, hexInput)
       buttonClicked.current = true
     }
@@ -436,7 +436,7 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
       const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
       onBlur(cactusEvent)
     }
-    setState(openedState)
+    setState(openedState.current)
     toggle(false)
   }
 
