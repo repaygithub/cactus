@@ -132,7 +132,7 @@ describe('component: ColorPicker', () => {
   describe('does not call onChange', () => {
     test('when cancel button is clicked', () => {
       const onChange = jest.fn()
-      const { getByLabelText, getByText } = render(
+      const { getByLabelText, getByText, getAllByLabelText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
         </StyleProvider>
@@ -162,6 +162,8 @@ describe('component: ColorPicker', () => {
       userEvent.click(cancelButton)
 
       expect(onChange).not.toHaveBeenCalled()
+      const outerHexInput = getAllByLabelText('Hex')[0] as HTMLInputElement
+      expect(outerHexInput.value).toBe('#FF0000')
     })
   })
 
