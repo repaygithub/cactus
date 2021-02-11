@@ -10,6 +10,7 @@ import tinycolor from 'tinycolor2'
 import Button from '../Button/Button'
 import Flex from '../Flex/Flex'
 import FocusLock from '../FocusLock/FocusLock'
+import { keyDownAsClick } from '../helpers/a11y'
 import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpers/events'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
@@ -504,6 +505,7 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
           label={phrases.triggerLabel}
           {...buttonProps}
           onClick={handleIconButtonClick}
+          onKeyDown={keyDownAsClick}
         >
           <DescriptivePalette />
         </IconButton>
