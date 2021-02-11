@@ -6,7 +6,7 @@ import {
   NavigationChevronUp,
   NavigationHamburger,
 } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -19,7 +19,15 @@ import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import { border, borderSize, boxShadow, radius, shadowTypes, textStyle } from '../helpers/theme'
+import {
+  border,
+  borderSize,
+  boxShadow,
+  insetBorder,
+  radius,
+  shadowTypes,
+  textStyle,
+} from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
@@ -51,52 +59,62 @@ export type MenuBarVariants = 'light' | 'dark'
 
 type VariantMap = { [K in MenuBarVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
+const borderBottomMap: { [K in BorderSize]: ReturnType<typeof css> } = {
+  thin: css`
+    border-bottom: 3px solid;
+  `,
+  thick: css`
+    border-bottom: 4px solid;
+  `,
+}
+
+const getBorder = (
+  borderSize: BorderSize,
+  borderMap: { [K in BorderSize]: ReturnType<typeof css> }
+): ReturnType<typeof css> => borderMap[borderSize]
+
 const variantMap: VariantMap = {
   light: css`
+    ${ScrollButton},
     [role='menubar'] > li > [role='menuitem'] {
-      ${(p) => textStyle(p.theme, 'body')};
+      ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom', { thin: 3, thick: 4 })};
+    }
+
+    [role='menubar'] > li > [role='menuitem'] {
       color: ${(p) => p.theme.colors.darkestContrast};
-      font-weight: 600;
-      text-transform: uppercase;
-
       background-color: ${(p): string => p.theme.colors.white};
-
-      border: ${(p) => border(p.theme, 'transparent')};
-      border-bottom: 3px solid ${(p) => p.theme.colors.lightContrast};
 
       &:hover,
       &[aria-expanded='true'] {
-        box-shadow: ${shadowTypes[2]} hsla(200, 96%, 35%, 0.3);
-        ${(p): string => `
-          border-bottom:  3px solid ${p.theme.colors.callToAction};
-        `}
+        ${(p) => insetBorder(p.theme, 'callToAction', 'bottom', { thin: 3, thick: 4 })};
+        color: ${(p) => p.theme.colors.callToAction};
       }
 
       &:focus {
-        border: ${(p) => border(p.theme, 'callToAction')};
+        ${(p) => insetBorder(p.theme, 'callToAction')};
       }
     }
   `,
   dark: css`
+    ${ScrollButton},
     [role='menubar'] > li > [role='menuitem'] {
-      ${(p) => textStyle(p.theme, 'body')};
       color: ${(p) => p.theme.colors.white};
-      font-weight: 600;
-      text-transform: uppercase;
-
       background-color: ${(p): string => p.theme.colors.base};
-      border: ${(p) => border(p.theme, 'transparent')};
+    }
 
+    [role='menubar'] > li > [role='menuitem'],
+    ${ScrollButton} {
       &:focus,
       &:hover {
-        border: ${(p) => border(p.theme, 'lightgray')};
+        ${(p) => insetBorder(p.theme, 'white')};
       }
+    }
 
+    [role='menubar'] > li > [role='menuitem'] {
       &:hover {
-        box-shadow: ${shadowTypes[2]} hsla(200, 96%, 35%, 0.3);
-        ${(p): string => `
-          border-bottom:  3px solid ${p.theme.colors.white};
-        `}
+        ${(p) => insetBorder(p.theme, 'white')};
+        ${(p) => getBorder(p.theme.border, borderBottomMap)};
+        border-bottom-color: ${(p) => p.theme.colors.white};
       }
     }
   `,
@@ -332,6 +350,7 @@ const navClickHandler = (event: React.MouseEvent<HTMLElement>) => {
 }
 
 MenuBar.displayName = 'MenuBar'
+MenuBar.propTypes = { 'aria-label': PropTypes.string, variant: PropTypes.oneOf(['light', 'dark']) }
 MenuBar.defaultProps = { 'aria-label': 'Main Menu', variant: 'light' }
 
 type ExportedMenuBarType = typeof MenuBar & {
@@ -360,12 +379,16 @@ const Nav = styled.nav<MenuBarProps>`
   }
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
-    padding: 20px 8px;
+    padding: 24px 16px;
+    ${(p) => textStyle(p.theme, 'body')};
+    font-weight: 600;
+    text-transform: uppercase;
   }
-
   [role='menubar'] > li {
-    &:hover {
+    &:hover,
+    &[aria-expanded='true'] {
       z-index: 100;
+      box-shadow: ${shadowTypes[2]} ${(p) => p.theme.colors.transparentCTA};
     }
   }
   ${variantSelector}
