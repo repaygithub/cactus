@@ -10,6 +10,7 @@ import {
 import { BorderSize, CactusTheme, ColorStyle, Shape, TextStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment, MouseEventHandler, ReactElement, useMemo } from 'react'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 
@@ -29,6 +30,7 @@ import {
   TOKEN_SETTERS,
 } from '../helpers/dates'
 import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpers/events'
+import generateId from '../helpers/generateId'
 import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
 import { usePositioning } from '../helpers/positionPopover'
@@ -483,19 +485,18 @@ const CalendarDayBase = styled.button.attrs({ type: 'button' })`
 
 type CalendarDayProps = {
   as?: React.ComponentProps<typeof CalendarDayBase>['as']
-  enableInteraction?: boolean
   longLabel: string
 } & React.ComponentPropsWithoutRef<'button'>
 
 const CalendarDay = React.forwardRef<HTMLButtonElement, CalendarDayProps>(
   (props, ref): ReactElement => {
-    const { children, longLabel, enableInteraction, ...rest } = props
+    const { children, longLabel, ...rest } = props
     if (rest.role === 'columnheader') {
       rest.as = 'div'
     }
     return (
       <CalendarDayBase {...rest} ref={ref}>
-        {enableInteraction && <VisuallyHidden>{longLabel}</VisuallyHidden>}
+        <VisuallyHidden>{longLabel}</VisuallyHidden>
         <span aria-hidden="true">{children}</span>
       </CalendarDayBase>
     )
@@ -513,7 +514,7 @@ interface CalendarDayDataType {
 interface CalendarProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
   days: PartialDate[]
-  onDayMouseEnter?: MouseEventHandler<HTMLButtonElement>
+  onDayMouseEnter: MouseEventHandler<HTMLButtonElement>
   /** Currently selected date in YYYY-MM-dd */
   selected: string
   /** Currently focused date in YYYY-MM-dd */
@@ -521,7 +522,6 @@ interface CalendarProps extends React.HTMLAttributes<HTMLDivElement> {
   focusMonth: number
   isValidDate?: (date: Date) => boolean
   ariaDisabledDate?: DateInputPhrasesType['ariaDisabledDate']
-  enableInteraction?: boolean
   children?: React.ReactNode
 }
 
@@ -531,11 +531,10 @@ function CalendarBase(props: CalendarProps): ReactElement {
     focusMonth,
     focusDay,
     selected,
-    onDayMouseEnter = noop,
+    onDayMouseEnter,
     children,
     isValidDate,
     ariaDisabledDate,
-    enableInteraction = true,
     ...rest
   } = props
   const daysMatrix: CalendarDayDataType[][] = useMemo(
@@ -581,7 +580,7 @@ function CalendarBase(props: CalendarProps): ReactElement {
             <div role="row" key={focusMonth + '-' + index}>
               {week.map(
                 ({ dateStrId, date, isMonth, description, isDisabled }): ReactElement => {
-                  const isFocused = dateStrId === focusDay && enableInteraction
+                  const isFocused = dateStrId === focusDay
                   const isSelected = dateStrId === selected
                   let className = ''
                   if (!isMonth) {
@@ -595,15 +594,14 @@ function CalendarBase(props: CalendarProps): ReactElement {
                   }
                   return (
                     <CalendarDay
-                      tabIndex={isFocused && enableInteraction ? 0 : -1}
+                      tabIndex={isFocused ? 0 : -1}
                       className={className}
                       key={dateStrId}
                       role="gridcell"
-                      data-date={enableInteraction && dateStrId}
+                      data-date={dateStrId}
                       longLabel={description}
                       aria-disabled={isDisabled ? 'true' : 'false'}
                       onMouseEnter={isMonth && !isDisabled ? onDayMouseEnter : undefined}
-                      enableInteraction={enableInteraction}
                     >
                       {date.d}
                     </CalendarDay>
@@ -621,6 +619,9 @@ function CalendarBase(props: CalendarProps): ReactElement {
 const Calendar = styled(CalendarBase)`
   background-color: ${(p): string => p.theme.colors.lightContrast};
   padding: 0 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 300px;
 
   > [role='row'] {
     display: flex;
@@ -628,17 +629,49 @@ const Calendar = styled(CalendarBase)`
   }
 `
 
-const CalendarSlideWrapper = styled(Flex)`
-  transform: translateX(-300px);
+const transitionTime = isIE ? '600ms' : '300ms'
 
-  &.slide-left {
-    transition: transform 300ms ease-out;
-    transform: translateX(-600px);
+const CalendarSlideWrapper = styled.div`
+  width: 900px;
+  position: relative;
+  display: inline-block;
+  left: -300px;
+  background-color: ${(p) => p.theme.colors.lightContrast};
+
+  .left-enter {
+    transform: translateX(600px);
   }
 
-  &.slide-right {
-    transition: transform 300ms ease-out;
+  .left-enter-active {
+    transform: translateX(300px);
+    transition: transform ${transitionTime} ease-out;
+  }
+
+  .left-enter-done {
+    transform: translateX(300px);
+  }
+
+  .left-exit-active {
+    transform: translateX(-300px);
+    transition: transform ${transitionTime} ease-out;
+  }
+
+  .right-enter {
     transform: translateX(0px);
+  }
+
+  .right-enter-active {
+    transform: translateX(300px);
+    transition: transform ${transitionTime} ease-out;
+  }
+
+  .right-enter-done {
+    transform: translateX(300px);
+  }
+
+  .right-exit-active {
+    transform: translateX(300px);
+    transition: transform ${transitionTime} ease-out;
   }
 `
 
@@ -776,7 +809,9 @@ interface DateInputState {
   locale: string
   type: DateType
   isOpen: false | 'month' | 'year' | 'calendar'
-  transitioning: false | 'slide-left' | 'slide-right'
+  transitioning: boolean
+  calendarKey: string
+  slideDirection: 'left' | 'right' | null
   invalidDate: boolean
   // YYYY-MM-dd
   focusDay?: string
@@ -807,6 +842,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       isOpen: false,
       transitioning: false,
       invalidDate: false,
+      calendarKey: generateId('calendar'),
+      slideDirection: null,
     }
   }
 
@@ -815,7 +852,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _shouldUpdateFocusDay = false
   private _didClickButton = false
   private _shouldFocusMonthYearList = false
-  private _transitionTimeout: ReturnType<typeof setTimeout> | null = null
 
   private _inputWrapper = React.createRef<HTMLDivElement>()
   private _button = React.createRef<HTMLButtonElement>()
@@ -901,7 +937,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     document.body.addEventListener('click', this.handleBodyClick, false)
   }
 
-  public componentDidUpdate(): void {
+  public componentDidUpdate(_: DateInputProps, prevState: DateInputState): void {
     this.eventTarget.id = this.props.id
     this.eventTarget.name = this.props.name
     // when the entered text is a complete value, auto focus the next input
@@ -982,13 +1018,13 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         onInvalidDate(false)
       }
     }
+    if (prevState.slideDirection !== this.state.slideDirection || this.state.transitioning) {
+      this.setState({ calendarKey: generateId('calendar'), transitioning: false })
+    }
   }
 
   public componentWillUnmount(): void {
     document.body.removeEventListener('click', this.handleBodyClick, false)
-    if (this._transitionTimeout) {
-      clearTimeout(this._transitionTimeout)
-    }
   }
 
   /** event handlers */
@@ -1316,7 +1352,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private handleLeftMonthArrowClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     const { month: focusMonth, year: focusYear } = this._getMonthData()
     this.setState(
-      (state): Pick<DateInputState, 'focusDay' | 'value' | 'transitioning'> => {
+      (state): Pick<DateInputState, 'focusDay' | 'value' | 'transitioning' | 'slideDirection'> => {
         const { value } = state
         const pd = PartialDate.from(value, 'YYYY-MM-dd')
         pd.setMonth(focusMonth === 0 ? 11 : focusMonth - 1)
@@ -1325,18 +1361,20 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         }
         pd.ensureDayOfMonth()
         this.raiseChange(event, pd)
-        return { focusDay: pd.format(), value: pd, transitioning: 'slide-right' }
+        return {
+          focusDay: pd.format(),
+          value: pd,
+          transitioning: true,
+          slideDirection: 'right',
+        }
       }
     )
-    this._transitionTimeout = setTimeout(() => {
-      this.setState({ transitioning: false })
-    }, 300)
   }
 
   private handleRightMonthArrowClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     const { month: focusMonth, year: focusYear } = this._getMonthData()
     this.setState(
-      (state): Pick<DateInputState, 'focusDay' | 'value' | 'transitioning'> => {
+      (state): Pick<DateInputState, 'focusDay' | 'value' | 'transitioning' | 'slideDirection'> => {
         const { value } = state
         const pd = PartialDate.from(value, 'YYYY-MM-dd')
         pd.setMonth(focusMonth === 11 ? 0 : focusMonth + 1)
@@ -1345,12 +1383,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         }
         pd.ensureDayOfMonth()
         this.raiseChange(event, pd)
-        return { focusDay: pd.format(), value: pd, transitioning: 'slide-left' }
+        return {
+          focusDay: pd.format(),
+          value: pd,
+          transitioning: true,
+          slideDirection: 'left',
+        }
       }
     )
-    this._transitionTimeout = setTimeout(() => {
-      this.setState({ transitioning: false })
-    }, 300)
   }
 
   private handleTimeChange = (event: React.ChangeEvent<Target>): void => {
@@ -1489,7 +1529,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private _close(returnFocus?: boolean): void {
-    this.setState({ isOpen: false, focusDay: undefined }, (): void => {
+    this.setState({ isOpen: false, focusDay: undefined, slideDirection: null }, (): void => {
       if (returnFocus && this._button.current !== null) {
         this._button.current.focus()
       }
@@ -1779,78 +1819,44 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               </Flex>
               {isOpen === 'calendar' ? (
                 <Fragment>
-                  <CalendarSlideWrapper className={this.state.transitioning || ''} width="900px">
-                    <Calendar
-                      enableInteraction={false}
-                      days={days}
-                      focusMonth={focusMonth}
-                      focusDay={focusDay || ''}
-                      selected={selectedStr}
-                    >
-                      <div role="row" tabIndex={-1}>
-                        {phrases.weekdays.map(
-                          (weekday): ReactElement => (
-                            <CalendarDay
-                              tabIndex={-1}
-                              key={`${weekday.long}-left`}
-                              role="columnheader"
-                              longLabel={weekday.long}
-                            >
-                              {weekday.short}
-                            </CalendarDay>
-                          )
-                        )}
-                      </div>
-                    </Calendar>
-                    <Calendar
-                      role="grid"
-                      onKeyDownCapture={this.handleCalendarKeydownCapture}
-                      aria-roledescription={phrases.calendarKeyboardDirections}
-                      days={days}
-                      ariaDisabledDate={phrases.ariaDisabledDate}
-                      focusMonth={focusMonth}
-                      focusDay={focusDay || ''}
-                      selected={selectedStr}
-                      onDayMouseEnter={this.handleDayMouseEnter}
-                      isValidDate={isValidDate}
-                    >
-                      <div role="row">
-                        {phrases.weekdays.map(
-                          (weekday): ReactElement => (
-                            <CalendarDay
-                              key={weekday.long}
-                              role="columnheader"
-                              longLabel={weekday.long}
-                            >
-                              {weekday.short}
-                            </CalendarDay>
-                          )
-                        )}
-                      </div>
-                    </Calendar>
-                    <Calendar
-                      enableInteraction={false}
-                      days={days}
-                      focusMonth={focusMonth}
-                      focusDay={focusDay || ''}
-                      selected={selectedStr}
-                    >
-                      <div role="row" tabIndex={-1}>
-                        {phrases.weekdays.map(
-                          (weekday): ReactElement => (
-                            <CalendarDay
-                              tabIndex={-1}
-                              key={`${weekday.long}-right`}
-                              role="columnheader"
-                              longLabel={weekday.long}
-                            >
-                              {weekday.short}
-                            </CalendarDay>
-                          )
-                        )}
-                      </div>
-                    </Calendar>
+                  <CalendarSlideWrapper>
+                    <TransitionGroup className="calendar-transition-group">
+                      <CSSTransition
+                        key={this.state.calendarKey}
+                        timeout={isIE ? 800 : 300}
+                        classNames={this.state.slideDirection || 'left'}
+                      >
+                        <Calendar
+                          className={!this.state.slideDirection ? 'left-enter-done' : undefined}
+                          role="grid"
+                          onKeyDownCapture={this.handleCalendarKeydownCapture}
+                          aria-roledescription={phrases.calendarKeyboardDirections}
+                          days={days}
+                          ariaDisabledDate={phrases.ariaDisabledDate}
+                          focusMonth={focusMonth}
+                          focusDay={focusDay || ''}
+                          selected={selectedStr}
+                          onDayMouseEnter={this.handleDayMouseEnter}
+                          isValidDate={isValidDate}
+                        >
+                          <div role="row">
+                            {phrases.weekdays.map(
+                              (weekday): ReactElement => (
+                                <CalendarDay
+                                  key={weekday.long}
+                                  role="columnheader"
+                                  longLabel={weekday.long}
+                                >
+                                  {weekday.short}
+                                </CalendarDay>
+                              )
+                            )}
+                          </div>
+                        </Calendar>
+                      </CSSTransition>
+                    </TransitionGroup>
                   </CalendarSlideWrapper>
+
                   {hasTime && (
                     <TimeInputWrapper>
                       <DateInput
