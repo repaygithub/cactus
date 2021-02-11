@@ -300,7 +300,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   padding: 0;
   background-color: transparent;
   font-size: inherit;
-  width: 4.5em;
+  width: 5em;
 }
 
 .c5 {
