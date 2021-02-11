@@ -183,7 +183,7 @@ const InputWrapper = styled.div<{ $disabled: boolean }>`
     padding: 0;
     background-color: transparent;
     font-size: inherit;
-    width: 4.5em;
+    width: 5em;
     ${(p) =>
       p.$disabled &&
       `
