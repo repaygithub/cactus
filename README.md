@@ -44,7 +44,7 @@ npm install --save-dev @repay/cactus-fwk
 
 **Before contributing, please read our [guidelines for contributing](./CONTRIBUTING.md)**
 
-You will need to install [Node.js](https://nodejs.org/en/) runtime and [Yarn](https://yarnpkg.com/en/docs/install) for package management. Next clone the repository and install the dependencies.  **Be sure to do this from the repository root.**
+You will need to install [Node.js](https://nodejs.org/en/) runtime and [Yarn](https://yarnpkg.com/en/docs/install) for package management. Next clone the repository and install the dependencies. **Be sure to do this from the repository root.**
 
 ```
 yarn install
@@ -166,7 +166,7 @@ To publish a release, open Terminal or command prompt and call:
 yarn release
 ```
 
-This command will install all dependencies, build packages, and then call [Lerna](https://lerna.js.org/) to handle the release process.  Lerna will automatically determine which packages have changed and will prompt you for the type of version bump (major/minor/patch).   It will then publish the updated packages, create commits with `package.json` changes, and create git tags.
+This command will install all dependencies, build packages, and then call [Lerna](https://lerna.js.org/) to handle the release process. Lerna will automatically determine which packages have changed and will prompt you for the type of version bump (major/minor/patch). It will then publish the updated packages, create commits with `package.json` changes, and create git tags.
 
 We also have a `yarn release:beta` command that will do roughly the same thing, but will pass additional options to Lerna that are needed for beta versions/pre-releases.
 
@@ -192,4 +192,104 @@ will send them to you via onetimesecret.
 
 ```bash
 yarn w <app-name...i.e. mock-ebpp> test -b "Chrome -incognito"
+```
+
+## StoryBook
+
+Storybook is an open-source tool that helps with the development of isolated UI components. With Storybook you will browse a library component, run each of those components in a private environment and explore them in different states. We implemented Storybook for two of our libraries [repay/cactus-icons](https://repaygithub.github.io/cactus/stories/cactus-icons/?path=/story/icons--all) and [@repay/cactus-web](https://repaygithub.github.io/cactus/stories/cactus-web/).
+
+In a Storybook application, all the content is being organized on two basic levels, the components, and their child stories; each story is a kind of a permutation of their parent component and each component could have as many stories as needed. The main story that every component should have along our libraries is the `Basic usage` and have to show a simple implementation of the selected component, next to `basic usage` you can include the rest of the variations of the component, those variations could be related with a ton of different aspects, like the content, the size, the children that the component supports, or any other prop defined that modifies the component’s performance.
+
+In addition to the creation of stories from specific components, we keep a track of the snapshots of every component for testing purposes, this helps us catch bugs in UI appearance. Every time that a component or a component's story is modified or created, a screenshot of the story will be created or updated and compared with the last commit to identify any possible changes.
+
+### `Cactus-web` Stories
+
+Every story has the `canvas` and the `docs` sections. On `canvas` section you’ll find the component running with the main props that you set for this specific permutation. Below the frame where the component is running, there are three addons: `Knobs`, `Cactus Theme`, and `Actions`.
+
+#### Cactus Theme 
+The **Cactus Theme** add-on allows you to play with a set of global parameters that modify the component appearance, such as the theme colors, the border width, component shape, the text’s font, and others. It allows us to make our components more customizable by the users. 
+
+#### Actions
+The Actions add-on logs the events triggered by the user, such as onClick, onFocus, or onBlur.
+
+#### Knobs
+
+The [knobs](https://www.npmjs.com/package/@storybook/addon-knobs) are controls that allow the user to control and edit the component’s props dynamically, exploring the component behavior. These are the knobs that are available: 
+
+- **`Text:`** To get a text from the user.
+- **`Boolean:`** To get a boolean value from the user.
+- **`Number`:** To get a number from the user.
+- **`Select`:** To get a value from a list of options. 
+- **`Radios`:** To get a value from a list of radio buttons.
+
+[More info here.](https://github.com/storybookjs/storybook/tree/master/addons/knobs#available-knobs)
+
+The knobs must have been created to give the user access to the different props of a component. For example, a button component that includes a `variant` prop with a list of variants like *standard*, *action*, *danger*, *warning* and *success*, those variants must be accessible and controllable from the Knobs section of the button's story.
+These are other use-cases where you must set up a knob for a prop from the parent component:
+– To Modify text from labels, inputs, textareas, headers and/or other contents.
+– To enable or disable user's actions like clicks. 
+– To change a specific CSS property like `justify-content`, `align-items`, `flex-direction`, `width`, `height`
+– To hide or show a specific component from the story. 
+
+##### Usage
+Every story’s file must be created on the root of their main component with the extension `.story.tsx`. All of the components exported from that story file will be rendered as individual stories from the same component in the Storybook application. Here is a simple demonstration of how it works
+
+First you need to import the `Meta` type that configures the stories for a component, the `React` library and the main component
+```javascript
+    //FooComponent.story.tsx
+    import { Meta } from '@storybook/react/types-6-0'
+    import React from 'react'
+
+    import FooComponent from './FooComponent'
+```
+
+Then, export by default the name of the story an the component it belongs to.
+```javascript
+    export default {
+        name: 'FooComponent',
+        component: FooComponent,
+    } as Meta
+``` 
+
+Alright, let's create the first default story for the `FooComponent`.
+```javascript
+    export const FooStory = () => {
+        return <FooComponent label='Label title' disabled={false} /> 
+    }
+```
+That function is rendering the `FooComponent` with two props, a label text and a boolean value that enables or disables a specific functionality of the `FooComponent`. Those values must be been controlled by the Storybook user, so we can create a knob to manipulate those props from the Storybook application. 
+
+```javascript
+    //...
+    import { boolean, text } from '@storybook/addon-knobs'
+
+    export const FooStory = () => {
+        return <FooComponent 
+            label={text('label', 'This is a knob')} 
+            disabled={boolean('disabled', false)} 
+        /> 
+    }
+```
+First, we need to import the required Knobs from the library `'@storybook/addon-knobs'`. That's how we export a story called `FooStory` that is rendering a component and controlling the `label` and `disabled` props with text and boolean knobs respectively. 
+
+```javascript 
+    //FooComponent.story.tsx
+    import { Meta } from '@storybook/react/types-6-0'
+    import React from 'react'
+
+    import FooComponent from './FooComponent'
+
+    import { boolean, text } from '@storybook/addon-knobs'
+
+    export default {
+        name: 'FooComponent',
+        component: FooComponent,
+    } as Meta
+
+    export const FooStory = () => {
+        return <FooComponent 
+            label={text('label', 'This is a knob')} 
+            disabled={boolean('disabled', false)} 
+        /> 
+    }
 ```
