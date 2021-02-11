@@ -1,4 +1,5 @@
 import {
+  BorderSize,
   CactusColor,
   CactusTheme,
   ColorStyle,
@@ -18,11 +19,16 @@ export const border = (theme: CactusTheme, color: string): string => {
 
 export type Direction = 'top' | 'bottom' | 'left' | 'right'
 
-export const insetBorder = (theme: CactusTheme, color: string, direction?: Direction): string => {
+export const insetBorder = (
+  theme: CactusTheme,
+  color: string,
+  direction?: Direction,
+  { thin = 1, thick = 2 }: { [K in BorderSize]?: number } = {}
+): string => {
   let hOffset = 0,
     vOffset = 0,
     spread = 0
-  const thickness = theme.border === 'thick' ? 2 : 1
+  const thickness = theme.border === 'thick' ? thick : thin
   if (direction === 'top') {
     vOffset = thickness
   } else if (direction === 'bottom') {
