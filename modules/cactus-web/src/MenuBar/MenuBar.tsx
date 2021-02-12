@@ -98,23 +98,25 @@ const variantMap: VariantMap = {
   dark: css`
     ${ScrollButton},
     [role='menubar'] > li > [role='menuitem'] {
+      ${(p) => getBorder(p.theme.border, borderBottomMap)};
+      border-bottom-color: transparent;
       color: ${(p) => p.theme.colors.white};
       background-color: ${(p): string => p.theme.colors.base};
-    }
 
-    [role='menubar'] > li > [role='menuitem'],
-    ${ScrollButton} {
+      &:hover {
+        ${(p) => getBorder(p.theme.border, borderBottomMap)};
+        border-bottom-color: ${(p) => p.theme.colors.white};
+      }
+
       &:focus,
       &:hover {
         ${(p) => insetBorder(p.theme, 'white')};
       }
-    }
-
-    [role='menubar'] > li > [role='menuitem'] {
-      &:hover {
+      
+      &:focus {
+        border-bottom-color: transparent;
         ${(p) => insetBorder(p.theme, 'white')};
-        ${(p) => getBorder(p.theme.border, borderBottomMap)};
-        border-bottom-color: ${(p) => p.theme.colors.white};
+        }
       }
     }
   `,
@@ -558,7 +560,7 @@ const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' 
   ${NavigationArrowDown} {
     width: 8px;
     height: 8px;
-    margin-left: 16px;
+    margin-left: 8px;
     ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
   }
 `
