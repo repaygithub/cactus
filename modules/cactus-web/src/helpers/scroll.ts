@@ -166,7 +166,10 @@ const equals = (left: number, right: number) => Math.abs(left - right) < 0.1
 const greaterThan = (left: number, right: number) => left + 0.1 - right > 0
 
 export const BUTTON_WIDTH = 34 // 16 margin, 18 icon
-export const ScrollButton = styled.div.attrs({ 'aria-hidden': true })`
+export const ScrollButton = styled.div.attrs((p) => ({
+  'aria-disabled': !p.onClick || undefined,
+  'aria-hidden': true,
+}))`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
   &[hidden] {
@@ -178,18 +181,14 @@ export const ScrollButton = styled.div.attrs({ 'aria-hidden': true })`
   background-color: transparent;
   text-align: center;
   outline: none;
-  ${(p) =>
-    !!p.onClick
-      ? `
-    cursor: pointer;
-    :hover {
-      color: ${p.theme.colors.callToAction};
-    }
-    `
-      : `
+  cursor: pointer;
+  :hover {
+    color: ${(p) => p.theme.colors.callToAction};
+  }
+  &[aria-disabled] {
     cursor: not-allowed;
-    color: ${p.theme.colors.lightGray};
-    `}
+    color: ${(p) => p.theme.colors.lightGray};
+  }
   svg {
     width: 18px;
     height: 18px;

@@ -6,7 +6,7 @@ import {
   NavigationChevronUp,
   NavigationHamburger,
 } from '@repay/cactus-icons'
-import { BorderSize, CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -59,20 +59,6 @@ export type MenuBarVariants = 'light' | 'dark'
 
 type VariantMap = { [K in MenuBarVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
 
-const borderBottomMap: { [K in BorderSize]: ReturnType<typeof css> } = {
-  thin: css`
-    border-bottom: 3px solid;
-  `,
-  thick: css`
-    border-bottom: 4px solid;
-  `,
-}
-
-const getBorder = (
-  borderSize: BorderSize,
-  borderMap: { [K in BorderSize]: ReturnType<typeof css> }
-): ReturnType<typeof css> => borderMap[borderSize]
-
 const variantMap: VariantMap = {
   light: css`
     ${ScrollButton},
@@ -98,26 +84,24 @@ const variantMap: VariantMap = {
   dark: css`
     ${ScrollButton},
     [role='menubar'] > li > [role='menuitem'] {
-      ${(p) => getBorder(p.theme.border, borderBottomMap)};
-      border-bottom-color: transparent;
+      padding: 23px 7px 21px 7px;
+      border: ${(p) => border(p.theme, 'base')};
+      border-bottom: ${(p) => border(p.theme, 'base', { thin: 3, thick: 4 })};
       color: ${(p) => p.theme.colors.white};
       background-color: ${(p): string => p.theme.colors.base};
 
-      &:hover {
-        ${(p) => getBorder(p.theme.border, borderBottomMap)};
-        border-bottom-color: ${(p) => p.theme.colors.white};
+      &:hover:not([aria-disabled]),
+      &[aria-expanded='true'] {
+        border-color: ${(p) => p.theme.colors.white};
       }
 
-      &:focus,
-      &:hover {
-        ${(p) => insetBorder(p.theme, 'white')};
-      }
-      
       &:focus {
-        border-bottom-color: transparent;
-        ${(p) => insetBorder(p.theme, 'white')};
-        }
+        padding-bottom: 23px;
+        border: ${(p) => border(p.theme, 'white')};
       }
+    }
+    ${ScrollButton} {
+      padding: 0;
     }
   `,
 }

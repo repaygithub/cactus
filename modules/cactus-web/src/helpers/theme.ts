@@ -10,11 +10,17 @@ import { css, FlattenSimpleInterpolation } from 'styled-components'
 
 export type Props = { theme: CactusTheme }
 
+type ThicknessOpts = { [K in BorderSize]?: number }
+
 export const borderSize = (props: Props): string => (props.theme.border === 'thick' ? '2px' : '1px')
 
-export const border = (theme: CactusTheme, color: string): string => {
-  const thickness = theme.border === 'thick' ? '2px' : '1px'
-  return `${thickness} solid ${theme.colors[color as CactusColor] || color}`
+export const border = (
+  theme: CactusTheme,
+  color: string,
+  { thin = 1, thick = 2 }: ThicknessOpts = {}
+): string => {
+  const thickness = theme.border === 'thick' ? thick : thin
+  return `${thickness}px solid ${theme.colors[color as CactusColor] || color}`
 }
 
 export type Direction = 'top' | 'bottom' | 'left' | 'right'
@@ -23,7 +29,7 @@ export const insetBorder = (
   theme: CactusTheme,
   color: string,
   direction?: Direction,
-  { thin = 1, thick = 2 }: { [K in BorderSize]?: number } = {}
+  { thin = 1, thick = 2 }: ThicknessOpts = {}
 ): string => {
   let hOffset = 0,
     vOffset = 0,
