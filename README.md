@@ -196,9 +196,9 @@ yarn w <app-name...i.e. mock-ebpp> test -b "Chrome -incognito"
 
 ## StoryBook
 
-Storybook is an open-source tool that helps with the development of isolated UI components. With Storybook you will browse a library component, run each of those components in a private environment and explore them in different states. We implemented Storybook for two of our libraries [repay/cactus-icons](https://repaygithub.github.io/cactus/stories/cactus-icons/?path=/story/icons--all) and [@repay/cactus-web](https://repaygithub.github.io/cactus/stories/cactus-web/).
+Storybook is an open-source tool that helps with the development of isolated UI components. With Storybook you will browse a library component, run each of those components in a private environment and explore them in different states. We implemented Storybook for two of our libraries [@repay/cactus-icons](https://repaygithub.github.io/cactus/stories/cactus-icons/?path=/story/icons--all) and [@repay/cactus-web](https://repaygithub.github.io/cactus/stories/cactus-web/).
 
-In a Storybook application, all the content is being organized on two basic levels, the components, and their child stories; each story is a kind of a permutation of their parent component and each component could have as many stories as needed. The main story that every component should have along our libraries is the `Basic usage` and have to show a simple implementation of the selected component, next to `basic usage` you can include the rest of the variations of the component, those variations could be related with a ton of different aspects, like the content, the size, the children that the component supports, or any other prop defined that modifies the component’s performance.
+In a Storybook application, all the content is being organized on two basic levels, the components, and their child stories; each story is a kind of a permutation of their parent component and each component could have as many stories as needed. The main story that every component should have along our libraries is the `Basic usage`. This story should show a simple implementation of the selected component. In addition to `basic usage` you can include the rest of the variations of the component as either separate stories or as knobs (see the Knobs section below). There are many possible variations, like the content, the size, the children that the component supports, or any other prop defined that modifies the component’s performance.
 
 In addition to the creation of stories from specific components, we keep a track of the snapshots of every component for testing purposes, this helps us catch bugs in UI appearance. Every time that a component or a component's story is modified or created, a screenshot of the story will be created or updated and compared with the last commit to identify any possible changes.
 
@@ -224,7 +224,7 @@ The [knobs](https://www.npmjs.com/package/@storybook/addon-knobs) are controls t
 
 [More info here.](https://github.com/storybookjs/storybook/tree/master/addons/knobs#available-knobs)
 
-The knobs must have been created to give the user access to the different props of a component. For example, a button component that includes a `variant` prop with a list of variants like *standard*, *action*, *danger*, *warning* and *success*, those variants must be accessible and controllable from the Knobs section of the button's story.
+Knobs should be used as much as possible to give the user access to the different props of a component. For example, if you have a button component that includes a `variant` prop with a list of variants like *standard*, *action*, *danger*, *warning* and *success*, you can make those variants accessible and controllable from the Knobs section of the button's story.
 
 These are other use-cases where you must set up a knob for a prop from the parent component:
 - To Modify text from labels, inputs, textareas, headers and/or other contents.
@@ -232,67 +232,8 @@ These are other use-cases where you must set up a knob for a prop from the paren
 - To change a specific CSS property like `justify-content`, `align-items`, `flex-direction`, `width`, `height`
 - To hide or show a specific component from the story. 
 
-Knobs are a powerful way to explore the component behavior through their properties. However, there are specific cases where is more convenient to show those behaviors by splitting them into different stories. The main story that you must include is the components `Basic usage`, it is not necessary to include all the knobs per prop into that main story, is there when you can decide when to make a knob for a prop or when to make a new different story to show a specific behavior, there are some cases that you would consider at the moment of being choosing between a knob or a new story; if the component has different variants, (such standard, warning, success), a better choice could be to create a new story showing all the variants on the same canvas, so the user could compare them. Another case where you must consider creating a new story is if the props modifies the component by making significant changes to its appearance, or if the component has specific optional functionalities or integrations with other small components like buttons or icons. 
+#### Knobs vs Stories
 
-##### Usage
-Every story’s file must be created on the root of their main component with the extension `.story.tsx`. All of the components exported from that story file will be rendered as individual stories from the same component in the Storybook application. Here is a simple demonstration of how it works
+Knobs are a powerful way to explore the component behavior through their properties. However, there are specific cases where it is more convenient to show those behaviors by splitting them into different stories. In the main `Basic usage` story, it is not necessary to include knobs for all of the props.  Here are some cases that you would consider creating a new story instead of using knobs: if the component has different variants, (such standard, warning, success), a better choice could be to create a new story showing all the variants on the same canvas, so the user could compare them. Another case where you must consider creating a new story is if the props modify the component by making significant changes to its appearance, or if the component has specific optional functionalities or integrations with other small components like buttons or icons.
 
-First you need to import the `Meta` type that configures the stories for a component, the `React` library and the main component
-```javascript
-    //FooComponent.story.tsx
-    import { Meta } from '@storybook/react/types-6-0'
-    import React from 'react'
-
-    import FooComponent from './FooComponent'
-```
-
-Then, export by default the name of the story an the component it belongs to.
-```javascript
-    export default {
-        name: 'FooComponent',
-        component: FooComponent,
-    } as Meta
-``` 
-
-Alright, let's create the first default story for the `FooComponent`.
-```javascript
-    export const FooStory = () => {
-        return <FooComponent label='Label title' disabled={false} /> 
-    }
-```
-That function is rendering the `FooComponent` with two props, a label text and a boolean value that enables or disables a specific functionality of the `FooComponent`. Those values must be been controlled by the Storybook user, so we can create a knob to manipulate those props from the Storybook application. 
-
-```javascript
-    //...
-    import { boolean, text } from '@storybook/addon-knobs'
-
-    export const FooStory = () => {
-        return <FooComponent 
-            label={text('label', 'This is a knob')} 
-            disabled={boolean('disabled', false)} 
-        /> 
-    }
-```
-First, we need to import the required Knobs from the library `'@storybook/addon-knobs'`. That's how we export a story called `FooStory` that is rendering a component and controlling the `label` and `disabled` props with text and boolean knobs respectively. 
-
-```javascript 
-    //FooComponent.story.tsx
-    import { Meta } from '@storybook/react/types-6-0'
-    import React from 'react'
-
-    import FooComponent from './FooComponent'
-
-    import { boolean, text } from '@storybook/addon-knobs'
-
-    export default {
-        name: 'FooComponent',
-        component: FooComponent,
-    } as Meta
-
-    export const FooStory = () => {
-        return <FooComponent 
-            label={text('label', 'This is a knob')} 
-            disabled={boolean('disabled', false)} 
-        /> 
-    }
-```
+If you want to look for more information about how to implement the knobs addon, please visit the [documentation](https://storybook.js.org/docs/react/writing-stories/introduction).
