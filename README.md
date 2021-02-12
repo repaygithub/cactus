@@ -216,8 +216,8 @@ The Actions add-on logs the events triggered by the user, such as onClick, onFoc
 
 The [knobs](https://www.npmjs.com/package/@storybook/addon-knobs) are controls that allow the user to control and edit the component’s props dynamically, exploring the component behavior. These are the knobs that are available: 
 
-- **`Text:`** To get a text from the user.
-- **`Boolean:`** To get a boolean value from the user.
+- **`Text`:** To get a text from the user.
+- **`Boolean`:** To get a boolean value from the user.
 - **`Number`:** To get a number from the user.
 - **`Select`:** To get a value from a list of options. 
 - **`Radios`:** To get a value from a list of radio buttons.
@@ -225,11 +225,14 @@ The [knobs](https://www.npmjs.com/package/@storybook/addon-knobs) are controls t
 [More info here.](https://github.com/storybookjs/storybook/tree/master/addons/knobs#available-knobs)
 
 The knobs must have been created to give the user access to the different props of a component. For example, a button component that includes a `variant` prop with a list of variants like *standard*, *action*, *danger*, *warning* and *success*, those variants must be accessible and controllable from the Knobs section of the button's story.
+
 These are other use-cases where you must set up a knob for a prop from the parent component:
-– To Modify text from labels, inputs, textareas, headers and/or other contents.
-– To enable or disable user's actions like clicks. 
-– To change a specific CSS property like `justify-content`, `align-items`, `flex-direction`, `width`, `height`
-– To hide or show a specific component from the story. 
+- To Modify text from labels, inputs, textareas, headers and/or other contents.
+- To enable or disable user's actions like clicks. 
+- To change a specific CSS property like `justify-content`, `align-items`, `flex-direction`, `width`, `height`
+- To hide or show a specific component from the story. 
+
+Knobs are a powerful way to explore the component behavior through their properties. However, there are specific cases where is more convenient to show those behaviors by splitting them into different stories. The main story that you must include is the components `Basic usage`, it is not necessary to include all the knobs per prop into that main story, is there when you can decide when to make a knob for a prop or when to make a new different story to show a specific behavior, there are some cases that you would consider at the moment of being choosing between a knob or a new story; if the component has different variants, (such standard, warning, success), a better choice could be to create a new story showing all the variants on the same canvas, so the user could compare them. Another case where you must consider creating a new story is if the props modifies the component by making significant changes to its appearance, or if the component has specific optional functionalities or integrations with other small components like buttons or icons. 
 
 ##### Usage
 Every story’s file must be created on the root of their main component with the extension `.story.tsx`. All of the components exported from that story file will be rendered as individual stories from the same component in the Storybook application. Here is a simple demonstration of how it works
