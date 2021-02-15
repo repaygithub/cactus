@@ -629,7 +629,7 @@ const Calendar = styled(CalendarBase)`
   }
 `
 
-const transitionTime = isIE ? '600ms' : '300ms'
+const transitionTime = isIE ? '350ms' : '300ms'
 
 const CalendarSlideWrapper = styled.div`
   width: 900px;
@@ -1823,7 +1823,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                     <TransitionGroup className="calendar-transition-group">
                       <CSSTransition
                         key={this.state.calendarKey}
-                        timeout={isIE ? 800 : 300}
+                        timeout={isIE ? 400 : 200}
                         classNames={this.state.slideDirection || 'left'}
                       >
                         <Calendar
