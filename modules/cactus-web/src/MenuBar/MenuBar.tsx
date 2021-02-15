@@ -61,9 +61,8 @@ type VariantMap = { [K in MenuBarVariants]: FlattenInterpolation<ThemeProps<Cact
 
 const variantMap: VariantMap = {
   light: css`
-    ${ScrollButton},
-    [role='menubar'] > li > [role='menuitem'] {
-      ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom', { thin: 3, thick: 4 })};
+    > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
+      ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom', { thin: 2, thick: 3 })};
     }
 
     [role='menubar'] > li > [role='menuitem'] {
@@ -72,7 +71,7 @@ const variantMap: VariantMap = {
 
       &:hover,
       &[aria-expanded='true'] {
-        ${(p) => insetBorder(p.theme, 'callToAction', 'bottom', { thin: 3, thick: 4 })};
+        ${(p) => insetBorder(p.theme, 'callToAction', 'bottom', { thin: 2, thick: 3 })};
         color: ${(p) => p.theme.colors.callToAction};
       }
 
@@ -82,8 +81,7 @@ const variantMap: VariantMap = {
     }
   `,
   dark: css`
-    ${ScrollButton},
-    [role='menubar'] > li > [role='menuitem'] {
+    > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
       padding: 23px 7px 21px 7px;
       border: ${(p) => border(p.theme, 'base')};
       border-bottom: ${(p) => border(p.theme, 'base', { thin: 3, thick: 4 })};
@@ -374,7 +372,7 @@ const Nav = styled.nav<MenuBarProps>`
     &:hover,
     &[aria-expanded='true'] {
       z-index: 100;
-      box-shadow: ${shadowTypes[2]} ${(p) => p.theme.colors.transparentCTA};
+      ${(p) => boxShadow(p.theme, 2)}
     }
   }
   ${variantSelector}
