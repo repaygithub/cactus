@@ -127,7 +127,6 @@ const ColorPickerPopup = styled(BasePopup)`
   position: fixed;
   z-index: 1000;
   width: 320px;
-  height: 478px;
   padding: 16px;
   background-color: ${(p): string => p.theme.colors.white};
   ${(p): ReturnType<typeof css> => getPopupShape(p.theme.shape)}
