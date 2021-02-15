@@ -34,7 +34,7 @@ const scopedSelector = (container: string, selector: string) =>
 
 const selectType = async (t: TestController, itype: string) => {
   await t.click('#input-type')
-  await t.click(`#input-type-${itype}-${itype}`)
+  await t.click(`#input-type-${itype}`)
 }
 
 const dateInput = '[aria-labelledby="date-test-label"]'

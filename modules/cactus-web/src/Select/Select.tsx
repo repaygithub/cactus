@@ -10,7 +10,7 @@ import { width as styledSystemWidth, WidthProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
-import { isResponsiveTouchDevice } from '../helpers/constants'
+import { isIE, isResponsiveTouchDevice } from '../helpers/constants'
 import {
   CactusChangeEvent,
   CactusEventTarget,
@@ -20,6 +20,7 @@ import {
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
+import { isPurelyEqual } from '../helpers/react'
 import { textFieldStatusMap } from '../helpers/status'
 import { boxShadow, fontSize, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
@@ -27,12 +28,35 @@ import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
 
 export type SelectValueType = string | number | (string | number)[] | null
-export interface OptionType {
-  label: string
+
+interface WithValue {
   value: string | number
 }
 
-type ExtendedOptionType = OptionType & { id: string; isSelected: boolean }
+export interface OptionType extends WithValue {
+  label: string
+}
+
+interface OptionProps extends WithValue {
+  children?: React.ReactNode
+  id?: string
+  'aria-label'?: string
+  altText?: string
+}
+
+interface ExtendedOptionType extends WithValue {
+  label: React.ReactNode
+  isSelected: boolean
+  id: string
+  ariaLabel?: string
+  altText?: string
+}
+
+type OptMap = Map<string | number, ExtendedOptionType>
+
+interface InternalOptionProps extends React.LiHTMLAttributes<HTMLLIElement> {
+  option: ExtendedOptionType
+}
 
 type Target = CactusEventTarget<SelectValueType>
 
@@ -43,7 +67,7 @@ export interface SelectProps
       React.DetailedHTMLProps<React.HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
       'ref' | 'onChange' | 'onBlur' | 'onFocus'
     > {
-  options: (OptionType | string | number)[]
+  options?: (OptionType | string | number)[]
   id: string
   name: string
   value?: string | number | (string | number)[] | null
@@ -66,15 +90,6 @@ export interface SelectProps
   onChange?: React.ChangeEventHandler<Target>
   onBlur?: React.FocusEventHandler<Target>
   onFocus?: React.FocusEventHandler<Target>
-}
-
-// Thank you, Stack Overflow https://stackoverflow.com/questions/49986720/how-to-detect-internet-explorer-11-and-below-versions
-const isIE = () => {
-  const ua = window.navigator.userAgent //Check the userAgent property of the window.navigator object
-  const msie = ua.indexOf('MSIE ') // IE 10 or older
-  const trident = ua.indexOf('Trident/') //IE 11
-
-  return msie > 0 || trident > 0
 }
 
 const displayStatus: any = (props: SelectProps): ReturnType<typeof css> | string => {
@@ -113,7 +128,7 @@ const ValueSwitch = (props: {
   const moreRef = useRef<HTMLSpanElement | null>(null)
   const [numToRender, setNum] = useState(numSelected)
   const [prevValue, setPrevValue] = useState<string>('')
-  const valueString = selected.reduce((m, o): string => m + o.label, '')
+  const valueString = selected.reduce((m, o): string => m + getLabel(o), '')
   const shouldRenderAll = prevValue !== valueString
   /**
    * finds the maximum number of values it can display
@@ -164,8 +179,8 @@ const ValueSwitch = (props: {
         <ValueSpan ref={spanRef}>
           {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
             (opt): React.ReactElement => (
-              <Tag id={`value-tag::${opt.id}`} closeOption key={opt.value + opt.label}>
-                {opt.label}
+              <Tag id={`value-tag::${opt.id}`} closeOption key={opt.id}>
+                {opt.altText || opt.value}
               </Tag>
             )
           )}
@@ -179,13 +194,13 @@ const ValueSwitch = (props: {
       return (
         <ValueSpan>
           <Tag id={`value-tag::${value.id}`} closeOption>
-            {value.label}
+            {value.altText || value.value}
           </Tag>
         </ValueSpan>
       )
     }
   } else {
-    return <ValueSpan>{selected[0].label}</ValueSpan>
+    return <ValueSpan>{selected[0].altText || selected[0].value}</ValueSpan>
   }
 }
 
@@ -338,7 +353,7 @@ const NoMatch = styled.li`
   overflow-wrap: break-word;
 `
 
-const Option = styled.li`
+const StyledOption = styled.li`
   cursor: pointer;
   display: list-item;
   border: none;
@@ -369,6 +384,30 @@ const Option = styled.li`
     vertical-align: -2px;
   }
 `
+
+export const SelectOption: React.FC<OptionProps> = ({ children }) => <>{children}</>
+
+const InternalOption: React.FC<InternalOptionProps> = ({ option, ...props }) => {
+  const ref = React.useRef<HTMLLIElement>(null)
+  React.useEffect(() => {
+    if (option.altText === undefined && ref.current) {
+      option.altText = ref.current.textContent || ''
+    }
+  }, [option])
+  return (
+    <StyledOption
+      ref={ref}
+      role="option"
+      data-value={option.value}
+      id={option.id}
+      aria-label={option.ariaLabel}
+      {...props}
+    />
+  )
+}
+
+const getLabel = ({ label, altText, value }: ExtendedOptionType): string =>
+  typeof label === 'string' ? label : altText || value.toString()
 
 interface ListWrapperProps {
   isOpen: boolean
@@ -452,7 +491,7 @@ interface ListProps {
   searchValue: string
   onBlur: (event: React.FocusEvent<HTMLUListElement>) => void
   onClick: (event: React.MouseEvent<HTMLUListElement>) => void
-  raiseChange: (event: React.SyntheticEvent, active: OptionType | null, noToggle?: boolean) => void
+  raiseChange: (event: React.SyntheticEvent, active: WithValue | null, noToggle?: boolean) => void
   onClose: () => void
   anchorRef: React.RefObject<HTMLDivElement>
   activeDescendant: string
@@ -461,18 +500,20 @@ interface ListProps {
   handleComboInputBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 
-function getSelectedIndex(options: (string | OptionType)[], value: string | number): number {
+function getSelectedIndex(options: WithValue[], value: string | number): number {
   for (let i = 0; i < options.length; ++i) {
-    const opt = options[i]
-    if (
-      (typeof opt === 'string' && opt === value) ||
-      (typeof opt !== 'string' && opt.value === value)
-    ) {
+    if (options[i].value === value) {
       return i
     }
   }
 
   return 0
+}
+
+function getIsSelected(selectedValues: SelectValueType, value: string | number) {
+  return (
+    (Array.isArray(selectedValues) && selectedValues.includes(value)) || selectedValues === value
+  )
 }
 
 function findMatchInRange(
@@ -483,7 +524,7 @@ function findMatchInRange(
 ): ExtendedOptionType | null {
   for (let i = startIndex; i < endIndex; ++i) {
     const opt = options[i]
-    if (opt.label.toLowerCase().startsWith(pendingChars.toLowerCase())) {
+    if (getLabel(opt).toLowerCase().startsWith(pendingChars.toLowerCase())) {
       return opt
     }
   }
@@ -668,16 +709,16 @@ class List extends React.Component<ListProps, ListState> {
     options: ExtendedOptionType[],
     searchValue: string
   ): [ExtendedOptionType[], boolean] => {
-    let addOption = true
+    let addOption = searchValue !== ''
+    searchValue = searchValue.toLowerCase()
     options = options.filter((opt: ExtendedOptionType): boolean => {
-      if (opt.label.toLowerCase() === searchValue.toLowerCase() || searchValue === '') {
+      const label = getLabel(opt).toLowerCase()
+      const includesSearch = label.includes(searchValue)
+      if (includesSearch && label.length === searchValue.length) {
         addOption = false
       }
-      return opt.label.toLowerCase().includes(searchValue.toLowerCase())
+      return includesSearch
     })
-    if (searchValue === '') {
-      addOption = false
-    }
     return [options, addOption]
   }
 
@@ -707,6 +748,7 @@ class List extends React.Component<ListProps, ListState> {
           label: `Create "${props.searchValue}"`,
           id: `create-${props.searchValue}`,
           isSelected: false,
+          altText: props.searchValue,
         }
         filteredOptions.unshift(addOpt)
       }
@@ -826,12 +868,10 @@ class List extends React.Component<ListProps, ListState> {
                   ariaSelected = isSelected ? 'true' : 'false'
                 }
                 return (
-                  <Option
-                    id={optId}
+                  <InternalOption
                     key={optId}
+                    option={opt}
                     className={activeDescendant === optId ? 'highlighted-option' : undefined}
-                    data-value={opt.value}
-                    role="option"
                     data-role={isCreateNewOption ? 'create' : 'option'}
                     aria-selected={ariaSelected}
                     onMouseEnter={this.handleOptionMouseEnter}
@@ -848,7 +888,7 @@ class List extends React.Component<ListProps, ListState> {
                       />
                     ) : null}
                     {opt.label}
-                  </Option>
+                  </InternalOption>
                 )
               }
             )
@@ -890,8 +930,8 @@ function asOption(opt: number | string | OptionType): OptionType {
   return opt
 }
 
-function getOptionId(selectId: string, option: OptionType): string {
-  return `${selectId}-${option.label}-${option.value}`.replace(/\s/g, '-')
+function getOptionId(selectId: string, value: string | number): string {
+  return `${selectId}-${value}`.replace(/\s/g, '-')
 }
 
 interface SelectState {
@@ -904,6 +944,8 @@ interface SelectState {
 }
 
 class SelectBase extends React.Component<SelectProps, SelectState> {
+  public static Option = SelectOption
+
   public state = {
     isOpen: false,
     value: this.props.value || null,
@@ -927,6 +969,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     if (this.triggerRef.current !== null) {
       this.setState({ currentTriggerWidth: this.triggerRef.current.getBoundingClientRect().width })
     }
+    this.resetMemo()
     this.detectOptionsFromValue()
     this.eventTarget.id = this.props.id
     this.eventTarget.name = this.props.name
@@ -941,6 +984,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         })
       }
     }
+    this.resetMemo()
     if (JSON.stringify(this.props.value) !== JSON.stringify(prevProps.value)) {
       this.detectOptionsFromValue()
     }
@@ -1081,7 +1125,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
     // In IE, there's no relatedTarget on blur with React versions lower than v17...it's already moved on to activeElement
     const isReact17 = event.nativeEvent.type === 'focusout'
-    if (isIE() && !isReact17) {
+    if (isIE && !isReact17) {
       setTimeout(() => {
         const focusTarget = document.activeElement
         this.closeListIfNotFocused(focusTarget)
@@ -1172,7 +1216,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
 
   private raiseChange = (
     event: React.SyntheticEvent,
-    option: OptionType | null,
+    option: WithValue | null,
     onlyAdd = false
   ): void => {
     if (option === null) {
@@ -1196,7 +1240,12 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     } else {
       value = option.value
     }
-    this.resetMemo()
+    const extOpt = this.optionsMap.get(option.value)
+    if (extOpt) {
+      extOpt.isSelected = getIsSelected(value, option.value)
+    } else {
+      this.resetMemo()
+    }
     this.setState({ value })
     this.eventTarget.value = value
     const { onChange } = this.props
@@ -1244,40 +1293,18 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  private isSelected = (option: OptionType): boolean => {
-    return (
-      (Array.isArray(this.state.value) && this.state.value.includes(option.value)) ||
-      this.state.value === option.value
-    )
-  }
-
-  private getOptByValue(value: string | number): OptionType | null {
-    for (const o of this.props.options) {
-      const option = asOption(o)
-      if (String(option.value) === String(value)) {
-        return option
-      }
-    }
-    return null
-  }
-
-  private optionsMap: { [key: string]: ExtendedOptionType } = {}
-
   private detectOptionsFromValue(): void {
-    this.getExtOptions().forEach((opt): void => {
-      this.optionsMap[opt.value] = opt
-    })
     if (this.props.comboBox && this.props.canCreateOption && this.props.value) {
       const newOptions: OptionType[] = []
 
       if (Array.isArray(this.props.value)) {
         this.props.value.forEach((val): void => {
-          if (!this.optionsMap[val]) {
+          if (!this.optionsMap.has(val)) {
             newOptions.push(asOption(val))
           }
         })
       } else {
-        if (!this.optionsMap[this.props.value]) {
+        if (!this.optionsMap.has(this.props.value)) {
           newOptions.push(asOption(this.props.value))
         }
       }
@@ -1292,63 +1319,103 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     }
   }
 
-  /** used to reduce rerenders of List and ValueSpan */
-  private memoizedExtOptions: {
-    id: string | undefined
-    options: (string | number | OptionType)[]
-    memo: ExtendedOptionType[]
-    value: SelectValueType
-  } = {
-    id: undefined,
-    options: [],
-    memo: [],
-    value: null,
+  private extendedOptions: ExtendedOptionType[] | null = null
+  private optionsMap: OptMap = new Map()
+
+  private buildOptsFromChildren(children: React.ReactNode, prevOpts: OptMap) {
+    const childArray = React.Children.toArray(children) as React.ReactChild[]
+    if (!childArray?.length) return
+
+    const selectId = this.props.id
+    const optList = this.getExtOptions()
+    for (const child of childArray) {
+      if (typeof child === 'string' || typeof child === 'number') {
+        optList.push(this.asExtOpt(child))
+      } else if (child?.type === React.Fragment) {
+        this.buildOptsFromChildren(child.props.children, prevOpts)
+      } else if (child?.props) {
+        const value = child.props.value
+        if (typeof value === 'string' || typeof value === 'number') {
+          const { altText: altProp, children, id, 'aria-label': ariaLabel } = child.props
+          const rawLabel = children || children === 0 ? children : value
+          const label = typeof rawLabel === 'number' ? rawLabel.toString() : rawLabel
+          let altText: string | undefined = altProp || ariaLabel
+          if (altText === undefined) {
+            let prevOpt: ExtendedOptionType | undefined
+            if (typeof label === 'string') {
+              altText = label
+            } else if ((prevOpt = prevOpts.get(value))) {
+              // Try to minimize how often we have to pull from textContent;
+              // this is to avoid the delay from `useEffect`, rather than performance reasons.
+              if (prevOpt.altText !== undefined && isPurelyEqual(prevOpt.label, label)) {
+                altText = prevOpt.altText
+              }
+            }
+          }
+          const opt: ExtendedOptionType = {
+            value,
+            label,
+            altText,
+            ariaLabel,
+            id: id || getOptionId(selectId, value),
+            isSelected: getIsSelected(this.state.value, value),
+          }
+          optList.push(opt)
+          this.optionsMap.set(opt.value, opt)
+        }
+      }
+    }
+  }
+
+  private asExtOpt(value: number | string | OptionType): ExtendedOptionType {
+    let opt: ExtendedOptionType
+    if (typeof value === 'number' || typeof value === 'string') {
+      const label = value.toString()
+      opt = {
+        value,
+        label,
+        altText: label,
+        id: getOptionId(this.props.id, value),
+        isSelected: getIsSelected(this.state.value, value),
+      }
+    } else {
+      opt = {
+        ...value,
+        altText: value.label,
+        id: getOptionId(this.props.id, value.value),
+        isSelected: getIsSelected(this.state.value, value.value),
+      }
+    }
+    this.optionsMap.set(opt.value, opt)
+    return opt
   }
 
   private getExtOptions(): ExtendedOptionType[] {
-    const selectId = this.props.id
-    if (
-      this.memoizedExtOptions.memo.length !== 0 &&
-      this.memoizedExtOptions.id === selectId &&
-      this.props.options === this.memoizedExtOptions.options &&
-      this.props.value === this.memoizedExtOptions.value
-    ) {
-      return this.memoizedExtOptions.memo
+    if (this.extendedOptions !== null) {
+      return this.extendedOptions
     }
-    const propValues = new Set<string | number>()
-    let memo = this.props.options.map(
-      (o): ExtendedOptionType => {
-        const opt = asOption(o)
-        propValues.add(opt.value)
-        const extendedOpt: ExtendedOptionType = {
-          ...opt,
-          id: getOptionId(selectId, opt),
-          isSelected: this.isSelected(opt),
-        }
-        return extendedOpt
+    const prevOpts = this.optionsMap
+    if (prevOpts.size > 0) {
+      this.optionsMap = new Map()
+    }
+    const optList: ExtendedOptionType[] = (this.extendedOptions = [])
+    if (this.props.children) {
+      this.buildOptsFromChildren(this.props.children, prevOpts)
+    } else if (this.props.options?.length) {
+      for (const o of this.props.options) {
+        optList.push(this.asExtOpt(o))
       }
-    )
-    const extraOpts = (this.state.extraOptions as OptionType[])
-      .filter((opt) => !propValues.has(opt.value))
-      .map(
-        (opt): ExtendedOptionType => ({
-          ...opt,
-          id: getOptionId(selectId, opt),
-          isSelected: this.isSelected(opt),
-        })
-      )
-    memo = memo.concat(extraOpts)
-    this.memoizedExtOptions = {
-      id: selectId,
-      options: this.props.options,
-      value: this.state.value,
-      memo: memo,
     }
-    return this.memoizedExtOptions.memo
+    for (const opt of this.state.extraOptions as OptionType[]) {
+      if (!this.optionsMap.has(opt.value)) {
+        optList.push(this.asExtOpt(opt))
+      }
+    }
+    return optList
   }
 
   private resetMemo = (): void => {
-    this.memoizedExtOptions.memo = []
+    this.extendedOptions = null
   }
 
   private setActiveDescendant = (activeDescendant: string): void => {
@@ -1486,7 +1553,7 @@ Select.propTypes = {
     ),
     PropTypes.arrayOf(PropTypes.string.isRequired),
     PropTypes.arrayOf(PropTypes.number.isRequired),
-  ]).isRequired,
+  ]),
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   // @ts-ignore
@@ -1508,6 +1575,12 @@ Select.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   noOptionsText: PropTypes.string,
+  children: function (props: Record<string, any>): Error | null {
+    if (props.children && props.options) {
+      return new Error('Should use `options` prop OR pass children, not both')
+    }
+    return null
+  },
 }
 
 Select.defaultProps = {

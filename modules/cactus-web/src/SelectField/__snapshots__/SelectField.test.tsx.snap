@@ -292,7 +292,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
               class="c17"
               data-role="option"
               data-value="basic"
-              id="prevent-random-id-basic-basic"
+              id="prevent-random-id-basic"
               role="option"
             >
               basic
@@ -301,7 +301,7 @@ exports[`component: SelectField minimal snapshot 1`] = `
               class="c17"
               data-role="option"
               data-value="options"
-              id="prevent-random-id-options-options"
+              id="prevent-random-id-options"
               role="option"
             >
               options

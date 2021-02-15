@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-web",
-  "version": "5.1.1",
+  "version": "5.2.0",
   "description": "A UI component library for web built in React by REPAY",
   "main": "dist/cactus-web.cjs.js",
   "module": "dist/index.js",
@@ -83,9 +83,11 @@
     "@types/puppeteer": "^3.0.2",
     "@types/react": "^16.9.53",
     "@types/react-transition-group": "^4.4.0",
+    "@types/react-color": "^2.17.5",
     "@types/storybook__react": "^5.2.1",
     "@types/styled-components": "^5.1.4",
     "@types/styled-system": "^5.1.10",
+    "@types/tinycolor2": "^1.4.2",
     "@types/user-event": "^4.1.0",
     "babel-jest": "^26.6.0",
     "babel-loader": "^8.1.0",
@@ -121,7 +123,13 @@
     "@repay/cactus-icons": "^2.3.0",
     "@repay/cactus-theme": "^2.0.2",
     "lodash": "^4.17.19",
+<<<<<<< HEAD
     "react-transition-group": "^4.4.1",
     "styled-system": "^5.1.5"
+=======
+    "react-color": "^2.19.3",
+    "styled-system": "^5.1.5",
+    "tinycolor2": "^1.4.2"
+>>>>>>> f1cfc7450bb06e57ec0fa891ad14915e21825ac1
   }
 }

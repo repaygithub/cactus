@@ -5,20 +5,21 @@ import { margin, MarginProps, width as styledSystemWidth, WidthProps } from 'sty
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import { omitMargins } from '../helpers/omit'
-import Select, { OptionType, SelectProps } from '../Select/Select'
+import Select, { SelectProps } from '../Select/Select'
 
 interface SelectFieldProps
   extends MarginProps,
     WidthProps,
     FieldProps,
     Omit<SelectProps, 'id' | keyof MarginProps | keyof WidthProps> {
-  options: (OptionType | string | number)[]
   className?: string
   id?: string
   multiple?: boolean
 }
 
-const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement => {
+type SelectFieldType = React.FC<SelectFieldProps> & { Option: typeof Select.Option }
+
+const SelectFieldBase: SelectFieldType = (props): React.ReactElement => {
   const {
     className,
     id,
@@ -77,6 +78,8 @@ const SelectFieldBase: React.FC<SelectFieldProps> = (props): React.ReactElement 
     </AccessibleField>
   )
 }
+
+SelectFieldBase.Option = Select.Option
 
 export const SelectField = styled(SelectFieldBase)`
   position: relative;

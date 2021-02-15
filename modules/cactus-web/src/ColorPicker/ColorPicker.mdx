@@ -1,0 +1,52 @@
+---
+name: ColorPicker
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import ColorPicker from './ColorPicker'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from '../helpers/constants'
+
+# ColorPicker
+
+The `ColorPicker` is a form element designed to allow a user to select a color with hex, rgb, or hue and saturation sliders.
+
+### Try It Out
+
+export const code = `
+  <ColorPicker id="my-picker" name="color" />
+`
+
+<LiveProvider code={code} scope={{ ColorPicker }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- Pass a meaningful name and ID
+- Use the `phrases` prop to set text & labels. This object should contain any of the following keys, although all are optional.
+  - `hexLabel`: Defaults to "Hex".
+  - `redLabel`: Defaults to "R".
+  - `greenLabel`: Defaults to "G".
+  - `blueLabel`: Defaults to "B".
+  - `triggerLabel`: Label for the palette icon button. Defaults to "Click to open the color picker".
+  - `applyLabel`: Defaults to "Apply".
+  - `cancelLabel`: Defaults to "Cancel".
+
+## Basic usage
+
+- If the hex input rendered outside the popup is changed, `onChange` will be called as soon as a valid hex string is set.
+- If the color is changed using any of the elements in the popup, `onChange` will only be called when the apply button is clicked.
+- If the cancel button is clicked, the color picker's state will revert to whatever value is passed through the props.
+- The `ColorPicker` value can be controlled with any of the following types of values:
+  - Hex string - ex: `00FF00` or `#00FF00`
+  - HSL object - Hue should stay between 0 and 360 while saturation and lightness should stay between 0 and 1. ex: `{ h: 120, s: 1, l: 0.5 }`
+  - HSV object - Hue should stay between 0 and 360 while saturation and value should stay between 0 and 1. ex: `{ h: 120, s: 1, v: 1 }`
+  - RGB object - All values should be between 0 and 255. ex: `{r: 0, g: 255, b: 0}`
+
+## Properties
+
+<PropsTable of={ColorPicker} />
