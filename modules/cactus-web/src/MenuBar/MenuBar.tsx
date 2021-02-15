@@ -19,15 +19,7 @@ import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import {
-  border,
-  borderSize,
-  boxShadow,
-  insetBorder,
-  radius,
-  shadowTypes,
-  textStyle,
-} from '../helpers/theme'
+import { border, borderSize, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
