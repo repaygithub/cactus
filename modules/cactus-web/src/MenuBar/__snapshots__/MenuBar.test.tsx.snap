@@ -616,9 +616,9 @@ exports[`component: MenuBar typechecks 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
 }
 
-.c0 .c1,
+.c0 > .c1,
 .c0 [role='menubar'] > li > [role='menuitem'] {
-  box-shadow: inset 0px -3px 0px 0px hsl(200,29%,90%);
+  box-shadow: inset 0px -2px 0px 0px hsl(200,29%,90%);
 }
 
 .c0 [role='menubar'] > li > [role='menuitem'] {
@@ -628,7 +628,7 @@ exports[`component: MenuBar typechecks 1`] = `
 
 .c0 [role='menubar'] > li > [role='menuitem']:hover,
 .c0 [role='menubar'] > li > [role='menuitem'][aria-expanded='true'] {
-  box-shadow: inset 0px -3px 0px 0px hsl(200,96%,35%);
+  box-shadow: inset 0px -2px 0px 0px hsl(200,96%,35%);
   color: hsl(200,96%,35%);
 }
 
