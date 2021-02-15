@@ -123,13 +123,9 @@
     "@repay/cactus-icons": "^2.3.0",
     "@repay/cactus-theme": "^2.0.2",
     "lodash": "^4.17.19",
-<<<<<<< HEAD
     "react-transition-group": "^4.4.1",
-    "styled-system": "^5.1.5"
-=======
     "react-color": "^2.19.3",
     "styled-system": "^5.1.5",
     "tinycolor2": "^1.4.2"
->>>>>>> f1cfc7450bb06e57ec0fa891ad14915e21825ac1
   }
 }
