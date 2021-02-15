@@ -236,4 +236,6 @@ These are other use-cases where you must set up a knob for a prop from the paren
 
 Knobs are a powerful way to explore the component behavior through their properties. However, there are specific cases where it is more convenient to show those behaviors by splitting them into different stories. In the main `Basic usage` story, it is not necessary to include knobs for all of the props.  Here are some cases that you would consider creating a new story instead of using knobs: if the component has different variants, (such standard, warning, success), a better choice could be to create a new story showing all the variants on the same canvas, so the user could compare them. Another case where you must consider creating a new story is if the props modify the component by making significant changes to its appearance, or if the component has specific optional functionalities or integrations with other small components like buttons or icons.
 
-If you want to look for more information about how to implement the knobs addon, please visit the [documentation](https://storybook.js.org/docs/react/writing-stories/introduction).
+#### Usage
+
+If you want to look for more information about how to write stories, please visit the [documentation](https://storybook.js.org/docs/react/writing-stories/introduction).
