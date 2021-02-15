@@ -11,7 +11,7 @@ exports[`Modal is closed when isOpen=false snapshot 1`] = `
 `;
 
 exports[`Modal is open when isOpen=true snapshot 1`] = `
-.c4 {
+.c3 {
   vertical-align: middle;
 }
 
@@ -38,7 +38,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   z-index: 100;
 }
 
-.c3 {
+.c2 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -63,11 +63,11 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   font-size: 24px;
 }
 
-.c3::-moz-focus-inner {
+.c2::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c2:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -79,7 +79,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c3:hover {
+.c2:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -134,7 +134,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   max-width: 100%;
 }
 
-.c1 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -149,7 +149,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
     max-width: 30%;
   }
 
-  .c1 > [data-reach-dialog-content] .c2 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -192,12 +192,12 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
           >
             <button
               aria-label="Close Label"
-              class="c2 c3"
+              class="c2 modal-close-btn"
               type="button"
               variant="standard"
             >
               <svg
-                class="c4"
+                class="c3"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
