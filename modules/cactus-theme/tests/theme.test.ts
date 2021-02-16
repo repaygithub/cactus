@@ -23,7 +23,7 @@ function themeAccessibility(themeName: string, theme: CactusTheme): void {
       ).toBeGreaterThanOrEqual(4.5)
     })
 
-    Object.keys(theme.colorStyles).forEach((name: keyof typeof theme['colorStyles']): void => {
+    Object.keys(theme.colorStyles).forEach((name): void => {
       if (name.includes('transparent')) {
         test(`colorStyle ${name}`, (): void => {
           const color = new Color(theme.colorStyles[name].backgroundColor)
@@ -54,16 +54,41 @@ describe('@repay/cactus-theme', (): void => {
   themeAccessibility('cactus theme', cactusTheme)
 
   test('generates a theme with primaryHue', (): void => {
-    const theme = generateTheme({ primaryHue: 100 })
+    const theme = generateTheme({ primaryHue: 200 })
     expect(theme.colors).toMatchObject({
-      base: 'hsl(100, 96%, 11%)',
-      callToAction: 'hsl(100, 96%, 35%)',
+      base: 'hsl(200, 96%, 11%)',
+      callToAction: 'hsl(200, 96%, 35%)',
     })
   })
+
+  themeAccessibility('primary theme', generateTheme({ primaryHue: 200 }))
+
+  test('generates a grayscale theme with primaryHue', (): void => {
+    const theme = generateTheme({ primaryHue: 200, grayscaleContrast: true })
+    expect(theme.colors).toMatchObject({
+      base: 'hsl(200, 96%, 11%)',
+      callToAction: 'hsl(200, 96%, 35%)',
+      lightContrast: 'hsl(0, 0%, 90%)',
+    })
+    expect(theme.colorStyles.lightContrast.backgroundColor).toBe('hsl(0, 0%, 90%)')
+  })
+
+  themeAccessibility(
+    'primary grayscale theme',
+    generateTheme({ primaryHue: 200, grayscaleContrast: true })
+  )
 
   test('generates a theme when primary color is provided', (): void => {
     const theme = generateTheme({ primary: '#012537 ' })
     expect(theme).toEqual(cactusTheme)
+  })
+
+  test('generates a grayscale theme when primary color is provided', (): void => {
+    const theme = generateTheme({ primary: '#012537 ', grayscaleContrast: true })
+    expect(theme).toMatchObject({
+      colors: { lightContrast: 'hsl(0, 0%, 90%)' },
+      colorStyles: { lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' } },
+    })
   })
 
   test('generates a theme when two colors are provided', (): void => {
@@ -76,6 +101,34 @@ describe('@repay/cactus-theme', (): void => {
     })
   })
 
+  themeAccessibility(
+    'two-color theme',
+    generateTheme({ primary: '#012537', secondary: ' #0000FF' })
+  )
+
+  test('generates a grayscale theme when two colors are provided', (): void => {
+    const theme = generateTheme({
+      primary: '#012537',
+      secondary: ' #0000FF',
+      grayscaleContrast: true,
+    })
+    expect(theme).toMatchObject({
+      colors: {
+        base: 'hsl(200, 96%, 11%)',
+        callToAction: 'hsl(240, 100%, 50%)',
+        lightContrast: 'hsl(0, 0%, 90%)',
+      },
+      colorStyles: {
+        lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' },
+      },
+    })
+  })
+
+  themeAccessibility(
+    'two-color grayscale theme',
+    generateTheme({ primary: '#012537', secondary: ' #0000FF', grayscaleContrast: true })
+  )
+
   test('generates a white theme when invalid colors are provided', (): void => {
     const theme = generateTheme({ primary: '' })
     expect(theme).toMatchObject({
@@ -84,6 +137,23 @@ describe('@repay/cactus-theme', (): void => {
   })
 
   themeAccessibility('white theme', generateTheme({ primary: '' }))
+
+  test('generates a white grayscale theme when invalid colors are provided', (): void => {
+    const theme = generateTheme({ primary: '', grayscaleContrast: true })
+    expect(theme).toMatchObject({
+      colors: {
+        base: 'hsl(0, 0%, 100%)',
+        callToAction: 'hsl(244, 48%, 26%)',
+        lightContrast: 'hsl(0, 0%, 90%)',
+      },
+      colorStyles: { lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' } },
+    })
+  })
+
+  themeAccessibility(
+    'white grayscale theme',
+    generateTheme({ primary: '', grayscaleContrast: true })
+  )
 
   test('generates a black theme when the primary color is black', (): void => {
     const theme = generateTheme({ primary: '#000000' })
@@ -94,12 +164,39 @@ describe('@repay/cactus-theme', (): void => {
 
   themeAccessibility('black theme', generateTheme({ primary: '#000' }))
 
+  test('generates a black grayscale theme when the primary color is black', (): void => {
+    const theme = generateTheme({ primary: '#000000', grayscaleContrast: true })
+    expect(theme).toMatchObject({
+      colors: {
+        base: 'hsl(0, 0%, 0%)',
+        callToAction: 'hsl(244, 96%, 35%)',
+        lightContrast: 'hsl(0, 0%, 90%)',
+      },
+      colorStyles: { lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' } },
+    })
+  })
+
+  themeAccessibility(
+    'black grayscale theme',
+    generateTheme({ primary: '#000', grayscaleContrast: true })
+  )
+
   themeAccessibility(
     'two light colors',
     generateTheme({ primary: '#FFCCBE', secondary: '#B6FCD5' })
   )
 
+  themeAccessibility(
+    'two light colors - grayscale',
+    generateTheme({ primary: '#FFCCBE', secondary: '#B6FCD5', grayscaleContrast: true })
+  )
+
   themeAccessibility('two dark colors', generateTheme({ primary: '#133337', secondary: '#AC101D' }))
+
+  themeAccessibility(
+    'two dark colors - grayscale',
+    generateTheme({ primary: '#133337', secondary: '#AC101D', grayscaleContrast: true })
+  )
 
   test('can generate a theme with custom borders', (): void => {
     const theme = generateTheme({ primaryHue: 200, border: 'thin' })
