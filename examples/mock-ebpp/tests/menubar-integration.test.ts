@@ -29,13 +29,21 @@ test('Navigate to faq page', async (t: TestController): Promise<void> => {
   await t.click(Selector('a').withText('FAQ'))
   let url = await getUrl()
   await t.expect(url).eql('http://localhost:33567/faq')
-  await t.click(Selector('a').withText('Rules'))
+  if (t.browser.name === 'Internet Explorer') {
+    await t.click(Selector('a').withText('Rules'))
+  } else {
+    await t.click(Selector('a').withText('RULES'))
+  }
   url = await getUrl()
   await t.expect(url).eql('http://localhost:33567/rules')
 })
 
 test('Interact with dropdown', async (t: TestController): Promise<void> => {
-  await t.click(Selector('span').withText('Accounts'))
+  if (t.browser.name === 'Internet Explorer') {
+    await t.click(Selector('span').withText('Accounts'))
+  } else {
+    await t.click(Selector('span').withText('ACCOUNTS'))
+  }
   await t.click(Selector('a').withText('Dhalton Huber'))
   const url = await getUrl()
   await t.expect(url).eql('http://localhost:33567/account/45789')
@@ -47,6 +55,15 @@ test('Can click item when MenuBar is overflowed', async (t: TestController): Pro
   const scrollIcon = Selector('nav').child('div').nth(-1)
   await t.click(scrollIcon)
   await t.click(scrollIcon)
-  await t.click(Selector('span').withText('Explore our modules on GitHub'))
+  await t.click(scrollIcon)
+  await t.click(scrollIcon)
+  await t.click(scrollIcon)
+  await t.click(scrollIcon)
+  await t.click(scrollIcon)
+  if (t.browser.name === 'Internet Explorer') {
+    await t.click(Selector('span').withText('Explore our modules on GitHub'))
+  } else {
+    await t.click(Selector('span').withText('EXPLORE OUR MODULES ON GITHUB'))
+  }
   await t.expect(queryByText('Cactus Framework').exists).ok()
 })

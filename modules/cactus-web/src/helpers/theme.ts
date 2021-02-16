@@ -1,4 +1,5 @@
 import {
+  BorderSize,
   CactusColor,
   CactusTheme,
   ColorStyle,
@@ -10,20 +11,31 @@ import { css, FlattenSimpleInterpolation } from 'styled-components'
 
 export type Props = { theme: CactusTheme }
 
+type ThicknessOpts = { [K in BorderSize]?: number }
+
 export const borderSize = (props: Props): string => (props.theme.border === 'thick' ? '2px' : '1px')
 
-export const border = (theme: CactusTheme, color: string): string => {
-  const thickness = theme.border === 'thick' ? '2px' : '1px'
-  return `${thickness} solid ${theme.colors[color as CactusColor] || color}`
+export const border = (
+  theme: CactusTheme,
+  color: string,
+  { thin = 1, thick = 2 }: ThicknessOpts = {}
+): string => {
+  const thickness = theme.border === 'thick' ? thick : thin
+  return `${thickness}px solid ${theme.colors[color as CactusColor] || color}`
 }
 
 export type Direction = 'top' | 'bottom' | 'left' | 'right'
 
-export const insetBorder = (theme: CactusTheme, color: string, direction?: Direction): string => {
+export const insetBorder = (
+  theme: CactusTheme,
+  color: string,
+  direction?: Direction,
+  { thin = 1, thick = 2 }: ThicknessOpts = {}
+): string => {
   let hOffset = 0,
     vOffset = 0,
     spread = 0
-  const thickness = theme.border === 'thick' ? 2 : 1
+  const thickness = theme.border === 'thick' ? thick : thin
   if (direction === 'top') {
     vOffset = thickness
   } else if (direction === 'bottom') {
@@ -61,7 +73,7 @@ export const invertColors = (style: ColorStyle): ColorStyle => {
   return { color: style.backgroundColor, backgroundColor: style.color }
 }
 
-const shadowTypes = [
+export const shadowTypes = [
   '0px 0px 3px',
   '0px 3px 8px',
   '0px 9px 24px',
