@@ -9,6 +9,9 @@ export default (): React.ReactElement => (
       <li>
         <Link to="/how-tos/end-to-end-testing/">End-to-End Testing</Link>
       </li>
+      <li>
+        <Link to="/how-tos/forms/">Making Forms with Formik</Link>
+      </li>
     </ul>
   </>
 )
