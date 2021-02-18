@@ -88,9 +88,7 @@ describe('component: Select', (): void => {
     expect(getByText('two')).not.toBeNull()
   })
 
-  test('sets active descendant to the top option when value does not exist in options', async (): Promise<
-    void
-  > => {
+  test('sets active descendant to the top option when value does not exist in options', async (): Promise<void> => {
     const { getByText, getByRole } = render(
       <StyleProvider>
         <Select id="test-id" name="city" options={['yum', 'who?', 'boss']} value="superman" />
@@ -695,9 +693,7 @@ describe('component: Select', (): void => {
       expect(document.querySelector('[aria-multiselectable=true]')).not.toBe(null)
     })
 
-    test('all options are rendered with aria-selected attribute as true or false', async (): Promise<
-      void
-    > => {
+    test('all options are rendered with aria-selected attribute as true or false', async (): Promise<void> => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -1153,9 +1149,7 @@ describe('component: Select', (): void => {
       expect(getByRole('listbox')).toHaveTextContent('superior')
     })
 
-    test('values should stay in options even after they are removed from the value', async (): Promise<
-      void
-    > => {
+    test('values should stay in options even after they are removed from the value', async (): Promise<void> => {
       const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -1338,9 +1332,7 @@ describe('component: Select', (): void => {
       expect(document.activeElement).toHaveTextContent('phoenix')
     })
 
-    test('blurring the list box to focus on the input should not close the list', async (): Promise<
-      void
-    > => {
+    test('blurring the list box to focus on the input should not close the list', async (): Promise<void> => {
       const { getByRole, getByText, rerender } = render(
         <StyleProvider>
           <Select
