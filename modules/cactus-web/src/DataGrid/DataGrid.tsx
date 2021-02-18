@@ -125,10 +125,9 @@ const StyledDataGrid = styled.div<DataGridProps & TransientProps>`
   }
 `
 
-export const DataGridPagination: React.FC<Omit<
-  PaginationProps,
-  'currentPage' | 'onPageChange' | 'pageCount'
->> = (props) => {
+export const DataGridPagination: React.FC<
+  Omit<PaginationProps, 'currentPage' | 'onPageChange' | 'pageCount'>
+> = (props) => {
   const { paginationOptions, onPageChange } = useContext(DataGridContext)
   return paginationOptions && paginationOptions.pageCount ? (
     <Pagination

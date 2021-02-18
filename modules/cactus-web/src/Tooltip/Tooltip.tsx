@@ -99,9 +99,9 @@ const getStyledInfoColor = (props: StyledInfoProps): ReturnType<typeof css> => {
     color: ${(p): string => p.theme.colors.darkestContrast};
   `
 }
-const StyledInfo = styled(({ forceVisible, ...props }) => <NotificationInfo {...props} />)<
-  StyledInfoProps
->`
+const StyledInfo = styled(({ forceVisible, ...props }) => (
+  <NotificationInfo {...props} />
+))<StyledInfoProps>`
   outline: none;
   ${getStyledInfoColor};
   &:hover {
@@ -135,6 +135,10 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
     }
   }, [])
 
+  const defaultPosition: Position = (_, tooltipRect) => {
+    return cactusPosition(triggerRef.current?.getBoundingClientRect(), tooltipRect)
+  }
+
   return (
     <>
       {!disabled && (
@@ -145,12 +149,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
             isVisible={stayOpen || hovering || forceVisible || tooltip.isVisible}
             label={label}
             ariaLabel={ariaLabel}
-            position={
-              position ||
-              ((_, tooltipRect) => {
-                return cactusPosition(triggerRef.current?.getBoundingClientRect(), tooltipRect)
-              })
-            }
+            position={position || defaultPosition}
             style={{ maxWidth }}
             onMouseEnter={() => {
               setHovering(true)

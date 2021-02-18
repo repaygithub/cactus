@@ -68,6 +68,7 @@ class Panel extends React.Component {
       shape: values.shape,
       font: values.font,
       boxShadows: values.boxShadows,
+      grayscaleContrast: values.grayscaleContrast,
       ...colors,
     })
   }
@@ -241,6 +242,20 @@ class Panel extends React.Component {
             />
             <label htmlFor="shape" style={{ display: 'block' }}>
               Box Shadows
+            </label>
+          </Form.Field>
+          <Form.Field>
+            <input
+              id="grayscaleContrast"
+              name="grayscaleContrast"
+              type="checkbox"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('grayscaleContrast', currentTarget.checked)
+              }}
+              checked={values.grayscaleContrast}
+            />
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Grayscale Contrast
             </label>
           </Form.Field>
 

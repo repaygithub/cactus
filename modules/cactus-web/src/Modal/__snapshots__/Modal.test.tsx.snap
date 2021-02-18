@@ -11,7 +11,7 @@ exports[`Modal is closed when isOpen=false snapshot 1`] = `
 `;
 
 exports[`Modal is open when isOpen=true snapshot 1`] = `
-.c4 {
+.c3 {
   vertical-align: middle;
 }
 
@@ -38,7 +38,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   z-index: 100;
 }
 
-.c3 {
+.c2 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -63,11 +63,11 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   font-size: 24px;
 }
 
-.c3::-moz-focus-inner {
+.c2::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c2:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -79,7 +79,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c3:hover {
+.c2:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -134,7 +134,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
   max-width: 100%;
 }
 
-.c1 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -149,7 +149,7 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
     max-width: 30%;
   }
 
-  .c1 > [data-reach-dialog-content] .c2 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -192,16 +192,17 @@ exports[`Modal is open when isOpen=true snapshot 1`] = `
           >
             <button
               aria-label="Close Label"
-              class="c2 c3"
+              class="c2 modal-close-btn"
               type="button"
               variant="standard"
             >
               <svg
-                class="c4"
+                class="c3"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
                 width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"

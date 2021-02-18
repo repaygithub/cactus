@@ -293,9 +293,7 @@ describe('component: DateInput', (): void => {
       expect(document.activeElement).toBe(getByText(today.toLocaleSpoken('date')).parentElement)
     })
 
-    test('can select date from date picker and use month year selection', async (): Promise<
-      void
-    > => {
+    test('can select date from date picker and use month year selection', async (): Promise<void> => {
       let value: any
       const handleChange = jest.fn((e) => {
         value = e.target.value

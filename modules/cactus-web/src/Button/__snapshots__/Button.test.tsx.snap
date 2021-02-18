@@ -43,7 +43,7 @@ exports[`With theme changes  Should have intermediate border radius 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -119,7 +119,7 @@ exports[`With theme changes  Should have square border radius 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -195,7 +195,7 @@ exports[`With theme changes  Should not have box shadows applied 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -271,7 +271,7 @@ exports[`With theme changes  should have 2px border 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -347,7 +347,7 @@ exports[`component: Button should default to standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -468,6 +468,7 @@ exports[`component: Button should render Spinner when loading is true 1`] = `
       height="1em"
       viewBox="0 0 24 24"
       width="1em"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M12,0 C5.372583,0 0,5.372583 0,12 C0,18.627417 5.372583,24 12,24 C18.627417,24 24,18.627417 24,12 C24,11.4477153 23.5522847,11 23,11 C22.4477153,11 22,11.4477153 22,12 C22,17.5228475 17.5228475,22 12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C12.5522847,2 13,1.55228475 13,1 C13,0.44771525 12.5522847,0 12,0 Z"
@@ -521,7 +522,7 @@ exports[`component: Button should render call to action variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -597,7 +598,7 @@ exports[`component: Button should render danger variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -674,7 +675,7 @@ exports[`component: Button should render disabled variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -745,7 +746,7 @@ exports[`component: Button should render inverse call to action variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -821,7 +822,7 @@ exports[`component: Button should render inverse danger variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -897,7 +898,7 @@ exports[`component: Button should render inverse disabled variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -968,7 +969,7 @@ exports[`component: Button should render inverse standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1044,7 +1045,7 @@ exports[`component: Button should render standard variant 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1121,7 +1122,7 @@ exports[`component: Button should support margin space props 1`] = `
   margin-top: -4px;
 }
 
-.c0 .sc-hkePoP {
+.c0 .sc-hjWSAi {
   position: absolute;
   left: 50%;
   top: 50%;
