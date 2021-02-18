@@ -25,19 +25,19 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 <div
     aria-hidden="true"
   />
-  .c9 {
+  .c8 {
   margin: 0;
 }
 
-.c11 {
+.c10 {
   font-weight: normal;
 }
 
-.c5 {
+.c4 {
   vertical-align: middle;
 }
 
-.c13 {
+.c12 {
   box-sizing: border-box;
   border: 1px solid hsl(200,9%,35%);
   border-radius: 8px;
@@ -51,58 +51,58 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   background-color: hsl(0,0%,100%);
 }
 
-.c13:disabled {
+.c12:disabled {
   cursor: not-allowed;
   border-color: hsl(0,0%,90%);
   background-color: hsl(0,0%,90%);
   color: hsl(0,0%,70%);
 }
 
-.c13:disabled::-webkit-input-placeholder {
+.c12:disabled::-webkit-input-placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c13:disabled::-moz-placeholder {
+.c12:disabled::-moz-placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c13:disabled:-ms-input-placeholder {
+.c12:disabled:-ms-input-placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c13:disabled::placeholder {
+.c12:disabled::placeholder {
   color: hsl(0,0%,70%);
 }
 
-.c13:focus {
+.c12:focus {
   border-color: hsl(200,96%,35%);
 }
 
-.c13::-webkit-input-placeholder {
+.c12::-webkit-input-placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c13::-moz-placeholder {
+.c12::-moz-placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c13:-ms-input-placeholder {
+.c12:-ms-input-placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c13::placeholder {
+.c12::placeholder {
   color: hsl(200,18%,45%);
   font-style: oblique;
 }
 
-.c12 {
+.c11 {
   box-sizing: border-box;
 }
 
-.c16 {
+.c15 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -121,11 +121,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c16::-moz-focus-inner {
+.c15::-moz-focus-inner {
   border: 0;
 }
 
-.c16:focus::after {
+.c15:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -139,12 +139,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c16 svg {
+.c15 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c16 .sc-gkdzZj {
+.c15 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -152,23 +152,23 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c16:hover {
+.c15:hover {
   background-color: hsl(353,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(353,96%,11%);
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
 }
 
-.c14 {
+.c13 {
   box-sizing: border-box;
   margin-top: 40px;
   margin-bottom: 4px;
 }
 
-.c7 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -185,7 +185,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -199,7 +199,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c10 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -220,7 +220,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c15 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -257,7 +257,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   z-index: 100;
 }
 
-.c4 {
+.c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -282,11 +282,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   font-size: 24px;
 }
 
-.c4::-moz-focus-inner {
+.c3::-moz-focus-inner {
   border: 0;
 }
 
-.c4:focus::after {
+.c3:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -298,7 +298,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c4:hover {
+.c3:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -353,7 +353,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   max-width: 100%;
 }
 
-.c1 > [data-reach-dialog-content] .c3 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -362,7 +362,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   font-size: 16px;
 }
 
-.c17 {
+.c16 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -377,12 +377,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c17:hover {
+.c16:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c17:focus::after {
+.c16:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -395,11 +395,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c17::-moz-focus-inner {
+.c16::-moz-focus-inner {
   border: 0;
 }
 
-.c17 svg {
+.c16 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -425,14 +425,14 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c16 {
+  .c15 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -444,7 +444,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
     max-width: 30%;
   }
 
-  .c1 > [data-reach-dialog-content] .c3 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -454,7 +454,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c17 {
+  .c16 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -498,12 +498,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c3 c4"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
               <svg
-                class="c5"
+                class="c4"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -516,32 +516,32 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c6 c7 modal-children"
+              class="c5 c6 modal-children"
             >
               <div
-                class="c6 c8 title-icon"
+                class="c5 c7 title-icon"
               >
                 <h1
-                  class="c9"
+                  class="c8"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c6 c10 children"
+                class="c5 c9 children"
               >
                 <h4
-                  class="c11"
+                  class="c10"
                   data-testid="description"
                   font-weight="normal"
                 >
                   Description text
                 </h4>
                 <div
-                  class="c12"
+                  class="c11"
                 >
                   <input
-                    class="c13"
+                    class="c12"
                     data-testid="input"
                     placeholder="Placeholder"
                     width="90%"
@@ -549,11 +549,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="c14 c15"
+                class="c13 c14"
               >
                 <button
                   aria-live="assertive"
-                  class="c16"
+                  class="c15"
                   type="button"
                 >
                   <span>
@@ -561,7 +561,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c17"
+                  class="c16"
                   type="button"
                 >
                   Cancel
@@ -602,15 +602,15 @@ exports[`Modal variant is danger snapshot 1`] = `
 <div
     aria-hidden="true"
   />
-  .c9 {
+  .c8 {
   margin: 0;
 }
 
-.c5 {
+.c4 {
   vertical-align: middle;
 }
 
-.c13 {
+.c12 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -629,11 +629,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c13::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c13:focus::after {
+.c12:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -647,12 +647,12 @@ exports[`Modal variant is danger snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c13 svg {
+.c12 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c13 .sc-gkdzZj {
+.c12 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -660,23 +660,23 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c13:hover {
+.c12:hover {
   background-color: hsl(353,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(353,96%,11%);
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
 }
 
-.c11 {
+.c10 {
   box-sizing: border-box;
   margin-top: 40px;
   margin-bottom: 4px;
 }
 
-.c7 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -693,7 +693,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -707,7 +707,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c10 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -728,7 +728,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c12 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -765,7 +765,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   z-index: 100;
 }
 
-.c4 {
+.c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -790,11 +790,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   font-size: 24px;
 }
 
-.c4::-moz-focus-inner {
+.c3::-moz-focus-inner {
   border: 0;
 }
 
-.c4:focus::after {
+.c3:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -806,7 +806,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c4:hover {
+.c3:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -861,7 +861,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   max-width: 100%;
 }
 
-.c1 > [data-reach-dialog-content] .c3 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -870,7 +870,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   font-size: 16px;
 }
 
-.c14 {
+.c13 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -885,12 +885,12 @@ exports[`Modal variant is danger snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c14:hover {
+.c13:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c14:focus::after {
+.c13:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -903,11 +903,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c14::-moz-focus-inner {
+.c13::-moz-focus-inner {
   border: 0;
 }
 
-.c14 svg {
+.c13 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -933,7 +933,7 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -945,7 +945,7 @@ exports[`Modal variant is danger snapshot 1`] = `
     max-width: 30%;
   }
 
-  .c1 > [data-reach-dialog-content] .c3 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -955,7 +955,7 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c14 {
+  .c13 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -999,12 +999,12 @@ exports[`Modal variant is danger snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c3 c4"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
               <svg
-                class="c5"
+                class="c4"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1017,26 +1017,26 @@ exports[`Modal variant is danger snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c6 c7 modal-children"
+              class="c5 c6 modal-children"
             >
               <div
-                class="c6 c8 title-icon"
+                class="c5 c7 title-icon"
               >
                 <h1
-                  class="c9"
+                  class="c8"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c6 c10 children"
+                class="c5 c9 children"
               />
               <div
-                class="c11 c12"
+                class="c10 c11"
               >
                 <button
                   aria-live="assertive"
-                  class="c13"
+                  class="c12"
                   type="button"
                 >
                   <span>
@@ -1044,7 +1044,7 @@ exports[`Modal variant is danger snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c14"
+                  class="c13"
                   type="button"
                 >
                   Cancel
@@ -1085,15 +1085,15 @@ exports[`Modal variant is success snapshot 1`] = `
 <div
     aria-hidden="true"
   />
-  .c9 {
+  .c8 {
   margin: 0;
 }
 
-.c5 {
+.c4 {
   vertical-align: middle;
 }
 
-.c13 {
+.c12 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -1112,11 +1112,11 @@ exports[`Modal variant is success snapshot 1`] = `
   border-color: hsl(145,89%,28%);
 }
 
-.c13::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c13:focus::after {
+.c12:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1130,12 +1130,12 @@ exports[`Modal variant is success snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c13 svg {
+.c12 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c13 .sc-gkdzZj {
+.c12 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1143,23 +1143,23 @@ exports[`Modal variant is success snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c13:hover {
+.c12:hover {
   background-color: hsl(145,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(145,96%,11%);
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
 }
 
-.c11 {
+.c10 {
   box-sizing: border-box;
   margin-top: 40px;
   margin-bottom: 4px;
 }
 
-.c7 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1176,7 +1176,7 @@ exports[`Modal variant is success snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1190,7 +1190,7 @@ exports[`Modal variant is success snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c10 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1211,7 +1211,7 @@ exports[`Modal variant is success snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c12 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1248,7 +1248,7 @@ exports[`Modal variant is success snapshot 1`] = `
   z-index: 100;
 }
 
-.c4 {
+.c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -1273,11 +1273,11 @@ exports[`Modal variant is success snapshot 1`] = `
   font-size: 24px;
 }
 
-.c4::-moz-focus-inner {
+.c3::-moz-focus-inner {
   border: 0;
 }
 
-.c4:focus::after {
+.c3:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1289,7 +1289,7 @@ exports[`Modal variant is success snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c4:hover {
+.c3:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -1344,7 +1344,7 @@ exports[`Modal variant is success snapshot 1`] = `
   max-width: 100%;
 }
 
-.c1 > [data-reach-dialog-content] .c3 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -1353,7 +1353,7 @@ exports[`Modal variant is success snapshot 1`] = `
   font-size: 16px;
 }
 
-.c14 {
+.c13 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1368,12 +1368,12 @@ exports[`Modal variant is success snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c14:hover {
+.c13:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c14:focus::after {
+.c13:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1386,11 +1386,11 @@ exports[`Modal variant is success snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c14::-moz-focus-inner {
+.c13::-moz-focus-inner {
   border: 0;
 }
 
-.c14 svg {
+.c13 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -1416,7 +1416,7 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1428,7 +1428,7 @@ exports[`Modal variant is success snapshot 1`] = `
     max-width: 30%;
   }
 
-  .c1 > [data-reach-dialog-content] .c3 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -1438,7 +1438,7 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c14 {
+  .c13 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1482,12 +1482,12 @@ exports[`Modal variant is success snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c3 c4"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
               <svg
-                class="c5"
+                class="c4"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1500,26 +1500,26 @@ exports[`Modal variant is success snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c6 c7 modal-children"
+              class="c5 c6 modal-children"
             >
               <div
-                class="c6 c8 title-icon"
+                class="c5 c7 title-icon"
               >
                 <h1
-                  class="c9"
+                  class="c8"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c6 c10 children"
+                class="c5 c9 children"
               />
               <div
-                class="c11 c12"
+                class="c10 c11"
               >
                 <button
                   aria-live="assertive"
-                  class="c13"
+                  class="c12"
                   type="button"
                 >
                   <span>
@@ -1527,7 +1527,7 @@ exports[`Modal variant is success snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c14"
+                  class="c13"
                   type="button"
                 >
                   Cancel
@@ -1548,15 +1548,15 @@ exports[`Modal variant is success snapshot 1`] = `
 `;
 
 exports[`Modal variant is warning snapshot 1`] = `
-.c9 {
+.c8 {
   margin: 0;
 }
 
-.c5 {
+.c4 {
   vertical-align: middle;
 }
 
-.c13 {
+.c12 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -1575,11 +1575,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-color: hsl(47,82%,47%);
 }
 
-.c13::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c13:focus::after {
+.c12:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1593,12 +1593,12 @@ exports[`Modal variant is warning snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c13 svg {
+.c12 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c13 .sc-gkdzZj {
+.c12 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1606,23 +1606,23 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c13:hover {
+.c12:hover {
   background-color: hsl(47,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(47,96%,11%);
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
 }
 
-.c11 {
+.c10 {
   box-sizing: border-box;
   margin-top: 40px;
   margin-bottom: 4px;
 }
 
-.c7 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1639,7 +1639,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1653,7 +1653,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c10 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1674,7 +1674,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c12 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1711,7 +1711,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   z-index: 100;
 }
 
-.c4 {
+.c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -1736,11 +1736,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   font-size: 24px;
 }
 
-.c4::-moz-focus-inner {
+.c3::-moz-focus-inner {
   border: 0;
 }
 
-.c4:focus::after {
+.c3:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1752,7 +1752,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c4:hover {
+.c3:hover {
   color: hsl(200,96%,35%);
 }
 
@@ -1807,7 +1807,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   max-width: 100%;
 }
 
-.c1 > [data-reach-dialog-content] .c3 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -1816,7 +1816,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   font-size: 16px;
 }
 
-.c14 {
+.c13 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1831,12 +1831,12 @@ exports[`Modal variant is warning snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c14:hover {
+.c13:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c14:focus::after {
+.c13:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1849,11 +1849,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c14::-moz-focus-inner {
+.c13::-moz-focus-inner {
   border: 0;
 }
 
-.c14 svg {
+.c13 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -1879,7 +1879,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1891,7 +1891,7 @@ exports[`Modal variant is warning snapshot 1`] = `
     max-width: 30%;
   }
 
-  .c1 > [data-reach-dialog-content] .c3 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -1901,7 +1901,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c14 {
+  .c13 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1949,12 +1949,12 @@ exports[`Modal variant is warning snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c3 c4"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
               <svg
-                class="c5"
+                class="c4"
                 fill="currentcolor"
                 height="1em"
                 viewBox="0 0 24 24"
@@ -1967,26 +1967,26 @@ exports[`Modal variant is warning snapshot 1`] = `
               </svg>
             </button>
             <div
-              class="c6 c7 modal-children"
+              class="c5 c6 modal-children"
             >
               <div
-                class="c6 c8 title-icon"
+                class="c5 c7 title-icon"
               >
                 <h1
-                  class="c9"
+                  class="c8"
                 >
                   Modal Title
                 </h1>
               </div>
               <div
-                class="c6 c10 children"
+                class="c5 c9 children"
               />
               <div
-                class="c11 c12"
+                class="c10 c11"
               >
                 <button
                   aria-live="assertive"
-                  class="c13"
+                  class="c12"
                   type="button"
                 >
                   <span>
@@ -1994,7 +1994,7 @@ exports[`Modal variant is warning snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="c14"
+                  class="c13"
                   type="button"
                 >
                   Cancel
