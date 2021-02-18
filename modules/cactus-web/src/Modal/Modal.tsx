@@ -53,7 +53,7 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
       {...rest}
     >
       <DialogContent aria-label={modalLabel}>
-        <IconButton onClick={onClose} label={closeLabel}>
+        <IconButton className="modal-close-btn" onClick={onClose} label={closeLabel}>
           <NavigationClose />
         </IconButton>
         {hasChildren && (
@@ -127,7 +127,7 @@ export const ModalPopUp = styled(DimmerStyled).withConfig({
         border-color: ${(p): string => p.theme.colors.error};
       `,
     })}
-    ${IconButton} {
+    .modal-close-btn {
       height: 16px;
       position: absolute;
       right: 24px;
@@ -138,7 +138,7 @@ export const ModalPopUp = styled(DimmerStyled).withConfig({
     ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
       padding: 40px 88px;
       max-width: ${(p) => !p.width && '30%'};
-      ${IconButton} {
+      .modal-close-btn {
         height: 24px;
         position: absolute;
         right: 40px;
