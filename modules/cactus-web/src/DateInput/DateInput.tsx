@@ -638,6 +638,10 @@ const CalendarSlideWrapper = styled.div`
   left: -300px;
   background-color: ${(p) => p.theme.colors.lightContrast};
 
+  .middle {
+    transform: translateX(300px);
+  }
+
   .left-enter {
     transform: translateX(600px);
   }
@@ -1827,7 +1831,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                         classNames={this.state.slideDirection || 'left'}
                       >
                         <Calendar
-                          className={!this.state.slideDirection ? 'left-enter-done' : undefined}
+                          className={!this.state.transitioning ? 'middle' : undefined}
                           role="grid"
                           onKeyDownCapture={this.handleCalendarKeydownCapture}
                           aria-roledescription={phrases.calendarKeyboardDirections}
