@@ -44,6 +44,8 @@ npm install --save-dev @repay/cactus-fwk
 
 **Before contributing, please read our [guidelines for contributing](./CONTRIBUTING.md)**
 
+In particular, please ensure that you run `yarn commit` to run the prompts that format our commit messages.  When you do this, **please add the JIRA ticket number when asked if your change affects any issues.**. In addition, please add the JIRA ticket number to all PR titles.
+
 You will need to install [Node.js](https://nodejs.org/en/) runtime and [Yarn](https://yarnpkg.com/en/docs/install) for package management. Next clone the repository and install the dependencies. **Be sure to do this from the repository root.**
 
 ```
