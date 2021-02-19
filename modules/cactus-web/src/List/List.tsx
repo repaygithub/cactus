@@ -76,7 +76,7 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
 )
 
 List.displayName = 'List'
-ListItem.displayName = 'ListItem'
+ListItem.displayName = 'List.Item'
 
 List.propTypes = {
   dividers: PropTypes.bool,
