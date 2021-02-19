@@ -48,7 +48,7 @@
       "text",
       "json-summary"
     ],
-    "testResultsProcessor": "jest-sonar-reporter"
+    "reporters": ["default", ["jest-sonar", { "outputDirectory": ".", "outputName": "test-report.xml" }]]
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",
@@ -74,7 +74,7 @@
     "babel-loader": "^8.2.2",
     "fast-glob": "^3.2.4",
     "jest": "^26.6.3",
-    "jest-sonar-reporter": "^2.0.0",
+    "jest-sonar": "^0.2.12",
     "jest-styled-components": "^7.0.3",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
