@@ -7,14 +7,11 @@ import { margin, MarginProps } from 'styled-system'
 import Flex from '../Flex/Flex'
 import Text from '../Text/Text'
 
-interface ListProps
-  extends MarginProps,
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
+interface ListProps extends MarginProps, React.HTMLAttributes<HTMLUListElement> {
   dividers?: boolean
 }
 
-interface ListItemProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLLIElement>, HTMLLIElement> {
+interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
   icon?: keyof typeof icons
   header?: React.ReactNode
   headerAs?: keyof JSX.IntrinsicElements | React.ComponentType<any>
