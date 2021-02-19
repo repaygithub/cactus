@@ -10,7 +10,7 @@ import Text from '../Text/Text'
 interface ListProps
   extends MarginProps,
     React.DetailedHTMLProps<React.HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
-  divided?: boolean
+  dividers?: boolean
 }
 
 interface ListItemProps
@@ -20,7 +20,7 @@ interface ListItemProps
   headerAs?: keyof JSX.IntrinsicElements | React.ComponentType<any>
 }
 
-const UL = styled.ul<{ $divided: boolean }>`
+const UL = styled.ul<{ $dividers: boolean }>`
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -33,7 +33,7 @@ const UL = styled.ul<{ $divided: boolean }>`
   }
 
   ${(p) =>
-    p.$divided &&
+    p.$dividers &&
     `
     li {
       border-top: 1px solid ${p.theme.colors.lightContrast};
@@ -49,8 +49,8 @@ const UL = styled.ul<{ $divided: boolean }>`
 `
 
 export const List = React.forwardRef<HTMLUListElement, ListProps>(
-  ({ children, divided = false, ...props }, ref) => (
-    <UL $divided={divided} {...props} ref={ref}>
+  ({ children, dividers = false, ...props }, ref) => (
+    <UL $dividers={dividers} {...props} ref={ref}>
       {children}
     </UL>
   )
@@ -91,7 +91,7 @@ List.displayName = 'List'
 ListItem.displayName = 'ListItem'
 
 List.propTypes = {
-  divided: PropTypes.bool,
+  dividers: PropTypes.bool,
 }
 
 ListItem.propTypes = {

@@ -71,7 +71,7 @@ export const HeadersAndIcons = (): React.ReactElement => (
 )
 
 export const WithDividers = (): React.ReactElement => (
-  <List divided>
+  <List dividers>
     <List.Item>This is an unordered list</List.Item>
     <List.Item>This list has dividers</List.Item>
     <List.Item>Each Item is separated by a line</List.Item>
