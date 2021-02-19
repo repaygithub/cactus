@@ -95,7 +95,6 @@ export const ModalPopUp = styled(DimmerStyled).withConfig({
     border-radius: ${radius(20)};
     background: white;
     ${(p): string => boxShadow(p.theme, 2)};
-    margin: auto;
     max-width: ${(p) => !p.width && '80%'};
     ${width}
     outline: none;
