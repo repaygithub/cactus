@@ -47,7 +47,7 @@ exports[`component: List snapshot 1`] = `
   list-style-type: none;
 }
 
-.c0 > li > div > div > ul {
+.c0 > li > .item-flex > .item-inner-flex > ul {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 24px;
@@ -60,16 +60,15 @@ exports[`component: List snapshot 1`] = `
 <div>
   <ul
     class="c0"
-    role="list"
   >
     <li
-      role="listitem"
+      tabindex="1"
     >
       <div
-        class="c1 c2"
+        class="c1 c2 item-flex"
       >
         <div
-          class="c3 c4"
+          class="c3 c4 item-inner-flex"
           width="100%"
         >
           Here I am
@@ -77,13 +76,13 @@ exports[`component: List snapshot 1`] = `
       </div>
     </li>
     <li
-      role="listitem"
+      tabindex="1"
     >
       <div
-        class="c1 c2"
+        class="c1 c2 item-flex"
       >
         <div
-          class="c3 c4"
+          class="c3 c4 item-inner-flex"
           width="100%"
         >
           There you are
@@ -91,27 +90,26 @@ exports[`component: List snapshot 1`] = `
       </div>
     </li>
     <li
-      role="listitem"
+      tabindex="1"
     >
       <div
-        class="c1 c2"
+        class="c1 c2 item-flex"
       >
         <div
-          class="c3 c4"
+          class="c3 c4 item-inner-flex"
           width="100%"
         >
           <ul
             class="c0"
-            role="list"
           >
             <li
-              role="listitem"
+              tabindex="1"
             >
               <div
-                class="c1 c2"
+                class="c1 c2 item-flex"
               >
                 <div
-                  class="c3 c4"
+                  class="c3 c4 item-inner-flex"
                   width="100%"
                 >
                   I am nested
