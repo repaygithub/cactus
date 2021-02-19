@@ -23,7 +23,7 @@ const UL = styled.ul<{ $dividers: boolean }>`
   list-style-type: none;
   ${margin}
 
-  & > li > .item-flex > .item-inner-flex > ul {
+  & & {
     margin-top: 8px;
     margin-bottom: 8px;
     margin-left: 24px;
@@ -55,30 +55,21 @@ export const List = React.forwardRef<HTMLUListElement, ListProps>(
 
 const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
   ({ icon, children, header, headerAs, ...props }, ref) => {
-    let Icon: React.ComponentType<any> | null = null
-    if (icon) {
-      Icon = icons[icon]
-    }
+    const Icon = icon && icons[icon]
+    const iconElement = Icon ? <Icon aria-hidden mr={3} /> : null
     return (
       <li tabIndex={1} className={props.onClick && 'clickable'} {...props} ref={ref}>
-        <Flex className="item-flex" flexDirection="column" alignItems="flex-start">
-          {header && (
-            <Flex alignItems="center">
-              {Icon && <Icon aria-hidden="true" mr={3} />}
-              <Text fontWeight="600" m={0} as={headerAs || 'p'}>
-                {header}
-              </Text>
-            </Flex>
-          )}
-          {React.Children.map(children, (child, index) => {
-            return (
-              <Flex className="item-inner-flex" alignItems="center" width="100%">
-                {index === 0 && Icon && !header && <Icon aria-hidden="true" mr={3} />}
-                {child}
-              </Flex>
-            )
-          })}
-        </Flex>
+        {header ? (
+          <Flex alignItems="center">
+            {iconElement}
+            <Text fontWeight="600" m={0} as={headerAs || 'p'}>
+              {header}
+            </Text>
+          </Flex>
+        ) : (
+          iconElement
+        )}
+        {children}
       </li>
     )
   }
