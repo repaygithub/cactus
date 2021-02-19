@@ -72,5 +72,6 @@ Array [
   "Tag",
   "Footer",
   "BrandBar",
+  "List",
 ]
 `;
