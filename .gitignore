@@ -4,6 +4,7 @@
 **/dist
 !actions/create-pull-request/dist
 **/coverage
+**/sonar-report.xml
 **/test-report.xml
 .cache
 .DS_Store
