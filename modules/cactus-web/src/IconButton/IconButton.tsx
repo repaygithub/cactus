@@ -196,7 +196,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
 
 IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
-  variant: PropTypes.oneOf(['standard', 'action', 'danger']),
+  variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success']),
   disabled: PropTypes.bool,
   label: (props: IconButtonProps, propName: string, componentName: string): Error | null => {
     if (!props.label && !props['aria-labelledby']) {
