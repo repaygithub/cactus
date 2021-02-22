@@ -59,7 +59,16 @@
       "!src/**/*.story.{ts,tsx}",
       "!src/storySupport/**"
     ],
-    "reporters": ["default", ["jest-sonar", { "outputDirectory": ".", "outputName": "test-report.xml" }]]
+    "reporters": [
+      "default",
+      [
+        "jest-sonar",
+        {
+          "outputDirectory": ".",
+          "outputName": "test-report.xml"
+        }
+      ]
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -120,7 +129,7 @@
     "@reach/visually-hidden": "^0.13.0",
     "@repay/cactus-icons": "^2.3.0",
     "@repay/cactus-theme": "^2.0.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "react-color": "^2.19.3",
     "react-transition-group": "^4.4.1",
     "styled-system": "^5.1.5",
