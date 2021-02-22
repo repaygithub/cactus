@@ -14,22 +14,30 @@ A simple unordered list component with features to help organize list data and l
 
 ## Basic usage
 
-- The `List` component has a `List.Item` sub-component, used to render the individual list items.
+- The `List` component has `List.Item` and `List.ItemHeader` sub-components, used to render the individual list items and their headers.
 - You can pass the `dividers` prop to `List` if you want the list items to be separated by a line.
-- The `header` prop may be passed to a `List.Item` to help organize the data. It will be rendered as a `<p />` with a font weight of 600.
-- If you need to customize the DOM element rendered for the item header, you may use the `headerAs` prop.
-- You can pass any icon name from our icon library to a `List.Item` to render an icon with the content.
+- If you need to customize the DOM element rendered for the item header, you may use the `as` prop on `List.ItemHeader`.
+- You can pass any icon name from our icon library to a `List.Item` or `List.ItemHeader` to render an icon with the content.
 - Nested lists should always be rendered as a child of `List.Item`, and they will be indented by 24px for each level of nesting.
 
 ### Try It out
 
 export const code = `
 <List>
-  <List.Item icon="DescriptiveFolder" header="No Nesting">Non-indented</List.Item>
+  <List.Item>
+    <List.ItemHeader icon="DescriptiveFolder">No Nesting</List.ItemHeader>
+    Non-indented
+  </List.Item>
   <List.Item>
     <List>
-      <List.Item icon="DescriptiveFolder" header="Nested List Item">Indented 24px</List.Item>
-      <List.Item icon="DescriptiveFolder" header="Nested List Item">Indented 24px</List.Item>
+      <List.Item>
+        <List.ItemHeader icon="DescriptiveFolder">Nested List Item</List.ItemHeader>
+        Indented 24px
+      </List.Item>
+      <List.Item>
+        <List.ItemHeader icon="DescriptiveFolder">Nested List Item</List.ItemHeader>
+        Indented 24px
+      </List.Item>
     </List>
   </List.Item>
 </List>
@@ -50,3 +58,7 @@ export const code = `
 ### List.Item
 
 <PropsTable of={List} staticProp="List.Item" />
+
+### List.ItemHeader
+
+<PropsTable of={List} staticProp="List.ItemHeader" />
