@@ -2,123 +2,47 @@
 
 exports[`component: List snapshot 1`] = `
 .c1 {
-  box-sizing: border-box;
-}
-
-.c3 {
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.c0 {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-.c0 > li > .item-flex > .item-inner-flex > ul {
+.c0 .c0 {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 24px;
 }
 
-.c0 .clickable {
+.c1 .clickable {
   cursor: pointer;
 }
 
 <div>
   <ul
-    class="c0"
+    class="c0 c1"
   >
     <li
-      tabindex="1"
+      tabindex="0"
     >
-      <div
-        class="c1 c2 item-flex"
-      >
-        <div
-          class="c3 c4 item-inner-flex"
-          width="100%"
-        >
-          Here I am
-        </div>
-      </div>
+      Here I am
     </li>
     <li
-      tabindex="1"
+      tabindex="0"
     >
-      <div
-        class="c1 c2 item-flex"
-      >
-        <div
-          class="c3 c4 item-inner-flex"
-          width="100%"
-        >
-          There you are
-        </div>
-      </div>
+      There you are
     </li>
     <li
-      tabindex="1"
+      tabindex="0"
     >
-      <div
-        class="c1 c2 item-flex"
+      <ul
+        class="c0 c1"
       >
-        <div
-          class="c3 c4 item-inner-flex"
-          width="100%"
+        <li
+          tabindex="0"
         >
-          <ul
-            class="c0"
-          >
-            <li
-              tabindex="1"
-            >
-              <div
-                class="c1 c2 item-flex"
-              >
-                <div
-                  class="c3 c4 item-inner-flex"
-                  width="100%"
-                >
-                  I am nested
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+          I am nested
+        </li>
+      </ul>
     </li>
   </ul>
 </div>

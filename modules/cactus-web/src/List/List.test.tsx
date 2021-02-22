@@ -48,7 +48,9 @@ describe('component: List', () => {
     const { getByText } = render(
       <StyleProvider>
         <List>
-          <List.Item header="I am a header">I am the content</List.Item>
+          <List.Item>
+            <List.ItemHeader>I am a header</List.ItemHeader>I am the content
+          </List.Item>
         </List>
       </StyleProvider>
     )
@@ -60,8 +62,8 @@ describe('component: List', () => {
     const { getByText } = render(
       <StyleProvider>
         <List>
-          <List.Item header="I am an h3 header" headerAs="h3">
-            I am the content
+          <List.Item>
+            <List.ItemHeader as="h3">I am an h3 header</List.ItemHeader>I am the content
           </List.Item>
         </List>
       </StyleProvider>

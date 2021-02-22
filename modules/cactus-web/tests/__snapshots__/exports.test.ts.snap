@@ -33,6 +33,7 @@ Array [
   "Label",
   "Layout",
   "Link",
+  "List",
   "MenuBar",
   "MenuButton",
   "Modal",
@@ -72,6 +73,5 @@ Array [
   "Tag",
   "Footer",
   "BrandBar",
-  "List",
 ]
 `;
