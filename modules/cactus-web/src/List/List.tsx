@@ -62,7 +62,7 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
     const Icon = icon && icons[icon]
     const iconElement = Icon ? <Icon aria-hidden mr={3} /> : null
     return (
-      <li tabIndex={0} className={props.onClick && 'clickable'} {...props} ref={ref}>
+      <li className={props.onClick && 'clickable'} {...props} ref={ref}>
         {iconElement}
         {children}
       </li>
