@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
+import { border } from '../helpers/theme'
 import Text, { TextProps } from '../Text/Text'
 
 interface ListProps extends MarginProps, React.HTMLAttributes<HTMLUListElement> {
@@ -36,7 +37,7 @@ const UL = styled.ul<{ $dividers: boolean }>`
     p.$dividers &&
     `
     li {
-      border-top: 1px solid ${p.theme.colors.lightContrast};
+      border-top: ${border(p.theme, 'lightContrast')};
     }
     li:first-of-type {
       border-top: none;
