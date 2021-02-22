@@ -2,6 +2,8 @@
 
 exports[`component: Tag can render content as children 1`] = `
 .c0 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
   box-sizing: border-box;
   font-size: 15px;
   line-height: 1.6;
