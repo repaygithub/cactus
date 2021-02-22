@@ -21,25 +21,17 @@ exports[`component: List snapshot 1`] = `
   <ul
     class="c0 c1"
   >
-    <li
-      tabindex="0"
-    >
+    <li>
       Here I am
     </li>
-    <li
-      tabindex="0"
-    >
+    <li>
       There you are
     </li>
-    <li
-      tabindex="0"
-    >
+    <li>
       <ul
         class="c0 c1"
       >
-        <li
-          tabindex="0"
-        >
+        <li>
           I am nested
         </li>
       </ul>
