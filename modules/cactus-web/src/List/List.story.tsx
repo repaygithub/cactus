@@ -51,18 +51,23 @@ export const WithIcons = (): React.ReactElement => {
 
 export const HeadersAndIcons = (): React.ReactElement => (
   <List>
-    <List.Item header="File 1" icon="DescriptiveDocument1">
+    <List.Item>
+      <List.ItemHeader icon="DescriptiveDocument1">File 1</List.ItemHeader>
       Test File
     </List.Item>
-    <List.Item header="Subset of Files" icon="DescriptiveFolder">
+    <List.Item>
+      <List.ItemHeader icon="DescriptiveFolder">Subset of Files</List.ItemHeader>
       <List>
-        <List.Item header="File 2" icon="DescriptiveDocument2">
+        <List.Item>
+          <List.ItemHeader icon="DescriptiveDocument2">File 2</List.ItemHeader>
           Another Test File
         </List.Item>
-        <List.Item header="File 3" icon="DescriptiveDocument2">
+        <List.Item>
+          <List.ItemHeader icon="DescriptiveDocument2">File 3</List.ItemHeader>
           And Another
         </List.Item>
-        <List.Item header="File 4" icon="DescriptiveDocument2">
+        <List.Item>
+          <List.ItemHeader icon="DescriptiveDocument2">File 4</List.ItemHeader>
           And One More
         </List.Item>
       </List>

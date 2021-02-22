@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
-import Text from '../Text/Text'
+import Text, { TextProps } from '../Text/Text'
 
 interface ListProps extends MarginProps, React.HTMLAttributes<HTMLUListElement> {
   dividers?: boolean
@@ -13,8 +13,11 @@ interface ListProps extends MarginProps, React.HTMLAttributes<HTMLUListElement> 
 
 interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
   icon?: keyof typeof icons
-  header?: React.ReactNode
-  headerAs?: keyof JSX.IntrinsicElements | React.ComponentType<any>
+}
+
+interface ItemHeaderProps extends Omit<TextProps, 'color'> {
+  icon?: keyof typeof icons
+  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>
 }
 
 const UL = styled.ul<{ $dividers: boolean }>`
@@ -54,29 +57,32 @@ export const List = React.forwardRef<HTMLUListElement, ListProps>(
 )
 
 const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
-  ({ icon, children, header, headerAs, ...props }, ref) => {
+  ({ icon, children, ...props }, ref) => {
     const Icon = icon && icons[icon]
     const iconElement = Icon ? <Icon aria-hidden mr={3} /> : null
     return (
       <li tabIndex={1} className={props.onClick && 'clickable'} {...props} ref={ref}>
-        {header ? (
-          <Flex alignItems="center">
-            {iconElement}
-            <Text fontWeight="600" m={0} as={headerAs || 'p'}>
-              {header}
-            </Text>
-          </Flex>
-        ) : (
-          iconElement
-        )}
+        {iconElement}
         {children}
       </li>
     )
   }
 )
 
+const ItemHeader: React.FC<ItemHeaderProps> = ({ icon, ...props }) => {
+  const Icon = icon && icons[icon]
+  const iconElement = Icon ? <Icon aria-hidden mr={3} /> : null
+  return (
+    <Flex alignItems="center">
+      {iconElement}
+      <Text fontWeight="600" m={0} {...props} />
+    </Flex>
+  )
+}
+
 List.displayName = 'List'
 ListItem.displayName = 'List.Item'
+ItemHeader.displayName = 'List.ItemHeader'
 
 List.propTypes = {
   dividers: PropTypes.bool,
@@ -84,17 +90,14 @@ List.propTypes = {
 
 ListItem.propTypes = {
   icon: PropTypes.oneOf(Object.keys(icons) as (keyof typeof icons)[]),
-  header: PropTypes.string,
-  headerAs: PropTypes.node as PropTypes.Requireable<
-    keyof JSX.IntrinsicElements | React.ComponentType<any>
-  >,
 }
 
-type ListType = typeof List & { Item: typeof ListItem }
+type ListType = typeof List & { Item: typeof ListItem; ItemHeader: typeof ItemHeader }
 const TypedList = List as ListType
 
 TypedList.Item = ListItem
+TypedList.ItemHeader = ItemHeader
 
-export { ListItem }
+export { ListItem, ItemHeader }
 
 export default TypedList

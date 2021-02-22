@@ -19,7 +19,7 @@ import {
 
 import { textStyle } from '../helpers/theme'
 
-interface TextProps
+export interface TextProps
   extends SpaceProps,
     ColorProps,
     ColorStyleProps,
