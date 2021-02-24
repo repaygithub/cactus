@@ -31,11 +31,11 @@ describe('component: ActionBar', () => {
       <StyleProvider>
         <ActionProvider>
           <ActionBar aria-label="Bar of Actions">
-            <ActionBar.Item id="high" icon={<ActionsGear />} orderHint="high" />
+            <ActionBar.Item id="high" aria-label="Gear" icon={<ActionsGear />} orderHint="high" />
           </ActionBar>
           <div aria-label="Content">
-            <ActionBar.Item id="bottom" icon={<ActionsKey />} orderHint="bottom" />
-            <ActionBar.Panel id="normal" icon={<ActionsKey />} />
+            <ActionBar.Item id="bottom" aria-label="Key" icon={<ActionsKey />} orderHint="bottom" />
+            <ActionBar.Panel id="normal" aria-label="Key2" icon={<ActionsKey />} />
             <ActionBar.Item id="top" aria-label="top" icon={<ActionsKey />} orderHint="top" />
           </div>
         </ActionProvider>
