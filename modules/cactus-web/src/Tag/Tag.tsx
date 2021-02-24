@@ -30,6 +30,7 @@ const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
 )
 
 export const Tag = styled(TagBase)`
+  ${(p) => p.theme.colorStyles.standard};
   box-sizing: border-box;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
   padding: 0 8px 0 8px;

@@ -29,6 +29,7 @@ export const BasicUsage = (): React.ReactElement => (
       warning={text('warning', '')}
       error={text('error', '')}
       autoTooltip={boolean('autoTooltip', true)}
+      multiple={boolean('multiple', false)}
       comboBox={boolean('comboBox', false)}
       canCreateOption={boolean('canCreateOption', true)}
       disableTooltip={select('disableTooltip', [false, true, undefined], false)}
