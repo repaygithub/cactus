@@ -1338,11 +1338,11 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         if (typeof value === 'string' || typeof value === 'number') {
           const {
             altText: altProp,
-            children: childrenOfChild,
+            children: grandchildren,
             id,
             'aria-label': ariaLabel,
           } = child.props
-          const rawLabel = childrenOfChild || childrenOfChild === 0 ? childrenOfChild : value
+          const rawLabel = grandchildren || grandchildren === 0 ? grandchildren : value
           const label = typeof rawLabel === 'number' ? rawLabel.toString() : rawLabel
           let altText: string | undefined = altProp || ariaLabel
           if (altText === undefined) {
