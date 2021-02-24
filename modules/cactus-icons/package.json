@@ -41,7 +41,7 @@
     "setupFilesAfterEnv": [
       "<rootDir>/tests/__setup__/setup.ts"
     ],
-    "testRegex": ".*\\.test\\.(tsx?)$",
+    "testRegex": ".*\\.test\\.((t|j)sx?)$",
     "verbose": true,
     "coverageReporters": [
       "lcov",
