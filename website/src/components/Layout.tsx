@@ -1,4 +1,4 @@
-import { useRect } from '@reach/rect'
+import { Rect } from '@reach/rect'
 import { Location, WindowLocation } from '@reach/router'
 import { NavigationChevronLeft } from '@repay/cactus-icons'
 import Close from '@repay/cactus-icons/i/navigation-close'
@@ -133,6 +133,12 @@ function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
         title: 'Tutorials',
         url: '/tutorials/',
         order: 100,
+        items: [],
+      },
+      {
+        title: 'How-to Guides',
+        url: '/how-tos/',
+        order: 101,
         items: [],
       },
     ],
@@ -461,10 +467,6 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
     }
   }, [location]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const sidebarRef = React.createRef<HTMLDivElement>()
-  const rect = useRect(sidebarRef, isOpen)
-  const sidebarWidth = isOpen && rect ? rect.width : 0
-
   const {
     allMdx: { edges: pages },
   } = useStaticQuery(graphql`
@@ -502,53 +504,62 @@ const BaseLayout: React.FC<{ className?: string; location: WindowLocation }> = (
         />
       </Helmet>
       <CactusProvider>
-        <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
-          {({ width }): React.ReactElement => {
+        <Rect observe={isOpen}>
+          {({ rect, ref: sidebarRef }) => {
+            const sidebarWidth = isOpen && rect ? rect.width : 0
             return (
-              <div className={className}>
-                <Header
-                  isOverlayed={isOpen && hasOverlay}
-                  position="fixed"
-                  top={0}
-                  paddingTop={3}
-                  zIndex={51}
-                  width="100%"
-                  backgroundColor="white"
-                  style={{ paddingLeft: width + 8 }}
-                >
-                  <IconButton
-                    iconSize="medium"
-                    onClick={toggleOpen}
-                    label={isOpen ? 'close navigation menu' : 'open navigation menu'}
-                  >
-                    {isOpen ? <Close /> : <Menu />}
-                  </IconButton>
-                </Header>
-                <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
-                  <InnerSidebar ref={sidebarRef}>
-                    <RootLink to="/">
-                      <CactusIcon /> Cactus DS
-                    </RootLink>
-                    <Scrollable>
-                      <MenuController location={location}>
-                        <MenuList>
-                          {groups.items.map(
-                            (item): React.ReactElement => (
-                              <MenuItem key={item.url} item={item} />
-                            )
-                          )}
-                        </MenuList>
-                      </MenuController>
-                    </Scrollable>
-                  </InnerSidebar>
-                </OuterSidebar>
-                <WindowBox style={{ marginLeft: hasOverlay ? 0 : width }}>{children}</WindowBox>
-                <CactusThemeWidget />
-                {hasOverlay && isOpen && <Overlay onClick={toggleOpen} />}
-              </div>
+              <Motion style={{ width: spring(sidebarWidth, springConfig) }}>
+                {({ width }): React.ReactElement => {
+                  return (
+                    <div className={className}>
+                      <Header
+                        isOverlayed={isOpen && hasOverlay}
+                        position="fixed"
+                        top={0}
+                        paddingTop={3}
+                        zIndex={51}
+                        width="100%"
+                        backgroundColor="white"
+                        style={{ paddingLeft: width + 8 }}
+                      >
+                        <IconButton
+                          iconSize="medium"
+                          onClick={toggleOpen}
+                          label={isOpen ? 'close navigation menu' : 'open navigation menu'}
+                        >
+                          {isOpen ? <Close /> : <Menu />}
+                        </IconButton>
+                      </Header>
+                      <OuterSidebar aria-hidden={isOpen ? 'false' : 'true'} style={{ width }}>
+                        <InnerSidebar ref={sidebarRef}>
+                          <RootLink to="/">
+                            <CactusIcon /> Cactus DS
+                          </RootLink>
+                          <Scrollable>
+                            <MenuController location={location}>
+                              <MenuList>
+                                {groups.items.map(
+                                  (item): React.ReactElement => (
+                                    <MenuItem key={item.url} item={item} />
+                                  )
+                                )}
+                              </MenuList>
+                            </MenuController>
+                          </Scrollable>
+                        </InnerSidebar>
+                      </OuterSidebar>
+                      <WindowBox style={{ marginLeft: hasOverlay ? 0 : width }}>
+                        {children}
+                      </WindowBox>
+                      <CactusThemeWidget />
+                      {hasOverlay && isOpen && <Overlay onClick={toggleOpen} />}
+                    </div>
+                  )
+                }}
+              </Motion>
             )
           }}
-        </Motion>
+        </Rect>
       </CactusProvider>
     </React.Fragment>
   )

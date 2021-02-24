@@ -12,11 +12,11 @@
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
     "@actions/io": "^1.0.2",
-    "@octokit/core": "^3.2.1",
-    "@octokit/plugin-paginate-rest": "^2.6.0",
-    "@octokit/plugin-rest-endpoint-methods": "^4.2.1",
+    "@octokit/core": "^3.2.5",
+    "@octokit/plugin-paginate-rest": "^2.9.1",
+    "@octokit/plugin-rest-endpoint-methods": "^4.10.3",
     "@types/uuid": "^8.3.0",
-    "@vercel/ncc": "^0.25.1",
-    "uuid": "^8.3.1"
+    "@vercel/ncc": "^0.27.0",
+    "uuid": "^8.3.2"
   }
 }

@@ -1,4 +1,4 @@
-import { queryByText } from '@testing-library/testcafe'
+import { getByLabelText, queryByText } from '@testing-library/testcafe'
 import * as path from 'path'
 import { ClientFunction } from 'testcafe'
 
@@ -45,6 +45,7 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
   await fillTextField('month', '2')
   await fillTextField('day of month', '28')
   await fillTextField('year', '2019')
+  await t.expect(getByLabelText('year').value).eql('2019')
   await clickWorkaround(queryByText('Submit'))
 
   const apiData: UIConfigData = await getApiData()

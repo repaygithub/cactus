@@ -170,6 +170,7 @@ exports[`component: SplitButton snapshot 1`] = `
         height="1em"
         viewBox="0 0 24 24"
         width="1em"
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
@@ -369,12 +370,12 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       Test
     </button>
     <button
-      aria-controls="menu--43"
+      aria-controls="menu--44"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--43"
+      id="menu-button--menu--44"
       type="button"
       variant="standard"
     >
@@ -385,6 +386,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
         height="1em"
         viewBox="0 0 24 24"
         width="1em"
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
@@ -399,10 +401,10 @@ exports[`component: SplitButton with theme customization dropdown should not hav
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--43"
+        aria-labelledby="menu-button--menu--44"
         class="c7"
         data-reach-menu-items=""
-        id="menu--43"
+        id="menu--44"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -410,7 +412,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--43"
+          id="option-0--menu--44"
           role="menuitem"
           tabindex="-1"
         >
@@ -419,7 +421,7 @@ exports[`component: SplitButton with theme customization dropdown should not hav
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--43"
+          id="option-1--menu--44"
           role="menuitem"
           tabindex="-1"
         >
@@ -585,12 +587,12 @@ exports[`component: SplitButton with theme customization should have 2px borders
       Test
     </button>
     <button
-      aria-controls="menu--48"
+      aria-controls="menu--49"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--48"
+      id="menu-button--menu--49"
       type="button"
       variant="standard"
     >
@@ -601,6 +603,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
         height="1em"
         viewBox="0 0 24 24"
         width="1em"
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
@@ -615,10 +618,10 @@ exports[`component: SplitButton with theme customization should have 2px borders
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--48"
+        aria-labelledby="menu-button--menu--49"
         class="c7"
         data-reach-menu-items=""
-        id="menu--48"
+        id="menu--49"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -626,7 +629,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--48"
+          id="option-0--menu--49"
           role="menuitem"
           tabindex="-1"
         >
@@ -635,7 +638,7 @@ exports[`component: SplitButton with theme customization should have 2px borders
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--48"
+          id="option-1--menu--49"
           role="menuitem"
           tabindex="-1"
         >
@@ -801,12 +804,12 @@ exports[`component: SplitButton with theme customization should have intermediat
       Test
     </button>
     <button
-      aria-controls="menu--38"
+      aria-controls="menu--39"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--38"
+      id="menu-button--menu--39"
       type="button"
       variant="standard"
     >
@@ -817,6 +820,7 @@ exports[`component: SplitButton with theme customization should have intermediat
         height="1em"
         viewBox="0 0 24 24"
         width="1em"
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
@@ -831,10 +835,10 @@ exports[`component: SplitButton with theme customization should have intermediat
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--38"
+        aria-labelledby="menu-button--menu--39"
         class="c7"
         data-reach-menu-items=""
-        id="menu--38"
+        id="menu--39"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -842,7 +846,7 @@ exports[`component: SplitButton with theme customization should have intermediat
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--38"
+          id="option-0--menu--39"
           role="menuitem"
           tabindex="-1"
         >
@@ -851,7 +855,7 @@ exports[`component: SplitButton with theme customization should have intermediat
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--38"
+          id="option-1--menu--39"
           role="menuitem"
           tabindex="-1"
         >
@@ -1017,12 +1021,12 @@ exports[`component: SplitButton with theme customization should have square shap
       Test
     </button>
     <button
-      aria-controls="menu--33"
+      aria-controls="menu--34"
       aria-haspopup="true"
       aria-label="Action List"
       class="c2 c3"
       data-reach-menu-button=""
-      id="menu-button--menu--33"
+      id="menu-button--menu--34"
       type="button"
       variant="standard"
     >
@@ -1033,6 +1037,7 @@ exports[`component: SplitButton with theme customization should have square shap
         height="1em"
         viewBox="0 0 24 24"
         width="1em"
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
@@ -1047,10 +1052,10 @@ exports[`component: SplitButton with theme customization should have square shap
       hidden=""
     >
       <div
-        aria-labelledby="menu-button--menu--33"
+        aria-labelledby="menu-button--menu--34"
         class="c7"
         data-reach-menu-items=""
-        id="menu--33"
+        id="menu--34"
         role="menu"
         tabindex="-1"
         variant="standard"
@@ -1058,7 +1063,7 @@ exports[`component: SplitButton with theme customization should have square shap
         <div
           data-reach-menu-item=""
           data-valuetext="One Action"
-          id="option-0--menu--33"
+          id="option-0--menu--34"
           role="menuitem"
           tabindex="-1"
         >
@@ -1067,7 +1072,7 @@ exports[`component: SplitButton with theme customization should have square shap
         <div
           data-reach-menu-item=""
           data-valuetext="Another Action"
-          id="option-1--menu--33"
+          id="option-1--menu--34"
           role="menuitem"
           tabindex="-1"
         >

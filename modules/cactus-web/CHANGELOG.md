@@ -1,3 +1,18 @@
+# v5.2.0 (Fri Feb 12 2021)
+
+#### 🚀 Enhancement
+
+- Add ability to customize formatting of `Select` options using the `Select.Option` component [#507](https://github.com/repaygithub/cactus/pull/507) ([@wilysword](https://github.com/wilysword))
+- Added a Dimmer component.  Modal component now uses this for the background overlay. [#502](https://github.com/repaygithub/cactus/pull/502) ([@daniloPenaR](https://github.com/daniloPenaR) [@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 3
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@wilysword](https://github.com/wilysword)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v5.1.1 (Thu Feb 04 2021)
 
 #### 🐛 Bug Fix

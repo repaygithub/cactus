@@ -67,10 +67,6 @@ export const BasicUsageWithThemeBuildInValues = (): React.ReactElement => (
     borderRadius={text('borderRadius', '')}
     borderStyle={text('borderStyle', 'solid')}
     textStyle={select('textStyle', textStyles, 'body') as keyof TextStyleCollection}
-    zIndex={text('zIndex', '') as Property.ZIndex}
-    overflow={text('overflow', '') as Property.Overflow}
-    overflowX={text('overflowX', '') as Property.OverflowX}
-    overflowY={text('overflowY', '') as Property.OverflowY}
   >
     {text('children', 'Example Content')}
   </Box>

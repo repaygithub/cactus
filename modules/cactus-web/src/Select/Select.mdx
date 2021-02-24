@@ -30,21 +30,60 @@ export const code = `<Select
 ## Best practices
 
 - For accessibility, The `Select` component should be used in coordination with a `Label` where the `id` on the `Select` is passed as `htmlFor` on the `Label`.
-- The option values should be a unique set.
+- The option values are expected be a unique set.
 
 ## Basic usage
 
-The `Select` element requires options be provided as an array. They can be either an array of strings which represent both the option value and label, or as an object where the value and label are provided separately.
+There are three ways you can pass options to the Select:
+- An array of values in the `options` prop, where the value is also used as the label.
+- An array of objects in the `options` prop, each of which has a `label` and a `value`.
+- As children, similar to a regular HTML select element.
 
 ```js
-let options = ['provide options', 'as and array', 'of strings']
+<Select options={['provide options', 'as and array', 'of strings']} />
 // OR
-let options = [
-  // both label and value must be
-  { label: 'Provide Options', value: 'provide-options' },
-  { label: 'As an Array', value: 'as-an-array' },
-  { label: 'of objects', value: 'of-objects' },
-]
+<Select
+  options={[
+    { label: 'Provide Options', value: 'provide-options' },
+    { label: 'As an Array', value: 'as-an-array' },
+    { label: 'of objects', value: 'of-objects' },
+  ]}
+/>
+// OR
+<Select>
+  <Select.Option value="child">Child Option Label</Select.Option>
+</Select>
+```
+
+**Important:** If you pass options-as-children, there are a few things to be aware of:
+- The label can include complex content such as images.
+  - It's up to the dev to ensure it doesn't look bad with the Select's default styles/appearance.
+  - Non-text content will only appear in the options when the Select is open; when it's closed only the text content of the selected value will be shown.
+  - If you want to override the text shown for selected values, use the `altText` prop, or the `aria-label` prop if there is one.
+- The elements you pass as children **are not directly rendered;** instead their props are extracted and used to create the real options. The recognized props are:
+  - `value` is required, can be a string or a number
+  - `children` is used as the label; if omitted, the `value` will be used for the label
+  - `id` can be used to override the default generated ID for the option
+  - `altText` is an alternative text-only label for selected options when the drop-down is closed
+  - `aria-label` can be used if a significant portion of the label is non-text or would be ambiguous to screen readers
+- The specific type of the element doesn't matter; you can use regular HTML `<option>` tags if you want. `<Select.Option>` is available for symmetry, and if you use Typescript, for the `altText` prop.
+- Because the options are not directly rendered, all options must be present in the tree. In other words, you can't do intermediate components like this:
+
+```js
+const Options = () => (
+  <>
+    <option value="option1" />
+    <option value="option2" />
+  </>
+)
+// BAD: the `Options` render func is never called so the <option> tags don't exist
+<Select>
+  <Options />
+<Select>
+
+// OKAY: the options are returned by the func and thus become part of the children tree;
+// the `React.Fragment` element is flattened out and the options are properly parsed
+<Select>{Options()}</Select>
 ```
 
 ### Minimum Required Props
@@ -106,3 +145,7 @@ export default () => {
 ## Properties
 
 <PropsTable of={Select} />
+
+### Select.Option
+
+<PropsTable of={Select} staticProp="SelectOption" />

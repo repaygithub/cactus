@@ -144,7 +144,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c15 .sc-gkCpWe {
+.c15 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -234,6 +234,29 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   flex-wrap: wrap;
 }
 
+.c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
 .c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -279,8 +302,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
-  background: rgba(46,53,56,0.33);
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -295,10 +317,13 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -307,7 +332,6 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-radius: 8px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
-  margin: auto;
   max-width: 80%;
   outline: none;
   padding: 64px 24px 40px 24px;
@@ -315,7 +339,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -324,11 +348,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -380,7 +404,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -388,14 +412,14 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
 }
 
@@ -414,12 +438,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
+  .c1 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
   }
 
-  .c0 > [data-reach-dialog-content] .c2 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -436,7 +460,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -460,7 +484,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="danger"
         >
@@ -473,7 +497,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
@@ -483,6 +507,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                 height="1em"
                 viewBox="0 0 24 24"
                 width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
@@ -626,7 +651,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c12 .sc-gkCpWe {
+.c12 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -716,6 +741,29 @@ exports[`Modal variant is danger snapshot 1`] = `
   flex-wrap: wrap;
 }
 
+.c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
 .c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -761,8 +809,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
-  background: rgba(46,53,56,0.33);
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -777,10 +824,13 @@ exports[`Modal variant is danger snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -789,7 +839,6 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-radius: 8px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
-  margin: auto;
   max-width: 80%;
   outline: none;
   padding: 64px 24px 40px 24px;
@@ -797,7 +846,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -806,11 +855,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -862,7 +911,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -870,14 +919,14 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
 }
 
@@ -889,12 +938,12 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
+  .c1 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
   }
 
-  .c0 > [data-reach-dialog-content] .c2 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -911,7 +960,7 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -935,7 +984,7 @@ exports[`Modal variant is danger snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="danger"
         >
@@ -948,7 +997,7 @@ exports[`Modal variant is danger snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
@@ -958,6 +1007,7 @@ exports[`Modal variant is danger snapshot 1`] = `
                 height="1em"
                 viewBox="0 0 24 24"
                 width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
@@ -1083,7 +1133,7 @@ exports[`Modal variant is success snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c12 .sc-gkCpWe {
+.c12 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1173,6 +1223,29 @@ exports[`Modal variant is success snapshot 1`] = `
   flex-wrap: wrap;
 }
 
+.c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
 .c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -1218,8 +1291,7 @@ exports[`Modal variant is success snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
-  background: rgba(46,53,56,0.33);
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1234,10 +1306,13 @@ exports[`Modal variant is success snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -1246,7 +1321,6 @@ exports[`Modal variant is success snapshot 1`] = `
   border-radius: 8px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
-  margin: auto;
   max-width: 80%;
   outline: none;
   padding: 64px 24px 40px 24px;
@@ -1254,7 +1328,7 @@ exports[`Modal variant is success snapshot 1`] = `
   border-color: hsl(145,89%,28%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -1263,11 +1337,11 @@ exports[`Modal variant is success snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -1319,7 +1393,7 @@ exports[`Modal variant is success snapshot 1`] = `
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1327,14 +1401,14 @@ exports[`Modal variant is success snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
 }
 
@@ -1346,12 +1420,12 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
+  .c1 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
   }
 
-  .c0 > [data-reach-dialog-content] .c2 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -1368,7 +1442,7 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -1392,7 +1466,7 @@ exports[`Modal variant is success snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="success"
         >
@@ -1405,7 +1479,7 @@ exports[`Modal variant is success snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
@@ -1415,6 +1489,7 @@ exports[`Modal variant is success snapshot 1`] = `
                 height="1em"
                 viewBox="0 0 24 24"
                 width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"
@@ -1520,7 +1595,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c12 .sc-gkCpWe {
+.c12 .sc-gkdzZj {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1610,6 +1685,29 @@ exports[`Modal variant is warning snapshot 1`] = `
   flex-wrap: wrap;
 }
 
+.c0 {
+  position: fixed;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(46,53,56,0.9);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  z-index: 100;
+}
+
 .c3 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -1655,8 +1753,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c0 {
-  background: rgba(46,53,56,0.33);
+.c1 {
   bottom: 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1671,10 +1768,13 @@ exports[`Modal variant is warning snapshot 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   z-index: 101;
 }
 
-.c0 > [data-reach-dialog-content] {
+.c1 > [data-reach-dialog-content] {
   -webkit-flex-basis: 100%;
   -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
@@ -1683,7 +1783,6 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-radius: 8px;
   background: white;
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
-  margin: auto;
   max-width: 80%;
   outline: none;
   padding: 64px 24px 40px 24px;
@@ -1691,7 +1790,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-color: hsl(47,82%,47%);
 }
 
-.c0 > [data-reach-dialog-content] .modal-children {
+.c1 > [data-reach-dialog-content] .modal-children {
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -1700,11 +1799,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   max-height: 60vh;
 }
 
-.c0 > [data-reach-dialog-content] .modal-children > * {
+.c1 > [data-reach-dialog-content] .modal-children > * {
   max-width: 100%;
 }
 
-.c0 > [data-reach-dialog-content] .c2 {
+.c1 > [data-reach-dialog-content] .modal-close-btn {
   height: 16px;
   position: absolute;
   right: 24px;
@@ -1756,7 +1855,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin-right: 4px;
 }
 
-.c1 .title-icon {
+.c2 .title-icon {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -1764,14 +1863,14 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin: 0;
 }
 
-.c1 .children {
+.c2 .children {
   overflow-wrap: break-word;
   word-wrap: break-word;
   text-align: center;
   width: 100%;
 }
 
-.c1 .children > * {
+.c2 .children > * {
   width: 100%;
 }
 
@@ -1783,12 +1882,12 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c0 > [data-reach-dialog-content] {
+  .c1 > [data-reach-dialog-content] {
     padding: 40px 88px;
     max-width: 30%;
   }
 
-  .c0 > [data-reach-dialog-content] .c2 {
+  .c1 > [data-reach-dialog-content] .modal-close-btn {
     height: 24px;
     position: absolute;
     right: 40px;
@@ -1805,7 +1904,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c1 .title-icon {
+  .c2 .title-icon {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -1833,7 +1932,7 @@ exports[`Modal variant is warning snapshot 1`] = `
       <div>
         <div
           aria-label="Modal"
-          class="c0 c1"
+          class="c0 c1 c2"
           data-reach-dialog-overlay=""
           variant="warning"
         >
@@ -1846,7 +1945,7 @@ exports[`Modal variant is warning snapshot 1`] = `
           >
             <button
               aria-label="Close Modal"
-              class="c2 c3"
+              class="c3 modal-close-btn"
               type="button"
               variant="standard"
             >
@@ -1856,6 +1955,7 @@ exports[`Modal variant is warning snapshot 1`] = `
                 height="1em"
                 viewBox="0 0 24 24"
                 width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M13.4142136,12 L22.7071068,21.2928932 C23.0976311,21.6834175 23.0976311,22.3165825 22.7071068,22.7071068 C22.3165825,23.0976311 21.6834175,23.0976311 21.2928932,22.7071068 L12,13.4142136 L2.70710678,22.7071068 C2.31658249,23.0976311 1.68341751,23.0976311 1.29289322,22.7071068 C0.902368927,22.3165825 0.902368927,21.6834175 1.29289322,21.2928932 L10.5857864,12 L1.29289322,2.70710678 C0.902368927,2.31658249 0.902368927,1.68341751 1.29289322,1.29289322 C1.68341751,0.902368927 2.31658249,0.902368927 2.70710678,1.29289322 L12,10.5857864 L21.2928932,1.29289322 C21.6834175,0.902368927 22.3165825,0.902368927 22.7071068,1.29289322 C23.0976311,1.68341751 23.0976311,2.31658249 22.7071068,2.70710678 L13.4142136,12 Z"

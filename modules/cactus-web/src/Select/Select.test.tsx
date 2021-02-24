@@ -41,6 +41,28 @@ describe('component: Select', (): void => {
     expect(getByText('Who?')).not.toBeNull()
   })
 
+  test('can receive options as children, with altText', (): void => {
+    const { queryByText } = render(
+      <StyleProvider>
+        <Select id="options-children" name="test-options" value="second">
+          <Select.Option value="first" altText="Locke">
+            Peter
+          </Select.Option>
+          <Select.Option value="second" altText="Demosthenes">
+            Valentine
+          </Select.Option>
+          <Select.Option value="third">Ender</Select.Option>
+        </Select>
+      </StyleProvider>
+    )
+
+    expect(queryByText('Peter')).not.toBeNull()
+    expect(queryByText('Valentine')).not.toBeNull()
+    expect(queryByText('Ender')).not.toBeNull()
+    expect(queryByText('Locke')).toBeNull()
+    expect(document.querySelector('#options-children')).toHaveTextContent('Demosthenes')
+  })
+
   test('should set placeholder when options are empty', async (): Promise<void> => {
     const { getByRole } = render(
       <StyleProvider>
@@ -66,9 +88,7 @@ describe('component: Select', (): void => {
     expect(getByText('two')).not.toBeNull()
   })
 
-  test('sets active descendant to the top option when value does not exist in options', async (): Promise<
-    void
-  > => {
+  test('sets active descendant to the top option when value does not exist in options', async (): Promise<void> => {
     const { getByText, getByRole } = render(
       <StyleProvider>
         <Select id="test-id" name="city" options={['yum', 'who?', 'boss']} value="superman" />
@@ -673,9 +693,7 @@ describe('component: Select', (): void => {
       expect(document.querySelector('[aria-multiselectable=true]')).not.toBe(null)
     })
 
-    test('all options are rendered with aria-selected attribute as true or false', async (): Promise<
-      void
-    > => {
+    test('all options are rendered with aria-selected attribute as true or false', async (): Promise<void> => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -1028,12 +1046,12 @@ describe('component: Select', (): void => {
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-phoenix-phoenix')
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-phoenix')
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-flagstaff-flagstaff')
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-flagstaff')
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
-      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson-tucson')
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson')
     })
 
     test('RETURN should select an option and focus on the trigger', async (): Promise<void> => {
@@ -1131,9 +1149,7 @@ describe('component: Select', (): void => {
       expect(getByRole('listbox')).toHaveTextContent('superior')
     })
 
-    test('values should stay in options even after they are removed from the value', async (): Promise<
-      void
-    > => {
+    test('values should stay in options even after they are removed from the value', async (): Promise<void> => {
       const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -1316,9 +1332,7 @@ describe('component: Select', (): void => {
       expect(document.activeElement).toHaveTextContent('phoenix')
     })
 
-    test('blurring the list box to focus on the input should not close the list', async (): Promise<
-      void
-    > => {
+    test('blurring the list box to focus on the input should not close the list', async (): Promise<void> => {
       const { getByRole, getByText, rerender } = render(
         <StyleProvider>
           <Select

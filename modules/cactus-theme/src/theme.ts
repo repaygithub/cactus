@@ -135,6 +135,8 @@ export type CactusColor = Exclude<keyof CactusTheme['colors'], 'status'>
 
 export type ColorVariant = keyof CactusTheme['colorStyles']
 
+const grayscaleLightContrast = 'hsl(0, 0%, 90%)'
+
 /** Neutrals */
 const white = `hsl(0, 0%, 100%)`
 const lightGray = `hsl(0, 0%, 90%)`
@@ -170,6 +172,7 @@ interface SharedGeneratorOptions {
   shape?: Shape
   font?: Font
   boxShadows?: boolean
+  grayscaleContrast?: boolean
 }
 
 interface HueGeneratorOptions extends SharedGeneratorOptions {
@@ -759,6 +762,11 @@ const makeTextStyles = (fontSizes: FontSizeObject): TextStyleCollection => ({
 
 export function generateTheme(options: GeneratorOptions = repayOptions): CactusTheme {
   const [colors, colorStyles] = isHue(options) ? fromHue(options) : fromTwoColor(options)
+
+  if (options.grayscaleContrast) {
+    colors.lightContrast = grayscaleLightContrast
+    colorStyles.lightContrast.backgroundColor = grayscaleLightContrast
+  }
 
   const fontSizes = [12.5, 15, 18, 21.6, 25.92, 31.104, 37.325] as FontSizeObject
   fontSizes.h1 = fontSizes[6]
