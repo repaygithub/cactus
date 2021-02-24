@@ -1,4 +1,4 @@
-import { ColorStyle } from '@repay/cactus-theme'
+import defaultTheme, { ColorStyle, TextStyleCollection } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
@@ -9,15 +9,20 @@ import { textFieldStatusMap } from '../helpers/status'
 import { border, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
+type TextStyleKey = keyof TextStyleCollection
+export const textStyles = Object.keys(defaultTheme.textStyles) as TextStyleKey[]
+
 export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
   /** !important */
   disabled?: boolean
   status?: Status | null
+  textStyle?: TextStyleKey
 }
 
 interface InputProps {
   disabled?: boolean
   status?: Status | null
+  textStyle?: TextStyleKey
 }
 
 const displayStatus = (props: TextInputProps) => {
@@ -44,11 +49,9 @@ const Input = styled.input<InputProps>`
   box-sizing: border-box;
   border: ${(p) => border(p.theme, p.disabled ? 'lightGray' : 'darkContrast')};
   border-radius: ${radius(20)};
-  height: 32px;
   outline: none;
-  box-sizing: border-box;
-  padding: 0px 28px 0px 15px;
-  ${(p) => textStyle(p.theme, 'body')};
+  padding: 3px 28px 3px 15px;
+  ${(p) => textStyle(p.theme, p.textStyle || 'body')};
   width: ${(p): string | number => p.width || 'auto'};
   background-color: ${(p): string => p.theme.colors.white};
 
@@ -81,6 +84,7 @@ export const TextInput = styled(TextInputBase)`
 TextInput.propTypes = {
   disabled: PropTypes.bool,
   status: StatusPropType,
+  textStyle: PropTypes.oneOf(textStyles),
 }
 
 TextInput.defaultProps = {

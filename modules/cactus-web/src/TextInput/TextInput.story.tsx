@@ -4,7 +4,7 @@ import React from 'react'
 
 import actions from '../helpers/storybookActionsWorkaround'
 import { Status } from '../StatusMessage/StatusMessage'
-import TextInput from './TextInput'
+import TextInput, { textStyles } from './TextInput'
 
 export default {
   title: 'TextInput',
@@ -22,11 +22,14 @@ const statusOptions: StatusOptions = {
   error: 'error',
 }
 
+const sizeOptions = [undefined, ...textStyles]
+
 export const BasicUsage = (): React.ReactElement => (
   <TextInput
     disabled={boolean('disabled', false)}
     placeholder={text('placeholder', 'Placeholder')}
     status={select('status', statusOptions, statusOptions.none)}
+    textStyle={select('text size', sizeOptions, undefined)}
     {...eventLoggers}
   />
 )
