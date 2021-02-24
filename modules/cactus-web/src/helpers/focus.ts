@@ -77,14 +77,14 @@ export function useFocusControl(focusControl: FocusControl = getFocusable, rootI
 
   const setFocus = React.useCallback<FocusSetter>(
     (focusHint, opts = {}) => {
-      const { focusState, focusControl } = box
-      const { shift = false, control = focusControl } = opts
+      const { focusState: boxFocusState, focusControl: boxFocusControl } = box
+      const { shift = false, control = boxFocusControl } = opts
       // Modify in-place to prevent re-render; in truth, we treat this more
       // like a ref than state, but `delay` is easier to implement this way.
-      focusState.current.focusHint = focusHint
-      focusState.current.shift = shift
-      focusState.current.control = control
-      applyFocusState(focusState.current, focusRootRef.current)
+      boxFocusState.current.focusHint = focusHint
+      boxFocusState.current.shift = shift
+      boxFocusState.current.control = control
+      applyFocusState(boxFocusState.current, focusRootRef.current)
     },
     [box, focusRootRef]
   )
