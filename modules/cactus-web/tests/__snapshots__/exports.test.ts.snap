@@ -33,6 +33,7 @@ Array [
   "Label",
   "Layout",
   "Link",
+  "List",
   "MenuBar",
   "MenuButton",
   "Modal",
