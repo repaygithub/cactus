@@ -164,9 +164,9 @@ const MenuBarList = React.forwardRef<HTMLSpanElement, ListProps>(
         {isTopbar ? (
           <FloatingMenu {...popupProps}>{children}</FloatingMenu>
         ) : (
-          <InlineMenu {...popupProps} aria-orientation="vertical">
+          <SideMenu {...popupProps} aria-orientation="vertical">
             {children}
-          </InlineMenu>
+          </SideMenu>
         )}
       </li>
     )
@@ -217,6 +217,30 @@ const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
       </ScrollButton>
     </MenuWrapper>
   )
+}
+
+const SideMenu: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
+  // You'd normally need state for this to trigger a re-render, but since these
+  // are initially hidden we can guarantee at least one re-render before it's seen.
+  const classRef = React.useRef<string | undefined>(undefined)
+  const marginRef = React.useRef<number>(16)
+  const elementId = props.id
+  React.useEffect(() => {
+    if (elementId) {
+      const list = document.getElementById(elementId)
+      let current = list,
+        nestLevel = 0
+      while (current && !current.matches('nav')) {
+        if (current.matches('[role="menu"]')) {
+          nestLevel++
+        }
+        current = current.parentElement
+      }
+      classRef.current = nestLevel % 2 ? 'nest-even' : 'nest-odd'
+      marginRef.current = 8 + (nestLevel - 2) * 16
+    }
+  }, [elementId])
+  return <InlineMenu {...props} $margin={marginRef.current} className={classRef.current} />
 }
 
 const onMenuBlur = (e: React.FocusEvent<HTMLElement>) => {
@@ -385,11 +409,22 @@ const listStyle = `
   margin: 0;
 `
 
-const InlineMenu = styled.ul`
+const InlineMenu = styled.ul<{ $margin: number }>`
   ${listStyle}
   display: block;
+  && [role='menuitem'] {
+    margin-left: ${(p) => p.$margin}px;
+    width: calc(100% - ${(p) => p.$margin}px);
+    border-bottom-color: transparent;
+  }
   &[aria-hidden='true'] {
     display: none;
+  }
+  &.nest-even {
+    background-color: ${(p) => p.theme.colors.white};
+  }
+  &.nest-odd {
+    background-color: ${(p) => p.theme.colors.lightContrast};
   }
 `
 
@@ -404,11 +439,13 @@ const SidebarMenu = styled.ul`
     ${NavigationArrowDown} {
       transform: rotateZ(-90deg);
     }
-    &[aria-expanded='true'] ${NavigationArrowDown} {
-      transform: rotateZ(90deg);
-    }
-    &:hover,
     &[aria-expanded='true'] {
+      color: ${(p) => p.theme.colors.callToAction};
+      ${NavigationArrowDown} {
+        transform: rotateZ(90deg);
+      }
+    }
+    &:hover {
       color: ${(p) => p.theme.colors.callToAction};
       border-bottom-color: ${(p) => p.theme.colors.callToAction};
     }
@@ -428,14 +465,6 @@ const SidebarMenu = styled.ul`
     &[aria-current='true'],
     &[aria-expanded='true'] {
       font-weight: 600;
-    }
-  }
-
-  [role='menu'] {
-    background-color: ${(p) => p.theme.colors.lightContrast};
-    padding-left: 8px;
-    [role='menu'] {
-      padding-left: 14px;
     }
   }
 `
