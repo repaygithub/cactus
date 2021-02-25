@@ -1,5 +1,5 @@
-import { CactusTheme, Shape } from '@repay/cactus-theme'
 import { DescriptivePalette } from '@repay/cactus-icons'
+import { CactusTheme, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
 import { ColorChangeHandler, CustomPicker, HSLColor, HSVColor } from 'react-color'
