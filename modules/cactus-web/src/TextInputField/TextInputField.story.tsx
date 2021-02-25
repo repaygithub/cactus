@@ -2,6 +2,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
+import { textStyles } from '../TextInput/TextInput'
 import TextInputField from './TextInputField'
 
 export default {
@@ -14,6 +15,8 @@ const eventLoggers = {
   onFocus: (e: any) => console.log('onFocus:', e.target.name),
   onBlur: (e: any) => console.log('onBlur:', e.target.name),
 }
+
+const sizeOptions = [undefined, ...textStyles]
 
 const InputValidator = (): React.ReactElement => {
   const [input, setInput] = useState('')
@@ -37,6 +40,7 @@ export const BasicUsage = (): React.ReactElement => (
       label={text('label', 'Input Label')}
       placeholder={text('placeholder', 'Placeholder')}
       disabled={boolean('disabled', false)}
+      textStyle={select('text size', sizeOptions, undefined)}
       success={text('success', '')}
       warning={text('warning', '')}
       error={text('error', '')}
