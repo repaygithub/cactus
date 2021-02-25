@@ -433,6 +433,17 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/descriptive/palette.svg"
+      style="width:100px;"
+      alt="svg for DescriptivePalette" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-palette</code>
+      <div>DescriptivePalette</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/descriptive/piechart.svg"
       style="width:100px;"
       alt="svg for DescriptivePiechart" />

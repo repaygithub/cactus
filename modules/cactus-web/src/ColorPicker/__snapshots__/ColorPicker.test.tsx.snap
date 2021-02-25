@@ -1,7 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: ColorPicker snapshot 1`] = `
-.c15 {
+.c2 {
+  vertical-align: middle;
+}
+
+.c16 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -19,11 +23,11 @@ exports[`component: ColorPicker snapshot 1`] = `
   border-color: hsl(200,96%,35%);
 }
 
-.c15::-moz-focus-inner {
+.c16::-moz-focus-inner {
   border: 0;
 }
 
-.c15:focus::after {
+.c16:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -37,12 +41,12 @@ exports[`component: ColorPicker snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c15 svg {
+.c16 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c15 .sc-hjWSAi {
+.c16 .sc-gVgnHT {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -50,30 +54,30 @@ exports[`component: ColorPicker snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c15:hover {
+.c16:hover {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
 }
 
-.c3 {
+.c4 {
   box-sizing: border-box;
   width: 100%;
 }
 
-.c9 {
+.c10 {
   box-sizing: border-box;
   width: 100%;
   margin-top: 40px;
 }
 
-.c12 {
+.c13 {
   box-sizing: border-box;
   width: 100%;
   margin-top: 16px;
 }
 
-.c4 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -94,7 +98,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -111,7 +115,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -125,7 +129,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   flex-wrap: wrap;
 }
 
-.c13 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -184,7 +188,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   color: hsl(200,96%,35%);
 }
 
-.c14 {
+.c15 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -199,12 +203,12 @@ exports[`component: ColorPicker snapshot 1`] = `
   color: hsl(353,84%,44%);
 }
 
-.c14:hover {
+.c15:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c14:focus::after {
+.c15:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -217,17 +221,17 @@ exports[`component: ColorPicker snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c14::-moz-focus-inner {
+.c15::-moz-focus-inner {
   border: 0;
 }
 
-.c14 svg {
+.c15 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
 }
 
-.c2 {
+.c3 {
   display: none;
   box-sizing: border-box;
   position: fixed;
@@ -241,7 +245,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   outline: none;
 }
 
-.c2 input {
+.c3 input {
   border: 1px solid hsl(200,10%,20%);
   border-radius: 8px;
   height: 32px;
@@ -249,21 +253,21 @@ exports[`component: ColorPicker snapshot 1`] = `
   padding: 0px 15px 0px 15px;
 }
 
-.c2 input:focus {
+.c3 input:focus {
   border: 1px solid hsl(200,96%,35%);
 }
 
-.c2 label {
+.c3 label {
   position: absolute;
   top: -26px;
   left: 16px;
 }
 
-.c2 .hex-wrapper > div > input {
+.c3 .hex-wrapper > div > input {
   width: 5em;
 }
 
-.c2 .rgb-wrapper > div > input {
+.c3 .rgb-wrapper > div > input {
   width: 2.5em;
 }
 
@@ -302,20 +306,20 @@ exports[`component: ColorPicker snapshot 1`] = `
   width: 5em;
 }
 
-.c5 {
+.c6 {
   position: relative;
   width: 288px;
   height: 200px;
 }
 
-.c7 {
+.c8 {
   position: relative;
   width: 288px;
   height: 16px;
   margin-top: 32px;
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
   width: 32px;
   height: 32px;
@@ -328,7 +332,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   transform: translate(-24px,-8px);
 }
 
-.c8 {
+.c9 {
   box-sizing: border-box;
   width: 32px;
   height: 32px;
@@ -342,14 +346,14 @@ exports[`component: ColorPicker snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c15 {
+  .c16 {
     font-size: 18px;
     line-height: 1.5;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c14 {
+  .c15 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -371,10 +375,11 @@ exports[`component: ColorPicker snapshot 1`] = `
       variant="standard"
     >
       <svg
+        class="c2"
         fill="currentcolor"
-        height="14"
+        height="1em"
         viewBox="0 0 26 24"
-        width="16"
+        width="1em"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -401,7 +406,7 @@ exports[`component: ColorPicker snapshot 1`] = `
   <div
     aria-hidden="true"
     aria-labelledby="color-picker-button"
-    class="c2"
+    class="c3"
     id="color-picker-popup"
     role="dialog"
     tabindex="-1"
@@ -411,11 +416,11 @@ exports[`component: ColorPicker snapshot 1`] = `
       tabindex="0"
     />
     <div
-      class="c3 c4"
+      class="c4 c5"
       width="100%"
     >
       <div
-        class="c5"
+        class="c6"
       >
         <div
           style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; background: rgb(255, 0, 0); border-radius: 8px;"
@@ -444,14 +449,14 @@ exports[`component: ColorPicker snapshot 1`] = `
               style="position: absolute; top: 0%; left: 100%; cursor: default;"
             >
               <div
-                class="c6"
+                class="c7"
               />
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c7"
+        class="c8"
       >
         <div
           style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; border-radius: 8px;"
@@ -481,14 +486,14 @@ exports[`component: ColorPicker snapshot 1`] = `
               style="position: absolute; left: 0%;"
             >
               <div
-                class="c8"
+                class="c9"
               />
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c9 c10 hex-wrapper"
+        class="c10 c11 hex-wrapper"
         width="100%"
       >
         <div
@@ -506,7 +511,7 @@ exports[`component: ColorPicker snapshot 1`] = `
           </label>
         </div>
         <div
-          class="c9 c11 rgb-wrapper"
+          class="c10 c12 rgb-wrapper"
           width="100%"
         >
           <div
@@ -555,18 +560,18 @@ exports[`component: ColorPicker snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c12 c13"
+      class="c13 c14"
       width="100%"
     >
       <button
-        class="c14"
+        class="c15"
         type="button"
       >
         Cancel
       </button>
       <button
         aria-live="assertive"
-        class="c15"
+        class="c16"
         type="button"
       >
         <span>

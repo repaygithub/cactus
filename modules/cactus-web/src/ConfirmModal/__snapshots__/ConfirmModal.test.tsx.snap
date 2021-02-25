@@ -142,7 +142,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c15 .sc-gkdzZj {
+.c15 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -649,7 +649,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c12 .sc-gkdzZj {
+.c12 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1131,7 +1131,7 @@ exports[`Modal variant is success snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c12 .sc-gkdzZj {
+.c12 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1593,7 +1593,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin-top: -4px;
 }
 
-.c12 .sc-gkdzZj {
+.c12 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
