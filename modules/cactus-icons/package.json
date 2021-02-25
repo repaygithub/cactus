@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-icons",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Cactus design-system icons as React elements",
   "module": "i/index.js",
   "main": "i/index.cjs.js",
@@ -48,7 +48,16 @@
       "text",
       "json-summary"
     ],
-    "reporters": ["default", ["jest-sonar", { "outputDirectory": ".", "outputName": "test-report.xml" }]]
+    "reporters": [
+      "default",
+      [
+        "jest-sonar",
+        {
+          "outputDirectory": ".",
+          "outputName": "test-report.xml"
+        }
+      ]
+    ]
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",
@@ -58,7 +67,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@repay/babel-preset": "^1.0.2",
-    "@repay/cactus-theme": "^2.0.2",
+    "@repay/cactus-theme": "^2.1.0",
     "@repay/scripts": "^2.0.2",
     "@storybook/addon-knobs": "^6.1.17",
     "@storybook/react": "6.1.17",

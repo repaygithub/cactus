@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-theme",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "The theme for the Cactus design-system at REPAY",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-theme",
   "license": "MIT",
@@ -43,6 +43,15 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}"
     ],
-    "reporters": ["default", ["jest-sonar", { "outputDirectory": ".", "outputName": "test-report.xml" }]]
+    "reporters": [
+      "default",
+      [
+        "jest-sonar",
+        {
+          "outputDirectory": ".",
+          "outputName": "test-report.xml"
+        }
+      ]
+    ]
   }
 }

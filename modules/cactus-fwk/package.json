@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-fwk",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Cactus Framework for React",
   "main": "dist/cactus-fwk.cjs.js",
   "module": "dist/cactus-fwk.js",
@@ -41,7 +41,16 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}"
     ],
-    "reporters": ["default", ["jest-sonar", { "outputDirectory": ".", "outputName": "test-report.xml" }]]
+    "reporters": [
+      "default",
+      [
+        "jest-sonar",
+        {
+          "outputDirectory": ".",
+          "outputName": "test-report.xml"
+        }
+      ]
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
