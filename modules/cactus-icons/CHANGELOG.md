@@ -1,3 +1,21 @@
+# v2.4.0 (Thu Feb 25 2021)
+
+#### 🚀 Enhancement
+
+- Add DescriptivePalette icon [#534](https://github.com/repaygithub/cactus/pull/534) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🔩 Dependency Updates
+
+- Upgrade Jest SonarQube reporter [#524](https://github.com/repaygithub/cactus/pull/524) ([@mikesoltow](https://github.com/mikesoltow))
+- Upgrade various dev dependencies, including build/bundling library [#518](https://github.com/repaygithub/cactus/pull/518) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v2.3.0 (Thu Feb 04 2021)
 
 #### 🚀 Enhancement
