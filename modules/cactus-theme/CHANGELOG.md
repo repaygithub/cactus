@@ -1,3 +1,20 @@
+# v2.1.0 (Thu Feb 25 2021)
+
+#### 🚀 Enhancement
+
+- Add grayscaleContrast option to theme - if enabled, replaces lightContrast color with gray [#519](https://github.com/repaygithub/cactus/pull/519) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### 🔩 Dependency Updates
+
+- Upgrade Jest SonarQube reporter [#524](https://github.com/repaygithub/cactus/pull/524) ([@mikesoltow](https://github.com/mikesoltow))
+- Upgrade various dependencies, including build/bundling library [#518](https://github.com/repaygithub/cactus/pull/518) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 1
+
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v2.0.2 (Tue Jan 12 2021)
 
 #### 🐛 Bug Fix
