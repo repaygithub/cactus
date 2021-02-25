@@ -16,8 +16,7 @@ class Dimmer extends React.Component<DimmerProps> {
   componentDidUpdate(prevProps: DimmerProps): void {
     if (prevProps.active === false && this.props.active === true && document.activeElement) {
       try {
-        // eslint-disable-next-line
-        (document.activeElement as HTMLElement).blur()
+        ;(document.activeElement as HTMLElement).blur()
       } catch {}
     }
   }
