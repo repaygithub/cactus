@@ -3,7 +3,9 @@
 #### 💥 Breaking Change
 
 - Add textStyle prop to TextInput and TextInputField, allowing users to control size of these components [#533](https://github.com/repaygithub/cactus/pull/533) ([@wilysword](https://github.com/wilysword))
+  - Default height of TextInput and TextInputField components has changed
 - Redesign MenuBar and add dark variant [#509](https://github.com/repaygithub/cactus/pull/509) ([@daniloPenaR](https://github.com/daniloPenaR) [@wilysword](https://github.com/wilysword))
+  - Appearance of MenuBar has changed significantly on desktop screens
 - Make `aria-label` required for ActionBar.Item [#488](https://github.com/repaygithub/cactus/pull/488) ([@wilysword](https://github.com/wilysword))
 
 #### 🚀 Enhancement
