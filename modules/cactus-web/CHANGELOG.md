@@ -1,3 +1,42 @@
+# v6.0.0-beta.0 (Thu Feb 25 2021)
+
+#### 💥 Breaking Change
+
+- Add textStyle prop to TextInput and TextInputField, allowing users to control size of these components [#533](https://github.com/repaygithub/cactus/pull/533) ([@wilysword](https://github.com/wilysword))
+- Redesign MenuBar and add dark variant [#509](https://github.com/repaygithub/cactus/pull/509) ([@daniloPenaR](https://github.com/daniloPenaR) [@wilysword](https://github.com/wilysword))
+- Make `aria-label` required for ActionBar.Item [#488](https://github.com/repaygithub/cactus/pull/488) ([@wilysword](https://github.com/wilysword))
+
+#### 🚀 Enhancement
+
+- Add List component [#522](https://github.com/repaygithub/cactus/pull/522) ([@Dhalton](https://github.com/Dhalton))
+- Add ColorPicker component [#508](https://github.com/repaygithub/cactus/pull/508) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Fix background color on Tag component [#530](https://github.com/repaygithub/cactus/pull/530) ([@wilysword](https://github.com/wilysword))
+- Fix margin bug with Modal in IE11 [#523](https://github.com/repaygithub/cactus/pull/523) ([@wilysword](https://github.com/wilysword))
+- Fix IconButton propTypes warnings [#528](https://github.com/repaygithub/cactus/pull/528) ([@daniloPenaR](https://github.com/daniloPenaR))
+- Fix positioning of IconButtons that are children of Modal [#517](https://github.com/repaygithub/cactus/pull/517) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🏠 Internal
+
+- Migrate DescriptivePalette icon to `@repay/cactus-icons` [#534](https://github.com/repaygithub/cactus/pull/534) ([@daniloPenaR](https://github.com/daniloPenaR))
+- Improve transition behavior for DateInput calendar [#514](https://github.com/repaygithub/cactus/pull/514) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🔩 Dependency Updates
+
+- Upgrade Jest SonarQube reporter [#524](https://github.com/repaygithub/cactus/pull/524) ([@mikesoltow](https://github.com/mikesoltow))
+- Upgrade various dependencies, including Reach libraries and build/bundling library [#518](https://github.com/repaygithub/cactus/pull/518) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 4
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v5.2.0 (Fri Feb 12 2021)
 
 #### 🚀 Enhancement
