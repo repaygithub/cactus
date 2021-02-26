@@ -94,7 +94,7 @@ export interface SelectProps
 
 const displayStatus: any = (props: SelectProps): ReturnType<typeof css> | string => {
   if (props.status && !props.disabled) {
-    return textFieldStatusMap[props.status as Status]
+    return textFieldStatusMap[props.status]
   } else {
     return ''
   }
@@ -1336,8 +1336,13 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       } else if (child?.props) {
         const value = child.props.value
         if (typeof value === 'string' || typeof value === 'number') {
-          const { altText: altProp, children, id, 'aria-label': ariaLabel } = child.props
-          const rawLabel = children || children === 0 ? children : value
+          const {
+            altText: altProp,
+            children: grandchildren,
+            id,
+            'aria-label': ariaLabel,
+          } = child.props
+          const rawLabel = grandchildren || grandchildren === 0 ? grandchildren : value
           const label = typeof rawLabel === 'number' ? rawLabel.toString() : rawLabel
           let altText: string | undefined = altProp || ariaLabel
           if (altText === undefined) {
