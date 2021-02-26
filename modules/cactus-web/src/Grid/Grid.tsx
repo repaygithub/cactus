@@ -103,7 +103,7 @@ export const Grid = styled.div<GridProps>`
 
   @supports (display: grid) {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(12, minmax(1px, 1fr));
     grid-gap: ${GUTTER_WIDTH}px;
     justify-items: ${(p): string => (p.justify ? p.justify : 'normal')};
 
