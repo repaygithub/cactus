@@ -62,7 +62,7 @@ exports[`component: Grid breakpoint styles should match larger screen sizes if t
 @supports (display:grid) {
   .c0 {
     display: grid;
-    grid-template-columns: repeat(12,1fr);
+    grid-template-columns: repeat(12,minmax(1px,1fr));
     grid-gap: 16px;
     justify-items: normal;
   }
@@ -154,7 +154,7 @@ exports[`component: Grid should render extraLarge viewport design 1`] = `
 @supports (display:grid) {
   .c0 {
     display: grid;
-    grid-template-columns: repeat(12,1fr);
+    grid-template-columns: repeat(12,minmax(1px,1fr));
     grid-gap: 16px;
     justify-items: center;
   }
@@ -250,7 +250,7 @@ exports[`component: Grid should render tiny viewport design 1`] = `
 @supports (display:grid) {
   .c0 {
     display: grid;
-    grid-template-columns: repeat(12,1fr);
+    grid-template-columns: repeat(12,minmax(1px,1fr));
     grid-gap: 16px;
     justify-items: end;
   }
