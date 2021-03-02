@@ -1,5 +1,5 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { act, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -320,7 +320,7 @@ describe('component: DateInput', (): void => {
         async (): Promise<void> => {
           fireEvent.click(getByLabelText('Click to change month'))
           await animationRender()
-          fireEvent.click(getByText('March'))
+          fireEvent.click(within(getByLabelText('Select a month')).getByText('March'))
           fireEvent.click(getByLabelText('Click to change year'))
           await animationRender()
           fireEvent.click(getByText('2018'))
