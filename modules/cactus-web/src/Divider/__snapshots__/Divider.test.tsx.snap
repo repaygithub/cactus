@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component: Divider snapshot 1`] = `
+.c0 {
+  border: 1px solid hsl(200,29%,90%);
+}
+
+<div>
+  <hr
+    class="c0"
+  />
+</div>
+`;
