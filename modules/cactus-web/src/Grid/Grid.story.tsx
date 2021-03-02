@@ -150,3 +150,85 @@ export const BasicUsage = (): React.ReactElement => (
     </Grid.Item>
   </Grid>
 )
+
+export const PreventGridBlowout = (): React.ReactElement => {
+  const LONG_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra diam sed consequat
+  auctor. Cras interdum vel tortor eget consequat. Aliquam id accumsan eros, a condimentum
+  neque. Cras nibh leo, pulvinar eu enim at, sodales molestie enim. Cras a lacinia nunc.
+  Nunc rutrum ut leo sed elementum.`
+  return (
+    <Grid>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <p style={{ overflow: 'hidden', height: 'auto', margin: '0' }}>
+          {LONG_TEXT.replace(/\s/g, '')}
+        </p>
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={1}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+
+      <Grid.Item tiny={3} medium={3}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={3}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={3}>
+        <p style={{ overflow: 'hidden', height: 'auto', margin: '0' }}>
+          {LONG_TEXT.replace(/\s/g, '')}
+        </p>
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={3}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+
+      <Grid.Item tiny={10} medium={9}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+      <Grid.Item tiny={2} medium={3}>
+        <p style={{ overflow: 'hidden', height: 'auto', margin: '0' }}>
+          {LONG_TEXT.replace(/\s/g, '')}
+        </p>
+      </Grid.Item>
+
+      <Grid.Item tiny={9} medium={4}>
+        <p style={{ overflow: 'hidden', height: 'auto', margin: '0' }}>
+          {LONG_TEXT.replace(/\s/g, '')}
+        </p>
+      </Grid.Item>
+      <Grid.Item tiny={3} medium={8}>
+        <Box height="25px" width="100%" backgroundColor="pink" />
+      </Grid.Item>
+    </Grid>
+  )
+}
