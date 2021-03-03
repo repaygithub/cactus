@@ -77,4 +77,4 @@ export default () => (
 
 ## Next Steps
 
-Seems pretty easy, right? Well, we can't stop here. To see how you can use the components available in `@repay/cactus-web` in conjunction with the theming principles we just went over in order to create a consistent and great looking front end application, click [here](../Components/README.md)
+Seems pretty easy, right? Well, we can't stop here. To see how you can use the components available in `@repay/cactus-web` in conjunction with the theming principles we just went over in order to create a consistent and great looking front end application, click <a to='/components'>here</a>

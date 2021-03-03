@@ -2,7 +2,7 @@
 
 Unit testing is great, but sometimes you need to test how your page behaves in an actual browser: that's where end-to-end testing comes in. This guide should show you how to use some of our tools to make this task a little easier.
 
-Before starting, you should have an application that you wish to test. The examples used will be based on an app like those created by the [@repay/create-ui](https://github.com/repaygithub/ui-tools/tree/master/modules/create-repay-ui) package; see [this tutorial](/tutorials/responsive-web-design/) for an example with starting a new project.
+Before starting, you should have an application that you wish to test. The examples used will be based on an app like those created by the [@repay/create-ui](https://github.com/repaygithub/ui-tools/tree/master/modules/create-repay-ui) package; see <a to='/tutorials/responsive-web-design/'>this tutorial</a> for an example with starting a new project.
 
 ## Installation & Configuration
 
