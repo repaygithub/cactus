@@ -73,5 +73,6 @@ Array [
   "Tag",
   "Footer",
   "BrandBar",
+  "Divider",
 ]
 `;
