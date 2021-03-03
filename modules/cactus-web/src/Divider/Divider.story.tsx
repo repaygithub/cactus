@@ -20,7 +20,7 @@ export const BasicUsage = (): React.ReactElement => {
           Weekly on mondays (42 payments)
         </h4>
       </Flex>
-      <Divider />
+      <Divider m={10} />
 
       <table style={{ fontSize: '15px', borderCollapse: 'collapse' }}>
         <tbody>

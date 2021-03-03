@@ -2,7 +2,10 @@
 
 exports[`component: Divider snapshot 1`] = `
 .c0 {
-  border: 1px solid hsl(200,29%,90%);
+  border: none;
+  height: 1px;
+  color: hsl(200,29%,90%);
+  background-color: hsl(200,29%,90%);
 }
 
 <div>
