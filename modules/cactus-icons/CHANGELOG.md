@@ -1,3 +1,15 @@
+# v2.4.1 (Thu Mar 04 2021)
+
+#### 🏠 Internal
+
+- Add some test coverage [#532](https://github.com/repaygithub/cactus/pull/532) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 1
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v2.4.0 (Thu Feb 25 2021)
 
 #### 🚀 Enhancement
