@@ -1,3 +1,29 @@
+# v6.0.0 (Thu Mar 04 2021)
+
+#### 💥 Breaking Change
+
+- Change styling of mobile/tablet menu to use alternate colors [#541](https://github.com/repaygithub/cactus/pull/541) ([@wilysword](https://github.com/wilysword))
+
+#### 🚀 Enhancement
+
+- Add Divider component [#537](https://github.com/repaygithub/cactus/pull/537) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🐛 Bug Fix
+
+- Fix blowout bug with Grid component [#536](https://github.com/repaygithub/cactus/pull/536) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🏠 Internal
+
+- Minor refactoring and add test coverage [#532](https://github.com/repaygithub/cactus/pull/532) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 3
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v6.0.0-beta.0 (Thu Feb 25 2021)
 
 #### 💥 Breaking Change
