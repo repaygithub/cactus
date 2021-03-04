@@ -141,6 +141,12 @@ function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
         order: 101,
         items: [],
       },
+      {
+        title: 'Deep Dives',
+        url: '/deep-dives/',
+        order: 102,
+        items: [],
+      },
     ],
   }
   pages
