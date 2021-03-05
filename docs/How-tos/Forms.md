@@ -1,8 +1,8 @@
 # How to Write Cactus Forms Using Formik
 
-Collecting data using forms is one of the most basic functions of a website. [@repay/cactus-web](/components/) provides several styled form inputs, as well as a few custom inputs that emulate built-in HTML inputs. This guide will show you the basics of combining these input components with a common forms library, [Formik](https://formik.org/).
+Collecting data using forms is one of the most basic functions of a website. <a to='/components/'>@repay/cactus-web</a> provides several styled form inputs, as well as a few custom inputs that emulate built-in HTML inputs. This guide will show you the basics of combining these input components with a common forms library, [Formik](https://formik.org/).
 
-Before starting, you should have an application, and know how to add a page or component. The examples used will be based on an app like those created by the [@repay/create-ui](https://github.com/repaygithub/ui-tools/tree/master/modules/create-repay-ui) package; see [this tutorial](/tutorials/responsive-web-design/) for an example with starting a new project.
+Before starting, you should have an application, and know how to add a page or component. The examples used will be based on an app like those created by the [@repay/create-ui](https://github.com/repaygithub/ui-tools/tree/master/modules/create-repay-ui) package; see <a to='/tutorials/responsive-web-design/'>this tutorial</a> for an example with starting a new project.
 
 ### Installation
 
@@ -255,5 +255,5 @@ These fields are all custom components rather than styled HTML elements, but the
 ### Further Reading
 
 - [Formik Documentation](https://formik.org/docs/tutorial)
-- [@repay/cactus-web Documentation](/components/)
+- <a to='/components/'>@repay/cactus-web Documentation</a>
 - [Example app w/ form (UI Config page)](https://github.com/repaygithub/cactus/tree/master/examples/mock-ebpp)

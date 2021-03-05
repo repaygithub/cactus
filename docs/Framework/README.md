@@ -8,9 +8,9 @@ The Cactus Framework implements a set of common front-end necessities at a top l
 
 ## Quick Links
 
-- [API Documentation](./API/README.md)
-  - [Error Boundary](./API/Error%20Boundary.md)
-  - [Feature Flags](./API/Feature%20Flags.md)
+- <a to="./api">API Documentation</a>
+- <a to="./api/error-boundary"> Error Boundary</a>
+- <a to="./api/feature-flags"> Feature Flags</a>
 - [Source Code](../../modules/cactus-fwk/)
 
 ## Getting Started
@@ -84,4 +84,4 @@ const Home: React.FC<Props> = (props) => {
 export default Home
 ```
 
-Next read the rest of the [API documentation](./API/README.md) or checkout out the [examples folder](../../examples/)
+Next read the rest of the <a to="./api">API Documentation</a> or checkout out the [examples folder](../../examples/)

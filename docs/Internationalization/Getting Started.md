@@ -133,4 +133,4 @@ const mainComponent = () => {
 } // ¡Bienvenido a la página de cuentas, CS Human!
 ```
 
-At this point, we have successfully set up a small example with the ability to render different translations for different sections. If you want to see a working example, you can check out the standard implementation [here](https://github.com/repaygithub/cactus/tree/master/examples/standard). It uses a lot of these same ideas. Additionally, we have much more detailed API docs on each tool available with internationalization [here](../API%20Documentation.md)
+At this point, we have successfully set up a small example with the ability to render different translations for different sections. If you want to see a working example, you can check out the standard implementation [here](https://github.com/repaygithub/cactus/tree/master/examples/standard). It uses a lot of these same ideas. Additionally, we have much more detailed API docs on each tool available with internationalization <a to='../api-documentation'>here</a>.

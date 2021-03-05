@@ -52,4 +52,4 @@ To see an example showcasing how `Formik` and `@repay/cactus-web` form elements 
 
 You can find individual component documentation in the side navigation.
 
-For a detailed and working example using both `@repay/cactus-web` components and `@repay/cactus-theme`, see the [theme-components example](../../examples/theme-components).
+For a detailed and working example using both `@repay/cactus-web` components and `@repay/cactus-theme`, see the [theme-components example](https://github.com/repaygithub/cactus/tree/master/examples/theme-components).
