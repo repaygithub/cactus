@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "w": "yarn workspace",
-    "ws": "yarn workspaces",
+    "ws": "yarn workspaces foreach -v --exclude cactus",
     "i18n": "yarn workspace @repay/cactus-i18n",
     "fwk": "yarn workspace @repay/cactus-fwk",
     "web": "yarn workspace @repay/cactus-web",
