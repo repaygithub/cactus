@@ -4454,7 +4454,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reach/observe-rect@npm:1.2.0":
+"@reach/observe-rect@npm:1.2.0, @reach/observe-rect@npm:^1.2.0":
   version: 1.2.0
   resolution: "@reach/observe-rect@npm:1.2.0"
   checksum: 4aa32fa1ab410527cecf62e3143664e4b7823212bb7b79b5fd84d0d390fa086fcdba27fceebc0e24e2958f2a0649d5b88ec8b0ed907c72730964ac33eb3089af
@@ -4590,6 +4590,7 @@ __metadata:
   resolution: "@repay/cactus-fwk@workspace:modules/cactus-fwk"
   dependencies:
     "@babel/core": ^7.12.16
+    "@babel/runtime": ^7.12.5
     "@repay/babel-preset": 1.0.2
     "@repay/scripts": ^2.0.2
     "@testing-library/jest-dom": ^5.11.9
@@ -4598,6 +4599,7 @@ __metadata:
     "@types/prop-types": ^15.7.3
     "@types/react": ^17.0.2
     babel-jest: ^26.6.3
+    core-js: ^3.8.2
     jest: ^26.6.3
     jest-sonar: ^0.2.12
     prop-types: ^15.7.2
@@ -4615,6 +4617,7 @@ __metadata:
   resolution: "@repay/cactus-i18n@workspace:modules/cactus-i18n"
   dependencies:
     "@babel/core": ^7.12.16
+    "@babel/runtime": ^7.12.5
     "@fluent/bundle": ^0.16.0
     "@fluent/langneg": ^0.5.0
     "@repay/babel-preset": 1.0.2
@@ -4626,6 +4629,7 @@ __metadata:
     "@types/jest": ^26.0.20
     "@types/react": ^17.0.2
     babel-jest: ^26.6.3
+    core-js: ^3.8.2
     intl: ^1.2.5
     intl-pluralrules: ^1.2.2
     jest: ^26.6.3
@@ -4645,11 +4649,13 @@ __metadata:
   resolution: "@repay/cactus-icons@workspace:modules/cactus-icons"
   dependencies:
     "@babel/core": ^7.12.16
+    "@babel/runtime": ^7.12.5
     "@repay/babel-preset": ^1.0.2
     "@repay/cactus-theme": ^2.1.0
     "@repay/scripts": ^2.0.2
     "@storybook/addon-knobs": ^6.1.17
-    "@storybook/react": 6.1.17
+    "@storybook/addons": ^6.1.17
+    "@storybook/react": ^6.1.17
     "@storybook/theming": ^6.1.17
     "@svgr/core": ^5.4.0
     "@testing-library/react": ^11.2.5
@@ -4660,19 +4666,24 @@ __metadata:
     "@types/styled-system": ^5.1.10
     babel-jest: ^26.6.3
     babel-loader: ^8.2.2
+    core-js: ^3.8.2
     fast-glob: ^3.2.4
     jest: ^26.6.3
     jest-sonar: ^0.2.12
     jest-styled-components: ^7.0.3
+    prettier: ^2.2.1
     prop-types: ^15.7.2
     react: ^17.0.1
     react-dom: ^17.0.1
+    react-is: ^17.0.0
     styled-components: ^5.2.1
     styled-system: ^5.1.5
     typescript: ^4.1.5
+    webpack: ^4.44.2
   peerDependencies:
     prop-types: ">=15.0.0"
     react: ^16.8.3 || ^17.0.0
+    react-is: ">= 16.8.0"
     styled-components: ^5.1.0
   languageName: unknown
   linkType: soft
@@ -4682,10 +4693,13 @@ __metadata:
   resolution: "@repay/cactus-theme@workspace:modules/cactus-theme"
   dependencies:
     "@babel/core": ^7.12.16
+    "@babel/runtime": ^7.12.5
     "@repay/babel-preset": ^1.0.2
     "@repay/scripts": ^2.0.2
     "@types/jest": ^26.0.20
     babel-jest: ^26.6.3
+    color: ^3.1.3
+    core-js: ^3.8.2
     jest-sonar: ^0.2.12
     typescript: ^4.1.5
   languageName: unknown
@@ -4696,8 +4710,10 @@ __metadata:
   resolution: "@repay/cactus-web@workspace:modules/cactus-web"
   dependencies:
     "@babel/core": ^7.12.16
+    "@babel/runtime": ^7.12.5
     "@reach/dialog": ^0.13.0
     "@reach/menu-button": ^0.13.0
+    "@reach/observe-rect": ^1.2.0
     "@reach/popover": ^0.13.0
     "@reach/rect": ^0.13.0
     "@reach/tooltip": 0.13.0
@@ -4713,9 +4729,11 @@ __metadata:
     "@storybook/addon-storyshots": ^6.1.17
     "@storybook/addon-storyshots-puppeteer": ^6.1.17
     "@storybook/addon-viewport": ^6.1.17
+    "@storybook/addons": ^6.1.17
     "@storybook/components": ^6.1.17
     "@storybook/react": ^6.1.17
     "@storybook/theming": ^6.1.17
+    "@testing-library/dom": ^7.28.1
     "@testing-library/jest-dom": ^5.11.9
     "@testing-library/react": ^11.2.5
     "@testing-library/user-event": ^12.6.3
@@ -4734,26 +4752,33 @@ __metadata:
     babel-jest: ^26.6.3
     babel-loader: ^8.2.2
     babel-plugin-require-context-hook: ^1.0.0
+    core-js: ^3.8.2
     csstype: ^3.0.3
     jest: ^26.6.3
     jest-sonar: ^0.2.12
     jest-styled-components: ^7.0.3
     lodash: ^4.17.21
+    prettier: ^2.2.1
     prop-types: ^15.7.2
     puppeteer: ^5.3.1
     react: ^17.0.1
     react-color: ^2.19.3
     react-dom: ^17.0.1
+    react-is: ^17.0.0
     react-transition-group: ^4.4.1
+    rollup: ^2.36.1
     rollup-plugin-commonjs: ^10.1.0
     start-server-and-test: 1.12.0
     styled-components: ^5.2.1
     styled-system: ^5.1.5
     tinycolor2: ^1.4.2
     typescript: ^4.1.5
+    webpack: ^4.44.2
   peerDependencies:
     prop-types: ">=15.7.0"
     react: ^16.8.3 || ^17.0.0
+    react-dom: ^16.8.3 || ^17.0.0
+    react-is: ">= 16.8.0"
     styled-components: ^5.1.0
   languageName: unknown
   linkType: soft
@@ -5202,7 +5227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addons@npm:6.1.17":
+"@storybook/addons@npm:6.1.17, @storybook/addons@npm:^6.1.17":
   version: 6.1.17
   resolution: "@storybook/addons@npm:6.1.17"
   dependencies:
@@ -5500,7 +5525,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react@npm:*, @storybook/react@npm:6.1.17, @storybook/react@npm:^6.1.17":
+"@storybook/react@npm:*, @storybook/react@npm:^6.1.17":
   version: 6.1.17
   resolution: "@storybook/react@npm:6.1.17"
   dependencies:
@@ -12600,6 +12625,7 @@ __metadata:
     "@mdx-js/mdx": ^1.6.22
     "@mdx-js/react": ^1.6.22
     "@reach/rect": ^0.13.0
+    "@reach/router": ^1.3.4
     "@repay/cactus-icons": ^2.1.6
     "@repay/cactus-theme": ^2.0.2
     "@repay/cactus-web": ^6.0.0
@@ -12640,6 +12666,8 @@ __metadata:
     react-live: ^2.2.3
     react-motion: ^0.5.2
     styled-components: ^5.2.1
+    styled-system: ^5.1.5
+    typescript: ^4.1.5
     unist-util-visit: ^2.0.3
   languageName: unknown
   linkType: soft
