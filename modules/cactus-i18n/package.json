@@ -9,10 +9,8 @@
   "license": "MIT",
   "scripts": {
     "cleanup": "rm -rf dist coverage",
-    "predev": "yarn run cleanup && yarn build:types",
-    "dev": "repay-scripts dev --lib src/index.ts",
-    "build": "repay-scripts build --lib src/index.ts",
-    "postbuild": "yarn build:types",
+    "dev": "yarn run cleanup && yarn build:types && repay-scripts dev --lib src/index.ts",
+    "build": "repay-scripts build --lib src/index.ts && yarn build:types",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
     "test:local": "yarn test:types && yarn test --coverage",

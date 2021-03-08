@@ -16,8 +16,7 @@
     "test:ci": "yarn test:local --maxWorkers=2",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
     "dev": "repay-scripts dev --lib src/theme.ts",
-    "prebuild": "yarn build:types",
-    "build": "repay-scripts build --lib src/theme.ts",
+    "build": "yarn build:types && repay-scripts build --lib src/theme.ts",
     "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
   },
   "devDependencies": {
