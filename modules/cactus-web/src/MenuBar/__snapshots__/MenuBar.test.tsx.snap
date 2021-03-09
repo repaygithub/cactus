@@ -514,7 +514,15 @@ exports[`component: MenuBar sidebar 1`] = `
 `;
 
 exports[`component: MenuBar typechecks 1`] = `
-.c9 {
+.c8 {
+  vertical-align: middle;
+}
+
+.c12 {
+  vertical-align: middle;
+}
+
+.c2 {
   vertical-align: middle;
 }
 
@@ -522,19 +530,11 @@ exports[`component: MenuBar typechecks 1`] = `
   vertical-align: middle;
 }
 
-.c3 {
+.c10 {
   vertical-align: middle;
 }
 
-.c14 {
-  vertical-align: middle;
-}
-
-.c11 {
-  vertical-align: middle;
-}
-
-.c2 {
+.c1 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   display: -webkit-box;
@@ -558,32 +558,32 @@ exports[`component: MenuBar typechecks 1`] = `
   cursor: pointer;
 }
 
-.c2[hidden] {
+.c1[hidden] {
   display: none;
 }
 
-.c2:hover {
+.c1:hover {
   color: hsl(200,96%,35%);
 }
 
-.c2[aria-disabled] {
+.c1[aria-disabled] {
   cursor: not-allowed;
   color: hsl(0,0%,90%);
 }
 
-.c2 svg {
+.c1 svg {
   width: 18px;
   height: 18px;
   margin: 8px;
 }
 
-.c7 {
+.c6 {
   -webkit-flex-shrink: 1;
   -ms-flex-negative: 1;
   flex-shrink: 1;
 }
 
-.c6 {
+.c5 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -605,6 +605,7 @@ exports[`component: MenuBar typechecks 1`] = `
   align-items: stretch;
   position: relative;
   outline: none;
+  box-shadow: inset 0px -2px 0px 0px hsl(200,29%,90%);
 }
 
 .c0 [role='menubar'] {
@@ -615,6 +616,7 @@ exports[`component: MenuBar typechecks 1`] = `
 .c0 [role='menubar'] > li > [role='menuitem'] {
   white-space: nowrap;
   padding: 24px 16px;
+  border-bottom: 2px solid hsl(200,29%,90%);
   font-size: 18px;
   line-height: 1.5;
   font-weight: 600;
@@ -627,11 +629,6 @@ exports[`component: MenuBar typechecks 1`] = `
   box-shadow: 0px 9px 24px hsla(200,96%,35%,0.3);
 }
 
-.c0 > .c1,
-.c0 [role='menubar'] > li > [role='menuitem'] {
-  box-shadow: inset 0px -2px 0px 0px hsl(200,29%,90%);
-}
-
 .c0 [role='menubar'] > li > [role='menuitem'] {
   color: hsl(200,10%,20%);
   background-color: hsl(0,0%,100%);
@@ -639,7 +636,7 @@ exports[`component: MenuBar typechecks 1`] = `
 
 .c0 [role='menubar'] > li > [role='menuitem']:hover,
 .c0 [role='menubar'] > li > [role='menuitem'][aria-expanded='true'] {
-  box-shadow: inset 0px -2px 0px 0px hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
   color: hsl(200,96%,35%);
 }
 
@@ -647,7 +644,7 @@ exports[`component: MenuBar typechecks 1`] = `
   box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
 }
 
-.c10 {
+.c9 {
   background-color: hsl(0,0%,100%);
   color: hsl(200,10%,20%);
   display: -webkit-box;
@@ -676,40 +673,40 @@ exports[`component: MenuBar typechecks 1`] = `
   z-index: 100;
 }
 
-.c10[aria-hidden='true'] {
+.c9[aria-hidden='true'] {
   display: none;
 }
 
-.c10 [role='menuitem'] {
+.c9 [role='menuitem'] {
   padding: 4px 8px;
 }
 
-.c10 [role='menuitem'] .c8 {
+.c9 [role='menuitem'] .c7 {
   -webkit-transform: rotateZ(-90deg);
   -ms-transform: rotateZ(-90deg);
   transform: rotateZ(-90deg);
 }
 
-.c10 [role='menuitem'][aria-expanded='true'] {
+.c9 [role='menuitem'][aria-expanded='true'] {
   background-color: hsl(200,29%,90%);
 }
 
-.c10 [role='menuitem'][aria-expanded='true'] .c8 {
+.c9 [role='menuitem'][aria-expanded='true'] .c7 {
   -webkit-transform: rotateZ(90deg);
   -ms-transform: rotateZ(90deg);
   transform: rotateZ(90deg);
 }
 
-.c10 [role='menuitem']:hover {
+.c9 [role='menuitem']:hover {
   color: hsl(200,96%,35%);
 }
 
-.c10 [role='menuitem']:focus {
+.c9 [role='menuitem']:focus {
   background-color: hsl(200,29%,90%);
   color: hsl(200,96%,35%);
 }
 
-.c4 {
+.c3 {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -738,7 +735,7 @@ exports[`component: MenuBar typechecks 1`] = `
   line-height: 1.6;
 }
 
-.c12 {
+.c11 {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -767,7 +764,7 @@ exports[`component: MenuBar typechecks 1`] = `
   line-height: 1.6;
 }
 
-.c5 {
+.c4 {
   cursor: pointer;
   border: none;
   outline: none;
@@ -790,16 +787,16 @@ exports[`component: MenuBar typechecks 1`] = `
   height: 100%;
 }
 
-.c5:active,
-.c5:focus {
+.c4:active,
+.c4:focus {
   outline: none;
 }
 
-.c5::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: none;
 }
 
-.c5 .c8 {
+.c4 .c7 {
   width: 8px;
   height: 8px;
   margin-left: 8px;
@@ -813,14 +810,14 @@ exports[`component: MenuBar typechecks 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c4 {
+  .c3 {
     font-size: 15px;
     line-height: 1.6;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c12 {
+  .c11 {
     font-size: 15px;
     line-height: 1.6;
   }
@@ -836,11 +833,11 @@ exports[`component: MenuBar typechecks 1`] = `
     <div
       aria-disabled="true"
       aria-hidden="true"
-      class="c1 c2"
+      class="c1"
       hidden=""
     >
       <svg
-        class="c3"
+        class="c2"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"
@@ -854,7 +851,7 @@ exports[`component: MenuBar typechecks 1`] = `
     </div>
     <ul
       aria-orientation="horizontal"
-      class="c4"
+      class="c3"
       role="menubar"
       tabindex="0"
     >
@@ -866,13 +863,13 @@ exports[`component: MenuBar typechecks 1`] = `
           aria-controls="em-popup"
           aria-current="true"
           aria-haspopup="menu"
-          class="c5"
+          class="c4"
           id="em"
           role="menuitem"
           tabindex="-1"
         >
           <div
-            class="c6"
+            class="c5"
           >
             <em>
               Emphasized
@@ -880,10 +877,10 @@ exports[`component: MenuBar typechecks 1`] = `
           </div>
           <div
             aria-hidden="true"
-            class="c7"
+            class="c6"
           >
             <svg
-              class="c8 c9"
+              class="c7 c8"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -900,17 +897,17 @@ exports[`component: MenuBar typechecks 1`] = `
         </span>
         <div
           aria-hidden="true"
-          class="c10"
+          class="c9"
           tabindex="-1"
         >
           <div
             aria-disabled="true"
             aria-hidden="true"
-            class="c1 c2"
+            class="c1"
             hidden=""
           >
             <svg
-              class="c11"
+              class="c10"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -926,7 +923,7 @@ exports[`component: MenuBar typechecks 1`] = `
           <ul
             aria-labelledby="em"
             aria-orientation="vertical"
-            class="c12"
+            class="c11"
             id="em-popup"
             role="menu"
           >
@@ -935,7 +932,7 @@ exports[`component: MenuBar typechecks 1`] = `
             >
               <a
                 aria-current="true"
-                class="c5"
+                class="c4"
                 href="#"
                 role="menuitem"
                 tabindex="-1"
@@ -950,22 +947,22 @@ exports[`component: MenuBar typechecks 1`] = `
               <span
                 aria-controls="nested-popup"
                 aria-haspopup="menu"
-                class="c5"
+                class="c4"
                 id="nested"
                 role="menuitem"
                 tabindex="-1"
               >
                 <div
-                  class="c6"
+                  class="c5"
                 >
                   Nested
                 </div>
                 <div
                   aria-hidden="true"
-                  class="c7"
+                  class="c6"
                 >
                   <svg
-                    class="c8 c9"
+                    class="c7 c8"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -982,17 +979,17 @@ exports[`component: MenuBar typechecks 1`] = `
               </span>
               <div
                 aria-hidden="true"
-                class="c10"
+                class="c9"
                 tabindex="-1"
               >
                 <div
                   aria-disabled="true"
                   aria-hidden="true"
-                  class="c1 c2"
+                  class="c1"
                   hidden=""
                 >
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -1008,7 +1005,7 @@ exports[`component: MenuBar typechecks 1`] = `
                 <ul
                   aria-labelledby="nested"
                   aria-orientation="vertical"
-                  class="c12"
+                  class="c11"
                   id="nested-popup"
                   role="menu"
                 >
@@ -1026,7 +1023,7 @@ exports[`component: MenuBar typechecks 1`] = `
                   >
                     <span
                       aria-current="true"
-                      class="c5"
+                      class="c4"
                       role="menuitem"
                       tabindex="-1"
                     >
@@ -1047,11 +1044,11 @@ exports[`component: MenuBar typechecks 1`] = `
                 <div
                   aria-disabled="true"
                   aria-hidden="true"
-                  class="c1 c2"
+                  class="c1"
                   hidden=""
                 >
                   <svg
-                    class="c13"
+                    class="c12"
                     fill="currentcolor"
                     height="1em"
                     viewBox="0 0 24 24"
@@ -1070,11 +1067,11 @@ exports[`component: MenuBar typechecks 1`] = `
           <div
             aria-disabled="true"
             aria-hidden="true"
-            class="c1 c2"
+            class="c1"
             hidden=""
           >
             <svg
-              class="c13"
+              class="c12"
               fill="currentcolor"
               height="1em"
               viewBox="0 0 24 24"
@@ -1094,7 +1091,7 @@ exports[`component: MenuBar typechecks 1`] = `
       >
         <span
           aria-current="true"
-          class="c5"
+          class="c4"
           role="menuitem"
           tabindex="-1"
         >
@@ -1107,7 +1104,7 @@ exports[`component: MenuBar typechecks 1`] = `
         role="none"
       >
         <a
-          class="c5"
+          class="c4"
           role="menuitem"
           tabindex="-1"
         >
@@ -1123,11 +1120,11 @@ exports[`component: MenuBar typechecks 1`] = `
     <div
       aria-disabled="true"
       aria-hidden="true"
-      class="c1 c2"
+      class="c1"
       hidden=""
     >
       <svg
-        class="c14"
+        class="c13"
         fill="currentcolor"
         height="1em"
         viewBox="0 0 24 24"

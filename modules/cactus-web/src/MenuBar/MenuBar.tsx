@@ -53,9 +53,7 @@ type VariantMap = { [K in MenuBarVariants]: FlattenInterpolation<ThemeProps<Cact
 
 const variantMap: VariantMap = {
   light: css`
-    > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
-      ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom', { thin: 2, thick: 3 })};
-    }
+    ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom', { thin: 2, thick: 3 })};
 
     [role='menubar'] > li > [role='menuitem'] {
       color: ${(p) => p.theme.colors.darkestContrast};
@@ -63,7 +61,7 @@ const variantMap: VariantMap = {
 
       &:hover,
       &[aria-expanded='true'] {
-        ${(p) => insetBorder(p.theme, 'callToAction', 'bottom', { thin: 2, thick: 3 })};
+        border-bottom-color: ${(p) => p.theme.colors.callToAction};
         color: ${(p) => p.theme.colors.callToAction};
       }
 
@@ -73,12 +71,13 @@ const variantMap: VariantMap = {
     }
   `,
   dark: css`
+    background-color: ${(p): string => p.theme.colors.base};
+
     > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
       padding: 23px 7px 21px 7px;
       border: ${(p) => border(p.theme, 'base')};
       border-bottom: ${(p) => border(p.theme, 'base', { thin: 3, thick: 4 })};
       color: ${(p) => p.theme.colors.white};
-      background-color: ${(p): string => p.theme.colors.base};
 
       &:hover:not([aria-disabled]),
       &[aria-expanded='true'] {
@@ -380,6 +379,7 @@ const Nav = styled.nav<MenuBarProps>`
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 24px 16px;
+    border-bottom: ${(p) => border(p.theme, 'lightContrast', { thin: 2, thick: 3 })};
     ${(p) => textStyle(p.theme, 'body')};
     font-weight: 600;
     text-transform: uppercase;
