@@ -7,6 +7,7 @@ import { omitMargins } from '../helpers/omit'
 
 interface LinkProps extends MarginProps, Omit<React.LinkHTMLAttributes<HTMLAnchorElement>, 'href'> {
   to: string
+  variant?: 'standard' | 'dark'
 }
 
 const LinkBase = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
@@ -15,16 +16,20 @@ const LinkBase = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => 
   return <a ref={ref} href={to} {...rest} />
 })
 
-export const Link = styled(LinkBase)`
+export const Link = styled(LinkBase).withConfig({
+  shouldForwardProp: (prop) => prop !== 'variant',
+})`
   font-style: italic;
   outline: none;
 
   :link {
-    color: ${(p): string => p.theme.colors.callToAction};
+    color: ${(p): string =>
+      p.variant === 'dark' ? p.theme.colors.darkContrast : p.theme.colors.callToAction};
   }
 
   :visited {
-    color: ${(p): string => p.theme.colors.mediumContrast};
+    color: ${(p): string =>
+      p.variant === 'dark' ? p.theme.colors.darkContrast : p.theme.colors.mediumContrast};
   }
 
   :hover {
@@ -41,6 +46,11 @@ export const Link = styled(LinkBase)`
 
 Link.propTypes = {
   to: PropTypes.string.isRequired,
+  variant: PropTypes.oneOf(['standard', 'dark']),
+}
+
+Link.defaultProps = {
+  variant: 'standard',
 }
 
 export default Link
