@@ -256,11 +256,9 @@ const StyledLink = styled(Link)`
     margin-top: 0px;
   }
 
-  :link {
-    color: ${(p) => p.theme.colors.base};
-  }
-
-  :visited {
+  :link,
+  :visited,
+  :hover {
     color: ${(p) => p.theme.colors.darkContrast};
   }
 
