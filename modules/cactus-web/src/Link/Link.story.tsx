@@ -2,6 +2,7 @@ import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
+import Flex from '../Flex/Flex'
 import Link from './Link'
 
 export default {
@@ -10,7 +11,14 @@ export default {
 } as Meta
 
 export const BasicUsage = (): ReactElement => (
-  <Link to={text('to', 'https://repaygithub.github.io/cactus/')}>{text('text', 'Click me!')}</Link>
+  <Flex flexDirection="column">
+    <Link to={text('to', 'https://repaygithub.github.io/cactus/')}>
+      {text('text', 'Click me!')}
+    </Link>
+    <Link variant="dark" to={text('to', 'https://repaygithub.github.io/cactus/')}>
+      I'm a dark link!
+    </Link>
+  </Flex>
 )
 
 export const WithinABlockOfText = (): ReactElement => (

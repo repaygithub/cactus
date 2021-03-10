@@ -14,15 +14,8 @@ exports[`Breadcrumb should have label and href snapshot 1`] = `
 
 .c1:visited,
 .c1:link {
-  color: hsl(200,18%,45%);
+  color: hsl(200,9%,35%);
   font-style: normal;
-  font-size: 15px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c1[aria-current='page'] {
-  color: hsl(200,10%,20%);
 }
 
 .c1:hover {
@@ -39,6 +32,11 @@ exports[`Breadcrumb should have label and href snapshot 1`] = `
   font-size: 10px;
 }
 
+.c0 {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
 .c0 > ul {
   display: -webkit-box;
   display: -webkit-flex;
@@ -50,6 +48,18 @@ exports[`Breadcrumb should have label and href snapshot 1`] = `
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.c0 [aria-current='page'] {
+  color: hsl(200,10%,20%);
+  font-style: italic;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -98,15 +108,8 @@ exports[`Should render Breadcrumb snapshot 1`] = `
 
 .c1:visited,
 .c1:link {
-  color: hsl(200,18%,45%);
+  color: hsl(200,9%,35%);
   font-style: normal;
-  font-size: 15px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c1[aria-current='page'] {
-  color: hsl(200,10%,20%);
 }
 
 .c1:hover {
@@ -129,6 +132,11 @@ exports[`Should render Breadcrumb snapshot 1`] = `
   font-size: 10px;
 }
 
+.c0 {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
 .c0 > ul {
   display: -webkit-box;
   display: -webkit-flex;
@@ -140,6 +148,18 @@ exports[`Should render Breadcrumb snapshot 1`] = `
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.c0 [aria-current='page'] {
+  color: hsl(200,10%,20%);
+  font-style: italic;
+}
+
+@media screen and (min-width:1024px) {
+  .c0 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
