@@ -117,18 +117,17 @@ function willTruncateBlockShow(
 }
 
 const ValueSwitch = (props: {
-  options: ExtendedOptionType[]
+  selected: ExtendedOptionType[]
   placeholder: string | undefined
   extraLabel: string
   multiple?: boolean
 }): React.ReactElement => {
-  const selected = props.options.filter((o): boolean => o.isSelected)
-  const numSelected = selected.length
+  const numSelected = props.selected.length
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
   const [numToRender, setNum] = useState(numSelected)
   const [prevValue, setPrevValue] = useState<string>('')
-  const valueString = selected.reduce((m, o): string => m + getLabel(o), '')
+  const valueString = props.selected.reduce((m, o): string => m + getLabel(o), '')
   const shouldRenderAll = prevValue !== valueString
   /**
    * finds the maximum number of values it can display
@@ -177,7 +176,7 @@ const ValueSwitch = (props: {
     if (numSelected > 1) {
       return (
         <ValueSpan ref={spanRef}>
-          {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
+          {props.selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
             (opt): React.ReactElement => (
               <Tag id={`value-tag::${opt.id}`} closeOption key={opt.id}>
                 {opt.altText || opt.value}
@@ -190,7 +189,7 @@ const ValueSwitch = (props: {
         </ValueSpan>
       )
     } else {
-      const value = selected[0]
+      const value = props.selected[0]
       return (
         <ValueSpan>
           <Tag id={`value-tag::${value.id}`} closeOption>
@@ -200,7 +199,7 @@ const ValueSwitch = (props: {
       )
     }
   } else {
-    return <ValueSpan>{selected[0].altText || selected[0].value}</ValueSpan>
+    return <ValueSpan>{props.selected[0].altText || props.selected[0].value}</ValueSpan>
   }
 }
 
@@ -1427,6 +1426,26 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.setState({ activeDescendant: activeDescendant })
   }
 
+  private getSelectedOptionsInOrder = (options: ExtendedOptionType[]): ExtendedOptionType[] => {
+    const optionsInOrder: ExtendedOptionType[] = []
+    const value = this.state.value
+    const selected = options.filter((option) => option.isSelected)
+    if (Array.isArray(value)) {
+      value?.forEach((valueItem) => {
+        const option = selected.find((option) => option.value === valueItem)
+        if (option) {
+          optionsInOrder.push(option)
+        }
+      })
+    } else {
+      const option = selected.find((option) => option.value === value)
+      if (option) {
+        optionsInOrder.push(option)
+      }
+    }
+    return optionsInOrder
+  }
+
   /** END helpers */
 
   public render(): React.ReactElement {
@@ -1501,7 +1520,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
             >
               <ValueSwitch
                 extraLabel={extraLabel || '+{} more'}
-                options={options}
+                selected={this.getSelectedOptionsInOrder(options)}
                 placeholder={noOptsDisable ? noOptionsText : placeholder}
                 multiple={multiple}
               />
