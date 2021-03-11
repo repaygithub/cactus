@@ -122,12 +122,13 @@ const ValueSwitch = (props: {
   extraLabel: string
   multiple?: boolean
 }): React.ReactElement => {
-  const numSelected = props.selected.length
+  const { selected } = props
+  const numSelected = selected.length
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
   const [numToRender, setNum] = useState(numSelected)
   const [prevValue, setPrevValue] = useState<string>('')
-  const valueString = props.selected.reduce((m, o): string => m + getLabel(o), '')
+  const valueString = selected.reduce((m, o): string => m + getLabel(o), '')
   const shouldRenderAll = prevValue !== valueString
   /**
    * finds the maximum number of values it can display
@@ -176,7 +177,7 @@ const ValueSwitch = (props: {
     if (numSelected > 1) {
       return (
         <ValueSpan ref={spanRef}>
-          {props.selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
+          {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
             (opt): React.ReactElement => (
               <Tag id={`value-tag::${opt.id}`} closeOption key={opt.id}>
                 {opt.altText || opt.value}
@@ -189,7 +190,7 @@ const ValueSwitch = (props: {
         </ValueSpan>
       )
     } else {
-      const value = props.selected[0]
+      const value = selected[0]
       return (
         <ValueSpan>
           <Tag id={`value-tag::${value.id}`} closeOption>
@@ -199,7 +200,7 @@ const ValueSwitch = (props: {
       )
     }
   } else {
-    return <ValueSpan>{props.selected[0].altText || props.selected[0].value}</ValueSpan>
+    return <ValueSpan>{selected[0].altText || selected[0].value}</ValueSpan>
   }
 }
 
