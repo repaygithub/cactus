@@ -1427,24 +1427,19 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.setState({ activeDescendant: activeDescendant })
   }
 
-  private getSelectedOptionsInOrder = (options: ExtendedOptionType[]): ExtendedOptionType[] => {
-    const optionsInOrder: ExtendedOptionType[] = []
+  private getSelectedOptionsInOrder = (): ExtendedOptionType[] => {
     const value = this.state.value
-    const selected = options.filter((option) => option.isSelected)
     if (Array.isArray(value)) {
-      value?.forEach((valueItem) => {
-        const option = selected.find((option) => option.value === valueItem)
-        if (option) {
-          optionsInOrder.push(option)
-        }
-      })
-    } else {
-      const option = selected.find((option) => option.value === value)
+      return value
+        .map((val) => this.optionsMap.get(val))
+        .filter((opt) => opt !== undefined) as ExtendedOptionType[]
+    } else if (value) {
+      const option = this.optionsMap.get(value)
       if (option) {
-        optionsInOrder.push(option)
+        return [option]
       }
     }
-    return optionsInOrder
+    return []
   }
 
   /** END helpers */
@@ -1521,7 +1516,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
             >
               <ValueSwitch
                 extraLabel={extraLabel || '+{} more'}
-                selected={this.getSelectedOptionsInOrder(options)}
+                selected={this.getSelectedOptionsInOrder()}
                 placeholder={noOptsDisable ? noOptionsText : placeholder}
                 multiple={multiple}
               />
