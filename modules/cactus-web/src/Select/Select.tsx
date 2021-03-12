@@ -117,12 +117,12 @@ function willTruncateBlockShow(
 }
 
 const ValueSwitch = (props: {
-  options: ExtendedOptionType[]
+  selected: ExtendedOptionType[]
   placeholder: string | undefined
   extraLabel: string
   multiple?: boolean
 }): React.ReactElement => {
-  const selected = props.options.filter((o): boolean => o.isSelected)
+  const { selected } = props
   const numSelected = selected.length
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
@@ -1427,6 +1427,21 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     this.setState({ activeDescendant: activeDescendant })
   }
 
+  private getSelectedOptionsInOrder = (): ExtendedOptionType[] => {
+    const value = this.state.value
+    if (Array.isArray(value)) {
+      return value
+        .map((val) => this.optionsMap.get(val))
+        .filter((opt) => opt !== undefined) as ExtendedOptionType[]
+    } else if (value) {
+      const option = this.optionsMap.get(value)
+      if (option) {
+        return [option]
+      }
+    }
+    return []
+  }
+
   /** END helpers */
 
   public render(): React.ReactElement {
@@ -1501,7 +1516,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
             >
               <ValueSwitch
                 extraLabel={extraLabel || '+{} more'}
-                options={options}
+                selected={this.getSelectedOptionsInOrder()}
                 placeholder={noOptsDisable ? noOptionsText : placeholder}
                 multiple={multiple}
               />
