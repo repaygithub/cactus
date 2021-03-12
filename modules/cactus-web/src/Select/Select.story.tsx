@@ -12,7 +12,7 @@ const eventLoggers = {
   onBlur: (e: any) => console.log('onBlur:', e.target.name),
 }
 
-const defaultMultiValue = arizonaCities.slice(6, 15)
+const defaultMultiValue = arizonaCities.slice(6, 15).reverse()
 
 export default {
   title: 'Select',
