@@ -1231,13 +1231,17 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
         value = ([] as (string | number)[]).concat(value)
       }
       if (value.includes(option.value)) {
-        if (!onlyAdd) {
-          value = value.filter((v): boolean => v !== option.value)
+        if (onlyAdd) {
+          return
         }
+        value = value.filter((v): boolean => v !== option.value)
       } else {
         value.push(option.value)
       }
     } else {
+      if (value === option.value) {
+        return
+      }
       value = option.value
     }
     const extOpt = this.optionsMap.get(option.value)

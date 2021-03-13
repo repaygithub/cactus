@@ -106,7 +106,10 @@ export const WithMultiselect = (): ReactElement => {
       id="select-input"
       disabled={boolean('disabled', false)}
       {...eventLoggers}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => {
+        eventLoggers.onChange(e)
+        setValue(e.target.value)
+      }}
       value={value}
       multiple
     >
@@ -131,7 +134,10 @@ export const WithComboBox = (): ReactElement => {
       id="select-input"
       disabled={boolean('disabled', false)}
       {...eventLoggers}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e) => {
+        eventLoggers.onChange(e)
+        setValue(e.target.value)
+      }}
       value={value}
       comboBox
       canCreateOption={boolean('canCreateOption', true)}
