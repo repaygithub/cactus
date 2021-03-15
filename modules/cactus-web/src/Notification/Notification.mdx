@@ -1,0 +1,54 @@
+---
+name: Notification
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import Notification from './Notification'
+import Alert from '../Alert/Alert'
+import Button from '../Button/Button'
+import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# Notification
+
+A component that overlays its children on the screen in different positions to help with rendering notifications like alerts.
+
+## Basic usage
+
+The `Notification` component has two props:
+  - `open`: Tells the component whether or not to display its children.
+  - `position`: An object with `vertical` and `horizontal` keys that tell the component where to render the child. Valid `vertical` values are "top" or "bottom",
+  while valid valid `horizontal` values are "left", "center", or "right". If no position prop is passed, it will default to the bottom center for tiny screens
+  and bottom right for anything larger than that.
+This component calls the `useScreenSize` hook internally, so it should always be rendered as a child of `ScreenSizeProvider`.
+
+### Try It Out
+
+export const code = `
+const NotificationContainer = () => {
+  const [open, setOpen] = React.useState(false)
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>
+        Open Notification
+      </Button>
+      <Notification open={open} position={{ vertical: 'bottom', horizontal: 'right' }}>
+        <Alert status="error" onClose={() => setOpen(false)}>I am an overlayed alert!</Alert>
+      </Notification>
+    </>
+  )
+}
+render(<ScreenSizeProvider><NotificationContainer /></ScreenSizeProvider>)
+`
+
+<LiveProvider code={code} scope={{ Notification, Alert, Button, ScreenSizeProvider }} noInline={true}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Properties
+
+<PropsTable of={Notification} />
