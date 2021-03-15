@@ -74,5 +74,6 @@ Array [
   "Footer",
   "BrandBar",
   "Divider",
+  "Header",
 ]
 `;
