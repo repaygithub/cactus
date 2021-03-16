@@ -17,12 +17,13 @@ A component that overlays its children on the screen in different positions to h
 
 ## Basic usage
 
-The `Notification` component has two props:
+The `Notification` component has three props:
   - `open`: Tells the component whether or not to display its children.
-  - `position`: An object with `vertical` and `horizontal` keys that tell the component where to render the child. Valid `vertical` values are "top" or "bottom",
-  while valid valid `horizontal` values are "left", "center", or "right". If no position prop is passed, it will default to the bottom center for tiny screens
-  and bottom right for anything larger than that.
-This component calls the `useScreenSize` hook internally, so it should always be rendered as a child of `ScreenSizeProvider`.
+  - `vertical`: Tells the component where to render the children vertically. Valid options are "top" or "bottom". Defaults to "bottom".
+  - `horizontal`: Tells the component where to render the children horizontally. Valid options are "left", "center", or "right". Defaults
+  to "center" for tiny screens and "right" for any screens larger than that.
+
+This component calls the `useScreenSize` hook internally, so it should always be rendered as a descendant of `ScreenSizeProvider`.
 
 ### Try It Out
 
@@ -34,7 +35,7 @@ const NotificationContainer = () => {
       <Button onClick={() => setOpen(true)}>
         Open Notification
       </Button>
-      <Notification open={open} position={{ vertical: 'bottom', horizontal: 'right' }}>
+      <Notification open={open} vertical="bottom" horizontal="right">
         <Alert status="error" onClose={() => setOpen(false)}>I am an overlayed alert!</Alert>
       </Notification>
     </>
