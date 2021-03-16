@@ -30,7 +30,7 @@ export const BasicUsage = (): React.ReactElement => {
       <Button id="open-notification" onClick={handleOpen}>
         Open Notification
       </Button>
-      <Notification open={open} position={{ vertical, horizontal }}>
+      <Notification open={open} vertical={vertical} horizontal={horizontal}>
         <Alert status="error" onClose={handleClose}>
           Message
         </Alert>
@@ -41,13 +41,13 @@ export const BasicUsage = (): React.ReactElement => {
 
 BasicUsage.parameters = {
   beforeScreenshot: async (page: Page) => {
-    await page.click('button[id="open-notification"]')
+    await page.click('#open-notification')
   },
 }
 
 export const TopLeft = (): React.ReactElement => {
   return (
-    <Notification open position={{ vertical: 'top', horizontal: 'left' }}>
+    <Notification open vertical="top" horizontal="left">
       <Alert status="error">Message</Alert>
     </Notification>
   )
@@ -55,7 +55,7 @@ export const TopLeft = (): React.ReactElement => {
 
 export const TopCenter = (): React.ReactElement => {
   return (
-    <Notification open position={{ vertical: 'top', horizontal: 'center' }}>
+    <Notification open vertical="top" horizontal="center">
       <Alert status="error">Message</Alert>
     </Notification>
   )
@@ -63,7 +63,7 @@ export const TopCenter = (): React.ReactElement => {
 
 export const TopRight = (): React.ReactElement => {
   return (
-    <Notification open position={{ vertical: 'top', horizontal: 'right' }}>
+    <Notification open vertical="top" horizontal="right">
       <Alert status="error">Message</Alert>
     </Notification>
   )
@@ -71,7 +71,7 @@ export const TopRight = (): React.ReactElement => {
 
 export const BottomLeft = (): React.ReactElement => {
   return (
-    <Notification open position={{ vertical: 'bottom', horizontal: 'left' }}>
+    <Notification open vertical="bottom" horizontal="left">
       <Alert status="error">Message</Alert>
     </Notification>
   )
@@ -79,7 +79,7 @@ export const BottomLeft = (): React.ReactElement => {
 
 export const BottomCenter = (): React.ReactElement => {
   return (
-    <Notification open position={{ vertical: 'bottom', horizontal: 'center' }}>
+    <Notification open vertical="bottom" horizontal="center">
       <Alert status="error">Message</Alert>
     </Notification>
   )

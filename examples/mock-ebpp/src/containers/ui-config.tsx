@@ -119,7 +119,7 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
 
   return (
     <div>
-      <Notification open={notificationOpen} position={{ vertical: 'top', horizontal: 'right' }}>
+      <Notification open={notificationOpen} vertical="top" horizontal="right">
         <Alert status="success" onClose={() => setNotificationOpen(false)}>
           Submitted Successfully
         </Alert>
