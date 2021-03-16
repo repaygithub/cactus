@@ -16,9 +16,7 @@ export type HeaderType = FC<HeaderProps> & {
   Title: typeof HeaderTitle
 }
 
-export const HeaderItem: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children }) => {
-  return <>{children}</>
-}
+export const HeaderItem: FC = ({ children }) => <>{children}</>
 
 export const HeaderTitle: FC = ({ children }) => {
   return (
@@ -28,11 +26,7 @@ export const HeaderTitle: FC = ({ children }) => {
   )
 }
 
-export const HeaderBreadcrumbRow: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  children,
-}) => {
-  return <>{children}</>
-}
+export const HeaderBreadcrumbRow: FC = ({ children }) => <>{children}</>
 
 export const Header: HeaderType = ({ children, bgColor = 'lightContrast', ...rest }) => {
   const childrens = Children.toArray(children)
@@ -78,14 +72,13 @@ export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
   justify-content: center;
   flex-direction: column;
   padding-top: ${(p) => !p.mainColumn && '24px'};
+  align-items: center;
 
   ${(p) => `
     ${p.theme.mediaQueries?.small}{
-      &:last-child {
-        flex-direction: row; 
-      }
+      flex-direction: ${!p.mainColumn ? 'row' : ''};
+      align-items: ${!p.mainColumn ? 'center' : 'flex-start'};
       padding-top: 0px;
-      align-items: center;
     }
   `};
 `
