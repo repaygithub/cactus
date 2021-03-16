@@ -9,11 +9,7 @@ describe('component: Notification', () => {
   test('should render children in the correct position on the page', () => {
     const { getByTestId, rerender } = render(
       <StyleProvider>
-        <Notification
-          open
-          position={{ vertical: 'top', horizontal: 'left' }}
-          data-testid="notification-wrapper"
-        >
+        <Notification open vertical="top" horizontal="left" data-testid="notification-wrapper">
           <Alert status="error">Error Notification</Alert>
         </Notification>
       </StyleProvider>
@@ -25,11 +21,7 @@ describe('component: Notification', () => {
 
     rerender(
       <StyleProvider>
-        <Notification
-          open
-          position={{ vertical: 'top', horizontal: 'center' }}
-          data-testid="notification-wrapper"
-        >
+        <Notification open vertical="top" horizontal="center" data-testid="notification-wrapper">
           <Alert status="error">Error Notification</Alert>
         </Notification>
       </StyleProvider>
@@ -42,11 +34,7 @@ describe('component: Notification', () => {
 
     rerender(
       <StyleProvider>
-        <Notification
-          open
-          position={{ vertical: 'top', horizontal: 'right' }}
-          data-testid="notification-wrapper"
-        >
+        <Notification open vertical="top" horizontal="right" data-testid="notification-wrapper">
           <Alert status="error">Error Notification</Alert>
         </Notification>
       </StyleProvider>
@@ -58,11 +46,7 @@ describe('component: Notification', () => {
 
     rerender(
       <StyleProvider>
-        <Notification
-          open
-          position={{ vertical: 'bottom', horizontal: 'left' }}
-          data-testid="notification-wrapper"
-        >
+        <Notification open vertical="bottom" horizontal="left" data-testid="notification-wrapper">
           <Alert status="error">Error Notification</Alert>
         </Notification>
       </StyleProvider>
@@ -74,11 +58,7 @@ describe('component: Notification', () => {
 
     rerender(
       <StyleProvider>
-        <Notification
-          open
-          position={{ vertical: 'bottom', horizontal: 'center' }}
-          data-testid="notification-wrapper"
-        >
+        <Notification open vertical="bottom" horizontal="center" data-testid="notification-wrapper">
           <Alert status="error">Error Notification</Alert>
         </Notification>
       </StyleProvider>
@@ -91,11 +71,7 @@ describe('component: Notification', () => {
 
     rerender(
       <StyleProvider>
-        <Notification
-          open
-          position={{ vertical: 'bottom', horizontal: 'right' }}
-          data-testid="notification-wrapper"
-        >
+        <Notification open vertical="bottom" horizontal="right" data-testid="notification-wrapper">
           <Alert status="error">Error Notification</Alert>
         </Notification>
       </StyleProvider>
@@ -109,7 +85,7 @@ describe('component: Notification', () => {
   test('should not render children when open is false', () => {
     const { queryByText } = render(
       <StyleProvider>
-        <Notification open={false} position={{ vertical: 'top', horizontal: 'left' }}>
+        <Notification open={false} vertical="top" horizontal="left">
           <Alert status="error">Error Notification</Alert>
         </Notification>
       </StyleProvider>
