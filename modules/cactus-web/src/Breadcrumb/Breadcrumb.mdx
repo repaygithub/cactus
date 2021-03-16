@@ -16,7 +16,7 @@ The `Breadcrumb` comopnent allows you to render a navigation of your previusly v
 
 export const code = `<Breadcrumb>
   <Breadcrumb.Item href="/">Account</Breadcrumb.Item>
-  <Breadcrumb.Item href="/" active>Make a Payment</Breadcrumb.Item>
+  <Breadcrumb.Active>Make a Payment</Breadcrumb.Active>
 </Breadcrumb>`
 
 <LiveProvider code={code} scope={{ Breadcrumb }}>
@@ -27,11 +27,12 @@ export const code = `<Breadcrumb>
 
 ## Best practices
 
-The Breadcrumb component consists of two parts: The `Breadcrumb` which works as a wrapper for the navigation links.
-And a `Breadcrumb.Item` which represents a single Breadrumb or link. href should be passed as a prop,
-and if it's the last navigation Breadcrumb, an active prop should be passed as well.
+The Breadcrumb component consists of three parts:
+- The `Breadcrumb` which works as a wrapper for the navigation links.
+- A `Breadcrumb.Item` which represents a single Breadrumb or link. href should be passed as a prop.
+- A `Breadcrumb.Active`, which represents the current page.  This will render non-clickable text.
 
-In addition, you can use the `as` prop to use a custom component, like a router's `Link` component,
+In addition, you can use the `as` prop to use a custom component for `Breadcrumb.Item`, like a router's `Link` component,
 instead of a standard HTML link.  For example:
 
 ```jsx
@@ -39,7 +40,7 @@ import { Link } from 'react-router-dom'
 
 <Breadcrumb>
   <Breadcrumb.Item as={Link} to="/">Account</Breadcrumb.Item>
-  <Breadcrumb.Item as={Link} to="/" active>Make a Payment</Breadcrumb.Item>
+  <Breadcrumb.Active>Make a Payment</Breadcrumb.Active>
 </Breadcrumb>
 ```
 

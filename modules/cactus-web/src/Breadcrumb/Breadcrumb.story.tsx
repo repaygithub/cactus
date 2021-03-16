@@ -12,9 +12,7 @@ export default {
 export const BasicUsage = (): ReactElement => (
   <Breadcrumb>
     <Breadcrumb.Item href="/">{text('Label 1', 'Account')}</Breadcrumb.Item>
-    <Breadcrumb.Item href="/" active>
-      <em>{text('Label 2', 'Make a Payment')}</em>
-    </Breadcrumb.Item>
+    <Breadcrumb.Active>{text('Label 2', 'Make a Payment')}</Breadcrumb.Active>
   </Breadcrumb>
 )
 
@@ -34,7 +32,7 @@ export const CustomItemElements = (): ReactElement => (
       {text('Label 1', 'Account')}
     </Breadcrumb.Item>
     <Breadcrumb.Item as={CustomLink} customTo="/" active>
-      <em>{text('Label 2', 'Make a Payment')}</em>
+      {text('Label 2', 'Make a Payment')}
     </Breadcrumb.Item>
   </Breadcrumb>
 )

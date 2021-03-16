@@ -180,11 +180,9 @@ exports[`component: Footer snapshot 1`] = `
   margin-top: 0px;
 }
 
-.c9:link {
-  color: hsl(200,96%,11%);
-}
-
-.c9:visited {
+.c9:link,
+.c9:visited,
+.c9:hover {
   color: hsl(200,9%,35%);
 }
 

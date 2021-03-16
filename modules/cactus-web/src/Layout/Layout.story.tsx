@@ -136,15 +136,27 @@ export const BasicUsage = (): React.ReactElement => {
   const hasMenu = boolean('Show Menu', true)
   const hasActions = boolean('Show Action Bar', true)
   const hasFooter = boolean('Show Footer', true)
+  const useDarkNav = boolean('Dark Navigation', false)
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false)
 
   return (
     <Layout>
       {hasBrand && <StoryBrandBar />}
-      {hasMenu && <StoryMenuBar />}
+      {hasMenu && (
+        <MenuBar variant={useDarkNav ? 'dark' : 'light'}>
+          <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
+          <MenuBar.Item onClick={action('Mill')}>I saw</MenuBar.Item>
+          <MenuBar.List title="Interlude: About Bears">
+            <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
+            <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
+          </MenuBar.List>
+        </MenuBar>
+      )}
       {hasActions && <StoryActionBar />}
       <Layout.Content>
-        <h1>Latin Or Something</h1>
+        <Box padding={3} backgroundColor={useDarkNav ? 'lightContrast' : 'white'}>
+          <h1>Latin Or Something</h1>
+        </Box>
         <TextInputField name="foo" label="Foo" />
         <ToggleField
           ml="150px"

@@ -1,3 +1,32 @@
+# v6.0.1 (Tue Mar 09 2021)
+
+#### 🐛 Bug Fix
+
+- Fix MenuBar width on desktop screens [#545](https://github.com/repaygithub/cactus/pull/545) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 1
+
+- [@mikesoltow](https://github.com/mikesoltow)
+
+---
+
+# vnull (Tue Mar 09 2021)
+
+#### 🐛 Bug Fix
+
+- Fix MenuBar width on desktop screens [#545](https://github.com/repaygithub/cactus/pull/545) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### 🏠 Internal
+
+- undefined [#542](https://github.com/repaygithub/cactus/pull/542) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### Authors: 2
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@mikesoltow](https://github.com/mikesoltow)
+
+---
+
 # v6.0.0 (Thu Mar 04 2021)
 
 #### 💥 Breaking Change

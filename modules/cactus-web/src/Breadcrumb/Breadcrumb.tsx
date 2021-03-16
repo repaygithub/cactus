@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { borderSize } from '../helpers/theme'
+import { borderSize, textStyle } from '../helpers/theme'
 
 type BreadcrumbItemProps<C extends GenericComponent> = AsProps<C> & {
   active?: boolean
@@ -30,6 +30,10 @@ export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
   )
 }
 
+export const BreadcrumbActive = (
+  props: React.HTMLAttributes<HTMLDivElement>
+): React.ReactElement => <div aria-current="page" {...props} />
+
 const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { children, className } = props
   return (
@@ -45,13 +49,8 @@ const BreadcrumbLink = styled.a`
   outline: none;
   &:visited,
   &:link {
-    color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${(p) => p.theme.colors.darkContrast};
     font-style: normal;
-    font-size: 15px;
-    text-decoration: none;
-  }
-  &[aria-current='page'] {
-    color: ${(p) => p.theme.colors.darkestContrast};
   }
   &:hover {
     color: ${(p) => p.theme.colors.callToAction};
@@ -69,6 +68,8 @@ const StyledChevron = styled(NavigationChevronRight)<{ $active?: boolean }>`
 `
 
 const StyledNav = styled.nav`
+  ${(p) => textStyle(p.theme, 'small')}
+
   > ul {
     display: flex;
     flex-direction: row;
@@ -76,13 +77,20 @@ const StyledNav = styled.nav`
     padding: 0;
     margin: 0;
   }
+
+  [aria-current='page'] {
+    color: ${(p) => p.theme.colors.darkestContrast};
+    font-style: italic;
+  }
 `
 
 type BreadcrumbComponent = typeof BreadcrumbBase & {
   Item: typeof BreadcrumbItem
+  Active: typeof BreadcrumbActive
 }
 
 export const Breadcrumb = BreadcrumbBase as BreadcrumbComponent
 Breadcrumb.Item = BreadcrumbItem
+Breadcrumb.Active = BreadcrumbActive
 
 export default Breadcrumb

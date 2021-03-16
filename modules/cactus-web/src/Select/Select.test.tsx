@@ -789,7 +789,7 @@ describe('component: Select', (): void => {
           <Select
             id="test-id"
             name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
+            options={['flagstaff', 'tucson', 'phoenix']}
             value={startingValue}
             onChange={onChange}
             multiple
