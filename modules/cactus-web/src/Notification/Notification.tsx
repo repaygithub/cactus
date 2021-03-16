@@ -1,31 +1,37 @@
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, ThemedStyledProps } from 'styled-components'
 
 import { ScreenSize, SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
-interface Position {
-  vertical: 'top' | 'bottom'
-  horizontal: 'left' | 'center' | 'right'
-}
+type Vertical = 'top' | 'bottom'
+type Horizontal = 'left' | 'center' | 'right'
 
 interface NotificationProps {
   open: boolean
-  position?: Position
+  vertical?: Vertical
+  horizontal?: Horizontal
 }
 
 interface NotificationWrapperProps {
-  $position: Position
-  $spacing: number
+  $vertical: Vertical
+  $horizontal: Horizontal
+  $screenSize: ScreenSize
 }
 
-const getNotificationPosition = (props: NotificationWrapperProps): ReturnType<typeof css> => {
-  const { $position, $spacing } = props
+const getNotificationPosition = (
+  props: ThemedStyledProps<NotificationWrapperProps, CactusTheme>
+): ReturnType<typeof css> => {
+  const { $vertical, $horizontal, $screenSize, theme } = props
+
+  const spacingIndex = $screenSize === SIZES.tiny ? 4 : $screenSize === SIZES.small ? 5 : 7
+
   return css`
-    ${$position.vertical}: ${$spacing}px;
-    ${$position.horizontal === 'center'
+    ${$vertical}: ${theme.space[spacingIndex]}px;
+    ${$horizontal === 'center'
       ? `left: 50%; transform: translateX(-50%);`
-      : `${$position.horizontal}: ${$spacing}px`}
+      : `${$horizontal}: ${theme.space[spacingIndex]}px`}
   `
 }
 
@@ -39,31 +45,24 @@ const NotificationWrapper = styled.div<NotificationWrapperProps>`
 
 export const Notification: React.FC<NotificationProps> = ({
   open,
-  position,
+  vertical = 'bottom',
+  horizontal,
   children,
   ...rest
 }) => {
   const screenSize = useScreenSize()
 
-  const getPosition = (): Position => {
-    return position
-      ? position
-      : screenSize === SIZES.tiny
-      ? { vertical: 'bottom', horizontal: 'center' }
-      : { vertical: 'bottom', horizontal: 'left' }
+  if (!horizontal) {
+    horizontal = screenSize === SIZES.tiny ? 'center' : 'right'
   }
 
-  const getSpacing = (screenSize: ScreenSize): number => {
-    return screenSize === SIZES.extraLarge ||
-      screenSize === SIZES.large ||
-      screenSize === SIZES.medium
-      ? 40
-      : screenSize === SIZES.small
-      ? 24
-      : 16
-  }
   return open ? (
-    <NotificationWrapper $position={getPosition()} $spacing={getSpacing(screenSize)} {...rest}>
+    <NotificationWrapper
+      $vertical={vertical}
+      $horizontal={horizontal}
+      $screenSize={screenSize}
+      {...rest}
+    >
       {children}
     </NotificationWrapper>
   ) : null
@@ -72,11 +71,8 @@ export const Notification: React.FC<NotificationProps> = ({
 Notification.displayName = 'Notification'
 Notification.propTypes = {
   open: PropTypes.bool.isRequired,
-  position: PropTypes.shape({
-    vertical: PropTypes.oneOf<'top' | 'bottom'>(['top', 'bottom']).isRequired,
-    horizontal: PropTypes.oneOf<'left' | 'center' | 'right'>(['left', 'center', 'right'])
-      .isRequired,
-  }),
+  vertical: PropTypes.oneOf<Vertical>(['top', 'bottom']),
+  horizontal: PropTypes.oneOf<Horizontal>(['left', 'center', 'right']),
 }
 
 export default Notification
