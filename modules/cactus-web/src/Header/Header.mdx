@@ -14,9 +14,9 @@ The `Header` component allows you to set a heading `Title` with aditional elemen
 
 - The `Header` component has `Header.Title`, `Header.Item` and `Header.BreadcrumbRow` sub-components.
 - The `Header.Title` is the most important sub-component, you must use it with the `Header` component.
-- The `Header.BreadcrumbRow` allows you to wrap a `Breadcrumb` component or a `Go Back` button.
+- The `Header.BreadcrumbRow` allows you to display a `Breadcrumb` component or a `Go Back` button above the `Title`.
 - The `Header.Item` allows you to wrap additional items that will be right-aligned (in desktop views).
-- The `Header` component uses its sub-components to arrange the elements you want to insert inside the header. If you pass a `children` without being wrapped into any subcomponent, that children won't be rendered.
+- The `Header` component uses its sub-components to arrange the elements you want to insert inside the header. Any child components not wrapped in a subcomponent will not be rendered.
 
 ```jsx
 import * as React from 'react'

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: Header Should render the Header with Title and Items 1`] = `
-.c3 {
+.c4 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -19,11 +19,11 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
   border-color: hsl(200,96%,11%);
 }
 
-.c3::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c4:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -37,12 +37,12 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
   box-sizing: border-box;
 }
 
-.c3 svg {
+.c4 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c3 .sc-gyUeRy {
+.c4 .sc-gyUeRy {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -50,7 +50,7 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
   margin-top: -8px;
 }
 
-.c3:hover {
+.c4:hover {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -59,11 +59,23 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
 .c2 {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 25.92px;
-  line-height: 1.5;
 }
 
 .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -101,15 +113,8 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c3 {
+  .c4 {
     font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c2 {
-    font-size: 31.104px;
     line-height: 1.5;
   }
 }
@@ -117,15 +122,29 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
 @media screen and (min-width:768px) {
   .c1 {
     padding-top: 0px;
-  }
-
-  .c1:first-child {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 
   .c1:last-child {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c3 {
+    padding-top: 0px;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .c3:last-child {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -152,18 +171,18 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
     <div
       class="c1"
     >
-      <h1
+      <h2
         class="c2"
       >
         Heading Title
-      </h1>
+      </h2>
     </div>
     <div
-      class="c1"
+      class="c3"
     >
       <button
         aria-live="assertive"
-        class="c3"
+        class="c4"
         type="button"
       >
         <span>
@@ -177,7 +196,7 @@ exports[`component: Header Should render the Header with Title and Items 1`] = `
 `;
 
 exports[`component: Header Should render the Header with Title and Items 2`] = `
-.c3 {
+.c4 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -195,11 +214,11 @@ exports[`component: Header Should render the Header with Title and Items 2`] = `
   border-color: hsl(200,96%,11%);
 }
 
-.c3::-moz-focus-inner {
+.c4::-moz-focus-inner {
   border: 0;
 }
 
-.c3:focus::after {
+.c4:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -213,12 +232,12 @@ exports[`component: Header Should render the Header with Title and Items 2`] = `
   box-sizing: border-box;
 }
 
-.c3 svg {
+.c4 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c3 .sc-gyUeRy {
+.c4 .sc-gyUeRy {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -226,7 +245,7 @@ exports[`component: Header Should render the Header with Title and Items 2`] = `
   margin-top: -8px;
 }
 
-.c3:hover {
+.c4:hover {
   background-color: hsl(200,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(200,96%,11%);
@@ -235,11 +254,23 @@ exports[`component: Header Should render the Header with Title and Items 2`] = `
 .c2 {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 25.92px;
-  line-height: 1.5;
 }
 
 .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -277,15 +308,8 @@ exports[`component: Header Should render the Header with Title and Items 2`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c3 {
+  .c4 {
     font-size: 18px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width:1024px) {
-  .c2 {
-    font-size: 31.104px;
     line-height: 1.5;
   }
 }
@@ -293,15 +317,29 @@ exports[`component: Header Should render the Header with Title and Items 2`] = `
 @media screen and (min-width:768px) {
   .c1 {
     padding-top: 0px;
-  }
-
-  .c1:first-child {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 
   .c1:last-child {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c3 {
+    padding-top: 0px;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .c3:last-child {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -328,18 +366,18 @@ exports[`component: Header Should render the Header with Title and Items 2`] = `
     <div
       class="c1"
     >
-      <h1
+      <h2
         class="c2"
       >
         Hasta la vista, baby
-      </h1>
+      </h2>
     </div>
     <div
-      class="c1"
+      class="c3"
     >
       <button
         aria-live="assertive"
-        class="c3"
+        class="c4"
         type="button"
       >
         <span>
@@ -366,15 +404,8 @@ exports[`component: Header Should render the Header with Title, Breadcrumb and I
 
 .c3:visited,
 .c3:link {
-  color: hsl(200,18%,45%);
+  color: hsl(200,9%,35%);
   font-style: normal;
-  font-size: 15px;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c3[aria-current='page'] {
-  color: hsl(200,10%,20%);
 }
 
 .c3:hover {
@@ -391,10 +422,9 @@ exports[`component: Header Should render the Header with Title, Breadcrumb and I
   font-size: 10px;
 }
 
-.c6 {
-  color: hsl(200,10%,20%);
-  margin: 0 3px;
-  font-size: 10px;
+.c2 {
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .c2 > ul {
@@ -408,6 +438,11 @@ exports[`component: Header Should render the Header with Title, Breadcrumb and I
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.c2 [aria-current='page'] {
+  color: hsl(200,10%,20%);
+  font-style: italic;
 }
 
 .c8 {
@@ -465,14 +500,26 @@ exports[`component: Header Should render the Header with Title, Breadcrumb and I
   border-color: hsl(200,96%,11%);
 }
 
-.c7 {
+.c6 {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 25.92px;
-  line-height: 1.5;
 }
 
 .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -510,15 +557,15 @@ exports[`component: Header Should render the Header with Title, Breadcrumb and I
 }
 
 @media screen and (min-width:1024px) {
-  .c8 {
-    font-size: 18px;
-    line-height: 1.5;
+  .c2 {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 
 @media screen and (min-width:1024px) {
-  .c7 {
-    font-size: 31.104px;
+  .c8 {
+    font-size: 18px;
     line-height: 1.5;
   }
 }
@@ -526,15 +573,29 @@ exports[`component: Header Should render the Header with Title, Breadcrumb and I
 @media screen and (min-width:768px) {
   .c1 {
     padding-top: 0px;
-  }
-
-  .c1:first-child {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 
   .c1:last-child {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width:768px) {
+  .c7 {
+    padding-top: 0px;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .c7:last-child {
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
@@ -587,40 +648,23 @@ exports[`component: Header Should render the Header with Title, Breadcrumb and I
               />
             </svg>
           </li>
-          <li>
-            <a
-              aria-current="page"
-              class="c3"
-              href="/"
-            >
-              <em>
-                Label
-              </em>
-            </a>
-            <svg
-              class="c4 c6"
-              fill="currentcolor"
-              height="1em"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-                transform="matrix(-1 0 0 1 24 0)"
-              />
-            </svg>
-          </li>
+          <div
+            aria-current="page"
+          >
+            <em>
+              Label
+            </em>
+          </div>
         </ul>
       </nav>
-      <h1
-        class="c7"
+      <h2
+        class="c6"
       >
         Heading Title
-      </h1>
+      </h2>
     </div>
     <div
-      class="c1"
+      class="c7"
     >
       <button
         aria-live="assertive"
@@ -641,8 +685,6 @@ exports[`component: Header Should render the Header witha a single title 1`] = `
 .c2 {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 25.92px;
-  line-height: 1.5;
 }
 
 .c1 {
@@ -657,7 +699,6 @@ exports[`component: Header Should render the Header witha a single title 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  padding-top: 24px;
 }
 
 .c0 {
@@ -682,22 +723,13 @@ exports[`component: Header Should render the Header witha a single title 1`] = `
   width: 100%;
 }
 
-@media screen and (min-width:1024px) {
-  .c2 {
-    font-size: 31.104px;
-    line-height: 1.5;
-  }
-}
-
 @media screen and (min-width:768px) {
   .c1 {
     padding-top: 0px;
-  }
-
-  .c1:first-child {
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 
   .c1:last-child {
@@ -727,11 +759,11 @@ exports[`component: Header Should render the Header witha a single title 1`] = `
     <div
       class="c1"
     >
-      <h1
+      <h2
         class="c2"
       >
         Hasta la vista, baby
-      </h1>
+      </h2>
     </div>
   </header>
 </div>

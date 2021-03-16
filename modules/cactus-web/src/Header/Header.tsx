@@ -1,17 +1,16 @@
 import PropTypes from 'prop-types'
-import React, { Children, ReactNode } from 'react'
+import React, { Children, ComponentType, FC, HTMLAttributes, ReactElement } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import Text from '../Text/Text'
 
 export type BackgroundColorVariants = 'lightContrast' | 'white'
-interface HeaderProps extends MarginProps, React.HTMLAttributes<HTMLDivElement> {
+interface HeaderProps extends MarginProps, HTMLAttributes<HTMLDivElement> {
   bgColor?: BackgroundColorVariants
-  children?: ReactNode
 }
 
-export type HeaderType = React.FC<HeaderProps> & {
+export type HeaderType = FC<HeaderProps> & {
   Item: typeof HeaderItem
   BreadcrumbRow: typeof HeaderBreadcrumbRow
   Title: typeof HeaderTitle
@@ -21,9 +20,9 @@ export const HeaderItem: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ chi
   return <>{children}</>
 }
 
-export const HeaderTitle: React.FC = ({ children }) => {
+export const HeaderTitle: FC = ({ children }) => {
   return (
-    <Text as="h1" textStyle="h2" my="0">
+    <Text as="h2" my="0">
       {children}
     </Text>
   )
@@ -37,19 +36,23 @@ export const HeaderBreadcrumbRow: React.FC<React.HTMLAttributes<HTMLDivElement>>
 
 export const Header: HeaderType = ({ children, bgColor = 'lightContrast', ...rest }) => {
   const childrens = Children.toArray(children)
+  type ChildElement = ReactElement<any, ComponentType>
 
   return (
     <StyledHeader bgColor={bgColor} {...rest}>
-      <HeaderColumn>
+      <HeaderColumn mainColumn>
         {childrens.find(
-          (child: any) => child.type.displayName === 'HeaderBreadcrumbRow' && <>{child}</>
+          (child) =>
+            (child as ChildElement).type.displayName === 'HeaderBreadcrumbRow' && <>{child}</>
         )}
-        {childrens.find((child: any) => child.type.displayName === 'HeaderTitle' && <>{child}</>)}
+        {childrens.find(
+          (child) => (child as ChildElement).type.displayName === 'HeaderTitle' && <>{child}</>
+        )}
       </HeaderColumn>
-      {childrens.some((i: any) => i.type.displayName === 'HeaderItem') && (
+      {childrens.some((i) => (i as ChildElement).type.displayName === 'HeaderItem') && (
         <HeaderColumn>
           {childrens.filter(
-            (child: any) => child.type.displayName === 'HeaderItem' && <>{child}</>
+            (child) => (child as ChildElement).type.displayName === 'HeaderItem' && <>{child}</>
           )}
         </HeaderColumn>
       )}
@@ -75,18 +78,18 @@ export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
   justify-content: center;
   flex-direction: column;
   padding-top: ${(p) => !p.mainColumn && '24px'};
+
   ${(p) => `
     ${p.theme.mediaQueries?.small}{
-      &:first-child {
-        flex-direction: column; 
-      }
       &:last-child {
         flex-direction: row; 
       }
       padding-top: 0px;
+      align-items: center;
     }
   `};
 `
+
 export const StyledHeader = styled.header<HeaderProps>`
   ${margin}
 
