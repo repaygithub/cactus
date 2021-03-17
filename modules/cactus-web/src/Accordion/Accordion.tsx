@@ -240,6 +240,7 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   background: none;
   border: 2px transparent;
   outline: none;
+  height: 24px;
 
   &::-moz-focus-inner {
     border: 0;
