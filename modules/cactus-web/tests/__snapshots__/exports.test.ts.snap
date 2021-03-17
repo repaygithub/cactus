@@ -37,6 +37,7 @@ Array [
   "MenuBar",
   "MenuButton",
   "Modal",
+  "Notification",
   "Pagination",
   "PrevNext",
   "RadioButton",
