@@ -72,6 +72,28 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   margin-top: 4px;
 }
 
+.c3 {
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  padding-right: 8px;
+}
+
+.c3 .sc-iGctRS {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  padding-left: 8px;
+}
+
 .c9 {
   opacity: 0;
   height: 0;
@@ -132,28 +154,6 @@ exports[`component: RadioGroup should render a disabled radio group 1`] = `
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
-}
-
-.c3 {
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding-right: 8px;
-}
-
-.c3 .sc-iGctRS {
-  position: relative;
-  right: 0;
-  bottom: 0;
-  padding-left: 0;
 }
 
 @media screen and (min-width:1024px) {
@@ -425,6 +425,28 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   margin-top: 4px;
 }
 
+.c3 {
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  padding-right: 8px;
+}
+
+.c3 .c4 {
+  position: relative;
+  right: 0;
+  bottom: 0;
+  padding-left: 8px;
+}
+
 .c12 {
   opacity: 0;
   height: 0;
@@ -539,28 +561,6 @@ exports[`component: RadioGroup should render a radio group 1`] = `
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
-}
-
-.c3 {
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding-right: 8px;
-}
-
-.c3 .c4 {
-  position: relative;
-  right: 0;
-  bottom: 0;
-  padding-left: 0;
 }
 
 @media screen and (min-width:1024px) {
