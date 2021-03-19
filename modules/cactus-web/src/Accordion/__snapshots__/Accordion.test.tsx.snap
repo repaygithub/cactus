@@ -67,7 +67,23 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.c1::after {
+  content: '';
+  min-height: inherit;
+  font-size: 0;
+}
+
+.c1 > :not(:first-child) {
+  width: 90%;
 }
 
 .c1::-moz-focus-inner {
@@ -219,7 +235,23 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.c2::after {
+  content: '';
+  min-height: inherit;
+  font-size: 0;
+}
+
+.c2 > :not(:first-child) {
+  width: 90%;
 }
 
 .c2::-moz-focus-inner {
@@ -373,7 +405,23 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.c2::after {
+  content: '';
+  min-height: inherit;
+  font-size: 0;
+}
+
+.c2 > :not(:first-child) {
+  width: 90%;
 }
 
 .c2::-moz-focus-inner {
@@ -526,7 +574,23 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.c2::after {
+  content: '';
+  min-height: inherit;
+  font-size: 0;
+}
+
+.c2 > :not(:first-child) {
+  width: 90%;
 }
 
 .c2::-moz-focus-inner {
@@ -679,7 +743,23 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.c2::after {
+  content: '';
+  min-height: inherit;
+  font-size: 0;
+}
+
+.c2 > :not(:first-child) {
+  width: 90%;
 }
 
 .c2::-moz-focus-inner {
@@ -832,7 +912,23 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.c2::after {
+  content: '';
+  min-height: inherit;
+  font-size: 0;
+}
+
+.c2 > :not(:first-child) {
+  width: 90%;
 }
 
 .c2::-moz-focus-inner {
@@ -980,7 +1076,23 @@ exports[`component: Accordion with theme customization simple accordion should h
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.c1::after {
+  content: '';
+  min-height: inherit;
+  font-size: 0;
+}
+
+.c1 > :not(:first-child) {
+  width: 90%;
 }
 
 .c1::-moz-focus-inner {
