@@ -26,41 +26,37 @@ interface BreadcrumbProps {
 }
 
 interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
-  anchorRef: React.RefObject<HTMLLIElement>
+  anchorRef: React.RefObject<HTMLDivElement>
   popupRef: React.RefObject<HTMLDivElement>
   expanded: boolean
 }
 
-export const BreadcrumbItem = React.forwardRef(
-  <C extends GenericComponent = 'a'>(
-    props: BreadcrumbItemProps<C>,
-    ref: React.ForwardedRef<HTMLLIElement>
-  ) => {
-    const {
-      active,
-      handleItemMouseEnter,
-      itemIndex = 0,
-      mobileListItem = false,
-      isSelected = false,
-      ...rest
-    } = props
+export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
+  props: BreadcrumbItemProps<C>
+): React.ReactElement => {
+  const {
+    active,
+    handleItemMouseEnter,
+    itemIndex = 0,
+    mobileListItem = false,
+    isSelected = false,
+    ...rest
+  } = props
 
-    // The "as any" with ...rest is necessary because Styled Components' types do not like
-    // forcing an aria-current when we're not sure if the element will be an <a>
-    // Here, we're just trusting the user to use a Link-ish component for the "as" prop
-    return (
-      <BreadcrumbListItem
-        id={mobileListItem ? `mobile-list-item-${itemIndex}` : undefined}
-        ref={ref}
-        data-selected={isSelected}
-        onMouseEnter={handleItemMouseEnter}
-      >
-        <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
-        {!mobileListItem && <StyledChevron iconSize="tiny" $active={active} />}
-      </BreadcrumbListItem>
-    )
-  }
-)
+  // The "as any" with ...rest is necessary because Styled Components' types do not like
+  // forcing an aria-current when we're not sure if the element will be an <a>
+  // Here, we're just trusting the user to use a Link-ish component for the "as" prop
+  return (
+    <BreadcrumbListItem
+      id={mobileListItem ? `mobile-list-item-${itemIndex}` : undefined}
+      data-selected={isSelected}
+      onMouseEnter={handleItemMouseEnter}
+    >
+      <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
+      {!mobileListItem && <StyledChevron iconSize="tiny" $active={active} />}
+    </BreadcrumbListItem>
+  )
+}
 
 export const BreadcrumbActive = (
   props: React.HTMLAttributes<HTMLDivElement>
@@ -73,7 +69,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const breadcrumbNavId = 'breadcrumb-nav'
 
   const isTiny = SIZES.tiny === useScreenSize()
-  const firstBreadcrumb = useRef<HTMLLIElement | null>(null)
+  const firstBreadcrumb = useRef<HTMLDivElement | null>(null)
   const ellipsisButton = useRef<HTMLButtonElement | null>(null)
   const popup = useRef<HTMLDivElement | null>(null)
   const mainBreadcrumbList = useRef<HTMLUListElement | null>(null)
@@ -170,10 +166,11 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>
         {isTiny && childrenCount > 2 ? (
           <>
-            {React.cloneElement(childrenArray[0] as JSX.Element, {
-              ...buttonProps,
-              ref: firstBreadcrumb,
-            })}
+            <div ref={firstBreadcrumb}>
+              {React.cloneElement(childrenArray[0] as JSX.Element, {
+                ...buttonProps,
+              })}
+            </div>
             <li>
               <button
                 type="button"
