@@ -240,7 +240,20 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   background: none;
   border: 2px transparent;
   outline: none;
-  height: 24px;
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+
+  ::after {
+    content: '';
+    min-height: inherit;
+    font-size: 0;
+  }
+
+  > :not(:first-child) {
+    width: 90%;
+  }
 
   &::-moz-focus-inner {
     border: 0;
