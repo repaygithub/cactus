@@ -1,17 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { MarginProps, WidthProps } from 'styled-system'
 
-import { FieldProps, useAccessibleField } from '../AccessibleField/AccessibleField'
-import { TooltipAlignment } from '../AccessibleField/AccessibleField'
-import Box from '../Box/Box'
+import { FieldProps } from '../AccessibleField/AccessibleField'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
 import Fieldset from '../Fieldset/Fieldset'
-import { cloneAll } from '../helpers/react'
-import Label from '../Label/Label'
-import StatusMessage from '../StatusMessage/StatusMessage'
-import Tooltip from '../Tooltip/Tooltip'
 interface CheckBoxGroupProps
   extends MarginProps,
     WidthProps,
@@ -19,11 +12,6 @@ interface CheckBoxGroupProps
     Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'defaultValue'> {
   checked?: { [K: string]: boolean }
   required?: boolean
-  disableTooltip?: boolean
-}
-
-interface LabelWrapper {
-  alignTooltip?: TooltipAlignment
 }
 
 type CheckBoxGroupItemProps = Omit<CheckBoxFieldProps, 'required'>
@@ -32,48 +20,10 @@ const CheckBoxGroupItem = React.forwardRef<HTMLInputElement, CheckBoxGroupItemPr
 )
 CheckBoxGroupItem.displayName = 'CheckBoxGroup.Item'
 
-type ForwardProps = {
-  disabled?: boolean
-  required?: boolean
-}
-
 const noop = () => undefined
 
 export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
-  (
-    {
-      label,
-      children,
-      tooltip,
-      required,
-      checked,
-      onFocus,
-      onBlur,
-      disableTooltip,
-      autoTooltip = true,
-      alignTooltip = 'right',
-      ...props
-    },
-    ref
-  ) => {
-    const {
-      fieldId,
-      ariaDescribedBy,
-      labelId,
-      statusId,
-      name,
-      status,
-      statusMessage,
-      tooltipId,
-      disabled,
-    } = useAccessibleField({ ...props, tooltip })
-    const [showTooltip, setTooltipVisible] = React.useState<boolean>(false)
-
-    const forwardProps: ForwardProps = { required }
-    if (disabled === true) {
-      forwardProps.disabled = disabled
-    }
-
+  ({ children, checked, ...props }, ref) => {
     const hasOnChange = !!props.onChange
     const cloneWithValue = (element: React.ReactElement, cloneProps: any) => {
       if (checked !== undefined) {
@@ -86,80 +36,14 @@ export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroup
       }
       return React.cloneElement(element, cloneProps)
     }
-    children = cloneAll(children, forwardProps, cloneWithValue)
-
-    const handleFocus = React.useCallback(
-      (event: React.FocusEvent<HTMLFieldSetElement>): void => {
-        onFocus?.(event)
-        if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-          setTooltipVisible(() => true)
-        }
-      },
-      [onFocus]
-    )
-
-    const handleBlur = React.useCallback(
-      (e: React.FocusEvent<HTMLFieldSetElement>) => {
-        onBlur?.(e)
-        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-          setTooltipVisible(() => false)
-        }
-      },
-      [onBlur, setTooltipVisible]
-    )
 
     return (
-      <Fieldset
-        {...props}
-        ref={ref}
-        id={fieldId}
-        aria-describedby={ariaDescribedBy}
-        name={name}
-        disabled={disabled}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      >
-        <Label id={labelId} as="legend">
-          <LabelWrapper alignTooltip={alignTooltip}>
-            {label}
-            {tooltip && (
-              <Tooltip
-                id={tooltipId}
-                label={tooltip}
-                disabled={disableTooltip ?? disabled}
-                forceVisible={autoTooltip ? showTooltip : false}
-              />
-            )}
-          </LabelWrapper>
-        </Label>
-        <Box mx={4} pt={3}>
-          {children}
-        </Box>
-
-        {status && (
-          <div>
-            <StatusMessage status={status} id={statusId}>
-              {statusMessage}
-            </StatusMessage>
-          </div>
-        )}
+      <Fieldset {...props} forwardProps={['required']} cloneWithValue={cloneWithValue} ref={ref}>
+        {children}
       </Fieldset>
     )
   }
 )
-
-const LabelWrapper = styled.span<LabelWrapper>`
-  flex-wrap: nowrap;
-  display: flex;
-  justify-content: ${(p) => (p.alignTooltip === 'right' ? 'space-between' : 'flex-start')};
-  padding-right: 8px;
-  ${Tooltip} {
-    position: relative;
-    right: 0;
-    bottom: 0;
-    padding-left: ${(p) => (p.alignTooltip === 'right' ? 0 : '8px')};
-  }
-`
 
 CheckBoxGroup.displayName = 'CheckBoxGroup'
 

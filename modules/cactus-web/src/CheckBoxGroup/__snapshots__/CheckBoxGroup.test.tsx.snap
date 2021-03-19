@@ -1,39 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
-.c8 + .c8 {
-  margin-top: 16px;
-}
-
-.c7 {
-  box-sizing: border-box;
-  margin-left: 16px;
-  margin-right: 16px;
-  padding-top: 8px;
-}
-
-.c2 {
-  font-size: 18px;
-  line-height: 1.5;
-  font-weight: 600;
-  color: hsl(200,10%,20%);
-}
-
 .c5 {
   vertical-align: middle;
 }
 
 .c14 {
   vertical-align: middle;
-}
-
-.c6 {
-  outline: none;
-  color: hsl(200,10%,20%);
-}
-
-.c6:hover {
-  color: hsl(200,96%,35%);
 }
 
 .c12 {
@@ -131,6 +104,17 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
+.c8 + .c8 {
+  margin-top: 16px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
 .c9 + .c9 {
   margin-top: 8px;
 }
@@ -148,6 +132,22 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
+}
+
+.c7 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding-top: 8px;
+}
+
+.c6 {
+  outline: none;
+  color: hsl(200,10%,20%);
+}
+
+.c6:hover {
+  color: hsl(200,96%,35%);
 }
 
 .c0 {
@@ -177,7 +177,7 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
   font-size: 16px;
 }
 
-.c0 .sc-gkdzZj {
+.c0 .sc-irlOZD {
   margin-top: 4px;
 }
 
@@ -189,10 +189,10 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
   padding-right: 8px;
 }
 
@@ -200,7 +200,7 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
   position: relative;
   right: 0;
   bottom: 0;
-  padding-left: 0;
+  padding-left: 8px;
 }
 
 @media screen and (min-width:1024px) {
@@ -381,48 +381,12 @@ exports[`component: CheckBoxGroup should render a checkbox group 1`] = `
 `;
 
 exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = `
-.c5 + .c5 {
-  margin-top: 16px;
-}
-
-.c4 {
-  box-sizing: border-box;
-  margin-left: 16px;
-  margin-right: 16px;
-  padding-top: 8px;
-}
-
-.c2 {
-  font-size: 18px;
-  line-height: 1.5;
-  font-weight: 600;
-  color: hsl(200,10%,20%);
-}
-
 .c16 {
   vertical-align: middle;
 }
 
 .c12 {
   vertical-align: middle;
-}
-
-.c14 {
-  padding: 2px 4px;
-  position: relative;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  display: inline-block;
-  font-size: 15px;
-  line-height: 1.6;
-  background-color: hsla(353,84%,44%,0.3);
-}
-
-.c14 .c15,
-.c14 .sc-fbNXWD,
-.c14 .c11 {
-  margin-right: 4px;
-  vertical-align: -2px;
 }
 
 .c9 {
@@ -474,6 +438,17 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
   box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
 }
 
+.c5 + .c5 {
+  margin-top: 16px;
+}
+
+.c2 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: hsl(200,10%,20%);
+}
+
 .c6 + .c6 {
   margin-top: 8px;
 }
@@ -482,6 +457,31 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
   cursor: not-allowed;
   padding-left: 8px;
   color: hsl(0,0%,70%);
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  padding-top: 8px;
+}
+
+.c14 {
+  padding: 2px 4px;
+  position: relative;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsla(353,84%,44%,0.3);
+}
+
+.c14 .c15,
+.c14 .sc-dacFzL,
+.c14 .c11 {
+  margin-right: 4px;
+  vertical-align: -2px;
 }
 
 .c0 {
@@ -504,7 +504,7 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
   clear: both;
 }
 
-.c0 .sc-iGctRS {
+.c0 .sc-dwcuIR {
   position: absolute;
   right: 8px;
   top: 2px;
@@ -523,18 +523,18 @@ exports[`component: CheckBoxGroup should render a disabled checkbox group 1`] = 
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
   padding-right: 8px;
 }
 
-.c3 .sc-iGctRS {
+.c3 .sc-dwcuIR {
   position: relative;
   right: 0;
   bottom: 0;
-  padding-left: 0;
+  padding-left: 8px;
 }
 
 @media screen and (min-width:1024px) {

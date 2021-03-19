@@ -1,7 +1,11 @@
 import isEqual from 'lodash/isEqual'
 import React, { SetStateAction } from 'react'
 
-type CloneFunc = (e: React.ReactElement, p?: Record<string, any>, ix?: number) => React.ReactElement
+export type CloneFunc = (
+  e: React.ReactElement,
+  p?: Record<string, any>,
+  ix?: number
+) => React.ReactElement
 
 // This can also be used just to flatten the children, but cloning seems the more likely use case.
 export function cloneAll(
