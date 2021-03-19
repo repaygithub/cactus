@@ -1,132 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Breadcrumb should have label and href snapshot 1`] = `
-.c2 {
+exports[`Breadcrumb: snapshot 1`] = `
+.c3 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c1 {
+.c2 {
   color: black;
   font-style: normal;
   outline: none;
 }
 
-.c1:visited,
-.c1:link {
+.c2:visited,
+.c2:link {
   color: hsl(200,9%,35%);
   font-style: normal;
 }
 
-.c1:hover {
+.c2:hover {
   color: hsl(200,96%,35%);
 }
 
-.c1:focus {
+.c2:focus {
   outline: hsl(200,96%,35%) solid 1px;
-}
-
-.c3 {
-  color: hsl(200,18%,45%);
-  margin: 0 3px;
-  font-size: 10px;
-}
-
-.c0 {
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.c0 > ul {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.c0 [aria-current='page'] {
-  color: hsl(200,10%,20%);
-  font-style: italic;
-}
-
-@media screen and (min-width:1024px) {
-  .c0 {
-    font-size: 15px;
-    line-height: 1.6;
-  }
-}
-
-<div>
-  <nav
-    aria-label="Breadcrumb"
-    class="c0"
-  >
-    <ul>
-      <li>
-        <a
-          class="c1"
-          href="www.github.com"
-        >
-          Link2
-        </a>
-        <svg
-          class="c2 c3"
-          fill="currentcolor"
-          height="1em"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="matrix(-1 0 0 1 24 0)"
-          />
-        </svg>
-      </li>
-    </ul>
-  </nav>
-</div>
-`;
-
-exports[`Should render Breadcrumb snapshot 1`] = `
-.c2 {
-  font-size: 8px;
-  vertical-align: middle;
-}
-
-.c1 {
-  color: black;
-  font-style: normal;
-  outline: none;
-}
-
-.c1:visited,
-.c1:link {
-  color: hsl(200,9%,35%);
-  font-style: normal;
-}
-
-.c1:hover {
-  color: hsl(200,96%,35%);
-}
-
-.c1:focus {
-  outline: hsl(200,96%,35%) solid 1px;
-}
-
-.c3 {
-  color: hsl(200,18%,45%);
-  margin: 0 3px;
-  font-size: 10px;
 }
 
 .c4 {
+  color: hsl(200,18%,45%);
+  margin: 0 3px;
+  font-size: 10px;
+}
+
+.c5 {
   color: hsl(200,10%,20%);
   margin: 0 3px;
   font-size: 10px;
@@ -137,7 +43,7 @@ exports[`Should render Breadcrumb snapshot 1`] = `
   line-height: 1.6;
 }
 
-.c0 > ul {
+.c0 .main-breadcrumb-list {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -150,7 +56,24 @@ exports[`Should render Breadcrumb snapshot 1`] = `
   margin: 0;
 }
 
-.c0 [aria-current='page'] {
+.c0 .ellipsis-button {
+  border: none;
+  background: none;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.c0 .ellipsis-button:hover {
+  color: hsl(200,96%,35%);
+}
+
+.c0 .ellipsis-button:focus {
+  outline: hsl(200,96%,35%) solid 1px;
+}
+
+.c0 .c1 [aria-current='page'] {
   color: hsl(200,10%,20%);
   font-style: italic;
 }
@@ -166,17 +89,23 @@ exports[`Should render Breadcrumb snapshot 1`] = `
   <nav
     aria-label="Breadcrumb"
     class="c0"
+    id="breadcrumb-nav"
   >
-    <ul>
-      <li>
+    <ul
+      class="main-breadcrumb-list"
+    >
+      <li
+        class=""
+        data-selected="false"
+      >
         <a
-          class="c1"
+          class="c1 c2"
           href="www.github.com"
         >
           Link2
         </a>
         <svg
-          class="c2 c3"
+          class="c3 c4"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -189,16 +118,19 @@ exports[`Should render Breadcrumb snapshot 1`] = `
           />
         </svg>
       </li>
-      <li>
+      <li
+        class=""
+        data-selected="false"
+      >
         <a
           aria-current="page"
-          class="c1"
+          class="c1 c2"
           href="www.repay.com"
         >
           Link2
         </a>
         <svg
-          class="c2 c4"
+          class="c3 c5"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
