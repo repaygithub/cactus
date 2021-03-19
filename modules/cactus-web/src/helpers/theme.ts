@@ -69,6 +69,31 @@ const radiiMap: Record<MaxRadius, Record<Shape, string>> = {
 export const radius = (maxRadius: MaxRadius) => ({ theme }: Props): string =>
   radiiMap[maxRadius][theme.shape]
 
+const popupShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
+  square: css`
+    border-radius: 0 2px 1px 1px;
+  `,
+  intermediate: css`
+    border-radius: 0 20px 10px 10px;
+  `,
+  round: css`
+    border-radius: 0 32px 16px 16px;
+  `,
+}
+
+export const popupShape = (shape: Shape): ReturnType<typeof css> => popupShapeMap[shape]
+
+export const popupBoxShadow = (theme: CactusTheme): ReturnType<typeof css> => {
+  return theme.boxShadows
+    ? css`
+        ${boxShadow(theme, 1)};
+      `
+    : css`
+        border: ${(p) => borderSize(p)} solid;
+        border-color: ${theme.colors.lightContrast};
+      `
+}
+
 export const invertColors = (style: ColorStyle): ColorStyle => {
   return { color: style.backgroundColor, backgroundColor: style.color }
 }
