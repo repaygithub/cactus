@@ -83,7 +83,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 }
 
 .c1 > :not(:first-child) {
-  width: 90%;
+  width: 100%;
 }
 
 .c1::-moz-focus-inner {
@@ -251,7 +251,7 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
 }
 
 .c2 > :not(:first-child) {
-  width: 90%;
+  width: 100%;
 }
 
 .c2::-moz-focus-inner {
@@ -421,7 +421,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 90%;
+  width: 100%;
 }
 
 .c2::-moz-focus-inner {
@@ -590,7 +590,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 90%;
+  width: 100%;
 }
 
 .c2::-moz-focus-inner {
@@ -759,7 +759,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 90%;
+  width: 100%;
 }
 
 .c2::-moz-focus-inner {
@@ -928,7 +928,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 90%;
+  width: 100%;
 }
 
 .c2::-moz-focus-inner {
@@ -1092,7 +1092,7 @@ exports[`component: Accordion with theme customization simple accordion should h
 }
 
 .c1 > :not(:first-child) {
-  width: 90%;
+  width: 100%;
 }
 
 .c1::-moz-focus-inner {
