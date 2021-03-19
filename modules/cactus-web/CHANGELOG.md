@@ -1,3 +1,24 @@
+# v6.1.0 (Fri Mar 19 2021)
+
+#### 🚀 Enhancement
+
+- Add Header component [#551](https://github.com/repaygithub/cactus/pull/551) ([@daniloPenaR](https://github.com/daniloPenaR) [@Dhalton](https://github.com/Dhalton))
+- Add Notification component [#550](https://github.com/repaygithub/cactus/pull/550) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Prevent onChange from firing on Select/SelectField when an already selected option is picked from the dropdown [#549](https://github.com/repaygithub/cactus/pull/549) ([@mikesoltow](https://github.com/mikesoltow))
+- The selected values displayed in the Select field (when `multiple={true}`) should now appear in the same order as the `value` of the Select component [#548](https://github.com/repaygithub/cactus/pull/548) ([@Dhalton](https://github.com/Dhalton))
+- Breadcrumb and Footer links now have better contrast, improving accessibility [#547](https://github.com/repaygithub/cactus/pull/547) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 3
+
+- [@Dhalton](https://github.com/Dhalton)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v6.0.1 (Tue Mar 09 2021)
 
 #### 🐛 Bug Fix
