@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import FocusLock from '../FocusLock/FocusLock'
 import { keyDownAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { borderSize, popupBoxShadow, popupShape, textStyle } from '../helpers/theme'
 import usePopup from '../helpers/usePopup'
@@ -26,7 +25,6 @@ interface BreadcrumbProps {
 }
 
 interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
-  anchorRef: React.RefObject<HTMLDivElement>
   popupRef: React.RefObject<HTMLDivElement>
   expanded: boolean
 }
@@ -40,6 +38,7 @@ export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
     itemIndex = 0,
     mobileListItem = false,
     isSelected = false,
+    role,
     ...rest
   } = props
 
@@ -51,6 +50,7 @@ export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
       id={mobileListItem ? `mobile-list-item-${itemIndex}` : undefined}
       data-selected={isSelected}
       onMouseEnter={handleItemMouseEnter}
+      role={role}
     >
       <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
       {!mobileListItem && <StyledChevron iconSize="tiny" $active={active} />}
@@ -60,7 +60,11 @@ export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
 
 export const BreadcrumbActive = (
   props: React.HTMLAttributes<HTMLDivElement>
-): React.ReactElement => <div aria-current="page" {...props} />
+): React.ReactElement => (
+  <li>
+    <div aria-current="page" {...props} />
+  </li>
+)
 
 const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { children, className } = props
@@ -73,8 +77,9 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const ellipsisButton = useRef<HTMLButtonElement | null>(null)
   const popup = useRef<HTMLDivElement | null>(null)
   const mainBreadcrumbList = useRef<HTMLUListElement | null>(null)
-  const { expanded, toggle, buttonProps, popupProps } = usePopup('dialog', {
+  const { expanded, toggle, buttonProps, popupProps, wrapperProps } = usePopup('menu', {
     id: breadcrumbNavId,
+    positionPopup: positionPortal,
   })
 
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0)
@@ -86,45 +91,45 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
       event.preventDefault()
       setSelectedIndex(0)
       const popup = document.querySelector('#breadcrumb-nav-popup') as HTMLUListElement
-      toggle(true, popup)
+      toggle(undefined, popup)
     },
     [toggle]
   )
 
-  React.useEffect(() => {
-    // We can't pass onClick or onKeyDown handlers to BreadcrumbItems directly because they could be using
-    // custom components. To circumvent this, we can listen for click & keydown events on the document
-    // and manually trigger the event handlers when necessary.
-    const handleBodyClick = (event: MouseEvent): void => {
-      const { target } = event
-      if (target instanceof Node && firstBreadcrumb.current?.contains(target)) {
-        handleTriggerClick((event as any) as React.MouseEvent)
-      }
-      if (
-        !(target instanceof Node) ||
-        (!popup.current?.contains(target) &&
-          !firstBreadcrumb.current?.contains(target) &&
-          !ellipsisButton.current?.contains(target))
-      ) {
-        toggle(false)
-      }
-    }
+  // React.useEffect(() => {
+  //   // We can't pass onClick or onKeyDown handlers to BreadcrumbItems directly because they could be using
+  //   // custom components. To circumvent this, we can listen for click & keydown events on the document
+  //   // and manually trigger the event handlers when necessary.
+  //   // const handleBodyClick = (event: MouseEvent): void => {
+  //   //   const { target } = event
+  //   //   if (target instanceof Node && firstBreadcrumb.current?.contains(target)) {
+  //   //     handleTriggerClick((event as any) as React.MouseEvent)
+  //   //   }
+  //   //   if (
+  //   //     !(target instanceof Node) ||
+  //   //     (!popup.current?.contains(target) &&
+  //   //       !firstBreadcrumb.current?.contains(target) &&
+  //   //       !ellipsisButton.current?.contains(target))
+  //   //   ) {
+  //   //     toggle(false)
+  //   //   }
+  //   // }
 
-    const handleBodyKeyDown = (event: KeyboardEvent) => {
-      const { target } = event
-      if (target instanceof Node && firstBreadcrumb.current?.contains(target)) {
-        keyDownAsClick((event as any) as React.KeyboardEvent)
-      }
-    }
+  //   // const handleBodyKeyDown = (event: KeyboardEvent) => {
+  //   //   const { target } = event
+  //   //   if (target instanceof Node && firstBreadcrumb.current?.contains(target)) {
+  //   //     keyDownAsClick(event as React.KeyboardEvent)
+  //   //   }
+  //   // }
 
-    document.body.addEventListener('click', handleBodyClick)
-    document.body.addEventListener('keydown', handleBodyKeyDown)
+  //   // document.body.addEventListener('click', handleBodyClick)
+  //   // document.body.addEventListener('keydown', handleBodyKeyDown)
 
-    return () => {
-      document.body.removeEventListener('click', handleBodyClick)
-      document.body.removeEventListener('keydown', handleBodyKeyDown)
-    }
-  }, [handleTriggerClick, toggle])
+  //   return () => {
+  //     // document.body.removeEventListener('click', handleBodyClick)
+  //     // document.body.removeEventListener('keydown', handleBodyKeyDown)
+  //   }
+  // }, [handleTriggerClick, toggle])
 
   const handlePopupKeyDown = (event: React.KeyboardEvent) => {
     event.preventDefault()
@@ -161,14 +166,17 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     }
   }
 
+  type ChildElement = React.ReactElement<any, React.ComponentType>
+  const fullButtonProps = { ...buttonProps, onClick: handleTriggerClick, onKeyDown: keyDownAsClick }
+  const { id: buttonId, ...buttonPropsWithoutId } = fullButtonProps
   return (
-    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className}>
+    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className} {...wrapperProps}>
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>
         {isTiny && childrenCount > 2 ? (
           <>
             <div ref={firstBreadcrumb}>
               {React.cloneElement(childrenArray[0] as JSX.Element, {
-                ...buttonProps,
+                ...fullButtonProps,
               })}
             </div>
             <li>
@@ -176,39 +184,39 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
                 type="button"
                 className="ellipsis-button"
                 ref={ellipsisButton}
-                {...buttonProps}
-                onClick={handleTriggerClick}
-                onKeyDown={keyDownAsClick}
+                {...buttonPropsWithoutId}
               >
                 ...
               </button>
             </li>
             {childrenArray[childrenCount - 1]}
             <BreadcrumbPopup
-              anchorRef={firstBreadcrumb}
               popupRef={popup}
               expanded={expanded}
               {...popupProps}
               onKeyDown={handlePopupKeyDown}
-              aria-owns="nav-popup-list"
               aria-activedescendant={`mobile-list-item-${selectedIndex}`}
             >
               <BreadcrumbPopupList id="nav-popup-list" $maxWidth={maxDropdownWidth}>
                 {Children.map(children, (child, index) => {
-                  const cloneProps: {
-                    mobileListItem: boolean
-                    handleItemMouseEnter: () => void
-                    itemIndex: number
-                    isSelected?: boolean
-                  } = {
-                    mobileListItem: true,
-                    itemIndex: index,
-                    handleItemMouseEnter: () => setSelectedIndex(index),
+                  if ((child as ChildElement)?.type.displayName !== 'Breadcrumb.Active') {
+                    const cloneProps: {
+                      mobileListItem: boolean
+                      handleItemMouseEnter: () => void
+                      itemIndex: number
+                      isSelected?: boolean
+                      role: string
+                    } = {
+                      mobileListItem: true,
+                      itemIndex: index,
+                      handleItemMouseEnter: () => setSelectedIndex(index),
+                      role: 'menuitem',
+                    }
+                    if (index === selectedIndex) {
+                      cloneProps.isSelected = true
+                    }
+                    return React.cloneElement(child as JSX.Element, cloneProps)
                   }
-                  if (index === selectedIndex) {
-                    cloneProps.isSelected = true
-                  }
-                  return React.cloneElement(child as JSX.Element, cloneProps)
                 })}
               </BreadcrumbPopupList>
             </BreadcrumbPopup>
@@ -221,14 +229,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   )
 }
 
-const BasePopup: React.FC<PopupProps> = ({ anchorRef, popupRef, expanded, ...props }) => {
-  usePositioning({
-    anchorRef,
-    ref: popupRef,
-    visible: expanded,
-    position: positionPortal,
-    updateOnScroll: true,
-  })
+const BasePopup: React.FC<PopupProps> = ({ popupRef, expanded, ...props }) => {
   return <FocusLock ref={popupRef} {...props} />
 }
 

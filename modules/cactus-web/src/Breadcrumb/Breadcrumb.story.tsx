@@ -13,7 +13,8 @@ export default {
 export const BasicUsage = (): ReactElement => (
   <Breadcrumb>
     <Breadcrumb.Item href="/">{text('Label 1', 'Account')}</Breadcrumb.Item>
-    <Breadcrumb.Active>{text('Label 2', 'Make a Payment')}</Breadcrumb.Active>
+    <Breadcrumb.Item href="/">{text('Label 2', 'Thingy')}</Breadcrumb.Item>
+    <Breadcrumb.Active>{text('Label 3', 'Make a Payment')}</Breadcrumb.Active>
   </Breadcrumb>
 )
 
@@ -21,8 +22,9 @@ const CustomLink: React.FC<{ className?: string; children: React.ReactNode; cust
   children,
   className,
   customTo,
+  ...props
 }) => (
-  <a style={{ color: 'pink' }} className={className} href={customTo}>
+  <a {...props} style={{ color: 'pink' }} className={className} href={customTo}>
     {children}
   </a>
 )
