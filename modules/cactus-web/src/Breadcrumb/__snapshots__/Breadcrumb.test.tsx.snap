@@ -90,6 +90,8 @@ exports[`Breadcrumb: snapshot 1`] = `
     aria-label="Breadcrumb"
     class="c0"
     id="breadcrumb-nav"
+    role="none"
+    tabindex="-1"
   >
     <ul
       class="main-breadcrumb-list"
