@@ -14,7 +14,7 @@ const ORDER: { [K in Size]: number } = {
   extraLarge: 4,
 }
 
-class ScreenSize {
+export class ScreenSize {
   public size: Size
 
   public constructor(size: Size) {

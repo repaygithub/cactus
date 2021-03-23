@@ -1,10 +1,12 @@
 import { RouteComponentProps } from '@reach/router'
 import {
+  Alert,
   Button,
   CheckBoxField,
   DateInputField,
   FileInputField,
   Flex,
+  Notification,
   RadioGroup,
   SelectField,
   Text,
@@ -62,9 +64,11 @@ const initialValues: FormData = {
 }
 
 const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
+  const [notificationOpen, setNotificationOpen] = React.useState<boolean>(false)
   const onSubmit = (values: FormData, { setSubmitting }: FormikHelpers<FormData>) => {
     post(values)
     console.log((window as any).apiData)
+    setNotificationOpen(true)
     setSubmitting(false)
   }
 
@@ -115,6 +119,11 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
 
   return (
     <div>
+      <Notification open={notificationOpen} vertical="top" horizontal="right">
+        <Alert status="success" onClose={() => setNotificationOpen(false)}>
+          Submitted Successfully
+        </Alert>
+      </Notification>
       <Helmet>
         <title> UI Config</title>
       </Helmet>

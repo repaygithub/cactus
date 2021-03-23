@@ -37,6 +37,7 @@ Array [
   "MenuBar",
   "MenuButton",
   "Modal",
+  "Notification",
   "Pagination",
   "PrevNext",
   "RadioButton",
@@ -74,5 +75,6 @@ Array [
   "Footer",
   "BrandBar",
   "Divider",
+  "Header",
 ]
 `;

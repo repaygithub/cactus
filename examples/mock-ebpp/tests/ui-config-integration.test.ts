@@ -47,6 +47,7 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
   await t.expect(getByLabelText('day of month').value).eql('28')
   await fillTextField('year', '2019')
   await clickWorkaround(queryByText('Submit'))
+  await queryByText('Submitted Successfully')
 
   const apiData: UIConfigData = await getApiData()
   const fileContents = apiData.fileInput[0].contents
