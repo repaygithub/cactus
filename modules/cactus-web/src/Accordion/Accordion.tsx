@@ -240,7 +240,6 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -252,7 +251,7 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   }
 
   > :not(:first-child) {
-    width: 100%;
+    min-width: 1px;
   }
 
   &::-moz-focus-inner {

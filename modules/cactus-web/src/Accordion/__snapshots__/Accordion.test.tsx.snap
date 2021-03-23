@@ -67,7 +67,6 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -83,7 +82,7 @@ exports[`component: Accordion Component Should render Accordion 1`] = `
 }
 
 .c1 > :not(:first-child) {
-  width: 100%;
+  min-width: 1px;
 }
 
 .c1::-moz-focus-inner {
@@ -235,7 +234,6 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -251,7 +249,7 @@ exports[`component: Accordion Component Should render outline accordion 1`] = `
 }
 
 .c2 > :not(:first-child) {
-  width: 100%;
+  min-width: 1px;
 }
 
 .c2::-moz-focus-inner {
@@ -405,7 +403,6 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -421,7 +418,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 100%;
+  min-width: 1px;
 }
 
 .c2::-moz-focus-inner {
@@ -574,7 +571,6 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -590,7 +586,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 100%;
+  min-width: 1px;
 }
 
 .c2::-moz-focus-inner {
@@ -743,7 +739,6 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -759,7 +754,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 100%;
+  min-width: 1px;
 }
 
 .c2::-moz-focus-inner {
@@ -912,7 +907,6 @@ exports[`component: Accordion with theme customization outline accordion should 
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -928,7 +922,7 @@ exports[`component: Accordion with theme customization outline accordion should 
 }
 
 .c2 > :not(:first-child) {
-  width: 100%;
+  min-width: 1px;
 }
 
 .c2::-moz-focus-inner {
@@ -1076,7 +1070,6 @@ exports[`component: Accordion with theme customization simple accordion should h
   background: none;
   border: 2px transparent;
   outline: none;
-  overflow: hidden;
   word-wrap: break-word;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -1092,7 +1085,7 @@ exports[`component: Accordion with theme customization simple accordion should h
 }
 
 .c1 > :not(:first-child) {
-  width: 100%;
+  min-width: 1px;
 }
 
 .c1::-moz-focus-inner {
