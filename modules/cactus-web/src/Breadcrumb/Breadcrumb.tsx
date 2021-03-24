@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import FocusLock from '../FocusLock/FocusLock'
 import { keyDownAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { borderSize, popupBoxShadow, popupShape, textStyle } from '../helpers/theme'
 import usePopup from '../helpers/usePopup'
@@ -15,8 +14,6 @@ import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 type BreadcrumbItemProps<C extends GenericComponent> = AsProps<C> & {
   active?: boolean
   mobileListItem?: boolean
-  isSelected?: boolean
-  itemIndex?: number
   handleItemMouseEnter?: () => void
 }
 
@@ -26,7 +23,6 @@ interface BreadcrumbProps {
 }
 
 interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
-  anchorRef: React.RefObject<HTMLDivElement>
   popupRef: React.RefObject<HTMLDivElement>
   expanded: boolean
 }
@@ -34,24 +30,13 @@ interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
 export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
   props: BreadcrumbItemProps<C>
 ): React.ReactElement => {
-  const {
-    active,
-    handleItemMouseEnter,
-    itemIndex = 0,
-    mobileListItem = false,
-    isSelected = false,
-    ...rest
-  } = props
+  const { active, handleItemMouseEnter, mobileListItem = false, role, ...rest } = props
 
   // The "as any" with ...rest is necessary because Styled Components' types do not like
   // forcing an aria-current when we're not sure if the element will be an <a>
   // Here, we're just trusting the user to use a Link-ish component for the "as" prop
   return (
-    <BreadcrumbListItem
-      id={mobileListItem ? `mobile-list-item-${itemIndex}` : undefined}
-      data-selected={isSelected}
-      onMouseEnter={handleItemMouseEnter}
-    >
+    <BreadcrumbListItem onMouseEnter={handleItemMouseEnter} role={role}>
       <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
       {!mobileListItem && <StyledChevron iconSize="tiny" $active={active} />}
     </BreadcrumbListItem>
@@ -60,7 +45,11 @@ export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
 
 export const BreadcrumbActive = (
   props: React.HTMLAttributes<HTMLDivElement>
-): React.ReactElement => <div aria-current="page" {...props} />
+): React.ReactElement => (
+  <BreadcrumbListItem>
+    <div aria-current="page" {...props} />
+  </BreadcrumbListItem>
+)
 
 const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { children, className } = props
@@ -73,22 +62,20 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const ellipsisButton = useRef<HTMLButtonElement | null>(null)
   const popup = useRef<HTMLDivElement | null>(null)
   const mainBreadcrumbList = useRef<HTMLUListElement | null>(null)
-  const { expanded, toggle, buttonProps, popupProps } = usePopup('dialog', {
+  const { expanded, toggle, buttonProps, popupProps, wrapperProps, setFocus } = usePopup('menu', {
     id: breadcrumbNavId,
+    positionPopup: positionPortal,
   })
-
-  const [selectedIndex, setSelectedIndex] = React.useState<number>(0)
 
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
 
   const handleTriggerClick = React.useCallback(
     (event: React.MouseEvent) => {
       event.preventDefault()
-      setSelectedIndex(0)
-      const popup = document.querySelector('#breadcrumb-nav-popup') as HTMLUListElement
-      toggle(true, popup)
+      toggle(undefined)
+      setFocus(0)
     },
-    [toggle]
+    [toggle, setFocus]
   )
 
   React.useEffect(() => {
@@ -97,22 +84,20 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     // and manually trigger the event handlers when necessary.
     const handleBodyClick = (event: MouseEvent): void => {
       const { target } = event
-      if (target instanceof Node && firstBreadcrumb.current?.contains(target)) {
-        handleTriggerClick((event as any) as React.MouseEvent)
-      }
       if (
-        !(target instanceof Node) ||
-        (!popup.current?.contains(target) &&
-          !firstBreadcrumb.current?.contains(target) &&
-          !ellipsisButton.current?.contains(target))
+        target instanceof Node &&
+        (firstBreadcrumb.current?.contains(target) || ellipsisButton.current?.contains(target))
       ) {
-        toggle(false)
+        handleTriggerClick((event as any) as React.MouseEvent)
       }
     }
 
     const handleBodyKeyDown = (event: KeyboardEvent) => {
       const { target } = event
-      if (target instanceof Node && firstBreadcrumb.current?.contains(target)) {
+      if (
+        target instanceof Node &&
+        (firstBreadcrumb.current?.contains(target) || ellipsisButton.current?.contains(target))
+      ) {
         keyDownAsClick((event as any) as React.KeyboardEvent)
       }
     }
@@ -127,48 +112,42 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   }, [handleTriggerClick, toggle])
 
   const handlePopupKeyDown = (event: React.KeyboardEvent) => {
-    event.preventDefault()
     const key = event.key
-    switch (key) {
-      case 'ArrowDown':
-        if (selectedIndex < childrenCount - 1) {
-          setSelectedIndex((currentSelectedIndex) => currentSelectedIndex + 1)
-        } else {
-          setSelectedIndex(0)
-        }
-        break
-      case 'ArrowUp':
-        if (selectedIndex > 0) {
-          setSelectedIndex((currentSelectedIndex) => currentSelectedIndex - 1)
-        } else {
-          setSelectedIndex(childrenCount - 1)
-        }
-        break
-      case 'Home':
-        setSelectedIndex(0)
-        break
-      case 'End':
-        setSelectedIndex(childrenCount - 1)
-        break
-      case 'Enter':
-      case ' ':
-        const link = document.querySelector("[data-selected='true'] a") as HTMLAnchorElement | null
-        link?.click()
-        break
-      case 'Escape':
-        toggle(false)
-        break
+    if (key !== 'Enter') {
+      event.preventDefault()
+      switch (key) {
+        case 'ArrowDown':
+          setFocus(1, { shift: true })
+          break
+        case 'ArrowUp':
+          setFocus(-1, { shift: true })
+          break
+        case 'Home':
+          setFocus(0)
+          break
+        case 'End':
+          setFocus(-1)
+          break
+        case 'Escape':
+          toggle(false)
+          break
+      }
     }
   }
 
+  type ChildElement = React.ReactElement<any, React.ComponentType>
+
+  const { onClick, onKeyDown, ...buttonPropsWithoutHandlers } = buttonProps
+  const { id: buttonId, ...buttonPropsWithoutId } = buttonPropsWithoutHandlers
+
   return (
-    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className}>
+    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className} {...wrapperProps}>
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>
         {isTiny && childrenCount > 2 ? (
           <>
-            <div ref={firstBreadcrumb}>
+            <div ref={firstBreadcrumb} id={buttonId}>
               {React.cloneElement(childrenArray[0] as JSX.Element, {
-                ...buttonProps,
+                ...buttonPropsWithoutHandlers,
               })}
             </div>
             <li>
@@ -176,39 +155,35 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
                 type="button"
                 className="ellipsis-button"
                 ref={ellipsisButton}
-                {...buttonProps}
-                onClick={handleTriggerClick}
-                onKeyDown={keyDownAsClick}
+                {...buttonPropsWithoutId}
               >
                 ...
               </button>
             </li>
             {childrenArray[childrenCount - 1]}
             <BreadcrumbPopup
-              anchorRef={firstBreadcrumb}
               popupRef={popup}
               expanded={expanded}
               {...popupProps}
               onKeyDown={handlePopupKeyDown}
-              aria-owns="nav-popup-list"
-              aria-activedescendant={`mobile-list-item-${selectedIndex}`}
             >
               <BreadcrumbPopupList id="nav-popup-list" $maxWidth={maxDropdownWidth}>
                 {Children.map(children, (child, index) => {
-                  const cloneProps: {
-                    mobileListItem: boolean
-                    handleItemMouseEnter: () => void
-                    itemIndex: number
-                    isSelected?: boolean
-                  } = {
-                    mobileListItem: true,
-                    itemIndex: index,
-                    handleItemMouseEnter: () => setSelectedIndex(index),
+                  if (
+                    (child as ChildElement)?.type.displayName !== 'Breadcrumb.Active' &&
+                    (child as ChildElement)?.props.active !== true
+                  ) {
+                    const cloneProps: {
+                      mobileListItem: boolean
+                      handleItemMouseEnter: () => void
+                      role: string
+                    } = {
+                      mobileListItem: true,
+                      handleItemMouseEnter: () => setFocus(index),
+                      role: 'menuitem',
+                    }
+                    return React.cloneElement(child as JSX.Element, cloneProps)
                   }
-                  if (index === selectedIndex) {
-                    cloneProps.isSelected = true
-                  }
-                  return React.cloneElement(child as JSX.Element, cloneProps)
                 })}
               </BreadcrumbPopupList>
             </BreadcrumbPopup>
@@ -221,14 +196,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   )
 }
 
-const BasePopup: React.FC<PopupProps> = ({ anchorRef, popupRef, expanded, ...props }) => {
-  usePositioning({
-    anchorRef,
-    ref: popupRef,
-    visible: expanded,
-    position: positionPortal,
-    updateOnScroll: true,
-  })
+const BasePopup: React.FC<PopupProps> = ({ popupRef, expanded, ...props }) => {
   return <FocusLock ref={popupRef} {...props} />
 }
 
@@ -237,11 +205,15 @@ const BreadcrumbPopup = styled(BasePopup)`
   position: fixed;
   outline: none;
   background-color: ${(p): string => p.theme.colors.white};
-  ${(p) => popupShape(p.theme.shape)}
+  z-index: 1000;
+  box-sizing: border-box;
+  ${(p) => popupShape('menu', p.theme.shape)}
   ${(p) => popupBoxShadow(p.theme)}
 `
 
-const BreadcrumbListItem = styled.li``
+const BreadcrumbListItem = styled.li`
+  box-sizing: border-box;
+`
 
 const BreadcrumbLink = styled.a`
   color: black;
@@ -270,15 +242,14 @@ const StyledChevron = styled(NavigationChevronRight)<{ $active?: boolean }>`
 const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
   box-sizing: border-box;
   margin: 0;
-  padding-top: ${(p) => p.theme.space[4]}px;
-  padding-bottom: ${(p) => p.theme.space[4]}px;
+  padding-top: ${(p) => p.theme.space[3]}px;
+  padding-bottom: ${(p) => p.theme.space[3]}px;
   padding-left: 0;
   padding-right: 0;
   list-style: none;
   max-width: ${(p) => (p.$maxWidth ? `${p.$maxWidth}px` : 'unset')};
 
   ${BreadcrumbListItem} {
-    box-sizing: border-box;
     width: 100%;
     border-radius: 0;
     outline: none;
@@ -287,7 +258,7 @@ const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
     padding-top: ${(p) => p.theme.space[2]}px;
     padding-bottom: ${(p) => p.theme.space[2]}px;
 
-    &[data-selected='true'] {
+    &:focus-within {
       background-color: ${(p) => p.theme.colors.callToAction};
 
       & * {
@@ -336,11 +307,9 @@ const StyledNav = styled.nav`
     }
   }
 
-  ${BreadcrumbLink} {
-    [aria-current='page'] {
-      color: ${(p) => p.theme.colors.darkestContrast};
-      font-style: italic;
-    }
+  [aria-current='page'] {
+    color: ${(p) => p.theme.colors.darkestContrast};
+    font-style: italic;
   }
 `
 

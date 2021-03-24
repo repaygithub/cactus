@@ -69,19 +69,35 @@ const radiiMap: Record<MaxRadius, Record<Shape, string>> = {
 export const radius = (maxRadius: MaxRadius) => ({ theme }: Props): string =>
   radiiMap[maxRadius][theme.shape]
 
-const popupShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 0 2px 1px 1px;
-  `,
-  intermediate: css`
-    border-radius: 0 20px 10px 10px;
-  `,
-  round: css`
-    border-radius: 0 32px 16px 16px;
-  `,
+type PopupType = 'dialog' | 'menu'
+
+const popupShapeMap: { [K in PopupType]: { [K in Shape]: ReturnType<typeof css> } } = {
+  dialog: {
+    square: css`
+      border-radius: 0 2px 1px 1px;
+    `,
+    intermediate: css`
+      border-radius: 0 20px 10px 10px;
+    `,
+    round: css`
+      border-radius: 0 32px 16px 16px;
+    `,
+  },
+  menu: {
+    square: css`
+      border-radius: 0 0 1px 1px;
+    `,
+    intermediate: css`
+      border-radius: 0 0 4px 4px;
+    `,
+    round: css`
+      border-radius: 0 0 8px 8px;
+    `,
+  },
 }
 
-export const popupShape = (shape: Shape): ReturnType<typeof css> => popupShapeMap[shape]
+export const popupShape = (popupType: PopupType, shape: Shape): ReturnType<typeof css> =>
+  popupShapeMap[popupType][shape]
 
 export const popupBoxShadow = (theme: CactusTheme): ReturnType<typeof css> => {
   return theme.boxShadows
