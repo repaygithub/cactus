@@ -6,6 +6,10 @@ exports[`Breadcrumb: snapshot 1`] = `
   vertical-align: middle;
 }
 
+.c1 {
+  box-sizing: border-box;
+}
+
 .c2 {
   color: black;
   font-style: normal;
@@ -73,7 +77,7 @@ exports[`Breadcrumb: snapshot 1`] = `
   outline: hsl(200,96%,35%) solid 1px;
 }
 
-.c0 .c1 [aria-current='page'] {
+.c0 [aria-current='page'] {
   color: hsl(200,10%,20%);
   font-style: italic;
 }
@@ -90,16 +94,17 @@ exports[`Breadcrumb: snapshot 1`] = `
     aria-label="Breadcrumb"
     class="c0"
     id="breadcrumb-nav"
+    role="none"
+    tabindex="-1"
   >
     <ul
       class="main-breadcrumb-list"
     >
       <li
-        class=""
-        data-selected="false"
+        class="c1"
       >
         <a
-          class="c1 c2"
+          class="c2"
           href="www.github.com"
         >
           Link2
@@ -119,12 +124,11 @@ exports[`Breadcrumb: snapshot 1`] = `
         </svg>
       </li>
       <li
-        class=""
-        data-selected="false"
+        class="c1"
       >
         <a
           aria-current="page"
-          class="c1 c2"
+          class="c2"
           href="www.repay.com"
         >
           Link2

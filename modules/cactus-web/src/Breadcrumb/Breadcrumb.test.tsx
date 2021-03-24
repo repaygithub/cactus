@@ -38,7 +38,7 @@ describe('Breadcrumb:', (): void => {
   describe('mobile', () => {
     describe('mouse interactions', () => {
       test('should open a dropdown when the first breadcrumb is clicked', () => {
-        const { getAllByText } = render(
+        const { getByRole, getAllByText } = render(
           <StyleProvider>
             <ScreenSizeContext.Provider value={SIZES.tiny}>
               <Breadcrumb>
@@ -50,7 +50,7 @@ describe('Breadcrumb:', (): void => {
           </StyleProvider>
         )
 
-        const firstBreadcrumb = getAllByText('Link 1')[0]
+        const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
         const popupBreadcrumbLink = getAllByText('Link 1')[1]
         expect(popupBreadcrumbLink).not.toBeVisible()
         userEvent.click(firstBreadcrumb)
@@ -58,7 +58,7 @@ describe('Breadcrumb:', (): void => {
       })
 
       test('should open a dropdown when the ellipsis button is clicked', () => {
-        const { getByText, getAllByText } = render(
+        const { getAllByText, getByRole } = render(
           <StyleProvider>
             <ScreenSizeContext.Provider value={SIZES.tiny}>
               <Breadcrumb>
@@ -70,7 +70,7 @@ describe('Breadcrumb:', (): void => {
           </StyleProvider>
         )
 
-        const ellipsisButton = getByText('...')
+        const ellipsisButton = getByRole('button', { name: '...' })
         const popupBreadcrumbLink = getAllByText('Link 1')[1]
         expect(popupBreadcrumbLink).not.toBeVisible()
         userEvent.click(ellipsisButton)
@@ -78,16 +78,13 @@ describe('Breadcrumb:', (): void => {
       })
 
       test('should be able to select an option from the dropdown', () => {
-        const onLink1Click = jest.fn()
-        const onLink2Click = jest.fn()
-        const { getByText, getAllByText } = render(
+        const onLinkClick = jest.fn()
+        const { getByText, getByRole } = render(
           <StyleProvider>
             <ScreenSizeContext.Provider value={SIZES.tiny}>
               <Breadcrumb>
-                <Breadcrumb.Item href="www.github.com" onClick={onLink1Click}>
-                  Link 1
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com" onClick={onLink2Click}>
+                <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
+                <Breadcrumb.Item href="www.github.com" onClick={onLinkClick}>
                   Link 2
                 </Breadcrumb.Item>
                 <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
@@ -96,18 +93,17 @@ describe('Breadcrumb:', (): void => {
           </StyleProvider>
         )
 
-        const firstBreadcrumb = getAllByText('Link 1')[0]
+        const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
         userEvent.click(firstBreadcrumb)
         const link2 = getByText('Link 2')
         userEvent.click(link2)
-        expect(onLink1Click).not.toHaveBeenCalled()
-        expect(onLink2Click).toHaveBeenCalledTimes(1)
+        expect(onLinkClick).toHaveBeenCalledTimes(1)
       })
     })
 
     describe('keyboard interactions', () => {
-      test('should open a dropdown when the first breadcrumb is clicked', () => {
-        const { getAllByText } = render(
+      test('should open a dropdown when the SPACE is pressed on the first breadcrumb', async () => {
+        const { getAllByText, getByRole } = render(
           <StyleProvider>
             <ScreenSizeContext.Provider value={SIZES.tiny}>
               <Breadcrumb>
@@ -119,16 +115,16 @@ describe('Breadcrumb:', (): void => {
           </StyleProvider>
         )
 
-        const firstBreadcrumb = getAllByText('Link 1')[0]
+        const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
         const popupBreadcrumbLink = getAllByText('Link 1')[1]
         expect(popupBreadcrumbLink).not.toBeVisible()
         fireEvent.focus(firstBreadcrumb)
-        userEvent.type(firstBreadcrumb, '{space}')
+        fireEvent.keyDown(firstBreadcrumb, { key: ' ' })
         expect(popupBreadcrumbLink).toBeVisible()
       })
 
-      test('should open a dropdown when the ellipsis button is clicked', () => {
-        const { getByText, getAllByText } = render(
+      test('should open a dropdown when SPACE is pressed on the ellipsis button', () => {
+        const { getAllByText, getByRole } = render(
           <StyleProvider>
             <ScreenSizeContext.Provider value={SIZES.tiny}>
               <Breadcrumb>
@@ -140,42 +136,18 @@ describe('Breadcrumb:', (): void => {
           </StyleProvider>
         )
 
-        const ellipsisButton = getByText('...')
+        const ellipsisButton = getByRole('button', { name: '...' })
         const popupBreadcrumbLink = getAllByText('Link 1')[1]
         expect(popupBreadcrumbLink).not.toBeVisible()
         fireEvent.focus(ellipsisButton)
-        userEvent.type(ellipsisButton, '{space}')
+        fireEvent.keyDown(ellipsisButton, { key: ' ' })
         expect(popupBreadcrumbLink).toBeVisible()
       })
 
-      test('should be able to select an option from the dropdown', () => {
-        const onLink1Click = jest.fn()
-        const onLink2Click = jest.fn()
-        const { getAllByText } = render(
-          <StyleProvider>
-            <ScreenSizeContext.Provider value={SIZES.tiny}>
-              <Breadcrumb>
-                <Breadcrumb.Item href="www.github.com" onClick={onLink1Click}>
-                  Link 1
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com" onClick={onLink2Click}>
-                  Link 2
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
-              </Breadcrumb>
-            </ScreenSizeContext.Provider>
-          </StyleProvider>
-        )
-
-        const firstBreadcrumb = getAllByText('Link 1')[0]
-        fireEvent.focus(firstBreadcrumb)
-        userEvent.click(firstBreadcrumb)
-        const activeElement = document.activeElement as Element
-        userEvent.type(activeElement, '{arrowdown}')
-        userEvent.type(activeElement, '{space}')
-        expect(onLink1Click).not.toHaveBeenCalled()
-        expect(onLink2Click).toHaveBeenCalledTimes(1)
-      })
+      /* NOTE
+       * Similar to the MenuBar, the logic for managing the focus in the dropdown relies
+       * on the elements being "visible", so that logic doesn't work in unit tests.
+       */
     })
   })
 })
