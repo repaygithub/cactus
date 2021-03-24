@@ -61,7 +61,8 @@ function positionMenu(menuWrapper: HTMLElement, menuButton: HTMLElement | null) 
     }
   }
   // Using translate instead of left because of an issue I had with inconsistent width.
-  menuWrapper.style.transform = `translateX(${left}px)`
+  // Using 3d because Safari handles the z-index stupidly https://bucketpress.com/css-translate-and-z-index-problems-in-safari-browser
+  menuWrapper.style.transform = `translate3d(${left}px, 0, 0)`
   menuWrapper.style.top = top || ''
 }
 
