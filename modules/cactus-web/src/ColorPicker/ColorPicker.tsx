@@ -106,7 +106,7 @@ const ColorPickerPopup = styled(BasePopup)`
   width: 320px;
   padding: 16px;
   background-color: ${(p): string => p.theme.colors.white};
-  ${(p): ReturnType<typeof css> => popupShape(p.theme.shape)}
+  ${(p): ReturnType<typeof css> => popupShape('dialog', p.theme.shape)}
   ${(p): ReturnType<typeof css> => popupBoxShadow(p.theme)}
   overflow: hidden;
   outline: none;

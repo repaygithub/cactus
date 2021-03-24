@@ -360,7 +360,7 @@ const CalendarPopup = styled(BasePopup)`
   z-index: 1000;
   width: 300px;
   background-color: ${(p): string => p.theme.colors.white};
-  ${(p): ReturnType<typeof css> => popupShape(p.theme.shape)}
+  ${(p): ReturnType<typeof css> => popupShape('dialog', p.theme.shape)}
   ${(p): ReturnType<typeof css> => popupBoxShadow(p.theme)}
   overflow: hidden;
 `
