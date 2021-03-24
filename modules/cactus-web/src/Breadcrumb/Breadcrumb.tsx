@@ -14,6 +14,7 @@ import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 type BreadcrumbItemProps<C extends GenericComponent> = AsProps<C> & {
   active?: boolean
   mobileListItem?: boolean
+  isSelected?: boolean
   handleItemMouseEnter?: () => void
 }
 
@@ -30,13 +31,13 @@ interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
 export const BreadcrumbItem = <C extends GenericComponent = 'a'>(
   props: BreadcrumbItemProps<C>
 ): React.ReactElement => {
-  const { active, handleItemMouseEnter, mobileListItem = false, role, ...rest } = props
+  const { active, handleItemMouseEnter, mobileListItem = false, isSelected, role, ...rest } = props
 
   // The "as any" with ...rest is necessary because Styled Components' types do not like
   // forcing an aria-current when we're not sure if the element will be an <a>
   // Here, we're just trusting the user to use a Link-ish component for the "as" prop
   return (
-    <BreadcrumbListItem onMouseEnter={handleItemMouseEnter} role={role}>
+    <BreadcrumbListItem data-selected={isSelected} onMouseEnter={handleItemMouseEnter} role={role}>
       <BreadcrumbLink aria-current={active && 'page'} {...(rest as any)} />
       {!mobileListItem && <StyledChevron iconSize="tiny" $active={active} />}
     </BreadcrumbListItem>
@@ -67,11 +68,15 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     positionPopup: positionPortal,
   })
 
+  const [selectedIndex, setSelectedIndex] = React.useState<number>(0)
+  const [dropdownItemCount, setDropdownItemCount] = React.useState<number>(0)
+
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
 
   const handleTriggerClick = React.useCallback(
     (event: React.MouseEvent) => {
       event.preventDefault()
+      setSelectedIndex(0)
       toggle(undefined)
       setFocus(0)
     },
@@ -111,21 +116,38 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     }
   }, [handleTriggerClick, toggle])
 
+  React.useEffect(() => {
+    const nonActiveLinks = childrenArray.filter(
+      (child) =>
+        (child as ChildElement).props.active !== true &&
+        (child as ChildElement).type.displayName !== 'Breadcrumb.Active'
+    )
+    setDropdownItemCount(nonActiveLinks.length)
+  }, [childrenArray])
+
   const handlePopupKeyDown = (event: React.KeyboardEvent) => {
     const key = event.key
     if (key !== 'Enter') {
       event.preventDefault()
       switch (key) {
         case 'ArrowDown':
+          setSelectedIndex((currentSelectedIndex) => {
+            return currentSelectedIndex < dropdownItemCount - 1 ? currentSelectedIndex + 1 : 0
+          })
           setFocus(1, { shift: true })
           break
         case 'ArrowUp':
+          setSelectedIndex((currentSelectedIndex) => {
+            return currentSelectedIndex > 0 ? currentSelectedIndex - 1 : dropdownItemCount - 1
+          })
           setFocus(-1, { shift: true })
           break
         case 'Home':
+          setSelectedIndex(0)
           setFocus(0)
           break
         case 'End':
+          setSelectedIndex(dropdownItemCount - 1)
           setFocus(-1)
           break
         case 'Escape':
@@ -176,10 +198,12 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
                     const cloneProps: {
                       mobileListItem: boolean
                       handleItemMouseEnter: () => void
+                      isSelected?: boolean
                       role: string
                     } = {
                       mobileListItem: true,
-                      handleItemMouseEnter: () => setFocus(index),
+                      handleItemMouseEnter: () => setSelectedIndex(index),
+                      isSelected: index === selectedIndex,
                       role: 'menuitem',
                     }
                     return React.cloneElement(child as JSX.Element, cloneProps)
@@ -258,7 +282,7 @@ const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
     padding-top: ${(p) => p.theme.space[2]}px;
     padding-bottom: ${(p) => p.theme.space[2]}px;
 
-    &:focus-within {
+    &[data-selected='true'] {
       background-color: ${(p) => p.theme.colors.callToAction};
 
       & * {
@@ -274,6 +298,7 @@ const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
     & * {
       text-decoration: none;
       font-style: normal;
+      outline: none;
     }
   }
 `
