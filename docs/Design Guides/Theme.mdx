@@ -1,0 +1,291 @@
+---
+title: Repay Theme
+---
+import { Table, Grid, Flex, Box, Text, Divider, TextInputField, Button } from '@repay/cactus-web'
+import {Shadow} from './Shadow'
+
+# REPAY Theme
+The underlying properties that define a theme are:
+
+<Table>
+  <Table.Header>
+    <Table.Cell>Property</Table.Cell>
+    <Table.Cell>Theme</Table.Cell>
+  </Table.Header>
+  <Table.Row>
+    <Table.Cell>Color</Table.Cell>
+    <Table.Cell>Primary (HEX 012638)</Table.Cell>
+  </Table.Row>
+  <Table.Row>
+    <Table.Cell>Typeface</Table.Cell>
+    <Table.Cell>Arial</Table.Cell>
+  </Table.Row>
+  <Table.Row>
+    <Table.Cell>Shadow</Table.Cell>
+    <Table.Cell>On</Table.Cell>
+  </Table.Row>
+  <Table.Row>
+    <Table.Cell>Lines</Table.Cell>
+    <Table.Cell> Thin (1px)</Table.Cell>
+  </Table.Row>
+  <Table.Row>
+    <Table.Cell>Shapes</Table.Cell>
+    <Table.Cell>Intermediate</Table.Cell>
+  </Table.Row>
+</Table>
+
+<Divider marginTop='40px' />
+
+## Color
+Our color scheme uses a monochromatic palette and a complementary action scheme. All the monochromatic scheme colors are based on REPAY’S Dark Blue, and the others are variations using the same Hue and changing Brightness and Saturation.
+
+### Default Monochromatic Scheme 
+<Grid>
+  <Grid.Item tiny={6} medium={4} large={3}>
+    <Box width='100%' height='100px' borderRadius='themed' backgroundColor='base'/>
+    <Text fontWeight='600'>Base</Text>
+
+  </Grid.Item>
+  <Grid.Item tiny={6} medium={4} large={3}>
+    <Flex height='100px' justifyContent='space-between'>
+        <Box width='100%' height='48px' borderRadius='themed' backgroundColor='callToAction'/>
+        <Box width='100%' height='48px' borderRadius='themed' backgroundColor='transparentCTA'/>
+    </Flex>
+    <Text fontWeight='600'>CTA</Text>
+
+  </Grid.Item>
+  <Grid.Item tiny={6} medium={4} large={3}>
+        <Flex height='100px' justifyContent='space-between'>
+        <Box width='100%' height='22px' borderRadius='themed' backgroundColor='lightContrast'/>
+        <Box width='100%' height='22px' borderRadius='themed' backgroundColor='mediumContrast'/>
+        <Box width='100%' height='22px' borderRadius='themed' backgroundColor='darkContrast'/>
+        <Box width='100%' height='22px' borderRadius='themed' backgroundColor='darkestContrast'/>
+    </Flex>
+    <Text fontWeight='600'>Contrast</Text>
+  </Grid.Item>
+  <Grid.Item tiny={6} medium={4} large={3}>
+    <Box width='100%' height='100px' backgroundColor='white' borderRadius='themed' borderWidth='1px' borderStyle='solid' borderColor='black'/>
+    <Text fontWeight='600'>Background</Text>
+  </Grid.Item>
+</Grid>
+
+### Action Scheme
+
+<Grid>
+  <Grid.Item tiny={6} medium={4} large={3}>
+  <Flex height='100px' justifyContent='space-between'>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='transparentSuccess'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='success'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='successDark'/>
+    </Flex>    
+    <Text fontWeight='600'>Success</Text>
+  </Grid.Item>
+  <Grid.Item tiny={6} medium={4} large={3}>
+    <Flex height='100px' justifyContent='space-between'>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='transparentError'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='error'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='errorDark'/>
+    </Flex>    
+    <Text fontWeight='600'>Error</Text>
+
+  </Grid.Item>
+  <Grid.Item tiny={6} medium={4} large={3}>
+    <Flex height='100px' justifyContent='space-between'>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='transparentWarning'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='warning'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='warningDark'/>
+    </Flex>    
+    <Text fontWeight='600'>Warning</Text>
+  </Grid.Item>
+  <Grid.Item tiny={6} medium={4} large={3}>
+    <Flex height='100px' justifyContent='space-between'>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='lightGray'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='mediumGray'/>
+        <Box width='100%' height='30px' borderRadius='themed' backgroundColor='darkGray'/>
+    </Flex>    
+    <Text fontWeight='600'>Disabled</Text>
+  </Grid.Item>
+</Grid>
+
+### Color guide
+Use of color
+
+<Grid>
+    <Grid.Item tiny={4} medium={2}>
+        <Box width='100%' height='100%' borderRadius='themed' backgroundColor='base'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+            The base color is the REPAY Brand color. It represents the brand through out the product.<br />
+            <b>Use mainly on: Buttons, content , Icons, headings.</b>
+        </Text>
+    </Grid.Item>
+    <Grid.Item tiny={4} medium={2}>
+    <Box width='100%' height='100%' borderRadius='themed' backgroundColor='callToAction'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+            CTA's color, Will be use for the main actions on the page. With this color you will catch the user’s attentionwhen needed.<br />
+            <b>Use mainly on: Buttons.</b> 
+        </Text>
+    </Grid.Item>
+    <Grid.Item tiny={4} medium={2}>
+        <Box width='100%' height='100%' borderRadius='themed' backgroundColor='darkestContrast'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+            Darkest Contrast it is used only for the content Text and Icons.<br />
+            <b>Use mainly on: Text, icons Form elements.</b>
+        </Text>
+    </Grid.Item>    
+    <Grid.Item tiny={4} medium={2}>
+        <Box width='100%' height='20%' borderTopLeftRadius='4px' borderTopRightRadius='4px'  backgroundColor='darkContrast'/> 
+        <Box width='100%' height='20%' backgroundColor='mediumContrast'/> 
+        <Box width='100%' height='60%' borderBottomLeftRadius='4px' borderBottomRightRadius='4px' backgroundColor='lightContrast' borderWidth='0px 1px 1px' borderStyle='solid' borderColor='mediumContrast'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+        Contrast (dark, medium, light) as the name says they are used to providing contrast and hierarchy. <br />
+        <b>Use mainly on: Backgrounds, Placeholder (dark) Breadcrumbs (medium)</b> 
+        </Text>
+    </Grid.Item>
+    <Grid.Item tiny={4} medium={2}>
+        <Box width='100%' height='100%' borderRadius='themed' backgroundColor='success'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+            Success Variant: This color can be used to provide Success actions. <br />
+            <b>Use mainly on: Buttons, icons, alerts.</b>
+        </Text>
+    </Grid.Item>
+    <Grid.Item tiny={4} medium={2}>
+        <Box width='100%' height='100%' borderRadius='themed' backgroundColor='error'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+            Danger Variant: This color can be used to provide danger actions.<br />
+            <b>Use mainly on: Buttons, icons alerts.</b>
+        </Text>
+    </Grid.Item>
+    <Grid.Item tiny={4} medium={2}>
+        <Box width='100%' height='100%' borderRadius='themed' backgroundColor='warning'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+            Warning Variant: This color can be used to convey Warning messages.<br />
+            <b>Use mainly on: Buttons, icons alerts.</b>
+        </Text>
+    </Grid.Item>
+    <Grid.Item tiny={4} medium={2}>
+        <Box width='100%' height='100%' borderRadius='themed' backgroundColor='mediumGray'/> 
+    </Grid.Item>
+    <Grid.Item tiny={8} medium={10}>
+        <Text>
+            Disable Variant: This color can be used to convey Disabled States.<br />
+            <b>Use mainly on: Buttons, icons content, Form elements.</b>
+        </Text>
+    </Grid.Item>  
+</Grid>
+
+### Accessibility
+When creating new content or components make sure  the color and background contrast meet AA Accessibility standards. You can check that [here](https://webaim.org/resources/contrastchecker/). 
+
+**Or just use Cactus components; they were designed with accessibility in mind! **
+
+<Divider marginTop='40px' />
+
+## Typeface
+### ARIAL
+Use typography to create clear hierarchies to guide users through the product and experience. Arial is used as the main font option, as it conveys cleanness, simplicity. 
+
+<Grid>
+    <Grid.Item tiny={12} medium={6}> 
+        <h3>Arial Regular (400w)</h3>
+        <Text>
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ <br /> 
+            1234567890 <br /> ”
+            ·$%&/\|()=,.?”:{`}{<>`}+_-*&^%#@~`’;
+        </Text>
+    </Grid.Item>
+        <Grid.Item tiny={12} medium={6}>
+        <h3>Arial Bold (600w)</h3>
+        <Text fontWeight='600'>
+            ABCDEFGHIJKLMNOPQRSTUVWXYZ <br /> 
+            1234567890 <br /> ”
+            ·$%&/\|()=,.?”:{`}{<>`}+_-*&^%#@~`’;
+        </Text>
+    </Grid.Item>
+</Grid>
+
+
+<Divider marginTop='40px' />
+ 
+
+## Shadows
+Our default theme comes with shadows because It helps us deliver a better user experience while interacting with our products.
+
+Shadows help us to create a hierarchy by creating apparent z-axis distances between different elements in the UI. Our shadows use the Call to action color at a 30% opacity to match the theme.
+<Grid>
+    <Grid.Item tiny={12} medium={4}>
+        <Shadow shadowType={0} fontWeight='600'>
+                <Text textStyle='h3' fontWeight='600'>S0</Text>
+                <Text>
+                    Shadow: 0, 0, 3px <br />
+                    Color: Call to action 30% 
+                </Text>
+        </Shadow>
+    </Grid.Item>
+    <Grid.Item tiny={12} medium={4}>
+        <Shadow shadowType={1}>
+                <Text textStyle='h3' fontWeight='600'>S1</Text>
+                <Text>
+                    Shadow: 0, 3, 8px <br />
+                    Color: Call to action 30% 
+                </Text>
+        </Shadow>
+    </Grid.Item>
+    <Grid.Item tiny={12} medium={4}>
+        <Shadow shadowType={2}>
+                <Text textStyle='h3' fontWeight='600'>S2</Text>
+                <Text>
+                    Shadow: 0, 9, 24px <br />
+                    Color: Call to action 30% 
+                </Text>
+        </Shadow>
+    </Grid.Item>
+</Grid>
+
+<Divider marginTop='40px' />
+
+## Lines
+Out standard theme uses a thin line. Used to create groups and separate content.
+
+**Thin**
+
+<Box border='1px solid' borderColor='mediumContrast' borderRadius='4px' width='200px' height='200px'> </Box>
+
+It has a thickness of 1px
+
+
+<Divider marginTop='40px' />
+
+
+## Shapes
+Shapes affects the roundness across the different components in our design system. REPAY’S standard theme will use the intermediate option.
+
+<Grid>
+    <Grid.Item tiny={12} medium={4}>
+        <Text fontWeight="600">Intermediate</Text>
+        <Box border='1px solid' borderColor='mediumContrast' borderRadius='4px' width='200px' height='200px'> 
+            <Box border='1px solid' borderColor='mediumContrast' borderRadius='8px' width='64px' height='64px' margin='68px'> </Box>
+        </Box>
+        <Text>Gives small components a corner radius of 8px and big components get a corner radius of 4px.</Text>
+    </Grid.Item>
+    <Grid.Item tiny={12} medium={8}>
+        <Text fontWeight="600">Example</Text>
+        <Flex  border='1px solid' borderColor='lightContrast' flexDirection='column' alignItems='flex-end' padding='48px 80px 32px' borderRadius='4px'> 
+            <TextInputField name="input" label="Label" width='100%'/>
+            <Button variant='action' margin={16}>Button</Button>
+        </Flex>
+    </Grid.Item>
+</Grid>
