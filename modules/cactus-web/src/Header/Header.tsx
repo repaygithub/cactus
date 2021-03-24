@@ -95,6 +95,7 @@ export const StyledHeader = styled.header<HeaderProps>`
   justify-content: center;
   padding: 8px 0;
   width: 100%;
+  box-sizing: border-box;
 
   ${(p) => `
   ${p.theme.mediaQueries?.small}{

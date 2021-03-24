@@ -2,12 +2,14 @@ import { ActionsGear, DescriptiveClock } from '@repay/cactus-icons'
 import { boolean, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
+import styled from 'styled-components'
 
 import ActionBar from '../ActionBar/ActionBar'
-import Box from '../Box/Box'
 import BrandBar from '../BrandBar/BrandBar'
+import Breadcrumb from '../Breadcrumb/Breadcrumb'
 import Flex from '../Flex/Flex'
 import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 import MenuBar from '../MenuBar/MenuBar'
 import MenuButton from '../MenuButton/MenuButton'
 import Modal from '../Modal/Modal'
@@ -154,9 +156,9 @@ export const BasicUsage = (): React.ReactElement => {
       )}
       {hasActions && <StoryActionBar />}
       <Layout.Content>
-        <Box padding={3} backgroundColor={useDarkNav ? 'lightContrast' : 'white'}>
-          <h1>Latin Or Something</h1>
-        </Box>
+        <Header bgColor={useDarkNav ? 'lightContrast' : 'white'}>
+          <Header.Title>Latin Or Something</Header.Title>
+        </Header>
         <TextInputField name="foo" label="Foo" />
         <ToggleField
           ml="150px"
@@ -207,6 +209,10 @@ BasicUsage.parameters = {
   cactus: { overrides: { display: 'block', position: 'static', width: '100%', height: '100%' } },
 }
 
+const SuperWideHeader = styled(Header)`
+  min-width: 2000px;
+`
+
 export const ShortContent = (): React.ReactElement => {
   const hasBrand = boolean('Show Brand Bar', true)
   const hasMenu = boolean('Show Menu', true)
@@ -220,9 +226,15 @@ export const ShortContent = (): React.ReactElement => {
       {hasMenu && <StoryMenuBar />}
       {hasActions && <StoryActionBar />}
       <Layout.Content overflowX={overflow ? 'auto' : undefined}>
-        <Box padding={3} minWidth="2000px" backgroundColor="lightContrast">
-          <h1>Latin Or Something</h1>
-        </Box>
+        <SuperWideHeader>
+          <SuperWideHeader.BreadcrumbRow>
+            <Breadcrumb>
+              <Breadcrumb.Item href="/">Test</Breadcrumb.Item>
+              <Breadcrumb.Active>Hi</Breadcrumb.Active>
+            </Breadcrumb>
+          </SuperWideHeader.BreadcrumbRow>
+          <SuperWideHeader.Title>Latin Or Something</SuperWideHeader.Title>
+        </SuperWideHeader>
       </Layout.Content>
       {hasFooter && <StoryFooter />}
     </Layout>

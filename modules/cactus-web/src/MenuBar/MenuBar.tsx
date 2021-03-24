@@ -372,10 +372,6 @@ const Nav = styled.nav<MenuBarProps>`
   align-items: stretch;
   position: relative;
   outline: none;
-  [role='menubar'] {
-    padding-bottom: 35px;
-    margin-bottom: -35px;
-  }
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 24px 16px;
