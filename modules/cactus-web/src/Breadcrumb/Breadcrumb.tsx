@@ -55,7 +55,7 @@ export const BreadcrumbActive = (
 const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { children, className } = props
   const childrenCount = Children.count(children)
-  const childrenArray = Children.toArray(children)
+  const childrenArray = Children.toArray(children) as ChildElement[]
   const breadcrumbNavId = 'breadcrumb-nav'
 
   const isTiny = SIZES.tiny === useScreenSize()
@@ -69,7 +69,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   })
 
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0)
-  const [dropdownItemCount, setDropdownItemCount] = React.useState<number>(0)
+  const [dropdownItems, setDropdownItems] = React.useState<ChildElement[]>([])
 
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
 
@@ -117,13 +117,11 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   }, [handleTriggerClick, toggle])
 
   React.useEffect(() => {
-    const nonActiveLinks = childrenArray.filter(
-      (child) =>
-        (child as ChildElement).props.active !== true &&
-        (child as ChildElement).type.displayName !== 'Breadcrumb.Active'
+    const nonActiveLinks = (Children.toArray(children) as ChildElement[]).filter(
+      (child) => child?.props.active !== true && child?.type.displayName !== 'Breadcrumb.Active'
     )
-    setDropdownItemCount(nonActiveLinks.length)
-  }, [childrenArray])
+    setDropdownItems(nonActiveLinks)
+  }, [children])
 
   const handlePopupKeyDown = (event: React.KeyboardEvent) => {
     const key = event.key
@@ -132,13 +130,13 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
       switch (key) {
         case 'ArrowDown':
           setSelectedIndex((currentSelectedIndex) => {
-            return currentSelectedIndex < dropdownItemCount - 1 ? currentSelectedIndex + 1 : 0
+            return currentSelectedIndex < dropdownItems.length - 1 ? currentSelectedIndex + 1 : 0
           })
           setFocus(1, { shift: true })
           break
         case 'ArrowUp':
           setSelectedIndex((currentSelectedIndex) => {
-            return currentSelectedIndex > 0 ? currentSelectedIndex - 1 : dropdownItemCount - 1
+            return currentSelectedIndex > 0 ? currentSelectedIndex - 1 : dropdownItems.length - 1
           })
           setFocus(-1, { shift: true })
           break
@@ -147,7 +145,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
           setFocus(0)
           break
         case 'End':
-          setSelectedIndex(dropdownItemCount - 1)
+          setSelectedIndex(dropdownItems.length - 1)
           setFocus(-1)
           break
         case 'Escape':
@@ -190,24 +188,19 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
               onKeyDown={handlePopupKeyDown}
             >
               <BreadcrumbPopupList id="nav-popup-list" $maxWidth={maxDropdownWidth}>
-                {Children.map(children, (child, index) => {
-                  if (
-                    (child as ChildElement)?.type.displayName !== 'Breadcrumb.Active' &&
-                    (child as ChildElement)?.props.active !== true
-                  ) {
-                    const cloneProps: {
-                      mobileListItem: boolean
-                      handleItemMouseEnter: () => void
-                      isSelected?: boolean
-                      role: string
-                    } = {
-                      mobileListItem: true,
-                      handleItemMouseEnter: () => setSelectedIndex(index),
-                      isSelected: index === selectedIndex,
-                      role: 'menuitem',
-                    }
-                    return React.cloneElement(child as JSX.Element, cloneProps)
+                {dropdownItems.map((child, index) => {
+                  const cloneProps: {
+                    mobileListItem: boolean
+                    handleItemMouseEnter: () => void
+                    isSelected?: boolean
+                    role: string
+                  } = {
+                    mobileListItem: true,
+                    handleItemMouseEnter: () => setSelectedIndex(index),
+                    isSelected: index === selectedIndex,
+                    role: 'menuitem',
                   }
+                  return React.cloneElement(child as JSX.Element, cloneProps)
                 })}
               </BreadcrumbPopupList>
             </BreadcrumbPopup>
