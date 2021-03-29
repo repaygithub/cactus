@@ -1,5 +1,5 @@
 import { DescriptivePalette } from '@repay/cactus-icons'
-import { CactusTheme, Shape } from '@repay/cactus-theme'
+import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
 import { ColorChangeHandler, CustomPicker, HSLColor, HSVColor } from 'react-color'
@@ -16,7 +16,7 @@ import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpe
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { useBox } from '../helpers/react'
-import { border, borderSize, boxShadow, radius } from '../helpers/theme'
+import { border, popupBoxShadow, popupShape, radius } from '../helpers/theme'
 import usePopup from '../helpers/usePopup'
 import IconButton from '../IconButton/IconButton'
 import TextButton from '../TextButton/TextButton'
@@ -98,30 +98,6 @@ const BasePopup: React.FC<PopupProps> = ({ anchorRef, popupRef, isOpen, ...props
   return <FocusLock ref={popupRef} {...props} />
 }
 
-const popupShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
-  square: css`
-    border-radius: 0 2px 1px 1px;
-  `,
-  intermediate: css`
-    border-radius: 0 20px 10px 10px;
-  `,
-  round: css`
-    border-radius: 0 32px 16px 16px;
-  `,
-}
-
-const getPopupShape = (shape: Shape): ReturnType<typeof css> => popupShapeMap[shape]
-const getPopupBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => {
-  return theme.boxShadows
-    ? css`
-        ${(p): string => boxShadow(p.theme, 1)};
-      `
-    : css`
-        border: ${(p) => borderSize(p)} solid;
-        border-color: ${theme.colors.lightContrast};
-      `
-}
-
 const ColorPickerPopup = styled(BasePopup)`
   display: ${(p) => (p.isOpen ? 'block' : 'none')};
   box-sizing: border-box;
@@ -130,8 +106,8 @@ const ColorPickerPopup = styled(BasePopup)`
   width: 320px;
   padding: 16px;
   background-color: ${(p): string => p.theme.colors.white};
-  ${(p): ReturnType<typeof css> => getPopupShape(p.theme.shape)}
-  ${(p): ReturnType<typeof css> => getPopupBoxShadowStyles(p.theme)}
+  ${(p): ReturnType<typeof css> => popupShape('dialog', p.theme.shape)}
+  ${(p): ReturnType<typeof css> => popupBoxShadow(p.theme)}
   overflow: hidden;
   outline: none;
 

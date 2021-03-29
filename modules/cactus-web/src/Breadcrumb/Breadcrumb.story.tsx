@@ -1,5 +1,6 @@
 import { array, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
+import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
 import Breadcrumb from './Breadcrumb'
@@ -29,16 +30,31 @@ const CustomLink: React.FC<{ className?: string; children: React.ReactNode; cust
 export const CustomItemElements = (): ReactElement => (
   <Breadcrumb>
     <Breadcrumb.Item as={CustomLink} customTo="/">
-      {text('Label 1', 'Account')}
+      {text('Label 1', 'Accounts')}
+    </Breadcrumb.Item>
+    <Breadcrumb.Item as={CustomLink} customTo="/">
+      {text('Label 2', 'Account Details')}
     </Breadcrumb.Item>
     <Breadcrumb.Item as={CustomLink} customTo="/" active>
-      {text('Label 2', 'Make a Payment')}
+      {text('Label 3', 'Make a Payment')}
     </Breadcrumb.Item>
   </Breadcrumb>
 )
 
+CustomItemElements.parameters = {
+  beforeScreenshot: async (page: Page) => {
+    const innerWidth = await page.evaluate(() => window.innerWidth)
+    if (innerWidth <= 375) {
+      const [button] = await page.$x("//button[contains(., '...')]")
+      if (button) {
+        await button.click()
+      }
+    }
+  },
+}
+
 export const AddMoreBreadcrumbs = (): ReactElement => {
-  const values = array('Add new Links', ['Link 1'])
+  const values = array('Add new Links', ['Link 1', 'Link 2', 'Link 3'])
 
   return (
     <Breadcrumb>

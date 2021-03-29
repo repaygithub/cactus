@@ -218,8 +218,9 @@ exports[`With theme changes  Dropdown should not have box-shadows 1`] = `
 .c5 {
   padding: 8px 0;
   outline: none;
-  border: 1px solid hsl(200,29%,90%);
   border-radius: 0 0 4px 4px;
+  border: 1px solid;
+  border-color: hsl(200,29%,90%);
   background-color: hsl(0,0%,100%);
 }
 

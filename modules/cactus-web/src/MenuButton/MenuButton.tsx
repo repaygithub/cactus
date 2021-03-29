@@ -8,7 +8,7 @@ import {
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
+import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
@@ -16,28 +16,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { border, boxShadow, radius, textStyle } from '../helpers/theme'
-
-const dropShapeMap = {
-  square: 'border-radius: 0 0 1px 1px;',
-  intermediate: 'border-radius: 0 0 4px 4px;',
-  round: 'border-radius: 0 0 8px 8px;',
-}
-
-type ThemeProps = { theme: CactusTheme }
-
-const getDropShape = ({ theme }: ThemeProps) => dropShapeMap[theme.shape]
-
-const getDropDownBorder = ({ theme }: ThemeProps) => {
-  if (!theme.boxShadows) {
-    return css`
-      border: ${border(theme, 'lightContrast')};
-      ${getDropShape};
-    `
-  } else {
-    return css(getDropShape)
-  }
-}
+import { border, popupBoxShadow, popupShape, radius, textStyle } from '../helpers/theme'
 
 const MenuButtonStyles = createGlobalStyle`
   :root {
@@ -71,8 +50,8 @@ interface MenuListProps extends ReachMenuItemsProps {
 const MenuList = styled(ReachMenuItems)<MenuListProps>`
   padding: 8px 0;
   outline: none;
-  ${getDropDownBorder};
-  ${(p) => boxShadow(p.theme, 1)};
+  ${(p) => popupShape('menu', p.theme.shape)}
+  ${(p) => popupBoxShadow(p.theme)}
   background-color: ${(p) => p.theme.colors.white};
 
   [data-reach-menu-item] {

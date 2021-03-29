@@ -27,6 +27,8 @@ export const code = `<Breadcrumb>
 
 ## Best practices
 
+It's important to render the Breadcrumb as a descendant of `ScreenSizeProvider`, as it calls the `useScreenSize` hook internally.
+
 The Breadcrumb component consists of three parts:
 - The `Breadcrumb` which works as a wrapper for the navigation links.
 - A `Breadcrumb.Item` which represents a single Breadrumb or link. href should be passed as a prop.
