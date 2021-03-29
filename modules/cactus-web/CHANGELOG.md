@@ -1,3 +1,22 @@
+# v6.1.1 (Mon Mar 29 2021)
+
+#### 🐛 Bug Fix
+
+- Fix bug where drop-down menu would become hidden in Safari [#562](https://github.com/repaygithub/cactus/pull/562) ([@mikesoltow](https://github.com/mikesoltow))
+- Fix bug where the MenuBar could obtain focus through a click below the menu [#560](https://github.com/repaygithub/cactus/pull/560) ([@mikesoltow](https://github.com/mikesoltow))
+- Fix an issue with Accordion text alignment in IE11 [#554](https://github.com/repaygithub/cactus/pull/554) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🏠 Internal
+
+- Refactor CheckBoxGroup and RadioGroup [#555](https://github.com/repaygithub/cactus/pull/555) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- [@mikesoltow](https://github.com/mikesoltow)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+
+---
+
 # v6.1.0 (Fri Mar 19 2021)
 
 #### 🚀 Enhancement
