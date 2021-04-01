@@ -3,7 +3,7 @@ import { select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import List from './List'
+import { List } from '../'
 
 export default {
   title: 'List',

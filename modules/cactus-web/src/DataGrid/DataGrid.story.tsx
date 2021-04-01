@@ -2,9 +2,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement, useContext, useState } from 'react'
 
-import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import SplitButton from '../SplitButton/SplitButton'
-import DataGrid from './DataGrid'
+import { DataGrid, ScreenSizeContext, SIZES, SplitButton } from '../'
 import { JustifyContent } from './types'
 
 interface Datum {

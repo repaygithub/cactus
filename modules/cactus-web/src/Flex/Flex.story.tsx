@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Property } from 'csstype'
 import React from 'react'
 
-import Flex from './Flex'
+import { Flex } from '../'
 
 const justifyOptions = [
   'unset',

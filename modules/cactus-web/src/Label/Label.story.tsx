@@ -2,7 +2,7 @@ import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Label from './Label'
+import { Label } from '../'
 
 export default {
   title: 'Label',

@@ -3,9 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
-import Box from '../Box/Box'
-import StyleProvider from '../StyleProvider/StyleProvider'
-import { ScreenSizeContext, ScreenSizeProvider } from './ScreenSizeProvider'
+import { Box, ScreenSizeContext, ScreenSizeProvider, StyleProvider } from '../'
 
 const BreakpointBox = styled(Box)`
   max-width: 320px;

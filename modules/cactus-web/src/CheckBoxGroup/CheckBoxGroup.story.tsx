@@ -2,8 +2,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
-import Flex from '../Flex/Flex'
-import CheckBoxGroup from './CheckBoxGroup'
+import { CheckBoxGroup, Flex } from '../'
 
 export default {
   title: 'CheckBoxGroup',

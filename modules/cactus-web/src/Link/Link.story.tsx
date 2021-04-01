@@ -2,8 +2,7 @@ import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
-import Flex from '../Flex/Flex'
-import Link from './Link'
+import { Flex, Link } from '../'
 
 export default {
   title: 'Link',

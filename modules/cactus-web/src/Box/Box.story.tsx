@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Property } from 'csstype'
 import React from 'react'
 
-import Box from './Box'
+import { Box } from '../'
 
 const positionOptions = {
   initial: 'initial',

@@ -1,10 +1,7 @@
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
-import Box from '../Box/Box'
-import Button from '../Button/Button'
-import Flex from '../Flex/Flex'
-import Dimmer from './Dimmer'
+import { Box, Button, Dimmer, Flex } from '../'
 
 export default {
   title: 'Dimmer',

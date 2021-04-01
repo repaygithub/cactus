@@ -4,7 +4,8 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Property } from 'csstype'
 import React from 'react'
 
-import { Span, Text } from './Text'
+import { Text } from '../'
+import { Span } from './Text'
 
 const COLOR_STYLES = Object.keys(cactusTheme.colorStyles) as CactusColor[]
 const TEXT_STYLES = Object.keys(cactusTheme.textStyles)

@@ -2,15 +2,17 @@ import { boolean } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement, useCallback, useReducer } from 'react'
 
-import Box from '../Box/Box'
-import CheckBoxField from '../CheckBoxField/CheckBoxField'
-import FileInputField from '../FileInputField/FileInputField'
-import RadioButtonField from '../RadioButtonField/RadioButtonField'
+import {
+  Box,
+  CheckBoxField,
+  FileInputField,
+  RadioButtonField,
+  SelectField,
+  TextAreaField,
+  TextInputField,
+  ToggleField,
+} from '../'
 import { OptionType } from '../Select/Select'
-import SelectField from '../SelectField/SelectField'
-import TextAreaField from '../TextAreaField/TextAreaField'
-import TextInputField from '../TextInputField/TextInputField'
-import ToggleField from '../ToggleField/ToggleField'
 
 type FieldTypes = 'text' | 'textarea' | 'select' | 'file' | 'toggle' | 'checkbox' | 'radio'
 

@@ -3,10 +3,8 @@ import { select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Breadcrumb from '../Breadcrumb/Breadcrumb'
-import Button from '../Button/Button'
-import Link from '../Link/Link'
-import Header, { BackgroundColorVariants } from './Header'
+import { Breadcrumb, Button, Header, Link } from '../'
+import { BackgroundColorVariants } from './Header'
 
 export default {
   title: 'Header',

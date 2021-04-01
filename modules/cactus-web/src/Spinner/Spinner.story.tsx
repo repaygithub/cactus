@@ -3,7 +3,7 @@ import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Spinner from './Spinner'
+import { Spinner } from '../'
 
 type IconSize = 'tiny' | 'small' | 'medium' | 'large'
 const iconSizes: IconSize[] = ['tiny', 'small', 'medium', 'large']

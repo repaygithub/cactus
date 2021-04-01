@@ -2,8 +2,8 @@ import { boolean } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import { CheckBox } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
-import CheckBox from './CheckBox'
 
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 

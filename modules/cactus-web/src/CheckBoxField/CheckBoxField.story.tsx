@@ -2,7 +2,7 @@ import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import CheckBoxField from './CheckBoxField'
+import { CheckBoxField } from '../'
 
 export default {
   title: 'CheckBoxField',

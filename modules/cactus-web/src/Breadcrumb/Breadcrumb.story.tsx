@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
-import Breadcrumb from './Breadcrumb'
+import { Breadcrumb } from '../'
 
 export default {
   title: 'Breadcrumb',

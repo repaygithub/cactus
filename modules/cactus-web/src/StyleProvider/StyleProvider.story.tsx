@@ -3,10 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
-import Box from '../Box/Box'
-import Flex from '../Flex/Flex'
-import Grid from '../Grid/Grid'
-import StyleProvider from './StyleProvider'
+import { Box, Flex, Grid, StyleProvider } from '../'
 
 const backgroundColors = ['springgreen', 'mediumturquoise', 'cornflowerblue', 'thistle', 'pink']
 

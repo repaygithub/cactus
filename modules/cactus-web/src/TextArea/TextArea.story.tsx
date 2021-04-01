@@ -2,9 +2,9 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import { TextArea } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
 import { Status } from '../StatusMessage/StatusMessage'
-import TextArea from './TextArea'
 
 type StatusOptions = { [k in Status | 'none']: Status | null }
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')

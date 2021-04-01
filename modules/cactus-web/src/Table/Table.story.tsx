@@ -2,7 +2,7 @@ import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Table from './Table'
+import { Table } from '../'
 
 type CellAlignment = 'left' | 'right' | 'center'
 const alignOptions = {

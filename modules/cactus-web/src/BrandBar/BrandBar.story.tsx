@@ -4,11 +4,8 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
-import ActionBar from '../ActionBar/ActionBar'
-import Layout from '../Layout/Layout'
+import { ActionBar, BrandBar, Layout, SelectField } from '../'
 import { SelectValueType } from '../Select/Select'
-import SelectField from '../SelectField/SelectField'
-import BrandBar from './BrandBar'
 
 const LOGO =
   'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg'

@@ -2,8 +2,8 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
+import { TextInputField } from '../'
 import { textStyles } from '../TextInput/TextInput'
-import TextInputField from './TextInputField'
 
 export default {
   title: 'TextInputField',

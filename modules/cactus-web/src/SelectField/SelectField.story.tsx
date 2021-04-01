@@ -3,8 +3,8 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
+import { SelectField } from '../'
 import { SelectValueType } from '../Select/Select'
-import SelectField from './SelectField'
 
 export default {
   title: 'SelectField',

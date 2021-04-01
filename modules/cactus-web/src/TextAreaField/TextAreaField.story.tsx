@@ -3,7 +3,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import TextAreaField from './TextAreaField'
+import { TextAreaField } from '../'
 
 const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
 

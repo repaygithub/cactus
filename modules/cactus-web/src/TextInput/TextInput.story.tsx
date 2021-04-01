@@ -2,9 +2,10 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import { TextInput } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
 import { Status } from '../StatusMessage/StatusMessage'
-import TextInput, { textStyles } from './TextInput'
+import { textStyles } from './TextInput'
 
 export default {
   title: 'TextInput',

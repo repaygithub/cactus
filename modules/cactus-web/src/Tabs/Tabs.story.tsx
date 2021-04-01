@@ -3,8 +3,8 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
+import { Tab, TabController, TabList, TabPanel } from '../'
 import { justifyOptions } from '../Flex/Flex'
-import { Tab, TabController, TabList, TabPanel } from './Tabs'
 
 const LABELS = [
   'Ready!',

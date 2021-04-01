@@ -2,8 +2,8 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
-import { Flex } from '../index'
-import Alert, { Status, Type } from './Alert'
+import { Alert, Flex } from '../'
+import { Status, Type } from './Alert'
 
 const status: Status[] = ['error', 'warning', 'info', 'success']
 const type: Type[] = ['general', 'push']

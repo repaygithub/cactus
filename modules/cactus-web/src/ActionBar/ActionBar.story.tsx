@@ -3,11 +3,7 @@ import { boolean } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Flex from '../Flex/Flex'
-import Layout from '../Layout/Layout'
-import Link from '../Link/Link'
-import Text from '../Text/Text'
-import ActionBar from './ActionBar'
+import { ActionBar, Flex, Layout, Link, Text } from '../'
 
 function action(msg: string) {
   return () => console.log('ITEM CLICKED:', msg)
