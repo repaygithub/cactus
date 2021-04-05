@@ -151,6 +151,9 @@ export const BasicUsage = (): React.ReactElement => {
           <MenuBar.List title="Interlude: About Bears">
             <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
             <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
+            <MenuBar.List title="Long Bears">
+              <MenuBar.Item>A very long label about bears is wider than its parent</MenuBar.Item>
+            </MenuBar.List>
           </MenuBar.List>
         </MenuBar>
       )}
