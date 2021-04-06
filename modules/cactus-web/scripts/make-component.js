@@ -131,7 +131,7 @@ function storyTemplate(componentName) {
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import ${componentName} from './${componentName}'
+import { ${componentName} } from '../'
 
 export default {
   title: '${componentName}',
