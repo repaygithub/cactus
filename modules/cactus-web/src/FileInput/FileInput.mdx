@@ -18,7 +18,7 @@ The file input can be used to drag & drop or select files to upload.
 export const code = `<FileInput
   name="file-input"
   accept={['.txt', '.doc']}
-  labels={{ delete: 'delete file', retry: 'retry file upload', loading: 'loading', loaded: 'successful' }}
+  labels={{ delete: 'delete file', loading: 'loading', loaded: 'successful' }}
   prompt="Drag files here or"
   buttonText="Select Files..."
   rawFiles={false}
@@ -100,7 +100,7 @@ const FileForm = () => {
       <FileInput
         name="file-input"
         accept=['.txt', '.doc']
-        labels={{ delete: 'delete file', retry: 'retry file upload', loading: 'loading', loaded: 'successful' }}
+        labels={{ delete: 'delete file', loading: 'loading', loaded: 'successful' }}
         prompt="Drag files here or"
         buttonText="Select Files..."
         onChange={handleChange}

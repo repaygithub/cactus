@@ -25,7 +25,6 @@ const FileInputExample: React.FC<RouteComponentProps> = (): React.ReactElement =
           accept={fileTypes}
           labels={{
             delete: 'Click to delete file',
-            retry: 'Click to retry file upload',
             loading: 'File uploading',
             loaded: 'File uploaded successfully',
           }}
