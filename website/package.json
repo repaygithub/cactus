@@ -26,8 +26,6 @@
     "@types/react-helmet": "^6.1.0",
     "@types/react-motion": "^0.0.29",
     "@types/styled-components": "^5.1.7",
-    "babel-plugin-export-metadata": "^2.3.0",
-    "babel-plugin-styled-components": "^1.12.0",
     "chokidar": "^3.5.1",
     "cpy": "^8.1.1",
     "fast-glob": "^3.2.5",
@@ -40,9 +38,6 @@
     "gatsby-plugin-styled-components": "^3.10.0",
     "gatsby-plugin-svgr": "^2.1.0",
     "gatsby-plugin-typescript": "^2.12.0",
-    "gatsby-remark-copy-linked-files": "^2.10.0",
-    "gatsby-remark-images": "^3.11.0",
-    "gatsby-remark-smartypants": "^2.10.0",
     "gatsby-source-filesystem": "^2.11.0",
     "gatsby-transformer-sharp": "^2.12.0",
     "unist-util-visit": "^2.0.3"

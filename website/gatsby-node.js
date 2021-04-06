@@ -123,8 +123,13 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
-        // So cactus-web docs can use react-live without having react-live as a cactus dependency
+        // So cactus-web docs can use react-live and peer dependencies correctly
+        'prop-types': require.resolve('prop-types'),
+        'react': require.resolve('react'),
+        'react-dom': require.resolve('react-dom'),
+        'react-is': require.resolve('react-is'),
         'react-live': require.resolve('react-live'),
+        'styled-components': require.resolve('styled-components'),
         // used to reference website components from inside mdx files, such as those in cactus-web
         'website-src': path.resolve('./src'),
       },

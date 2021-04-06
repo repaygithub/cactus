@@ -1,0 +1,7 @@
+{
+  "name": "docs",
+  "dependencies": {
+    "@repay/cactus-web": "^6.0.0",
+    "styled-components": "^5.2.1"
+  }
+}

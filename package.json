@@ -39,6 +39,7 @@
   "workspaces": {
     "packages": [
       "website",
+      "docs",
       "modules/*",
       "examples/*",
       ".yalc/*",
