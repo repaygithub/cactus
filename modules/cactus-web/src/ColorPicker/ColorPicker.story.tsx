@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
-import ColorPicker from './ColorPicker'
+import { ColorPicker } from '../'
 
 export default {
   title: 'ColorPicker',

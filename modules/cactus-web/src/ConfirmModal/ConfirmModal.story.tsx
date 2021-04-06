@@ -3,11 +3,8 @@ import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
-import Button from '../Button/Button'
+import { Button, ConfirmModal, Text, TextInput } from '../'
 import { ModalType } from '../Modal/Modal'
-import Text from '../Text/Text'
-import TextInput from '../TextInput/TextInput'
-import ConfirmModal from './ConfirmModal'
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]

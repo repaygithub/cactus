@@ -3,8 +3,8 @@ import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { Flex } from '../index'
-import SplitButton, { IconProps, SplitButtonVariant } from './SplitButton'
+import { Flex, SplitButton } from '../'
+import { IconProps, SplitButtonVariant } from './SplitButton'
 type IconName = keyof typeof icons | 'None'
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 

@@ -2,8 +2,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Flex from '../Flex/Flex'
-import RadioGroup from './RadioGroup'
+import { Flex, RadioGroup } from '../'
 
 export default {
   title: 'RadioGroup',

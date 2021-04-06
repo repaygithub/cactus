@@ -2,8 +2,7 @@ import { boolean } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Table from '../Table/Table'
-import Toggle from './Toggle'
+import { Table, Toggle } from '../'
 
 export default {
   title: 'Toggle',

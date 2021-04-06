@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
-import MenuButton from './MenuButton'
+import { MenuButton } from '../'
 
 const stopNav = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => e.preventDefault()
 

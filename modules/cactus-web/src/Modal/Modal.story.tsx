@@ -2,10 +2,8 @@ import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
-import Alert from '../Alert/Alert'
-import Button from '../Button/Button'
-import Text from '../Text/Text'
-import Modal, { ModalType } from './Modal'
+import { Alert, Button, Modal, Text } from '../'
+import { ModalType } from './Modal'
 
 export default {
   title: 'Modal',

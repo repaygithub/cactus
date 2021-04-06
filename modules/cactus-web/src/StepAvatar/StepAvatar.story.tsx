@@ -2,8 +2,8 @@ import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Grid from '../Grid/Grid'
-import { AvatarStep, StepAvatar } from './StepAvatar'
+import { Grid, StepAvatar } from '../'
+import { AvatarStep } from './StepAvatar'
 
 const avatarSteps: AvatarStep[] = ['notDone', 'inProcess', 'done']
 

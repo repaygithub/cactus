@@ -3,9 +3,9 @@ import { boolean, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
+import { Grid, IconButton, Text } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
-import { Grid, Text } from '../index'
-import IconButton, { IconButtonSizes, IconButtonVariants } from './IconButton'
+import { IconButtonSizes, IconButtonVariants } from './IconButton'
 
 const iconButtonVariants: IconButtonVariants[] = [
   'standard',

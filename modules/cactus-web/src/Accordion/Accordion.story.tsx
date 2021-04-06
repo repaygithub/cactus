@@ -3,12 +3,8 @@ import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
 
-import Box from '../Box/Box'
-import Flex from '../Flex/Flex'
-import IconButton from '../IconButton/IconButton'
-import Text from '../Text/Text'
-import TextButton from '../TextButton/TextButton'
-import Accordion, { AccordionVariants } from './Accordion'
+import { Accordion, Box, Flex, IconButton, Text, TextButton } from '../'
+import { AccordionVariants } from './Accordion'
 
 interface ContentManagerState {
   [group: number]: number

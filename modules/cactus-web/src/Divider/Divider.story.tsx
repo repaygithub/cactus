@@ -1,10 +1,7 @@
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Box from '../Box/Box'
-import Card from '../Card/Card'
-import Flex from '../Flex/Flex'
-import Divider from './Divider'
+import { Box, Card, Divider, Flex } from '../'
 
 export default {
   title: 'Divider',

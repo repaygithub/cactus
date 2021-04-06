@@ -2,7 +2,7 @@ import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import ToggleField from './ToggleField'
+import { ToggleField } from '../'
 
 const eventLoggers = {
   onClick: (e: any) => console.log(`onClick '${e.target.name}': ${e.target.checked}`),

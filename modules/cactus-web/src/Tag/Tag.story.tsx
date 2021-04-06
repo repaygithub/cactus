@@ -2,9 +2,7 @@ import { boolean } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Button from '../Button/Button'
-import Flex from '../Flex/Flex'
-import Tag from './Tag'
+import { Button, Flex, Tag } from '../'
 
 const options = [
   {

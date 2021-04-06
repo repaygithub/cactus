@@ -2,8 +2,7 @@ import { text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Flex from '../Flex/Flex'
-import Tooltip from './Tooltip'
+import { Flex, Tooltip } from '../'
 
 export default {
   title: 'Tooltip',

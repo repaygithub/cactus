@@ -3,9 +3,10 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
+import { Button, Flex } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
-import { Flex } from '../index'
-import Button, { ButtonVariants } from './Button'
+import { ButtonVariants } from './Button'
+
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const buttonVariants: ButtonVariants[] = ['standard', 'action', 'danger', 'warning', 'success']

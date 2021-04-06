@@ -2,7 +2,8 @@ import { number, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import MenuBar, { MenuBarVariants } from './MenuBar'
+import { MenuBar } from '../'
+import { MenuBarVariants } from './MenuBar'
 
 const menuBarVariants: MenuBarVariants[] = ['light', 'dark']
 

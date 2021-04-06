@@ -2,8 +2,7 @@ import { number, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Box from '../Box/Box'
-import Footer from './Footer'
+import { Box, Footer } from '../'
 
 const LINK_TEXT = [
   'Static',

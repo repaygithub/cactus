@@ -3,9 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement, useState } from 'react'
 
-import Flex from '../Flex/Flex'
-import StatusMessage from '../StatusMessage/StatusMessage'
-import DateInput from './DateInput'
+import { DateInput, Flex, StatusMessage } from '../'
 
 const eventLoggers = {
   onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),

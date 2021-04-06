@@ -1,8 +1,8 @@
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { Flex, Grid, Text } from '../index'
-import Avatar, { AvatarStatus, AvatarType } from './Avatar'
+import { Avatar, Flex, Grid, Text } from '../'
+import { AvatarStatus, AvatarType } from './Avatar'
 export default {
   title: 'Avatar',
   component: Avatar,

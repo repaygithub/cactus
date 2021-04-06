@@ -2,8 +2,8 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { Box } from '../index'
-import DateInputField from './DateInputField'
+import { Box, DateInputField } from '../'
+
 const dateInputTypes: ('date' | 'datetime' | 'time')[] = ['date', 'datetime', 'time']
 
 export default {

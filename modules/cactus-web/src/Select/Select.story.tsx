@@ -3,8 +3,9 @@ import { array, boolean, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement } from 'react'
 
+import { Select } from '../'
 import arizonaCities from '../storySupport/arizonaCities'
-import Select, { SelectValueType } from './Select'
+import { SelectValueType } from './Select'
 
 const eventLoggers = {
   onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),

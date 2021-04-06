@@ -2,7 +2,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import FileInputField from './FileInputField'
+import { FileInputField } from '../'
 
 export default {
   title: 'FileInputField',

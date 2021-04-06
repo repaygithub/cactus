@@ -3,9 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
-import Alert from '../Alert/Alert'
-import Button from '../Button/Button'
-import Notification from './Notification'
+import { Alert, Button, Notification } from '../'
 
 export default {
   title: 'Notification',

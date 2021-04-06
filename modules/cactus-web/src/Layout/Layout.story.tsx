@@ -4,20 +4,22 @@ import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
-import ActionBar from '../ActionBar/ActionBar'
-import BrandBar from '../BrandBar/BrandBar'
-import Breadcrumb from '../Breadcrumb/Breadcrumb'
-import Flex from '../Flex/Flex'
-import Footer from '../Footer/Footer'
-import Header from '../Header/Header'
-import MenuBar from '../MenuBar/MenuBar'
-import MenuButton from '../MenuButton/MenuButton'
-import Modal from '../Modal/Modal'
-import Select from '../Select/Select'
-import SplitButton from '../SplitButton/SplitButton'
-import TextInputField from '../TextInputField/TextInputField'
-import ToggleField from '../ToggleField/ToggleField'
-import Layout from './Layout'
+import {
+  ActionBar,
+  BrandBar,
+  Breadcrumb,
+  Flex,
+  Footer,
+  Header,
+  Layout,
+  MenuBar,
+  MenuButton,
+  Modal,
+  Select,
+  SplitButton,
+  TextInputField,
+  ToggleField,
+} from '../'
 
 function action(msg: string) {
   return () => console.log('ITEM CLICKED:', msg)

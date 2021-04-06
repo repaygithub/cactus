@@ -2,7 +2,7 @@ import { number } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import Pagination from './Pagination'
+import { Pagination } from '../'
 
 export default {
   title: 'Pagination',
