@@ -481,7 +481,7 @@ const MenuWrapper = styled.div`
   white-space: normal;
   flex-flow: column nowrap;
   align-items: stretch;
-  width: auto;
+  width: max-content;
   min-width: 200px;
   max-width: 320px;
   max-height: 70vh;
