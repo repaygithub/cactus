@@ -39,7 +39,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
     const closeButtonRef = React.useRef<HTMLButtonElement | null>(null)
     const imagesFromChildren = images.length === 0 && !!children
     const childrenArray = React.Children.toArray(children)
-    const showArrows = imagesFromChildren ? childrenArray.length > 1 : images.length > 1
+    const multipleImages = imagesFromChildren ? childrenArray.length > 1 : images.length > 1
     const phrases = { ...DEFAULT_PHRASES, ...passedPhrases }
 
     React.useEffect(() => {
@@ -83,8 +83,8 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
     }
 
     return (
-      <PreviewBox ref={ref} {...rest}>
-        {showArrows && (
+      <PreviewBox ref={ref} $justify={multipleImages ? 'space-between' : 'center'} {...rest}>
+        {multipleImages && (
           <IconButton
             onClick={handleLeftArrowClick}
             onKeyDown={keyDownAsClick}
@@ -108,7 +108,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
             tabIndex={0}
           />
         )}
-        {showArrows && (
+        {multipleImages && (
           <IconButton
             onClick={handleRightArrowClick}
             onKeyDown={keyDownAsClick}
@@ -157,7 +157,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
   }
 )
 
-const PreviewBox = styled.div`
+const PreviewBox = styled.div<{ $justify: 'space-between' | 'center' }>`
   box-sizing: border-box;
   padding-left: ${(p) => p.theme.space[7]}px;
   padding-right: ${(p) => p.theme.space[7]}px;
@@ -170,7 +170,7 @@ const PreviewBox = styled.div`
   ${width}
   ${height}
   display: flex;
-  justify-content: space-between;
+  justify-content: ${(p) => p.$justify};
   align-items: center;
   ${margin}
 
