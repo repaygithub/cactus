@@ -1,0 +1,66 @@
+---
+name: Preview
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import Preview from './Preview'
+
+# Preview
+
+### Try It Out
+
+export const code = `
+  <Preview>
+    <img
+      src="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg"
+      alt="Repay Logo"
+    />
+    <img src="http://placekitten.com/400/450" alt="Cute kitten number 1" />
+    <img src="http://placekitten.com/450/250" alt="Cute kitten number 2" />
+    <img src="http://placekitten.com/600/300" alt="Cute kitten number 3" />
+  </Preview>
+`
+
+<LiveProvider code={code} scope={{ Preview }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- There are two ways the `Preview` component can be used.
+  1. Passing the image sources through the `images` prop:
+      - This method should only be used if accessibility is not a concern.
+  2. Rendering images as children:
+      - This gives you the ability to set some `alt` text on the images to make them accessible.
+- Another important note on accessibility is that the component exposes a `phrases` prop which you can use to set
+labels for the arrow buttons and the close button.
+- The `Preview` component exposes `width` and `height` props if you need to resize it. However, the minimum width is
+50% and the minimum height is 200px.
+
+## Basic usage
+
+The examples below explain how to use the `Preview` component using the `images` prop and using children, respectively.
+
+```jsx
+const IMAGES = ['http://placekitten.com/400/450', 'http://placekitten.com/600/300']
+
+<Preview images={IMAGES} />
+```
+
+OR
+
+```jsx
+<Preview>
+  <img src="http://placekitten.com/400/450" alt="Cute kitten 1" />
+  <img src="http://placekitten.com/600/300" alt="Cute kitten 2" />
+</Preview>
+```
+
+## Properties
+
+<PropsTable of={Preview} />
