@@ -140,6 +140,86 @@ describe('component: Select', (): void => {
     expect(trigger).toHaveTextContent('two')
   })
 
+  describe('clears value on empty string', () => {
+    test('single select', () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="x" name="x" value="y" options={['x', 'y', 'z']} />
+        </StyleProvider>
+      )
+      const trigger = getByRole('button')
+      expect(trigger).toHaveTextContent('y')
+      rerender(
+        <StyleProvider>
+          <Select id="x" name="x" value="" options={['x', 'y', 'z']} />
+        </StyleProvider>
+      )
+      expect(trigger).toHaveTextContent('Select an option')
+    })
+
+    test('...unless there is an option with a blank value', () => {
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select
+            id="x"
+            name="x"
+            value="y"
+            options={[
+              { value: '', label: 'this page is intentionally blank' },
+              { value: 'y', label: 'this statement is false' },
+              { value: 'z', label: 'this land is my land' },
+            ]}
+          />
+        </StyleProvider>
+      )
+      const trigger = getByRole('button')
+      expect(trigger).toHaveTextContent('this statement is false')
+      rerender(
+        <StyleProvider>
+          <Select
+            id="x"
+            name="x"
+            value=""
+            options={[
+              { value: '', label: 'this page is intentionally blank' },
+              { value: 'y', label: 'this statement is false' },
+              { value: 'z', label: 'this land is my land' },
+            ]}
+          />
+        </StyleProvider>
+      )
+      expect(trigger).toHaveTextContent('this page is intentionally blank')
+    })
+
+    test('multi select', () => {
+      // Unlike the single select, having a "blank" value in multiselect
+      // doesn't prevent the "clear"; instead, pass [''] to select that option.
+      const { getByRole, rerender } = render(
+        <StyleProvider>
+          <Select id="x" name="x" multiple value={['z', 'y', '']}>
+            <option value="">Blank</option>
+            <option value="x" />
+            <option value="y" />
+            <option value="z" />
+          </Select>
+        </StyleProvider>
+      )
+      const trigger = getByRole('button')
+      expect(trigger).toHaveTextContent('zyBlank')
+      rerender(
+        <StyleProvider>
+          <Select id="x" name="x" multiple value="">
+            <option value="">Blank</option>
+            <option value="x" />
+            <option value="y" />
+            <option value="z" />
+          </Select>
+        </StyleProvider>
+      )
+      expect(trigger).toHaveTextContent('Select an option')
+    })
+  })
+
   describe('keyboard interactions', (): void => {
     test('listbox gets focus on SPACE and first option selected', async (): Promise<void> => {
       const { getByText, getByRole } = render(
