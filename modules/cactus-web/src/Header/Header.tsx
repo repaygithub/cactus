@@ -16,11 +16,11 @@ export type HeaderType = FC<HeaderProps> & {
   Title: typeof HeaderTitle
 }
 
-export const HeaderItem: FC = ({ children }) => <>{children}</>
+export const HeaderItem: FC = ({ children, ...props }) => <div {...props}>{children}</div>
 
-export const HeaderTitle: FC = ({ children }) => {
+export const HeaderTitle: FC = ({ children, ...props }) => {
   return (
-    <Text as="h2" my="0">
+    <Text as="h2" my="0" {...props}>
       {children}
     </Text>
   )
@@ -73,9 +73,18 @@ export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
   flex-direction: column;
   padding-top: ${(p) => !p.mainColumn && '24px'};
   align-items: center;
+  > :not(:first-child) {
+    margin-top: ${(p) => !p.mainColumn && '8px'};
+  }
 
   ${(p) => `
     ${p.theme.mediaQueries?.small}{
+      > div:not(:first-child) {
+        margin-top: ${!p.mainColumn && '0px'};
+      }
+      > div{
+        margin-left: ${!p.mainColumn ? '8px' : '0px'};
+      }
       flex-direction: ${!p.mainColumn ? 'row' : ''};
       align-items: ${!p.mainColumn ? 'center' : 'flex-start'};
       padding-top: 0px;
@@ -93,12 +102,17 @@ export const StyledHeader = styled.header<HeaderProps>`
   flex-direction: column;
   height: auto;
   justify-content: center;
-  padding: 8px 0;
+  padding: 8px 16px;
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 
   ${(p) => `
   ${p.theme.mediaQueries?.small}{
+    text-align: left;
     justify-content: space-between;
     flex-direction: row;
     padding: 8px 40px;

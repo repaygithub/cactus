@@ -1,5 +1,5 @@
-import { ActionsAdd } from '@repay/cactus-icons'
-import { select } from '@storybook/addon-knobs'
+import { ActionsAdd, ActionsCopy } from '@repay/cactus-icons'
+import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
@@ -17,7 +17,7 @@ export const BasicUsage = (): React.ReactElement => {
   const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
   return (
     <Header bgColor={bgSelection}>
-      <Header.Title>Heading Title</Header.Title>
+      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
     </Header>
   )
 }
@@ -27,7 +27,7 @@ export const WithButton = (): React.ReactElement => {
 
   return (
     <Header bgColor={bgSelection}>
-      <Header.Title>Heading Title</Header.Title>
+      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
       <Header.Item>
         <Button variant="action">
           <ActionsAdd /> Add new configuration
@@ -42,7 +42,7 @@ export const WithBreadcrumbs = (): React.ReactElement => {
 
   return (
     <Header bgColor={bgSelection}>
-      <Header.Title>Heading Title</Header.Title>
+      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
       <Header.BreadcrumbRow>
         <Breadcrumb>
           <Breadcrumb.Item href="/">Label</Breadcrumb.Item>
@@ -77,8 +77,13 @@ export const WithMultipleItems = (): React.ReactElement => {
           <ActionsAdd /> Add new configuration
         </Button>
       </Header.Item>
-      <Header.Item>Some text because I like crowded UIs</Header.Item>
-      <Header.Title>Heading Title</Header.Title>
+      <Header.Item>
+        <Button variant="success">
+          <ActionsCopy />
+        </Button>
+      </Header.Item>
+      <Header.Item> Some text because I like crowded UIs </Header.Item>
+      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
     </Header>
   )
 }
@@ -91,7 +96,7 @@ export const WithGoBackLink = (): React.ReactElement => {
       <Header.BreadcrumbRow>
         <Link to="https://repaygithub.github.io/cactus/">Go back!</Link>
       </Header.BreadcrumbRow>
-      <Header.Title>Heading Title</Header.Title>
+      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
       <Header.Item>
         <Button variant="action">
           <ActionsAdd /> Add new configuration
