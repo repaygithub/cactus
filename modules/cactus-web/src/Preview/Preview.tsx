@@ -61,7 +61,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
     }, [imageSelected])
 
     React.useEffect(() => {
-      if (imageSelected !== null) {
+      if (imageSelected) {
         closeButtonRef.current?.focus()
       }
     }, [imageSelected])
@@ -122,36 +122,36 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
         )}
         {imageSelected && (
           <Dimmer active>
-            <Flex flexDirection="column" alignItems="center">
-              <Flex width="50%" mb={4}>
-                <StyledIconButton
-                  ref={closeButtonRef}
-                  ml="auto"
-                  onKeyDown={keyDownAsClick}
-                  label={phrases.close}
-                  variant="action"
-                >
-                  <NavigationClose aria-hidden="true" />
-                </StyledIconButton>
-              </Flex>
-              {imagesFromChildren ? (
+            <Flex height="100%" flexDirection="column" alignItems="center">
+              <ScrollWrapper>
+                <Flex width="100%" mb={4}>
+                  <StyledIconButton
+                    ref={closeButtonRef}
+                    ml="auto"
+                    onKeyDown={keyDownAsClick}
+                    label={phrases.close}
+                    variant="action"
+                  >
+                    <NavigationClose aria-hidden="true" />
+                  </StyledIconButton>
+                </Flex>
                 <ImageBackground>
-                  {React.cloneElement(childrenArray[currentIndex] as JSX.Element, {
-                    ref: selectedImageRef,
-                    'data-selected': 'true',
-                    tabIndex: 0,
-                  })}
+                  {imagesFromChildren ? (
+                    React.cloneElement(childrenArray[currentIndex] as JSX.Element, {
+                      ref: selectedImageRef,
+                      'data-selected': 'true',
+                      tabIndex: 0,
+                    })
+                  ) : (
+                    <img
+                      ref={selectedImageRef}
+                      src={images[currentIndex]}
+                      data-selected="true"
+                      tabIndex={0}
+                    />
+                  )}
                 </ImageBackground>
-              ) : (
-                <ImageBackground>
-                  <img
-                    ref={selectedImageRef}
-                    src={images[currentIndex]}
-                    data-selected="true"
-                    tabIndex={0}
-                  />
-                </ImageBackground>
-              )}
+              </ScrollWrapper>
             </Flex>
           </Dimmer>
         )}
@@ -196,8 +196,15 @@ const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
 
 const ImageBackground = styled.div`
   display: flex;
-  width: 50%;
+  width: 100%;
   background-color: ${(p) => p.theme.colors.white};
+`
+
+const ScrollWrapper = styled.div`
+  width: 50%;
+  max-height: 100%;
+  overflow: auto;
+  padding: ${(p) => p.theme.space[3]}px;
 `
 
 const StyledIconButton = styled(IconButton)`
