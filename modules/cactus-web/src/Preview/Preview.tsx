@@ -34,7 +34,7 @@ const DEFAULT_PHRASES: Phrases = {
 export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
   ({ images = [], children, phrases: passedPhrases, ...rest }, ref) => {
     const [currentIndex, setCurrentIndex] = React.useState<number>(0)
-    const [selectedImage, setSelectedImage] = React.useState<number | null>(null)
+    const [imageSelected, setImageSelected] = React.useState<boolean>(false)
     const selectedImageRef = React.useRef<HTMLImageElement | null>(null)
     const closeButtonRef = React.useRef<HTMLButtonElement | null>(null)
     const imagesFromChildren = images.length === 0 && !!children
@@ -47,10 +47,10 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
         const { target } = event
         if (
           target instanceof Node &&
-          selectedImage !== null &&
+          imageSelected &&
           !selectedImageRef?.current?.contains(target)
         ) {
-          setSelectedImage(null)
+          setImageSelected(false)
         }
       }
       document.body.addEventListener('click', handleBodyClick)
@@ -58,13 +58,13 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
       return () => {
         document.body.removeEventListener('click', handleBodyClick)
       }
-    }, [selectedImage])
+    }, [imageSelected])
 
     React.useEffect(() => {
-      if (selectedImage !== null) {
+      if (imageSelected !== null) {
         closeButtonRef.current?.focus()
       }
-    }, [selectedImage])
+    }, [imageSelected])
 
     const handleLeftArrowClick = () => {
       setCurrentIndex((index) => index - 1)
@@ -75,15 +75,11 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
     }
 
     const handleImageClick = () => {
-      setSelectedImage(currentIndex)
-    }
-
-    const handleXClick = () => {
-      setSelectedImage(null)
+      setImageSelected(true)
     }
 
     return (
-      <PreviewBox ref={ref} $justify={multipleImages ? 'space-between' : 'center'} {...rest}>
+      <PreviewBox ref={ref} justify={multipleImages ? 'space-between' : 'center'} {...rest}>
         {multipleImages && (
           <IconButton
             onClick={handleLeftArrowClick}
@@ -99,6 +95,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
             onClick: handleImageClick,
             onKeyDown: keyDownAsClick,
             tabIndex: 0,
+            'data-selected': 'false',
           })
         ) : (
           <img
@@ -106,6 +103,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
             onClick={handleImageClick}
             onKeyDown={keyDownAsClick}
             tabIndex={0}
+            data-selected="false"
           />
         )}
         {multipleImages && (
@@ -122,32 +120,37 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
             <NavigationChevronRight aria-hidden="true" />
           </IconButton>
         )}
-        {selectedImage !== null && (
+        {imageSelected && (
           <Dimmer active>
             <Flex flexDirection="column" alignItems="center">
               <Flex width="50%" mb={4}>
-                <IconButton
+                <StyledIconButton
                   ref={closeButtonRef}
                   ml="auto"
-                  onClick={handleXClick}
+                  onKeyDown={keyDownAsClick}
                   label={phrases.close}
+                  variant="action"
                 >
                   <NavigationClose aria-hidden="true" />
-                </IconButton>
+                </StyledIconButton>
               </Flex>
               {imagesFromChildren ? (
-                React.cloneElement(childrenArray[selectedImage] as JSX.Element, {
-                  ref: selectedImageRef,
-                  'data-selected': 'true',
-                  tabIndex: 0,
-                })
+                <ImageBackground>
+                  {React.cloneElement(childrenArray[currentIndex] as JSX.Element, {
+                    ref: selectedImageRef,
+                    'data-selected': 'true',
+                    tabIndex: 0,
+                  })}
+                </ImageBackground>
               ) : (
-                <img
-                  ref={selectedImageRef}
-                  src={images[selectedImage]}
-                  data-selected="true"
-                  tabIndex={0}
-                />
+                <ImageBackground>
+                  <img
+                    ref={selectedImageRef}
+                    src={images[currentIndex]}
+                    data-selected="true"
+                    tabIndex={0}
+                  />
+                </ImageBackground>
               )}
             </Flex>
           </Dimmer>
@@ -157,7 +160,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
   }
 )
 
-const PreviewBox = styled.div<{ $justify: 'space-between' | 'center' }>`
+const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
   box-sizing: border-box;
   padding-left: ${(p) => p.theme.space[7]}px;
   padding-right: ${(p) => p.theme.space[7]}px;
@@ -170,11 +173,11 @@ const PreviewBox = styled.div<{ $justify: 'space-between' | 'center' }>`
   ${width}
   ${height}
   display: flex;
-  justify-content: ${(p) => p.$justify};
+  justify-content: ${(p) => p.justify};
   align-items: center;
   ${margin}
 
-  img {
+  img[data-selected='false'] {
     display: inline;
     max-width: 80%;
     max-height: 80%;
@@ -185,7 +188,23 @@ const PreviewBox = styled.div<{ $justify: 'space-between' | 'center' }>`
   }
 
   img[data-selected='true'] {
-    width: 50%;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+  }
+`
+
+const ImageBackground = styled.div`
+  display: flex;
+  width: 50%;
+  background-color: ${(p) => p.theme.colors.white};
+`
+
+const StyledIconButton = styled(IconButton)`
+  color: ${(p) => p.theme.colors.white};
+
+  &:hover {
+    color: ${(p) => p.theme.colors.white};
   }
 `
 
