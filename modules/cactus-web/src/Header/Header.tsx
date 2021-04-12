@@ -16,7 +16,7 @@ export type HeaderType = FC<HeaderProps> & {
   Title: typeof HeaderTitle
 }
 
-export const HeaderItem: FC = ({ children, ...props }) => <div {...props}>{children}</div>
+export const HeaderItem: FC = (props) => <div {...props} />
 
 export const HeaderTitle: FC = ({ children, ...props }) => {
   return (
@@ -73,7 +73,7 @@ export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
   flex-direction: column;
   padding-top: ${(p) => !p.mainColumn && '24px'};
   align-items: center;
-  > :not(:first-child) {
+  > div {
     margin-top: ${(p) => !p.mainColumn && '8px'};
   }
 
