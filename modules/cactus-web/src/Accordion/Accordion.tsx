@@ -252,6 +252,7 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
 
   > :not(:first-child) {
     min-width: 1px;
+    flex: 1;
   }
 
   &::-moz-focus-inner {
