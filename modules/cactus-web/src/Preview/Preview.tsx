@@ -122,7 +122,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
         )}
         {imageSelected && (
           <Dimmer active>
-            <Flex height="100%" flexDirection="column" alignItems="center">
+            <Flex height="100%" flexDirection="column" alignItems="center" justifyContent="center">
               <ScrollWrapper>
                 <Flex width="100%" mb={4}>
                   <StyledIconButton
