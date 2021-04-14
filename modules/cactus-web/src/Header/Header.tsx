@@ -89,6 +89,15 @@ export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
       align-items: ${!p.mainColumn ? 'center' : 'flex-start'};
       padding-top: 0px;
     }
+    ${
+      p.mainColumn &&
+      `
+        flex: 1 1;
+        > h2 {
+          max-width: 100%;
+        }
+      `
+    }
   `};
 `
 
