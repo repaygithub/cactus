@@ -64,6 +64,21 @@ const variantOrDisabled = (props: TextButtonProps) => {
   }
 }
 
+export const focusStyle = css`
+  ::after {
+    content: '';
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    border: ${(p) => border(p.theme, 'callToAction')};
+    border-radius: ${radius(20)};
+  }
+`
+
 export const TextButton = styled.button<TextButtonProps>`
   ${(p) => textStyle(p.theme, 'body')};
   position: relative;
@@ -80,18 +95,7 @@ export const TextButton = styled.button<TextButtonProps>`
   }
 
   &:focus {
-    ::after {
-      content: '';
-      display: block;
-      box-sizing: border-box;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      top: 0px;
-      left: 0px;
-      border: ${(p) => border(p.theme, 'callToAction')};
-      border-radius: ${radius(20)};
-    }
+    ${focusStyle}
   }
 
   &::-moz-focus-inner {
