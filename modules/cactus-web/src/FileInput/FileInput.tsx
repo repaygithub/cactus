@@ -6,7 +6,7 @@ import {
   StatusCheck,
 } from '@repay/cactus-icons'
 import { CactusTheme } from '@repay/cactus-theme'
-import PropTypes from 'prop-types'
+import PropTypes, { Validator } from 'prop-types'
 import React, { MutableRefObject, useEffect, useRef } from 'react'
 import styled, { css, StyledComponentBase } from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
@@ -44,7 +44,7 @@ type ErrorType =
   | 'NotReadableError'
   | 'EncodingError'
   | 'UnknownError'
-type FileStatus = 'loading' | 'loaded' | 'error'
+type FileStatus = 'unloaded', 'loading' | 'loaded' | 'error'
 
 type ErrorHandler = (type: ErrorType, accept?: string[]) => React.ReactChild
 type Target = CactusEventTarget<FileObject[]>
@@ -55,10 +55,8 @@ interface CallbackProps {
   onChange?: React.ChangeEventHandler<Target>
   onFocus?: React.FocusEventHandler<Target>
   onBlur?: React.FocusEventHandler<Target>
-  onError?: ErrorHandler
   multiple?: boolean
   disabled?: boolean
-  rawFiles?: boolean
 }
 
 interface PropBox extends CallbackProps {
@@ -73,12 +71,12 @@ export interface FileInputProps
     MaxWidthProps,
     WidthProps,
     CallbackProps,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onError' | 'onFocus' | 'onBlur'> {
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'> {
   name: string
   labels?: { delete?: string; loading?: string; loaded?: string }
   buttonText?: React.ReactNode
   prompt?: React.ReactNode
-  value?: FileObject[]
+  value?: '' | FileObject[]
 }
 
 interface EmptyPromptsProps {
@@ -122,6 +120,148 @@ const DEFAULT_LABELS = {
   delete: 'Delete File',
   loading: 'Loading',
   loaded: 'Successful',
+}
+
+const baseValuePropType = PropTypes.arrayOf(
+  // TODO Fix this
+  PropTypes.shape({
+    fileName: PropTypes.string.isRequired,
+    content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    status: PropTypes.oneOf(['loading', 'loaded', 'error']),
+    errorMsg: PropTypes.node,
+  })
+)
+
+const valuePropType: Validator<FileInputProps['value']> = (props, ...args) =>
+  props.value === '' ? null : baseValuePropType(props, ...args)
+
+type FileChangeEvent = React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLInputElement>
+
+class FileInput extends React.Component<FileInputProps, FileInputState> {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    accept: PropTypes.arrayOf(PropTypes.string),
+    disabled: PropTypes.bool,
+    labels: PropTypes.shape({
+      delete: PropTypes.string,
+      loading: PropTypes.string,
+      loaded: PropTypes.string,
+    }),
+    buttonText: PropTypes.node,
+    prompt: PropTypes.node,
+    onChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    multiple: PropTypes.bool,
+    value: valuePropType,
+  }
+
+  private eventTarget = new CactusEventTarget<FileObject[]>({})
+  public state = { inputKey: 0, files: [] }
+
+  private static getDerivedStateFromProps(
+    props: FileInputProps,
+    state: FileInputState,
+  ): Partial<FileInputState> | null {
+    if (props.value !== undefined && props.value !== state.files) {
+      const files = !Array.isArray(props.value) ? [] : props.value
+      if (files.length || state.files.length) {
+        const newState: Partial<FileInputState> = { files }
+        if (files.length !== state.files.length || state.files.some(
+          (f, ix) => f.file !== files[ix].file)) {
+          newState.inputKey = state.inputKey + 1
+        }
+        return newState
+      }
+    }
+    return null
+  }
+
+  private deleteFile = (index: number) => {
+    this.setState((state) => {
+      const files = state.files.splice(index, 1)
+      return { inputKey: state.inputKey + 1, files }
+    })
+  }
+
+  private onInputChange = (event: FileChangeEvent) => {
+    event.stopPropagation()
+    const isDropEvent = !!event.dataTransfer
+    const rawFiles = isDropEvent ? event.dataTransfer.files : event.target.files
+    // TODO Implement `append` for drop events.
+    if (isDropEvent) {
+      event.preventDefault()
+    }
+    const files = Array.from(rawFiles).map(this.toFileObj)
+    this.setState({ files })
+
+    const { eventTarget, props: { onChange } } = this
+    eventTarget.value = files
+    if (onChange) {
+      const cactusEvent = new CactusChangeEvent(eventTarget, event)
+      onChange(cactusEvent)
+    }
+  }
+
+  private toFileObj = (file: File): FileObject => {
+    const fileObj: any = { file, status: 'unloaded' }
+
+    fileObj.$promise = new Promise((resolve, reject) => {
+      if (accept && !accepts(file, accept)) {
+        reject(setCustomError(fileObj, FILE_TYPE_ERR, accept))
+      }
+
+      fileObj.load = () => {
+        if (fileObj.status === 'unloaded') {
+          fileObj.status = 'loading'
+          const reader = new FileReader()
+
+          reader.onload = () => {
+            let dataURL = reader.result as string
+            if (file.size > 250000000 && dataURL === '') {
+              reject(setCustomError(fileObj, NOT_READABLE_ERR))
+              return
+            }
+            const prefixIndex = dataURL.indexOf('base64')
+            if (prefixIndex >= 0) {
+              dataURL = dataURL.slice(prefixIndex + 7)
+            }
+            fileObj.contents = dataURL
+            fileObj.status = 'loaded'
+            resolve(dataURL)
+          }
+
+          reader.onerror = () => {
+            reader.abort()
+            fileObj.status = 'error'
+            reject(fileObj.error = reader.error)
+          }
+
+          reader.readAsDataURL(fileObj.file)
+        }
+        return fileObj.$promise
+      }
+    })
+    return fileObj
+  }
+
+  // Allow reference as styled-components CSS class.
+  toString() {
+    return InnerFileInput.toString()
+  }
+
+  render() {
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
+    return (
+      <InnerFileInput
+        {...this.props}
+        {...this.state}
+        handleFileEvent={this.onInputChange}
+        deleteFile={this.deleteFile}
+      />
+    )
+  }
 }
 
 const EmptyPrompts = styled.div`
@@ -248,13 +388,12 @@ const FileInfo = (props: FileInfoProps): React.ReactElement => {
   )
 }
 
-const defaultErrorHandler = (errorType: ErrorType, accept: string[] | undefined = []): string => {
+const setCustomError = (fileObj: FileObject, errName: string, accept?: string[]) => {
   let errorMsg = 'An unknown error occurred when reading the file.'
-  switch (errorType) {
+  switch (errorName) {
     case FILE_TYPE_ERR:
-      errorMsg = `The file provided does not match any of the accepted file types: ${accept.join(
-        ', '
-      )}`
+      const acceptable = accept?.join(', ')
+      errorMsg = `The file provided does not match any of the accepted file types: ${acceptable}.`
       break
     case NOT_FOUND_ERR:
       errorMsg = 'The file provided could not be found. Please try again.'
@@ -266,15 +405,17 @@ const defaultErrorHandler = (errorType: ErrorType, accept: string[] | undefined 
       errorMsg = 'The file read operation was aborted. Please try again.'
       break
     case NOT_READABLE_ERR:
-      errorMsg =
-        'The file read operation failed. The file may be too large. Please try again or select a different file.'
+      errorMsg = 'The file read operation failed: the file may be too large.'
+        + ' Please try again or select a different file.'
       break
     case ENCODING_ERR:
       errorMsg = 'The encoding or decoding operation failed. Please try again.'
       break
   }
-
-  return errorMsg
+  fileObj.status = 'error'
+  const error = fileObj.error = new Error(errMsg)
+  error.name = errName
+  return error
 }
 
 function trapEvent(e: React.DragEvent) {
@@ -494,6 +635,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
       const cactusEvent = new CactusChangeEvent(eventTarget, event)
       boxOnChange(cactusEvent)
     }
+    // TODO is this step necessary? How can I do it with the new outer class component?
     if (topFileBox.current) {
       topFileBox.current.focus()
     }
