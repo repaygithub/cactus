@@ -79,10 +79,10 @@ export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
 
   ${(p) => `
     ${p.theme.mediaQueries?.small}{
-      > div:not(:first-child) {
+      > div {
         margin-top: ${!p.mainColumn && '0px'};
       }
-      > div{
+      > div:not(:first-child) {
         margin-left: ${!p.mainColumn ? '8px' : '0px'};
       }
       flex-direction: ${!p.mainColumn ? 'row' : ''};
@@ -95,6 +95,7 @@ export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
         flex: 1 1;
         > h2 {
           max-width: 100%;
+          flex-shrink: 0;
         }
       `
     }
