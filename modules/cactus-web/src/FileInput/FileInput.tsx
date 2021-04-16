@@ -529,10 +529,10 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
   }, [box, eventTarget, files])
 
   useEffect((): void => {
-    if (value) {
+    if (value && !files.some((f) => f.status === 'loading')) {
       updateFiles({ control: value })
     }
-  }, [value, updateFiles])
+  }, [value, updateFiles, files])
 
   const handleDrop = React.useCallback<React.DragEventHandler>(
     (event) => {
