@@ -6,7 +6,7 @@ import {
   StatusCheck,
 } from '@repay/cactus-icons'
 import { CactusTheme } from '@repay/cactus-theme'
-import PropTypes, { Validator } from 'prop-types'
+import PropTypes from 'prop-types'
 import React, { MutableRefObject, useEffect, useRef } from 'react'
 import styled, { css, StyledComponentBase } from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
@@ -78,7 +78,7 @@ export interface FileInputProps
   labels?: { delete?: string; loading?: string; loaded?: string }
   buttonText?: React.ReactNode
   prompt?: React.ReactNode
-  value?: FileObject[] | ''
+  value?: FileObject[]
 }
 
 interface EmptyPromptsProps {
@@ -529,9 +529,8 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
   }, [box, eventTarget, files])
 
   useEffect((): void => {
-    const control = value === '' ? [] : value
-    if (control) {
-      updateFiles({ control })
+    if (value) {
+      updateFiles({ control: value })
     }
   }, [value, updateFiles])
 
@@ -711,17 +710,6 @@ interface FileInputComponent
   defaultErrorHandler: (type: ErrorType, accept?: string[]) => string
 }
 
-const baseValuePropType = PropTypes.arrayOf(
-  PropTypes.shape({
-    fileName: PropTypes.string.isRequired,
-    content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    status: PropTypes.oneOf(['loading', 'loaded', 'error']),
-    errorMsg: PropTypes.node,
-  })
-)
-const valuePropType: Validator<FileInputProps['value']> = (props, ...args) =>
-  props.value === '' ? null : baseValuePropType(props, ...args)
-
 FileInput.propTypes = {
   name: PropTypes.string.isRequired,
   accept: PropTypes.arrayOf(PropTypes.string),
@@ -739,7 +727,14 @@ FileInput.propTypes = {
   onError: PropTypes.func,
   rawFiles: PropTypes.bool,
   multiple: PropTypes.bool,
-  value: valuePropType,
+  value: PropTypes.arrayOf(
+    PropTypes.shape({
+      fileName: PropTypes.string.isRequired,
+      content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+      status: PropTypes.oneOf(['loading', 'loaded', 'error']),
+      errorMsg: PropTypes.node,
+    })
+  ),
 }
 
 FileInput.defaultProps = {
