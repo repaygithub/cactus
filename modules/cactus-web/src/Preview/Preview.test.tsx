@@ -100,5 +100,23 @@ describe('component: Preview', () => {
       fireEvent.keyDown(closeButton, { key: 'Enter' })
       expect(getAllByAltText('Cute kitten number 1').length).toBe(1)
     })
+
+    test('should be able to close an image with the escape key', () => {
+      const { getByAltText, getAllByAltText } = render(
+        <StyleProvider>
+          <Preview>
+            {IMAGES.map((src, ix) => (
+              <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+            ))}
+          </Preview>
+        </StyleProvider>
+      )
+
+      const image = getByAltText('Cute kitten number 1')
+      userEvent.click(image)
+      expect(getAllByAltText('Cute kitten number 1')[1]).toBeInTheDocument()
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Escape' })
+      expect(getAllByAltText('Cute kitten number 1').length).toBe(1)
+    })
   })
 })
