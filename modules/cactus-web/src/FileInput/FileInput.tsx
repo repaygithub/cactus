@@ -20,7 +20,7 @@ import {
   CactusFocusEvent,
   isFocusOut,
 } from '../helpers/events'
-import { omitMargins } from '../helpers/omit'
+import { omitProps } from '../helpers/omit'
 import { useRenderTrigger } from '../helpers/react'
 import { border, radius, textStyle } from '../helpers/theme'
 import { IconButton } from '../IconButton/IconButton'
@@ -36,84 +36,72 @@ const NOT_READABLE_ERR = 'NotReadableError'
 const ENCODING_ERR = 'EncodingError'
 const UNKNOWN_ERR = 'UnknownError'
 
-type ErrorType =
-  | 'FileTypeError'
-  | 'NotFoundError'
-  | 'SecurityError'
-  | 'AbortError'
-  | 'NotReadableError'
-  | 'EncodingError'
-  | 'UnknownError'
-type FileStatus = 'unloaded', 'loading' | 'loaded' | 'error'
+type FileStatus = 'unloaded' | 'loading' | 'loaded' | 'error'
 
-type ErrorHandler = (type: ErrorType, accept?: string[]) => React.ReactChild
 type Target = CactusEventTarget<FileObject[]>
 
-// These are the props mostly used in callbacks.
-interface CallbackProps {
-  accept?: string[]
-  onChange?: React.ChangeEventHandler<Target>
-  onFocus?: React.FocusEventHandler<Target>
-  onBlur?: React.FocusEventHandler<Target>
+interface CommonProps extends MarginProps, MaxWidthProps, WidthProps, Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDrop' | 'onFocus' | 'onBlur'> {
+  name: string
+  labels?: FileInfoLabels
+  buttonText?: React.ReactNode
+  prompt?: React.ReactNode
   multiple?: boolean
   disabled?: boolean
 }
 
-interface PropBox extends CallbackProps {
-  onError: ErrorHandler
-  isMounted?: boolean
-  isFocused?: boolean
-  event?: React.SyntheticEvent
-}
-
-export interface FileInputProps
-  extends MarginProps,
-    MaxWidthProps,
-    WidthProps,
-    CallbackProps,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onFocus' | 'onBlur'> {
-  name: string
-  labels?: { delete?: string; loading?: string; loaded?: string }
-  buttonText?: React.ReactNode
-  prompt?: React.ReactNode
+export interface FileInputProps extends CommonProps {
   value?: '' | FileObject[]
+  accept?: string[]
+  onChange?: React.ChangeEventHandler<Target>
+  onFocus?: React.FocusEventHandler<Target>
+  onBlur?: React.FocusEventHandler<Target>
 }
 
-interface EmptyPromptsProps {
-  prompt: React.ReactNode
-  disabled?: boolean
-  className?: string
-  children?: React.ReactNode
+interface FileInputState {
+  inputKey: number
+  files: FileObject[]
 }
 
-interface FileBoxProps {
-  fileName: string
-  onDelete: React.MouseEventHandler<HTMLElement>
-  status: FileStatus
-  labels: { delete?: string; loading?: string; loaded?: string }
-  className?: string
-  errorMsg?: React.ReactChild
-  disabled?: boolean
+interface InnerInputProps extends CommonProps, FileInputState {
+  deleteFile: (index: number, event: React.SyntheticEvent) => void
+  onDrop: (event: React.DragEvent<HTMLDivElement>) => void
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onFocus: (event: React.FocusEvent) => void
+  onBlur: (event: React.FocusEvent) => void
+}
+
+interface FileInfoLabels {
+  delete?: string
+  loading?: string
+  loaded?: string
+  unloaded?: string
 }
 
 interface FileInfoProps extends FileBoxProps {
-  labels: { delete?: string; loading?: string; loaded?: string }
+  className?: string
+  disabled?: boolean
+  labels: FileInfoLabels
+  index: number
+  deleteFile: (i: number, e: React.SyntheticEvent) => void
+  fileObj: FileObject
   boxRef?: MutableRefObject<HTMLDivElement | null>
 }
 
-export interface FileObject {
-  fileName: string
-  contents: File | string | null
-  status: FileStatus
-  errorMsg?: React.ReactChild
+// This is based on DOMException used by FileReader
+// TODO How to make it easier to translate error messages?
+interface FileError {
+  name: string
+  message: string
 }
 
-interface FileAction {
-  deleteFile?: string
-  control?: FileObject[]
-  append?: boolean
-  files?: FileList | null
-  event?: React.SyntheticEvent
+export interface FileObject {
+  file: File
+  status: FileStatus
+  contents?: string
+  error?: FileError
+  errorMsg?: React.ReactChild // TODO?
+  $promise: Promise<string, FileError>
+  loadBase64: () => Promise<string, FileError>
 }
 
 const DEFAULT_LABELS = {
@@ -137,6 +125,18 @@ const valuePropType: Validator<FileInputProps['value']> = (props, ...args) =>
 
 const isSameFile = (f1: File, f2: File) => f1.size === f2.size && f1.name === f2.name
 
+const DEFAULT_ERROR_MSG = 'An unknown error occurred when reading the file.'
+const DEFAULT_BUTTON_TEXT = 'Select Files...'
+const DEFAULT_PROMPT = 'Drag files here or'
+
+const DEFAULT_LABELS = {
+  delete: 'Delete File',
+  loading: 'Loading',
+  loaded: 'Successful',
+  unloaded: 'Not Loaded',
+}
+
+/** Handles all external-facing event & state logic */
 class FileInput extends React.Component<FileInputProps, FileInputState> {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -156,17 +156,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     value: valuePropType,
   }
 
-  static defaultProps = {
-    disabled: false,
-    multiple: false,
-    labels: {
-      delete: 'Delete File',
-      loading: 'Loading',
-      loaded: 'Successful',
-    },
-    buttonText: 'Select Files...',
-    prompt: 'Drag files here or',
-  }
+  static defaultProps = { disabled: false, multiple: false }
 
   private isFocused: boolean = false
   private eventTarget = new CactusEventTarget<FileObject[]>({})
@@ -202,7 +192,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
 
   private toFileObj = (file: File) => toFileObj(file, this.props.accept)
 
-  private handleDrop = (event: React.DragEvent<HTMLInputElement>) => {
+  private handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     trapEvent(event)
     if (this.props.disabled) return
 
@@ -223,6 +213,8 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     event.stopPropagation()
     // Don't need to check `multiple` or `disabled` here because the DOM input does it for us.
     const files = Array.from(event.target.files).map(this.toFileObj)
+    // TODO Should we just always change the input key?
+    // It'd avoid all issues with the component state not matching the input state...
     this.setState({ files })
     this.raiseChange(files, event)
   }
@@ -272,9 +264,17 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   render() {
     this.eventTarget.id = this.props.id
     this.eventTarget.name = this.props.name
+    const {
+      value,
+      accept,
+      onChange,
+      onFocus,
+      onBlur,
+      ...props
+    } = this.props
     return (
       <InnerFileInput
-        {...this.props}
+        {...props}
         {...this.state}
         onChange={this.handleChange}
         onDrop={this.handleDrop}
@@ -364,9 +364,8 @@ const FileBox = styled.div<{ $status: FileStatus }>`
 `
 const FileInfo: React.FC<FileInfoProps> = (props) => {
   const {
-    className,
     disabled,
-    labels,
+    labels = {},
     index,
     deleteFile,
     fileObj: {
@@ -392,7 +391,7 @@ const FileInfo: React.FC<FileInfoProps> = (props) => {
 
   const hasError = error && !disabled
   let label = file.name
-  let avatarStatus?: string = undefined
+  let avatarStatus: string | undefined = undefined
   if (status === 'unloaded') {
     label += `, ${labels.unloaded || DEFAULT_LABELS.unloaded}`
     avatarStatus = 'info' // TODO?
@@ -403,7 +402,7 @@ const FileInfo: React.FC<FileInfoProps> = (props) => {
     label += `, ${error?.message || DEFAULT_ERROR_MSG}`
     avatarStatus = 'error'
   } else if (status === 'loading') {
-    label += `, ${labels.loaded || DEFAULT_LABELS.loading}`
+    label += `, ${labels.loading || DEFAULT_LABELS.loading}`
   }
 
   const onDelete = React.useCallback(
@@ -412,7 +411,7 @@ const FileInfo: React.FC<FileInfoProps> = (props) => {
   )
 
   return (
-    <div className={className}>
+    <>
       <FileBox
         tabIndex={0}
         aria-label={label}
@@ -437,7 +436,7 @@ const FileInfo: React.FC<FileInfoProps> = (props) => {
         )}
       </FileBox>
       {hasError && <StatusMessage status="error">{error.message}</StatusMessage>}
-    </div>
+    </>
   )
 }
 
@@ -448,7 +447,7 @@ const toFileObj = (file: File, accept?: string[]): FileObject => {
       reject(setCustomError(fileObj, FILE_TYPE_ERR, accept))
     }
 
-    fileObj.load = () => {
+    fileObj.loadBase64 = () => {
       if (fileObj.status === 'unloaded') {
         fileObj.status = 'loading'
         const reader = new FileReader()
@@ -483,7 +482,7 @@ const toFileObj = (file: File, accept?: string[]): FileObject => {
 }
 
 const setCustomError = (fileObj: FileObject, errName: string, accept?: string[]) => {
-  let errorMsg = 'An unknown error occurred when reading the file.'
+  let errorMsg = DEFAULT_ERROR_MSG
   switch (errorName) {
     case FILE_TYPE_ERR:
       const acceptable = accept?.join(', ')
@@ -517,18 +516,18 @@ function trapEvent(e: React.DragEvent) {
   e.stopPropagation()
 }
 
-const FileInputBase = (props: FileInputProps): React.ReactElement => {
+const FileInputBase = (props: InnerInputProps): React.ReactElement => {
   const {
     className,
     name,
     accept,
-    labels = DEFAULT_LABELS,
-    buttonText = 'Select Files...',
-    prompt = 'Drag files here or',
+    labels,
+    buttonText,
+    prompt,
     multiple,
     value,
     id,
-    disabled = false,
+    disabled,
     'aria-describedby': describedBy,
     onChange,
     onDrop,
@@ -538,10 +537,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     files,
     inputKey,
     ...fileInputProps
-  } = omitMargins(props, 'width', 'maxWidth') as Omit<
-    FileInputProps,
-    keyof MarginProps | 'width' | 'maxWidth'
-  >
+  } = props
   const fileSelector = useRef<HTMLInputElement | null>(null)
   const topFileBox = useRef<HTMLDivElement | null>(null)
 
@@ -571,7 +567,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
       onClick={handleOpenFileSelect}
     >
       <BatchstatusOpen iconSize="small" />
-      {buttonText}
+      {buttonText || DEFAULT_BUTTON_TEXT}
     </TextButton>
   )
 
@@ -601,12 +597,12 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
         <EmptyPrompts>
           <ActionsUpload iconSize="large" color="callToAction" />
           <Flex flexDirection="column" alignItems="center" m={3}>
-            <span>{prompt}</span>
+            <span>{prompt || DEFAULT_PROMPT}</span>
             {openFileButton}
           </Flex>
         </EmptyPrompts>
       ) : (
-        <React.Fragment>
+        <>
           {files.map(
             (fileObj, index): React.ReactElement => (
               <FileInfo
@@ -621,13 +617,14 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
             )
           )}
           {openFileButton}
-        </React.Fragment>
+        </>
       )}
     </div>
   )
 }
 
-const InnerFileInput = styled(FileInputBase)`
+const InnerFileInput = styled(FileInputBase).withConfig(omitProps(margin, width, maxWidth))`
+  ${(p) => textStyle(p.theme, 'body')};
   box-sizing: border-box;
   border-radius: ${radius(8)};
   border: 2px dotted ${(p) => p.theme.colors.darkestContrast};
@@ -671,4 +668,4 @@ const InnerFileInput = styled(FileInputBase)`
   ${maxWidth}
 ` as any
 
-export default FileInput as React.FC<FileInputProps>
+export default FileInput

@@ -40,3 +40,22 @@ function extractor<T>(keys: string[]) {
 }
 
 export const extractMargins = extractor<MarginProps>(margin.propNames as string[])
+
+type Omittable = string | string[] | { propNames?: string[] }
+
+export const omitProps = (...args: Omittable[]): {
+  shouldForwardProp: (prop: string) => boolean
+} => {
+  const excludedProps = new Set<string>()
+  const add = excludedProps.add.bind(excludedProps)
+  for (const arg of args) {
+    if (typeof arg === 'string') {
+      add(arg)
+    } else if (Array.isArray(arg)) {
+      arg.forEach(add)
+    } else if (arg.propNames) {
+      arg.propNames.forEach(add)
+    }
+  }
+  return { shouldForwardProp: (p) => !excludedProps.has(p) }
+}
