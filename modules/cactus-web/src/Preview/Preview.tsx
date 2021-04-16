@@ -6,7 +6,7 @@ import { height, HeightProps, margin, MarginProps, width, WidthProps } from 'sty
 
 import Dimmer from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
-import { keyDownAsClick } from '../helpers/a11y'
+import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { boxShadow, radius } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 
@@ -14,13 +14,13 @@ interface PreviewProps
   extends MarginProps,
     WidthProps,
     HeightProps,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onError' | 'onFocus' | 'onBlur'> {
+    React.HTMLAttributes<HTMLDivElement> {
   images?: string[]
   phrases?: Phrases
 }
 
 interface Phrases {
-  previous: string
+  previous?: string
   next?: string
   close?: string
 }
@@ -37,12 +37,17 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
     const [imageSelected, setImageSelected] = React.useState<boolean>(false)
     const selectedImageRef = React.useRef<HTMLImageElement | null>(null)
     const closeButtonRef = React.useRef<HTMLButtonElement | null>(null)
-    const imagesFromChildren = images.length === 0 && !!children
-    const childrenArray = React.Children.toArray(children)
-    const multipleImages = imagesFromChildren ? childrenArray.length > 1 : images.length > 1
+    const imgComponents = images.length
+      ? images.map((src) => <img src={src} />)
+      : React.Children.toArray(children)
+    const multipleImages = imgComponents.length > 1
     const phrases = { ...DEFAULT_PHRASES, ...passedPhrases }
 
     React.useEffect(() => {
+      if (imageSelected) {
+        closeButtonRef.current?.focus()
+      }
+
       const handleBodyClick = (event: MouseEvent): void => {
         const { target } = event
         if (
@@ -53,16 +58,19 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
           setImageSelected(false)
         }
       }
+
+      const handleBodyKeyDown = (event: KeyboardEvent) => {
+        if (imageSelected && event.key === 'Escape') {
+          setImageSelected(false)
+        }
+      }
+
       document.body.addEventListener('click', handleBodyClick)
+      document.body.addEventListener('keydown', handleBodyKeyDown)
 
       return () => {
         document.body.removeEventListener('click', handleBodyClick)
-      }
-    }, [imageSelected])
-
-    React.useEffect(() => {
-      if (imageSelected) {
-        closeButtonRef.current?.focus()
+        document.body.removeEventListener('keydown', handleBodyKeyDown)
       }
     }, [imageSelected])
 
@@ -84,37 +92,25 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
           <IconButton
             onClick={handleLeftArrowClick}
             onKeyDown={keyDownAsClick}
+            onKeyUp={preventAction}
             disabled={currentIndex === 0}
             label={phrases.previous}
           >
             <NavigationChevronLeft aria-hidden="true" />
           </IconButton>
         )}
-        {imagesFromChildren ? (
-          React.cloneElement(childrenArray[currentIndex] as JSX.Element, {
-            onClick: handleImageClick,
-            onKeyDown: keyDownAsClick,
-            tabIndex: 0,
-            'data-selected': 'false',
-          })
-        ) : (
-          <img
-            src={images[currentIndex]}
-            onClick={handleImageClick}
-            onKeyDown={keyDownAsClick}
-            tabIndex={0}
-            data-selected="false"
-          />
-        )}
+        {React.cloneElement(imgComponents[currentIndex] as JSX.Element, {
+          onClick: handleImageClick,
+          onKeyDown: keyDownAsClick,
+          onKeyUp: preventAction,
+          tabIndex: 0,
+        })}
         {multipleImages && (
           <IconButton
             onClick={handleRightArrowClick}
             onKeyDown={keyDownAsClick}
-            disabled={
-              imagesFromChildren
-                ? currentIndex === childrenArray.length - 1
-                : currentIndex === images.length - 1
-            }
+            onKeyUp={preventAction}
+            disabled={currentIndex === imgComponents.length - 1}
             label={phrases.next}
           >
             <NavigationChevronRight aria-hidden="true" />
@@ -129,6 +125,7 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
                     ref={closeButtonRef}
                     ml="auto"
                     onKeyDown={keyDownAsClick}
+                    onKeyUp={preventAction}
                     label={phrases.close}
                     variant="action"
                   >
@@ -136,20 +133,10 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
                   </StyledIconButton>
                 </Flex>
                 <ImageBackground>
-                  {imagesFromChildren ? (
-                    React.cloneElement(childrenArray[currentIndex] as JSX.Element, {
-                      ref: selectedImageRef,
-                      'data-selected': 'true',
-                      tabIndex: 0,
-                    })
-                  ) : (
-                    <img
-                      ref={selectedImageRef}
-                      src={images[currentIndex]}
-                      data-selected="true"
-                      tabIndex={0}
-                    />
-                  )}
+                  {React.cloneElement(imgComponents[currentIndex] as JSX.Element, {
+                    ref: selectedImageRef,
+                    tabIndex: 0,
+                  })}
                 </ImageBackground>
               </ScrollWrapper>
             </Flex>
@@ -159,6 +146,11 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
     )
   }
 )
+
+const ImageBackground = styled.div`
+  display: flex;
+  background-color: ${(p) => p.theme.colors.white};
+`
 
 const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
   box-sizing: border-box;
@@ -177,7 +169,7 @@ const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
   align-items: center;
   ${margin}
 
-  img[data-selected='false'] {
+  img {
     display: inline;
     max-width: 80%;
     max-height: 80%;
@@ -187,21 +179,19 @@ const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
     ${(p) => boxShadow(p.theme, 2)}
   }
 
-  img[data-selected='true'] {
+  ${ImageBackground} img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    box-shadow: none;
     width: 100%;
     height: 100%;
     flex-shrink: 0;
   }
 `
 
-const ImageBackground = styled.div`
-  display: flex;
-  width: 100%;
-  background-color: ${(p) => p.theme.colors.white};
-`
-
 const ScrollWrapper = styled.div`
-  width: 50%;
+  max-width: 80%;
   max-height: 100%;
   overflow: auto;
   padding: ${(p) => p.theme.space[3]}px;

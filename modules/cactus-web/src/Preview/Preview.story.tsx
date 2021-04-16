@@ -14,6 +14,7 @@ const IMAGES = [
   'http://placekitten.com/450/250',
   'http://placekitten.com/250',
   'http://placekitten.com/600/300',
+  'http://placekitten.com/1250/700',
 ]
 
 export const BasicUsage = (): React.ReactElement => <Preview images={IMAGES} />
