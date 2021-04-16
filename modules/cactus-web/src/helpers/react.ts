@@ -133,3 +133,9 @@ export function useStateWithCallback<S>(
 
   return [state, setStateWithCallback]
 }
+
+const toggle = (x: boolean) => !x
+
+export function useRenderTrigger(): React.DispatchWithoutAction {
+  return React.useReducer(toggle, false)[1]
+}

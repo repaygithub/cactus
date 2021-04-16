@@ -21,7 +21,7 @@ import {
   isFocusOut,
 } from '../helpers/events'
 import { omitMargins } from '../helpers/omit'
-import { useBox } from '../helpers/react'
+import { useRenderTrigger } from '../helpers/react'
 import { border, radius, textStyle } from '../helpers/theme'
 import { IconButton } from '../IconButton/IconButton'
 import Spinner from '../Spinner/Spinner'
@@ -135,7 +135,7 @@ const baseValuePropType = PropTypes.arrayOf(
 const valuePropType: Validator<FileInputProps['value']> = (props, ...args) =>
   props.value === '' ? null : baseValuePropType(props, ...args)
 
-type FileChangeEvent = React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLInputElement>
+const isSameFile = (f1: File, f2: File) => f1.size === f2.size && f1.name === f2.name
 
 class FileInput extends React.Component<FileInputProps, FileInputState> {
   static propTypes = {
@@ -156,8 +156,21 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     value: valuePropType,
   }
 
+  static defaultProps = {
+    disabled: false,
+    multiple: false,
+    labels: {
+      delete: 'Delete File',
+      loading: 'Loading',
+      loaded: 'Successful',
+    },
+    buttonText: 'Select Files...',
+    prompt: 'Drag files here or',
+  }
+
+  private isFocused: boolean = false
   private eventTarget = new CactusEventTarget<FileObject[]>({})
-  public state = { inputKey: 0, files: [] }
+  public state: FileInputState = { inputKey: 0, files: [] }
 
   private static getDerivedStateFromProps(
     props: FileInputProps,
@@ -177,24 +190,44 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     return null
   }
 
-  private deleteFile = (index: number) => {
+  private deleteFile = (index: number, event: React.SyntheticEvent) => {
+    event.persist()
+    // TODO call order...
     this.setState((state) => {
       const files = state.files.splice(index, 1)
+      this.raiseChange(files, event)
       return { inputKey: state.inputKey + 1, files }
     })
   }
 
-  private onInputChange = (event: FileChangeEvent) => {
-    event.stopPropagation()
-    const isDropEvent = !!event.dataTransfer
-    const rawFiles = isDropEvent ? event.dataTransfer.files : event.target.files
-    // TODO Implement `append` for drop events.
-    if (isDropEvent) {
-      event.preventDefault()
-    }
-    const files = Array.from(rawFiles).map(this.toFileObj)
-    this.setState({ files })
+  private toFileObj = (file: File) => toFileObj(file, this.props.accept)
 
+  private handleDrop = (event: React.DragEvent<HTMLInputElement>) => {
+    trapEvent(event)
+    if (this.props.disabled) return
+
+    let files = this.state.files
+    const isUnique = (f: File) => !files.some(({ file }) => isSameFile(file, f))
+    const newFiles = event.dataTransfer.files.filter(isUnique).map(this.toFileObj)
+    if (newFiles.length) {
+      files = this.props.multiple ? files.concat(newFiles) : newFiles.slice(0, 1)
+      // TODO Does the post-update callback run before the next render? If so,
+      // should maybe raise the change event in that and do the uniqueness
+      // calculation inside the update callback.
+      this.setState({ files })
+      this.raiseChange(files, event)
+    }
+  }
+
+  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation()
+    // Don't need to check `multiple` or `disabled` here because the DOM input does it for us.
+    const files = Array.from(event.target.files).map(this.toFileObj)
+    this.setState({ files })
+    this.raiseChange(files, event)
+  }
+
+  private raiseChange(files, event) {
     const { eventTarget, props: { onChange } } = this
     eventTarget.value = files
     if (onChange) {
@@ -203,50 +236,36 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
     }
   }
 
-  private toFileObj = (file: File): FileObject => {
-    const fileObj: any = { file, status: 'unloaded' }
-
-    fileObj.$promise = new Promise((resolve, reject) => {
-      if (accept && !accepts(file, accept)) {
-        reject(setCustomError(fileObj, FILE_TYPE_ERR, accept))
+  private handleFocus = (event: React.FocusEvent) => {
+    const onFocus = this.props.onFocus
+    if (!this.isFocused) {
+      this.isFocused = true
+      if (onFocus) {
+        const cactusEvent = new CactusFocusEvent('focus', this.eventTarget, event)
+        onFocus(cactusEvent)
       }
+    }
+  }
 
-      fileObj.load = () => {
-        if (fileObj.status === 'unloaded') {
-          fileObj.status = 'loading'
-          const reader = new FileReader()
-
-          reader.onload = () => {
-            let dataURL = reader.result as string
-            if (file.size > 250000000 && dataURL === '') {
-              reject(setCustomError(fileObj, NOT_READABLE_ERR))
-              return
-            }
-            const prefixIndex = dataURL.indexOf('base64')
-            if (prefixIndex >= 0) {
-              dataURL = dataURL.slice(prefixIndex + 7)
-            }
-            fileObj.contents = dataURL
-            fileObj.status = 'loaded'
-            resolve(dataURL)
-          }
-
-          reader.onerror = () => {
-            reader.abort()
-            fileObj.status = 'error'
-            reject(fileObj.error = reader.error)
-          }
-
-          reader.readAsDataURL(fileObj.file)
-        }
-        return fileObj.$promise
+  private handleBlur = (event: React.FocusEvent) => {
+    if (isFocusOut(event)) {
+      this.isFocused = false
+      const onBlur = this.props.onBlur
+      if (onBlur) {
+        const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
+        onBlur(cactusEvent)
       }
-    })
-    return fileObj
+    }
   }
 
   // Allow reference as styled-components CSS class.
-  toString() {
+  // TODO I think it might be possible to style components while still not allowing
+  // them to be overridden with the `as` prop by doing something like this:
+  // const SC = styled(C).attrs({ $as: C })`
+  //   ...styles
+  // ` as React.FC<CProps>
+  // The type change is to make Typescript complain if they try to pass `as`.
+  static toString() {
     return InnerFileInput.toString()
   }
 
@@ -257,7 +276,10 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
       <InnerFileInput
         {...this.props}
         {...this.state}
-        handleFileEvent={this.onInputChange}
+        onChange={this.handleChange}
+        onDrop={this.handleDrop}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
         deleteFile={this.deleteFile}
       />
     )
@@ -274,67 +296,21 @@ const EmptyPrompts = styled.div`
   color: ${(p) => p.theme.colors.mediumContrast};
 `
 
-const fileBoxMap = {
+const fileBoxColors = {
   loading: css`
-    background-color: ${(p): string => p.theme.colors.lightContrast};
+    background-color: ${(p) => p.theme.colors.lightContrast};
   `,
   loaded: css`
-    border: ${(p): string => border(p.theme, p.theme.colors.success)};
-    background-color: ${(p): string => p.theme.colors.transparentSuccess};
+    border: ${(p) => border(p.theme, 'success')};
+    background-color: ${(p) => p.theme.colors.transparentSuccess};
   `,
   error: css`
-    border: ${(p): string => border(p.theme, p.theme.colors.error)};
-    background-color: ${(p): string => p.theme.colors.transparentError};
-  `,
-  disabled: css`
-    border: ${(p): string => border(p.theme, p.theme.colors.mediumGray)};
-    background-color: ${(p): string => p.theme.colors.lightGray};
+    border: ${(p) => border(p.theme, 'error')};
+    background-color: ${(p) => 'transparentError'};
   `,
 }
 
-const fileStatus = (props: FileBoxProps) =>
-  props.disabled ? fileBoxMap.disabled : fileBoxMap[props.status]
-
-const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
-  (props, ref): React.ReactElement => {
-    const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
-
-    let label = fileName
-    let avatarStatus: string | undefined = undefined
-    if (status === 'loaded') {
-      label += `, ${labels.loaded || DEFAULT_LABELS.loaded}`
-      avatarStatus = 'success'
-    } else if (status === 'error' && errorMsg) {
-      label += `, ${errorMsg}`
-      avatarStatus = 'error'
-    } else if (status === 'loading') {
-      label += `, ${labels.loading || DEFAULT_LABELS.loading}`
-    }
-
-    return (
-      <div className={className} tabIndex={0} aria-label={label} aria-disabled={disabled} ref={ref}>
-        {avatarStatus && (
-          <Avatar type="alert" status={avatarStatus} disabled={disabled} />
-        )}
-        <span>{fileName}</span>
-        {status === 'loading' ? (
-          <Spinner iconSize="12px" />
-        ) : (
-          <IconButton
-            onClick={onDelete}
-            data-filename={fileName}
-            label={labels.delete || DEFAULT_LABELS.delete}
-            disabled={disabled}
-          >
-            <NavigationClose iconSize="12px" />
-          </IconButton>
-        )}
-      </div>
-    )
-  }
-)
-
-const FileBox = styled(FileBoxBase)`
+const FileBox = styled.div<{ $status: FileStatus }>`
   box-sizing: border-box;
   width: 100%;
   margin-top: 8px;
@@ -344,6 +320,13 @@ const FileBox = styled(FileBoxBase)`
   justify-content: space-between;
   align-items: center;
   color: ${(p) => p.theme.colors.darkestContrast};
+  ${(p) => fileBoxColors[props.$status]};
+
+  &[aria-disabled] {
+    color: ${(p) => p.theme.colors.mediumGray};
+    border: ${(p) => border(p.theme, 'mediumGray')};
+    background-color: ${(p) => p.theme.colors.lightGray};
+  }
 
   span {
     margin-left: 8px;
@@ -374,18 +357,129 @@ const FileBox = styled(FileBoxBase)`
     margin-left: auto;
   }
 
-  ${fileStatus}
+  ${NavigationClose} {
+    height: 12px;
+    width: 12px;
+  }
 `
+const FileInfo: React.FC<FileInfoProps> = (props) => {
+  const {
+    className,
+    disabled,
+    labels,
+    index,
+    deleteFile,
+    fileObj: {
+      file,
+      error,
+      status,
+      $promise,
+    },
+  } = props
 
-const FileInfo = (props: FileInfoProps): React.ReactElement => {
-  const { errorMsg, labels, boxRef, disabled, ...rest } = props
+  const triggerRerender = useRenderTrigger()
+  const isMounted = React.useRef<boolean>(true)
+  React.useEffect(() => {
+    isMounted.current = true
+    const handler = () => {
+      if (isMounted.current) triggerRerender()
+    }
+    $promise.then(handler, handler)
+    return () => {
+      isMounted.current = false
+    }
+  }, [$promise])
+
+  const hasError = error && !disabled
+  let label = file.name
+  let avatarStatus?: string = undefined
+  if (status === 'unloaded') {
+    label += `, ${labels.unloaded || DEFAULT_LABELS.unloaded}`
+    avatarStatus = 'info' // TODO?
+  } else if (status === 'loaded') {
+    label += `, ${labels.loaded || DEFAULT_LABELS.loaded}`
+    avatarStatus = 'success'
+  } else if (status === 'error') {
+    label += `, ${error?.message || DEFAULT_ERROR_MSG}`
+    avatarStatus = 'error'
+  } else if (status === 'loading') {
+    label += `, ${labels.loaded || DEFAULT_LABELS.loading}`
+  }
+
+  const onDelete = React.useCallback(
+    (event: React.MouseEvent) => deleteFile(index, event),
+    [deleteFile, index],
+  )
 
   return (
-    <>
-      <FileBox errorMsg={errorMsg} labels={labels} ref={boxRef} disabled={disabled} {...rest} />
-      {errorMsg && !disabled && <StatusMessage status="error">{errorMsg}</StatusMessage>}
-    </>
+    <div className={className}>
+      <FileBox
+        tabIndex={0}
+        aria-label={label}
+        aria-disabled={disabled || undefined}
+        ref={boxRef}
+        $status={status}
+      >
+        {avatarStatus && (
+          <Avatar type="alert" status={avatarStatus} disabled={disabled} />
+        )}
+        <span>{file.name}</span>
+        {status === 'loading' ? (
+          <Spinner />
+        ) : (
+          <IconButton
+            onClick={onDelete}
+            label={labels.delete || DEFAULT_LABELS.delete}
+            disabled={disabled}
+          >
+            <NavigationClose />
+          </IconButton>
+        )}
+      </FileBox>
+      {hasError && <StatusMessage status="error">{error.message}</StatusMessage>}
+    </div>
   )
+}
+
+const toFileObj = (file: File, accept?: string[]): FileObject => {
+  const fileObj: any = { file, status: 'unloaded' }
+  fileObj.$promise = new Promise((resolve, reject) => {
+    if (accept && !accepts(file, accept)) {
+      reject(setCustomError(fileObj, FILE_TYPE_ERR, accept))
+    }
+
+    fileObj.load = () => {
+      if (fileObj.status === 'unloaded') {
+        fileObj.status = 'loading'
+        const reader = new FileReader()
+
+        reader.onload = () => {
+          let dataURL = reader.result as string
+          if (file.size > 250000000 && dataURL === '') {
+            reject(setCustomError(fileObj, NOT_READABLE_ERR))
+            return
+          }
+          const prefixIndex = dataURL.indexOf('base64')
+          if (prefixIndex >= 0) {
+            dataURL = dataURL.slice(prefixIndex + 7)
+          }
+          fileObj.contents = dataURL
+          fileObj.status = 'loaded'
+          resolve(dataURL)
+        }
+
+        reader.onerror = () => {
+          reader.abort()
+          fileObj.status = 'error'
+          reject(fileObj.error = reader.error)
+        }
+
+        reader.readAsDataURL(fileObj.file)
+      }
+      return fileObj.$promise
+    }
+  })
+  return fileObj
 }
 
 const setCustomError = (fileObj: FileObject, errName: string, accept?: string[]) => {
@@ -423,170 +517,9 @@ function trapEvent(e: React.DragEvent) {
   e.stopPropagation()
 }
 
-function deleteFile(files: FileObject[], fileToDelete: string) {
-  const filtered = files.filter((file) => file.fileName !== fileToDelete)
-  // If nothing was actually deleted, no reason to change the state.
-  return filtered.length === files.length ? files : filtered
-}
-
-function removeDuplicates(oldFiles: FileObject[], newFiles: FileList) {
-  const files: File[] = []
-  for (let i = 0; i < newFiles.length; i++) {
-    const file = newFiles[i]
-    const isSameFile = (f: FileObject) => {
-      const sameName = f.fileName === file.name
-      if (f.contents instanceof File) {
-        // Should be pretty unlikely to have two different files with the same name and timestamp.
-        return sameName && f.contents.lastModified === file.lastModified
-      }
-      return sameName
-    }
-    if (!oldFiles.some(isSameFile)) {
-      files.push(file)
-    }
-  }
-  return files
-}
-
-const toFileObj = (box: PropBox) => (file: File): FileObject => {
-  const { rawFiles, accept, onError } = box
-  if (accept && !accepts(file, accept)) {
-    const errorMsg = onError(FILE_TYPE_ERR, accept)
-    return {
-      fileName: file.name,
-      contents: null,
-      status: 'error',
-      errorMsg: errorMsg,
-    }
-  } else if (rawFiles) {
-    return {
-      fileName: file.name,
-      contents: file,
-      status: 'loaded',
-    }
-  }
-  return {
-    fileName: file.name,
-    contents: file,
-    status: 'loading',
-  }
-}
-
-const loadFile = (box: PropBox) => (fileObj: FileObject): Promise<FileObject> => {
-  const { onError } = box
-  if (fileObj.status !== 'loading') {
-    return Promise.resolve(fileObj)
-  }
-  const file = fileObj.contents as File
-  const reader = new FileReader()
-  return new Promise<FileObject>((resolve): void => {
-    reader.onload = (): void => {
-      const dataURL = reader.result as string
-      if (file.size > 250000000 && dataURL === '') {
-        const errorMsg = onError(NOT_READABLE_ERR)
-        resolve({
-          fileName: file.name,
-          contents: null,
-          status: 'error',
-          errorMsg: errorMsg,
-        })
-      }
-      resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
-    }
-
-    reader.onerror = (): void => {
-      reader.abort()
-      let errorType: ErrorType = UNKNOWN_ERR
-      if (reader.error) {
-        switch (reader.error.name) {
-          case NOT_FOUND_ERR:
-            errorType = NOT_FOUND_ERR
-            break
-          case SECURITY_ERR:
-            errorType = SECURITY_ERR
-            break
-          case ABORT_ERR:
-            errorType = ABORT_ERR
-            break
-          case NOT_READABLE_ERR:
-            errorType = NOT_READABLE_ERR
-            break
-          case ENCODING_ERR:
-            errorType = ENCODING_ERR
-            break
-        }
-      }
-      const errorMsg = onError(errorType)
-      resolve({
-        fileName: file.name,
-        contents: null,
-        status: 'error',
-        errorMsg: errorMsg,
-      })
-    }
-
-    reader.readAsDataURL(file)
-  })
-}
-
-const reducer = (files: FileObject[], action: FileAction, box: PropBox) => {
-  const { disabled, isMounted, multiple } = box
-  let newFiles = files
-  if (action.control) {
-    newFiles = action.control
-  } else if (disabled || !isMounted) {
-    return files
-  }
-  if (action.deleteFile) {
-    newFiles = deleteFile(files, action.deleteFile)
-  } else if (action.files) {
-    if (action.append && multiple) {
-      const actionFiles = removeDuplicates(files, action.files)
-      if (actionFiles.length) {
-        newFiles = [...files, ...actionFiles.map(toFileObj(box))]
-      }
-    } else {
-      newFiles = Array.from(action.files).map(toFileObj(box))
-    }
-  }
-  if (!multiple && newFiles.length > 1) {
-    newFiles = [newFiles[0]]
-  }
-  return newFiles
-}
-
-const useFileState = (box: PropBox, initial: FileObject[]) => {
-  const [files, setFiles] = React.useState<FileObject[]>(initial)
-  const setter = useRef<(a: FileAction) => void>()
-  if (setter.current === undefined) {
-    const $loadFile = loadFile(box)
-    setter.current = (action) => {
-      box.event = action.event
-      box.event?.persist?.()
-      setFiles((existingFiles) => {
-        const newFiles = reducer(existingFiles, action, box)
-        if (newFiles !== existingFiles && newFiles.some((f) => f.status === 'loading')) {
-          Promise.all(newFiles.map($loadFile)).then((results) => {
-            if (box.isMounted) {
-              setFiles(results)
-            }
-          })
-        }
-        return newFiles
-      })
-    }
-  }
-  return [files, setter.current] as const
-}
-
 const FileInputBase = (props: FileInputProps): React.ReactElement => {
   const {
     className,
-    onChange,
-    onError = defaultErrorHandler,
-    onFocus,
-    onBlur,
-    rawFiles,
     name,
     accept,
     labels = DEFAULT_LABELS,
@@ -597,6 +530,13 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     id,
     disabled = false,
     'aria-describedby': describedBy,
+    onChange,
+    onDrop,
+    onFocus,
+    onBlur,
+    deleteFile,
+    files,
+    inputKey,
     ...fileInputProps
   } = omitMargins(props, 'width', 'maxWidth') as Omit<
     FileInputProps,
@@ -604,56 +544,13 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
   >
   const fileSelector = useRef<HTMLInputElement | null>(null)
   const topFileBox = useRef<HTMLDivElement | null>(null)
-  const box = useBox<PropBox>({
-    accept,
-    disabled,
-    multiple,
-    rawFiles,
-    onChange,
-    onError,
-    onFocus,
-    onBlur,
-  })
-  const [files, updateFiles] = useFileState(box, value || [])
-  // Not adding `multiple` or `type=file` because Formik doesn't properly support file inputs.
-  const eventTarget = useBox(
-    new CactusEventTarget<FileObject[]>({ id, name, value: files })
-  )
-  const [inputKey, setInputKey] = React.useState<number>(0)
-
-  useEffect(() => {
-    box.isMounted = true
-    return () => {
-      box.isMounted = false
-    }
-  }, [box])
 
   useEffect((): void => {
-    const { onChange: boxOnChange, event } = box
-    if (boxOnChange && event && !files.some((f) => f.status === 'loading')) {
-      box.event = undefined
-      const cactusEvent = new CactusChangeEvent(eventTarget, event)
-      boxOnChange(cactusEvent)
-    }
     // TODO is this step necessary? How can I do it with the new outer class component?
     if (topFileBox.current) {
       topFileBox.current.focus()
     }
-  }, [box, eventTarget, files])
-
-  useEffect((): void => {
-    if (value) {
-      updateFiles({ control: value })
-    }
-  }, [value, updateFiles])
-
-  const handleDrop = React.useCallback<React.DragEventHandler>(
-    (event) => {
-      trapEvent(event)
-      updateFiles({ files: event.dataTransfer.files, append: true, event })
-    },
-    [updateFiles]
-  )
+  }, [files])
 
   const handleOpenFileSelect = React.useCallback<React.MouseEventHandler>(
     (event) => {
@@ -665,55 +562,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     [fileSelector]
   )
 
-  const handleFileSelect = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      event.stopPropagation()
-      updateFiles({ files: event.target.files, event })
-    },
-    [updateFiles]
-  )
-
-  const onDelete = React.useCallback<React.MouseEventHandler<HTMLElement>>(
-    (e) => {
-      e.currentTarget.blur()
-      const fileName = e.currentTarget.getAttribute('data-filename') as string
-      updateFiles({ deleteFile: fileName, event: e })
-      setInputKey((k) => k + 1)
-    },
-    [updateFiles]
-  )
-
-  const handleFocus = React.useCallback(
-    (event: React.FocusEvent) => {
-      const { isFocused, onFocus: boxOnFocus } = box
-      if (!isFocused) {
-        box.isFocused = true
-        if (boxOnFocus) {
-          const cactusEvent = new CactusFocusEvent('focus', eventTarget, event)
-          boxOnFocus(cactusEvent)
-        }
-      }
-    },
-    [box, eventTarget]
-  )
-
-  const handleBlur = React.useCallback(
-    (event: React.FocusEvent<HTMLElement>) => {
-      if (isFocusOut(event)) {
-        box.isFocused = false
-        const { onBlur: boxOnBlur } = box
-        if (boxOnBlur) {
-          const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
-          boxOnBlur(cactusEvent)
-        }
-      }
-    },
-    [box, eventTarget]
-  )
-
-  const emptyClassName = files.length === 0 ? 'empty' : 'notEmpty'
-
-  const uploadButton = (
+  const openFileButton = (
     <TextButton
       variant="action"
       id={id}
@@ -725,16 +574,17 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
       {buttonText}
     </TextButton>
   )
+
   return (
     <div
       {...fileInputProps}
-      className={`${className} ${emptyClassName}`}
+      className={className}
       onDragEnter={trapEvent}
       onDragLeave={trapEvent}
       onDragOver={trapEvent}
-      onDrop={handleDrop}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
+      onDrop={onDrop}
+      onFocus={onFocus}
+      onBlur={onBlur}
       aria-disabled={disabled || undefined}
     >
       <input
@@ -744,7 +594,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
         accept={accept && accept.join()}
         name={name}
         multiple={multiple}
-        onChange={handleFileSelect}
+        onChange={onChange}
         disabled={disabled}
       />
       {files.length === 0 ? (
@@ -752,33 +602,32 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
           <ActionsUpload iconSize="large" color="callToAction" />
           <Flex flexDirection="column" alignItems="center" m={3}>
             <span>{prompt}</span>
-            {uploadButton}
+            {openFileButton}
           </Flex>
         </EmptyPrompts>
       ) : (
         <React.Fragment>
           {files.map(
-            (file, index): React.ReactElement => (
+            (fileObj, index): React.ReactElement => (
               <FileInfo
-                key={file.fileName}
-                fileName={file.fileName}
-                onDelete={onDelete}
-                status={file.status}
-                errorMsg={file.errorMsg}
+                key={index}
+                index={index}
+                fileObj={fileObj}
+                deleteFile={deleteFile}
                 labels={labels}
                 boxRef={index === 0 ? topFileBox : undefined}
                 disabled={disabled}
               />
             )
           )}
-          {uploadButton}
+          {openFileButton}
         </React.Fragment>
       )}
     </div>
   )
 }
 
-export const FileInput = styled(FileInputBase)`
+const InnerFileInput = styled(FileInputBase)`
   box-sizing: border-box;
   border-radius: ${radius(8)};
   border: 2px dotted ${(p) => p.theme.colors.darkestContrast};
@@ -790,16 +639,16 @@ export const FileInput = styled(FileInputBase)`
   align-items: center;
   ${(p) => textStyle(p.theme, 'body')};
 
-  &.notEmpty {
+  ${(p) => !p.files.length && `
     flex-direction: column;
-    border-color: ${(p): string => p.theme.colors.callToAction};
+    border-color: ${p.theme.colors.callToAction};
     padding: 0 8px;
 
     ${TextButton} {
       position: relative;
       margin: 16px 0 16px 0;
     }
-  }
+  `}
 
   &[aria-disabled] {
     border: 2px solid ${(p) => p.theme.colors.lightGray};
@@ -822,51 +671,4 @@ export const FileInput = styled(FileInputBase)`
   ${maxWidth}
 ` as any
 
-FileInput.defaultErrorHandler = defaultErrorHandler
-
-interface FileInputComponent
-  extends StyledComponentBase<
-    React.FunctionComponent<FileInputProps>,
-    CactusTheme,
-    FileInputProps
-  > {
-  defaultErrorHandler: (type: ErrorType, accept?: string[]) => string
-}
-
-FileInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  accept: PropTypes.arrayOf(PropTypes.string),
-  disabled: PropTypes.bool,
-  labels: PropTypes.shape({
-    delete: PropTypes.string,
-    loading: PropTypes.string,
-    loaded: PropTypes.string,
-  }),
-  buttonText: PropTypes.node,
-  prompt: PropTypes.node,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onError: PropTypes.func,
-  rawFiles: PropTypes.bool,
-  multiple: PropTypes.bool,
-  value: PropTypes.arrayOf(
-    PropTypes.shape({
-      fileName: PropTypes.string.isRequired,
-      content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-      status: PropTypes.oneOf(['loading', 'loaded', 'error']),
-      errorMsg: PropTypes.node,
-    })
-  ),
-}
-
-FileInput.defaultProps = {
-  disabled: false,
-  rawFiles: false,
-  multiple: false,
-  labels: DEFAULT_LABELS,
-  buttonText: 'Select Files...',
-  prompt: 'Drag files here or',
-}
-
-export default FileInput as FileInputComponent
+export default FileInput as React.FC<FileInputProps>
