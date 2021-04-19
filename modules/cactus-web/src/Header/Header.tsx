@@ -32,8 +32,6 @@ export const Header: HeaderType = ({ children, bgColor = 'lightContrast', ...res
   const childrens = Children.toArray(children)
   type ChildElement = ReactElement<any, ComponentType>
 
-  const itemAmount = childrens.filter((child) => (child as ChildElement).type.displayName === 'HeaderItem' && child).length
-
   return (
     <StyledHeader bgColor={bgColor} {...rest}>
       <MainColumn>

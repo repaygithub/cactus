@@ -1,4 +1,4 @@
- import { ActionsAdd } from '@repay/cactus-icons'
+import { ActionsAdd } from '@repay/cactus-icons'
 import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
@@ -72,7 +72,9 @@ export const WithLongTextItem = (): React.ReactElement => {
           </Breadcrumb.Active>
         </Breadcrumb>
       </Header.BreadcrumbRow>
-      <Header.Item><Text>You are configuring Merchant directory from  OWE Demo Merchant</Text></Header.Item>
+      <Header.Item>
+        <Text>You are configuring Merchant directory from OWE Demo Merchant</Text>
+      </Header.Item>
       <Header.Title>{text('Header Title', 'Header')}</Header.Title>
     </Header>
   )
