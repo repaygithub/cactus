@@ -1,9 +1,9 @@
-import { ActionsAdd, ActionsCopy } from '@repay/cactus-icons'
+ import { ActionsAdd } from '@repay/cactus-icons'
 import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { Breadcrumb, Button, Header, Link } from '../'
+import { Breadcrumb, Button, Header, Link, Text } from '../'
 import { BackgroundColorVariants } from './Header'
 
 export default {
@@ -59,7 +59,7 @@ export const WithBreadcrumbs = (): React.ReactElement => {
     </Header>
   )
 }
-export const WithMultipleItems = (): React.ReactElement => {
+export const WithLongTextItem = (): React.ReactElement => {
   const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
 
   return (
@@ -72,17 +72,7 @@ export const WithMultipleItems = (): React.ReactElement => {
           </Breadcrumb.Active>
         </Breadcrumb>
       </Header.BreadcrumbRow>
-      <Header.Item>
-        <Button variant="action">
-          <ActionsAdd /> Add new configuration
-        </Button>
-      </Header.Item>
-      <Header.Item>
-        <Button variant="success">
-          <ActionsCopy />
-        </Button>
-      </Header.Item>
-      <Header.Item> Some text because I like crowded UIs </Header.Item>
+      <Header.Item><Text>You are configuring Merchant directory from  OWE Demo Merchant</Text></Header.Item>
       <Header.Title>{text('Header Title', 'Header')}</Header.Title>
     </Header>
   )
@@ -102,7 +92,6 @@ export const WithGoBackLink = (): React.ReactElement => {
           <ActionsAdd /> Add new configuration
         </Button>
       </Header.Item>
-      <Header.Item>Some text because I like crowded UIs</Header.Item>
     </Header>
   )
 }
