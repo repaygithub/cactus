@@ -108,7 +108,10 @@ const ItemsColumn = styled.div`
     ${p.theme.mediaQueries?.medium}{
       flex-direction: row;
       align-items: center;
-      flex: 0 1 auto; 
+      flex: 0 1 auto;
+      > div:not(:first-child) {
+        margin-top: 0px;
+      }
     }
   `}
 `
