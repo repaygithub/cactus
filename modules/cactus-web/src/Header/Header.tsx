@@ -94,7 +94,7 @@ const ItemsColumn = styled.div`
       hyphens: auto;
       overflow-wrap: break-word;
       padding-top: 0px;
-      width: 100%;
+      max-width: 100%;
       word-wrap: break-word;
       > div {
         margin-top: 0px;
@@ -108,6 +108,7 @@ const ItemsColumn = styled.div`
     ${p.theme.mediaQueries?.medium}{
       flex-direction: row;
       align-items: center;
+      flex: 0 1 auto; 
     }
   `}
 `

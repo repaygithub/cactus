@@ -1,4 +1,4 @@
-import { ActionsAdd } from '@repay/cactus-icons'
+import { ActionsAdd, ActionsCopy } from '@repay/cactus-icons'
 import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
@@ -75,6 +75,35 @@ export const WithLongTextItem = (): React.ReactElement => {
       <Header.Item>
         <Text>You are configuring Merchant directory from OWE Demo Merchant</Text>
       </Header.Item>
+      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+    </Header>
+  )
+}
+
+export const WithMultipleItems = (): React.ReactElement => {
+  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
+
+  return (
+    <Header bgColor={bgSelection}>
+      <Header.BreadcrumbRow>
+        <Breadcrumb>
+          <Breadcrumb.Item href="/">Label</Breadcrumb.Item>
+          <Breadcrumb.Active>
+            <em>Label</em>
+          </Breadcrumb.Active>
+        </Breadcrumb>
+      </Header.BreadcrumbRow>
+      <Header.Item>
+        <Button variant="action">
+          <ActionsAdd /> Add new configuration
+        </Button>
+      </Header.Item>
+      <Header.Item>
+        <Button variant="success">
+          <ActionsCopy />
+        </Button>
+      </Header.Item>
+      <Header.Item> Some text because I like crowded UIs </Header.Item>
       <Header.Title>{text('Header Title', 'Header')}</Header.Title>
     </Header>
   )
