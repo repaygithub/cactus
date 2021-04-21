@@ -118,30 +118,14 @@ interface FileAction {
   event?: React.SyntheticEvent
 }
 
-const EmptyPromptsBase = (props: EmptyPromptsProps): React.ReactElement => (
-  <div className={props.className}>
-    <ActionsUpload iconSize="large" />
-    <Flex flexDirection="column" alignItems="center" m={3}>
-      <span>{props.prompt}</span>
-      {props.children}
-    </Flex>
-  </div>
-)
-
-const EmptyPrompts = styled(EmptyPromptsBase)`
+const EmptyPrompts = styled.div`
   width: 100%;
   height: 100px;
   margin: 0 15%;
   display: flex;
   align-items: center;
   justify-content: center;
-  ${ActionsUpload} {
-    color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
-  }
-  span {
-    color: ${(p): string =>
-      p.disabled ? p.theme.colors.mediumGray : p.theme.colors.mediumContrast};
-  }
+  color: ${(p) => p.theme.colors.mediumContrast};
 `
 
 const fileBoxMap = {
@@ -213,13 +197,11 @@ const FileBox = styled(FileBoxBase)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${(p): string =>
-    p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast};
+  color: ${(p) => p.theme.colors.darkestContrast};
 
   span {
     margin-left: 8px;
     margin-right: 8px;
-    ${(p) => textStyle(p.theme, 'body')};
   }
   button {
     padding: 0;
@@ -228,6 +210,7 @@ const FileBox = styled(FileBoxBase)`
   ${Avatar} {
     height: 24px;
     width: 24px;
+    flex-shrink: 0;
 
     ${NotificationError} {
       height: 16px;
@@ -600,6 +583,18 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 
   const emptyClassName = files.length === 0 ? 'empty' : 'notEmpty'
 
+  const uploadButton = (
+    <TextButton
+      variant="action"
+      id={id}
+      aria-describedby={describedBy}
+      disabled={disabled}
+      onClick={handleOpenFileSelect}
+    >
+      <BatchstatusOpen iconSize="small" />
+      {buttonText}
+    </TextButton>
+  )
   return (
     <div
       {...fileInputProps}
@@ -610,6 +605,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
       onDrop={handleDrop}
       onFocus={handleFocus}
       onBlur={handleBlur}
+      aria-disabled={disabled || undefined}
     >
       <input
         key={inputKey}
@@ -622,17 +618,12 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
         disabled={disabled}
       />
       {files.length === 0 ? (
-        <EmptyPrompts prompt={prompt} disabled={disabled}>
-          <TextButton
-            variant="action"
-            id={id}
-            aria-describedby={describedBy}
-            disabled={disabled}
-            onClick={handleOpenFileSelect}
-          >
-            <BatchstatusOpen iconSize="small" />
-            {buttonText}
-          </TextButton>
+        <EmptyPrompts>
+          <ActionsUpload iconSize="large" color="callToAction" />
+          <Flex flexDirection="column" alignItems="center" m={3}>
+            <span>{prompt}</span>
+            {uploadButton}
+          </Flex>
         </EmptyPrompts>
       ) : (
         <React.Fragment>
@@ -650,16 +641,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
               />
             )
           )}
-          <TextButton
-            variant="action"
-            id={id}
-            aria-describedby={describedBy}
-            disabled={disabled}
-            onClick={handleOpenFileSelect}
-          >
-            <BatchstatusOpen iconSize="small" />
-            {buttonText}
-          </TextButton>
+          {uploadButton}
         </React.Fragment>
       )}
     </div>
@@ -669,15 +651,14 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
   border-radius: ${radius(8)};
-  border: ${(p): string => (p.disabled ? 'none' : '2px dotted')};
-  border-color: ${(p): string => p.theme.colors.darkestContrast};
+  border: 2px dotted ${(p) => p.theme.colors.darkestContrast};
   min-width: 300px;
   min-height: 100px;
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  ${(p): string => (p.disabled ? `background-color: ${p.theme.colors.lightGray};` : '')}
+  ${(p) => textStyle(p.theme, 'body')};
 
   &.notEmpty {
     flex-direction: column;
@@ -687,6 +668,14 @@ export const FileInput = styled(FileInputBase)`
     ${TextButton} {
       position: relative;
       margin: 16px 0 16px 0;
+    }
+  }
+
+  &[aria-disabled] {
+    border: 2px solid ${(p) => p.theme.colors.lightGray};
+    background-color: ${(p) => p.theme.colors.lightGray};
+    * {
+      color: ${(p) => p.theme.colors.mediumGray};
     }
   }
 
