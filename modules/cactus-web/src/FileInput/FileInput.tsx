@@ -118,30 +118,20 @@ interface FileAction {
   event?: React.SyntheticEvent
 }
 
-const EmptyPromptsBase = (props: EmptyPromptsProps): React.ReactElement => (
-  <div className={props.className}>
-    <ActionsUpload iconSize="large" />
-    <Flex flexDirection="column" alignItems="center" m={3}>
-      <span>{props.prompt}</span>
-      {props.children}
-    </Flex>
-  </div>
-)
+const DEFAULT_LABELS = {
+  delete: 'Delete File',
+  loading: 'Loading',
+  loaded: 'Successful',
+}
 
-const EmptyPrompts = styled(EmptyPromptsBase)`
+const EmptyPrompts = styled.div`
   width: 100%;
   height: 100px;
   margin: 0 15%;
   display: flex;
   align-items: center;
   justify-content: center;
-  ${ActionsUpload} {
-    color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
-  }
-  span {
-    color: ${(p): string =>
-      p.disabled ? p.theme.colors.mediumGray : p.theme.colors.mediumContrast};
-  }
+  color: ${(p) => p.theme.colors.mediumContrast};
 `
 
 const fileBoxMap = {
@@ -170,32 +160,33 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
     const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
 
     let label = fileName
+    let avatarStatus: string | undefined = undefined
     if (status === 'loaded') {
-      label += labels.loaded ? `, ${labels.loaded}` : ', Successful'
+      label += `, ${labels.loaded || DEFAULT_LABELS.loaded}`
+      avatarStatus = 'success'
     } else if (status === 'error' && errorMsg) {
       label += `, ${errorMsg}`
+      avatarStatus = 'error'
     } else if (status === 'loading') {
-      label += labels.loading ? `, ${labels.loading}` : ', Loading'
+      label += `, ${labels.loading || DEFAULT_LABELS.loading}`
     }
 
     return (
       <div className={className} tabIndex={0} aria-label={label} aria-disabled={disabled} ref={ref}>
-        {status === 'error' ? (
-          <Avatar type="alert" status="error" disabled={disabled} />
-        ) : (
-          status === 'loaded' && <Avatar type="alert" status="success" disabled={disabled} />
+        {avatarStatus && (
+          <Avatar type="alert" status={avatarStatus} disabled={disabled} />
         )}
         <span>{fileName}</span>
         {status === 'loading' ? (
-          <Spinner />
+          <Spinner iconSize="12px" />
         ) : (
           <IconButton
             onClick={onDelete}
             data-filename={fileName}
-            label={labels.delete}
+            label={labels.delete || DEFAULT_LABELS.delete}
             disabled={disabled}
           >
-            <NavigationClose />
+            <NavigationClose iconSize="12px" />
           </IconButton>
         )}
       </div>
@@ -206,28 +197,26 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
 const FileBox = styled(FileBoxBase)`
   box-sizing: border-box;
   width: 100%;
-  min-height: 36px;
   margin-top: 8px;
-  padding: 0 8px 0 8px;
+  padding: 4px 8px;
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${(p): string =>
-    p.disabled ? p.theme.colors.mediumGray : p.theme.colors.darkestContrast};
+  color: ${(p) => p.theme.colors.darkestContrast};
 
   span {
     margin-left: 8px;
     margin-right: 8px;
-    ${(p) => textStyle(p.theme, 'body')};
-  }
-  button {
-    padding: 0;
+    max-width: calc(100% - 52px);/* margins + avatar + button */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   ${Avatar} {
     height: 24px;
     width: 24px;
+    flex-shrink: 0;
 
     ${NotificationError} {
       height: 16px;
@@ -240,42 +229,24 @@ const FileBox = styled(FileBoxBase)`
     }
   }
 
-  ${Spinner} {
-    height: 12px;
-    width: 12px;
-  }
-
   ${IconButton} {
+    padding: 0;
     margin-left: auto;
-  }
-
-  ${NavigationClose} {
-    height: 12px;
-    width: 12px;
   }
 
   ${fileStatus}
 `
 
-const FileInfoBase = (props: FileInfoProps): React.ReactElement => {
-  const { className, errorMsg, labels, boxRef, disabled, ...rest } = props
+const FileInfo = (props: FileInfoProps): React.ReactElement => {
+  const { errorMsg, labels, boxRef, disabled, ...rest } = props
 
   return (
-    <div className={className}>
+    <>
       <FileBox errorMsg={errorMsg} labels={labels} ref={boxRef} disabled={disabled} {...rest} />
       {errorMsg && !disabled && <StatusMessage status="error">{errorMsg}</StatusMessage>}
-    </div>
+    </>
   )
 }
-
-const FileInfo = styled(FileInfoBase)`
-  width: 100%;
-
-  ${StatusMessage} {
-    position: relative;
-    margin-top: 4px;
-  }
-`
 
 const defaultErrorHandler = (errorType: ErrorType, accept: string[] | undefined = []): string => {
   let errorMsg = 'An unknown error occurred when reading the file.'
@@ -477,7 +448,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     rawFiles,
     name,
     accept,
-    labels = {},
+    labels = DEFAULT_LABELS,
     buttonText = 'Select Files...',
     prompt = 'Drag files here or',
     multiple,
@@ -600,6 +571,18 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 
   const emptyClassName = files.length === 0 ? 'empty' : 'notEmpty'
 
+  const uploadButton = (
+    <TextButton
+      variant="action"
+      id={id}
+      aria-describedby={describedBy}
+      disabled={disabled}
+      onClick={handleOpenFileSelect}
+    >
+      <BatchstatusOpen iconSize="small" />
+      {buttonText}
+    </TextButton>
+  )
   return (
     <div
       {...fileInputProps}
@@ -610,6 +593,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
       onDrop={handleDrop}
       onFocus={handleFocus}
       onBlur={handleBlur}
+      aria-disabled={disabled || undefined}
     >
       <input
         key={inputKey}
@@ -622,17 +606,12 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
         disabled={disabled}
       />
       {files.length === 0 ? (
-        <EmptyPrompts prompt={prompt} disabled={disabled}>
-          <TextButton
-            variant="action"
-            id={id}
-            aria-describedby={describedBy}
-            disabled={disabled}
-            onClick={handleOpenFileSelect}
-          >
-            <BatchstatusOpen iconSize="small" />
-            {buttonText}
-          </TextButton>
+        <EmptyPrompts>
+          <ActionsUpload iconSize="large" color="callToAction" />
+          <Flex flexDirection="column" alignItems="center" m={3}>
+            <span>{prompt}</span>
+            {uploadButton}
+          </Flex>
         </EmptyPrompts>
       ) : (
         <React.Fragment>
@@ -650,16 +629,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
               />
             )
           )}
-          <TextButton
-            variant="action"
-            id={id}
-            aria-describedby={describedBy}
-            disabled={disabled}
-            onClick={handleOpenFileSelect}
-          >
-            <BatchstatusOpen iconSize="small" />
-            {buttonText}
-          </TextButton>
+          {uploadButton}
         </React.Fragment>
       )}
     </div>
@@ -669,15 +639,14 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
 export const FileInput = styled(FileInputBase)`
   box-sizing: border-box;
   border-radius: ${radius(8)};
-  border: ${(p): string => (p.disabled ? 'none' : '2px dotted')};
-  border-color: ${(p): string => p.theme.colors.darkestContrast};
+  border: 2px dotted ${(p) => p.theme.colors.darkestContrast};
   min-width: 300px;
   min-height: 100px;
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  ${(p): string => (p.disabled ? `background-color: ${p.theme.colors.lightGray};` : '')}
+  ${(p) => textStyle(p.theme, 'body')};
 
   &.notEmpty {
     flex-direction: column;
@@ -688,6 +657,18 @@ export const FileInput = styled(FileInputBase)`
       position: relative;
       margin: 16px 0 16px 0;
     }
+  }
+
+  &[aria-disabled] {
+    border: 2px solid ${(p) => p.theme.colors.lightGray};
+    background-color: ${(p) => p.theme.colors.lightGray};
+    * {
+      color: ${(p) => p.theme.colors.mediumGray};
+    }
+  }
+
+  ${StatusMessage} {
+    margin-top: 4px;
   }
 
   input {
@@ -741,11 +722,7 @@ FileInput.defaultProps = {
   disabled: false,
   rawFiles: false,
   multiple: false,
-  labels: {
-    delete: 'Delete File',
-    loading: 'Loading',
-    loaded: 'Successful',
-  },
+  labels: DEFAULT_LABELS,
   buttonText: 'Select Files...',
   prompt: 'Drag files here or',
 }
