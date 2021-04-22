@@ -118,6 +118,12 @@ interface FileAction {
   event?: React.SyntheticEvent
 }
 
+const DEFAULT_LABELS = {
+  delete: 'Delete File',
+  loading: 'Loading',
+  loaded: 'Successful',
+}
+
 const EmptyPrompts = styled.div`
   width: 100%;
   height: 100px;
@@ -154,32 +160,33 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
     const { fileName, className, status, errorMsg, onDelete, labels, disabled } = props
 
     let label = fileName
+    let avatarStatus: string | undefined = undefined
     if (status === 'loaded') {
-      label += labels.loaded ? `, ${labels.loaded}` : ', Successful'
+      label += `, ${labels.loaded || DEFAULT_LABELS.loaded}`
+      avatarStatus = 'success'
     } else if (status === 'error' && errorMsg) {
       label += `, ${errorMsg}`
+      avatarStatus = 'error'
     } else if (status === 'loading') {
-      label += labels.loading ? `, ${labels.loading}` : ', Loading'
+      label += `, ${labels.loading || DEFAULT_LABELS.loading}`
     }
 
     return (
       <div className={className} tabIndex={0} aria-label={label} aria-disabled={disabled} ref={ref}>
-        {status === 'error' ? (
-          <Avatar type="alert" status="error" disabled={disabled} />
-        ) : (
-          status === 'loaded' && <Avatar type="alert" status="success" disabled={disabled} />
+        {avatarStatus && (
+          <Avatar type="alert" status={avatarStatus} disabled={disabled} />
         )}
         <span>{fileName}</span>
         {status === 'loading' ? (
-          <Spinner />
+          <Spinner iconSize="12px" />
         ) : (
           <IconButton
             onClick={onDelete}
             data-filename={fileName}
-            label={labels.delete}
+            label={labels.delete || DEFAULT_LABELS.delete}
             disabled={disabled}
           >
-            <NavigationClose />
+            <NavigationClose iconSize="12px" />
           </IconButton>
         )}
       </div>
@@ -190,9 +197,8 @@ const FileBoxBase = React.forwardRef<HTMLDivElement, FileBoxProps>(
 const FileBox = styled(FileBoxBase)`
   box-sizing: border-box;
   width: 100%;
-  min-height: 36px;
   margin-top: 8px;
-  padding: 0 8px 0 8px;
+  padding: 4px 8px;
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
@@ -202,9 +208,9 @@ const FileBox = styled(FileBoxBase)`
   span {
     margin-left: 8px;
     margin-right: 8px;
-  }
-  button {
-    padding: 0;
+    max-width: calc(100% - 52px);/* margins + avatar + button */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 
   ${Avatar} {
@@ -223,42 +229,24 @@ const FileBox = styled(FileBoxBase)`
     }
   }
 
-  ${Spinner} {
-    height: 12px;
-    width: 12px;
-  }
-
   ${IconButton} {
+    padding: 0;
     margin-left: auto;
-  }
-
-  ${NavigationClose} {
-    height: 12px;
-    width: 12px;
   }
 
   ${fileStatus}
 `
 
-const FileInfoBase = (props: FileInfoProps): React.ReactElement => {
-  const { className, errorMsg, labels, boxRef, disabled, ...rest } = props
+const FileInfo = (props: FileInfoProps): React.ReactElement => {
+  const { errorMsg, labels, boxRef, disabled, ...rest } = props
 
   return (
-    <div className={className}>
+    <>
       <FileBox errorMsg={errorMsg} labels={labels} ref={boxRef} disabled={disabled} {...rest} />
       {errorMsg && !disabled && <StatusMessage status="error">{errorMsg}</StatusMessage>}
-    </div>
+    </>
   )
 }
-
-const FileInfo = styled(FileInfoBase)`
-  width: 100%;
-
-  ${StatusMessage} {
-    position: relative;
-    margin-top: 4px;
-  }
-`
 
 const defaultErrorHandler = (errorType: ErrorType, accept: string[] | undefined = []): string => {
   let errorMsg = 'An unknown error occurred when reading the file.'
@@ -460,7 +448,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
     rawFiles,
     name,
     accept,
-    labels = {},
+    labels = DEFAULT_LABELS,
     buttonText = 'Select Files...',
     prompt = 'Drag files here or',
     multiple,
@@ -679,6 +667,10 @@ export const FileInput = styled(FileInputBase)`
     }
   }
 
+  ${StatusMessage} {
+    margin-top: 4px;
+  }
+
   input {
     display: none;
   }
@@ -730,11 +722,7 @@ FileInput.defaultProps = {
   disabled: false,
   rawFiles: false,
   multiple: false,
-  labels: {
-    delete: 'Delete File',
-    loading: 'Loading',
-    loaded: 'Successful',
-  },
+  labels: DEFAULT_LABELS,
   buttonText: 'Select Files...',
   prompt: 'Drag files here or',
 }
