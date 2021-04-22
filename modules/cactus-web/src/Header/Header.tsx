@@ -16,15 +16,15 @@ export type HeaderType = FC<HeaderProps> & {
   Title: typeof HeaderTitle
 }
 
-export const HeaderItem: FC = (props) => <div {...props} />
+export const HeaderItem: FC<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+> = (props) => <div {...props} />
 
-export const HeaderTitle: FC = ({ children, ...props }) => {
-  return (
-    <Text as="h2" my="0" {...props}>
-      {children}
-    </Text>
-  )
-}
+export const HeaderTitle: FC<React.ComponentProps<typeof Text>> = ({ children, ...props }) => (
+  <Text as="h2" my="0" {...props}>
+    {children}
+  </Text>
+)
 
 export const HeaderBreadcrumbRow: FC = ({ children }) => <>{children}</>
 
@@ -73,7 +73,7 @@ const MainColumn = styled.div`
       align-items: flex-start;
     }
     flex: 1 1;
-    > h2 {
+    > * {
       max-width: 100%;
       flex-shrink: 0;
     }
