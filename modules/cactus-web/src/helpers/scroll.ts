@@ -2,6 +2,39 @@ import observeRect from '@reach/observe-rect'
 import React from 'react'
 import styled from 'styled-components'
 
+const supportsOverscroll: boolean =
+  typeof window !== 'undefined' && window.CSS?.supports?.('overscroll-behavior', 'none')
+
+export function trapScroll<T extends HTMLElement>({
+  current: scrollTrap,
+}: React.RefObject<T | null>): ReturnType<React.EffectCallback> {
+  if (scrollTrap && !supportsOverscroll) {
+    const onWheel = (event: WheelEvent) => {
+      const scroll = Math.abs(scrollTrap.scrollTop)
+      let allowScroll = true
+      if (event.deltaY < 0) {
+        allowScroll = scroll !== 0
+      } else if (scrollTrap.scrollHeight - scroll === scrollTrap.clientHeight) {
+        allowScroll = false
+      }
+      if (!allowScroll) {
+        event.preventDefault()
+      }
+    }
+
+    scrollTrap.addEventListener('wheel', onWheel)
+    return () => {
+      scrollTrap.removeEventListener('wheel', onWheel)
+    }
+  } else if (scrollTrap) {
+    scrollTrap.style.overscrollBehavior = 'none'
+  }
+}
+
+export function useScrollTrap<T extends HTMLElement>(ref: React.RefObject<T | null>): void {
+  React.useEffect(() => trapScroll(ref), [ref])
+}
+
 type Orientation = 'horizontal' | 'vertical'
 
 export interface Scroll {
