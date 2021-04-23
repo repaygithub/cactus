@@ -97,4 +97,15 @@ describe('component: Footer', () => {
     expect(changedLink).toBeInTheDocument()
     expect(changedLink).toHaveAttribute('href', 'https://microsoft.com')
   })
+  test('should be able to pass as prop', () => {
+    const { getByText } = render(
+      <StyleProvider>
+        <Footer logo={REPAY_LOGO}>
+          Custom Content
+          <Footer.Link as="a" href="https://google.com">Some Link</Footer.Link>
+        </Footer>
+      </StyleProvider>
+    )
+    expect(getByText('Some Link')).toHaveAttribute('href', 'https://google.com')
+  })
 })

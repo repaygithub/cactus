@@ -8,13 +8,7 @@ import { useLayout } from '../Layout/Layout'
 import Link from '../Link/Link'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
-interface LinkProps {
-  children: React.ReactNode
-  to: string
-  id?: string
-}
-
-type LinkMap = Map<string, LinkProps>
+type LinkMap = Map<string, typeof Link>
 type FooterContextType = (u: (s: LinkMap) => LinkMap) => void
 
 interface LinkColProps {
@@ -120,8 +114,8 @@ const columnsMap: { [K in Size]: number } = {
 }
 
 // Divides array of links into smaller arrays of links for splitting them up in the list view
-const divideLinks = (links: LinkProps[], maxCols: number) => {
-  const divided: LinkProps[][] = []
+const divideLinks = (links: typeof Link[], maxCols: number) => {
+  const divided: typeof Link[][] = []
   const numPerCol = Math.floor(links.length / maxCols)
   const extra = links.length % maxCols
   for (let i = 0, linkIndex = 0; i < maxCols && linkIndex < links.length; i++) {
@@ -135,11 +129,11 @@ const divideLinks = (links: LinkProps[], maxCols: number) => {
   return divided
 }
 
-type FooterType = React.FC<FooterProps> & { Link: React.FC<LinkProps> }
+type FooterType = React.FC<FooterProps> & { Link: typeof Link }
 
 export const Footer: FooterType = (props) => {
   const { logo, className, children } = props
-  const [links, setLinks] = useState(new Map<string, LinkProps>())
+  const [links, setLinks] = useState(new Map<string, typeof Link>())
   const [maxCols, setMaxCols] = useState<number>(1)
   const screenSize = useContext(ScreenSizeContext)
 
@@ -171,7 +165,7 @@ export const Footer: FooterType = (props) => {
           {dividedLinks.map((linkGroup, colIndex) => (
             <LinkCol key={colIndex} maxCols={dividedLinks.length}>
               {linkGroup.map((link, i) => (
-                <StyledLink key={i} {...link} />
+                <StyledLink key={i} {...(link as any)}/>
               ))}
             </LinkCol>
           ))}
@@ -181,11 +175,12 @@ export const Footer: FooterType = (props) => {
   )
 }
 
-export const FooterLink: React.FC<LinkProps> = ({ children, id, to }) => {
+export const FLink: any = (props: any) => {
+  const {id, children, to} = props
   const setLinks = useContext(FooterContext)
   const key = useId(id)
   useEffect(() => {
-    setLinks?.((links) => new Map(links.set(key, { children, id, to })))
+    setLinks?.((links) => new Map(links.set(key, props)))
   }, [key, children, id, to, setLinks])
   useEffect(
     () => () =>
@@ -198,6 +193,8 @@ export const FooterLink: React.FC<LinkProps> = ({ children, id, to }) => {
   )
   return null
 }
+
+const FooterLink = FLink as typeof Link
 
 const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })<{ isGrid: boolean }>`
   ${(p) => textStyle(p.theme, 'small')};
