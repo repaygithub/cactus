@@ -5,7 +5,9 @@ import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
 
-interface LinkProps extends MarginProps, Omit<React.LinkHTMLAttributes<HTMLAnchorElement>, 'href'> {
+export interface LinkProps
+  extends MarginProps,
+    Omit<React.LinkHTMLAttributes<HTMLAnchorElement>, 'href'> {
   to: string
   variant?: 'standard' | 'dark'
 }

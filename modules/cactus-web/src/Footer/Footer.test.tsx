@@ -102,6 +102,11 @@ describe('component: Footer', () => {
       <StyleProvider>
         <Footer logo={REPAY_LOGO}>
           Custom Content
+          {/* These three should all cause Typescript errors if uncommented.
+          <Footer.Link>Hey</Footer.Link>
+          <Footer.Link to="one" href="two">You</Footer.Link>
+          <Footer.Link as="a" value="">Now</Footer.Link>
+          */}
           <Footer.Link as="a" href="https://google.com">
             Some Link
           </Footer.Link>
