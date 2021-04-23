@@ -165,7 +165,7 @@ export const Footer: FooterType = (props) => {
           {dividedLinks.map((linkGroup, colIndex) => (
             <LinkCol key={colIndex} maxCols={dividedLinks.length}>
               {linkGroup.map((link, i) => (
-                <StyledLink key={i} {...(link as any)}/>
+                <StyledLink key={i} {...(link as any)} />
               ))}
             </LinkCol>
           ))}
@@ -176,7 +176,7 @@ export const Footer: FooterType = (props) => {
 }
 
 export const FLink: any = (props: any) => {
-  const {id, children, to} = props
+  const { id, children, to } = props
   const setLinks = useContext(FooterContext)
   const key = useId(id)
   useEffect(() => {

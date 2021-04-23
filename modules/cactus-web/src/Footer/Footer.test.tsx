@@ -102,7 +102,9 @@ describe('component: Footer', () => {
       <StyleProvider>
         <Footer logo={REPAY_LOGO}>
           Custom Content
-          <Footer.Link as="a" href="https://google.com">Some Link</Footer.Link>
+          <Footer.Link as="a" href="https://google.com">
+            Some Link
+          </Footer.Link>
         </Footer>
       </StyleProvider>
     )
