@@ -1,3 +1,33 @@
+# v6.2.0 (Fri Apr 23 2021)
+
+#### 🚀 Enhancement
+
+- Improve Header Item spacing, pass props to Header.Title [#566](https://github.com/repaygithub/cactus/pull/566) ([@daniloPenaR](https://github.com/daniloPenaR))
+- Add Preview component that allows viewing of embedded images [#565](https://github.com/repaygithub/cactus/pull/565) ([@Dhalton](https://github.com/Dhalton))
+- Allow MenuBar sub-menus to be wider than their parent [#564](https://github.com/repaygithub/cactus/pull/564) ([@Dhalton](https://github.com/Dhalton))
+- Add mobile version of Breadcrumb component [#558](https://github.com/repaygithub/cactus/pull/558) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Clear custom input values on empty string [#571](https://github.com/repaygithub/cactus/pull/571) ([@wilysword](https://github.com/wilysword))
+- Fix FileInput onChange not firing in FireFox [#570](https://github.com/repaygithub/cactus/pull/570) ([@Dhalton](https://github.com/Dhalton))
+- Fix Accordion IconButton shrinking in IE11 [#568](https://github.com/repaygithub/cactus/pull/568) ([@daniloPenaR](https://github.com/daniloPenaR))
+- Fix broken type signatures on some components [#563](https://github.com/repaygithub/cactus/pull/563) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### 🔩 Dependency Updates
+
+- Upgrade ssri [#572](https://github.com/repaygithub/cactus/pull/572) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 5
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@Dhalton](https://github.com/Dhalton)
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v6.1.1 (Mon Mar 29 2021)
 
 #### 🐛 Bug Fix
