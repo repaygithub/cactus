@@ -97,4 +97,22 @@ describe('component: Footer', () => {
     expect(changedLink).toBeInTheDocument()
     expect(changedLink).toHaveAttribute('href', 'https://microsoft.com')
   })
+  test('should be able to pass as prop', () => {
+    const { getByText } = render(
+      <StyleProvider>
+        <Footer logo={REPAY_LOGO}>
+          Custom Content
+          {/* These three should all cause Typescript errors if uncommented.
+          <Footer.Link>Hey</Footer.Link>
+          <Footer.Link to="one" href="two">You</Footer.Link>
+          <Footer.Link as="a" value="">Now</Footer.Link>
+          */}
+          <Footer.Link as="a" href="https://google.com">
+            Some Link
+          </Footer.Link>
+        </Footer>
+      </StyleProvider>
+    )
+    expect(getByText('Some Link')).toHaveAttribute('href', 'https://google.com')
+  })
 })

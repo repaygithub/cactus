@@ -5,14 +5,8 @@ import styled from 'styled-components'
 import { boxShadow, textStyle } from '../helpers/theme'
 import useId from '../helpers/useId'
 import { useLayout } from '../Layout/Layout'
-import Link from '../Link/Link'
+import Link, { LinkProps } from '../Link/Link'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-
-interface LinkProps {
-  children: React.ReactNode
-  to: string
-  id?: string
-}
 
 type LinkMap = Map<string, LinkProps>
 type FooterContextType = (u: (s: LinkMap) => LinkMap) => void
@@ -104,7 +98,6 @@ const LinkCol = styled('div')<LinkColProps>`
   padding: 0 16px 0 16px;
   max-width: calc(100% / ${(p) => p.maxCols});
   border-right: 1px solid ${(p) => p.theme.colors.base};
-
   &:last-of-type {
     border-right: none;
   }
@@ -135,7 +128,7 @@ const divideLinks = (links: LinkProps[], maxCols: number) => {
   return divided
 }
 
-type FooterType = React.FC<FooterProps> & { Link: React.FC<LinkProps> }
+type FooterType = React.FC<FooterProps> & { Link: typeof Link }
 
 export const Footer: FooterType = (props) => {
   const { logo, className, children } = props
@@ -171,7 +164,7 @@ export const Footer: FooterType = (props) => {
           {dividedLinks.map((linkGroup, colIndex) => (
             <LinkCol key={colIndex} maxCols={dividedLinks.length}>
               {linkGroup.map((link, i) => (
-                <StyledLink key={i} {...link} />
+                <StyledLink key={i} {...(link as any)} />
               ))}
             </LinkCol>
           ))}
@@ -181,12 +174,12 @@ export const Footer: FooterType = (props) => {
   )
 }
 
-export const FooterLink: React.FC<LinkProps> = ({ children, id, to }) => {
+export const FooterLink: any = (props: LinkProps) => {
   const setLinks = useContext(FooterContext)
-  const key = useId(id)
+  const key = useId(props.id)
   useEffect(() => {
-    setLinks?.((links) => new Map(links.set(key, { children, id, to })))
-  }, [key, children, id, to, setLinks])
+    setLinks?.((links) => new Map(links.set(key, props)))
+  }, [props, key, setLinks])
   useEffect(
     () => () =>
       setLinks?.((links) => {
@@ -235,15 +228,10 @@ const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })<{ is
     }`}
 `
 
-Footer.Link = FooterLink
+Footer.Link = FooterLink as typeof Link
 
 Footer.propTypes = {
   logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-}
-
-FooterLink.propTypes = {
-  to: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 }
 
 export default Footer
