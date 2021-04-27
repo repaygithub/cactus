@@ -67,7 +67,7 @@ const variantMap: VariantMap = {
     &:hover {
       color: ${(p): string => p.theme.colors.darkestContrast};
     }
-  `
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -116,7 +116,7 @@ const inverseVariantMap: VariantMap = {
     &:hover {
       color: ${(p): string => p.theme.colors.darkestContrast};
     }
-  `
+  `,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
