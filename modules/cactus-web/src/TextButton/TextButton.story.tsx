@@ -7,7 +7,7 @@ import { TextButton } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
 import { TextButtonVariants } from './TextButton'
 
-const textButtonVariants: TextButtonVariants[] = ['standard', 'action', 'danger']
+const textButtonVariants: TextButtonVariants[] = ['standard', 'action', 'danger', 'dark']
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
@@ -37,6 +37,14 @@ export const BasicUsage = (): React.ReactElement => (
       {...eventLoggers}
     >
       Action
+    </TextButton>
+    <TextButton
+      variant="dark"
+      inverse={boolean('inverse', false)}
+      m={text('m', '')}
+      {...eventLoggers}
+    >
+      Dark
     </TextButton>
     <TextButton
       variant="standard"
