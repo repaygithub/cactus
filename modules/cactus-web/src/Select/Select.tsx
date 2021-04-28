@@ -48,7 +48,6 @@ interface OptionProps extends WithValue {
 
 interface ExtendedOptionType extends WithValue {
   label: React.ReactNode
-  isSelected: boolean
   id: string
   ariaLabel?: string
   altText?: string
@@ -477,6 +476,8 @@ const StyledListWrapper = styled.div`
   }
 `
 
+type GetSelectedCallback = (opt: WithValue) => boolean
+
 interface ListProps {
   isOpen: boolean
   comboBox?: boolean
@@ -484,6 +485,7 @@ interface ListProps {
   matchNotFoundText: string
   comboBoxSearchLabel: string
   options: ExtendedOptionType[]
+  getSelected: GetSelectedCallback
   multiple?: boolean
   searchValue: string
   onBlur: (event: React.FocusEvent<HTMLUListElement>) => void
@@ -507,10 +509,10 @@ function getSelectedIndex(options: WithValue[], value: OptionValue): number {
   return 0
 }
 
-function getIsSelected(selectedValues: SelectValueType, value: OptionValue) {
-  return (
-    (Array.isArray(selectedValues) && selectedValues.includes(value)) || selectedValues === value
-  )
+function getSelectedCallback(selection: SelectValueType) {
+  return Array.isArray(selection)
+    ? (opt: WithValue) => selection.includes(opt.value)
+    : (opt: WithValue) => opt.value === selection
 }
 
 function findMatchInRange(
@@ -691,9 +693,12 @@ class List extends React.Component<ListProps, ListState> {
     }, 150) // 120ms worked on Firefox and IE11 so 150 is just extra safe
   }
 
-  public static initActiveDescendant(options: ExtendedOptionType[]): string {
+  public static initActiveDescendant(
+    getSelected: GetSelectedCallback,
+    options: ExtendedOptionType[]
+  ): string {
     let activeId = ''
-    const selected = options.find((o): boolean => o.isSelected)
+    const selected = options.find(getSelected)
     if (selected) {
       activeId = selected.id
     } else if (options.length) {
@@ -744,7 +749,6 @@ class List extends React.Component<ListProps, ListState> {
           value: 'create',
           label: `Create "${props.searchValue}"`,
           id: `create-${props.searchValue}`,
-          isSelected: false,
           altText: props.searchValue,
         }
         filteredOptions.unshift(addOpt)
@@ -755,7 +759,7 @@ class List extends React.Component<ListProps, ListState> {
     }
 
     if (props.isOpen && !props.comboBox && state.activeDescendant === '') {
-      activeDescendant = List.initActiveDescendant(filteredOptions)
+      activeDescendant = List.initActiveDescendant(props.getSelected, filteredOptions)
       update = true
     }
 
@@ -830,6 +834,7 @@ class List extends React.Component<ListProps, ListState> {
       multiple,
       anchorRef,
       onClose,
+      getSelected,
       activeDescendant: selectManagedActiveDescendant,
       matchNotFoundText,
     } = this.props
@@ -857,7 +862,7 @@ class List extends React.Component<ListProps, ListState> {
             options.map(
               (opt): React.ReactElement => {
                 const optId = opt.id
-                const isSelected = opt.isSelected
+                const isSelected = getSelected(opt)
                 let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
                 const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
                 // multiselectable should have aria-selected on all options
@@ -966,7 +971,6 @@ class OptionState {
         label: optLabel,
         altText: !altText && typeof strLabel === 'string' ? strLabel : altText,
         id: id || getOptionId(this.idPrefix, optValue),
-        isSelected: getIsSelected(stateValue, optValue),
         ariaLabel,
       }
       this.extOptions.push(extOpt)
@@ -1096,12 +1100,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     const optState = state.options.getNextState(props, value)
     if (optState !== state.options) {
       newState.options = optState
-    } else if (newState.value !== undefined) {
-      // If the value changed but the options didn't, need to ensure selection is correct.
-      // (CACTUS-584 should remove the need for this.)
-      for (const o of optState.extOptions) {
-        o.isSelected = getIsSelected(value, o.value)
-      }
     }
     const extraOptions = state.extraOptions
     for (const opt of extraOptions) {
@@ -1271,13 +1269,10 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
           event.preventDefault()
 
           if (active === null) {
+            const getSelected = getSelectedCallback(this.state.value)
             this.setState({
-              activeDescendant: List.initActiveDescendant(options),
+              activeDescendant: List.initActiveDescendant(getSelected, options),
             })
-            return
-          }
-
-          if (active === null) {
             return
           }
           let nextIndex = getSelectedIndex(options, active.value)
@@ -1344,9 +1339,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
     option: WithValue | null,
     onlyAdd = false
   ): void => {
-    const extOpt = option && this.state.options.getExtOpt(option.value)
-    // This condition is redundant, but it keeps Typescript happy.
-    if (!extOpt || option === null) {
+    if (option === null) {
       return
     }
     let value: SelectValueType = this.state.value
@@ -1371,7 +1364,6 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
       }
       value = option.value
     }
-    extOpt.isSelected = getIsSelected(value, option.value)
     this.setState({ value })
     this.eventTarget.value = value
     const { onChange } = this.props
@@ -1531,6 +1523,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
             matchNotFoundText={matchNotFoundText}
             comboBoxSearchLabel={this.props.comboBoxSearchLabel || 'Search for an option'}
             options={options}
+            getSelected={getSelectedCallback(this.state.value)}
             multiple={multiple}
             searchValue={searchValue}
             activeDescendant={activeDescendant}

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Children, ComponentType, FC, HTMLAttributes, ReactElement } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import Text from '../Text/Text'
@@ -16,15 +16,15 @@ export type HeaderType = FC<HeaderProps> & {
   Title: typeof HeaderTitle
 }
 
-export const HeaderItem: FC = ({ children }) => <>{children}</>
+export const HeaderItem: FC<
+  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+> = (props) => <div {...props} />
 
-export const HeaderTitle: FC = ({ children }) => {
-  return (
-    <Text as="h2" my="0">
-      {children}
-    </Text>
-  )
-}
+export const HeaderTitle: FC<React.ComponentProps<typeof Text>> = ({ children, ...props }) => (
+  <Text as="h2" my="0" {...props}>
+    {children}
+  </Text>
+)
 
 export const HeaderBreadcrumbRow: FC = ({ children }) => <>{children}</>
 
@@ -34,7 +34,7 @@ export const Header: HeaderType = ({ children, bgColor = 'lightContrast', ...res
 
   return (
     <StyledHeader bgColor={bgColor} {...rest}>
-      <HeaderColumn mainColumn>
+      <MainColumn>
         {childrens.find(
           (child) =>
             (child as ChildElement).type.displayName === 'HeaderBreadcrumbRow' && <>{child}</>
@@ -42,17 +42,79 @@ export const Header: HeaderType = ({ children, bgColor = 'lightContrast', ...res
         {childrens.find(
           (child) => (child as ChildElement).type.displayName === 'HeaderTitle' && <>{child}</>
         )}
-      </HeaderColumn>
+      </MainColumn>
       {childrens.some((i) => (i as ChildElement).type.displayName === 'HeaderItem') && (
-        <HeaderColumn>
+        <ItemsColumn>
           {childrens.filter(
             (child) => (child as ChildElement).type.displayName === 'HeaderItem' && <>{child}</>
           )}
-        </HeaderColumn>
+        </ItemsColumn>
       )}
     </StyledHeader>
   )
 }
+
+const columnStyles = css`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`
+
+const MainColumn = styled.div`
+  ${columnStyles}
+  ${(p) => `
+    ${p.theme.mediaQueries?.small}{
+      padding-top: 0px;
+      min-width: 40%;
+      > div:not(:first-child) {
+        margin-left: 0px;
+      }
+      align-items: flex-start;
+    }
+    flex: 1 1;
+    > * {
+      max-width: 100%;
+      flex-shrink: 0;
+    }
+  `}
+`
+
+const ItemsColumn = styled.div`
+  ${columnStyles}
+  padding-top: 24px;
+  > div:not(:first-child) {
+    margin-top: 8px;
+  }
+
+  ${(p) => `
+    ${p.theme.mediaQueries?.small}{
+      align-items: flex-end;
+      flex: 1 1 0px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      padding-top: 0px;
+      max-width: 100%;
+      word-wrap: break-word;
+      > div {
+        margin-top: 0px;
+        margin-left: 8px;
+        word-wrap: break-word;
+        max-width: 100%;
+        hyphens: auto;
+      }
+    }
+
+    ${p.theme.mediaQueries?.medium}{
+      flex-direction: row;
+      align-items: center;
+      flex: 0 1 auto;
+      > div:not(:first-child) {
+        margin-top: 0px;
+      }
+    }
+  `}
+`
 
 Header.displayName = 'Header'
 HeaderBreadcrumbRow.displayName = 'HeaderBreadcrumbRow'
@@ -67,22 +129,6 @@ Header.propTypes = {
   bgColor: PropTypes.oneOf(['white', 'lightContrast']),
 }
 
-export const HeaderColumn = styled.div<{ mainColumn?: boolean }>`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding-top: ${(p) => !p.mainColumn && '24px'};
-  align-items: center;
-
-  ${(p) => `
-    ${p.theme.mediaQueries?.small}{
-      flex-direction: ${!p.mainColumn ? 'row' : ''};
-      align-items: ${!p.mainColumn ? 'center' : 'flex-start'};
-      padding-top: 0px;
-    }
-  `};
-`
-
 export const StyledHeader = styled.header<HeaderProps>`
   ${margin}
 
@@ -93,12 +139,17 @@ export const StyledHeader = styled.header<HeaderProps>`
   flex-direction: column;
   height: auto;
   justify-content: center;
-  padding: 8px 0;
+  padding: 8px 16px;
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 
   ${(p) => `
   ${p.theme.mediaQueries?.small}{
+    text-align: left;
     justify-content: space-between;
     flex-direction: row;
     padding: 8px 40px;
