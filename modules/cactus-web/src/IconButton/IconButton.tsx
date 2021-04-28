@@ -9,7 +9,7 @@ import { isIE } from '../helpers/constants'
 import { omitMargins } from '../helpers/omit'
 import { borderSize } from '../helpers/theme'
 
-export type IconButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
+export type IconButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success' | 'dark'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
 interface IconButtonProps
@@ -61,6 +61,13 @@ const variantMap: VariantMap = {
       color: ${(p): string => p.theme.colors.successDark};
     }
   `,
+  dark: css`
+    color: ${(p): string => p.theme.colors.darkContrast};
+
+    &:hover {
+      color: ${(p): string => p.theme.colors.callToAction};
+    }
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -101,6 +108,13 @@ const inverseVariantMap: VariantMap = {
 
     &:hover {
       color: ${(p): string => p.theme.colors.successDark};
+    }
+  `,
+  dark: css`
+    color: ${(p): string => p.theme.colors.darkContrast};
+
+    &:hover {
+      color: ${(p): string => p.theme.colors.callToAction};
     }
   `,
 }
@@ -196,7 +210,7 @@ export const IconButton = styled(IconButtonBase)<IconButtonProps>`
 
 IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
-  variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success']),
+  variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success', 'dark']),
   disabled: PropTypes.bool,
   label: (props: IconButtonProps, propName: string, componentName: string): Error | null => {
     if (!props.label && !props['aria-labelledby']) {

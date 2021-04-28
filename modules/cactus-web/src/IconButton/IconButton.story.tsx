@@ -1,9 +1,9 @@
 import * as icons from '@repay/cactus-icons'
 import { boolean, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
-import React from 'react'
+import React, { useContext } from 'react'
 
-import { Grid, IconButton, Text } from '../'
+import { Grid, IconButton, ScreenSizeContext, SIZES, Text } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
 import { IconButtonSizes, IconButtonVariants } from './IconButton'
 
@@ -13,6 +13,7 @@ const iconButtonVariants: IconButtonVariants[] = [
   'danger',
   'warning',
   'success',
+  'dark',
 ]
 
 type IconName = keyof typeof icons
@@ -24,12 +25,20 @@ export default {
   component: IconButton,
 } as Meta
 
-const IconButtonBase = ({ size, disabled }: { size: IconButtonSizes; disabled?: boolean }) => {
+const IconButtonBase = ({
+  size,
+  disabled,
+  isTiny,
+}: {
+  size: IconButtonSizes
+  disabled?: boolean
+  isTiny?: boolean
+}) => {
   const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
   const Icon = icons[iconName] as React.ComponentType<any>
   return (
     <>
-      <Grid.Item tiny={2}>
+      <Grid.Item tiny={isTiny ? 2 : 1}>
         <IconButton
           variant="standard"
           inverse={boolean('inverse', false)}
@@ -89,19 +98,36 @@ const IconButtonBase = ({ size, disabled }: { size: IconButtonSizes; disabled?: 
           <Icon />
         </IconButton>
       </Grid.Item>
+      <Grid.Item tiny={2}>
+        <IconButton
+          variant="dark"
+          inverse={boolean('inverse', false)}
+          iconSize={size}
+          label="add"
+          disabled={disabled}
+          {...eventLoggers}
+        >
+          <Icon />
+        </IconButton>
+      </Grid.Item>
     </>
   )
 }
-export const BasicUsage = (): React.ReactElement => {
+
+const IconsGrid = () => {
+  const size = useContext(ScreenSizeContext)
+  const isTiny = size.size === SIZES.tiny.size
   return (
     <Grid justify="center">
-      <Grid.Item tiny={2}>
-        <Text textStyle="tiny" margin="0">
-          Size
-        </Text>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <Text textStyle="tiny" margin="0">
+      {!isTiny && (
+        <Grid.Item tiny={1}>
+          <Text textStyle="tiny" margin="0">
+            Size
+          </Text>
+        </Grid.Item>
+      )}
+      <Grid.Item tiny={isTiny ? 2 : 1}>
+        <Text textStyle="small" margin="0">
           Standard
         </Text>
       </Grid.Item>
@@ -127,36 +153,55 @@ export const BasicUsage = (): React.ReactElement => {
       </Grid.Item>
       <Grid.Item tiny={2}>
         <Text textStyle="small" margin="0">
-          Tiny
+          Dark
         </Text>
       </Grid.Item>
-      <IconButtonBase size="tiny" />
-      <Grid.Item tiny={2}>
-        <Text textStyle="small" margin="0">
-          Small
-        </Text>
-      </Grid.Item>
-      <IconButtonBase size="small" />
-      <Grid.Item tiny={2}>
-        <Text textStyle="small" margin="0">
-          Medium
-        </Text>
-      </Grid.Item>
-      <IconButtonBase size="medium" />
-      <Grid.Item tiny={2}>
-        <Text textStyle="small" margin="0">
-          Large
-        </Text>
-      </Grid.Item>
-      <IconButtonBase size="large" />
-      <Grid.Item tiny={2}>
-        <Text textStyle="small" margin="0">
-          Disabled
-        </Text>
-      </Grid.Item>
-      <IconButtonBase size="large" disabled />
+      {!isTiny && (
+        <Grid.Item tiny={1}>
+          <Text textStyle="small" margin="0">
+            Tiny
+          </Text>
+        </Grid.Item>
+      )}
+      <IconButtonBase size="tiny" isTiny={isTiny} />
+      {!isTiny && (
+        <Grid.Item tiny={1}>
+          <Text textStyle="small" margin="0">
+            Small
+          </Text>
+        </Grid.Item>
+      )}
+      <IconButtonBase size="small" isTiny={isTiny} />
+      {!isTiny && (
+        <Grid.Item tiny={1}>
+          <Text textStyle="small" margin="0">
+            Medium
+          </Text>
+        </Grid.Item>
+      )}
+      <IconButtonBase size="medium" isTiny={isTiny} />
+      {!isTiny && (
+        <Grid.Item tiny={1}>
+          <Text textStyle="small" margin="0">
+            Large
+          </Text>
+        </Grid.Item>
+      )}
+      <IconButtonBase size="large" isTiny={isTiny} />
+      {!isTiny && (
+        <Grid.Item tiny={1}>
+          <Text textStyle="small" margin="0">
+            Disabled
+          </Text>
+        </Grid.Item>
+      )}
+      <IconButtonBase size="large" disabled isTiny={isTiny} />
     </Grid>
   )
+}
+
+export const BasicUsage = (): React.ReactElement => {
+  return <IconsGrid />
 }
 
 export const AllIcons = (): React.ReactElement => {

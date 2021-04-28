@@ -5,7 +5,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { border, radius, textStyle } from '../helpers/theme'
 
-export type TextButtonVariants = 'standard' | 'action' | 'danger'
+export type TextButtonVariants = 'standard' | 'action' | 'danger' | 'dark'
 
 interface TextButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, MarginProps {
   variant?: TextButtonVariants
@@ -27,6 +27,9 @@ const variantMap: VariantMap = {
   danger: css`
     color: ${(p): string => p.theme.colors.error};
   `,
+  dark: css`
+    color: ${(p): string => p.theme.colors.darkContrast};
+  `,
 }
 
 const inverseVariantMap: VariantMap = {
@@ -38,6 +41,9 @@ const inverseVariantMap: VariantMap = {
     color: ${(p): string => p.theme.colors.white};
   `,
   danger: css``,
+  dark: css`
+    color: ${(p): string => p.theme.colors.darkContrast};
+  `,
 }
 
 const disabled: FlattenInterpolation<ThemeProps<CactusTheme>> = css`
@@ -103,7 +109,7 @@ export const TextButton = styled.button<TextButtonProps>`
 `
 
 TextButton.propTypes = {
-  variant: PropTypes.oneOf(['standard', 'action', 'danger']),
+  variant: PropTypes.oneOf(['standard', 'action', 'danger', 'dark']),
   disabled: PropTypes.bool,
   inverse: PropTypes.bool,
 }
