@@ -5,6 +5,27 @@ order: -99
 
 # Hooks
 
+## useScrollTrap
+
+In the case you have a popup, modal, or drop-down with it's own scrolling context, you often want to prevent scrolling from propagating up to the main page: it can be disconcerting when you're scrolling in a drop-down and suddenly the entire page is moving. `useScrollTrap` takes in a ref to a scrollable HTML element (an element styled with `overflow: auto` or `overflow: scroll`) and ensures scrolling doesn't "escape".
+
+There are two caveats in browsers that don't support the `overscroll-behavior` CSS property:
+
+1. The Javascript backup is only implemented for vertical scrolling.
+2. The Javascript backup is based on the "wheel" event, since (to my knowledge) other methods of scrolling don't propagate.
+
+For situations where a hook isn't appropriate, or if you have more complex logic about how to apply the scroll trap, there's a `trapScroll` function with the same arguments: it will either return nothing for the CSS implementation, or a "cleanup" function for the backup implementation.
+
+```jsx
+function ScrollTrap(props) {
+  const ref = useRef()
+  useScrollTrap(ref)
+  // Is equivalent to:
+  // useEffect(() => trapScroll(ref), [ref])
+  return <div {...props} ref={ref} style={{ overflow: 'auto' }} />
+}
+```
+
 ## usePopup
 
 This hook is designed to help set up popup menus & dialogs, or basically any situation where it's appropriate to use the `aria-haspopup` attribute. It provides helpers for opening/closing, and for managing the focus of elements within the popup.

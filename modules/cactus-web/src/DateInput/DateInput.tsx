@@ -35,6 +35,7 @@ import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
+import { useScrollTrap } from '../helpers/scroll'
 import { popupBoxShadow, popupShape, radius, textStyle } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 import { Status } from '../StatusMessage/StatusMessage'
@@ -676,7 +677,13 @@ const monthYearListShapeMap: { [K in Shape]: ReturnType<typeof css> } = {
 
 const getMonthYearListShape = (shape: Shape): ReturnType<typeof css> => monthYearListShapeMap[shape]
 
-const MonthYearListWrapper = styled.div`
+const MonthYearListScrollTrap: React.FC<{ className?: string }> = (props) => {
+  const ref = React.useRef<HTMLDivElement>(null)
+  useScrollTrap(ref)
+  return <div {...props} ref={ref} />
+}
+
+const MonthYearListWrapper = styled(MonthYearListScrollTrap)`
   box-sizing: border-box;
   display: flex;
   height: 240px;

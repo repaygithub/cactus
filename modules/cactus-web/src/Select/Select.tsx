@@ -21,7 +21,8 @@ import {
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { isPurelyEqual } from '../helpers/react'
+import { isPurelyEqual, useMergedRefs } from '../helpers/react'
+import { useScrollTrap } from '../helpers/scroll'
 import { textFieldStatusMap } from '../helpers/status'
 import { boxShadow, fontSize, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
@@ -315,7 +316,17 @@ const getListBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => {
       `
 }
 
-const StyledList = styled.ul`
+const ListWithScrollTrap = React.forwardRef<
+  HTMLUListElement,
+  React.HTMLAttributes<HTMLUListElement>
+>((props, listRef) => {
+  const scrollRef = React.useRef<HTMLUListElement>(null)
+  useScrollTrap(scrollRef)
+  const ref = useMergedRefs(listRef, scrollRef)
+  return <ul {...props} ref={ref} />
+})
+
+const StyledList = styled(ListWithScrollTrap)`
   position: relative;
   box-sizing: border-box;
   z-index: 100;
