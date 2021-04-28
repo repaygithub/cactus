@@ -1,10 +1,9 @@
 import * as icons from '@repay/cactus-icons'
-import cactusTheme from '@repay/cactus-theme'
 import { boolean, select } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useContext } from 'react'
 
-import { Grid, IconButton, ScreenSizeContext, SIZES, StyleProvider, Text } from '../'
+import { Grid, IconButton, ScreenSizeContext, SIZES, Text } from '../'
 import actions from '../helpers/storybookActionsWorkaround'
 import { IconButtonSizes, IconButtonVariants } from './IconButton'
 
@@ -105,6 +104,7 @@ const IconButtonBase = ({
           inverse={boolean('inverse', false)}
           iconSize={size}
           label="add"
+          disabled={disabled}
           {...eventLoggers}
         >
           <Icon />
@@ -127,7 +127,7 @@ const IconsGrid = () => {
         </Grid.Item>
       )}
       <Grid.Item tiny={isTiny ? 2 : 1}>
-        <Text textStyle="tiny" margin="0">
+        <Text textStyle="small" margin="0">
           Standard
         </Text>
       </Grid.Item>
@@ -201,11 +201,7 @@ const IconsGrid = () => {
 }
 
 export const BasicUsage = (): React.ReactElement => {
-  return (
-    <StyleProvider theme={cactusTheme} global>
-      <IconsGrid />
-    </StyleProvider>
-  )
+  return <IconsGrid />
 }
 
 export const AllIcons = (): React.ReactElement => {

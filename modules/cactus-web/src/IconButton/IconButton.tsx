@@ -65,7 +65,7 @@ const variantMap: VariantMap = {
     color: ${(p): string => p.theme.colors.darkContrast};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.darkestContrast};
+      color: ${(p): string => p.theme.colors.callToAction};
     }
   `,
 }
@@ -114,7 +114,7 @@ const inverseVariantMap: VariantMap = {
     color: ${(p): string => p.theme.colors.darkContrast};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.darkestContrast};
+      color: ${(p): string => p.theme.colors.callToAction};
     }
   `,
 }
