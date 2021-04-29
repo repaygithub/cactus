@@ -63,6 +63,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const ellipsisButton = useRef<HTMLButtonElement | null>(null)
   const popup = useRef<HTMLDivElement | null>(null)
   const mainBreadcrumbList = useRef<HTMLUListElement | null>(null)
+  const navContainer = useRef<HTMLElement | null>(null)
   const { expanded, toggle, buttonProps, popupProps, wrapperProps, setFocus } = usePopup('menu', {
     id: breadcrumbNavId,
     positionPopup: positionPortal,
@@ -72,6 +73,11 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const [dropdownItems, setDropdownItems] = React.useState<ChildElement[]>([])
 
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
+  const navContainerWidth = navContainer.current?.getBoundingClientRect().width
+
+  const areListWiderThanNav = (maxDropdownWidth && navContainerWidth ) && maxDropdownWidth >= navContainerWidth 
+
+  console.log(areListWiderThanNav)
 
   const handleTriggerClick = React.useCallback(
     (event: React.MouseEvent) => {
@@ -161,9 +167,9 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { id: buttonId, ...buttonPropsWithoutId } = buttonPropsWithoutHandlers
 
   return (
-    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className} {...wrapperProps}>
+    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className} ref={navContainer} {...wrapperProps}>
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>
-        {isTiny && childrenCount > 2 ? (
+        {(isTiny && childrenCount > 2) || (areListWiderThanNav && !isTiny)  ? (
           <>
             <div ref={firstBreadcrumb} id={buttonId}>
               {React.cloneElement(childrenArray[0] as JSX.Element, {
@@ -298,6 +304,7 @@ const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
 
 const StyledNav = styled.nav`
   ${(p) => textStyle(p.theme, 'small')}
+  width: 100%;
 
   .main-breadcrumb-list {
     display: flex;
@@ -305,6 +312,7 @@ const StyledNav = styled.nav`
     list-style: none;
     padding: 0;
     margin: 0;
+    width:fit-content;
   }
 
   .ellipsis-button {
