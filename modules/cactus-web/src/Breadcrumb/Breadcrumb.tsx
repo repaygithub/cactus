@@ -76,7 +76,8 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
 
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
   const pivotWidth = pivotBreadcrumb.current?.getBoundingClientRect().width
-  const parentNavContainerWidth = mainNavContainer.current?.parentElement?.getBoundingClientRect().width
+  const parentNavContainerWidth = mainNavContainer.current?.parentElement?.getBoundingClientRect()
+    .width
 
   const handleTriggerClick = React.useCallback(
     (event: React.MouseEvent) => {
@@ -88,15 +89,16 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     [toggle, setFocus]
   )
 
-  React.useLayoutEffect(()=> {
-    if ((pivotWidth && parentNavContainerWidth && pivotWidth > parentNavContainerWidth) || 
+  React.useLayoutEffect(() => {
+    if (
+      (pivotWidth && parentNavContainerWidth && pivotWidth > parentNavContainerWidth) ||
       (isTiny && childrenCount > 2)
     ) {
       setEllipsisVersion(true)
-    } else if(pivotWidth && parentNavContainerWidth && pivotWidth < parentNavContainerWidth) {
+    } else if (pivotWidth && parentNavContainerWidth && pivotWidth < parentNavContainerWidth) {
       setEllipsisVersion(false)
     }
-  },[screenSize, isTiny, pivotWidth, parentNavContainerWidth, childrenCount])
+  }, [screenSize, isTiny, pivotWidth, parentNavContainerWidth, childrenCount])
 
   React.useEffect(() => {
     // We can't pass onClick or onKeyDown handlers to BreadcrumbItems directly because they could be using
@@ -176,9 +178,15 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { id: buttonId, ...buttonPropsWithoutId } = buttonPropsWithoutHandlers
 
   return (
-    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" ref={mainNavContainer} className={className} {...wrapperProps}>
+    <StyledNav
+      id={breadcrumbNavId}
+      aria-label="Breadcrumb"
+      ref={mainNavContainer}
+      className={className}
+      {...wrapperProps}
+    >
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>
-        { ellipsisVersion ? (
+        {ellipsisVersion ? (
           <>
             <div ref={firstBreadcrumb} id={buttonId}>
               {React.cloneElement(childrenArray[0] as JSX.Element, {
@@ -224,7 +232,13 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
           children
         )}
       </ul>
-      <ul className="main-breadcrumb-list" style={{position: 'absolute', visibility: 'hidden'}} ref={pivotBreadcrumb} >{children}</ul>
+      <ul
+        className="main-breadcrumb-list"
+        style={{ position: 'absolute', visibility: 'hidden' }}
+        ref={pivotBreadcrumb}
+      >
+        {children}
+      </ul>
     </StyledNav>
   )
 }
