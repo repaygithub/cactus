@@ -58,26 +58,25 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const childrenArray = Children.toArray(children) as ChildElement[]
   const breadcrumbNavId = 'breadcrumb-nav'
 
-  const isTiny = SIZES.tiny === useScreenSize()
+  const screenSize = useScreenSize()
+  const isTiny = SIZES.tiny === screenSize
   const firstBreadcrumb = useRef<HTMLDivElement | null>(null)
   const ellipsisButton = useRef<HTMLButtonElement | null>(null)
   const popup = useRef<HTMLDivElement | null>(null)
+  const mainNavContainer = useRef<HTMLElement | null>(null)
   const mainBreadcrumbList = useRef<HTMLUListElement | null>(null)
-  const navContainer = useRef<HTMLElement | null>(null)
+  const pivotBreadcrumb = useRef<HTMLUListElement | null>(null)
   const { expanded, toggle, buttonProps, popupProps, wrapperProps, setFocus } = usePopup('menu', {
     id: breadcrumbNavId,
     positionPopup: positionPortal,
   })
-
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0)
   const [dropdownItems, setDropdownItems] = React.useState<ChildElement[]>([])
+  const [ellipsisVersion, setEllipsisVersion] = React.useState<boolean>(false)
 
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
-  const navContainerWidth = navContainer.current?.getBoundingClientRect().width
-
-  const areListWiderThanNav = (maxDropdownWidth && navContainerWidth ) && maxDropdownWidth >= navContainerWidth 
-
-  console.log(areListWiderThanNav)
+  const pivotWidth = pivotBreadcrumb.current?.getBoundingClientRect().width
+  const parentNavContainerWidth = mainNavContainer.current?.parentElement?.getBoundingClientRect().width
 
   const handleTriggerClick = React.useCallback(
     (event: React.MouseEvent) => {
@@ -88,6 +87,16 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     },
     [toggle, setFocus]
   )
+
+  React.useLayoutEffect(()=> {
+    if ((pivotWidth && parentNavContainerWidth && pivotWidth > parentNavContainerWidth) || 
+      (isTiny && childrenCount > 2)
+    ) {
+      setEllipsisVersion(true)
+    } else if(pivotWidth && parentNavContainerWidth && pivotWidth < parentNavContainerWidth) {
+      setEllipsisVersion(false)
+    }
+  },[screenSize, isTiny, pivotWidth, parentNavContainerWidth, childrenCount])
 
   React.useEffect(() => {
     // We can't pass onClick or onKeyDown handlers to BreadcrumbItems directly because they could be using
@@ -167,9 +176,9 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { id: buttonId, ...buttonPropsWithoutId } = buttonPropsWithoutHandlers
 
   return (
-    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className} ref={navContainer} {...wrapperProps}>
+    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" ref={mainNavContainer} className={className} {...wrapperProps}>
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>
-        {(isTiny && childrenCount > 2) || (areListWiderThanNav && !isTiny)  ? (
+        { ellipsisVersion ? (
           <>
             <div ref={firstBreadcrumb} id={buttonId}>
               {React.cloneElement(childrenArray[0] as JSX.Element, {
@@ -215,6 +224,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
           children
         )}
       </ul>
+      <ul className="main-breadcrumb-list" style={{position: 'absolute', visibility: 'hidden'}} ref={pivotBreadcrumb} >{children}</ul>
     </StyledNav>
   )
 }
@@ -304,7 +314,6 @@ const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
 
 const StyledNav = styled.nav`
   ${(p) => textStyle(p.theme, 'small')}
-  width: 100%;
 
   .main-breadcrumb-list {
     display: flex;
@@ -312,7 +321,6 @@ const StyledNav = styled.nav`
     list-style: none;
     padding: 0;
     margin: 0;
-    width:fit-content;
   }
 
   .ellipsis-button {
