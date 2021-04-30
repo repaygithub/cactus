@@ -1,3 +1,29 @@
+# v6.3.0 (Fri Apr 30 2021)
+
+#### 🚀 Enhancement
+
+- Added dark variants for TextButton and IconButton [#577](https://github.com/repaygithub/cactus/pull/577) ([@daniloPenaR](https://github.com/daniloPenaR) [@mikesoltow](https://github.com/mikesoltow) [@Dhalton](https://github.com/Dhalton))
+- Pass props to Footer.Link and add support for as prop [#574](https://github.com/repaygithub/cactus/pull/574) ([@daniloPenaR](https://github.com/daniloPenaR))
+- Remove redundant selection state on options in Select [#573](https://github.com/repaygithub/cactus/pull/573) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- Prevent scroll from propagating to the window from inside Select and DateInput dropdowns [#580](https://github.com/repaygithub/cactus/pull/580) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- Updated storyshots after adding missing storyshot dependency [#581](https://github.com/repaygithub/cactus/pull/581) ([@daniloPenaR](https://github.com/daniloPenaR) [@github-actions[bot]](https://github.com/github-actions[bot]))
+
+#### Authors: 5
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@github-actions[bot]](https://github.com/github-actions[bot])
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v6.2.0 (Fri Apr 23 2021)
 
 #### 🚀 Enhancement
