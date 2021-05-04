@@ -238,10 +238,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
           children
         )}
       </ul>
-      <HiddenBreadcrumbList
-        className="main-breadcrumb-list"
-        ref={pivotBreadcrumb}
-      >
+      <HiddenBreadcrumbList className="main-breadcrumb-list" ref={pivotBreadcrumb}>
         {children}
       </HiddenBreadcrumbList>
     </StyledNav>
