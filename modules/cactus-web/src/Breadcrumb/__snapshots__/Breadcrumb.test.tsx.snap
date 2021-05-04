@@ -8,6 +8,8 @@ exports[`Breadcrumb: snapshot 1`] = `
 
 .c1 {
   box-sizing: border-box;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 .c2 {
@@ -80,6 +82,7 @@ exports[`Breadcrumb: snapshot 1`] = `
 .c0 [aria-current='page'] {
   color: hsl(200,10%,20%);
   font-style: italic;
+  padding-right: 3px;
 }
 
 @media screen and (min-width:1024px) {

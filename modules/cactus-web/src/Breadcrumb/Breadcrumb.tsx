@@ -75,9 +75,6 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const [ellipsisVersion, setEllipsisVersion] = React.useState<boolean>(false)
 
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
-  const pivotWidth = pivotBreadcrumb.current?.getBoundingClientRect().width
-  const parentNavContainerWidth = mainNavContainer.current?.parentElement?.getBoundingClientRect()
-    .width
 
   const handleTriggerClick = React.useCallback(
     (event: React.MouseEvent) => {
@@ -89,16 +86,26 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     [toggle, setFocus]
   )
 
-  React.useLayoutEffect(() => {
-    if (
-      (pivotWidth && parentNavContainerWidth && pivotWidth > parentNavContainerWidth) ||
-      (isTiny && childrenCount > 2)
-    ) {
+  const checkEllipsisVersion = React.useCallback(() => {
+    const parentWidth = mainNavContainer.current?.parentElement?.getBoundingClientRect().width
+    const pivotWidth = pivotBreadcrumb.current?.getBoundingClientRect().width
+    if ((pivotWidth && parentWidth && pivotWidth >= parentWidth) || (isTiny && childrenCount > 2)) {
       setEllipsisVersion(true)
-    } else if (pivotWidth && parentNavContainerWidth && pivotWidth < parentNavContainerWidth) {
+    } else if (pivotWidth && parentWidth && pivotWidth < parentWidth) {
       setEllipsisVersion(false)
     }
-  }, [screenSize, isTiny, pivotWidth, parentNavContainerWidth, childrenCount])
+  }, [childrenCount, isTiny])
+
+  React.useLayoutEffect(() => {
+    checkEllipsisVersion()
+    const handleResize = () => {
+      checkEllipsisVersion()
+    }
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [checkEllipsisVersion])
 
   React.useEffect(() => {
     // We can't pass onClick or onKeyDown handlers to BreadcrumbItems directly because they could be using
@@ -260,6 +267,8 @@ const BreadcrumbPopup = styled(BasePopup)`
 
 const BreadcrumbListItem = styled.li`
   box-sizing: border-box;
+  overflow: auto;
+  white-space: nowrap;
 `
 
 const BreadcrumbLink = styled.a`
@@ -358,6 +367,7 @@ const StyledNav = styled.nav`
   [aria-current='page'] {
     color: ${(p) => p.theme.colors.darkestContrast};
     font-style: italic;
+    padding-right: 3px;
   }
 `
 
