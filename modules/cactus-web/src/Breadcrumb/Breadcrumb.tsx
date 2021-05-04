@@ -87,12 +87,11 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   )
 
   const checkEllipsisVersion = React.useCallback(() => {
+    setEllipsisVersion(false)
     const parentWidth = mainNavContainer.current?.parentElement?.getBoundingClientRect().width
     const pivotWidth = pivotBreadcrumb.current?.getBoundingClientRect().width
     if ((pivotWidth && parentWidth && pivotWidth >= parentWidth) || (isTiny && childrenCount > 2)) {
       setEllipsisVersion(true)
-    } else if (pivotWidth && parentWidth && pivotWidth < parentWidth) {
-      setEllipsisVersion(false)
     }
   }, [childrenCount, isTiny])
 
@@ -239,13 +238,12 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
           children
         )}
       </ul>
-      <ul
+      <HiddenBreadcrumbList
         className="main-breadcrumb-list"
-        style={{ position: 'absolute', visibility: 'hidden' }}
         ref={pivotBreadcrumb}
       >
         {children}
-      </ul>
+      </HiddenBreadcrumbList>
     </StyledNav>
   )
 }
@@ -265,9 +263,15 @@ const BreadcrumbPopup = styled(BasePopup)`
   ${(p) => popupBoxShadow(p.theme)}
 `
 
+const HiddenBreadcrumbList = styled.ul`
+  position: absolute;
+  visibility: hidden;
+  left: -100000px;
+`
+
 const BreadcrumbListItem = styled.li`
   box-sizing: border-box;
-  overflow: auto;
+  overflow: visible;
   white-space: nowrap;
 `
 
@@ -367,7 +371,6 @@ const StyledNav = styled.nav`
   [aria-current='page'] {
     color: ${(p) => p.theme.colors.darkestContrast};
     font-style: italic;
-    padding-right: 3px;
   }
 `
 

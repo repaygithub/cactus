@@ -6,9 +6,15 @@ exports[`Breadcrumb: snapshot 1`] = `
   vertical-align: middle;
 }
 
+.c6 {
+  position: absolute;
+  visibility: hidden;
+  left: -100000px;
+}
+
 .c1 {
   box-sizing: border-box;
-  overflow: auto;
+  overflow: visible;
   white-space: nowrap;
 }
 
@@ -82,7 +88,6 @@ exports[`Breadcrumb: snapshot 1`] = `
 .c0 [aria-current='page'] {
   color: hsl(200,10%,20%);
   font-style: italic;
-  padding-right: 3px;
 }
 
 @media screen and (min-width:1024px) {
@@ -152,8 +157,7 @@ exports[`Breadcrumb: snapshot 1`] = `
       </li>
     </ul>
     <ul
-      class="main-breadcrumb-list"
-      style="position: absolute; visibility: hidden;"
+      class="c6 main-breadcrumb-list"
     >
       <li
         class="c1"
