@@ -88,9 +88,11 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
 
   React.useLayoutEffect(() => {
     const checkEllipsisVersion = () => {
-      const parentWidth = Math.ceil(mainNavContainer.current?.parentElement?.getBoundingClientRect().width!)
-      const pivotWidth = Math.ceil(pivotBreadcrumb.current?.getBoundingClientRect().width!)
-      const ellipsVersion = (pivotWidth >= parentWidth) || (isTiny && childrenCount > 2)
+      const parentWidth = Math.ceil(
+        mainNavContainer.current?.parentElement?.getBoundingClientRect().width || 0
+      )
+      const pivotWidth = Math.ceil(pivotBreadcrumb.current?.getBoundingClientRect().width || 0)
+      const ellipsVersion = pivotWidth >= parentWidth || (isTiny && childrenCount > 2)
       setEllipsisVersion(ellipsVersion)
     }
     checkEllipsisVersion()
