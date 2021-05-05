@@ -168,8 +168,8 @@ export const BasicUsage = (): React.ReactElement => {
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
                 <Breadcrumb.Item href="/" key={i}>{`label ${i}`}</Breadcrumb.Item>
               ))}
-              <Breadcrumb.Item>
-                <Link to="/">Make a Payment</Link>
+              <Breadcrumb.Item as={Link} to="/">
+                Make a Payment
               </Breadcrumb.Item>
             </Breadcrumb>
           </Header.BreadcrumbRow>

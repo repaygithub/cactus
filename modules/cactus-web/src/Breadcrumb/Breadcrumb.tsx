@@ -86,25 +86,19 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     [toggle, setFocus]
   )
 
-  const checkEllipsisVersion = React.useCallback(() => {
-    setEllipsisVersion(false)
-    const parentWidth = mainNavContainer.current?.parentElement?.getBoundingClientRect().width
-    const pivotWidth = pivotBreadcrumb.current?.getBoundingClientRect().width
-    if ((pivotWidth && parentWidth && pivotWidth >= parentWidth) || (isTiny && childrenCount > 2)) {
-      setEllipsisVersion(true)
+  React.useLayoutEffect(() => {
+    const checkEllipsisVersion = () => {
+      const parentWidth = Math.ceil(mainNavContainer.current?.parentElement?.getBoundingClientRect().width!)
+      const pivotWidth = Math.ceil(pivotBreadcrumb.current?.getBoundingClientRect().width!)
+      const ellipsVersion = (pivotWidth >= parentWidth) || (isTiny && childrenCount > 2)
+      setEllipsisVersion(ellipsVersion)
+    }
+    checkEllipsisVersion()
+    window.addEventListener('resize', checkEllipsisVersion)
+    return () => {
+      window.removeEventListener('resize', checkEllipsisVersion)
     }
   }, [childrenCount, isTiny])
-
-  React.useLayoutEffect(() => {
-    checkEllipsisVersion()
-    const handleResize = () => {
-      checkEllipsisVersion()
-    }
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [checkEllipsisVersion])
 
   React.useEffect(() => {
     // We can't pass onClick or onKeyDown handlers to BreadcrumbItems directly because they could be using
