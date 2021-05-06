@@ -66,10 +66,13 @@ interface Rect {
   width: number
 }
 
-const getRect = (e: Element): Rect => e.getBoundingClientRect()
+const getRect = (e: Element): Rect => {
+  const r = e.getBoundingClientRect()
+  return { left: Math.floor(r.left), right: Math.ceil(r.right), width: Math.ceil(r.width) }
+}
 const getVerticalRect = (e: Element): Rect => {
-  const rect = e.getBoundingClientRect()
-  return { left: rect.top, right: rect.bottom, width: rect.height }
+  const r = e.getBoundingClientRect()
+  return { left: Math.floor(r.top), right: Math.ceil(r.bottom), width: Math.ceil(r.height) }
 }
 
 export function useScroll<T extends HTMLElement>(
@@ -95,7 +98,7 @@ export function useScroll<T extends HTMLElement>(
 
         const parentRect = getMappedRect(listWrapper)
         const scrollWidth = isHorizontal ? list.scrollWidth : list.scrollHeight
-        if (greaterThan(parentRect.width, scrollWidth)) {
+        if (parentRect.width >= scrollWidth) {
           return DEFAULT_SCROLL
         }
         let offset = 0
@@ -110,25 +113,25 @@ export function useScroll<T extends HTMLElement>(
           } else if (nextIndex > 0) {
             const itemRect = itemRects[nextIndex]
             const visibleLeft = parentRect.left + buttonWidth
-            if (greaterThan(visibleLeft, itemRect.left)) {
+            if (visibleLeft > itemRect.left) {
               // Offscreen to the left, offset is sum of all items to the left.
               for (let i = nextIndex - 1; i >= 0; i--) {
                 offset += itemRects[i].width
               }
-            } else if (greaterThan(itemRect.right, parentRect.right - buttonWidth)) {
+            } else if (itemRect.right > parentRect.right - buttonWidth) {
               // Offscreen to the right, offset is all items to the left - visible width.
               for (let i = nextIndex; i >= 0; i--) {
-                if (greaterThan(visibleWidth, offset)) {
+                if (visibleWidth >= offset) {
                   nextIndex = i
                 }
                 offset += itemRects[i].width
               }
-              offset = Math.ceil(offset - visibleWidth)
+              offset -= visibleWidth
             } else {
               // Currently onscreen, just need to find the currentIndex.
               offset = currentOffset
               for (let i = nextIndex - 1; i >= 0; i--) {
-                if (greaterThan(itemRects[i].left, visibleLeft)) {
+                if (itemRects[i].left >= visibleLeft) {
                   nextIndex = i
                 }
               }
@@ -152,10 +155,10 @@ export function useScroll<T extends HTMLElement>(
         }
 
         // Set the actual scroll offset on the list.
-        if (!equals(offset, currentOffset)) {
+        if (offset !== currentOffset) {
           list[scrollOffset] = offset
         } else if (
-          equals(offset, scrollState.offset) &&
+          offset === scrollState.offset &&
           scrollState.showScroll &&
           nextIndex === scrollState.currentIndex
         ) {
@@ -167,7 +170,7 @@ export function useScroll<T extends HTMLElement>(
           showScroll: true,
           currentIndex: nextIndex,
         }
-        if (buttonWidth && !greaterThan(visibleWidth, scrollWidth - offset)) {
+        if (buttonWidth && visibleWidth < scrollWidth - offset) {
           result.clickFore = () => {
             setScroll(updateScrollState(result, result.currentIndex + 1))
           }
@@ -194,9 +197,6 @@ export function useScroll<T extends HTMLElement>(
   }, [isVisible, listRef, orientation, getScrollInfo])
   return [listRef, scroll]
 }
-
-const equals = (left: number, right: number) => Math.abs(left - right) < 0.1
-const greaterThan = (left: number, right: number) => left + 0.1 - right > 0
 
 export const BUTTON_WIDTH = 34 // 16 margin, 18 icon
 export const ScrollButton = styled.div.attrs((p) => ({
