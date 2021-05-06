@@ -1,45 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Breadcrumb: snapshot 1`] = `
-.c3 {
+.c4 {
   font-size: 8px;
   vertical-align: middle;
 }
 
-.c1 {
+.c7 {
+  display: none;
+  position: fixed;
+  outline: none;
+  background-color: hsl(0,0%,100%);
+  z-index: 1000;
   box-sizing: border-box;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+}
+
+.c9 {
+  position: absolute;
+  visibility: hidden;
+  left: -100000px;
 }
 
 .c2 {
+  box-sizing: border-box;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.c3 {
   color: black;
   font-style: normal;
   outline: none;
 }
 
-.c2:visited,
-.c2:link {
+.c3:visited,
+.c3:link {
   color: hsl(200,9%,35%);
   font-style: normal;
 }
 
-.c2:hover {
+.c3:hover {
   color: hsl(200,96%,35%);
 }
 
-.c2:focus {
+.c3:focus {
   outline: hsl(200,96%,35%) solid 1px;
 }
 
-.c4 {
+.c5 {
   color: hsl(200,18%,45%);
   margin: 0 3px;
   font-size: 10px;
 }
 
-.c5 {
+.c6 {
   color: hsl(200,10%,20%);
   margin: 0 3px;
   font-size: 10px;
+}
+
+.c8 {
+  box-sizing: border-box;
+  margin: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 0;
+  padding-right: 0;
+  list-style: none;
+  max-width: unset;
+}
+
+.c8 .c1 {
+  width: 100%;
+  border-radius: 0;
+  outline: none;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.c8 .c1[data-selected='true'] {
+  background-color: hsl(200,96%,35%);
+}
+
+.c8 .c1[data-selected='true'] * {
+  color: hsl(0,0%,100%);
+}
+
+.c8 .c1[data-selected='true'] *[style] {
+  color: hsl(0,0%,100%) !important;
+}
+
+.c8 .c1 * {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-style: normal;
+  outline: none;
 }
 
 .c0 {
@@ -100,17 +159,121 @@ exports[`Breadcrumb: snapshot 1`] = `
     <ul
       class="main-breadcrumb-list"
     >
+      <div
+        id="breadcrumb-nav-button"
+      >
+        <li
+          class="c1 c2"
+          role="button"
+        >
+          <a
+            aria-controls="breadcrumb-nav-popup"
+            aria-haspopup="menu"
+            class="c3"
+            href="www.github.com"
+            id="breadcrumb-nav-button"
+          >
+            Link2
+          </a>
+          <svg
+            class="c4 c5"
+            fill="currentcolor"
+            height="1em"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="matrix(-1 0 0 1 24 0)"
+            />
+          </svg>
+        </li>
+      </div>
+      <li>
+        <button
+          aria-controls="breadcrumb-nav-popup"
+          aria-haspopup="menu"
+          class="ellipsis-button"
+          role="button"
+          type="button"
+        >
+          ...
+        </button>
+      </li>
       <li
-        class="c1"
+        class="c1 c2"
       >
         <a
-          class="c2"
+          aria-current="page"
+          class="c3"
+          href="www.repay.com"
+        >
+          Link2
+        </a>
+        <svg
+          class="c4 c6"
+          fill="currentcolor"
+          height="1em"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+            transform="matrix(-1 0 0 1 24 0)"
+          />
+        </svg>
+      </li>
+      <div
+        aria-hidden="true"
+        aria-labelledby="breadcrumb-nav-button"
+        class="c7"
+        id="breadcrumb-nav-popup"
+        role="menu"
+        tabindex="-1"
+      >
+        <div
+          data-cactus-focus-guard="start"
+          tabindex="0"
+        />
+        <ul
+          class="c8"
+          id="nav-popup-list"
+        >
+          <li
+            class="c1 c2"
+            data-selected="true"
+            role="menuitem"
+          >
+            <a
+              class="c3"
+              href="www.github.com"
+            >
+              Link2
+            </a>
+          </li>
+        </ul>
+        <div
+          data-cactus-focus-guard="end"
+          tabindex="0"
+        />
+      </div>
+    </ul>
+    <ul
+      class="c9 main-breadcrumb-list"
+    >
+      <li
+        class="c1 c2"
+      >
+        <a
+          class="c3"
           href="www.github.com"
         >
           Link2
         </a>
         <svg
-          class="c3 c4"
+          class="c4 c5"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"
@@ -124,17 +287,17 @@ exports[`Breadcrumb: snapshot 1`] = `
         </svg>
       </li>
       <li
-        class="c1"
+        class="c1 c2"
       >
         <a
           aria-current="page"
-          class="c2"
+          class="c3"
           href="www.repay.com"
         >
           Link2
         </a>
         <svg
-          class="c3 c5"
+          class="c4 c6"
           fill="currentcolor"
           height="1em"
           viewBox="0 0 24 24"

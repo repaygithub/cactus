@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
-import { Breadcrumb } from '../'
+import { Breadcrumb, Link } from '../'
 
 export default {
   title: 'Breadcrumb',
@@ -52,6 +52,18 @@ CustomItemElements.parameters = {
     }
   },
 }
+
+export const HugeListOfBreadcrumbs = (): ReactElement => (
+  <Breadcrumb>
+    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
+      <Breadcrumb.Item key={i} href="/">{`label ${i}`}</Breadcrumb.Item>
+    ))}
+    <Breadcrumb.Item as={Link} to="/">
+      Make a Payment
+    </Breadcrumb.Item>
+  </Breadcrumb>
+)
+HugeListOfBreadcrumbs.storyName = 'A huge list of Breadcrumbs'
 
 export const AddMoreBreadcrumbs = (): ReactElement => {
   const values = array('Add new Links', ['Link 1', 'Link 2', 'Link 3'])

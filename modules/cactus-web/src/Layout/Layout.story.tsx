@@ -12,6 +12,7 @@ import {
   Footer,
   Header,
   Layout,
+  Link,
   MenuBar,
   MenuButton,
   Modal,
@@ -162,6 +163,16 @@ export const BasicUsage = (): React.ReactElement => {
       {hasActions && <StoryActionBar />}
       <Layout.Content>
         <Header bgColor={useDarkNav ? 'lightContrast' : 'white'}>
+          <Header.BreadcrumbRow>
+            <Breadcrumb>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
+                <Breadcrumb.Item href="/" key={i}>{`label ${i}`}</Breadcrumb.Item>
+              ))}
+              <Breadcrumb.Item as={Link} to="/">
+                Make a Payment
+              </Breadcrumb.Item>
+            </Breadcrumb>
+          </Header.BreadcrumbRow>
           <Header.Title>Latin Or Something</Header.Title>
         </Header>
         <TextInputField name="foo" label="Foo" />
