@@ -6,14 +6,16 @@ import AccessibleField from './AccessibleField'
 
 describe('component: AccessibleField', (): void => {
   test('provides an accessible label', (): void => {
-    const { getByLabelText } = render(
+    const { getByLabelText, getByTestId } = render(
       <StyleProvider>
-        <AccessibleField label="Accessible Label" name="text_field">
+        <AccessibleField data-testid="wrapper" label="Accessible Label" name="text_field">
           <input data-is="accessible" />
         </AccessibleField>
       </StyleProvider>
     )
 
+    const wrapper = getByTestId('wrapper')
+    expect(wrapper).not.toHaveAttribute('name')
     const input = getByLabelText('Accessible Label')
     expect(input).toHaveAttribute('data-is', 'accessible')
     expect(input).toHaveAttribute('name', 'text_field')
