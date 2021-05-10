@@ -10,18 +10,22 @@ import React from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { omitProps } from '../helpers/omit'
+
 export type AvatarType = 'alert' | 'feedback'
 export type AvatarStatus = 'error' | 'warning' | 'info' | 'success'
 
-interface AvatarProps extends MarginProps {
-  type?: AvatarType
+interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   status?: AvatarStatus
+}
+
+interface AvatarStyleProps extends AvatarProps, MarginProps {
+  type?: AvatarType
   disabled?: boolean
-  className?: string
 }
 
 const avaColor = (
-  props: AvatarProps & ThemeProps<CactusTheme>
+  props: AvatarStyleProps & ThemeProps<CactusTheme>
 ): ReturnType<typeof css> | ColorStyle | undefined => {
   const { type, status, disabled } = props
 
@@ -55,17 +59,19 @@ const getIcon = (status: AvatarStatus = 'info'): typeof NotificationError => {
 }
 
 const AvatarBase = (props: AvatarProps): React.ReactElement => {
-  const { className, status } = props
+  const { status, ...rest } = props
 
   const Icon = getIcon(status)
   return (
-    <div className={className}>
+    <div {...rest}>
       <Icon iconSize="medium" />
     </div>
   )
 }
 
-export const Avatar = styled(AvatarBase)<AvatarProps>`
+export const Avatar = styled(AvatarBase).withConfig(
+  omitProps<AvatarStyleProps>(margin, 'type', 'disabled')
+)`
   box-sizing: border-box;
   width: 40px;
   height: 40px;
