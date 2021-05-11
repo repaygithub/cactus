@@ -1,5 +1,4 @@
 import { StatusCheck } from '@repay/cactus-icons'
-import { generateTheme } from '@repay/cactus-theme'
 import { fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
 

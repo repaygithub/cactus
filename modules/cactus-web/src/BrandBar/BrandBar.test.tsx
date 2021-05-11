@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
-import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import BrandBar from './BrandBar'
 

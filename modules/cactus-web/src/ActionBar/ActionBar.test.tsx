@@ -11,7 +11,7 @@ describe('component: ActionBar', () => {
   test('typechecks', () => {
     const itemRef: React.MutableRefObject<HTMLButtonElement | null> = { current: null }
     const panelRef: React.MutableRefObject<HTMLDivElement | null> = { current: null }
-    const { container, getByLabelText } = render(
+    const { getByLabelText } = render(
       <StyleProvider>
         <ActionBar>
           <ActionBar.Panel id="one" icon={<ActionsGear />} ref={panelRef} aria-label="The Panel">
