@@ -58,18 +58,21 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const childrenArray = Children.toArray(children) as ChildElement[]
   const breadcrumbNavId = 'breadcrumb-nav'
 
-  const isTiny = SIZES.tiny === useScreenSize()
+  const screenSize = useScreenSize()
+  const isTiny = SIZES.tiny === screenSize
   const firstBreadcrumb = useRef<HTMLDivElement | null>(null)
   const ellipsisButton = useRef<HTMLButtonElement | null>(null)
   const popup = useRef<HTMLDivElement | null>(null)
+  const mainNavContainer = useRef<HTMLElement | null>(null)
   const mainBreadcrumbList = useRef<HTMLUListElement | null>(null)
+  const pivotBreadcrumb = useRef<HTMLUListElement | null>(null)
   const { expanded, toggle, buttonProps, popupProps, wrapperProps, setFocus } = usePopup('menu', {
     id: breadcrumbNavId,
     positionPopup: positionPortal,
   })
-
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0)
   const [dropdownItems, setDropdownItems] = React.useState<ChildElement[]>([])
+  const [ellipsisVersion, setEllipsisVersion] = React.useState<boolean>(false)
 
   const maxDropdownWidth = mainBreadcrumbList.current?.getBoundingClientRect().width
 
@@ -82,6 +85,22 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
     },
     [toggle, setFocus]
   )
+
+  React.useLayoutEffect(() => {
+    const checkEllipsisVersion = () => {
+      const parentWidth = Math.ceil(
+        mainNavContainer.current?.parentElement?.getBoundingClientRect().width || 0
+      )
+      const pivotWidth = Math.ceil(pivotBreadcrumb.current?.getBoundingClientRect().width || 0)
+      const ellipsVersion = pivotWidth >= parentWidth || (isTiny && childrenCount > 2)
+      setEllipsisVersion(ellipsVersion)
+    }
+    checkEllipsisVersion()
+    window.addEventListener('resize', checkEllipsisVersion)
+    return () => {
+      window.removeEventListener('resize', checkEllipsisVersion)
+    }
+  }, [childrenCount, isTiny])
 
   React.useEffect(() => {
     // We can't pass onClick or onKeyDown handlers to BreadcrumbItems directly because they could be using
@@ -161,9 +180,15 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
   const { id: buttonId, ...buttonPropsWithoutId } = buttonPropsWithoutHandlers
 
   return (
-    <StyledNav id={breadcrumbNavId} aria-label="Breadcrumb" className={className} {...wrapperProps}>
+    <StyledNav
+      id={breadcrumbNavId}
+      aria-label="Breadcrumb"
+      ref={mainNavContainer}
+      className={className}
+      {...wrapperProps}
+    >
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>
-        {isTiny && childrenCount > 2 ? (
+        {ellipsisVersion ? (
           <>
             <div ref={firstBreadcrumb} id={buttonId}>
               {React.cloneElement(childrenArray[0] as JSX.Element, {
@@ -209,6 +234,9 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
           children
         )}
       </ul>
+      <HiddenBreadcrumbList className="main-breadcrumb-list" ref={pivotBreadcrumb}>
+        {children}
+      </HiddenBreadcrumbList>
     </StyledNav>
   )
 }
@@ -228,8 +256,16 @@ const BreadcrumbPopup = styled(BasePopup)`
   ${(p) => popupBoxShadow(p.theme)}
 `
 
+const HiddenBreadcrumbList = styled.ul`
+  position: absolute;
+  visibility: hidden;
+  left: -100000px;
+`
+
 const BreadcrumbListItem = styled.li`
   box-sizing: border-box;
+  overflow: visible;
+  white-space: nowrap;
 `
 
 const BreadcrumbLink = styled.a`

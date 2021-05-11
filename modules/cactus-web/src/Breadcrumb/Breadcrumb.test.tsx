@@ -8,7 +8,7 @@ import Breadcrumb from './Breadcrumb'
 
 describe('Breadcrumb:', (): void => {
   test('should have label and href', (): void => {
-    const { getByText } = render(
+    const { getAllByText } = render(
       <StyleProvider>
         <Breadcrumb>
           <Breadcrumb.Item href="www.github.com">Link2</Breadcrumb.Item>
@@ -16,7 +16,7 @@ describe('Breadcrumb:', (): void => {
       </StyleProvider>
     )
 
-    expect(getByText('Link2')).toBeInTheDocument()
+    expect(getAllByText('Link2')[0]).toBeInTheDocument()
     expect(document.querySelector('a')).toHaveAttribute('href', 'www.github.com')
   })
 
@@ -64,7 +64,7 @@ describe('Breadcrumb:', (): void => {
 
       test('should be able to select an option from the dropdown', () => {
         const onLinkClick = jest.fn()
-        const { getByText, getByRole } = render(
+        const { getAllByText, getByRole } = render(
           <StyleProvider>
             <ScreenSizeContext.Provider value={SIZES.tiny}>
               <Breadcrumb>
@@ -80,7 +80,7 @@ describe('Breadcrumb:', (): void => {
 
         const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
         userEvent.click(firstBreadcrumb)
-        const link2 = getByText('Link 2')
+        const link2 = getAllByText('Link 2')[0]
         userEvent.click(link2)
         expect(onLinkClick).toHaveBeenCalledTimes(1)
       })
