@@ -26,6 +26,7 @@ export const BasicUsage = (): ReactElement => {
         {...eventLoggers}
         disabled={boolean('disabled', false)}
         onInvalidDate={(isDateInvalid) => setInvalidDate(isDateInvalid)}
+        data-testid="testing"
       />
       {invalidDate && (
         <StatusMessage status="error" style={{ marginTop: '4px' }}>

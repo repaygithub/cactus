@@ -60,3 +60,12 @@ export const omitProps = <P extends object>(...args: Omittable[]): StyledConfig<
   }
   return { shouldForwardProp: (p) => !excludedProps.has(p) }
 }
+
+export const getDataProps = <T>(props: T): any =>
+  Object.keys(props).reduce((dataProps: any, prop: string) => {
+    if (prop.startsWith?.('data-')) {
+      // @ts-ignore
+      dataProps[prop] = props[prop]
+    }
+    return dataProps
+  }, {})

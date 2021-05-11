@@ -33,6 +33,7 @@ import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpe
 import generateId from '../helpers/generateId'
 import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
+import { getDataProps } from '../helpers/omit'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { useScrollTrap } from '../helpers/scroll'
@@ -1695,6 +1696,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             onClick={this.handleClick}
+            {...getDataProps(this.props)}
           >
             {hasDate ? (
               <IconButton
