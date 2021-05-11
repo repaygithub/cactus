@@ -75,10 +75,10 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
         {children}
       </Flex>
       <Flex justifyContent="space-between" marginTop="40px" marginBottom={2}>
+        <TextButton onClick={onClose}>{cancelButtonText}</TextButton>
         <Button onClick={onConfirm} variant={variant} marginRight="24px">
           {confirmButtonText}
         </Button>
-        <TextButton onClick={onClose}>{cancelButtonText}</TextButton>
       </Flex>
     </Modal>
   )

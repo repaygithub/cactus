@@ -100,7 +100,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c15 {
+.c16 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -119,11 +119,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c15::-moz-focus-inner {
+.c16::-moz-focus-inner {
   border: 0;
 }
 
-.c15:focus::after {
+.c16:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -137,12 +137,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c15 svg {
+.c16 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c15 .sc-flMoUE {
+.c16 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -150,7 +150,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c15:hover {
+.c16:hover {
   background-color: hsl(353,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(353,96%,11%);
@@ -359,7 +359,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   font-size: 16px;
 }
 
-.c16 {
+.c15 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -374,12 +374,12 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c16:hover {
+.c15:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c16:focus::after {
+.c15:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -392,11 +392,11 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c16::-moz-focus-inner {
+.c15::-moz-focus-inner {
   border: 0;
 }
 
-.c16 svg {
+.c15 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -429,7 +429,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c15 {
+  .c16 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -451,7 +451,7 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c16 {
+  .c15 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -549,19 +549,19 @@ exports[`Modal renders TextInput and Description snapshot 1`] = `
                 class="c13 c14"
               >
                 <button
-                  aria-live="assertive"
                   class="c15"
+                  type="button"
+                >
+                  Cancel
+                </button>
+                <button
+                  aria-live="assertive"
+                  class="c16"
                   type="button"
                 >
                   <span>
                     Confirm
                   </span>
-                </button>
-                <button
-                  class="c16"
-                  type="button"
-                >
-                  Cancel
                 </button>
               </div>
             </div>
@@ -607,7 +607,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c12 {
+.c13 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -626,11 +626,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-color: hsl(353,84%,44%);
 }
 
-.c12::-moz-focus-inner {
+.c13::-moz-focus-inner {
   border: 0;
 }
 
-.c12:focus::after {
+.c13:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -644,12 +644,12 @@ exports[`Modal variant is danger snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c12 svg {
+.c13 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c12 .sc-flMoUE {
+.c13 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -657,7 +657,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c12:hover {
+.c13:hover {
   background-color: hsl(353,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(353,96%,11%);
@@ -866,7 +866,7 @@ exports[`Modal variant is danger snapshot 1`] = `
   font-size: 16px;
 }
 
-.c13 {
+.c12 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -881,12 +881,12 @@ exports[`Modal variant is danger snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c13:hover {
+.c12:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c13:focus::after {
+.c12:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -899,11 +899,11 @@ exports[`Modal variant is danger snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c13::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c12 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -929,7 +929,7 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c12 {
+  .c13 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -951,7 +951,7 @@ exports[`Modal variant is danger snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1031,19 +1031,19 @@ exports[`Modal variant is danger snapshot 1`] = `
                 class="c10 c11"
               >
                 <button
-                  aria-live="assertive"
                   class="c12"
+                  type="button"
+                >
+                  Cancel
+                </button>
+                <button
+                  aria-live="assertive"
+                  class="c13"
                   type="button"
                 >
                   <span>
                     Confirm
                   </span>
-                </button>
-                <button
-                  class="c13"
-                  type="button"
-                >
-                  Cancel
                 </button>
               </div>
             </div>
@@ -1089,7 +1089,7 @@ exports[`Modal variant is success snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c12 {
+.c13 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -1108,11 +1108,11 @@ exports[`Modal variant is success snapshot 1`] = `
   border-color: hsl(145,89%,28%);
 }
 
-.c12::-moz-focus-inner {
+.c13::-moz-focus-inner {
   border: 0;
 }
 
-.c12:focus::after {
+.c13:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1126,12 +1126,12 @@ exports[`Modal variant is success snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c12 svg {
+.c13 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c12 .sc-flMoUE {
+.c13 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1139,7 +1139,7 @@ exports[`Modal variant is success snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c12:hover {
+.c13:hover {
   background-color: hsl(145,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(145,96%,11%);
@@ -1348,7 +1348,7 @@ exports[`Modal variant is success snapshot 1`] = `
   font-size: 16px;
 }
 
-.c13 {
+.c12 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1363,12 +1363,12 @@ exports[`Modal variant is success snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c13:hover {
+.c12:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c13:focus::after {
+.c12:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1381,11 +1381,11 @@ exports[`Modal variant is success snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c13::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c12 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -1411,7 +1411,7 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c12 {
+  .c13 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1433,7 +1433,7 @@ exports[`Modal variant is success snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1513,19 +1513,19 @@ exports[`Modal variant is success snapshot 1`] = `
                 class="c10 c11"
               >
                 <button
-                  aria-live="assertive"
                   class="c12"
+                  type="button"
+                >
+                  Cancel
+                </button>
+                <button
+                  aria-live="assertive"
+                  class="c13"
                   type="button"
                 >
                   <span>
                     Confirm
                   </span>
-                </button>
-                <button
-                  class="c13"
-                  type="button"
-                >
-                  Cancel
                 </button>
               </div>
             </div>
@@ -1551,7 +1551,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   vertical-align: middle;
 }
 
-.c12 {
+.c13 {
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -1570,11 +1570,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-color: hsl(47,82%,47%);
 }
 
-.c12::-moz-focus-inner {
+.c13::-moz-focus-inner {
   border: 0;
 }
 
-.c12:focus::after {
+.c13:focus::after {
   content: '';
   display: block;
   position: absolute;
@@ -1588,12 +1588,12 @@ exports[`Modal variant is warning snapshot 1`] = `
   box-sizing: border-box;
 }
 
-.c12 svg {
+.c13 svg {
   display: inline-block;
   margin-top: -4px;
 }
 
-.c12 .sc-flMoUE {
+.c13 .sc-flMoUE {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1601,7 +1601,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   margin-top: -8px;
 }
 
-.c12:hover {
+.c13:hover {
   background-color: hsl(47,96%,11%);
   color: hsl(0,0%,100%);
   border-color: hsl(47,96%,11%);
@@ -1810,7 +1810,7 @@ exports[`Modal variant is warning snapshot 1`] = `
   font-size: 16px;
 }
 
-.c13 {
+.c12 {
   font-size: 18px;
   line-height: 1.5;
   position: relative;
@@ -1825,12 +1825,12 @@ exports[`Modal variant is warning snapshot 1`] = `
   color: hsl(200,96%,11%);
 }
 
-.c13:hover {
+.c12:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c13:focus::after {
+.c12:focus::after {
   content: '';
   display: block;
   box-sizing: border-box;
@@ -1843,11 +1843,11 @@ exports[`Modal variant is warning snapshot 1`] = `
   border-radius: 8px;
 }
 
-.c13::-moz-focus-inner {
+.c12::-moz-focus-inner {
   border: 0;
 }
 
-.c13 svg {
+.c12 svg {
   display: inline-block;
   margin-top: -4px;
   margin-right: 4px;
@@ -1873,7 +1873,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c12 {
+  .c13 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1895,7 +1895,7 @@ exports[`Modal variant is warning snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-  .c13 {
+  .c12 {
     font-size: 18px;
     line-height: 1.5;
   }
@@ -1979,19 +1979,19 @@ exports[`Modal variant is warning snapshot 1`] = `
                 class="c10 c11"
               >
                 <button
-                  aria-live="assertive"
                   class="c12"
+                  type="button"
+                >
+                  Cancel
+                </button>
+                <button
+                  aria-live="assertive"
+                  class="c13"
                   type="button"
                 >
                   <span>
                     Confirm
                   </span>
-                </button>
-                <button
-                  class="c13"
-                  type="button"
-                >
-                  Cancel
                 </button>
               </div>
             </div>
