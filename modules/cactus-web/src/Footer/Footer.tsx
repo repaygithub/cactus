@@ -131,7 +131,7 @@ const divideLinks = (links: LinkProps[], maxCols: number) => {
 type FooterType = React.FC<FooterProps> & { Link: typeof Link }
 
 export const Footer: FooterType = (props) => {
-  const { logo, className, children } = props
+  const { logo, children, ...rest } = props
   const [links, setLinks] = useState(new Map<string, LinkProps>())
   const [maxCols, setMaxCols] = useState<number>(1)
   const screenSize = useContext(ScreenSizeContext)
@@ -151,7 +151,7 @@ export const Footer: FooterType = (props) => {
   }, [logo, screenSize, ref])
 
   return (
-    <StyledFooter ref={ref} className={className} isGrid={screenSize > SIZES.tiny}>
+    <StyledFooter ref={ref} {...rest} isGrid={screenSize > SIZES.tiny}>
       {logo && (
         <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
       )}
