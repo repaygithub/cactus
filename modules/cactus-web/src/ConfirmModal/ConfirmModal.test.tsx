@@ -27,7 +27,7 @@ describe('Confirm modal renders different variants', () => {
     )
     const confirmModal = getByTestId('confirmModal').firstElementChild
     const styles = window.getComputedStyle(confirmModal as Element)
-    console.log(theme.colors.warning)
+
     expect(styles.borderColor.trim()).toBe(theme.colors.warning.replace(/ /g, ''))
   })
 

@@ -742,7 +742,6 @@ describe('component: DateInput', (): void => {
       )
       const dateInput = asFragment().firstElementChild?.firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
-      console.log(theme.border)
 
       expect(styles.borderRadius).toBe('8px')
     })
