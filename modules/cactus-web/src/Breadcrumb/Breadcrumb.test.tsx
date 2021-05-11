@@ -7,21 +7,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Breadcrumb from './Breadcrumb'
 
 describe('Breadcrumb:', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <Breadcrumb>
-          <Breadcrumb.Item href="www.github.com">Link2</Breadcrumb.Item>
-          <Breadcrumb.Item href="www.repay.com" active>
-            Link2
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should have label and href', (): void => {
     const { getByText } = render(
       <StyleProvider>

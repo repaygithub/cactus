@@ -7,73 +7,15 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextArea from './TextArea'
 
 describe('component: TextArea', (): void => {
-  test('should render a textarea', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextArea />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render a disabled textarea', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextArea disabled={true} />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render a textarea with a placeholder', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextArea placeholder="Type something!" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render a success textarea', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextArea status="success" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render a warning textarea', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextArea status="warning" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render an error textarea', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextArea status="error" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should support margin space props', (): void => {
-    const { container } = render(
+    const { container, getByTestId } = render(
       <StyleProvider>
-        <TextArea ml={5} />
+        <TextArea ml={5} data-testid="textArea" />
       </StyleProvider>
     )
-
+    const textArea = getByTestId('textArea').parentElement
+    const styles = window.getComputedStyle(textArea as HTMLElement)
+    expect(styles.marginLeft).toBe('24px')
     expect(container).toMatchSnapshot()
   })
 
@@ -92,35 +34,40 @@ describe('component: TextArea', (): void => {
   describe('with theme customization', (): void => {
     test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { asFragment } = render(
+      const { getByTestId } = render(
         <StyleProvider theme={theme}>
-          <TextArea />
+          <TextArea data-testid="textArea" />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const textArea = getByTestId('textArea')
+      const styles = window.getComputedStyle(textArea)
+      expect(styles.borderWidth).toBe('2px')
     })
 
     test('should have 8px border radius', (): void => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { asFragment } = render(
+      const theme = generateTheme({ primaryHue: 200, shape: 'round' })
+      const { getByTestId } = render(
         <StyleProvider theme={theme}>
-          <TextArea />
+          <TextArea data-testid="textArea" />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const textArea = getByTestId('textArea')
+      const styles = window.getComputedStyle(textArea)
+      expect(styles.borderRadius).toBe('8px')
     })
 
     test('should have 1px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { asFragment } = render(
+      const { getByTestId } = render(
         <StyleProvider theme={theme}>
-          <TextArea />
+          <TextArea data-testid="textArea" />
         </StyleProvider>
       )
-
-      expect(asFragment()).toMatchSnapshot()
+      const textArea = getByTestId('textArea')
+      const styles = window.getComputedStyle(textArea)
+      expect(styles.borderRadius).toBe('1px')
     })
   })
 })

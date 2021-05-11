@@ -6,7 +6,7 @@ import TextInput from '../TextInput/TextInput'
 import Modal from './Modal'
 
 describe('Modal is open when isOpen=true', (): void => {
-  test('snapshot', (): void => {
+  test('Modal is open', (): void => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
@@ -20,13 +20,12 @@ describe('Modal is open when isOpen=true', (): void => {
         />
       </StyleProvider>
     )
-    expect(baseElement).toMatchSnapshot()
     expect(baseElement).toContainHTML('<reach-portal>')
   })
 })
 
 describe('Modal is closed when isOpen=false', (): void => {
-  test('snapshot', (): void => {
+  test('Modal is closed', (): void => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
@@ -38,7 +37,6 @@ describe('Modal is closed when isOpen=false', (): void => {
       </StyleProvider>
     )
 
-    expect(baseElement).toMatchSnapshot()
     expect(baseElement).not.toContainHTML('<reach-portal>')
   })
 })

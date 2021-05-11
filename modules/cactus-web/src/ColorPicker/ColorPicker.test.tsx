@@ -323,14 +323,4 @@ describe('component: ColorPicker', () => {
       expect(blueInput.value).toBe('255')
     })
   })
-
-  test('snapshot', () => {
-    const { container } = render(
-      <StyleProvider>
-        <ColorPicker id="color-picker" name="color" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
 })

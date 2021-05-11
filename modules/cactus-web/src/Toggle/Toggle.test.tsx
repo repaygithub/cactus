@@ -11,44 +11,16 @@ import Toggle from './Toggle'
 const noop = () => undefined
 
 describe('component: Toggle', (): void => {
-  test('should render a toggle', (): void => {
-    const toggle = render(
-      <StyleProvider>
-        <Toggle checked={false} onChange={noop} />
-      </StyleProvider>
-    )
-
-    expect(toggle.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render a disabled toggle', (): void => {
-    const toggle = render(
-      <StyleProvider>
-        <Toggle checked={false} disabled={true} />
-      </StyleProvider>
-    )
-
-    expect(toggle.asFragment()).toMatchSnapshot()
-  })
-
-  test('should initialize checked to true', (): void => {
-    const toggle = render(
-      <StyleProvider>
-        <Toggle checked={true} onChange={noop} />
-      </StyleProvider>
-    )
-
-    expect(toggle.asFragment()).toMatchSnapshot()
-  })
-
   test('should support margin space props', (): void => {
-    const toggle = render(
+    const { getByTestId } = render(
       <StyleProvider>
-        <Toggle checked={false} marginBottom={4} onChange={noop} />
+        <Toggle checked={false} marginBottom={4} onChange={noop} data-testid="toggle" />
       </StyleProvider>
     )
+    const toggle = getByTestId('toggle').parentElement
+    const style = window.getComputedStyle(toggle as HTMLElement)
 
-    expect(toggle.asFragment()).toMatchSnapshot()
+    expect(style.marginBottom).toBe('16px')
   })
 
   test('should trigger onChange event', (): void => {
@@ -80,13 +52,16 @@ describe('component: Toggle', (): void => {
   describe('with theme customization', (): void => {
     test('should not have box shadows on focus', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { asFragment } = render(
+      const { getByTestId } = render(
         <StyleProvider theme={theme}>
-          <Toggle />
+          <Toggle data-testid="toggle" />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const toggle = getByTestId('toggle')
+      const style = window.getComputedStyle(toggle)
+
+      expect(style.boxShadow).toBe('')
     })
   })
 })

@@ -7,112 +7,16 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Button from './Button'
 
 describe('component: Button', (): void => {
-  test('should default to standard variant', (): void => {
-    const button = render(
-      <StyleProvider>
-        <Button>Click me!</Button>
-      </StyleProvider>
-    )
-
-    expect(button.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render standard variant', (): void => {
-    const button = render(
-      <StyleProvider>
-        <Button variant="standard">Click me!</Button>
-      </StyleProvider>
-    )
-
-    expect(button.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render call to action variant', (): void => {
-    const button = render(
-      <StyleProvider>
-        <Button variant="action">Click me!</Button>
-      </StyleProvider>
-    )
-
-    expect(button.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render danger variant', (): void => {
-    const { asFragment } = render(
-      <StyleProvider>
-        <Button variant="danger">I am dangerous</Button>
-      </StyleProvider>
-    )
-
-    expect(asFragment()).toMatchSnapshot()
-  })
-
-  test('should render disabled variant', (): void => {
-    const button = render(
-      <StyleProvider>
-        <Button disabled>Click me!</Button>
-      </StyleProvider>
-    )
-
-    expect(button.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render inverse standard variant', (): void => {
-    const button = render(
-      <StyleProvider>
-        <Button variant="standard" inverse>
-          Click me!
-        </Button>
-      </StyleProvider>
-    )
-
-    expect(button.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render inverse call to action variant', (): void => {
-    const button = render(
-      <StyleProvider>
-        <Button variant="action" inverse>
-          Click me!
-        </Button>
-      </StyleProvider>
-    )
-
-    expect(button.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render inverse danger variant', (): void => {
-    const { asFragment } = render(
-      <StyleProvider>
-        <Button variant="danger" inverse>
-          I am also dangerous
-        </Button>
-      </StyleProvider>
-    )
-
-    expect(asFragment()).toMatchSnapshot()
-  })
-
-  test('should render inverse disabled variant', (): void => {
-    const button = render(
-      <StyleProvider>
-        <Button disabled inverse>
-          Click me!
-        </Button>
-      </StyleProvider>
-    )
-
-    expect(button.asFragment()).toMatchSnapshot()
-  })
-
   test('should support margin space props', (): void => {
-    const button = render(
+    const { getByText } = render(
       <StyleProvider>
         <Button mt={5}>I have margins!</Button>
       </StyleProvider>
     )
+    const button = getByText('I have margins!').parentElement
+    const styled = window.getComputedStyle(button as HTMLElement)
 
-    expect(button.asFragment()).toMatchSnapshot()
+    expect(styled.marginTop).toBe('24px')
   })
 
   test('should support svgs as children', (): void => {
@@ -126,12 +30,12 @@ describe('component: Button', (): void => {
   })
 
   test('should render Spinner when loading is true', (): void => {
-    const { asFragment } = render(
+    const { getByLabelText } = render(
       <StyleProvider>
         <Button loading>Submit</Button>
       </StyleProvider>
     )
-    expect(asFragment()).toMatchSnapshot()
+    expect(getByLabelText('loading')).toBeInTheDocument()
   })
 
   test('should trigger onClick', (): void => {
@@ -166,39 +70,51 @@ describe('component: Button', (): void => {
 describe('With theme changes ', (): void => {
   test('should have 2px border', (): void => {
     const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-    const { asFragment } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <Button>Click me!</Button>
       </StyleProvider>
     )
-    expect(asFragment()).toMatchSnapshot()
+    const button = getByText('Click me!').parentElement
+    const styled = window.getComputedStyle(button as HTMLElement)
+    expect(styled.borderWidth).toBe('2px')
   })
 
   test('Should have intermediate border radius', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-    const { asFragment } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <Button>Click me!</Button>
       </StyleProvider>
     )
-    expect(asFragment()).toMatchSnapshot()
+
+    const button = getByText('Click me!').parentElement
+    const styled = window.getComputedStyle(button as HTMLElement)
+    expect(styled.borderRadius).toBe('8px')
   })
+
   test('Should have square border radius', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-    const { asFragment } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <Button>Click me!</Button>
       </StyleProvider>
     )
-    expect(asFragment()).toMatchSnapshot()
+
+    const button = getByText('Click me!').parentElement
+    const styled = window.getComputedStyle(button as HTMLElement)
+    expect(styled.borderRadius).toBe('1px')
   })
+
   test('Should not have box shadows applied', (): void => {
     const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-    const { asFragment } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <Button>Click me!</Button>
       </StyleProvider>
     )
-    expect(asFragment()).toMatchSnapshot()
+    const button = getByText('Click me!').parentElement
+    const styled = window.getComputedStyle(button as HTMLElement)
+    expect(styled.boxShadow).toBe('')
   })
 })

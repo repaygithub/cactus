@@ -91,7 +91,5 @@ describe('component: AccessibleField', (): void => {
       otherStatus = getByText('Bold Success')
     } catch {}
     expect(otherStatus).toBe(null)
-
-    expect(container).toMatchSnapshot()
   })
 })

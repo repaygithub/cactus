@@ -6,16 +6,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Box from './Box'
 
 describe('component: Box', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <Box />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should accept built-in props', (): void => {
     const { container } = render(
       <StyleProvider>

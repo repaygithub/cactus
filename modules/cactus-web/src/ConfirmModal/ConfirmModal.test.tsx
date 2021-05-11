@@ -1,3 +1,4 @@
+import { generateTheme } from '@repay/cactus-theme'
 import { render } from '@testing-library/react'
 import * as React from 'react'
 
@@ -6,10 +7,11 @@ import Text from '../Text/Text'
 import TextInput from '../TextInput/TextInput'
 import ConfirmModal from './ConfirmModal'
 
-describe('Modal variant is warning', (): void => {
-  test('snapshot', (): void => {
-    const { baseElement } = render(
-      <StyleProvider>
+describe('Confirm modal renders different variants', () => {
+  const theme = generateTheme()
+  test('Warning variant', () => {
+    const { getByTestId } = render(
+      <StyleProvider theme={theme}>
         <ConfirmModal
           onConfirm={(): void => {
             return
@@ -19,17 +21,19 @@ describe('Modal variant is warning', (): void => {
           }}
           isOpen={true}
           variant="warning"
+          data-testid="confirmModal"
         />
       </StyleProvider>
     )
-
-    expect(baseElement).toMatchSnapshot()
+    const confirmModal = getByTestId('confirmModal').firstElementChild
+    const styles = window.getComputedStyle(confirmModal as Element)
+    console.log(theme.colors.warning)
+    expect(styles.borderColor.trim()).toBe(theme.colors.warning.replace(/ /g, ''))
   })
-})
-describe('Modal variant is success', (): void => {
-  test('snapshot', (): void => {
-    const { baseElement } = render(
-      <StyleProvider>
+
+  test('Success variant', () => {
+    const { getByTestId } = render(
+      <StyleProvider theme={theme}>
         <ConfirmModal
           onConfirm={(): void => {
             return
@@ -39,17 +43,18 @@ describe('Modal variant is success', (): void => {
           }}
           isOpen={true}
           variant="success"
+          data-testid="confirmModal"
         />
       </StyleProvider>
     )
+    const confirmModal = getByTestId('confirmModal').firstElementChild
+    const styles = window.getComputedStyle(confirmModal as Element)
 
-    expect(baseElement).toMatchSnapshot()
+    expect(styles.borderColor.trim()).toBe(theme.colors.success.replace(/ /g, ''))
   })
-})
-describe('Modal variant is danger', (): void => {
-  test('snapshot', (): void => {
-    const { baseElement } = render(
-      <StyleProvider>
+  test('Danger variant', () => {
+    const { getByTestId } = render(
+      <StyleProvider theme={theme}>
         <ConfirmModal
           onConfirm={(): void => {
             return
@@ -59,17 +64,20 @@ describe('Modal variant is danger', (): void => {
           }}
           isOpen={true}
           variant="danger"
+          data-testid="confirmModal"
         />
       </StyleProvider>
     )
+    const confirmModal = getByTestId('confirmModal').firstElementChild
+    const styles = window.getComputedStyle(confirmModal as Element)
 
-    expect(baseElement).toMatchSnapshot()
+    expect(styles.borderColor.trim()).toBe(theme.colors.error.replace(/ /g, ''))
   })
 })
 
 describe('Modal renders TextInput and Description', (): void => {
-  test('snapshot', (): void => {
-    const { baseElement, getByTestId } = render(
+  test('Should render child elements', (): void => {
+    const { getByTestId } = render(
       <StyleProvider>
         <ConfirmModal
           onConfirm={(): void => {
@@ -90,7 +98,6 @@ describe('Modal renders TextInput and Description', (): void => {
     )
     const input = getByTestId('input')
     const description = getByTestId('description')
-    expect(baseElement).toMatchSnapshot()
     expect(input).toBeTruthy()
     expect(description).toBeTruthy()
   })

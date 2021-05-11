@@ -6,34 +6,15 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import RadioButton from './RadioButton'
 
 describe('component: RadioButton', (): void => {
-  test('should render a radio button', (): void => {
-    const radioButton = render(
-      <StyleProvider>
-        <RadioButton name="test" id="radio" />
-      </StyleProvider>
-    )
-
-    expect(radioButton.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render a disabled radio button', (): void => {
-    const radioButton = render(
-      <StyleProvider>
-        <RadioButton name="test" id="radio" disabled />
-      </StyleProvider>
-    )
-
-    expect(radioButton.asFragment()).toMatchSnapshot()
-  })
-
   test('should support margin space props', (): void => {
-    const radioButton = render(
+    const { container } = render(
       <StyleProvider>
         <RadioButton name="test" id="SPACE PROPS YEAH" margin={4} />
       </StyleProvider>
     )
-
-    expect(radioButton.asFragment()).toMatchSnapshot()
+    const radioBtn = container.querySelector('[id="SPACE PROPS YEAH"]')?.parentElement
+    const styles = window.getComputedStyle(radioBtn as Element)
+    expect(styles.margin).toBe('16px')
   })
 
   test('should trigger onChange event', (): void => {
@@ -79,13 +60,15 @@ describe('component: RadioButton', (): void => {
   describe('with theme customization', (): void => {
     test('should not have box shadows on focus', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <RadioButton name="customize" id="themability" />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const radioBtn = container.querySelector('[id="themability"]')?.parentElement
+      const styles = window.getComputedStyle(radioBtn as Element)
+      expect(styles.boxShadow).toBe('')
     })
   })
 })

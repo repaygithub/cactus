@@ -7,26 +7,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import CheckBoxField from './CheckBoxField'
 
 describe('component: CheckBoxField', (): void => {
-  test('should render a checkbox field', (): void => {
-    const checkboxField = render(
-      <StyleProvider>
-        <CheckBoxField label="SoIA" id="my-id" name="checkbox-test" />
-      </StyleProvider>
-    )
-
-    expect(checkboxField.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render a disabled checkbox field', (): void => {
-    const checkboxField = render(
-      <StyleProvider>
-        <CheckBoxField label="NMNL" id="my-id" name="checkbox-test" disabled />
-      </StyleProvider>
-    )
-
-    expect(checkboxField.asFragment()).toMatchSnapshot()
-  })
-
   test('should generate unique id when one is not provided', (): void => {
     const { container, getByText } = render(
       <StyleProvider>
@@ -42,13 +22,21 @@ describe('component: CheckBoxField', (): void => {
   })
 
   test('should support margin space props', (): void => {
-    const checkboxField = render(
+    const { getByTestId } = render(
       <StyleProvider>
-        <CheckBoxField label="space props" name="space_props" id="not-random" mr={3} />
+        <CheckBoxField
+          label="space props"
+          name="space_props"
+          id="not-random"
+          mr={3}
+          data-testid="testField"
+        />
       </StyleProvider>
     )
 
-    expect(checkboxField.asFragment()).toMatchSnapshot()
+    const checkField = getByTestId('testField')
+    const styles = window.getComputedStyle(checkField)
+    expect(styles.marginRight).toBe('0.5ex')
   })
 
   test('should trigger onChange event', (): void => {

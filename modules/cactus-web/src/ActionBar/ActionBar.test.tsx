@@ -21,7 +21,6 @@ describe('component: ActionBar', () => {
         </ActionBar>
       </StyleProvider>
     )
-    expect(container).toMatchSnapshot()
     expect(getByLabelText('The Panel')).toBe(panelRef.current?.firstElementChild)
     expect(getByLabelText('The Button')).toBe(itemRef.current)
   })

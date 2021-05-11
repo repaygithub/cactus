@@ -6,21 +6,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextAreaField from './TextAreaField'
 
 describe('component: TextAreaField', (): void => {
-  test('should render a TextAreaField', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="boolest"
-          name="boolest"
-          label="boolest"
-          tooltip="the boolest dude in the office"
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should render a disabled TextAreaField', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>

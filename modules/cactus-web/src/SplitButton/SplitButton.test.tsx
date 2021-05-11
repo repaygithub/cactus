@@ -8,19 +8,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import SplitButton from './SplitButton'
 
 describe('component: SplitButton', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <SplitButton mainActionLabel="Test" onSelectMainAction={jest.fn()}>
-          <SplitButton.Action onSelect={jest.fn()}>One Action</SplitButton.Action>
-          <SplitButton.Action onSelect={jest.fn()}>Another Action</SplitButton.Action>
-        </SplitButton>
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   describe('mouse interactions', (): void => {
     test('can select main action', (): void => {
       const onMainSelect = jest.fn()
@@ -108,7 +95,7 @@ describe('component: SplitButton', (): void => {
   describe('with theme customization', (): void => {
     test('should have square shape', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { container } = render(
+      const { getByText } = render(
         <StyleProvider theme={theme}>
           <SplitButton mainActionLabel="Test" onSelectMainAction={jest.fn()}>
             <SplitButton.Action onSelect={jest.fn()}>One Action</SplitButton.Action>
@@ -116,12 +103,15 @@ describe('component: SplitButton', (): void => {
           </SplitButton>
         </StyleProvider>
       )
-
-      expect(container).toMatchSnapshot()
+      const splitButton = getByText('Test')
+      const styles = window.getComputedStyle(splitButton)
+      expect(styles.borderWidth).toBe('1px')
+      expect(styles.borderRadius).toBe('1px')
     })
+
     test('should have intermediate shape', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { container } = render(
+      const { getByText } = render(
         <StyleProvider theme={theme}>
           <SplitButton mainActionLabel="Test" onSelectMainAction={jest.fn()}>
             <SplitButton.Action onSelect={jest.fn()}>One Action</SplitButton.Action>
@@ -130,11 +120,14 @@ describe('component: SplitButton', (): void => {
         </StyleProvider>
       )
 
-      expect(container).toMatchSnapshot()
+      const splitButton = getByText('Test')
+      const styles = window.getComputedStyle(splitButton)
+      expect(styles.borderWidth).toBe('1px')
+      expect(styles.borderRadius).toBe('8px 1px 1px 8px')
     })
     test('dropdown should not have box shadows', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { container } = render(
+      const { getByText } = render(
         <StyleProvider theme={theme}>
           <SplitButton mainActionLabel="Test" onSelectMainAction={jest.fn()}>
             <SplitButton.Action onSelect={jest.fn()}>One Action</SplitButton.Action>
@@ -143,11 +136,13 @@ describe('component: SplitButton', (): void => {
         </StyleProvider>
       )
 
-      expect(container).toMatchSnapshot()
+      const splitButton = getByText('Test')
+      const styles = window.getComputedStyle(splitButton)
+      expect(styles.boxShadow).toBe('')
     })
     test('should have 2px borders', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { container } = render(
+      const { getByText } = render(
         <StyleProvider theme={theme}>
           <SplitButton mainActionLabel="Test" onSelectMainAction={jest.fn()}>
             <SplitButton.Action onSelect={jest.fn()}>One Action</SplitButton.Action>
@@ -156,7 +151,9 @@ describe('component: SplitButton', (): void => {
         </StyleProvider>
       )
 
-      expect(container).toMatchSnapshot()
+      const splitButton = getByText('Test')
+      const styles = window.getComputedStyle(splitButton)
+      expect(styles.borderWidth).toBe('2px')
     })
   })
 })
