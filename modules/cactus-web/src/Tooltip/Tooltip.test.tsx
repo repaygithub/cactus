@@ -25,6 +25,17 @@ describe('component: Tooltip', (): void => {
     expect(container).toMatchSnapshot()
   })
 
+  test('should always render label in invisible div', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <Tooltip label="I'm invisible, can you see me?" id="invisible" data-testid="elbisivni" />
+      </StyleProvider>
+    )
+    const label = getByTestId('elbisivni')
+    expect(label).toHaveAttribute('id', 'invisible')
+    expect(label).toHaveTextContent("I'm invisible, can you see me?")
+  })
+
   test('should not render portal without mouseenter event', (): void => {
     render(
       <StyleProvider>

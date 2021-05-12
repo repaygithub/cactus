@@ -8,6 +8,7 @@ import React, { cloneElement, useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { getDataProps } from '../helpers/omit'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
 import { border, boxShadow, radius } from '../helpers/theme'
 
@@ -158,7 +159,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
               setHovering(false)
             }}
           />
-          <VisuallyHidden role="tooltip" id={id}>
+          <VisuallyHidden role="tooltip" id={id} {...getDataProps(props)}>
             {label}
           </VisuallyHidden>
         </>
