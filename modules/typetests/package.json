@@ -1,0 +1,138 @@
+{
+  "name": "@repay/cactus-web",
+  "version": "6.3.0",
+  "description": "A UI component library for web built in React by REPAY",
+  "main": "dist/cactus-web.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-web",
+  "license": "MIT",
+  "sideEffects": [
+    "./dist/helpers/polyfills.js",
+    "./cactus-addon/register.jsx"
+  ],
+  "scripts": {
+    "cleanup": "rm -rf dist coverage .storybook/dist",
+    "new": "node scripts/make-component.js",
+    "test": "jest --testPathIgnorePatterns=\"storyshots.test.ts\"",
+    "tdd": "jest --testPathIgnorePatterns=\"storyshots.test.ts\" --watch",
+    "tdd:focus": "yarn tdd --testPathPattern",
+    "test:focus": "jest --testPathPattern",
+    "test:stories": "yarn start-storybook -p 9122 -c .storybook --smoke-test",
+    "test:local": " yarn test:types && yarn test",
+    "test:visual": "start-test 'start-storybook -p 9001 -c .storybook --ci' 9001 'yarn test:focus \"storyshots.test.ts\"'",
+    "test:visual-update": "start-test 'start-storybook -p 9001 -c .storybook --ci' 9001 'yarn test:focus \"storyshots.test.ts\" -u'",
+    "test:ci": "yarn test:local --maxWorkers=2 && yarn test:stories",
+    "test:types": "tsc -p ./tsconfig.json --noEmit",
+    "start": "start-storybook -p 9001 -c .storybook",
+    "dev": "echo \"This now builds in watch mode, use yarn web start for storybook\\n\"; repay-scripts dev --lib --tree-shaking --config rollup.config.js src/index.ts",
+    "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
+    "build": "repay-scripts build --lib --tree-shaking --config rollup.config.js src/index.ts",
+    "postbuild": "yarn build:types",
+    "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@repay/cactus-icons)"
+    ],
+    "moduleNameMapper": {
+      "^styled-components": "<rootDir>/../../node_modules/styled-components/dist/styled-components.browser.cjs.js"
+    },
+    "setupFiles": [
+      "<rootDir>/.jest/register-context.js"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/__setup__/setup.ts"
+    ],
+    "testRegex": ".*\\.test\\.(tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/*.story.{ts,tsx}",
+      "!src/storySupport/**"
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-sonar",
+        {
+          "outputDirectory": ".",
+          "outputName": "test-report.xml"
+        }
+      ]
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@repay/babel-preset": "^1.0.2",
+    "@repay/scripts": "^2.0.2",
+    "@storybook/addon-actions": "^6.1.17",
+    "@storybook/addon-docs": "^6.1.17",
+    "@storybook/addon-knobs": "^6.1.17",
+    "@storybook/addon-storyshots": "^6.1.17",
+    "@storybook/addon-storyshots-puppeteer": "^6.1.17",
+    "@storybook/addon-viewport": "^6.1.17",
+    "@storybook/components": "^6.1.17",
+    "@storybook/react": "^6.1.17",
+    "@storybook/theming": "^6.1.17",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "@types/jest": "^26.0.20",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^14.14.27",
+    "@types/puppeteer": "^3.0.2",
+    "@types/react": "^17.0.2",
+    "@types/react-color": "^2.17.5",
+    "@types/react-transition-group": "^4.4.0",
+    "@types/storybook__react": "^5.2.1",
+    "@types/styled-components": "^5.1.7",
+    "@types/styled-system": "^5.1.10",
+    "@types/tinycolor2": "^1.4.2",
+    "@types/user-event": "^4.1.0",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-require-context-hook": "^1.0.0",
+    "csstype": "^3.0.3",
+    "jest": "^26.6.3",
+    "jest-sonar": "^0.2.12",
+    "jest-styled-components": "^7.0.3",
+    "prop-types": "^15.7.2",
+    "puppeteer": "^5.3.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "start-server-and-test": "1.12.0",
+    "styled-components": "^5.2.1",
+    "typescript": "^4.1.5"
+  },
+  "peerDependencies": {
+    "prop-types": ">=15.7.0",
+    "react": "^16.8.3 || ^17.0.0",
+    "styled-components": "^5.1.0"
+  },
+  "dependencies": {
+    "@reach/dialog": "^0.13.0",
+    "@reach/menu-button": "^0.13.0",
+    "@reach/popover": "^0.13.0",
+    "@reach/rect": "^0.13.0",
+    "@reach/tooltip": "0.13.0",
+    "@reach/utils": "^0.13.0",
+    "@reach/visually-hidden": "^0.13.0",
+    "@repay/cactus-icons": "^2.4.1",
+    "@repay/cactus-theme": "^2.1.0",
+    "lodash": "^4.17.21",
+    "react-color": "^2.19.3",
+    "react-transition-group": "^4.4.1",
+    "styled-system": "^5.1.5",
+    "tinycolor2": "^1.4.2"
+  }
+}
