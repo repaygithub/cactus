@@ -34,9 +34,9 @@ describe('component: CheckBoxField', (): void => {
       </StyleProvider>
     )
 
-    const checkField = getByTestId('testField')
+    const checkField = getByTestId('testField').parentElement?.parentElement as HTMLElement
     const styles = window.getComputedStyle(checkField)
-    expect(styles.marginRight).toBe('0.5ex')
+    expect(styles.marginRight).toBe('8px')
   })
 
   test('should trigger onChange event', (): void => {

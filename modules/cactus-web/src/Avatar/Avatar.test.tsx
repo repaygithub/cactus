@@ -11,6 +11,6 @@ describe('component: Avatars', (): void => {
         <Avatar />
       </StyleProvider>
     )
-    expect(container).toMatchSnapshot()
+    expect(container).toBeInTheDocument()
   })
 })

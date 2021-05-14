@@ -91,7 +91,6 @@ describe('component: Accordion', (): void => {
 
       expect(container).toHaveTextContent('Test Header')
       expect(container).not.toHaveTextContent('Test Body')
-      expect(container).toMatchSnapshot()
     })
 
     test('Should render outline accordion', (): void => {
@@ -108,7 +107,6 @@ describe('component: Accordion', (): void => {
 
       expect(container).toHaveTextContent('Test Header')
       expect(container).not.toHaveTextContent('Test Body')
-      expect(container).toMatchSnapshot()
     })
 
     test('Should open Accordion when button is clicked', async (): Promise<void> => {
@@ -779,7 +777,7 @@ describe('component: Accordion', (): void => {
   describe('with theme customization', (): void => {
     test('simple accordion should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <Accordion id="accordion">
             <Accordion.Header>
@@ -790,44 +788,14 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
-    })
-
-    test('outline accordion should not have box shadows when open', (): void => {
-      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <Accordion id="accordion" variant="outline">
-            <Accordion.Header>
-              <Text as="h3">Test Header</Text>
-            </Accordion.Header>
-            <Accordion.Body>Test Body</Accordion.Body>
-          </Accordion>
-        </StyleProvider>
-      )
-
-      expect(asFragment()).toMatchSnapshot()
-    })
-
-    test('outline accordion should have 2px border', (): void => {
-      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <Accordion id="accordion" variant="outline">
-            <Accordion.Header>
-              <Text as="h3">Test Header</Text>
-            </Accordion.Header>
-            <Accordion.Body>Test Body</Accordion.Body>
-          </Accordion>
-        </StyleProvider>
-      )
-
-      expect(asFragment()).toMatchSnapshot()
+      const accordion = container.querySelector('#accordion')?.firstChild
+      const styles = window.getComputedStyle(accordion as Element)
+      expect(styles.borderWidth).toBe('2px')
     })
 
     test('outline accordion should have 4px border-radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <Accordion id="accordion" variant="outline">
             <Accordion.Header>
@@ -838,12 +806,14 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const accordion = container.querySelector('#accordion')
+      const styles = window.getComputedStyle(accordion as Element)
+      expect(styles.borderRadius).toBe('4px')
     })
 
     test('outline accordion should have 1px border-radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <Accordion id="accordion" variant="outline">
             <Accordion.Header>
@@ -854,7 +824,9 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const accordion = container.querySelector('#accordion')
+      const styles = window.getComputedStyle(accordion as Element)
+      expect(styles.borderRadius).toBe('1px')
     })
   })
 })

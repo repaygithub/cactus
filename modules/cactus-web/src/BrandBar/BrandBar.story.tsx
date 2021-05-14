@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
-import { ActionBar, BrandBar, Layout, SelectField } from '../'
+import { ActionBar, BrandBar, Layout, Link, SelectField } from '../'
 import { SelectValueType } from '../Select/Select'
 
 const LOGO =
@@ -67,6 +67,23 @@ export const CustomItems = (): React.ReactElement => {
     </Layout>
   )
 }
+
+export const UserMenuItemLink = (): React.ReactElement => (
+  <Layout>
+    <BrandBar logo={LOGO}>
+      <BrandBar.UserMenu
+        isProfilePage={boolean('On profile page?', false)}
+        label={text('Menu Title', 'Hershell Jewess')}
+      >
+        <BrandBar.UserMenuItem as={Link} to="https://www.google.com">
+          Go to Google
+        </BrandBar.UserMenuItem>
+      </BrandBar.UserMenu>
+    </BrandBar>
+  </Layout>
+)
+
+UserMenuItemLink.storyName = 'UserMenuItem as Link'
 
 CustomItems.parameters = {
   beforeScreenshot: async (page: Page) => {

@@ -8,7 +8,7 @@ import TextArea from './TextArea'
 
 describe('component: TextArea', (): void => {
   test('should support margin space props', (): void => {
-    const { container, getByTestId } = render(
+    const { getByTestId } = render(
       <StyleProvider>
         <TextArea ml={5} data-testid="textArea" />
       </StyleProvider>
@@ -16,7 +16,6 @@ describe('component: TextArea', (): void => {
     const textArea = getByTestId('textArea').parentElement
     const styles = window.getComputedStyle(textArea as HTMLElement)
     expect(styles.marginLeft).toBe('24px')
-    expect(container).toMatchSnapshot()
   })
 
   test('should trigger onChange handler', (): void => {
