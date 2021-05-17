@@ -605,6 +605,7 @@ exports[`component: MenuBar typechecks 1`] = `
   align-items: stretch;
   position: relative;
   outline: none;
+  z-index: 100;
   box-shadow: inset 0px -2px 0px 0px hsl(200,29%,90%);
 }
 

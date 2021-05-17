@@ -251,6 +251,7 @@ const MenuList = styled(ReachMenuList)`
   background-color: ${(p) => p.theme.colors.white};
 
   [data-reach-menu-item] {
+    z-index: 110;
     box-sizing: border-box;
     position: relative;
     display: block;
