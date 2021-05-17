@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import { overflow, OverflowProps, overflowX, overflowY } from 'styled-system'
 
 import ActionProvider from '../ActionBar/ActionProvider'
+import { getDataProps } from '../helpers/omit'
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 
 export type Role = 'menubar' | 'actionbar' | 'footer' | 'brandbar'
@@ -55,7 +56,7 @@ export const useLayout = (role: Role, { position, offset }: LayoutInfo): UseLayo
   return { ...layout, cssClass: `cactus-layout-${position}` }
 }
 
-export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const Layout: React.FC<{ children: React.ReactNode }> = ({ children, ...rest }) => {
   const { current: componentInfo } = React.useRef<ComponentInfo>({})
   const [layout, setLayout] = React.useState<LayoutCtx>({ ...DEFAULT_CTX, componentInfo })
   layout.setLayout = React.useCallback(
@@ -79,7 +80,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     <ScreenSizeProvider>
       <LayoutContext.Provider value={layout}>
         <ActionProvider>
-          <LayoutWrapper {...layout}>{children}</LayoutWrapper>
+          <LayoutWrapper {...layout} {...getDataProps(rest)}>
+            {children}
+          </LayoutWrapper>
         </ActionProvider>
       </LayoutContext.Provider>
     </ScreenSizeProvider>

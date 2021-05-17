@@ -53,7 +53,7 @@ export const BreadcrumbActive = (
 )
 
 const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
-  const { children, className } = props
+  const { children, ...rest } = props
   const childrenCount = Children.count(children)
   const childrenArray = Children.toArray(children) as ChildElement[]
   const breadcrumbNavId = 'breadcrumb-nav'
@@ -181,10 +181,10 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
 
   return (
     <StyledNav
+      {...rest}
       id={breadcrumbNavId}
       aria-label="Breadcrumb"
       ref={mainNavContainer}
-      className={className}
       {...wrapperProps}
     >
       <ul className="main-breadcrumb-list" ref={mainBreadcrumbList}>

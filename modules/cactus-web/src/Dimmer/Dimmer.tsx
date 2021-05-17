@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 
-export interface DimmerProps {
+export interface DimmerProps extends React.HTMLAttributes<HTMLDivElement> {
   active: boolean
 }
 
@@ -20,9 +20,9 @@ class Dimmer extends React.Component<DimmerProps> {
       } catch {}
     }
   }
-  render(): React.ReactElement {
-    const { active, children } = this.props
-    return active ? <DimmerStyled>{children}</DimmerStyled> : <></>
+  render(): React.ReactElement | null {
+    const { active, ...rest } = this.props
+    return active ? <DimmerStyled {...rest} /> : null
   }
 }
 

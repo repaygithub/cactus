@@ -7,19 +7,16 @@ import { margin, MarginProps } from 'styled-system'
 
 import { radius, textStyle } from '../helpers/theme'
 
-interface TagProps extends MarginProps {
-  id?: string
-  className?: string
+interface TagProps extends MarginProps, React.HTMLAttributes<HTMLSpanElement> {
   closeOption?: boolean
   children: React.ReactNode
-  hidden?: boolean
   onCloseIconClick?: () => void
 }
 
 const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
-  ({ id, className, closeOption, children, onCloseIconClick }, ref): React.ReactElement => {
+  ({ closeOption, children, onCloseIconClick, ...props }, ref): React.ReactElement => {
     return (
-      <span id={id} ref={ref} className={className}>
+      <span ref={ref} {...props}>
         <span className="value-tag__label">{children}</span>
         {(closeOption || typeof onCloseIconClick === 'function') && (
           <NavigationClose data-role="close" onClick={onCloseIconClick} />

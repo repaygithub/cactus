@@ -6,18 +6,22 @@ import styled, { css, ThemeProps } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import Avatar from '../Avatar/Avatar'
+import { omitProps } from '../helpers/omit'
 import { boxShadow } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'
 
-interface AlertProps extends MarginProps, WidthProps, React.HTMLAttributes<HTMLDivElement> {
+interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   status?: Status
-  type?: Type
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void
-  shadow?: boolean
   closeLabel?: string
+}
+
+interface AlertStyleProps extends AlertProps, MarginProps, WidthProps {
+  type?: Type
+  shadow?: boolean
 }
 
 const backgroundColor = (props: AlertProps & ThemeProps<CactusTheme>): string | undefined => {
@@ -59,7 +63,7 @@ const typeMap: TypeMap = {
   `,
 }
 
-const typeVariant = (props: AlertProps): ReturnType<typeof css> | undefined => {
+const typeVariant = (props: AlertStyleProps) => {
   const { type } = props
   if (type !== undefined) {
     return typeMap[type]
@@ -74,10 +78,10 @@ const statusToVariantMap: { [K in Status]: 'success' | 'warning' | 'danger' | 'a
 }
 
 const AlertBase = (props: AlertProps): React.ReactElement => {
-  const { className, status = 'info', onClose, closeLabel, children } = props
+  const { status = 'info', onClose, closeLabel, children, ...rest } = props
 
   return (
-    <div className={className}>
+    <div {...rest}>
       <div>
         <Avatar status={status} type="alert" />
       </div>
@@ -96,7 +100,9 @@ const AlertBase = (props: AlertProps): React.ReactElement => {
   )
 }
 
-export const Alert = styled(AlertBase)<AlertProps>`
+export const Alert = styled(AlertBase).withConfig(
+  omitProps<AlertStyleProps>(margin, width, 'type', 'shadow')
+)`
   box-sizing: border-box;
   display: flex;
   justify-content: flex-start;
