@@ -1,4 +1,4 @@
-import { ActionsAdd, ActionsCopy } from '@repay/cactus-icons'
+import { ActionsAdd, ActionsCopy, ActionsDelete } from '@repay/cactus-icons'
 import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
@@ -153,6 +153,50 @@ export const WithGoBackLink = (): React.ReactElement => {
       <Header.Item>
         <Button variant="action">
           <ActionsAdd /> Add new configuration
+        </Button>
+      </Header.Item>
+    </Header>
+  )
+}
+
+export const WithDescription = (): React.ReactElement => {
+  const descriptionText = text('Description Text', 'I am describing something about this page')
+  return (
+    <Header>
+      <Header.Title>I Have a Description</Header.Title>
+      <Header.Description text={descriptionText} />
+    </Header>
+  )
+}
+
+export const WithEverything = (): React.ReactElement => {
+  const descriptionText = text(
+    'Description Text',
+    'This story was put here to showcase the header with all sub-components that it offers'
+  )
+  return (
+    <Header>
+      <Header.BreadcrumbRow>
+        <Breadcrumb>
+          <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+          <Breadcrumb.Active>Full Header</Breadcrumb.Active>
+        </Breadcrumb>
+      </Header.BreadcrumbRow>
+      <Header.Title>I Am a Jam-Packed Header</Header.Title>
+      <Header.Description>{descriptionText}</Header.Description>
+      <Header.Item>
+        <Button variant="action">
+          <ActionsAdd /> Add new configuration
+        </Button>
+      </Header.Item>
+      <Header.Item>
+        <Button variant="success">
+          <ActionsCopy />
+        </Button>
+      </Header.Item>
+      <Header.Item>
+        <Button variant="danger">
+          <ActionsDelete />
         </Button>
       </Header.Item>
     </Header>

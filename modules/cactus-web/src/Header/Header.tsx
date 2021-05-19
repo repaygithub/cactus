@@ -10,10 +10,15 @@ interface HeaderProps extends MarginProps, HTMLAttributes<HTMLDivElement> {
   bgColor?: BackgroundColorVariants
 }
 
+interface HeaderDescriptionProps extends HTMLAttributes<HTMLDivElement> {
+  text?: string
+}
+
 export type HeaderType = FC<HeaderProps> & {
   Item: typeof HeaderItem
   BreadcrumbRow: typeof HeaderBreadcrumbRow
   Title: typeof HeaderTitle
+  Description: typeof HeaderDescription
 }
 
 export const HeaderItem: FC<
@@ -28,24 +33,33 @@ export const HeaderTitle: FC<React.ComponentProps<typeof Text>> = ({ children, .
 
 export const HeaderBreadcrumbRow: FC = ({ children }) => <>{children}</>
 
+export const HeaderDescription: FC<HeaderDescriptionProps> = ({ text, children, ...rest }) => (
+  <StyledDescription {...rest}>{children || text}</StyledDescription>
+)
+
 export const Header: HeaderType = ({ children, bgColor = 'lightContrast', ...rest }) => {
-  const childrens = Children.toArray(children)
+  const childrenArray = Children.toArray(children)
   type ChildElement = ReactElement<any, ComponentType>
+  const headerDescription = childrenArray.find(
+    (child) => (child as ChildElement).type.displayName === 'HeaderDescription'
+  )
+  const hasDescription = headerDescription !== undefined
 
   return (
-    <StyledHeader bgColor={bgColor} {...rest}>
+    <StyledHeader bgColor={bgColor} $hasDescription={hasDescription} {...rest}>
       <MainColumn>
-        {childrens.find(
+        {childrenArray.find(
           (child) =>
             (child as ChildElement).type.displayName === 'HeaderBreadcrumbRow' && <>{child}</>
         )}
-        {childrens.find(
+        {childrenArray.find(
           (child) => (child as ChildElement).type.displayName === 'HeaderTitle' && <>{child}</>
         )}
+        {headerDescription}
       </MainColumn>
-      {childrens.some((i) => (i as ChildElement).type.displayName === 'HeaderItem') && (
+      {childrenArray.some((i) => (i as ChildElement).type.displayName === 'HeaderItem') && (
         <ItemsColumn>
-          {childrens.filter(
+          {childrenArray.filter(
             (child) => (child as ChildElement).type.displayName === 'HeaderItem' && <>{child}</>
           )}
         </ItemsColumn>
@@ -64,7 +78,7 @@ const columnStyles = css`
 const MainColumn = styled.div`
   ${columnStyles}
   ${(p) => `
-    ${p.theme.mediaQueries?.small}{
+    ${p.theme.mediaQueries?.small} {
       padding-top: 0px;
       min-width: 40%;
       > div:not(:first-child) {
@@ -88,7 +102,7 @@ const ItemsColumn = styled.div`
   }
 
   ${(p) => `
-    ${p.theme.mediaQueries?.small}{
+    ${p.theme.mediaQueries?.small} {
       align-items: flex-end;
       flex: 1 1 0px;
       hyphens: auto;
@@ -105,7 +119,7 @@ const ItemsColumn = styled.div`
       }
     }
 
-    ${p.theme.mediaQueries?.medium}{
+    ${p.theme.mediaQueries?.medium} {
       flex-direction: row;
       align-items: center;
       flex: 0 1 auto;
@@ -116,20 +130,29 @@ const ItemsColumn = styled.div`
   `}
 `
 
+const StyledDescription = styled.div`
+  margin-top: ${(p) => `${p.theme.space[3]}px`};
+  ${(p) => p.theme.mediaQueries?.small} {
+    margin-top: 0px;
+  }
+`
+
 Header.displayName = 'Header'
 HeaderBreadcrumbRow.displayName = 'HeaderBreadcrumbRow'
 HeaderTitle.displayName = 'HeaderTitle'
 HeaderItem.displayName = 'HeaderItem'
+HeaderDescription.displayName = 'HeaderDescription'
 
 Header.BreadcrumbRow = HeaderBreadcrumbRow
 Header.Title = HeaderTitle
 Header.Item = HeaderItem
+Header.Description = HeaderDescription
 
 Header.propTypes = {
   bgColor: PropTypes.oneOf(['white', 'lightContrast']),
 }
 
-export const StyledHeader = styled.header<HeaderProps>`
+export const StyledHeader = styled.header<HeaderProps & { $hasDescription: boolean }>`
   ${margin}
 
   align-items: center;
@@ -148,11 +171,11 @@ export const StyledHeader = styled.header<HeaderProps>`
   hyphens: auto;
 
   ${(p) => `
-  ${p.theme.mediaQueries?.small}{
+  ${p.theme.mediaQueries?.small} {
     text-align: left;
     justify-content: space-between;
     flex-direction: row;
-    padding: 8px 40px;
+    ${p.$hasDescription ? 'padding: 8px 40px 16px 40px;' : 'padding: 8px 40px;'}
     }
   `}
 `
