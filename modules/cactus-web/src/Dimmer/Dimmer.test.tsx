@@ -4,17 +4,6 @@ import * as React from 'react'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Dimmer from './Dimmer'
 
-describe('Dimmer when page=true', () => {
-  test('Snapshot Page Dimmer ', () => {
-    const { baseElement } = render(
-      <StyleProvider>
-        <Dimmer active></Dimmer>
-      </StyleProvider>
-    )
-    expect(baseElement).toMatchSnapshot()
-  })
-})
-
 describe('Dimmer render content as children', () => {
   test('Page Dimmer: Should render content when active=true', () => {
     const { container } = render(

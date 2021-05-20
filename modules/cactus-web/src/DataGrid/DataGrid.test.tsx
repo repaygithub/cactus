@@ -251,16 +251,6 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
 }
 
 describe('component: DataGrid', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <DataGridContainer />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should be able to change page size', (): void => {
     const { getByLabelText, getByText } = render(
       <StyleProvider>

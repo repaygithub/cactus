@@ -6,18 +6,8 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Box from './Box'
 
 describe('component: Box', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <Box />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should accept built-in props', (): void => {
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider>
         <Box
           position="relative"
@@ -44,8 +34,12 @@ describe('component: Box', (): void => {
         </Box>
       </StyleProvider>
     )
+    const box = getByText('Content')
+    const style = window.getComputedStyle(box)
 
-    expect(container).toMatchSnapshot()
+    expect(style.zIndex).toBe('100')
+    expect(style.borderStyle).toBe('solid')
+    expect(style.borderRadius).toBe('20px')
   })
 
   test('borderRadius prop should accept themed arg & custom shape definitions', () => {

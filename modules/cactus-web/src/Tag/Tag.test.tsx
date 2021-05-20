@@ -6,13 +6,13 @@ import Tag from './Tag'
 
 describe('component: Tag', () => {
   test('can render content as children', () => {
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider>
         <Tag>Test label</Tag>
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
+    expect(getByText('Test label')).toBeInTheDocument()
   })
   test('Close icon is present', () => {
     const onClick = jest.fn()

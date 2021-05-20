@@ -6,21 +6,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextInputField from './TextInputField'
 
 describe('component: TextInputField', (): void => {
-  test('should render a TextInputField', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TextInputField
-          id="instigate"
-          name="instigate"
-          label="Enter some text"
-          tooltip="Go on, do it"
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should render a disabled TextInputField', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>

@@ -73,22 +73,4 @@ describe('component: List', () => {
 
     expect(header.tagName).toBe('H3')
   })
-
-  test('snapshot', () => {
-    const { container } = render(
-      <StyleProvider>
-        <List>
-          <List.Item>Here I am</List.Item>
-          <List.Item>There you are</List.Item>
-          <List.Item>
-            <List>
-              <List.Item>I am nested</List.Item>
-            </List>
-          </List.Item>
-        </List>
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
 })

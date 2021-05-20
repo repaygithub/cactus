@@ -5,36 +5,32 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Flex from './Flex'
 
 describe('component: Flex', (): void => {
-  test('snapshot with no props', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <Flex />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should accept flex props', (): void => {
-    const { container } = render(
+    const { getByTestId } = render(
       <StyleProvider>
         <Flex
           justifyContent="flex-end"
           alignItems="center"
           flexWrap="nowrap"
           flexDirection="column"
+          data-testid="flexContainer"
         >
           <Flex alignSelf="flex-end" />
           <Flex />
         </Flex>
       </StyleProvider>
     )
+    const flexContainer = getByTestId('flexContainer')
+    const styles = window.getComputedStyle(flexContainer)
 
-    expect(container).toMatchSnapshot()
+    expect(styles.justifyContent).toBe('flex-end')
+    expect(styles.alignItems).toBe('center')
+    expect(styles.flexWrap).toBe('nowrap')
+    expect(styles.flexDirection).toBe('column')
   })
 
   test('should accept basic built-in props', (): void => {
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider>
         <Flex
           position="relative"
@@ -59,7 +55,12 @@ describe('component: Flex', (): void => {
         </Flex>
       </StyleProvider>
     )
+    const flexContainer = getByText('Content')
+    const styles = window.getComputedStyle(flexContainer as Element)
 
-    expect(container).toMatchSnapshot()
+    expect(styles.position).toBe('relative')
+    expect(styles.margin).toBe('4px')
+    expect(styles.color).toBe('rgb(255, 255, 255)')
+    expect(styles.borderStyle).toBe('solid')
   })
 })

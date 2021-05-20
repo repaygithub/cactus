@@ -5,39 +5,12 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import StepAvatar from './StepAvatar'
 
 describe('component: StepAvatar', (): void => {
-  test('Default Step', (): void => {
-    const { container } = render(
+  test('exists', (): void => {
+    const { getByTestId } = render(
       <StyleProvider>
-        <StepAvatar />
+        <StepAvatar status="inProcess" data-testid="stepAvatar" />
       </StyleProvider>
     )
-    expect(container).toMatchSnapshot()
-  })
-
-  test('Step Avatar, Not Done', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <StepAvatar status="notDone" />
-      </StyleProvider>
-    )
-    expect(container).toMatchSnapshot()
-  })
-
-  test('Step Avatar, In Process', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <StepAvatar status="inProcess" />
-      </StyleProvider>
-    )
-    expect(container).toMatchSnapshot()
-  })
-
-  test('Step Avatar, Done', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <StepAvatar status="done" />
-      </StyleProvider>
-    )
-    expect(container).toMatchSnapshot()
+    expect(getByTestId('stepAvatar')).toBeInTheDocument()
   })
 })

@@ -11,7 +11,7 @@ describe('component: ActionBar', () => {
   test('typechecks', () => {
     const itemRef: React.MutableRefObject<HTMLButtonElement | null> = { current: null }
     const panelRef: React.MutableRefObject<HTMLDivElement | null> = { current: null }
-    const { container, getByLabelText, getByTestId } = render(
+    const { getByLabelText, getByTestId } = render(
       <StyleProvider>
         <ActionBar data-testid="bar">
           <ActionBar.Panel
@@ -33,7 +33,7 @@ describe('component: ActionBar', () => {
         </ActionBar>
       </StyleProvider>
     )
-    expect(container).toMatchSnapshot()
+
     expect(getByTestId('panel')).toBe(panelRef.current)
     expect(getByLabelText('The Panel')).toBe(panelRef.current?.firstElementChild)
     expect(getByTestId('item')).toBe(itemRef.current)

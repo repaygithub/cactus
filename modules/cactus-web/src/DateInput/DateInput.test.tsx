@@ -725,11 +725,12 @@ describe('component: DateInput', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { asFragment } = render(
         <StyleProvider theme={theme}>
-          <DateInput name="thin" id="not-thicc" value="2020-01-01" />
+          <DateInput name="thin" id="not-thicc" value="2020-01-01" data-testid="dateInput" />
         </StyleProvider>
       )
-
-      expect(asFragment()).toMatchSnapshot()
+      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const styles = window.getComputedStyle(dateInput as Element)
+      expect(styles.borderWidth).toBe('2px')
     })
 
     test('should match intermediate shape styles', (): void => {
@@ -739,8 +740,10 @@ describe('component: DateInput', (): void => {
           <DateInput name="intermediate" id="not-round" value="2020-01-01" />
         </StyleProvider>
       )
+      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const styles = window.getComputedStyle(dateInput as Element)
 
-      expect(asFragment()).toMatchSnapshot()
+      expect(styles.borderRadius).toBe('8px')
     })
 
     test('should match square shape styles', (): void => {
@@ -751,7 +754,10 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const styles = window.getComputedStyle(dateInput as Element)
+
+      expect(styles.borderRadius).toBe('1px')
     })
 
     test('should not have box shadows set', (): void => {
@@ -762,7 +768,10 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const styles = window.getComputedStyle(dateInput as Element)
+
+      expect(styles.boxShadow).toBe('')
     })
   })
 })

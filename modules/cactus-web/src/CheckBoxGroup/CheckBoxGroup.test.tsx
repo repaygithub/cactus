@@ -25,7 +25,6 @@ describe('component: CheckBoxGroup', (): void => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
     const cbs = container.querySelectorAll('input')
     cbs.forEach((cb, ix) => {
       expect(cb.required).toBe(true)
@@ -56,7 +55,6 @@ describe('component: CheckBoxGroup', (): void => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
     expect(container.querySelector('fieldset')?.disabled).toBe(true)
     const cbs = container.querySelectorAll('input')
     cbs.forEach((cb, ix) => {

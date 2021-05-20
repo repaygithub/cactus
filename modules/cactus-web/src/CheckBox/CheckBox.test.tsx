@@ -7,36 +7,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import CheckBox from './CheckBox'
 
 describe('component: CheckBox', (): void => {
-  test('should render a checkbox', (): void => {
-    const checkBox = render(
-      <StyleProvider>
-        <CheckBox id="check" />
-      </StyleProvider>
-    )
-
-    expect(checkBox.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render a disabled checkbox', (): void => {
-    const checkBox = render(
-      <StyleProvider>
-        <CheckBox id="checking" disabled />
-      </StyleProvider>
-    )
-
-    expect(checkBox.asFragment()).toMatchSnapshot()
-  })
-
-  test('should support margin space props', (): void => {
-    const checkBox = render(
-      <StyleProvider>
-        <CheckBox id="MARGIN PROPS YEAH" m={4} />
-      </StyleProvider>
-    )
-
-    expect(checkBox.asFragment()).toMatchSnapshot()
-  })
-
   test('should trigger onChange event', (): void => {
     const onChange = jest.fn()
     const { getByTestId } = render(
@@ -100,24 +70,14 @@ describe('component: CheckBox', (): void => {
   describe('with theme customization', (): void => {
     test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { asFragment } = render(
+      const { getByTestId } = render(
         <StyleProvider theme={theme}>
-          <CheckBox id="theme" />
+          <CheckBox id="theme" data-testid="checkbox" />
         </StyleProvider>
       )
-
-      expect(asFragment()).toMatchSnapshot()
-    })
-
-    test('should not have box shadow on focus', (): void => {
-      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <CheckBox id="theme" />
-        </StyleProvider>
-      )
-
-      expect(asFragment()).toMatchSnapshot()
+      const checkBox = getByTestId('checkbox')
+      const checkboxStyles = window.getComputedStyle(checkBox)
+      expect(checkboxStyles.borderWidth).toBe('0px')
     })
   })
 })
