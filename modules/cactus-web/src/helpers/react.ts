@@ -98,11 +98,11 @@ export function useValue<T>(value: T, dependencies: any[]): T {
 }
 
 // An immutable container with mutable contents; basically, a self-updating ref.
-export function useBox<T>(box: T): T {
-  const { current } = React.useRef<T>(box)
+export function useBox<T>(box: Partial<T>): T {
+  const { current } = React.useRef<T>(box as T)
   if (box !== current) {
     for (const key of Object.keys(box) as (keyof T)[]) {
-      current[key] = box[key]
+      current[key] = box[key] as T[keyof T]
     }
   }
   return current
@@ -132,4 +132,64 @@ export function useStateWithCallback<S>(
   }, [state])
 
   return [state, setStateWithCallback]
+}
+
+const toggle = (x: boolean) => !x
+
+export const useRenderTrigger = (): (() => void) => React.useReducer(toggle, false)[1]
+
+type SemiControlProps<T extends React.ElementType> = {
+  input: T
+  value: unknown
+  onChange: React.ChangeEventHandler<unknown>
+} & Omit<React.ComponentProps<T>, 'as' | 'ref' | 'value' | 'onChange'>
+
+interface ControlBox {
+  value: unknown
+  controlledValue: unknown
+  isFocused: boolean
+  onFocus?: React.FocusEventHandler<unknown>
+  handleFocus: React.FocusEventHandler<unknown>
+  onBlur?: React.FocusEventHandler<unknown>
+  handleBlur: React.FocusEventHandler<unknown>
+  onChange: React.ChangeEventHandler<unknown>
+  handleChange: React.ChangeEventHandler<unknown>
+}
+
+// Use this to make an input "uncontrolled" while focused, but controlled otherwise;
+// this is useful when valid values are limited but you don't want to interfere
+// with user input by trying to normalize the value as they type.
+export const SemiControlled = <T extends React.ElementType>(
+  props: SemiControlProps<T>
+): React.ReactElement => {
+  const { input, value: controlledValue, onFocus, onBlur, onChange, ...rest } = props
+  const trigger = useRenderTrigger()
+  const vars = useBox<ControlBox>({ onFocus, onBlur, onChange, controlledValue })
+  if (vars.isFocused === undefined) {
+    vars.isFocused = false
+    vars.handleFocus = (e: React.FocusEvent<unknown>) => {
+      vars.isFocused = true
+      vars.onFocus?.(e)
+    }
+    vars.handleBlur = (e: React.FocusEvent<unknown>) => {
+      vars.isFocused = false
+      vars.onBlur?.(e)
+      trigger() // Now rerender with the parent's value.
+    }
+    vars.handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+      vars.value = e.target.value
+      vars.onChange(e)
+      trigger()
+    }
+  }
+  if (!vars.isFocused) {
+    vars.value = controlledValue
+  }
+  return React.createElement(input, {
+    ...rest,
+    onFocus: vars.handleFocus,
+    onBlur: vars.handleBlur,
+    onChange: vars.handleChange,
+    value: vars.value,
+  })
 }

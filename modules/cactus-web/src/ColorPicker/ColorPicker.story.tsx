@@ -42,18 +42,22 @@ export const Controlled = (): React.ReactElement => {
     hsl: { h: 120, s: 1, l: 0.5 },
     hsv: { h: 120, s: 1, v: 1 },
     rgb: { r: 0, g: 255, b: 0 },
-    hex: '00FF00',
+    hex: '#00FF00',
   })
   const controlledBy = select('controlled by', ['hsl', 'hsv', 'rgb', 'hex'], 'hsl')
   return (
     <ColorPicker
       id="color-picker"
       name="color"
+      format={controlledBy}
       value={state[controlledBy]}
       {...eventLoggers}
       onChange={(event) => {
         if (event.currentTarget.value) {
-          setState(event.currentTarget.value)
+          setState((state) => ({
+            ...state,
+            [controlledBy]: event.currentTarget.value,
+          }))
           console.log(`onChange: ${event.currentTarget.name}:`)
           console.log(event.currentTarget.value)
         }
