@@ -8,8 +8,7 @@ import { border, fontSize } from '../helpers/theme'
 
 type NavDirection = 'prev' | 'next'
 
-export interface PrevNextProps extends MarginProps {
-  className?: string
+export interface PrevNextProps extends MarginProps, React.HTMLAttributes<HTMLDivElement> {
   disablePrev?: boolean
   disableNext?: boolean
   linkAs?: React.ElementType
@@ -18,28 +17,23 @@ export interface PrevNextProps extends MarginProps {
   nextText?: React.ReactNode
 }
 
-interface PrevNextLinkProps {
-  className?: string
+interface PrevNextLinkProps extends React.LinkHTMLAttributes<HTMLAnchorElement> {
   disabled: boolean
-  onClick?: () => void
 }
 
 const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
-  children,
-  className,
   disabled,
   onClick,
+  ...rest
 }): React.ReactElement => (
   <a
     role="link"
     aria-disabled={disabled ? 'true' : 'false'}
-    className={className}
+    {...rest}
     onClick={onClick}
     onKeyDown={onClick && keyDownAsClick}
     tabIndex={disabled ? undefined : 0}
-  >
-    {children}
-  </a>
+  />
 )
 
 const PrevNextLink = styled(PrevNextLinkBase)`
@@ -69,7 +63,6 @@ const PrevNextLink = styled(PrevNextLinkBase)`
 `
 
 const PrevNextBase: React.FC<PrevNextProps> = ({
-  className,
   disablePrev = false,
   disableNext = false,
   linkAs,
@@ -80,7 +73,7 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   nextText,
   ...rest
 }): React.ReactElement => (
-  <div className={className} {...rest}>
+  <div {...rest}>
     <PrevNextLink
       as={linkAs}
       disabled={disablePrev}

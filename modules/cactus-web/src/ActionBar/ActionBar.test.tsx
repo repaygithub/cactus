@@ -11,18 +11,36 @@ describe('component: ActionBar', () => {
   test('typechecks', () => {
     const itemRef: React.MutableRefObject<HTMLButtonElement | null> = { current: null }
     const panelRef: React.MutableRefObject<HTMLDivElement | null> = { current: null }
-    const { getByLabelText } = render(
+    const { getByLabelText, getByTestId } = render(
       <StyleProvider>
-        <ActionBar>
-          <ActionBar.Panel id="one" icon={<ActionsGear />} ref={panelRef} aria-label="The Panel">
+        <ActionBar data-testid="bar">
+          <ActionBar.Panel
+            id="one"
+            icon={<ActionsGear />}
+            ref={panelRef}
+            aria-label="The Panel"
+            data-testid="panel"
+          >
             <p>I am a helpful message of some sort.</p>
           </ActionBar.Panel>
-          <ActionBar.Item id="two" icon={<ActionsKey />} ref={itemRef} aria-label="The Button" />
+          <ActionBar.Item
+            id="two"
+            icon={<ActionsKey />}
+            ref={itemRef}
+            aria-label="The Button"
+            data-testid="item"
+          />
         </ActionBar>
       </StyleProvider>
     )
+
+    expect(getByTestId('panel')).toBe(panelRef.current)
     expect(getByLabelText('The Panel')).toBe(panelRef.current?.firstElementChild)
+    expect(getByTestId('item')).toBe(itemRef.current)
     expect(getByLabelText('The Button')).toBe(itemRef.current)
+    const actionbar = getByTestId('bar')
+    expect(actionbar?.contains(panelRef.current)).toBe(true)
+    expect(actionbar?.contains(itemRef.current)).toBe(true)
   })
 
   test('reposition buttons', () => {

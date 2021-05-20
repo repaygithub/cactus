@@ -39,7 +39,7 @@ interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
 }
 interface MenuItemProps {
-  children?: React.ReactNode
+  children: React.ReactNode
   onSelect: () => any
 }
 
@@ -50,8 +50,9 @@ const MenuButtonStyles = createGlobalStyle`
 `
 
 const MenuItem = (props: MenuItemProps) => {
-  const { children, onSelect } = props
-  return <ReachMenuItem onSelect={onSelect}>{children}</ReachMenuItem>
+  // @ts-ignore Setting `id` screws up Reach internals...so why do they even allow it?
+  const { id, ...rest } = props
+  return <ReachMenuItem {...rest} />
 }
 
 export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
@@ -115,11 +116,16 @@ BrandBarUserMenu.defaultProps = {
 
 export default BrandBar
 
-const ActionBarUserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage }) => {
+const ActionBarUserMenu: React.FC<UserMenuProps> = ({
+  label,
+  children,
+  isProfilePage,
+  ...rest
+}) => {
   const button = (
     <ActionBar.PanelWrapper key="cactus-user-menu">
       <Menu>
-        <ActionMenuButton as={ReachMenuButton as any} $isProfilePage={isProfilePage}>
+        <ActionMenuButton as={ReachMenuButton as any} $isProfilePage={isProfilePage} {...rest}>
           <DescriptiveProfile />
           <VisuallyHidden>{label}</VisuallyHidden>
         </ActionMenuButton>
@@ -137,7 +143,7 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({ label, children, isProfile
   return renderButton && <Sidebar layoutRole="brandbar">{renderButton}</Sidebar>
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage, ...rest }) => {
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const position = React.useCallback<Position>(
     (targetRect, popoverRect) => {
@@ -158,7 +164,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage }) =
   )
   return (
     <Menu>
-      <MenuButton $isProfilePage={isProfilePage} ref={buttonRef}>
+      <MenuButton $isProfilePage={isProfilePage} ref={buttonRef} {...rest}>
         <DescriptiveProfile aria-hidden mr="8px" />
         <span>{label}</span>
         <NavigationChevronDown aria-hidden ml="8px" />
@@ -245,6 +251,7 @@ const MenuList = styled(ReachMenuList)`
   background-color: ${(p) => p.theme.colors.white};
 
   [data-reach-menu-item] {
+    z-index: 110;
     box-sizing: border-box;
     position: relative;
     display: block;

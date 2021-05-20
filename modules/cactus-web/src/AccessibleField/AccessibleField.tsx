@@ -5,6 +5,7 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import { Flex } from '../Flex/Flex'
+import { omitProps } from '../helpers/omit'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
@@ -24,7 +25,7 @@ interface AccessibleProps {
   disableTooltip?: boolean
 }
 
-type RenderFunc = (props: AccessibleProps) => JSX.Element | JSX.Element[]
+type RenderFunc = (props: AccessibleProps) => React.ReactNode
 
 // These are the props commonly used by components that wrap AccessibleField.
 export interface FieldProps {
@@ -41,11 +42,21 @@ export interface FieldProps {
   alignTooltip?: TooltipAlignment
 }
 
-interface AccessibleFieldProps extends FieldProps, MarginProps, WidthProps {
+interface AccessibleFieldProps extends FieldProps {
   id?: string
   className?: string
-  children: JSX.Element | RenderFunc
+  children: React.ReactElement | RenderFunc
   disabled?: boolean
+}
+
+interface AccessibleHookArgs {
+  id?: string
+  name?: string
+  disabled?: boolean
+  tooltip?: React.ReactNode
+  error?: React.ReactNode
+  warning?: React.ReactNode
+  success?: React.ReactNode
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -59,7 +70,7 @@ export function useAccessibleField({
   success,
   disabled,
   tooltip,
-}: Partial<AccessibleFieldProps>): AccessibleProps {
+}: AccessibleHookArgs): AccessibleProps {
   const fieldId = useId(id, name)
   const labelId = `${fieldId}-label`
   const statusId = `${fieldId}-status`
@@ -94,19 +105,34 @@ export function useAccessibleField({
 }
 
 function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
-  const accessibility = useAccessibleField(props)
+  const {
+    alignTooltip = 'right',
+    autoTooltip = true,
+    children,
+    disableTooltip,
+    disabled,
+    error,
+    id,
+    isOpen,
+    label,
+    labelProps,
+    name,
+    success,
+    tooltip,
+    warning,
+    ...rest
+  } = props
+  const hookArgs = { id, name, tooltip, disabled, error, warning, success }
+  const accessibility = useAccessibleField(hookArgs)
   const {
     fieldId,
     ariaDescribedBy,
     labelId,
-    name,
     statusId,
     tooltipId,
     status,
     statusMessage,
-    disabled,
   } = accessibility
-  const { autoTooltip = true, disableTooltip, alignTooltip = 'right' } = props
 
   const ref = React.useRef<HTMLDivElement | null>(null)
   const [forceTooltipVisible, setTooltipVisible] = React.useState<boolean>(false)
@@ -133,32 +159,27 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   }
 
   return (
-    <FieldWrapper
-      className={props.className}
-      ref={ref}
-      onFocus={handleFieldFocus}
-      onBlur={handleFieldBlur}
-    >
+    <FieldWrapper {...rest} ref={ref} onFocus={handleFieldFocus} onBlur={handleFieldBlur}>
       <Flex
         justifyContent={alignTooltip === 'right' ? 'space-between' : 'flex-start'}
         alignItems="center"
       >
-        <Label {...props.labelProps} id={labelId} htmlFor={fieldId}>
-          {props.label}
+        <Label {...labelProps} id={labelId} htmlFor={fieldId}>
+          {label}
         </Label>
-        {props.tooltip && (
+        {tooltip && (
           <Tooltip
-            label={props.tooltip}
+            label={tooltip}
             id={tooltipId}
             maxWidth={maxWidth}
             disabled={disableTooltip ?? disabled}
-            forceVisible={!props.isOpen && forceTooltipVisible}
+            forceVisible={!isOpen && forceTooltipVisible}
           />
         )}
       </Flex>
-      {typeof props.children === 'function'
-        ? props.children(accessibility)
-        : React.cloneElement(React.Children.only(props.children), {
+      {typeof children === 'function'
+        ? children(accessibility)
+        : React.cloneElement(React.Children.only(children), {
             id: fieldId,
             name,
             'aria-describedby': ariaDescribedBy,
@@ -176,7 +197,9 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   )
 }
 
-export const AccessibleField = styled(AccessibleFieldBase)`
+export const AccessibleField = styled(AccessibleFieldBase).withConfig(
+  omitProps<AccessibleFieldProps & MarginProps & WidthProps>(width, margin)
+)`
   position: relative;
   ${margin}
   ${width}

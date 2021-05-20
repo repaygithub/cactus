@@ -22,7 +22,7 @@ const isColumn = (col: any): col is ColumnObject => {
 }
 
 const DataGridTable: React.FC<DataGridTableProps> = (props) => {
-  const { children, data, dividers } = props
+  const { children, data, ...rest } = props
 
   const { columns, isCardView, cardBreakpoint, fullWidth, sortOptions, onSort } = useContext(
     DataGridContext
@@ -39,7 +39,7 @@ const DataGridTable: React.FC<DataGridTableProps> = (props) => {
   return (
     <>
       {children}
-      <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint} dividers={dividers}>
+      <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint} {...rest}>
         <Table.Header>
           {[...columns.keys()].map((key) => {
             const column = columns.get(key)

@@ -42,6 +42,7 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
     paginationOptions,
     onPageChange = () => undefined,
     cardBreakpoint = 'tiny',
+    ...rest
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
   const [topSectionRendered, setTopSectionRendered] = useState<boolean>(false)
@@ -79,7 +80,12 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
   }
 
   return (
-    <StyledDataGrid fullWidth={fullWidth} $isCardView={isCardView} $cardBreakpoint={cardBreakpoint}>
+    <StyledDataGrid
+      fullWidth={fullWidth}
+      $isCardView={isCardView}
+      $cardBreakpoint={cardBreakpoint}
+      {...rest}
+    >
       <DataGridContext.Provider
         value={{
           addDataColumn,
