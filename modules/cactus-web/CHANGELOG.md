@@ -1,3 +1,24 @@
+# v6.4.0 (Thu May 20 2021)
+
+#### 🚀 Enhancement
+
+- Forward more props to the DOM for various components so that props like data-testid can be passed down [#590](https://github.com/repaygithub/cactus/pull/590) ([@wilysword](https://github.com/wilysword))
+- Render Breadcrumbs in ellipsis mode if there is not enough space to render the standard version [#582](https://github.com/repaygithub/cactus/pull/582) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🐛 Bug Fix
+
+- Fix bug where menu dropdowns were not opening on Safari [#591](https://github.com/repaygithub/cactus/pull/591) ([@Dhalton](https://github.com/Dhalton))
+- Fix order of confirm/cancel buttons in ConfirmModal [#588](https://github.com/repaygithub/cactus/pull/588) ([@daniloPenaR](https://github.com/daniloPenaR))
+- Fix infinite re-renders with useScroll inside % width containers [#583](https://github.com/repaygithub/cactus/pull/583) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 3
+
+- [@wilysword](https://github.com/wilysword)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v6.3.0 (Fri Apr 30 2021)
 
 #### 🚀 Enhancement
