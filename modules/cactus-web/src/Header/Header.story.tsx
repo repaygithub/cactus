@@ -164,7 +164,7 @@ export const WithDescription = (): React.ReactElement => {
   return (
     <Header>
       <Header.Title>I Have a Description</Header.Title>
-      <Header.Description text={descriptionText} />
+      <Header.Description>{descriptionText}</Header.Description>
     </Header>
   )
 }

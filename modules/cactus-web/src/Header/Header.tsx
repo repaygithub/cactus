@@ -10,10 +10,6 @@ interface HeaderProps extends MarginProps, HTMLAttributes<HTMLDivElement> {
   bgColor?: BackgroundColorVariants
 }
 
-interface HeaderDescriptionProps extends HTMLAttributes<HTMLDivElement> {
-  text?: string
-}
-
 export type HeaderType = FC<HeaderProps> & {
   Item: typeof HeaderItem
   BreadcrumbRow: typeof HeaderBreadcrumbRow
@@ -33,8 +29,8 @@ export const HeaderTitle: FC<React.ComponentProps<typeof Text>> = ({ children, .
 
 export const HeaderBreadcrumbRow: FC = ({ children }) => <>{children}</>
 
-export const HeaderDescription: FC<HeaderDescriptionProps> = ({ text, children, ...rest }) => (
-  <StyledDescription {...rest}>{children || text}</StyledDescription>
+export const HeaderDescription: FC<HTMLAttributes<HTMLDivElement>> = ({ children, ...rest }) => (
+  <StyledDescription {...rest}>{children}</StyledDescription>
 )
 
 export const Header: HeaderType = ({ children, bgColor = 'lightContrast', ...rest }) => {
