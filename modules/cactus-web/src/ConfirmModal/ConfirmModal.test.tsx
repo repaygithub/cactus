@@ -7,9 +7,9 @@ import Text from '../Text/Text'
 import TextInput from '../TextInput/TextInput'
 import ConfirmModal from './ConfirmModal'
 
-describe('Confirm modal renders different variants', () => {
+describe('component: ConfirmModal', () => {
   const theme = generateTheme()
-  test('Warning variant', () => {
+  test('should render warning variant', () => {
     const { getByTestId } = render(
       <StyleProvider theme={theme}>
         <ConfirmModal
@@ -31,7 +31,7 @@ describe('Confirm modal renders different variants', () => {
     expect(styles.borderColor.trim()).toBe(theme.colors.warning.replace(/ /g, ''))
   })
 
-  test('Success variant', () => {
+  test('should render success variant', () => {
     const { getByTestId } = render(
       <StyleProvider theme={theme}>
         <ConfirmModal
@@ -52,7 +52,8 @@ describe('Confirm modal renders different variants', () => {
 
     expect(styles.borderColor.trim()).toBe(theme.colors.success.replace(/ /g, ''))
   })
-  test('Danger variant', () => {
+
+  test('should render danger variant', () => {
     const { getByTestId } = render(
       <StyleProvider theme={theme}>
         <ConfirmModal
@@ -73,9 +74,7 @@ describe('Confirm modal renders different variants', () => {
 
     expect(styles.borderColor.trim()).toBe(theme.colors.error.replace(/ /g, ''))
   })
-})
 
-describe('Modal renders TextInput and Description', (): void => {
   test('Should render child elements', (): void => {
     const { getByTestId } = render(
       <StyleProvider>
@@ -100,5 +99,29 @@ describe('Modal renders TextInput and Description', (): void => {
     const description = getByTestId('description')
     expect(input).toBeTruthy()
     expect(description).toBeTruthy()
+  })
+
+  test('should support flex item props', () => {
+    const { getByText } = render(
+      <StyleProvider>
+        <ConfirmModal
+          isOpen={true}
+          onConfirm={jest.fn()}
+          onClose={jest.fn()}
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+        >
+          Flex Confirm Modal
+        </ConfirmModal>
+      </StyleProvider>
+    )
+
+    const confirmModal = getByText('Flex Confirm Modal').parentElement?.parentElement
+    expect(confirmModal).toHaveStyle('flex: 1')
+    expect(confirmModal).toHaveStyle('flex-grow: 1')
+    expect(confirmModal).toHaveStyle('flex-shrink: 0')
+    expect(confirmModal).toHaveStyle('flex-basis: 0')
   })
 })

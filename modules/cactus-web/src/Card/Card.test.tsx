@@ -96,4 +96,20 @@ describe('component: Card', (): void => {
       expect(cardSyles.borderRadius).toBe('4px')
     })
   })
+
+  test('should support flex item props', () => {
+    const { getByText } = render(
+      <StyleProvider>
+        <Card flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+          Flex Card
+        </Card>
+      </StyleProvider>
+    )
+
+    const card = getByText('Flex Card')
+    expect(card).toHaveStyle('flex: 1')
+    expect(card).toHaveStyle('flex-grow: 1')
+    expect(card).toHaveStyle('flex-shrink: 0')
+    expect(card).toHaveStyle('flex-basis: 0')
+  })
 })

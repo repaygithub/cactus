@@ -12,7 +12,7 @@ export const ActivePageDimmer = (): React.ReactElement => {
 
   return (
     <>
-      <Flex mx={15} justifyContent="start" alignItems="flex-start" flexDirection="column">
+      <Flex mx={15} justifyContent="flex-start" alignItems="flex-start" flexDirection="column">
         <h1>Page Dimmer</h1>
         <p>
           Mauris eu felis fringilla tortor scelerisque tincidunt et quis risus. Proin dui arcu,

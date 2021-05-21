@@ -3,9 +3,10 @@ import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { flexbox, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import Avatar from '../Avatar/Avatar'
+import { FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
 import { boxShadow } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
@@ -13,7 +14,7 @@ import IconButton from '../IconButton/IconButton'
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'
 
-interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+interface AlertProps extends FlexItemProps, React.HTMLAttributes<HTMLDivElement> {
   status?: Status
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void
   closeLabel?: string
@@ -101,7 +102,16 @@ const AlertBase = (props: AlertProps): React.ReactElement => {
 }
 
 export const Alert = styled(AlertBase).withConfig(
-  omitProps<AlertStyleProps>(margin, width, 'type', 'shadow')
+  omitProps<AlertStyleProps>(
+    margin,
+    width,
+    'type',
+    'shadow',
+    'flex',
+    'flexBasis',
+    'flexGrow',
+    'flexShrink'
+  )
 )`
   box-sizing: border-box;
   display: flex;
@@ -115,6 +125,7 @@ export const Alert = styled(AlertBase).withConfig(
   border-radius: 8px;
   ${margin}
   ${width}
+  ${flexbox}
 
   div:first-child {
     flex: 0 0 auto;

@@ -115,4 +115,21 @@ describe('component: Box', (): void => {
     expect(boxStyles.borderBottomRightRadius).toBe('1px')
     expect(boxStyles.borderBottomLeftRadius).toBe('20px')
   })
+
+  test('should accept flex item props', () => {
+    const { getByText } = render(
+      <StyleProvider>
+        <Box flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+          Flex Item Box
+        </Box>
+      </StyleProvider>
+    )
+
+    const box = getByText('Flex Item Box')
+    const boxStyles = window.getComputedStyle(box)
+    expect(boxStyles.flex).toBe('1')
+    expect(boxStyles.flexBasis).toBe('0px')
+    expect(boxStyles.flexGrow).toBe('1')
+    expect(boxStyles.flexShrink).toBe('0')
+  })
 })

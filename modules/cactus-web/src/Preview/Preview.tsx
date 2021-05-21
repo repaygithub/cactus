@@ -2,11 +2,12 @@ import { NavigationChevronLeft, NavigationChevronRight, NavigationClose } from '
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { height, HeightProps, margin, MarginProps, width, WidthProps } from 'styled-system'
+import { flexbox, height, HeightProps, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import Dimmer from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
+import { FlexItemProps } from '../helpers/flexItem'
 import { boxShadow, radius } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 
@@ -14,6 +15,7 @@ interface PreviewProps
   extends MarginProps,
     WidthProps,
     HeightProps,
+    FlexItemProps,
     React.HTMLAttributes<HTMLDivElement> {
   images?: string[]
   phrases?: Phrases
@@ -168,6 +170,7 @@ const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
   justify-content: ${(p) => p.justify};
   align-items: center;
   ${margin}
+  ${flexbox}
 
   img {
     display: inline;

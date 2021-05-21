@@ -10,6 +10,7 @@ import {
   compose,
   display,
   DisplayProps,
+  flexbox,
   layout,
   LayoutProps,
   overflow,
@@ -22,6 +23,7 @@ import {
   TypographyProps,
 } from 'styled-system'
 
+import { FlexItemProps } from '../helpers/flexItem'
 import { radius, textStyle } from '../helpers/theme'
 
 interface CustomBR {
@@ -55,7 +57,8 @@ export interface BoxProps
     DisplayProps,
     TypographyProps,
     CustomBorderProps,
-    OverflowProps {
+    OverflowProps,
+    FlexItemProps {
   textStyle?: keyof TextStyleCollection
 }
 
@@ -99,7 +102,18 @@ const decideBorderRadius = (props: ThemedStyledProps<BoxProps, DefaultTheme>) =>
 
 export const Box = styled('div')<BoxProps>`
   box-sizing: border-box;
-  ${compose(position, display, layout, space, colorStyle, color, typography, border, overflow)}
+  ${compose(
+    position,
+    display,
+    layout,
+    space,
+    colorStyle,
+    color,
+    typography,
+    border,
+    overflow,
+    flexbox
+  )}
   ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
   ${decideBorderRadius}
 `

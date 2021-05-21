@@ -3,17 +3,27 @@ import { NavigationClose } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
-import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
+import {
+  flexbox,
+  height,
+  HeightProps,
+  maxHeight,
+  MaxHeightProps,
+  width,
+  WidthProps,
+} from 'styled-system'
 
 import { DimmerStyled } from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
+import { FlexItemProps } from '../helpers/flexItem'
+import { omitProps } from '../helpers/omit'
 import { border, boxShadow, radius } from '../helpers/theme'
 import cssVariant from '../helpers/variant'
 import IconButton from '../IconButton/IconButton'
 
 export type ModalType = 'action' | 'danger' | 'warning' | 'success'
 
-export interface ModalProps extends WidthProps {
+export interface ModalProps extends WidthProps, FlexItemProps {
   className?: string
   closeLabel?: string
   isOpen: boolean
@@ -23,11 +33,16 @@ export interface ModalProps extends WidthProps {
   innerHeight?: HeightProps['height']
   innerMaxHeight?: MaxHeightProps['maxHeight']
 }
-interface ModalPopupProps extends DialogProps, WidthProps, HeightProps, MaxHeightProps {
+interface ModalPopupProps
+  extends DialogProps,
+    WidthProps,
+    HeightProps,
+    MaxHeightProps,
+    FlexItemProps {
   variant: ModalType
 }
 
-const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
+const ModalBase: FunctionComponent<ModalProps> = (props): React.ReactElement => {
   const {
     variant = 'action',
     children,
@@ -71,12 +86,9 @@ const Modalbase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
   )
 }
 
-export const ModalPopUp = styled(DimmerStyled).withConfig({
-  shouldForwardProp: (prop) => {
-    // @ts-ignore
-    return prop !== 'maxHeight'
-  },
-})<ModalPopupProps>`
+export const ModalPopUp = styled(DimmerStyled).withConfig(
+  omitProps<ModalPopupProps>('maxHeight', 'flex', 'flexBasis', 'flexGrow', 'flexShrink')
+)`
   bottom: 0;
   display: flex;
   left: 0;
@@ -89,7 +101,7 @@ export const ModalPopUp = styled(DimmerStyled).withConfig({
   z-index: 101;
   > [data-reach-dialog-content] {
     ${(p) => p.width && 'box-sizing: border-box;'}
-    flex-basis: ${(p) => !p.width && '100%'};
+    flex-basis: ${(p) => !p.width && p.flexBasis === undefined && '100%'};
     width: ${(p) => !p.width && '100%'};
     border: ${(p) => border(p.theme, '')};
     border-radius: ${radius(20)};
@@ -97,6 +109,7 @@ export const ModalPopUp = styled(DimmerStyled).withConfig({
     ${(p): string => boxShadow(p.theme, 2)};
     max-width: ${(p) => !p.width && '80%'};
     ${width}
+    ${flexbox}
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;
@@ -147,7 +160,7 @@ export const ModalPopUp = styled(DimmerStyled).withConfig({
     }
   }
 `
-export const Modal = styled(Modalbase)``
+export const Modal = styled(ModalBase)``
 
 Modal.propTypes = {
   className: PropTypes.string,

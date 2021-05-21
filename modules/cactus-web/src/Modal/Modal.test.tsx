@@ -5,8 +5,8 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextInput from '../TextInput/TextInput'
 import Modal from './Modal'
 
-describe('Modal is open when isOpen=true', (): void => {
-  test('Modal is open', (): void => {
+describe('component: Modal', () => {
+  test('Modal is open when isOpen=true', (): void => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
@@ -22,10 +22,8 @@ describe('Modal is open when isOpen=true', (): void => {
     )
     expect(baseElement).toContainHTML('<reach-portal>')
   })
-})
 
-describe('Modal is closed when isOpen=false', (): void => {
-  test('Modal is closed', (): void => {
+  test('Modal is closed when isOpen=false', () => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
@@ -39,10 +37,8 @@ describe('Modal is closed when isOpen=false', (): void => {
 
     expect(baseElement).not.toContainHTML('<reach-portal>')
   })
-})
 
-describe('Aria-labels applied correctly', (): void => {
-  test('snapshot', (): void => {
+  test('Aria-labels applied correctly', () => {
     const { baseElement } = render(
       <StyleProvider>
         <Modal
@@ -59,10 +55,8 @@ describe('Aria-labels applied correctly', (): void => {
     expect(baseElement.querySelector('div[aria-label="Modal Label"]')).toBeInTheDocument()
     expect(baseElement.querySelector('div[aria-modal="true"]')).toBeInTheDocument()
   })
-})
 
-describe('Can render content as children', (): void => {
-  test('snapshot', (): void => {
+  test('Can render content as children', () => {
     const { getByTestId } = render(
       <StyleProvider>
         <Modal
@@ -80,5 +74,21 @@ describe('Can render content as children', (): void => {
     )
     const child = getByTestId('child')
     expect(child).toBeInTheDocument()
+  })
+
+  test('should support flex item props', () => {
+    const { getByText } = render(
+      <StyleProvider>
+        <Modal isOpen={true} onClose={jest.fn()} flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+          Flex Modal
+        </Modal>
+      </StyleProvider>
+    )
+
+    const modal = getByText('Flex Modal').parentElement
+    expect(modal).toHaveStyle('flex: 1')
+    expect(modal).toHaveStyle('flex-grow: 1')
+    expect(modal).toHaveStyle('flex-shrink: 0')
+    expect(modal).toHaveStyle('flex-basis: 0')
   })
 })
