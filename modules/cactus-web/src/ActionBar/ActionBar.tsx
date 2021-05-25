@@ -95,7 +95,7 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
 // The box shadow is #2, but shifted to be only on the right side.
 const StyledPopup = styled.div.withConfig({
   shouldForwardProp: (prop) => !stylePropNames.includes(prop),
-})<StyleProps>`
+})<StyleProps & { expanded?: boolean }>`
   ${(p) => p.theme.colorStyles.standard};
   box-sizing: border-box;
   z-index: 100;

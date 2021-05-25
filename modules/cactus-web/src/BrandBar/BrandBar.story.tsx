@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
-import { ActionBar, BrandBar, Layout, SelectField } from '../'
+import { ActionBar, BrandBar, Layout, Link, SelectField } from '../'
 import { SelectValueType } from '../Select/Select'
 
 const LOGO =
@@ -29,6 +29,27 @@ export const BasicUsage = (): React.ReactElement => (
         </BrandBar.UserMenuItem>
         <BrandBar.UserMenuItem onSelect={action('Logout')}>
           {text('Action two', 'Logout')}
+        </BrandBar.UserMenuItem>
+      </BrandBar.UserMenu>
+    </BrandBar>
+  </Layout>
+)
+
+export const UserMenuLink = (): React.ReactElement => (
+  <Layout>
+    <BrandBar logo={LOGO}>
+      <BrandBar.UserMenu
+        isProfilePage={boolean('On profile page?', false)}
+        label={text('Menu Title', 'Hershell Jewess')}
+      >
+        <BrandBar.UserMenuItem onClick={action('Settings')}>
+          {text('Action one', 'Settings')}
+        </BrandBar.UserMenuItem>
+        <BrandBar.UserMenuItem onClick={action('Logout')}>
+          {text('Action two', 'Logout')}
+        </BrandBar.UserMenuItem>
+        <BrandBar.UserMenuItem as={Link} to="https://www.google.com">
+          Go to Google
         </BrandBar.UserMenuItem>
       </BrandBar.UserMenu>
     </BrandBar>

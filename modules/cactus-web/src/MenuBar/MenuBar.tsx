@@ -189,7 +189,7 @@ const getWrappedScrollInfo: GetScrollInfo = (e) => ({
   buttonWidth: BUTTON_WIDTH,
   listItems: getOwnedMenuItems(e),
 })
-const getPanelScrollInfo: GetScrollInfo = (menu) => ({
+export const getPanelScrollInfo: GetScrollInfo = (menu) => ({
   listWrapper: menu,
   buttonWidth: 0,
   listItems: getVisibleMenuItems(menu),
@@ -242,10 +242,14 @@ const SideMenu: React.FC<React.HTMLAttributes<HTMLElement>> = (props) => {
   return <InlineMenu {...props} $margin={marginRef.current} className={classRef.current} />
 }
 
-const onMenuBlur = (e: React.FocusEvent<HTMLElement>) => {
+export const onMenuBlur: (e: React.FocusEvent<HTMLElement>) => void = (
+  e: React.FocusEvent<HTMLElement>
+) => {
   e.currentTarget.tabIndex = 0
 }
-const useFocusHandler = (setFocus: FocusSetter) =>
+export const useFocusHandler: (
+  setFocus: FocusSetter
+) => (e: React.FocusEvent<HTMLElement>) => void = (setFocus: FocusSetter) =>
   React.useCallback(
     (e: React.FocusEvent<HTMLElement>) => {
       e.currentTarget.tabIndex = -1
@@ -425,7 +429,7 @@ const InlineMenu = styled.ul<{ $margin: number }>`
   }
 `
 
-const SidebarMenu = styled.ul`
+export const SidebarMenu = styled.ul`
   ${(p) => p.theme.colorStyles.standard}
   ${(p) => textStyle(p.theme, 'small')};
   ${listStyle}
@@ -552,7 +556,7 @@ const buttonStyles = `
   }
 `
 
-const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
+export const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
   ${buttonStyles}
   width: 100%;
   height: 100%;
