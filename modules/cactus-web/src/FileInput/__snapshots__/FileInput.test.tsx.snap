@@ -504,8 +504,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c12 .c5,
-.c12 .SvgComponent-bevlva,
-.c12 .SvgComponent-fCAhFS {
+.c12 .sc-dacFzL,
+.c12 .sc-dWdcrH {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -598,12 +598,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c2 .c3 .SvgComponent-fCAhFS {
+.c2 .c3 .sc-dWdcrH {
   height: 18px;
   width: 18px;
 }
 
-.c2 .sc-eCssSg {
+.c2 .sc-gkdzZj {
   height: 12px;
   width: 12px;
 }
@@ -824,7 +824,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c4 .SvgComponent-iZpKnr {
+.c4 .sc-jUEnpm {
   padding-bottom: 4px;
 }
 
@@ -956,7 +956,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c2 .c3 .SvgComponent-iZpKnr {
+.c2 .c3 .sc-jUEnpm {
   height: 16px;
   width: 16px;
 }
@@ -966,7 +966,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c2 .sc-eCssSg {
+.c2 .sc-gkdzZj {
   height: 12px;
   width: 12px;
 }
@@ -984,7 +984,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-jSgupP {
+.c1 .sc-flMoUE {
   position: relative;
   margin-top: 4px;
 }
@@ -1216,17 +1216,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   padding: 0;
 }
 
-.c2 .sc-bdfBwQ {
+.c2 .sc-gVgnHT {
   height: 24px;
   width: 24px;
 }
 
-.c2 .sc-bdfBwQ .SvgComponent-iZpKnr {
+.c2 .sc-gVgnHT .sc-jUEnpm {
   height: 16px;
   width: 16px;
 }
 
-.c2 .sc-bdfBwQ .SvgComponent-fCAhFS {
+.c2 .sc-gVgnHT .sc-dWdcrH {
   height: 18px;
   width: 18px;
 }
@@ -1236,11 +1236,11 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .sc-hKgILt {
+.c2 .sc-gyUeRy {
   margin-left: auto;
 }
 
-.c2 .SvgComponent-eJMnHx {
+.c2 .sc-TmcTc {
   height: 12px;
   width: 12px;
 }
@@ -1249,7 +1249,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-jSgupP {
+.c1 .sc-flMoUE {
   position: relative;
   margin-top: 4px;
 }
