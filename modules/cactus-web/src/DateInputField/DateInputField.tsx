@@ -30,6 +30,10 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     disableTooltip,
     alignTooltip,
     invalidDateLabel = 'The date you have selected is invalid. Please pick another date.',
+    flex,
+    flexGrow,
+    flexShrink,
+    flexBasis,
     ...rest
   } = omitMargins(props) as Omit<DateInputFieldProps, keyof MarginProps>
 
@@ -54,6 +58,10 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
+      flex={flex}
+      flexGrow={flexGrow}
+      flexShrink={flexShrink}
+      flexBasis={flexBasis}
     >
       {({
         fieldId,

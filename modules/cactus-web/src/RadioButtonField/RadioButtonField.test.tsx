@@ -57,4 +57,27 @@ describe('component: RadioButtonField', (): void => {
     fireEvent.blur(getByLabelText('Aegon'))
     expect(onBlur).toHaveBeenCalled()
   })
+
+  test('should support flex item props', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <RadioButtonField
+          id="Targaryen"
+          name="rbf"
+          label="Aegon"
+          data-testid="flex-rbf"
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+        />
+      </StyleProvider>
+    )
+
+    const radioField = getByTestId('flex-rbf').parentElement?.parentElement
+    expect(radioField).toHaveStyle('flex: 1')
+    expect(radioField).toHaveStyle('flex-grow: 1')
+    expect(radioField).toHaveStyle('flex-shrink: 0')
+    expect(radioField).toHaveStyle('flex-basis: 0')
+  })
 })

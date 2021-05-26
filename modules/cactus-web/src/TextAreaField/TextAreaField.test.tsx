@@ -106,6 +106,29 @@ describe('component: TextAreaField', (): void => {
     )
 
     expect(container.firstElementChild).toHaveStyle('margin-left: 8px')
+    expect(container.firstElementChild).toHaveStyle('margin-right: 8px')
+  })
+
+  test('should support flex item props', () => {
+    const { container } = render(
+      <StyleProvider>
+        <TextAreaField
+          id="missing"
+          name="missing"
+          label="missing a comma"
+          tooltip="you are missing a comma, sir"
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+        />
+      </StyleProvider>
+    )
+
+    expect(container.firstElementChild).toHaveStyle('flex: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-grow: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-shrink: 0')
+    expect(container.firstElementChild).toHaveStyle('flex-basis: 0')
   })
 
   test('should trigger onChange handler', (): void => {

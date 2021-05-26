@@ -5,6 +5,7 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import { Flex } from '../Flex/Flex'
+import { FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
@@ -28,7 +29,7 @@ interface AccessibleProps {
 type RenderFunc = (props: AccessibleProps) => React.ReactNode
 
 // These are the props commonly used by components that wrap AccessibleField.
-export interface FieldProps {
+export interface FieldProps extends FlexItemProps {
   name: string
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor' | 'id'>

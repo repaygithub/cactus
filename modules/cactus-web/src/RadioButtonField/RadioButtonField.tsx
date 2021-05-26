@@ -4,12 +4,16 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
+import { FlexItemProps } from '../helpers/flexItem'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
 
-export interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id'>, MarginProps {
+export interface RadioButtonFieldProps
+  extends Omit<RadioButtonProps, 'id'>,
+    MarginProps,
+    FlexItemProps {
   label: React.ReactNode
   name: string
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
@@ -18,13 +22,28 @@ export interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id'>, Mar
 
 const RadioButtonFieldBase = React.forwardRef<HTMLInputElement, RadioButtonFieldProps>(
   (props, ref) => {
-    const { label, labelProps, id, className, name, ...radioButtonProps } = omitMargins(
-      props
-    ) as Omit<RadioButtonFieldProps, keyof MarginProps>
+    const {
+      label,
+      labelProps,
+      id,
+      className,
+      name,
+      flex,
+      flexGrow,
+      flexShrink,
+      flexBasis,
+      ...radioButtonProps
+    } = omitMargins(props) as Omit<RadioButtonFieldProps, keyof MarginProps>
     const radioButtonId = useId(id, name)
 
     return (
-      <FieldWrapper className={className}>
+      <FieldWrapper
+        className={className}
+        flex={flex}
+        flexGrow={flexGrow}
+        flexShrink={flexShrink}
+        flexBasis={flexBasis}
+      >
         <RadioButton ref={ref} id={radioButtonId} name={name} {...radioButtonProps} />
         <Label {...labelProps} htmlFor={radioButtonId}>
           {label}

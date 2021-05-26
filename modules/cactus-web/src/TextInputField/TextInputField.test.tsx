@@ -103,6 +103,27 @@ describe('component: TextInputField', (): void => {
     expect(container.firstElementChild).toHaveStyle('margin: 8px')
   })
 
+  test('should support flex item props', () => {
+    const { container } = render(
+      <StyleProvider>
+        <TextInputField
+          id="margins"
+          name="margins"
+          label="Check out all these sick margins"
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+        />
+      </StyleProvider>
+    )
+
+    expect(container.firstElementChild).toHaveStyle('flex: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-grow: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-shrink: 0')
+    expect(container.firstElementChild).toHaveStyle('flex-basis: 0')
+  })
+
   test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
