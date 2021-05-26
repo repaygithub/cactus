@@ -125,5 +125,5 @@ export const positionDropDown: PositionCallback = (dd, button) => {
 
 const MARGIN = 8
 
-const getViewport = () =>
+export const getViewport = (): Element | null =>
   document.compatMode === 'BackCompat' ? document.querySelector('body') : document.documentElement

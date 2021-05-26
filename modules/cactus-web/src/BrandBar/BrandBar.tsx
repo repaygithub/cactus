@@ -8,6 +8,7 @@ import { OrderHint, useAction } from '../ActionBar/ActionProvider'
 import Flex from '../Flex/Flex'
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
+import { getViewport, usePositioning } from '../helpers/positionPopover'
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { Sidebar } from '../Layout/Sidebar'
@@ -139,7 +140,7 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
   })
 
   const buttonId = buttonProps.id
-  wrapperProps.onClick = React.useCallback(
+  popupProps.onClick = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       const target = event.target as HTMLDivElement
       if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
@@ -180,9 +181,13 @@ const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePop
 
 const positionPopup = (menu: HTMLElement, menuButton: HTMLElement | null) => {
   if (menuButton) {
-    const { left, width } = menuButton.getBoundingClientRect()
-    menu.style.left = `${left}px`
-    menu.style.width = `${width}px`
+    const parent = menuButton.offsetParent || getViewport()
+    const viewWidth = parent?.getBoundingClientRect().right || window.innerWidth
+    const { right, width, bottom } = menuButton.getBoundingClientRect()
+    menu.style.top = `${bottom}px`
+    menu.style.right = `${viewWidth - right}px`
+    menu.style.minWidth = `${width}px`
+    menu.style.maxWidth = '400px'
   }
 }
 
@@ -193,30 +198,39 @@ const UserMenu: React.FC<UserMenuProps> = ({
   isProfilePage,
   ...rest
 }) => {
-  const { buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
+  const { expanded, buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
     id,
     focusControl,
-    positionPopup,
     onWrapperKeyDown: handleArrows,
   })
-  const buttonId = buttonProps.id
+  const buttonRef = React.useRef<HTMLButtonElement>(null)
+  const listRef = React.useRef<HTMLUListElement>(null)
+  usePositioning({
+    position: positionPopup,
+    visible: expanded,
+    ref: listRef,
+    anchorRef: buttonRef,
+    updateOnScroll: true,
+  })
   wrapperProps.onClick = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       const target = event.target as HTMLDivElement
       if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
-        toggle(false, document.getElementById(buttonId as string))
+        toggle(false, buttonRef.current)
       }
     },
-    [toggle, buttonId]
+    [toggle]
   )
   return (
     <div {...wrapperProps}>
-      <MenuButton {...buttonProps} {...rest}>
+      <MenuButton {...buttonProps} {...rest} ref={buttonRef}>
         <DescriptiveProfile aria-hidden mr="8px" />
         <span>{label}</span>
         <NavigationChevronDown aria-hidden ml="8px" />
       </MenuButton>
-      <MenuList {...popupProps}>{children}</MenuList>
+      <MenuList {...popupProps} ref={listRef}>
+        {children}
+      </MenuList>
     </div>
   )
 }
@@ -291,6 +305,7 @@ const MenuList = styled.ul`
   display: block;
   position: fixed;
   outline: none;
+  z-index: 110;
   &[aria-hidden] {
     display: none;
   }
@@ -302,7 +317,6 @@ const MenuList = styled.ul`
   list-style: none;
 
   [role='menuitem'] {
-    z-index: 110;
     box-sizing: border-box;
     position: relative;
     display: block;
