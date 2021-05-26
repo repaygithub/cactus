@@ -6,19 +6,21 @@ import FieldWrapper from './FieldWrapper'
 
 describe('component: FormField', (): void => {
   test('should provide 16px of spacing between fields', (): void => {
-    const { container } = render(
+    const { getByTestId } = render(
       <StyleProvider>
         <div>
           <FieldWrapper>
             <input />
           </FieldWrapper>
-          <FieldWrapper>
+          <FieldWrapper data-testid="fieldWrapper">
             <input />
           </FieldWrapper>
         </div>
       </StyleProvider>
     )
+    const fieldWrapper = getByTestId('fieldWrapper')
+    const styles = window.getComputedStyle(fieldWrapper)
 
-    expect(container).toMatchSnapshot()
+    expect(styles.marginTop).toBe('16px')
   })
 })

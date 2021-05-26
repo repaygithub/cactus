@@ -74,15 +74,6 @@ const Menu = () => {
 }
 
 describe('component: MenuBar', () => {
-  test('typechecks', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Menu />
-      </StyleProvider>
-    )
-    expect(container).toMatchSnapshot()
-  })
-
   test('sidebar', () => {
     const { container } = render(
       <StyleProvider>
@@ -91,7 +82,6 @@ describe('component: MenuBar', () => {
         </ScreenSizeContext.Provider>
       </StyleProvider>
     )
-    expect(container).toMatchSnapshot()
     const hamburger = container.querySelectorAll('[role="button"]')
     expect(hamburger).toHaveLength(1)
   })

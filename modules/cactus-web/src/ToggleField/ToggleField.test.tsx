@@ -10,48 +10,6 @@ import ToggleField from './ToggleField'
 const noop = () => undefined
 
 describe('component: ToggleField', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <ToggleField
-          id="static-id"
-          name="is_enabled"
-          label="Enabled"
-          checked={false}
-          onChange={noop}
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('snapshot when checked=true', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <ToggleField
-          id="static-id"
-          name="is_enabled"
-          label="Enabled"
-          checked={true}
-          onChange={noop}
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('snapshot when disabled', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <ToggleField id="static-id" name="is_enabled" label="Enabled" checked={false} disabled />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should generate unique id when one is not provided', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>

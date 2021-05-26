@@ -5,18 +5,24 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import Header from './Header'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from '../helpers/constants'
+import Button from '../Button/Button'
+import Breadcrumb from '../Breadcrumb/Breadcrumb'
 
 # Header
 
-The `Header` component allows you to set a heading `Title` with aditional elements: `Breadcrumbs` or `Back buttons` and other different items.
+The `Header` component allows you to set a `Header.Title` with additional elements like `Breadcrumb` or `Button`, using the sub-components it offers.
 
 ## Basic usage
 
-- The `Header` component has `Header.Title`, `Header.Item` and `Header.BreadcrumbRow` sub-components.
-- The `Header.Title` is the most important sub-component, you must use it with the `Header` component.
-- The `Header.BreadcrumbRow` allows you to display a `Breadcrumb` component or a `Go Back` button above the `Title`.
-- The `Header.Item` allows you to wrap additional items that will be right-aligned (in desktop views).
-- The `Header` component uses its sub-components to arrange the elements you want to insert inside the header. Any child components not wrapped in a subcomponent will not be rendered.
+The `Header` component offers the following sub-components to help arrange the items in the page header:
+  - The `Header.Title` is the most important sub-component, you must use it with the `Header` component.
+  - The `Header.BreadcrumbRow` allows you to display a `Breadcrumb` component or a `Go Back` button above the `Title`.
+  - The `Header.Item` allows you to add additional items that will be right-aligned (in desktop views).
+  - The `Header.Description` allows you to render some description text below the header's title.
+
+The `Header` component uses its sub-components to arrange the elements you want to insert inside the header. Any child components not wrapped in a sub-component will not be rendered.
 
 ```jsx
 import * as React from 'react'
@@ -30,19 +36,29 @@ import { Header } from '@repay/cactus-web'
 ### Try It out
 
 export const code = `
-    <Header>
-      <Header.BreadcrumbRow>
-        <Link to="https://repaygithub.github.io/cactus/">Go back!</Link>
-      </Header.BreadcrumbRow>
-      <Header.Title>Heading Title</Header.Title>
-      <Header.Item>
-        <Button variant="action">
-          <Icon /> Add new configuration
-        </Button>
-      </Header.Item>
-      <Header.Item>Some text because I like crowded UIs</Header.Item>
-    </Header>
+<Header>
+  <Header.BreadcrumbRow>
+    <Breadcrumb>
+      <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+      <Breadcrumb.Active>Header Docs</Breadcrumb.Active>
+    </Breadcrumb>
+  </Header.BreadcrumbRow>
+  <Header.Title>Heading Title</Header.Title>
+  <Header.Description>Description of the current page</Header.Description>
+  <Header.Item>
+    <Button variant="action">
+      Add new configuration
+    </Button>
+  </Header.Item>
+  <Header.Item>Some text because I like crowded UIs</Header.Item>
+</Header>
 `
+
+<LiveProvider code={code} scope={{ Header, Button, Breadcrumb}}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Properties
 
@@ -52,12 +68,15 @@ export const code = `
 
 ### Header.Item
 
-<PropsTable of={Header} staticProp="Header.Item" />
+<PropsTable of={Header} staticProp="HeaderItem" />
 
 ### Header.Title
 
-<PropsTable of={Header} staticProp="Header.Title" />
+<PropsTable of={Header} staticProp="HeaderTitle" />
 
 ### Header.BreadcrumbRow
 
-<PropsTable of={Header} staticProp="Header.BreadcrumbRow" />
+<PropsTable of={Header} staticProp="HeaderBreadcrumbRow" />
+
+### Header.Description
+<PropsTable of={Header} staticProp="HeaderDescription" />

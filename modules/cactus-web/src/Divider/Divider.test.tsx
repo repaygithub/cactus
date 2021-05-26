@@ -5,13 +5,14 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Divider from './Divider'
 
 describe('component: Divider', () => {
-  test('snapshot', () => {
+  test('Should render HR element', () => {
     const { container } = render(
       <StyleProvider>
         <Divider />
       </StyleProvider>
     )
+    const divider = container.firstElementChild
 
-    expect(container).toMatchSnapshot()
+    expect(divider?.tagName).toBe('HR')
   })
 })

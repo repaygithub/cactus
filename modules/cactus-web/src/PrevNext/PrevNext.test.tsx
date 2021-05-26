@@ -6,46 +6,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import PrevNext from './PrevNext'
 
 describe('component: PrevNext', (): void => {
-  test('basic usage', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <PrevNext />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('provided link text', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <PrevNext prevText="Go Back" nextText="Go Forward" />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('disable prev', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <PrevNext disablePrev={true} />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('disable next', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <PrevNext disableNext={true} />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('it calls the onNavigate handler when link is clicked', (): void => {
     const mockNavigate = jest.fn()
     const { getByText } = render(

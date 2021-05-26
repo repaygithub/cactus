@@ -5,39 +5,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import FileInputField from './FileInputField'
 
 describe('component: FileInputField', (): void => {
-  test('should render file input field', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <FileInputField
-          name="bears"
-          id="consistent"
-          label="Just Boolin"
-          accept={['.txt']}
-          tooltip="upload something"
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render a disabled file input field', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <FileInputField
-          name="bears"
-          id="consistent"
-          label="Just Boolin"
-          accept={['.txt']}
-          tooltip="upload something"
-          disabled={true}
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should render a loading file', (): void => {
     const { container } = render(
       <StyleProvider>

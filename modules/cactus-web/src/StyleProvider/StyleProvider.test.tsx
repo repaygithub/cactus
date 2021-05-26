@@ -23,16 +23,6 @@ describe('component: StyleProvider', (): void => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should provide a default theme to children', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <TestComponent />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
+    expect(container.firstElementChild?.innerHTML).toBe('theme included')
   })
 })

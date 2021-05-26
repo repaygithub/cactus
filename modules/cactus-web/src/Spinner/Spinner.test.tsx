@@ -5,13 +5,14 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Spinner from './Spinner'
 
 describe('component: Spinner', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
+  test('Exists', (): void => {
+    const { getByTestId } = render(
       <StyleProvider>
-        <Spinner />
+        <Spinner data-testid="spin" />
       </StyleProvider>
     )
-
-    expect(container).toMatchSnapshot()
+    const spinner = getByTestId('spin')
+    expect(spinner.tagName).toBe('svg')
+    expect(spinner).toBeInTheDocument()
   })
 })

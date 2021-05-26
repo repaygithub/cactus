@@ -7,74 +7,27 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import TextInput from './TextInput'
 
 describe('component: TextInput', (): void => {
-  test('should render a text input', (): void => {
-    const input = render(
-      <StyleProvider>
-        <TextInput />
-      </StyleProvider>
-    )
-
-    expect(input.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render a disabled input', (): void => {
-    const input = render(
-      <StyleProvider>
-        <TextInput disabled />
-      </StyleProvider>
-    )
-
-    expect(input.asFragment()).toMatchSnapshot()
-  })
-
   test('should render an input with a placeholder', (): void => {
-    const input = render(
+    const { getByPlaceholderText } = render(
       <StyleProvider>
         <TextInput placeholder="hold my place" />
       </StyleProvider>
     )
 
-    expect(input.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render a success input', (): void => {
-    const input = render(
-      <StyleProvider>
-        <TextInput status="success" />
-      </StyleProvider>
-    )
-
-    expect(input.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render an warning input', (): void => {
-    const input = render(
-      <StyleProvider>
-        <TextInput status="warning" />
-      </StyleProvider>
-    )
-
-    expect(input.asFragment()).toMatchSnapshot()
-  })
-
-  test('should render an error input', (): void => {
-    const input = render(
-      <StyleProvider>
-        <TextInput status="error" />
-      </StyleProvider>
-    )
-
-    expect(input.asFragment()).toMatchSnapshot()
+    expect(getByPlaceholderText('hold my place')).toBeInTheDocument()
   })
 
   test('should support margin space props', (): void => {
-    const textInput = render(
+    const { getByPlaceholderText } = render(
       <StyleProvider>
-        <TextInput marginTop={4} />
+        <TextInput marginTop={4} placeholder="Do I wanna know?" />
       </StyleProvider>
     )
 
-    expect(textInput.asFragment()).toMatchSnapshot()
+    const textInput = getByPlaceholderText('Do I wanna know?').parentElement
+    const styles = window.getComputedStyle(textInput as HTMLElement)
+
+    expect(styles.marginTop).toBe('16px')
   })
 
   test('should trigger onChange handler', (): void => {
@@ -92,35 +45,44 @@ describe('component: TextInput', (): void => {
   describe('with theme customization', (): void => {
     test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { asFragment } = render(
+      const { getByPlaceholderText } = render(
         <StyleProvider theme={theme}>
-          <TextInput />
+          <TextInput placeholder="Do I wanna know?" />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const textInput = getByPlaceholderText('Do I wanna know?')
+      const styles = window.getComputedStyle(textInput)
+
+      expect(styles.borderWidth).toBe('2px')
     })
 
     test('should have 8px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { asFragment } = render(
+      const { getByPlaceholderText } = render(
         <StyleProvider theme={theme}>
-          <TextInput />
+          <TextInput placeholder="Do I wanna know?" />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const textInput = getByPlaceholderText('Do I wanna know?')
+      const styles = window.getComputedStyle(textInput)
+
+      expect(styles.borderRadius).toBe('8px')
     })
 
     test('should have 1px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { asFragment } = render(
+      const { getByPlaceholderText } = render(
         <StyleProvider theme={theme}>
-          <TextInput />
+          <TextInput placeholder="Do I wanna know?" />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const textInput = getByPlaceholderText('Do I wanna know?')
+      const styles = window.getComputedStyle(textInput)
+
+      expect(styles.borderRadius).toBe('1px')
     })
   })
 })

@@ -16,21 +16,6 @@ function closest(el: HTMLElement, matcher: (el: HTMLElement) => boolean): HTMLEl
 }
 
 describe('component: SelectField', (): void => {
-  test('minimal snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <SelectField
-          label="Requires a label"
-          name="the-test-select-field"
-          id="prevent-random-id"
-          options={['basic', 'options']}
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('render with complex options', (): void => {
     const { getByLabelText } = render(
       <StyleProvider>

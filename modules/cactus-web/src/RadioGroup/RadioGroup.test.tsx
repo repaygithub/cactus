@@ -28,7 +28,6 @@ describe('component: RadioGroup', (): void => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
     const radios = container.querySelectorAll('input')
     for (let i = 0; i < 5; i++) {
       const radio = radios[i]
@@ -64,7 +63,6 @@ describe('component: RadioGroup', (): void => {
       </StyleProvider>
     )
 
-    expect(container).toMatchSnapshot()
     expect(container.querySelector('fieldset')?.disabled).toBe(true)
     const radios = container.querySelectorAll('input')
     for (let i = 0; i < 5; i++) {

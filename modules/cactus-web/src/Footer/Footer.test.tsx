@@ -9,20 +9,6 @@ const REPAY_LOGO =
 const Logo = () => <img data-testid="image" src={REPAY_LOGO} />
 
 describe('component: Footer', () => {
-  test('snapshot', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Footer logo={REPAY_LOGO}>
-          Custom Content
-          <Footer.Link to="https://google.com">Some Link</Footer.Link>
-          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
-        </Footer>
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should be able to pass custom content using children', () => {
     const { getByText } = render(
       <StyleProvider>

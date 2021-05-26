@@ -6,23 +6,16 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Card from './Card'
 
 describe('component: Card', (): void => {
-  test('snapshot', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <Card />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
   test('should support margin space props', (): void => {
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider>
         <Card m={2}>Content</Card>
       </StyleProvider>
     )
+    const card = getByText('Content')
+    const cardSyles = window.getComputedStyle(card)
 
-    expect(container).toMatchSnapshot()
+    expect(cardSyles.margin).toBe('4px')
   })
 
   test('should support padding props', (): void => {
@@ -76,35 +69,31 @@ describe('component: Card', (): void => {
   describe('with theme customization', (): void => {
     test('should have no box shadow & 2px borders', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false, border: 'thick' })
-      const { asFragment } = render(
+      const { getByText } = render(
         <StyleProvider theme={theme}>
-          <Card />
+          <Card>Content</Card>
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const card = getByText('Content')
+      const cardSyles = window.getComputedStyle(card)
+
+      expect(cardSyles.borderWidth).toBe('2px')
+      expect(cardSyles.boxShadow).toBe('')
     })
 
     test('should have 4px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { asFragment } = render(
+      const { getByText } = render(
         <StyleProvider theme={theme}>
-          <Card />
+          <Card>Content</Card>
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
-    })
+      const card = getByText('Content')
+      const cardSyles = window.getComputedStyle(card)
 
-    test('should have 1px border radius', (): void => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <Card />
-        </StyleProvider>
-      )
-
-      expect(asFragment()).toMatchSnapshot()
+      expect(cardSyles.borderRadius).toBe('4px')
     })
   })
 })

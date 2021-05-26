@@ -16,16 +16,6 @@ function getActiveValue(): string {
 }
 
 describe('component: Select', (): void => {
-  test('snapshot', (): void => {
-    const { asFragment } = render(
-      <StyleProvider>
-        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-      </StyleProvider>
-    )
-
-    expect(asFragment()).toMatchSnapshot()
-  })
-
   test('can receive options as objects', (): void => {
     const options = [
       { value: 'yum', label: 'Yum' },
@@ -1296,46 +1286,56 @@ describe('component: Select', (): void => {
   describe('with theme customization', (): void => {
     test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <Select id="test-id" name="customize" options={['thin', 'thick']} />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const selectComponent = container.querySelector('[id="test-id"]')
+      const styles = window.getComputedStyle(selectComponent as Element)
+      expect(styles.borderWidth).toBe('2px')
     })
 
     test('should match intermediate shape styles', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <Select id="test-id" name="customize" options={['shape', 'border']} />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const selectComponent = container.querySelector('[id="test-id"]')
+      const styles = window.getComputedStyle(selectComponent as Element)
+      expect(styles.borderWidth).toBe('1px')
+      expect(styles.borderRadius).toBe('8px')
     })
 
     test('should match square shape styles', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <Select id="test-id" name="customize" options={['shape', 'border']} />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const selectComponent = container.querySelector('[id="test-id"]')
+      const styles = window.getComputedStyle(selectComponent as Element)
+      expect(styles.borderWidth).toBe('1px')
+      expect(styles.borderRadius).toBe('1px')
     })
 
     test('should not have box shadows set', (): void => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { asFragment } = render(
+      const { container } = render(
         <StyleProvider theme={theme}>
           <Select id="test-id" name="customize" options={['shape', 'border']} />
         </StyleProvider>
       )
 
-      expect(asFragment()).toMatchSnapshot()
+      const selectComponent = container.querySelector('[id="test-id"]')
+      const styles = window.getComputedStyle(selectComponent as Element)
+      expect(styles.boxShadow).toBe('')
     })
   })
 })

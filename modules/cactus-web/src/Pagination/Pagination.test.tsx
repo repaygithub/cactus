@@ -69,14 +69,11 @@ const assertPages = (
 
 describe('component: Pagination', (): void => {
   test('11 pages, first page selected', (): void => {
-    const { container, getAllByRole } = render(
+    const { getAllByRole } = render(
       <StyleProvider>
         <ManagedPagination size={11} start={1} />
       </StyleProvider>
     )
-
-    expect(container).toMatchSnapshot()
-
     assertPages(getAllByRole('link'), 11, 1, [8, 9, 10])
   })
 
