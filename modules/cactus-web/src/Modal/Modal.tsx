@@ -3,19 +3,11 @@ import { NavigationClose } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
-import {
-  flexbox,
-  height,
-  HeightProps,
-  maxHeight,
-  MaxHeightProps,
-  width,
-  WidthProps,
-} from 'styled-system'
+import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
 import { DimmerStyled } from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
-import { FlexItemProps } from '../helpers/flexItem'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
 import { border, boxShadow, radius } from '../helpers/theme'
 import cssVariant from '../helpers/variant'
@@ -109,7 +101,7 @@ export const ModalPopUp = styled(DimmerStyled).withConfig(
     ${(p): string => boxShadow(p.theme, 2)};
     max-width: ${(p) => !p.width && '80%'};
     ${width}
-    ${flexbox}
+    ${flexItem}
     outline: none;
     padding: 64px 24px 40px 24px;
     position: relative;

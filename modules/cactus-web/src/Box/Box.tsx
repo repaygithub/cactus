@@ -10,7 +10,6 @@ import {
   compose,
   display,
   DisplayProps,
-  flexbox,
   layout,
   LayoutProps,
   overflow,
@@ -23,7 +22,7 @@ import {
   TypographyProps,
 } from 'styled-system'
 
-import { FlexItemProps } from '../helpers/flexItem'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { radius, textStyle } from '../helpers/theme'
 
 interface CustomBR {
@@ -112,7 +111,7 @@ export const Box = styled('div')<BoxProps>`
     typography,
     border,
     overflow,
-    flexbox
+    flexItem
   )}
   ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
   ${decideBorderRadius}

@@ -15,17 +15,9 @@ import React, {
   useState,
 } from 'react'
 import styled, { css, StyledComponentBase } from 'styled-components'
-import {
-  flexbox,
-  margin,
-  MarginProps,
-  maxWidth,
-  MaxWidthProps,
-  width,
-  WidthProps,
-} from 'styled-system'
+import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
-import { FlexItemProps } from '../helpers/flexItem'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins, omitProps } from '../helpers/omit'
 import { boxShadow, radius } from '../helpers/theme'
@@ -775,7 +767,7 @@ export const Accordion = styled(AccordionBase).withConfig(
   ${margin}
   ${width}
   ${maxWidth}
-  ${flexbox}
+  ${flexItem}
 ` as any
 
 Accordion.defaultProps = {

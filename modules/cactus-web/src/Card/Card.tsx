@@ -1,17 +1,9 @@
 import { BorderSize, CactusTheme, ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
-import {
-  flexbox,
-  margin,
-  MarginProps,
-  padding,
-  PaddingProps,
-  width,
-  WidthProps,
-} from 'styled-system'
+import { margin, MarginProps, padding, PaddingProps, width, WidthProps } from 'styled-system'
 
-import { FlexItemProps } from '../helpers/flexItem'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { boxShadow, radius } from '../helpers/theme'
 
 interface CardProps extends MarginProps, WidthProps, PaddingProps, FlexItemProps {
@@ -46,7 +38,7 @@ export const Card = styled.div<CardProps>`
   box-sizing: border-box;
   ${margin}
   ${width}
-  ${flexbox}
+  ${flexItem}
   ${(p): ColorStyle => p.theme.colorStyles.standard};
   border-radius: ${radius(8)};
   padding: ${(p): number => p.theme.space[4]}px;

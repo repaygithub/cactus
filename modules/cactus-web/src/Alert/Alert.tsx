@@ -3,10 +3,10 @@ import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
-import { flexbox, margin, MarginProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import Avatar from '../Avatar/Avatar'
-import { FlexItemProps } from '../helpers/flexItem'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
 import { boxShadow } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
@@ -125,7 +125,7 @@ export const Alert = styled(AlertBase).withConfig(
   border-radius: 8px;
   ${margin}
   ${width}
-  ${flexbox}
+  ${flexItem}
 
   div:first-child {
     flex: 0 0 auto;

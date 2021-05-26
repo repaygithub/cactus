@@ -7,17 +7,6 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 
 .c3 {
   box-sizing: border-box;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
 }
 
 .c4 {
@@ -79,8 +68,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 .c22 .c15,
-.c22 .sc-fbNXWD,
-.c22 .sc-Fyfyc {
+.c22 .SvgComponent-bevlva,
+.c22 .SvgComponent-fCAhFS {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -280,12 +269,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c12 .c13 .sc-Fyfyc {
+.c12 .c13 .SvgComponent-fCAhFS {
   height: 18px;
   width: 18px;
 }
 
-.c12 .sc-dwcuIR {
+.c12 .sc-kEjbxe {
   height: 12px;
   width: 12px;
 }
@@ -544,17 +533,6 @@ exports[`component: FileInputField should render a loaded file 1`] = `
 
 .c3 {
   box-sizing: border-box;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
 }
 
 .c4 {
@@ -633,7 +611,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   padding-right: 8px;
 }
 
-.c1 .sc-gkdzZj {
+.c1 .sc-eCssSg {
   margin-top: 4px;
 }
 
@@ -658,7 +636,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c14 .sc-GTWni {
+.c14 .SvgComponent-iZpKnr {
   padding-bottom: 4px;
 }
 
@@ -790,7 +768,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c12 .c13 .sc-GTWni {
+.c12 .c13 .SvgComponent-iZpKnr {
   height: 16px;
   width: 16px;
 }
@@ -800,7 +778,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c12 .sc-dwcuIR {
+.c12 .sc-kEjbxe {
   height: 12px;
   width: 12px;
 }
@@ -818,7 +796,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c11 .sc-gkdzZj {
+.c11 .sc-eCssSg {
   position: relative;
   margin-top: 4px;
 }
@@ -1031,17 +1009,6 @@ exports[`component: FileInputField should render a loading file 1`] = `
 
 .c3 {
   box-sizing: border-box;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
 }
 
 .c4 {
@@ -1116,7 +1083,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding-right: 8px;
 }
 
-.c1 .sc-gkdzZj {
+.c1 .sc-eCssSg {
   margin-top: 4px;
 }
 
@@ -1202,17 +1169,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding: 0;
 }
 
-.c12 .sc-eWvPJL {
+.c12 .sc-pFZIQ {
   height: 24px;
   width: 24px;
 }
 
-.c12 .sc-eWvPJL .sc-GTWni {
+.c12 .sc-pFZIQ .SvgComponent-iZpKnr {
   height: 16px;
   width: 16px;
 }
 
-.c12 .sc-eWvPJL .sc-Fyfyc {
+.c12 .sc-pFZIQ .SvgComponent-fCAhFS {
   height: 18px;
   width: 18px;
 }
@@ -1222,11 +1189,11 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 12px;
 }
 
-.c12 .sc-kUbhmq {
+.c12 .sc-jrAGrp {
   margin-left: auto;
 }
 
-.c12 .sc-hlTvYk {
+.c12 .SvgComponent-eJMnHx {
   height: 12px;
   width: 12px;
 }
@@ -1235,7 +1202,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 100%;
 }
 
-.c11 .sc-gkdzZj {
+.c11 .sc-eCssSg {
   position: relative;
   margin-top: 4px;
 }
