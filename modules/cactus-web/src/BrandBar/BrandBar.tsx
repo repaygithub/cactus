@@ -1,6 +1,6 @@
 import { DescriptiveProfile, NavigationChevronDown } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
-import React, { Children, useEffect, useRef, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import { ActionBar } from '../ActionBar/ActionBar'
@@ -8,22 +8,11 @@ import { OrderHint, useAction } from '../ActionBar/ActionProvider'
 import Flex from '../Flex/Flex'
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { useFocusControl } from '../helpers/focus'
-import { useMergedRefs } from '../helpers/react'
-import { useScroll } from '../helpers/scroll'
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
-import usePopup from '../helpers/usePopup'
+import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { Sidebar } from '../Layout/Sidebar'
-import {
-  getPanelScrollInfo,
-  onMenuBlur,
-  SidebarMenu as ActionMenuPopup,
-  useFocusHandler,
-} from '../MenuBar/MenuBar'
-import { getOwnedMenuItems, useMenu, useMenuKeyHandler } from '../MenuBar/scroll'
+import { SidebarMenu as ActionMenuPopup } from '../MenuBar/MenuBar'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
-
-type ChildElement = React.ReactElement<any, React.ComponentType>
 
 interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string
@@ -32,13 +21,9 @@ interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 interface UserMenuProps {
-  label: React.ReactNode
+  id?: string
   isProfilePage?: boolean
-}
-
-interface UserMenuPopupProps {
-  expanded?: boolean
-  $menuWidth?: number
+  label: React.ReactNode
 }
 
 interface ProfileStyleProp {
@@ -49,16 +34,10 @@ interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
 }
 
-type MenuItemProps<C extends GenericComponent> = AsProps<C> & {
-  isSelected?: boolean
-  handleMouseEnter?: () => void
-}
-
 function MenuItemFunc<E, C extends GenericComponent = 'span'>(
-  props: MenuItemProps<C>,
+  props: AsProps<C>,
   ref: React.Ref<E>
 ) {
-  const { isSelected } = props
   // The `as any` here is to enable proper use of link substition,
   // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
   const propsCopy = { ...props } as any
@@ -74,13 +53,7 @@ function MenuItemFunc<E, C extends GenericComponent = 'span'>(
       }
   return (
     <li role="none">
-      <MenuListItem
-        data-selected={isSelected}
-        tabIndex={-1}
-        role="menuitem"
-        ref={ref as any}
-        {...propsCopy}
-      />
+      <MenuListItem {...propsCopy} tabIndex={-1} role="menuitem" ref={ref as any} />
     </li>
   )
 }
@@ -156,43 +129,37 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
   label,
   children,
   isProfilePage,
+  id = 'user-menu',
   ...rest
 }) => {
-  const actionMenuId = 'actionbar-user-menu'
-  const orientation = 'vertical'
-  const { expanded, wrapperProps, buttonProps, popupProps } = useMenu(actionMenuId)
-  const [menuRef] = useScroll<HTMLDivElement>(orientation, expanded, getPanelScrollInfo)
-  const [setFocus, rootRef] = useFocusControl(getOwnedMenuItems)
-  const onMenuFocus = useFocusHandler(setFocus)
-  const menuKeyHandler = useMenuKeyHandler(setFocus, false)
-  const mergedRef = useMergedRefs(menuRef, rootRef)
+  const { buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
+    id,
+    focusControl,
+    onWrapperKeyDown: handleArrows,
+  })
+
+  const buttonId = buttonProps.id
+  wrapperProps.onClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLDivElement
+      if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
+        toggle(false, document.getElementById(buttonId as string))
+      }
+    },
+    [toggle, buttonId]
+  )
 
   const button = (
     <ActionBar.PanelWrapper key="cactus-user-menu" {...wrapperProps}>
       <ActionMenuButton $isProfilePage={isProfilePage} {...buttonProps} {...rest}>
         <DescriptiveProfile />
       </ActionMenuButton>
-      <ActionBar.PanelPopup
-        as={ActionMenuPopup}
-        ref={menuRef}
-        aria-orientation={orientation}
-        {...popupProps}
-      >
+      <ActionBar.PanelPopup as={ActionMenuPopup} {...popupProps}>
         <PopupHeader>
           <DescriptiveProfile mr="8px" />
           {label}
         </PopupHeader>
-        <ActionMenuList
-          role="menubar"
-          aria-orientation={orientation}
-          tabIndex={0}
-          ref={mergedRef}
-          onFocus={onMenuFocus}
-          onBlur={onMenuBlur}
-          onKeyDown={menuKeyHandler}
-        >
-          {children}
-        </ActionMenuList>
+        <ActionMenuList>{children}</ActionMenuList>
       </ActionBar.PanelPopup>
     </ActionBar.PanelWrapper>
   )
@@ -200,47 +167,59 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
   return renderButton && <Sidebar layoutRole="brandbar">{renderButton}</Sidebar>
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage, ...rest }) => {
-  const userMenuId = 'user-menu'
-  const orientation = 'vertical'
-  const buttonRef = useRef<HTMLButtonElement>(null)
-  const { buttonProps, expanded, popupProps, wrapperProps } = useMenu(userMenuId)
-  const [menuRef] = useScroll<HTMLDivElement>(orientation, expanded, getPanelScrollInfo)
-  const popupWidth = buttonRef.current?.getBoundingClientRect().width
+const focusControl = (root: HTMLElement) =>
+  Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'))
 
-  const [setFocus, rootRef] = useFocusControl(getOwnedMenuItems)
-  const onMenuFocus = useFocusHandler(setFocus)
-  const menuKeyHandler = useMenuKeyHandler(setFocus, false)
-  const mergedRef = useMergedRefs(menuRef, rootRef)
+const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
+  if (event.key === 'ArrowDown') {
+    toggle(true, 1, { shift: true })
+  } else if (event.key === 'ArrowUp') {
+    toggle(true, -1, { shift: true })
+  }
+}
 
+const positionPopup = (menu: HTMLElement, menuButton: HTMLElement | null) => {
+  if (menuButton) {
+    const { left, width } = menuButton.getBoundingClientRect()
+    menu.style.left = `${left}px`
+    menu.style.width = `${width}px`
+  }
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({
+  id = 'user-menu',
+  label,
+  children,
+  isProfilePage,
+  ...rest
+}) => {
+  const { buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
+    id,
+    focusControl,
+    positionPopup,
+    onWrapperKeyDown: handleArrows,
+  })
+  const buttonId = buttonProps.id
+  wrapperProps.onClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLDivElement
+      if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
+        toggle(false, document.getElementById(buttonId as string))
+      }
+    },
+    [toggle, buttonId]
+  )
   return (
-    <div id={userMenuId} {...wrapperProps}>
-      <MenuButton ref={buttonRef} {...buttonProps} {...rest}>
+    <div {...wrapperProps}>
+      <MenuButton {...buttonProps} {...rest}>
         <DescriptiveProfile aria-hidden mr="8px" />
         <span>{label}</span>
         <NavigationChevronDown aria-hidden ml="8px" />
       </MenuButton>
-      <UserMenuPopup ref={menuRef} expanded={expanded} $menuWidth={popupWidth} {...popupProps}>
-        <MenuList
-          role="menubar"
-          ref={mergedRef}
-          onFocus={onMenuFocus}
-          tabIndex={0}
-          onKeyDown={menuKeyHandler}
-        >
-          {children}
-        </MenuList>
-      </UserMenuPopup>
+      <MenuList {...popupProps}>{children}</MenuList>
     </div>
   )
 }
-
-const UserMenuPopup = styled.div<UserMenuPopupProps>`
-  position: fixed;
-  display: ${(p) => (p.expanded ? 'block' : 'none')};
-  width: ${(p) => (p.$menuWidth ? `${p.$menuWidth}px` : 'unset')};
-  outline: none;
-`
 
 const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
   display: flex;
@@ -310,6 +289,11 @@ const MenuButton = styled.button<ProfileStyleProp>`
 
 const MenuList = styled.ul`
   display: block;
+  position: fixed;
+  outline: none;
+  &[aria-hidden] {
+    display: none;
+  }
   padding: 8px 0;
   margin-top: 8px;
   border-radius: ${radius(8)};
@@ -330,6 +314,7 @@ const MenuList = styled.ul`
     outline: none;
     padding: 4px 16px;
     text-align: center;
+    &:focus,
     &:hover {
       ${(p) => p.theme.colorStyles.callToAction};
     }

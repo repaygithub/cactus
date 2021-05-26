@@ -24,10 +24,10 @@ export const BasicUsage = (): React.ReactElement => (
         isProfilePage={boolean('On profile page?', false)}
         label={text('Menu Title', 'Hershell Jewess')}
       >
-        <BrandBar.UserMenuItem onSelect={action('Settings')}>
+        <BrandBar.UserMenuItem onClick={action('Settings')}>
           {text('Action one', 'Settings')}
         </BrandBar.UserMenuItem>
-        <BrandBar.UserMenuItem onSelect={action('Logout')}>
+        <BrandBar.UserMenuItem onClick={action('Logout')}>
           {text('Action two', 'Logout')}
         </BrandBar.UserMenuItem>
       </BrandBar.UserMenu>
@@ -80,8 +80,8 @@ export const CustomItems = (): React.ReactElement => {
           />
         </BrandBar.Item>
         <BrandBar.UserMenu label="Userforce One">
-          <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
-          <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+          <BrandBar.UserMenuItem onClick={action('Settings')}>Settings</BrandBar.UserMenuItem>
+          <BrandBar.UserMenuItem onClick={action('Logout')}>Logout</BrandBar.UserMenuItem>
         </BrandBar.UserMenu>
       </BrandBar>
       <ActionBar />

@@ -171,6 +171,61 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   flex-wrap: wrap;
 }
 
+.c10 {
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  font-size: 15px;
+  line-height: 1.6;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.c10 [role='menuitem'] {
+  padding: 18px 16px;
+  border-bottom: 1px solid hsl(200,29%,90%);
+  position: relative;
+  overflow: visible;
+}
+
+.c10 [role='menuitem'] .sc-iNqMTl {
+  -webkit-transform: rotateZ(-90deg);
+  -ms-transform: rotateZ(-90deg);
+  transform: rotateZ(-90deg);
+}
+
+.c10 [role='menuitem'][aria-expanded='true'] {
+  color: hsl(200,96%,35%);
+}
+
+.c10 [role='menuitem'][aria-expanded='true'] .sc-iNqMTl {
+  -webkit-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+}
+
+.c10 [role='menuitem']:hover {
+  color: hsl(200,96%,35%);
+  border-bottom-color: hsl(200,96%,35%);
+}
+
+.c10 [role='menuitem']:focus::after {
+  border: 1px solid hsl(200,96%,35%);
+  background-color: transparent;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% + 1px);
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.c10 [role='menuitem'][aria-current='true'],
+.c10 [role='menuitem'][aria-expanded='true'] {
+  font-weight: 600;
+}
+
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -203,6 +258,9 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
 }
 
 .c13 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   outline: none;
 }
 
@@ -223,45 +281,49 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
   font-size: 12px;
 }
 
-.c10 {
-  font-size: 15px;
-  line-height: 1.6;
-  padding: 0;
-}
-
-.c10[hidden] {
-  display: none;
-}
-
-.c10 [role='menuitem'] {
-  display: block;
+.c14 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
   box-sizing: border-box;
-  padding: 18px 16px;
+  color: inherit;
   cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font: inherit;
+  height: 100%;
   text-align: left;
   -webkit-text-decoration: none;
   text-decoration: none;
-  overflow-wrap: break-word;
   outline: none;
-  box-shadow: inset 0px -1px 0px 0px hsl(200,29%,90%);
+  width: 100%;
 }
 
-.c10 [role='menuitem'][data-selected] {
-  color: hsl(200,96%,35%);
-  box-shadow: inset 0px 0px 0px 1px hsl(200,96%,35%);
+.c14:active,
+.c14:focus {
+  outline: none;
 }
 
-@media screen and (min-width:1024px) {
-  .c11 {
-    font-size: 18px;
-    line-height: 1.5;
-  }
+.c14::-moz-focus-inner {
+  border: none;
 }
 
 @media screen and (min-width:1024px) {
   .c10 {
     font-size: 15px;
     line-height: 1.6;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .c11 {
+    font-size: 18px;
+    line-height: 1.5;
   }
 }
 
@@ -311,13 +373,15 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
       >
         <div
           class="c4"
+          id="user-menu"
+          role="none"
+          tabindex="-1"
         >
           <button
-            aria-controls="menu--7"
-            aria-haspopup="true"
+            aria-controls="user-menu-popup"
+            aria-haspopup="menu"
             class="c5 c6"
-            data-reach-menu-button=""
-            id="menu-button--menu--7"
+            id="user-menu-button"
             role="button"
             type="button"
           >
@@ -333,20 +397,16 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
                 d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
               />
             </svg>
-            <span
-              style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; word-wrap: normal;"
-            >
-              Test name
-            </span>
           </button>
-          <div
+          <ul
+            aria-hidden="true"
+            aria-labelledby="user-menu-button"
             class="c10 c7"
-            data-reach-menu=""
-            data-reach-menu-popover=""
-            hidden=""
+            id="user-menu-popup"
+            role="menu"
+            tabindex="-1"
           >
             <div
-              aria-hidden="true"
               class="c11"
             >
               <svg
@@ -364,34 +424,33 @@ exports[`component: BrandBar snapshot - mobile 1`] = `
               </svg>
               Test name
             </div>
-            <div
-              aria-labelledby="menu-button--menu--7"
+            <ul
               class="c13"
-              data-reach-menu-items=""
-              id="menu--7"
-              role="menu"
-              tabindex="-1"
             >
-              <div
-                data-reach-menu-item=""
-                data-valuetext="Settings"
-                id="option-0--menu--7"
-                role="menuitem"
-                tabindex="-1"
+              <li
+                role="none"
               >
-                Settings
-              </div>
-              <div
-                data-reach-menu-item=""
-                data-valuetext="Logout"
-                id="option-1--menu--7"
-                role="menuitem"
-                tabindex="-1"
+                <span
+                  class="c14"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  Settings
+                </span>
+              </li>
+              <li
+                role="none"
               >
-                Logout
-              </div>
-            </div>
-          </div>
+                <span
+                  class="c14"
+                  role="menuitem"
+                  tabindex="-1"
+                >
+                  Logout
+                </span>
+              </li>
+            </ul>
+          </ul>
         </div>
       </div>
     </div>
@@ -508,6 +567,78 @@ exports[`component: BrandBar snapshot 1`] = `
   font-size: 12px;
 }
 
+.c8 {
+  display: block;
+  position: fixed;
+  outline: none;
+  padding: 8px 0;
+  margin-top: 8px;
+  border-radius: 4px;
+  box-shadow: 0px 3px 8px hsla(200,96%,35%,0.3);
+  background-color: hsl(0,0%,100%);
+  list-style: none;
+}
+
+.c8[aria-hidden] {
+  display: none;
+}
+
+.c8 [role='menuitem'] {
+  z-index: 110;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.6;
+  background-color: hsl(0,0%,100%);
+  color: hsl(200,10%,20%);
+  outline: none;
+  padding: 4px 16px;
+  text-align: center;
+}
+
+.c8 [role='menuitem']:focus,
+.c8 [role='menuitem']:hover {
+  background-color: hsl(200,96%,35%);
+  color: hsl(0,0%,100%);
+}
+
+.c9 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box;
+  color: inherit;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font: inherit;
+  height: 100%;
+  text-align: left;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  outline: none;
+  width: 100%;
+}
+
+.c9:active,
+.c9:focus {
+  outline: none;
+}
+
+.c9::-moz-focus-inner {
+  border: none;
+}
+
 @media screen and (min-width:1024px) {
   .c4 {
     font-size: 18px;
@@ -516,7 +647,10 @@ exports[`component: BrandBar snapshot 1`] = `
 }
 
 @media screen and (min-width:1024px) {
-
+  .c8 [role='menuitem'] {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 <div>
@@ -533,47 +667,83 @@ exports[`component: BrandBar snapshot 1`] = `
         placeholder="Type Here"
         type="text"
       />
-      <button
-        aria-controls="menu--1"
-        aria-haspopup="true"
-        class="c4"
-        data-reach-menu-button=""
-        id="menu-button--menu--1"
-        type="button"
+      <div
+        id="user-menu"
+        role="none"
+        tabindex="-1"
       >
-        <svg
-          aria-hidden="true"
-          class="c5"
-          fill="currentcolor"
-          height="1em"
-          mr="8px"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <button
+          aria-controls="user-menu-popup"
+          aria-haspopup="menu"
+          class="c4"
+          id="user-menu-button"
+          role="button"
         >
-          <path
-            d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
-          />
-        </svg>
-        <span>
-          Test name
-        </span>
-        <svg
+          <svg
+            aria-hidden="true"
+            class="c5"
+            fill="currentcolor"
+            height="1em"
+            mr="8px"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12,14 C8.66390125,14 6,11.0697086 6,7.5 C6,3.93029138 8.66390125,1 12,1 C15.3360987,1 18,3.93029138 18,7.5 C18,11.0697086 15.3360987,14 12,14 Z M12,12 C14.1867487,12 16,10.0054236 16,7.5 C16,4.99457638 14.1867487,3 12,3 C9.81325125,3 8,4.99457638 8,7.5 C8,10.0054236 9.81325125,12 12,12 Z M2.45149933,22.6626662 C2.13244151,23.1134661 1.50834851,23.2202642 1.05754861,22.9012064 C0.606748712,22.5821485 0.499950658,21.9580555 0.819008481,21.5072556 C3.90518485,17.1467671 7.65108363,14.9179688 12,14.9179688 C16.3564684,14.9179688 20.0355137,17.1550465 22.9722241,21.5273973 C23.2801579,21.9858678 23.1581239,22.6071613 22.6996535,22.9150951 C22.241183,23.223029 21.6198895,23.100995 21.3119556,22.6425246 C18.7258796,18.7922191 15.6435316,16.9179688 12,16.9179688 C8.34891637,16.9179688 5.18498442,18.8004986 2.45149933,22.6626662 Z"
+            />
+          </svg>
+          <span>
+            Test name
+          </span>
+          <svg
+            aria-hidden="true"
+            class="c6 c7"
+            fill="currentcolor"
+            height="1em"
+            ml="8px"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
+              transform="rotate(-90 12 12)"
+            />
+          </svg>
+        </button>
+        <ul
           aria-hidden="true"
-          class="c6 c7"
-          fill="currentcolor"
-          height="1em"
-          ml="8px"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+          aria-labelledby="user-menu-button"
+          class="c8"
+          id="user-menu-popup"
+          role="menu"
+          tabindex="-1"
         >
-          <path
-            d="M17.7071068,2.70710678 C18.0976311,2.31658249 18.0976311,1.68341751 17.7071068,1.29289322 C17.3165825,0.902368927 16.6834175,0.902368927 16.2928932,1.29289322 L6.29289322,11.2928932 C5.90236893,11.6834175 5.90236893,12.3165825 6.29289322,12.7071068 L16.2928932,22.7071068 C16.6834175,23.0976311 17.3165825,23.0976311 17.7071068,22.7071068 C18.0976311,22.3165825 18.0976311,21.6834175 17.7071068,21.2928932 L8.41421356,12 L17.7071068,2.70710678 Z"
-            transform="rotate(-90 12 12)"
-          />
-        </svg>
-      </button>
+          <li
+            role="none"
+          >
+            <span
+              class="c9"
+              role="menuitem"
+              tabindex="-1"
+            >
+              Settings
+            </span>
+          </li>
+          <li
+            role="none"
+          >
+            <span
+              class="c9"
+              role="menuitem"
+              tabindex="-1"
+            >
+              Logout
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
