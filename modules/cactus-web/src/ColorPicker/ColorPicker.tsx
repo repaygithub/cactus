@@ -466,18 +466,16 @@ export class ColorPicker extends React.Component<ColorPickerProps, ColorState> {
     event.stopPropagation()
     event.preventDefault()
     if (!this.contains(event.relatedTarget)) {
-      event.persist()
-      const target = this.syncTarget()
+      this.hasFocus = false
       const blurHandler = this.props.onBlur
+      if (typeof blurHandler === 'function') {
+        blurHandler(new CactusFocusEvent('blur', this.syncTarget(), event))
+      }
       // `relatedTarget` is null when the entire window loses focus,
       // but `activeElement` will still point to a page element.
       window.requestAnimationFrame(() => {
         if (!this.contains(document.activeElement)) {
-          this.hasFocus = false
           toggle(false)
-          if (typeof blurHandler === 'function') {
-            blurHandler(new CactusFocusEvent('blur', target, event))
-          }
         }
       })
     }
