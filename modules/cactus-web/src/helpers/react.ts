@@ -1,4 +1,4 @@
-import isEqual from 'lodash/isEqual'
+import { assign, isEqual, noop } from 'lodash'
 import React, { SetStateAction } from 'react'
 
 export type CloneFunc = (
@@ -97,20 +97,23 @@ export function useValue<T>(value: T, dependencies: any[]): T {
   return valueRef.current
 }
 
+interface UseBox {
+  <T>(box: T): T
+  // Mutable box + immutable initialization
+  <M, I extends (...a: any) => any>(box: M, init: I, ...args: Parameters<I>): M & ReturnType<I>
+}
+type Obj = Record<string, any>
+
 // An immutable container with mutable contents; basically, a self-updating ref.
-export function useBox<T>(box: Partial<T>): T {
-  const { current } = React.useRef<T>(box as T)
-  if (box !== current) {
-    for (const key of Object.keys(box) as (keyof T)[]) {
-      current[key] = box[key] as T[keyof T]
-    }
+export const useBox: UseBox = (box: Obj, init?: (...a: any[]) => Obj, ...args: any[]): Obj => {
+  const ref = React.useRef<Obj>()
+  if (ref.current === undefined) {
+    ref.current = init ? init(...args) : {}
   }
-  return current
+  return assign(ref.current, box)
 }
 
 type StateSetterWithCallback<S> = (v: SetStateAction<S>, callback?: () => void) => void
-
-const noop = () => undefined
 
 export function useStateWithCallback<S>(
   initialState: S | (() => S)
@@ -146,7 +149,6 @@ type SemiControlProps<T extends React.ElementType> = {
 
 interface ControlBox {
   value: unknown
-  controlledValue: unknown
   isFocused: boolean
   onFocus?: React.FocusEventHandler<unknown>
   handleFocus: React.FocusEventHandler<unknown>
@@ -154,6 +156,29 @@ interface ControlBox {
   handleBlur: React.FocusEventHandler<unknown>
   onChange: React.ChangeEventHandler<unknown>
   handleChange: React.ChangeEventHandler<unknown>
+}
+
+const initControlBox = (trigger: () => void): ControlBox => {
+  const vars: ControlBox = {
+    value: null,
+    isFocused: false,
+    onChange: noop,
+    handleFocus: (e: React.FocusEvent<unknown>) => {
+      vars.isFocused = true
+      vars.onFocus?.(e)
+    },
+    handleBlur: (e: React.FocusEvent<unknown>) => {
+      vars.isFocused = false
+      vars.onBlur?.(e)
+      trigger() // Now rerender with the parent's value.
+    },
+    handleChange: (e: React.ChangeEvent<{ value: unknown }>) => {
+      vars.value = e.target.value
+      vars.onChange(e)
+      trigger()
+    },
+  }
+  return vars
 }
 
 // Use this to make an input "uncontrolled" while focused, but controlled otherwise;
@@ -164,24 +189,7 @@ export const SemiControlled = <T extends React.ElementType>(
 ): React.ReactElement => {
   const { input, value: controlledValue, onFocus, onBlur, onChange, ...rest } = props
   const trigger = useRenderTrigger()
-  const vars = useBox<ControlBox>({ onFocus, onBlur, onChange, controlledValue })
-  if (vars.isFocused === undefined) {
-    vars.isFocused = false
-    vars.handleFocus = (e: React.FocusEvent<unknown>) => {
-      vars.isFocused = true
-      vars.onFocus?.(e)
-    }
-    vars.handleBlur = (e: React.FocusEvent<unknown>) => {
-      vars.isFocused = false
-      vars.onBlur?.(e)
-      trigger() // Now rerender with the parent's value.
-    }
-    vars.handleChange = (e: React.ChangeEvent<{ value: unknown }>) => {
-      vars.value = e.target.value
-      vars.onChange(e)
-      trigger()
-    }
-  }
+  const vars = useBox({ onFocus, onBlur, onChange, controlledValue }, initControlBox, trigger)
   if (!vars.isFocused) {
     vars.value = controlledValue
   }
