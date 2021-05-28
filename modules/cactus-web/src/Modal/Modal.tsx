@@ -79,7 +79,7 @@ const ModalBase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
 }
 
 export const ModalPopUp = styled(DimmerStyled).withConfig(
-  omitProps<ModalPopupProps>('maxHeight', 'flex', 'flexBasis', 'flexGrow', 'flexShrink')
+  omitProps<ModalPopupProps>(flexItem, 'maxHeight')
 )`
   bottom: 0;
   display: flex;

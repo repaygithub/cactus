@@ -14,13 +14,13 @@ import IconButton from '../IconButton/IconButton'
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'
 
-interface AlertProps extends FlexItemProps, React.HTMLAttributes<HTMLDivElement> {
+interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   status?: Status
   onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void
   closeLabel?: string
 }
 
-interface AlertStyleProps extends AlertProps, MarginProps, WidthProps {
+interface AlertStyleProps extends AlertProps, MarginProps, WidthProps, FlexItemProps {
   type?: Type
   shadow?: boolean
 }
@@ -102,16 +102,7 @@ const AlertBase = (props: AlertProps): React.ReactElement => {
 }
 
 export const Alert = styled(AlertBase).withConfig(
-  omitProps<AlertStyleProps>(
-    margin,
-    width,
-    'type',
-    'shadow',
-    'flex',
-    'flexBasis',
-    'flexGrow',
-    'flexShrink'
-  )
+  omitProps<AlertStyleProps>(margin, width, flexItem, 'type', 'shadow')
 )`
   box-sizing: border-box;
   display: flex;

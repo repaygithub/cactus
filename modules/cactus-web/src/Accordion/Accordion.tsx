@@ -678,14 +678,13 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     }
   }
 
-  const rest = omitMargins(restProps, 'width', 'maxWidth')
   const open = isManaged ? getManagedOpen() : unmanagedState.isOpen
 
   return (
     <div
       id={id}
       className={`${className} ${open && variant === 'outline' ? 'box-shadow' : ''}`}
-      {...rest}
+      {...restProps}
     >
       <AccordionContext.Provider
         value={{
@@ -754,7 +753,7 @@ const variantStyles = (props: AccordionProps): ReturnType<typeof css> | undefine
 }
 
 export const Accordion = styled(AccordionBase).withConfig(
-  omitProps<AccordionProps>('flex', 'flexBasis', 'flexGrow', 'flexShrink')
+  omitProps<AccordionProps>(flexItem, margin, 'width', 'maxWidth')
 )`
   box-sizing: border-box;
   width: 100%;
