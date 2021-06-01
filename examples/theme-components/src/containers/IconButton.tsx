@@ -47,7 +47,7 @@ const IconbuttonExample: React.FC<RouteComponentProps> = (): React.ReactElement 
         <NavigationChevronLeft />
         Back
       </Link>
-      <Text as="h1" textAlign="center" mb={0}>
+      <Text as="h1" textAlign="center">
         IconButton
       </Text>
       <Flex margin="auto" justifyContent="space-around" alignItems="flex-end" mb={32}>

@@ -22,7 +22,7 @@ export const HeaderItem: FC<
 > = (props) => <div {...props} />
 
 export const HeaderTitle: FC<React.ComponentProps<typeof Text>> = ({ children, ...props }) => (
-  <Text as="h2" my="0" {...props}>
+  <Text as="h2" {...props}>
     {children}
   </Text>
 )
