@@ -73,4 +73,22 @@ describe('component: List', () => {
 
     expect(header.tagName).toBe('H3')
   })
+
+  test('should support flex item props', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <List data-testid="flex-list" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+          <List.Item>List Item 1</List.Item>
+          <List.Item>List Item 2</List.Item>
+          <List.Item>List Item 3</List.Item>
+        </List>
+      </StyleProvider>
+    )
+
+    const list = getByTestId('flex-list')
+    expect(list).toHaveStyle('flex: 1')
+    expect(list).toHaveStyle('flex-grow: 1')
+    expect(list).toHaveStyle('flex-shrink: 0')
+    expect(list).toHaveStyle('flex-basis: 0')
+  })
 })

@@ -50,6 +50,30 @@ describe('component: AccessibleField', (): void => {
     )
   })
 
+  test('supports flex item props', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <AccessibleField
+          label="Accessible Label"
+          name="text_field"
+          data-testid="flex-field"
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+        >
+          <input name="text_field" data-is="accessible" />
+        </AccessibleField>
+      </StyleProvider>
+    )
+
+    const field = getByTestId('flex-field')
+    expect(field).toHaveStyle('flex: 1')
+    expect(field).toHaveStyle('flex-grow: 1')
+    expect(field).toHaveStyle('flex-shrink: 0')
+    expect(field).toHaveStyle('flex-basis: 0')
+  })
+
   test('alternate prop types', (): void => {
     const { container, getByText } = render(
       <StyleProvider>

@@ -39,6 +39,29 @@ describe('component: CheckBoxField', (): void => {
     expect(styles.marginRight).toBe('8px')
   })
 
+  test('should support flex item props', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <CheckBoxField
+          label="space props"
+          name="space_props"
+          id="not-random"
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+          data-testid="flex-checkbox"
+        />
+      </StyleProvider>
+    )
+
+    const checkField = getByTestId('flex-checkbox').parentElement?.parentElement as HTMLElement
+    expect(checkField).toHaveStyle('flex: 1')
+    expect(checkField).toHaveStyle('flex-grow: 1')
+    expect(checkField).toHaveStyle('flex-shrink: 0')
+    expect(checkField).toHaveStyle('flex-basis: 0')
+  })
+
   test('should trigger onChange event', (): void => {
     const box: any = {}
     const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'checked'])))

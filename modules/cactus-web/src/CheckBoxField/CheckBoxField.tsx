@@ -5,11 +5,15 @@ import { margin, MarginProps } from 'styled-system'
 
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
+import { FlexItemProps } from '../helpers/flexItem'
 import { omitMargins } from '../helpers/omit'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 
-export interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id' | 'disabled'>, MarginProps {
+export interface CheckBoxFieldProps
+  extends Omit<CheckBoxProps, 'id' | 'disabled'>,
+    MarginProps,
+    FlexItemProps {
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
@@ -19,11 +23,28 @@ export interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id' | 'disabled
 
 const CheckBoxFieldBase = React.forwardRef<HTMLInputElement, CheckBoxFieldProps>((props, ref) => {
   const componentProps = omitMargins(props) as Omit<CheckBoxFieldProps, keyof MarginProps>
-  const { label, labelProps, id, name, className, ...checkboxProps } = componentProps
+  const {
+    label,
+    labelProps,
+    id,
+    name,
+    className,
+    flex,
+    flexGrow,
+    flexShrink,
+    flexBasis,
+    ...checkboxProps
+  } = componentProps
   const checkboxId = useId(id, name)
 
   return (
-    <FieldWrapper className={className}>
+    <FieldWrapper
+      className={className}
+      flex={flex}
+      flexGrow={flexGrow}
+      flexShrink={flexShrink}
+      flexBasis={flexBasis}
+    >
       <CheckBox {...checkboxProps} ref={ref} id={checkboxId} name={name} />
       <Label {...labelProps} htmlFor={checkboxId}>
         {label}

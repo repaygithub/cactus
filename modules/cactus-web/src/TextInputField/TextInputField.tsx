@@ -27,6 +27,10 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     autoTooltip,
     disableTooltip,
     alignTooltip,
+    flex,
+    flexGrow,
+    flexShrink,
+    flexBasis,
     ...inputProps
   } = omitMargins(props) as Omit<TextInputFieldProps, keyof MarginProps>
 
@@ -45,6 +49,10 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
+      flex={flex}
+      flexGrow={flexGrow}
+      flexShrink={flexShrink}
+      flexBasis={flexBasis}
     >
       {({
         fieldId,

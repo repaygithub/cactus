@@ -6,6 +6,7 @@ import styled, { css, ThemeProps } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import Avatar from '../Avatar/Avatar'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
 import { boxShadow } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
@@ -19,7 +20,7 @@ interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   closeLabel?: string
 }
 
-interface AlertStyleProps extends AlertProps, MarginProps, WidthProps {
+interface AlertStyleProps extends AlertProps, MarginProps, WidthProps, FlexItemProps {
   type?: Type
   shadow?: boolean
 }
@@ -101,7 +102,7 @@ const AlertBase = (props: AlertProps): React.ReactElement => {
 }
 
 export const Alert = styled(AlertBase).withConfig(
-  omitProps<AlertStyleProps>(margin, width, 'type', 'shadow')
+  omitProps<AlertStyleProps>(margin, width, flexItem, 'type', 'shadow')
 )`
   box-sizing: border-box;
   display: flex;
@@ -115,6 +116,7 @@ export const Alert = styled(AlertBase).withConfig(
   border-radius: 8px;
   ${margin}
   ${width}
+  ${flexItem}
 
   div:first-child {
     flex: 0 0 auto;

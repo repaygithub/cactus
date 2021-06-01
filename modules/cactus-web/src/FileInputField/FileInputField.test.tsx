@@ -109,4 +109,27 @@ describe('component: FileInputField', (): void => {
     const errorMsg = getByText("My boy's the boolest of them all")
     expect(errorMsg).toBeInTheDocument()
   })
+
+  test('should support flex item props', () => {
+    const { container } = render(
+      <StyleProvider>
+        <FileInputField
+          name="dabears"
+          id="free-fallin"
+          label="Bickin Back"
+          accept={['.txt']}
+          data-testid="flex-fileinput"
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+        />
+      </StyleProvider>
+    )
+
+    expect(container.firstElementChild).toHaveStyle('flex: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-grow: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-shrink: 0')
+    expect(container.firstElementChild).toHaveStyle('flex-basis: 0')
+  })
 })

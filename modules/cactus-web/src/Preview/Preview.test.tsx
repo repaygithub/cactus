@@ -119,4 +119,22 @@ describe('component: Preview', () => {
       expect(getAllByAltText('Cute kitten number 1').length).toBe(1)
     })
   })
+
+  test('should support flex item props', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <Preview data-testid="flex-preview" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+          {IMAGES.map((src, ix) => (
+            <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+          ))}
+        </Preview>
+      </StyleProvider>
+    )
+
+    const previewBox = getByTestId('flex-preview')
+    expect(previewBox).toHaveStyle('flex: 1')
+    expect(previewBox).toHaveStyle('flex-grow: 1')
+    expect(previewBox).toHaveStyle('flex-shrink: 0')
+    expect(previewBox).toHaveStyle('flex-basis: 0')
+  })
 })

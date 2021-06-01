@@ -829,4 +829,23 @@ describe('component: Accordion', (): void => {
       expect(styles.borderRadius).toBe('1px')
     })
   })
+
+  test('should support flex item props', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <Accordion data-testid="flex-accordion" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+          <Accordion.Header>
+            <Text as="h3">I Have Flex Item Props</Text>
+          </Accordion.Header>
+          <Accordion.Body>La dee da</Accordion.Body>
+        </Accordion>
+      </StyleProvider>
+    )
+
+    const accordion = getByTestId('flex-accordion')
+    expect(accordion).toHaveStyle('flex: 1')
+    expect(accordion).toHaveStyle('flex-grow: 1')
+    expect(accordion).toHaveStyle('flex-shrink: 0')
+    expect(accordion).toHaveStyle('flex-basis: 0')
+  })
 })

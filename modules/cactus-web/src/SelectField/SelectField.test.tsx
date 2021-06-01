@@ -172,7 +172,32 @@ describe('component: SelectField', (): void => {
       </StyleProvider>
     )
 
-    expect(container).not.toBeNull()
+    expect(container.firstElementChild).toHaveStyle('margin-left: 8px')
+    expect(container.firstElementChild).toHaveStyle('margin-right: 8px')
+    expect(container.firstElementChild).toHaveStyle('margin-top: 8px')
+    expect(container.firstElementChild).toHaveStyle('margin-bottom: 8px')
+  })
+
+  test('should support flex item props', () => {
+    const { container } = render(
+      <StyleProvider>
+        <SelectField
+          label="Requires a label"
+          name="the-test-select-field"
+          id="for-the-snap"
+          options={['basic', 'options']}
+          flex={1}
+          flexGrow={1}
+          flexShrink={0}
+          flexBasis={0}
+        />
+      </StyleProvider>
+    )
+
+    expect(container.firstElementChild).toHaveStyle('flex: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-grow: 1')
+    expect(container.firstElementChild).toHaveStyle('flex-shrink: 0')
+    expect(container.firstElementChild).toHaveStyle('flex-basis: 0')
   })
 
   describe('should accept form event', (): void => {

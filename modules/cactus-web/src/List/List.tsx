@@ -5,10 +5,11 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { border } from '../helpers/theme'
 import Text, { TextProps } from '../Text/Text'
 
-interface ListProps extends MarginProps, React.HTMLAttributes<HTMLUListElement> {
+interface ListProps extends MarginProps, FlexItemProps, React.HTMLAttributes<HTMLUListElement> {
   dividers?: boolean
 }
 
@@ -26,6 +27,7 @@ const UL = styled.ul<{ $dividers: boolean }>`
   margin: 0;
   list-style-type: none;
   ${margin}
+  ${flexItem}
 
   & & {
     margin-top: 8px;

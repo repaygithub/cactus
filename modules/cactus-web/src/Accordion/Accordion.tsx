@@ -17,8 +17,9 @@ import React, {
 import styled, { css, StyledComponentBase } from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import KeyCodes from '../helpers/keyCodes'
-import { omitMargins } from '../helpers/omit'
+import { omitMargins, omitProps } from '../helpers/omit'
 import { boxShadow, radius } from '../helpers/theme'
 import useId from '../helpers/useId'
 import IconButton from '../IconButton/IconButton'
@@ -31,6 +32,7 @@ interface AccordionProps
   extends MarginProps,
     MaxWidthProps,
     WidthProps,
+    FlexItemProps,
     React.HTMLAttributes<HTMLDivElement> {
   /** Does not apply when Accordion descends from a controlled Provider.  If true, the
    * Accordion will begin in the open state when first rendered.
@@ -676,14 +678,13 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     }
   }
 
-  const rest = omitMargins(restProps, 'width', 'maxWidth')
   const open = isManaged ? getManagedOpen() : unmanagedState.isOpen
 
   return (
     <div
       id={id}
       className={`${className} ${open && variant === 'outline' ? 'box-shadow' : ''}`}
-      {...rest}
+      {...restProps}
     >
       <AccordionContext.Provider
         value={{
@@ -751,7 +752,9 @@ const variantStyles = (props: AccordionProps): ReturnType<typeof css> | undefine
   }
 }
 
-export const Accordion = styled(AccordionBase)`
+export const Accordion = styled(AccordionBase).withConfig(
+  omitProps<AccordionProps>(flexItem, margin, 'width', 'maxWidth')
+)`
   box-sizing: border-box;
   width: 100%;
 
@@ -763,6 +766,7 @@ export const Accordion = styled(AccordionBase)`
   ${margin}
   ${width}
   ${maxWidth}
+  ${flexItem}
 ` as any
 
 Accordion.defaultProps = {
