@@ -9,71 +9,90 @@ import ColorPicker from './ColorPicker'
 describe('component: ColorPicker', () => {
   describe('can be controlled', () => {
     test('with hsl', () => {
-      const { getAllByLabelText, getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
-          <ColorPicker id="color-picker" name="color-test" value={{ h: 120, s: 1, l: 0.5 }} />
+          <ColorPicker
+            id="color-picker"
+            name="color-test"
+            format="hsl"
+            value={{ h: 120, s: 1, l: 0.5 }}
+          />
         </StyleProvider>
       )
 
-      expect((getAllByLabelText('Hex')[0] as HTMLInputElement).value).toBe('#00FF00')
-      expect((getByLabelText('R') as HTMLInputElement).value).toBe('0')
-      expect((getByLabelText('G') as HTMLInputElement).value).toBe('255')
-      expect((getByLabelText('B') as HTMLInputElement).value).toBe('0')
+      expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
     })
 
     test('with hsv', () => {
-      const { getAllByLabelText, getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
-          <ColorPicker id="color-picker" name="what-color" value={{ h: 120, s: 1, v: 1 }} />
+          <ColorPicker
+            id="color-picker"
+            name="what-color"
+            format="hsv"
+            value={{ h: 120, s: 1, v: 1 }}
+          />
         </StyleProvider>
       )
 
-      expect((getAllByLabelText('Hex')[0] as HTMLInputElement).value).toBe('#00FF00')
-      expect((getByLabelText('R') as HTMLInputElement).value).toBe('0')
-      expect((getByLabelText('G') as HTMLInputElement).value).toBe('255')
-      expect((getByLabelText('B') as HTMLInputElement).value).toBe('0')
+      expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
     })
 
     test('with rgb', () => {
-      const { getAllByLabelText, getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
-          <ColorPicker id="color-picker" name="color-me" value={{ r: 0, g: 255, b: 0 }} />
+          <ColorPicker
+            id="color-picker"
+            name="color-me"
+            format="rgb"
+            value={{ r: 0, g: 255, b: 0 }}
+          />
         </StyleProvider>
       )
 
-      expect((getAllByLabelText('Hex')[0] as HTMLInputElement).value).toBe('#00FF00')
-      expect((getByLabelText('R') as HTMLInputElement).value).toBe('0')
-      expect((getByLabelText('G') as HTMLInputElement).value).toBe('255')
-      expect((getByLabelText('B') as HTMLInputElement).value).toBe('0')
+      expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
     })
 
     test('with hex', () => {
-      const { getAllByLabelText, getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="almost-there" value="00FF00" />
         </StyleProvider>
       )
 
-      expect((getAllByLabelText('Hex')[0] as HTMLInputElement).value).toBe('#00FF00')
-      expect((getByLabelText('R') as HTMLInputElement).value).toBe('0')
-      expect((getByLabelText('G') as HTMLInputElement).value).toBe('255')
-      expect((getByLabelText('B') as HTMLInputElement).value).toBe('0')
+      expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
+    })
+
+    test('empty string resets value', () => {
+      const { getByLabelText, rerender } = render(
+        <StyleProvider>
+          <ColorPicker id="color-picker" name="almost-there" value="00FF00" />
+        </StyleProvider>
+      )
+      rerender(
+        <StyleProvider>
+          <ColorPicker id="color-picker" name="almost-there" value="" />
+        </StyleProvider>
+      )
+
+      expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#000000')
     })
   })
 
   test('can open portal', async () => {
-    const { getByLabelText, getAllByLabelText, getByRole } = render(
+    const { getByLabelText, queryByRole } = render(
       <StyleProvider>
         <ColorPicker id="color-picker" name="pick-a-color" />
       </StyleProvider>
     )
 
     const trigger = getByLabelText('Click to open the color picker')
+    expect(queryByRole('dialog')).toBe(null)
     userEvent.click(trigger)
-    expect(getByRole('dialog')).toBeInTheDocument()
+    expect(queryByRole('dialog')).toBeInTheDocument()
     // Should focus the hex input when initially opened
     await animationRender()
-    expect(document.activeElement).toBe(getAllByLabelText('Hex')[1])
+    expect(document.activeElement).toBe(getByLabelText('Hex'))
   })
 
   describe('calls onChange', () => {
@@ -115,13 +134,13 @@ describe('component: ColorPicker', () => {
 
     test('when outer hex input is changed', () => {
       const onChange = jest.fn()
-      const { getAllByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
         </StyleProvider>
       )
 
-      const outerHexInput = getAllByLabelText('Hex')[0]
+      const outerHexInput = getByLabelText('Color')
       userEvent.clear(outerHexInput)
       userEvent.type(outerHexInput, 'FF0000')
 
@@ -132,7 +151,7 @@ describe('component: ColorPicker', () => {
   describe('does not call onChange', () => {
     test('when cancel button is clicked', () => {
       const onChange = jest.fn()
-      const { getByLabelText, getByText, getAllByLabelText } = render(
+      const { getByLabelText, getByText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
         </StyleProvider>
@@ -162,21 +181,22 @@ describe('component: ColorPicker', () => {
       userEvent.click(cancelButton)
 
       expect(onChange).not.toHaveBeenCalled()
-      const outerHexInput = getAllByLabelText('Hex')[0] as HTMLInputElement
-      expect(outerHexInput.value).toBe('#FF0000')
+      const outerHexInput = getByLabelText('Color') as HTMLInputElement
+      expect(outerHexInput.value).toBe('#000000')
+      expect(onChange).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('calls onFocus', () => {
     test('when outer hex input is focused', () => {
       const onFocus = jest.fn()
-      const { getAllByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="rainbow" onFocus={onFocus} />
         </StyleProvider>
       )
 
-      const outerHexInput = getAllByLabelText('Hex')[0]
+      const outerHexInput = getByLabelText('Color')
       fireEvent.focus(outerHexInput)
       expect(onFocus).toHaveBeenCalledTimes(1)
     })
@@ -200,67 +220,62 @@ describe('component: ColorPicker', () => {
   describe('calls onBlur', () => {
     test('when the outer hex input is blurred', async () => {
       const onBlur = jest.fn()
-      const { getAllByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="rainbow" onBlur={onBlur} />
         </StyleProvider>
       )
 
-      const outerHexInput = getAllByLabelText('Hex')[0]
+      const outerHexInput = getByLabelText('Color')
       fireEvent.focus(outerHexInput)
       fireEvent.blur(outerHexInput)
       await animationRender()
       expect(onBlur).toHaveBeenCalledTimes(1)
     })
 
-    test('when the cancel button is clicked', async () => {
+    test('when another element is focused', async () => {
       const onBlur = jest.fn()
-      const { getByLabelText, getByText } = render(
+      const { getByLabelText, getByRole } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="rainbow" onBlur={onBlur} />
+          <input type="text" aria-label="sup" />
         </StyleProvider>
       )
 
       const trigger = getByLabelText('Click to open the color picker')
       userEvent.click(trigger)
 
-      const cancelButton = getByText('Cancel')
-      userEvent.click(cancelButton)
+      const dialog = getByRole('dialog')
+
+      userEvent.click(getByLabelText('sup'))
       await animationRender()
       expect(onBlur).toHaveBeenCalledTimes(1)
-    })
-
-    test('when the apply button is clicked', async () => {
-      const onBlur = jest.fn()
-      const { getByLabelText, getByText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="rainbow" onBlur={onBlur} />
-        </StyleProvider>
-      )
-
-      const trigger = getByLabelText('Click to open the color picker')
-      userEvent.click(trigger)
-
-      const applyButton = getByText('Apply')
-      userEvent.click(applyButton)
-      await animationRender()
-      expect(onBlur).toHaveBeenCalledTimes(1)
+      // Also closes the dialog if it's open.
+      expect(dialog).not.toBeInTheDocument()
     })
   })
 
   describe('can set color', () => {
     test('using the outer hex input', () => {
-      const { getAllByLabelText, getByLabelText } = render(
+      let value = null
+      const onChange = (e: any) => {
+        value = e.target.value
+      }
+      const { getByLabelText } = render(
         <StyleProvider>
-          <ColorPicker id="color-picker" name="does-anyone-read-this" />
+          <ColorPicker id="color-picker" name="does-anyone-read-this" onChange={onChange} />
         </StyleProvider>
       )
 
-      const outerHexInput = getAllByLabelText('Hex')[0] as HTMLInputElement
-      const innerHexInput = getAllByLabelText('Hex')[1] as HTMLInputElement
+      const outerHexInput = getByLabelText('Color') as HTMLInputElement
       userEvent.clear(outerHexInput)
       userEvent.type(outerHexInput, 'FF0000')
       fireEvent.blur(outerHexInput)
+      expect(value).toBe('#FF0000')
+
+      const trigger = getByLabelText('Click to open the color picker')
+      userEvent.click(trigger)
+      const innerHexInput = getByLabelText('Hex') as HTMLInputElement
       expect(innerHexInput.value).toBe('#FF0000')
       expect((getByLabelText('R') as HTMLInputElement).value).toBe('255')
       expect((getByLabelText('G') as HTMLInputElement).value).toBe('0')
@@ -268,7 +283,7 @@ describe('component: ColorPicker', () => {
     })
 
     test('using the inner hex input', () => {
-      const { getAllByLabelText, getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="cool-color" />
         </StyleProvider>
@@ -277,19 +292,19 @@ describe('component: ColorPicker', () => {
       const trigger = getByLabelText('Click to open the color picker')
       userEvent.click(trigger)
 
-      const outerHexInput = getAllByLabelText('Hex')[0] as HTMLInputElement
-      const innerHexInput = getAllByLabelText('Hex')[1] as HTMLInputElement
+      const outerHexInput = getByLabelText('Color') as HTMLInputElement
+      const innerHexInput = getByLabelText('Hex') as HTMLInputElement
       userEvent.clear(innerHexInput)
       userEvent.type(innerHexInput, 'FF0000')
       fireEvent.blur(innerHexInput)
-      expect(outerHexInput.value).toBe('#FF0000')
+      expect(outerHexInput.value).toBe('#000000')
       expect((getByLabelText('R') as HTMLInputElement).value).toBe('255')
       expect((getByLabelText('G') as HTMLInputElement).value).toBe('0')
       expect((getByLabelText('B') as HTMLInputElement).value).toBe('0')
     })
 
     test('using the rgb inputs', () => {
-      const { getAllByLabelText, getByLabelText } = render(
+      const { getByLabelText } = render(
         <StyleProvider>
           <ColorPicker id="color-picker" name="coooooolor" />
         </StyleProvider>
@@ -298,8 +313,8 @@ describe('component: ColorPicker', () => {
       const trigger = getByLabelText('Click to open the color picker')
       userEvent.click(trigger)
 
-      const outerHexInput = getAllByLabelText('Hex')[0] as HTMLInputElement
-      const innerHexInput = getAllByLabelText('Hex')[1] as HTMLInputElement
+      const outerHexInput = getByLabelText('Color') as HTMLInputElement
+      const innerHexInput = getByLabelText('Hex') as HTMLInputElement
       const redInput = getByLabelText('R') as HTMLInputElement
       const greenInput = getByLabelText('G') as HTMLInputElement
       const blueInput = getByLabelText('B') as HTMLInputElement
@@ -316,7 +331,7 @@ describe('component: ColorPicker', () => {
       userEvent.type(blueInput, '255')
       fireEvent.blur(blueInput)
 
-      expect(outerHexInput.value).toBe('#0000FF')
+      expect(outerHexInput.value).toBe('#000000')
       expect(innerHexInput.value).toBe('#0000FF')
       expect(redInput.value).toBe('0')
       expect(greenInput.value).toBe('0')

@@ -28,6 +28,7 @@ export const code = `
 
 - Pass a meaningful name and ID
 - Use the `phrases` prop to set text & labels. This object should contain any of the following keys, although all are optional.
+  - `colorLabel`: Defaults to "Color".
   - `hexLabel`: Defaults to "Hex".
   - `redLabel`: Defaults to "R".
   - `greenLabel`: Defaults to "G".
@@ -38,14 +39,15 @@ export const code = `
 
 ## Basic usage
 
-- If the hex input rendered outside the popup is changed, `onChange` will be called as soon as a valid hex string is set.
+- If the hex input rendered outside the popup is changed, `onChange` will be called as soon as a valid color string is set.
 - If the color is changed using any of the elements in the popup, `onChange` will only be called when the apply button is clicked.
-- If the cancel button is clicked, the color picker's state will revert to whatever value is passed through the props.
-- The `ColorPicker` value can be controlled with any of the following types of values:
-  - Hex string - ex: `00FF00` or `#00FF00`
-  - HSL object - Hue should stay between 0 and 360 while saturation and lightness should stay between 0 and 1. ex: `{ h: 120, s: 1, l: 0.5 }`
-  - HSV object - Hue should stay between 0 and 360 while saturation and value should stay between 0 and 1. ex: `{ h: 120, s: 1, v: 1 }`
-  - RGB object - All values should be between 0 and 255. ex: `{r: 0, g: 255, b: 0}`
+- If the cancel button is clicked, or an element outside the picker is focused, the popup will close and the value will remain what it was before the picker was opened.
+- The `ColorPicker` value can be controlled using the `format` and `value`/`onChange` props with the following types of values:
+  - "hex" string format (default) - a hex color string, e.g. `00FF00` or `#00FF00`
+  - "hsl" object format - Hue should stay between 0 and 360 while saturation and lightness should stay between 0 and 1, e.g. `{ h: 120, s: 1, l: 0.5 }`
+  - "hsv" object format - Hue should stay between 0 and 360 while saturation and value should stay between 0 and 1, e.g. `{ h: 120, s: 1, v: 1 }`
+  - "rgb" object format - All values should be between 0 and 255, e.g. `{ r: 0, g: 255, b: 0 }`
+- Passing a `value=""` prop will reset the picker to its default value (black).
 
 ## Properties
 
