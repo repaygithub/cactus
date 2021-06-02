@@ -20,7 +20,7 @@ import IconButton from '../IconButton/IconButton'
 import TextButton from '../TextButton/TextButton'
 
 // Monkey! (fix IE11 issue in Saturation component)
-if (document && document.body && !document.contains) {
+if (typeof document !== 'undefined' && document?.body && !document.contains) {
   document.contains = document.body.contains.bind(document.body)
 }
 
