@@ -1,5 +1,3 @@
-import '../helpers/polyfills'
-
 import { ActionsAdd, NavigationChevronDown } from '@repay/cactus-icons'
 import { BorderSize, CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
 import isEqual from 'lodash/isEqual'
