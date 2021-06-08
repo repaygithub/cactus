@@ -208,9 +208,7 @@ const Rules = (props: RouteComponentProps): ReactElement => {
                         pb={4}
                         mb={4}
                       >
-                        <Text as="h4" my={0}>
-                          Conditions
-                        </Text>
+                        <Text as="h4">Conditions</Text>
                         <TextButton
                           ml="auto"
                           variant="action"
@@ -300,9 +298,7 @@ const Rules = (props: RouteComponentProps): ReactElement => {
                         mb={4}
                         mt={5}
                       >
-                        <Text as="h4" my={0}>
-                          Actions
-                        </Text>
+                        <Text as="h4">Actions</Text>
                         <TextButton
                           ml="auto"
                           variant="action"

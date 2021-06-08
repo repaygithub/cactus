@@ -67,9 +67,7 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
         {iconName && (
           <Icon iconSize={iconSize} iconName={iconName} variant={variant} className="icon" />
         )}
-        <Text as="h1" margin="0">
-          {title}
-        </Text>
+        <Text as="h1">{title}</Text>
       </Flex>
       <Flex className="children" flexDirection="column" justifyContent="center" alignItems="center">
         {children}
