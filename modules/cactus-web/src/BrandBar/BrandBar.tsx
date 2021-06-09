@@ -130,13 +130,14 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
   label,
   children,
   isProfilePage,
-  id = 'user-menu',
+  id,
   ...rest
 }) => {
   const { buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
     id,
     focusControl,
     onWrapperKeyDown: handleArrows,
+    buttonId: 'user-menu-button',
   })
 
   const buttonId = buttonProps.id
@@ -191,17 +192,12 @@ const positionPopup = (menu: HTMLElement, menuButton: HTMLElement | null) => {
   }
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({
-  id = 'user-menu',
-  label,
-  children,
-  isProfilePage,
-  ...rest
-}) => {
+const UserMenu: React.FC<UserMenuProps> = ({ id, label, children, isProfilePage, ...rest }) => {
   const { expanded, buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
     id,
     focusControl,
     onWrapperKeyDown: handleArrows,
+    buttonId: 'user-menu-button',
   })
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const listRef = React.useRef<HTMLUListElement>(null)
@@ -212,7 +208,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     anchorRef: buttonRef,
     updateOnScroll: true,
   })
-  wrapperProps.onClick = React.useCallback(
+  popupProps.onClick = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       const target = event.target as HTMLDivElement
       if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
@@ -222,7 +218,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
     [toggle]
   )
   return (
-    <div {...wrapperProps}>
+    <StyledUserMenu {...wrapperProps}>
       <MenuButton {...buttonProps} {...rest} ref={buttonRef}>
         <DescriptiveProfile aria-hidden mr="8px" />
         <span>{label}</span>
@@ -231,9 +227,13 @@ const UserMenu: React.FC<UserMenuProps> = ({
       <MenuList {...popupProps} ref={listRef}>
         {children}
       </MenuList>
-    </div>
+    </StyledUserMenu>
   )
 }
+
+const StyledUserMenu = styled.div`
+  outline: none;
+`
 
 const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
   display: flex;
@@ -337,6 +337,13 @@ const ActionMenuList = styled.ul`
   padding: 0;
   margin: 0;
   outline: none;
+  word-break: break-word;
+  [role='menuitem'] {
+    &:focus,
+    &:hover {
+      ${(p) => p.theme.colorStyles.callToAction};
+    }
+  }
 `
 
 const ActionMenuButton = styled(ActionBar.Button)<ProfileStyleProp>(

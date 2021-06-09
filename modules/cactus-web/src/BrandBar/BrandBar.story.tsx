@@ -30,24 +30,6 @@ export const BasicUsage = (): React.ReactElement => (
         <BrandBar.UserMenuItem onClick={action('Logout')}>
           {text('Action two', 'Logout')}
         </BrandBar.UserMenuItem>
-      </BrandBar.UserMenu>
-    </BrandBar>
-  </Layout>
-)
-
-export const UserMenuLink = (): React.ReactElement => (
-  <Layout>
-    <BrandBar logo={LOGO}>
-      <BrandBar.UserMenu
-        isProfilePage={boolean('On profile page?', false)}
-        label={text('Menu Title', 'Hershell Jewess')}
-      >
-        <BrandBar.UserMenuItem onClick={action('Settings')}>
-          {text('Action one', 'Settings')}
-        </BrandBar.UserMenuItem>
-        <BrandBar.UserMenuItem onClick={action('Logout')}>
-          {text('Action two', 'Logout')}
-        </BrandBar.UserMenuItem>
         <BrandBar.UserMenuItem as={Link} to="https://www.google.com">
           Go to Google
         </BrandBar.UserMenuItem>
@@ -91,6 +73,6 @@ export const CustomItems = (): React.ReactElement => {
 
 CustomItems.parameters = {
   beforeScreenshot: async (page: Page) => {
-    await page.click('[id="user-menu-button"]')
+    await page.click(`[id="user-menu-button"]`)
   },
 }
