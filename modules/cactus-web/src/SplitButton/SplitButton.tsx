@@ -269,7 +269,7 @@ export const SplitButton: SplitButtonType = (props) => {
 }
 
 const DropDown: React.FC<DropDownProps> = ({ isOpen, variant, anchorRef, children }) => {
-  const ref = React.useRef<HTMLElement>(null)
+  const ref = React.useRef<HTMLDivElement>(null)
   usePositioning({
     position: positionDropDown,
     visible: isOpen,
