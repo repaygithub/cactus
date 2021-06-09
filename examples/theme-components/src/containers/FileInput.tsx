@@ -5,6 +5,14 @@ import React from 'react'
 
 import Link from '../components/Link'
 
+type File = { load: () => Promise<unknown> }
+
+const loadFiles = (e: React.ChangeEvent<{ value: null | File[] }>) => {
+  e.target.value?.forEach((f) => {
+    f.load().catch(console.error)
+  })
+}
+
 const FileInputExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const fileTypes = ['.doc', '.txt', '.md', '.pdf']
 
@@ -20,7 +28,6 @@ const FileInputExample: React.FC<RouteComponentProps> = (): React.ReactElement =
       <Flex justifyContent="center">
         <FileInput
           name="my-file-loader"
-          rawFiles={false}
           multiple={true}
           accept={fileTypes}
           labels={{
@@ -30,6 +37,7 @@ const FileInputExample: React.FC<RouteComponentProps> = (): React.ReactElement =
           }}
           prompt="Drag files here or"
           buttonText="Select Files..."
+          onChange={loadFiles}
         />
       </Flex>
     </div>

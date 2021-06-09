@@ -95,7 +95,7 @@ export interface FileObject {
   contents?: unknown
   error?: Error & { original?: any }
   errorMsg?: React.ReactNode
-  load: (l: LoadFunc) => Promise<unknown>
+  load: (l?: LoadFunc) => Promise<unknown>
 }
 
 interface LoadingFile extends FileObject {
