@@ -1,10 +1,13 @@
 module.exports = {
   stories: ['../src/**/*.story.tsx'],
   addons: [
-    '@storybook/addon-knobs/register',
+    '@storybook/addon-knobs',
     '../cactus-addon/register.jsx',
-    '@storybook/addon-actions/register',
-    '@storybook/addon-viewport/register',
+    '@storybook/addon-actions',
+    '@storybook/addon-viewport',
     '@storybook/addon-docs',
   ],
+  core: {
+    builder: 'webpack5',
+  },
 }
