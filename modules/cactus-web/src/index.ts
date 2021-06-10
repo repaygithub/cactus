@@ -1,3 +1,5 @@
+import './helpers/polyfills'
+
 export { AccessibleField, useAccessibleField } from './AccessibleField/AccessibleField'
 export { default as Accordion } from './Accordion/Accordion'
 export { default as ActionBar } from './ActionBar/ActionBar'
