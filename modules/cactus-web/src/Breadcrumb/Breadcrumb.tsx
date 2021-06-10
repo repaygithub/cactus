@@ -112,7 +112,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
         target instanceof Node &&
         (firstBreadcrumb.current?.contains(target) || ellipsisButton.current?.contains(target))
       ) {
-        handleTriggerClick((event as any) as React.MouseEvent)
+        handleTriggerClick(event as any as React.MouseEvent)
       }
     }
 
@@ -122,7 +122,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
         target instanceof Node &&
         (firstBreadcrumb.current?.contains(target) || ellipsisButton.current?.contains(target))
       ) {
-        keyDownAsClick((event as any) as React.KeyboardEvent)
+        keyDownAsClick(event as any as React.KeyboardEvent)
       }
     }
 

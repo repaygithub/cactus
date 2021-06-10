@@ -30,27 +30,25 @@ const PageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
       <ol className="page-options-list">
         {pageSizeOptions &&
           paginationOptions &&
-          pageSizeOptions.map(
-            (pageSize): ReactElement => {
-              const isCurrentPageSize = paginationOptions.pageSize === pageSize
-              return (
-                <li className="page-option" key={`page-size-option-${pageSize}`}>
-                  <a
-                    role="link"
-                    aria-selected={isCurrentPageSize ? 'true' : 'false'}
-                    onClick={(): void => {
-                      onPageChange({ ...paginationOptions, pageSize: pageSize })
-                    }}
-                    onKeyDown={keyDownAsClick}
-                    tabIndex={isCurrentPageSize ? undefined : 0}
-                    aria-label={makePageSizeLabel(pageSize)}
-                  >
-                    {pageSize}
-                  </a>
-                </li>
-              )
-            }
-          )}
+          pageSizeOptions.map((pageSize): ReactElement => {
+            const isCurrentPageSize = paginationOptions.pageSize === pageSize
+            return (
+              <li className="page-option" key={`page-size-option-${pageSize}`}>
+                <a
+                  role="link"
+                  aria-selected={isCurrentPageSize ? 'true' : 'false'}
+                  onClick={(): void => {
+                    onPageChange({ ...paginationOptions, pageSize: pageSize })
+                  }}
+                  onKeyDown={keyDownAsClick}
+                  tabIndex={isCurrentPageSize ? undefined : 0}
+                  aria-label={makePageSizeLabel(pageSize)}
+                >
+                  {pageSize}
+                </a>
+              </li>
+            )
+          })}
       </ol>
     </StyledPageSizeSelect>
   )

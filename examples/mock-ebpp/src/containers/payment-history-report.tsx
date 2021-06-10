@@ -57,29 +57,27 @@ const PaymentHistoryReport = (props: RouteComponentProps): React.ReactElement =>
             </thead>
 
             <tbody style={{ fontSize: '22px' }}>
-              {state.payments.map(
-                (payment: PaymentData, index: number): React.ReactElement => {
-                  const color = index % 2 === 1 ? 'lightgrey' : 'white'
+              {state.payments.map((payment: PaymentData, index: number): React.ReactElement => {
+                const color = index % 2 === 1 ? 'lightgrey' : 'white'
 
-                  return (
-                    <tr
-                      key={payment.pnref}
-                      style={{
-                        backgroundColor: `${color}`,
-                        border: '2px solid black',
-                        textAlign: 'center',
-                      }}
-                    >
-                      <td> {payment.firstName} </td>
-                      <td> {payment.lastName} </td>
-                      <td> {payment.pnref} </td>
-                      <td> {payment.date} </td>
-                      <td> {payment.cardLastFour} </td>
-                      <td> {payment.id} </td>
-                    </tr>
-                  )
-                }
-              )}
+                return (
+                  <tr
+                    key={payment.pnref}
+                    style={{
+                      backgroundColor: `${color}`,
+                      border: '2px solid black',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <td> {payment.firstName} </td>
+                    <td> {payment.lastName} </td>
+                    <td> {payment.pnref} </td>
+                    <td> {payment.date} </td>
+                    <td> {payment.cardLastFour} </td>
+                    <td> {payment.id} </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </Flex>

@@ -36,10 +36,10 @@ export function CactusProvider({
 }: React.PropsWithChildren<Record<string, unknown>>): ReactElement {
   const [themeArgs, setThemeArgs] = useState<GeneratorOptions>({ primaryHue: 200 })
   const theme = useMemo((): CactusTheme => generateTheme(themeArgs), [themeArgs])
-  const contextValue = useMemo((): ThemeArgsContextType => ({ theme, update: setThemeArgs }), [
-    theme,
-    setThemeArgs,
-  ])
+  const contextValue = useMemo(
+    (): ThemeArgsContextType => ({ theme, update: setThemeArgs }),
+    [theme, setThemeArgs]
+  )
   return (
     <ThemeArgsContext.Provider value={contextValue}>
       <StyleProvider global theme={theme}>
