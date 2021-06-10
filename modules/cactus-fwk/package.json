@@ -53,9 +53,9 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@repay/babel-preset": "1.0.2",
-    "@repay/scripts": "^2.0.2",
+    "@babel/core": "^7.14.6",
+    "@repay/babel-preset": "1.1.1",
+    "@repay/scripts": "^3.0.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",
