@@ -336,42 +336,79 @@ function removeDuplicates(oldFiles: FileObject[], newFiles: FileList) {
   return files
 }
 
-const toFileObj = (box: PropBox) => (file: File): FileObject => {
-  const { rawFiles, accept, onError } = box
-  if (accept && !accepts(file, accept)) {
-    const errorMsg = onError(FILE_TYPE_ERR, accept)
-    return {
-      fileName: file.name,
-      contents: null,
-      status: 'error',
-      errorMsg: errorMsg,
+const toFileObj =
+  (box: PropBox) =>
+  (file: File): FileObject => {
+    const { rawFiles, accept, onError } = box
+    if (accept && !accepts(file, accept)) {
+      const errorMsg = onError(FILE_TYPE_ERR, accept)
+      return {
+        fileName: file.name,
+        contents: null,
+        status: 'error',
+        errorMsg: errorMsg,
+      }
+    } else if (rawFiles) {
+      return {
+        fileName: file.name,
+        contents: file,
+        status: 'loaded',
+      }
     }
-  } else if (rawFiles) {
     return {
       fileName: file.name,
       contents: file,
-      status: 'loaded',
+      status: 'loading',
     }
   }
-  return {
-    fileName: file.name,
-    contents: file,
-    status: 'loading',
-  }
-}
 
-const loadFile = (box: PropBox) => (fileObj: FileObject): Promise<FileObject> => {
-  const { onError } = box
-  if (fileObj.status !== 'loading') {
-    return Promise.resolve(fileObj)
-  }
-  const file = fileObj.contents as File
-  const reader = new FileReader()
-  return new Promise<FileObject>((resolve): void => {
-    reader.onload = (): void => {
-      const dataURL = reader.result as string
-      if (file.size > 250000000 && dataURL === '') {
-        const errorMsg = onError(NOT_READABLE_ERR)
+const loadFile =
+  (box: PropBox) =>
+  (fileObj: FileObject): Promise<FileObject> => {
+    const { onError } = box
+    if (fileObj.status !== 'loading') {
+      return Promise.resolve(fileObj)
+    }
+    const file = fileObj.contents as File
+    const reader = new FileReader()
+    return new Promise<FileObject>((resolve): void => {
+      reader.onload = (): void => {
+        const dataURL = reader.result as string
+        if (file.size > 250000000 && dataURL === '') {
+          const errorMsg = onError(NOT_READABLE_ERR)
+          resolve({
+            fileName: file.name,
+            contents: null,
+            status: 'error',
+            errorMsg: errorMsg,
+          })
+        }
+        resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
+      }
+
+      reader.onerror = (): void => {
+        reader.abort()
+        let errorType: ErrorType = UNKNOWN_ERR
+        if (reader.error) {
+          switch (reader.error.name) {
+            case NOT_FOUND_ERR:
+              errorType = NOT_FOUND_ERR
+              break
+            case SECURITY_ERR:
+              errorType = SECURITY_ERR
+              break
+            case ABORT_ERR:
+              errorType = ABORT_ERR
+              break
+            case NOT_READABLE_ERR:
+              errorType = NOT_READABLE_ERR
+              break
+            case ENCODING_ERR:
+              errorType = ENCODING_ERR
+              break
+          }
+        }
+        const errorMsg = onError(errorType)
         resolve({
           fileName: file.name,
           contents: null,
@@ -379,43 +416,10 @@ const loadFile = (box: PropBox) => (fileObj: FileObject): Promise<FileObject> =>
           errorMsg: errorMsg,
         })
       }
-      resolve({ fileName: file.name, contents: dataURL, status: 'loaded' })
-    }
 
-    reader.onerror = (): void => {
-      reader.abort()
-      let errorType: ErrorType = UNKNOWN_ERR
-      if (reader.error) {
-        switch (reader.error.name) {
-          case NOT_FOUND_ERR:
-            errorType = NOT_FOUND_ERR
-            break
-          case SECURITY_ERR:
-            errorType = SECURITY_ERR
-            break
-          case ABORT_ERR:
-            errorType = ABORT_ERR
-            break
-          case NOT_READABLE_ERR:
-            errorType = NOT_READABLE_ERR
-            break
-          case ENCODING_ERR:
-            errorType = ENCODING_ERR
-            break
-        }
-      }
-      const errorMsg = onError(errorType)
-      resolve({
-        fileName: file.name,
-        contents: null,
-        status: 'error',
-        errorMsg: errorMsg,
-      })
-    }
-
-    reader.readAsDataURL(file)
-  })
-}
+      reader.readAsDataURL(file)
+    })
+  }
 
 const reducer = (files: FileObject[], action: FileAction, box: PropBox) => {
   const { disabled, isMounted, multiple } = box
@@ -504,9 +508,7 @@ const FileInputBase = (props: FileInputProps): React.ReactElement => {
   })
   const [files, updateFiles] = useFileState(box, value || [])
   // Not adding `multiple` or `type=file` because Formik doesn't properly support file inputs.
-  const eventTarget = useBox(
-    new CactusEventTarget<FileObject[]>({ id, name, value: files })
-  )
+  const eventTarget = useBox(new CactusEventTarget<FileObject[]>({ id, name, value: files }))
   const [inputKey, setInputKey] = React.useState<number>(0)
 
   useEffect(() => {

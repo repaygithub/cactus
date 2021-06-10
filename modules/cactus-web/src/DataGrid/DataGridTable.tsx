@@ -24,15 +24,8 @@ const isColumn = (col: any): col is ColumnObject => {
 const DataGridTable: React.FC<DataGridTableProps> = (props) => {
   const { children, data, ...rest } = props
 
-  const {
-    columns,
-    isCardView,
-    cardBreakpoint,
-    fullWidth,
-    sortOptions,
-    onSort,
-    variant,
-  } = useContext(DataGridContext)
+  const { columns, isCardView, cardBreakpoint, fullWidth, sortOptions, onSort, variant } =
+    useContext(DataGridContext)
 
   const handleSort = (id: string, exists: boolean) => {
     if (sortOptions) {
