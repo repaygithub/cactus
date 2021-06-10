@@ -232,7 +232,7 @@ const PickerBase: React.FC<CustomPickerProps> = (props) => {
   }
 
   const handleHueChange: ColorChangeHandler<HSLColor> = (hsl) => {
-    const color = tinycolor((hsl as any) as HSL)
+    const color = tinycolor(hsl as any as HSL)
     saveColor(color)
   }
 
@@ -333,9 +333,7 @@ export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
   const openedState = useRef<Color>(initialState)
   const buttonClicked = useRef<boolean>(false)
 
-  const eventTarget = useBox(
-    new CactusEventTarget<Color>({ id, name, value: state })
-  )
+  const eventTarget = useBox(new CactusEventTarget<Color>({ id, name, value: state }))
 
   const inputRef = useRef<HTMLDivElement | null>(null)
   const portalRef = useRef<HTMLDivElement | null>(null)

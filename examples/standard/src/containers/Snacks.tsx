@@ -41,15 +41,13 @@ const Snacks: React.FC<RouteComponentProps> = (): ReactElement => {
         <I18nText get="snacks-desc" />
       </div>
       <ul>
-        {snackList.map(
-          (item, ix): ReactElement => {
-            return (
-              <li key={ix}>
-                <I18nText get={item} />
-              </li>
-            )
-          }
-        )}
+        {snackList.map((item, ix): ReactElement => {
+          return (
+            <li key={ix}>
+              <I18nText get={item} />
+            </li>
+          )
+        })}
       </ul>
     </I18nSection>
   )

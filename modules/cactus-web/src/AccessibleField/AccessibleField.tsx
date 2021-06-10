@@ -125,15 +125,8 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
   } = props
   const hookArgs = { id, name, tooltip, disabled, error, warning, success }
   const accessibility = useAccessibleField(hookArgs)
-  const {
-    fieldId,
-    ariaDescribedBy,
-    labelId,
-    statusId,
-    tooltipId,
-    status,
-    statusMessage,
-  } = accessibility
+  const { fieldId, ariaDescribedBy, labelId, statusId, tooltipId, status, statusMessage } =
+    accessibility
 
   const ref = React.useRef<HTMLDivElement | null>(null)
   const [forceTooltipVisible, setTooltipVisible] = React.useState<boolean>(false)

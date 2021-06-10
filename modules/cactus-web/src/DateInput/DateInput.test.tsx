@@ -316,19 +316,17 @@ describe('component: DateInput', (): void => {
       })
       await animationRender()
       const desiredDate = PartialDate.from('2018-03-23', { type: 'date', format: 'YYYY-MM-dd' })
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(getByLabelText('Click to change month'))
-          await animationRender()
-          fireEvent.click(within(getByLabelText('Select a month')).getByText('March'))
-          fireEvent.click(getByLabelText('Click to change year'))
-          await animationRender()
-          fireEvent.click(getByText('2018'))
-          await animationRender()
-          // @ts-ignore
-          fireEvent.click(getByText(desiredDate.toLocaleSpoken('date')).parentElement)
-        }
-      )
+      await act(async (): Promise<void> => {
+        fireEvent.click(getByLabelText('Click to change month'))
+        await animationRender()
+        fireEvent.click(within(getByLabelText('Select a month')).getByText('March'))
+        fireEvent.click(getByLabelText('Click to change year'))
+        await animationRender()
+        fireEvent.click(getByText('2018'))
+        await animationRender()
+        // @ts-ignore
+        fireEvent.click(getByText(desiredDate.toLocaleSpoken('date')).parentElement)
+      })
       expect(handleChange).toHaveBeenCalledTimes(3)
       expect(value).toEqual('2018-03-23')
     })
@@ -353,12 +351,10 @@ describe('component: DateInput', (): void => {
       const portalTrigger = getByLabelText('Open date picker')
       userEvent.click(portalTrigger)
       await animationRender()
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(getByLabelText('Click to go back one month'))
-          await animationRender()
-        }
-      )
+      await act(async (): Promise<void> => {
+        fireEvent.click(getByLabelText('Click to go back one month'))
+        await animationRender()
+      })
       expect(handleChange).toHaveBeenCalledTimes(1)
       expect(value).toEqual('2018-02-23')
     })
@@ -383,12 +379,10 @@ describe('component: DateInput', (): void => {
       const portalTrigger = getByLabelText('Open date picker')
       userEvent.click(portalTrigger)
       await animationRender()
-      await act(
-        async (): Promise<void> => {
-          fireEvent.click(getByLabelText('Click to go forward one month'))
-          await animationRender()
-        }
-      )
+      await act(async (): Promise<void> => {
+        fireEvent.click(getByLabelText('Click to go forward one month'))
+        await animationRender()
+      })
       expect(handleChange).toHaveBeenCalledTimes(1)
       expect(value).toEqual('2018-04-23')
     })
@@ -423,20 +417,18 @@ describe('component: DateInput', (): void => {
         await animationRender()
         // @ts-ignore
         expect(document.activeElement.dataset.date).toEqual('2018-03-22')
-        await act(
-          async (): Promise<void> => {
-            // @ts-ignore
-            fireEvent.keyDown(document.activeElement, {
-              key: 'ArrowRight',
-              target: document.activeElement,
-            })
-            await animationRender()
-            // @ts-ignore
-            fireEvent.click(document.activeElement, {
-              target: document.activeElement,
-            })
-          }
-        )
+        await act(async (): Promise<void> => {
+          // @ts-ignore
+          fireEvent.keyDown(document.activeElement, {
+            key: 'ArrowRight',
+            target: document.activeElement,
+          })
+          await animationRender()
+          // @ts-ignore
+          fireEvent.click(document.activeElement, {
+            target: document.activeElement,
+          })
+        })
         expect(handleChange).toHaveBeenCalledTimes(1)
         expect(value).toEqual('2018-03-23')
       })
@@ -466,39 +458,37 @@ describe('component: DateInput', (): void => {
         await animationRender()
         // @ts-ignore
         expect(document.activeElement.dataset.date).toEqual('2018-03-22')
-        await act(
-          async (): Promise<void> => {
-            fireEvent.click(getByLabelText('Click to change month'))
-            await animationRender()
-            const monthList = getByLabelText('Select a month')
+        await act(async (): Promise<void> => {
+          fireEvent.click(getByLabelText('Click to change month'))
+          await animationRender()
+          const monthList = getByLabelText('Select a month')
+          // @ts-ignore
+          fireEvent.keyDown(monthList, {
+            key: 'ArrowUp',
+            target: monthList,
+          })
+          await animationRender()
+          rerender(
+            <StyleProvider>
+              <DateInput
+                name="date_input"
+                id="date-input"
+                format="YYYY-MM-dd"
+                value={pd.format()}
+                onChange={handleChange}
+              />
+            </StyleProvider>
+          )
+          const selected = document.getElementById(
             // @ts-ignore
-            fireEvent.keyDown(monthList, {
-              key: 'ArrowUp',
-              target: monthList,
-            })
-            await animationRender()
-            rerender(
-              <StyleProvider>
-                <DateInput
-                  name="date_input"
-                  id="date-input"
-                  format="YYYY-MM-dd"
-                  value={pd.format()}
-                  onChange={handleChange}
-                />
-              </StyleProvider>
-            )
-            const selected = document.getElementById(
-              // @ts-ignore
-              monthList.getAttribute('aria-activedescendant')
-            )
-            // @ts-ignore
-            fireEvent.click(selected, {
-              target: selected,
-            })
-            await animationRender()
-          }
-        )
+            monthList.getAttribute('aria-activedescendant')
+          )
+          // @ts-ignore
+          fireEvent.click(selected, {
+            target: selected,
+          })
+          await animationRender()
+        })
         expect(getByLabelText('Click to change month')).toHaveTextContent('February')
       })
 
@@ -527,37 +517,35 @@ describe('component: DateInput', (): void => {
         await animationRender()
         // @ts-ignore
         expect(document.activeElement.dataset.date).toEqual('2018-03-22')
-        await act(
-          async (): Promise<void> => {
-            fireEvent.click(getByLabelText('Click to change year'))
-            await animationRender()
-            const yearList = getByLabelText('Select a year')
-            // @ts-ignore
-            fireEvent.keyDown(yearList, {
-              key: 'ArrowUp',
-              target: yearList,
-            })
-            await animationRender()
-            rerender(
-              <StyleProvider>
-                <DateInput
-                  name="date_input"
-                  id="date-input"
-                  format="YYYY-MM-dd"
-                  value={pd.format()}
-                  onChange={handleChange}
-                />
-              </StyleProvider>
-            )
-            // @ts-ignore
-            const selected = document.getElementById(yearList.getAttribute('aria-activedescendant'))
-            // @ts-ignore
-            fireEvent.click(selected, {
-              target: selected,
-            })
-            await animationRender()
-          }
-        )
+        await act(async (): Promise<void> => {
+          fireEvent.click(getByLabelText('Click to change year'))
+          await animationRender()
+          const yearList = getByLabelText('Select a year')
+          // @ts-ignore
+          fireEvent.keyDown(yearList, {
+            key: 'ArrowUp',
+            target: yearList,
+          })
+          await animationRender()
+          rerender(
+            <StyleProvider>
+              <DateInput
+                name="date_input"
+                id="date-input"
+                format="YYYY-MM-dd"
+                value={pd.format()}
+                onChange={handleChange}
+              />
+            </StyleProvider>
+          )
+          // @ts-ignore
+          const selected = document.getElementById(yearList.getAttribute('aria-activedescendant'))
+          // @ts-ignore
+          fireEvent.click(selected, {
+            target: selected,
+          })
+          await animationRender()
+        })
         expect(getByLabelText('Click to change year')).toHaveTextContent('2017')
       })
     })
