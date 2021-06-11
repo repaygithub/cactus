@@ -1,3 +1,21 @@
+# v6.5.0 (Fri Jun 11 2021)
+
+#### 🚀 Enhancement
+
+- Allow users to pass flex, flexBasis, flexGrow, and flexShrink to various components (see component docs for more) [#594](https://github.com/repaygithub/cactus/pull/594) ([@Dhalton](https://github.com/Dhalton))
+- Add a Header.Description component to render descriptive text just below the main Header [#592](https://github.com/repaygithub/cactus/pull/592) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Fix our custom polyfills so that they are compatible with Webpack 5 [#603](https://github.com/repaygithub/cactus/pull/603) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- [@Dhalton](https://github.com/Dhalton)
+- Michael Soltow ([@mikesoltow](https://github.com/mikesoltow))
+
+---
+
 # v6.4.0 (Thu May 20 2021)
 
 #### 🚀 Enhancement
