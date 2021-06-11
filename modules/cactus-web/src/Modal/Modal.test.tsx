@@ -7,7 +7,7 @@ import Modal from './Modal'
 
 describe('component: Modal', () => {
   test('Modal is open when isOpen=true', (): void => {
-    const { baseElement } = render(
+    const { getByText } = render(
       <StyleProvider>
         <Modal
           variant="action"
@@ -17,25 +17,29 @@ describe('component: Modal', () => {
           onClose={(): void => {
             return
           }}
-        />
+        >
+          I am a modal
+        </Modal>
       </StyleProvider>
     )
-    expect(baseElement).toContainHTML('<reach-portal>')
+    expect(getByText('I am a modal')).toBeVisible()
   })
 
   test('Modal is closed when isOpen=false', () => {
-    const { baseElement } = render(
+    const { queryByText } = render(
       <StyleProvider>
         <Modal
           isOpen={false}
           onClose={(): void => {
             return
           }}
-        />
+        >
+          I am a modal
+        </Modal>
       </StyleProvider>
     )
 
-    expect(baseElement).not.toContainHTML('<reach-portal>')
+    expect(queryByText('I am a modal')).not.toBeInTheDocument()
   })
 
   test('Aria-labels applied correctly', () => {
