@@ -19,10 +19,11 @@ import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import { border, borderSize, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
+import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { SidebarMenu } from '../SidebarMenu/SidebarMenu'
 import {
   getOwnedMenuItems,
   getVisibleMenuItems,
@@ -425,47 +426,6 @@ const InlineMenu = styled.ul<{ $margin: number }>`
   }
 `
 
-export const SidebarMenu = styled.ul`
-  ${(p) => p.theme.colorStyles.standard}
-  ${(p) => textStyle(p.theme, 'small')};
-  ${listStyle}
-
-  [role='menuitem'] {
-    padding: 18px 16px;
-    border-bottom: ${(p) => border(p.theme, 'lightContrast')};
-    ${NavigationArrowDown} {
-      transform: rotateZ(-90deg);
-    }
-    &[aria-expanded='true'] {
-      color: ${(p) => p.theme.colors.callToAction};
-      ${NavigationArrowDown} {
-        transform: rotateZ(90deg);
-      }
-    }
-    &:hover {
-      color: ${(p) => p.theme.colors.callToAction};
-      border-bottom-color: ${(p) => p.theme.colors.callToAction};
-    }
-    position: relative;
-    overflow: visible;
-    &:focus::after {
-      border: ${(p) => border(p.theme, 'callToAction')};
-      background-color: transparent;
-      box-sizing: border-box;
-      width: 100%;
-      height: calc(100% + ${borderSize});
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    &[aria-current='true'],
-    &[aria-expanded='true'] {
-      font-weight: 600;
-    }
-  }
-`
-
 const MenuWrapper = styled.div`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
@@ -552,7 +512,7 @@ const buttonStyles = `
   }
 `
 
-const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
+export const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
   ${buttonStyles}
   width: 100%;
   height: 100%;

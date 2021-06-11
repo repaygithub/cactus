@@ -12,8 +12,9 @@ import { getViewport, usePositioning } from '../helpers/positionPopover'
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { Sidebar } from '../Layout/Sidebar'
-import { SidebarMenu as ActionMenuPopup } from '../MenuBar/MenuBar'
+import { MenuButton as MenuListItem } from '../MenuBar/MenuBar'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { SidebarMenu as ActionMenuPopup } from '../SidebarMenu/SidebarMenu'
 
 interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string
@@ -319,15 +320,19 @@ const MenuList = styled.ul`
     display: block;
     cursor: pointer;
     text-decoration: none;
+    word-wrap: break-word;
     overflow-wrap: break-word;
     ${(p) => textStyle(p.theme, 'small')};
     ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
     text-align: center;
-    &:focus,
+    &:focus {
+      background-color: ${(p) => p.theme.colors.lightContrast};
+      color: ${(p) => p.theme.colors.callToAction};
+    }
     &:hover {
-      ${(p) => p.theme.colorStyles.callToAction};
+      color: ${(p) => p.theme.colors.callToAction};
     }
   }
 `
@@ -337,7 +342,8 @@ const ActionMenuList = styled.ul`
   padding: 0;
   margin: 0;
   outline: none;
-  word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   [role='menuitem'] {
     &:focus,
     &:hover {
@@ -354,6 +360,7 @@ const PopupHeader = styled.div`
   text-align: right;
   box-sizing: border-box;
   display: block;
+  word-wrap: break-word;
   overflow-wrap: break-word;
   padding: 18px 16px;
   ${(p) => textStyle(p.theme, 'body')};
@@ -362,28 +369,5 @@ const PopupHeader = styled.div`
   ${(p) => insetBorder(p.theme, 'callToAction', 'bottom')};
   svg {
     font-size: 12px;
-  }
-`
-
-const MenuListItem = styled.span`
-  align-items: center;
-  background-color: transparent;
-  border: none;
-  box-sizing: border-box;
-  color: inherit;
-  cursor: pointer;
-  display: flex;
-  font: inherit;
-  height: 100%;
-  text-align: left;
-  text-decoration: none;
-  outline: none;
-  width: 100%;
-  &:active,
-  &:focus {
-    outline: none;
-  }
-  &::-moz-focus-inner {
-    border: none;
   }
 `

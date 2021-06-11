@@ -73,6 +73,6 @@ export const CustomItems = (): React.ReactElement => {
 
 CustomItems.parameters = {
   beforeScreenshot: async (page: Page) => {
-    await page.click(`[id="user-menu-button"]`)
+    await page.click('[id="user-menu-button"]')
   },
 }
