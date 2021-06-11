@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -34,7 +34,7 @@ describe('component: Preview', () => {
       expect(getByAltText('Cute kitten number 1')).toBeInTheDocument()
     })
 
-    test('should be able to expand an image', () => {
+    test('should be able to expand an image', async () => {
       const { getByAltText, getAllByAltText, getByLabelText } = render(
         <StyleProvider>
           <Preview>
@@ -48,9 +48,10 @@ describe('component: Preview', () => {
       const image = getByAltText('Cute kitten number 1')
       userEvent.click(image)
       const closeButton = getByLabelText('Close the image')
-      expect(document.activeElement).toBe(closeButton)
+      await waitFor(() => expect(document.activeElement).toBe(closeButton))
       expect(getAllByAltText('Cute kitten number 1')[1]).toBeInTheDocument()
-      userEvent.click(closeButton)
+      act(() => userEvent.click(closeButton))
+      await waitFor(() => expect(closeButton).not.toBeInTheDocument())
       expect(getAllByAltText('Cute kitten number 1').length).toBe(1)
     })
   })
@@ -81,7 +82,7 @@ describe('component: Preview', () => {
       expect(getByAltText('Cute kitten number 1')).toBeInTheDocument()
     })
 
-    test('Should be able to expand an image', () => {
+    test('Should be able to expand an image', async () => {
       const { getByAltText, getAllByAltText, getByLabelText } = render(
         <StyleProvider>
           <Preview>
@@ -95,14 +96,15 @@ describe('component: Preview', () => {
       const image = getByAltText('Cute kitten number 1')
       fireEvent.keyDown(image, { key: 'Enter' })
       const closeButton = getByLabelText('Close the image')
-      expect(document.activeElement).toBe(closeButton)
+      expect(document.activeElement === closeButton).toBe(true)
       expect(getAllByAltText('Cute kitten number 1')[1]).toBeInTheDocument()
       fireEvent.keyDown(closeButton, { key: 'Enter' })
+      await waitFor(() => expect(closeButton).not.toBeInTheDocument())
       expect(getAllByAltText('Cute kitten number 1').length).toBe(1)
     })
 
-    test('should be able to close an image with the escape key', () => {
-      const { getByAltText, getAllByAltText } = render(
+    test('should be able to close an image with the escape key', async () => {
+      const { getByAltText, getAllByAltText, getByLabelText } = render(
         <StyleProvider>
           <Preview>
             {IMAGES.map((src, ix) => (
@@ -114,8 +116,11 @@ describe('component: Preview', () => {
 
       const image = getByAltText('Cute kitten number 1')
       userEvent.click(image)
+      const closeButton = getByLabelText('Close the image')
+      await waitFor(() => expect(document.activeElement).toBe(closeButton))
       expect(getAllByAltText('Cute kitten number 1')[1]).toBeInTheDocument()
       fireEvent.keyDown(document.activeElement as Element, { key: 'Escape' })
+      await waitFor(() => expect(closeButton).not.toBeInTheDocument())
       expect(getAllByAltText('Cute kitten number 1').length).toBe(1)
     })
   })

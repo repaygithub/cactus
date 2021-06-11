@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React, { useState } from 'react'
 
@@ -32,7 +32,7 @@ describe('React Helper Tests', () => {
       )
     }
 
-    it('sets the state and runs the callback ONLY after the state updates', () => {
+    it('sets the state and runs the callback ONLY after the state updates', async () => {
       render(<TestingComponent />)
       const updateMainStateWithCallbackButton = screen.getByText('Update Main State with Callback')
       const updateOtherStateButton = screen.getByText('Update Other State')
@@ -51,7 +51,7 @@ describe('React Helper Tests', () => {
       expect(currentOtherState).toHaveTextContent('other')
 
       userEvent.click(updateMainStateWithCallbackButton)
-      expect(callback).toHaveBeenCalledTimes(1)
+      await waitFor(() => expect(callback).toHaveBeenCalledTimes(1))
       expect(otherCallback).not.toHaveBeenCalled()
       expect(currentMainState).toHaveTextContent('updated')
       expect(currentOtherState).toHaveTextContent('other')
@@ -63,8 +63,8 @@ describe('React Helper Tests', () => {
       expect(currentOtherState).toHaveTextContent('otherUpdated')
 
       userEvent.click(updateMainStateWithOtherCallbackButton)
+      await waitFor(() => expect(otherCallback).toHaveBeenCalledTimes(1))
       expect(callback).toHaveBeenCalledTimes(1)
-      expect(otherCallback).toHaveBeenCalledTimes(1)
       expect(currentMainState).toHaveTextContent('updatedAgain')
       expect(currentOtherState).toHaveTextContent('otherUpdated')
 
