@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -38,7 +38,7 @@ describe('Breadcrumb:', (): void => {
         const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
         const popupBreadcrumbLink = getAllByText('Link 1')[1]
         expect(popupBreadcrumbLink).not.toBeVisible()
-        userEvent.click(firstBreadcrumb)
+        act(() => userEvent.click(firstBreadcrumb))
         expect(popupBreadcrumbLink).toBeVisible()
       })
 
@@ -58,7 +58,7 @@ describe('Breadcrumb:', (): void => {
         const ellipsisButton = getByRole('button', { name: '...' })
         const popupBreadcrumbLink = getAllByText('Link 1')[1]
         expect(popupBreadcrumbLink).not.toBeVisible()
-        userEvent.click(ellipsisButton)
+        act(() => userEvent.click(ellipsisButton))
         expect(popupBreadcrumbLink).toBeVisible()
       })
 
@@ -79,7 +79,7 @@ describe('Breadcrumb:', (): void => {
         )
 
         const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
-        userEvent.click(firstBreadcrumb)
+        act(() => userEvent.click(firstBreadcrumb))
         const link2 = getAllByText('Link 2')[0]
         userEvent.click(link2)
         expect(onLinkClick).toHaveBeenCalledTimes(1)
