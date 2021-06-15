@@ -603,7 +603,7 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 18px;
 }
 
-.c2 .sc-gkdzZj {
+.c2 .sc-flMoUE {
   height: 12px;
   width: 12px;
 }
@@ -966,7 +966,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c2 .sc-gkdzZj {
+.c2 .sc-flMoUE {
   height: 12px;
   width: 12px;
 }
@@ -984,7 +984,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-flMoUE {
+.c1 .sc-eWVKcp {
   position: relative;
   margin-top: 4px;
 }
@@ -1216,17 +1216,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   padding: 0;
 }
 
-.c2 .sc-gVgnHT {
+.c2 .sc-fWPcDo {
   height: 24px;
   width: 24px;
 }
 
-.c2 .sc-gVgnHT .sc-jUEnpm {
+.c2 .sc-fWPcDo .sc-jUEnpm {
   height: 16px;
   width: 16px;
 }
 
-.c2 .sc-gVgnHT .sc-dWdcrH {
+.c2 .sc-fWPcDo .sc-dWdcrH {
   height: 18px;
   width: 18px;
 }
@@ -1236,7 +1236,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .sc-gyUeRy {
+.c2 .sc-gkdzZj {
   margin-left: auto;
 }
 
@@ -1249,7 +1249,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .sc-flMoUE {
+.c1 .sc-eWVKcp {
   position: relative;
   margin-top: 4px;
 }
