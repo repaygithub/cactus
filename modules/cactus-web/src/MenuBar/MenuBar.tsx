@@ -208,7 +208,12 @@ const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
       <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
-      <MenuList {...props} aria-orientation="vertical" ref={menuRef}>
+      <MenuList
+        {...props}
+        aria-orientation="vertical"
+        ref={menuRef}
+        $showScroll={scroll.showScroll}
+      >
         {children}
       </MenuList>
       <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
@@ -510,23 +515,21 @@ const MenuWrapper = styled.div`
   }
 `
 
-const MenuList = styled.ul`
+// Includes fix for an IE bug with nested flex items.
+const MenuList = styled.ul<{ $showScroll?: boolean }>`
   ${listStyle}
   width: 100%;
   display: flex;
-  flex-direction: ${(p) => (p['aria-orientation'] === 'vertical' ? 'column' : 'row')};
+  &[aria-orientation='vertical'] {
+    flex-direction: column;
+    ${isIE && ((p) => `max-height: calc(70vh - ${p.$showScroll ? BUTTON_WIDTH * 2 : 0}px);`)}
+  }
   justify-content: flex-start;
   flex-wrap: nowrap;
   align-items: stretch;
   overflow: hidden;
   color: ${(p) => p.theme.colors.darkestContrast};
   ${(p) => textStyle(p.theme, 'small')};
-  ${(p) => {
-    // Fix for an IE bug with nested flex items.
-    if (isIE && p['aria-orientation'] === 'vertical') {
-      return `max-height: calc(70vh - ${BUTTON_WIDTH * 2}px);`
-    }
-  }}
 `
 
 const buttonStyles = `
