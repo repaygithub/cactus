@@ -68,8 +68,8 @@ exports[`component: FileInputField should render a file with an error 1`] = `
 }
 
 .c21 .c14,
-.c21 .SvgComponent-bevlva,
-.c21 .SvgComponent-fCAhFS {
+.c21 .SvgComponent-bdWwHG,
+.c21 .SvgComponent-fCbsSy {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -101,7 +101,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   padding-right: 8px;
 }
 
-.c1 .Tooltip-cEcyMF {
+.c1 .Tooltip-cDUCrJ {
   position: relative;
   font-size: 16px;
   padding-right: 8px;
@@ -269,12 +269,12 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c11 .c12 .SvgComponent-fCAhFS {
+.c11 .c12 .SvgComponent-fCbsSy {
   height: 18px;
   width: 18px;
 }
 
-.c11 .Spinner-hUZwCV {
+.c11 .Spinner-hVylqp {
   height: 12px;
   width: 12px;
 }
@@ -347,7 +347,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
   padding-left: 16px;
 }
 
-.c2 .Tooltip-cEcyMF {
+.c2 .Tooltip-cDUCrJ {
   display: block;
   bottom: 4px;
   font-size: 16px;
@@ -403,7 +403,7 @@ exports[`component: FileInputField should render a file with an error 1`] = `
         upload something
       </span>
       <span
-        class="Tooltip-cEcyMF"
+        class="Tooltip-cDUCrJ"
         data-reach-tooltip-trigger=""
         data-state="tooltip-hidden"
       >
@@ -605,13 +605,13 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   padding-right: 8px;
 }
 
-.c1 .Tooltip-cEcyMF {
+.c1 .Tooltip-cDUCrJ {
   position: relative;
   font-size: 16px;
   padding-right: 8px;
 }
 
-.c1 .StatusMessage-iAthHz {
+.c1 .StatusMessage-iARWuT {
   margin-top: 4px;
 }
 
@@ -636,7 +636,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c13 .SvgComponent-iZpKnr {
+.c13 .SvgComponent-iZOzaL {
   padding-bottom: 4px;
 }
 
@@ -768,7 +768,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c11 .c12 .SvgComponent-iZpKnr {
+.c11 .c12 .SvgComponent-iZOzaL {
   height: 16px;
   width: 16px;
 }
@@ -778,7 +778,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c11 .Spinner-hUZwCV {
+.c11 .Spinner-hVylqp {
   height: 12px;
   width: 12px;
 }
@@ -796,7 +796,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c10 .StatusMessage-iAthHz {
+.c10 .StatusMessage-iARWuT {
   position: relative;
   margin-top: 4px;
 }
@@ -851,7 +851,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
   padding-left: 16px;
 }
 
-.c2 .Tooltip-cEcyMF {
+.c2 .Tooltip-cDUCrJ {
   display: block;
   bottom: 4px;
   font-size: 16px;
@@ -900,7 +900,7 @@ exports[`component: FileInputField should render a loaded file 1`] = `
         upload something
       </span>
       <span
-        class="Tooltip-cEcyMF"
+        class="Tooltip-cDUCrJ"
         data-reach-tooltip-trigger=""
         data-state="tooltip-hidden"
       >
@@ -1077,13 +1077,13 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding-right: 8px;
 }
 
-.c1 .Tooltip-cEcyMF {
+.c1 .Tooltip-cDUCrJ {
   position: relative;
   font-size: 16px;
   padding-right: 8px;
 }
 
-.c1 .StatusMessage-iAthHz {
+.c1 .StatusMessage-iARWuT {
   margin-top: 4px;
 }
 
@@ -1169,17 +1169,17 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding: 0;
 }
 
-.c11 .Avatar-Jmvut {
+.c11 .Avatar-JLkhN {
   height: 24px;
   width: 24px;
 }
 
-.c11 .Avatar-Jmvut .SvgComponent-iZpKnr {
+.c11 .Avatar-JLkhN .SvgComponent-iZOzaL {
   height: 16px;
   width: 16px;
 }
 
-.c11 .Avatar-Jmvut .SvgComponent-fCAhFS {
+.c11 .Avatar-JLkhN .SvgComponent-fCbsSy {
   height: 18px;
   width: 18px;
 }
@@ -1189,11 +1189,11 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 12px;
 }
 
-.c11 .IconButton-fYcrJZ {
+.c11 .IconButton-fXUvpd {
   margin-left: auto;
 }
 
-.c11 .SvgComponent-eJMnHx {
+.c11 .SvgComponent-eJErmB {
   height: 12px;
   width: 12px;
 }
@@ -1202,7 +1202,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   width: 100%;
 }
 
-.c10 .StatusMessage-iAthHz {
+.c10 .StatusMessage-iARWuT {
   position: relative;
   margin-top: 4px;
 }
@@ -1257,7 +1257,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
   padding-left: 16px;
 }
 
-.c2 .Tooltip-cEcyMF {
+.c2 .Tooltip-cDUCrJ {
   display: block;
   bottom: 4px;
   font-size: 16px;
@@ -1306,7 +1306,7 @@ exports[`component: FileInputField should render a loading file 1`] = `
         upload something
       </span>
       <span
-        class="Tooltip-cEcyMF"
+        class="Tooltip-cDUCrJ"
         data-reach-tooltip-trigger=""
         data-state="tooltip-hidden"
       >
