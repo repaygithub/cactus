@@ -59,7 +59,7 @@ interface FileObject {
     message: string
   }
 
-  /* A custom error message (possibly localized) that will be displayed to the user instead of `error.message`.
+  /* A custom error message (possibly localized) that will be displayed to the user instead of `error.message`. */
   errorMsg?: React.ReactNode
 
   /* Loads the file and sets the status, contents, and error properties as appropriate. */
@@ -73,7 +73,7 @@ If you get File objects from another source and want to pass them into a FileInp
 
 ### Loading Files
 
-The `load()` method can be used to asynchronously load the contents of a file. It takes a single optional argument, a function that does most of the work of actually loading the file: this load function should accept a File object and return a Promise that resolves to the file contents, or rejects to an Error describing why the file could not be loaded. The default load function utilizes a [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL) to read the file contents as a base64-encoded string.
+The `FileObject.load()` method can be used to asynchronously load the contents of a file. It takes a single optional argument, a function that does most of the work of actually loading the file: this load function should accept a File object and return a Promise that resolves to the file contents, or rejects to an Error describing why the file could not be loaded. The default load function utilizes a [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL) to read the file contents as a base64-encoded string.
 
 Although the passed-in load function does most of the work, the `load()` method is still recommended for its extra functionality:
 
@@ -125,6 +125,28 @@ const FileForm = () => {
       </Button>
     </form>
   )
+}
+```
+
+### File Errors
+
+File errors, either violations of the `accept` prop or errors occurring during a load attempt, are displayed in the file list. By default this means the `FileObject.error.message`, but you may feel some errors are too technical for the average user; or you may wish to localize error messages. In any case, you can override the error message by setting `FileObject.errorMsg`, which will then be displayed to the user instead.
+
+For example, you might write something like this:
+
+```js
+const onChange = (e) => {
+  setFiles(e.target.value)
+  const loading = e.target.value.map(f => f.load().then(
+    () => f,
+    (e) => {
+      if (e.name === 'SecurityError')
+        f.errorMsg = "You don't have permission to be aboard there, mate."
+      return f
+    },
+  ))
+  // Compare to avoid race conditions, in case the files have changed since load started.
+  Promise.all(loading).then((new) => setFiles((old) => old === new ? [...new] : old))
 }
 ```
 
