@@ -504,8 +504,8 @@ exports[`component: FileInput should render a file with an error 1`] = `
 }
 
 .c12 .c5,
-.c12 .SvgComponent-bevlva,
-.c12 .SvgComponent-fCAhFS {
+.c12 .SvgComponent-bdWwHG,
+.c12 .SvgComponent-fCbsSy {
   margin-right: 4px;
   vertical-align: -2px;
 }
@@ -598,12 +598,12 @@ exports[`component: FileInput should render a file with an error 1`] = `
   width: 16px;
 }
 
-.c2 .c3 .SvgComponent-fCAhFS {
+.c2 .c3 .SvgComponent-fCbsSy {
   height: 18px;
   width: 18px;
 }
 
-.c2 .Spinner-hUZwCV {
+.c2 .Spinner-hVylqp {
   height: 12px;
   width: 12px;
 }
@@ -824,7 +824,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   background-color: hsla(145,89%,28%,0.3);
 }
 
-.c4 .SvgComponent-iZpKnr {
+.c4 .SvgComponent-iZOzaL {
   padding-bottom: 4px;
 }
 
@@ -956,7 +956,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 24px;
 }
 
-.c2 .c3 .SvgComponent-iZpKnr {
+.c2 .c3 .SvgComponent-iZOzaL {
   height: 16px;
   width: 16px;
 }
@@ -966,7 +966,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 18px;
 }
 
-.c2 .Spinner-hUZwCV {
+.c2 .Spinner-hVylqp {
   height: 12px;
   width: 12px;
 }
@@ -984,7 +984,7 @@ exports[`component: FileInput should render a loaded file 1`] = `
   width: 100%;
 }
 
-.c1 .StatusMessage-iAthHz {
+.c1 .StatusMessage-iARWuT {
   position: relative;
   margin-top: 4px;
 }
@@ -1216,17 +1216,17 @@ exports[`component: FileInput should render a loading file 1`] = `
   padding: 0;
 }
 
-.c2 .Avatar-Jmvut {
+.c2 .Avatar-JLkhN {
   height: 24px;
   width: 24px;
 }
 
-.c2 .Avatar-Jmvut .SvgComponent-iZpKnr {
+.c2 .Avatar-JLkhN .SvgComponent-iZOzaL {
   height: 16px;
   width: 16px;
 }
 
-.c2 .Avatar-Jmvut .SvgComponent-fCAhFS {
+.c2 .Avatar-JLkhN .SvgComponent-fCbsSy {
   height: 18px;
   width: 18px;
 }
@@ -1236,11 +1236,11 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 12px;
 }
 
-.c2 .IconButton-fYcrJZ {
+.c2 .IconButton-fXUvpd {
   margin-left: auto;
 }
 
-.c2 .SvgComponent-eJMnHx {
+.c2 .SvgComponent-eJErmB {
   height: 12px;
   width: 12px;
 }
@@ -1249,7 +1249,7 @@ exports[`component: FileInput should render a loading file 1`] = `
   width: 100%;
 }
 
-.c1 .StatusMessage-iAthHz {
+.c1 .StatusMessage-iARWuT {
   position: relative;
   margin-top: 4px;
 }
