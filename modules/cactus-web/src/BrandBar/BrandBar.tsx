@@ -138,7 +138,6 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
     id,
     focusControl,
     onWrapperKeyDown: handleArrows,
-    buttonId: 'user-menu-button',
   })
 
   const buttonId = buttonProps.id
@@ -198,7 +197,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ id, label, children, isProfilePage,
     id,
     focusControl,
     onWrapperKeyDown: handleArrows,
-    buttonId: 'user-menu-button',
   })
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const listRef = React.useRef<HTMLUListElement>(null)
