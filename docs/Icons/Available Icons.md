@@ -1247,6 +1247,17 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/status/star-filled.svg"
+      style="width:100px;"
+      alt="svg for StatusStarFilled" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/status-star-filled</code>
+      <div>StatusStarFilled</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/status/star.svg"
       style="width:100px;"
       alt="svg for StatusStar" />
