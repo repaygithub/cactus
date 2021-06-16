@@ -116,6 +116,7 @@ Array [
   "StatusRecomend",
   "StatusSpinner",
   "StatusStar",
+  "StatusStarFilled",
   "StatusSun",
   "StatusTarget",
   "StatusThumbsdown",

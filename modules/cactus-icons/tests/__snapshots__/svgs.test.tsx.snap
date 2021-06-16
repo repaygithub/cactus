@@ -2417,6 +2417,27 @@ exports[`renders StatusStar 1`] = `
 </DocumentFragment>
 `;
 
+exports[`renders StatusStarFilled 1`] = `
+<DocumentFragment>
+  .c0 {
+  vertical-align: middle;
+}
+
+<svg
+    class="c0"
+    fill="currentcolor"
+    height="1em"
+    viewBox="0 0 24 24"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.6838 8.3913L11.057 1.66718C11.371 0.777607 12.629 0.777607 12.943 1.66718L15.3162 8.3913H22C22.9497 8.3913 23.3646 9.59089 22.6178 10.1776L17.0843 14.5254L19.4704 21.6838C19.7787 22.6086 18.7165 23.3829 17.9304 22.8064L12 18.4575L6.06964 22.8064C5.28351 23.3829 4.22131 22.6086 4.52959 21.6838L6.91572 14.5254L1.38219 10.1776C0.635443 9.59089 1.05034 8.3913 2.00001 8.3913H8.6838Z"
+    />
+  </svg>
+</DocumentFragment>
+`;
+
 exports[`renders StatusSun 1`] = `
 <DocumentFragment>
   .c0 {
