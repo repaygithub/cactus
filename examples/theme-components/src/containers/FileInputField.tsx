@@ -5,6 +5,14 @@ import React from 'react'
 
 import Link from '../components/Link'
 
+type File = { load: () => Promise<unknown> }
+
+const loadFiles = (e: React.ChangeEvent<{ value: null | File[] }>) => {
+  e.target.value?.forEach((f) => {
+    f.load().catch(console.error)
+  })
+}
+
 const FileInputFieldExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   return (
     <div>
@@ -21,7 +29,6 @@ const FileInputFieldExample: React.FC<RouteComponentProps> = (): React.ReactElem
           accept={['.md', '.txt', '.pdf']}
           name="input-field"
           tooltip="Upload files from your system"
-          rawFiles={false}
           multiple={true}
           labels={{
             delete: 'Click to delete file',
@@ -30,6 +37,7 @@ const FileInputFieldExample: React.FC<RouteComponentProps> = (): React.ReactElem
           }}
           prompt="Drag files here or"
           buttonText="Select Files..."
+          onChange={loadFiles}
         />
       </Flex>
     </div>

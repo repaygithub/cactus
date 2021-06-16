@@ -49,11 +49,10 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
   await clickWorkaround(queryByText('Submit'))
   await queryByText('Submitted Successfully')
 
-  const apiData: UIConfigData = await getApiData()
-  const fileContents = apiData.fileInput[0].contents
-  // IE spits out null for the contents if the file is 0 bytes; other browsers vary.
-  if (fileContents !== null) {
-    await t.expect(fileContents.startsWith('data:')).ok()
+  const { logo, ...apiData }: UIConfigData = await getApiData()
+  // Not sure why, this doesn't seem to work on IE
+  if (logo) {
+    await t.expect(logo).eql('ZmFrZQo=')
   }
 
   await t.expect(apiData).eql({
@@ -69,7 +68,6 @@ test('should fill out and submit the entire form', async (t): Promise<void> => {
     allowCustomerLogin: true,
     useCactusStyles: true,
     selectColor: 'blue',
-    fileInput: [{ fileName: 'test-logo.jpg', contents: fileContents, status: 'loaded' }],
     establishedDate: '2019-02-28',
   })
 })

@@ -5,64 +5,6 @@ import { StyleProvider } from '../StyleProvider/StyleProvider'
 import FileInputField from './FileInputField'
 
 describe('component: FileInputField', (): void => {
-  test('should render a loading file', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <FileInputField
-          name="bears"
-          id="consistent"
-          label="Just Boolin"
-          accept={['.txt']}
-          tooltip="upload something"
-          value={[{ fileName: 'boolest.txt', contents: null, status: 'loading' }]}
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render a loaded file', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <FileInputField
-          name="bears"
-          id="consistent"
-          label="Just Boolin"
-          accept={['.txt']}
-          tooltip="upload something"
-          value={[{ fileName: 'boolest.txt', contents: 'some-b64-string', status: 'loaded' }]}
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  test('should render a file with an error', (): void => {
-    const { container } = render(
-      <StyleProvider>
-        <FileInputField
-          name="bears"
-          id="consistent"
-          label="Just Boolin"
-          accept={['.txt']}
-          tooltip="upload something"
-          value={[
-            {
-              fileName: 'boolest.txt',
-              contents: null,
-              status: 'error',
-              errorMsg: 'Get it together, man',
-            },
-          ]}
-        />
-      </StyleProvider>
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
   test('should render field validation messages', () => {
     const { getByText, rerender } = render(
       <StyleProvider>

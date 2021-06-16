@@ -11,7 +11,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # FileInput
 
-The file input can be used to drag & drop or select files to upload.
+The file input can be used to drag & drop or select files to upload. Unlike the basic HTML file input, `FileInput` can be either controlled or uncontrolled.
 
 ### Try it out
 
@@ -21,7 +21,6 @@ export const code = `<FileInput
   labels={{ delete: 'delete file', loading: 'loading', loaded: 'successful' }}
   prompt="Drag files here or"
   buttonText="Select Files..."
-  rawFiles={false}
   multiple={true}
 />`
 
@@ -31,17 +30,58 @@ export const code = `<FileInput
   <LivePreview />
 </LiveProvider>
 
-## Best practices
-
-- Make sure to pass meaningful messages in the `labels` object. These labels will be passed to the `aria-label` prop on some buttons which will make them accessible.
-- Use the `onError` prop to pass an error handling function. This function should return a string describing the error. The `accept` parameter will
-  always be present if the error is of type `FileTypeError`.
-- The `labels`, `prompt`, and `buttonText` props can and should all be used to support multiple languages; you can pass translated strings to do this.
-
 ## Basic usage
 
-You can use the `accept` prop to pass an array of accepted file types as well as the `multiple` prop to define whether or not the user should be
-able to select multiple files to upload
+`FileInput` behaves much like a standard HTML file input, taking the same props for the most part. The main differences are in the [accept](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) prop, which is an array instead of a comma-delimited list, and the `value` prop, which the standard input doesn't have because it is always uncontrolled.
+
+Additionally, in events files are accessed through `target.value` instead of `target.files`. Changes to the file list are always reflected via the `onChange` event, regardless of whether they were added using the normal file dialog, by drag-and-drop, or removed using the file list's delete button.
+
+Once files have been selected they are displayed in a list, styled according to their status and with any file-specific error messages displayed. Each file in the list also has a delete button that can be used to remove it from the value.
+
+### Controlled Input: `value` prop & `event.target.value`
+
+In order to make working with files easier, the `value` prop and change/focus/blur event target values are an array of the following type:
+
+```ts
+interface FileObject {
+  /* A global Javascript File object. */
+  file: File
+
+  /* Defaults to 'unloaded', unless the file violates the `accept` constraint. */
+  status: 'unloaded' | 'loading' | 'loaded' | 'error'
+
+  /* File contents, if the file has been loaded. */
+  contents?: unknown
+
+  /* Any Error object raised during loading, or violation of the `accept` constraint. */
+  error?: {
+    name: string
+    message: string
+  }
+
+  /* A custom error message (possibly localized) that will be displayed to the user instead of `error.message`. */
+  errorMsg?: React.ReactNode
+
+  /* Loads the file and sets the status, contents, and error properties as appropriate. */
+  load: (l: (f: File) => Promise<unknown>) => Promise<unknown>
+}
+```
+
+`value` is always an array, though if `multiple` is not true, it should never have more than one object in it. For smoother interop with certain form libraries and other input types, passing value as the empty string is also considered equivalent to an empty array.
+
+If you get File objects from another source and want to pass them into a FileInput, you can use the `FileInput.toFileObj(file: File)` function to create compatible FileObject wrappers.
+
+### Loading Files
+
+The `FileObject.load()` method can be used to asynchronously load the contents of a file. It takes a single optional argument, a function that does most of the work of actually loading the file: this load function should accept a File object and return a Promise that resolves to the file contents, or rejects to an Error describing why the file could not be loaded. The default load function utilizes a [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL) to read the file contents as a base64-encoded string.
+
+Although the passed-in load function does most of the work, the `load()` method is still recommended for its extra functionality:
+
+- It only loads the file if the current status is `unloaded`; otherwise it returns a Promise with the results of the previous load attempt.
+- It automatically sets the `status`, `contents`, and `error` properties of the `FileObject` it's called on, depending on whether the Promise resolves or rejects. (It still returns the Promise in case you need to do additional or custom handling.)
+- When setting the status, it updates the visual styles in the file list without needing to rerender the whole FileInput component or pass in a new `value` prop.
+
+Note that because file loading is typically async, care should be taken to avoid race conditions between load events and change events. Here's an example where a form is submitted with only the file contents:
 
 ```jsx
 import React, { useCallback, useState } from 'react'
@@ -49,64 +89,36 @@ import { FileInput, Button } from '@repay/cactus-web'
 
 const FileForm = () => {
   const [state, setState] = useState({})
+  const [files, setFiles] = useState([])
 
   const handleChange = useCallback(
-    ({ target }) => {
-      setState(state => ({ ...state, [target.name]: target.value }))
+    (event) => {
+      const { name, value } = event.target
+      setFiles(value)
+      const promises = value.map(file => file.load().catch(console.error))
+      Promise.all(promises).then(files => {
+        setState(s => ({ ...s, [name]: files }))
+      })
     },
-    [setState]
+    [],
   )
 
   const handleSubmit = useCallback(
     event => {
       event.preventDefault()
-      const data = { ...state }
-      // send data to api
+      sendDataToAPI(state)
     },
     [state]
   )
-
-  const handleError = (errorType, accept?) => {
-    let errorMsg = 'An unknown error occurred when reading the file.'
-    switch (errorType) {
-      case 'FileTypeError':
-        errorMsg = `The file provided does not match any of the accepted file types: ${accept.join(
-          ', '
-        )}`
-        break
-      case 'NotFoundError':
-        errorMsg = 'The file provided could not be found. Please try again.'
-        break
-      case 'SecurityError':
-        errorMsg = 'The file could not be read due to security restrictions.'
-        break
-      case 'AbortError':
-        errorMsg = 'The file read operation was aborted. Please try again.'
-        break
-      case 'NotReadableError':
-        errorMsg =
-          'The file read operation failed. The file may be too large. Please try again or select a different file.'
-        break
-      case 'EncodingError':
-        errorMsg = 'The encoding or decoding operation failed. Please try again.'
-        break
-    }
-
-    return errorMsg
-}
 
   return (
     <form onSubmit={handleSubmit}>
       <FileInput
         name="file-input"
-        accept=['.txt', '.doc']
-        labels={{ delete: 'delete file', loading: 'loading', loaded: 'successful' }}
-        prompt="Drag files here or"
-        buttonText="Select Files..."
+        value={files}
+        accept={['.txt', '.doc']}
         onChange={handleChange}
-        onError={handleError}
-        rawFiles={false}
-        multiple={true}
+        multiple
       />
       <Button type="submit" variant="action">
         Submit
@@ -116,26 +128,42 @@ const FileForm = () => {
 }
 ```
 
-### onChange Event
+### File Errors
 
-Because of limitations in the functionality of a standard `<input type="file"/>`, the FileInput component uses a slightly modified interface. The `event` object passed to the handler is a standard `React.ChangeEvent`, but the `target` and `currentTarget` are a custom object with the following interface:
+File errors, either violations of the `accept` prop or errors occurring during a load attempt, are displayed in the file list. By default this means the `FileObject.error.message`, but you may feel some errors are too technical for the average user; or you may wish to localize error messages. In any case, you can override the error message by setting `FileObject.errorMsg`, which will then be displayed to the user instead.
 
-```tsx
-{
-  id: props.id,
-  name: props.name,
-  value: [
-    {
-      fileName: file.name,
-      contents: file,
-      status: 'loaded',
-      errorMsg: undefined,
-    }
-  ]
+For example, you might write something like this:
+
+```js
+const onChange = (e) => {
+  setFiles(e.target.value)
+  const loading = e.target.value.map(f => f.load().then(
+    () => f,
+    (e) => {
+      if (e.name === 'SecurityError')
+        f.errorMsg = "You don't have permission to be aboard there, mate."
+      return f
+    },
+  ))
+  // Compare to avoid race conditions, in case the files have changed since load started.
+  Promise.all(loading).then((new) => setFiles((old) => old === new ? [...new] : old))
 }
 ```
 
-The `value` is always an array, even if `multiple=false`; the contents will either be a Javascript File object (if `rawFiles=true`) or the contents of the file as a string. The `status` will be "loaded", "loading", or "error", in which case the `errorMsg` will be populated using the `onError` handler.
+## Localization/Labels
+
+`FileInput` has several props for controlling text content & labels on the component. They can be used for simple customization, or localization.
+
+- `buttonText` ("Select Files...") - Used as the contents of the button that opens the file select dialog.
+- `prompt` ("Drag files here or") - Text displayed just above the file select button, but only when the file list is empty.
+- `labels.delete` ("Delete File") - Used as the `aria-label` for the X icons which delete individual files.
+- `labels.[status]` - Used as the `aria-label` on list items in the file list, depending on the file's current status:
+  - `labels.unloaded` ("Not Loaded")
+  - `labels.loading` ("Loading")
+  - `labels.loaded` ("Successful")
+  - `labels.error` ("Error Loading File") - In addition to this label, the `FileObject.errorMsg` is linked using `aria-describedby`.
+
+The labels must all be strings because they're used directly in `aria-label` attributes, but `buttonText`, `prompt`, and `FileObject.errorMsg` can all be React nodes (e.g. an `I18nText` component from `@repay/cactus-i18n`).
 
 ## Properties
 
