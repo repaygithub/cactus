@@ -48,4 +48,5 @@ export const DataGridContext = createContext<DataGridContextType>({
   fullWidth: false,
   cardBreakpoint: 'tiny',
   isCardView: false,
+  variant: undefined,
 })
