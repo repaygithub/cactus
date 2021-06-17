@@ -8,6 +8,7 @@ import useId from '../helpers/useId'
 import Pagination, { PaginationProps } from '../Pagination/Pagination'
 import PrevNext, { PrevNextProps } from '../PrevNext/PrevNext'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { TableVariant } from '../Table/Table'
 import BottomSection, { BottomSectionProps } from './BottomSection'
 import DataGridTable, { DataGridTableProps } from './DataGridTable'
 import { DataGridContext, getMediaQuery } from './helpers'
@@ -31,6 +32,7 @@ interface DataGridProps extends MarginProps {
   children: React.ReactNode
   fullWidth?: boolean
   cardBreakpoint?: Size
+  variant?: TableVariant
 }
 
 export const DataGrid = (props: DataGridProps): ReactElement => {
@@ -42,6 +44,7 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
     paginationOptions,
     onPageChange = () => undefined,
     cardBreakpoint = 'tiny',
+    variant,
     ...rest
   } = props
   const [columns, setColumns] = useState(new Map<string, DataColumnObject | ColumnObject>())
@@ -98,6 +101,7 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
           fullWidth,
           cardBreakpoint,
           isCardView,
+          variant,
         }}
       >
         {!topSectionRendered && <TopSection />}
