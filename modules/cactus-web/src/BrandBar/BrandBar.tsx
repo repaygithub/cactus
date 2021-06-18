@@ -6,13 +6,11 @@ import styled from 'styled-components'
 import { ActionBar } from '../ActionBar/ActionBar'
 import { OrderHint, useAction } from '../ActionBar/ActionProvider'
 import Flex from '../Flex/Flex'
-import { keyDownAsClick, preventAction } from '../helpers/a11y'
-import { AsProps, GenericComponent } from '../helpers/asProps'
 import { getViewport, usePositioning } from '../helpers/positionPopover'
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { Sidebar } from '../Layout/Sidebar'
-import { MenuButton as MenuListItem } from '../MenuBar/MenuBar'
+import { MenuItemFunc, MenuItemType } from '../MenuItem/MenuItem'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { SidebarMenu as ActionMenuPopup } from '../SidebarMenu/SidebarMenu'
 
@@ -35,33 +33,6 @@ interface ProfileStyleProp {
 interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
 }
-
-function MenuItemFunc<E, C extends GenericComponent = 'span'>(
-  props: AsProps<C>,
-  ref: React.Ref<E>
-) {
-  // The `as any` here is to enable proper use of link substition,
-  // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
-  const propsCopy = { ...props } as any
-  if (!propsCopy.onKeyDown) {
-    propsCopy.onKeyDown = keyDownAsClick
-  }
-  const original = propsCopy.onKeyUp
-  propsCopy.onKeyUp = !original
-    ? preventAction
-    : (e: React.KeyboardEvent<HTMLElement>) => {
-        original(e)
-        preventAction(e)
-      }
-  return (
-    <li role="none">
-      <MenuListItem {...propsCopy} tabIndex={-1} role="menuitem" ref={ref as any} />
-    </li>
-  )
-}
-
-type MenuItemType = typeof MenuItemFunc
-
 // Tell Typescript to treat this as a regular functional component,
 // even though React knows it's a `forwardRef` component.
 const MenuItemFR = React.forwardRef(MenuItemFunc) as any

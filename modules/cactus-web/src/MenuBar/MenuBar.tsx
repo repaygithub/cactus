@@ -13,8 +13,6 @@ import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components
 
 import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
-import { keyDownAsClick, preventAction } from '../helpers/a11y'
-import { AsProps, GenericComponent } from '../helpers/asProps'
 import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
@@ -22,6 +20,7 @@ import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
+import { MenuItemFunc, MenuItemType, MenuListItem } from '../MenuItem/MenuItem'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { SidebarMenu } from '../SidebarMenu/SidebarMenu'
 import {
@@ -114,36 +113,10 @@ const useVariant = (): Variant => {
   return 'top'
 }
 
-function MenuBarItemFunc<E, C extends GenericComponent = 'span'>(
-  props: AsProps<C>,
-  ref: React.Ref<E>
-) {
-  // The `as any` here is to enable proper use of link substition,
-  // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
-  const propsCopy = { ...props } as any
-  if (!propsCopy.onKeyDown) {
-    propsCopy.onKeyDown = keyDownAsClick
-  }
-  const original = propsCopy.onKeyUp
-  propsCopy.onKeyUp = !original
-    ? preventAction
-    : (e: React.KeyboardEvent<HTMLElement>) => {
-        original(e)
-        preventAction(e)
-      }
-  return (
-    <li role="none">
-      <MenuButton ref={ref as any} {...propsCopy} />
-    </li>
-  )
-}
-
-type MenuBarItemType = typeof MenuBarItemFunc
-
 // Tell Typescript to treat this as a regular functional component,
 // even though React knows it's a `forwardRef` component.
-const MenuBarItemFR = React.forwardRef(MenuBarItemFunc) as any
-const MenuBarItem = MenuBarItemFR as MenuBarItemType
+const MenuBarItemFR = React.forwardRef(MenuItemFunc) as any
+const MenuBarItem = MenuBarItemFR as MenuItemType
 
 MenuBarItemFR.displayName = 'MenuBarItem'
 
@@ -155,12 +128,12 @@ const MenuBarList = React.forwardRef<HTMLSpanElement, ListProps>(
 
     return (
       <li {...wrapperProps}>
-        <MenuButton {...props} {...buttonProps} ref={ref}>
+        <MenuListItem {...props} {...buttonProps} ref={ref}>
           <TextWrapper>{title}</TextWrapper>
           <IconWrapper aria-hidden>
             <NavigationArrowDown />
           </IconWrapper>
-        </MenuButton>
+        </MenuListItem>
         {isTopbar ? (
           <FloatingMenu {...popupProps}>{children}</FloatingMenu>
         ) : (
@@ -355,7 +328,7 @@ MenuBar.defaultProps = { 'aria-label': 'Main Menu', variant: 'light' }
 
 type ExportedMenuBarType = typeof MenuBar & {
   List: typeof MenuBarList
-  Item: MenuBarItemType
+  Item: MenuItemType
 }
 
 const TypedMenuBar = MenuBar as ExportedMenuBarType
@@ -487,40 +460,4 @@ const MenuList = styled.ul`
       return `max-height: calc(70vh - ${BUTTON_WIDTH * 2}px);`
     }
   }}
-`
-
-const buttonStyles = `
-  cursor: pointer;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  text-decoration: none;
-  text-align: left;
-  color: inherit;
-  font: inherit;
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-
-  &::-moz-focus-inner {
-    border: none;
-  }
-`
-
-export const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
-  ${buttonStyles}
-  width: 100%;
-  height: 100%;
-
-  ${NavigationArrowDown} {
-    width: 8px;
-    height: 8px;
-    margin-left: 8px;
-    ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
-  }
 `
