@@ -52,8 +52,8 @@
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@repay/eslint-config": "^5.0.1",
-    "commitizen": "^4.2.3",
-    "conventional-commits-parser": "^3.2.0",
+    "commitizen": "^4.2.4",
+    "conventional-commits-parser": "^3.2.1",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.29.0",
     "gh-pages": "^3.2.2",
