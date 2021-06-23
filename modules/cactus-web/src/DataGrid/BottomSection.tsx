@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { cloneAll } from '../helpers/react'
+import { textStyle } from '../helpers/theme'
 import { ScreenSizeContext } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { DataGridContext, getMediaQuery } from './helpers'
 import { JustifyContent, TransientProps } from './types'
@@ -15,7 +16,7 @@ export interface BottomSectionProps {
 
 const BottomSection = (props: BottomSectionProps): React.ReactElement | null => {
   const { children, justifyContent = 'space-between', spacing = 4 } = props
-  const { isCardView, cardBreakpoint } = useContext(DataGridContext)
+  const { isCardView, cardBreakpoint, variant } = useContext(DataGridContext)
   const screenSize = useContext(ScreenSizeContext)
   const { space } = useTheme()
 
@@ -27,6 +28,7 @@ const BottomSection = (props: BottomSectionProps): React.ReactElement | null => 
       $isCardView={isCardView}
       $cardBreakpoint={cardBreakpoint}
       $justifyContent={justifyContent}
+      $variant={variant}
     >
       {cloneAll(
         children,
@@ -49,8 +51,9 @@ const StyledBottomSection = styled.div<TransientProps & { $justifyContent: Justi
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
+  margin-top: ${(p) => (p.$variant === 'mini' ? `${p.theme.space[3]}px` : `${p.theme.space[7]}px`)};
   padding: 0 16px;
+  ${(p) => textStyle(p.theme, p.$variant === 'mini' ? 'small' : 'body')}}
 
   // Non-card view styles
   ${getMediaQuery} {

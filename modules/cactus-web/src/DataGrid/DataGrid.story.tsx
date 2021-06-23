@@ -69,6 +69,14 @@ const INITIAL_DATA = [
   },
 ]
 
+type Variant = 'table' | 'card' | 'mini'
+const varOptions = {
+  undefined: '',
+  table: 'table',
+  card: 'card',
+  mini: 'mini',
+}
+
 const BoolComponent = ({ value }: { value: boolean }): ReactElement => {
   return <div>{value ? 'YES' : 'NO'}</div>
 }
@@ -85,6 +93,7 @@ const DataGridContainer = ({
     ['tiny', 'small', 'medium', 'large', 'extraLarge'],
     'tiny'
   )
+  const variant = select('variant', varOptions, undefined) as Variant
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
   const showResultsCount = includePaginationAndSort
@@ -222,6 +231,7 @@ const DataGridContainer = ({
       onPageChange={onPageChange}
       fullWidth={boolean('fullWidth', false)}
       cardBreakpoint={cardBreakpoint}
+      variant={variant}
     >
       {topSection && (
         <DataGrid.TopSection

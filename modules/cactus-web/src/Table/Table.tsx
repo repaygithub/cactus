@@ -18,7 +18,7 @@ import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSize
 type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-type TableVariant = 'table' | 'card'
+export type TableVariant = 'table' | 'card' | 'mini'
 
 interface TableContextProps {
   cellType?: CellType
@@ -184,7 +184,7 @@ export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellPro
       )
     }
 
-    props.variant = 'table'
+    props.variant = context.variant
     return (
       <StyledCell {...props} ref={ref}>
         {children}
@@ -245,7 +245,7 @@ Table.displayName = 'Table'
 Table.propTypes = {
   fullWidth: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
-  variant: PropTypes.oneOf<TableVariant>(['table', 'card']),
+  variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
   as: PropTypes.elementType as PropTypes.Validator<React.ElementType>,
 }
 
@@ -302,6 +302,11 @@ const StyledCell = styled.td(
                 min-width: 160px;
               }
             `};
+    `,
+    mini: css<TableCellProps>`
+      text-align: ${(p): string => p.align || 'left'};
+      padding: 8px;
+      ${(p) => p.width && width};
     `,
     card: css`
       && {
@@ -363,7 +368,8 @@ const getCTABorder = (p: ThemeProps<CactusTheme>, focus?: boolean): ReturnType<t
 
 const table = css<TableProps>`
   display: table;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
+  ${(p): FlattenSimpleInterpolation | TextStyle =>
+    textStyle(p.theme, p.variant === 'mini' ? 'small' : 'body')};
   border-spacing: 0;
   td,
   th {
@@ -488,5 +494,5 @@ const StyledTable = styled.table<TableProps>`
   th {
     font-weight: 600;
   }
-  ${variant({ table, card })};
+  ${variant({ table, card, mini: table })};
 `
