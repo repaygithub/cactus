@@ -1,5 +1,5 @@
 import { Size } from '../ScreenSizeProvider/ScreenSizeProvider'
-import { TableCellProps } from '../Table/Table'
+import { TableCellProps, TableVariant } from '../Table/Table'
 
 export type ColumnFn = (rowData: { [key: string]: any }) => React.ReactNode
 export type JustifyContent =
@@ -14,6 +14,7 @@ export type JustifyContent =
 export interface TransientProps {
   $isCardView: boolean
   $cardBreakpoint: Size
+  $variant?: TableVariant
 }
 
 export interface DataColumnObject {
@@ -63,4 +64,5 @@ export interface DataGridContextType {
   fullWidth: boolean
   cardBreakpoint: Size
   isCardView: boolean
+  variant: TableVariant | undefined
 }

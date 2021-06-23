@@ -12,11 +12,12 @@ const alignOptions = {
   undefined: '',
 }
 
-type Variant = 'table' | 'card'
+type Variant = 'table' | 'card' | 'mini'
 const varOptions = {
   undefined: '',
   table: 'table',
   card: 'card',
+  mini: 'mini',
 }
 
 const createAlignKnob = (): CellAlignment =>
