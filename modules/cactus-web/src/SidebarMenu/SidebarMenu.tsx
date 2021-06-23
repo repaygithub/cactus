@@ -14,7 +14,7 @@ export const SidebarMenu = styled.ul`
   ${(p) => textStyle(p.theme, 'small')};
   ${listStyle}
 
-  [role='menuitem'] {
+  && [role='menuitem'] {
     padding: 18px 16px;
     border-bottom: ${(p) => border(p.theme, 'lightContrast')};
     ${NavigationArrowDown} {

@@ -321,12 +321,6 @@ const ActionMenuList = styled.ul`
     &:hover {
       color: ${(p) => p.theme.colors.callToAction};
     }
-    &:visited {
-      color: inherit;
-      &:hover {
-        color: ${(p) => p.theme.colors.callToAction};
-      }
-    }
   }
 `
 
