@@ -28,6 +28,27 @@ describe('component: BrandBar', () => {
       userEvent.click(getByText('Settings'))
       expect(actionOne).toHaveBeenCalled()
     })
+
+    test('can interact with a dropdown', () => {
+      const firstOptionClick = jest.fn()
+      const { getByText } = render(
+        <StyleProvider>
+          <BrandBar>
+            <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
+              <ul>
+                <li onClick={firstOptionClick}>Option 1</li>
+                <li>Option 2</li>
+                <li>Option 3</li>
+              </ul>
+            </BrandBar.Item>
+          </BrandBar>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByText('Test Dropdown'))
+      userEvent.click(getByText('Option 1'))
+      expect(firstOptionClick).toHaveBeenCalled()
+    })
   })
 
   describe('keyboard usage', (): void => {
@@ -62,6 +83,41 @@ describe('component: BrandBar', () => {
       await animationRender()
       expect(actionOne).not.toHaveBeenCalled()
       expect(actionTwo).toHaveBeenCalled()
+    })
+
+    test('can interact with a dropdown', () => {
+      const thirdOptionClick = jest.fn()
+      const { getByText } = render(
+        <StyleProvider>
+          <BrandBar>
+            <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
+              <ul>
+                <li tabIndex={0}>Option 1</li>
+                <li tabIndex={0}>Option 2</li>
+                <li onClick={thirdOptionClick} tabIndex={0}>
+                  Option 3
+                </li>
+              </ul>
+            </BrandBar.Item>
+          </BrandBar>
+        </StyleProvider>
+      )
+
+      fireEvent.keyDown(getByText('Test Dropdown'), { key: 'Enter' })
+      const firstOption = getByText('Option 1')
+      expect(document.activeElement).toBe(firstOption)
+
+      // @ts-ignore
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+
+      // @ts-ignore
+      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+
+      // @ts-ignore
+      fireEvent.keyDown(document.activeElement, { key: 'Enter' })
+
+      expect(thirdOptionClick).toHaveBeenCalled()
+      expect(document.activeElement).toBe(getByText('Test Dropdown').parentElement)
     })
   })
 })
