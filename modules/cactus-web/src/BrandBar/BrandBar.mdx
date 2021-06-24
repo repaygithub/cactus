@@ -13,7 +13,10 @@ The `BrandBar` components renders a logo and optional user or site controls. It 
 
 UserMenu and UserMenuItem are for user-related actions, such as log in/out or navigating to a user preferences page; you can use the `isProfilePage` prop to change the button's styling when on such a page. The `label` should be something identifying for the user, such as a name or username. In a responsive Layout, the user menu will move to the ActionBar on mobile-size screens.
 
-The Item subcomponent is similar, but more general. You can use it to add just about anything to the BrandBar, though best practice would be to limit it to user-related or site-wide controls that don't take up a lot of room. If you give a `mobileIcon`, it will be moved to the ActionBar on mobile-size screens (the `id` prop will be required as well, and any other props will be forwarded to the ActionBar.Panel used to implement this behavior). If you do _not_ give an icon, it will instead render the item's contents just below the logo on mobile screens.
+The Item sub-component is similar, but more general. You can use it to add just about anything to the BrandBar, though best practice would be to limit it to user-related or site-wide controls that don't take up a lot of room. If you give a `mobileIcon`, it will be moved to the ActionBar on mobile-size screens (the `id` prop will be required as well, and any other props will be forwarded to the ActionBar.Panel used to implement this behavior). If you do _not_ give an icon, it will instead render the item's contents just below the logo on mobile screens.
+The item component can also take an `align` prop to align it to the left or the right.
+
+The Dropdown sub-component is a shell for a dropdown. It should always be rendered using the `as` prop on `BrandBar.Item` to take advantage of the `align` prop. It will render a dropdown button, and any children passed to the Dropdown will be rendered inside the dropdown, so it's highly customizable.
 
 ### Try it out
 
@@ -56,3 +59,7 @@ export const code = `<BrandBar
 ### BrandBar.Item
 
 <PropsTable of={BrandBar} staticProp="BrandBarItem" />
+
+### BrandBar.Dropdown
+
+<PropsTable of={BrandBar} staticProp="BrandBarDropdown" />
