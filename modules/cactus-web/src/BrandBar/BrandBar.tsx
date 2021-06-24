@@ -6,18 +6,30 @@ import styled from 'styled-components'
 import { ActionBar } from '../ActionBar/ActionBar'
 import { OrderHint, useAction } from '../ActionBar/ActionProvider'
 import Flex from '../Flex/Flex'
-import { getViewport, usePositioning } from '../helpers/positionPopover'
-import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
+import FocusLock from '../FocusLock/FocusLock'
+import { keyDownAsClick } from '../helpers/a11y'
+import { PolyFC } from '../helpers/asProps'
+import { getTopPosition, getViewport, usePositioning } from '../helpers/positionPopover'
+import {
+  border,
+  boxShadow,
+  insetBorder,
+  popupBoxShadow,
+  popupShape,
+  radius,
+  textStyle,
+} from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { Sidebar } from '../Layout/Sidebar'
 import { MenuItemFunc, MenuItemType } from '../MenuItem/MenuItem'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { SidebarMenu as ActionMenuPopup } from '../SidebarMenu/SidebarMenu'
 
-interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ItemProps {
   id?: string
   mobileIcon?: React.ReactElement
   orderHint?: OrderHint
+  align?: Align
 }
 
 interface UserMenuProps {
@@ -33,10 +45,30 @@ interface ProfileStyleProp {
 interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
 }
+
+type Align = 'left' | 'right'
+
+interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
+  label: React.ReactNode
+  align: Align
+}
+
+interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
+  buttonRef: React.RefObject<HTMLButtonElement>
+  popupRef: React.RefObject<HTMLDivElement>
+  isOpen: boolean
+  align: Align
+  $isTiny: boolean
+}
+
 // Tell Typescript to treat this as a regular functional component,
 // even though React knows it's a `forwardRef` component.
 const MenuItemFR = React.forwardRef(MenuItemFunc) as any
 const MenuItem = MenuItemFR as MenuItemType
+
+export const BrandBarDropdown: React.FC<DropdownProps> = (props) => {
+  return <Dropdown {...props} />
+}
 
 export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
   const isTiny = SIZES.tiny === useScreenSize()
@@ -44,10 +76,13 @@ export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
   return <MenuComponent {...props} />
 }
 
-export const BrandBarItem: React.FC<ItemProps> = ({ mobileIcon, ...props }) => {
+export const BrandBarItem: PolyFC<ItemProps, 'div'> = (props) => {
+  const { mobileIcon, ...rest } = props
   const isTiny = SIZES.tiny === useScreenSize()
   if (isTiny && mobileIcon) {
-    return <ActionBar.Panel aria-label="" {...props} icon={mobileIcon} />
+    return <ActionBar.Panel aria-label="" {...rest} icon={mobileIcon} />
+  } else if ((rest as any).align && rest.as) {
+    return <BrandBarDropdown {...(rest as any)} />
   }
   return <>{props.children}</>
 }
@@ -56,17 +91,58 @@ type BrandBarType = React.FC<BrandBarProps> & {
   Item: typeof BrandBarItem
   UserMenu: typeof BrandBarUserMenu
   UserMenuItem: typeof MenuItem
+  Dropdown: typeof BrandBarDropdown
 }
 
 export const BrandBar: BrandBarType = ({ logo, children, ...props }) => {
   const isTiny = SIZES.tiny === useScreenSize()
   const justify = isTiny ? 'center' : 'flex-end'
+  const childrenArray = React.Children.toArray(children)
+  const alignedChildren = childrenArray.filter(
+    (child) => (child as JSX.Element).props.align !== undefined
+  )
+  const leftChildren = alignedChildren.filter(
+    (child) => (child as JSX.Element).props.align === 'left'
+  )
+  const rightChildren = alignedChildren.filter(
+    (child) => (child as JSX.Element).props.align === 'right'
+  )
+  const nonAlignedChildren = childrenArray.filter(
+    (child) => (child as JSX.Element).props.align === undefined
+  )
+
   return (
     <StyledBrandBar {...props} $isTiny={isTiny}>
-      <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
       <Flex alignItems="flex-end" justifyContent={justify}>
-        {children}
+        <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
+        {!isTiny && leftChildren}
       </Flex>
+      {isTiny ? (
+        <Flex flexDirection="column" width="100%">
+          <StyledDropdownRow
+            alignItems="flex-end"
+            justifyContent={
+              leftChildren.length && !rightChildren.length
+                ? 'flex-start'
+                : rightChildren.length && !leftChildren.length
+                ? 'flex-end'
+                : 'space-between'
+            }
+            flexWrap="nowrap"
+            width="100%"
+          >
+            {leftChildren}
+            {rightChildren}
+          </StyledDropdownRow>
+          <Flex alignItems="flex-end" justifyContent={justify}>
+            {nonAlignedChildren}
+          </Flex>
+        </Flex>
+      ) : (
+        <Flex alignItems="flex-end" justifyContent={justify}>
+          {childrenArray.filter((child) => (child as JSX.Element).props.align !== 'left')}
+        </Flex>
+      )}
     </StyledBrandBar>
   )
 }
@@ -75,6 +151,7 @@ BrandBar.displayName = 'BrandBar'
 BrandBar.Item = BrandBarItem
 BrandBar.UserMenu = BrandBarUserMenu
 BrandBar.UserMenuItem = MenuItem
+BrandBar.Dropdown = BrandBarDropdown
 
 BrandBar.propTypes = {
   logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
@@ -83,9 +160,10 @@ BrandBar.propTypes = {
 BrandBarItem.propTypes = {
   mobileIcon: PropTypes.element,
   orderHint: ActionBar.Panel.propTypes?.orderHint,
+  align: PropTypes.oneOf(['left', 'right']),
 }
 
-BrandBarItem.defaultProps = { orderHint: 'low' }
+BrandBarItem.defaultProps = { orderHint: 'low', align: 'right' }
 
 BrandBarUserMenu.propTypes = {
   label: PropTypes.node.isRequired,
@@ -94,6 +172,11 @@ BrandBarUserMenu.propTypes = {
 
 BrandBarUserMenu.defaultProps = {
   isProfilePage: false,
+}
+
+BrandBarDropdown.propTypes = {
+  label: PropTypes.node.isRequired,
+  align: PropTypes.oneOf(['left', 'right'] as Align[]).isRequired,
 }
 
 export default BrandBar
@@ -203,6 +286,182 @@ const UserMenu: React.FC<UserMenuProps> = ({ id, label, children, isProfilePage,
 
 const StyledUserMenu = styled.div`
   outline: none;
+`
+
+const Dropdown: React.FC<DropdownProps> = ({ label, children, align }) => {
+  const buttonRef = React.useRef<HTMLButtonElement>(null)
+  const portalRef = React.useRef<HTMLDivElement>(null)
+  const isTiny = SIZES.tiny === useScreenSize()
+  const { expanded, toggle, buttonProps, popupProps, setFocus } = usePopup('dialog', {})
+
+  React.useEffect(() => {
+    const handleBodyClick = (event: MouseEvent): void => {
+      const { target } = event
+      if (
+        target instanceof Node &&
+        !buttonRef.current?.contains(target) &&
+        !portalRef.current?.contains(target)
+      ) {
+        toggle(false)
+      }
+    }
+
+    const handleBodyKeyDown = (event: KeyboardEvent) => {
+      const { target } = event
+      if (
+        target instanceof Node &&
+        !buttonRef.current?.contains(target) &&
+        !portalRef.current?.contains(target)
+      ) {
+        toggle(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleBodyClick)
+    document.body.addEventListener('keydown', handleBodyKeyDown)
+
+    return () => {
+      document.body.removeEventListener('click', handleBodyClick)
+      document.body.removeEventListener('keydown', handleBodyKeyDown)
+    }
+  })
+
+  const handlePopupKeyDown = (event: React.KeyboardEvent) => {
+    const key = event.key
+    if (key === 'Enter' || key === 'Space') {
+      keyDownAsClick(event)
+    }
+    switch (key) {
+      case 'ArrowDown':
+        setFocus(1, { shift: true })
+        break
+      case 'ArrowUp':
+        setFocus(-1, { shift: true })
+        break
+      case 'Home':
+        setFocus(0)
+        break
+      case 'End':
+        setFocus(-1)
+        break
+      case 'Escape':
+      case 'Enter':
+      case 'Space':
+        toggle(false)
+        buttonRef.current?.focus()
+        break
+    }
+  }
+
+  const handleTriggerClick = () => {
+    toggle()
+  }
+
+  return (
+    <>
+      <DropdownButton
+        $isTiny={isTiny}
+        ref={buttonRef}
+        onClick={handleTriggerClick}
+        {...buttonProps}
+      >
+        <span>{label}</span>
+        <NavigationChevronDown aria-hidden ml={4} />
+      </DropdownButton>
+      <DropdownPopup
+        buttonRef={buttonRef}
+        popupRef={portalRef}
+        isOpen={expanded}
+        align={align}
+        $isTiny={isTiny}
+        {...popupProps}
+        onKeyDown={handlePopupKeyDown}
+      >
+        {children}
+      </DropdownPopup>
+    </>
+  )
+}
+
+const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, align, ...props }) => {
+  const positionPortal = React.useCallback<
+    (popover: HTMLElement, target: HTMLElement | null) => void
+  >(
+    (popover, target) => {
+      if (!target || !popover || !buttonRef.current) {
+        return
+      }
+      const targetRect = target.getBoundingClientRect()
+      const popoverRect = popover.getBoundingClientRect()
+      const buttonWidth = buttonRef.current.clientWidth
+
+      popover.style.minWidth = `${buttonWidth}px`
+      if (align === 'right') {
+        popover.style.right = `${window.innerWidth - targetRect.right}px`
+      } else {
+        popover.style.left = `${targetRect.left}px`
+      }
+      const topPosition = getTopPosition(targetRect, popoverRect)
+      popover.style.top = topPosition.top
+    },
+    [buttonRef, align]
+  )
+  usePositioning({
+    anchorRef: buttonRef,
+    ref: popupRef,
+    visible: isOpen,
+    position: positionPortal,
+    updateOnScroll: true,
+  })
+  return <FocusLock ref={popupRef} {...props} />
+}
+
+const StyledDropdownRow = styled(Flex)`
+  border-top: ${(p) => border(p.theme, 'lightContrast')};
+  border-bottom: ${(p) => border(p.theme, 'lightContrast')};
+`
+
+const DropdownButton = styled.button<{ $isTiny: boolean }>`
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: transparent;
+  ${(p) => textStyle(p.theme, 'body')};
+  padding: ${(p) => p.theme.space[4]}px;
+  border: 0;
+  border-bottom: ${(p) => (p.$isTiny ? '0' : border(p.theme, 'lightContrast'))};
+  border-left: ${(p) => border(p.theme, 'lightContrast')};
+  border-right: ${(p) => border(p.theme, 'lightContrast')};
+  outline: none;
+
+  &[aria-expanded='true'] {
+    color: ${(p) => p.theme.colors.callToAction};
+
+    ${NavigationChevronDown} {
+      transform: scaleY(-1);
+    }
+  }
+
+  &:focus {
+    border: ${(p) => !p.$isTiny && border(p.theme, 'callToAction')};
+    color: ${(p) => p.theme.colors.callToAction};
+  }
+
+  & svg {
+    font-size: 12px;
+  }
+`
+
+const DropdownPopup = styled(BasePopup)`
+  display: ${(p) => (p.isOpen ? 'block' : 'none')};
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 1000;
+  background-color: ${(p): string => p.theme.colors.white};
+  ${(p) => popupShape('menu', p.theme.shape)}
+  ${(p) => popupBoxShadow(p.theme)}
+  outline: none;
+  ${(p) => p.$isTiny && 'width: 100%;'}
 `
 
 const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
