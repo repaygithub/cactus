@@ -169,9 +169,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage, ...
         <span>{label}</span>
         <NavigationChevronDown aria-hidden ml="8px" />
       </MenuButton>
-      <MenuPopover position={position}>
+      <StyledMenuPopover position={position}>
         <MenuList>{children}</MenuList>
-      </MenuPopover>
+      </StyledMenuPopover>
     </Menu>
   )
 }
@@ -290,6 +290,10 @@ const PopupHeader = styled.div`
   svg {
     font-size: 12px;
   }
+`
+
+const StyledMenuPopover = styled(MenuPopover)`
+  z-index: 110;
 `
 
 // TODO The MenuBar differentiates between hover & focus, but Reach only has
