@@ -315,7 +315,6 @@ const ActionMenuList = styled.ul`
   overflow-wrap: break-word;
   [role='menuitem'] {
     &:focus {
-      background-color: ${(p) => p.theme.colors.lightContrast};
       color: ${(p) => p.theme.colors.callToAction};
     }
     &:hover {
