@@ -290,7 +290,6 @@ const StyledUserMenu = styled.div`
   outline: none;
 `
 
-const Dropdown: React.FC<DropdownProps> = ({ label, children, align }) => {
 const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const portalRef = React.useRef<HTMLDivElement>(null)
@@ -511,6 +510,7 @@ const LogoWrapper = styled.div`
 
 const MenuButton = styled.button<ProfileStyleProp>`
   ${(p) => textStyle(p.theme, 'body')};
+  height: 100%;
   font-weight: 600;
   margin-right: 5px;
   background-color: transparent;
