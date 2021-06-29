@@ -50,14 +50,12 @@ type Align = 'left' | 'right'
 
 interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   label: React.ReactNode
-  align: Align
 }
 
 interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
   buttonRef: React.RefObject<HTMLButtonElement>
   popupRef: React.RefObject<HTMLDivElement>
   isOpen: boolean
-  align: Align
   $isTiny: boolean
 }
 
@@ -81,11 +79,14 @@ export const BrandBarItem: PolyFC<ItemProps, 'div'> = (props) => {
   const isTiny = SIZES.tiny === useScreenSize()
   if (isTiny && mobileIcon) {
     return <ActionBar.Panel aria-label="" {...rest} icon={mobileIcon} />
-  } else if ((rest as any).align && rest.as) {
-    return <BrandBarDropdown {...(rest as any)} />
+  } else if (rest.as) {
+    return <StyledItem {...rest} />
   }
   return <>{props.children}</>
 }
+
+// Necessary for passing as props to BrandBar.Item
+const StyledItem = styled.div``
 
 type BrandBarType = React.FC<BrandBarProps> & {
   Item: typeof BrandBarItem
@@ -113,33 +114,35 @@ export const BrandBar: BrandBarType = ({ logo, children, ...props }) => {
 
   return (
     <StyledBrandBar {...props} $isTiny={isTiny}>
-      <Flex alignItems="flex-end" justifyContent={justify}>
+      <Flex justifyContent={justify} flexWrap="nowrap">
         <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
         {!isTiny && leftChildren}
       </Flex>
       {isTiny ? (
         <Flex flexDirection="column" width="100%">
-          <StyledDropdownRow
-            alignItems="flex-end"
-            justifyContent={
-              leftChildren.length && !rightChildren.length
-                ? 'flex-start'
-                : rightChildren.length && !leftChildren.length
-                ? 'flex-end'
-                : 'space-between'
-            }
-            flexWrap="nowrap"
-            width="100%"
-          >
-            {leftChildren}
-            {rightChildren}
-          </StyledDropdownRow>
+          {(!!leftChildren.length || !!rightChildren.length) && (
+            <StyledDropdownRow
+              alignItems="flex-end"
+              justifyContent={
+                leftChildren.length && !rightChildren.length
+                  ? 'flex-start'
+                  : rightChildren.length && !leftChildren.length
+                  ? 'flex-end'
+                  : 'space-between'
+              }
+              flexWrap="nowrap"
+              width="100%"
+            >
+              {leftChildren}
+              {rightChildren}
+            </StyledDropdownRow>
+          )}
           <Flex alignItems="flex-end" justifyContent={justify}>
             {nonAlignedChildren}
           </Flex>
         </Flex>
       ) : (
-        <Flex alignItems="flex-end" justifyContent={justify}>
+        <Flex justifyContent={justify} flexWrap="nowrap">
           {childrenArray.filter((child) => (child as JSX.Element).props.align !== 'left')}
         </Flex>
       )}
@@ -163,7 +166,7 @@ BrandBarItem.propTypes = {
   align: PropTypes.oneOf(['left', 'right']),
 }
 
-BrandBarItem.defaultProps = { orderHint: 'low', align: 'right' }
+BrandBarItem.defaultProps = { orderHint: 'low' }
 
 BrandBarUserMenu.propTypes = {
   label: PropTypes.node.isRequired,
@@ -176,7 +179,6 @@ BrandBarUserMenu.defaultProps = {
 
 BrandBarDropdown.propTypes = {
   label: PropTypes.node.isRequired,
-  align: PropTypes.oneOf(['left', 'right'] as Align[]).isRequired,
 }
 
 export default BrandBar
@@ -289,6 +291,7 @@ const StyledUserMenu = styled.div`
 `
 
 const Dropdown: React.FC<DropdownProps> = ({ label, children, align }) => {
+const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const portalRef = React.useRef<HTMLDivElement>(null)
   const isTiny = SIZES.tiny === useScreenSize()
@@ -372,7 +375,6 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children, align }) => {
         buttonRef={buttonRef}
         popupRef={portalRef}
         isOpen={expanded}
-        align={align}
         $isTiny={isTiny}
         {...popupProps}
         onKeyDown={handlePopupKeyDown}
@@ -383,7 +385,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children, align }) => {
   )
 }
 
-const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, align, ...props }) => {
+const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, ...props }) => {
   const positionPortal = React.useCallback<
     (popover: HTMLElement, target: HTMLElement | null) => void
   >(
@@ -395,16 +397,13 @@ const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, align, .
       const popoverRect = popover.getBoundingClientRect()
       const buttonWidth = buttonRef.current.clientWidth
 
-      popover.style.minWidth = `${buttonWidth}px`
-      if (align === 'right') {
-        popover.style.right = `${window.innerWidth - targetRect.right}px`
-      } else {
-        popover.style.left = `${targetRect.left}px`
-      }
       const topPosition = getTopPosition(targetRect, popoverRect)
       popover.style.top = topPosition.top
+      popover.style.left = `${targetRect.left}px`
+      popover.style.minWidth = `${buttonWidth}px`
+      popover.style.maxWidth = `${window.innerWidth - targetRect.left}px`
     },
-    [buttonRef, align]
+    [buttonRef]
   )
   usePositioning({
     anchorRef: buttonRef,
@@ -425,6 +424,10 @@ const DropdownButton = styled.button<{ $isTiny: boolean }>`
   box-sizing: border-box;
   cursor: pointer;
   font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
   background-color: transparent;
   ${(p) => textStyle(p.theme, 'body')};
   padding: ${(p) => p.theme.space[4]}px;
@@ -462,6 +465,21 @@ const DropdownPopup = styled(BasePopup)`
   ${(p) => popupBoxShadow(p.theme)}
   outline: none;
   ${(p) => p.$isTiny && 'width: 100%;'}
+
+  li {
+    cursor: pointer;
+    list-style-type: none;
+    outline: none;
+
+    &:focus {
+      color: ${(p) => p.theme.colors.callToAction};
+      ${(p) => insetBorder(p.theme, 'callToAction')};
+    }
+
+    &:hover {
+      color: ${(p) => p.theme.colors.callToAction};
+    }
+  }
 `
 
 const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
@@ -476,7 +494,7 @@ const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
       : `
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: stretch;
   `}
   width: 100%;
   ${(p): string => insetBorder(p.theme, 'lightContrast', 'bottom')};
@@ -487,7 +505,7 @@ const LogoWrapper = styled.div`
   * {
     display: block;
     max-width: 200px;
-    max-height: 80px;
+    max-height: 60px;
   }
 `
 

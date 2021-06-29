@@ -150,13 +150,6 @@ const List = styled.ul`
 const ListItem = styled.li<{ $isLastItem: boolean }>`
   padding: ${(p) => p.theme.space[2]}px;
   border-bottom: ${(p) => (p.$isLastItem ? 'none' : `1px solid ${p.theme.colors.lightContrast}`)};
-  cursor: pointer;
-  list-style-type: none;
-
-  &:hover,
-  &:focus {
-    color: ${(p) => p.theme.colors.callToAction};
-  }
 `
 
 const BrandBarWithOrgDropdown = () => {
@@ -191,12 +184,23 @@ const BrandBarWithOrgDropdown = () => {
           p={4}
           flexGrow={1}
           borderLeft={isTiny ? undefined : '1px solid'}
-          borderRight={isTiny ? undefined : '1px solid'}
+          borderRight={isTiny || align === 'left' ? undefined : '1px solid'}
           borderLeftColor="lightContrast"
           borderRightColor="lightContrast"
         >
-          <Flex width="100%" justifyContent="center">
+          <Flex width="100%" height="100%" justifyContent="center" alignItems="center">
             <strong>{currentOrg.name}</strong>
+          </Flex>
+        </Box>
+      </BrandBar.Item>
+      <BrandBar.Item>
+        <Box
+          p={4}
+          borderRight={align === 'left' ? '1px solid' : undefined}
+          borderRightColor="lightContrast"
+        >
+          <Flex height="100%" alignItems="center" p={2}>
+            Some Custom Content
           </Flex>
         </Box>
       </BrandBar.Item>
@@ -213,7 +217,7 @@ const BrandBarWithOrgDropdown = () => {
               }}
             />
           </Box>
-          <Divider />
+          <Divider mb={searchValue ? 0 : undefined} />
           {searchValue ? (
             <List>
               {searchedOrgs.map((org, ix) => (
