@@ -73,6 +73,14 @@ export const CustomItems = (): React.ReactElement => {
 
 CustomItems.parameters = {
   beforeScreenshot: async (page: Page) => {
+    await page.click('[id="org-select"]')
+    await page.focus('[id="org-select-REPAY"]')
+  },
+}
+
+BasicUsage.parameters = {
+  beforeScreenshot: async (page: Page) => {
     await page.click('[role="button"]')
+    await page.focus('[role="menuitem"]')
   },
 }
