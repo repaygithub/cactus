@@ -3,7 +3,7 @@ name: ScreenSizeProvider
 menu: Components
 ---
 
-import ScreenSizeProvider, { ScreenSizeContext, SIZES } from './ScreenSizeProvider'
+import ScreenSizeProvider, { SIZES, useScreenSize } from './ScreenSizeProvider'
 import StyleProvider from '../StyleProvider/StyleProvider'
 import { livePreviewStyle } from '../helpers/constants'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
@@ -15,13 +15,13 @@ The `ScreenSizeProvider` gives a programatic way of determining what the current
 
 ## Basic Usage
 
-You can utilize the value of the provider via the `ScreenSizeContext`. The value is not a string, but calling `toString()` on it will give you the name of the size. There is also a `SIZES` constant that can be used to do comparison logic.
+You can utilize the value of the provider via the `useScreenSize` hook. The value is not a string, but calling `toString()` on it will give you the name of the size. There is also a `SIZES` constant that can be used to do comparison logic.
 
 ```jsx
-import { ScreenSizeContext, SIZES } from '@repay/cactus-web'
+import { SIZES, useScreenSize } from '@repay/cactus-web'
 
 const SmallScreensOnly = () => {
-  const size = React.useContext(ScreenSizeContext)
+  const size = useScreenSize()
   if (size < SIZES.medium) {
     return `This screen is ${size.toString()}.`
   }
@@ -35,13 +35,13 @@ const SmallScreensOnly = () => {
 
 export const code = `
 function ScreenSize() {
-  const size = React.useContext(ScreenSizeContext)
+  const size = useScreenSize()
   return <>{size.toString()}</>
 }
 render(<StyleProvider><ScreenSizeProvider><ScreenSize/></ScreenSizeProvider></StyleProvider>)
 `
 
-<LiveProvider code={code} scope={{ ScreenSizeProvider, ScreenSizeContext, SIZES, StyleProvider }} noInline>
+<LiveProvider code={code} scope={{ ScreenSizeProvider, SIZES, StyleProvider, useScreenSize }} noInline>
   <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
