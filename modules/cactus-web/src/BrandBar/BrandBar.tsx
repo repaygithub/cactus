@@ -1,24 +1,18 @@
-import {
-  Menu,
-  MenuButton as ReachMenuButton,
-  MenuItem as ReachMenuItem,
-  MenuItems as ReachMenuList,
-  MenuPopover,
-} from '@reach/menu-button'
-import { Position } from '@reach/popover'
-import VisuallyHidden from '@reach/visually-hidden'
 import { DescriptiveProfile, NavigationChevronDown } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 
 import { ActionBar } from '../ActionBar/ActionBar'
 import { OrderHint, useAction } from '../ActionBar/ActionProvider'
 import Flex from '../Flex/Flex'
-import { getTopPosition } from '../helpers/positionPopover'
+import { getViewport, usePositioning } from '../helpers/positionPopover'
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
+import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { Sidebar } from '../Layout/Sidebar'
+import { MenuItemFunc, MenuItemType } from '../MenuItem/MenuItem'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { SidebarMenu as ActionMenuPopup } from '../SidebarMenu/SidebarMenu'
 
 interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   id?: string
@@ -27,8 +21,9 @@ interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 interface UserMenuProps {
-  label: React.ReactNode
+  id?: string
   isProfilePage?: boolean
+  label: React.ReactNode
 }
 
 interface ProfileStyleProp {
@@ -38,22 +33,10 @@ interface ProfileStyleProp {
 interface BrandBarProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
 }
-interface MenuItemProps {
-  children: React.ReactNode
-  onSelect: () => any
-}
-
-const MenuButtonStyles = createGlobalStyle`
-  :root {
-    --reach-menu-button: 1;
-  }
-`
-
-const MenuItem = (props: MenuItemProps) => {
-  // @ts-ignore Setting `id` screws up Reach internals...so why do they even allow it?
-  const { id, ...rest } = props
-  return <ReachMenuItem {...rest} />
-}
+// Tell Typescript to treat this as a regular functional component,
+// even though React knows it's a `forwardRef` component.
+const MenuItemFR = React.forwardRef(MenuItemFunc) as any
+const MenuItem = MenuItemFR as MenuItemType
 
 export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
   const isTiny = SIZES.tiny === useScreenSize()
@@ -81,7 +64,6 @@ export const BrandBar: BrandBarType = ({ logo, children, ...props }) => {
   return (
     <StyledBrandBar {...props} $isTiny={isTiny}>
       <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
-      <MenuButtonStyles />
       <Flex alignItems="flex-end" justifyContent={justify}>
         {children}
       </Flex>
@@ -120,61 +102,108 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
   label,
   children,
   isProfilePage,
+  id,
   ...rest
 }) => {
+  const { buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
+    id,
+    focusControl,
+    onWrapperKeyDown: handleArrows,
+  })
+
+  const buttonId = buttonProps.id
+  popupProps.onClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLDivElement
+      if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
+        toggle(false, document.getElementById(buttonId as string))
+      }
+    },
+    [toggle, buttonId]
+  )
+
   const button = (
-    <ActionBar.PanelWrapper key="cactus-user-menu">
-      <Menu>
-        <ActionMenuButton as={ReachMenuButton as any} $isProfilePage={isProfilePage} {...rest}>
-          <DescriptiveProfile />
-          <VisuallyHidden>{label}</VisuallyHidden>
-        </ActionMenuButton>
-        <ActionBar.PanelPopup as={ActionMenuPopup} portal={false}>
-          <PopupHeader aria-hidden>
-            <DescriptiveProfile mr="8px" />
-            {label}
-          </PopupHeader>
-          <ActionMenuList>{children}</ActionMenuList>
-        </ActionBar.PanelPopup>
-      </Menu>
+    <ActionBar.PanelWrapper key="cactus-user-menu" {...wrapperProps}>
+      <ActionMenuButton $isProfilePage={isProfilePage} {...buttonProps} {...rest}>
+        <DescriptiveProfile />
+      </ActionMenuButton>
+      <ActionBar.PanelPopup as={ActionMenuPopup} {...popupProps}>
+        <PopupHeader>
+          <DescriptiveProfile mr="8px" />
+          {label}
+        </PopupHeader>
+        <ActionMenuList>{children}</ActionMenuList>
+      </ActionBar.PanelPopup>
     </ActionBar.PanelWrapper>
   )
   const renderButton = useAction(button, 1000)
   return renderButton && <Sidebar layoutRole="brandbar">{renderButton}</Sidebar>
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ label, children, isProfilePage, ...rest }) => {
-  const buttonRef = React.useRef<HTMLButtonElement>(null)
-  const position = React.useCallback<Position>(
-    (targetRect, popoverRect) => {
-      if (!targetRect || !popoverRect || !buttonRef.current) {
-        return {}
-      }
-      const buttonWidth = buttonRef.current.clientWidth
+const focusControl = (root: HTMLElement) =>
+  Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'))
 
-      return {
-        minWidth: targetRect.width + 21,
-        maxWidth: Math.max(buttonWidth, Math.min(buttonWidth * 2, 400)),
-        right: targetRect.right,
-        left: targetRect.left - 21,
-        ...getTopPosition(targetRect, popoverRect),
+const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
+  if (event.key === 'ArrowDown') {
+    toggle(true, 1, { shift: true })
+  } else if (event.key === 'ArrowUp') {
+    toggle(true, -1, { shift: true })
+  }
+}
+
+const positionPopup = (menu: HTMLElement, menuButton: HTMLElement | null) => {
+  if (menuButton) {
+    const parent = menuButton.offsetParent || getViewport()
+    const viewWidth = parent?.getBoundingClientRect().right || window.innerWidth
+    const { right, width, bottom } = menuButton.getBoundingClientRect()
+    menu.style.top = `${bottom}px`
+    menu.style.right = `${viewWidth - right}px`
+    menu.style.minWidth = `${width}px`
+    menu.style.maxWidth = '400px'
+  }
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ id, label, children, isProfilePage, ...rest }) => {
+  const { expanded, buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
+    id,
+    focusControl,
+    onWrapperKeyDown: handleArrows,
+  })
+  const buttonRef = React.useRef<HTMLButtonElement>(null)
+  const listRef = React.useRef<HTMLUListElement>(null)
+  usePositioning({
+    position: positionPopup,
+    visible: expanded,
+    ref: listRef,
+    anchorRef: buttonRef,
+    updateOnScroll: true,
+  })
+  popupProps.onClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLDivElement
+      if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
+        toggle(false, buttonRef.current)
       }
     },
-    [buttonRef]
+    [toggle]
   )
   return (
-    <Menu>
-      <MenuButton $isProfilePage={isProfilePage} ref={buttonRef} {...rest}>
+    <StyledUserMenu {...wrapperProps}>
+      <MenuButton {...buttonProps} {...rest} ref={buttonRef}>
         <DescriptiveProfile aria-hidden mr="8px" />
         <span>{label}</span>
         <NavigationChevronDown aria-hidden ml="8px" />
       </MenuButton>
-      <MenuPopover position={position}>
-        <MenuList>{children}</MenuList>
-      </MenuPopover>
-    </Menu>
+      <MenuList {...popupProps} ref={listRef}>
+        {children}
+      </MenuList>
+    </StyledUserMenu>
   )
 }
+
+const StyledUserMenu = styled.div`
+  outline: none;
+`
 
 const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
   display: flex;
@@ -203,7 +232,7 @@ const LogoWrapper = styled.div`
   }
 `
 
-const MenuButton = styled(ReachMenuButton)<ProfileStyleProp>`
+const MenuButton = styled.button<ProfileStyleProp>`
   ${(p) => textStyle(p.theme, 'body')};
   font-weight: 600;
   margin-right: 5px;
@@ -228,7 +257,6 @@ const MenuButton = styled(ReachMenuButton)<ProfileStyleProp>`
   &[aria-expanded='true'] {
     ${(p) => insetBorder(p.theme, 'callToAction', 'bottom')};
     color: ${(p): string => p.theme.colors.callToAction};
-
     ${NavigationChevronDown} {
       transform: scaleY(-1);
     }
@@ -236,41 +264,60 @@ const MenuButton = styled(ReachMenuButton)<ProfileStyleProp>`
   &:hover {
     color: ${(p): string => p.theme.colors.callToAction};
   }
-
   & svg {
     font-size: 12px;
   }
 `
 
-const MenuList = styled(ReachMenuList)`
+const MenuList = styled.ul`
+  display: block;
+  position: fixed;
+  outline: none;
+  z-index: 110;
+  &[aria-hidden] {
+    display: none;
+  }
   padding: 8px 0;
   margin-top: 8px;
-  outline: none;
   border-radius: ${radius(8)};
   ${(p) => boxShadow(p.theme, 1) || `border: ${border(p.theme, 'lightContrast')}`};
   background-color: ${(p) => p.theme.colors.white};
-
-  [data-reach-menu-item] {
-    z-index: 110;
+  list-style: none;
+  [role='menuitem'] {
     box-sizing: border-box;
     position: relative;
     display: block;
     cursor: pointer;
     text-decoration: none;
+    word-wrap: break-word;
     overflow-wrap: break-word;
     ${(p) => textStyle(p.theme, 'small')};
     ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
     text-align: center;
-    &[data-selected] {
-      ${(p) => p.theme.colorStyles.callToAction};
+    &:focus {
+      background-color: ${(p) => p.theme.colors.lightContrast};
+      color: ${(p) => p.theme.colors.callToAction};
+    }
+    &:hover {
+      color: ${(p) => p.theme.colors.callToAction};
     }
   }
 `
 
-const ActionMenuList = styled(ReachMenuList)`
+const ActionMenuList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
   outline: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  [role='menuitem'] {
+    &:hover {
+      color: ${(p) => p.theme.colors.callToAction};
+    }
+  }
 `
 
 const ActionMenuButton = styled(ActionBar.Button)<ProfileStyleProp>(
@@ -281,6 +328,7 @@ const PopupHeader = styled.div`
   text-align: right;
   box-sizing: border-box;
   display: block;
+  word-wrap: break-word;
   overflow-wrap: break-word;
   padding: 18px 16px;
   ${(p) => textStyle(p.theme, 'body')};
@@ -289,31 +337,5 @@ const PopupHeader = styled.div`
   ${(p) => insetBorder(p.theme, 'callToAction', 'bottom')};
   svg {
     font-size: 12px;
-  }
-`
-
-// TODO The MenuBar differentiates between hover & focus, but Reach only has
-// one state: data-selected. If we ever get rid of Reach, we should match these
-// styles to the ones in MenuBar. (Or maybe just refactor to use the same components.)
-const ActionMenuPopup = styled(MenuPopover)`
-  ${(p) => textStyle(p.theme, 'small')};
-  padding: 0;
-  &[hidden] {
-    display: none;
-  }
-  [role='menuitem'] {
-    display: block;
-    box-sizing: border-box;
-    padding: 18px 16px;
-    cursor: pointer;
-    text-align: left;
-    text-decoration: none;
-    overflow-wrap: break-word;
-    outline: none;
-    ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom')};
-    &[data-selected] {
-      color: ${(p) => p.theme.colors.callToAction};
-      ${(p) => insetBorder(p.theme, 'callToAction')};
-    }
   }
 `
