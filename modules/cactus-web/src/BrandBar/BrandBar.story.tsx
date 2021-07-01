@@ -19,6 +19,7 @@ import {
   TextInput,
   useScreenSize,
 } from '../'
+import { insetBorder } from '../helpers/theme'
 import { SelectValueType } from '../Select/Select'
 
 interface Org {
@@ -150,6 +151,18 @@ const List = styled.ul`
 const ListItem = styled.li<{ $isLastItem: boolean }>`
   padding: ${(p) => p.theme.space[2]}px;
   border-bottom: ${(p) => (p.$isLastItem ? 'none' : `1px solid ${p.theme.colors.lightContrast}`)};
+  cursor: pointer;
+  list-style-type: none;
+  outline: none;
+
+  &:focus {
+    color: ${(p) => p.theme.colors.callToAction};
+    ${(p) => insetBorder(p.theme, 'callToAction')};
+  }
+
+  &:hover {
+    color: ${(p) => p.theme.colors.callToAction};
+  }
 `
 
 const BrandBarWithOrgDropdown = () => {
@@ -196,7 +209,7 @@ const BrandBarWithOrgDropdown = () => {
       <BrandBar.Item>
         <Box
           p={4}
-          borderRight={align === 'left' ? '1px solid' : undefined}
+          borderRight={align === 'left' && !isTiny ? '1px solid' : undefined}
           borderRightColor="lightContrast"
         >
           <Flex height="100%" alignItems="center" p={2}>

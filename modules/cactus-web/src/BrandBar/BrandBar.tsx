@@ -431,7 +431,6 @@ const DropdownButton = styled.button<{ $isTiny: boolean }>`
   ${(p) => textStyle(p.theme, 'body')};
   padding: ${(p) => p.theme.space[4]}px;
   border: 0;
-  border-bottom: ${(p) => (p.$isTiny ? '0' : border(p.theme, 'lightContrast'))};
   border-left: ${(p) => border(p.theme, 'lightContrast')};
   border-right: ${(p) => border(p.theme, 'lightContrast')};
   outline: none;
@@ -445,7 +444,11 @@ const DropdownButton = styled.button<{ $isTiny: boolean }>`
   }
 
   &:focus {
-    border: ${(p) => !p.$isTiny && border(p.theme, 'callToAction')};
+    ${(p) => !p.$isTiny && insetBorder(p.theme, 'callToAction')};
+    color: ${(p) => p.theme.colors.callToAction};
+  }
+
+  &:hover {
     color: ${(p) => p.theme.colors.callToAction};
   }
 
@@ -464,21 +467,6 @@ const DropdownPopup = styled(BasePopup)`
   ${(p) => popupBoxShadow(p.theme)}
   outline: none;
   ${(p) => p.$isTiny && 'width: 100%;'}
-
-  li {
-    cursor: pointer;
-    list-style-type: none;
-    outline: none;
-
-    &:focus {
-      color: ${(p) => p.theme.colors.callToAction};
-      ${(p) => insetBorder(p.theme, 'callToAction')};
-    }
-
-    &:hover {
-      color: ${(p) => p.theme.colors.callToAction};
-    }
-  }
 `
 
 const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
