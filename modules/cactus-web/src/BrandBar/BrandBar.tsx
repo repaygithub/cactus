@@ -385,6 +385,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
 }
 
 const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, ...props }) => {
+  const isTiny = SIZES.tiny === useScreenSize()
   const positionPortal = React.useCallback<
     (popover: HTMLElement, target: HTMLElement | null) => void
   >(
@@ -398,11 +399,15 @@ const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, ...props
 
       const topPosition = getTopPosition(targetRect, popoverRect)
       popover.style.top = topPosition.top
-      popover.style.left = `${targetRect.left}px`
+      popover.style.left = isTiny ? '0px' : `${targetRect.left}px`
       popover.style.minWidth = `${buttonWidth}px`
-      popover.style.maxWidth = `${window.innerWidth - targetRect.left}px`
+      if (isTiny) {
+        popover.style.right = '0px'
+      } else {
+        popover.style.maxWidth = `${window.innerWidth - targetRect.left}px`
+      }
     },
-    [buttonRef]
+    [buttonRef, isTiny]
   )
   usePositioning({
     anchorRef: buttonRef,
