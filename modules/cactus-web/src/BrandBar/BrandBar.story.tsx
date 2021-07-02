@@ -218,7 +218,7 @@ const BrandBarWithOrgDropdown = () => {
         </Box>
       </BrandBar.Item>
       <BrandBar.Item as={BrandBar.Dropdown} label="Select Org" align={align}>
-        <Box width={isTiny ? '100%' : '280px'} pt={2} textStyle="small">
+        <Box width={isTiny ? '100%' : undefined} pt={2} textStyle="small">
           <Box width="100%" px={2}>
             <TextInput
               width="100%"

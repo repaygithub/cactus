@@ -75,18 +75,15 @@ export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
 }
 
 export const BrandBarItem: PolyFC<ItemProps, 'div'> = (props) => {
-  const { mobileIcon, ...rest } = props
+  const { mobileIcon, as: Component, ...rest } = props
   const isTiny = SIZES.tiny === useScreenSize()
   if (isTiny && mobileIcon) {
     return <ActionBar.Panel aria-label="" {...rest} icon={mobileIcon} />
-  } else if (rest.as) {
-    return <StyledItem {...rest} />
+  } else if (Component) {
+    return <Component {...(rest as any)} />
   }
   return <>{props.children}</>
 }
-
-// Necessary for passing as props to BrandBar.Item
-const StyledItem = styled.div``
 
 type BrandBarType = React.FC<BrandBarProps> & {
   Item: typeof BrandBarItem
@@ -123,13 +120,7 @@ export const BrandBar: BrandBarType = ({ logo, children, ...props }) => {
           {(!!leftChildren.length || !!rightChildren.length) && (
             <StyledDropdownRow
               alignItems="flex-end"
-              justifyContent={
-                leftChildren.length && !rightChildren.length
-                  ? 'flex-start'
-                  : rightChildren.length && !leftChildren.length
-                  ? 'flex-end'
-                  : 'space-between'
-              }
+              justifyContent="center"
               flexWrap="nowrap"
               width="100%"
             >
@@ -297,7 +288,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
   const { expanded, toggle, buttonProps, popupProps, setFocus } = usePopup('dialog', {})
 
   React.useEffect(() => {
-    const handleBodyClick = (event: MouseEvent): void => {
+    const closeOnOutsideEvent = (event: MouseEvent | KeyboardEvent) => {
       const { target } = event
       if (
         target instanceof Node &&
@@ -308,15 +299,12 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
       }
     }
 
+    const handleBodyClick = (event: MouseEvent): void => {
+      closeOnOutsideEvent(event)
+    }
+
     const handleBodyKeyDown = (event: KeyboardEvent) => {
-      const { target } = event
-      if (
-        target instanceof Node &&
-        !buttonRef.current?.contains(target) &&
-        !portalRef.current?.contains(target)
-      ) {
-        toggle(false)
-      }
+      closeOnOutsideEvent(event)
     }
 
     document.body.addEventListener('click', handleBodyClick)
@@ -326,7 +314,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
       document.body.removeEventListener('click', handleBodyClick)
       document.body.removeEventListener('keydown', handleBodyKeyDown)
     }
-  })
+  }, [])
 
   const handlePopupKeyDown = (event: React.KeyboardEvent) => {
     const key = event.key
@@ -390,12 +378,12 @@ const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, ...props
     (popover: HTMLElement, target: HTMLElement | null) => void
   >(
     (popover, target) => {
-      if (!target || !popover || !buttonRef.current) {
+      if (!target || !popover) {
         return
       }
       const targetRect = target.getBoundingClientRect()
       const popoverRect = popover.getBoundingClientRect()
-      const buttonWidth = buttonRef.current.clientWidth
+      const buttonWidth = targetRect.width
 
       const topPosition = getTopPosition(targetRect, popoverRect)
       popover.style.top = topPosition.top
@@ -407,7 +395,7 @@ const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, ...props
         popover.style.maxWidth = `${window.innerWidth - targetRect.left}px`
       }
     },
-    [buttonRef, isTiny]
+    [isTiny]
   )
   usePositioning({
     anchorRef: buttonRef,
@@ -463,7 +451,10 @@ const DropdownButton = styled.button<{ $isTiny: boolean }>`
 `
 
 const DropdownPopup = styled(BasePopup)`
-  display: ${(p) => (p.isOpen ? 'block' : 'none')};
+  display: block;
+  &[aria-hidden='true'] {
+    display: none;
+  }
   box-sizing: border-box;
   position: fixed;
   z-index: 1000;
