@@ -40,7 +40,7 @@ export const code = `
 
 - Use meaningful labels to ensure accessibility.
 - `CheckBoxGroup` props will only be forwarded to the individual checkboxes if they are direct children of `CheckBoxGroup`.
-If you use an intermediate component, the component will have to accept the forwarded props and pass them on.
+If you use an intermediate component, it will have to accept the forwarded props and pass them on.
 - You can control the values using one of two methods, which should not be mixed:
   - Pass `checked` to `CheckBoxGroup`. This should be an object, mapping the checkbox names to their boolean values.
   - Pass `checked` or `defaultChecked` to `CheckBoxGroup.Item`s.

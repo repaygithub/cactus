@@ -158,7 +158,9 @@ const PropsTable: React.FC<PropsTableProps> = ({
   staticProp,
 }): React.ReactElement | null => {
   const data = useDocgen()
-  const fileName = component.__filemeta && component.__filemeta.filename
+  // Not sure why some pull from `dist` instead of `src`.
+  const fileName =
+    component.__filemeta && component.__filemeta.filename.replace(/dist(.*)js/, 'src$1tsx')
   const docItem = data.find((doc): boolean => doc.key === fileName)
 
   const { ownProps, styledSystemProps } = React.useMemo((): PropsMemo => {

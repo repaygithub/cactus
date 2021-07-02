@@ -255,7 +255,7 @@ const StyledLink = styled(Link)`
 
 const StyledA = StyledLink.withComponent('a')
 
-const isStorybookUrl = (url: string): boolean => /stories\/[a-zA-Z]/.test(url)
+const isExternalUrl = (url: string): boolean => /^http/.test(url)
 
 const NavToggle = ({ toggle, ...rest }: any): React.ReactElement => (
   <IconButton {...rest} onClick={toggle} label="open section" iconSize="small">
@@ -269,7 +269,7 @@ const MenuItem: React.FC<{ item: MenuGroup }> = ({ item }): React.ReactElement =
 
   return (
     <li>
-      {isStorybookUrl(item.url) ? (
+      {isExternalUrl(item.url) ? (
         <StyledA href={item.url}>{item.title}</StyledA>
       ) : (
         <StyledLink to={item.url} onClick={toggle}>
