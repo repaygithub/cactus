@@ -205,10 +205,13 @@ const ValueSpan = styled.span`
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: middle;
 `
 
+// The extra padding prevents italic text from getting cut off.
 const Placeholder = styled(ValueSpan)`
   font-style: italic;
+  padding-right: 1px;
   color: ${(p): string => p.theme.colors.darkContrast};
 `
 
@@ -265,7 +268,7 @@ const SelectTrigger = styled.button`
   ${NavigationChevronDown} {
     position: absolute;
     right: 14px; // 14 + 2px from border
-    top: 10px;
+    top: 11px;
   }
 `
 
@@ -354,6 +357,7 @@ const NoMatch = styled.li`
   box-shadow: none;
   padding: 4px 16px;
   overflow-wrap: break-word;
+  word-wrap: break-word;
 `
 
 const StyledOption = styled.li`
@@ -366,6 +370,7 @@ const StyledOption = styled.li`
   box-shadow: none;
   padding: 4px 16px;
   overflow-wrap: break-word;
+  word-wrap: break-word;
   ${(p): string =>
     isResponsiveTouchDevice
       ? `
