@@ -299,20 +299,12 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
       }
     }
 
-    const handleBodyClick = (event: MouseEvent): void => {
-      closeOnOutsideEvent(event)
-    }
-
-    const handleBodyKeyDown = (event: KeyboardEvent) => {
-      closeOnOutsideEvent(event)
-    }
-
-    document.body.addEventListener('click', handleBodyClick)
-    document.body.addEventListener('keydown', handleBodyKeyDown)
+    document.body.addEventListener('click', closeOnOutsideEvent)
+    document.body.addEventListener('keydown', closeOnOutsideEvent)
 
     return () => {
-      document.body.removeEventListener('click', handleBodyClick)
-      document.body.removeEventListener('keydown', handleBodyKeyDown)
+      document.body.removeEventListener('click', closeOnOutsideEvent)
+      document.body.removeEventListener('keydown', closeOnOutsideEvent)
     }
   }, [])
 
