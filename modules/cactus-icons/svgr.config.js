@@ -13,7 +13,6 @@ import {
   compose,
   space,
   SpaceProps,
-  style,
   verticalAlign,
   VerticalAlignProps,
 } from 'styled-system'
