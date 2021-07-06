@@ -25,3 +25,24 @@ export interface PolyFC<P, D extends React.ElementType> {
   defaultProps?: Partial<P>
   displayName?: string
 }
+
+type PolyRefProps<P, T extends React.ElementType> =
+  T extends keyof JSX.IntrinsicElements
+  ? P & Omit<JSX.IntrinsicElements[T], 'as' | keyof P>
+  : T extends React.ComponentType<infer U>
+  ? P & Omit<U, 'as' | keyof P>
+  : never
+
+export interface PolyFCWithRef<P, D extends React.ElementType> {
+  <T extends React.ElementType = D>(p: { as?: T } & PolyRefProps<P, T>): React.ReactElement | null
+  propTypes?: React.WeakValidationMap<P>
+  defaultProps?: Partial<P>
+  displayName?: string
+}
+
+const polyForwardRef = <P, D extends React.ElementType>(
+  func: <T extends React.ElementType = D>(
+    p: { as?: T } & PolyProps<P, T>,
+    ref: React.ComponentPropsWithRef<T>['ref']
+  ) => React.ReactElement | null
+): PolyFCWithRef<P, D> => React.forwardRef(func as any) as any
