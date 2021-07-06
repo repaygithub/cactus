@@ -64,22 +64,31 @@ function compareElements(left: React.ReactChild, right: React.ReactChild) {
 }
 
 type Ref<T> = React.RefCallback<T> | React.MutableRefObject<T> | null | undefined
+type HybridRef<T> = React.RefCallback<T> & React.RefObject<T>
+type MutHybridRef<T> = React.RefCallback<T> & React.MutableRefObject<T>
 
-export function useMergedRefs<T>(...refs: Ref<T>[]): React.RefCallback<T> {
-  return React.useCallback(
-    (value: T | null) => {
-      for (const ref of refs) {
-        if (!ref || !value) {
-          continue
-        } else if (typeof ref === 'function') {
-          ref(value)
-        } else {
-          ref.current = value
-        }
+// Keep in mind that unlike a normal ref, hybrid refs are not guaranteed to be stable.
+export function useMergedRefs<T>(...refs: Ref<T>[]): HybridRef<T> {
+  const refFunc: any = (value: T | null) => {
+    if (!value) return
+    hybridRef.current = value
+    for (const ref of refs) {
+      if (!ref) {
+        continue
+      } else if (typeof ref === 'function') {
+        ref(value)
+      } else {
+        ref.current = value
       }
-    },
-    [refs]
-  )
+    }
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const hybridRef = React.useCallback<MutHybridRef<T>>(refFunc, refs)
+  if (hybridRef === refFunc) {
+    Object.defineProperty(hybridRef, 'current', { writable: true, enumerable: true })
+    Object.preventExtensions(hybridRef)
+  }
+  return hybridRef
 }
 
 // Similar to useMemo/useCallback except stability is guaranteed.
