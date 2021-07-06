@@ -8,7 +8,9 @@ export const FieldWrapper = styled.div<MarginProps & FlexItemProps>`
     margin-top: ${(p): number => p.theme.space[4]}px;
   }
 
-  ${margin}
+  && {
+    ${margin}
+  }
   ${flexItem}
 `
 

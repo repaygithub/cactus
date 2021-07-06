@@ -29,7 +29,7 @@ interface AccessibleProps {
 type RenderFunc = (props: AccessibleProps) => React.ReactNode
 
 // These are the props commonly used by components that wrap AccessibleField.
-export interface FieldProps extends FlexItemProps {
+export interface FieldProps extends FlexItemProps, MarginProps {
   name: string
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor' | 'id'>
@@ -48,6 +48,7 @@ interface AccessibleFieldProps extends FieldProps {
   className?: string
   children: React.ReactElement | RenderFunc
   disabled?: boolean
+  role?: string
 }
 
 interface AccessibleHookArgs {
@@ -121,6 +122,8 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     success,
     tooltip,
     warning,
+    onBlur,
+    onFocus,
     ...rest
   } = props
   const hookArgs = { id, name, tooltip, disabled, error, warning, success }
@@ -148,20 +151,38 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
     }
   }, [maxWidth, setMaxWidth])
 
-  const handleFieldFocus = () => {
-    if (autoTooltip) {
-      setTooltipVisible(true)
-    }
-  }
-  const handleFieldBlur = () => {
-    if (autoTooltip) {
-      setTooltipVisible(false)
-    }
+  const handleFieldBlur = React.useCallback(
+    (e: React.FocusEvent<HTMLFieldSetElement>) => {
+      onBlur?.(e)
+      if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+        setTooltipVisible(() => false)
+      }
+    },
+    [onBlur, setTooltipVisible]
+  )
+
+  const handleFieldFocus = React.useCallback(
+    (e: React.FocusEvent<HTMLFieldSetElement>) => {
+      onFocus?.(e)
+      if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+        setTooltipVisible(() => true)
+      }
+    },
+    [onFocus, setTooltipVisible]
+  )
+
+  // If this represents a group of fields, the label points to the group instead of the child.
+  if (rest.role?.includes('group')) {
+    rest.id = fieldId
+    rest['aria-labelledby'] = labelId
+    rest['aria-describedby'] = ariaDescribedBy
   }
 
   return (
     <FieldWrapper {...rest} ref={ref} onFocus={handleFieldFocus} onBlur={handleFieldBlur}>
       <Flex
+        className="field-label-row"
+        flexWrap="nowrap"
         justifyContent={alignTooltip === 'right' ? 'space-between' : 'flex-start'}
         alignItems="center"
       >
@@ -188,7 +209,7 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
             disabled,
           })}
       {status !== undefined && (
-        <div>
+        <div className="field-status-row">
           <StatusMessage status={status} id={statusId}>
             {statusMessage}
           </StatusMessage>
@@ -199,15 +220,14 @@ function AccessibleFieldBase(props: AccessibleFieldProps): React.ReactElement {
 }
 
 export const AccessibleField = styled(AccessibleFieldBase).withConfig(
-  omitProps<AccessibleFieldProps & MarginProps & WidthProps>(width, margin)
+  omitProps<AccessibleFieldProps & WidthProps>(width)
 )`
   position: relative;
-  ${margin}
   ${width}
   display: flex;
   flex-direction: column;
 
-  ${Label} {
+  .field-label-row ${Label} {
     display: block;
     box-sizing: border-box;
     padding-left: 16px;
@@ -215,13 +235,13 @@ export const AccessibleField = styled(AccessibleFieldBase).withConfig(
     color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 
-  ${Tooltip} {
+  .field-label-row ${Tooltip} {
     position: relative;
     font-size: 16px;
     padding-right: 8px;
   }
 
-  ${StatusMessage} {
+  .field-status-row ${StatusMessage} {
     margin-top: 4px;
   }
 `
