@@ -1,0 +1,57 @@
+---
+name: CheckBoxCard
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import CheckBoxCard from './CheckBoxCard'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# CheckBoxCard
+
+`CheckBoxCard` is a checkbox styled like a card; as such it can have labels with more complex styling options than a <a href="../checkboxfield/">CheckBoxField</a>. (Because of this, the label is passed as children, rather than an explicit `label` prop.) It includes two sub-components:
+- `CheckBoxCard.Group` is basically the same as `CheckBoxGroup`, but styled to look better with the cards: by default the cards are arranged in a flex row with wrapping.
+- `CheckBoxCard.Inverse` is a styled block that can be used to create a section of the card with visual contrast; called inverse because the background/foreground colors are reversed when the card is selected. It uses `:first-child` and `:last-child` styling, so when using it be sure to wrap any other text in a `<span>` or other HTML element.
+
+## Basic Usage
+
+`CheckBoxCard` can be used basically like any other checkbox. `CheckBoxCard.Group` works exactly like <a href="../checkboxgroup/">CheckBoxGroup</a> and takes all the same props. By default, cards inside the `Group` are styled with `flex="1 0 1px"` so that they'll all be the same width, but `CheckBoxCard` does take styling flex item props so that can be customized.
+
+### Inner Field
+
+`CheckBoxCard` includes styling for if you want to include a dependent input in the card, for instance if you have the user selecting from a list of options, but one of the options is a custom value, then you can put a `TextInputField` (or other field) in the card. CheckBoxCard accepts a `focusRef` in such instances, which should be a ref to an object with a `focus()` method that will be called when the underlying checkbox becomes checked. This can either be a ref directly to the HTML input you want to focus, or just an object with a custom-defined `focus()` function.
+
+### Try it out
+
+export const code = `<CheckBoxCard.Group
+  label="Here there be checkboxes"
+  defaultChecked={{ option_b: true }}
+>
+  <CheckBoxCard name="option_a">CheckBox The First</CheckBoxCard>
+  <CheckBoxCard name="option_b">
+    <span>CheckBox The</span>
+    <CheckBoxCard.Inverse>Second</CheckBoxCard.Inverse>
+  </CheckBoxCard>
+  <CheckBoxCard name="option_c">CheckBox The Third</CheckBoxCard>
+</CheckBoxCard.Group>`
+
+<LiveProvider code={code} scope={{ CheckBoxCard }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- Use meaningful labels to ensure accessibility. All text content of the card is treated as the label, so keep it relatively short.
+- If using an inner field, pass an appropriate `focusRef` so that the field will automatically be focused when the checkbox is checked.
+
+## Properties
+
+<PropsTable of={CheckBoxCard} fileName="CheckBoxCard/CheckBoxCard.tsx" />
+
+### Group
+
+Same supported props as <a href="../checkboxgroup/">CheckBoxGroup</a>.

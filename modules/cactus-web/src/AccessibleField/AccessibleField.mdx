@@ -17,6 +17,7 @@ The `<AccessibleField />` is intendend as a wrapper with a single child which ac
 export const scope = { AccessibleField }
 export const code = `
 <AccessibleField
+  name="a11y"
   label="Accessible Field"
   warning="Here we have added a warning message which is rendered as a status and is accessibly tied to the provided child."
 >
@@ -65,9 +66,11 @@ export default props => {
 }
 ```
 
+If `role="group"` (or "radiogroup") is passed, the wrapper div is given the `id`, `aria-labelledby`, and `aria-describedby` props that would normally be passed to the child input, so the AccessibleField acts more like a `<fieldset>` element. You should use the render func in this case to be able to render multiple children instead of the one that is normally accepted.
+
 ## Properties
 
-<PropsTable of={AccessibleField} />
+<PropsTable of={AccessibleField} fileName="AccessibleField/AccessibleField.tsx" />
 
 # `useAccessibleField` hook
 

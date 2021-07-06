@@ -1,0 +1,54 @@
+---
+name: RadioCard
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import RadioCard from './RadioCard'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# RadioCard
+
+`RadioCard` is a radio button styled like a card; as such it can have labels with more complex styling options than a <a href="../radiobuttonfield/">RadioButtonField</a>. (Because of this, the label is passed as children, rather than an explicit `label` prop.) It includes two sub-components:
+- `RadioCard.Group` is basically the same as `RadioGroup`, but styled to look better with the cards: by default the cards are arranged in a flex row with wrapping.
+- `RadioCard.Inverse` is a styled block that can be used to create a section of the card with visual contrast; called inverse because the background/foreground colors are reversed when the card is selected. It uses `:first-child` and `:last-child` styling, so when using it be sure to wrap any other text in a `<span>` or other HTML element.
+
+## Basic Usage
+
+`RadioCard` can be used basically like any other radio button. `RadioCard.Group` works exactly like <a href="../radiogroup/">RadioGroup</a> and takes all the same props. By default, cards inside the `Group` are styled with `flex="1 0 1px"` so that they'll all be the same width, but `RadioCard` does take styling flex item props so that can be customized.
+
+### Inner Field
+
+`RadioCard` includes styling for if you want to include a dependent input in the card, for instance if you have the user selecting from a list of options, but one of the options is a custom value, then you can put a `TextInputField` (or other field) in the card. RadioCard accepts a `focusRef` in such instances, which should be a ref to an object with a `focus()` method that will be called when the underlying radio button becomes checked. This can either be a ref directly to the HTML input you want to focus, or just an object with a custom-defined `focus()` function.
+
+### Try it out
+
+export const code = `<RadioCard.Group name="radioCity" label="Here there be radios" defaultValue="option_b">
+  <RadioCard value="option_a">Radio The First</RadioCard>
+  <RadioCard value="option_b">
+    <span>Radio The</span>
+    <RadioCard.Inverse>Second</RadioCard.Inverse>
+  </RadioCard>
+  <RadioCard value="option_c">Radio The Third</RadioCard>
+</RadioCard.Group>`
+
+<LiveProvider code={code} scope={{ RadioCard }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- Use meaningful labels to ensure accessibility. All text content of the card is treated as the label, so keep it relatively short.
+- If using an inner field, pass an appropriate `focusRef` so that the field will automatically be focused when the radio button is checked.
+
+## Properties
+
+<PropsTable of={RadioCard} fileName="RadioCard/RadioCard.tsx" />
+
+### Group
+
+Same supported props as <a href="../radiogroup/">RadioGroup</a>.

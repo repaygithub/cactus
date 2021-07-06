@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { MarginProps, WidthProps } from 'styled-system'
 
-import { FieldProps } from '../AccessibleField/AccessibleField'
+import { ExtFieldProps } from '../AccessibleField/AccessibleField'
+import { Fieldset, makeGroup } from '../Checkable/Group'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
-import Fieldset from '../Fieldset/Fieldset'
-interface CheckBoxGroupProps
-  extends MarginProps,
-    WidthProps,
-    Omit<FieldProps, 'labelProps'>,
-    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name' | 'defaultValue'> {
-  checked?: { [K: string]: boolean }
+
+interface CheckBoxGroupProps extends Omit<ExtFieldProps, 'role'> {
+  checked?: Record<string, any> // `any` instead of `boolean` to work better with form libs.
   required?: boolean
 }
 
@@ -20,32 +16,16 @@ const CheckBoxGroupItem = React.forwardRef<HTMLInputElement, CheckBoxGroupItemPr
 )
 CheckBoxGroupItem.displayName = 'CheckBoxGroup.Item'
 
-const noop = () => undefined
+// This is a restriction of the allowable props in CheckableGroup.
+interface CheckBoxGroupType extends React.FC<CheckBoxGroupProps> {
+  Item: typeof CheckBoxGroupItem
+}
 
-export const CheckBoxGroup = React.forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
-  ({ children, checked, ...props }, ref) => {
-    const hasOnChange = !!props.onChange
-    const cloneWithValue = (element: React.ReactElement, cloneProps: any) => {
-      if (checked !== undefined) {
-        cloneProps = { ...cloneProps, checked: checked[element.props.name] || false }
-      }
-      // This is to avert a PropTypes warning regarding missing onChange handler.
-      const hasChecked = cloneProps.checked !== undefined || element.props.checked !== undefined
-      if (hasChecked && hasOnChange && !element.props.onChange) {
-        cloneProps = { ...cloneProps, onChange: noop }
-      }
-      return React.cloneElement(element, cloneProps)
-    }
-
-    return (
-      <Fieldset {...props} forwardProps={['required']} cloneWithValue={cloneWithValue} ref={ref}>
-        {children}
-      </Fieldset>
-    )
-  }
-)
-
-CheckBoxGroup.displayName = 'CheckBoxGroup'
+export const CheckBoxGroup = makeGroup({
+  component: Fieldset,
+  displayName: 'CheckBoxGroup',
+}) as CheckBoxGroupType
+CheckBoxGroup.Item = CheckBoxGroupItem
 
 CheckBoxGroup.propTypes = {
   id: PropTypes.string,
@@ -60,9 +40,4 @@ CheckBoxGroup.propTypes = {
   checked: PropTypes.objectOf(PropTypes.bool.isRequired),
 }
 
-type CheckBoxGroupType = typeof CheckBoxGroup & { Item: typeof CheckBoxGroupItem }
-
-const DefaultCheckBoxGroup = CheckBoxGroup as any
-DefaultCheckBoxGroup.Item = CheckBoxGroupItem
-
-export default DefaultCheckBoxGroup as CheckBoxGroupType
+export default CheckBoxGroup
