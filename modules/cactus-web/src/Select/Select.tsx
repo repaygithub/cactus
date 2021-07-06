@@ -4,8 +4,7 @@ import isEqual from 'lodash/isEqual'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
-import { width as styledSystemWidth, WidthProps } from 'styled-system'
+import { margin, MarginProps, width as styledSystemWidth, WidthProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
@@ -206,12 +205,14 @@ const ValueSpan = styled.span`
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  vertical-align: middle;
 `
 
-const Placeholder = styled.span`
+// The extra padding prevents italic text from getting cut off.
+const Placeholder = styled(ValueSpan)`
   font-style: italic;
+  padding-right: 1px;
   color: ${(p): string => p.theme.colors.darkContrast};
-  ${(p): string => fontSize(p.theme, 'p')};
 `
 
 const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
@@ -228,7 +229,7 @@ const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[
 const SelectTrigger = styled.button`
   position: relative;
   box-sizing: border-box;
-  min-width: 194px;
+  min-width: 60px;
   width: 100%;
   height: 32px;
   padding: 0 28px 0 16px;
@@ -267,14 +268,14 @@ const SelectTrigger = styled.button`
   ${NavigationChevronDown} {
     position: absolute;
     right: 14px; // 14 + 2px from border
-    top: 10px;
+    top: 11px;
   }
 `
 
 const ComboInput = styled.input`
   position: relative;
   box-sizing: border-box;
-  min-width: 194px;
+  min-width: 60px;
   width: 100%;
   height: 32px;
   padding: 0 24px 0 16px;
@@ -356,6 +357,7 @@ const NoMatch = styled.li`
   box-shadow: none;
   padding: 4px 16px;
   overflow-wrap: break-word;
+  word-wrap: break-word;
 `
 
 const StyledOption = styled.li`
@@ -368,6 +370,7 @@ const StyledOption = styled.li`
   box-shadow: none;
   padding: 4px 16px;
   overflow-wrap: break-word;
+  word-wrap: break-word;
   ${(p): string =>
     isResponsiveTouchDevice
       ? `
@@ -1560,6 +1563,7 @@ export const Select = styled(SelectBase)`
   ${margin}
   ${styledSystemWidth}
   ${SelectTrigger} {
+    background-color: ${(p) => p.theme.colors.white};
     ${displayStatus}
   }
 `
