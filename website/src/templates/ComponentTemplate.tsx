@@ -51,7 +51,7 @@ const ComponentTemplate = ({ data }: ComponentTemplateProps): React.ReactElement
 export default ComponentTemplate
 
 export const query = graphql`
-  query($slug: String!) {
+  query ($slug: String!) {
     docgenDb {
       id
       db

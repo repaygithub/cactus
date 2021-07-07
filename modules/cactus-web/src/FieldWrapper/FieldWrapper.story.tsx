@@ -196,32 +196,30 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactE
         py={5}
         onSubmit={(event: React.FormEvent<HTMLFormElement>): void => event.preventDefault()}
       >
-        {fields.map(
-          (field): ReactElement => {
-            const Field = fieldTypeMap[field.type]
-            const { validator, ...rest } = field
-            const props = rest as React.ComponentPropsWithoutRef<typeof Field>
-            props.value = values[field.name]
-            props.onChange = handleChange
-            props.onBlur = handleBlur
-            switch (field.type) {
-              case 'radio': {
-                props.value = field.value
-                props.checked = field.value === values[field.name]
-                break
-              }
-              case 'checkbox': {
-                props.checked = values[field.name]
-                break
-              }
+        {fields.map((field): ReactElement => {
+          const Field = fieldTypeMap[field.type]
+          const { validator, ...rest } = field
+          const props = rest as React.ComponentPropsWithoutRef<typeof Field>
+          props.value = values[field.name]
+          props.onChange = handleChange
+          props.onBlur = handleBlur
+          switch (field.type) {
+            case 'radio': {
+              props.value = field.value
+              props.checked = field.value === values[field.name]
+              break
             }
-            if (withValidations && Array.isArray(statuses[field.name])) {
-              const [status, message] = statuses[field.name] as FieldStatus
-              props[status] = message
+            case 'checkbox': {
+              props.checked = values[field.name]
+              break
             }
-            return <Field key={field.type + field.label} {...props} />
           }
-        )}
+          if (withValidations && Array.isArray(statuses[field.name])) {
+            const [status, message] = statuses[field.name] as FieldStatus
+            props[status] = message
+          }
+          return <Field key={field.type + field.label} {...props} />
+        })}
       </Box>
     </div>
   )

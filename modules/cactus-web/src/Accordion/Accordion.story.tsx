@@ -33,17 +33,15 @@ const ContentManager = ({
   const [state, setState] = useState<ContentManagerState>(initializeContent)
   const changeContent = useCallback(
     (group: number, increase?: boolean): void =>
-      setState(
-        (s): ContentManagerState => {
-          let value = s[group] || 0
-          if (increase) {
-            ++value
-          } else if (value > 0) {
-            --value
-          }
-          return { ...s, [group]: value }
+      setState((s): ContentManagerState => {
+        let value = s[group] || 0
+        if (increase) {
+          ++value
+        } else if (value > 0) {
+          --value
         }
-      ),
+        return { ...s, [group]: value }
+      }),
     [setState]
   )
   return children({ ...state, changeContent })

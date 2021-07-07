@@ -116,18 +116,22 @@ function createMenuGroups(pages: Edges<Markdown>): MenuGroup {
         url: '/stories/',
         // always last
         order: 1000,
-        items: storybooks.map((story): {
-          title: string
-          url: string
-          order: number
-          items: []
-        } => ({
-          title: story.name,
-          // withPrefix because it's not a gatsby link
-          url: `https://repaygithub.github.io/cactus/stories/${story.dirname}/`,
-          order: 1,
-          items: [],
-        })),
+        items: storybooks.map(
+          (
+            story
+          ): {
+            title: string
+            url: string
+            order: number
+            items: []
+          } => ({
+            title: story.name,
+            // withPrefix because it's not a gatsby link
+            url: `https://repaygithub.github.io/cactus/stories/${story.dirname}/`,
+            order: 1,
+            items: [],
+          })
+        ),
       },
       {
         title: 'Tutorials',
@@ -189,14 +193,16 @@ const MenuContext = React.createContext<MenuContextType>({
   },
 })
 
-const initialize = (location: WindowLocation): (() => string[]) => (): string[] => {
-  const state: string[] = []
-  const split = location.pathname.split('/').filter(Boolean)
-  for (let i = 0; i < split.length; ++i) {
-    state.push('/' + split.slice(0, i).join('/') + '/')
+const initialize =
+  (location: WindowLocation): (() => string[]) =>
+  (): string[] => {
+    const state: string[] = []
+    const split = location.pathname.split('/').filter(Boolean)
+    for (let i = 0; i < split.length; ++i) {
+      state.push('/' + split.slice(0, i).join('/') + '/')
+    }
+    return state
   }
-  return state
-}
 
 const MenuController: React.FC<{ location: WindowLocation }> = ({
   children,

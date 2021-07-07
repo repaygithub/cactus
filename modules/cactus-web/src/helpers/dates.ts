@@ -557,7 +557,7 @@ export class PartialDate implements FormatTokenMap {
     } else {
       const includeDate = type === 'date' || type === 'datetime'
       const includeTime = type === 'datetime' || type === 'time'
-      const opts = {
+      const opts: Intl.DateTimeFormatOptions = {
         year: includeDate ? 'numeric' : undefined,
         month: includeDate ? 'long' : undefined,
         day: includeDate ? 'numeric' : undefined,

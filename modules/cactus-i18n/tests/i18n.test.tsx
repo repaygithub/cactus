@@ -718,11 +718,9 @@ key-for-the-group = We are the { $groupName }!
         supportedLangs: ['en-US'],
       })
       await controller.loadAll({ section: 'global', lang: 'en-US', content: global })
-      const formatter = jest.fn(
-        (text: string): React.ReactElement => {
-          return <div data-testid="hoobla">{text}</div>
-        }
-      )
+      const formatter = jest.fn((text: string): React.ReactElement => {
+        return <div data-testid="hoobla">{text}</div>
+      })
       const { getByTestId } = render(
         <I18nProvider controller={controller}>
           <I18nFormatted get="key-for-the-group" formatter={formatter} />

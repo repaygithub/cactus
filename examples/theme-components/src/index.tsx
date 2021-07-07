@@ -102,9 +102,8 @@ const Icons = React.lazy(
     import(/* webpackChunkName: "Icons" */ './containers/Icons')
 )
 
-const {
-  createGlobalStyle,
-} = styledComponents as styledComponents.ThemedStyledComponentsModule<CactusTheme>
+const { createGlobalStyle } =
+  styledComponents as styledComponents.ThemedStyledComponentsModule<CactusTheme>
 
 const appRoot = document.createElement('div')
 appRoot.className = 'app-root'
