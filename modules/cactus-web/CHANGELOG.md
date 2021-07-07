@@ -4,9 +4,13 @@
 
 - Reduce `min-width` of Select component [#620](https://github.com/repaygithub/cactus/pull/620) ([@wilysword](https://github.com/wilysword))
 - Alter BrandMenu.UserMenuItem API to allow links to be used [#597](https://github.com/repaygithub/cactus/pull/597) ([@daniloPenaR](https://github.com/daniloPenaR))
+  - `onSelect` is no longer accepted.  Use `onClick` instead
 - Change FileInput to synchronous event handling [#604](https://github.com/repaygithub/cactus/pull/604) ([@wilysword](https://github.com/wilysword))
+  - Users now have to account for asynchronous file loading themselves.  See [FileInput docs](https://repaygithub.github.io/cactus/components/fileinput/) for more info
 - Set default h1-h4 margins to 0 in the Text component [#601](https://github.com/repaygithub/cactus/pull/601) ([@daniloPenaR](https://github.com/daniloPenaR))
+  - You will now have to manually provide a margin if you want one
 - Various improvements to the ColorPicker component [#596](https://github.com/repaygithub/cactus/pull/596) ([@wilysword](https://github.com/wilysword))
+  - `target.value` for ColorPicker events is now a single value depending on the format prop, instead of a single object with multiple color formats; the hex format is now prefixed by a "#"
 
 #### 🚀 Enhancement
 
