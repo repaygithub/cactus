@@ -7,9 +7,6 @@ import * as icons from '../i'
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
 
-type IconSizes = 'tiny' | 'small' | 'medium' | 'large'
-const iconSizes: IconSizes[] = ['tiny', 'small', 'medium', 'large']
-
 export default {
   title: 'Icons',
   component: icons as any,
@@ -25,7 +22,7 @@ export const One = (): ReactElement => {
 }
 
 export const All = (): ReactElement => {
-  const size = test('iconSize', 'large')
+  const size = text('iconSize', 'large')
   return (
     <div
       style={{
