@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { MarginProps, WidthProps } from 'styled-system'
+import styled from 'styled-components'
 
-import { FieldProps } from '../AccessibleField/AccessibleField'
-import Fieldset from '../Fieldset/Fieldset'
+import { ExtFieldProps } from '../AccessibleField/AccessibleField'
+import { Fieldset } from '../Checkable/Group'
 import RadioButtonField, { RadioButtonFieldProps } from '../RadioButtonField/RadioButtonField'
 
-interface RadioGroupProps
-  extends MarginProps,
-    WidthProps,
-    Omit<FieldProps, 'labelProps'>,
-    Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'name'> {
+interface RadioGroupProps extends Omit<ExtFieldProps, 'role'> {
   value?: string | number
   defaultValue?: string | number
   required?: boolean
@@ -23,48 +19,15 @@ const RadioGroupButton = React.forwardRef<HTMLInputElement, RadioGroupButtonProp
 )
 RadioGroupButton.displayName = 'RadioGroup.Button'
 
-const noop = () => undefined
+// This is a restriction of the allowable props in CheckableGroup
+interface RadioGroupType extends React.FC<RadioGroupProps> {
+  Button: typeof RadioGroupButton
+}
 
-export const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>(
-  ({ children, defaultValue, value, ...props }, ref) => {
-    const hasOnChange = !!props.onChange
-    const cloneWithValue = (element: React.ReactElement, cloneProps: any) => {
-      if (value !== undefined) {
-        if (element.props.value !== undefined) {
-          cloneProps = { ...cloneProps, checked: element.props.value === value }
-        } else {
-          cloneProps = { ...cloneProps, value }
-        }
-      } else if (defaultValue !== undefined) {
-        if (element.props.value !== undefined) {
-          cloneProps = { ...cloneProps, defaultChecked: element.props.value === defaultValue }
-        } else {
-          cloneProps = { ...cloneProps, defaultValue }
-        }
-      }
-      // This is to avert a PropTypes warning regarding missing onChange handler.
-      const hasChecked = cloneProps.checked !== undefined || element.props.checked !== undefined
-      if (hasChecked && hasOnChange && !element.props.onChange) {
-        cloneProps = { ...cloneProps, onChange: noop }
-      }
-      return React.cloneElement(element, cloneProps)
-    }
-
-    return (
-      <Fieldset
-        {...props}
-        ref={ref}
-        role="radiogroup"
-        forwardProps={['name', 'required']}
-        cloneWithValue={cloneWithValue}
-      >
-        {children}
-      </Fieldset>
-    )
-  }
-)
-
+export const RadioGroup: RadioGroupType = styled(Fieldset).attrs({ role: 'radiogroup' })`` as any
 RadioGroup.displayName = 'RadioGroup'
+RadioGroup.Button = RadioGroupButton
+
 RadioGroup.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -91,9 +54,4 @@ RadioGroup.propTypes = {
   },
 }
 
-type RadioGroupType = typeof RadioGroup & { Button: typeof RadioGroupButton }
-
-const DefaultRadioGroup = RadioGroup as any
-DefaultRadioGroup.Button = RadioGroupButton
-
-export default DefaultRadioGroup as RadioGroupType
+export default RadioGroup

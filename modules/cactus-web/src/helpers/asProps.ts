@@ -26,8 +26,7 @@ export interface PolyFC<P, D extends React.ElementType> {
   displayName?: string
 }
 
-type PolyRefProps<P, T extends React.ElementType> =
-  T extends keyof JSX.IntrinsicElements
+type PolyRefProps<P, T extends React.ElementType> = T extends keyof JSX.IntrinsicElements
   ? P & Omit<JSX.IntrinsicElements[T], 'as' | keyof P>
   : T extends React.ComponentType<infer U>
   ? P & Omit<U, 'as' | keyof P>
@@ -40,7 +39,7 @@ export interface PolyFCWithRef<P, D extends React.ElementType> {
   displayName?: string
 }
 
-const polyForwardRef = <P, D extends React.ElementType>(
+export const polyForwardRef = <P, D extends React.ElementType>(
   func: <T extends React.ElementType = D>(
     p: { as?: T } & PolyProps<P, T>,
     ref: React.ComponentPropsWithRef<T>['ref']
