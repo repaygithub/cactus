@@ -13,16 +13,16 @@ import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components
 
 import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
-import { keyDownAsClick, preventAction } from '../helpers/a11y'
-import { AsProps, GenericComponent } from '../helpers/asProps'
 import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import { border, borderSize, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
+import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
+import { MenuItemFunc, MenuItemType, MenuListItem } from '../MenuItem/MenuItem'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { SidebarMenu } from '../SidebarMenu/SidebarMenu'
 import {
   getOwnedMenuItems,
   getVisibleMenuItems,
@@ -113,36 +113,10 @@ const useVariant = (): Variant => {
   return 'top'
 }
 
-function MenuBarItemFunc<E, C extends GenericComponent = 'span'>(
-  props: AsProps<C>,
-  ref: React.Ref<E>
-) {
-  // The `as any` here is to enable proper use of link substition,
-  // e.g. <MenuBar.Item as="a" href="go/go/power/rangers" />
-  const propsCopy = { ...props } as any
-  if (!propsCopy.onKeyDown) {
-    propsCopy.onKeyDown = keyDownAsClick
-  }
-  const original = propsCopy.onKeyUp
-  propsCopy.onKeyUp = !original
-    ? preventAction
-    : (e: React.KeyboardEvent<HTMLElement>) => {
-        original(e)
-        preventAction(e)
-      }
-  return (
-    <li role="none">
-      <MenuButton ref={ref as any} {...propsCopy} />
-    </li>
-  )
-}
-
-type MenuBarItemType = typeof MenuBarItemFunc
-
 // Tell Typescript to treat this as a regular functional component,
 // even though React knows it's a `forwardRef` component.
-const MenuBarItemFR = React.forwardRef(MenuBarItemFunc) as any
-const MenuBarItem = MenuBarItemFR as MenuBarItemType
+const MenuBarItemFR = React.forwardRef(MenuItemFunc) as any
+const MenuBarItem = MenuBarItemFR as MenuItemType
 
 MenuBarItemFR.displayName = 'MenuBarItem'
 
@@ -154,12 +128,12 @@ const MenuBarList = React.forwardRef<HTMLSpanElement, ListProps>(
 
     return (
       <li {...wrapperProps}>
-        <MenuButton {...props} {...buttonProps} ref={ref}>
+        <MenuListItem {...props} {...buttonProps} ref={ref}>
           <TextWrapper>{title}</TextWrapper>
           <IconWrapper aria-hidden>
             <NavigationArrowDown />
           </IconWrapper>
-        </MenuButton>
+        </MenuListItem>
         {isTopbar ? (
           <FloatingMenu {...popupProps}>{children}</FloatingMenu>
         ) : (
@@ -359,7 +333,7 @@ MenuBar.defaultProps = { 'aria-label': 'Main Menu', variant: 'light' }
 
 type ExportedMenuBarType = typeof MenuBar & {
   List: typeof MenuBarList
-  Item: MenuBarItemType
+  Item: MenuItemType
 }
 
 const TypedMenuBar = MenuBar as ExportedMenuBarType
@@ -430,47 +404,6 @@ const InlineMenu = styled.ul<{ $margin: number }>`
   }
 `
 
-const SidebarMenu = styled.ul`
-  ${(p) => p.theme.colorStyles.standard}
-  ${(p) => textStyle(p.theme, 'small')};
-  ${listStyle}
-
-  [role='menuitem'] {
-    padding: 18px 16px;
-    border-bottom: ${(p) => border(p.theme, 'lightContrast')};
-    ${NavigationArrowDown} {
-      transform: rotateZ(-90deg);
-    }
-    &[aria-expanded='true'] {
-      color: ${(p) => p.theme.colors.callToAction};
-      ${NavigationArrowDown} {
-        transform: rotateZ(90deg);
-      }
-    }
-    &:hover {
-      color: ${(p) => p.theme.colors.callToAction};
-      border-bottom-color: ${(p) => p.theme.colors.callToAction};
-    }
-    position: relative;
-    overflow: visible;
-    &:focus::after {
-      border: ${(p) => border(p.theme, 'callToAction')};
-      background-color: transparent;
-      box-sizing: border-box;
-      width: 100%;
-      height: calc(100% + ${borderSize});
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    &[aria-current='true'],
-    &[aria-expanded='true'] {
-      font-weight: 600;
-    }
-  }
-`
-
 const MenuWrapper = styled.div`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
@@ -530,40 +463,4 @@ const MenuList = styled.ul<{ $showScroll?: boolean }>`
   overflow: hidden;
   color: ${(p) => p.theme.colors.darkestContrast};
   ${(p) => textStyle(p.theme, 'small')};
-`
-
-const buttonStyles = `
-  cursor: pointer;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  text-decoration: none;
-  text-align: left;
-  color: inherit;
-  font: inherit;
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
-
-  &::-moz-focus-inner {
-    border: none;
-  }
-`
-
-const MenuButton = styled.span.attrs({ tabIndex: -1 as number, role: 'menuitem' as string })`
-  ${buttonStyles}
-  width: 100%;
-  height: 100%;
-
-  ${NavigationArrowDown} {
-    width: 8px;
-    height: 8px;
-    margin-left: 8px;
-    ${(p) => (p['aria-expanded'] ? 'transform: scaleY(-1);' : undefined)}
-  }
 `

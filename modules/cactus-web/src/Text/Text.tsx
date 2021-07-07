@@ -11,6 +11,7 @@ import {
   FontStyleProps,
   fontWeight,
   FontWeightProps,
+  margin,
   space,
   SpaceProps,
   textAlign,
@@ -31,6 +32,12 @@ export interface TextProps
 }
 
 export const Text = styled('p')<TextProps>`
+  &:not(p) {
+    margin: 0;
+  }
+  && {
+    ${margin}
+  }
   ${space}
   ${color}
   ${colorStyle}

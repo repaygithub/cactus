@@ -14,8 +14,8 @@ describe('component: BrandBar', () => {
         <StyleProvider>
           <BrandBar>
             <BrandBar.UserMenu label="Test name">
-              <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
-              <BrandBar.UserMenuItem onSelect={(): void => console.log('Logout')}>
+              <BrandBar.UserMenuItem onClick={actionOne}>Settings</BrandBar.UserMenuItem>
+              <BrandBar.UserMenuItem onClick={(): void => console.log('Logout')}>
                 Logout
               </BrandBar.UserMenuItem>
             </BrandBar.UserMenu>
@@ -39,18 +39,14 @@ describe('component: BrandBar', () => {
         <StyleProvider>
           <BrandBar>
             <BrandBar.UserMenu label="Test name">
-              <BrandBar.UserMenuItem onSelect={actionOne}>Settings</BrandBar.UserMenuItem>
-              <BrandBar.UserMenuItem onSelect={actionTwo}>Logout</BrandBar.UserMenuItem>
+              <BrandBar.UserMenuItem onClick={actionOne}>Settings</BrandBar.UserMenuItem>
+              <BrandBar.UserMenuItem onClick={actionTwo}>Logout</BrandBar.UserMenuItem>
             </BrandBar.UserMenu>
           </BrandBar>
         </StyleProvider>
       )
 
       fireEvent.keyDown(getByText('Test name'), { key: 'Enter' })
-      await animationRender()
-
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
       await animationRender()
 
       // @ts-ignore

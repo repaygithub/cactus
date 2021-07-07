@@ -20,7 +20,7 @@ const MenuButtonExample: React.FC<RouteComponentProps> = (): ReactElement => {
         <NavigationChevronLeft />
         Back
       </Link>
-      <Text as="h1" textAlign="center" mb={0}>
+      <Text as="h1" textAlign="center">
         Link
       </Text>
       <Flex height="80px" justifyContent="space-evenly" width="100%" alignItems="center">

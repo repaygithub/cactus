@@ -1,9 +1,3 @@
-interface FileObj {
-  fileName: string
-  contents: string
-  status: string
-}
-
 export interface UIConfigData {
   displayName: string
   merchantName: string
@@ -13,7 +7,7 @@ export interface UIConfigData {
   allowCustomerLogin: boolean
   useCactusStyles: boolean
   selectColor: string
-  fileInput: FileObj[]
+  logo?: string
   notificationEmail: string
   allLocations: string[]
   mpLocation: string

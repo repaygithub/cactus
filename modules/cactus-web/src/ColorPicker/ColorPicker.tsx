@@ -1,44 +1,57 @@
 import { DescriptivePalette } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { ColorChangeHandler, CustomPicker, HSLColor, HSVColor } from 'react-color'
 import { EditableInput, Hue, Saturation } from 'react-color/lib/components/common'
-import styled, { css, withTheme } from 'styled-components'
+import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 import tinycolor from 'tinycolor2'
 
 import Button from '../Button/Button'
 import Flex from '../Flex/Flex'
 import FocusLock from '../FocusLock/FocusLock'
-import { keyDownAsClick } from '../helpers/a11y'
 import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpers/events'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
-import { useBox } from '../helpers/react'
+import { SemiControlled } from '../helpers/react'
 import { border, popupBoxShadow, popupShape, radius } from '../helpers/theme'
-import usePopup from '../helpers/usePopup'
+import usePopup, { TogglePopup } from '../helpers/usePopup'
 import IconButton from '../IconButton/IconButton'
 import TextButton from '../TextButton/TextButton'
 
-interface ColorPickerProps
+// Monkey! (fix IE11 issue in Saturation component)
+if (typeof document !== 'undefined' && document?.body && !document.contains) {
+  document.contains = document.body.contains.bind(document.body)
+}
+
+interface BaseProps
   extends MarginProps,
-    Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onError' | 'onFocus' | 'onBlur'> {
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'color' | 'onChange' | 'onFocus' | 'onBlur'> {
   name: string
   id: string
-  theme: CactusTheme
-  value?: string | HSL | HSV | RGB
-  phrases?: Phrases
+  phrases?: Partial<Phrases>
+  disabled?: boolean
+}
+
+interface InnerColorPickerProps extends BaseProps {
+  anchorRef: React.RefObject<HTMLDivElement>
+  color: tinycolor.Instance
+  setColor: (c: tinycolor.Instance, e: React.SyntheticEvent) => void
+  onFocus: React.FocusEventHandler<HTMLElement>
+  onBlur: (e: React.FocusEvent<HTMLElement>, t: TogglePopup) => void
+}
+
+interface ColorPickerProps extends BaseProps {
+  format?: Format
+  value?: Color
   onChange?: React.ChangeEventHandler<CactusEventTarget<Color>>
   onFocus?: React.FocusEventHandler<CactusEventTarget<Color>>
   onBlur?: React.FocusEventHandler<CactusEventTarget<Color>>
-  disabled?: boolean
 }
 
 interface CustomPickerProps {
   saveColor: (color: tinycolor.Instance) => void
-  theme: CactusTheme
-  currentColor: Color
+  currentColor: tinycolor.Instance
   phrases: Phrases
 }
 
@@ -60,18 +73,16 @@ interface RGB {
   b: number
 }
 
-interface Color {
-  hsl: HSL
-  hsv: HSV
-  rgb: RGB
-  hex: string
-}
+type Format = 'hex' | 'rgb' | 'hsl' | 'hsv'
+
+type Color = string | RGB | HSL | HSV
 
 interface PointerProps {
-  hsl?: HSL
+  hsl?: HSLColor
 }
 
 interface Phrases {
+  colorLabel: string
   hexLabel: string
   redLabel: string
   greenLabel: string
@@ -81,25 +92,36 @@ interface Phrases {
   cancelLabel: string
 }
 
-interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
-  anchorRef: React.RefObject<HTMLDivElement>
-  popupRef: React.RefObject<HTMLDivElement>
-  isOpen: boolean
+interface DialogProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
+  handleClose: () => void
+  color: tinycolor.Instance
+  setColor: (c: tinycolor.Instance, e: React.SyntheticEvent) => void
+  phrases: Phrases
 }
 
-const BasePopup: React.FC<PopupProps> = ({ anchorRef, popupRef, isOpen, ...props }) => {
-  usePositioning({
-    anchorRef,
-    ref: popupRef,
-    visible: isOpen,
-    position: positionPortal,
-    updateOnScroll: true,
-  })
-  return <FocusLock ref={popupRef} {...props} />
-}
-
-const ColorPickerPopup = styled(BasePopup)`
-  display: ${(p) => (p.isOpen ? 'block' : 'none')};
+const PickerDialog = styled(({ handleClose, color, setColor, phrases, ...props }: DialogProps) => {
+  const [dialogColor, setDialogColor] = React.useState<tinycolor.Instance>(color)
+  const handleApply = (event: React.MouseEvent) => {
+    setColor(dialogColor, event)
+    handleClose()
+  }
+  return (
+    <FocusLock {...props}>
+      <Picker saveColor={setDialogColor} currentColor={dialogColor} phrases={phrases} />
+      <Flex justifyContent="space-around" width="100%" mt={4}>
+        <TextButton variant="danger" onClick={handleClose}>
+          {phrases.cancelLabel}
+        </TextButton>
+        <Button variant="action" onClick={handleApply}>
+          {phrases.applyLabel}
+        </Button>
+      </Flex>
+    </FocusLock>
+  )
+})`
+  &[aria-hidden] {
+    display: none;
+  }
   box-sizing: border-box;
   position: fixed;
   z-index: 1000;
@@ -137,7 +159,7 @@ const ColorPickerPopup = styled(BasePopup)`
   }
 `
 
-const InputWrapper = styled.div<{ $disabled: boolean }>`
+const InputWrapper = styled.div`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -154,28 +176,24 @@ const InputWrapper = styled.div<{ $disabled: boolean }>`
     border-color: ${(p): string => p.theme.colors.callToAction};
   }
 
-  input {
+  input.hex-borderless {
     border: none;
     outline: none;
     padding: 0;
     background-color: transparent;
     font-size: inherit;
     width: 5em;
-    ${(p) =>
-      p.$disabled &&
-      `
-        color: ${p.theme.colorStyles.disable.color};
-        cursor: not-allowed;
-      `}
+
+    :disabled {
+      color: ${(p) => p.theme.colorStyles.disable.color};
+    }
   }
 
-  ${(p) =>
-    p.$disabled &&
-    `
-      cursor: not-allowed;
-      border-color: ${p.theme.colors.lightGray};
-      background-color: ${p.theme.colorStyles.disable.backgroundColor};
-    `}
+  &[aria-disabled] {
+    cursor: not-allowed;
+    border-color: ${(p) => p.theme.colors.lightGray};
+    background-color: ${(p) => p.theme.colorStyles.disable.backgroundColor};
+  }
 `
 
 const SaturationWrapper = styled.div`
@@ -213,18 +231,22 @@ const Pointer = styled.div<{ $type: 'hue' | 'saturation'; $hsl: HSLColor }>`
   }}
 `
 
-const HuePointer: React.FC<PointerProps> = (props) => {
-  const { hsl = { h: 0, s: 0, l: 0 } } = props
+const blackHsl: HSLColor = { h: 0, s: 0, l: 0 }
+
+const HuePointer: React.FC<PointerProps> = ({ hsl = blackHsl }) => {
   return <Pointer $hsl={hsl} $type="hue" />
 }
 
-const SaturationPointer: React.FC<PointerProps> = (props) => {
-  const { hsl = { h: 0, s: 0, l: 0 } } = props
+const SaturationPointer: React.FC<PointerProps> = ({ hsl = blackHsl }) => {
   return <Pointer $hsl={hsl} $type="saturation" />
 }
 
+// These do their own styling, so we have to convert theme radius to a prop.
+const StyledHue = styled(Hue).attrs((p) => ({ radius: radius(20)(p) }))``
+const StyledSaturation = StyledHue.withComponent(Saturation)
+
 const PickerBase: React.FC<CustomPickerProps> = (props) => {
-  const { saveColor, theme, currentColor, phrases, ...rest } = props
+  const { saveColor, currentColor, phrases, ...rest } = props
 
   const handleSaturationChange: ColorChangeHandler<HSVColor> = (hsv) => {
     const color = tinycolor(hsv)
@@ -232,43 +254,42 @@ const PickerBase: React.FC<CustomPickerProps> = (props) => {
   }
 
   const handleHueChange: ColorChangeHandler<HSLColor> = (hsl) => {
-    const color = tinycolor((hsl as any) as HSL)
+    const color = tinycolor(hsl)
     saveColor(color)
   }
 
   const handleInnerHexChange = (change: { [k: string]: string }) => {
-    const hex = change[phrases.hexLabel]
-    if (isValidHex(hex)) {
-      const color = tinycolor(hex)
+    const color = getValidColor(change[phrases.hexLabel] || '')
+    if (color) {
       saveColor(color)
     }
   }
 
+  const rgb = currentColor.toRgb()
   const handleRGBChange = (change: number, key: 'r' | 'g' | 'b') => {
-    const color = tinycolor({ ...currentColor.rgb, [key]: change })
+    const color = tinycolor({ ...rgb, [key]: change })
     saveColor(color)
   }
+
+  // The calculated hue for black is always zero, but we want to preserve it here.
+  const original: any = currentColor.getOriginalInput()
+  const hsl = original?.source === 'hsl' ? original : currentColor.toHsl()
+  const hsv = original?.source === 'hsv' ? original : currentColor.toHsv()
+  hsl.h = hsv.h = hsl.h || hsv.h
 
   return (
     <Flex width="100%" flexDirection="column" alignItems="center" justifyContent="center">
       <SaturationWrapper>
-        <Saturation
+        <StyledSaturation
           {...rest}
-          radius={radius(20)({ theme })}
-          hsl={currentColor.hsl}
-          hsv={currentColor.hsv}
+          hsl={hsl}
+          hsv={hsv}
           pointer={SaturationPointer}
           onChange={handleSaturationChange}
         />
       </SaturationWrapper>
       <HueWrapper>
-        <Hue
-          {...rest}
-          radius={radius(20)({ theme })}
-          hsl={currentColor.hsl}
-          pointer={HuePointer}
-          onChange={handleHueChange}
-        />
+        <StyledHue {...rest} hsl={hsl} pointer={HuePointer} onChange={handleHueChange} />
       </HueWrapper>
       <Flex
         className="hex-wrapper"
@@ -279,22 +300,22 @@ const PickerBase: React.FC<CustomPickerProps> = (props) => {
       >
         <EditableInput
           label={phrases.hexLabel}
-          value={`#${currentColor.hex}`}
+          value={fmtColor(currentColor, 'hex') as string}
           onChange={handleInnerHexChange}
         />
         <Flex className="rgb-wrapper" width="100%" justifyContent="space-between" mt={7}>
           <EditableInput
-            value={currentColor.rgb.r}
+            value={rgb.r}
             label={phrases.redLabel}
             onChange={({ R }) => handleRGBChange(Number(R), 'r')}
           />
           <EditableInput
-            value={currentColor.rgb.g}
+            value={rgb.g}
             label={phrases.greenLabel}
             onChange={({ G }) => handleRGBChange(Number(G), 'g')}
           />
           <EditableInput
-            value={currentColor.rgb.b}
+            value={rgb.b}
             label={phrases.blueLabel}
             onChange={({ B }) => handleRGBChange(Number(B), 'b')}
           />
@@ -306,197 +327,272 @@ const PickerBase: React.FC<CustomPickerProps> = (props) => {
 
 const Picker = CustomPicker(PickerBase)
 
-const isValidHex = (hex: string): boolean => /^#?[0-9A-F]{6}$/i.test(hex)
-
-const initialState: Color = {
-  hsl: { h: 0, s: 1, l: 0.5 },
-  hsv: { h: 0, s: 1, v: 1 },
-  rgb: { r: 255, g: 0, b: 0 },
-  hex: 'FF0000',
+const getValidColor = (raw: string) => {
+  const color = new tinycolor(raw)
+  // There are short formats like hex3 & hex4 that we don't want to deal with.
+  if (
+    color.isValid() &&
+    !(color.getFormat().startsWith('hex') && raw.replace(/^#/, '').length < 6)
+  ) {
+    return color
+  }
 }
 
-export const ColorPickerBase: React.FC<ColorPickerProps> = (props) => {
-  const {
-    id,
-    name,
-    disabled = false,
-    phrases: passedPhrases,
-    theme,
-    value,
-    onChange,
-    onFocus,
-    onBlur,
-    ...rest
-  } = props
+interface ColorState {
+  input: Color
+  color: tinycolor.Instance
+}
 
-  const [state, setState] = useState<Color>(initialState)
-  const openedState = useRef<Color>(initialState)
-  const buttonClicked = useRef<boolean>(false)
+const DEFAULT_COLOR = 'black'
+const initialState: ColorState = {
+  input: DEFAULT_COLOR,
+  color: new tinycolor(DEFAULT_COLOR),
+}
 
-  const eventTarget = useBox(
-    new CactusEventTarget<Color>({ id, name, value: state })
-  )
+const fmtColor = (color: tinycolor.Instance, format: Format = 'hex'): Color => {
+  if (format === 'hex') {
+    return color.toHexString().toUpperCase()
+  } else if (format === 'rgb') {
+    return color.toRgb()
+  } else if (format === 'hsl') {
+    return color.toHsl()
+  } else if (format === 'hsv') {
+    return color.toHsv()
+  }
+  return '#000000'
+}
 
-  const inputRef = useRef<HTMLDivElement | null>(null)
-  const portalRef = useRef<HTMLDivElement | null>(null)
+const colorShape = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.shape({
+    h: PropTypes.number.isRequired,
+    s: PropTypes.number.isRequired,
+    l: PropTypes.number.isRequired,
+  }),
+  PropTypes.shape({
+    h: PropTypes.number.isRequired,
+    s: PropTypes.number.isRequired,
+    v: PropTypes.number.isRequired,
+  }),
+  PropTypes.shape({
+    r: PropTypes.number.isRequired,
+    g: PropTypes.number.isRequired,
+    b: PropTypes.number.isRequired,
+  }),
+])
 
-  const phrases: Phrases = { ...defaultPhrases, ...passedPhrases }
+const colorType = (...args: Parameters<typeof colorShape>): Error | null => {
+  const props = args[0]
+  if (!props.value) return null
+  const color = new tinycolor(props.value)
+  const format = props.format || 'hex'
+  if (!color.isValid()) {
+    return new Error('Invalid prop `value` supplied to `ColorPicker`: unrecognized color')
+  } else if (color.getFormat() !== format) {
+    return new Error('Invalid prop `value` supplied to `ColorPicker`: does not match `format`')
+  }
+  return colorShape(...args)
+}
 
-  const { expanded, toggle, buttonProps, popupProps } = usePopup('dialog', {
-    id,
-  })
+export class ColorPicker extends React.Component<ColorPickerProps, ColorState> {
+  static displayName = 'ColorPicker'
 
-  useEffect(() => {
-    if (value) {
-      const passedColor = tinycolor(value)
-      saveColor(passedColor)
-    }
-  }, [value, expanded])
-
-  const handleIconButtonClick = () => {
-    if (!expanded) {
-      // Save state popup was opened with in case we need to reset on cancel
-      openedState.current = state
-      const hexInput = document.querySelector(`#${popupProps.id} input`) as HTMLInputElement
-      toggle(true, hexInput)
-      buttonClicked.current = true
-    }
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    format: PropTypes.oneOf<Format>(['hex', 'hsl', 'hsv', 'rgb']),
+    value: colorType,
+    phrases: PropTypes.shape({
+      colorLabel: PropTypes.string,
+      hexLabel: PropTypes.string,
+      redLabel: PropTypes.string,
+      greenLabel: PropTypes.string,
+      blueLabel: PropTypes.string,
+      triggerLabel: PropTypes.string,
+      applyLabel: PropTypes.string,
+      cancelLabel: PropTypes.string,
+    }),
+    onChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    disabled: PropTypes.bool,
   }
 
-  const saveColor = (color: tinycolor.Instance): void => {
-    setState({
-      hsl: color.toHsl(),
-      hsv: color.toHsv(),
-      rgb: color.toRgb(),
-      hex: color.toHex().toUpperCase(),
-    })
+  state = initialState
+
+  private hasFocus = false
+
+  private eventTarget = new CactusEventTarget<Color>({})
+
+  private anchorRef = React.createRef<HTMLDivElement>()
+
+  static getDerivedStateFromProps(
+    props: Readonly<ColorPickerProps>,
+    state: ColorState
+  ): Partial<ColorState> | null {
+    if (props.value !== undefined) {
+      const input = props.value || DEFAULT_COLOR
+      if (input !== state.input) {
+        return props.value ? { input, color: new tinycolor(input) } : initialState
+      }
+    }
+    return null
   }
 
-  const handleOuterHexChange = (
-    change: { [k: string]: string },
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const hex = change[phrases.hexLabel]
-    if (isValidHex(hex)) {
-      const color = tinycolor(hex)
-      saveColor(color)
-      if (onChange && typeof onChange === 'function') {
-        eventTarget.value = {
-          hsl: color.toHsl(),
-          hsv: color.toHsv(),
-          rgb: color.toRgb(),
-          hex: color.toHex().toUpperCase(),
-        }
-        const cactusEvent = new CactusChangeEvent(eventTarget, event)
-        onChange(cactusEvent)
+  private syncTarget(color: tinycolor.Instance = this.state.color) {
+    this.eventTarget.id = this.props.id
+    this.eventTarget.name = this.props.name
+    this.eventTarget.value = fmtColor(color, this.props.format)
+    return this.eventTarget
+  }
+
+  private contains(maybeNode: unknown): boolean {
+    const wrapper = this.anchorRef.current
+    return maybeNode instanceof Node && !!wrapper && wrapper.contains(maybeNode)
+  }
+
+  private handleFocus = (event: React.FocusEvent<HTMLElement>) => {
+    event.stopPropagation()
+    if (!this.hasFocus) {
+      this.hasFocus = true
+      const focusHandler = this.props.onFocus
+      if (typeof focusHandler === 'function') {
+        focusHandler(new CactusFocusEvent('focus', this.syncTarget(), event))
       }
     }
   }
 
-  const handleCancelClick = (event: React.MouseEvent) => {
-    if (onBlur && typeof onBlur === 'function') {
-      const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
-      onBlur(cactusEvent)
+  private handleBlur = (event: React.FocusEvent<HTMLElement>, toggle: TogglePopup) => {
+    event.stopPropagation()
+    event.preventDefault()
+    if (!this.contains(event.relatedTarget)) {
+      this.hasFocus = false
+      const blurHandler = this.props.onBlur
+      if (typeof blurHandler === 'function') {
+        blurHandler(new CactusFocusEvent('blur', this.syncTarget(), event))
+      }
+      // `relatedTarget` is null when the entire window loses focus,
+      // but `activeElement` will still point to a page element.
+      window.requestAnimationFrame(() => {
+        if (!this.contains(document.activeElement)) {
+          toggle(false)
+        }
+      })
     }
-    setState(openedState.current)
-    toggle(false)
   }
 
-  const handleApplyClick = (event: React.MouseEvent) => {
-    if (onChange && typeof onChange === 'function') {
-      const cactusEvent = new CactusChangeEvent(eventTarget, event)
-      onChange(cactusEvent)
+  private setColor = (color: tinycolor.Instance, event: React.SyntheticEvent) => {
+    if (tinycolor.equals(this.state.color, color)) return
+
+    this.setState({ color })
+    const changeHandler = this.props.onChange
+    if (typeof changeHandler === 'function') {
+      changeHandler(new CactusChangeEvent(this.syncTarget(color), event))
     }
-    if (onBlur && typeof onBlur === 'function') {
-      const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
-      onBlur(cactusEvent)
-    }
-    toggle(false)
   }
 
-  const isOutside = (element: EventTarget | null) => {
-    const input = inputRef.current
-    const portal = portalRef.current
+  render(): React.ReactElement {
+    const { value, format, onFocus, onBlur, onChange, ...props } = this.props
     return (
-      !(element instanceof Node) ||
-      !input ||
-      !input.contains(element) ||
-      (expanded && (!portal || !portal.contains(element)))
+      <InnerColorPicker
+        {...props}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        anchorRef={this.anchorRef}
+        color={this.state.color}
+        setColor={this.setColor}
+      />
     )
   }
 
-  const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
-    const { relatedTarget } = event
-    if (isOutside(relatedTarget)) {
-      if (onFocus && typeof onFocus === 'function') {
-        const cactusEvent = new CactusFocusEvent('focus', eventTarget, event)
-        onFocus(cactusEvent)
-      }
-    }
+  static toString(): string {
+    // For use as a styled-components CSS class.
+    return InputWrapper.toString()
   }
+}
 
-  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-    event.persist()
-    window.requestAnimationFrame((): void => {
-      if (isOutside(document.activeElement) && !buttonClicked.current) {
-        if (onBlur && typeof onBlur === 'function') {
-          const cactusEvent = new CactusFocusEvent('blur', eventTarget, event)
-          onBlur(cactusEvent)
-        }
-      }
-      if (buttonClicked.current) {
-        buttonClicked.current = false
-      }
-    })
+const InnerColorPicker = (props: InnerColorPickerProps) => {
+  const {
+    name,
+    disabled = false,
+    phrases: passedPhrases,
+    color,
+    setColor,
+    anchorRef,
+    onBlur,
+    onKeyDown,
+    ...rest
+  } = props
+  const phrases: Phrases = { ...defaultPhrases, ...passedPhrases }
+  const popup = {
+    id: props.id,
+    onWrapperBlur: onBlur,
+    onWrapperKeyDown: onKeyDown as React.KeyboardEventHandler<HTMLElement>,
+    focusOnClickExpand: true,
   }
+  const { expanded, toggle, buttonProps, popupProps, wrapperProps } = usePopup('dialog', popup)
+  if (!expanded) {
+    // In this case we conditionally render the dialog, don't want an invalid ID here.
+    delete buttonProps['aria-controls']
+  }
+  const popupId = React.useRef(popupProps.id as string)
+  usePositioning({
+    anchorRef,
+    ref: popupId,
+    visible: expanded,
+    position: positionPortal,
+    updateOnScroll: true,
+  })
+
+  const handleOuterHexChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const color = getValidColor(event.target?.value || '')
+      if (color) {
+        setColor(color, event)
+      }
+    },
+    [setColor]
+  )
+
+  const handleClose = React.useCallback(() => {
+    toggle(false, anchorRef.current?.querySelector('input'))
+  }, [toggle, anchorRef])
 
   return (
-    <>
-      <InputWrapper
-        id={id}
-        ref={inputRef}
-        $disabled={disabled || false}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        {...rest}
+    <InputWrapper {...rest} {...wrapperProps} ref={anchorRef} aria-disabled={disabled || undefined}>
+      <IconButton
+        {...buttonProps}
+        disabled={disabled}
+        iconSize="small"
+        label={phrases.triggerLabel}
       >
-        <IconButton
-          disabled={disabled}
-          iconSize="small"
-          label={phrases.triggerLabel}
-          {...buttonProps}
-          onClick={handleIconButtonClick}
-          onKeyDown={keyDownAsClick}
-        >
-          <DescriptivePalette />
-        </IconButton>
-        {!disabled ? (
-          <EditableInput
-            label={phrases.hexLabel || 'Hex'}
-            value={`#${state.hex}`}
-            style={{ label: { visibility: 'hidden', width: 0, height: 0, position: 'absolute' } }}
-            onChange={handleOuterHexChange as (change: { [k: string]: string }) => void} // Type definitions are a little off. TS thinks no event is passed to the handler but it is.
-          />
-        ) : (
-          <input value={`#${state.hex}`} disabled />
-        )}
-      </InputWrapper>
-      <ColorPickerPopup anchorRef={inputRef} popupRef={portalRef} isOpen={expanded} {...popupProps}>
-        <Picker theme={theme} saveColor={saveColor} currentColor={state} phrases={phrases} />
-        <Flex justifyContent="space-around" width="100%" mt={4}>
-          <TextButton variant="danger" onClick={handleCancelClick}>
-            {phrases.cancelLabel}
-          </TextButton>
-          <Button variant="action" onClick={handleApplyClick}>
-            {phrases.applyLabel}
-          </Button>
-        </Flex>
-      </ColorPickerPopup>
-    </>
+        <DescriptivePalette />
+      </IconButton>
+      <SemiControlled
+        input="input"
+        className="hex-borderless"
+        name={name}
+        disabled={disabled}
+        readOnly={expanded}
+        value={fmtColor(color, 'hex')}
+        onChange={handleOuterHexChange}
+        aria-label={phrases.colorLabel}
+      />
+      {expanded && (
+        <PickerDialog
+          {...popupProps}
+          phrases={phrases}
+          handleClose={handleClose}
+          color={color}
+          setColor={setColor}
+        />
+      )}
+    </InputWrapper>
   )
 }
 
 const defaultPhrases: Phrases = {
+  colorLabel: 'Color',
   hexLabel: 'Hex',
   redLabel: 'R',
   greenLabel: 'G',
@@ -504,46 +600,6 @@ const defaultPhrases: Phrases = {
   triggerLabel: 'Click to open the color picker',
   applyLabel: 'Apply',
   cancelLabel: 'Cancel',
-}
-
-export const ColorPicker = withTheme(ColorPickerBase)
-ColorPicker.displayName = 'ColorPicker'
-
-ColorPicker.propTypes = {
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({
-      h: PropTypes.number.isRequired,
-      s: PropTypes.number.isRequired,
-      l: PropTypes.number.isRequired,
-    }),
-    PropTypes.shape({
-      h: PropTypes.number.isRequired,
-      s: PropTypes.number.isRequired,
-      v: PropTypes.number.isRequired,
-    }),
-    PropTypes.shape({
-      r: PropTypes.number.isRequired,
-      g: PropTypes.number.isRequired,
-      b: PropTypes.number.isRequired,
-    }),
-  ]),
-  // @ts-ignore
-  phrases: PropTypes.shape({
-    hexLabel: PropTypes.string,
-    redLabel: PropTypes.string,
-    greenLabel: PropTypes.string,
-    blueLabel: PropTypes.string,
-    triggerLabel: PropTypes.string,
-    applyLabel: PropTypes.string,
-    cancelLabel: PropTypes.string,
-  }),
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  disabled: PropTypes.bool,
 }
 
 export default ColorPicker

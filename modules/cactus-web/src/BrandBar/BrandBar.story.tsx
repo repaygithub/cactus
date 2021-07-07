@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
-import { ActionBar, BrandBar, Layout, SelectField } from '../'
+import { ActionBar, BrandBar, Layout, Link, SelectField } from '../'
 import { SelectValueType } from '../Select/Select'
 
 const LOGO =
@@ -24,11 +24,14 @@ export const BasicUsage = (): React.ReactElement => (
         isProfilePage={boolean('On profile page?', false)}
         label={text('Menu Title', 'Hershell Jewess')}
       >
-        <BrandBar.UserMenuItem onSelect={action('Settings')}>
+        <BrandBar.UserMenuItem onClick={action('Settings')}>
           {text('Action one', 'Settings')}
         </BrandBar.UserMenuItem>
-        <BrandBar.UserMenuItem onSelect={action('Logout')}>
+        <BrandBar.UserMenuItem onClick={action('Logout')}>
           {text('Action two', 'Logout')}
+        </BrandBar.UserMenuItem>
+        <BrandBar.UserMenuItem as={Link} to="https://www.google.com">
+          Go to Google
         </BrandBar.UserMenuItem>
       </BrandBar.UserMenu>
     </BrandBar>
@@ -59,8 +62,8 @@ export const CustomItems = (): React.ReactElement => {
           />
         </BrandBar.Item>
         <BrandBar.UserMenu label="Userforce One">
-          <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
-          <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+          <BrandBar.UserMenuItem onClick={action('Settings')}>Settings</BrandBar.UserMenuItem>
+          <BrandBar.UserMenuItem onClick={action('Logout')}>Logout</BrandBar.UserMenuItem>
         </BrandBar.UserMenu>
       </BrandBar>
       <ActionBar />
@@ -70,6 +73,14 @@ export const CustomItems = (): React.ReactElement => {
 
 CustomItems.parameters = {
   beforeScreenshot: async (page: Page) => {
-    await page.click('[data-reach-menu-button]')
+    await page.click('[id="org-select"]')
+    await page.focus('[id="org-select-REPAY"]')
+  },
+}
+
+BasicUsage.parameters = {
+  beforeScreenshot: async (page: Page) => {
+    await page.click('[role="button"]')
+    await page.focus('[role="menuitem"]')
   },
 }

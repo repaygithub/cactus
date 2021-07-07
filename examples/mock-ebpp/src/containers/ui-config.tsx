@@ -21,10 +21,11 @@ import { Helmet } from 'react-helmet'
 import { post } from '../api'
 
 interface FileObject {
-  fileName: string
-  contents: File | string | null
-  status: 'loading' | 'loaded' | 'error'
+  file: File
+  contents?: unknown
+  status: 'loading' | 'loaded' | 'error' | 'unloaded'
   errorMsg?: string
+  load: () => Promise<unknown>
 }
 
 interface FormData {
@@ -65,8 +66,17 @@ const initialValues: FormData = {
 
 const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
   const [notificationOpen, setNotificationOpen] = React.useState<boolean>(false)
-  const onSubmit = (values: FormData, { setSubmitting }: FormikHelpers<FormData>) => {
-    post(values)
+  const onSubmit = async (values: FormData, { setSubmitting }: FormikHelpers<FormData>) => {
+    const formValues: Record<string, any> = { ...values }
+    delete formValues.fileInput
+    if (values.fileInput?.length) {
+      try {
+        formValues.logo = await values.fileInput[0].load()
+      } catch (e) {
+        console.error('Error loading logo:', e)
+      }
+    }
+    post(formValues)
     console.log((window as any).apiData)
     setNotificationOpen(true)
     setSubmitting(false)

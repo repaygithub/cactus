@@ -26,21 +26,30 @@ export const omitMargins = <Obj extends { [k: string]: any }>(
   )
 
 function extractor<T>(keys: string[]) {
-  // @ts-ignore Not sure why Typescript doesn't like `key is keyof T`.
-  const isKeyofT = (key: string): key is keyof T => keys.includes(key)
-  return (props: Record<string, any>) => {
-    const extractedProps: Partial<T> = {}
-    for (const key of Object.keys(props)) {
-      if (isKeyofT(key)) {
-        extractedProps[key] = props[key]
-        delete props[key]
-      }
-    }
-    return extractedProps
-  }
+  return (props: Record<string, any>) => split(props, keys) as Partial<T>
 }
 
 export const extractMargins = extractor<MarginProps>(margin.propNames as string[])
+
+interface Split {
+  <P, K extends keyof P>(p: P, keys: K[]): Pick<P, K>
+  <P, K extends keyof P>(p: P, ...keys: K[]): Pick<P, K>
+}
+
+// WARNING: if any of the keys K are required in P, `props` may not match type P after extraction.
+export const split: Split = (
+  props: Record<string, any>,
+  ...args: (string | string[])[]
+): Record<string, any> => {
+  const keys = Array.isArray(args[0]) ? args[0] : (args as string[])
+  return keys.reduce((extracted, key) => {
+    if (key in props) {
+      extracted[key] = props[key]
+      delete props[key]
+    }
+    return extracted
+  }, {} as Record<string, any>)
+}
 
 type Omittable = string | string[] | { propNames?: string[] }
 
