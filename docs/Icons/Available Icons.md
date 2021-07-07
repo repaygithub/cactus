@@ -323,6 +323,17 @@
   <figure
     style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
   >
+    <img src="../../modules/cactus-icons/svgs/descriptive/delivered.svg"
+      style="width:100px;"
+      alt="svg for DescriptiveDelivered" />
+    <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
+      <code style="white-space:pre-wrap;font-size:10px;">/i/descriptive-delivered</code>
+      <div>DescriptiveDelivered</div>
+    </figcaption>
+  </figure>
+  <figure
+    style="display:flex;justify-content:center;flex-direction:column;align-items:center;"
+  >
     <img src="../../modules/cactus-icons/svgs/descriptive/discussions.svg"
       style="width:100px;"
       alt="svg for DescriptiveDiscussions" />
