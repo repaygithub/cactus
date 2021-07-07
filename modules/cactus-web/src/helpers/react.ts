@@ -67,6 +67,7 @@ type Ref<T> = React.RefCallback<T> | React.MutableRefObject<T> | null | undefine
 type HybridRef<T> = React.RefCallback<T> & React.RefObject<T>
 type MutHybridRef<T> = React.RefCallback<T> & React.MutableRefObject<T>
 
+// Keep in mind that unlike a normal ref, hybrid refs are not guaranteed to be stable.
 export function useMergedRefs<T>(...refs: Ref<T>[]): HybridRef<T> {
   const refFunc: any = (value: T | null) => {
     if (!value) return
