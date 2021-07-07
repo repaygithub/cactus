@@ -151,26 +151,17 @@ const MenuBarList = React.forwardRef<HTMLSpanElement, ListProps>(
     const variant = useVariant()
     const isTopbar = variant === 'top'
     const { wrapperProps, buttonProps, popupProps } = useSubmenu(props.id, isTopbar)
-    const menuBtnRef: React.MutableRefObject<HTMLSpanElement | null> = React.useRef(null)
-    const [menuBtnWidth, setMenuBtnWidth] = React.useState<number | undefined>(undefined)
-
-    React.useImperativeHandle(ref, () => menuBtnRef.current as HTMLSpanElement)
-    React.useEffect(() => {
-      setMenuBtnWidth(menuBtnRef.current?.getBoundingClientRect().width)
-    }, [menuBtnRef])
 
     return (
       <li {...wrapperProps}>
-        <MenuButton {...props} {...buttonProps} ref={menuBtnRef}>
+        <MenuButton {...props} {...buttonProps} ref={ref}>
           <TextWrapper>{title}</TextWrapper>
           <IconWrapper aria-hidden>
             <NavigationArrowDown />
           </IconWrapper>
         </MenuButton>
         {isTopbar ? (
-          <FloatingMenu minWidth={menuBtnWidth} {...popupProps}>
-            {children}
-          </FloatingMenu>
+          <FloatingMenu {...popupProps}>{children}</FloatingMenu>
         ) : (
           <SideMenu {...popupProps} aria-orientation="vertical">
             {children}
@@ -204,21 +195,16 @@ const getPanelScrollInfo: GetScrollInfo = (menu) => ({
   listItems: getVisibleMenuItems(menu),
 })
 
-interface FoatingMenuProps extends React.HTMLAttributes<HTMLElement> {
-  minWidth: number | undefined
-}
-
-const FloatingMenu: React.FC<FoatingMenuProps> = ({
+const FloatingMenu: React.FC<React.HTMLAttributes<HTMLElement>> = ({
   children,
   'aria-hidden': hidden,
   tabIndex,
   onKeyDown,
-  minWidth,
   ...props
 }) => {
   const [menuRef, scroll] = useScroll<HTMLUListElement>('vertical', !hidden, getWrappedScrollInfo)
   return (
-    <MenuWrapper aria-hidden={hidden} minWidth={minWidth} tabIndex={tabIndex} onKeyDown={onKeyDown}>
+    <MenuWrapper aria-hidden={hidden} tabIndex={tabIndex} onKeyDown={onKeyDown}>
       <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
         <NavigationChevronUp />
       </ScrollButton>
@@ -485,7 +471,7 @@ const SidebarMenu = styled.ul`
   }
 `
 
-const MenuWrapper = styled.div<{ minWidth: number | undefined }>`
+const MenuWrapper = styled.div`
   ${(p) => p.theme.colorStyles.standard};
   display: flex;
   &[aria-hidden='true'] {
@@ -502,7 +488,7 @@ const MenuWrapper = styled.div<{ minWidth: number | undefined }>`
   flex-flow: column nowrap;
   align-items: stretch;
   width: max-content;
-  min-width: ${(p) => (p.minWidth ? `${p.minWidth}px` : '200px')};
+  min-width: 200px;
   max-width: 320px;
   max-height: 70vh;
   z-index: 100;
