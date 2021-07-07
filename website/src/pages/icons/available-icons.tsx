@@ -57,36 +57,28 @@ export default (): React.ReactElement => (
       See below for the list of available icons and the names and paths by which they can be
       referenced.
     </Text>
-    {categories.map(
-      (cat): React.ReactElement => {
-        const iconList = iconsCategoryMap[cat]
-        return (
-          <React.Fragment key={cat}>
-            <Text as="h3" fontSize="h3" style={{ textTransform: 'capitalize' }}>
-              {cat}
-            </Text>
-            <Flex flexWrap="wrap" justifyContent="start">
-              {iconList.map(
-                ({ fullName, path, Icon }): React.ReactElement => (
-                  <Flex
-                    key={path}
-                    m={4}
-                    flexBasis="64px"
-                    flexDirection="column"
-                    alignItems="center"
-                  >
-                    <Icon style={{ fontSize: '40px' }} />
-                    <Text m={0} fontSize="12px">
-                      {fullName}
-                    </Text>
-                    <Code>/i/{path}</Code>
-                  </Flex>
-                )
-              )}
-            </Flex>
-          </React.Fragment>
-        )
-      }
-    )}
+    {categories.map((cat): React.ReactElement => {
+      const iconList = iconsCategoryMap[cat]
+      return (
+        <React.Fragment key={cat}>
+          <Text as="h3" fontSize="h3" style={{ textTransform: 'capitalize' }}>
+            {cat}
+          </Text>
+          <Flex flexWrap="wrap" justifyContent="start">
+            {iconList.map(
+              ({ fullName, path, Icon }): React.ReactElement => (
+                <Flex key={path} m={4} flexBasis="64px" flexDirection="column" alignItems="center">
+                  <Icon style={{ fontSize: '40px' }} />
+                  <Text m={0} fontSize="12px">
+                    {fullName}
+                  </Text>
+                  <Code>/i/{path}</Code>
+                </Flex>
+              )
+            )}
+          </Flex>
+        </React.Fragment>
+      )
+    })}
   </>
 )

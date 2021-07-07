@@ -1,5 +1,5 @@
 import { ActionsGear, ActionsKey } from '@repay/cactus-icons'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -68,7 +68,7 @@ describe('component: ActionBar', () => {
     expect(content.children).toHaveLength(0)
   })
 
-  test('panel control', () => {
+  test('panel control', async () => {
     const panelRef: React.MutableRefObject<HTMLDivElement | null> = { current: null }
     const outsideRef: React.MutableRefObject<HTMLButtonElement | null> = { current: null }
     const { getByLabelText } = render(
@@ -107,9 +107,9 @@ describe('component: ActionBar', () => {
 
     // Show by clicking the button
     userEvent.click(button)
+    await waitFor(() => expect(checkbox).toHaveFocus())
     expect(button).toHaveAttribute('aria-expanded', 'true')
     expect(panel).not.toHaveAttribute('aria-hidden')
-    expect(checkbox).toHaveFocus()
     expect(checkbox.checked).toBe(true)
 
     // Hide by pressing escape

@@ -113,16 +113,8 @@ const getBoxShadow = (theme: CactusTheme, useBoxShadows?: boolean): ReturnType<t
 
 const AccordionHeaderBase = (props: AccordionHeaderProps): ReactElement => {
   const { className, children, render, ...rest } = props
-  const {
-    isOpen,
-    variant,
-    bodyId,
-    headerId,
-    handleToggle,
-    handleFocus,
-    focusFirst,
-    focusLast,
-  } = useContext(AccordionContext)
+  const { isOpen, variant, bodyId, headerId, handleToggle, handleFocus, focusFirst, focusLast } =
+    useContext(AccordionContext)
 
   const handleHeaderClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     let element: HTMLElement | null = event.target as HTMLElement

@@ -52,9 +52,7 @@ const DEFAULT_SCROLL: Scroll = { showScroll: false, offset: 0, currentIndex: 0 }
 //    or the container of the list + buttons if it's `overflow: hidden`.
 // 2. The width of one button, or 0 (zero) if it's a regular scroll element.
 // 3. The list of items that can be scrolled to.
-export type GetScrollInfo = (
-  e: HTMLElement
-) => {
+export type GetScrollInfo = (e: HTMLElement) => {
   listWrapper: HTMLElement
   buttonWidth: number
   listItems: HTMLElement[]

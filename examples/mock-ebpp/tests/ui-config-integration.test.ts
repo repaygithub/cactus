@@ -10,20 +10,16 @@ const getApiData = ClientFunction((): UIConfigData => (window as any).apiData)
 
 // eslint-disable-next-line no-undef
 fixture('UI Config Integration Tests')
-  .before(
-    async (ctx): Promise<void> => {
-      ctx.server = startStaticServer({
-        directory: path.join(process.cwd(), 'dist'),
-        port: 33567,
-        singlePageApp: true,
-      })
-    }
-  )
-  .after(
-    async (ctx): Promise<void> => {
-      await ctx.server.close()
-    }
-  )
+  .before(async (ctx): Promise<void> => {
+    ctx.server = startStaticServer({
+      directory: path.join(process.cwd(), 'dist'),
+      port: 33567,
+      singlePageApp: true,
+    })
+  })
+  .after(async (ctx): Promise<void> => {
+    await ctx.server.close()
+  })
   .page('http://localhost:33567/ui-config')
 
 test('should fill out and submit the entire form', async (t): Promise<void> => {
