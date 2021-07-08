@@ -62,6 +62,11 @@ const ORGS: { favorites: Org[]; recent: Org[] } = {
       id: '124356',
       subdomain: 'fleeting',
     },
+    {
+      name: 'Low',
+      id: '987654',
+      subdomain: 'low-life',
+    },
   ],
 }
 

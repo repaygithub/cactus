@@ -59,6 +59,9 @@ interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
   $isTiny: boolean
 }
 
+// Margin between BrandBar dropdowns and the BrandBar itself.
+const DROPDOWN_MARGIN = 8
+
 // Tell Typescript to treat this as a regular functional component,
 // even though React knows it's a `forwardRef` component.
 const MenuItemFR = React.forwardRef(MenuItemFunc) as any
@@ -221,8 +224,10 @@ const focusControl = (root: HTMLElement) =>
 
 const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
   if (event.key === 'ArrowDown') {
+    event.preventDefault()
     toggle(true, 1, { shift: true })
   } else if (event.key === 'ArrowUp') {
+    event.preventDefault()
     toggle(true, -1, { shift: true })
   }
 }
@@ -231,11 +236,13 @@ const positionPopup = (menu: HTMLElement, menuButton: HTMLElement | null) => {
   if (menuButton) {
     const parent = menuButton.offsetParent || getViewport()
     const viewWidth = parent?.getBoundingClientRect().right || window.innerWidth
-    const { right, width, bottom } = menuButton.getBoundingClientRect()
+    const { right, width, bottom, top } = menuButton.getBoundingClientRect()
+    const availableBelow = window.innerHeight - bottom
     menu.style.top = `${bottom}px`
     menu.style.right = `${viewWidth - right}px`
     menu.style.minWidth = `${width}px`
     menu.style.maxWidth = '400px'
+    menu.style.maxHeight = `${Math.max(availableBelow, top) - DROPDOWN_MARGIN}px`
   }
 }
 
@@ -285,41 +292,16 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const portalRef = React.useRef<HTMLDivElement>(null)
   const isTiny = SIZES.tiny === useScreenSize()
-  const { expanded, toggle, buttonProps, popupProps, setFocus } = usePopup('dialog', {})
-
-  React.useEffect(() => {
-    const closeOnOutsideEvent = (event: MouseEvent | KeyboardEvent) => {
-      const { target } = event
-      if (
-        target instanceof Node &&
-        !buttonRef.current?.contains(target) &&
-        !portalRef.current?.contains(target)
-      ) {
-        toggle(false)
-      }
-    }
-
-    document.body.addEventListener('click', closeOnOutsideEvent)
-    document.body.addEventListener('keydown', closeOnOutsideEvent)
-
-    return () => {
-      document.body.removeEventListener('click', closeOnOutsideEvent)
-      document.body.removeEventListener('keydown', closeOnOutsideEvent)
-    }
-  }, [])
+  const { expanded, toggle, buttonProps, popupProps, wrapperProps, setFocus } = usePopup('dialog', {
+    onWrapperKeyDown: handleArrows,
+  })
 
   const handlePopupKeyDown = (event: React.KeyboardEvent) => {
     const key = event.key
-    if (key === 'Enter' || key === 'Space') {
+    if (key === 'Enter' || key === ' ') {
       keyDownAsClick(event)
     }
     switch (key) {
-      case 'ArrowDown':
-        setFocus(1, { shift: true })
-        break
-      case 'ArrowUp':
-        setFocus(-1, { shift: true })
-        break
       case 'Home':
         setFocus(0)
         break
@@ -328,25 +310,16 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
         break
       case 'Escape':
       case 'Enter':
-      case 'Space':
+      case ' ':
         toggle(false)
         buttonRef.current?.focus()
         break
     }
   }
 
-  const handleTriggerClick = () => {
-    toggle()
-  }
-
   return (
-    <>
-      <DropdownButton
-        $isTiny={isTiny}
-        ref={buttonRef}
-        onClick={handleTriggerClick}
-        {...buttonProps}
-      >
+    <div {...wrapperProps}>
+      <DropdownButton $isTiny={isTiny} ref={buttonRef} {...buttonProps}>
         <span>{label}</span>
         <NavigationChevronDown aria-hidden ml={4} />
       </DropdownButton>
@@ -360,7 +333,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
       >
         {children}
       </DropdownPopup>
-    </>
+    </div>
   )
 }
 
@@ -376,11 +349,13 @@ const BasePopup: React.FC<PopupProps> = ({ buttonRef, popupRef, isOpen, ...props
       const targetRect = target.getBoundingClientRect()
       const popoverRect = popover.getBoundingClientRect()
       const buttonWidth = targetRect.width
+      const availableBelow = window.innerHeight - targetRect.bottom
 
       const topPosition = getTopPosition(targetRect, popoverRect)
       popover.style.top = topPosition.top
       popover.style.left = isTiny ? '0px' : `${targetRect.left}px`
       popover.style.minWidth = `${buttonWidth}px`
+      popover.style.maxHeight = `${Math.max(availableBelow, targetRect.top) - DROPDOWN_MARGIN}px`
       if (isTiny) {
         popover.style.right = '0px'
       } else {
@@ -409,6 +384,7 @@ const DropdownButton = styled.button<{ $isTiny: boolean }>`
   cursor: pointer;
   font-weight: 600;
   margin: 0;
+  height: 100%;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -450,6 +426,9 @@ const DropdownPopup = styled(BasePopup)`
   box-sizing: border-box;
   position: fixed;
   z-index: 1000;
+  overflow-y: auto;
+  outline: none;
+  margin-top: ${DROPDOWN_MARGIN}px;
   background-color: ${(p): string => p.theme.colors.white};
   ${(p) => popupShape('menu', p.theme.shape)}
   ${(p) => popupBoxShadow(p.theme)}
@@ -524,14 +503,16 @@ const MenuButton = styled.button<ProfileStyleProp>`
 
 const MenuList = styled.ul`
   display: block;
+  box-sizing: border-box;
   position: fixed;
   outline: none;
   z-index: 110;
+  overflow-y: auto;
   &[aria-hidden] {
     display: none;
   }
   padding: 8px 0;
-  margin-top: 8px;
+  margin-top: ${DROPDOWN_MARGIN}px;
   border-radius: ${radius(8)};
   ${(p) => boxShadow(p.theme, 1) || `border: ${border(p.theme, 'lightContrast')}`};
   background-color: ${(p) => p.theme.colors.white};
