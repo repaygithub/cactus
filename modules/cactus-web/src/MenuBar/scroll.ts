@@ -64,6 +64,7 @@ function positionMenu(menuWrapper: HTMLElement, menuButton: HTMLElement | null) 
   // Using 3d because Safari handles the z-index stupidly https://bucketpress.com/css-translate-and-z-index-problems-in-safari-browser
   menuWrapper.style.transform = `translate3d(${left}px, 0, 0)`
   menuWrapper.style.top = top || ''
+  menuWrapper.style.minWidth = `${buttonRect.width}px`
 }
 
 const isExpanded = (button: HTMLElement) => button.getAttribute('aria-expanded') === 'true'
