@@ -55,12 +55,12 @@ describe('component: Tooltip', (): void => {
     act((): void => {
       fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
       setTimeout(jest.fn(), 2000)
-      jest.runAllTimers()
+      jest.runOnlyPendingTimers()
     })
     act((): void => {
       fireEvent.mouseEnter(document.querySelector('div[role="tooltip"]') as Element)
       setTimeout(jest.fn(), 2000)
-      jest.runAllTimers()
+      jest.runOnlyPendingTimers()
     })
     const tooltip = document.querySelector('div[role="tooltip"]') as Element
     expect(tooltip).not.toBeNull()

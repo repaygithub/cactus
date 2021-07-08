@@ -64,6 +64,7 @@ function positionMenu(menuWrapper: HTMLElement, menuButton: HTMLElement | null) 
   // Using 3d because Safari handles the z-index stupidly https://bucketpress.com/css-translate-and-z-index-problems-in-safari-browser
   menuWrapper.style.transform = `translate3d(${left}px, 0, 0)`
   menuWrapper.style.top = top || ''
+  menuWrapper.style.minWidth = `${buttonRect.width}px`
 }
 
 const isExpanded = (button: HTMLElement) => button.getAttribute('aria-expanded') === 'true'
@@ -129,9 +130,9 @@ type KeyHandler = React.KeyboardEventHandler<HTMLElement>
 export const useMenuKeyHandler = (setFocus: FocusSetter, isWrapper: boolean): KeyHandler =>
   React.useCallback<KeyHandler>(
     (event) => {
-      const menu = (!isWrapper
-        ? event.currentTarget
-        : event.currentTarget.querySelector('ul')) as HTMLElement
+      const menu = (
+        !isWrapper ? event.currentTarget : event.currentTarget.querySelector('ul')
+      ) as HTMLElement
       const orientation = menu.getAttribute('aria-orientation')
       const scrollForward = orientation === 'vertical' ? 'ArrowDown' : 'ArrowRight'
       const scrollBack = orientation === 'vertical' ? 'ArrowUp' : 'ArrowLeft'

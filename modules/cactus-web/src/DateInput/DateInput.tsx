@@ -552,44 +552,40 @@ function CalendarBase(props: CalendarProps): ReactElement {
   return (
     <div {...rest}>
       {children}
-      {daysMatrix.map(
-        (week, index): ReactElement => {
-          return (
-            <div role="row" key={focusMonth + '-' + index}>
-              {week.map(
-                ({ dateStrId, date, isMonth, description, isDisabled }): ReactElement => {
-                  const isFocused = dateStrId === focusDay
-                  const isSelected = dateStrId === selected
-                  let className = ''
-                  if (!isMonth) {
-                    className += ' outside-date'
-                  }
-                  if (isSelected) {
-                    className += ' selected-date'
-                  }
-                  if (isFocused) {
-                    className += ' focused-date'
-                  }
-                  return (
-                    <CalendarDay
-                      tabIndex={isFocused ? 0 : -1}
-                      className={className}
-                      key={dateStrId}
-                      role="gridcell"
-                      data-date={dateStrId}
-                      longLabel={description}
-                      aria-disabled={isDisabled ? 'true' : 'false'}
-                      onMouseEnter={isMonth && !isDisabled ? onDayMouseEnter : undefined}
-                    >
-                      {date.d}
-                    </CalendarDay>
-                  )
-                }
-              )}
-            </div>
-          )
-        }
-      )}
+      {daysMatrix.map((week, index): ReactElement => {
+        return (
+          <div role="row" key={focusMonth + '-' + index}>
+            {week.map(({ dateStrId, date, isMonth, description, isDisabled }): ReactElement => {
+              const isFocused = dateStrId === focusDay
+              const isSelected = dateStrId === selected
+              let className = ''
+              if (!isMonth) {
+                className += ' outside-date'
+              }
+              if (isSelected) {
+                className += ' selected-date'
+              }
+              if (isFocused) {
+                className += ' focused-date'
+              }
+              return (
+                <CalendarDay
+                  tabIndex={isFocused ? 0 : -1}
+                  className={className}
+                  key={dateStrId}
+                  role="gridcell"
+                  data-date={dateStrId}
+                  longLabel={description}
+                  aria-disabled={isDisabled ? 'true' : 'false'}
+                  onMouseEnter={isMonth && !isDisabled ? onDayMouseEnter : undefined}
+                >
+                  {date.d}
+                </CalendarDay>
+              )
+            })}
+          </div>
+        )
+      })}
     </div>
   )
 }
@@ -1158,23 +1154,21 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const dateStr = target.dataset.date
       const { type } = this.props
       event.persist()
-      this.setState(
-        (state): Pick<DateInputState, 'value' | 'isOpen' | 'focusDay'> => {
-          const value = state.value.clone()
-          value.parse(dateStr, 'YYYY-MM-dd')
-          this.raiseChange(event, value)
-          const updates: Pick<DateInputState, 'value' | 'focusDay' | 'isOpen'> = {
-            value,
-            focusDay: undefined,
-            isOpen: false,
-          }
-          if (type === 'time' || type === 'datetime') {
-            updates.isOpen = state.isOpen
-            updates.focusDay = dateStr
-          }
-          return updates
+      this.setState((state): Pick<DateInputState, 'value' | 'isOpen' | 'focusDay'> => {
+        const value = state.value.clone()
+        value.parse(dateStr, 'YYYY-MM-dd')
+        this.raiseChange(event, value)
+        const updates: Pick<DateInputState, 'value' | 'focusDay' | 'isOpen'> = {
+          value,
+          focusDay: undefined,
+          isOpen: false,
         }
-      )
+        if (type === 'time' || type === 'datetime') {
+          updates.isOpen = state.isOpen
+          updates.focusDay = dateStr
+        }
+        return updates
+      })
       if (type === 'date') {
         this._close(true)
       }
@@ -1221,22 +1215,20 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
     if (adjustment !== undefined) {
       const { which, by } = adjustment
-      this.setState(
-        ({ focusDay }): Pick<DateInputState, 'focusDay'> => {
-          const newDay = parseDate(focusDay as string, 'YYYY-MM-dd')
-          if (which === 'day') {
-            newDay.setDate(newDay.getDate() + by)
-          } else if (which === 'week') {
-            newDay.setDate(newDay.getDate() + by - newDay.getDay())
-          } else if (which === 'month') {
-            newDay.setMonth(newDay.getMonth() + by)
-          } else if (which === 'year') {
-            newDay.setFullYear(newDay.getFullYear() + by)
-          }
-          this._shouldUpdateFocusDay = true
-          return { focusDay: formatDate(newDay, 'YYYY-MM-dd') }
+      this.setState(({ focusDay }): Pick<DateInputState, 'focusDay'> => {
+        const newDay = parseDate(focusDay as string, 'YYYY-MM-dd')
+        if (which === 'day') {
+          newDay.setDate(newDay.getDate() + by)
+        } else if (which === 'week') {
+          newDay.setDate(newDay.getDate() + by - newDay.getDay())
+        } else if (which === 'month') {
+          newDay.setMonth(newDay.getMonth() + by)
+        } else if (which === 'year') {
+          newDay.setFullYear(newDay.getFullYear() + by)
         }
-      )
+        this._shouldUpdateFocusDay = true
+        return { focusDay: formatDate(newDay, 'YYYY-MM-dd') }
+      })
       event.stopPropagation()
       event.preventDefault()
     }
@@ -1300,16 +1292,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       } else if (name === 'setYear' && !value.isValid() && token) {
         this.handleUpdate(event, token, 'Key', String(optionValue))
       } else {
-        this.setState(
-          (prevState): Pick<DateInputState, 'focusDay' | 'value'> => {
-            const { value: prevValue } = prevState
-            const pd = PartialDate.from(prevValue, 'YYYY-MM-dd')
-            pd[name](optionValue)
-            pd.ensureDayOfMonth()
-            this.raiseChange(event, pd)
-            return { focusDay: pd.format(), value: pd }
-          }
-        )
+        this.setState((prevState): Pick<DateInputState, 'focusDay' | 'value'> => {
+          const { value: prevValue } = prevState
+          const pd = PartialDate.from(prevValue, 'YYYY-MM-dd')
+          pd[name](optionValue)
+          pd.ensureDayOfMonth()
+          this.raiseChange(event, pd)
+          return { focusDay: pd.format(), value: pd }
+        })
       }
       this.togglePortalView('calendar')
       event.stopPropagation()
@@ -1385,14 +1375,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const time = event.target.value
     if (typeof time === 'string' && time !== '') {
       event.persist()
-      this.setState(
-        ({ value }): Pick<DateInputState, 'value'> => {
-          const update = value.clone()
-          update.parse(time, 'HH:mm')
-          this.raiseChange(event, update)
-          return { value: update }
-        }
-      )
+      this.setState(({ value }): Pick<DateInputState, 'value'> => {
+        const update = value.clone()
+        update.parse(time, 'HH:mm')
+        this.raiseChange(event, update)
+        return { value: update }
+      })
     }
   }
 
@@ -1405,79 +1393,77 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     change?: string | undefined
   ): void => {
     event.persist()
-    this.setState(
-      ({ value, isOpen, focusDay }): Pick<DateInputState, 'value' | 'focusDay'> => {
-        const update = PartialDate.from(value)
-        switch (type) {
-          case 'ArrowUp':
-          case 'ArrowDown': {
-            arrowValueChange(token, update, type)
-            break
-          }
-          case 'Delete': {
-            update[token] = undefined
-            break
-          }
-          case 'Key': {
-            if (change === undefined) {
-              update[token] = change
-            } else if (token === 'aa') {
-              update[token] = change
-            } else if (/^[0-9]+$/.test(change)) {
-              let current = update[token]
-              const asNum = Number(change)
-              if (current === '' || current === undefined || this._lastInputKeyed !== token) {
-                current = asNum
-              } else {
-                current = Number(current)
-                const together = current * 10 + asNum
-                if (token === 'YYYY') {
-                  // years
-                  if (together < 10000) {
-                    current = together
-                  } else {
-                    current = asNum
-                  }
-                } else if (/M{1,2}/.test(token)) {
-                  current = together < 13 ? together : asNum
-                } else if (/d{1,2}/.test(token)) {
-                  current = together % 32 === together ? together : asNum
-                } else if (/h{1,2}/i.test(token)) {
-                  // hours
-                  const military = token === 'HH' || token === 'H'
-                  const max = military ? 23 : 12
-                  current = together <= max ? together : asNum
-                } else if (/m{1,2}/.test(token)) {
-                  // minutes
-                  const mod = (current % 10) * 10 + asNum
-                  if (together <= 59) {
-                    current = together
-                  } else if (mod <= 59) {
-                    current = mod
-                  } else {
-                    current = asNum
-                  }
+    this.setState(({ value, isOpen, focusDay }): Pick<DateInputState, 'value' | 'focusDay'> => {
+      const update = PartialDate.from(value)
+      switch (type) {
+        case 'ArrowUp':
+        case 'ArrowDown': {
+          arrowValueChange(token, update, type)
+          break
+        }
+        case 'Delete': {
+          update[token] = undefined
+          break
+        }
+        case 'Key': {
+          if (change === undefined) {
+            update[token] = change
+          } else if (token === 'aa') {
+            update[token] = change
+          } else if (/^[0-9]+$/.test(change)) {
+            let current = update[token]
+            const asNum = Number(change)
+            if (current === '' || current === undefined || this._lastInputKeyed !== token) {
+              current = asNum
+            } else {
+              current = Number(current)
+              const together = current * 10 + asNum
+              if (token === 'YYYY') {
+                // years
+                if (together < 10000) {
+                  current = together
+                } else {
+                  current = asNum
+                }
+              } else if (/M{1,2}/.test(token)) {
+                current = together < 13 ? together : asNum
+              } else if (/d{1,2}/.test(token)) {
+                current = together % 32 === together ? together : asNum
+              } else if (/h{1,2}/i.test(token)) {
+                // hours
+                const military = token === 'HH' || token === 'H'
+                const max = military ? 23 : 12
+                current = together <= max ? together : asNum
+              } else if (/m{1,2}/.test(token)) {
+                // minutes
+                const mod = (current % 10) * 10 + asNum
+                if (together <= 59) {
+                  current = together
+                } else if (mod <= 59) {
+                  current = mod
+                } else {
+                  current = asNum
                 }
               }
-              this._lastInputKeyed = token
-              const asString = current.toString()
-              const maxLength = token === 'YYYY' ? 4 : 2
-              if (asString.length === maxLength) {
-                this._shouldFocusNext = true
-              }
-              update[token] = asString
             }
-            break
+            this._lastInputKeyed = token
+            const asString = current.toString()
+            const maxLength = token === 'YYYY' ? 4 : 2
+            if (asString.length === maxLength) {
+              this._shouldFocusNext = true
+            }
+            update[token] = asString
           }
+          break
         }
-
-        this.raiseChange(event, update)
-        if (isOpen !== false) {
-          focusDay = update.format('YYYY-MM-dd')
-        }
-        return { value: update, focusDay }
       }
-    )
+
+      this.raiseChange(event, update)
+      if (isOpen !== false) {
+        focusDay = update.format('YYYY-MM-dd')
+      }
+      return { value: update, focusDay }
+    })
   }
 
   private raiseChange = (event: React.SyntheticEvent<any>, value: PartialDate): void => {
@@ -1490,30 +1476,28 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private _open(): void {
-    this.setState(
-      ({ value }): Pick<DateInputState, 'isOpen' | 'focusDay'> => {
-        let focusDay: string
-        if (value.isValid()) {
-          focusDay = `${value.YYYY}-${value.MM}-${value.dd}`
-        } else {
-          const pd = PartialDate.from(new Date(), 'YYYY-MM-dd')
-          if (value.MM) {
-            pd.setMonth(Number(value.MM) - 1)
-          }
-          if (value.dd) {
-            pd.setDate(Number(value.dd))
-          }
-          if (value.YYYY) {
-            pd.setYear(Number(value.YYYY))
-          }
-          focusDay = pd.format()
+    this.setState(({ value }): Pick<DateInputState, 'isOpen' | 'focusDay'> => {
+      let focusDay: string
+      if (value.isValid()) {
+        focusDay = `${value.YYYY}-${value.MM}-${value.dd}`
+      } else {
+        const pd = PartialDate.from(new Date(), 'YYYY-MM-dd')
+        if (value.MM) {
+          pd.setMonth(Number(value.MM) - 1)
         }
-        return {
-          isOpen: 'calendar',
-          focusDay,
+        if (value.dd) {
+          pd.setDate(Number(value.dd))
         }
+        if (value.YYYY) {
+          pd.setYear(Number(value.YYYY))
+        }
+        focusDay = pd.format()
       }
-    )
+      return {
+        isOpen: 'calendar',
+        focusDay,
+      }
+    })
   }
 
   private _close(returnFocus?: boolean): void {
@@ -1546,13 +1530,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private togglePortalView(triggerType: 'month' | 'year' | 'calendar'): void {
-    this.setState(
-      (): Pick<DateInputState, 'isOpen'> => {
-        const updates: Pick<DateInputState, 'isOpen'> = { isOpen: triggerType }
-        this._shouldUpdateFocusDay = triggerType === 'calendar'
-        return updates
-      }
-    )
+    this.setState((): Pick<DateInputState, 'isOpen'> => {
+      const updates: Pick<DateInputState, 'isOpen'> = { isOpen: triggerType }
+      this._shouldUpdateFocusDay = triggerType === 'calendar'
+      return updates
+    })
   }
 
   private _pickerMonthCacheKey = ''
@@ -1713,30 +1695,28 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               !id.endsWith('-time') &&
               !name.endsWith('-time') && <DescriptiveClock aria-hidden="true" />
             )}
-            {formatArray.map(
-              (token, index): ReactElement => {
-                const key = `${token}-${index}`
-                if (isToken(token)) {
-                  const inputId = isFirstInput ? id : undefined
-                  isFirstInput = false
-                  return (
-                    <input
-                      disabled={disabled}
-                      key={key}
-                      type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
-                      id={inputId}
-                      data-token={token}
-                      aria-label={getInputLabel(token, phrases)}
-                      placeholder={getInputPlaceholder(token)}
-                      value={value[token]}
-                      autoComplete="off"
-                      onChange={noop}
-                    />
-                  )
-                }
-                return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
+            {formatArray.map((token, index): ReactElement => {
+              const key = `${token}-${index}`
+              if (isToken(token)) {
+                const inputId = isFirstInput ? id : undefined
+                isFirstInput = false
+                return (
+                  <input
+                    disabled={disabled}
+                    key={key}
+                    type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
+                    id={inputId}
+                    data-token={token}
+                    aria-label={getInputLabel(token, phrases)}
+                    placeholder={getInputPlaceholder(token)}
+                    value={value[token]}
+                    autoComplete="off"
+                    onChange={noop}
+                  />
+                )
               }
-            )}
+              return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
+            })}
             <span aria-hidden="true" />
             <ToggleButtons aria-hidden="true">
               <NavigationChevronUp
