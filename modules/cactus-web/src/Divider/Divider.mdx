@@ -4,7 +4,9 @@ menu: Components
 ---
 
 import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
 import Divider from './Divider'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Divider
 
@@ -12,11 +14,15 @@ This component is an `hr` that can be used to separate out sections of a form or
 
 ## Basic usage
 
-```tsx
-import * as React from 'react'
-import { Divider } from '@repay/cactus-web'
-;<Divider />
-```
+### Try it out
+
+export const code = `<Divider margin={4} />`
+
+<LiveProvider code={code} scope={{ Divider }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
 
 ## Properties
 

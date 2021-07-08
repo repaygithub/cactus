@@ -5,7 +5,7 @@ import React, { FunctionComponent } from 'react'
 import styled, { css } from 'styled-components'
 import { height, HeightProps, maxHeight, MaxHeightProps, width, WidthProps } from 'styled-system'
 
-import { DimmerStyled } from '../Dimmer/Dimmer'
+import { dimmerStyles } from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
@@ -56,7 +56,6 @@ const ModalBase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
       variant={variant}
       height={innerHeight}
       maxHeight={innerMaxHeight}
-      as={DialogOverlay}
       {...rest}
     >
       <DialogContent aria-label={modalLabel}>
@@ -78,9 +77,10 @@ const ModalBase: FunctionComponent<ModalProps> = (props): React.ReactElement => 
   )
 }
 
-export const ModalPopUp = styled(DimmerStyled).withConfig(
+export const ModalPopUp = styled(DialogOverlay).withConfig(
   omitProps<ModalPopupProps>(flexItem, 'maxHeight')
 )`
+  ${dimmerStyles}
   bottom: 0;
   display: flex;
   left: 0;

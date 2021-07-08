@@ -26,7 +26,7 @@ class Dimmer extends React.Component<DimmerProps> {
   }
 }
 
-export const DimmerStyled = styled.div`
+export const dimmerStyles = `
   position: fixed;
   display: flex;
   background: rgba(46, 53, 56, 0.9);
@@ -39,6 +39,10 @@ export const DimmerStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   z-index: 100;
+`
+
+const DimmerStyled = styled.div`
+  ${dimmerStyles}
 `
 
 export default Dimmer

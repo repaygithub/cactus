@@ -461,10 +461,10 @@ const FileInfo: React.FC<FileInfoProps> = (props) => {
     label += `, ${labels.loading || DEFAULT_LABELS.loading}`
   }
 
-  const onDelete = React.useCallback((event: React.MouseEvent) => deleteFile(index, event), [
-    deleteFile,
-    index,
-  ])
+  const onDelete = React.useCallback(
+    (event: React.MouseEvent) => deleteFile(index, event),
+    [deleteFile, index]
+  )
 
   return (
     <>

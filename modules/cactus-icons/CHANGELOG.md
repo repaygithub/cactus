@@ -1,3 +1,15 @@
+# v2.5.0 (Wed Jul 07 2021)
+
+#### 🚀 Enhancement
+
+- Add StatusStarFilled icon [#607](https://github.com/repaygithub/cactus/pull/607) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 1
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v2.4.1 (Thu Mar 04 2021)
 
 #### 🏠 Internal

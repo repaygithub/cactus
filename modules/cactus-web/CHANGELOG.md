@@ -1,3 +1,35 @@
+# v7.0.0 (Wed Jul 07 2021)
+
+#### 💥 Breaking Change
+
+- Reduce `min-width` of Select component [#620](https://github.com/repaygithub/cactus/pull/620) ([@wilysword](https://github.com/wilysword))
+- Alter BrandMenu.UserMenuItem API to allow links to be used [#597](https://github.com/repaygithub/cactus/pull/597) ([@daniloPenaR](https://github.com/daniloPenaR))
+  - `onSelect` is no longer accepted.  Use `onClick` instead
+- Change FileInput to synchronous event handling [#604](https://github.com/repaygithub/cactus/pull/604) ([@wilysword](https://github.com/wilysword))
+  - Users now have to account for asynchronous file loading themselves.  See [FileInput docs](https://repaygithub.github.io/cactus/components/fileinput/) for more info
+- Set default h1-h4 margins to 0 in the Text component [#601](https://github.com/repaygithub/cactus/pull/601) ([@daniloPenaR](https://github.com/daniloPenaR))
+  - You will now have to manually provide a margin if you want one
+- Various improvements to the ColorPicker component [#596](https://github.com/repaygithub/cactus/pull/596) ([@wilysword](https://github.com/wilysword))
+  - `target.value` for ColorPicker events is now a single value depending on the format prop, instead of a single object with multiple color formats; the hex format is now prefixed by a "#"
+
+#### 🚀 Enhancement
+
+- Add `mini` variant to the Table component [#608](https://github.com/repaygithub/cactus/pull/608) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Fix broken props tables on the docs website [#616](https://github.com/repaygithub/cactus/pull/616) ([@wilysword](https://github.com/wilysword))
+- Fix white corners on Notification component [#612](https://github.com/repaygithub/cactus/pull/612) ([@Dhalton](https://github.com/Dhalton))
+- Fix flickering behavior in MenuBar dropdowns on IE11 [#606](https://github.com/repaygithub/cactus/pull/606) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 3
+
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v7.0.0-beta.0 (Fri Jun 11 2021)
 
 #### 💥 Breaking Change

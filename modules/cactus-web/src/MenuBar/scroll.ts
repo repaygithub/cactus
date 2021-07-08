@@ -129,9 +129,9 @@ type KeyHandler = React.KeyboardEventHandler<HTMLElement>
 export const useMenuKeyHandler = (setFocus: FocusSetter, isWrapper: boolean): KeyHandler =>
   React.useCallback<KeyHandler>(
     (event) => {
-      const menu = (!isWrapper
-        ? event.currentTarget
-        : event.currentTarget.querySelector('ul')) as HTMLElement
+      const menu = (
+        !isWrapper ? event.currentTarget : event.currentTarget.querySelector('ul')
+      ) as HTMLElement
       const orientation = menu.getAttribute('aria-orientation')
       const scrollForward = orientation === 'vertical' ? 'ArrowDown' : 'ArrowRight'
       const scrollBack = orientation === 'vertical' ? 'ArrowUp' : 'ArrowLeft'
