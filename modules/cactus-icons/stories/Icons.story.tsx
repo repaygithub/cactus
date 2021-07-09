@@ -1,14 +1,11 @@
 import cactusTheme, { CactusTheme, generateTheme } from '@repay/cactus-theme'
-import { number, select } from '@storybook/addon-knobs'
+import { number, select, text } from '@storybook/addon-knobs'
 import React, { ReactElement } from 'react'
 
 import * as icons from '../i'
 
 type IconName = keyof typeof icons
 const iconNames: IconName[] = Object.keys(icons) as IconName[]
-
-type IconSizes = 'tiny' | 'small' | 'medium' | 'large'
-const iconSizes: IconSizes[] = ['tiny', 'small', 'medium', 'large']
 
 export default {
   title: 'Icons',
@@ -21,16 +18,11 @@ export const One = (): ReactElement => {
   const hue: number = number('hue', 210)
   const theme: CactusTheme = generateTheme({ primaryHue: hue })
 
-  return (
-    <Icon
-      iconSize={select('iconSize', iconSizes, 'large')}
-      style={{ color: theme.colors.callToAction }}
-    />
-  )
+  return <Icon iconSize={text('iconSize', 'large')} style={{ color: theme.colors.callToAction }} />
 }
 
 export const All = (): ReactElement => {
-  const size = select('iconSize', iconSizes, 'large')
+  const size = text('iconSize', 'large')
   return (
     <div
       style={{

@@ -13,7 +13,6 @@ import {
   compose,
   space,
   SpaceProps,
-  style,
   verticalAlign,
   VerticalAlignProps,
 } from 'styled-system'
@@ -41,9 +40,9 @@ const COMPONENT_NAME = styled(Base)(
   )
 )
 
-TS_IGNORE
 COMPONENT_NAME.propTypes = {
-  iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
+  // @ts-ignore
+  iconSize: PropTypes.string,
 }
 
 COMPONENT_NAME.defaultProps = {
@@ -58,7 +57,7 @@ export default COMPONENT_NAME
     placeholderPattern: /^[_A-Z]{2,}$/,
   })
 
-  return typeScriptTpl({ JSX: jsx, COMPONENT_NAME: componentName, TS_IGNORE: '// @ts-ignore' })
+  return typeScriptTpl({ JSX: jsx, COMPONENT_NAME: componentName })
 }
 
 module.exports = {
