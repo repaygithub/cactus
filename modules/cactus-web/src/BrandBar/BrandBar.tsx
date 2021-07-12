@@ -314,8 +314,6 @@ const Dropdown: React.FC<DropdownProps> = ({
         setFocus(-1)
         break
       case 'Escape':
-      case 'Enter':
-      case ' ':
         toggle(false, buttonRef.current)
         break
     }
@@ -328,7 +326,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         toggle(false, buttonRef.current)
       }
     },
-    [toggle]
+    [toggle, listItemSelector]
   )
 
   return (
