@@ -36,7 +36,9 @@ describe('component: BrandBar', () => {
           <BrandBar>
             <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
               <ul>
-                <li onClick={firstOptionClick}>Option 1</li>
+                <li role="menuitem" onClick={firstOptionClick}>
+                  Option 1
+                </li>
                 <li>Option 2</li>
                 <li>Option 3</li>
               </ul>
@@ -90,7 +92,7 @@ describe('component: BrandBar', () => {
               <ul>
                 <li tabIndex={0}>Option 1</li>
                 <li tabIndex={0}>Option 2</li>
-                <li onClick={thirdOptionClick} tabIndex={0}>
+                <li role="menuitem" onClick={thirdOptionClick} tabIndex={0}>
                   Option 3
                 </li>
               </ul>
