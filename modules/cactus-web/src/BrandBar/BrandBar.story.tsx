@@ -240,6 +240,7 @@ const BrandBarWithOrgDropdown = () => {
             <List>
               {searchedOrgs.map((org, ix) => (
                 <ListItem
+                  role="menuitem"
                   key={ix}
                   tabIndex={0}
                   $isLastItem={ix === searchedOrgs.length - 1}
@@ -268,6 +269,7 @@ const BrandBarWithOrgDropdown = () => {
                 <List>
                   {ORGS.favorites.map((org, ix) => (
                     <ListItem
+                      role="menuitem"
                       key={ix}
                       tabIndex={0}
                       $isLastItem={ix === ORGS.favorites.length - 1}
@@ -287,6 +289,7 @@ const BrandBarWithOrgDropdown = () => {
                 <List>
                   {ORGS.recent.map((org, ix) => (
                     <ListItem
+                      role="menuitem"
                       key={ix}
                       tabIndex={0}
                       $isLastItem={ix === ORGS.recent.length - 1}

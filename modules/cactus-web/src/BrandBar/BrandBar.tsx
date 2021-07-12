@@ -50,6 +50,7 @@ type Align = 'left' | 'right'
 
 interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   label: React.ReactNode
+  listItemSelector?: string
 }
 
 interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -288,7 +289,11 @@ const StyledUserMenu = styled.div`
   outline: none;
 `
 
-const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
+const Dropdown: React.FC<DropdownProps> = ({
+  label,
+  children,
+  listItemSelector = '[role="menuitem"], [role="menuitem"] *',
+}) => {
   const buttonRef = React.useRef<HTMLButtonElement>(null)
   const portalRef = React.useRef<HTMLDivElement>(null)
   const isTiny = SIZES.tiny === useScreenSize()
@@ -311,11 +316,20 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
       case 'Escape':
       case 'Enter':
       case ' ':
-        toggle(false)
-        buttonRef.current?.focus()
+        toggle(false, buttonRef.current)
         break
     }
   }
+
+  const handlePopupClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      const target = event.target as HTMLDivElement
+      if (target.matches(listItemSelector)) {
+        toggle(false, buttonRef.current)
+      }
+    },
+    [toggle]
+  )
 
   return (
     <div {...wrapperProps}>
@@ -330,6 +344,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, children }) => {
         $isTiny={isTiny}
         {...popupProps}
         onKeyDown={handlePopupKeyDown}
+        onClick={handlePopupClick}
       >
         {children}
       </DropdownPopup>
