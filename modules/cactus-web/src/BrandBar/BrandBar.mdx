@@ -17,6 +17,7 @@ The Item sub-component is similar, but more general. You can use it to add just 
 The item component can also take an `align` prop to align it to the left or the right.
 
 The Dropdown sub-component is a shell for a dropdown. It should always be rendered using the `as` prop on `BrandBar.Item` to take advantage of the `align` prop. It will render a dropdown button, and any children passed to the Dropdown will be rendered inside the dropdown, so it's highly customizable.
+If you want the Dropdown to close automatically when a user clicks an option, you may need to pass a custom selector to the `listItemSelector` prop. By default, the list item selector will search for items with `role="menuitem"`.
 
 ### Try it out
 
