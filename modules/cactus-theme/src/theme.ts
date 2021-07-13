@@ -706,8 +706,8 @@ function fromTwoColor({
     return fromTwoWhite(primaryHue)
   }
 
-  // primary is non-black and secondary is light or white
-  if (isSecondaryWhite || !isDark(...secondaryRgb)) {
+  // primary is non-black and secondary is white
+  if (isSecondaryWhite) {
     return fromWhiteSecondary(primaryColor, secondaryColor)
   }
 

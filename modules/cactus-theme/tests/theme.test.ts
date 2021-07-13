@@ -129,6 +129,42 @@ describe('@repay/cactus-theme', (): void => {
     generateTheme({ primary: '#012537', secondary: ' #0000FF', grayscaleContrast: true })
   )
 
+  test('generates a theme with a white secondary color', () => {
+    const theme = generateTheme({
+      primary: '#012537',
+      secondary: ' #FFFFFF',
+    })
+    expect(theme).toMatchObject({
+      colors: {
+        base: 'hsl(200, 96%, 11%)',
+        callToAction: 'hsl(200, 96%, 35%)',
+      },
+    })
+  })
+
+  themeAccessibility(
+    'white secondary',
+    generateTheme({ primary: '#012537', secondary: ' #FFFFFF' })
+  )
+
+  test('generates a theme with a very light secondary color', () => {
+    const theme = generateTheme({
+      primary: '#012537',
+      secondary: ' #AB7878',
+    })
+    expect(theme).toMatchObject({
+      colors: {
+        base: 'hsl(200, 96%, 11%)',
+        callToAction: 'hsl(0, 23%, 57%)',
+      },
+    })
+  })
+
+  // We don't test for accessibility with a light secondary color.  It would fail the
+  // test because we don't really support that combination.  The above test just makes
+  // sure we're not ignoring the secondary color entirely because it's too light.  It's
+  // up to users of this library to prevent light secondary colors from being used.
+
   test('generates a white theme when invalid colors are provided', (): void => {
     const theme = generateTheme({ primary: '' })
     expect(theme).toMatchObject({
@@ -180,17 +216,6 @@ describe('@repay/cactus-theme', (): void => {
     'black grayscale theme',
     generateTheme({ primary: '#000', grayscaleContrast: true })
   )
-
-  themeAccessibility(
-    'two light colors',
-    generateTheme({ primary: '#FFCCBE', secondary: '#B6FCD5' })
-  )
-
-  themeAccessibility(
-    'two light colors - grayscale',
-    generateTheme({ primary: '#FFCCBE', secondary: '#B6FCD5', grayscaleContrast: true })
-  )
-
   themeAccessibility('two dark colors', generateTheme({ primary: '#133337', secondary: '#AC101D' }))
 
   themeAccessibility(
