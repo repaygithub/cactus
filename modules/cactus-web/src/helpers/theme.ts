@@ -130,7 +130,7 @@ export const boxShadow = (theme: CactusTheme, shadowType: number | string): stri
     if (typeof shadowType === 'number') {
       shadowType = shadowTypes[shadowType]
     }
-    return `box-shadow: ${shadowType} ${theme.colors.transparentCTA}`
+    return `box-shadow: ${shadowType} ${theme.colors.lightCallToAction}`
   } else {
     return ''
   }

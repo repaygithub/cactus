@@ -363,11 +363,11 @@ const fileBoxColors = {
   `,
   loaded: css`
     border-color: ${(p) => p.theme.colors.success};
-    background-color: ${(p) => p.theme.colors.transparentSuccess};
+    background-color: ${(p) => p.theme.colors.successLight};
   `,
   error: css`
     border-color: ${(p) => p.theme.colors.error};
-    background-color: ${(p) => p.theme.colors.transparentError};
+    background-color: ${(p) => p.theme.colors.errorLight};
   `,
 }
 

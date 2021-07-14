@@ -358,7 +358,7 @@ const getCTABorder = (p: ThemeProps<CactusTheme>, focus?: boolean): ReturnType<t
       border-left-color: ${p.theme.colors.callToAction};
       border-top-color: ${p.theme.colors.callToAction};
       border-bottom-color: ${p.theme.colors.callToAction};
-      background-color: ${focus && p.theme.colors.transparentCTA};
+      background-color: ${focus && p.theme.colors.lightCallToAction};
     }
     td:last-child {
       border-color: ${p.theme.colors.callToAction};
