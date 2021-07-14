@@ -255,6 +255,6 @@ const StyledLink = styled(Link)`
   }
 
   :focus {
-    background-color: ${(p) => p.theme.colors.transparentCTA};
+    background-color: ${(p) => p.theme.colors.lightCallToAction};
   }
 `

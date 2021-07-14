@@ -40,7 +40,7 @@ export const Link = styled(LinkBase).withConfig({
 
   :focus {
     color: ${(p): string => p.theme.colors.callToAction};
-    background-color: ${(p): string => p.theme.colors.transparentCTA};
+    background-color: ${(p): string => p.theme.colors.lightCallToAction};
   }
 
   ${margin};
