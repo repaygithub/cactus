@@ -12,3 +12,16 @@ type Props<C> = C extends keyof JSX.IntrinsicElements
   : never
 
 export type AsProps<C> = { as?: C } & Props<C>
+
+type PolyProps<P, T extends React.ElementType> = T extends keyof JSX.IntrinsicElements
+  ? P & Omit<JSX.IntrinsicElements[T], 'as' | 'ref' | keyof P>
+  : T extends React.ComponentType<infer U>
+  ? P & Omit<U, 'as' | 'ref' | keyof P>
+  : never
+
+export interface PolyFC<P, D extends React.ElementType> {
+  <T extends React.ElementType = D>(p: { as?: T } & PolyProps<P, T>): React.ReactElement | null
+  propTypes?: React.WeakValidationMap<P>
+  defaultProps?: Partial<P>
+  displayName?: string
+}

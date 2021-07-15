@@ -9,7 +9,7 @@ const FOCUS_SELECTOR =
   'input:not([hidden]):not([type="hidden"]):not([type="file"]):not(:disabled),' +
   'button:not(:disabled),' +
   'select:not(:disabled),' +
-  'textarea:not(:disabled)' +
+  'textarea:not(:disabled),' +
   '[tabindex]'
 
 export function getFocusable(root?: Element | Document): FocusList {
@@ -20,7 +20,11 @@ export function getFocusable(root?: Element | Document): FocusList {
     searchFrom = document
   }
   const result = Array.from(searchFrom.querySelectorAll<HTMLElement>(FOCUS_SELECTOR))
-  return result.filter((el) => !(el.hasAttribute('tabindex') && el.tabIndex < 0))
+  return result.filter(
+    (el) =>
+      !(el.hasAttribute('tabindex') && el.tabIndex < 0) &&
+      !el.hasAttribute('data-cactus-focus-guard')
+  )
 }
 
 type RootHint = HTMLElement | string | null
