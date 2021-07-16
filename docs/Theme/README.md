@@ -34,7 +34,7 @@ import cactusTheme from '@repay/cactus-theme'
 
 ### generateTheme
 
-The `generateTheme()` function accepts an options object containing either a primary hue or a primary color, which is then used to generate the rest of the theme and the color scheme. If you don't provide an options object, the function will default to the REPAY theme. The options object should be structured as on of the following:
+The `generateTheme()` function accepts an options object containing either a primary hue or a primary color, which is then used to generate the rest of the theme and the color scheme. If you don't provide an options object, the function will default to the REPAY theme. The options object should be structured as one of the following:
 
 | Attr         | Type    | Required | Description                                                                                     |
 | ------------ | ------- | -------- | ----------------------------------------------------------------------------------------------- |
@@ -46,6 +46,26 @@ The `generateTheme()` function accepts an options object containing either a pri
 | `secondary` | hexcode string | N        | A hexcode color to define the "action" color.                                                           |
 
 If only a `primary` color is provided or the secondary color is white, the theme will be entirely based on the one color. If the primary color is black, there is a special "black" theme which provides a blue "action" color.
+
+Whether you generate a theme using a primary hue or with primary and secondary hex values, there are several other optional keys you can set in the options object:
+
+| Attr                | Type                                       | Required | Description                                                                        |
+| ------------------- | ------------------------------------------ | -------- | ---------------------------------------------------------------------------------- |
+| `border`            | `thin` \| `thick`                          | N        | Specifies theme border thickness. Thin is 1px and thick is 2px. Default is thin.   |
+| `shape`             | `round` \| `intermediate` \| `square`      | N        | Specifies general component shape. Default is intermediate.                        |
+| `font`              | `Helvetica Neue` \| `Helvetica` \| `Arial` | N        | Defines application font. Default is Helvetica.                                    |
+| `boxShadows`        | Boolean                                    | N        | Enabled/disables box shadows on cactus-web components. Enabled by default.         |
+| `grayscaleContrast` | Boolean                                    | N        | Enables/disables usage of grayscale colors for lightContrast. Disabled by default. |
+| `breakpoints`       | Object shape defined below                 | N        | Define custom breakpoints for your application.                                    |
+
+The `breakpoints` option should have the following form:
+
+| Attr        | Type         | Required | Description                                                                  |
+| ----------- | ------------ | -------- | ---------------------------------------------------------------------------- |
+| `small`     | Pixel string | Y        | The breakpoint between tiny and small screen sizes. Default is 768px.        |
+| `medium`    | Pixel string | Y        | The breakpoint between small and medium screen sizes. Default is 1024px.     |
+| `large`     | Pixel string | Y        | The breakpoint between medium and large screen sizes. Default is 1200px.     |
+| `extraLarge`| Pixel string | Y        | The breakpoint between large and extraLarge screen sizes. Default is 1440px. |
 
 #### Example using primary hue
 
