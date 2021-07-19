@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { PolyFCWithRef } from '../helpers/asProps'
+import { isIE } from '../helpers/constants'
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import generateId from '../helpers/generateId'
 import { omitProps } from '../helpers/omit'
@@ -101,7 +102,7 @@ export const makeToggleCard: MakeToggleCard = ({ type, displayName, groupRole })
     .withConfig(omitProps<MarginProps & FlexItemProps>(margin, flexItem))
     .attrs({ type, as: ToggleCard })`
     ${FlexGroup} .field-input-group > & {
-      flex: 1 0 1px;
+      flex: 1 0 ${isIE ? 'auto' : '1px'};
     }
   ` as any
   Card.displayName = displayName
