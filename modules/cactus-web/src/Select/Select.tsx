@@ -3,12 +3,12 @@ import { BorderSize, CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-th
 import isEqual from 'lodash/isEqual'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import styled, { css, FlattenSimpleInterpolation, ThemeContext, withTheme } from 'styled-components'
 import { margin, MarginProps, width as styledSystemWidth, WidthProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
-import { isIE, isResponsiveTouchDevice } from '../helpers/constants'
+import { isIE } from '../helpers/constants'
 import {
   CactusChangeEvent,
   CactusEventTarget,
@@ -21,7 +21,7 @@ import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { isPurelyEqual, useMergedRefs } from '../helpers/react'
 import { useScrollTrap } from '../helpers/scroll'
 import { textFieldStatusMap } from '../helpers/status'
-import { boxShadow, fontSize, radius, textStyle } from '../helpers/theme'
+import { boxShadow, fontSize, isResponsiveTouchDevice, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
@@ -84,6 +84,7 @@ export interface SelectProps
   onChange?: React.ChangeEventHandler<Target>
   onBlur?: React.FocusEventHandler<Target>
   onFocus?: React.FocusEventHandler<Target>
+  theme: CactusTheme
 }
 
 const displayStatus: any = (props: SelectProps): ReturnType<typeof css> | string => {
@@ -339,8 +340,8 @@ const StyledList = styled(ListWithScrollTrap)`
   border-radius: ${radius(8)};
   ${(p): ReturnType<typeof css> => getListBoxShadowStyles(p.theme)}
   border-style: solid;
-  ${(): string =>
-    isResponsiveTouchDevice
+  ${(p): string =>
+    isResponsiveTouchDevice(p.theme.breakpoints)
       ? `
     margin-bottom: ${DONE_SECTION_HEIGHT}px;
     height: calc(100% - ${DONE_SECTION_HEIGHT}px);
@@ -372,7 +373,7 @@ const StyledOption = styled.li`
   overflow-wrap: break-word;
   word-wrap: break-word;
   ${(p): string =>
-    isResponsiveTouchDevice
+    isResponsiveTouchDevice(p.theme.breakpoints)
       ? `
     padding: 6px 16px;
     & + & {
@@ -425,13 +426,15 @@ interface ListWrapperProps {
 
 const ListWrapper: React.FC<ListWrapperProps> = ({ isOpen, children, anchorRef }) => {
   const ref = React.useRef<HTMLDivElement>(null)
-  const position = isResponsiveTouchDevice ? positionResponsive : positionDropDown
+  const theme = React.useContext(ThemeContext)
+  const isTouchDevice = isResponsiveTouchDevice(theme.breakpoints)
+  const position = isTouchDevice ? positionResponsive : positionDropDown
   usePositioning({
     position,
     ref,
     anchorRef,
     visible: isOpen,
-    updateOnScroll: !isResponsiveTouchDevice,
+    updateOnScroll: !isTouchDevice,
   })
   return (
     <StyledListWrapper role="dialog" aria-hidden={isOpen ? undefined : true} ref={ref}>
@@ -453,8 +456,8 @@ const StyledListWrapper = styled.div`
   max-width: 100vw;
   ${(p): string => boxShadow(p.theme, 1)};
   background-color: ${(p): string => p.theme.colors.white};
-  ${(): string =>
-    isResponsiveTouchDevice
+  ${(p): string =>
+    isResponsiveTouchDevice(p.theme.breakpoints)
       ? `
     left: 0;
     bottom: 0;
@@ -509,6 +512,7 @@ interface ListProps {
   setActiveDescendant?: (activeDescendant: string) => void
   handleComboInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   handleComboInputBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
+  theme: CactusTheme
 }
 
 function getSelectedIndex(options: WithValue[], value: OptionValue): number {
@@ -567,6 +571,7 @@ class List extends React.Component<ListProps, ListState> {
   private searchIndex = 0
   private scrollClear: number | undefined
   private didScroll = false
+  private isTouchDevice = isResponsiveTouchDevice(this.props.theme.breakpoints)
 
   /** Start List event handlers */
 
@@ -790,7 +795,7 @@ class List extends React.Component<ListProps, ListState> {
   }
 
   public componentDidMount(): void {
-    RESPONSIVE_HEIGHT = isResponsiveTouchDevice ? responsiveHeight() : 0
+    RESPONSIVE_HEIGHT = this.isTouchDevice ? responsiveHeight() : 0
   }
 
   public componentDidUpdate(prevProps: ListProps): void {
@@ -871,42 +876,44 @@ class List extends React.Component<ListProps, ListState> {
           {options.length === 0 && !this.props.canCreateOption ? (
             <NoMatch>{matchNotFoundText}</NoMatch>
           ) : (
-            options.map((opt): React.ReactElement => {
-              const optId = opt.id
-              const isSelected = getSelected(opt)
-              let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
-              const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
-              // multiselectable should have aria-selected on all options
-              if (multiple) {
-                ariaSelected = isSelected ? 'true' : 'false'
+            options.map(
+              (opt): React.ReactElement => {
+                const optId = opt.id
+                const isSelected = getSelected(opt)
+                let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
+                const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
+                // multiselectable should have aria-selected on all options
+                if (multiple) {
+                  ariaSelected = isSelected ? 'true' : 'false'
+                }
+                return (
+                  <InternalOption
+                    key={optId}
+                    option={opt}
+                    className={activeDescendant === optId ? 'highlighted-option' : undefined}
+                    data-role={isCreateNewOption ? 'create' : 'option'}
+                    aria-selected={ariaSelected}
+                    onMouseEnter={this.handleOptionMouseEnter}
+                  >
+                    {isCreateNewOption ? (
+                      <ActionsAdd mr={2} mb={2} />
+                    ) : multiple ? (
+                      <CheckBox
+                        id={`multiselect-option-check-${optId}`}
+                        aria-hidden="true"
+                        checked={isSelected}
+                        readOnly
+                        mr={2}
+                      />
+                    ) : null}
+                    {opt.label}
+                  </InternalOption>
+                )
               }
-              return (
-                <InternalOption
-                  key={optId}
-                  option={opt}
-                  className={activeDescendant === optId ? 'highlighted-option' : undefined}
-                  data-role={isCreateNewOption ? 'create' : 'option'}
-                  aria-selected={ariaSelected}
-                  onMouseEnter={this.handleOptionMouseEnter}
-                >
-                  {isCreateNewOption ? (
-                    <ActionsAdd mr={2} mb={2} />
-                  ) : multiple ? (
-                    <CheckBox
-                      id={`multiselect-option-check-${optId}`}
-                      aria-hidden="true"
-                      checked={isSelected}
-                      readOnly
-                      mr={2}
-                    />
-                  ) : null}
-                  {opt.label}
-                </InternalOption>
-              )
-            })
+            )
           )}
         </StyledList>
-        {isResponsiveTouchDevice ? (
+        {this.isTouchDevice ? (
           <Flex justifyContent={comboBox ? 'space-between' : 'center'}>
             {comboBox ? (
               <ComboInput
@@ -1065,6 +1072,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   private comboInputRef = React.createRef<HTMLInputElement>()
   private isFocused = false
   private eventTarget = new CactusEventTarget<SelectValueType>({})
+  private isTouchDevice = isResponsiveTouchDevice(this.props.theme.breakpoints)
 
   public componentDidMount(): void {
     if (this.triggerRef.current !== null) {
@@ -1384,7 +1392,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   private openList(): void {
     this.setState({ isOpen: true }, () => {
       this.props.onDropdownToggle && this.props.onDropdownToggle(true)
-      if (!isResponsiveTouchDevice) {
+      if (!this.isTouchDevice) {
         window.requestAnimationFrame((): void => {
           if (this.listRef.current !== null && !this.props.comboBox) {
             this.listRef.current.focus()
@@ -1490,7 +1498,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
               id={`${id}-input`}
               name={name}
               autoComplete="off"
-              autoFocus={isResponsiveTouchDevice ? true : false}
+              autoFocus={!this.isTouchDevice ? true : false}
               value={searchValue}
               style={{ width: `${this.state.currentTriggerWidth}px` }}
               onChange={this.handleComboInputChange}
@@ -1545,6 +1553,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
             raiseChange={this.raiseChange}
             onClose={this.closeList}
             anchorRef={this.triggerRef}
+            theme={this.props.theme}
           />
         </div>
       </div>
@@ -1552,7 +1561,9 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
   }
 }
 
-export const Select = styled(SelectBase)`
+const SelectWithTheme = withTheme(SelectBase)
+
+const StyledSelect = styled(SelectWithTheme)`
   max-width: 100%;
   & button:disabled {
     background-color: ${(p) => p.disabled && p.theme.colors.lightGray};
@@ -1565,6 +1576,12 @@ export const Select = styled(SelectBase)`
     ${displayStatus}
   }
 `
+
+type SelectType = typeof StyledSelect & { Option: typeof SelectOption }
+
+const Select = StyledSelect as SelectType
+
+export { Select }
 
 Select.propTypes = {
   // @ts-ignore
