@@ -66,8 +66,10 @@ const radiiMap: Record<MaxRadius, Record<Shape, string>> = {
   },
 }
 
-export const radius = (maxRadius: MaxRadius) => ({ theme }: Props): string =>
-  radiiMap[maxRadius][theme.shape]
+export const radius =
+  (maxRadius: MaxRadius) =>
+  ({ theme }: Props): string =>
+    radiiMap[maxRadius][theme.shape]
 
 type PopupType = 'dialog' | 'menu'
 
