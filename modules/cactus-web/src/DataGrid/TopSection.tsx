@@ -26,8 +26,9 @@ interface SortLabels {
 const TopSection = (props: TopSectionProps): ReactElement | null => {
   const [hasChildren, setHasChildren] = useState<boolean>(false)
   const { sortLabels = {}, children, justifyContent = 'space-between', spacing = 4 } = props
-  const { columns, sortOptions, onSort, isCardView, cardBreakpoint, variant } =
-    useContext(DataGridContext)
+  const { columns, sortOptions, onSort, isCardView, cardBreakpoint, variant } = useContext(
+    DataGridContext
+  )
   const screenSize = useContext(ScreenSizeContext)
   const { space } = useTheme()
   const sortableColumns = useMemo(() => {
@@ -85,14 +86,16 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
       {isCardView && sortableColumns.size > 0 && (
         <div className="sort-buttons">
           <MenuButton variant="unfilled" label={sortLabels.sortBy || 'Sort by'} mr={4}>
-            {[...sortableColumns.keys()].map((key): ReactElement => {
-              const col = sortableColumns.get(key) as DataColumnObject
-              return (
-                <MenuButton.Item key={key} onSelect={() => handleSortColChange(key)}>
-                  {col.title}
-                </MenuButton.Item>
-              )
-            })}
+            {[...sortableColumns.keys()].map(
+              (key): ReactElement => {
+                const col = sortableColumns.get(key) as DataColumnObject
+                return (
+                  <MenuButton.Item key={key} onSelect={() => handleSortColChange(key)}>
+                    {col.title}
+                  </MenuButton.Item>
+                )
+              }
+            )}
           </MenuButton>
           <MenuButton variant="unfilled" label={sortLabels.order || 'Order'}>
             <MenuButton.Item onSelect={() => handleSortDirChange(true)}>
@@ -143,7 +146,7 @@ const StyledTopSection = styled.div<TransientProps & { $justifyContent: JustifyC
   // Card view styles when screen is larger than tiny
   ${(p) =>
     p.$isCardView &&
-    `${p.theme.mediaQueries && p.theme.mediaQueries.small} {
+    `${p.theme.mediaQueries.small} {
       flex-direction: row;
       justify-content: ${p.$justifyContent};
 

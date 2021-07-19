@@ -79,12 +79,10 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       }
     }
-    if (theme.mediaQueries) {
-      for (const mq of Object.keys(theme.mediaQueries) as MediaQuery[]) {
-        const media = window.matchMedia(theme.mediaQueries[mq].replace(/^@media /, ''))
-        queries[mq] = media
-        media.addListener(listener)
-      }
+    for (const mq of Object.keys(theme.mediaQueries) as MediaQuery[]) {
+      const media = window.matchMedia(theme.mediaQueries[mq].replace(/^@media /, ''))
+      queries[mq] = media
+      media.addListener(listener)
     }
     listener()
 
