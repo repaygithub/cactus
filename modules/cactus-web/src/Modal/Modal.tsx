@@ -9,7 +9,7 @@ import { dimmerStyles } from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
-import { border, boxShadow, radius } from '../helpers/theme'
+import { border, radius } from '../helpers/theme'
 import cssVariant from '../helpers/variant'
 import IconButton from '../IconButton/IconButton'
 
@@ -98,7 +98,6 @@ export const ModalPopUp = styled(DialogOverlay).withConfig(
     border: ${(p) => border(p.theme, '')};
     border-radius: ${radius(20)};
     background: white;
-    ${(p): string => boxShadow(p.theme, 2)};
     max-width: ${(p) => !p.width && '80%'};
     ${width}
     ${flexItem}

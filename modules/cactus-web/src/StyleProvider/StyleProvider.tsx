@@ -89,9 +89,9 @@ h4, h5, h6 {
 let shouldCheckTheme = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test'
 
 const checkThemeProperties = (theme: CactusTheme): void => {
-  if (theme.colors.transparentCTA === undefined) {
+  if (theme.colors.lightCallToAction === undefined) {
     console.warn(
-      "You are using an outdated version of @repay/cactus-theme. Some features won't be available in @repay/cactus-web with this version. Please upgrade to @repay/cactus-theme >= 0.4.3."
+      "You are using an outdated version of @repay/cactus-theme. Some features won't be available in @repay/cactus-web with this version. Please upgrade to @repay/cactus-theme >= 3.0.0."
     )
   }
   shouldCheckTheme = false
@@ -172,7 +172,7 @@ StyleProvider.propTypes = {
       baseText: PropTypes.string.isRequired,
       callToAction: PropTypes.string.isRequired,
       callToActionText: PropTypes.string.isRequired,
-      transparentCTA: PropTypes.string.isRequired,
+      lightCallToAction: PropTypes.string.isRequired,
       lightContrast: PropTypes.string.isRequired,
       mediumContrast: PropTypes.string.isRequired,
       darkContrast: PropTypes.string.isRequired,
@@ -184,12 +184,15 @@ StyleProvider.propTypes = {
       success: PropTypes.string.isRequired,
       warning: PropTypes.string.isRequired,
       error: PropTypes.string.isRequired,
-      transparentSuccess: PropTypes.string.isRequired,
-      transparentWarning: PropTypes.string.isRequired,
-      transparentError: PropTypes.string.isRequired,
-      errorDark: PropTypes.string.isRequired,
-      warningDark: PropTypes.string.isRequired,
+      successLight: PropTypes.string.isRequired,
+      warningLight: PropTypes.string.isRequired,
+      errorLight: PropTypes.string.isRequired,
+      successMedium: PropTypes.string.isRequired,
+      warningMedium: PropTypes.string.isRequired,
+      errorMedium: PropTypes.string.isRequired,
       successDark: PropTypes.string.isRequired,
+      warningDark: PropTypes.string.isRequired,
+      errorDark: PropTypes.string.isRequired,
       status: PropTypes.shape({
         background: statusObj,
         avatar: statusObj,
@@ -211,13 +214,16 @@ StyleProvider.propTypes = {
       error: colorStyleObj,
       warning: colorStyleObj,
       disable: colorStyleObj,
-      transparentCTA: colorStyleObj,
-      transparentError: colorStyleObj,
-      transparentSuccess: colorStyleObj,
-      transparentWarning: colorStyleObj,
+      lightCallToAction: colorStyleObj,
+      successLight: colorStyleObj,
+      errorLight: colorStyleObj,
+      warningLight: colorStyleObj,
+      successMedium: colorStyleObj,
+      errorMedium: colorStyleObj,
+      warningMedium: colorStyleObj,
+      successDark: colorStyleObj,
       errorDark: colorStyleObj,
       warningDark: colorStyleObj,
-      successDark: colorStyleObj,
     }).isRequired,
     border: PropTypes.oneOf(['thin', 'thick']).isRequired,
     shape: PropTypes.oneOf(['square', 'intermediate', 'round']).isRequired,
