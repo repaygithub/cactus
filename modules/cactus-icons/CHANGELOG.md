@@ -1,3 +1,21 @@
+# v2.6.0 (Mon Jul 19 2021)
+
+#### 🚀 Enhancement
+
+- Allow iconSize prop to accept any valid font size in addition to the tiny/small/medium/etc. values from the theme [#622](https://github.com/repaygithub/cactus/pull/622) ([@mikesoltow](https://github.com/mikesoltow))
+- Add DescriptiveDelivered icon [#618](https://github.com/repaygithub/cactus/pull/618) ([@wilysword](https://github.com/wilysword))
+
+#### 🔩 Dependency Updates
+
+- Upgrade various dependencies [#615](https://github.com/repaygithub/cactus/pull/615) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 2
+
+- [@mikesoltow](https://github.com/mikesoltow)
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v2.5.0 (Wed Jul 07 2021)
 
 #### 🚀 Enhancement

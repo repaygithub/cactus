@@ -1,3 +1,19 @@
+# v2.1.1 (Mon Jul 19 2021)
+
+#### 🐛 Bug Fix
+
+- Stop ignoring light secondary colors in generateTheme [#624](https://github.com/repaygithub/cactus/pull/624) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### 🔩 Dependency Updates
+
+- Upgrade various dependencies [#615](https://github.com/repaygithub/cactus/pull/615) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 1
+
+- [@mikesoltow](https://github.com/mikesoltow)
+
+---
+
 # v2.1.0 (Thu Feb 25 2021)
 
 #### 🚀 Enhancement

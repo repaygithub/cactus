@@ -1,3 +1,25 @@
+# v7.1.0 (Mon Jul 19 2021)
+
+#### 🚀 Enhancement
+
+- Add BrandBar.Dropdown component [#609](https://github.com/repaygithub/cactus/pull/609) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- Increase MenuBar dropdown min-width so that it cannot be narrower than the trigger button [#621](https://github.com/repaygithub/cactus/pull/621) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🔩 Dependency Updates
+
+- Upgrade Reach libraries and other various dependencies [#615](https://github.com/repaygithub/cactus/pull/615) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### Authors: 3
+
+- [@Dhalton](https://github.com/Dhalton)
+- [@mikesoltow](https://github.com/mikesoltow)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+
+---
+
 # v7.0.0 (Wed Jul 07 2021)
 
 #### 💥 Breaking Change
