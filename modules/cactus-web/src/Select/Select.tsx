@@ -877,41 +877,39 @@ class List extends React.Component<ListProps, ListState> {
           {options.length === 0 && !this.props.canCreateOption ? (
             <NoMatch>{matchNotFoundText}</NoMatch>
           ) : (
-            options.map(
-              (opt): React.ReactElement => {
-                const optId = opt.id
-                const isSelected = getSelected(opt)
-                let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
-                const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
-                // multiselectable should have aria-selected on all options
-                if (multiple) {
-                  ariaSelected = isSelected ? 'true' : 'false'
-                }
-                return (
-                  <InternalOption
-                    key={optId}
-                    option={opt}
-                    className={activeDescendant === optId ? 'highlighted-option' : undefined}
-                    data-role={isCreateNewOption ? 'create' : 'option'}
-                    aria-selected={ariaSelected}
-                    onMouseEnter={this.handleOptionMouseEnter}
-                  >
-                    {isCreateNewOption ? (
-                      <ActionsAdd mr={2} mb={2} />
-                    ) : multiple ? (
-                      <CheckBox
-                        id={`multiselect-option-check-${optId}`}
-                        aria-hidden="true"
-                        checked={isSelected}
-                        readOnly
-                        mr={2}
-                      />
-                    ) : null}
-                    {opt.label}
-                  </InternalOption>
-                )
+            options.map((opt): React.ReactElement => {
+              const optId = opt.id
+              const isSelected = getSelected(opt)
+              let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
+              const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
+              // multiselectable should have aria-selected on all options
+              if (multiple) {
+                ariaSelected = isSelected ? 'true' : 'false'
               }
-            )
+              return (
+                <InternalOption
+                  key={optId}
+                  option={opt}
+                  className={activeDescendant === optId ? 'highlighted-option' : undefined}
+                  data-role={isCreateNewOption ? 'create' : 'option'}
+                  aria-selected={ariaSelected}
+                  onMouseEnter={this.handleOptionMouseEnter}
+                >
+                  {isCreateNewOption ? (
+                    <ActionsAdd mr={2} mb={2} />
+                  ) : multiple ? (
+                    <CheckBox
+                      id={`multiselect-option-check-${optId}`}
+                      aria-hidden="true"
+                      checked={isSelected}
+                      readOnly
+                      mr={2}
+                    />
+                  ) : null}
+                  {opt.label}
+                </InternalOption>
+              )
+            })
           )}
         </StyledList>
         {this.isTouchDevice ? (
