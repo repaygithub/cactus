@@ -84,10 +84,11 @@ export interface SelectProps
   onChange?: React.ChangeEventHandler<Target>
   onBlur?: React.FocusEventHandler<Target>
   onFocus?: React.FocusEventHandler<Target>
-  theme: CactusTheme
 }
 
-const displayStatus: any = (props: SelectProps): ReturnType<typeof css> | string => {
+type SelectPropsWithTheme = SelectProps & { theme: CactusTheme }
+
+const displayStatus: any = (props: SelectPropsWithTheme): ReturnType<typeof css> | string => {
   if (props.status && !props.disabled) {
     return textFieldStatusMap[props.status]
   } else {
@@ -876,39 +877,41 @@ class List extends React.Component<ListProps, ListState> {
           {options.length === 0 && !this.props.canCreateOption ? (
             <NoMatch>{matchNotFoundText}</NoMatch>
           ) : (
-            options.map((opt): React.ReactElement => {
-              const optId = opt.id
-              const isSelected = getSelected(opt)
-              let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
-              const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
-              // multiselectable should have aria-selected on all options
-              if (multiple) {
-                ariaSelected = isSelected ? 'true' : 'false'
+            options.map(
+              (opt): React.ReactElement => {
+                const optId = opt.id
+                const isSelected = getSelected(opt)
+                let ariaSelected: boolean | 'true' | 'false' | undefined = isSelected || undefined
+                const isCreateNewOption = comboBox && optId === `create-${this.state.searchValue}`
+                // multiselectable should have aria-selected on all options
+                if (multiple) {
+                  ariaSelected = isSelected ? 'true' : 'false'
+                }
+                return (
+                  <InternalOption
+                    key={optId}
+                    option={opt}
+                    className={activeDescendant === optId ? 'highlighted-option' : undefined}
+                    data-role={isCreateNewOption ? 'create' : 'option'}
+                    aria-selected={ariaSelected}
+                    onMouseEnter={this.handleOptionMouseEnter}
+                  >
+                    {isCreateNewOption ? (
+                      <ActionsAdd mr={2} mb={2} />
+                    ) : multiple ? (
+                      <CheckBox
+                        id={`multiselect-option-check-${optId}`}
+                        aria-hidden="true"
+                        checked={isSelected}
+                        readOnly
+                        mr={2}
+                      />
+                    ) : null}
+                    {opt.label}
+                  </InternalOption>
+                )
               }
-              return (
-                <InternalOption
-                  key={optId}
-                  option={opt}
-                  className={activeDescendant === optId ? 'highlighted-option' : undefined}
-                  data-role={isCreateNewOption ? 'create' : 'option'}
-                  aria-selected={ariaSelected}
-                  onMouseEnter={this.handleOptionMouseEnter}
-                >
-                  {isCreateNewOption ? (
-                    <ActionsAdd mr={2} mb={2} />
-                  ) : multiple ? (
-                    <CheckBox
-                      id={`multiselect-option-check-${optId}`}
-                      aria-hidden="true"
-                      checked={isSelected}
-                      readOnly
-                      mr={2}
-                    />
-                  ) : null}
-                  {opt.label}
-                </InternalOption>
-              )
-            })
+            )
           )}
         </StyledList>
         {this.isTouchDevice ? (
@@ -1048,7 +1051,7 @@ class OptionState {
   }
 }
 
-class SelectBase extends React.Component<SelectProps, SelectState> {
+class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
   public static Option = SelectOption
 
   public state: SelectState = {
@@ -1496,7 +1499,7 @@ class SelectBase extends React.Component<SelectProps, SelectState> {
               id={`${id}-input`}
               name={name}
               autoComplete="off"
-              autoFocus={!this.isTouchDevice ? true : false}
+              autoFocus={this.isTouchDevice ? true : false}
               value={searchValue}
               style={{ width: `${this.state.currentTriggerWidth}px` }}
               onChange={this.handleComboInputChange}
