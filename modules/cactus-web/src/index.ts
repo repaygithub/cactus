@@ -46,7 +46,7 @@ export {
   SIZES,
   useScreenSize,
 } from './ScreenSizeProvider/ScreenSizeProvider'
-export { Select } from './Select/Select'
+export { default as Select } from './Select/Select'
 export { SelectField } from './SelectField/SelectField'
 export { Spinner } from './Spinner/Spinner'
 export { SplitButton } from './SplitButton/SplitButton'

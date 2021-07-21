@@ -1562,7 +1562,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
 
 const SelectWithTheme = withTheme(SelectBase)
 
-const StyledSelect = styled(SelectWithTheme)`
+const Select = styled(SelectWithTheme)`
   max-width: 100%;
   & button:disabled {
     background-color: ${(p) => p.disabled && p.theme.colors.lightGray};
@@ -1575,10 +1575,6 @@ const StyledSelect = styled(SelectWithTheme)`
     ${displayStatus}
   }
 `
-
-type SelectType = typeof StyledSelect & { Option: typeof SelectOption }
-
-const Select = StyledSelect as SelectType
 
 export { Select }
 
@@ -1633,4 +1629,4 @@ Select.defaultProps = {
   noOptionsText: 'No options available',
 }
 
-export default Select
+export default Select as typeof Select & { Option: typeof SelectOption }
