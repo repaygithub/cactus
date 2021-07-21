@@ -7,7 +7,7 @@ import { omitMargins } from '../helpers/omit'
 
 export interface LinkProps
   extends MarginProps,
-    Omit<React.LinkHTMLAttributes<HTMLAnchorElement>, 'href'> {
+    Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   to: string
   variant?: 'standard' | 'dark'
 }

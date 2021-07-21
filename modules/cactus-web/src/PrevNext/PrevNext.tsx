@@ -17,7 +17,7 @@ export interface PrevNextProps extends MarginProps, React.HTMLAttributes<HTMLDiv
   nextText?: React.ReactNode
 }
 
-interface PrevNextLinkProps extends React.LinkHTMLAttributes<HTMLAnchorElement> {
+interface PrevNextLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   disabled: boolean
 }
 
