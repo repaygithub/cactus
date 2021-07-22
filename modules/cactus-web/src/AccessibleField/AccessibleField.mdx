@@ -68,6 +68,26 @@ export default props => {
 
 If `role="group"` (or "radiogroup") is passed, the wrapper div is given the `id`, `aria-labelledby`, and `aria-describedby` props that would normally be passed to the child input, so the AccessibleField acts more like a `<fieldset>` element. You should use the render func in this case to be able to render multiple children instead of the one that is normally accepted.
 
+### Render Function
+
+To customize how the field is rendered, you can pass a function as the component's child. The function will be passed a single argument, the result of the `useAccessibleField` hook (see below).
+
+```jsx
+<AccessibleField {...props}>
+  {({ fieldId, disabled, status, statusId }) => (
+    <>
+      <CoolIconThatGoesBeforeTheInput />
+      <input
+        id={fieldId}
+        disabled={disabled}
+        aria-invalid={status === 'error'}
+        aria-errormessage={status === 'error' ? statusId : undefined}
+      />
+    </>
+  )}
+</AccessibleField>
+```
+
 ## Properties
 
 <PropsTable of={AccessibleField} fileName="AccessibleField/AccessibleField.tsx" />
