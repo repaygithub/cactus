@@ -248,13 +248,13 @@ const StyledSaturation = StyledHue.withComponent(Saturation)
 const PickerBase: React.FC<CustomPickerProps> = (props) => {
   const { saveColor, currentColor, phrases, ...rest } = props
 
-  const handleSaturationChange: ColorChangeHandler<HSVColor> = (hsv) => {
-    const color = tinycolor(hsv)
+  const handleSaturationChange: ColorChangeHandler<HSVColor> = (newHsv) => {
+    const color = tinycolor(newHsv)
     saveColor(color)
   }
 
-  const handleHueChange: ColorChangeHandler<HSLColor> = (hsl) => {
-    const color = tinycolor(hsl)
+  const handleHueChange: ColorChangeHandler<HSLColor> = (newHsl) => {
+    const color = tinycolor(newHsl)
     saveColor(color)
   }
 
@@ -546,9 +546,9 @@ const InnerColorPicker = (props: InnerColorPickerProps) => {
 
   const handleOuterHexChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const color = getValidColor(event.target?.value || '')
-      if (color) {
-        setColor(color, event)
+      const newColor = getValidColor(event.target?.value || '')
+      if (newColor) {
+        setColor(newColor, event)
       }
     },
     [setColor]
