@@ -379,4 +379,34 @@ describe('@repay/cactus-theme', (): void => {
       boxShadows: false,
     })
   })
+
+  test('generates a theme with breakpoints and media queries by default', () => {
+    const theme = generateTheme()
+    expect(theme.breakpoints).toMatchObject(['768px', '1024px', '1200px', '1440px'])
+    expect(theme.mediaQueries).toMatchObject({
+      small: '@media screen and (min-width: 768px)',
+      medium: '@media screen and (min-width: 1024px)',
+      large: '@media screen and (min-width: 1200px)',
+      extraLarge: '@media screen and (min-width: 1440px)',
+    })
+  })
+
+  test('generates a theme with custom breakpoints and media queries', () => {
+    const theme = generateTheme({
+      primaryHue: 200,
+      breakpoints: {
+        small: '400px',
+        medium: '600px',
+        large: '800px',
+        extraLarge: '1000px',
+      },
+    })
+    expect(theme.breakpoints).toMatchObject(['400px', '600px', '800px', '1000px'])
+    expect(theme.mediaQueries).toMatchObject({
+      small: '@media screen and (min-width: 400px)',
+      medium: '@media screen and (min-width: 600px)',
+      large: '@media screen and (min-width: 800px)',
+      extraLarge: '@media screen and (min-width: 1000px)',
+    })
+  })
 })

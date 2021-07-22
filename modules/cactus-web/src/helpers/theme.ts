@@ -171,3 +171,17 @@ type MediaQuery = keyof Required<CactusTheme>['mediaQueries']
 
 export const media = (theme: CactusTheme, query: MediaQuery): string | undefined =>
   theme.mediaQueries && theme.mediaQueries[query]
+
+/* Detects if the user is using a mobile/touch device which falls under either the SMALL or TINY breakpoint
+category AND that the site they are on is optimized for a device of that size */
+export const isResponsiveTouchDevice = (
+  breakpoints: Required<CactusTheme>['breakpoints']
+): boolean => {
+  return (
+    typeof window !== 'undefined' &&
+    typeof screen !== 'undefined' &&
+    window.innerWidth < Number(breakpoints[0].split('px')[0]) &&
+    'ontouchstart' in window &&
+    screen.width === window.innerWidth
+  )
+}

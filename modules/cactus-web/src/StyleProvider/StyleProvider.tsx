@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import * as styledComponents from 'styled-components'
 
-import { breakpointOrder, breakpoints } from '../helpers/constants'
 import { textStyle } from '../helpers/theme'
 
 interface Env {
@@ -28,13 +27,6 @@ const DebugStyle = createGlobalStyle`
     --reach-dialog: 1;
   }
 `
-
-const queries = {
-  small: `@media screen and (min-width: ${breakpoints.small}px)`,
-  medium: `@media screen and (min-width: ${breakpoints.medium}px)`,
-  large: `@media screen and (min-width: ${breakpoints.large}px)`,
-  extraLarge: `@media screen and (min-width: ${breakpoints.extraLarge}px)`,
-}
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -106,8 +98,6 @@ export const StyleProvider: React.FC<StyleProviderProps> = (props): React.ReactE
   const { global, children, theme: providedTheme, ...themeProviderProps } = props
   shouldCheckTheme && checkThemeProperties(providedTheme || cactusTheme)
   const theme = providedTheme ? providedTheme : cactusTheme
-  theme.breakpoints = breakpointOrder.map((bp): string => `${breakpoints[bp]}px`)
-  theme.mediaQueries = queries
 
   return (
     <styledComponents.ThemeProvider theme={theme} {...themeProviderProps}>

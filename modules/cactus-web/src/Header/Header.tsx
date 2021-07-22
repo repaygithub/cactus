@@ -74,7 +74,7 @@ const columnStyles = css`
 const MainColumn = styled.div`
   ${columnStyles}
   ${(p) => `
-    ${p.theme.mediaQueries?.small} {
+    ${p.theme.mediaQueries.small} {
       padding-top: 0px;
       min-width: 40%;
       > div:not(:first-child) {
@@ -98,7 +98,7 @@ const ItemsColumn = styled.div`
   }
 
   ${(p) => `
-    ${p.theme.mediaQueries?.small} {
+    ${p.theme.mediaQueries.small} {
       align-items: flex-end;
       flex: 1 1 0px;
       hyphens: auto;
@@ -115,7 +115,7 @@ const ItemsColumn = styled.div`
       }
     }
 
-    ${p.theme.mediaQueries?.medium} {
+    ${p.theme.mediaQueries.medium} {
       flex-direction: row;
       align-items: center;
       flex: 0 1 auto;
@@ -128,7 +128,7 @@ const ItemsColumn = styled.div`
 
 const StyledDescription = styled.div`
   margin-top: ${(p) => `${p.theme.space[3]}px`};
-  ${(p) => p.theme.mediaQueries?.small} {
+  ${(p) => p.theme.mediaQueries.small} {
     margin-top: 0px;
   }
 `
@@ -167,7 +167,7 @@ export const StyledHeader = styled.header<HeaderProps & { $hasDescription: boole
   hyphens: auto;
 
   ${(p) => `
-  ${p.theme.mediaQueries?.small} {
+  ${p.theme.mediaQueries.small} {
     text-align: left;
     justify-content: space-between;
     flex-direction: row;

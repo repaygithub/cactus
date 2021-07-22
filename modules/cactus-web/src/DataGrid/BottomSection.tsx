@@ -64,7 +64,6 @@ const StyledBottomSection = styled.div<TransientProps & { $justifyContent: Justi
   // Card view styles when screen is larger than tiny
   ${(p) =>
     p.$isCardView &&
-    p.theme.mediaQueries &&
     `${p.theme.mediaQueries.small} {
       flex-direction: row;
       justify-content: ${p.$justifyContent};

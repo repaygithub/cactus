@@ -87,7 +87,7 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
 export const ConfirmModal = styled(ConfirmModalBase)`
   .title-icon {
     flex-direction: column;
-    ${(p): string | undefined => p.theme.mediaQueries && p.theme.mediaQueries.medium} {
+    ${(p): string => p.theme.mediaQueries.medium} {
       flex-direction: ${getFlexDirection};
     }
     text-align: center;

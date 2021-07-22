@@ -60,9 +60,16 @@ export type Shape = 'square' | 'intermediate' | 'round'
 
 export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
+export interface BreakpointsObject {
+  small: string
+  medium: string
+  large: string
+  extraLarge: string
+}
+
 export interface CactusTheme {
-  breakpoints?: string[]
-  mediaQueries?: {
+  breakpoints: string[]
+  mediaQueries: {
     small: string
     medium: string
     large: string
@@ -182,6 +189,7 @@ interface SharedGeneratorOptions {
   font?: Font
   boxShadows?: boolean
   grayscaleContrast?: boolean
+  breakpoints?: BreakpointsObject
 }
 
 interface HueGeneratorOptions extends SharedGeneratorOptions {
@@ -890,6 +898,20 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     return x === font ? -1 : y === font ? 1 : 0
   })
 
+  const breakpoints = options.breakpoints || {
+    small: '768px',
+    medium: '1024px',
+    large: '1200px',
+    extraLarge: '1440px',
+  }
+
+  const mediaQueries = {
+    small: `@media screen and (min-width: ${breakpoints.small})`,
+    medium: `@media screen and (min-width: ${breakpoints.medium})`,
+    large: `@media screen and (min-width: ${breakpoints.large})`,
+    extraLarge: `@media screen and (min-width: ${breakpoints.extraLarge})`,
+  }
+
   return {
     colors,
     colorStyles,
@@ -903,6 +925,8 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     boxShadows,
     textStyles: makeTextStyles(fontSizes),
     mobileTextStyles: makeTextStyles(mobileFontSizes),
+    breakpoints: Object.values(breakpoints),
+    mediaQueries,
   }
 }
 
