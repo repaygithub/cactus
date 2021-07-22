@@ -15,6 +15,7 @@ describe('Dimmer render content as children', () => {
     )
     expect(container).toHaveTextContent('Children is here!')
   })
+
   test('Page Dimmer: Should NOT render content when active=false', () => {
     const { container } = render(
       <StyleProvider>
@@ -24,5 +25,29 @@ describe('Dimmer render content as children', () => {
       </StyleProvider>
     )
     expect(container).not.toHaveTextContent('Children is here!')
+  })
+
+  test('Dimmer should blur elements that have focus when it becomes active', () => {
+    const buttonBlur = jest.fn()
+    const { getByText, rerender } = render(
+      <StyleProvider>
+        <button onBlur={buttonBlur}>I should be blurred</button>
+        <Dimmer active={false} />
+      </StyleProvider>
+    )
+
+    const button = getByText('I should be blurred')
+    button.focus()
+    expect(document.activeElement).toBe(button)
+
+    rerender(
+      <StyleProvider>
+        <button onBlur={buttonBlur}>I should be blurred</button>
+        <Dimmer active />
+      </StyleProvider>
+    )
+
+    expect(document.activeElement).not.toBe(button)
+    expect(buttonBlur).toHaveBeenCalled()
   })
 })

@@ -16,4 +16,22 @@ describe('component: Header', () => {
     const headerStyles = window.getComputedStyle(rawHeader)
     expect(headerStyles.backgroundColor).toBe('rgb(255, 255, 255)')
   })
+
+  test('Header should render its title and description', () => {
+    const { getByText } = render(
+      <StyleProvider>
+        <Header>
+          <Header.Title>I Am a Title</Header.Title>
+          <Header.Description>I am a description</Header.Description>
+        </Header>
+      </StyleProvider>
+    )
+
+    const title = getByText('I Am a Title')
+    const desc = getByText('I am a description')
+
+    expect(title).toBeInTheDocument()
+    expect(title.tagName).toBe('H2')
+    expect(desc).toBeInTheDocument()
+  })
 })
