@@ -146,25 +146,19 @@ function AccessibleFieldBase(props: InnerProps) {
     }
   }, [maxWidth, setMaxWidth])
 
-  const handleFieldBlur = React.useCallback(
-    (e: React.FocusEvent<HTMLDivElement>) => {
-      onBlur?.(e)
-      if (autoTooltip && isFocusOut(e)) {
-        setTooltipVisible(() => false)
-      }
-    },
-    [onBlur, autoTooltip, setTooltipVisible]
-  )
+  const handleFieldBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    onBlur?.(e)
+    if (autoTooltip && isFocusOut(e)) {
+      setTooltipVisible(false)
+    }
+  }
 
-  const handleFieldFocus = React.useCallback(
-    (e: React.FocusEvent<HTMLDivElement>) => {
-      onFocus?.(e)
-      if (autoTooltip) {
-        setTooltipVisible(() => true)
-      }
-    },
-    [onFocus, autoTooltip, setTooltipVisible]
-  )
+  const handleFieldFocus = (e: React.FocusEvent<HTMLDivElement>) => {
+    onFocus?.(e)
+    if (autoTooltip) {
+      setTooltipVisible(true)
+    }
+  }
 
   // If this represents a group of fields, the label points to the group instead of the child.
   if (rest.role?.includes('group')) {
