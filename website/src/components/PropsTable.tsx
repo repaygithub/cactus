@@ -143,6 +143,7 @@ export type ComponentWithFileMeta = React.ComponentType & {
 interface PropsTableProps {
   of: ComponentWithFileMeta
   staticProp?: string
+  fileName?: string
 }
 
 interface PropsMemo {
@@ -156,11 +157,15 @@ interface PropsMemo {
 const PropsTable: React.FC<PropsTableProps> = ({
   of: component,
   staticProp,
+  fileName,
 }): React.ReactElement | null => {
   const data = useDocgen()
   // Not sure why some pull from `dist` instead of `src`.
-  const fileName =
-    component.__filemeta && component.__filemeta.filename.replace(/dist(.*)js/, 'src$1tsx')
+  if (!fileName) {
+    fileName = component.__filemeta?.filename.replace(/dist(.*)js/, 'src$1tsx')
+  } else if (!fileName.includes('src')) {
+    fileName = '../modules/cactus-web/src/' + fileName
+  }
   const docItem = data.find((doc): boolean => doc.key === fileName)
 
   const { ownProps, styledSystemProps } = React.useMemo((): PropsMemo => {

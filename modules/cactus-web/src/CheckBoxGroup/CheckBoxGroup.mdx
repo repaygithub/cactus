@@ -15,7 +15,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 ## Basic Usage
 
-`CheckBoxGroup` renders a `fieldset`, and any checkboxes in the group should be rendered and children.
+`CheckBoxGroup` renders an `AccessibleField` with `role="group"`, and any checkboxes in the group should be rendered as children.
 `required` and `disabled` props are forwarded to all of the checkboxes, but you can still disable individual checkboxes if you need to.
 
 `CheckBoxGroup.Item` is a wrapper for `CheckBoxField` with the `required` prop removed so that it can be left out without causing TS errors.
@@ -44,9 +44,8 @@ If you use an intermediate component, it will have to accept the forwarded props
 - You can control the values using one of two methods, which should not be mixed:
   - Pass `checked` to `CheckBoxGroup`. This should be an object, mapping the checkbox names to their boolean values.
   - Pass `checked` or `defaultChecked` to `CheckBoxGroup.Item`s.
-- Passing a `ref` to `CheckBoxGroup` will be set on the `fieldset` element.
-- `onChange`, `onFocus` and `onBlur` handlers are not forwarded to individual checkboxes. They are associated with the `fieldset` and rely on event delegation to capture changes.
+- `onChange`, `onFocus` and `onBlur` handlers are not forwarded to individual checkboxes. They are associated with the wrapper `div` and rely on event delegation to capture changes.
 
 ## Properties
 
-<PropsTable of={CheckBoxGroup} />
+<PropsTable of={CheckBoxGroup} fileName="CheckBoxGroup/CheckBoxGroup.tsx" />

@@ -63,13 +63,12 @@ describe('component: RadioGroup', (): void => {
       </StyleProvider>
     )
 
-    expect(container.querySelector('fieldset')?.disabled).toBe(true)
     const radios = container.querySelectorAll('input')
     for (let i = 0; i < 5; i++) {
       const radio = radios[i]
       expect(radio.name).toBe('cities')
       expect(radio.required).toBe(false)
-      expect(radio.disabled).toBe(true)
+      expect(radio.disabled).toBe(radio.value !== 'pyro')
       expect(radio.checked).toBe(i === 2)
     }
 
