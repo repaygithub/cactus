@@ -36,7 +36,7 @@ describe('component: MenuButton', (): void => {
       const actionTwo = jest.fn()
       const { getByText, rerender } = render(
         <StyleProvider>
-          <MenuButton label="Demo">
+          <MenuButton label="Demo" variant="unfilled">
             <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
             <MenuButton.Item onSelect={actionTwo}>Action Two</MenuButton.Item>
             <MenuButton.Link href="#">Action Three</MenuButton.Link>

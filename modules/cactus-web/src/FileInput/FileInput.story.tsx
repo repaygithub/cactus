@@ -10,10 +10,10 @@ export default {
   component: FileInput,
 } as Meta
 
-const file: File = Object.create(File.prototype)
-Object.defineProperty(file, 'name', { enumerable: true, value: 'boolest.txt' })
-Object.defineProperty(file, 'size', { enumerable: true, value: 42 })
-const unloaded = FileInput.toFileObj(file)
+const dummyFile: File = Object.create(File.prototype)
+Object.defineProperty(dummyFile, 'name', { enumerable: true, value: 'boolest.txt' })
+Object.defineProperty(dummyFile, 'size', { enumerable: true, value: 42 })
+const unloaded = FileInput.toFileObj(dummyFile)
 const fileStatuses: typeof unloaded[] = [
   unloaded,
   { ...unloaded, status: 'error', errorMsg: 'This file is fake!' },

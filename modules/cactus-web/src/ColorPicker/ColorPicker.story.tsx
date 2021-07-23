@@ -54,8 +54,8 @@ export const Controlled = (): React.ReactElement => {
       {...eventLoggers}
       onChange={(event) => {
         if (event.currentTarget.value) {
-          setState((state) => ({
-            ...state,
+          setState((currentState) => ({
+            ...currentState,
             [controlledBy]: event.currentTarget.value,
           }))
           console.log(`onChange: ${event.currentTarget.name}:`)
