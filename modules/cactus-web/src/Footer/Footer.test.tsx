@@ -12,24 +12,20 @@ describe('component: Footer', () => {
   test('should be able to pass custom content using children', () => {
     const { getByText } = render(
       <StyleProvider>
-        <Footer logo={REPAY_LOGO}>
-          Custom Content
-          <Footer.Link to="https://google.com">Some Link</Footer.Link>
-          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
-        </Footer>
+        <Footer logo={REPAY_LOGO}>Custom Content</Footer>
       </StyleProvider>
     )
 
     expect(getByText('Custom Content')).toBeInTheDocument()
   })
 
-  test('should be able to pass links using Footer.Link', () => {
+  test('should be able to pass links using a', () => {
     const { getByText } = render(
       <StyleProvider>
         <Footer logo={REPAY_LOGO}>
           Custom Content
-          <Footer.Link to="https://google.com">Some Link</Footer.Link>
-          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
+          <a href="https://google.com">Some Link</a>
+          <a href="https://repay.com">Some Other Link</a>
         </Footer>
       </StyleProvider>
     )
@@ -46,59 +42,10 @@ describe('component: Footer', () => {
   test('should be able to pass a logo using a component', () => {
     const { getByTestId } = render(
       <StyleProvider>
-        <Footer logo={<Logo />}>
-          Custom Content
-          <Footer.Link to="https://google.com">Some Link</Footer.Link>
-          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
-        </Footer>
+        <Footer logo={<Logo />}>Custom Content</Footer>
       </StyleProvider>
     )
 
     expect(getByTestId('image')).toBeInTheDocument()
-  })
-
-  test('should be able to update links without creating new ones', () => {
-    const { queryByText, getByText, rerender } = render(
-      <StyleProvider>
-        <Footer logo={REPAY_LOGO}>
-          Custom Content
-          <Footer.Link to="https://google.com">Some Link</Footer.Link>
-          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
-        </Footer>
-      </StyleProvider>
-    )
-
-    rerender(
-      <StyleProvider>
-        <Footer logo={REPAY_LOGO}>
-          Custom Content
-          <Footer.Link to="https://microsoft.com">Changed Link</Footer.Link>
-          <Footer.Link to="https://repay.com">Some Other Link</Footer.Link>
-        </Footer>
-      </StyleProvider>
-    )
-
-    expect(queryByText('Some Link')).toBeNull()
-    const changedLink = getByText('Changed Link')
-    expect(changedLink).toBeInTheDocument()
-    expect(changedLink).toHaveAttribute('href', 'https://microsoft.com')
-  })
-  test('should be able to pass as prop', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Footer logo={REPAY_LOGO}>
-          Custom Content
-          {/* These three should all cause Typescript errors if uncommented.
-          <Footer.Link>Hey</Footer.Link>
-          <Footer.Link to="one" href="two">You</Footer.Link>
-          <Footer.Link as="a" value="">Now</Footer.Link>
-          */}
-          <Footer.Link as="a" href="https://google.com">
-            Some Link
-          </Footer.Link>
-        </Footer>
-      </StyleProvider>
-    )
-    expect(getByText('Some Link')).toHaveAttribute('href', 'https://google.com')
   })
 })

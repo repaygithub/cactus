@@ -130,9 +130,10 @@ const StoryActionBar = () => (
 
 const StoryFooter = () => (
   <Footer logo={LOGO}>
-    <em>{text('Footer', 'How will you REPAY us?')}</em>
-    <Footer.Link to="#">The Link To Nowhere</Footer.Link>
-    <Footer.Link to="https://google.com">The Giant</Footer.Link>
+    <em>{text('Footer', 'How will you REPAY us?') + ' '}</em>
+    <a href="#">The Link To Nowhere</a>
+    {' | '}
+    <a href="https://google.com">The Giant</a>
   </Footer>
 )
 
