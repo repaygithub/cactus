@@ -20,7 +20,7 @@ document.body.appendChild(appRoot)
 
 const App = (): React.ReactElement => {
   return (
-    <StyleProvider global>
+    <StyleProvider>
       <ScreenSizeProvider>
         <Helmet>
           <title> Home </title>
