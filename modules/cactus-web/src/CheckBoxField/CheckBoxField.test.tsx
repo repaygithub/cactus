@@ -24,19 +24,23 @@ describe('component: CheckBoxField', (): void => {
   test('should support margin space props', (): void => {
     const { getByTestId } = render(
       <StyleProvider>
-        <CheckBoxField
-          label="space props"
-          name="space_props"
-          id="not-random"
-          mr={3}
-          data-testid="testField"
-        />
+        <CheckBoxField label="F" name="1st" data-testid="first" />
+        <CheckBoxField name="def" label="D" data-testid="default" mb={2} />
+        <CheckBoxField name="over" label="O" data-testid="override" mt={4} />
       </StyleProvider>
     )
 
-    const checkField = getByTestId('testField').parentElement?.parentElement as HTMLElement
-    const styles = window.getComputedStyle(checkField)
-    expect(styles.marginRight).toBe('8px')
+    const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
+    expect(getByTestId('first').parentElement?.parentElement).toHaveStyle(blank)
+    expect(getByTestId('default').parentElement?.parentElement).toHaveStyle({
+      ...blank,
+      marginTop: '8px',
+      marginBottom: '4px',
+    })
+    expect(getByTestId('override').parentElement?.parentElement).toHaveStyle({
+      ...blank,
+      marginTop: '16px',
+    })
   })
 
   test('should support flex item props', () => {

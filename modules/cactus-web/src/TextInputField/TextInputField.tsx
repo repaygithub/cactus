@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
-import { omitMargins } from '../helpers/omit'
+import { extractFieldStyleProps } from '../helpers/omit'
 import { TextInput, TextInputProps } from '../TextInput/TextInput'
 
-interface TextInputFieldProps
-  extends MarginProps,
-    FieldProps,
-    Omit<TextInputProps, 'name' | 'status'> {}
+interface TextInputFieldProps extends FieldProps, Omit<TextInputProps, 'name' | 'status'> {}
 
 const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
   const {
@@ -18,7 +14,6 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     name,
     label,
     labelProps,
-    className,
     success,
     warning,
     error,
@@ -27,12 +22,9 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     autoTooltip,
     disableTooltip,
     alignTooltip,
-    flex,
-    flexGrow,
-    flexShrink,
-    flexBasis,
     ...inputProps
-  } = omitMargins(props) as Omit<TextInputFieldProps, keyof MarginProps>
+  } = props
+  const styleProps = extractFieldStyleProps(inputProps)
 
   return (
     <AccessibleField
@@ -41,7 +33,6 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       name={name}
       label={label}
       labelProps={labelProps}
-      className={className}
       success={success}
       warning={warning}
       error={error}
@@ -49,10 +40,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
-      flex={flex}
-      flexGrow={flexGrow}
-      flexShrink={flexShrink}
-      flexBasis={flexBasis}
+      {...styleProps}
     >
       {({
         fieldId,
@@ -76,8 +64,6 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
 
 export const TextInputField = styled(TextInputFieldBase)`
   position: relative;
-  width: ${(p): string | number => p.width || 'auto'};
-  ${margin}
 `
 
 TextInputField.propTypes = {

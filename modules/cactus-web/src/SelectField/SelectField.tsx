@@ -1,17 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps, width as styledSystemWidth, WidthProps } from 'styled-system'
+import { WidthProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
-import { omitMargins } from '../helpers/omit'
+import { extractFieldStyleProps } from '../helpers/omit'
 import Select, { SelectProps } from '../Select/Select'
 
-interface SelectFieldProps
-  extends MarginProps,
-    WidthProps,
-    FieldProps,
-    Omit<SelectProps, 'id' | keyof MarginProps | keyof WidthProps> {
+interface SelectFieldProps extends WidthProps, FieldProps, Omit<SelectProps, 'id'> {
   className?: string
   id?: string
   multiple?: boolean
@@ -21,7 +17,6 @@ type SelectFieldType = React.FC<SelectFieldProps> & { Option: typeof Select.Opti
 
 const SelectFieldBase: SelectFieldType = (props): React.ReactElement => {
   const {
-    className,
     id,
     name,
     label,
@@ -30,22 +25,17 @@ const SelectFieldBase: SelectFieldType = (props): React.ReactElement => {
     success,
     warning,
     error,
-    width,
     disabled,
     autoTooltip,
     disableTooltip,
     alignTooltip,
-    flex,
-    flexGrow,
-    flexShrink,
-    flexBasis,
     ...rest
-  } = omitMargins(props) as Omit<SelectFieldProps, keyof MarginProps>
+  } = props
+  const styleProps = extractFieldStyleProps(rest)
   const [isOpen, setIsOpen] = React.useState(false)
   return (
     <AccessibleField
       disabled={disabled}
-      className={className}
       id={id}
       name={name}
       label={label}
@@ -54,15 +44,11 @@ const SelectFieldBase: SelectFieldType = (props): React.ReactElement => {
       success={success}
       warning={warning}
       error={error}
-      width={width}
       autoTooltip={autoTooltip}
       isOpen={isOpen}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
-      flex={flex}
-      flexGrow={flexGrow}
-      flexShrink={flexShrink}
-      flexBasis={flexBasis}
+      {...styleProps}
     >
       {({
         fieldId,
@@ -91,8 +77,6 @@ SelectFieldBase.Option = Select.Option
 
 export const SelectField = styled(SelectFieldBase)`
   position: relative;
-  ${margin}
-  ${styledSystemWidth}
 
   ${Select} {
     width: 100%;

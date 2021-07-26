@@ -40,20 +40,18 @@ export const WithValues = (): React.ReactElement => {
   }>({ 'option-1': true, 'option-2': false, 'option-3': false })
   return (
     <Flex>
-      <div>
-        <CheckBoxGroup
-          name="controller"
-          label="Controller"
-          checked={value}
-          onChange={({ target }: any) =>
-            setValue((existingValue) => ({ ...existingValue, [target.name]: target.checked }))
-          }
-        >
-          <CheckBoxGroup.Item name="option-1" label="Option 1" />
-          <CheckBoxGroup.Item name="option-2" label="Option 2" />
-          <CheckBoxGroup.Item name="option-3" label="Option 3" />
-        </CheckBoxGroup>
-      </div>
+      <CheckBoxGroup
+        name="controller"
+        label="Controller"
+        checked={value}
+        onChange={({ target }: any) =>
+          setValue((existingValue) => ({ ...existingValue, [target.name]: target.checked }))
+        }
+      >
+        <CheckBoxGroup.Item name="option-1" label="Option 1" />
+        <CheckBoxGroup.Item name="option-2" label="Option 2" />
+        <CheckBoxGroup.Item name="option-3" label="Option 3" />
+      </CheckBoxGroup>
       <CheckBoxGroup name="follower" label="Follower" onChange={noop} m={0}>
         <CheckBoxGroup.Item checked={value['option-1']} name="option-4" label="Option 4" />
         <CheckBoxGroup.Item checked={value['option-2']} name="option-5" label="Option 5" />
