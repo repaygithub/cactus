@@ -2,7 +2,23 @@
 
 exports[`@repay/cactus-i18n should match snapshot of exports 1`] = `
 Array [
-  "generateTheme",
   "default",
+  "generateTheme",
+  "isResponsiveTouchDevice",
+  "borderSize",
+  "border",
+  "radius",
+  "insetBorder",
+  "mediaGTE",
+  "mediaLT",
+  "breakpoint",
+  "color",
+  "colorStyle",
+  "space",
+  "iconSize",
+  "fontSize",
+  "textStyle",
+  "boxShadow",
+  "shadow",
 ]
 `;

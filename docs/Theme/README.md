@@ -14,6 +14,10 @@ The `@repay/cactus-theme` library exports a theme generator which will create a 
 
 The [styled-components](https://www.npmjs.com/package/styled-components) package created the `ThemeProvider` component, and we recommend that you check their documentation out for even more clarity.
 
+### Style Helpers
+
+We also provide a number of useful functions for reducing boilerplate in `styled-components`: see <a href="./style-helpers/#">the style helpers documentation</a> for a full list.
+
 ## Usage
 
 The `@repay/cactus-theme` library exports a theme generator function, and a default theme.
