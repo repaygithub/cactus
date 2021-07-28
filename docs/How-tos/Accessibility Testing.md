@@ -1,6 +1,6 @@
 #### Component Accessibility
 
-In our efforts for our front-ends to meet accessibility requirements of <INSERT_REQUIRED_LEVEL>, we implement supplemental automated accessibility testing via `jest-axe`, a custom jest matcher for testing accessibility. Since it is a jest plugin, this allows us to write tests for components where we would be conerned about any accessibility requirements being met. These sort of tests can be placed right alongside existing unit tests, and they can be parameterized to run the same test over our provided screen sizes by using the `jest-each` plugin, which in general enables parameterized tests.
+In our efforts for our front-ends to meet accessibility requirements, we implement supplemental automated accessibility testing via `jest-axe`, a custom jest matcher for testing accessibility. Since it is a jest plugin, this allows us to write tests for components where we would be conerned about any accessibility requirements being met. These sort of tests can be placed right alongside existing unit tests, and they can be parameterized to run the same test over our provided screen sizes by using the `jest-each` plugin, which in general enables parameterized tests.
 
 Automated accessibility provide a safeguard around common issues and can catch ~30% of issues.
 
