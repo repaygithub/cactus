@@ -40,9 +40,11 @@ test('DataGrid interactions in table view', async (t: TestController): Promise<v
 
   // Delete account using SplitButton
   await t.click(Selector('button').withAttribute('data-reach-menu-button').nth(0))
+  await t.debug()
   await t.click(
     Selector('div').withAttribute('data-reach-menu-item').withText('Delete Account 01254')
   )
+  await t.debug()
   await t.expect(queryByText('Account 01254 deleted successfully').exists).ok()
 
   // Navigate to account page using SplitButton
