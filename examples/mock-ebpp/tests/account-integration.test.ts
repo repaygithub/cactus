@@ -26,7 +26,7 @@ fixture('Account Integration Tests')
 
 test('DataGrid interactions in table view', async (t: TestController): Promise<void> => {
   // Set desktop screen size
-  await t.resizeWindow(1600, 994)
+  await t.maximizeWindow()
   await clickWorkaround(queryByText('First Name'))
   await t.expect(queryByText('Victoria').exists).ok()
   await t.expect(queryByText('Chris').exists).ok()
