@@ -39,6 +39,7 @@ test('DataGrid interactions in table view', async (t: TestController): Promise<v
   await t.expect(queryByText('Victoria').exists).ok()
 
   // Delete account using SplitButton
+  await t.debug()
   await t.click(Selector('button').withAttribute('data-reach-menu-button').nth(0))
   await t.debug()
   await t.click(
