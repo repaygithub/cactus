@@ -59,10 +59,10 @@ const ContentWrapper = styledWithClass('div', 'footer-content')`
 const link = css`
   a {
     outline: none;
-    padding: 2px 1px 0;
     :link {
       font-style: italic;
       text-decoration: underline;
+      padding: 2px 2px 0 0;
     }
     :hover {
       text-decoration: none;
@@ -72,7 +72,7 @@ const link = css`
 const lightLink = css`
   a {
     :link {
-      color: ${(p) => p.theme.colors.base};
+      color: ${(p) => p.theme.colors.callToAction};
     }
     :visited {
       color: ${(p) => p.theme.colors.darkContrast};
@@ -132,7 +132,8 @@ export const Footer = styled(FooterBase).attrs({ as: FooterBase, role: 'contenti
   ${link};
   ${(p) => (p.variant && p.variant in variants ? variants[p.variant] : variants.gray)};
   a:focus {
-    ${(p) => p.theme.colorStyles.lightCallToAction};
+    color: ${(p) => p.theme.colors.darkContrast};
+    background-color: ${(p) => p.theme.colors.lightCallToAction};
   }
 ` as React.FC<FooterProps>
 
