@@ -2,7 +2,7 @@ import { select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
-import { Alert, Button, Modal, Text } from '../'
+import { Alert, Button, ColorPicker, DateInputField, Modal, SelectField, Text } from '../'
 import { ModalType } from './Modal'
 
 export default {
@@ -37,6 +37,9 @@ const ModalWithState = (): React.ReactElement => {
       innerMaxHeight={text('innerMaxHeight', '')}
     >
       <Text as="h3">{text('modal content', 'This is a Modal')}</Text>
+      <DateInputField label="Hey there" name="foo" />
+      <ColorPicker name="bar" id="bar" />
+      <SelectField name="baz" label="Baz" options={['a', 'b', 'c']} />
     </Modal>
   ) : (
     <Button variant="action" onClick={(): void => setOpen(true)}>

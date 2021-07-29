@@ -34,10 +34,9 @@ export const dimmerStyles = `
   left: 0;
   width: 100%;
   height: 100%;
-  text-align: center;
-  vertical-align: middle;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   z-index: 100;
 `
 
