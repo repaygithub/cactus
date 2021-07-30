@@ -1,7 +1,6 @@
 import Color from 'color'
 
-import { CactusTheme } from '../dist/theme'
-import cactusTheme, { generateTheme } from '../src/theme'
+import cactusTheme, { CactusTheme, ColorVariant, generateTheme } from '../src/theme'
 
 function themeAccessibility(themeName: string, theme: CactusTheme): void {
   describe(`${themeName} meets basic accessibility contrast thresholds`, (): void => {
@@ -22,8 +21,7 @@ function themeAccessibility(themeName: string, theme: CactusTheme): void {
         new Color(theme.colors.callToAction).contrast(new Color('#FFFFFF'))
       ).toBeGreaterThanOrEqual(4.5)
     })
-
-    Object.keys(theme.colorStyles).forEach((name): void => {
+    ;(Object.keys(theme.colorStyles) as ColorVariant[]).forEach((name): void => {
       if (name !== 'disable') {
         test(`colorStyle ${name}`, (): void => {
           expect(

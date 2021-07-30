@@ -8,7 +8,7 @@ export function rgbToHsl(red: number, green: number, blue: number): [number, num
 
   const max = Math.max(red, green, blue)
   const min = Math.min(red, green, blue)
-  let hue: number
+  let hue = 0
   let saturation: number
   let lightness = (max + min) / 2
 
@@ -45,19 +45,22 @@ export function rgbToHsl(red: number, green: number, blue: number): [number, num
 export function hexToRgb(hex: string): [number, number, number] {
   hex = hex?.trim?.()
   if (/^#?([a-f\d]{3}){1,2}$/i.test(hex)) {
-    let result
+    let result: string[] | null = null
     if (hex.length < 6) {
       result = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(hex)
-      result[1] += result[1]
-      result[2] += result[2]
-      result[3] += result[3]
+      if (result) {
+        result[1] += result[1]
+        result[2] += result[2]
+        result[3] += result[3]
+      }
     } else {
       result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
     }
-    return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
-  } else {
-    return [255, 255, 255]
+    if (result) {
+      return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
+    }
   }
+  return [255, 255, 255]
 }
 
 // Calculating YIQ for easy contrast comparisons based on https://24ways.org/2010/calculating-color-contrast
