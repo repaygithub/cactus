@@ -8,6 +8,7 @@ import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import generateId from '../helpers/generateId'
 import { omitProps } from '../helpers/omit'
 import { useBox } from '../helpers/react'
+import { styledWithClass } from '../helpers/styled'
 import { border, boxShadow, radius, textStyle } from '../helpers/theme'
 import { FlexGroup, GroupProps, makeGroup } from './Group'
 import { CheckableProps, WrapperLabel } from './Wrapper'
@@ -115,9 +116,7 @@ export const makeToggleCard: MakeToggleCard = ({ type, displayName, groupRole })
   return Card
 }
 
-const className = (componentId: string): any => ({ componentId })
-
-const CardSpan = styled.span.withConfig(className('toggle-card-contents'))`
+const CardSpan = styledWithClass('span', 'toggle-card-contents')`
   overflow: hidden;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -137,7 +136,7 @@ const CardSpan = styled.span.withConfig(className('toggle-card-contents'))`
   }
 `
 
-const Inverse = styled.span.withConfig(className('toggle-card-inverse'))`
+const Inverse = styledWithClass('span', 'toggle-card-inverse')`
   display: block;
   box-sizing: content-box;
   width: 100%;
