@@ -1,22 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
-import { omitMargins } from '../helpers/omit'
+import { extractFieldStyleProps } from '../helpers/omit'
 import TextArea, { TextAreaProps } from '../TextArea/TextArea'
 
-interface TextAreaFieldProps
-  extends MarginProps,
-    FieldProps,
-    Omit<TextAreaProps, 'name' | 'status'> {}
+interface TextAreaFieldProps extends FieldProps, Omit<TextAreaProps, 'name' | 'status'> {}
 
 const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
   const {
     label,
     labelProps,
-    className,
     success,
     warning,
     error,
@@ -27,12 +22,9 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
     autoTooltip,
     disableTooltip,
     alignTooltip,
-    flex,
-    flexGrow,
-    flexShrink,
-    flexBasis,
     ...textAreaProps
-  } = omitMargins(props) as Omit<TextAreaFieldProps, keyof MarginProps>
+  } = props
+  const styleProps = extractFieldStyleProps(textAreaProps)
 
   return (
     <AccessibleField
@@ -41,7 +33,6 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       name={name}
       label={label}
       labelProps={labelProps}
-      className={className}
       success={success}
       warning={warning}
       error={error}
@@ -49,10 +40,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
-      flex={flex}
-      flexGrow={flexGrow}
-      flexShrink={flexShrink}
-      flexBasis={flexBasis}
+      {...styleProps}
     >
       {({
         fieldId,
@@ -76,8 +64,6 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
 
 export const TextAreaField = styled(TextAreaFieldBase)`
   position: relative;
-  width: ${(p): string => p.width || 'auto'};
-  ${margin}
 `
 
 TextAreaField.propTypes = {

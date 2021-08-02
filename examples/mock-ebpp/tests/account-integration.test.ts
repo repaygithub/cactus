@@ -1,4 +1,9 @@
-import { queryAllByText, queryByLabelText, queryByText } from '@testing-library/testcafe'
+import {
+  queryAllByLabelText,
+  queryAllByText,
+  queryByLabelText,
+  queryByText,
+} from '@testing-library/testcafe'
 import * as path from 'path'
 import { Selector } from 'testcafe'
 
@@ -21,7 +26,7 @@ fixture('Account Integration Tests')
 
 test('DataGrid interactions in table view', async (t: TestController): Promise<void> => {
   // Set desktop screen size
-  await t.resizeWindow(1600, 994)
+  await t.maximizeWindow()
   await clickWorkaround(queryByText('First Name'))
   await t.expect(queryByText('Victoria').exists).ok()
   await t.expect(queryByText('Chris').exists).ok()
@@ -39,10 +44,8 @@ test('DataGrid interactions in table view', async (t: TestController): Promise<v
   await t.expect(queryByText('Victoria').exists).ok()
 
   // Delete account using SplitButton
-  await t.click(Selector('button').withAttribute('data-reach-menu-button').nth(0))
-  await t.click(
-    Selector('div').withAttribute('data-reach-menu-item').withText('Delete Account 01254')
-  )
+  await t.click(queryAllByLabelText('Action List').nth(0))
+  await t.click(queryByText('Delete Account 01254'))
   await t.expect(queryByText('Account 01254 deleted successfully').exists).ok()
 
   // Navigate to account page using SplitButton
@@ -73,10 +76,8 @@ test('DataGrid interactions in card view', async (t: TestController): Promise<vo
   await t.expect(queryByText('Victoria').exists).ok()
 
   // // Delete account using SplitButton
-  await t.click(Selector('button').withAttribute('data-reach-menu-button').nth(2))
-  await t.click(
-    Selector('div').withAttribute('data-reach-menu-item').withText('Delete Account 01254')
-  )
+  await t.click(queryAllByLabelText('Action List').nth(0))
+  await t.click(queryByText('Delete Account 01254'))
   await t.expect(queryByText('Account 01254 deleted successfully').exists).ok()
 
   // Navigate to account page using SplitButton

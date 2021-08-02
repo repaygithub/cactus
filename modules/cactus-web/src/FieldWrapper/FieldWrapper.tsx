@@ -3,14 +3,16 @@ import { margin, MarginProps } from 'styled-system'
 
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
 
-export const FieldWrapper = styled.div<MarginProps & FlexItemProps>`
+type StyleProps = MarginProps & FlexItemProps & { $gap?: number }
+export const FieldWrapper = styled.div<StyleProps>`
   min-width: 1px; /* IE Fix for some situations. */
-  & + & {
-    margin-top: ${(p): number => p.theme.space[4]}px;
+  :not(:first-child) {
+    margin-top: ${(p) => p.theme.space[p.$gap ?? 4]}px;
   }
-
-  ${margin}
-  ${flexItem}
+  && {
+    ${margin}
+    ${flexItem}
+  }
 `
 
 export default FieldWrapper

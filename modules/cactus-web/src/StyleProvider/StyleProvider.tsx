@@ -42,11 +42,11 @@ textarea {
   letter-spacing: normal;
 }
 
-/* Inexplicably, applying this to <button> causes integration tests to fail. */
 html,
 body,
 input,
 select,
+button,
 textarea {
   ${(p) => textStyle(p.theme, 'body')};
   font-family: ${(p) => p.theme.font};

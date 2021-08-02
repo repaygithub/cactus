@@ -1,6 +1,8 @@
 import omit from 'lodash/omit'
 import { StyledConfig } from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
+
+import { flexItem, FlexItemProps } from './flexItem'
 
 export default omit
 
@@ -30,6 +32,15 @@ function extractor<T>(keys: string[]) {
 }
 
 export const extractMargins = extractor<MarginProps>(margin.propNames as string[])
+
+type FieldStyleProps = FlexItemProps & MarginProps & WidthProps & { className?: string }
+const FIELD_STYLE_PROPS: string[] = [
+  'className',
+  ...(margin.propNames as string[]),
+  ...(width.propNames as string[]),
+  ...(flexItem.propNames as string[]),
+]
+export const extractFieldStyleProps = extractor<FieldStyleProps>(FIELD_STYLE_PROPS)
 
 interface Split {
   <P, K extends keyof P>(p: P, keys: K[]): Pick<P, K>

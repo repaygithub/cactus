@@ -43,6 +43,28 @@ describe('component: DateInputField', (): void => {
     expect(alert).toHaveTextContent('an error message')
   })
 
+  test('should support margin space props', (): void => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <DateInputField label="F" name="1st" data-testid="first" />
+        <DateInputField name="def" label="D" data-testid="default" mb={2} />
+        <DateInputField name="over" label="O" data-testid="override" mt={1} />
+      </StyleProvider>
+    )
+
+    const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
+    expect(getByTestId('first').parentElement?.parentElement).toHaveStyle(blank)
+    expect(getByTestId('default').parentElement?.parentElement).toHaveStyle({
+      ...blank,
+      marginTop: '16px',
+      marginBottom: '4px',
+    })
+    expect(getByTestId('override').parentElement?.parentElement).toHaveStyle({
+      ...blank,
+      marginTop: '2px',
+    })
+  })
+
   test('supports flex item props', () => {
     const { container } = render(
       <StyleProvider>

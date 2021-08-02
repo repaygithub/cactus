@@ -176,7 +176,7 @@ export const BasicUsage = (): React.ReactElement => {
           </Header.BreadcrumbRow>
           <Header.Title>Latin Or Something</Header.Title>
         </Header>
-        <TextInputField name="foo" label="Foo" />
+        <TextInputField name="foo" label="Foo" m={0} />
         <ToggleField
           ml="150px"
           name="modalToggle"
