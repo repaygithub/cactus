@@ -93,20 +93,25 @@ describe('component: TextAreaField', (): void => {
   })
 
   test('should support margin space props', (): void => {
-    const { container } = render(
+    const { getByTestId } = render(
       <StyleProvider>
-        <TextAreaField
-          id="missing"
-          name="missing"
-          label="missing a comma"
-          tooltip="you are missing a comma, sir"
-          mx={3}
-        />
+        <TextAreaField label="F" name="1st" data-testid="first" />
+        <TextAreaField name="def" label="D" data-testid="default" mb={2} />
+        <TextAreaField name="over" label="O" data-testid="override" mt={1} />
       </StyleProvider>
     )
 
-    expect(container.firstElementChild).toHaveStyle('margin-left: 8px')
-    expect(container.firstElementChild).toHaveStyle('margin-right: 8px')
+    const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
+    expect(getByTestId('first').parentElement?.parentElement).toHaveStyle(blank)
+    expect(getByTestId('default').parentElement?.parentElement).toHaveStyle({
+      ...blank,
+      marginTop: '16px',
+      marginBottom: '4px',
+    })
+    expect(getByTestId('override').parentElement?.parentElement).toHaveStyle({
+      ...blank,
+      marginTop: '2px',
+    })
   })
 
   test('should support flex item props', () => {

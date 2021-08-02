@@ -31,23 +31,20 @@ export const BasicUsage = (): React.ReactElement => (
   </RadioGroup>
 )
 
-// TODO Extra div is to avert bug in how `FieldWrapper` handles margins; CACTUS-667.
 export const WithValues = (): React.ReactElement => {
   const [value, setValue] = React.useState<string>('strong')
   return (
     <Flex>
-      <div>
-        <RadioGroup
-          name="youAreGroupTwo"
-          label="Controller"
-          value={value}
-          onChange={(e: any) => setValue(e.target.value)}
-        >
-          <RadioGroup.Button label="Empty" value="" />
-          <RadioGroup.Button label={<sup>Strong</sup>} value="strong" />
-          <RadioGroup.Button label="Fortunate" value="ladybug" />
-        </RadioGroup>
-      </div>
+      <RadioGroup
+        name="youAreGroupTwo"
+        label="Controller"
+        value={value}
+        onChange={(e: any) => setValue(e.target.value)}
+      >
+        <RadioGroup.Button label="Empty" value="" />
+        <RadioGroup.Button label={<sup>Strong</sup>} value="strong" />
+        <RadioGroup.Button label="Fortunate" value="ladybug" />
+      </RadioGroup>
       <RadioGroup name="youAreGroupThree" label={<em>Follower</em>} required onChange={noop} m={0}>
         <RadioGroup.Button checked={value === ''} label="Zen" value="" />
         <RadioGroup.Button checked={value === 'strong'} label="Confident" value="strong" />

@@ -1,21 +1,19 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import FileInput, { FileInputProps } from '../FileInput/FileInput'
-import { omitMargins } from '../helpers/omit'
+import { extractFieldStyleProps } from '../helpers/omit'
 import Label from '../Label/Label'
 import Tooltip from '../Tooltip/Tooltip'
 
-interface FileInputFieldProps extends FileInputProps, MarginProps, FieldProps {
+interface FileInputFieldProps extends FileInputProps, FieldProps {
   className?: string
 }
 
 const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
   const {
-    className,
     disabled,
     label,
     labelProps,
@@ -25,21 +23,16 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
     success,
     warning,
     error,
-    width,
     autoTooltip = false,
     disableTooltip,
     alignTooltip,
-    flex,
-    flexGrow,
-    flexShrink,
-    flexBasis,
     ...rest
-  } = omitMargins(props) as Omit<FileInputFieldProps, keyof MarginProps>
+  } = props
+  const styleProps = extractFieldStyleProps(rest)
 
   return (
     <AccessibleField
       disabled={disabled}
-      className={className}
       id={id}
       name={name}
       label={label}
@@ -48,14 +41,10 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
       success={success}
       warning={warning}
       error={error}
-      width={width}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
-      flex={flex}
-      flexGrow={flexGrow}
-      flexShrink={flexShrink}
-      flexBasis={flexBasis}
+      {...styleProps}
     >
       {({
         fieldId,
@@ -94,8 +83,6 @@ export const FileInputField = styled(FileInputFieldBase)`
     font-size: 16px;
     ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
   }
-
-  ${margin}
 `
 
 // `styled` HOC somehow messes up the type of the `accept` prop,

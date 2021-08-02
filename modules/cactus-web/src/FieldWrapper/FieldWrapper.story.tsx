@@ -1,4 +1,4 @@
-import { boolean } from '@storybook/addon-knobs'
+import { boolean, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import React, { ReactElement, useCallback, useReducer } from 'react'
 
@@ -161,9 +161,19 @@ const formReducer = (state: FormState, action: FormAction): FormState | never =>
   return state
 }
 
+const parseMargin = (m: string): any => {
+  if (/^[\d\s]+$/.test(m)) {
+    return parseInt(m)
+  } else if (m.includes(',')) {
+    return m.split(',').map(parseMargin)
+  }
+  return m || undefined
+}
+
 const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactElement => {
   const [{ values, statuses }, dispatch] = useReducer(formReducer, null, initForm)
   const fullWidth = boolean('fullWidth', false)
+  const marginOverride = parseMargin(text('margin override', ''))
   const handleChange = useCallback(
     (name: string, value: any): void => {
       dispatch({ type: 'change', name, value })
@@ -203,6 +213,7 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactE
           props.value = values[field.name]
           props.onChange = handleChange
           props.onBlur = handleBlur
+          props.margin = marginOverride
           switch (field.type) {
             case 'radio': {
               props.value = field.value
