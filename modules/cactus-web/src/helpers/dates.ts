@@ -230,6 +230,34 @@ const __LOCALE_SPOKEN_FORMATS_CACHE__: {
   [key: string]: InstanceType<typeof Intl.DateTimeFormat>
 } = {}
 
+export function getFormatter(
+  type: DateType | Intl.DateTimeFormatOptions,
+  locale: string = getLocale()
+): (d: Date) => string {
+  let formatter: InstanceType<typeof Intl.DateTimeFormat>
+  const cacheKey = locale + type
+  if (typeof type === 'object') {
+    formatter = new Intl.DateTimeFormat(locale, type)
+  } else if (__LOCALE_SPOKEN_FORMATS_CACHE__.hasOwnProperty(cacheKey)) {
+    formatter = __LOCALE_SPOKEN_FORMATS_CACHE__[cacheKey]
+  } else {
+    const includeDate = type === 'date' || type === 'datetime'
+    const includeTime = type === 'datetime' || type === 'time'
+    const opts: Intl.DateTimeFormatOptions = {
+      year: includeDate ? 'numeric' : undefined,
+      month: includeDate ? 'long' : undefined,
+      day: includeDate ? 'numeric' : undefined,
+      weekday: includeDate ? 'long' : undefined,
+      hour: includeTime ? 'numeric' : undefined,
+      minute: includeTime ? '2-digit' : undefined,
+      second: undefined,
+      timeZone: 'UTC',
+    }
+    formatter = new Intl.DateTimeFormat(locale, opts)
+  }
+  return (d: Date) => formatter.format(d)
+}
+
 export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYear()): number {
   const firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
   const lastOfMonth = new Date(+firstOfMonth)
@@ -550,27 +578,8 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public toLocaleSpoken(type: DateType): string {
-    let spokenFormatter: InstanceType<typeof Intl.DateTimeFormat>
-    const cacheKey = this._locale + type
-    if (__LOCALE_SPOKEN_FORMATS_CACHE__.hasOwnProperty(cacheKey)) {
-      spokenFormatter = __LOCALE_SPOKEN_FORMATS_CACHE__[cacheKey]
-    } else {
-      const includeDate = type === 'date' || type === 'datetime'
-      const includeTime = type === 'datetime' || type === 'time'
-      const opts: Intl.DateTimeFormatOptions = {
-        year: includeDate ? 'numeric' : undefined,
-        month: includeDate ? 'long' : undefined,
-        day: includeDate ? 'numeric' : undefined,
-        weekday: includeDate ? 'long' : undefined,
-        hour: includeTime ? 'numeric' : undefined,
-        minute: includeTime ? '2-digit' : undefined,
-        second: undefined,
-        timeZone: 'UTC',
-      }
-      spokenFormatter = new Intl.DateTimeFormat(this._locale, opts)
-    }
-
-    return spokenFormatter.format(this.toDate())
+    const spokenFormatter = getFormatter(type, this._locale)
+    return spokenFormatter(this.toDate())
   }
 
   public toDate(): Date {
