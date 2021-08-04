@@ -3,12 +3,13 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getFormatter } from '../helpers/dates'
-import useId from '../helpers/useId'
+import { useRefWithId } from '../helpers/useId'
 import { omitProps } from '../helpers/omit'
 import { textStyle } from '../helpers/theme'
+import { isFocusOut } from '../helpers/events'
 
 export type CalendarDate = string | Date
-export type CalendarValue = CalendarDate | CalendarDate[]
+export type CalendarValue = CalendarDate | string[] | Date[] | null
 export type WeekdayLabel = string | {
   long: string
   short: string
@@ -21,6 +22,7 @@ interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
   locale?: string
   isValidDate?: (d: Date) => boolean
   selected?: CalendarValue
+  initialFocus?: CalendarDate
   labels?: {
     labelDate?: (d: Date) => string
     labelDisabled?: (normalLabel: string) => string
@@ -90,25 +92,76 @@ const makeGrid = (month: number, year: number, locale?: string, isValidDate?: (d
   return rows
 }
 
-const CalendarGridBase = ({ month, year, locale, labels = {}, isValidDate, selected, ...props }: BaseProps) => {
-  const id = useId(props.id)
+export const INSIDE_DATE = '[data-date]:not(.outside-date)'
+export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =>
+  root.querySelector<HTMLElement>(`[data-date='${date}']:not(.outside-date)`)
+
+const useTabIndexCallback = (
+  initialFocus: BaseProps['initialFocus'],
+  gridRef: React.MutableRefObject<HTMLDivElement>,
+  props: React.HTMLAttributes<HTMLDivElement>,
+): (d: string) => number => {
+  const focusRef = React.useRef<string | null>(null)
+  React.useEffect(() => {
+      const initial = typeof initialFocus === 'object' ? toISODate(initialFocus) : initialFocus
+      const focus = (initial && queryDate(gridRef.current, initial) || gridRef.current.querySelector(INSIDE_DATE)) as HTMLElement
+      focusRef.current = focus.dataset.date as string
+      focus.tabIndex = 0
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const { onFocus, onBlur } = props
+  props.onFocus = (e) => {
+    focusRef.current = null
+    e.target.tabIndex = -1
+    onFocus?.(e)
+  }
+  props.onBlur = (e) => {
+    if (isFocusOut(e) && e.target.dataset.date) {
+      focusRef.current = e.target.dataset.date
+      e.target.tabIndex = 0
+    }
+    onBlur?.(e)
+  }
+  return (date: string) => date === focusRef.current ? 0 : -1
+}
+
+const isDateArray = (a: string[] | Date[]): a is Date[] => typeof a[0] === 'object'
+
+const makeSelectedCallback = (selected: BaseProps['selected']): (d: string) => boolean => {
+  if (!selected) {
+    return () => false
+  } else if (Array.isArray(selected)) {
+    if (selected.length > 50) {
+      const vals = new Set<string>()
+      if (isDateArray(selected)) {
+        selected.forEach((d) => vals.add(toISODate(d)))
+      } else {
+        selected.forEach(vals.add, vals)
+      }
+      return Set.prototype.has.bind(vals)
+    } else if (isDateArray(selected)) {
+      selected = selected.map(toISODate)
+    }
+    return Array.prototype.includes.bind(selected as string[])
+  } else {
+    const isoSelected = typeof selected === 'string' ? selected : toISODate(selected)
+    return (d) => d === isoSelected
+  }
+}
+
+const CalendarGridBase = ({ month, year, locale, labels = {}, isValidDate, selected, initialFocus, ...props }: BaseProps) => {
+  const gridRef = useRefWithId<HTMLDivElement>(props.id)
+  const id = gridRef.current.id
   const { labelDate, labelDisabled, weekdays } = labels
   const header = React.useMemo(() => makeGridHeader(id, locale, weekdays), [id, locale, weekdays])
   const grid = React.useMemo(
     () => makeGrid(month, year, locale, isValidDate, labelDate, labelDisabled),
     [month, year, locale, isValidDate, labelDate, labelDisabled]
   )
-  let isSelected: (d: string) => boolean
-  if (!selected) {
-    isSelected = () => false
-  } else if (Array.isArray(selected)) {
-    isSelected = Array.prototype.includes.bind(typeof selected[0] === 'string' ? selected : (selected as Date[]).map(toISODate))
-  } else {
-    const isoSelected = typeof selected === 'string' ? selected : toISODate(selected)
-    isSelected = (d) => d === isoSelected
-  }
+  const getTabIndex = useTabIndexCallback(initialFocus, gridRef, props)
+  const isSelected = React.useMemo(() => makeSelectedCallback(selected), [selected])
   return (
-    <div {...props} id={id} role="grid">
+    <div {...props} id={id} ref={gridRef} role="grid">
       {header && <div role="row" key="header">{header}</div>}
       {grid.map((row, ix) => (
         <div role="row" key={ix}>
@@ -117,6 +170,7 @@ const CalendarGridBase = ({ month, year, locale, labels = {}, isValidDate, selec
               dateProps['aria-describedby'] = header[jx].props.id
             }
             dateProps['aria-selected'] = isSelected(dateProps['data-date'])
+            dateProps.tabIndex = getTabIndex(dateProps['data-date'])
             return (
               <span {...dateProps} key={jx} role="gridcell" />
             )
@@ -129,7 +183,7 @@ const CalendarGridBase = ({ month, year, locale, labels = {}, isValidDate, selec
 
 // TODO Switch to cactus-theme helpers
 export const CalendarGrid = styled(CalendarGridBase).withConfig(
-  omitProps<CalendarGridProps>(margin)
+  omitProps<CalendarGridProps>(margin, 'radius')
 )`
   ${(p) => textStyle(p.theme, 'small')};
   text-align: center;

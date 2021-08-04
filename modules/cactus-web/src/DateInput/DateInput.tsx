@@ -1595,6 +1595,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       } while (++dayOfWeek < 7)
 
       this.phrasesCache = {
+        // TODO This is currently set as `roledescription` but should probably be `describedby`.
         calendarKeyboardDirections: 'Press space to choose the date.',
         inputKeyboardDirections: '',
         yearLabel: 'year',

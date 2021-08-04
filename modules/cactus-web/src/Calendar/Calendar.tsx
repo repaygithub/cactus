@@ -1,9 +1,9 @@
-import CalendarGrid, { CalendarDate, CalendarValue, toISODate } from './Grid'
+import CalendarGrid, { CalendarDate, CalendarValue, toISODate, queryDate, INSIDE_DATE } from './Grid'
 
 type BaseProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'defaultChecked' | 'defaultValue' | 'onChange'>
 
 interface CalendarProps extends MarginProps, BaseProps {
-  initialFocus?: CalendarDate | { day?: number; month?: number; year?: number }
+  initialFocus?: CalendarDate
   value?: CalendarValue
   defaultValue?: CalendarValue
   form?: string
@@ -17,6 +17,7 @@ interface CalendarProps extends MarginProps, BaseProps {
   labels?: {
     one: never
   }
+  locale?: string
   children?: never
 }
 
@@ -31,10 +32,24 @@ const initState = (props) => {
   return { value: '' }
 }
 
+const raiseAsDate = (value: CalendarValue) => {
+  if (Array.isArray(value)) {
+    value = value[0]
+  }
+  return typeof value === 'object' ? 'date' : 'string'
+}
+
 class CalenderBase extends React.Component {
   public static Grid = CalendarGrid
 
   public state = initState(this.props)
+
+  private eventTarget = new CactusEventTarget<Color>({})
+  private rootRef = React.createRef<HTMLDivElement>()
+
+  get rootElement() {
+    return this.rootRef.current as HTMLElement
+  }
 
   static getDerivedStateFromProps(props: Readonly<CalendarProps>, state: CalendarState): Partial<CalendarState> | null {
     if (props.value !== undefined && props.value !== state.value) {
@@ -43,7 +58,7 @@ class CalenderBase extends React.Component {
     return null
   }
 
-  onReset = (e: React.FormEvent<HTMLFormElement>) => {
+  private onReset = (e: React.FormEvent<HTMLFormElement>) => {
     if (this.props.value !== undefined) return
     const form = this.props.form
     if (form ? e.target.id === form : e.target.contains(this.rootElement)) {
@@ -59,123 +74,156 @@ class CalenderBase extends React.Component {
     document.removeEventListener('reset', this.onReset)
   }
 
-  setMonth = (month: number) => {
-    this.setState({ month })
-    this.props.onMonthChange?.(month)
-  }
-
-  setYear = (year: number) => {
-    this.setState({ year })
-    this.props.onYearChange?.(year)
-  }
-
-  gridControl = (gridRoot, searchState) => {
-    const elements = gridRoot.querySelector('[role="gridcell"]:not(.outside-date)')
-    let nextIndex = getFocusIndex(elements, searchState)
-    if (nextIndex < 0) {
-      this.setState(({ month, year }) => {
-        const date = new Date(year, month, 1)
-        date.setDate(0)
-        return { month: date.getMonth(), year: date.getFullYear() }
-      })
-    } else if (nextIndex >= elements.length) {
-      this.setState(({ month, year }) => {
-        const date = new Date(year, month, 1)
-        date.setDate(32)
-        return { month: date.getMonth(), year: date.getFullYear() }
-      })
-    } else {
-      // TODO change element tabindex?
-      state.focusIndex = nextIndex
-      return elements[nextIndex]
+  componentDidUpdate(props, state) {
+    if (state.month !== this.state.month) {
+      this.props.onMonthChange?.(this.state.month)
+    }
+    if (state.year !== this.state.year) {
+      this.props.onYearChange?.(this.state.year)
+    }
+    // TODO Are there situations where the month/year might change
+    // and we need to set a tabIndex without actually focusing?
+    if (state.overflowFocus !== this.state.overflowFocus) {
+      queryDate(this.rootElement, this.state.overflowFocus)?.focus()
     }
   }
-}
 
-const gridRef = (gridRoot: HTMLDivElement) => {
-}
-
-const observer = window !== 'undefined' && window.MutationObserver && new window.MutationObserver(
-  (mutations) => {
-    for (const mut of mutations) {
-      mut.addedNodes.forEach(setTabIndex)
-    }
-  }
-)
-
-const setTabIndex = (e: Node) => {
-  const isElem: e is HTMLElement = 'tabIndex' in e
-  if (isElem && e.dataset.date) {
-    e.tabIndex = -1
-  }
-}
-
-const gridRef = (gridRoot: HTMLDivElement) => {
-  if (gridRoot) {
-    gridRoot.querySelectorAll('[data-date]').forEach(setTabIndex)
-    observer?.observe(gridRoot)
-  }
-}
-
-const Grid = (props) => {
-  const ref = useMergedRefs(gridRef)
-  React.useEffect(() => {
-    // TODO use passed-in value
-    const initialFocus = toISODate(new Date())
-    if (ref.current) {
-      const element = ref.current.querySelector(`[data-date='${initialFocus}']`) || ref.current.querySelector('[data-date]:not(.outside-date)')
-      if (element) {
-        element.tabIndex = 0
+  setOverflowFocus(date: Date) {
+    const month = date.getMonth()
+    const year = date.getFullYear()
+    this.setState((state) => {
+      if (month !== state.month || year !== state.year) {
+        return { month, year, overflowFocus: toISODate(date) }
       }
+      return null
+    })
+  }
+
+  setSelectedDate = (e: React.SyntheticEvent<HTMLElement>) => {
+    // TODO Support multiple, eventually.
+    const isoDate = e.target.dataset.date
+    const disabled = this.props.disabled || this.props.readOnly || e.target.getAttribute('aria-disabled') === 'true'
+    if (disabled || !isoDate) return
+
+    const value = raiseAsDate(this.state.value) ? new Date(isoDate) : isoDate
+    this.setState({ value })
+    if (this.props.onChange) {
+      this.eventTarget.id = this.props.id
+      this.eventTarget.name = this.props.name
+      this.eventTarget.value = value
+      this.props.onChange(new CactusChangeEvent(this.eventTarget, e))
     }
-  }, [])
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  }
+
+  setGridFocus(shift: number, type: 'day' | 'month' | 'year' | 'weekday') {
+    const dates = Array.from(this.rootElement.querySelectorAll<HTMLElement>(INSIDE_DATE))
+    const index = getCurrentFocusIndex(dates, 0)
+    const date = new Date(dates[index].dataset.date)
+    const month = date.getMonth()
+    const year = date.getFullYear()
+    if (type === 'day') {
+      date.setDate(date.getDate() + shift)
+    } else if (type === 'month') {
+      date.setMonth(month + shift)
+    } else if (type === 'year') {
+      date.setYear(year + shift)
+    } else { // type === 'weekday'
+      date.setDate(date.getDate() + shift - date.getDay())
+    }
+    if (date.getMonth() !== month || date.getFullYear() !== year) {
+      this.setOverflowFocus(date)
+    } else {
+      dates[date.getDate() - 1].focus()
+    }
+  }
+
+  onGridKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!e.target.dataset.date) return
 
-    let focusChanged = false
     switch (e.key) {
       case 'ArrowLeft':
-        focusChanged = setFocus(-1, 'day')
+        this.setGridFocus(-1, 'day')
         break
       case 'ArrowRight':
-        focusChanged = setFocus(1, 'day')
+        this.setGridFocus(1, 'day')
         break
       case 'ArrowUp':
-        focusChanged = setFocus(-7, 'day')
+        this.setGridFocus(-7, 'day')
         break
       case 'ArrowDown':
-        focusChanged = setFocus(7, 'day')
+        this.setGridFocus(7, 'day')
         break
       case 'PageUp':
-        focusChanged = setFocus(-1, e.shiftKey ? 'year' : 'month')
+        this.setGridFocus(-1, e.shiftKey ? 'year' : 'month')
         break
       case 'PageDown':
-        focusChanged = setFocus(1, e.shiftKey ? 'year' : 'month')
+        this.setGridFocus(1, e.shiftKey ? 'year' : 'month')
         break
       case 'Home':
-        focusChanged = setFocus(0, 'weekday')
+        this.setGridFocus(0, 'weekday')
         break
       case 'End':
-        focusChanged = setFocus(6, 'weekday')
+        this.setGridFocus(6, 'weekday')
         break
 
       case ' ':
       case 'Enter':
-        if (target.getAttribute('aria-disabled') !== true) {
-          // TODO Someday we should handle multiple with shift/ctrl keys.
-          setSelectedDate(e.target.dataset.date)
-        }
+        // TODO Someday we should handle multiple with shift/ctrl keys.
+        setSelectedDate(e)
+        e.preventDefault()
         break
 
       default:
         return
     }
-    if (focusChanged) {
-      e.target.tabIndex = -1
-    }
     e.stopPropagation()
   }
-  return (
-    <CalendarGrid {...props} ref={ref} />
-  )
+
+  render() {
+    const {
+      initialFocus,
+      value,
+      defaultValue,
+      form,
+      name,
+      multiple,
+      disabled,
+      readOnly,
+      onChange,
+      onMonthChange,
+      onYearChange,
+      isValidDate,
+      labels,
+      locale,
+      ...rest
+    } = this.props
+    return (
+      <div
+        {...rest}
+        role="group"
+        aria-disabled={disabled}
+        ref={this.rootRef}
+      >
+        <div>
+          <LeftButton />
+          <SelectMonth />
+          <SelectYear />
+          <RightButton />
+        </div>
+        <CalendarGrid
+          month={this.state.month}
+          year={this.state.year}
+          locale={locale}
+          isValidDate={isValidDate}
+          selected={this.state.value}
+          initialFocus={initialFocus}
+          labels={labels}
+          aria-multiselectable={multiple}
+          aria-readonly={readOnly}
+          onKeyDown={this.onGridKeyDown}
+          onClick={this.setSelectedDate}
+        />
+      </div>
+    )
+  }
 }
