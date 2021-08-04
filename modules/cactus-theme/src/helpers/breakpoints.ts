@@ -16,7 +16,7 @@ export const mediaGTE = memo(_mediaGTE, 'small', 'medium')
 /** Returns a media query that's the inverse of the equivalent `mediaGTE(X)` query. */
 const _mediaLT = (p: ThemeProps, breakpoint: Breakpoint) =>
   // Assumes query starts with `@media screen and (min-width:`
-  `@media screen and (not ${p.theme.mediaQueries[breakpoint].slice(18)})`
+  `@media not ${p.theme.mediaQueries[breakpoint].slice(7)}`
 export const mediaLT = memo(_mediaLT, 'small', 'medium')
 
 /** Returns the given breakpoint value; accepts either an index, or a screen size name. */

@@ -28,17 +28,17 @@ describe('helper: mediaGTE', () => {
 
 describe('helper: mediaLT', () => {
   test('should curry args', () => {
-    expectCurry(mediaLT, ['extraLarge'], '@media screen and (not (min-width: 1440px))')
+    expectCurry(mediaLT, ['extraLarge'], '@media not screen and (min-width: 1440px)')
   })
 
   test('should memoize screen sizes', () => {
     expectMemo(
       mediaLT,
       {
-        small: '@media screen and (not (min-width: 768px))',
-        medium: '@media screen and (not (min-width: 1024px))',
+        small: '@media not screen and (min-width: 768px)',
+        medium: '@media not screen and (min-width: 1024px)',
       },
-      { key: 'medium', value: '@media screen and (not (min-width: 500px))', ...altBP }
+      { key: 'medium', value: '@media not screen and (min-width: 500px)', ...altBP }
     )
   })
 })
