@@ -12,18 +12,20 @@ export interface HelperFunc<A extends any[], R> {
 }
 
 export const wrap = <A extends any[], R>(func: ThemeFunc<A, R>): HelperFunc<A, R> => {
-  const helper: any = (first: any, ...rest: any[]) => {
-    if (typeof first === 'object') {
-      if ('theme' in first) {
-        return (func as any)(first, ...rest)
-      } else if ('space' in first && 'mediaQueries' in first) {
+  const helper: any = (...args: A) => {
+    if (typeof args[0] === 'object') {
+      if ('theme' in args[0]) {
+        const first = args.shift() as ThemeProps
+        return func(first, ...args)
+      } else if ('space' in args[0] && 'mediaQueries' in args[0]) {
         // Picked two relatively uncommon names to represent the theme shape.
-        return (func as any)({ theme: first }, ...rest)
+        const theme = args.shift() as CactusTheme
+        return func({ theme }, ...args)
       }
-    } else if (rest.length === 0 && first in helper) {
-      return helper[first]
+    } else if (args.length === 1 && args[0] in helper) {
+      return helper[args[0]]
     }
-    return (p: ThemeProps) => (func as any)(p, first, ...rest)
+    return (p: ThemeProps) => func(p, ...args)
   }
   return helper
 }
@@ -34,7 +36,7 @@ export const memo = <A extends any[], R>(
 ): HelperFunc<A, R> => {
   const helper: any = wrap(func)
   for (const arg of toCache) {
-    helper[arg] = (p: ThemeProps) => (func as any)(p, arg)
+    helper[arg] = helper(arg)
   }
   return helper
 }
