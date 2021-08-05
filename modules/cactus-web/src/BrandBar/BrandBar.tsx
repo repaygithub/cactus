@@ -224,12 +224,19 @@ const focusControl = (root: HTMLElement) =>
   Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'))
 
 const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
-  if (event.key === 'ArrowDown') {
+  const key = event.key
+  if (key === 'ArrowDown') {
     event.preventDefault()
     toggle(true, 1, { shift: true })
-  } else if (event.key === 'ArrowUp') {
+  } else if (key === 'ArrowUp') {
     event.preventDefault()
     toggle(true, -1, { shift: true })
+  } else if (key === 'End') {
+    event.preventDefault()
+    toggle(true, -1)
+  } else if (key === 'Home') {
+    event.preventDefault()
+    toggle(true, 0)
   }
 }
 
