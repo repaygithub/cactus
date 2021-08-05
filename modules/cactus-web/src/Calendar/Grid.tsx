@@ -15,26 +15,36 @@ export type WeekdayLabel = string | {
   short: string
 }
 
+export interface CalendarGridLabels {
+  labelDate?: (d: Date) => string
+  labelDisabled?: (normalLabel: string) => string
+  weekdays?: WeekdayLabel[]
+}
+
 interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: never
-  month: number
-  year: number
+  children?: never
+  focusDate?: Date
   locale?: string
   isValidDate?: (d: Date) => boolean
   selected?: CalendarValue
-  initialFocus?: CalendarDate
-  labels?: {
-    labelDate?: (d: Date) => string
-    labelDisabled?: (normalLabel: string) => string
-    weekdays?: WeekdayLabel[]
-  }
+  labels?: CalendarGridLabels
 }
 
 export interface CalendarGridProps extends BaseProps, MarginProps {
   radius?: number
 }
 
-export const toISODate = (date: Date): string => date.toISOString().slice(0, 10)
+// toISOString messes with timezones and can return the wrong date;
+// similarly `new Date(string)` treats ISO date strings like midnight UTC.
+export const toISODate = (date: Date): string => [
+  ('000' + date.getFullYear()).slice(0, 4),
+  ('0' + (date.getMonth() + 1)).slice(0, 2),
+  ('0' + date.getDate()).slice(0, 2),
+].join('-')
+export const dateParts = (date: string): [number, number, number] => {
+  const [year, month, day] = date.split('-')
+  return [parseInt(year), parseInt(month), parseInt(day)]
+}
 
 const makeGridHeader = (idPrefix: string, locale?: string, weekdayLabels: WeekdayLabel[] = []) => {
   if (weekdayLabels === null) return null
@@ -97,17 +107,19 @@ export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =
   root.querySelector<HTMLElement>(`[data-date='${date}']:not(.outside-date)`)
 
 const useTabIndexCallback = (
-  initialFocus: BaseProps['initialFocus'],
-  gridRef: React.MutableRefObject<HTMLDivElement>,
+  focusDate: CalendarDate,
+  gridRef: React.RefObject<HTMLDivElement>,
   props: React.HTMLAttributes<HTMLDivElement>,
 ): (d: string) => number => {
   const focusRef = React.useRef<string | null>(null)
+  const focusStr = typeof focusDate === 'object' ? toISODate(focusDate) : focusDate
   React.useEffect(() => {
-      const initial = typeof initialFocus === 'object' ? toISODate(initialFocus) : initialFocus
-      const focus = (initial && queryDate(gridRef.current, initial) || gridRef.current.querySelector(INSIDE_DATE)) as HTMLElement
+    if (gridRef.current && !gridRef.current.contains(document.activeElement)) {
+      const focus = (queryDate(gridRef.current, focusStr) || gridRef.current.querySelector(INSIDE_DATE)) as HTMLElement
       focusRef.current = focus.dataset.date as string
       focus.tabIndex = 0
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    }
+  }, [focusStr, gridRef])
 
   const { onFocus, onBlur } = props
   props.onFocus = (e) => {
@@ -149,16 +161,26 @@ const makeSelectedCallback = (selected: BaseProps['selected']): (d: string) => b
   }
 }
 
-const CalendarGridBase = ({ month, year, locale, labels = {}, isValidDate, selected, initialFocus, ...props }: BaseProps) => {
+const TODAY = new Date()
+
+const CalendarGridBase = ({ focusDate = TODAY, locale, labels = {}, isValidDate, selected, ...props }: BaseProps) => {
   const gridRef = useRefWithId<HTMLDivElement>(props.id)
   const id = gridRef.current.id
   const { labelDate, labelDisabled, weekdays } = labels
   const header = React.useMemo(() => makeGridHeader(id, locale, weekdays), [id, locale, weekdays])
+
+  let month: number, year: number
+  if (typeof focusDate === 'string') {
+    [year, month] = dateParts(focusDate)
+  } else {
+    month = focusDate.getMonth()
+    year = focusDate.getFullYear()
+  }
   const grid = React.useMemo(
     () => makeGrid(month, year, locale, isValidDate, labelDate, labelDisabled),
     [month, year, locale, isValidDate, labelDate, labelDisabled]
   )
-  const getTabIndex = useTabIndexCallback(initialFocus, gridRef, props)
+  const getTabIndex = useTabIndexCallback(focusDate, gridRef, props)
   const isSelected = React.useMemo(() => makeSelectedCallback(selected), [selected])
   return (
     <div {...props} id={id} ref={gridRef} role="grid">
