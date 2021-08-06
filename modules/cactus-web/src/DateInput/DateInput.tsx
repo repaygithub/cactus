@@ -29,7 +29,12 @@ import {
   PartialDate,
   TOKEN_SETTERS,
 } from '../helpers/dates'
-import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpers/events'
+import {
+  CactusChangeEvent,
+  CactusEventTarget,
+  CactusFocusEvent,
+  isFocusOut,
+} from '../helpers/events'
 import generateId from '../helpers/generateId'
 import KeyCodes from '../helpers/keyCodes'
 import getLocale from '../helpers/locale'
@@ -365,6 +370,7 @@ const CalendarPopup = styled(BasePopup)`
   ${(p): ReturnType<typeof css> => popupShape('dialog', p.theme.shape)}
   ${(p): ReturnType<typeof css> => popupBoxShadow(p.theme)}
   overflow: hidden;
+  outline: none;
 `
 
 const MonthSelect = styled.button.attrs({ type: 'button' })`
@@ -918,7 +924,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   public componentDidMount(): void {
     this.eventTarget.id = this.props.id
     this.eventTarget.name = this.props.name
-    document.body.addEventListener('click', this.handleBodyClick, false)
   }
 
   public componentDidUpdate(_: DateInputProps, prevState: DateInputState): void {
@@ -1007,22 +1012,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  public componentWillUnmount(): void {
-    document.body.removeEventListener('click', this.handleBodyClick, false)
-  }
-
   /** event handlers */
-
-  private handleBodyClick = (event: MouseEvent): void => {
-    const { target } = event
-    if (
-      !(target instanceof Node) ||
-      (!(this._inputWrapper.current && this._inputWrapper.current.contains(target)) &&
-        !(this._portal.current && this._portal.current.contains(target)))
-    ) {
-      this._close(false)
-    }
-  }
 
   private handleKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const target = event.target
@@ -1071,7 +1061,13 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private handleBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
+  private handleComponentBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
+    if (isFocusOut(event)) {
+      this._close(false)
+    }
+  }
+
+  private handleInputBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
     // when blurring off the field
     this._lastInputKeyed = ''
     // double nested because the portal takes one turn to render
@@ -1665,7 +1661,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const selectedStr = value.format('YYYY-MM-dd')
 
     return (
-      <Fragment>
+      <div onBlur={this.handleComponentBlur}>
         <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
           <InputWrapper
             className={className}
@@ -1676,7 +1672,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             onKeyDownCapture={this.handleKeydownCapture}
             onInputCapture={this.handleInputCapture}
             onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
+            onBlur={this.handleInputBlur}
             onClick={this.handleClick}
             {...getDataProps(this.props)}
           >
@@ -1738,6 +1734,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             role="dialog"
             aria-labelledby={`${currentMonthId} ${currentYearId}`}
             onKeyDownCapture={this.handlePortalKeydownCapture}
+            tabIndex={-1}
           >
             <div onClick={this.handleCalendarClick}>
               <Flex justifyContent="space-between" alignItems="center" padding={4}>
@@ -1932,7 +1929,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             </div>
           </CalendarPopup>
         )}
-      </Fragment>
+      </div>
     )
   }
 }

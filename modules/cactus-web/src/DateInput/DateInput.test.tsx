@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { PartialDate } from '../helpers/dates'
 import KeyCodes from '../helpers/keyCodes'
+import Modal from '../Modal/Modal'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DateInput from './DateInput'
 
@@ -274,6 +275,22 @@ describe('component: DateInput', (): void => {
         fireEvent.click(portalTrigger)
       })
       expect(getByRole('dialog')).toBeInTheDocument()
+    })
+
+    test('can close calendar on blur, even inside a modal', () => {
+      const { getByLabelText, getByText } = render(
+        <StyleProvider>
+          <Modal isOpen={true} onClose={() => undefined}>
+            <div>Click here to blur the calendar</div>
+            <DateInput name="date-input" id="date-input" />
+          </Modal>
+        </StyleProvider>
+      )
+      const portalTrigger = getByLabelText('Open date picker')
+      userEvent.click(portalTrigger)
+      expect(getByLabelText('Click to go forward one month')).toBeVisible()
+      userEvent.click(getByText('Click here to blur the calendar'))
+      expect(getByLabelText('Click to go forward one month')).not.toBeVisible()
     })
 
     test('focus set to current date when no value selected', async (): Promise<void> => {
@@ -716,7 +733,7 @@ describe('component: DateInput', (): void => {
           <DateInput name="thin" id="not-thicc" value="2020-01-01" data-testid="dateInput" />
         </StyleProvider>
       )
-      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
       expect(styles.borderWidth).toBe('2px')
     })
@@ -728,7 +745,7 @@ describe('component: DateInput', (): void => {
           <DateInput name="intermediate" id="not-round" value="2020-01-01" />
         </StyleProvider>
       )
-      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
 
       expect(styles.borderRadius).toBe('8px')
@@ -742,7 +759,7 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
 
       expect(styles.borderRadius).toBe('1px')
@@ -756,7 +773,7 @@ describe('component: DateInput', (): void => {
         </StyleProvider>
       )
 
-      const dateInput = asFragment().firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
 
       expect(styles.boxShadow).toBe('')
