@@ -18,6 +18,7 @@ Array [
   "iconSize",
   "fontSize",
   "textStyle",
+  "lineHeight",
   "boxShadow",
   "shadow",
 ]
