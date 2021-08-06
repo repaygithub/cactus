@@ -1,19 +1,22 @@
+import { color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
 import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getFormatter } from '../helpers/dates'
-import { useRefWithId } from '../helpers/useId'
+import { isFocusOut } from '../helpers/events'
 import { omitProps } from '../helpers/omit'
 import { textStyle } from '../helpers/theme'
-import { isFocusOut } from '../helpers/events'
+import { useRefWithId } from '../helpers/useId'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
-export type WeekdayLabel = string | {
-  long: string
-  short: string
-}
+export type WeekdayLabel =
+  | string
+  | {
+      long: string
+      short: string
+    }
 
 export interface CalendarGridLabels {
   labelDate?: (d: Date) => string
@@ -36,11 +39,12 @@ export interface CalendarGridProps extends BaseProps, MarginProps {
 
 // toISOString messes with timezones and can return the wrong date;
 // similarly `new Date(string)` treats ISO date strings like midnight UTC.
-export const toISODate = (date: Date): string => [
-  ('000' + date.getFullYear()).slice(0, 4),
-  ('0' + (date.getMonth() + 1)).slice(0, 2),
-  ('0' + date.getDate()).slice(0, 2),
-].join('-')
+export const toISODate = (date: Date): string =>
+  [
+    ('000' + date.getFullYear()).slice(0, 4),
+    ('0' + (date.getMonth() + 1)).slice(0, 2),
+    ('0' + date.getDate()).slice(0, 2),
+  ].join('-')
 export const dateParts = (date: string): [number, number, number] => {
   const [year, month, day] = date.split('-')
   return [parseInt(year), parseInt(month), parseInt(day)]
@@ -75,9 +79,16 @@ const makeGridHeader = (idPrefix: string, locale?: string, weekdayLabels: Weekda
 
 type GridCellProps = React.HTMLAttributes<Node> & { 'data-date': string }
 
-const makeGrid = (month: number, year: number, locale?: string, isValidDate?: (d: Date) => boolean, labelDate?: (d: Date) => string, labelDisabled?: (l: string) => string) => {
+const makeGrid = (
+  month: number,
+  year: number,
+  locale?: string,
+  isValidDate?: (d: Date) => boolean,
+  labelDate?: (d: Date) => string,
+  labelDisabled?: (l: string) => string
+) => {
   const rows: GridCellProps[][] = []
-  let date = new Date(year, month, 1)
+  const date = new Date(year, month, 1)
   date.setDate(-date.getDay() + 1)
   if (!labelDate) {
     labelDate = getFormatter('date', locale)
@@ -91,7 +102,7 @@ const makeGrid = (month: number, year: number, locale?: string, isValidDate?: (d
       row.push({
         children: day,
         'aria-disabled': !isValid,
-        'aria-label': (!isValid && labelDisabled) ? labelDisabled(label) : label,
+        'aria-label': !isValid && labelDisabled ? labelDisabled(label) : label,
         'data-date': toISODate(date),
         className: date.getMonth() !== month ? 'outside-date' : undefined,
       })
@@ -109,13 +120,14 @@ export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =
 const useTabIndexCallback = (
   focusDate: CalendarDate,
   gridRef: React.RefObject<HTMLDivElement>,
-  props: React.HTMLAttributes<HTMLDivElement>,
-): (d: string) => number => {
+  props: React.HTMLAttributes<HTMLDivElement>
+): ((d: string) => number) => {
   const focusRef = React.useRef<string | null>(null)
   const focusStr = typeof focusDate === 'object' ? toISODate(focusDate) : focusDate
   React.useEffect(() => {
     if (gridRef.current && !gridRef.current.contains(document.activeElement)) {
-      const focus = (queryDate(gridRef.current, focusStr) || gridRef.current.querySelector(INSIDE_DATE)) as HTMLElement
+      const focus = (queryDate(gridRef.current, focusStr) ||
+        gridRef.current.querySelector(INSIDE_DATE)) as HTMLElement
       focusRef.current = focus.dataset.date as string
       focus.tabIndex = 0
     }
@@ -134,12 +146,12 @@ const useTabIndexCallback = (
     }
     onBlur?.(e)
   }
-  return (date: string) => date === focusRef.current ? 0 : -1
+  return (date: string) => (date === focusRef.current ? 0 : -1)
 }
 
 const isDateArray = (a: string[] | Date[]): a is Date[] => typeof a[0] === 'object'
 
-const makeSelectedCallback = (selected: BaseProps['selected']): (d: string) => boolean => {
+const makeSelectedCallback = (selected: BaseProps['selected']): ((d: string) => boolean) => {
   if (!selected) {
     return () => false
   } else if (Array.isArray(selected)) {
@@ -163,7 +175,14 @@ const makeSelectedCallback = (selected: BaseProps['selected']): (d: string) => b
 
 const TODAY = new Date()
 
-const CalendarGridBase = ({ focusDate = TODAY, locale, labels = {}, isValidDate, selected, ...props }: BaseProps) => {
+const CalendarGridBase = ({
+  focusDate = TODAY,
+  locale,
+  labels = {},
+  isValidDate,
+  selected,
+  ...props
+}: BaseProps) => {
   const gridRef = useRefWithId<HTMLDivElement>(props.id)
   const id = gridRef.current.id
   const { labelDate, labelDisabled, weekdays } = labels
@@ -171,7 +190,7 @@ const CalendarGridBase = ({ focusDate = TODAY, locale, labels = {}, isValidDate,
 
   let month: number, year: number
   if (typeof focusDate === 'string') {
-    [year, month] = dateParts(focusDate)
+    ;[year, month] = dateParts(focusDate)
   } else {
     month = focusDate.getMonth()
     year = focusDate.getFullYear()
@@ -184,7 +203,11 @@ const CalendarGridBase = ({ focusDate = TODAY, locale, labels = {}, isValidDate,
   const isSelected = React.useMemo(() => makeSelectedCallback(selected), [selected])
   return (
     <div {...props} id={id} ref={gridRef} role="grid">
-      {header && <div role="row" key="header">{header}</div>}
+      {header && (
+        <div role="row" key="header">
+          {header}
+        </div>
+      )}
       {grid.map((row, ix) => (
         <div role="row" key={ix}>
           {row.map((dateProps, jx) => {
@@ -193,9 +216,7 @@ const CalendarGridBase = ({ focusDate = TODAY, locale, labels = {}, isValidDate,
             }
             dateProps['aria-selected'] = isSelected(dateProps['data-date'])
             dateProps.tabIndex = getTabIndex(dateProps['data-date'])
-            return (
-              <span {...dateProps} key={jx} role="gridcell" />
-            )
+            return <span {...dateProps} key={jx} role="gridcell" />
           })}
         </div>
       ))}
@@ -203,21 +224,18 @@ const CalendarGridBase = ({ focusDate = TODAY, locale, labels = {}, isValidDate,
   )
 }
 
-// TODO Switch to cactus-theme helpers
 export const CalendarGrid = styled(CalendarGridBase).withConfig(
   omitProps<CalendarGridProps>(margin, 'radius')
 )`
-  ${(p) => textStyle(p.theme, 'small')};
-  text-align: center;
-  color: ${(p) => p.theme.colors.darkestContrast};
-  background-color: ${(p) => p.theme.colors.lightContrast};
-  padding: 0 10px;
   box-sizing: border-box;
   display: inline-block;
   width: 300px;
-
+  padding: 0 10px;
   ${margin}
-  ${(p) => p.radius && `border-radius: ${radius(p, p.radius)};`}
+  ${textStyle('small')}
+  ${colorStyle('lightContrast')}
+  border-radius: ${radius(20)};
+  text-align: center;
 
   [role='row'] {
     display: flex;
@@ -237,36 +255,34 @@ export const CalendarGrid = styled(CalendarGridBase).withConfig(
   }
 
   .outside-date {
-    color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${color('mediumContrast')};
   }
 
   *:focus {
     outline: none;
-    background-color: ${(p) => p.theme.colors.lightCallToAction};
+    background-color: ${color('lightCallToAction')};
 
     &[aria-disabled='true'] {
-      background-color: ${(p) => p.theme.colors.errorLight};
+      background-color: ${color('errorLight')};
     }
   }
 
   [aria-disabled='true'] {
-    color: ${(p) => p.theme.colors.mediumContrast};
+    color: ${color('mediumContrast')};
   }
 
   [aria-disabled='false'] {
     cursor: pointer;
     :hover {
-      background-color: ${(p) => p.theme.colors.lightCallToAction};
+      background-color: ${color('lightCallToAction')};
     }
   }
 
   [aria-selected='true'] {
-    background-color: ${(p) => p.theme.colors.callToAction};
-    color: ${(p) => p.theme.colors.white};
+    ${colorStyle('callToAction')}
 
     &.outside-date {
-      color: ${(p) => p.theme.colors.darkContrast};
-      background-color: ${(p) => p.theme.colors.lightCallToAction};
+      ${colorStyle('darkContrast', 'lightCallToAction')}
     }
   }
 ` as React.FC<CalendarGridProps>

@@ -18,5 +18,5 @@ export default {
 } as Meta
 
 export const BasicUsage = (): ReactElement => {
-  return (<CalendarGrid />)
+  return <CalendarGrid />
 }

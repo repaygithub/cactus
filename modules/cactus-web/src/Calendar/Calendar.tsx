@@ -1,23 +1,40 @@
-import React from 'react'
-import { margin, MarginProps } from 'styled-system'
-import styled from 'styled-components'
-
-import { getFormatter } from '../helpers/dates'
-import CalendarGrid, { dateParts, CalendarDate, CalendarGridLabels, CalendarValue, toISODate, queryDate, INSIDE_DATE } from './Grid'
-import IconButton from '../IconButton/IconButton'
-import Flex from '../Flex/Flex'
-import { CactusEventTarget, CactusChangeEvent } from '../helpers/events'
 import { NavigationChevronLeft, NavigationChevronRight } from '@repay/cactus-icons'
-import { getCurrentFocusIndex } from '../helpers/focus'
+import React from 'react'
+import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
-type BaseProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'defaultChecked' | 'defaultValue' | 'onChange'>
+import Flex from '../Flex/Flex'
+import { getFormatter } from '../helpers/dates'
+import { CactusChangeEvent, CactusEventTarget } from '../helpers/events'
+import { getCurrentFocusIndex } from '../helpers/focus'
+import IconButton from '../IconButton/IconButton'
+import DropDown from './DropDown'
+import CalendarGrid, {
+  CalendarDate,
+  CalendarGridLabels,
+  CalendarValue,
+  dateParts,
+  INSIDE_DATE,
+  queryDate,
+  toISODate,
+} from './Grid'
+
+type BaseProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'defaultChecked' | 'defaultValue' | 'onChange'
+>
 
 interface CalendarLabels extends CalendarGridLabels {
   prevMonth: string
   nextMonth: string
+  showMonth: string
+  showYear: string
+  months?: string[]
 }
 
 const DEFAULT_LABELS: CalendarLabels = {
+  showMonth: 'Click to change month',
+  showYear: 'Click to change year',
   prevMonth: 'Click to go back one month',
   nextMonth: 'Click to go forward one month',
   labelDisabled: (d: string) => `${d} can't be selected`,
@@ -46,7 +63,7 @@ interface CalendarState {
   focusDate: Date
 }
 
-const memoize = <A extends any[], R>(func: (...a: A) => R): (...a: A) => R => {
+const memoize = <A extends any[], R>(func: (...a: A) => R): ((...a: A) => R) => {
   let key: A = [] as any
   let result: R = undefined as any
   return (...args: A) => {
@@ -89,6 +106,11 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
   private eventTarget = new CactusEventTarget<CalendarValue>({})
   private rootRef = React.createRef<HTMLDivElement>()
 
+  get rootElement(): HTMLDivElement {
+    if (!this.rootRef.current) throw new Error('over 9000')
+    return this.rootRef.current
+  }
+
   private getMonthOptions = memoize((locale?: string, monthLabels?: string[]) => {
     if (!monthLabels) {
       monthLabels = []
@@ -102,8 +124,7 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
   })
 
   // TODO Infinite scroll?
-  private static getYearOptions = memoize(() => {
-    const thisYear = new Date().getFullYear()
+  private getYearOptions = memoize((thisYear: number) => {
     const endYear = thisYear + 100
     const years = []
     for (let year = thisYear - 99; year < endYear; year++) {
@@ -112,12 +133,10 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
     return years
   })
 
-  get rootElement(): HTMLDivElement {
-    if (!this.rootRef.current) throw new Error('over 9000')
-    return this.rootRef.current
-  }
-
-  static getDerivedStateFromProps(props: Readonly<CalendarProps>, state: CalendarState): Partial<CalendarState> | null {
+  static getDerivedStateFromProps(
+    props: Readonly<CalendarProps>,
+    state: CalendarState
+  ): Partial<CalendarState> | null {
     if (props.value !== undefined) {
       let value = props.value
       if (Array.isArray(value) && !value.length) {
@@ -165,7 +184,10 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
 
   private setFocusDate(date: Date) {
     this.setState(({ focusDate }) => {
-      if (date.getMonth() !== focusDate.getMonth() || date.getFullYear() !== focusDate.getFullYear()) {
+      if (
+        date.getMonth() !== focusDate.getMonth() ||
+        date.getFullYear() !== focusDate.getFullYear()
+      ) {
         return { focusDate: date }
       }
       return null
@@ -195,17 +217,38 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
 
   private handleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const direction = e.currentTarget.name as 'left' | 'right'
-    const { value, focusDate } = this.state
-    const next = new Date(focusDate)
+    const next = new Date(this.state.focusDate)
     next.setMonth(next.getMonth() + (direction === 'left' ? -1 : 1))
-    const month = next.getMonth()
-    let day = focusDate.getDate()
+    this.handleMonthYearChange(next, e, direction)
+  }
 
+  private selectMonth = (month: number, e: React.SyntheticEvent) => {
+    const next = new Date(this.state.focusDate)
+    next.setMonth(month)
+    this.handleMonthYearChange(next, e)
+  }
+
+  private selectYear = (year: number, e: React.SyntheticEvent) => {
+    const next = new Date(this.state.focusDate)
+    next.setFullYear(year)
+    this.handleMonthYearChange(next, e)
+  }
+
+  private handleMonthYearChange(
+    next: Date,
+    e: React.SyntheticEvent,
+    transition?: 'left' | 'right'
+  ) {
+    const { value, focusDate } = this.state
+    const month = next.getMonth()
+    if (month === focusDate.getMonth() && next.getFullYear() === focusDate.getFullYear()) return
+
+    let day = focusDate.getDate()
     let updateValue = false
     if (value && !Array.isArray(value)) {
       updateValue = !this.props.readOnly
       if (typeof value === 'string') {
-        day =  dateParts(value)[2]
+        day = dateParts(value)[2]
       } else {
         day = value.getDate()
       }
@@ -224,6 +267,7 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
     // TODO Transitions
     const newState = { focusDate: next, value }
     if (updateValue) {
+      // TODO Make sure the date is enabled
       newState.value = raiseAsDate(value) ? next : toISODate(next)
       this.raiseChange(newState, e)
     } else {
@@ -234,6 +278,8 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
   private setGridFocus(shift: number, type: 'day' | 'month' | 'year' | 'weekday') {
     const dates = Array.from(this.rootElement.querySelectorAll<HTMLElement>(INSIDE_DATE))
     const index = getCurrentFocusIndex(dates, 0)
+    // The INSIDE_DATE query guarantees it has a `data-date` attribute.
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const date = new Date(...dateParts(dates[index].dataset.date!))
     const month = date.getMonth()
     const year = date.getFullYear()
@@ -243,7 +289,8 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
       date.setMonth(month + shift)
     } else if (type === 'year') {
       date.setFullYear(year + shift)
-    } else { // type === 'weekday'
+    } else {
+      // type === 'weekday'
       date.setDate(date.getDate() + shift - date.getDay())
     }
     // Only set the focusDate when the month/year changes, otherwise manage focus internally.
@@ -316,12 +363,7 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
     } = this.props
     // TODO style flex column-reverse
     return (
-      <div
-        {...rest}
-        role="group"
-        aria-disabled={disabled}
-        ref={this.rootRef}
-      >
+      <div {...rest} role="group" aria-disabled={disabled} ref={this.rootRef}>
         <CalendarGrid
           locale={locale}
           isValidDate={isValidDate}
@@ -342,18 +384,10 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
           >
             <NavigationChevronLeft />
           </IconButton>
-          <DropDown
-            value={this.state.focusDate.getMonth()}
-            options={this.getMonthOptions(locale, labels.months)}
-            onSelectOption={this.selectMonth}
-            aria-labelledby={0/* TODO */}
-          />
-          <DropDown
-            value={this.state.focusDate.getFullYear()}
-            options={this.getYearOptions()}
-            onSelectOption={this.selectYear}
-            aria-labelledby={0/* TODO */}
-          />
+          <div>
+            {this.renderMonthDD(locale, labels.months)}
+            {this.renderYearDD()}
+          </div>
           <IconButton
             name="right"
             label={labels.nextMonth || DEFAULT_LABELS.nextMonth}
@@ -363,95 +397,44 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
             <NavigationChevronRight />
           </IconButton>
         </Flex>
+        {renderLabels(labels)}
       </div>
+    )
+  }
+
+  renderMonthDD(locale?: string, labels?: string[]) {
+    const options = this.getMonthOptions(locale, labels)
+    const month = this.state.focusDate.getMonth()
+    return (
+      <DropDown
+        value={month}
+        label={options[month].label}
+        options={options}
+        onSelectOption={this.selectMonth}
+        aria-labelledby="showMonth"
+      />
+    )
+  }
+
+  renderYearDD() {
+    const year = this.state.focusDate.getFullYear()
+    return (
+      <DropDown
+        label={year}
+        value={year}
+        options={this.getYearOptions(year)}
+        onSelectOption={this.selectYear}
+        aria-labelledby="showYear"
+      />
     )
   }
 }
 
-const onWrapperKeyDown = (e: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
-  keyDownAsClick(e)
-  if (e.isDefaultPrevented()) return
-
-  let focusHint = 1
-  switch (e.key) {
-    case 'Home':
-    case 'PageUp':
-      toggle(true, 0)
-      break
-    case 'End':
-    case 'PageDown':
-      toggle(true, -1)
-      break
-
-    case 'ArrowUp':
-      focusHint = -1
-    case 'ArrowDown':
-      const button = e.currentTarget.firstElementChild
-      if (button?.getAttribute('aria-expanded') === 'true') {
-        toggle(true, focusHint, { shift: true })
-      } else {
-        let item = button?.nextElementSibling?.firstElementChild
-        while (item) {
-          if (item.getAttribute('aria-selected') === 'true') {
-            toggle(true, item)
-            break
-          }
-          item = item.nextElementSibling
-        }
-      }
-      break
-    default:
-      return
-  }
-  e.stopPropagation()
-}
-
-const positionPopup = (popup: HTMLElement) => {
-  const header = popup.closest('[role="group"] > *')
-  if (header) {
-    popup.styles.top = `${header.offsetHeight}px`
-  }
-}
-
-const DropDown = ({ value, options, onSelectOption, ...props }) => {
-  const { wrapperProps, popupProps, buttonProps, toggle, setFocus } = usePopup('listbox', { positionPopup, onWrapperKeyDown })
-  buttonProps['aria-labelledby'] = `${props['aria-labelledby']} ${buttonProps.id}`
-  delete buttonProps.onKeyDown // Handled at the wrapper level.
-  buttonProps.onClick = (e: React.MouseEvent<HTMLElement>) => {
-    const selected = e.currentTarget.nextElementSibling?.querySelector('[aria-selected="true"]')
-    toggle(undefined, selected)
-  }
-
-  let selectedLabel = ''
-  popupProps.children = options.map((opt) => {
-    const props = { key: '', tabIndex: -1, children: '', 'data-value': '' }
-    let isSelected = opt === value
-    if (typeof opt === 'object') {
-      props['data-value'] = opt.value.toString()
-      props.children = opt.label
-      isSelected = value === opt.value
-    } else {
-      props['data-value'] = props.children = opt.toString()
-    }
-    if (isSelected) {
-      selectedLabel = props.children
-    }
-    return (<li {...props} role="option" aria-selected={isSelected || undefined} />)
-  })
-  popupProps.onClick = (e: React.MouseEvent<HTMLElement>) => {
-    const target = e.target as HTMLElement
-    if (target.dataset.value) {
-      toggle(false, e.currentTarget.previousElementSibling)
-      onSelectOption(target.dataset.value, e)
-    }
-  }
-  return (
-    <div {...wrapperProps}>
-      <button type="button" {...buttonProps}>
-        <span>{selectedLabel}</span>
-        <NavigationChevronDown iconSize="tiny" ml={3} />
-      </button>
-      <ul {...popupProps} {...props} />
-    </div>
-  )
-}
+// Even with `hidden`, elements directly referenced by ID are still accessible.
+// TODO Fix the IDs
+const renderLabels = (labels: Partial<CalendarLabels>) => (
+  <div hidden>
+    <div id="showMonth">{labels.showMonth || DEFAULT_LABELS.showMonth}</div>
+    <div id="showYear">{labels.showYear || DEFAULT_LABELS.showYear}</div>
+  </div>
+)
