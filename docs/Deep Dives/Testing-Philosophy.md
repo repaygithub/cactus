@@ -1,6 +1,6 @@
 ## Testing Philosophy
 
-You wouldn't build a house without a good foundation. As a general rule a thumb, we want to shift our testing efforts as left as possible. A bottom up approach to testing is highly effective in reducing development times and decreasing bug escape rates. The reason for this is your testing effort becomes precisely targeted at different levels while also providing overlap through higher-order tests. Unit tests are the fastest form of quality feedback a developer can get, therefore we want to write a lot of these. This document along with the design guidelines presented is intended to demonstrate how we best go about that.
+You wouldn't build a house without a good foundation, so as a general rule a thumb, we want to shift our testing efforts as close to source (the foundation) as possible. A bottom up approach to testing is highly effective in reducing development times and decreasing bug escape rates. The reason for this is your testing effort becomes precisely targeted at different levels while also providing overlap through higher-order tests. Unit tests are the fastest form of quality feedback a developer can get, therefore we want to write a lot of these. This document along with the design guidelines presented is intended to demonstrate how we best go about that.
 
 
 ![alt text](https://martinfowler.com/articles/practical-test-pyramid/testPyramid.png)
