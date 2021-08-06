@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { fontSize, iconSize, lineHeight, space, textStyle } from '../src/helpers/sizes'
 import { defaultProps, expectCurry, expectMemo } from './helpers'
 
@@ -37,40 +34,20 @@ describe('helper: fontSize', () => {
 })
 
 describe('helper: lineHeight', () => {
-  const realMedia = window.matchMedia
   const query = `@media screen and (min-width: ${defaultProps.theme.breakpoints[1]})`
-  const useMobile: any = () => ({ matches: false })
-  const useNormal: any = () => ({ matches: true })
-  const custom = (l: number, f: number) => `min-height: ${(f / l).toFixed(2)}px;`
+  const custom = (l: string) => `::before { content: '${l}'; }`
 
   test('should curry args', () => {
-    window.matchMedia = useMobile
-    expectCurry(lineHeight, ['h1'], '46.65px')
-    expectCurry(lineHeight, ['h1', 'em'], '1.5em')
-  })
-
-  test('should change per screen size', () => {
-    window.matchMedia = useNormal
-    expect(lineHeight(defaultProps, 'h1')).toBe('55.9875px')
-    expect(lineHeight(defaultProps, 'h1', 'em')).toBe('1.5em')
-  })
-
-  test('should render property', () => {
-    expect(lineHeight(defaultProps, 'body', 'height')).toBe('height: 27px;')
-    expect(lineHeight(defaultProps, 'h1', 'height')).toBe(
-      `height: 46.65px; ${query} { height: 55.9875px; }`
-    )
+    expectCurry(lineHeight, ['h1', 'h'], `h: 46.65px; ${query} { h: 55.9875px; }`)
+    expectCurry(lineHeight, ['h1', 'h', 'em'], 'h: 1.5em;')
   })
 
   test('should render custom func', () => {
-    expect(lineHeight(defaultProps, 'body', custom)).toBe('min-height: 12.00px;')
+    expect(lineHeight(defaultProps, 'body', custom)).toBe(`::before { content: '27px'; }`)
     expect(lineHeight(defaultProps, 'h1', custom)).toBe(
-      `min-height: 20.73px; ${query} { min-height: 24.88px; }`
+      `::before { content: '46.65px'; } ${query} { ::before { content: '55.9875px'; } }`
     )
-  })
-
-  afterEach(() => {
-    window.matchMedia = realMedia
+    expect(lineHeight(defaultProps, 'h1', custom, 'em')).toBe(`::before { content: '1.5em'; }`)
   })
 })
 

@@ -69,17 +69,15 @@ Returns values from the `theme.textStyles` & `theme.mobileTextStyles` objects. I
 
 #### lineHeight
 ```
-type RenderFunc = (lineHeight: number, fontSize: number, p: ThemeProps) => string
-type RenderOpt = 'em' | 'px' | string | RenderFunc
-function lineHeight(size: keyof TextStyles, opt: RenderOpt = 'px'): string;
+type RenderFunc = (lineHeight: string, p: ThemeProps) => string
+function lineHeight(
+  size: keyof TextStyles,
+  prop: string | RenderFunc,
+  type: 'px' | 'em' = 'px'
+): string;
 ```
 
-Returns a value from `theme.textStyles` or `theme.mobileTextStyles`. The default mode is to calculate the height as a pixel length, but there are three options to change the behavior:
-- If you pass `'em'` as the option, it will return an `em` length instead of a pixel length.
-- If you pass a string it will be treated as CSS property name, and return a full CSS block (including media query if needed).
-- If you pass a function it will be called with the text style, and should return a full CSS property (including ';'). If needed the function will be called twice and the result will include a media query.
-
-In the value modes (px or em) it uses `window.matchMedia` to choose between mobile and regular styles. Unlike the modes with media queries it can't dynamically change the value as the window resizes; you can get around this, however, by rendering your component inside a `ScreenSizeContext` consumer (from '@repay/cactus-web').
+Returns a CSS property or block calculated from `theme.textStyles` and `theme.mobileTextStyles`. The value is calculated as a pixel length by default (`lineHeight * fontSize`), but you can also get the value in em units. There are two ways to render: specify the name of the CSS property, or pass a function to do the rendering. In both cases, if the calculated value is different for mobile & regular styles, the output is turned into a CSS block with a media query, similar to `fontSize` and `textStyle`.
 
 ## Colors
 

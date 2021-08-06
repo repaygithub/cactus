@@ -31,9 +31,6 @@ const _fontSize = (p: ThemeProps, size: keyof FontSizeObject) => {
 }
 export const fontSize = memo(_fontSize, 'body', 'small')
 
-const needsMQ = (mobile: TextStyle, regular: TextStyle) =>
-  !(mobile.fontSize === regular.fontSize && mobile.lineHeight === regular.lineHeight)
-
 /**
  * Returns a CSS block with two text style (`font-size` & `line-height`) declarations:
  * one from `theme.mobileTextStyles` for tiny/small screen sizes,
@@ -42,7 +39,7 @@ const needsMQ = (mobile: TextStyle, regular: TextStyle) =>
 const _textStyle = (p: ThemeProps, size: TextStyleSize) => {
   const mobile = p.theme.mobileTextStyles[size]
   const regular = p.theme.textStyles[size]
-  if (!needsMQ(mobile, regular)) {
+  if (mobile.fontSize === regular.fontSize && mobile.lineHeight === regular.lineHeight) {
     return regular
   }
   return `
@@ -56,35 +53,38 @@ const _textStyle = (p: ThemeProps, size: TextStyleSize) => {
 }
 export const textStyle = memo(_textStyle, 'body', 'small')
 
-type RenderFunc = (lineHeight: number, fontSize: number, p: ThemeProps) => string
-type RenderOpt = 'px' | 'em' | string | RenderFunc
+type RenderFunc = (lineHeight: string, p: ThemeProps) => string
 
 const asPx = (style: TextStyle) => {
   const exact = parseFloat(style.lineHeight) * parseFloat(style.fontSize)
   return exact.toFixed(4).replace(/\.?0*$/, 'px')
 }
 
-const matchesMobile = (p: ThemeProps) => !window.matchMedia(mediaGTE(p, 'medium').slice(7)).matches
-
 /** Returns the line height for the given text style, as an em or pixel length. */
-const _lineHeight = (p: ThemeProps, size: TextStyleSize, opt: RenderOpt = 'px'): string => {
-  const mobile = p.theme.mobileTextStyles[size]
-  const regular = p.theme.textStyles[size]
-  if (opt === 'px') {
-    return asPx(needsMQ(mobile, regular) && matchesMobile(p) ? mobile : regular)
-  } else if (opt === 'em') {
-    const needsQuery = mobile.lineHeight !== regular.lineHeight
-    const style = needsQuery && matchesMobile(p) ? mobile : regular
-    return `${style.lineHeight}em`
-  } else if (typeof opt === 'function') {
-    const mob = opt(parseFloat(mobile.lineHeight), parseFloat(mobile.fontSize), p)
-    const reg = opt(parseFloat(regular.lineHeight), parseFloat(regular.fontSize), p)
-    if (mob === reg) return mob
-    return `${mob} ${mediaGTE(p, 'medium')} { ${reg} }`
+const _lineHeight = (
+  p: ThemeProps,
+  size: TextStyleSize,
+  prop: string | RenderFunc,
+  type: 'px' | 'em' = 'px'
+): string => {
+  const mobStyle = p.theme.mobileTextStyles[size]
+  const regStyle = p.theme.textStyles[size]
+  let mobile: string, regular: string
+  if (type === 'px') {
+    mobile = asPx(mobStyle)
+    regular = asPx(regStyle)
   } else {
-    const mob = `${opt}: ${asPx(mobile)};`
-    if (!needsMQ(mobile, regular)) return mob
-    return `${mob} ${mediaGTE(p, 'medium')} { ${opt}: ${asPx(regular)}; }`
+    mobile = `${mobStyle.lineHeight}em`
+    regular = `${mobStyle.lineHeight}em`
   }
+  if (mobile === regular) {
+    if (typeof prop === 'function') {
+      return prop(regular, p)
+    }
+    return `${prop}: ${regular};`
+  } else if (typeof prop === 'function') {
+    return `${prop(mobile, p)} ${mediaGTE(p, 'medium')} { ${prop(regular, p)} }`
+  }
+  return `${prop}: ${mobile}; ${mediaGTE(p, 'medium')} { ${prop}: ${regular}; }`
 }
 export const lineHeight = wrap(_lineHeight)
