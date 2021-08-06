@@ -53,13 +53,13 @@ describe('component: DateInputField', (): void => {
     )
 
     const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
-    expect(getByTestId('first').parentElement?.parentElement).toHaveStyle(blank)
-    expect(getByTestId('default').parentElement?.parentElement).toHaveStyle({
+    expect(getByTestId('first').parentElement?.parentElement?.parentElement).toHaveStyle(blank)
+    expect(getByTestId('default').parentElement?.parentElement?.parentElement).toHaveStyle({
       ...blank,
       marginTop: '16px',
       marginBottom: '4px',
     })
-    expect(getByTestId('override').parentElement?.parentElement).toHaveStyle({
+    expect(getByTestId('override').parentElement?.parentElement?.parentElement).toHaveStyle({
       ...blank,
       marginTop: '2px',
     })
