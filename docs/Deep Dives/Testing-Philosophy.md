@@ -34,7 +34,7 @@ Most UI tests require much more comprehensive setup, full deployments, or genera
 
 ### Visual Regression
 
-Volume: Medium
+Volume: Low/Medium
 
 Automated tests that compare either mockups or a previous iteration of a view to new iterations of a view. These are useful in ensuring there are no view component changes that were unintended. They either match or they don't and are often configured across all supported breakpoints.
 
