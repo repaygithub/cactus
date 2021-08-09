@@ -6,18 +6,18 @@ const withShadow = defaultProps
 const noShadow = { theme: generateTheme({ primaryHue: 200, boxShadows: false }) }
 
 const _ = (size: string, c: CactusColor = 'lightCallToAction') =>
-  `box-shadow: ${size} ${defaultProps.theme.colors[c]}`
+  `box-shadow: ${size} ${defaultProps.theme.colors[c]};`
 
 describe('helper: boxShadow', () => {
   test('should curry args', () => {
     expectCurry(boxShadow, [1], _('0px 3px 8px'))
-    expectCurry(boxShadow, [0, 'gray'], 'box-shadow: 0px 0px 3px gray')
+    expectCurry(boxShadow, [0, 'gray'], 'box-shadow: 0px 0px 3px gray;')
   })
 
   test('allows fallback color', () => {
     // This helper ignores the `boxShadows` setting.
     expect(boxShadow(noShadow, 2, 'mediumGray')).toBe(_('0px 9px 24px', 'mediumGray'))
-    expect(boxShadow(noShadow, 3, 'orange')).toBe('box-shadow: 0px 12px 24px orange')
+    expect(boxShadow(noShadow, 3, 'orange')).toBe('box-shadow: 0px 12px 24px orange;')
   })
 })
 
@@ -33,11 +33,11 @@ describe('helper: shadow', () => {
   test('allows fallback: border color', () => {
     expect(shadow(withShadow, '4px', 'lightContrast')).toBe(_('4px'))
     expect(shadow(noShadow, '4px', 'lightContrast')).toBe(
-      `border: 1px solid ${defaultProps.theme.colors.lightContrast}`
+      `border: 1px solid ${defaultProps.theme.colors.lightContrast};`
     )
 
     expect(shadow(withShadow, 5, 'rgb(1, 2, 3)')).toBe(_('0px 45px 48px'))
-    expect(shadow(noShadow, 5, 'rgb(1, 2, 3)')).toBe(`border: 1px solid rgb(1, 2, 3)`)
+    expect(shadow(noShadow, 5, 'rgb(1, 2, 3)')).toBe(`border: 1px solid rgb(1, 2, 3);`)
   })
 
   test('allows fallback: CSS property', () => {
@@ -54,11 +54,11 @@ describe('helper: shadow', () => {
   test('allows fallback: style function', () => {
     const fn1 = (p: typeof defaultProps) => `2px dotted ${p.theme.colors.base}`
     expect(shadow(withShadow, 0, fn1)).toBe(_('0px 0px 3px'))
-    expect(shadow(noShadow, 0, fn1)).toBe(`border: 2px dotted ${noShadow.theme.colors.base}`)
+    expect(shadow(noShadow, 0, fn1)).toBe(`border: 2px dotted ${noShadow.theme.colors.base};`)
 
-    const fn2 = () => 'ouline: 1px dotted orange'
+    const fn2 = () => 'ouline: 1px dotted orange;'
     expect(shadow(withShadow, 1, fn2)).toBe(_('0px 3px 8px'))
-    expect(shadow(noShadow, 1, fn2)).toBe('ouline: 1px dotted orange')
+    expect(shadow(noShadow, 1, fn2)).toBe('ouline: 1px dotted orange;')
 
     const fn3 = (p: typeof defaultProps) => ({ backgroundColor: p.theme.colors.lightContrast })
     expect(shadow(withShadow, 'once', fn3)).toBe(_('once'))

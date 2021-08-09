@@ -86,7 +86,7 @@ describe('helper: radius', () => {
 
 describe('helper: insetBorder', () => {
   const $ = (c: string, h: string, v: string, s: string) =>
-    `box-shadow: inset ${h} ${v} 0 ${s} ${c}`
+    `box-shadow: inset ${h} ${v} 0 ${s} ${c};`
   const _ = (c: CactusColor, h: string, v: string, s: string, p = defaultProps) =>
     $(p.theme.colors[c], h, v, s)
 

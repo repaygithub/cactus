@@ -17,7 +17,7 @@ const isCssValue = (x: unknown): x is string => typeof x === 'string' && !x.incl
 /** Returns a `box-shadow` property with the given standard shadow type (from the style guide). */
 const _boxShadow = (p: ThemeProps, shadowType: number, colorName = 'lightCallToAction') => {
   const color_ = p.theme.colors[colorName as CactusColor] || colorName
-  return `box-shadow: ${shadowTypes[shadowType]} ${color_}`
+  return `box-shadow: ${shadowTypes[shadowType]} ${color_};`
 }
 export const boxShadow = wrap(_boxShadow)
 
@@ -36,7 +36,7 @@ const _shadow = (
   let value = fallback as ShadowValue
   if (props.theme.boxShadows) {
     const shadowSize = shadowTypes[shadowTypeOrSize as number] || shadowTypeOrSize
-    return `box-shadow: ${shadowSize} ${props.theme.colors.lightCallToAction}`
+    return `box-shadow: ${shadowSize} ${props.theme.colors.lightCallToAction};`
   } else if (typeof fallback === 'function') {
     value = fallback(props)
   } else if (isCssValue(fallback)) {
@@ -44,6 +44,6 @@ const _shadow = (
     value = border(props, fallback)
   }
   // If no CSS property is specified, assume `border` as the closest analogue of box shadows.
-  return isCssValue(value) ? `border: ${value}` : value
+  return isCssValue(value) ? `border: ${value};` : value
 }
 export const shadow = wrap(_shadow)

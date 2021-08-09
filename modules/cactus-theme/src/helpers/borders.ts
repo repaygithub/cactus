@@ -61,6 +61,6 @@ const _insetBorder = (
     spread = thickness
   }
   const color_ = p.theme.colors[colorName as CactusColor] || colorName
-  return `box-shadow: inset ${hOffset} ${vOffset} 0 ${spread} ${color_}`
+  return `box-shadow: inset ${hOffset} ${vOffset} 0 ${spread} ${color_};`
 }
 export const insetBorder = wrap(_insetBorder)
