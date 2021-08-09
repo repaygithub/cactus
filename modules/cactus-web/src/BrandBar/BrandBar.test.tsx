@@ -10,7 +10,7 @@ describe('component: BrandBar', () => {
   describe('mouse usage', (): void => {
     test('can select an action', async (): Promise<void> => {
       const actionOne = jest.fn()
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.UserMenu label="Test name">
@@ -24,7 +24,7 @@ describe('component: BrandBar', () => {
         </StyleProvider>
       )
 
-      const trigger = getByText('Test name').parentElement as HTMLElement
+      const trigger = getByRole('button', { name: 'Test name' })
 
       userEvent.click(trigger)
       const settings = getByText('Settings')
@@ -40,12 +40,12 @@ describe('component: BrandBar', () => {
 
       expect(actionOne).toHaveBeenCalled()
       expect(getByText('Logout')).not.toBeVisible()
-      expect(document.activeElement).toBe(trigger)
+      expect(trigger).toHaveFocus()
     })
 
     test('can interact with a dropdown', async () => {
       const firstOptionClick = jest.fn()
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
@@ -62,7 +62,7 @@ describe('component: BrandBar', () => {
         </StyleProvider>
       )
 
-      const trigger = getByText('Test Dropdown').parentElement as HTMLElement
+      const trigger = getByRole('button', { name: 'Test Dropdown' })
 
       userEvent.click(trigger)
       const option1 = getByText('Option 1')
@@ -78,11 +78,11 @@ describe('component: BrandBar', () => {
 
       expect(firstOptionClick).toHaveBeenCalled()
       expect(getByText('Option 2')).not.toBeVisible()
-      expect(document.activeElement).toBe(trigger)
+      expect(trigger).toHaveFocus()
     })
 
     test('item supports custom item selectors', async () => {
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.Item
@@ -100,7 +100,7 @@ describe('component: BrandBar', () => {
         </StyleProvider>
       )
 
-      const trigger = getByText('Test Dropdown').parentElement as HTMLElement
+      const trigger = getByRole('button', { name: 'Test Dropdown' })
 
       userEvent.click(trigger)
       const option1 = getByText('Option 1')
@@ -125,7 +125,7 @@ describe('component: BrandBar', () => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
 
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.UserMenu label="Test name">
@@ -136,33 +136,33 @@ describe('component: BrandBar', () => {
         </StyleProvider>
       )
 
-      const trigger = getByText('Test name').parentElement as HTMLElement
+      const trigger = getByRole('button', { name: 'Test name' })
 
       fireEvent.keyDown(trigger, { key: 'Enter' })
 
       const settings = getByText('Settings')
       const logout = getByText('Logout')
 
-      expect(document.activeElement).toBe(settings)
+      expect(settings).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'End' })
 
-      expect(document.activeElement).toBe(logout)
+      expect(logout).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'Home' })
 
-      expect(document.activeElement).toBe(settings)
+      expect(settings).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'Escape' })
 
       expect(settings).not.toBeVisible()
-      expect(document.activeElement).toBe(trigger)
+      expect(trigger).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'Enter' })
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowDown' })
 
-      expect(document.activeElement).toBe(logout)
+      expect(logout).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowUp' })
       fireEvent.keyDown(document.activeElement as Element, { key: 'Enter' })
@@ -170,12 +170,12 @@ describe('component: BrandBar', () => {
       expect(actionOne).toHaveBeenCalled()
       expect(actionTwo).not.toHaveBeenCalled()
       expect(getByText('Logout')).not.toBeVisible()
-      expect(document.activeElement).toBe(trigger)
+      expect(trigger).toHaveFocus()
     })
 
     test('can interact with a dropdown', () => {
       const thirdOptionClick = jest.fn()
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
@@ -191,26 +191,26 @@ describe('component: BrandBar', () => {
         </StyleProvider>
       )
 
-      const trigger = getByText('Test Dropdown').parentElement as HTMLElement
+      const trigger = getByRole('button', { name: 'Test Dropdown' })
       fireEvent.keyDown(trigger, { key: 'Enter' })
       const option1 = getByText('Option 1')
       const option2 = getByText('Option 2')
       const option3 = getByText('Option 3')
 
-      expect(document.activeElement).toBe(option1)
+      expect(option1).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'End' })
 
-      expect(document.activeElement).toBe(option3)
+      expect(option3).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'Home' })
 
-      expect(document.activeElement).toBe(option1)
+      expect(option1).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'Escape' })
 
       expect(option2).not.toBeVisible()
-      expect(document.activeElement).toBe(trigger)
+      expect(trigger).toHaveFocus()
 
       fireEvent.keyDown(document.activeElement as Element, { key: 'Enter' })
       fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowDown' })
@@ -219,7 +219,7 @@ describe('component: BrandBar', () => {
 
       expect(thirdOptionClick).toHaveBeenCalled()
       expect(option2).not.toBeVisible()
-      expect(document.activeElement).toBe(trigger)
+      expect(trigger).toHaveFocus()
     })
   })
 })

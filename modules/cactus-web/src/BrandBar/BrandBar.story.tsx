@@ -320,3 +320,10 @@ export const WithOrgDropdown = (): React.ReactElement => {
     </Layout>
   )
 }
+
+WithOrgDropdown.parameters = {
+  beforeScreenshot: async (page: Page) => {
+    await page.click('[role="button"]')
+    await page.focus('[role="menuitem"]')
+  },
+}
