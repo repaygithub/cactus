@@ -781,7 +781,7 @@ function fromTwoColor({
   secondary,
 }: TwoColorGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   const primaryRgb = hexToRgb(primary)
-  const secondaryRgb = hexToRgb(secondary)
+  const secondaryRgb = hexToRgb(secondary || '')
   const [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
   const [secondaryHue, secondarySaturation, secondaryLightness] = rgbToHsl(...secondaryRgb)
   const isSecondaryWhite = secondaryLightness === 100

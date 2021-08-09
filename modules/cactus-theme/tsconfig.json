@@ -1,11 +1,10 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
     "outDir": "dist",
-    "declaration": true,
-    "types": []
+    "rootDir": ".",
+    "types": ["react", "jest", "node"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src", "tests"],
   "exclude": ["**/node_modules", "dist"]
 }

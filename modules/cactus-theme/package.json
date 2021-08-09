@@ -4,9 +4,9 @@
   "description": "The theme for the Cactus design-system at REPAY",
   "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-theme",
   "license": "MIT",
-  "main": "dist/theme.cjs.js",
-  "module": "dist/theme.esm.js",
-  "types": "dist/theme.d.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "cleanup": "rm -rf dist",
@@ -15,10 +15,10 @@
     "test:local": " yarn test:types && yarn test",
     "test:ci": "yarn test:local --maxWorkers=2",
     "test:types": "tsc --project ./tsconfig.json --noEmit",
-    "dev": "repay-scripts dev --lib src/theme.ts",
+    "dev": "repay-scripts dev --lib src/index.ts",
     "prebuild": "yarn build:types",
-    "build": "repay-scripts build --lib src/theme.ts",
-    "build:types": "tsc --project ./tsconfig.json --emitDeclarationOnly"
+    "build": "repay-scripts build --lib src/index.ts",
+    "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
