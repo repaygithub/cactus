@@ -1,4 +1,5 @@
 import { Meta } from '@storybook/react/types-6-0'
+import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
 import { Box, Button, Dimmer, Flex } from '../'
@@ -22,7 +23,9 @@ export const ActivePageDimmer = (): React.ReactElement => {
           mauris rutrum maximus congue, lectus sem molestie est, eget gravida orci ligula tempus
           dolor.
         </p>
-        <Button onClick={() => setOpen(true)}>Activate dimmer!</Button>
+        <Button id="dimmer-btn" onClick={() => setOpen(true)}>
+          Activate dimmer!
+        </Button>
         <Dimmer active={open}>
           <div>
             <Box>
@@ -33,4 +36,10 @@ export const ActivePageDimmer = (): React.ReactElement => {
       </Flex>
     </>
   )
+}
+
+ActivePageDimmer.parameters = {
+  beforeScreenshot: async (page: Page) => {
+    await page.click('[id="dimmer-btn"]')
+  },
 }
