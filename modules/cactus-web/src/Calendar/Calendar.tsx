@@ -1,4 +1,5 @@
 import { NavigationChevronLeft, NavigationChevronRight } from '@repay/cactus-icons'
+import { colorStyle, radius, shadow } from '@repay/cactus-theme'
 import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
@@ -7,6 +8,7 @@ import Flex from '../Flex/Flex'
 import { getFormatter } from '../helpers/dates'
 import { CactusChangeEvent, CactusEventTarget } from '../helpers/events'
 import { getCurrentFocusIndex } from '../helpers/focus'
+import { omitProps } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
 import DropDown from './DropDown'
 import CalendarGrid, {
@@ -18,11 +20,6 @@ import CalendarGrid, {
   queryDate,
   toISODate,
 } from './Grid'
-
-type BaseProps = Omit<
-  React.HTMLAttributes<HTMLDivElement>,
-  'defaultChecked' | 'defaultValue' | 'onChange'
->
 
 interface CalendarLabels extends CalendarGridLabels {
   prevMonth: string
@@ -40,7 +37,12 @@ const DEFAULT_LABELS: CalendarLabels = {
   labelDisabled: (d: string) => `${d} can't be selected`,
 }
 
-interface CalendarProps extends MarginProps, BaseProps {
+type BaseProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'defaultChecked' | 'defaultValue' | 'onChange'
+>
+
+interface CalendarProps extends BaseProps {
   initialFocus?: CalendarDate
   value?: CalendarValue
   defaultValue?: CalendarValue
@@ -67,7 +69,7 @@ const memoize = <A extends any[], R>(func: (...a: A) => R): ((...a: A) => R) => 
   let key: A = [] as any
   let result: R = undefined as any
   return (...args: A) => {
-    if (args.every((k, i) => k === key[i])) {
+    if (args.length === key.length && args.every((k, i) => k === key[i])) {
       return result
     }
     key = args
@@ -98,13 +100,14 @@ const raiseAsDate = (value: CalendarValue): boolean => {
   return typeof value === 'object'
 }
 
-class CalenderBase extends React.Component<CalendarProps, CalendarState> {
+class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   public static Grid = CalendarGrid
 
   state = initState(this.props)
 
   private eventTarget = new CactusEventTarget<CalendarValue>({})
   private rootRef = React.createRef<HTMLDivElement>()
+  private _isOverflow = false
 
   get rootElement(): HTMLDivElement {
     if (!this.rootRef.current) throw new Error('over 9000')
@@ -178,8 +181,11 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
       if (state.focusDate.getFullYear() !== newYear) {
         this.props.onYearChange?.(newYear)
       }
-      queryDate(this.rootElement, toISODate(this.state.focusDate))?.focus()
+      if (this._isOverflow) {
+        queryDate(this.rootElement, toISODate(this.state.focusDate))?.focus()
+      }
     }
+    this._isOverflow = false
   }
 
   private setFocusDate(date: Date) {
@@ -188,6 +194,7 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
         date.getMonth() !== focusDate.getMonth() ||
         date.getFullYear() !== focusDate.getFullYear()
       ) {
+        this._isOverflow = true
         return { focusDate: date }
       }
       return null
@@ -201,8 +208,14 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
     const disabled = this.props.disabled || target.getAttribute('aria-disabled') === 'true'
     if (disabled || this.props.readOnly || !isoDate) return
 
-    const value = raiseAsDate(this.state.value) ? new Date(...dateParts(isoDate)) : isoDate
-    this.raiseChange({ value }, e)
+    const isDate = raiseAsDate(this.state.value)
+    const value = isDate ? new Date(...dateParts(isoDate)) : isoDate
+    const newState: any = { value }
+    if (target.matches('.outside-date')) {
+      this._isOverflow = true
+      newState.focusDate = isDate ? value : new Date(...dateParts(isoDate))
+    }
+    this.raiseChange(newState, e)
   }
 
   private raiseChange(newState: { value: CalendarValue }, e: React.SyntheticEvent) {
@@ -384,10 +397,10 @@ class CalenderBase extends React.Component<CalendarProps, CalendarState> {
           >
             <NavigationChevronLeft />
           </IconButton>
-          <div>
+          <Flex>
             {this.renderMonthDD(locale, labels.months)}
             {this.renderYearDD()}
-          </div>
+          </Flex>
           <IconButton
             name="right"
             label={labels.nextMonth || DEFAULT_LABELS.nextMonth}
@@ -438,3 +451,27 @@ const renderLabels = (labels: Partial<CalendarLabels>) => (
     <div id="showYear">{labels.showYear || DEFAULT_LABELS.showYear}</div>
   </div>
 )
+
+// TODO Disabled styles, radius
+export const Calendar = styled(CalendarBase)
+  .withConfig(omitProps<CalendarProps & MarginProps>(margin))
+  .attrs({ as: CalendarBase })`
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  box-sizing: border-box;
+  width: 300px;
+  ${margin}
+  ${colorStyle('standard')};
+  border-radius: ${radius(16, 0.6)};
+  border-top-left-radius: 0;
+  border-top-right-radius: ${radius(32, 0.6)};
+  ${shadow(1, 'lightContrast')};
+  overflow: hidden;
+
+  ${CalendarGrid} {
+    border-radius: 0;
+  }
+`
+
+export default Calendar

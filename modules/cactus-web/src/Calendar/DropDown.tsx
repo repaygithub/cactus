@@ -1,5 +1,5 @@
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
+import { color, colorStyle, insetBorder, textStyle } from '@repay/cactus-theme'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -13,6 +13,7 @@ interface Option {
 }
 
 interface DropDownProps extends React.AriaAttributes {
+  className?: string
   label: string | number
   value: number
   options: number[] | Option[]
@@ -26,12 +27,16 @@ const onWrapperKeyDown = (e: React.KeyboardEvent<HTMLElement>, toggle: TogglePop
   let focusHint = 1
   switch (e.key) {
     case 'Home':
-    case 'PageUp':
       toggle(true, 0)
       break
+    case 'PageUp':
+      toggle(true, -7, { shift: true })
+      break
     case 'End':
-    case 'PageDown':
       toggle(true, -1)
+      break
+    case 'PageDown':
+      toggle(true, 7, { shift: true })
       break
 
     case 'ArrowUp':
@@ -54,21 +59,43 @@ const onWrapperKeyDown = (e: React.KeyboardEvent<HTMLElement>, toggle: TogglePop
     default:
       return
   }
+  e.preventDefault()
   e.stopPropagation()
 }
+
+const ITEM_HEIGHT = 35 // line height (27px) + padding (8px)
 
 const positionPopup = (popup: HTMLElement) => {
   let header = popup
   while ((header = header.parentElement as HTMLElement)) {
     if (header.parentElement?.getAttribute('role') === 'group') {
-      popup.style.top = `${header.offsetHeight}px`
-      break
+      const headerHeight = header.offsetHeight
+      const popupHeight = header.parentElement.clientHeight - headerHeight
+      let itemMiddle = ITEM_HEIGHT >> 1
+      let item = popup.firstElementChild
+      while (item && item.getAttribute('aria-selected') !== 'true') {
+        item = item.nextElementSibling
+        itemMiddle += ITEM_HEIGHT
+      }
+      popup.style.top = `${headerHeight}px`
+      popup.scrollTop = itemMiddle - popupHeight / 2
+      return
     }
   }
 }
 
-const DropDownBase = ({ label, value, options, onSelectOption, ...props }: DropDownProps) => {
+const focusControl = (root: HTMLElement) => Array.from(root.querySelectorAll<HTMLElement>('li'))
+
+const DropDownBase = ({
+  className,
+  label,
+  value,
+  options,
+  onSelectOption,
+  ...props
+}: DropDownProps) => {
   const { wrapperProps, popupProps, buttonProps, toggle } = usePopup('listbox', {
+    focusControl,
     positionPopup,
     onWrapperKeyDown,
   })
@@ -107,7 +134,7 @@ const DropDownBase = ({ label, value, options, onSelectOption, ...props }: DropD
   const popupRef = React.useRef<HTMLUListElement>(null)
   useScrollTrap(popupRef)
   return (
-    <div {...wrapperProps}>
+    <div {...wrapperProps} className={className}>
       <button type="button" {...buttonProps}>
         <span>{label}</span>
         <NavigationChevronDown iconSize="tiny" ml={3} />
@@ -117,6 +144,7 @@ const DropDownBase = ({ label, value, options, onSelectOption, ...props }: DropD
   )
 }
 
+// TODO Adjust padding-right for scrollbar.
 const DropDown = styled(DropDownBase)`
   button {
     appearance: none;
@@ -140,23 +168,19 @@ const DropDown = styled(DropDownBase)`
   ul {
     overflow-y: scroll;
     position: absolute;
-    top: 0;
+    top: 62px;
     bottom: 0;
     left: 0;
     right: 0;
     list-style: none;
-    padding: 0;
+    padding: 0 16px;
     margin: 0;
     outline: none;
-    border: 2px solid transparent;
-    border-radius: ${radius(16, 0.6)};
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
     background-color: ${color('lightContrast')};
+  }
 
-    &:focus-within {
-      border-color: ${color('callToAction')};
-    }
+  [aria-hidden='true'] {
+    display: none;
   }
 
   li {
@@ -164,6 +188,7 @@ const DropDown = styled(DropDownBase)`
     text-align: center;
     cursor: pointer;
     padding: 4px 0;
+    outline: none;
 
     span {
       padding: 4px;
@@ -174,8 +199,8 @@ const DropDown = styled(DropDownBase)`
       background-color: ${color('lightCallToAction')};
     }
 
-    &:focus-visible span {
-      outline: ${border('darkContrast')};
+    &:focus-visible {
+      ${insetBorder('darkContrast')};
     }
 
     &[aria-selected='true'] > span {

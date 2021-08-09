@@ -3,8 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement, useState } from 'react'
 
-// TODO Switch to global import
-import { CalendarGrid } from './Grid'
+import { Calendar } from '../'
 
 const eventLoggers = {
   onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
@@ -14,9 +13,13 @@ const eventLoggers = {
 
 export default {
   title: 'Calendar',
-  component: CalendarGrid,
+  component: Calendar,
 } as Meta
 
 export const BasicUsage = (): ReactElement => {
-  return <CalendarGrid />
+  return <Calendar />
+}
+
+export const GridOnly = (): ReactElement => {
+  return <Calendar.Grid />
 }

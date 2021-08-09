@@ -1,22 +1,20 @@
-import { color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
+import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { DefaultTheme, StyledComponent } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getFormatter } from '../helpers/dates'
 import { isFocusOut } from '../helpers/events'
 import { omitProps } from '../helpers/omit'
-import { textStyle } from '../helpers/theme'
-import { useRefWithId } from '../helpers/useId'
+import useId from '../helpers/useId'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
-export type WeekdayLabel =
-  | string
-  | {
-      long: string
-      short: string
-    }
+export type WeekdayLabel = string | ComplexWeekdayLabel
+interface ComplexWeekdayLabel {
+  long: string
+  short: string
+}
 
 export interface CalendarGridLabels {
   labelDate?: (d: Date) => string
@@ -26,7 +24,6 @@ export interface CalendarGridLabels {
 
 interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: never
-  focusDate?: Date
   locale?: string
   isValidDate?: (d: Date) => boolean
   selected?: CalendarValue
@@ -34,20 +31,30 @@ interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export interface CalendarGridProps extends BaseProps, MarginProps {
-  radius?: number
+  focusDate?: CalendarDate
+}
+
+interface InnerProps extends BaseProps {
+  focusStr: string
+  month: number
+  year: number
 }
 
 // toISOString messes with timezones and can return the wrong date;
 // similarly `new Date(string)` treats ISO date strings like midnight UTC.
+const zfill = (pad: string, num: number) => {
+  const result = pad + num
+  return result.slice(result.length - pad.length - 1)
+}
 export const toISODate = (date: Date): string =>
   [
-    ('000' + date.getFullYear()).slice(0, 4),
-    ('0' + (date.getMonth() + 1)).slice(0, 2),
-    ('0' + date.getDate()).slice(0, 2),
+    zfill('000', date.getFullYear()),
+    zfill('0', date.getMonth() + 1),
+    zfill('0', date.getDate()),
   ].join('-')
 export const dateParts = (date: string): [number, number, number] => {
   const [year, month, day] = date.split('-')
-  return [parseInt(year), parseInt(month), parseInt(day)]
+  return [parseInt(year), parseInt(month) - 1, parseInt(day)]
 }
 
 const makeGridHeader = (idPrefix: string, locale?: string, weekdayLabels: WeekdayLabel[] = []) => {
@@ -93,7 +100,8 @@ const makeGrid = (
   if (!labelDate) {
     labelDate = getFormatter('date', locale)
   }
-  while (date.getMonth() <= month && date.getFullYear() <= year) {
+  const last = new Date(year, month + 1, 1).valueOf()
+  while (date.valueOf() < last) {
     const row: GridCellProps[] = []
     for (let i = 0; i < 7; i++) {
       const day = date.getDate()
@@ -118,21 +126,10 @@ export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =
   root.querySelector<HTMLElement>(`[data-date='${date}']:not(.outside-date)`)
 
 const useTabIndexCallback = (
-  focusDate: CalendarDate,
-  gridRef: React.RefObject<HTMLDivElement>,
+  focusStr: string,
   props: React.HTMLAttributes<HTMLDivElement>
 ): ((d: string) => number) => {
-  const focusRef = React.useRef<string | null>(null)
-  const focusStr = typeof focusDate === 'object' ? toISODate(focusDate) : focusDate
-  React.useEffect(() => {
-    if (gridRef.current && !gridRef.current.contains(document.activeElement)) {
-      const focus = (queryDate(gridRef.current, focusStr) ||
-        gridRef.current.querySelector(INSIDE_DATE)) as HTMLElement
-      focusRef.current = focus.dataset.date as string
-      focus.tabIndex = 0
-    }
-  }, [focusStr, gridRef])
-
+  const focusRef = React.useRef<string | null>(focusStr)
   const { onFocus, onBlur } = props
   props.onFocus = (e) => {
     focusRef.current = null
@@ -173,36 +170,28 @@ const makeSelectedCallback = (selected: BaseProps['selected']): ((d: string) => 
   }
 }
 
-const TODAY = new Date()
-
 const CalendarGridBase = ({
-  focusDate = TODAY,
+  focusStr,
+  month,
+  year,
   locale,
   labels = {},
   isValidDate,
   selected,
   ...props
-}: BaseProps) => {
-  const gridRef = useRefWithId<HTMLDivElement>(props.id)
-  const id = gridRef.current.id
+}: InnerProps) => {
+  const id = useId(props.id)
   const { labelDate, labelDisabled, weekdays } = labels
   const header = React.useMemo(() => makeGridHeader(id, locale, weekdays), [id, locale, weekdays])
 
-  let month: number, year: number
-  if (typeof focusDate === 'string') {
-    ;[year, month] = dateParts(focusDate)
-  } else {
-    month = focusDate.getMonth()
-    year = focusDate.getFullYear()
-  }
   const grid = React.useMemo(
     () => makeGrid(month, year, locale, isValidDate, labelDate, labelDisabled),
     [month, year, locale, isValidDate, labelDate, labelDisabled]
   )
-  const getTabIndex = useTabIndexCallback(focusDate, gridRef, props)
+  const getTabIndex = useTabIndexCallback(focusStr, props)
   const isSelected = React.useMemo(() => makeSelectedCallback(selected), [selected])
   return (
-    <div {...props} id={id} ref={gridRef} role="grid">
+    <div {...props} id={id} role="grid">
       {header && (
         <div role="row" key="header">
           {header}
@@ -224,9 +213,25 @@ const CalendarGridBase = ({
   )
 }
 
-export const CalendarGrid = styled(CalendarGridBase).withConfig(
-  omitProps<CalendarGridProps>(margin, 'radius')
-)`
+const deriveAttrs = ({ focusDate = new Date() }: CalendarGridProps) => {
+  let month: number, year: number
+  let focusStr = focusDate as string
+  if (typeof focusDate === 'object') {
+    focusStr = toISODate(focusDate)
+    month = focusDate.getMonth()
+    year = focusDate.getFullYear()
+  } else {
+    ;[year, month] = dateParts(focusDate)
+  }
+  // Set `key` to force a remount when the month/year changes.
+  return { as: CalendarGridBase, key: focusStr.slice(0, 7), focusStr, month, year }
+}
+
+// TODO Figure out the right style for selected `.outside-date`
+const OUTLINE = { thin: '2px' }
+export const CalendarGrid = styled(CalendarGridBase)
+  .withConfig(omitProps<any>(margin, 'focusDate'))
+  .attrs(deriveAttrs)`
   box-sizing: border-box;
   display: inline-block;
   width: 300px;
@@ -245,46 +250,48 @@ export const CalendarGrid = styled(CalendarGridBase).withConfig(
     box-sizing: border-box;
     display: inline-block;
     padding: 8px 0;
-    text-align: 0;
     border-radius: 50%;
     flex: 0 0 40px;
+    outline: none;
   }
 
   [role='columnheader'] {
     font-weight: 600;
   }
 
-  .outside-date {
+  [aria-disabled='true'] {
     color: ${color('mediumContrast')};
-  }
-
-  *:focus {
-    outline: none;
-    background-color: ${color('lightCallToAction')};
-
-    &[aria-disabled='true'] {
+    :focus {
       background-color: ${color('errorLight')};
     }
   }
 
-  [aria-disabled='true'] {
+  [aria-disabled='false'] {
+    cursor: pointer;
+    :hover, :focus {
+      background-color: ${color('lightCallToAction')};
+    }
+    :focus-visible {
+      background-color: transparent;
+      outline: ${border('callToAction', OUTLINE)};
+      outline-offset: -2px;
+    }
+  }
+
+  .outside-date {
     color: ${color('mediumContrast')};
   }
 
-  [aria-disabled='false'] {
-    cursor: pointer;
-    :hover {
-      background-color: ${color('lightCallToAction')};
-    }
-  }
-
-  [aria-selected='true'] {
+  && span[aria-selected='true'] {
     ${colorStyle('callToAction')}
-
+    :focus-visible {
+      outline: ${border('white', OUTLINE)};
+      outline-offset: -4px;
+    }
     &.outside-date {
-      ${colorStyle('darkContrast', 'lightCallToAction')}
+      opacity: .6;
     }
   }
-` as React.FC<CalendarGridProps>
+` as StyledComponent<React.FC<CalendarGridProps>, DefaultTheme>
 
 export default CalendarGrid

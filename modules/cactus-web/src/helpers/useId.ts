@@ -1,4 +1,4 @@
-import { MutableRefObject, useRef } from 'react'
+import { useRef } from 'react'
 
 import generateId from './generateId'
 
@@ -11,11 +11,3 @@ const useId = (customId?: string | undefined, prefix = 'rand'): string => {
 }
 
 export default useId
-
-export const useRefWithId = <T>(id?: string | undefined, prefix = 'rand'): MutableRefObject<T> => {
-  const ref = useRef() as MutableRefObject<T>
-  if (ref.current === undefined) {
-    ref.current = { id: id || generateId(prefix) } as any
-  }
-  return ref
-}
