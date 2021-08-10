@@ -8,6 +8,7 @@ import Flex from '../Flex/Flex'
 import { getFormatter } from '../helpers/dates'
 import { CactusChangeEvent, CactusEventTarget } from '../helpers/events'
 import { getCurrentFocusIndex } from '../helpers/focus'
+import generateId from '../helpers/generateId'
 import { omitProps } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
 import DropDown from './DropDown'
@@ -20,8 +21,10 @@ import CalendarGrid, {
   queryDate,
   toISODate,
 } from './Grid'
+import Slider, { SlideDirection, SliderProps } from './Slider'
 
-interface CalendarLabels extends CalendarGridLabels {
+export interface CalendarLabels extends CalendarGridLabels {
+  calendarKeyboardDirections: string
   prevMonth: string
   nextMonth: string
   showMonth: string
@@ -30,11 +33,11 @@ interface CalendarLabels extends CalendarGridLabels {
 }
 
 const DEFAULT_LABELS: CalendarLabels = {
+  calendarKeyboardDirections: 'Press space to choose the date',
   showMonth: 'Click to change month',
   showYear: 'Click to change year',
   prevMonth: 'Click to go back one month',
   nextMonth: 'Click to go forward one month',
-  labelDisabled: (d: string) => `${d} can't be selected`,
 }
 
 type BaseProps = Omit<
@@ -52,15 +55,14 @@ interface CalendarProps extends BaseProps {
   disabled?: boolean
   readOnly?: boolean
   onChange?: React.ChangeEventHandler<CactusEventTarget<CalendarValue>>
-  onMonthChange?: (month: number) => void
-  onYearChange?: (year: number) => void
+  onMonthChange?: (month: number, year: number) => void
   isValidDate?: (date: Date) => boolean
   labels?: Partial<CalendarLabels>
   locale?: string
   children?: never
 }
 
-interface CalendarState {
+interface CalendarState extends SliderProps {
   value: CalendarValue
   focusDate: Date
 }
@@ -81,6 +83,7 @@ const initState = (props: CalendarProps): CalendarState => {
   const state: CalendarState = { value: '', focusDate: new Date() }
   if (props.value === undefined && props.defaultValue !== undefined) {
     state.value = props.defaultValue
+    // If we can't tell if it should be `Date` or `string`, default to `string`.
     if (Array.isArray(state.value) && !state.value.length) {
       state.value = ''
     }
@@ -97,6 +100,7 @@ const raiseAsDate = (value: CalendarValue): boolean => {
   if (Array.isArray(value)) {
     value = value[0]
   }
+  // Works for `Date` objects or `null`.
   return typeof value === 'object'
 }
 
@@ -110,31 +114,10 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   private _isOverflow = false
 
   get rootElement(): HTMLDivElement {
+    // Something that should be impossible.
     if (!this.rootRef.current) throw new Error('over 9000')
     return this.rootRef.current
   }
-
-  private getMonthOptions = memoize((locale?: string, monthLabels?: string[]) => {
-    if (!monthLabels) {
-      monthLabels = []
-      const fmtMonth = getFormatter({ month: 'long' }, locale)
-      const date = new Date(1984, 0, 1)
-      for (let i = 0; i < 12; date.setMonth(++i)) {
-        monthLabels.push(fmtMonth(date))
-      }
-    }
-    return monthLabels.map((label, ix) => ({ label, value: ix }))
-  })
-
-  // TODO Infinite scroll?
-  private getYearOptions = memoize((thisYear: number) => {
-    const endYear = thisYear + 100
-    const years = []
-    for (let year = thisYear - 99; year < endYear; year++) {
-      years.push(year)
-    }
-    return years
-  })
 
   static getDerivedStateFromProps(
     props: Readonly<CalendarProps>,
@@ -142,6 +125,8 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   ): Partial<CalendarState> | null {
     if (props.value !== undefined) {
       let value = props.value
+      // We should never store an empty array internally, because then we can't
+      // tell if we're supposed to raise events values as `Date` or `string`.
       if (Array.isArray(value) && !value.length) {
         value = raiseAsDate(state.value) ? null : ''
       }
@@ -170,16 +155,11 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   }
 
   componentDidUpdate(props: Readonly<CalendarProps>, state: Readonly<CalendarState>) {
-    // TODO Are there situations where the month/year might change
-    // and we need to set a tabIndex without actually focusing?
     if (state.focusDate !== this.state.focusDate) {
       const newMonth = this.state.focusDate.getMonth()
-      if (state.focusDate.getMonth() !== newMonth) {
-        this.props.onMonthChange?.(newMonth)
-      }
       const newYear = this.state.focusDate.getFullYear()
-      if (state.focusDate.getFullYear() !== newYear) {
-        this.props.onYearChange?.(newYear)
+      if (state.focusDate.getMonth() !== newMonth || state.focusDate.getFullYear() !== newYear) {
+        this.props.onMonthChange?.(newMonth, newYear)
       }
       if (this._isOverflow) {
         queryDate(this.rootElement, toISODate(this.state.focusDate))?.focus()
@@ -229,7 +209,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   }
 
   private handleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const direction = e.currentTarget.name as 'left' | 'right'
+    const direction = e.currentTarget.name as SlideDirection
     const next = new Date(this.state.focusDate)
     next.setMonth(next.getMonth() + (direction === 'left' ? -1 : 1))
     this.handleMonthYearChange(next, e, direction)
@@ -250,7 +230,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   private handleMonthYearChange(
     next: Date,
     e: React.SyntheticEvent,
-    transition?: 'left' | 'right'
+    transition?: SlideDirection
   ) {
     const { value, focusDate } = this.state
     const month = next.getMonth()
@@ -266,21 +246,26 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
         day = value.getDate()
       }
     } else {
-      // Focus/blur events fire before click, so the grid should have a single tab-able element.
+      // When not focused, the grid should have a single tab-able element.
       const elem = this.rootElement.querySelector<HTMLElement>('[role="grid"] [tabindex="0"]')
       if (elem?.dataset.date) {
         day = dateParts(elem.dataset.date)[2]
       }
     }
+    // If setting the date overflowed the month, clamp to the last day.
     next.setDate(day)
-    // If setting the date overflowed the month, clamp to the last day of the month.
     if (month !== next.getMonth()) {
       next.setDate(0)
     }
-    // TODO Transitions
-    const newState = { focusDate: next, value }
+    if (updateValue && this.props.isValidDate) {
+      updateValue = this.props.isValidDate(next)
+    }
+    const newState: CalendarState = { focusDate: next, value }
+    if (transition) {
+      newState.transition = transition
+      newState.transitionKey = generateId(transition)
+    }
     if (updateValue) {
-      // TODO Make sure the date is enabled
       newState.value = raiseAsDate(value) ? next : toISODate(next)
       this.raiseChange(newState, e)
     } else {
@@ -374,26 +359,14 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
       locale,
       ...rest
     } = this.props
-    // TODO style flex column-reverse
     return (
       <div {...rest} role="group" aria-disabled={disabled} ref={this.rootRef}>
-        <CalendarGrid
-          locale={locale}
-          isValidDate={isValidDate}
-          selected={this.state.value}
-          focusDate={this.state.focusDate}
-          labels={labels}
-          aria-multiselectable={multiple}
-          aria-readonly={readOnly}
-          onKeyDown={this.onGridKeyDown}
-          onClick={this.setSelectedDate}
-        />
         <Flex justifyContent="space-between" alignItems="center" padding={4}>
           <IconButton
             name="left"
-            label={labels.prevMonth || DEFAULT_LABELS.prevMonth}
             iconSize="small"
             onClick={this.handleArrowClick}
+            aria-labelledby={this.getLabelId('prevMonth')}
           >
             <NavigationChevronLeft />
           </IconButton>
@@ -403,17 +376,43 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
           </Flex>
           <IconButton
             name="right"
-            label={labels.nextMonth || DEFAULT_LABELS.nextMonth}
             iconSize="small"
             onClick={this.handleArrowClick}
+            aria-labelledby={this.getLabelId('nextMonth')}
           >
             <NavigationChevronRight />
           </IconButton>
         </Flex>
-        {renderLabels(labels)}
+        <Slider {...this.state}>
+          <CalendarGrid
+            locale={locale}
+            isValidDate={isValidDate}
+            selected={this.state.value}
+            focusDate={this.state.focusDate}
+            labels={labels}
+            aria-multiselectable={multiple}
+            aria-readonly={readOnly}
+            aria-describedby={this.getLabelId('calendarKeyboardDirections')}
+            onKeyDown={this.onGridKeyDown}
+            onClick={this.setSelectedDate}
+          />
+        </Slider>
+        {this.renderLabels(labels)}
       </div>
     )
   }
+
+  private getMonthOptions = memoize((locale?: string, monthLabels?: string[]) => {
+    if (!monthLabels) {
+      monthLabels = []
+      const fmtMonth = getFormatter({ month: 'long' }, locale)
+      const date = new Date(1984, 0, 1)
+      for (let i = 0; i < 12; date.setMonth(++i)) {
+        monthLabels.push(fmtMonth(date))
+      }
+    }
+    return monthLabels.map((label, ix) => ({ label, value: ix }))
+  })
 
   renderMonthDD(locale?: string, labels?: string[]) {
     const options = this.getMonthOptions(locale, labels)
@@ -424,10 +423,20 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
         label={options[month].label}
         options={options}
         onSelectOption={this.selectMonth}
-        aria-labelledby="showMonth"
+        aria-labelledby={this.getLabelId('showMonth')}
       />
     )
   }
+
+  // TODO Infinite scroll?
+  private getYearOptions = memoize((thisYear: number) => {
+    const endYear = thisYear + 100
+    const years = []
+    for (let year = thisYear - 99; year < endYear; year++) {
+      years.push(year)
+    }
+    return years
+  })
 
   renderYearDD() {
     const year = this.state.focusDate.getFullYear()
@@ -437,34 +446,41 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
         value={year}
         options={this.getYearOptions(year)}
         onSelectOption={this.selectYear}
-        aria-labelledby="showYear"
+        aria-labelledby={this.getLabelId('showYear')}
       />
+    )
+  }
+
+  private _labelIDs: { [K in keyof CalendarLabels]?: string } = {}
+  private getLabelId(label: keyof CalendarLabels) {
+    return this._labelIDs[label] || (this._labelIDs[label] = generateId('label'))
+  }
+
+  renderLabels(labels: Partial<CalendarLabels>) {
+    const keys = Object.keys(this._labelIDs) as (keyof CalendarLabels)[]
+    return (
+      <div hidden>
+        {keys.map((key) => (
+          <div id={this._labelIDs[key]} key={key}>
+            {labels[key] || DEFAULT_LABELS[key]}
+          </div>
+        ))}
+      </div>
     )
   }
 }
 
-// Even with `hidden`, elements directly referenced by ID are still accessible.
-// TODO Fix the IDs
-const renderLabels = (labels: Partial<CalendarLabels>) => (
-  <div hidden>
-    <div id="showMonth">{labels.showMonth || DEFAULT_LABELS.showMonth}</div>
-    <div id="showYear">{labels.showYear || DEFAULT_LABELS.showYear}</div>
-  </div>
-)
-
-// TODO Disabled styles, radius
+// TODO Disabled styles
 export const Calendar = styled(CalendarBase)
   .withConfig(omitProps<CalendarProps & MarginProps>(margin))
   .attrs({ as: CalendarBase })`
-  position: relative;
-  display: flex;
-  flex-direction: column-reverse;
+  position: relative; /* Necessary for drop-down positioning. */
   box-sizing: border-box;
   width: 300px;
   ${margin}
   ${colorStyle('standard')};
   border-radius: ${radius(16, 0.6)};
-  border-top-left-radius: 0;
+  border-top-left-radius: ${radius(32, 0.6)};
   border-top-right-radius: ${radius(32, 0.6)};
   ${shadow(1, 'lightContrast')};
   overflow: hidden;

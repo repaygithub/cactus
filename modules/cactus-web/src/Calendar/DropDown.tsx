@@ -1,5 +1,5 @@
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { color, colorStyle, insetBorder, textStyle } from '@repay/cactus-theme'
+import { border, color, colorStyle, insetBorder, textStyle } from '@repay/cactus-theme'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -144,7 +144,7 @@ const DropDownBase = ({
   )
 }
 
-// TODO Adjust padding-right for scrollbar.
+const OUTLINE = { thin: '2px' }
 const DropDown = styled(DropDownBase)`
   button {
     appearance: none;
@@ -158,7 +158,7 @@ const DropDown = styled(DropDownBase)`
     }
   }
 
-  [aria-expanded]
+  [aria-expanded] {
     color: ${color('callToAction')};
     svg {
       transform: scaleY(-1);
@@ -168,12 +168,13 @@ const DropDown = styled(DropDownBase)`
   ul {
     overflow-y: scroll;
     position: absolute;
+    z-index: 1;
     top: 62px;
     bottom: 0;
     left: 0;
     right: 0;
     list-style: none;
-    padding: 0 16px;
+    padding: 0;
     margin: 0;
     outline: none;
     background-color: ${color('lightContrast')};
@@ -195,16 +196,22 @@ const DropDown = styled(DropDownBase)`
       border-radius: 4px;
     }
 
-    &:hover span {
+    &:hover span,
+    &:focus span {
       background-color: ${color('lightCallToAction')};
     }
 
-    &:focus-visible {
-      ${insetBorder('darkContrast')};
+    &:focus-visible span {
+      background-color: transparent;
+      outline: ${border('callToAction', OUTLINE)};
     }
 
-    &[aria-selected='true'] > span {
+    &[aria-selected='true'] span {
       ${colorStyle('callToAction')}
+    }
+
+    &[aria-selected='true']:focus-visible span {
+      ${insetBorder('white', undefined, OUTLINE)};
     }
   }
 `

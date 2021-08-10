@@ -6,7 +6,7 @@ import { margin, MarginProps } from 'styled-system'
 import { getFormatter } from '../helpers/dates'
 import { isFocusOut } from '../helpers/events'
 import { omitProps } from '../helpers/omit'
-import useId from '../helpers/useId'
+import generateId from '../helpers/generateId'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
@@ -19,7 +19,7 @@ interface ComplexWeekdayLabel {
 export interface CalendarGridLabels {
   labelDate?: (d: Date) => string
   labelDisabled?: (normalLabel: string) => string
-  weekdays?: WeekdayLabel[]
+  weekdays?: WeekdayLabel[] | null
 }
 
 interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -57,14 +57,14 @@ export const dateParts = (date: string): [number, number, number] => {
   return [parseInt(year), parseInt(month) - 1, parseInt(day)]
 }
 
-const makeGridHeader = (idPrefix: string, locale?: string, weekdayLabels: WeekdayLabel[] = []) => {
+const makeGridHeader = (locale?: string, weekdayLabels: WeekdayLabel[] | null = []) => {
   if (weekdayLabels === null) return null
 
   const fmtShort = getFormatter({ weekday: 'short' }, locale)
   const fmtLong = getFormatter({ weekday: 'long' }, locale)
   const cells: React.ReactElement<React.HTMLAttributes<any>>[] = []
   for (let i = 0; i < 7; i++) {
-    const props = { id: `${idPrefix}-col${i}`, key: i, children: '', 'aria-label': '' }
+    const props = { id: generateId('col'), key: i, children: '', 'aria-label': '' }
     const labels = weekdayLabels[i]
     if (typeof labels === 'string') {
       props.children = labels
@@ -105,7 +105,7 @@ const makeGrid = (
     const row: GridCellProps[] = []
     for (let i = 0; i < 7; i++) {
       const day = date.getDate()
-      const isValid = isValidDate?.(date) ?? true
+      const isValid = isValidDate ? isValidDate(date) : true
       const label = labelDate(date)
       row.push({
         children: day,
@@ -180,9 +180,8 @@ const CalendarGridBase = ({
   selected,
   ...props
 }: InnerProps) => {
-  const id = useId(props.id)
   const { labelDate, labelDisabled, weekdays } = labels
-  const header = React.useMemo(() => makeGridHeader(id, locale, weekdays), [id, locale, weekdays])
+  const header = React.useMemo(() => makeGridHeader(locale, weekdays), [locale, weekdays])
 
   const grid = React.useMemo(
     () => makeGrid(month, year, locale, isValidDate, labelDate, labelDisabled),
@@ -191,7 +190,7 @@ const CalendarGridBase = ({
   const getTabIndex = useTabIndexCallback(focusStr, props)
   const isSelected = React.useMemo(() => makeSelectedCallback(selected), [selected])
   return (
-    <div {...props} id={id} role="grid">
+    <div {...props} role="grid">
       {header && (
         <div role="row" key="header">
           {header}
@@ -200,7 +199,9 @@ const CalendarGridBase = ({
       {grid.map((row, ix) => (
         <div role="row" key={ix}>
           {row.map((dateProps, jx) => {
-            if (header) {
+            // The default `labelDate` function includes the weekday but we
+            // can't tell with a custom one, so add describedby just in case.
+            if (header && labelDate) {
               dateProps['aria-describedby'] = header[jx].props.id
             }
             dateProps['aria-selected'] = isSelected(dateProps['data-date'])
