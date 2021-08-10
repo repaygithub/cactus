@@ -159,9 +159,9 @@ If `theme.boxShadows` is false, the fallback is returned instead:
 - Else it's returned as-is.
 
 ```
-shadow(0, 'lightContrast') // = 'border: 1px solid [theme.colors.lightContrast]'
-shadow(0, border('red', { thin: '2px' })) // = 'border: 2px solid red'
-shadow(0, 'outline: 1px solid green') // = 'outline: 1px solid green'
+shadow(0, 'lightContrast') // = 'outline: 1px solid [theme.colors.lightContrast]'
+shadow(0, border('red', { thin: '2px' })) // = 'outline: 2px solid red'
+shadow(0, 'border: 1px solid green') // = 'border: 1px solid green'
 shadow(0, { margin: '2px' }) // = { margin: '2px' }
 ```
 

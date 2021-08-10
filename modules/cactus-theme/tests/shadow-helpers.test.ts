@@ -30,19 +30,19 @@ describe('helper: shadow', () => {
     expect(shadow(withShadow, 'hello')).toBe(_('hello'))
   })
 
-  test('allows fallback: border color', () => {
+  test('allows fallback: outline color', () => {
     expect(shadow(withShadow, '4px', 'lightContrast')).toBe(_('4px'))
     expect(shadow(noShadow, '4px', 'lightContrast')).toBe(
-      `border: 1px solid ${defaultProps.theme.colors.lightContrast};`
+      `outline: 1px solid ${defaultProps.theme.colors.lightContrast};`
     )
 
     expect(shadow(withShadow, 5, 'rgb(1, 2, 3)')).toBe(_('0px 45px 48px'))
-    expect(shadow(noShadow, 5, 'rgb(1, 2, 3)')).toBe(`border: 1px solid rgb(1, 2, 3);`)
+    expect(shadow(noShadow, 5, 'rgb(1, 2, 3)')).toBe(`outline: 1px solid rgb(1, 2, 3);`)
   })
 
   test('allows fallback: CSS property', () => {
-    expect(shadow(withShadow, 2, 'outline: 1px solid black')).toBe(_('0px 9px 24px'))
-    expect(shadow(noShadow, 2, 'outline: 1px solid black')).toBe('outline: 1px solid black')
+    expect(shadow(withShadow, 2, 'border: 1px solid black')).toBe(_('0px 9px 24px'))
+    expect(shadow(noShadow, 2, 'border: 1px solid black')).toBe('border: 1px solid black')
   })
 
   test('allows fallback: CSS object', () => {
@@ -54,7 +54,7 @@ describe('helper: shadow', () => {
   test('allows fallback: style function', () => {
     const fn1 = (p: typeof defaultProps) => `2px dotted ${p.theme.colors.base}`
     expect(shadow(withShadow, 0, fn1)).toBe(_('0px 0px 3px'))
-    expect(shadow(noShadow, 0, fn1)).toBe(`border: 2px dotted ${noShadow.theme.colors.base};`)
+    expect(shadow(noShadow, 0, fn1)).toBe(`outline: 2px dotted ${noShadow.theme.colors.base};`)
 
     const fn2 = () => 'ouline: 1px dotted orange;'
     expect(shadow(withShadow, 1, fn2)).toBe(_('0px 3px 8px'))

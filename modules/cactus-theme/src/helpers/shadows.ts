@@ -26,7 +26,7 @@ export const boxShadow = wrap(_boxShadow)
  * `fallback` can be a function that takes the props object, or a string, or a CSS object.
  * If it's a string that does not contain ':', it's assumed to be a border color.
  * Similarly, if the function returns a string with no ':', it's automatically added
- * to a `border:` property declaration.
+ * to an `outline:` property declaration.
  */
 const _shadow = (
   props: ThemeProps,
@@ -43,7 +43,7 @@ const _shadow = (
     // Assume string fallbacks are border colors.
     value = border(props, fallback)
   }
-  // If no CSS property is specified, assume `border` as the closest analogue of box shadows.
-  return isCssValue(value) ? `border: ${value};` : value
+  // If no CSS property is specified, assume `outline` as the closest analogue of box shadows.
+  return isCssValue(value) ? `outline: ${value};` : value
 }
 export const shadow = wrap(_shadow)
