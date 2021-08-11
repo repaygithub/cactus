@@ -7,7 +7,6 @@ import { margin, MarginProps } from 'styled-system'
 import Flex from '../Flex/Flex'
 import { getFormatter } from '../helpers/dates'
 import { CactusChangeEvent, CactusEventTarget } from '../helpers/events'
-import { getCurrentFocusIndex } from '../helpers/focus'
 import generateId from '../helpers/generateId'
 import { omitProps } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
@@ -17,18 +16,19 @@ import CalendarGrid, {
   CalendarGridLabels,
   CalendarValue,
   dateParts,
-  INSIDE_DATE,
+  clampDate,
   queryDate,
   toISODate,
 } from './Grid'
 import Slider, { SlideDirection, SliderProps } from './Slider'
+import { isActionKey } from '../helpers/a11y'
 
 export interface CalendarLabels extends CalendarGridLabels {
-  calendarKeyboardDirections: string
-  prevMonth: string
-  nextMonth: string
-  showMonth: string
-  showYear: string
+  calendarKeyboardDirections: React.ReactChild
+  prevMonth: React.ReactChild
+  nextMonth: React.ReactChild
+  showMonth: React.ReactChild
+  showYear: React.ReactChild
   months?: string[]
 }
 
@@ -168,7 +168,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     this._isOverflow = false
   }
 
-  private setFocusDate(date: Date) {
+  private setFocusDate = (date: Date) => {
     this.setState(({ focusDate }) => {
       if (
         date.getMonth() !== focusDate.getMonth() ||
@@ -181,21 +181,18 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     })
   }
 
-  private setSelectedDate = (e: React.SyntheticEvent) => {
-    // TODO Support multiple, eventually.
+  private setSelectedDate = (e: React.MouseEvent | React.KeyboardEvent) => {
     const target = e.target as HTMLElement
     const isoDate = target.dataset.date
     const disabled = this.props.disabled || target.getAttribute('aria-disabled') === 'true'
-    if (disabled || this.props.readOnly || !isoDate) return
+    const isAction = (e as React.MouseEvent).button === 0 || isActionKey(e as React.KeyboardEvent)
+    if (this.props.readOnly || disabled) {
+      e.preventDefault()
+      return
+    } else if (!isoDate || !isAction) return
 
-    const isDate = raiseAsDate(this.state.value)
-    const value = isDate ? new Date(...dateParts(isoDate)) : isoDate
-    const newState: any = { value }
-    if (target.matches('.outside-date')) {
-      this._isOverflow = true
-      newState.focusDate = isDate ? value : new Date(...dateParts(isoDate))
-    }
-    this.raiseChange(newState, e)
+    const value = raiseAsDate(this.state.value) ? new Date(...dateParts(isoDate)) : isoDate
+    this.raiseChange({ value }, e)
   }
 
   private raiseChange(newState: { value: CalendarValue }, e: React.SyntheticEvent) {
@@ -211,19 +208,19 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   private handleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const direction = e.currentTarget.name as SlideDirection
     const next = new Date(this.state.focusDate)
-    next.setMonth(next.getMonth() + (direction === 'left' ? -1 : 1))
+    clampDate(next, 'setMonth', next.getMonth() + (direction === 'left' ? -1 : 1))
     this.handleMonthYearChange(next, e, direction)
   }
 
   private selectMonth = (month: number, e: React.SyntheticEvent) => {
     const next = new Date(this.state.focusDate)
-    next.setMonth(month)
+    clampDate(next, 'setMonth', month)
     this.handleMonthYearChange(next, e)
   }
 
   private selectYear = (year: number, e: React.SyntheticEvent) => {
     const next = new Date(this.state.focusDate)
-    next.setFullYear(year)
+    clampDate(next, 'setFullYear', year)
     this.handleMonthYearChange(next, e)
   }
 
@@ -252,11 +249,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
         day = dateParts(elem.dataset.date)[2]
       }
     }
-    // If setting the date overflowed the month, clamp to the last day.
-    next.setDate(day)
-    if (month !== next.getMonth()) {
-      next.setDate(0)
-    }
+    clampDate(next, 'setDate', day)
     if (updateValue && this.props.isValidDate) {
       updateValue = this.props.isValidDate(next)
     }
@@ -273,74 +266,6 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     }
   }
 
-  private setGridFocus(shift: number, type: 'day' | 'month' | 'year' | 'weekday') {
-    const dates = Array.from(this.rootElement.querySelectorAll<HTMLElement>(INSIDE_DATE))
-    const index = getCurrentFocusIndex(dates, 0)
-    // The INSIDE_DATE query guarantees it has a `data-date` attribute.
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const date = new Date(...dateParts(dates[index].dataset.date!))
-    const month = date.getMonth()
-    const year = date.getFullYear()
-    if (type === 'day') {
-      date.setDate(date.getDate() + shift)
-    } else if (type === 'month') {
-      date.setMonth(month + shift)
-    } else if (type === 'year') {
-      date.setFullYear(year + shift)
-    } else {
-      // type === 'weekday'
-      date.setDate(date.getDate() + shift - date.getDay())
-    }
-    // Only set the focusDate when the month/year changes, otherwise manage focus internally.
-    if (date.getMonth() !== month || date.getFullYear() !== year) {
-      this.setFocusDate(date)
-    } else {
-      dates[date.getDate() - 1].focus()
-    }
-  }
-
-  private onGridKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!(e.target as HTMLElement).dataset.date) return
-
-    switch (e.key) {
-      case 'ArrowLeft':
-        this.setGridFocus(-1, 'day')
-        break
-      case 'ArrowRight':
-        this.setGridFocus(1, 'day')
-        break
-      case 'ArrowUp':
-        this.setGridFocus(-7, 'day')
-        break
-      case 'ArrowDown':
-        this.setGridFocus(7, 'day')
-        break
-      case 'PageUp':
-        this.setGridFocus(-1, e.shiftKey ? 'year' : 'month')
-        break
-      case 'PageDown':
-        this.setGridFocus(1, e.shiftKey ? 'year' : 'month')
-        break
-      case 'Home':
-        this.setGridFocus(0, 'weekday')
-        break
-      case 'End':
-        this.setGridFocus(6, 'weekday')
-        break
-
-      case ' ':
-      case 'Enter':
-        // TODO Someday we should handle multiple with shift/ctrl keys.
-        this.setSelectedDate(e)
-        e.preventDefault()
-        break
-
-      default:
-        return
-    }
-    e.stopPropagation()
-  }
-
   render() {
     const {
       initialFocus,
@@ -353,7 +278,6 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
       readOnly,
       onChange,
       onMonthChange,
-      onYearChange,
       isValidDate,
       labels = DEFAULT_LABELS,
       locale,
@@ -393,8 +317,9 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
             aria-multiselectable={multiple}
             aria-readonly={readOnly}
             aria-describedby={this.getLabelId('calendarKeyboardDirections')}
-            onKeyDown={this.onGridKeyDown}
             onClick={this.setSelectedDate}
+            onKeyDown={this.setSelectedDate}
+            onFocusOverflow={this.setFocusDate}
           />
         </Slider>
         {this.renderLabels(labels)}
@@ -453,7 +378,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
 
   private _labelIDs: { [K in keyof CalendarLabels]?: string } = {}
   private getLabelId(label: keyof CalendarLabels) {
-    return this._labelIDs[label] || (this._labelIDs[label] = generateId('label'))
+    return this._labelIDs[label] || (this._labelIDs[label] = generateId(label))
   }
 
   renderLabels(labels: Partial<CalendarLabels>) {
@@ -475,7 +400,7 @@ export const Calendar = styled(CalendarBase)
   .withConfig(omitProps<CalendarProps & MarginProps>(margin))
   .attrs({ as: CalendarBase })`
   position: relative; /* Necessary for drop-down positioning. */
-  box-sizing: border-box;
+  box-sizing: content-box;
   width: 300px;
   ${margin}
   ${colorStyle('standard')};

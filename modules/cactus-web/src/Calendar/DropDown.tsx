@@ -203,7 +203,7 @@ const DropDown = styled(DropDownBase)`
 
     &:focus-visible span {
       background-color: transparent;
-      outline: ${border('callToAction', OUTLINE)};
+      border: ${border('callToAction', OUTLINE)};
     }
 
     &[aria-selected='true'] span {

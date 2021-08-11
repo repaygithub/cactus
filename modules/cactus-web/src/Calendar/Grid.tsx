@@ -1,12 +1,14 @@
-import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
+import { border, color, colorStyle, insetBorder, radius, textStyle } from '@repay/cactus-theme'
 import React from 'react'
 import styled, { DefaultTheme, StyledComponent } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { isActionKey } from '../helpers/a11y'
 import { getFormatter } from '../helpers/dates'
 import { isFocusOut } from '../helpers/events'
 import { omitProps } from '../helpers/omit'
 import generateId from '../helpers/generateId'
+import { getCurrentFocusIndex } from '../helpers/focus'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
@@ -28,6 +30,7 @@ interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
   isValidDate?: (d: Date) => boolean
   selected?: CalendarValue
   labels?: CalendarGridLabels
+  onFocusOverflow?: (d: Date) => void
 }
 
 export interface CalendarGridProps extends BaseProps, MarginProps {
@@ -55,6 +58,13 @@ export const toISODate = (date: Date): string =>
 export const dateParts = (date: string): [number, number, number] => {
   const [year, month, day] = date.split('-')
   return [parseInt(year), parseInt(month) - 1, parseInt(day)]
+}
+export const clampDate = (date: Date, method: 'setDate' | 'setMonth' | 'setFullYear', value: number): void => {
+  const month = method !== 'setMonth' ? date.getMonth() : value < 0 ? 12 + value : value % 12
+  date[method](value)
+  if (date.getMonth() !== month) {
+    date.setDate(0)
+  }
 }
 
 const makeGridHeader = (locale?: string, weekdayLabels: WeekdayLabel[] | null = []) => {
@@ -121,16 +131,16 @@ const makeGrid = (
   return rows
 }
 
-export const INSIDE_DATE = '[data-date]:not(.outside-date)'
 export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =>
   root.querySelector<HTMLElement>(`[data-date='${date}']:not(.outside-date)`)
 
-const useTabIndexCallback = (
+const useFocusBehavior = (
   focusStr: string,
+  onFocusOverflow: undefined | ((d: Date) => void),
   props: React.HTMLAttributes<HTMLDivElement>
 ): ((d: string) => number) => {
   const focusRef = React.useRef<string | null>(focusStr)
-  const { onFocus, onBlur } = props
+  const { onClick, onKeyDown, onFocus, onBlur } = props
   props.onFocus = (e) => {
     focusRef.current = null
     e.target.tabIndex = -1
@@ -143,7 +153,72 @@ const useTabIndexCallback = (
     }
     onBlur?.(e)
   }
+  props.onClick = (e) => {
+    onClick?.(e)
+    const target = e.target as HTMLElement
+    if (!e.isDefaultPrevented() && onFocusOverflow && target.matches('.outside-date')) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      onFocusOverflow(new Date(...dateParts(target.dataset.date!)))
+    }
+  }
+  props.onKeyDown = (e) => {
+    onKeyDown?.(e)
+    if (!e.isDefaultPrevented() && (e.target as HTMLElement).dataset.date) {
+      const overflowDate = onGridKeyDown(e)
+      if (onFocusOverflow && overflowDate) {
+        onFocusOverflow(overflowDate)
+      }
+    }
+  }
   return (date: string) => (date === focusRef.current ? 0 : -1)
+}
+
+type FocusShift = 'day' | 'month' | 'year' | 'weekday'
+const setGridFocus = (e: React.KeyboardEvent<HTMLDivElement>, shift: number, type: FocusShift) => {
+  e.stopPropagation()
+  const dates = Array.from(e.currentTarget.querySelectorAll<HTMLElement>('[data-date]:not(.outside-date)'))
+  const index = getCurrentFocusIndex(dates, 0)
+  // The query guarantees it has a `data-date` attribute.
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const date = new Date(...dateParts(dates[index].dataset.date!))
+  const month = date.getMonth()
+  const year = date.getFullYear()
+  if (type === 'day') {
+    date.setDate(date.getDate() + shift)
+  } else if (type === 'month') {
+    clampDate(date, 'setMonth', month + shift)
+  } else if (type === 'year') {
+    clampDate(date, 'setFullYear', year + shift)
+  } else {
+    // type === 'weekday'
+    date.setDate(date.getDate() + shift - date.getDay())
+  }
+  // Only set the focusDate when the month/year changes, otherwise manage focus internally.
+  if (date.getMonth() !== month || date.getFullYear() !== year) {
+    return date
+  }
+  dates[date.getDate() - 1].focus()
+}
+
+const onGridKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  switch (e.key) {
+    case 'ArrowLeft':
+      return setGridFocus(e, -1, 'day')
+    case 'ArrowRight':
+      return setGridFocus(e, 1, 'day')
+    case 'ArrowUp':
+      return setGridFocus(e, -7, 'day')
+    case 'ArrowDown':
+      return setGridFocus(e, 7, 'day')
+    case 'PageUp':
+      return setGridFocus(e, -1, e.shiftKey ? 'year' : 'month')
+    case 'PageDown':
+      return setGridFocus(e, 1, e.shiftKey ? 'year' : 'month')
+    case 'Home':
+      return setGridFocus(e, 0, 'weekday')
+    case 'End':
+      return setGridFocus(e, 6, 'weekday')
+  }
 }
 
 const isDateArray = (a: string[] | Date[]): a is Date[] => typeof a[0] === 'object'
@@ -178,6 +253,7 @@ const CalendarGridBase = ({
   labels = {},
   isValidDate,
   selected,
+  onFocusOverflow,
   ...props
 }: InnerProps) => {
   const { labelDate, labelDisabled, weekdays } = labels
@@ -187,7 +263,7 @@ const CalendarGridBase = ({
     () => makeGrid(month, year, locale, isValidDate, labelDate, labelDisabled),
     [month, year, locale, isValidDate, labelDate, labelDisabled]
   )
-  const getTabIndex = useTabIndexCallback(focusStr, props)
+  const getTabIndex = useFocusBehavior(focusStr, onFocusOverflow, props)
   const isSelected = React.useMemo(() => makeSelectedCallback(selected), [selected])
   return (
     <div {...props} role="grid">
@@ -269,13 +345,15 @@ export const CalendarGrid = styled(CalendarGridBase)
 
   [aria-disabled='false'] {
     cursor: pointer;
-    :hover, :focus {
+    :focus {
       background-color: ${color('lightCallToAction')};
     }
     :focus-visible {
       background-color: transparent;
-      outline: ${border('callToAction', OUTLINE)};
-      outline-offset: -2px;
+      ${insetBorder('callToAction', undefined, OUTLINE)};
+    }
+    :hover {
+      background-color: ${color('lightCallToAction')};
     }
   }
 
@@ -286,8 +364,9 @@ export const CalendarGrid = styled(CalendarGridBase)
   && span[aria-selected='true'] {
     ${colorStyle('callToAction')}
     :focus-visible {
-      outline: ${border('white', OUTLINE)};
-      outline-offset: -4px;
+      border: ${border('callToAction', OUTLINE)};
+      ${insetBorder('white', undefined, OUTLINE)};
+      padding: 6px 0;
     }
     &.outside-date {
       opacity: .6;
