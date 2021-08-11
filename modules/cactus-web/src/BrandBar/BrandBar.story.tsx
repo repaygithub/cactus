@@ -3,72 +3,60 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
-import styled from 'styled-components'
 
 import {
   ActionBar,
   Box,
   BrandBar,
-  Divider,
   Flex,
   Layout,
   Link,
+  OrgSelect,
   SelectField,
   SIZES,
-  Text,
-  TextInput,
   useScreenSize,
 } from '../'
-import { insetBorder } from '../helpers/theme'
+import { Organization } from '../OrgSelect/OrgSelect'
 import { SelectValueType } from '../Select/Select'
 
-interface Org {
-  name: string
-  id: string
-  subdomain: string
-}
+const ORGS: Organization[] = [
+  {
+    name: 'Test Org',
+    id: '123456',
+    subdomain: 'test-org',
+  },
+  {
+    name: 'Faker',
+    id: '123465',
+    subdomain: 'faker',
+  },
+  {
+    name: 'Favorite',
+    id: '213456',
+    subdomain: 'fav',
+  },
 
-const ORGS: { favorites: Org[]; recent: Org[] } = {
-  favorites: [
-    {
-      name: 'Test Org',
-      id: '123456',
-      subdomain: 'test-org',
-    },
-    {
-      name: 'Faker',
-      id: '123465',
-      subdomain: 'faker',
-    },
-    {
-      name: 'Favorite',
-      id: '213456',
-      subdomain: 'fav',
-    },
-  ],
-  recent: [
-    {
-      name: 'Most Recent',
-      id: '654321',
-      subdomain: 'most-recent',
-    },
-    {
-      name: 'My Org',
-      id: '654312',
-      subdomain: 'my-org',
-    },
-    {
-      name: 'Fleeting',
-      id: '124356',
-      subdomain: 'fleeting',
-    },
-    {
-      name: 'Low',
-      id: '987654',
-      subdomain: 'low-life',
-    },
-  ],
-}
+  {
+    name: 'Most Recent',
+    id: '654321',
+    subdomain: 'most-recent',
+  },
+  {
+    name: 'My Org',
+    id: '654312',
+    subdomain: 'my-org',
+  },
+  {
+    name: 'Fleeting',
+    id: '124356',
+    subdomain: 'fleeting',
+  },
+  {
+    name: 'Low',
+    id: '987654',
+    subdomain: 'low-life',
+  },
+]
 
 const LOGO =
   'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg'
@@ -148,51 +136,13 @@ BasicUsage.parameters = {
   },
 }
 
-const List = styled.ul`
-  margin: 0;
-  padding: 0;
-`
-
-const ListItem = styled.li<{ $isLastItem: boolean }>`
-  padding: ${(p) => p.theme.space[2]}px;
-  border-bottom: ${(p) => (p.$isLastItem ? 'none' : `1px solid ${p.theme.colors.lightContrast}`)};
-  cursor: pointer;
-  list-style-type: none;
-  outline: none;
-
-  &:focus {
-    color: ${(p) => p.theme.colors.callToAction};
-    ${(p) => insetBorder(p.theme, 'callToAction')};
-  }
-
-  &:hover {
-    color: ${(p) => p.theme.colors.callToAction};
-  }
-`
-
 const BrandBarWithOrgDropdown = () => {
-  /*
-   * Had to pull this into a separate component so we could use the
-   * useScreenSize() hook.
-   */
-  const [currentOrg, setCurrentOrg] = React.useState<Org>(ORGS.favorites[0])
-  const [searchValue, setSearchValue] = React.useState<string>('')
-  const [searchedOrgs, setSearchedOrgs] = React.useState<Org[]>([])
+  const [currentOrg, setCurrentOrg] = React.useState<Organization>(ORGS[0])
   const isTiny = SIZES.tiny === useScreenSize()
   const align: 'left' | 'right' = select('align', ['left', 'right'], 'right')
 
-  React.useEffect(() => {
-    if (searchValue) {
-      setSearchedOrgs(
-        [...ORGS.favorites, ...ORGS.recent].filter((org) => org.name.includes(searchValue))
-      )
-    }
-  }, [searchValue])
-
-  const handleOrgSelect = (orgId: string) => {
-    const newOrg = [...ORGS.favorites, ...ORGS.recent].find((org) => org.id === orgId)
-    setCurrentOrg(newOrg as Org)
-    setSearchValue('')
+  const handleOrgSelect = (newOrg: Organization) => {
+    setCurrentOrg(newOrg)
   }
 
   return (
@@ -223,86 +173,7 @@ const BrandBarWithOrgDropdown = () => {
         </Box>
       </BrandBar.Item>
       <BrandBar.Item as={BrandBar.Dropdown} label="Select Org" align={align}>
-        <Box width={isTiny ? '100%' : undefined} pt={2} textStyle="small">
-          <Box width="100%" px={2}>
-            <TextInput
-              width="100%"
-              name="search"
-              placeholder="Search Orgs..."
-              value={searchValue}
-              onChange={(e) => {
-                setSearchValue(e.target.value)
-              }}
-            />
-          </Box>
-          <Divider mb={searchValue ? 0 : undefined} />
-          {searchValue ? (
-            <List>
-              {searchedOrgs.map((org, ix) => (
-                <ListItem
-                  role="menuitem"
-                  key={ix}
-                  tabIndex={0}
-                  $isLastItem={ix === searchedOrgs.length - 1}
-                  onClick={() => handleOrgSelect(org.id)}
-                >
-                  {org.name}
-                </ListItem>
-              ))}
-            </List>
-          ) : (
-            <>
-              <Flex width="100%" justifyContent="center">
-                <strong>Current Org Info</strong>
-              </Flex>
-              <Box px={3}>
-                <Text my={1}>{currentOrg.name}</Text>
-                <Text my={1}>{currentOrg.id}</Text>
-                <Text my={1}>{currentOrg.subdomain}</Text>
-              </Box>
-              <Box width="100%" backgroundColor="lightContrast" py={2}>
-                <Flex width="100%" justifyContent="center">
-                  Favorites
-                </Flex>
-              </Box>
-              <Box width="100%" px={2}>
-                <List>
-                  {ORGS.favorites.map((org, ix) => (
-                    <ListItem
-                      role="menuitem"
-                      key={ix}
-                      tabIndex={0}
-                      $isLastItem={ix === ORGS.favorites.length - 1}
-                      onClick={() => handleOrgSelect(org.id)}
-                    >
-                      {org.name}
-                    </ListItem>
-                  ))}
-                </List>
-              </Box>
-              <Box width="100%" backgroundColor="lightContrast" py={2}>
-                <Flex width="100%" justifyContent="center">
-                  Recents
-                </Flex>
-              </Box>
-              <Box width="100%" px={2}>
-                <List>
-                  {ORGS.recent.map((org, ix) => (
-                    <ListItem
-                      role="menuitem"
-                      key={ix}
-                      tabIndex={0}
-                      $isLastItem={ix === ORGS.recent.length - 1}
-                      onClick={() => handleOrgSelect(org.id)}
-                    >
-                      {org.name}
-                    </ListItem>
-                  ))}
-                </List>
-              </Box>
-            </>
-          )}
-        </Box>
+        <OrgSelect orgs={ORGS} currentOrg={currentOrg} onOrgClick={handleOrgSelect} />
       </BrandBar.Item>
       <BrandBar.UserMenu label="Userforce One">
         <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
