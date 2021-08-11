@@ -1,0 +1,52 @@
+---
+name: OrgSelect
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import OrgSelect from './OrgSelect'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from '../helpers/constants'
+
+# OrgSelect
+
+The `OrgSelect` is a component designed to show the current organization's info as well as make it easy to search and switch between orgs.
+
+## Basic usage
+
+`OrgSelect` will render a search box at the top, the current org info (if it's provided through the `currentOrg` prop), and a list of all orgs.
+If a user types in the search box, the component will filter through the list of orgs and display only the ones that match the search.
+
+The `OrgSelect` can be controlled or uncontrolled -- if you don't pass any `onChange` prop to the component, then it will filter orgs for you. However, if you
+want to handle the filtering yourself, you can pass an `onChange` handler that will be called whenever the search value changes. If you pass an `onChange` handler,
+make sure to update the list of orgs and pass the updated list through the `orgs` prop.
+
+## Try It out
+
+export const code = `
+<OrgSelect
+  orgs={[
+    { name: 'Org 1', id: '1234', subdomain: 'org-1' },
+    { name: 'Org 2', id: '1243', subdomain: 'org-1' },
+    { name: 'Org 3', id: '2134', subdomain: 'org-3' }
+  ]}
+  currentOrg={{ name: 'Org 1', id: '1234', subdomain: 'org-1' }}
+  onOrgClick={(org) => console.log(org.name + ' clicked')}
+/>
+`
+
+<LiveProvider code={code} scope={{ OrgSelect }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- The `OrgSelect` was designed to be rendered inside a dropdown; the `BrandBar.Dropdown` in particular is the best place to use it.
+- If you pass an `onChange` you must update the orgs passed to the `orgs` prop yourself.
+- Organizations are expected to be objects with the form: `{ name: string, id: string, subdomain: string }`.
+
+## Properties
+
+<PropsTable of={OrgSelect} />
