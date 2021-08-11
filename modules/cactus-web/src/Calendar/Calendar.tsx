@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
+import { isActionKey } from '../helpers/a11y'
 import { getFormatter } from '../helpers/dates'
 import { CactusChangeEvent, CactusEventTarget } from '../helpers/events'
 import generateId from '../helpers/generateId'
@@ -15,14 +16,14 @@ import CalendarGrid, {
   CalendarDate,
   CalendarGridLabels,
   CalendarValue,
-  dateParts,
   clampDate,
+  dateParts,
   queryDate,
   toISODate,
 } from './Grid'
 import Slider, { SlideDirection, SliderProps } from './Slider'
-import { isActionKey } from '../helpers/a11y'
 
+export { CalendarDate, CalendarValue }
 export interface CalendarLabels extends CalendarGridLabels {
   calendarKeyboardDirections: React.ReactChild
   prevMonth: React.ReactChild
@@ -224,11 +225,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     this.handleMonthYearChange(next, e)
   }
 
-  private handleMonthYearChange(
-    next: Date,
-    e: React.SyntheticEvent,
-    transition?: SlideDirection
-  ) {
+  private handleMonthYearChange(next: Date, e: React.SyntheticEvent, transition?: SlideDirection) {
     const { value, focusDate } = this.state
     const month = next.getMonth()
     if (month === focusDate.getMonth() && next.getFullYear() === focusDate.getFullYear()) return

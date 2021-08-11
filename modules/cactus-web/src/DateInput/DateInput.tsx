@@ -4,12 +4,13 @@ import {
   NavigationChevronDown,
   NavigationChevronUp,
 } from '@repay/cactus-icons'
+import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment, ReactElement } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
-import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
 
+import Calendar, { CalendarDate, CalendarLabels, CalendarValue } from '../Calendar/Calendar'
 import Flex from '../Flex/Flex'
 import FocusLock from '../FocusLock/FocusLock'
 import { isIE } from '../helpers/constants'
@@ -38,7 +39,6 @@ import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import IconButton from '../IconButton/IconButton'
 import { Status } from '../StatusMessage/StatusMessage'
-import Calendar, { CalendarLabels } from '../Calendar/Calendar'
 
 interface MonthYearDataType {
   month: number
@@ -321,8 +321,9 @@ const CalendarPopup: React.FC<PopupProps> = ({ anchorRef, popupRef, ...props }) 
     position: positionPortal,
     updateOnScroll: true,
   })
-  // TODO Change ref to the Calendar; Could also do it by id.
-  return <FocusLock ref={(n) => popupRef.current = n && n.firstElementChild} {...props} />
+  // Can't ref directly to Calendar because it's a class component.
+  const ref = popupRef as React.MutableRefObject<Element | null>
+  return <FocusLock ref={(n) => (ref.current = n && n.firstElementChild)} {...props} />
 }
 
 const PopupCalendar = styled(Calendar)`
@@ -331,7 +332,7 @@ const PopupCalendar = styled(Calendar)`
   border-top-left-radius: 0;
 `
 
-type Target = CactusEventTarget<Date | string>
+type Target = CactusEventTarget<CalendarDate>
 
 export interface DateInputProps
   extends MarginProps,
@@ -384,13 +385,8 @@ interface DateInputState {
   value: PartialDate
   locale: string
   type: DateType
-  isOpen: false | 'month' | 'year' | 'calendar'
-  transitioning: boolean
-  calendarKey: string
-  slideDirection: 'left' | 'right' | null
+  isOpen: boolean
   invalidDate: boolean
-  // YYYY-MM-dd
-  focusDay?: string
 }
 
 const isFormatValid = (format: string, type: DateType): boolean => {
@@ -416,23 +412,17 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       type,
       locale,
       isOpen: false,
-      transitioning: false,
       invalidDate: false,
-      calendarKey: generateId('calendar'),
-      slideDirection: null,
     }
   }
 
   private _shouldFocusNext = false
   private _lastInputKeyed = ''
-  private _shouldUpdateFocusDay = false
-  private _didClickButton = false
-  private _shouldFocusMonthYearList = false
 
   private _inputWrapper = React.createRef<HTMLDivElement>()
   private _button = React.createRef<HTMLButtonElement>()
   private _portal = React.createRef<HTMLDivElement>()
-  private eventTarget = new CactusEventTarget<Date | string>({})
+  private eventTarget = new CactusEventTarget<CalendarDate>({})
 
   public static propTypes = {
     name: PropTypes.string.isRequired,
@@ -498,9 +488,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       if (value.isValid() && !value.equals(state.value)) {
         updates = updates || {}
         updates.value = value
-        if (state.isOpen) {
-          updates.focusDay = value.format('YYYY-MM-dd')
-        }
       }
     }
 
@@ -512,7 +499,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     this.eventTarget.name = this.props.name
   }
 
-  public componentDidUpdate(_: DateInputProps, prevState: DateInputState): void {
+  public componentDidUpdate() {
     this.eventTarget.id = this.props.id
     this.eventTarget.name = this.props.name
     // when the entered text is a complete value, auto focus the next input
@@ -536,44 +523,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           nextSibling.focus()
         }
       }
-    } else if (this._shouldUpdateFocusDay) {
-      const _portal = this._portal.current
-      const focusDay = this.state.focusDay
-      window.requestAnimationFrame((): void => {
-        const toFocus = _portal && _portal.querySelector(`[data-date="${focusDay}"]`)
-        // focus on focusDay button if focus is already in portal
-        if (toFocus instanceof HTMLButtonElement) {
-          toFocus.focus()
-        }
-      })
-      this._shouldUpdateFocusDay = false
-    }
-    if (this.state.isOpen === 'month' || this.state.isOpen === 'year') {
-      window.requestAnimationFrame((): void => {
-        const _portal = this._portal.current
-        const list = _portal && (_portal.querySelector('[role="listbox"]') as HTMLElement)
-        if (list) {
-          const activeDescendant = list.getAttribute('aria-activedescendant')
-          if (!activeDescendant) return
-          const $selected = document.getElementById(activeDescendant)
-          if (!$selected) return
-
-          if (list.scrollHeight > list.clientHeight) {
-            const scrollBottom = list.clientHeight + list.scrollTop
-            const optionBottom = $selected.offsetTop + $selected.offsetHeight
-            if (optionBottom > scrollBottom) {
-              list.scrollTop = optionBottom - list.clientHeight
-            } else if ($selected.offsetTop < list.scrollTop) {
-              list.scrollTop = $selected.offsetTop
-            }
-          }
-
-          if (this._shouldFocusMonthYearList) {
-            list.focus()
-            this._shouldFocusMonthYearList = false
-          }
-        }
-      })
     }
     const { value, invalidDate } = this.state
     const { onInvalidDate, type } = this.props
@@ -593,12 +542,15 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         onInvalidDate(false)
       }
     }
-    if (prevState.slideDirection !== this.state.slideDirection || this.state.transitioning) {
-      this.setState({ calendarKey: generateId('calendar'), transitioning: false })
-    }
   }
 
   /** event handlers */
+
+  private handleBodyClick = (event: MouseEvent): void => {
+    if (this.state.isOpen && this._isOutside(event.target)) {
+      this._close(false)
+    }
+  }
 
   private handleKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const target = event.target
@@ -624,6 +576,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private handleInputCapture = (event: React.CompositionEvent<HTMLDivElement>): void => {
     const target = event.target
     let data = event.data || event.nativeEvent.data
+    console.log('WHAT THE HECK IS GOING ON HERE?', data, target)
     if (
       this._inputWrapper.current !== null &&
       isOwnInput(target, this._inputWrapper.current) &&
@@ -657,10 +610,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     // when blurring off the field
     this._lastInputKeyed = ''
     // double nested because the portal takes one turn to render
-    const didClickButton = this._didClickButton
     event.persist()
     window.requestAnimationFrame((): void => {
-      if (this._isOutside(document.activeElement) && !didClickButton) {
+      if (this._isOutside(document.activeElement)) {
         const { onBlur } = this.props
         if (typeof onBlur === 'function') {
           this.eventTarget.value = this._convertVal(this.state.value)
@@ -673,41 +625,30 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private handleClick = (): void => {
     window.requestAnimationFrame((): void => {
-      // if not focusing in portal, try to focus first input
-      if (this._didClickButton) {
-        const _portal = this._portal.current
-        if (_portal !== null) {
-          const focusDay = _portal.querySelector('button[data-date][tabindex="0"]')
-          if (focusDay instanceof HTMLButtonElement) {
-            focusDay.focus()
-          }
-        }
-        this._didClickButton = false
-      } else {
-        const activeElement = document.activeElement
-        const _inputWrapper = this._inputWrapper.current
-        if (
-          _inputWrapper &&
-          (!(activeElement instanceof Node) || !_inputWrapper.contains(activeElement))
-        ) {
-          const inputs = _inputWrapper.querySelector('input')
-          if (inputs !== null) {
-            inputs.focus()
-          }
+      const activeElement = document.activeElement
+      const _inputWrapper = this._inputWrapper.current
+      if (
+        _inputWrapper &&
+        (!(activeElement instanceof Node) || !_inputWrapper.contains(activeElement))
+      ) {
+        const inputs = _inputWrapper.querySelector('input')
+        if (inputs !== null) {
+          inputs.focus()
         }
       }
     })
   }
 
-  private handleButtonClick = (): void => {
-    this._open()
-    this._didClickButton = true
-  }
-
-  private handleButtonKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
-    if (event.key === ' ') {
-      this._didClickButton = true
-    }
+  private handleButtonClick = (e: React.SyntheticEvent): void => {
+    e.stopPropagation()
+    this.setState({ isOpen: true })
+    window.requestAnimationFrame(() => {
+      // if not focusing in portal, try to focus first input
+      const focusDay = this._portal.current?.querySelector('[role="grid"] [tabindex="0"]')
+      if (focusDay instanceof HTMLElement) {
+        focusDay.focus()
+      }
+    })
   }
 
   private handlePortalKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>): void => {
@@ -750,6 +691,33 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     event.stopPropagation()
   }
 
+  private handleCalendarChange = (event: React.ChangeEvent<CactusEventTarget<CalendarValue>>) => {
+    const newVal = event.target.value
+    // This shouldn't ever happen, mostly just to keep Typescript happy.
+    if (newVal && !Array.isArray(newVal)) {
+      this.setState(({ value }) => {
+        const update = value.clone()
+        if (typeof newVal === 'string') {
+          update.parse(newVal, 'YYYY-MM-dd')
+        } else {
+          update.setYear(newVal.getFullYear())
+          update.setMonth(newVal.getMonth())
+          update.setDate(newVal.getDate())
+        }
+        return { value: update }
+      })
+    }
+  }
+
+  private handleMonthYearChange = (month: number, year: number) => {
+    this.setState(({ value }) => {
+      const update = value.clone()
+      update.setYear(year)
+      update.setMonth(month)
+      return { value: update }
+    })
+  }
+
   private handleTimeChange = (event: React.ChangeEvent<Target>): void => {
     const time = event.target.value
     if (typeof time === 'string' && time !== '') {
@@ -772,7 +740,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     change?: string | undefined
   ): void => {
     event.persist()
-    this.setState(({ value, isOpen, focusDay }): Pick<DateInputState, 'value' | 'focusDay'> => {
+    this.setState(({ value }) => {
       const update = PartialDate.from(value)
       switch (type) {
         case 'ArrowUp':
@@ -838,10 +806,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       }
 
       this.raiseChange(event, update)
-      if (isOpen !== false) {
-        focusDay = update.format('YYYY-MM-dd')
-      }
-      return { value: update, focusDay }
+      return { value: update }
     })
   }
 
@@ -854,40 +819,16 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private _open(): void {
-    this.setState(({ value }): Pick<DateInputState, 'isOpen' | 'focusDay'> => {
-      let focusDay: string
-      if (value.isValid()) {
-        focusDay = `${value.YYYY}-${value.MM}-${value.dd}`
-      } else {
-        const pd = PartialDate.from(new Date(), 'YYYY-MM-dd')
-        if (value.MM) {
-          pd.setMonth(Number(value.MM) - 1)
-        }
-        if (value.dd) {
-          pd.setDate(Number(value.dd))
-        }
-        if (value.YYYY) {
-          pd.setYear(Number(value.YYYY))
-        }
-        focusDay = pd.format()
-      }
-      return {
-        isOpen: 'calendar',
-        focusDay,
-      }
-    })
-  }
-
   private _close(returnFocus?: boolean): void {
-    this.setState({ isOpen: false, focusDay: undefined, slideDirection: null }, (): void => {
-      if (returnFocus && this._button.current !== null) {
-        this._button.current.focus()
-      }
-    })
+    const callback = returnFocus
+      ? (): void => {
+          this._button.current?.focus()
+        }
+      : undefined
+    this.setState({ isOpen: false }, callback)
   }
 
-  private _convertVal(value: PartialDate): Date | string {
+  private _convertVal(value: PartialDate): CalendarDate {
     const providedValue = this.props.value
     const isExpectingDate = providedValue === null || providedValue instanceof Date
     if (value.isValid()) {
@@ -908,15 +849,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     )
   }
 
-  private _getMonthData(): MonthYearDataType {
-    const { value, focusDay } = this.state
-    const focusPartialDate = PartialDate.from(focusDay || value, 'YYYY-MM-dd')
-    const year = focusPartialDate.getYear()
-    const month = focusPartialDate.getMonth()
-    // TODO would this be converted to `initialFocus`?
-    return { month, year, day }
-  }
-
   private static PHRASES: DateInputPhrasesType = {
     inputKeyboardDirections: '',
     yearLabel: 'year',
@@ -932,14 +864,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private getPhrases(): DateInputPhrasesType {
     const phrases = { ...DateInputBase.PHRASES, ...this.props.phrases }
-    if (this.props.phrases.ariaDisabledDate) {
+    if (this.props.phrases?.ariaDisabledDate) {
       phrases.labelDisabled = this.props.phrases.ariaDisabledDate
     }
     return phrases
   }
 
   public render(): ReactElement {
-    const { value, isOpen, focusDay } = this.state
+    const { value, isOpen } = this.state
     const {
       id,
       name,
@@ -956,12 +888,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const hasDate = type === 'date' || type === 'datetime'
     const phrases = this.getPhrases()
 
-    const currentMonthId = id + '-month-label'
-    const currentYearId = id + '-year-label'
     const timeId = id + '-time'
-    const { month: focusMonth, year: focusYear, days } = this._getMonthData()
-    const selectedStr = value.format('YYYY-MM-dd')
-
+    const focusDate = value.toDate()
+    const selectedValue = value.isValid() ? focusDate : null
     return (
       <div onBlur={this.handleComponentBlur}>
         <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
@@ -982,9 +911,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               <IconButton
                 disabled={disabled}
                 ref={this._button}
-                onClick={!disabled ? this.handleButtonClick : undefined}
-                onTouchStart={!disabled ? this.handleButtonClick : undefined}
-                onKeyDown={!disabled ? this.handleButtonKeyDown : undefined}
+                onClick={this.handleButtonClick}
+                onTouchStart={this.handleButtonClick}
                 label={phrases.pickerLabel}
               >
                 <DescriptiveCalendar />
@@ -1034,14 +962,14 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             popupRef={this._portal}
             hidden={!isOpen}
             role="dialog"
-            aria-labelledby={`${currentMonthId} ${currentYearId}`}
             onKeyDownCapture={this.handlePortalKeydownCapture}
             tabIndex={-1}
           >
             <PopupCalendar
-              initialFocus="??"
-              value={this.state.value}
+              initialFocus={focusDate}
+              value={selectedValue}
               onChange={this.handleCalendarChange}
+              onMonthChange={this.handleMonthYearChange}
               disabled={disabled}
               name={name}
               isValidDate={isValidDate}
@@ -1070,7 +998,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
 export const DateInput = styled(DateInputBase)`
   ${(p) => p.disabled && colorStyle(p, 'disable')}
-  ${(p) => p.disabled && `
+  ${(p) =>
+    p.disabled &&
+    `
     border-color: ${color(p, 'lightGray')};
     cursor: not-allowed;
     & input::placeholder,

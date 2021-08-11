@@ -1,7 +1,7 @@
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 
 import { Calendar } from '../'
 

@@ -1,7 +1,7 @@
+import { color } from '@repay/cactus-theme'
 import React from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import styled from 'styled-components'
-import { color } from '@repay/cactus-theme'
 
 import { isIE } from '../helpers/constants'
 
@@ -15,12 +15,12 @@ export interface SliderProps {
 const TIMEOUT = isIE ? 400 : 300
 
 const Slider: React.FC<SliderProps> = ({ transition, transitionKey, children }) => (
-    <TransitionGroup component={SlideWrapper}>
-      <CSSTransition key={transitionKey} timeout={TIMEOUT} classNames={transition}>
-        {children}
-      </CSSTransition>
-    </TransitionGroup>
-  )
+  <TransitionGroup component={SlideWrapper}>
+    <CSSTransition key={transitionKey} timeout={TIMEOUT} classNames={transition}>
+      {children}
+    </CSSTransition>
+  </TransitionGroup>
+)
 
 export default Slider
 

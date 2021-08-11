@@ -3,12 +3,11 @@ import React from 'react'
 import styled, { DefaultTheme, StyledComponent } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { isActionKey } from '../helpers/a11y'
 import { getFormatter } from '../helpers/dates'
 import { isFocusOut } from '../helpers/events'
-import { omitProps } from '../helpers/omit'
-import generateId from '../helpers/generateId'
 import { getCurrentFocusIndex } from '../helpers/focus'
+import generateId from '../helpers/generateId'
+import { omitProps } from '../helpers/omit'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
@@ -59,7 +58,11 @@ export const dateParts = (date: string): [number, number, number] => {
   const [year, month, day] = date.split('-')
   return [parseInt(year), parseInt(month) - 1, parseInt(day)]
 }
-export const clampDate = (date: Date, method: 'setDate' | 'setMonth' | 'setFullYear', value: number): void => {
+export const clampDate = (
+  date: Date,
+  method: 'setDate' | 'setMonth' | 'setFullYear',
+  value: number
+): void => {
   const month = method !== 'setMonth' ? date.getMonth() : value < 0 ? 12 + value : value % 12
   date[method](value)
   if (date.getMonth() !== month) {
@@ -176,7 +179,9 @@ const useFocusBehavior = (
 type FocusShift = 'day' | 'month' | 'year' | 'weekday'
 const setGridFocus = (e: React.KeyboardEvent<HTMLDivElement>, shift: number, type: FocusShift) => {
   e.stopPropagation()
-  const dates = Array.from(e.currentTarget.querySelectorAll<HTMLElement>('[data-date]:not(.outside-date)'))
+  const dates = Array.from(
+    e.currentTarget.querySelectorAll<HTMLElement>('[data-date]:not(.outside-date)')
+  )
   const index = getCurrentFocusIndex(dates, 0)
   // The query guarantees it has a `data-date` attribute.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
