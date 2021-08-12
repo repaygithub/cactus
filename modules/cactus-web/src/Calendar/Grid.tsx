@@ -29,7 +29,7 @@ interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
   isValidDate?: (d: Date) => boolean
   selected?: CalendarValue
   labels?: CalendarGridLabels
-  onFocusOverflow?: (d: Date) => void
+  onFocusOverflow?: (d: Date, e: React.SyntheticEvent) => void
 }
 
 export interface CalendarGridProps extends BaseProps, MarginProps {
@@ -139,7 +139,7 @@ export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =
 
 const useFocusBehavior = (
   focusStr: string,
-  onFocusOverflow: undefined | ((d: Date) => void),
+  onFocusOverflow: CalendarGridProps['onFocusOverflow'],
   props: React.HTMLAttributes<HTMLDivElement>
 ): ((d: string) => number) => {
   const focusRef = React.useRef<string | null>(focusStr)
@@ -159,9 +159,10 @@ const useFocusBehavior = (
   props.onClick = (e) => {
     onClick?.(e)
     const target = e.target as HTMLElement
-    if (!e.isDefaultPrevented() && onFocusOverflow && target.matches('.outside-date')) {
+    const selector = '.outside-date[aria-disabled="false"]'
+    if (!e.isDefaultPrevented() && onFocusOverflow && target.matches(selector)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      onFocusOverflow(new Date(...dateParts(target.dataset.date!)))
+      onFocusOverflow(new Date(...dateParts(target.dataset.date!)), e)
     }
   }
   props.onKeyDown = (e) => {
@@ -169,7 +170,7 @@ const useFocusBehavior = (
     if (!e.isDefaultPrevented() && (e.target as HTMLElement).dataset.date) {
       const overflowDate = onGridKeyDown(e)
       if (onFocusOverflow && overflowDate) {
-        onFocusOverflow(overflowDate)
+        onFocusOverflow(overflowDate, e)
       }
     }
   }
@@ -179,6 +180,7 @@ const useFocusBehavior = (
 type FocusShift = 'day' | 'month' | 'year' | 'weekday'
 const setGridFocus = (e: React.KeyboardEvent<HTMLDivElement>, shift: number, type: FocusShift) => {
   e.stopPropagation()
+  e.preventDefault()
   const dates = Array.from(
     e.currentTarget.querySelectorAll<HTMLElement>('[data-date]:not(.outside-date)')
   )

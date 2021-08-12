@@ -2,7 +2,6 @@ import {
   formatDate,
   getDefaultFormat,
   getLocaleFormat,
-  parseDate,
   PartialDate,
 } from '../src/helpers/dates'
 
@@ -55,26 +54,6 @@ describe('date helpers', (): void => {
     test('YYYY-MM-dd h:mm aa', (): void => {
       expect(formatDate(new Date(2018, 7, 12, 5, 23), 'YYYY-MM-dd h:mm aa')).toEqual(
         '2018-08-12 5:23 AM'
-      )
-    })
-  })
-
-  describe('parseDate()', (): void => {
-    test('YYYY-MM-dd', (): void => {
-      expect(parseDate('2018-08-12', 'YYYY-MM-dd')).toEqual(new Date(2018, 7, 12))
-    })
-
-    test('MM/dd/YYYY', (): void => {
-      expect(parseDate('08/12/2018', 'MM/dd/YYYY')).toEqual(new Date(2018, 7, 12))
-    })
-
-    test('YYYY-MM-dd H:mm', (): void => {
-      expect(parseDate('2018-08-12 5:23', 'YYYY-MM-dd H:mm')).toEqual(new Date(2018, 7, 12, 5, 23))
-    })
-
-    test('YYYY-MM-dd h:mm aa', (): void => {
-      expect(parseDate('2018-08-12 5:23 AM', 'YYYY-MM-dd h:mm aa')).toEqual(
-        new Date(2018, 7, 12, 5, 23)
       )
     })
   })

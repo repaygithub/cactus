@@ -10,18 +10,18 @@ import React, { Component, Fragment, ReactElement } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
-import Calendar, { CalendarDate, CalendarLabels, CalendarValue } from '../Calendar/Calendar'
+import Calendar, { CalendarLabels, MonthChange } from '../Calendar/Calendar'
+import { CalendarDate, CalendarValue } from '../Calendar/Grid'
 import Flex from '../Flex/Flex'
 import FocusLock from '../FocusLock/FocusLock'
+import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { isIE } from '../helpers/constants'
 import {
   DateType,
-  formatDate,
   FormatTokenType,
   getDefaultFormat,
   getLastDayOfMonth,
   isToken,
-  parseDate,
   parseFormat,
   PartialDate,
   TOKEN_SETTERS,
@@ -32,7 +32,6 @@ import {
   CactusFocusEvent,
   isFocusOut,
 } from '../helpers/events'
-import generateId from '../helpers/generateId'
 import getLocale from '../helpers/locale'
 import { getDataProps } from '../helpers/omit'
 import { usePositioning } from '../helpers/positionPopover'
@@ -40,11 +39,6 @@ import positionPortal from '../helpers/positionPortal'
 import IconButton from '../IconButton/IconButton'
 import { Status } from '../StatusMessage/StatusMessage'
 
-interface MonthYearDataType {
-  month: number
-  year: number
-  day: number
-}
 interface DateInputPhrasesType extends Partial<CalendarLabels> {
   inputKeyboardDirections: string
   yearLabel: string
@@ -313,7 +307,7 @@ interface PopupProps extends React.HTMLAttributes<HTMLDivElement> {
   popupRef: React.RefObject<HTMLDivElement>
 }
 
-const CalendarPopup: React.FC<PopupProps> = ({ anchorRef, popupRef, ...props }) => {
+const CalendarPopup: React.FC<PopupProps> = ({ anchorRef, popupRef, children, ...props }) => {
   usePositioning({
     anchorRef,
     ref: popupRef,
@@ -321,9 +315,7 @@ const CalendarPopup: React.FC<PopupProps> = ({ anchorRef, popupRef, ...props }) 
     position: positionPortal,
     updateOnScroll: true,
   })
-  // Can't ref directly to Calendar because it's a class component.
-  const ref = popupRef as React.MutableRefObject<Element | null>
-  return <FocusLock ref={(n) => (ref.current = n && n.firstElementChild)} {...props} />
+  return <FocusLock {...props}>{!props.hidden && children}</FocusLock>
 }
 
 const PopupCalendar = styled(Calendar)`
@@ -383,6 +375,8 @@ export interface DateInputProps
 
 interface DateInputState {
   value: PartialDate
+  focusMonth: number
+  focusYear: number
   locale: string
   type: DateType
   isOpen: boolean
@@ -407,8 +401,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const type = props.type || 'date'
     const format = props.format || getDefaultFormat(type)
 
+    const value = PartialDate.from(props.value, { format, locale, type })
     this.state = {
-      value: PartialDate.from(props.value, { format, locale, type }),
+      value,
+      focusMonth: value.getMonth(),
+      focusYear: value.getYear(),
       type,
       locale,
       isOpen: false,
@@ -422,6 +419,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _inputWrapper = React.createRef<HTMLDivElement>()
   private _button = React.createRef<HTMLButtonElement>()
   private _portal = React.createRef<HTMLDivElement>()
+  // This ref goes to the CalendarBase class.
+  private _setPortal = (target: any) => {
+    ;(this._portal as React.MutableRefObject<HTMLDivElement>).current = target?.rootElement
+  }
   private eventTarget = new CactusEventTarget<CalendarDate>({})
 
   public static propTypes = {
@@ -488,6 +489,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       if (value.isValid() && !value.equals(state.value)) {
         updates = updates || {}
         updates.value = value
+        updates.focusMonth = value.getMonth()
+        updates.focusYear = value.getYear()
       }
     }
 
@@ -573,22 +576,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private handleInputCapture = (event: React.CompositionEvent<HTMLDivElement>): void => {
-    const target = event.target
-    let data = event.data || event.nativeEvent.data
-    console.log('WHAT THE HECK IS GOING ON HERE?', data, target)
-    if (
-      this._inputWrapper.current !== null &&
-      isOwnInput(target, this._inputWrapper.current) &&
-      !event.defaultPrevented &&
-      data
-    ) {
-      data = String(data).substr(-1)
-      const token = target.dataset.token as FormatTokenType
-      this.handleUpdate(event, token, 'Key', data)
-    }
-  }
-
   private handleFocus = (event: React.FocusEvent<HTMLDivElement>): void => {
     const { relatedTarget } = event
     if (this._isOutside(relatedTarget)) {
@@ -651,7 +638,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     })
   }
 
-  private handlePortalKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+  private handlePortalKeydown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === 'Escape') {
       this._close(true)
       event.preventDefault()
@@ -695,6 +682,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const newVal = event.target.value
     // This shouldn't ever happen, mostly just to keep Typescript happy.
     if (newVal && !Array.isArray(newVal)) {
+      event.persist()
+      event.preventDefault()
       this.setState(({ value }) => {
         const update = value.clone()
         if (typeof newVal === 'string') {
@@ -704,17 +693,30 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           update.setMonth(newVal.getMonth())
           update.setDate(newVal.getDate())
         }
+        this.raiseChange(event, update)
         return { value: update }
       })
+      if (this.props.type === 'date') {
+        this._close(true)
+      }
     }
   }
 
-  private handleMonthYearChange = (month: number, year: number) => {
+  private handleMonthYearChange = (values: MonthChange, e: React.SyntheticEvent) => {
+    e.persist()
     this.setState(({ value }) => {
-      const update = value.clone()
-      update.setYear(year)
-      update.setMonth(month)
-      return { value: update }
+      const newState = { value, focusMonth: values.month, focusYear: values.year }
+      if (!values.isFocusOverflow) {
+        const update = value.clone()
+        update.setYear(values.year)
+        update.setMonth(values.month)
+        if (update.dd && !update.isValid()) {
+          update.setDate(getLastDayOfMonth(values.month, values.year))
+        }
+        this.raiseChange(e, update)
+        newState.value = update
+      }
+      return newState
     })
   }
 
@@ -806,7 +808,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       }
 
       this.raiseChange(event, update)
-      return { value: update }
+      return { value: update, focusMonth: update.getMonth(), focusYear: update.getYear() }
     })
   }
 
@@ -820,12 +822,21 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private _close(returnFocus?: boolean): void {
-    const callback = returnFocus
-      ? (): void => {
+    const callback = !returnFocus
+      ? undefined
+      : (): void => {
           this._button.current?.focus()
         }
-      : undefined
-    this.setState({ isOpen: false }, callback)
+    this.setState(({ value }) => {
+      const newState = { isOpen: false } as DateInputState
+      if (value.MM) {
+        newState.focusMonth = value.getMonth()
+      }
+      if (value.YYYY) {
+        newState.focusYear = value.getYear()
+      }
+      return newState
+    }, callback)
   }
 
   private _convertVal(value: PartialDate): CalendarDate {
@@ -841,11 +852,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _isOutside(el?: null | EventTarget): boolean {
     const _input = this._inputWrapper.current
     const _portal = this._portal.current
-    return (
-      !(el instanceof Node) ||
-      !_input ||
-      !_input.contains(el) ||
-      (this.state.isOpen && (!_portal || !_portal.contains(el)))
+    return !(
+      el instanceof Node &&
+      (_input?.contains(el) || (this.state.isOpen && _portal?.contains(el)))
     )
   }
 
@@ -889,8 +898,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const phrases = this.getPhrases()
 
     const timeId = id + '-time'
-    const focusDate = value.toDate()
-    const selectedValue = value.isValid() ? focusDate : null
+    const selectedValue = value.isValidDate() ? value.toDate() : null
     return (
       <div onBlur={this.handleComponentBlur}>
         <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
@@ -901,7 +909,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             aria-describedby={ariaDescribedBy}
             aria-labelledby={ariaLabelledBy}
             onKeyDownCapture={this.handleKeydownCapture}
-            onInputCapture={this.handleInputCapture}
             onFocus={this.handleFocus}
             onBlur={this.handleInputBlur}
             onClick={this.handleClick}
@@ -913,6 +920,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                 ref={this._button}
                 onClick={this.handleButtonClick}
                 onTouchStart={this.handleButtonClick}
+                onKeyDown={keyDownAsClick}
+                onKeyUp={preventAction}
                 label={phrases.pickerLabel}
               >
                 <DescriptiveCalendar />
@@ -962,11 +971,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             popupRef={this._portal}
             hidden={!isOpen}
             role="dialog"
-            onKeyDownCapture={this.handlePortalKeydownCapture}
-            tabIndex={-1}
+            onKeyDown={this.handlePortalKeydown}
           >
             <PopupCalendar
-              initialFocus={focusDate}
+              month={this.state.focusMonth}
+              year={this.state.focusYear}
               value={selectedValue}
               onChange={this.handleCalendarChange}
               onMonthChange={this.handleMonthYearChange}
@@ -975,20 +984,23 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               isValidDate={isValidDate}
               labels={phrases}
               locale={this.state.locale}
-            />
-            {hasTime && (
-              <Flex justifyContent="center" padding={4}>
-                <DateInput
-                  id={timeId}
-                  name={timeId}
-                  type="time"
-                  format="HH:mm"
-                  value={value.format('HH:mm')}
-                  onChange={this.handleTimeChange}
-                  phrases={phrases}
-                />
-              </Flex>
-            )}
+              ref={this._setPortal}
+              tabIndex={-1}
+            >
+              {hasTime && (
+                <Flex justifyContent="center" padding={4}>
+                  <DateInput
+                    id={timeId}
+                    name={timeId}
+                    type="time"
+                    format="HH:mm"
+                    value={value.format('HH:mm')}
+                    onChange={this.handleTimeChange}
+                    phrases={phrases}
+                  />
+                </Flex>
+              )}
+            </PopupCalendar>
           </CalendarPopup>
         )}
       </div>

@@ -46,7 +46,6 @@ class BaseEvent<E, T> implements BaseSyntheticEvent<E, T, T> {
   target: T
   bubbles = false
   cancelable = false
-  defaultPrevented = false
   type: string
 
   constructor(type: string, target: T, originalEvent: BaseSyntheticEvent<E, any, any>) {
@@ -66,17 +65,20 @@ class BaseEvent<E, T> implements BaseSyntheticEvent<E, T, T> {
   get timeStamp(): number {
     return this.reactEvent.timeStamp
   }
+  get defaultPrevented(): boolean {
+    return this.reactEvent.defaultPrevented
+  }
   preventDefault() {
-    this.defaultPrevented = true
+    this.reactEvent.preventDefault()
   }
   isDefaultPrevented(): boolean {
-    return this.defaultPrevented
+    return this.reactEvent.isDefaultPrevented()
   }
   stopPropagation() {
-    return
+    return this.reactEvent.stopPropagation()
   }
   isPropagationStopped() {
-    return false
+    return this.reactEvent.isPropagationStopped()
   }
   persist() {
     this.reactEvent.persist()

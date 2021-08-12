@@ -589,13 +589,17 @@ export class PartialDate implements FormatTokenMap {
     return date
   }
 
-  public isValid(): boolean {
-    const type = this._type
-    const isDateValid =
-      type === 'time' ||
+  public isValidDate(): boolean {
+    return (
+      this._type === 'time' ||
       ([this.year, this.month, this.day].every(isNumber) && this.isDayOfMonth(this.day || 0))
+    )
+  }
+
+  public isValid(): boolean {
+    const isDateValid = this.isValidDate()
     const isTimeValid =
-      type === 'date' ||
+      this._type === 'date' ||
       (this.hours !== undefined &&
         this.minutes !== undefined &&
         (!this._format.includes('aa') || this.period !== undefined))
@@ -658,35 +662,6 @@ export class PartialDate implements FormatTokenMap {
       return new PartialDate(date, formatOrOpts)
     }
   }
-}
-
-/**
- * Will attempt to parse a string as a date using the provided format,
- * and is not forgiving.
- */
-export function parseDate(dateStr: string, format?: string): Date {
-  if (!format) {
-    return new Date(dateStr)
-  }
-  const parsedFormat = parseFormat(format)
-  if (parsedFormat.length > 0) {
-    let cursor = 0
-    const partial = new PartialDate('', format)
-    for (const token of parsedFormat) {
-      if (isToken(token)) {
-        let value = dateStr.charAt(cursor)
-        while (/[0-9]/.test(dateStr.charAt(++cursor))) {
-          value += dateStr.charAt(cursor)
-        }
-        partial[token] = value
-      } else {
-        cursor += token.length
-      }
-    }
-    return partial.toDate()
-  }
-
-  return new Date(NaN)
 }
 
 export function isValidDate(date: Date): boolean {
