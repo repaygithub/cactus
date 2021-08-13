@@ -10,7 +10,7 @@ describe('component: BrandBar', () => {
   describe('mouse usage', (): void => {
     test('can select an action', async (): Promise<void> => {
       const actionOne = jest.fn()
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.UserMenu label="Test name">
@@ -20,18 +20,32 @@ describe('component: BrandBar', () => {
               </BrandBar.UserMenuItem>
             </BrandBar.UserMenu>
           </BrandBar>
+          <div>Click me</div>
         </StyleProvider>
       )
 
-      userEvent.click(getByText('Test name'))
+      const trigger = getByRole('button', { name: 'Test name' })
+
+      userEvent.click(trigger)
+      const settings = getByText('Settings')
+      expect(settings).toBeVisible()
+
+      userEvent.click(getByText('Click me'))
+
+      expect(settings).not.toBeVisible()
+
+      userEvent.click(trigger)
+      userEvent.click(settings)
       await animationRender()
-      userEvent.click(getByText('Settings'))
+
       expect(actionOne).toHaveBeenCalled()
+      expect(getByText('Logout')).not.toBeVisible()
+      expect(trigger).toHaveFocus()
     })
 
-    test('can interact with a dropdown', () => {
+    test('can interact with a dropdown', async () => {
       const firstOptionClick = jest.fn()
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
@@ -44,12 +58,65 @@ describe('component: BrandBar', () => {
               </ul>
             </BrandBar.Item>
           </BrandBar>
+          <div>Click me</div>
         </StyleProvider>
       )
 
-      userEvent.click(getByText('Test Dropdown'))
-      userEvent.click(getByText('Option 1'))
+      const trigger = getByRole('button', { name: 'Test Dropdown' })
+
+      userEvent.click(trigger)
+      const option1 = getByText('Option 1')
+
+      expect(option1).toBeVisible()
+
+      userEvent.click(getByText('Click me'))
+      expect(option1).not.toBeVisible()
+
+      userEvent.click(trigger)
+      userEvent.click(option1)
+      await animationRender()
+
       expect(firstOptionClick).toHaveBeenCalled()
+      expect(getByText('Option 2')).not.toBeVisible()
+      expect(trigger).toHaveFocus()
+    })
+
+    test('item supports custom item selectors', async () => {
+      const { getByText, getByRole } = render(
+        <StyleProvider>
+          <BrandBar>
+            <BrandBar.Item
+              as={BrandBar.Dropdown}
+              listItemSelector='[role="custom-selector"], [role="custom-selector"] *'
+              label="Test Dropdown"
+            >
+              <ul>
+                <li role="menuitem">Option 1</li>
+                <li>Option 2</li>
+                <li role="custom-selector">Option 3</li>
+              </ul>
+            </BrandBar.Item>
+          </BrandBar>
+        </StyleProvider>
+      )
+
+      const trigger = getByRole('button', { name: 'Test Dropdown' })
+
+      userEvent.click(trigger)
+      const option1 = getByText('Option 1')
+      const option2 = getByText('Option 2')
+      const option3 = getByText('Option 3')
+      userEvent.click(option1)
+
+      expect(option1).toBeVisible()
+
+      userEvent.click(option2)
+
+      expect(option2).toBeVisible()
+
+      userEvent.click(option3)
+
+      expect(option3).not.toBeVisible()
     })
   })
 
@@ -58,7 +125,7 @@ describe('component: BrandBar', () => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
 
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.UserMenu label="Test name">
@@ -69,23 +136,46 @@ describe('component: BrandBar', () => {
         </StyleProvider>
       )
 
-      fireEvent.keyDown(getByText('Test name'), { key: 'Enter' })
-      await animationRender()
+      const trigger = getByRole('button', { name: 'Test name' })
 
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
-      await animationRender()
+      fireEvent.keyDown(trigger, { key: 'Enter' })
 
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'Enter' })
-      await animationRender()
-      expect(actionOne).not.toHaveBeenCalled()
-      expect(actionTwo).toHaveBeenCalled()
+      const settings = getByText('Settings')
+      const logout = getByText('Logout')
+
+      expect(settings).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'End' })
+
+      expect(logout).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Home' })
+
+      expect(settings).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Escape' })
+
+      expect(settings).not.toBeVisible()
+      expect(trigger).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Enter' })
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowDown' })
+
+      expect(logout).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowUp' })
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Enter' })
+
+      expect(actionOne).toHaveBeenCalled()
+      expect(actionTwo).not.toHaveBeenCalled()
+      expect(getByText('Logout')).not.toBeVisible()
+      expect(trigger).toHaveFocus()
     })
 
     test('can interact with a dropdown', () => {
       const thirdOptionClick = jest.fn()
-      const { getByText } = render(
+      const { getByText, getByRole } = render(
         <StyleProvider>
           <BrandBar>
             <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
@@ -101,21 +191,35 @@ describe('component: BrandBar', () => {
         </StyleProvider>
       )
 
-      fireEvent.keyDown(getByText('Test Dropdown'), { key: 'Enter' })
-      const firstOption = getByText('Option 1')
-      expect(document.activeElement).toBe(firstOption)
+      const trigger = getByRole('button', { name: 'Test Dropdown' })
+      fireEvent.keyDown(trigger, { key: 'Enter' })
+      const option1 = getByText('Option 1')
+      const option2 = getByText('Option 2')
+      const option3 = getByText('Option 3')
 
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+      expect(option1).toHaveFocus()
 
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
+      fireEvent.keyDown(document.activeElement as Element, { key: 'End' })
 
-      // @ts-ignore
-      fireEvent.keyDown(document.activeElement, { key: 'Enter' })
+      expect(option3).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Home' })
+
+      expect(option1).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Escape' })
+
+      expect(option2).not.toBeVisible()
+      expect(trigger).toHaveFocus()
+
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Enter' })
+      fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowDown' })
+      fireEvent.keyDown(document.activeElement as Element, { key: 'ArrowDown' })
+      fireEvent.keyDown(document.activeElement as Element, { key: 'Enter' })
 
       expect(thirdOptionClick).toHaveBeenCalled()
-      expect(document.activeElement).toBe(getByText('Test Dropdown').parentElement)
+      expect(option2).not.toBeVisible()
+      expect(trigger).toHaveFocus()
     })
   })
 })
