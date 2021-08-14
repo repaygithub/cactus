@@ -1,9 +1,4 @@
-import {
-  formatDate,
-  getDefaultFormat,
-  getLocaleFormat,
-  PartialDate,
-} from '../src/helpers/dates'
+import { formatDate, getDefaultFormat, getLocaleFormat, PartialDate } from '../src/helpers/dates'
 
 describe('date helpers', (): void => {
   describe('getLocalFormat()', (): void => {

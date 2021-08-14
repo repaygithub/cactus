@@ -1,6 +1,7 @@
 import { border, color, colorStyle, insetBorder, radius, textStyle } from '@repay/cactus-theme'
+import { stubFalse } from 'lodash'
 import React from 'react'
-import styled, { DefaultTheme, StyledComponent } from 'styled-components'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { getFormatter } from '../helpers/dates'
@@ -17,13 +18,24 @@ interface ComplexWeekdayLabel {
   short: string
 }
 
+interface DateParts {
+  year?: number
+  month?: number
+  day?: number
+}
+export interface FocusProps {
+  initialFocus?: CalendarDate | DateParts
+  month?: number
+  year?: number
+}
+
 export interface CalendarGridLabels {
   labelDate?: (d: Date) => string
   labelDisabled?: (normalLabel: string) => string
   weekdays?: WeekdayLabel[] | null
 }
 
-interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
+interface BaseProps extends FocusProps, React.HTMLAttributes<HTMLDivElement> {
   children?: never
   locale?: string
   isValidDate?: (d: Date) => boolean
@@ -32,17 +44,16 @@ interface BaseProps extends React.HTMLAttributes<HTMLDivElement> {
   onFocusOverflow?: (d: Date, e: React.SyntheticEvent) => void
 }
 
-export interface CalendarGridProps extends BaseProps, MarginProps {
-  focusDate?: CalendarDate
-}
+export type CalendarGridProps = BaseProps & MarginProps
 
-interface InnerProps extends BaseProps {
-  focusStr: string
-  month: number
+interface GridState {
+  overflow: string | null
+  focus: string | null
   year: number
+  month: number
 }
 
-// toISOString messes with timezones and can return the wrong date;
+// `Date.toISOString()` messes with timezones and can return the wrong date;
 // similarly `new Date(string)` treats ISO date strings like midnight UTC.
 const zfill = (pad: string, num: number) => {
   const result = pad + num
@@ -60,11 +71,21 @@ export const dateParts = (date: string): [number, number, number] => {
 }
 export const clampDate = (
   date: Date,
-  method: 'setDate' | 'setMonth' | 'setFullYear',
-  value: number
+  method: 'day' | 'month' | 'year',
+  value: number,
+  maybeMonth?: number,
+  maybeDay?: number
 ): void => {
-  const month = method !== 'setMonth' ? date.getMonth() : value < 0 ? 12 + value : value % 12
-  date[method](value)
+  let month: number = maybeMonth === undefined ? date.getMonth() : maybeMonth % 12
+  if (method === 'month') {
+    month = value % 12
+    date.setMonth(value, maybeMonth ?? date.getDate())
+  } else if (method === 'year') {
+    date.setFullYear(value, month, maybeDay ?? date.getDate())
+  } else {
+    date.setDate(value)
+  }
+  if (month < 0) month += 12
   if (date.getMonth() !== month) {
     date.setDate(0)
   }
@@ -137,44 +158,10 @@ const makeGrid = (
 export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =>
   root.querySelector<HTMLElement>(`[data-date='${date}']:not(.outside-date)`)
 
-const useFocusBehavior = (
-  focusStr: string,
-  onFocusOverflow: CalendarGridProps['onFocusOverflow'],
-  props: React.HTMLAttributes<HTMLDivElement>
-): ((d: string) => number) => {
-  const focusRef = React.useRef<string | null>(focusStr)
-  const { onClick, onKeyDown, onFocus, onBlur } = props
-  props.onFocus = (e) => {
-    focusRef.current = null
-    e.target.tabIndex = -1
-    onFocus?.(e)
-  }
-  props.onBlur = (e) => {
-    if (isFocusOut(e) && e.target.dataset.date) {
-      focusRef.current = e.target.dataset.date
-      e.target.tabIndex = 0
-    }
-    onBlur?.(e)
-  }
-  props.onClick = (e) => {
-    onClick?.(e)
-    const target = e.target as HTMLElement
-    const selector = '.outside-date[aria-disabled="false"]'
-    if (!e.isDefaultPrevented() && onFocusOverflow && target.matches(selector)) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      onFocusOverflow(new Date(...dateParts(target.dataset.date!)), e)
-    }
-  }
-  props.onKeyDown = (e) => {
-    onKeyDown?.(e)
-    if (!e.isDefaultPrevented() && (e.target as HTMLElement).dataset.date) {
-      const overflowDate = onGridKeyDown(e)
-      if (onFocusOverflow && overflowDate) {
-        onFocusOverflow(overflowDate, e)
-      }
-    }
-  }
-  return (date: string) => (date === focusRef.current ? 0 : -1)
+// This is similar to passing `tabIndex={-1} as a prop, but makes it easier to
+// make programmatic changes later because it only runs once rather than every render.
+const setTabIndex = (ref: HTMLElement | null) => {
+  if (ref) ref.tabIndex = -1
 }
 
 type FocusShift = 'day' | 'month' | 'year' | 'weekday'
@@ -193,9 +180,9 @@ const setGridFocus = (e: React.KeyboardEvent<HTMLDivElement>, shift: number, typ
   if (type === 'day') {
     date.setDate(date.getDate() + shift)
   } else if (type === 'month') {
-    clampDate(date, 'setMonth', month + shift)
+    clampDate(date, 'month', month + shift)
   } else if (type === 'year') {
-    clampDate(date, 'setFullYear', year + shift)
+    clampDate(date, 'year', year + shift)
   } else {
     // type === 'weekday'
     date.setDate(date.getDate() + shift - date.getDay())
@@ -228,52 +215,167 @@ const onGridKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
   }
 }
 
-const isDateArray = (a: string[] | Date[]): a is Date[] => typeof a[0] === 'object'
-
-const makeSelectedCallback = (selected: BaseProps['selected']): ((d: string) => boolean) => {
-  if (!selected) {
-    return () => false
-  } else if (Array.isArray(selected)) {
-    if (selected.length > 50) {
-      const vals = new Set<string>()
-      if (isDateArray(selected)) {
-        selected.forEach((d) => vals.add(toISODate(d)))
-      } else {
-        selected.forEach(vals.add, vals)
+const useIsSelected = (selected: BaseProps['selected']): ((d: string) => boolean) => {
+  const ref = React.useRef<(d: string) => boolean>(stubFalse)
+  let isSelected: any = ref.current
+  let value: any = null
+  if (Array.isArray(selected)) {
+    const isoDates: string[] =
+      typeof selected[0] === 'string' ? (selected as string[]) : (selected as Date[]).map(toISODate)
+    if (isoDates.length === 1) {
+      value = isoDates[0]
+    } else if (isoDates.length) {
+      value = isSelected._value
+      if (value?.size !== isoDates.length || !isoDates.every(Set.prototype.has, value)) {
+        const vals = new Set<string>()
+        isoDates.forEach(Set.prototype.add, vals)
+        isSelected = ref.current = Set.prototype.has.bind(vals)
+        isSelected._value = value = vals
       }
-      return Set.prototype.has.bind(vals)
-    } else if (isDateArray(selected)) {
-      selected = selected.map(toISODate)
     }
-    return Array.prototype.includes.bind(selected as string[])
+  } else if (selected instanceof Date) {
+    value = toISODate(selected)
   } else {
-    const isoSelected = typeof selected === 'string' ? selected : toISODate(selected)
-    return (d) => d === isoSelected
+    value = selected
   }
+  if (!value) {
+    isSelected = ref.current = stubFalse
+  } else if (value !== isSelected._value) {
+    isSelected = ref.current = (d: string) => value === d
+    isSelected._value = value
+  }
+  return isSelected
+}
+
+const overflowReducer = (state: GridState, [str, dt]: [string, Date]): GridState => ({
+  overflow: str,
+  year: dt.getFullYear(),
+  month: dt.getMonth(),
+  focus: str,
+})
+
+export const initGridState = (initialFocus: BaseProps['initialFocus']): GridState => {
+  let focus: string
+  let year: number, month: number
+  if (typeof initialFocus === 'string') {
+    focus = initialFocus
+    ;[year, month] = dateParts(initialFocus)
+  } else {
+    let date: Date
+    if (initialFocus instanceof Date) {
+      date = initialFocus
+      year = initialFocus.getFullYear()
+    } else {
+      date = new Date()
+      year = initialFocus?.year ?? date.getFullYear()
+      clampDate(date, 'year', year, initialFocus?.month, initialFocus?.day)
+    }
+    focus = toISODate(date)
+    month = date.getMonth()
+  }
+  return { overflow: null, year, month, focus }
 }
 
 const CalendarGridBase = ({
-  focusStr,
-  month,
-  year,
+  initialFocus,
+  month: monthProp,
+  year: yearProp,
   locale,
   labels = {},
   isValidDate,
   selected,
   onFocusOverflow,
-  ...props
-}: InnerProps) => {
+  onClick,
+  onKeyDown,
+  onFocus,
+  onBlur,
+  ...rest
+}: BaseProps) => {
+  const gridRef = React.useRef<HTMLDivElement>(null)
+  const [state, setOverflow] = React.useReducer(overflowReducer, initialFocus, initGridState)
+  const year = yearProp ?? state.year
+  const month = monthProp ?? state.month
+  const isSelected = useIsSelected(selected)
+  // First effect: if we've just had an overflow event, refocus on the grid.
+  React.useEffect(() => {
+    if (gridRef.current && state.overflow) {
+      queryDate(gridRef.current, state.overflow)?.focus()
+    }
+  }, [state.overflow])
+  // Second effect: if the grid is not currently focused,
+  // make sure there's exactly one gridcell with tabIndex == 0.
+  React.useEffect(() => {
+    const grid = gridRef.current
+    const active = document.activeElement as HTMLElement | null
+    // Only set the tabIndex if the grid isn't currently focused.
+    if (grid && !(active?.dataset.date && grid.contains(active))) {
+      const old = grid.querySelector<HTMLElement>('[tabindex="0"]')
+      let toFocus: HTMLElement | null = old
+      // First choice is the selected date (first one this month if there's multiple).
+      if (isSelected !== stubFalse) {
+        toFocus = grid.querySelector<HTMLElement>('[aria-selected="true"]:not(.outside-date)')
+      }
+      if (!toFocus) {
+        // `state.focus == null` iff calendar is focused, in which case this effect isn't run.
+        const date = new Date(...dateParts(state.focus as string))
+        clampDate(date, 'year', year, month)
+        toFocus = queryDate(grid, toISODate(date))
+      }
+      if (toFocus) {
+        if (old && old !== toFocus) {
+          old.tabIndex = -1
+        }
+        toFocus.tabIndex = 0
+        state.focus = toFocus.dataset.date as string
+      }
+    }
+  }, [isSelected, month, year]) // eslint-disable-line react-hooks/exhaustive-deps
+  const props: React.HTMLAttributes<HTMLDivElement> = rest
+  // NOTE: We set `state.focus` without triggering a re-render,
+  // so we don't lose the tabIndex information if month/year changes.
+  props.onFocus = (e) => {
+    state.focus = null
+    e.target.tabIndex = -1
+    onFocus?.(e)
+  }
+  props.onBlur = (e) => {
+    if (isFocusOut(e) && e.target.dataset.date) {
+      state.focus = e.target.dataset.date
+      e.target.tabIndex = 0
+    }
+    onBlur?.(e)
+  }
+  props.onClick = (e) => {
+    onClick?.(e)
+    const target = e.target as HTMLElement
+    const selector = '.outside-date[aria-disabled="false"]'
+    if (!e.isDefaultPrevented() && target.matches(selector)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const dateStr: string = target.dataset.date!
+      const date = new Date(...dateParts(dateStr))
+      setOverflow([dateStr, date])
+      onFocusOverflow?.(date, e)
+    }
+  }
+  props.onKeyDown = (e) => {
+    onKeyDown?.(e)
+    if (!e.isDefaultPrevented() && (e.target as HTMLElement).dataset.date) {
+      const overflowDate = onGridKeyDown(e)
+      if (overflowDate) {
+        setOverflow([toISODate(overflowDate), overflowDate])
+        onFocusOverflow?.(overflowDate, e)
+      }
+    }
+  }
+
   const { labelDate, labelDisabled, weekdays } = labels
   const header = React.useMemo(() => makeGridHeader(locale, weekdays), [locale, weekdays])
-
   const grid = React.useMemo(
     () => makeGrid(month, year, locale, isValidDate, labelDate, labelDisabled),
     [month, year, locale, isValidDate, labelDate, labelDisabled]
   )
-  const getTabIndex = useFocusBehavior(focusStr, onFocusOverflow, props)
-  const isSelected = React.useMemo(() => makeSelectedCallback(selected), [selected])
   return (
-    <div {...props} role="grid">
+    <div {...props} key={`${year}-${month}`} ref={gridRef} role="grid">
       {header && (
         <div role="row" key="header">
           {header}
@@ -288,8 +390,7 @@ const CalendarGridBase = ({
               dateProps['aria-describedby'] = header[jx].props.id
             }
             dateProps['aria-selected'] = isSelected(dateProps['data-date'])
-            dateProps.tabIndex = getTabIndex(dateProps['data-date'])
-            return <span {...dateProps} key={jx} role="gridcell" />
+            return <span {...dateProps} key={jx} ref={setTabIndex} role="gridcell" />
           })}
         </div>
       ))}
@@ -297,25 +398,11 @@ const CalendarGridBase = ({
   )
 }
 
-const deriveAttrs = ({ focusDate = new Date() }: CalendarGridProps) => {
-  let month: number, year: number
-  let focusStr = focusDate as string
-  if (typeof focusDate === 'object') {
-    focusStr = toISODate(focusDate)
-    month = focusDate.getMonth()
-    year = focusDate.getFullYear()
-  } else {
-    ;[year, month] = dateParts(focusDate)
-  }
-  // Set `key` to force a remount when the month/year changes.
-  return { as: CalendarGridBase, key: focusStr.slice(0, 7), focusStr, month, year }
-}
-
 // TODO Figure out the right style for selected `.outside-date`
 const OUTLINE = { thin: '2px' }
 export const CalendarGrid = styled(CalendarGridBase)
-  .withConfig(omitProps<any>(margin, 'focusDate'))
-  .attrs(deriveAttrs)`
+  .withConfig(omitProps<CalendarGridProps>(margin))
+  .attrs({ as: CalendarGridBase })`
   box-sizing: border-box;
   display: inline-block;
   width: 300px;
@@ -379,6 +466,6 @@ export const CalendarGrid = styled(CalendarGridBase)
       opacity: .6;
     }
   }
-` as StyledComponent<React.FC<CalendarGridProps>, DefaultTheme>
+`
 
 export default CalendarGrid

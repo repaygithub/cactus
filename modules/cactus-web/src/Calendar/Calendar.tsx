@@ -13,13 +13,11 @@ import { omitProps } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
 import DropDown from './DropDown'
 import CalendarGrid, {
-  CalendarDate,
   CalendarGridLabels,
   CalendarValue,
-  clampDate,
   dateParts,
-  queryDate,
-  toISODate,
+  FocusProps,
+  initGridState,
 } from './Grid'
 import Slider, { SlideDirection, SliderProps } from './Slider'
 
@@ -51,10 +49,7 @@ export interface MonthChange {
   isFocusOverflow: boolean
 }
 
-interface CalendarProps extends BaseProps {
-  month?: number
-  year?: number
-  initialFocus?: CalendarDate
+interface CalendarProps extends BaseProps, FocusProps {
   value?: CalendarValue
   defaultValue?: CalendarValue
   form?: string
@@ -71,7 +66,8 @@ interface CalendarProps extends BaseProps {
 
 interface CalendarState extends SliderProps {
   value: CalendarValue
-  focusDate: Date
+  month: number
+  year: number
 }
 
 const memoize = <A extends any[], R>(func: (...a: A) => R): ((...a: A) => R) => {
@@ -87,27 +83,23 @@ const memoize = <A extends any[], R>(func: (...a: A) => R): ((...a: A) => R) => 
 }
 
 const initState = (props: CalendarProps): CalendarState => {
-  const state: CalendarState = { value: '', focusDate: new Date() }
+  let value: CalendarValue = ''
   if (props.value === undefined && props.defaultValue !== undefined) {
-    state.value = props.defaultValue
+    value = props.defaultValue
     // If we can't tell if it should be `Date` or `string`, default to `string`.
-    if (Array.isArray(state.value) && !state.value.length) {
-      state.value = ''
+    if (Array.isArray(value) && !value.length) {
+      value = ''
     }
   }
-  if (typeof props.initialFocus === 'object') {
-    state.focusDate = new Date(props.initialFocus)
-  } else if (props.initialFocus) {
-    state.focusDate = new Date(...dateParts(props.initialFocus))
+  let date: Date
+  if (props.year === undefined || props.month === undefined) {
+    // Make sure we use the same initialization logic as Grid.
+    const { year, month } = initGridState(props.initialFocus)
+    date = new Date(props.year ?? year, props.month ?? month, 1)
   } else {
-    if (props.year !== undefined) {
-      clampDate(state.focusDate, 'setFullYear', props.year)
-    }
-    if (props.month !== undefined) {
-      clampDate(state.focusDate, 'setMonth', props.month)
-    }
+    date = new Date(props.year, props.month, 1)
   }
-  return state
+  return { value, year: date.getFullYear(), month: date.getMonth() }
 }
 
 const raiseAsDate = (value: CalendarValue): boolean => {
@@ -148,15 +140,16 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
         newState = { value }
       }
     }
-    if (props.year !== undefined && props.year !== state.focusDate.getFullYear()) {
+    if (props.year !== undefined && props.year !== state.year) {
       newState = newState || {}
-      newState.focusDate = new Date(state.focusDate)
-      clampDate(newState.focusDate, 'setFullYear', props.year)
+      newState.year = props.year
     }
-    if (props.month !== undefined && props.month !== state.focusDate.getMonth()) {
+    // Pass month through `Date` to normalize values outside the range [0, 12).
+    if (props.month !== undefined && props.month !== state.month) {
       newState = newState || {}
-      newState.focusDate = newState.focusDate || new Date(state.focusDate)
-      clampDate(newState.focusDate, 'setMonth', props.month)
+      const date = new Date(state.year, state.month, 1)
+      date.setMonth(props.month)
+      newState.month = date.getMonth()
     }
     return newState
   }
@@ -178,35 +171,13 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     document.removeEventListener('reset', this.onReset)
   }
 
-  private setFocusDate = (date: Date, e: React.SyntheticEvent) => {
-    if (
-      date.getMonth() !== this.state.focusDate.getMonth() ||
-      date.getFullYear() !== this.state.focusDate.getFullYear()
-    ) {
-      this.raiseMonthChange({ focusDate: date }, true, e)
-    }
-  }
-
-  private raiseMonthChange(
-    newState: Omit<CalendarState, 'value'>,
-    isFocusOverflow: boolean,
-    e: React.SyntheticEvent
-  ) {
-    const callback = !isFocusOverflow
-      ? undefined
-      : () => {
-          queryDate(this.rootElement, toISODate(newState.focusDate))?.focus()
-        }
-    this.setState(newState, callback)
-    if (this.props.onMonthChange) {
-      this.props.onMonthChange(
-        {
-          month: newState.focusDate.getMonth(),
-          year: newState.focusDate.getFullYear(),
-          isFocusOverflow,
-        },
-        e
-      )
+  private setFocusDate = (date: Date, e: React.SyntheticEvent, transState?: SliderProps) => {
+    if (date.getMonth() !== this.state.month || date.getFullYear() !== this.state.year) {
+      const dateState = { year: date.getFullYear(), month: date.getMonth() }
+      this.setState({ ...dateState, ...transState })
+      if (this.props.onMonthChange) {
+        this.props.onMonthChange({ ...dateState, isFocusOverflow: !transState }, e)
+      }
     }
   }
 
@@ -230,41 +201,22 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
 
   private handleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const direction = e.currentTarget.name as SlideDirection
-    const next = new Date(this.state.focusDate)
-    clampDate(next, 'setMonth', next.getMonth() + (direction === 'left' ? -1 : 1))
-    this.handleMonthYearChange(next, e, direction)
+    const month = this.state.month + (direction === 'left' ? -1 : 1)
+    const next = new Date(this.state.year, month, 1)
+    this.setFocusDate(next, e, {
+      transition: direction,
+      transitionKey: generateId(direction),
+    })
   }
 
   private selectMonth = (month: number, e: React.SyntheticEvent) => {
-    const next = new Date(this.state.focusDate)
-    clampDate(next, 'setMonth', month)
-    this.handleMonthYearChange(next, e)
+    const next = new Date(this.state.year, month, 1)
+    this.setFocusDate(next, e, {})
   }
 
   private selectYear = (year: number, e: React.SyntheticEvent) => {
-    const next = new Date(this.state.focusDate)
-    clampDate(next, 'setFullYear', year)
-    this.handleMonthYearChange(next, e)
-  }
-
-  private handleMonthYearChange(next: Date, e: React.SyntheticEvent, transition?: SlideDirection) {
-    const { focusDate } = this.state
-    const month = next.getMonth()
-    if (month === focusDate.getMonth() && next.getFullYear() === focusDate.getFullYear()) return
-
-    let day = focusDate.getDate()
-    // When not focused, the grid should have a single tab-able element.
-    const elem = this.rootElement.querySelector<HTMLElement>('[role="grid"] [tabindex="0"]')
-    if (elem?.dataset.date) {
-      day = dateParts(elem.dataset.date)[2]
-    }
-    clampDate(next, 'setDate', day)
-    const newState: Omit<CalendarState, 'value'> = { focusDate: next }
-    if (transition) {
-      newState.transition = transition
-      newState.transitionKey = generateId(transition)
-    }
-    this.raiseMonthChange(newState, false, e)
+    const next = new Date(year, this.state.month, 1)
+    this.setFocusDate(next, e, {})
   }
 
   render() {
@@ -313,10 +265,12 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
         </Flex>
         <Slider {...this.state}>
           <CalendarGrid
+            month={this.state.month}
+            year={this.state.year}
             locale={locale}
             isValidDate={isValidDate}
             selected={this.state.value}
-            focusDate={this.state.focusDate}
+            initialFocus={initialFocus}
             labels={labels}
             aria-multiselectable={multiple}
             aria-readonly={readOnly}
@@ -346,7 +300,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
 
   renderMonthDD(locale?: string, labels?: string[]) {
     const options = this.getMonthOptions(locale, labels)
-    const month = this.state.focusDate.getMonth()
+    const month = this.state.month
     return (
       <DropDown
         value={month}
@@ -369,7 +323,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   })
 
   renderYearDD() {
-    const year = this.state.focusDate.getFullYear()
+    const year = this.state.year
     return (
       <DropDown
         label={year}
