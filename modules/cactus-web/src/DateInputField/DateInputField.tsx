@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps, width } from 'styled-system'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import DateInput, { DateInputProps } from '../DateInput/DateInput'
-import { omitMargins } from '../helpers/omit'
+import { extractFieldStyleProps } from '../helpers/omit'
 
 interface DateInputFieldProps extends FieldProps, Omit<DateInputProps, 'id'> {
   className?: string
@@ -15,7 +14,6 @@ interface DateInputFieldProps extends FieldProps, Omit<DateInputProps, 'id'> {
 
 function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
   const {
-    className,
     id,
     name,
     label,
@@ -24,18 +22,14 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     success,
     warning,
     error,
-    width: widthProp,
     disabled,
     autoTooltip,
     disableTooltip,
     alignTooltip,
     invalidDateLabel = 'The date you have selected is invalid. Please pick another date.',
-    flex,
-    flexGrow,
-    flexShrink,
-    flexBasis,
     ...rest
-  } = omitMargins(props) as Omit<DateInputFieldProps, keyof MarginProps>
+  } = props
+  const styleProps = extractFieldStyleProps(rest)
 
   const [invalidDate, setInvalidDate] = useState<boolean>(false)
 
@@ -46,7 +40,6 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
   return (
     <AccessibleField
       disabled={disabled}
-      className={className}
       id={id}
       name={name}
       label={label}
@@ -58,10 +51,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
-      flex={flex}
-      flexGrow={flexGrow}
-      flexShrink={flexShrink}
-      flexBasis={flexBasis}
+      {...styleProps}
     >
       {({
         fieldId,
@@ -86,9 +76,6 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
 }
 
 export const DateInputField = styled(DateInputFieldBase)`
-  ${margin}
-  ${width}
-
   ${DateInput} {
     width: 100%;
   }

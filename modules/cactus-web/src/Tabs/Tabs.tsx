@@ -1,16 +1,15 @@
 import { NavigationChevronLeft, NavigationChevronRight } from '@repay/cactus-icons'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 
 import Box, { BoxProps } from '../Box/Box'
 import Flex, { JustifyContent } from '../Flex/Flex'
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
-import { isResponsiveTouchDevice } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useValue } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import { border, insetBorder, media, textStyle } from '../helpers/theme'
+import { border, insetBorder, isResponsiveTouchDevice, media, textStyle } from '../helpers/theme'
 
 interface TabListProps extends Omit<React.HTMLAttributes<HTMLElement>, 'role'> {
   fullWidth?: boolean
@@ -54,6 +53,7 @@ export const TabList: React.FC<TabListProps> = ({
   ...props
 }) => {
   const id = React.useContext(TabContext)?.id
+  const theme = React.useContext(ThemeContext)
   const orientation = props['aria-orientation'] || 'horizontal'
   const [listRef, scroll] = useScroll<HTMLDivElement>(orientation, true, getScrollInfo)
   const [setFocus, rootRef] = useFocusControl(getTabs)
@@ -61,7 +61,7 @@ export const TabList: React.FC<TabListProps> = ({
   if (scroll.showScroll) {
     props.justifyContent = 'flex-start'
   }
-  const showScroll = scroll.showScroll && !isResponsiveTouchDevice
+  const showScroll = scroll.showScroll && !isResponsiveTouchDevice(theme.breakpoints)
   const keyHandler = useKeyHandler(setFocus)
   const focusHandler = useFocusHandler(setFocus, onFocus)
   const blurHandler = React.useCallback<FocusHandler>(
@@ -267,7 +267,8 @@ const StyledTabList = styled(Flex)`
   flex-flow: row nowrap;
   outline: none;
   white-space: nowrap;
-  ${isResponsiveTouchDevice ? 'overflow-x: scroll' : 'overflow: hidden'};
+  ${(p) =>
+    isResponsiveTouchDevice(p.theme.breakpoints) ? 'overflow-x: scroll' : 'overflow: hidden'};
 
   &[aria-orientation='vertical'] {
     white-space: normal;

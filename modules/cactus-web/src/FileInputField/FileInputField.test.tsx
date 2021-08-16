@@ -52,6 +52,29 @@ describe('component: FileInputField', (): void => {
     expect(errorMsg).toBeInTheDocument()
   })
 
+  test('should support margin space props', (): void => {
+    const { container } = render(
+      <StyleProvider>
+        <FileInputField label="F" name="first" />
+        <FileInputField name="default" label="D" mb={2} />
+        <FileInputField name="override" label="O" mt={1} />
+      </StyleProvider>
+    )
+
+    const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
+    const first = container.firstElementChild
+    expect(first).toHaveStyle(blank)
+    expect(first?.nextElementSibling).toHaveStyle({
+      ...blank,
+      marginTop: '16px',
+      marginBottom: '4px',
+    })
+    expect(first?.nextElementSibling?.nextElementSibling).toHaveStyle({
+      ...blank,
+      marginTop: '2px',
+    })
+  })
+
   test('should support flex item props', () => {
     const { container } = render(
       <StyleProvider>

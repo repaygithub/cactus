@@ -45,7 +45,7 @@ export const WithValues = (): React.ReactElement => {
         <RadioGroup.Button label={<sup>Strong</sup>} value="strong" />
         <RadioGroup.Button label="Fortunate" value="ladybug" />
       </RadioGroup>
-      <RadioGroup name="youAreGroupThree" label={<em>Follower</em>} required>
+      <RadioGroup name="youAreGroupThree" label={<em>Follower</em>} required onChange={noop} m={0}>
         <RadioGroup.Button checked={value === ''} label="Zen" value="" />
         <RadioGroup.Button checked={value === 'strong'} label="Confident" value="strong" />
         <RadioGroup.Button checked={value === 'ladybug'} label="Miraculous" value="ladybug" />
@@ -53,6 +53,7 @@ export const WithValues = (): React.ReactElement => {
     </Flex>
   )
 }
+const noop = () => undefined // Fix propTypes warning.
 
 export const WithDefaultValues = (): React.ReactElement => {
   const group = React.useRef<HTMLFormElement>(null)

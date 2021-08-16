@@ -29,13 +29,13 @@ const backgroundColor = (props: AlertProps & ThemeProps<CactusTheme>): string | 
   const { status } = props
   switch (status) {
     case 'error':
-      return props.theme.colors.status.avatar.error
+      return props.theme.colors.status.background.error
     case 'warning':
-      return props.theme.colors.status.avatar.warning
+      return props.theme.colors.status.background.warning
     case 'info':
       return props.theme.colors.white
     case 'success':
-      return props.theme.colors.status.avatar.success
+      return props.theme.colors.status.background.success
   }
 }
 

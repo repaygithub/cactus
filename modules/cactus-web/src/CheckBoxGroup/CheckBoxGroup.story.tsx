@@ -16,8 +16,8 @@ export const BasicUsage = (): React.ReactElement => (
     label={text('label', 'My Label')}
     disabled={boolean('disabled', false)}
     onChange={(e: any) => console.log(`'${e.target.name}' changed: ${e.target.checked}`)}
-    onFocus={(e) => console.log(`'${e.target.name}' focused`)}
-    onBlur={(e) => console.log(`'${e.target.name}' blurred`)}
+    onFocus={(e: any) => console.log(`'${e.target.name}' focused`)}
+    onBlur={(e: any) => console.log(`'${e.target.name}' blurred`)}
     tooltip={text('tooltip', 'Check some boxes')}
     autoTooltip={boolean('autoTooltip', true)}
     error={text('error', '')}
@@ -52,7 +52,7 @@ export const WithValues = (): React.ReactElement => {
         <CheckBoxGroup.Item name="option-2" label="Option 2" />
         <CheckBoxGroup.Item name="option-3" label="Option 3" />
       </CheckBoxGroup>
-      <CheckBoxGroup name="follower" label="Follower">
+      <CheckBoxGroup name="follower" label="Follower" onChange={noop} m={0}>
         <CheckBoxGroup.Item checked={value['option-1']} name="option-4" label="Option 4" />
         <CheckBoxGroup.Item checked={value['option-2']} name="option-5" label="Option 5" />
         <CheckBoxGroup.Item checked={value['option-3']} name="option-6" label="Option 6" />
@@ -60,3 +60,4 @@ export const WithValues = (): React.ReactElement => {
     </Flex>
   )
 }
+const noop = () => undefined // Fix propTypes warning.

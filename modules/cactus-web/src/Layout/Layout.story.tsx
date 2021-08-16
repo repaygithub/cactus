@@ -130,9 +130,10 @@ const StoryActionBar = () => (
 
 const StoryFooter = () => (
   <Footer logo={LOGO}>
-    <em>{text('Footer', 'How will you REPAY us?')}</em>
-    <Footer.Link to="#">The Link To Nowhere</Footer.Link>
-    <Footer.Link to="https://google.com">The Giant</Footer.Link>
+    <em>{text('Footer', 'How will you REPAY us?') + ' '}</em>
+    <a href="#">The Link To Nowhere</a>
+    {' | '}
+    <a href="https://google.com">The Giant</a>
   </Footer>
 )
 
@@ -175,7 +176,7 @@ export const BasicUsage = (): React.ReactElement => {
           </Header.BreadcrumbRow>
           <Header.Title>Latin Or Something</Header.Title>
         </Header>
-        <TextInputField name="foo" label="Foo" />
+        <TextInputField name="foo" label="Foo" m={0} />
         <ToggleField
           ml="150px"
           name="modalToggle"

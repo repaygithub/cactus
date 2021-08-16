@@ -60,9 +60,16 @@ export type Shape = 'square' | 'intermediate' | 'round'
 
 export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
+export interface BreakpointsObject {
+  small: string
+  medium: string
+  large: string
+  extraLarge: string
+}
+
 export interface CactusTheme {
-  breakpoints?: string[]
-  mediaQueries?: {
+  breakpoints: string[]
+  mediaQueries: {
     small: string
     medium: string
     large: string
@@ -74,7 +81,7 @@ export interface CactusTheme {
     baseText: string
     callToAction: string
     callToActionText: string
-    transparentCTA: string
+    lightCallToAction: string
 
     /** Contrasts */
     lightContrast: string
@@ -92,12 +99,15 @@ export interface CactusTheme {
     success: string
     warning: string
     error: string
-    transparentSuccess: string
-    transparentWarning: string
-    transparentError: string
-    errorDark: string
-    warningDark: string
+    successLight: string
+    warningLight: string
+    errorLight: string
+    successMedium: string
+    warningMedium: string
+    errorMedium: string
     successDark: string
+    warningDark: string
+    errorDark: string
 
     status: StatusColors
   }
@@ -117,13 +127,16 @@ export interface CactusTheme {
     error: ColorStyle
     warning: ColorStyle
     disable: ColorStyle
-    transparentCTA: ColorStyle
-    transparentError: ColorStyle
-    transparentSuccess: ColorStyle
-    transparentWarning: ColorStyle
+    lightCallToAction: ColorStyle
+    successLight: ColorStyle
+    errorLight: ColorStyle
+    warningLight: ColorStyle
+    successMedium: ColorStyle
+    errorMedium: ColorStyle
+    warningMedium: ColorStyle
+    successDark: ColorStyle
     errorDark: ColorStyle
     warningDark: ColorStyle
-    successDark: ColorStyle
   }
   border: BorderSize
   shape: Shape
@@ -138,32 +151,35 @@ export type ColorVariant = keyof CactusTheme['colorStyles']
 const grayscaleLightContrast = 'hsl(0, 0%, 90%)'
 
 /** Neutrals */
-const white = `hsl(0, 0%, 100%)`
-const lightGray = `hsl(0, 0%, 90%)`
-const mediumGray = `hsl(0, 0%, 70%)`
-const darkGray = `hsl(0, 0%, 50%)`
+const white = 'hsl(0, 0%, 100%)'
+const lightGray = 'hsl(0, 0%, 90%)'
+const mediumGray = 'hsl(0, 0%, 70%)'
+const darkGray = 'hsl(0, 0%, 50%)'
 
 /** Notification Colors */
-const success = `hsl(145, 89%, 28%)`
-const error = `hsl(353, 84%, 44%)`
-const warning = `hsl(47, 82%, 47%)`
-const transparentSuccess = `hsla(145, 89%, 28%, 0.3)`
-const transparentError = `hsla(353, 84%, 44%, 0.3)`
-const transparentWarning = `hsla(47, 82%, 47%, 0.3)`
-const errorDark = `hsl(353, 96%, 11%)`
-const warningDark = `hsl(47, 96%, 11%)`
-const successDark = `hsl(145, 96%, 11%)`
+const success = 'hsl(145, 89%, 28%)'
+const error = 'hsl(353, 84%, 44%)'
+const warning = 'hsl(47, 82%, 47%)'
+const successLight = 'hsl(145, 33%, 78%)'
+const errorLight = 'hsl(353, 67%, 83%)'
+const warningLight = 'hsl(47, 73%, 84%)'
+const successMedium = 'hsl(145, 33%, 63%)'
+const errorMedium = 'hsl(353, 67%, 72%)'
+const warningMedium = 'hsl(47, 72%, 73%)'
+const errorDark = 'hsl(353, 96%, 11%)'
+const warningDark = 'hsl(47, 96%, 11%)'
+const successDark = 'hsl(145, 96%, 11%)'
 
 const status: StatusColors = {
   background: {
-    success: transparentSuccess,
-    warning: transparentWarning,
-    error: transparentError,
+    success: successLight,
+    warning: warningLight,
+    error: errorLight,
   },
   avatar: {
-    success: transparentSuccess,
-    warning: transparentWarning,
-    error: transparentError,
+    success: successMedium,
+    warning: warningMedium,
+    error: errorMedium,
   },
 }
 
@@ -173,10 +189,29 @@ interface SharedGeneratorOptions {
   font?: Font
   boxShadows?: boolean
   grayscaleContrast?: boolean
+  breakpoints?: BreakpointsObject
 }
 
 interface HueGeneratorOptions extends SharedGeneratorOptions {
   primaryHue: number
+}
+
+function convertToLightCTASaturation(ctaSaturation: number, ctaLightness: number): number {
+  return Math.round(1.5 * (ctaLightness / 10) * (ctaSaturation / 10) - 1.5 * (ctaLightness / 10))
+}
+
+function getHslString(colorParams: number[]): string {
+  const [hue, saturation, lightness] = colorParams
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+}
+
+function getLightCallToAction(ctaParams: number[]): string {
+  const [ctaHue, ctaSaturation, ctaLightness] = ctaParams
+  const lightCTAHue = ctaHue
+  const lightCTASaturation =
+    ctaLightness <= 50 ? convertToLightCTASaturation(ctaSaturation, ctaLightness) : ctaSaturation
+  const lightCTALightness = Math.round((ctaLightness / 10) * 3 + 70)
+  return getHslString([lightCTAHue, lightCTASaturation, lightCTALightness])
 }
 
 function fromHue({
@@ -185,9 +220,10 @@ function fromHue({
   /** Core colors */
   const base = `hsl(${primaryHue}, 96%, 11%)`
   const baseText = `hsl(0, 0%, 100%)`
-  const callToAction = `hsl(${primaryHue}, 96%, 35%)`
+  const ctaParams = [primaryHue, 96, 35]
+  const callToAction = getHslString(ctaParams)
   const callToActionText = `hsl(0, 0%, 100%)`
-  const transparentCTA = `hsla(${primaryHue}, 96%, 35%, 0.3)`
+  const lightCallToAction = getLightCallToAction(ctaParams)
 
   /** Contrasts */
   const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
@@ -202,7 +238,7 @@ function fromHue({
       baseText,
       callToAction,
       callToActionText,
-      transparentCTA,
+      lightCallToAction,
 
       /** Contrasts */
       lightContrast,
@@ -220,12 +256,15 @@ function fromHue({
       success,
       error,
       warning,
-      transparentSuccess,
-      transparentError,
-      transparentWarning,
+      successLight,
+      errorLight,
+      warningLight,
+      successMedium,
+      errorMedium,
+      warningMedium,
+      successDark,
       errorDark,
       warningDark,
-      successDark,
 
       /** Status Colors */
       status,
@@ -267,20 +306,32 @@ function fromHue({
         backgroundColor: lightGray,
         color: mediumGray,
       },
-      transparentCTA: {
-        backgroundColor: transparentCTA,
+      lightCallToAction: {
+        backgroundColor: lightCallToAction,
         color: darkestContrast,
       },
-      transparentError: {
-        backgroundColor: transparentError,
+      successLight: {
+        backgroundColor: successLight,
         color: darkestContrast,
       },
-      transparentSuccess: {
-        backgroundColor: transparentSuccess,
+      errorLight: {
+        backgroundColor: errorLight,
         color: darkestContrast,
       },
-      transparentWarning: {
-        backgroundColor: transparentWarning,
+      warningLight: {
+        backgroundColor: warningLight,
+        color: darkContrast,
+      },
+      successMedium: {
+        backgroundColor: successMedium,
+        color: darkestContrast,
+      },
+      errorMedium: {
+        backgroundColor: errorMedium,
+        color: darkestContrast,
+      },
+      warningMedium: {
+        backgroundColor: warningMedium,
         color: darkContrast,
       },
       errorDark: {
@@ -318,8 +369,9 @@ function fromTwoWhite(primaryHue: number): [CactusTheme['colors'], CactusTheme['
   const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
   const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
 
-  const callToAction = `hsl(244, 48%, 26%)`
-  const transparentCTA = `hsla(244, 48%, 26%, 0.3)`
+  const ctaParams = [244, 48, 26]
+  const callToAction = getHslString(ctaParams)
+  const lightCallToAction = getLightCallToAction(ctaParams)
   const callToActionText = white
 
   return [
@@ -327,9 +379,9 @@ function fromTwoWhite(primaryHue: number): [CactusTheme['colors'], CactusTheme['
       /** Core colors */
       base: white,
       baseText: darkestContrast,
-      callToAction: callToAction,
-      callToActionText: callToActionText,
-      transparentCTA: transparentCTA,
+      callToAction,
+      callToActionText,
+      lightCallToAction,
 
       /** Contrasts */
       lightContrast,
@@ -347,12 +399,15 @@ function fromTwoWhite(primaryHue: number): [CactusTheme['colors'], CactusTheme['
       success,
       error,
       warning,
-      transparentSuccess,
-      transparentError,
-      transparentWarning,
+      successLight,
+      errorLight,
+      warningLight,
+      successMedium,
+      errorMedium,
+      warningMedium,
+      successDark,
       errorDark,
       warningDark,
-      successDark,
 
       /** Status Colors */
       status,
@@ -394,21 +449,33 @@ function fromTwoWhite(primaryHue: number): [CactusTheme['colors'], CactusTheme['
         backgroundColor: lightGray,
         color: mediumGray,
       },
-      transparentCTA: {
-        backgroundColor: transparentCTA,
+      lightCallToAction: {
+        backgroundColor: lightCallToAction,
         color: darkestContrast,
       },
-      transparentError: {
-        backgroundColor: transparentError,
+      successLight: {
+        backgroundColor: successLight,
         color: darkestContrast,
       },
-      transparentSuccess: {
-        backgroundColor: transparentSuccess,
+      errorLight: {
+        backgroundColor: errorLight,
         color: darkestContrast,
       },
-      transparentWarning: {
-        backgroundColor: transparentWarning,
+      warningLight: {
+        backgroundColor: warningLight,
+        color: darkContrast,
+      },
+      successMedium: {
+        backgroundColor: successMedium,
         color: darkestContrast,
+      },
+      errorMedium: {
+        backgroundColor: errorMedium,
+        color: darkestContrast,
+      },
+      warningMedium: {
+        backgroundColor: warningMedium,
+        color: darkContrast,
       },
       errorDark: {
         backgroundColor: errorDark,
@@ -446,9 +513,10 @@ function fromWhiteSecondary(
   const updatedSecondaryHue = primary.lightness !== 0 ? primary.hue : 244
   const updatedSecondarySaturation = primary.lightness > 21 ? 98 : 96
   const updatedSecondaryLightness = primary.lightness > 21 ? 10 : 35
-  const callToAction = `hsl(${updatedSecondaryHue}, ${updatedSecondarySaturation}%, ${updatedSecondaryLightness}%)`
+  const ctaParams = [updatedSecondaryHue, updatedSecondarySaturation, updatedSecondaryLightness]
+  const callToAction = getHslString(ctaParams)
   const callToActionText = white
-  const transparentCTA = `hsla(${updatedSecondaryHue}, ${updatedSecondarySaturation}%, ${updatedSecondaryLightness}%, 0.3)`
+  const lightCallToAction = getLightCallToAction(ctaParams)
 
   return [
     {
@@ -457,7 +525,7 @@ function fromWhiteSecondary(
       baseText,
       callToAction,
       callToActionText,
-      transparentCTA,
+      lightCallToAction,
 
       /** Contrasts */
       lightContrast,
@@ -475,12 +543,15 @@ function fromWhiteSecondary(
       success,
       error,
       warning,
-      transparentSuccess,
-      transparentError,
-      transparentWarning,
+      successLight,
+      errorLight,
+      warningLight,
+      successMedium,
+      errorMedium,
+      warningMedium,
+      successDark,
       errorDark,
       warningDark,
-      successDark,
 
       /** Status Colors */
       status,
@@ -522,20 +593,32 @@ function fromWhiteSecondary(
         backgroundColor: lightGray,
         color: mediumGray,
       },
-      transparentCTA: {
-        backgroundColor: transparentCTA,
+      lightCallToAction: {
+        backgroundColor: lightCallToAction,
         color: darkestContrast,
       },
-      transparentError: {
-        backgroundColor: transparentError,
+      successLight: {
+        backgroundColor: successLight,
         color: darkestContrast,
       },
-      transparentSuccess: {
-        backgroundColor: transparentSuccess,
+      errorLight: {
+        backgroundColor: errorLight,
         color: darkestContrast,
       },
-      transparentWarning: {
-        backgroundColor: transparentWarning,
+      warningLight: {
+        backgroundColor: warningLight,
+        color: darkContrast,
+      },
+      successMedium: {
+        backgroundColor: successMedium,
+        color: darkestContrast,
+      },
+      errorMedium: {
+        backgroundColor: errorMedium,
+        color: darkestContrast,
+      },
+      warningMedium: {
+        backgroundColor: warningMedium,
         color: darkContrast,
       },
       errorDark: {
@@ -569,9 +652,10 @@ function fromTwoNonWhite(
 
   const baseText = isDark(...primary.rgb) ? white : darkestContrast
 
-  const callToAction = `hsl(${secondary.hue}, ${secondary.saturation}%, ${secondary.lightness}%)`
+  const ctaParams = [secondary.hue, secondary.saturation, secondary.lightness]
+  const callToAction = getHslString(ctaParams)
   const callToActionText = isDark(...secondary.rgb) ? white : darkestContrast
-  const transparentCTA = `hsla(${secondary.hue}, ${secondary.saturation}%, ${secondary.lightness}%, 0.3)`
+  const lightCallToAction = getLightCallToAction(ctaParams)
 
   return [
     {
@@ -580,7 +664,7 @@ function fromTwoNonWhite(
       baseText,
       callToAction,
       callToActionText,
-      transparentCTA,
+      lightCallToAction,
 
       /** Contrasts */
       lightContrast,
@@ -598,12 +682,15 @@ function fromTwoNonWhite(
       success,
       error,
       warning,
-      transparentSuccess,
-      transparentError,
-      transparentWarning,
+      successLight,
+      errorLight,
+      warningLight,
+      successMedium,
+      errorMedium,
+      warningMedium,
+      successDark,
       errorDark,
       warningDark,
-      successDark,
 
       /** Status Colors */
       status,
@@ -645,20 +732,32 @@ function fromTwoNonWhite(
         backgroundColor: lightGray,
         color: mediumGray,
       },
-      transparentCTA: {
-        backgroundColor: transparentCTA,
+      lightCallToAction: {
+        backgroundColor: lightCallToAction,
         color: darkestContrast,
       },
-      transparentError: {
-        backgroundColor: transparentError,
+      successLight: {
+        backgroundColor: successLight,
         color: darkestContrast,
       },
-      transparentSuccess: {
-        backgroundColor: transparentSuccess,
+      errorLight: {
+        backgroundColor: errorLight,
         color: darkestContrast,
       },
-      transparentWarning: {
-        backgroundColor: transparentWarning,
+      warningLight: {
+        backgroundColor: warningLight,
+        color: darkContrast,
+      },
+      successMedium: {
+        backgroundColor: successMedium,
+        color: darkestContrast,
+      },
+      errorMedium: {
+        backgroundColor: errorMedium,
+        color: darkestContrast,
+      },
+      warningMedium: {
+        backgroundColor: warningMedium,
         color: darkContrast,
       },
       errorDark: {
@@ -682,7 +781,7 @@ function fromTwoColor({
   secondary,
 }: TwoColorGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   const primaryRgb = hexToRgb(primary)
-  const secondaryRgb = hexToRgb(secondary)
+  const secondaryRgb = hexToRgb(secondary || '')
   const [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
   const [secondaryHue, secondarySaturation, secondaryLightness] = rgbToHsl(...secondaryRgb)
   const isSecondaryWhite = secondaryLightness === 100
@@ -799,6 +898,20 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     return x === font ? -1 : y === font ? 1 : 0
   })
 
+  const breakpoints = options.breakpoints || {
+    small: '768px',
+    medium: '1024px',
+    large: '1200px',
+    extraLarge: '1440px',
+  }
+
+  const mediaQueries = {
+    small: `@media screen and (min-width: ${breakpoints.small})`,
+    medium: `@media screen and (min-width: ${breakpoints.medium})`,
+    large: `@media screen and (min-width: ${breakpoints.large})`,
+    extraLarge: `@media screen and (min-width: ${breakpoints.extraLarge})`,
+  }
+
   return {
     colors,
     colorStyles,
@@ -812,6 +925,8 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     boxShadows,
     textStyles: makeTextStyles(fontSizes),
     mobileTextStyles: makeTextStyles(mobileFontSizes),
+    breakpoints: Object.values(breakpoints),
+    mediaQueries,
   }
 }
 

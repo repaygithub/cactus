@@ -292,7 +292,7 @@ const InputWrapper = styled.div`
 
     &:focus {
       outline: none;
-      background-color: ${(p): string => p.theme.colors.transparentCTA};
+      background-color: ${(p): string => p.theme.colors.lightCallToAction};
     }
 
     &::placeholder {
@@ -445,15 +445,15 @@ const CalendarDayBase = styled.button.attrs({ type: 'button' })`
 
     &.selected-date {
       color: ${(p): string => p.theme.colors.darkContrast};
-      background-color: ${(p): string => p.theme.colors.transparentCTA};
+      background-color: ${(p): string => p.theme.colors.lightCallToAction};
     }
   }
 
   &.focused-date {
-    background-color: ${(p): string => p.theme.colors.transparentCTA};
+    background-color: ${(p): string => p.theme.colors.lightCallToAction};
 
     &[aria-disabled='true'] {
-      background-color: ${(p): string => p.theme.colors.transparentError};
+      background-color: ${(p): string => p.theme.colors.errorLight};
     }
   }
 
@@ -735,7 +735,7 @@ const MonthYearListWrapper = styled(MonthYearListScrollTrap)`
     }
 
     &:hover > span {
-      background-color: ${(p): string => p.theme.colors.transparentCTA};
+      background-color: ${(p): string => p.theme.colors.lightCallToAction};
     }
 
     &[aria-selected='true'] > span {

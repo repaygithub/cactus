@@ -1,260 +1,147 @@
 import PropTypes from 'prop-types'
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import React from 'react'
+import styled, { css } from 'styled-components'
 
+import { isIE } from '../helpers/constants'
+import { styledWithClass } from '../helpers/styled'
 import { boxShadow, textStyle } from '../helpers/theme'
-import useId from '../helpers/useId'
 import { useLayout } from '../Layout/Layout'
-import Link, { LinkProps } from '../Link/Link'
-import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
-type LinkMap = Map<string, LinkProps>
-type FooterContextType = (u: (s: LinkMap) => LinkMap) => void
-
-interface LinkColProps {
-  maxCols: number
-}
-
+type FooterVariant = 'white' | 'gray' | 'dark'
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {
   logo?: string | React.ReactElement
+  variant?: FooterVariant
 }
 
-const FooterContext = createContext<FooterContextType | undefined>(undefined)
+const FooterBase: React.FC<FooterProps> = ({ logo, children, variant, ...props }) => {
+  useLayout('footer', { position: 'flow', offset: 0 })
 
-const LogoWrapper = styled('div')`
-  padding: 16px 24px;
-  -ms-grid-column: 1;
-  -ms-grid-row: 1;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  return (
+    <footer {...props}>
+      {logo && (
+        <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
+      )}
+      <ContentWrapper>{children}</ContentWrapper>
+    </footer>
+  )
+}
+FooterBase.displayName = 'Footer'
+
+const LogoWrapper = styledWithClass('div', 'footer-logo')`
+  margin-bottom: ${(p) => p.theme.space[5]}px;
+  ${(p) => p.theme.mediaQueries.small} {
+    margin-bottom: 0;
+    margin-right: ${(p) => p.theme.space[7]}px;
+  }
   &,
   * {
+    box-sizing: border-box;
     display: block;
     max-width: 200px;
     max-height: 40px;
   }
 `
 
-const gridCell2 = `
-  -ms-grid-row-align: center;
-  -ms-grid-column: 2;
-  -ms-grid-row: 1;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
-`
-
-const ContentWrapper = styled('div')`
-  box-sizing: border-box;
+const ContentWrapper = styledWithClass('div', 'footer-content')`
+  min-width: 1px;
   max-width: 100%;
-  padding: 16px 24px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
   &:empty {
     display: none;
   }
-  &:not(:empty) {
-    ${gridCell2}
-  }
-  ${LogoWrapper} + & {
-    padding-left: 0;
+  ${(p) => p.theme.mediaQueries.small} {
+    max-width: ${(p) => p.theme.breakpoints[2]};
+    margin: 0 auto;
   }
 `
 
-const LinksColsContainer = styled('div')`
-  box-sizing: border-box;
-  max-width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: center;
-  padding: 16px 24px;
-  background-color: ${(p) => p.theme.colors.white};
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
-  -ms-grid-row: 2;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  ${LogoWrapper} + ${ContentWrapper}:empty + & {
-    padding-left: 0;
+const link = css`
+  a {
+    outline: none;
+    :link {
+      font-style: italic;
+      text-decoration: underline;
+      padding: 2px 2px 0 0;
+    }
+    :hover {
+      text-decoration: none;
+    }
   }
-  ${ContentWrapper}:empty + & {
-    background-color: transparent;
-    -ms-grid-column-span: 1;
-    ${gridCell2}
+`
+const lightLink = css`
+  a {
+    :link {
+      color: ${(p) => p.theme.colors.callToAction};
+    }
+    :visited {
+      color: ${(p) => p.theme.colors.darkContrast};
+    }
   }
 `
 
-const LinkCol = styled('div')<LinkColProps>`
-  box-sizing: border-box;
+type VariantMap = { [K in FooterVariant]: ReturnType<typeof css> }
+const variants: VariantMap = {
+  white: css`
+    ${(p) => p.theme.colorStyles.standard};
+    ${lightLink};
+  `,
+  gray: css`
+    color: ${(p) => p.theme.colors.darkestContrast};
+    background-color: ${(p) => p.theme.colors.lightGray};
+    ${lightLink};
+  `,
+  dark: css`
+    background-color: ${(p) => p.theme.colors.darkContrast};
+    &,
+    a:link,
+    a:visited {
+      color: ${(p) => p.theme.colors.white};
+    }
+  `,
+}
+
+export const Footer = styled(FooterBase).attrs({ as: FooterBase, role: 'contentinfo' as string })`
+  ${(p) => textStyle(p.theme, 'body')};
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  padding: 0 16px 0 16px;
-  max-width: calc(100% / ${(p) => p.maxCols});
-  border-right: 1px solid ${(p) => p.theme.colors.base};
-  &:last-of-type {
-    border-right: none;
-  }
-`
-
-// Maps the screen size to a max number of columns for the links
-const columnsMap: { [K in Size]: number } = {
-  tiny: 1,
-  small: 3,
-  medium: 4,
-  large: 6,
-  extraLarge: 6,
-}
-
-// Divides array of links into smaller arrays of links for splitting them up in the list view
-const divideLinks = (links: LinkProps[], maxCols: number) => {
-  const divided: LinkProps[][] = []
-  const numPerCol = Math.floor(links.length / maxCols)
-  const extra = links.length % maxCols
-  for (let i = 0, linkIndex = 0; i < maxCols && linkIndex < links.length; i++) {
-    const start = linkIndex
-    linkIndex += numPerCol
-    divided[i] = links.slice(start, linkIndex)
-    if (i < extra) {
-      divided[i].push(links[linkIndex++])
-    }
-  }
-  return divided
-}
-
-type FooterType = React.FC<FooterProps> & { Link: typeof Link }
-
-export const Footer: FooterType = (props) => {
-  const { logo, children, ...rest } = props
-  const [links, setLinks] = useState(new Map<string, LinkProps>())
-  const [maxCols, setMaxCols] = useState<number>(1)
-  const screenSize = useContext(ScreenSizeContext)
-
-  const dividedLinks = divideLinks(Array.from(links.values()), maxCols)
-
-  const ref = React.useRef<HTMLElement>(null)
-  useLayout('footer', { position: 'flow', offset: 0 })
-
-  React.useEffect(() => {
-    let newMaxCols = columnsMap[screenSize.size]
-    // If the links are next to the logo, not as many can fit on one line.
-    if (newMaxCols > 1 && logo && ref.current?.querySelector?.(`${ContentWrapper}:empty`)) {
-      newMaxCols -= 1
-    }
-    setMaxCols(() => newMaxCols)
-  }, [logo, screenSize, ref])
-
-  return (
-    <StyledFooter ref={ref} {...rest} isGrid={screenSize > SIZES.tiny}>
-      {logo && (
-        <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
-      )}
-      <ContentWrapper>
-        <FooterContext.Provider value={setLinks}>{children}</FooterContext.Provider>
-      </ContentWrapper>
-
-      {links.size > 0 && (
-        <LinksColsContainer>
-          {dividedLinks.map((linkGroup, colIndex) => (
-            <LinkCol key={colIndex} maxCols={dividedLinks.length}>
-              {linkGroup.map((link, i) => (
-                <StyledLink key={i} {...(link as any)} />
-              ))}
-            </LinkCol>
-          ))}
-        </LinksColsContainer>
-      )}
-    </StyledFooter>
-  )
-}
-
-export const FooterLink: any = (props: LinkProps) => {
-  const setLinks = useContext(FooterContext)
-  const key = useId(props.id)
-  useEffect(() => {
-    setLinks?.((links) => new Map(links.set(key, props)))
-  }, [props, key, setLinks])
-  useEffect(
-    () => () =>
-      setLinks?.((links) => {
-        const newLinks = new Map(links)
-        newLinks.delete(key)
-        return newLinks
-      }),
-    [key, setLinks]
-  )
-  return null
-}
-
-const StyledFooter = styled.footer.attrs({ role: 'contentinfo' as string })<{ isGrid: boolean }>`
-  ${(p) => textStyle(p.theme, 'small')};
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
   width: 100%;
+  padding: ${(p) => p.theme.space[5]}px ${(p) => p.theme.space[7]}px;
   background-color: ${(p) => p.theme.colors.lightContrast};
   ${(p) => boxShadow(p.theme, 1)};
-  ${(p) =>
-    p.isGrid
-      ? `
-    height: auto;
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: min-content 1fr;
-    grid-template-columns: min-content 1fr;
-    -ms-grid-rows: min-content min-content;
-    grid-template-rows: min-content min-content;
-    `
-      : `
-    ${LogoWrapper} + ${ContentWrapper}:empty + ${LinksColsContainer},
-    ${LogoWrapper} + ${ContentWrapper}:not(:empty) {
-      padding-top: 0;
-      padding-left: 24px;
-    }
-    ${LinksColsContainer} {
-      width: 100%;
-    }
-    && > * {
-      padding-left: 24px;
-    }`}
-`
 
-Footer.Link = FooterLink as typeof Link
+  ${(p) => p.theme.mediaQueries.small} {
+    flex-direction: row;
+    ${(p) =>
+      p.logo
+        ? `
+      justify-content: space-between;
+      text-align: left;
+    `
+        : isIE &&
+          `
+      ::before {
+        content: '';
+      }
+    `}
+  }
+
+  ${link};
+  ${(p) => (p.variant && p.variant in variants ? variants[p.variant] : variants.gray)};
+  a:focus {
+    color: ${(p) => p.theme.colors.darkContrast};
+    background-color: ${(p) => p.theme.colors.lightCallToAction};
+  }
+` as React.FC<FooterProps>
 
 Footer.propTypes = {
   logo: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  variant: PropTypes.oneOf(['white', 'gray', 'dark']),
 }
 
+Footer.defaultProps = { variant: 'gray' }
+
 export default Footer
-
-const StyledLink = styled(Link)`
-  max-width: 100%;
-  margin-top: 4px;
-
-  :first-child {
-    margin-top: 0px;
-  }
-
-  :link,
-  :visited,
-  :hover {
-    color: ${(p) => p.theme.colors.darkContrast};
-  }
-
-  :hover {
-    text-decoration: none;
-  }
-
-  :focus {
-    background-color: ${(p) => p.theme.colors.transparentCTA};
-  }
-`

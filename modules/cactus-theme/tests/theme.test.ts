@@ -1,7 +1,6 @@
 import Color from 'color'
 
-import { CactusTheme } from '../dist/theme'
-import cactusTheme, { generateTheme } from '../src/theme'
+import cactusTheme, { CactusTheme, ColorVariant, generateTheme } from '../src/theme'
 
 function themeAccessibility(themeName: string, theme: CactusTheme): void {
   describe(`${themeName} meets basic accessibility contrast thresholds`, (): void => {
@@ -22,18 +21,8 @@ function themeAccessibility(themeName: string, theme: CactusTheme): void {
         new Color(theme.colors.callToAction).contrast(new Color('#FFFFFF'))
       ).toBeGreaterThanOrEqual(4.5)
     })
-
-    Object.keys(theme.colorStyles).forEach((name): void => {
-      if (name.includes('transparent')) {
-        test(`colorStyle ${name}`, (): void => {
-          const color = new Color(theme.colorStyles[name].backgroundColor)
-          expect(
-            color
-              .mix(new Color('white').alpha(1 - color.alpha()))
-              .contrast(new Color(theme.colorStyles[name].color))
-          ).toBeGreaterThanOrEqual(4.5)
-        })
-      } else if (typeof name === 'string' && name !== 'disable') {
+    ;(Object.keys(theme.colorStyles) as ColorVariant[]).forEach((name): void => {
+      if (name !== 'disable') {
         test(`colorStyle ${name}`, (): void => {
           expect(
             new Color(theme.colorStyles[name].backgroundColor).contrast(
@@ -44,6 +33,67 @@ function themeAccessibility(themeName: string, theme: CactusTheme): void {
       }
     })
   })
+}
+
+const white = 'hsl(0, 0%, 100%)'
+
+const expectedActionColors = {
+  success: 'hsl(145, 89%, 28%)',
+  warning: 'hsl(47, 82%, 47%)',
+  error: 'hsl(353, 84%, 44%)',
+  successLight: 'hsl(145, 33%, 78%)',
+  warningLight: 'hsl(47, 73%, 84%)',
+  errorLight: 'hsl(353, 67%, 83%)',
+  successMedium: 'hsl(145, 33%, 63%)',
+  warningMedium: 'hsl(47, 72%, 73%)',
+  errorMedium: 'hsl(353, 67%, 72%)',
+  successDark: 'hsl(145, 96%, 11%)',
+  warningDark: 'hsl(47, 96%, 11%)',
+  errorDark: 'hsl(353, 96%, 11%)',
+}
+
+const expectedActionStyles = {
+  success: {
+    backgroundColor: expectedActionColors.success,
+    color: white,
+  },
+  error: {
+    backgroundColor: expectedActionColors.error,
+    color: white,
+  },
+  warning: {
+    backgroundColor: expectedActionColors.warning,
+  },
+  successLight: {
+    backgroundColor: expectedActionColors.successLight,
+  },
+  errorLight: {
+    backgroundColor: expectedActionColors.errorLight,
+  },
+  warningLight: {
+    backgroundColor: expectedActionColors.warningLight,
+  },
+  successMedium: {
+    backgroundColor: expectedActionColors.successMedium,
+  },
+  errorMedium: {
+    backgroundColor: expectedActionColors.errorMedium,
+  },
+  warningMedium: {
+    backgroundColor: expectedActionColors.warningMedium,
+  },
+  successDark: {
+    backgroundColor: expectedActionColors.successDark,
+    color: white,
+  },
+  errorDark: {
+    backgroundColor: expectedActionColors.errorDark,
+    color: white,
+  },
+  warningDark: {
+    backgroundColor: expectedActionColors.warningDark,
+    color: white,
+  },
 }
 
 describe('@repay/cactus-theme', (): void => {
@@ -58,6 +108,12 @@ describe('@repay/cactus-theme', (): void => {
     expect(theme.colors).toMatchObject({
       base: 'hsl(200, 96%, 11%)',
       callToAction: 'hsl(200, 96%, 35%)',
+      lightCallToAction: 'hsl(200, 45%, 81%)',
+      ...expectedActionColors,
+    })
+    expect(theme.colorStyles).toMatchObject({
+      ...expectedActionStyles,
+      lightCallToAction: { backgroundColor: 'hsl(200, 45%, 81%)', color: 'hsl(200, 10%, 20%)' },
     })
   })
 
@@ -68,9 +124,15 @@ describe('@repay/cactus-theme', (): void => {
     expect(theme.colors).toMatchObject({
       base: 'hsl(200, 96%, 11%)',
       callToAction: 'hsl(200, 96%, 35%)',
+      lightCallToAction: 'hsl(200, 45%, 81%)',
       lightContrast: 'hsl(0, 0%, 90%)',
+      ...expectedActionColors,
     })
-    expect(theme.colorStyles.lightContrast.backgroundColor).toBe('hsl(0, 0%, 90%)')
+    expect(theme.colorStyles).toMatchObject({
+      ...expectedActionStyles,
+      lightCallToAction: { backgroundColor: 'hsl(200, 45%, 81%)', color: 'hsl(200, 10%, 20%)' },
+      lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' },
+    })
   })
 
   themeAccessibility(
@@ -86,8 +148,17 @@ describe('@repay/cactus-theme', (): void => {
   test('generates a grayscale theme when primary color is provided', (): void => {
     const theme = generateTheme({ primary: '#012537 ', grayscaleContrast: true })
     expect(theme).toMatchObject({
-      colors: { lightContrast: 'hsl(0, 0%, 90%)' },
-      colorStyles: { lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' } },
+      colors: {
+        lightContrast: 'hsl(0, 0%, 90%)',
+        callToAction: 'hsl(200, 96%, 35%)',
+        lightCallToAction: 'hsl(200, 45%, 81%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        lightCallToAction: { backgroundColor: 'hsl(200, 45%, 81%)', color: 'hsl(200, 10%, 20%)' },
+        lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' },
+        ...expectedActionStyles,
+      },
     })
   })
 
@@ -97,6 +168,12 @@ describe('@repay/cactus-theme', (): void => {
       colors: {
         base: 'hsl(200, 96%, 11%)',
         callToAction: 'hsl(240, 100%, 50%)',
+        lightCallToAction: 'hsl(240, 68%, 85%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        ...expectedActionStyles,
+        lightCallToAction: { backgroundColor: 'hsl(240, 68%, 85%)', color: 'hsl(200, 10%, 20%)' },
       },
     })
   })
@@ -116,10 +193,14 @@ describe('@repay/cactus-theme', (): void => {
       colors: {
         base: 'hsl(200, 96%, 11%)',
         callToAction: 'hsl(240, 100%, 50%)',
+        lightCallToAction: 'hsl(240, 68%, 85%)',
         lightContrast: 'hsl(0, 0%, 90%)',
+        ...expectedActionColors,
       },
       colorStyles: {
+        lightCallToAction: { backgroundColor: 'hsl(240, 68%, 85%)', color: 'hsl(200, 10%, 20%)' },
         lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' },
+        ...expectedActionStyles,
       },
     })
   })
@@ -138,6 +219,12 @@ describe('@repay/cactus-theme', (): void => {
       colors: {
         base: 'hsl(200, 96%, 11%)',
         callToAction: 'hsl(200, 96%, 35%)',
+        lightCallToAction: 'hsl(200, 45%, 81%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        ...expectedActionStyles,
+        lightCallToAction: { backgroundColor: 'hsl(200, 45%, 81%)', color: 'hsl(200, 10%, 20%)' },
       },
     })
   })
@@ -156,6 +243,12 @@ describe('@repay/cactus-theme', (): void => {
       colors: {
         base: 'hsl(200, 96%, 11%)',
         callToAction: 'hsl(0, 23%, 57%)',
+        lightCallToAction: 'hsl(0, 23%, 87%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        ...expectedActionStyles,
+        lightCallToAction: { backgroundColor: 'hsl(0, 23%, 87%)', color: 'hsl(200, 10%, 20%)' },
       },
     })
   })
@@ -168,7 +261,16 @@ describe('@repay/cactus-theme', (): void => {
   test('generates a white theme when invalid colors are provided', (): void => {
     const theme = generateTheme({ primary: '' })
     expect(theme).toMatchObject({
-      colors: { base: 'hsl(0, 0%, 100%)', callToAction: 'hsl(244, 48%, 26%)' },
+      colors: {
+        base: 'hsl(0, 0%, 100%)',
+        callToAction: 'hsl(244, 48%, 26%)',
+        lightCallToAction: 'hsl(244, 15%, 78%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        ...expectedActionStyles,
+        lightCallToAction: { backgroundColor: 'hsl(244, 15%, 78%)', color: 'hsl(0, 10%, 20%)' },
+      },
     })
   })
 
@@ -180,9 +282,15 @@ describe('@repay/cactus-theme', (): void => {
       colors: {
         base: 'hsl(0, 0%, 100%)',
         callToAction: 'hsl(244, 48%, 26%)',
+        lightCallToAction: 'hsl(244, 15%, 78%)',
         lightContrast: 'hsl(0, 0%, 90%)',
+        ...expectedActionColors,
       },
-      colorStyles: { lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' } },
+      colorStyles: {
+        lightCallToAction: { backgroundColor: 'hsl(244, 15%, 78%)', color: 'hsl(0, 10%, 20%)' },
+        lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' },
+        ...expectedActionStyles,
+      },
     })
   })
 
@@ -194,7 +302,16 @@ describe('@repay/cactus-theme', (): void => {
   test('generates a black theme when the primary color is black', (): void => {
     const theme = generateTheme({ primary: '#000000' })
     expect(theme).toMatchObject({
-      colors: { base: 'hsl(0, 0%, 0%)', callToAction: 'hsl(244, 96%, 35%)' },
+      colors: {
+        base: 'hsl(0, 0%, 0%)',
+        callToAction: 'hsl(244, 96%, 35%)',
+        lightCallToAction: 'hsl(244, 45%, 81%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        ...expectedActionStyles,
+        lightCallToAction: { backgroundColor: 'hsl(244, 45%, 81%)', color: 'hsl(0, 10%, 20%)' },
+      },
     })
   })
 
@@ -206,9 +323,15 @@ describe('@repay/cactus-theme', (): void => {
       colors: {
         base: 'hsl(0, 0%, 0%)',
         callToAction: 'hsl(244, 96%, 35%)',
+        lightCallToAction: 'hsl(244, 45%, 81%)',
         lightContrast: 'hsl(0, 0%, 90%)',
+        ...expectedActionColors,
       },
-      colorStyles: { lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' } },
+      colorStyles: {
+        lightCallToAction: { backgroundColor: 'hsl(244, 45%, 81%)', color: 'hsl(0, 10%, 20%)' },
+        lightContrast: { backgroundColor: 'hsl(0, 0%, 90%)' },
+        ...expectedActionStyles,
+      },
     })
   })
 
@@ -252,6 +375,36 @@ describe('@repay/cactus-theme', (): void => {
     expect(theme).toMatchObject({
       ...cactusTheme,
       boxShadows: false,
+    })
+  })
+
+  test('generates a theme with breakpoints and media queries by default', () => {
+    const theme = generateTheme()
+    expect(theme.breakpoints).toMatchObject(['768px', '1024px', '1200px', '1440px'])
+    expect(theme.mediaQueries).toMatchObject({
+      small: '@media screen and (min-width: 768px)',
+      medium: '@media screen and (min-width: 1024px)',
+      large: '@media screen and (min-width: 1200px)',
+      extraLarge: '@media screen and (min-width: 1440px)',
+    })
+  })
+
+  test('generates a theme with custom breakpoints and media queries', () => {
+    const theme = generateTheme({
+      primaryHue: 200,
+      breakpoints: {
+        small: '400px',
+        medium: '600px',
+        large: '800px',
+        extraLarge: '1000px',
+      },
+    })
+    expect(theme.breakpoints).toMatchObject(['400px', '600px', '800px', '1000px'])
+    expect(theme.mediaQueries).toMatchObject({
+      small: '@media screen and (min-width: 400px)',
+      medium: '@media screen and (min-width: 600px)',
+      large: '@media screen and (min-width: 800px)',
+      extraLarge: '@media screen and (min-width: 1000px)',
     })
   })
 })

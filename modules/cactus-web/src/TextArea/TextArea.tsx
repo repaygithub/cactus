@@ -33,7 +33,7 @@ const Area = styled.textarea<TextAreaProps>`
   border: ${(p) => border(p.theme, p.disabled ? 'lightGray' : 'darkContrast')};
   border-radius: ${radius(8)};
   min-height: 100px;
-  ${(p): string => (p.theme.mediaQueries ? p.theme.mediaQueries.small : '')} {
+  ${(p): string => p.theme.mediaQueries.small} {
     min-width: 336px;
   }
   box-sizing: border-box;

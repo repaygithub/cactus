@@ -9,30 +9,25 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Footer
 
+## Basic usage
+
+The Footer takes an optional `logo` prop, which can either be a string for an img element's src, or a React component that renders the logo. Besides the logo, any other content should be passed as children.
+
 ## Best practices
 
 - The footer should be rendered at the bottom of the page.
-- The footer should be rendered as a descendent of `ScreenSizeProvider` in order for the links to be displayed properly.
-- You can brand the footer using the `logo` prop -- this allows you to pass a logo to the footer, and you can provide either
-an img src _or_ a custom component to render an image.
-- The `alt` attribute on the logo will default to "Logo" when passing a src string to the `logo` prop. If the `alt` attr needs
-to be translated, we recommend that you pass a logo component with your own translated `alt` attribute set on your `img` tag.
-
-## Basic usage
-
-The `Footer` component provides the `Footer.Link` sub-component for rendering links. It accepts `to` prop
-and arranges all of your links in the bottom section of the footer.
-
-Any other custom content you'd like to display can be rendered as a child of `Footer` and will be shown to the right of the logo.
+- If using the <a href="../layout/">Layout</a> component, Footer should be the last child of the Layout.
+- Use the `variant` prop to change the color: `white`, `gray`, or `dark`.
+- The `alt` attribute on the logo will default to "Logo" when passing a src string. Passing the logo as a component instead will allow you to customize the `alt` attribute (e.g. for localization).
 
 ### Try It Out
 
 export const code = `
 <Footer logo="https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg">
-  Custom Footer Content
-  <Footer.Link to="https://google.com">Privacy Policy</Footer.Link>
-  <Footer.Link to="https://repay.com">Careers</Footer.Link>
-  <Footer.Link to="https://microsoft.com">Contact Us</Footer.Link>
+  Custom Footer Content<br/>
+  <a href="https://google.com">Privacy Policy</a>{' | '}
+  <a href="https://repay.com">Careers</a>{' | '}
+  <a href="https://microsoft.com">Contact Us</a>
 </Footer>
 `
 
@@ -46,6 +41,3 @@ export const code = `
 
 ### Footer
 <PropsTable of={Footer} staticProp="Footer" />
-
-### Footer.Link
-<PropsTable of={Footer} staticProp="Footer.Link" />
