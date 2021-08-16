@@ -4,8 +4,11 @@
 
 - Redesign the Footer component [#634](https://github.com/repaygithub/cactus/pull/634) ([@wilysword](https://github.com/wilysword))
 - Fix the ability to override margin on components using FieldWrapper [#635](https://github.com/repaygithub/cactus/pull/635) ([@wilysword](https://github.com/wilysword))
+  - Changed field default margin selector from `& + &` (adjacent sibling) to `:not(:first-child)`. In most layouts they'll behave the same, but the new selector is significantly broader, nonetheless.
 - Require mediaQueries and breakpoints on all themes passed into StyleProvider [#628](https://github.com/repaygithub/cactus/pull/628) ([@Dhalton](https://github.com/Dhalton))
+  - StyleProvider will no longer generate these fields for you.  StyleProvider will also log an error if you don't have `@repay/cactus-theme` >= 3.0.0
 - Make @repay/cactus-theme a peer dependency and use new non-transparent colors. [#627](https://github.com/repaygithub/cactus/pull/627) ([@mikesoltow](https://github.com/mikesoltow))
+  - Your application will not work properly unless you also include `@repay/cactus-theme` >= 3.0.0 as a direct (non dev) dependency
 
 #### 🚀 Enhancement
 

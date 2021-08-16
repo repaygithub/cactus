@@ -4,6 +4,8 @@
 
 - Require mediaQueries and breakpoints in CactusTheme type [#628](https://github.com/repaygithub/cactus/pull/628) ([@Dhalton](https://github.com/Dhalton))
 - Replace transparent colors with non-transparent ones [#627](https://github.com/repaygithub/cactus/pull/627) ([@mikesoltow](https://github.com/mikesoltow))
+  - `transparentCTA` replaced with `lightCalltoAction`
+  - `transparentSuccess`, `transparentWarning`, and `transparentError` replaced with `successLight`, `warningLight`, and `errorLight`, respectively
 
 #### 🚀 Enhancement
 
