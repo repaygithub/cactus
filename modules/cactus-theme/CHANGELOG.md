@@ -1,3 +1,22 @@
+# v3.0.0 (Mon Aug 16 2021)
+
+#### 💥 Breaking Change
+
+- Require mediaQueries and breakpoints in CactusTheme type [#628](https://github.com/repaygithub/cactus/pull/628) ([@Dhalton](https://github.com/Dhalton))
+- Replace transparent colors with non-transparent ones [#627](https://github.com/repaygithub/cactus/pull/627) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### 🚀 Enhancement
+
+- Export style helpers such as shape() and color() to assist with using theme properties in your style definitions [#640](https://github.com/repaygithub/cactus/pull/640) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 3
+
+- [@mikesoltow](https://github.com/mikesoltow)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v2.1.1 (Mon Jul 19 2021)
 
 #### 🐛 Bug Fix
