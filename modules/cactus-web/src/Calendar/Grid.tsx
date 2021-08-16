@@ -35,20 +35,20 @@ export interface CalendarGridLabels {
   weekdays?: WeekdayLabel[] | null
 }
 
-interface BaseProps extends FocusProps, React.HTMLAttributes<HTMLDivElement> {
+export interface BaseProps extends FocusProps, React.HTMLAttributes<HTMLDivElement> {
   children?: never
   locale?: string
   isValidDate?: (d: Date) => boolean
   selected?: CalendarValue
   labels?: CalendarGridLabels
   onFocusOverflow?: (d: Date, e: React.SyntheticEvent) => void
+  getFocusDate?: (year: number, month: number) => string | undefined
 }
 
 export type CalendarGridProps = BaseProps & MarginProps
 
 interface GridState {
   overflow: string | null
-  focus: string | null
   year: number
   month: number
 }
@@ -155,6 +155,7 @@ const makeGrid = (
   return rows
 }
 
+const INSIDE_DATE = '[data-date]:not(.outside-date)'
 export const queryDate = (root: HTMLElement, date: string): HTMLElement | null =>
   root.querySelector<HTMLElement>(`[data-date='${date}']:not(.outside-date)`)
 
@@ -168,9 +169,7 @@ type FocusShift = 'day' | 'month' | 'year' | 'weekday'
 const setGridFocus = (e: React.KeyboardEvent<HTMLDivElement>, shift: number, type: FocusShift) => {
   e.stopPropagation()
   e.preventDefault()
-  const dates = Array.from(
-    e.currentTarget.querySelectorAll<HTMLElement>('[data-date]:not(.outside-date)')
-  )
+  const dates = Array.from(e.currentTarget.querySelectorAll<HTMLElement>(INSIDE_DATE))
   const index = getCurrentFocusIndex(dates, 0)
   // The query guarantees it has a `data-date` attribute.
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -183,11 +182,9 @@ const setGridFocus = (e: React.KeyboardEvent<HTMLDivElement>, shift: number, typ
     clampDate(date, 'month', month + shift)
   } else if (type === 'year') {
     clampDate(date, 'year', year + shift)
-  } else {
-    // type === 'weekday'
+  } /* type === 'weekday' */ else {
     date.setDate(date.getDate() + shift - date.getDay())
   }
-  // Only set the focusDate when the month/year changes, otherwise manage focus internally.
   if (date.getMonth() !== month || date.getFullYear() !== year) {
     return date
   }
@@ -251,14 +248,11 @@ const overflowReducer = (state: GridState, [str, dt]: [string, Date]): GridState
   overflow: str,
   year: dt.getFullYear(),
   month: dt.getMonth(),
-  focus: str,
 })
 
 export const initGridState = (initialFocus: BaseProps['initialFocus']): GridState => {
-  let focus: string
   let year: number, month: number
   if (typeof initialFocus === 'string') {
-    focus = initialFocus
     ;[year, month] = dateParts(initialFocus)
   } else {
     let date: Date
@@ -270,14 +264,20 @@ export const initGridState = (initialFocus: BaseProps['initialFocus']): GridStat
       year = initialFocus?.year ?? date.getFullYear()
       clampDate(date, 'year', year, initialFocus?.month, initialFocus?.day)
     }
-    focus = toISODate(date)
     month = date.getMonth()
   }
-  return { overflow: null, year, month, focus }
+  return { overflow: null, year, month }
+}
+
+const getFocusFromToday = (year: number, month: number): string => {
+  const date = new Date()
+  clampDate(date, 'year', year, month)
+  return toISODate(date)
 }
 
 const CalendarGridBase = ({
   initialFocus,
+  getFocusDate = getFocusFromToday,
   month: monthProp,
   year: yearProp,
   locale,
@@ -307,7 +307,7 @@ const CalendarGridBase = ({
   React.useEffect(() => {
     const grid = gridRef.current
     const active = document.activeElement as HTMLElement | null
-    // Only set the tabIndex if the grid isn't currently focused.
+    // If the grid is currently focused, we don't need to do anything.
     if (grid && !(active?.dataset.date && grid.contains(active))) {
       const old = grid.querySelector<HTMLElement>('[tabindex="0"]')
       let toFocus: HTMLElement | null = old
@@ -316,17 +316,14 @@ const CalendarGridBase = ({
         toFocus = grid.querySelector<HTMLElement>('[aria-selected="true"]:not(.outside-date)')
       }
       if (!toFocus) {
-        // `state.focus == null` iff calendar is focused, in which case this effect isn't run.
-        const date = new Date(...dateParts(state.focus as string))
-        clampDate(date, 'year', year, month)
-        toFocus = queryDate(grid, toISODate(date))
+        const fd = getFocusDate(year, month) || getFocusFromToday(year, month)
+        toFocus = queryDate(grid, fd) || grid.querySelector<HTMLElement>(INSIDE_DATE)
       }
       if (toFocus) {
         if (old && old !== toFocus) {
           old.tabIndex = -1
         }
         toFocus.tabIndex = 0
-        state.focus = toFocus.dataset.date as string
       }
     }
   }, [isSelected, month, year]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -334,13 +331,11 @@ const CalendarGridBase = ({
   // NOTE: We set `state.focus` without triggering a re-render,
   // so we don't lose the tabIndex information if month/year changes.
   props.onFocus = (e) => {
-    state.focus = null
     e.target.tabIndex = -1
     onFocus?.(e)
   }
   props.onBlur = (e) => {
     if (isFocusOut(e) && e.target.dataset.date) {
-      state.focus = e.target.dataset.date
       e.target.tabIndex = 0
     }
     onBlur?.(e)

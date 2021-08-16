@@ -99,7 +99,7 @@ const DropDownBase = ({
     positionPopup,
     onWrapperKeyDown,
   })
-  buttonProps['aria-labelledby'] = `${props['aria-labelledby']} ${buttonProps.id}`
+  buttonProps['aria-describedby'] = props['aria-labelledby']
   delete buttonProps.onKeyDown // Handled at the wrapper level.
   buttonProps.onClick = (e: React.MouseEvent<HTMLElement>) => {
     const selected = e.currentTarget.nextElementSibling?.querySelector('[aria-selected="true"]')

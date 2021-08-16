@@ -15,9 +15,11 @@ import DropDown from './DropDown'
 import CalendarGrid, {
   CalendarGridLabels,
   CalendarValue,
+  clampDate,
   dateParts,
   FocusProps,
   initGridState,
+  toISODate,
 } from './Grid'
 import Slider, { SlideDirection, SliderProps } from './Slider'
 
@@ -118,6 +120,18 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   private eventTarget = new CactusEventTarget<CalendarValue>({})
   private rootRef = React.createRef<HTMLDivElement>()
 
+  private _focus: string | undefined = undefined
+  private getFocusDate = (year: number, month: number) => {
+    if (this._focus) {
+      const date = new Date(year, month, 1)
+      clampDate(date, 'day', parseInt(this._focus.slice(8)))
+      return toISODate(date)
+    }
+  }
+  private setLastFocus = (e: React.FocusEvent<HTMLElement>) => {
+    this._focus = e.target.dataset.date
+  }
+
   get rootElement(): HTMLDivElement {
     // Something that should be impossible.
     if (!this.rootRef.current) throw new Error('over 9000')
@@ -171,7 +185,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     document.removeEventListener('reset', this.onReset)
   }
 
-  private setFocusDate = (date: Date, e: React.SyntheticEvent, transState?: SliderProps) => {
+  private setMonthYear = (date: Date, e: React.SyntheticEvent, transState?: SliderProps) => {
     if (date.getMonth() !== this.state.month || date.getFullYear() !== this.state.year) {
       const dateState = { year: date.getFullYear(), month: date.getMonth() }
       this.setState({ ...dateState, ...transState })
@@ -203,7 +217,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     const direction = e.currentTarget.name as SlideDirection
     const month = this.state.month + (direction === 'left' ? -1 : 1)
     const next = new Date(this.state.year, month, 1)
-    this.setFocusDate(next, e, {
+    this.setMonthYear(next, e, {
       transition: direction,
       transitionKey: generateId(direction),
     })
@@ -211,12 +225,12 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
 
   private selectMonth = (month: number, e: React.SyntheticEvent) => {
     const next = new Date(this.state.year, month, 1)
-    this.setFocusDate(next, e, {})
+    this.setMonthYear(next, e, {})
   }
 
   private selectYear = (year: number, e: React.SyntheticEvent) => {
     const next = new Date(year, this.state.month, 1)
-    this.setFocusDate(next, e, {})
+    this.setMonthYear(next, e, {})
   }
 
   render() {
@@ -277,7 +291,9 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
             aria-describedby={this.getLabelId('calendarKeyboardDirections')}
             onClick={this.setSelectedDate}
             onKeyDown={this.setSelectedDate}
-            onFocusOverflow={this.setFocusDate}
+            onFocusOverflow={this.setMonthYear}
+            onBlur={this.setLastFocus}
+            getFocusDate={this.getFocusDate}
           />
         </Slider>
         {children}

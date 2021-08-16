@@ -331,13 +331,14 @@ export interface DateInputProps
     WidthProps,
     Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
-      'disabled' | 'width' | 'value' | 'onChange' | 'onBlur' | 'onFocus'
+      'disabled' | 'width' | 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus'
     > {
   name: string
   id: string
   className?: string
   /** When */
   value?: string | Date | null
+  defaultValue?: string | Date | null
   /**
    * Required when value is a string, then when events are called with the value they will be
    * this format. Date will always be displayed based on locale preferences.
@@ -401,7 +402,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const type = props.type || 'date'
     const format = props.format || getDefaultFormat(type)
 
-    const value = PartialDate.from(props.value, { format, locale, type })
+    const initValue = props.value === undefined ? props.defaultValue : props.value
+    const value = PartialDate.from(initValue, { format, locale, type })
     this.state = {
       value,
       focusMonth: value.getMonth(),
@@ -544,14 +546,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       if (onInvalidDate && typeof onInvalidDate === 'function') {
         onInvalidDate(false)
       }
-    }
-  }
-
-  /** event handlers */
-
-  private handleBodyClick = (event: MouseEvent): void => {
-    if (this.state.isOpen && this._isOutside(event.target)) {
-      this._close(false)
     }
   }
 
