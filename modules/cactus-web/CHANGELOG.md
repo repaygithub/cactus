@@ -1,3 +1,30 @@
+# v8.0.0 (Mon Aug 16 2021)
+
+#### 💥 Breaking Change
+
+- Redesign the Footer component [#634](https://github.com/repaygithub/cactus/pull/634) ([@wilysword](https://github.com/wilysword))
+- Fix the ability to override margin on components using FieldWrapper [#635](https://github.com/repaygithub/cactus/pull/635) ([@wilysword](https://github.com/wilysword))
+- Require mediaQueries and breakpoints on all themes passed into StyleProvider [#628](https://github.com/repaygithub/cactus/pull/628) ([@Dhalton](https://github.com/Dhalton))
+- Make @repay/cactus-theme a peer dependency and use new non-transparent colors. [#627](https://github.com/repaygithub/cactus/pull/627) ([@mikesoltow](https://github.com/mikesoltow))
+
+#### 🚀 Enhancement
+
+- Add CheckBoxCard and RadioCard components [#629](https://github.com/repaygithub/cactus/pull/629) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- Fix a bug where DateInput was not rendering correctly inside of a Modal [#638](https://github.com/repaygithub/cactus/pull/638) ([@mikesoltow](https://github.com/mikesoltow))
+- Fix the font on Button to use the font set by the theme [#632](https://github.com/repaygithub/cactus/pull/632) ([@Dhalton](https://github.com/Dhalton) [@mikesoltow](https://github.com/mikesoltow))
+- Fix incorrect type on the Link component [#630](https://github.com/repaygithub/cactus/pull/630) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 3
+
+- [@mikesoltow](https://github.com/mikesoltow)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v7.1.0 (Mon Jul 19 2021)
 
 #### 🚀 Enhancement
