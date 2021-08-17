@@ -62,7 +62,7 @@ const NUMBER_INPUT_TYPE = !IS_FIREFOX ? 'number' : 'tel'
 const noop = function (): void {
   return
 }
-const ALLOW_DEFAULT = ['Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
+const ALLOW_DEFAULT = ['Escape', 'Tab', 'Home', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight']
 
 function isOwnInput(target: any, container: Element): target is HTMLInputElement {
   return (
@@ -633,7 +633,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private handlePortalKeydown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    if (event.key === 'Escape') {
+    if (this.state.isOpen && event.key === 'Escape') {
       this._close(true)
       event.preventDefault()
       event.stopPropagation()

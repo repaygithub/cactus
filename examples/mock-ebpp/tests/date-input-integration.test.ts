@@ -134,9 +134,9 @@ test('enter time by typing', async (t): Promise<void> => {
 test('select date with popup', async (t): Promise<void> => {
   await clickWorkaround(queryByLabelText('Open date picker'))
 
-  await t.click(queryByText('October', { selector: 'button *' }))
+  await t.click(queryByText('October', { selector: '[aria-haspopup] *' }))
   await t.click('[data-value="1"]')
-  await clickWorkaround(queryByText('2019', { selector: 'button *' }))
+  await clickWorkaround(queryByText('2019', { selector: '[aria-haspopup] *' }))
   await t.click('[data-value="2005"]')
   await clickWorkaround(Selector('[data-date="2005-02-28"]'))
   await t

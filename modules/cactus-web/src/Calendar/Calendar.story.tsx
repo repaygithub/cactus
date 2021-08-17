@@ -1,25 +1,69 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
+import { boolean, text } from '@storybook/addon-knobs'
 import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
-import { Calendar } from '../'
+import { Button, Calendar } from '../'
 
-const eventLoggers = {
-  onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
-  onFocus: (e: any) => console.log('onFocus:', e.target.name),
-  onBlur: (e: any) => console.log('onBlur:', e.target.name),
-}
+const onChange = (e: any) => console.log(`onChange: ${e.target.value}`)
 
 export default {
   title: 'Calendar',
   component: Calendar,
 } as Meta
 
+const INITIAL = new Date(2021, 9, 21)
+
 export const BasicUsage = (): ReactElement => {
-  return <Calendar />
+  const disabled = boolean('disabled', false)
+  const readOnly = boolean('readonly', false)
+  return (
+    <form>
+      <Calendar
+        initialFocus={INITIAL}
+        defaultValue={INITIAL}
+        onChange={onChange}
+        disabled={disabled}
+        readOnly={readOnly}
+      >
+        <Button type="reset" my={4} mx="auto">
+          Reset
+        </Button>
+      </Calendar>
+    </form>
+  )
+}
+BasicUsage.paramaters = {
+  beforeScreenshot: (page: Page) => page.click('[aria-haspopup]'),
 }
 
+const selected = (function () {
+  const date = new Date(INITIAL)
+  const year = date.getFullYear()
+  const month = date.getMonth() - 1
+  const dates = []
+  for (let i = 0; i < 3; i++) {
+    date.setFullYear(year, month + i, 1)
+    dates.push(new Date(date))
+    date.setDate(0)
+    dates.push(new Date(date))
+  }
+  return dates
+})()
+
 export const GridOnly = (): ReactElement => {
-  return <Calendar.Grid />
+  const invalidDays = text('invalid days', '10, 20')
+    .split(',')
+    .map((x) => parseInt(x))
+  const showHeader = boolean('show header', true)
+  return (
+    <Calendar.Grid
+      isValidDate={(d: Date) => !invalidDays.includes(d.getDate())}
+      labels={showHeader ? undefined : { weekdays: null }}
+      initialFocus={INITIAL}
+      selected={selected}
+      aria-multiselectable
+      aria-readonly
+    />
+  )
 }

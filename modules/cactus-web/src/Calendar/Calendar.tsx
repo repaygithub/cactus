@@ -375,6 +375,8 @@ export const Calendar = styled(CalendarBase)
   .withConfig(omitProps<CalendarProps & MarginProps>(margin))
   .attrs({ as: CalendarBase })`
   position: relative; /* Necessary for drop-down positioning. */
+  display: flex;
+  flex-direction: column;
   box-sizing: content-box;
   width: 300px;
   ${margin}

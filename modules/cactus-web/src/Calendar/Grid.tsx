@@ -18,13 +18,14 @@ interface ComplexWeekdayLabel {
   short: string
 }
 
-interface DateParts {
-  year?: number
-  month?: number
-  day?: number
-}
 export interface FocusProps {
-  initialFocus?: CalendarDate | DateParts
+  initialFocus?:
+    | CalendarDate
+    | {
+        year?: number
+        month?: number
+        day?: number
+      }
   month?: number
   year?: number
 }

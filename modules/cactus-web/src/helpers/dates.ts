@@ -255,7 +255,7 @@ export function getFormatter(
     }
     formatter = new Intl.DateTimeFormat(locale, opts)
   }
-  return (d: Date) => formatter.format(d)
+  return (d: Date) => formatter.format(d).replace('\u200e', '')
 }
 
 export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYear()): number {
