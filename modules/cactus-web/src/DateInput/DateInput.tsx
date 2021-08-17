@@ -6,7 +6,7 @@ import {
 } from '@repay/cactus-icons'
 import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { Component, Fragment, ReactElement } from 'react'
+import React, { Component, ReactElement } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
@@ -321,6 +321,7 @@ const CalendarPopup: React.FC<PopupProps> = ({ anchorRef, popupRef, children, ..
 const PopupCalendar = styled(Calendar)`
   position: fixed;
   z-index: 1000;
+  outline: none;
   border-top-left-radius: 0;
 `
 
@@ -417,6 +418,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private _shouldFocusNext = false
   private _lastInputKeyed = ''
+  private _isFocused = false
 
   private _inputWrapper = React.createRef<HTMLDivElement>()
   private _button = React.createRef<HTMLButtonElement>()
@@ -549,6 +551,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
+  public componentWillUnmount(): void {
+    this._close = () => undefined
+  }
+
   private handleKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     const target = event.target
     if (isOwnInput(target, event.currentTarget)) {
@@ -571,8 +577,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   private handleFocus = (event: React.FocusEvent<HTMLDivElement>): void => {
-    const { relatedTarget } = event
-    if (this._isOutside(relatedTarget)) {
+    if (!this._isFocused) {
+      this._isFocused = true
       const { onFocus } = this.props
       if (typeof onFocus === 'function') {
         const cactusEvent = new CactusFocusEvent('focus', this.eventTarget, event)
@@ -581,27 +587,24 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }
   }
 
-  private handleComponentBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
-    if (isFocusOut(event)) {
-      this._close(false)
-    }
-  }
-
-  private handleInputBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
+  private handleBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
     // when blurring off the field
     this._lastInputKeyed = ''
-    // double nested because the portal takes one turn to render
-    event.persist()
-    window.requestAnimationFrame((): void => {
-      if (this._isOutside(document.activeElement)) {
-        const { onBlur } = this.props
-        if (typeof onBlur === 'function') {
-          this.eventTarget.value = this._convertVal(this.state.value)
-          const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
-          onBlur(cactusEvent)
-        }
+    if (isFocusOut(event)) {
+      this._isFocused = false
+      const { onBlur } = this.props
+      if (typeof onBlur === 'function') {
+        this.eventTarget.value = this._convertVal(this.state.value)
+        const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
+        onBlur(cactusEvent)
       }
-    })
+      const wrapper = event.currentTarget
+      window.requestAnimationFrame(() => {
+        if (!wrapper.contains(document.activeElement)) {
+          this._close(false)
+        }
+      })
+    }
   }
 
   private handleClick = (): void => {
@@ -894,7 +897,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const timeId = id + '-time'
     const selectedValue = value.isValidDate() ? value.toDate() : null
     return (
-      <div onBlur={this.handleComponentBlur}>
+      <div onFocus={this.handleFocus} onBlur={this.handleBlur}>
         <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
           <InputWrapper
             className={className}
@@ -903,8 +906,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             aria-describedby={ariaDescribedBy}
             aria-labelledby={ariaLabelledBy}
             onKeyDownCapture={this.handleKeydownCapture}
-            onFocus={this.handleFocus}
-            onBlur={this.handleInputBlur}
             onClick={this.handleClick}
             {...getDataProps(this.props)}
           >
