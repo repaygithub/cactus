@@ -32,6 +32,7 @@ describe('component: BrandBar', () => {
 
       userEvent.click(getByText('Click me'))
 
+      await animationRender()
       expect(settings).not.toBeVisible()
 
       userEvent.click(trigger)
@@ -65,11 +66,13 @@ describe('component: BrandBar', () => {
       const trigger = getByRole('button', { name: 'Test Dropdown' })
 
       userEvent.click(trigger)
+      await animationRender()
       const option1 = getByText('Option 1')
 
       expect(option1).toBeVisible()
 
       userEvent.click(getByText('Click me'))
+      await animationRender()
       expect(option1).not.toBeVisible()
 
       userEvent.click(trigger)
