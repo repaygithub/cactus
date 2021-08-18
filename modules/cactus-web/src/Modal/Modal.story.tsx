@@ -92,7 +92,7 @@ const ModalWithPopups = () => {
       innerMaxHeight={text('innerMaxHeight', '')}
     >
       <ColorPicker name="color" id="color" />
-      <DateInputField name="date" label="Pick a Date" />
+      <DateInputField name="date" label="Pick a Date" defaultValue="2021-08-17" />
       <SelectField name="select" label="Pick an Option" options={['a', 'b', 'c']} />
     </Modal>
   ) : (
