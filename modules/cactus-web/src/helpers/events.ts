@@ -2,12 +2,33 @@ import { BaseSyntheticEvent, FocusEvent as ReactFocusEvent } from 'react'
 
 import { isIE } from './constants'
 
+/** Returns true if focus is leaving `currentTarget`, to another element OR window. */
 export function isFocusOut(event: ReactFocusEvent<HTMLElement>): boolean {
   // IE sets activeElement before the blur/focus events, but doesn't support
   // relatedTarget. Note that in React 17 this might change if they switch
   // from focus/blur to focusin/focusout, which DO support relatedTarget.
   const focused = event.relatedTarget || (isIE ? document.activeElement : null)
   return !focused || !event.currentTarget.contains(focused as Node)
+}
+
+/** Returns true if focus is moving to another element in the same window. */
+export function isFocusLost(event: ReactFocusEvent<HTMLElement>): boolean {
+  // NOTE In Safari this behaves the same way as `isFocusOut`, because
+  // it ALWAYS changes the `activeElement` when the window loses focus;
+  // that means my old `requestAnimationFrame` workaround didn't work either,
+  // so there isn't really anything we can do to get it to work in Safari.
+  if (event.relatedTarget) {
+    return !event.currentTarget.contains(event.relatedTarget as Node)
+  } else if (document.activeElement !== event.target) {
+    return !event.currentTarget.contains(document.activeElement)
+  } else {
+    // This seems to work in all browsers, but IE has a caveat (of course):
+    // if focus leaves the window this properly returns false, but when focus
+    // returns to the window IE doesn't restore focus to the old activeElement,
+    // so the activeElement changes without firing a blur event and whatever
+    // behavior is controlled by `isFocusLost` won't fire.
+    return false
+  }
 }
 
 export interface TargetProps<T> {

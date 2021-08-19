@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { PartialDate } from '../helpers/dates'
 import KeyCodes from '../helpers/keyCodes'
+import Modal from '../Modal/Modal'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DateInput from './DateInput'
 
@@ -276,6 +277,23 @@ describe('component: DateInput', (): void => {
       expect(getByRole('dialog')).toBeInTheDocument()
     })
 
+    test('can close calendar on blur, even inside a modal', () => {
+      const { getByLabelText, getByText } = render(
+        <StyleProvider>
+          <Modal isOpen={true} onClose={() => undefined}>
+            <div>Click here to blur the calendar</div>
+            <DateInput name="date-input" id="date-input" />
+          </Modal>
+        </StyleProvider>
+      )
+      const portalTrigger = getByLabelText('Open date picker')
+      userEvent.click(portalTrigger)
+      const elementInDialog = getByLabelText('Click to go forward one month')
+      expect(elementInDialog).toBeVisible()
+      userEvent.click(getByText('Click here to blur the calendar'))
+      expect(elementInDialog).not.toBeInTheDocument()
+    })
+
     test('focus set to current date when no value selected', async (): Promise<void> => {
       const { getByLabelText } = render(
         <StyleProvider>
@@ -317,7 +335,6 @@ describe('component: DateInput', (): void => {
       userEvent.click(getByText('2018'))
       // @ts-ignore
       userEvent.click(getByLabelText(desiredDate.toLocaleSpoken('date')))
-      await animationRender()
       expect(handleChange).toHaveBeenCalledTimes(3)
       expect(value).toEqual('2018-03-23')
     })

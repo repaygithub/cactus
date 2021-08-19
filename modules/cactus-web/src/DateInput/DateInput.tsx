@@ -30,6 +30,7 @@ import {
   CactusChangeEvent,
   CactusEventTarget,
   CactusFocusEvent,
+  isFocusLost,
   isFocusOut,
 } from '../helpers/events'
 import getLocale from '../helpers/locale'
@@ -598,12 +599,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
         onBlur(cactusEvent)
       }
-      const wrapper = event.currentTarget
-      window.requestAnimationFrame(() => {
-        if (!wrapper.contains(document.activeElement)) {
-          this._close(false)
-        }
-      })
+      if (isFocusLost(event)) {
+        this._close(false)
+      }
     }
   }
 

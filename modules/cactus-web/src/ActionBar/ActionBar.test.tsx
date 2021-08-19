@@ -124,7 +124,7 @@ describe('component: ActionBar', () => {
 
     // Hide by clicking outside popup
     userEvent.click(outsideRef.current as HTMLElement)
-    await waitFor(() => expect(panel).toHaveAttribute('aria-hidden', 'true'))
+    expect(panel).toHaveAttribute('aria-hidden', 'true')
     expect(outsideRef.current).toHaveFocus()
 
     // Show by pressing space
