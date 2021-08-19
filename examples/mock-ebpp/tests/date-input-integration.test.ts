@@ -257,16 +257,15 @@ test('locks focus to date picker', async (t: TestController): Promise<void> => {
     .ok('Date button not focused')
 
   // tab and expect focus to circle back to Month select
-  // TODO I have no idea why this isn't working, it works fine when I do it manually.
-  //await t.pressKey('tab')
-  //const monthSelectActiveEl = await getActiveElement()
-  //await t
-  //  .expect(monthSelectActiveEl.tagName)
-  //  .eql('button')
-  //  .expect(monthSelectActiveEl.attributes?.['aria-label'])
-  //  .eql('Click to go back one month')
-  //  .expect(monthSelectActiveEl.focused)
-  //  .ok('Date button not focused')
+  await t.pressKey('tab')
+  const monthSelectActiveEl = await getActiveElement()
+  await t
+    .expect(monthSelectActiveEl.tagName)
+    .eql('button')
+    .expect(monthSelectActiveEl.attributes?.['aria-labelledby'])
+    .contains('prevMonth-')
+    .expect(monthSelectActiveEl.focused)
+    .ok('Date button not focused')
 })
 
 test('move and select date with keyboard', async (t: TestController): Promise<void> => {
