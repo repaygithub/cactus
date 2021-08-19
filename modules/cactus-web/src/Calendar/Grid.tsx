@@ -428,5 +428,6 @@ export const CalendarGrid = styled(CalendarGridBase)
     }
   }
 `
+CalendarGrid.displayName = 'Calendar.Grid'
 
 export default CalendarGrid
