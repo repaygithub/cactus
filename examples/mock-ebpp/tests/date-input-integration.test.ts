@@ -19,32 +19,23 @@ fixture('DateInput Integration Tests')
   })
   .page('http://localhost:33567/date-test')
 
-const scopedSelector = (container: string, selector: string) =>
-  Selector(
-    () => {
-      const c = document.querySelector(container)
-      return (c?.querySelector?.(selector) as Node) || null
-    },
-    { dependencies: { container, selector } }
-  )
-
 const selectType = async (t: TestController, itype: string) => {
   await t.click('#input-type')
   await t.click(`#input-type-${itype}`)
 }
 
-const dateInput = '[aria-labelledby="date-test-label"]'
-const dateDialog = '[role="dialog"]'
+const dateInput = Selector('[aria-labelledby="date-test-label"]')
+const dateDialog = Selector('[role="dialog"] [role="group"]')
 
 const textField = Selector('#unified-value')
 const monthInput = queryByLabelText('month')
 const dayInput = queryByLabelText('day of month')
 const yearInput = queryByLabelText('year')
-const hourInput = scopedSelector(dateInput, '[aria-label="hours"]')
-const minuteInput = scopedSelector(dateInput, '[aria-label="minutes"]')
-const ampmInput = scopedSelector(dateInput, '[aria-label="time period"]')
-const upButton = scopedSelector(dateInput, 'svg[data-name="ArrowUp"]')
-const downButton = scopedSelector(dateInput, 'svg[data-name="ArrowDown"]')
+const hourInput = dateInput.find('[aria-label="hours"]')
+const minuteInput = dateInput.find('[aria-label="minutes"]')
+const ampmInput = dateInput.find('[aria-label="time period"]')
+const upButton = dateInput.find('svg[data-name="ArrowUp"]')
+const downButton = dateInput.find('svg[data-name="ArrowDown"]')
 
 test('enter date by typing', async (t): Promise<void> => {
   await t.click(monthInput)
@@ -142,8 +133,8 @@ test('select date with popup', async (t): Promise<void> => {
   await t
     .expect(textField.value)
     .eql('2005-02-28')
-    .expect(Selector(dateDialog).filterHidden().exists)
-    .ok('Dialog is hidden')
+    .expect(dateDialog.with({ timeout: 0 }).exists)
+    .notOk('Dialog is hidden')
 })
 
 test('select datetime with popup', async (t): Promise<void> => {
@@ -153,15 +144,15 @@ test('select datetime with popup', async (t): Promise<void> => {
   await clickWorkaround(queryByLabelText('Click to go back one month'))
   await clickWorkaround(Selector('[data-date="2019-09-29"]'))
   await t
-    .typeText(Selector(`${dateDialog} [aria-label="hours"]`), '11')
+    .typeText(dateDialog.find('[aria-label="hours"]'), '11')
     .pressKey('up')
-    .click(Selector(`${dateDialog} svg[data-name="ArrowUp"]`))
+    .click(dateDialog.find('svg[data-name="ArrowUp"]'))
     .pressKey('tab')
     .pressKey('down')
   await t
     .expect(textField.value)
     .eql('2019-09-29T23:04')
-    .expect(Selector(dateDialog).filterHidden().exists)
+    .expect(dateDialog.with({ timeout: 0 }).exists)
     .ok('Dialog is visible')
 })
 
