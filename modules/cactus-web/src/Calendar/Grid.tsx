@@ -179,14 +179,18 @@ const isStringArray = (x: string[] | Date[]): x is string[] => typeof x[0] === '
 const useIsSelected = (selected: BaseProps['selected']): ((d: string) => boolean) => {
   const ref = React.useRef<(d: string) => boolean>(stubFalse)
   let isSelected: any = ref.current
+  // If the prop hasn't changed, don't change the callback.
   if (isSelected._raw === selected) return isSelected
 
   let value: any = null
   if (Array.isArray(selected)) {
     const isoDates: string[] = isStringArray(selected) ? selected : selected.map(toISODate)
     if (isoDates.length === 1) {
+      // Treat single-item array the same as a single value.
       value = isoDates[0]
     } else if (isoDates.length) {
+      // Convert longer arrays to a Set for efficient comparisons;
+      // only make a new set if the contents of the selection has changed.
       value = isSelected._value
       if (value?.size !== isoDates.length || !isoDates.every(Set.prototype.has, value)) {
         const vals = new Set<string>()
@@ -201,9 +205,11 @@ const useIsSelected = (selected: BaseProps['selected']): ((d: string) => boolean
   } else {
     value = selected
   }
+  // At this point `value` should be falsy iff `selected` was falsy OR it was an empty array.
   if (!value) {
     isSelected = ref.current = stubFalse
   } else if (value !== isSelected._value) {
+    // Multi-values were already handled above, so if we get here it's a single value.
     isSelected = ref.current = (d: string) => value === d
     isSelected._raw = selected
     isSelected._value = value

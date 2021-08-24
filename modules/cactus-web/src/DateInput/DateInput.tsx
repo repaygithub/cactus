@@ -678,7 +678,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     // This shouldn't ever happen, mostly just to keep Typescript happy.
     if (newVal && !Array.isArray(newVal)) {
       event.persist()
-      event.preventDefault()
       this.setState(({ value }) => {
         const update = value.clone()
         if (typeof newVal === 'string') {

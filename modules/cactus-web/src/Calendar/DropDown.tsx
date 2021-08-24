@@ -20,10 +20,7 @@ interface DropDownProps extends React.AriaAttributes {
   onSelectOption: (value: number, e: React.SyntheticEvent) => void
 }
 
-const onWrapperKeyDown = (e: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
-  keyDownAsClick(e)
-  if (e.isDefaultPrevented()) return
-
+const getFocusHint = (e: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
   let focusHint = 0
   switch (e.key) {
     case 'Home':
@@ -50,23 +47,9 @@ const onWrapperKeyDown = (e: React.KeyboardEvent<HTMLElement>, toggle: TogglePop
     default:
       return
   }
-  const button = e.currentTarget.firstElementChild
-  if (focusHint) {
-    if (button?.getAttribute('aria-expanded') === 'true') {
-      toggle(true, focusHint, { shift: true })
-    } else {
-      let item = button?.nextElementSibling?.firstElementChild
-      while (item) {
-        if (item.getAttribute('aria-selected') === 'true') {
-          toggle(true, item as HTMLElement)
-          break
-        }
-        item = item.nextElementSibling
-      }
-    }
-  }
   e.preventDefault()
   e.stopPropagation()
+  return focusHint
 }
 
 const positionPopup = (popup: HTMLElement) => {
@@ -99,15 +82,34 @@ const DropDownBase = ({
   onSelectOption,
   ...props
 }: DropDownProps) => {
-  const { wrapperProps, popupProps, buttonProps, toggle } = usePopup('listbox', {
+  const popupRef = React.useRef<HTMLUListElement>(null)
+  useScrollTrap(popupRef)
+  const { wrapperProps, popupProps, buttonProps, expanded, toggle } = usePopup('listbox', {
     focusControl,
     positionPopup,
-    onWrapperKeyDown,
   })
+
+  const closeOnEscape = wrapperProps.onKeyDown
+  wrapperProps.onKeyDown = (e) => {
+    closeOnEscape?.(e)
+    keyDownAsClick(e)
+    if (e.isDefaultPrevented()) return
+
+    const focusHint = getFocusHint(e, toggle)
+    if (focusHint) {
+      if (expanded) {
+        toggle(true, focusHint, { shift: true })
+      } else {
+        const item = popupRef.current?.querySelector<HTMLElement>('[aria-selected="true"]')
+        toggle(true, item)
+      }
+    }
+  }
+
   buttonProps['aria-describedby'] = props['aria-labelledby']
   delete buttonProps.onKeyDown // Handled at the wrapper level.
-  buttonProps.onClick = (e: React.MouseEvent<HTMLElement>) => {
-    const selected = e.currentTarget.nextElementSibling?.querySelector('[aria-selected="true"]')
+  buttonProps.onClick = () => {
+    const selected = popupRef.current?.querySelector('[aria-selected="true"]')
     toggle(undefined, selected as HTMLElement)
   }
 
@@ -128,7 +130,7 @@ const DropDownBase = ({
   })
   popupProps.onClick = (e: React.MouseEvent<HTMLElement>) => {
     let target = e.target as HTMLElement
-    if (target.matches('span')) {
+    if (!target.matches('[data-value]')) {
       target = target.parentElement as HTMLElement
     }
     if (target.dataset.value) {
@@ -136,8 +138,6 @@ const DropDownBase = ({
       onSelectOption(parseInt(target.dataset.value), e)
     }
   }
-  const popupRef = React.useRef<HTMLUListElement>(null)
-  useScrollTrap(popupRef)
   return (
     <div {...wrapperProps} className={className}>
       <button type="button" {...buttonProps}>
