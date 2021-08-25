@@ -246,7 +246,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
       ...rest
     } = this.props
     return (
-      <div {...rest} role="group" aria-disabled={disabled} ref={this.rootRef}>
+      <div aria-label="calendar" {...rest} role="group" aria-disabled={disabled} ref={this.rootRef}>
         <Flex justifyContent="space-between" alignItems="center" padding={4}>
           <IconButton
             name="left"

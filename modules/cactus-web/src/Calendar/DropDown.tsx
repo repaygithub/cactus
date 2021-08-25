@@ -114,17 +114,17 @@ const DropDownBase = ({
   }
 
   popupProps.children = options.map((opt: number | Option) => {
-    const props =
+    const optProps =
       typeof opt === 'object'
         ? { key: opt.value, children: <span>{opt.label}</span> }
         : { key: opt, children: <span>{opt}</span> }
     return (
       <li
-        {...props}
+        {...optProps}
         tabIndex={-1}
         role="option"
-        data-value={props.key}
-        aria-selected={props.key === value || undefined}
+        data-value={optProps.key}
+        aria-selected={optProps.key === value || undefined}
       />
     )
   })
@@ -141,7 +141,7 @@ const DropDownBase = ({
   return (
     <div {...wrapperProps} className={className}>
       <button type="button" {...buttonProps}>
-        <span>{label}</span>
+        <span aria-live="polite">{label}</span>
         <NavigationChevronDown iconSize="tiny" ml={3} />
       </button>
       <ul {...popupProps} {...props} ref={popupRef} />
