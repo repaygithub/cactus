@@ -6,7 +6,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
 import { isActionKey } from '../helpers/a11y'
-import { clampDate, dateParts, getFormatter, toISODate } from '../helpers/dates'
+import { dateParts, getFormatter } from '../helpers/dates'
 import { CactusChangeEvent, CactusEventTarget } from '../helpers/events'
 import generateId from '../helpers/generateId'
 import { omitProps } from '../helpers/omit'
@@ -111,16 +111,10 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
 
   private eventTarget = new CactusEventTarget<CalendarValue>({})
 
-  private _focus: string | undefined = undefined
-  private getFocusDate = (year: number, month: number) => {
-    if (this._focus) {
-      const date = new Date(year, month, 1)
-      clampDate(date, 'day', parseInt(this._focus.slice(8)))
-      return toISODate(date)
-    }
-  }
+  // Can't track this internal to Grid, because Slider tends to remount it.
+  private _lastFocus: string | undefined = undefined
   private setLastFocus = (e: React.FocusEvent<HTMLElement>) => {
-    this._focus = e.target.dataset.date
+    this._lastFocus = e.target.dataset.date
   }
 
   private rootRef = React.createRef<HTMLDivElement>()
@@ -276,7 +270,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
             locale={locale}
             isValidDate={isValidDate}
             selected={this.state.value}
-            initialFocus={initialFocus}
+            initialFocus={this._lastFocus || initialFocus}
             labels={labels}
             aria-multiselectable={multiple}
             aria-readonly={readOnly}
@@ -285,7 +279,6 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
             onKeyDown={this.setSelectedDate}
             onFocusOverflow={this.setMonthYear}
             onBlur={this.setLastFocus}
-            getFocusDate={this.getFocusDate}
           />
         </Slider>
         {children}

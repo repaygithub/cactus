@@ -43,7 +43,6 @@ export interface BaseProps extends FocusProps, React.HTMLAttributes<HTMLDivEleme
   selected?: CalendarValue
   labels?: CalendarGridLabels
   onFocusOverflow?: (d: Date, e: React.SyntheticEvent) => void
-  getFocusDate?: (year: number, month: number) => string | undefined
 }
 
 export type CalendarGridProps = BaseProps & MarginProps
@@ -52,6 +51,7 @@ interface GridState {
   overflow: string | null
   year: number
   month: number
+  day: number
 }
 
 const makeGridHeader = (locale?: string, weekdayLabels: CalendarGridLabels['weekdays'] = []) => {
@@ -224,12 +224,13 @@ const overflowReducer = (state: GridState, [str, dt]: [string, Date]): GridState
   overflow: str,
   year: dt.getFullYear(),
   month: dt.getMonth(),
+  day: dt.getDate(),
 })
 
 export const initGridState = (initialFocus: BaseProps['initialFocus']): GridState => {
-  let year: number, month: number
+  let year: number, month: number, day: number
   if (typeof initialFocus === 'string') {
-    ;[year, month] = dateParts(initialFocus)
+    ;[year, month, day] = dateParts(initialFocus)
   } else {
     let date: Date
     if (initialFocus instanceof Date) {
@@ -241,19 +242,25 @@ export const initGridState = (initialFocus: BaseProps['initialFocus']): GridStat
       clampDate(date, 'year', year, initialFocus?.month, initialFocus?.day)
     }
     month = date.getMonth()
+    day = date.getDate()
   }
-  return { overflow: null, year, month }
+  return { overflow: null, year, month, day }
 }
 
-const getFocusFromToday = (year: number, month: number): string => {
-  const date = new Date()
-  clampDate(date, 'year', year, month)
+const getFocusDate = (date: Date, day: number, focus: FocusProps['initialFocus']) => {
+  if (typeof focus === 'string') {
+    day = parseInt(focus.slice(8))
+  } else if (focus instanceof Date) {
+    day = focus.getDate()
+  } else if (focus?.day) {
+    day = focus.day
+  }
+  clampDate(date, 'day', day)
   return toISODate(date)
 }
 
 const CalendarGridBase = ({
   initialFocus,
-  getFocusDate = getFocusFromToday,
   month: monthProp,
   year: yearProp,
   locale,
@@ -292,7 +299,7 @@ const CalendarGridBase = ({
         toFocus = grid.querySelector<HTMLElement>('[aria-selected="true"]:not(.outside-date)')
       }
       if (!toFocus) {
-        const fd = getFocusDate(year, month) || getFocusFromToday(year, month)
+        const fd = getFocusDate(new Date(year, month, 1), state.day, initialFocus)
         toFocus = queryDate(grid, fd) || grid.querySelector<HTMLElement>(INSIDE_DATE)
       }
       if (toFocus) {
