@@ -92,6 +92,7 @@ export function useMergedRefs<T>(...refs: Ref<T>[]): HybridRef<T> {
 }
 
 type Func<R = any> = (...args: any[]) => R
+type NotFunc<T> = T extends Func ? never : T
 
 interface ValueHook {
   <T extends Func>(mkValue: T, args: Parameters<T>): ReturnType<T>
@@ -100,8 +101,8 @@ interface ValueHook {
     deps: D,
     compareDependencies: (prev: Parameters<T>, current: D) => Parameters<T>
   ): ReturnType<T>
-  <T>(value: T, deps: unknown[]): T
-  <T, D>(value: T, deps: D, compareDependencies: (prev: D, current: D) => D): T
+  <T>(value: NotFunc<T>, deps: unknown[]): T
+  <T, D>(value: NotFunc<T>, deps: D, compareDependencies: (prev: D, current: D) => D): T
 }
 
 interface Value<T> {
