@@ -9,6 +9,7 @@ import { isFocusOut } from '../helpers/events'
 import { getCurrentFocusIndex } from '../helpers/focus'
 import generateId from '../helpers/generateId'
 import { omitProps } from '../helpers/omit'
+import { useValue } from '../helpers/react'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
@@ -175,46 +176,48 @@ const onGridKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
   }
 }
 
+type ISODates = string[] | [Set<string>]
 const isStringArray = (x: string[] | Date[]): x is string[] => typeof x[0] === 'string'
-const useIsSelected = (selected: BaseProps['selected']): ((d: string) => boolean) => {
-  const ref = React.useRef<(d: string) => boolean>(stubFalse)
-  let isSelected: any = ref.current
-  // If the prop hasn't changed, don't change the callback.
-  if (isSelected._raw === selected) return isSelected
+const containsAll = (s: Set<string>, a: string[]) => s.size === a.length && a.every(s.has, s)
 
-  let value: any = null
+const makeIsSelected = (...isoDates: ISODates): ((d: string) => boolean) => {
+  const date = isoDates[0]
+  if (date instanceof Set) {
+    return Set.prototype.has.bind(date)
+  } else if (isoDates.length > 1) {
+    return Array.prototype.includes.bind(isoDates)
+  } else if (date) {
+    return (d: string) => d === date
+  }
+  return stubFalse
+}
+
+const compareSelected = (old: ISODates, selected: BaseProps['selected']): ISODates => {
+  const first = old[0] || ''
+  let date = ''
   if (Array.isArray(selected)) {
     const isoDates: string[] = isStringArray(selected) ? selected : selected.map(toISODate)
-    if (isoDates.length === 1) {
-      // Treat single-item array the same as a single value.
-      value = isoDates[0]
-    } else if (isoDates.length) {
-      // Convert longer arrays to a Set for efficient comparisons;
-      // only make a new set if the contents of the selection has changed.
-      value = isSelected._value
-      if (value?.size !== isoDates.length || !isoDates.every(Set.prototype.has, value)) {
-        const vals = new Set<string>()
-        isoDates.forEach(Set.prototype.add, vals)
-        isSelected = ref.current = Set.prototype.has.bind(vals)
-        isSelected._raw = selected
-        isSelected._value = value = vals
-      }
+    // If the new array has the same contents as the previous one, just keep the old.
+    if (
+      old === isoDates ||
+      (!isoDates.length && !first) ||
+      (first instanceof Set && containsAll(first, isoDates)) ||
+      (old.length === isoDates.length && isoDates.every((d: any) => old.includes(d)))
+    ) {
+      return old
+    } else if (isoDates.length > 30) {
+      // For longish arrays, converting to a Set should save some CPU cycles.
+      const dates = new Set<string>()
+      isoDates.forEach(Set.prototype.add, dates)
+      return [dates]
     }
+    return isoDates
   } else if (selected instanceof Date) {
-    value = toISODate(selected)
-  } else {
-    value = selected
+    date = toISODate(selected)
+  } else if (selected) {
+    date = selected
   }
-  // At this point `value` should be falsy iff `selected` was falsy OR it was an empty array.
-  if (!value) {
-    isSelected = ref.current = stubFalse
-  } else if (value !== isSelected._value) {
-    // Multi-values were already handled above, so if we get here it's a single value.
-    isSelected = ref.current = (d: string) => value === d
-    isSelected._raw = selected
-    isSelected._value = value
-  }
-  return isSelected
+  return date === first ? old : [date]
 }
 
 const overflowReducer = (state: GridState, [str, dt]: [string, Date]): GridState => ({
@@ -268,7 +271,7 @@ const CalendarGridBase = ({
   const [state, setOverflow] = React.useReducer(overflowReducer, initialFocus, initGridState)
   const year = yearProp ?? state.year
   const month = monthProp ?? state.month
-  const isSelected = useIsSelected(selected)
+  const isSelected = useValue(makeIsSelected, selected, compareSelected)
   // First effect: if we've just had an overflow event, refocus on the grid.
   React.useEffect(() => {
     if (gridRef.current && state.overflow) {
@@ -336,11 +339,8 @@ const CalendarGridBase = ({
   }
 
   const { labelDate, labelDisabled, weekdays } = labels
-  const header = React.useMemo(() => makeGridHeader(locale, weekdays), [locale, weekdays])
-  const grid = React.useMemo(
-    () => makeGrid(month, year, locale, isValidDate, labelDate, labelDisabled),
-    [month, year, locale, isValidDate, labelDate, labelDisabled]
-  )
+  const header = useValue(makeGridHeader, [locale, weekdays])
+  const grid = useValue(makeGrid, [month, year, locale, isValidDate, labelDate, labelDisabled])
   return (
     <div {...props} key={`${year}-${month}`} ref={gridRef} role="grid">
       {header && (
