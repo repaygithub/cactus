@@ -43,7 +43,7 @@ export interface MonthChange {
   isFocusOverflow: boolean
 }
 
-interface CalendarProps extends BaseProps, FocusProps {
+interface InnerCalendarProps extends BaseProps, FocusProps {
   value?: CalendarValue
   defaultValue?: CalendarValue
   form?: string
@@ -57,6 +57,7 @@ interface CalendarProps extends BaseProps, FocusProps {
   labels?: Partial<CalendarLabels>
   locale?: string
 }
+export type CalendarProps = InnerCalendarProps & MarginProps
 
 interface CalendarState extends SliderProps {
   value: CalendarValue
@@ -76,7 +77,7 @@ const memoize = <A extends any[], R>(func: (...a: A) => R): ((...a: A) => R) => 
   }
 }
 
-const initState = (props: CalendarProps): CalendarState => {
+const initState = (props: InnerCalendarProps): CalendarState => {
   let value: CalendarValue = ''
   if (props.value === undefined && props.defaultValue !== undefined) {
     value = props.defaultValue
@@ -104,7 +105,7 @@ const raiseAsDate = (value: CalendarValue): boolean => {
   return typeof value === 'object'
 }
 
-class CalendarBase extends React.Component<CalendarProps, CalendarState> {
+class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
   public static Grid = CalendarGrid
 
   state = initState(this.props)
@@ -125,7 +126,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
   }
 
   static getDerivedStateFromProps(
-    props: Readonly<CalendarProps>,
+    props: Readonly<InnerCalendarProps>,
     state: CalendarState
   ): Partial<CalendarState> | null {
     let newState: Partial<CalendarState> | null = null
@@ -287,16 +288,14 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
     )
   }
 
-  private getMonthOptions = memoize((locale?: string, monthLabels?: string[]) => {
-    if (!monthLabels) {
-      monthLabels = []
-      const fmtMonth = getFormatter({ month: 'long' }, locale)
-      const date = new Date(1984, 0, 1)
-      for (let i = 0; i < 12; date.setMonth(++i)) {
-        monthLabels.push(fmtMonth(date))
-      }
+  private getMonthOptions = memoize((locale?: string, monthLabels: string[] = []) => {
+    const months = []
+    const date = new Date(1984, 0, 1)
+    const fmtMonth = getFormatter({ month: 'long' }, locale)
+    for (let i = 0; i < 12; date.setMonth(++i)) {
+      months.push({ label: monthLabels[i] || fmtMonth(date), value: i })
     }
-    return monthLabels.map((label, ix) => ({ label, value: ix }))
+    return months
   })
 
   renderMonthDD(locale?: string, labels?: string[]) {
@@ -357,7 +356,7 @@ class CalendarBase extends React.Component<CalendarProps, CalendarState> {
 
 // TODO Disabled styles
 export const Calendar = styled(CalendarBase)
-  .withConfig(omitProps<CalendarProps & MarginProps>(margin))
+  .withConfig(omitProps<CalendarProps>(margin))
   .attrs({ as: CalendarBase })`
   position: relative; /* Necessary for drop-down positioning. */
   display: flex;
