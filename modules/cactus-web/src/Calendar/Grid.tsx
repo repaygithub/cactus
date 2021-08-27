@@ -247,16 +247,14 @@ export const initGridState = (initialFocus: BaseProps['initialFocus']): GridStat
   return { overflow: null, year, month, day }
 }
 
-const getFocusDate = (date: Date, day: number, focus: FocusProps['initialFocus']) => {
-  if (typeof focus === 'string') {
-    day = parseInt(focus.slice(8))
-  } else if (focus instanceof Date) {
-    day = focus.getDate()
-  } else if (focus?.day) {
-    day = focus.day
+const getFocusDay = (initialFocus: FocusProps['initialFocus']) => {
+  if (typeof initialFocus === 'string') {
+    return parseInt(initialFocus.slice(8))
+  } else if (initialFocus instanceof Date) {
+    return initialFocus.getDate()
+  } else {
+    return initialFocus?.day
   }
-  clampDate(date, 'day', day)
-  return toISODate(date)
 }
 
 const CalendarGridBase = ({
@@ -299,7 +297,8 @@ const CalendarGridBase = ({
         toFocus = grid.querySelector<HTMLElement>('[aria-selected="true"]:not(.outside-date)')
       }
       if (!toFocus) {
-        const fd = getFocusDate(new Date(year, month, 1), state.day, initialFocus)
+        const focusDay = getFocusDay(initialFocus) || state.day
+        const fd = toISODate(clampDate(new Date(year, month, 1), 'day', focusDay))
         toFocus = queryDate(grid, fd) || grid.querySelector<HTMLElement>(INSIDE_DATE)
       }
       if (toFocus) {

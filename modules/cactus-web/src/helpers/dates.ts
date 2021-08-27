@@ -289,7 +289,7 @@ export const clampDate = (
   value: number,
   maybeMonth?: number,
   maybeDay?: number
-): void => {
+): Date => {
   let month: number = maybeMonth === undefined ? date.getMonth() : maybeMonth % 12
   if (method === 'month') {
     month = value % 12
@@ -303,6 +303,7 @@ export const clampDate = (
   if (date.getMonth() !== month) {
     date.setDate(0)
   }
+  return date
 }
 
 export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYear()): number {
