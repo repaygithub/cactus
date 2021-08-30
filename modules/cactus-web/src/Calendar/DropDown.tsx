@@ -3,7 +3,7 @@ import { border, color, colorStyle, insetBorder, textStyle } from '@repay/cactus
 import React from 'react'
 import styled from 'styled-components'
 
-import { keyDownAsClick } from '../helpers/a11y'
+import { keyDownAsClick, LiveRegion } from '../helpers/a11y'
 import { useScrollTrap } from '../helpers/scroll'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 
@@ -18,6 +18,7 @@ interface DropDownProps extends React.AriaAttributes {
   value: number
   options: number[] | Option[]
   onSelectOption: (value: number, e: React.SyntheticEvent) => void
+  liveKey?: React.Key
 }
 
 const getFocusHint = (e: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
@@ -80,6 +81,7 @@ const DropDownBase = ({
   value,
   options,
   onSelectOption,
+  liveKey,
   ...props
 }: DropDownProps) => {
   const popupRef = React.useRef<HTMLUListElement>(null)
@@ -140,8 +142,9 @@ const DropDownBase = ({
   }
   return (
     <div {...wrapperProps} className={className}>
+      {liveKey && <LiveRegion value={label} changeKey={liveKey} />}
       <button type="button" {...buttonProps}>
-        <span aria-live="polite">{label}</span>
+        <span>{label}</span>
         <NavigationChevronDown iconSize="tiny" ml={3} />
       </button>
       <ul {...popupProps} {...props} ref={popupRef} />

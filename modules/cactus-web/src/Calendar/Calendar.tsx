@@ -308,6 +308,7 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
         options={options}
         onSelectOption={this.selectMonth}
         aria-labelledby={this.getLabelId('showMonth')}
+        liveKey={this.state.transitionKey}
       />
     )
   }
@@ -331,6 +332,7 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
         options={this.getYearOptions(year)}
         onSelectOption={this.selectYear}
         aria-labelledby={this.getLabelId('showYear')}
+        liveKey={this.state.transitionKey}
       />
     )
   }
