@@ -98,6 +98,7 @@ export const BasicUsage = (): React.ReactElement => (
         </BrandBar.UserMenuItem>
       </BrandBar.UserMenu>
     </BrandBar>
+    <Layout.Content />
   </Layout>
 )
 
@@ -130,6 +131,7 @@ export const CustomItems = (): React.ReactElement => {
         </BrandBar.UserMenu>
       </BrandBar>
       <ActionBar />
+      <Layout.Content />
     </Layout>
   )
 }
@@ -317,6 +319,7 @@ export const WithOrgDropdown = (): React.ReactElement => {
     <Layout>
       <BrandBarWithOrgDropdown />
       <ActionBar />
+      <Layout.Content />
     </Layout>
   )
 }

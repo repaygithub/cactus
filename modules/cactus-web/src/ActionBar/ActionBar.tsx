@@ -1,13 +1,12 @@
+import { border, shadow } from '@repay/cactus-theme'
 import pick from 'lodash/pick'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { layout, LayoutProps as LayoutStyleProps, padding, PaddingProps } from 'styled-system'
 
-import { border, boxShadow } from '../helpers/theme'
 import usePopup, { PopupType, PositionPopup, TogglePopup } from '../helpers/usePopup'
-import { addLayoutStyle, LayoutProps } from '../Layout/Layout'
-import { Sidebar } from '../Layout/Sidebar'
+import { positionPanel, Sidebar } from '../Layout/Sidebar'
 import { OrderHint, OrderHintKey, useAction, useActionBarItems } from './ActionProvider'
 
 interface ItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -94,12 +93,14 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
 
 // The box shadow is #2, but shifted to be only on the right side.
 const StyledPopup = styled.div.withConfig({
-  shouldForwardProp: (prop) => !stylePropNames.includes(prop),
+  shouldForwardProp: (p) => (p as string) === 'width' || !stylePropNames.includes(p),
 })<StyleProps>`
   ${(p) => p.theme.colorStyles.standard};
   box-sizing: border-box;
+  position: absolute;
   z-index: 100;
   outline: none;
+  ${shadow('12px 0 24px -12px', (p) => `border-right: ${border(p, 'lightContrast')}`)}
 
   display: block;
   &[aria-hidden='true'] {
@@ -165,48 +166,4 @@ ActionBarPanel.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 }
 
-ActionBarPanel.defaultProps = { popupType: 'dialog' }
-
-addLayoutStyle(
-  'fixedBottom',
-  css<LayoutProps>`
-    ${StyledPopup} {
-      position: fixed;
-      left: 0;
-      width: 100vw;
-      top: unset;
-      bottom: ${(p) => p.fixedBottom}px;
-      max-height: calc(100vh - ${(p) => p.fixedBottom}px);
-    }
-  `
-)
-
-addLayoutStyle(
-  'fixedLeft',
-  css<LayoutProps>`
-    ${StyledPopup} {
-      position: fixed;
-      left: ${(p) => p.fixedLeft}px;
-      top: 0;
-      bottom: ${(p) => p.fixedBottom}px;
-      ${(p) =>
-        boxShadow(p.theme, '12px 0 24px -12px') ||
-        `border-right: ${border(p.theme, 'lightContrast')}`};
-    }
-  `
-)
-
-addLayoutStyle(
-  'floatLeft',
-  css<LayoutProps>`
-    ${StyledPopup} {
-      position: absolute;
-      left: ${(p) => p.floatLeft}px;
-      top: 0;
-      bottom: 0;
-      ${(p) =>
-        boxShadow(p.theme, '12px 0 24px -12px') ||
-        `border-right: ${border(p.theme, 'lightContrast')}`};
-    }
-  `
-)
+ActionBarPanel.defaultProps = { popupType: 'dialog', positionPopup: positionPanel }

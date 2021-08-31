@@ -36,6 +36,7 @@ Array [
   "IconButton",
   "Label",
   "Layout",
+  "useLayout",
   "Link",
   "List",
   "MenuBar",

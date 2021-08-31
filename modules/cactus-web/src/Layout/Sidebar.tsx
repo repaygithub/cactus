@@ -1,30 +1,57 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { classes } from '../helpers/styled'
 import { insetBorder } from '../helpers/theme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import { Position, Role, useLayout } from './Layout'
+import { Position, useLayout } from './grid'
 
 const WIDTH = 60
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  layoutRole: Role
+  layoutRole: string
 }
 
 type SidebarType = React.FC<SidebarProps> & { Button: ReturnType<typeof styled.button> }
 
 export const Sidebar: SidebarType = ({ layoutRole, className, ...props }) => {
-  const size = React.useContext(ScreenSizeContext)
-  let position: Position = 'floatLeft'
-  if (size < SIZES.small) {
-    position = 'fixedBottom'
-  } else if (size < SIZES.large) {
-    position = 'fixedLeft'
+  const screenSize = React.useContext(ScreenSizeContext)
+  const size = React.Children.toArray(props.children).length ? WIDTH : 0
+  let position: Position
+  if (screenSize < SIZES.small) {
+    position = { fixed: 'bottom', size }
+  } else if (screenSize < SIZES.large) {
+    position = { fixed: 'left', size }
+  } else {
+    position = { grid: 'left', width: size }
   }
-  const offset = React.Children.toArray(props.children).length ? WIDTH : 0
-  const { cssClass } = useLayout(layoutRole, { position, offset })
-  className = className ? `${className} ${cssClass}` : cssClass
-  return <SidebarDiv {...props} className={className} />
+  const layoutClass = useLayout(layoutRole, position, 1)
+  return <SidebarDiv {...props} className={classes(className, layoutClass)} />
+}
+
+export const positionPanel = (popup: HTMLElement): void => {
+  const parent = popup.offsetParent
+  if (parent) {
+    const rect = parent.getBoundingClientRect()
+    if (parent.matches('.cactus-fixed-bottom')) {
+      popup.style.top = 'unset'
+      popup.style.left = '0'
+      popup.style.bottom = `${rect.height}px`
+      popup.style.right = '0'
+      popup.style.maxHeight = `${rect.top}px`
+      popup.style.boxShadow = 'none'
+      popup.style.width = 'auto'
+    } else if (parent.matches('.cactus-fixed-left, .cactus-grid-left')) {
+      popup.style.top = '0'
+      popup.style.left = `${rect.width}px`
+      popup.style.bottom = '0'
+      popup.style.right = 'unset'
+      popup.style.maxHeight = ''
+      popup.style.boxShadow = ''
+      // This indicates a `width` prop has been used to override the default width.
+      popup.style.width = !popup.hasAttribute('width') ? 'max-content' : ''
+    }
+  }
 }
 
 Sidebar.Button = styled.button`
@@ -79,14 +106,15 @@ Sidebar.Button.defaultProps = { role: 'button', type: 'button' }
 const SidebarDiv = styled.div`
   ${(p) => p.theme.colorStyles.standard};
   position: relative;
+  z-index: 100;
   box-sizing: border-box;
   display: flex;
   :empty {
     display: none;
   }
 
-  &.cactus-layout-floatLeft,
-  &.cactus-layout-fixedLeft {
+  &.cactus-grid-left,
+  &.cactus-fixed-left {
     flex-direction: column;
     ${(p) => insetBorder(p.theme, 'lightContrast', 'right')};
     ${Sidebar.Button} {
@@ -97,7 +125,7 @@ const SidebarDiv = styled.div`
     }
   }
 
-  &.cactus-layout-fixedBottom {
+  &.cactus-fixed-bottom {
     flex-direction: row;
     justify-content: flex-end;
     ${(p) => insetBorder(p.theme, 'lightContrast', 'top')};

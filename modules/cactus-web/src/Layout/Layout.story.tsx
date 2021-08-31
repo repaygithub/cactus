@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import {
   ActionBar,
+  Box,
   BrandBar,
   Breadcrumb,
   Flex,
@@ -20,7 +21,9 @@ import {
   SplitButton,
   TextInputField,
   ToggleField,
+  useLayout,
 } from '../'
+import { Position } from './grid'
 
 function action(msg: string) {
   return () => console.log('ITEM CLICKED:', msg)
@@ -233,7 +236,7 @@ const SuperWideHeader = styled(Header)`
 export const ShortContent = (): React.ReactElement => {
   const hasBrand = boolean('Show Brand Bar', true)
   const hasMenu = boolean('Show Menu', true)
-  const hasActions = boolean('Show Action Bar', false)
+  const hasActions = boolean('Show Action Bar', true)
   const hasFooter = boolean('Show Footer', true)
   const overflow = boolean('Main Scrollbar', true)
 
@@ -263,3 +266,38 @@ ShortContent.parameters = {
     overrides: { display: 'block', position: 'static', width: '100%', height: '100%' },
   },
 }
+
+interface GridProps {
+  role: string
+  order?: number
+  bg: string
+  text?: 'sideways'
+}
+const SIDEWAYS = { writingMode: 'vertical-rl' } as const
+const GridItem = ({ role, order, bg, text, ...position }: GridProps & Position) => {
+  const layoutClass = useLayout(role, position, order)
+  const color = `hsl(${bg}, 30%, 70%)`
+  const style = text ? SIDEWAYS : undefined
+  return (
+    <Box backgroundColor={color} className={layoutClass} style={style} p={2}>
+      {role}
+    </Box>
+  )
+}
+
+export const CustomGrid = (): React.ReactElement => (
+  <Layout>
+    <GridItem role="header1" bg="0" grid="header" col={3} colEnd={-2} />
+    <GridItem role="header2" bg="40" grid="header" height={50} col="main" />
+    <GridItem role="upperLeft" bg="80" col={1} colSpan={2} row={1} rowSpan={2} />
+    <GridItem role="upperRight" bg="120" row={1} col={-2} colEnd={-1} />
+    <GridItem role="main" bg="160" width="1fr" height="2fr" />
+    <GridItem role="left1" bg="200" grid="left" width={50} rowEnd={-1} />
+    <GridItem role="left2" bg="240" grid="left" width={50} />
+    <GridItem role="right" bg="280" grid="right" text="sideways" />
+    <GridItem role="footer" bg="320" grid="footer" height="1fr" col="left2" />
+    <GridItem role="fixed-bottom1" bg="20" fixed="bottom" size={28} order={1} />
+    <GridItem role="fixed-right" bg="160" fixed="right" size={40} order={2} text="sideways" />
+    <GridItem role="fixed-bottom2" bg="40" fixed="bottom" size={28} order={3} />
+  </Layout>
+)
