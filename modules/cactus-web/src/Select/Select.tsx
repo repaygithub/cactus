@@ -233,7 +233,8 @@ const SelectTrigger = styled.button`
   box-sizing: border-box;
   min-width: 60px;
   width: 100%;
-  height: 32px;
+  height: 35px;
+  ${(p) => textStyle(p.theme, 'body')}
   padding: 0 28px 0 16px;
   background-color: transparent;
   border-radius: ${radius(20)};
@@ -270,7 +271,7 @@ const SelectTrigger = styled.button`
   ${NavigationChevronDown} {
     position: absolute;
     right: 14px; // 14 + 2px from border
-    top: 11px;
+    top: 14px;
   }
 `
 

@@ -247,7 +247,7 @@ const InputWrapper = styled.div`
   border-color: ${(p): string => p.theme.colors.darkestContrast};
   border-radius: ${radius(20)};
   background-color: ${(p): string => p.theme.colors.white};
-  height: 36px;
+  height: 35px;
   outline: none;
   overflow: hidden;
   padding: 0 16px 0 12px;
