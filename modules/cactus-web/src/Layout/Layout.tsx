@@ -40,20 +40,163 @@ const LayoutContext = React.createContext<LayoutCtx>(DEFAULT_CTX)
 
 type UseLayout = LayoutProps & { cssClass: string }
 
-export const useLayout = (role: Role, { position, offset }: LayoutInfo): UseLayout => {
-  if (position === 'flow') {
-    offset = 0
+const COLUMNS: Position[] = ['leftCol', 'fixedLeft', 'rightCol', 'fixedRight']
+const getOffset = (e: HTMLElement, position: Position) => COLUMNS.includes(position) ? e.offsetWidth : e.offsetHeight
+
+type PositionKey = 'header' | 'leftCol' | 'main' | 'rightCol' | 'footer'
+type FixedPosition = { top: number } | { left: number } | { right: number } | { bottom: number }
+interface GridPosition {
+  row: number
+  rowSpan?: number
+  col: number
+  colSpan?: number
+}
+type Position = PositionKey | FixedPosition | GridPosition
+
+type Offset = string | number
+type Dimension = Offset | undefined
+
+interface Dimensions {
+  width?: Dimension | Dimension[]
+  height?: Dimension | Dimension[]
+}
+
+// TODO How do I do this with min-content?
+interface LayoutProps {
+  top: number
+  left: number
+  right: number
+  bottom: number
+  cssClass: string
+}
+
+interface UseLayout {
+  (role: string, position: FixedPosition, order?: number): LayoutProps
+  (role: string, position: PositionKey, offset: Offset, order?: number): LayoutProps
+  (role: string, position: GridPosition, dimensions: Dimensions): LayoutProps
+}
+export const useLayout: UseLayout = (role: string, position: Position, offsetOrOrder: Dimension, order = 0): UseLayout<T> => {
+  // If it's a fixed position, the `order` is the thrid argument instead of the fourth.
+  if (typeof position === 'object' && !('row' in position) && typeof offsetOrOrder === 'number') {
+    order = offsetOrOrder
   }
   const { setLayout, componentInfo, ...layout } = React.useContext(LayoutContext)
   React.useEffect(() => {
-    componentInfo[role] = { position, offset }
-    setLayout({})
-    return () => {
-      delete componentInfo[role]
-      setLayout({ [position]: 0 })
+    let realOffset = offset
+    if (realOffset === undefined && ref.current) {
+      realOffset = getOffset(ref.current, position)
     }
-  }, [role, position, offset, componentInfo, setLayout])
+    if (realOffset !== undefined) {
+      dispatch({ type: 'add', role, position, order, offset: realOffset })
+    }
+  }, [role, position, order, dispatch])
+  React.useEffect(() => {
+    return () => dispatch({ type: 'remove', role })
+  }, [role, dispatch])
   return { ...layout, cssClass: `cactus-layout-${position}` }
+}
+
+const reduceLayout = (state: LayoutCtx, { type, role, ...action }: LayoutAction) => {
+  let newState = state
+  const index = state.components.findIndex((c) => c.role === role)
+  if (index < 0) {
+    const components = [...state.components]
+    components.push(action as ComponentLayout)
+    newState = { ...state, components }
+  } else if (type === 'remove') {
+    const components = [...state.components]
+    components.splice(index, 1)
+    newState = { ...state, components }
+  } else {
+    const old = state.components[index]
+    if (!isEqual(old.position, action.position) || !isEqual(old.offset, action.offset) || old.order !== action.order) {
+      const components = [...state.components]
+      components.splice(index, 1, action as ComponentLayout)
+      newState = { ...state, components }
+    }
+  }
+  if (newState !== state) {
+    generateGrid(newState)
+  }
+  return newState
+}
+
+const positionKeyOrder: { [K in PositionKey]: number } = {
+  header: 0,
+  leftCol: 1,
+  main: 2,
+  rightCol: 3,
+  footer: 4,
+}
+const sortByOrder = (a: ComponentLayout, b: ComponentLayout) => {
+  const proxyA = positionKeyOrder[a.position as any]
+  const proxyB = positionKeyOrder[b.position as any]
+  return proxyA === proxyB ? a.order - b.order : proxyA - proxyB
+}
+const isGridPosition = (x: any): x is GridPosition => 'row' in x && 'col' in x
+const generateGrid = (state: LayoutState) => {
+  const components = state.components.sort(sortByOrder)
+  let row = 1
+  let col = 1
+  const rows: Dimension[] = []
+  const columns: Dimension[] = []
+  for (const layout of components) {
+    const position = layout.position
+    // TODO Is there a better way to interleave string & grid positioning?
+    if (typeof position === 'string') {
+      if (position === 'header' || position === 'footer') {
+        rows[row++ - 1] = layout.offset
+      } else {
+        columns[col++ - 1] = layout.offset
+      }
+      layout.grid = { row, col }
+    } else if (isGridPosition(layout.position)) {
+      const { width, height } = layout.offset
+      const { rowSpan = 1, colSpan = 1 } = layout.grid = { ...layout.position }
+      assignSizes(rows, layout.grid.row, rowSpan, height, 'row')
+      assignSizes(columns, layout.grid.col, colSpan, width, 'column')
+    } else {
+      continue
+    }
+  }
+  state.rows = rows.map(toCSSValues, 'row').join(' ')
+  state.columns = columns.map(toCSSValues, 'column').join(' ')
+}
+
+const assignSizes = (dim: Dimension[], start: number, span: number, src: Dimension | Dimension[], name: 'row' | 'column') => {
+  start -= 1
+  span += start
+  for (let i = start; i < span; i++) {
+    const size = Array.isArray(height) ? height[i - start] : height
+    const existing = dim[i]
+    if (!existing) {
+      dim[i] = size
+    } else if (size && existing !== size) {
+      console.warn(`Mismatch on layout ${name} ${i + 1}: was ${existing}, now ${size}`)
+    }
+  }
+}
+
+function toCSSValues(this: string, size: Dimension, i): string {
+  if (typeof size === 'number') {
+    return `${size}px`
+  } else if (!size) {
+    console.warn(`Missing layout size for ${this} ${i + 1}`)
+    return ''
+  }
+  return size
+}
+
+const reduceOffset = (offsetSum: number, layout: LayoutInfo, _: number, array: LayoutArray) => {
+  array.grid += ` ${layout.offset}px`
+  return offsetSum + layout.offset
+}
+
+const addStyles = (position: Position, array: LayoutInfo[]): LayoutArray => {
+  const layouts = array as LayoutArray
+  layouts.grid = ''
+  layouts.totalOffset = layouts.reduce(reduceOffset, 0)
+  return layouts
 }
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children, ...rest }) => {
@@ -148,6 +291,83 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
     ${styles['flow']};
   }
 
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: ${p.leftCol.grid} minmax(1px, 1fr) ${p.rightCol.grid};
+  grid-template-columns: ${p.leftCol.grid} minmax(1px, 1fr) ${p.rightCol.grid};
+  -ms-grid-rows: ${p.header.grid} minmax(max-content, 1fr) ${p.footer.grid};
+  grid-template-rows: ${p.header.grid} minmax(max-content, 1fr) ${p.footer.grid};
+
+  ${p.header.map((h, i) => `
+    & > .cactus-layout-${h.role} {
+      -ms-grid-column: 1;
+      -ms-grid-column-span: ${p.leftCol.length + 1 + p.rightCol.length};
+      grid-column: 1 / span ${p.leftCol.length + 1 + p.rightCol.length};
+      -ms-grid-row: ${i + 1};
+      grid-row: ${i + 1};
+    }
+  `)}
+
+  ${p.footer.map((h, i) => `
+    & > .cactus-layout-${h.role} {
+      -ms-grid-column: 1;
+      -ms-grid-column-span: ${p.leftCol.length + 1 + p.rightCol.length};
+      grid-column: 1 / span ${p.leftCol.length + 1 + p.rightCol.length};
+      -ms-grid-row: ${i + 3 + p.header.length};
+      grid-row: ${i + 3 + p.header.length};
+    }
+  `)}
+
+  ${p.leftCol.map((h, i) => `
+    & > .cactus-layout-${h.role} {
+      -ms-grid-column: ${i + 1};
+      -ms-grid-column-span: ${p.leftCol.length + 1 + p.rightCol.length};
+      grid-column: 1 / span ${p.leftCol.length + 1 + p.rightCol.length};
+      -ms-grid-row: ${i + 1};
+      grid-row: ${i + 1};
+    }
+  `)}
+
+  & >  {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  & > *:nth-child(2) {
+    -ms-grid-row: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+  & > *:last-child {
+    -ms-grid-row: 4;
+    grid-row-start: 4;
+    grid-row-end: 5;
+  }
+  & > *:first-child {
+    -ms-grid-row: 1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+  & > .cactus-layout-floatLeft {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    -ms-grid-row: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+  & > ${Main} {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    -ms-grid-row: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+
   ${p.fixedBottom
     ? `
         display: -ms-grid;
@@ -179,52 +399,6 @@ const wrapperStyle = (p: LayoutProps) => css<LayoutProps>`
         }
       `
     : `
-        display: -ms-grid;
-        display: grid;
-        -ms-grid-columns: ${p.floatLeft}px minmax(1px, 1fr);
-        grid-template-columns: ${p.floatLeft}px minmax(1px, 1fr);
-        -ms-grid-rows: min-content min-content minmax(max-content, 1fr) min-content;
-        grid-template-rows: min-content min-content minmax(max-content, 1fr) min-content;
-
-        & > * {
-          -ms-grid-column: 1;
-          -ms-grid-column-span: 2;
-          grid-column-start: 1;
-          grid-column-end: 3;
-        }
-        & > *:nth-child(2) {
-          -ms-grid-row: 2;
-          grid-row-start: 2;
-          grid-row-end: 3;
-        }
-        & > *:last-child {
-          -ms-grid-row: 4;
-          grid-row-start: 4;
-          grid-row-end: 5;
-        }
-        & > *:first-child {
-          -ms-grid-row: 1;
-          grid-row-start: 1;
-          grid-row-end: 2;
-        }
-        & > .cactus-layout-floatLeft {
-          -ms-grid-column: 1;
-          -ms-grid-column-span: 1;
-          grid-column-start: 1;
-          grid-column-end: 2;
-          -ms-grid-row: 3;
-          grid-row-start: 3;
-          grid-row-end: 4;
-        }
-        & > ${Main} {
-          -ms-grid-column: 2;
-          -ms-grid-column-span: 1;
-          grid-column-start: 2;
-          grid-column-end: 3;
-          -ms-grid-row: 3;
-          grid-row-start: 3;
-          grid-row-end: 4;
-        }
       `}
 `
 

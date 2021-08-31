@@ -110,7 +110,9 @@ function usePopup(
       // Although blur events aren't cancelable, you can use `preventDefault()`
       // in this case to prevent the `usePopup`'s default behavior.
       if (!event.isDefaultPrevented() && isFocusOut(event)) {
-        toggle(false)
+        if (!event.currentTarget.contains(document.activeElement)) {
+          toggle(false)
+        }
       }
     },
     [toggle, onWrapperBlur]
