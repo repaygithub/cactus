@@ -3,28 +3,28 @@ import styled from 'styled-components'
 
 import { insetBorder } from '../helpers/theme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import { Position, Role, useLayout } from './Layout'
+import { useLayout } from './Layout'
+import { classes } from '../helpers/styled'
 
 const WIDTH = 60
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  layoutRole: Role
+  layoutRole: string
 }
 
 type SidebarType = React.FC<SidebarProps> & { Button: ReturnType<typeof styled.button> }
 
 export const Sidebar: SidebarType = ({ layoutRole, className, ...props }) => {
   const size = React.useContext(ScreenSizeContext)
-  let position: Position = 'floatLeft'
+  let position: 'leftCol' | 'left' | 'bottom' = 'leftCol'
   if (size < SIZES.small) {
-    position = 'fixedBottom'
+    position = 'bottom'
   } else if (size < SIZES.large) {
-    position = 'fixedLeft'
+    position = 'left'
   }
   const offset = React.Children.toArray(props.children).length ? WIDTH : 0
-  const { cssClass } = useLayout(layoutRole, { position, offset })
-  className = className ? `${className} ${cssClass}` : cssClass
-  return <SidebarDiv {...props} className={className} />
+  const layoutClass = useLayout(layoutRole, { [position]: offset }, 1)
+  return <SidebarDiv {...props} className={classes(className, layoutClass)} />
 }
 
 Sidebar.Button = styled.button`

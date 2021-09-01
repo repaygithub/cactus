@@ -10,3 +10,5 @@ export const styledWithClass = (
   const tag = styled(component)
   return tag.withConfig({ componentId: className } as any)
 }
+
+export const classes = (...args: (string | undefined)[]): string => args.filter(Boolean).join(' ')

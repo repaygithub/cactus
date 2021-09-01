@@ -245,11 +245,12 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(
 
     const onMenuFocus = useFocusHandler(setFocus)
 
-    useLayout('menubar', { position: 'flow', offset: 0 })
+    const layoutClass = useLayout('menubar', { header: 'min-content' }, 1)
 
     return (
       <Nav
         {...props}
+        className={layoutClass}
         variant={variant}
         ref={ref}
         tabIndex={-1}

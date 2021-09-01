@@ -6,6 +6,7 @@ import { isIE } from '../helpers/constants'
 import { styledWithClass } from '../helpers/styled'
 import { boxShadow, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
+import { classes } from '../helpers/styled'
 
 type FooterVariant = 'white' | 'gray' | 'dark'
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -14,10 +15,9 @@ interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const FooterBase: React.FC<FooterProps> = ({ logo, children, variant, ...props }) => {
-  useLayout('footer', { position: 'flow', offset: 0 })
-
+  const layoutClass = useLayout('footer', { footer: 'min-content' })
   return (
-    <footer {...props}>
+    <footer {...props} className={classes(props.className, layoutClass)}>
       {logo && (
         <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
       )}
