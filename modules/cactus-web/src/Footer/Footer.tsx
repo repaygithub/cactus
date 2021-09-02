@@ -4,9 +4,9 @@ import styled, { css } from 'styled-components'
 
 import { isIE } from '../helpers/constants'
 import { styledWithClass } from '../helpers/styled'
+import { classes } from '../helpers/styled'
 import { boxShadow, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
-import { classes } from '../helpers/styled'
 
 type FooterVariant = 'white' | 'gray' | 'dark'
 interface FooterProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -10,6 +10,7 @@ import FocusLock from '../FocusLock/FocusLock'
 import { keyDownAsClick } from '../helpers/a11y'
 import { PolyFC } from '../helpers/asProps'
 import { getTopPosition, getViewport, usePositioning } from '../helpers/positionPopover'
+import { classes } from '../helpers/styled'
 import {
   border,
   boxShadow,
@@ -20,7 +21,8 @@ import {
   textStyle,
 } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
-import { Sidebar } from '../Layout/Sidebar'
+import { useLayout } from '../Layout/Layout'
+import { positionPanel, Sidebar } from '../Layout/Sidebar'
 import { MenuItemFunc, MenuItemType } from '../MenuItem/MenuItem'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { SidebarMenu as ActionMenuPopup } from '../SidebarMenu/SidebarMenu'
@@ -74,8 +76,12 @@ export const BrandBarDropdown: React.FC<DropdownProps> = (props) => {
 
 export const BrandBarUserMenu: React.FC<UserMenuProps> = (props) => {
   const isTiny = SIZES.tiny === useScreenSize()
-  const MenuComponent = isTiny ? ActionBarUserMenu : UserMenu
-  return <MenuComponent {...props} />
+  const actionButton = isTiny ? <ActionBarUserMenu key="cactus-user-menu" {...props} /> : null
+  const renderButton = useAction(actionButton, 1000)
+  if (!isTiny) {
+    return <UserMenu {...props} />
+  }
+  return renderButton && <Sidebar layoutRole="brandbar-menu">{renderButton}</Sidebar>
 }
 
 export const BrandBarItem: PolyFC<ItemProps, 'div'> = (props) => {
@@ -96,7 +102,7 @@ type BrandBarType = React.FC<BrandBarProps> & {
   Dropdown: typeof BrandBarDropdown
 }
 
-export const BrandBar: BrandBarType = ({ logo, children, ...props }) => {
+export const BrandBar: BrandBarType = ({ logo, children, className, ...props }) => {
   const isTiny = SIZES.tiny === useScreenSize()
   const justify = isTiny ? 'center' : 'flex-end'
   const childrenArray = React.Children.toArray(children)
@@ -113,8 +119,9 @@ export const BrandBar: BrandBarType = ({ logo, children, ...props }) => {
     (child) => (child as JSX.Element).props.align === undefined
   )
 
+  const layoutClass = useLayout('brandbar', { header: 'min-content' })
   return (
-    <StyledBrandBar {...props} $isTiny={isTiny}>
+    <StyledBrandBar {...props} className={classes(className, layoutClass)} $isTiny={isTiny}>
       <Flex justifyContent={justify} flexWrap="nowrap">
         <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
         {!isTiny && leftChildren}
@@ -188,6 +195,7 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
   const { buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
     id,
     focusControl,
+    positionPopup: positionPanel,
     onWrapperKeyDown: handleArrows,
   })
 
@@ -202,12 +210,12 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
     [toggle, buttonId]
   )
 
-  const button = (
-    <ActionBar.PanelWrapper key="cactus-user-menu" {...wrapperProps}>
+  return (
+    <ActionBar.PanelWrapper {...wrapperProps}>
       <ActionMenuButton $isProfilePage={isProfilePage} {...buttonProps} {...rest}>
         <DescriptiveProfile />
       </ActionMenuButton>
-      <ActionBar.PanelPopup as={ActionMenuPopup} {...popupProps}>
+      <ActionBar.PanelPopup as={ActionMenuPopup} padding="0" {...popupProps}>
         <PopupHeader>
           <DescriptiveProfile mr="8px" />
           {label}
@@ -216,8 +224,6 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
       </ActionBar.PanelPopup>
     </ActionBar.PanelWrapper>
   )
-  const renderButton = useAction(button, 1000)
-  return renderButton && <Sidebar layoutRole="brandbar">{renderButton}</Sidebar>
 }
 
 const focusControl = (root: HTMLElement) =>

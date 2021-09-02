@@ -1,6 +1,7 @@
+import { isEqual } from 'lodash'
 import React from 'react'
 import { css } from 'styled-components'
-import { isEqual, set } from 'lodash'
+
 import { useValue } from '../helpers/react'
 
 interface GridLayout {
@@ -46,6 +47,7 @@ interface LayoutState {
   components: ComponentLayout[]
   styles: Style[]
   position: { [K in FixedKey]: number }
+  classes: Record<string, string>
 }
 
 const ZERO_POSITION = { top: 0, left: 0, bottom: 0, right: 0 }
@@ -53,26 +55,29 @@ const INITIAL_STATE: LayoutState = {
   components: [],
   styles: [],
   position: ZERO_POSITION,
+  classes: {},
 }
 
 interface LayoutCtx {
   dispatch: React.Dispatch<LayoutAction>
   styles: LayoutState['styles']
   position: LayoutState['position']
+  classes: LayoutState['classes']
 }
 
 export const LayoutContext = React.createContext<LayoutCtx>({
   dispatch: () => undefined,
   styles: [],
   position: ZERO_POSITION,
+  classes: {},
 })
 
 const relKeyOrder = ['header', 'leftCol', 'main', 'rightCol', 'footer'] as const
-type RelKey = (typeof relKeyOrder)[number]
+type RelKey = typeof relKeyOrder[number]
 
 // This order is important to the logic in `gridFromFixed`.
 const fixedKeyOrder = ['top', 'left', 'bottom', 'right'] as const
-type FixedKey = (typeof fixedKeyOrder)[number]
+type FixedKey = typeof fixedKeyOrder[number]
 
 type FixedBox = { [K in FixedKey]?: Length } & {
   width?: Length
@@ -100,14 +105,21 @@ interface UseLayout {
   (role: string, position: FixedPosition, order?: number): string
 }
 export const useLayout: UseLayout = (role: string, position: Position, order = 0): string => {
-  const { dispatch } = React.useContext(LayoutContext)
+  const { dispatch, classes } = React.useContext(LayoutContext)
   React.useEffect(() => {
     dispatch({ type: 'add', role, position, order })
   }, [role, position, order, dispatch])
   React.useEffect(() => {
     return () => dispatch({ type: 'remove', role })
   }, [role, dispatch])
-  return `cactus-layout-${role}`
+  return classes[role]
+}
+
+const generateCSSClass = (layout: ComponentLayout) => {
+  if (layout.type !== 'grid') {
+    return `cactus-layout-${layout.role} cactus-${layout.type}-${layout.key}`
+  }
+  return `cactus-layout-${layout.role} cactus-grid-${layout.grid.row}-${layout.grid.col}`
 }
 
 const reduceLayout = (state: LayoutState, { role, ...action }: LayoutAction) => {
@@ -116,20 +128,25 @@ const reduceLayout = (state: LayoutState, { role, ...action }: LayoutAction) => 
   if (index < 0) {
     if (action.type === 'add') {
       const components = [...state.components]
-      components.push(toComponentLayout(role, action.position, action.order))
-      newState = { ...state, components }
+      const layout = toComponentLayout(role, action.position, action.order)
+      components.push(layout)
+      const classes = { ...state.classes, [role]: generateCSSClass(layout) }
+      newState = { ...state, components, classes }
     }
   } else if (action.type === 'remove') {
     const components = [...state.components]
     components.splice(index, 1)
-    newState = { ...state, components }
+    const classes = { ...state.classes }
+    delete classes[role]
+    newState = { ...state, components, classes }
   } else {
     const oldLayout = state.components[index]
     const newLayout = toComponentLayout(role, action.position, action.order)
     if (!isEqual(oldLayout, newLayout)) {
       const components = [...state.components]
       components[index] = newLayout
-      newState = { ...state, components }
+      const classes = { ...state.classes, [role]: generateCSSClass(newLayout) }
+      newState = { ...state, components, classes }
     }
   }
   if (newState !== state) {
@@ -138,15 +155,22 @@ const reduceLayout = (state: LayoutState, { role, ...action }: LayoutAction) => 
   return newState
 }
 
-const useGridLayout = () => {
+const useGridLayout = (): LayoutCtx => {
   const [state, dispatch] = React.useReducer(reduceLayout, INITIAL_STATE)
-  return useValue({ dispatch, styles: state.styles, position: state.position }, [state])
+  return useValue(
+    {
+      dispatch,
+      styles: state.styles,
+      classes: state.classes,
+      position: state.position,
+    },
+    [state]
+  )
 }
 
 export default useGridLayout
 
 const toComponentLayout = (role: string, position: any, order: number): ComponentLayout => {
-  const layout = { role, order }
   if ('row' in position) {
     return { role, type: 'grid', grid: position }
   }
@@ -158,7 +182,6 @@ const toComponentLayout = (role: string, position: any, order: number): Componen
   const fixedIndex = fixedKeyOrder.findIndex((k) => k in position)
   if (fixedIndex >= 0) {
     const key = fixedKeyOrder[fixedIndex]
-    const offset = position[key]
     return { role, order, type: 'fixed', key, index: fixedIndex, offset: position[key] }
   }
   throw new Error('Invalid layout')
@@ -192,7 +215,8 @@ const generateGrid = (state: LayoutState) => {
 
   const rowValue = rows.map(toCSSValues, 'row').join(' ')
   const colValue = columns.map(toCSSValues, 'column').join(' ')
-  state.styles = [`
+  state.styles = [
+    `
     display: -ms-grid;
     display: grid;
     -ms-grid-rows: ${rowValue};
@@ -201,8 +225,9 @@ const generateGrid = (state: LayoutState) => {
     grid-template-columns: ${colValue};
     position: absolute;
     overflow: auto;
-  `]
-  state.styles.push(fixedKeyOrder.reduce(reduceToPx, state.position))
+  `,
+    fixedKeyOrder.reduce(reduceToPx, state.position),
+  ]
 
   const spanAllColumns = `
     -ms-grid-column: 1;
@@ -211,20 +236,29 @@ const generateGrid = (state: LayoutState) => {
   `
   for (const role of Object.keys(styles)) {
     const style = styles[role]
+    const layoutClass = state.classes[role].split(' ')[0]
     if (typeof style === 'string') {
-      state.styles.push(`.cactus-layout > .cactus-layout-${role} {
+      state.styles.push(`& > .${layoutClass} {
         ${style.replace(SPAN_ALL_COLUMNS, spanAllColumns)}
       }`)
     } else {
-      state.styles.push(css`.cactus-layout-${role} {
-        position: fixed;
-        ${style}
-      }`)
+      state.styles.push(css`
+        .${layoutClass} {
+          position: fixed;
+          ${style}
+        }
+      `)
     }
   }
 }
 
-const assignSizes = (dim: Dimension[], start: number, span: number, src: Dimension | Dimension[], name: 'row' | 'column') => {
+const assignSizes = (
+  dim: Dimension[],
+  start: number,
+  span: number,
+  src: Dimension | Dimension[],
+  name: 'row' | 'column'
+) => {
   const style = `
     -ms-grid-${name}: ${start};
     -ms-grid-${name}-span: ${span};
@@ -247,7 +281,12 @@ const assignSizes = (dim: Dimension[], start: number, span: number, src: Dimensi
 const SPAN_ALL_COLUMNS = /SPAN_ALL_COLUMNS/g
 
 type StyleMap = Record<string, string | FixedBox>
-const gridFromRel = (styles: StyleMap, rows: Dimension[], columns: Dimension[], relLayouts: RelLayout[]) => {
+const gridFromRel = (
+  styles: StyleMap,
+  rows: Dimension[],
+  columns: Dimension[],
+  relLayouts: RelLayout[]
+) => {
   let row = 1
   let col = 1
   let mainRow: number | undefined = undefined
@@ -275,7 +314,12 @@ const gridFromRel = (styles: StyleMap, rows: Dimension[], columns: Dimension[], 
   }
 }
 
-const gridFromGrid = (styles: StyleMap, rows: Dimension[], columns: Dimension[], gridLayouts: GridLayout[]) => {
+const gridFromGrid = (
+  styles: StyleMap,
+  rows: Dimension[],
+  columns: Dimension[],
+  gridLayouts: GridLayout[]
+) => {
   for (const layout of gridLayouts) {
     const { width, height, row, rowSpan = 1, col, colSpan = 1 } = layout.grid
     const rowStyle = assignSizes(rows, row, rowSpan, height, 'row')
@@ -284,21 +328,31 @@ const gridFromGrid = (styles: StyleMap, rows: Dimension[], columns: Dimension[],
   }
 }
 
-const gridFromFixed = (styles: StyleMap, rows: Dimension[], columns: Dimension[], fixedLayouts: FixedLayout[]) => {
+const gridFromFixed = (
+  styles: StyleMap,
+  rows: Dimension[],
+  columns: Dimension[],
+  fixedLayouts: FixedLayout[]
+) => {
   const fixed = { ...ZERO_POSITION }
   for (const layout of fixedLayouts) {
     const box: FixedBox = { ...fixed }
     // Delete the opposite: e.g. if this is top, delete bottom.
     delete box[fixedKeyOrder[(layout.index + 2) % 4]]
     // left/right are odd indexes, top/bottom are evens.
-    box[layout.index % 2 ? 'width' : 'height'] = layout.offset
+    box[layout.index % 2 ? 'width' : 'height'] = `${layout.offset}px`
     fixed[layout.key] += layout.offset
     styles[layout.role] = fixedKeyOrder.reduce(reduceToPx, box)
   }
   return fixed
 }
 
-const reduceToPx = (styles: FixedBox, key: FixedKey) => set(styles, key, `${styles[key]}px`)
+const reduceToPx = (styles: FixedBox, key: FixedKey) => {
+  if (styles[key]) {
+    styles[key] = `${styles[key]}px`
+  }
+  return styles
+}
 
 function toCSSValues(this: string, size: Dimension, i: number): string {
   if (typeof size === 'number') {

@@ -5,8 +5,8 @@ import { overflow, OverflowProps, overflowX, overflowY } from 'styled-system'
 
 import ActionProvider from '../ActionBar/ActionProvider'
 import { getDataProps, omitProps } from '../helpers/omit'
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import { classes, styledWithClass } from '../helpers/styled'
+import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import useGridLayout, { LayoutContext, useLayout } from './grid'
 
 export { useLayout }
@@ -34,10 +34,9 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children, ...r
 }
 
 type MainProps = React.HTMLAttributes<HTMLElement>
-const MainImpl = React.forwardRef<HTMLElement, MainProps>(
-  (p, ref) => {
-    const layoutClass = useLayout('main', { main: 'minmax(1px, 1fr);minmax(max-content, 1fr)' })
-    return <main {...p} ref={ref} className={classes(p.className, layoutClass)} />
+const MainImpl = React.forwardRef<HTMLElement, MainProps>((p, ref) => {
+  const layoutClass = useLayout('main', { main: 'minmax(1px, 1fr);minmax(max-content, 1fr)' })
+  return <main {...p} ref={ref} className={classes(p.className, layoutClass)} />
 })
 
 const Main = styled(MainImpl).withConfig(
