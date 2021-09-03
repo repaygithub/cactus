@@ -1,4 +1,6 @@
-import { KeyboardEvent } from 'react'
+import React, { KeyboardEvent } from 'react'
+
+import { useValue } from './react'
 
 export const isActionKey = (event: KeyboardEvent): boolean =>
   event.key === 'Enter' || event.key === ' '
@@ -18,3 +20,19 @@ export const keyDownAsClick = (event: KeyboardEvent): void => {
     target.click && target.click()
   }
 }
+
+interface LiveProps {
+  value: React.ReactChild
+  changeKey: React.Key
+  live?: React.AriaAttributes['aria-live']
+  visible?: boolean
+}
+
+export const LiveRegion = (inProps: LiveProps): React.ReactElement => {
+  const { value, changeKey, live = 'polite', visible = false } = inProps
+  const style = visible ? undefined : INVISIBLE
+  const props = { 'aria-live': live, style }
+  const contents = useValue(value, [changeKey])
+  return React.createElement('div', props, contents)
+}
+const INVISIBLE = { position: 'absolute', transform: 'scale(0)', zIndex: '-1' }

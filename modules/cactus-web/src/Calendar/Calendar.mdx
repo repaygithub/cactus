@@ -1,0 +1,115 @@
+---
+name: Calendar
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import Calendar from './Calendar'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# Calendar
+
+The `Calendar` component displays a calendar with controls for changing the month/year.
+It can also work as a date input, allowing the user to select a date from the calendar.
+The <a href="../dateinput/#">DateInput</a> component uses `Calendar` for its popup dialog.
+
+#### Date Format Note
+
+Unlike `DateInput`, the string format for dates is not customizable:
+all string dates accepted via props or raised in events are in ISO 8601 `year-month-day`, e.g. "2012-12-21".
+In this doc I'll refer to these as a `DateString` type, although it's just a regular string in Typescript.
+
+### Try it out
+
+export const code = `<Calendar />`
+
+<LiveProvider code={code} scope={{ Calendar }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Control Props
+
+The Calendar can be used uncontrolled, but often it's more useful to control it using props. There are two sets of control props: focus and selected value. The selected value props are explained more in the next section.
+
+The focus control props are `year` and `month`, which control what month the calendar displays. To keep them up-to-date, you can pass the `onMonthChange` event handler, defined like this:
+```
+interface MonthChangeData {
+  month: number;
+  year: number;
+  isFocusOverflow: boolean;
+}
+function onMonthChange(data: MonthChangeData, event: React.SyntheticEvent);
+```
+The first argument is event data, including the new year/month values.
+`isFocusOverflow` is false if the month was changed using the button controls on the Calendar,
+and true if the month was changed because focus on the grid moved outside the current month;
+e.g. clicking on one of the grayed-out days before the first or after the last day of the month.
+The second argument is the original user interaction that led to the change.
+
+If you don't want to fully control the focus but want to display a certain month initially, you can use the `initialFocus` prop:
+```
+type initialFocus =
+  | undefined
+  | Date
+  | DateString
+  | {
+    year?: number;
+    month?: number;
+    day?: number;
+  };
+```
+Any missing parts (or passing nothing at all) default to today's year/month/day.
+The `day` portion is used to set which day will receive keyboard focus when tabbing onto the grid.
+
+### As an Input
+
+Calendar also accepts many common input props: `value` & `onChange` for a controlled input,
+or `defaultValue` for uncontrolled; as well as `multiple`, `disabled`, and `readOnly`,
+which have the same meanings as for built-in input types.
+The value type used in props & events is defined like this:
+```
+type CalendarValue =
+  | ''
+  | null
+  | Date
+  | DateString
+  | Date[]
+  | DateString[];
+```
+Like `DateInput`, the type raised in events depends on what you pass in:
+- Passing null or a Date object/array, events will raise Date objects.
+- Passing the empty string or a DateString/array, events will raise as DateStrings.
+- Passing an empty array will use whatever type was used on the last render, or default to DateString on the first render.
+
+Though `multiple` can be used to display multiple selected dates,
+the ability to select multiple dates has not been added yet (future release?);
+as such, you should only use `multiple` alongside `readOnly`.
+
+## Labels
+
+Calendar accepts a `labels` prop, an object which can be used to override/localize
+accessiblity labels on buttons, and month/weekday labels.
+To use the default month/weekday labels but use the browser's built-in localization functionality,
+you can instead pass the `locale` prop (defaults to the browser's locale).
+
+## Calendar.Grid
+
+You can also render just the grid portion of the calendar using the `Calendar.Grid` component.
+It has no ability to select dates like an input, but it can display selected
+dates using the `selected` prop (same type as Calendar's `value`/`defaultValue`).
+It has the same focus control props as `Calendar`, except instead of `onMonthChange`
+it has `onFocusOverflow`, since all month changes on the grid are due to focus overflow.
+```
+function onFocusOverflow(dateToFocus: Date, event: React.SyntheticEvent);
+```
+
+## Properties
+
+<PropsTable of={Calendar} />
+
+### Calendar.Grid
+
+<PropsTable of={Calendar.Grid} staticProp="Calendar.Grid" />
