@@ -85,7 +85,8 @@ describe('component: Calendar', () => {
 
       test('isValidDate disables matching dates', () => {
         const { container } = render(<Grid isValidDate={(d) => !!(d.getDate() % 10)} />)
-        const disabled = queryAllByAttr(container, 'aria-disabled', 'true')
+        const query = queryAllByAttr(container, 'aria-disabled', 'true')
+        const disabled = Array.prototype.filter.call(query, (x) => !x.matches('.outside-date'))
         expect(disabled).toHaveLength(NOW.getMonth() === 1 ? 2 : 3)
         const ym = ISO_NOW.slice(0, 8)
         expect(disabled[0]).toHaveAttribute('data-date', ym + '10')
