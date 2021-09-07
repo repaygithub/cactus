@@ -230,6 +230,82 @@ const __LOCALE_SPOKEN_FORMATS_CACHE__: {
   [key: string]: InstanceType<typeof Intl.DateTimeFormat>
 } = {}
 
+export function getFormatter(
+  type: DateType | Intl.DateTimeFormatOptions,
+  locale: string = getLocale()
+): (d: Date) => string {
+  let formatter: InstanceType<typeof Intl.DateTimeFormat>
+  const cacheKey = locale + type
+  if (typeof type === 'object') {
+    formatter = new Intl.DateTimeFormat(locale, type)
+  } else if (__LOCALE_SPOKEN_FORMATS_CACHE__.hasOwnProperty(cacheKey)) {
+    formatter = __LOCALE_SPOKEN_FORMATS_CACHE__[cacheKey]
+  } else {
+    const includeDate = type === 'date' || type === 'datetime'
+    const includeTime = type === 'datetime' || type === 'time'
+    const opts: Intl.DateTimeFormatOptions = {
+      year: includeDate ? 'numeric' : undefined,
+      month: includeDate ? 'long' : undefined,
+      day: includeDate ? 'numeric' : undefined,
+      weekday: includeDate ? 'long' : undefined,
+      hour: includeTime ? 'numeric' : undefined,
+      minute: includeTime ? '2-digit' : undefined,
+      second: undefined,
+      timeZone: 'UTC',
+    }
+    formatter = new Intl.DateTimeFormat(locale, opts)
+  }
+  return (d: Date) => formatter.format(d).replace('\u200e', '')
+}
+
+// `Date.toISOString()` messes with timezones and can return the wrong date;
+// similarly `new Date(string)` treats ISO date strings like midnight UTC.
+const zfill = (pad: string, num: number) => {
+  const result = pad + num
+  return result.slice(result.length - pad.length - 1)
+}
+
+/** Returns a date in ISO `YYYY-MM-dd` format. */
+export const toISODate = (date: Date): string =>
+  [
+    zfill('000', date.getFullYear()),
+    zfill('0', date.getMonth() + 1),
+    zfill('0', date.getDate()),
+  ].join('-')
+
+/** Splits an ISO date and returns the year/month/day as an array of numbers. */
+export const dateParts = (date: string): [number, number, number] => {
+  const [year, month, day] = date.split('-')
+  return [parseInt(year), parseInt(month) - 1, parseInt(day)]
+}
+
+/**
+ * Sets the given value(s) on the Date; if the day overflows and
+ * changes the month, it clamps to the last day of the given month.
+ */
+export const clampDate = (
+  date: Date,
+  method: 'day' | 'month' | 'year',
+  value: number,
+  maybeMonth?: number,
+  maybeDay?: number
+): Date => {
+  let month: number = maybeMonth === undefined ? date.getMonth() : maybeMonth % 12
+  if (method === 'month') {
+    month = value % 12
+    date.setMonth(value, maybeMonth ?? date.getDate())
+  } else if (method === 'year') {
+    date.setFullYear(value, month, maybeDay ?? date.getDate())
+  } else {
+    date.setDate(value)
+  }
+  if (month < 0) month += 12
+  if (date.getMonth() !== month) {
+    date.setDate(0)
+  }
+  return date
+}
+
 export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYear()): number {
   const firstOfMonth = new Date(year, month, 1, 0, 0, 0, 0)
   const lastOfMonth = new Date(+firstOfMonth)
@@ -550,27 +626,8 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public toLocaleSpoken(type: DateType): string {
-    let spokenFormatter: InstanceType<typeof Intl.DateTimeFormat>
-    const cacheKey = this._locale + type
-    if (__LOCALE_SPOKEN_FORMATS_CACHE__.hasOwnProperty(cacheKey)) {
-      spokenFormatter = __LOCALE_SPOKEN_FORMATS_CACHE__[cacheKey]
-    } else {
-      const includeDate = type === 'date' || type === 'datetime'
-      const includeTime = type === 'datetime' || type === 'time'
-      const opts: Intl.DateTimeFormatOptions = {
-        year: includeDate ? 'numeric' : undefined,
-        month: includeDate ? 'long' : undefined,
-        day: includeDate ? 'numeric' : undefined,
-        weekday: includeDate ? 'long' : undefined,
-        hour: includeTime ? 'numeric' : undefined,
-        minute: includeTime ? '2-digit' : undefined,
-        second: undefined,
-        timeZone: 'UTC',
-      }
-      spokenFormatter = new Intl.DateTimeFormat(this._locale, opts)
-    }
-
-    return spokenFormatter.format(this.toDate())
+    const spokenFormatter = getFormatter(type, this._locale)
+    return spokenFormatter(this.toDate())
   }
 
   public toDate(): Date {
@@ -580,13 +637,17 @@ export class PartialDate implements FormatTokenMap {
     return date
   }
 
-  public isValid(): boolean {
-    const type = this._type
-    const isDateValid =
-      type === 'time' ||
+  public isValidDate(): boolean {
+    return (
+      this._type === 'time' ||
       ([this.year, this.month, this.day].every(isNumber) && this.isDayOfMonth(this.day || 0))
+    )
+  }
+
+  public isValid(): boolean {
+    const isDateValid = this.isValidDate()
     const isTimeValid =
-      type === 'date' ||
+      this._type === 'date' ||
       (this.hours !== undefined &&
         this.minutes !== undefined &&
         (!this._format.includes('aa') || this.period !== undefined))
@@ -649,35 +710,6 @@ export class PartialDate implements FormatTokenMap {
       return new PartialDate(date, formatOrOpts)
     }
   }
-}
-
-/**
- * Will attempt to parse a string as a date using the provided format,
- * and is not forgiving.
- */
-export function parseDate(dateStr: string, format?: string): Date {
-  if (!format) {
-    return new Date(dateStr)
-  }
-  const parsedFormat = parseFormat(format)
-  if (parsedFormat.length > 0) {
-    let cursor = 0
-    const partial = new PartialDate('', format)
-    for (const token of parsedFormat) {
-      if (isToken(token)) {
-        let value = dateStr.charAt(cursor)
-        while (/[0-9]/.test(dateStr.charAt(++cursor))) {
-          value += dateStr.charAt(cursor)
-        }
-        partial[token] = value
-      } else {
-        cursor += token.length
-      }
-    }
-    return partial.toDate()
-  }
-
-  return new Date(NaN)
 }
 
 export function isValidDate(date: Date): boolean {

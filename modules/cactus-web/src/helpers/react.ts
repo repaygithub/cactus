@@ -91,30 +91,55 @@ export function useMergedRefs<T>(...refs: Ref<T>[]): HybridRef<T> {
   return hybridRef
 }
 
-// Similar to useMemo/useCallback except stability is guaranteed.
-export function useValue<T>(value: T, dependencies: any[]): T {
-  const valueRef = React.useRef<T>(value)
-  const depRef = React.useRef<any[]>(dependencies)
-  const length = Math.max(dependencies.length, depRef.current.length)
-  for (let i = 0; i < length; i++) {
-    if (depRef.current[i] !== dependencies[i]) {
-      depRef.current = dependencies
-      valueRef.current = value
-      break
-    }
-  }
-  return valueRef.current
+type Func<R = any> = (...args: any[]) => R
+type NotFunc<T> = T extends Func ? never : T
+
+interface ValueHook {
+  <T extends Func>(mkValue: T, args: Parameters<T>): ReturnType<T>
+  <T extends Func, D = Parameters<T>>(
+    mkValue: T,
+    deps: D,
+    compareDependencies: (prev: Parameters<T>, current: D) => Parameters<T>
+  ): ReturnType<T>
+  <T>(value: NotFunc<T>, deps: unknown[]): T
+  <T, D>(value: NotFunc<T>, deps: D, compareDependencies: (prev: D, current: D) => D): T
 }
+
+interface Value<T> {
+  value: T
+  dependencies: unknown[]
+}
+
+const shallowCmp = (prev: any[], current: any[]): any[] => {
+  if (prev.length !== current.length || !prev.every((d, i) => d === current[i])) {
+    return current
+  }
+  return prev
+}
+
+// Similar to useMemo/useCallback except stability is guaranteed.
+export const useValue: ValueHook = <T>(val: any, deps: any[], cmp = shallowCmp): T => {
+  const ref = React.useRef(SENTINEL as Value<T>)
+  let value = ref.current.value
+  const prevDeps = ref.current.dependencies
+  const dependencies = cmp(prevDeps, deps)
+  if (dependencies !== prevDeps) {
+    value = typeof val === 'function' ? val(...dependencies) : val
+    ref.current = { value, dependencies }
+  }
+  return value
+}
+const SENTINEL: unknown = { dependencies: [Object.create(null)] }
 
 interface UseBox {
   <T>(box: T): T
   // Mutable box + immutable initialization
-  <M, I extends (...a: any) => any>(box: M, init: I, ...args: Parameters<I>): M & ReturnType<I>
+  <M, I extends Func>(box: M, init: I, ...args: Parameters<I>): M & ReturnType<I>
 }
 type Obj = Record<string, any>
 
 // An immutable container with mutable contents; basically, a self-updating ref.
-export const useBox: UseBox = (box: Obj, init?: (...a: any[]) => Obj, ...args: any[]): Obj => {
+export const useBox: UseBox = (box: Obj, init?: Func<Obj>, ...args: any[]): Obj => {
   const ref = React.useRef<Obj>()
   if (ref.current === undefined) {
     ref.current = init ? init(...args) : {}
