@@ -206,7 +206,7 @@ const InputWrapper = styled.div`
   align-items: center;
   border: ${border('darkestContrast')};
   border-radius: ${radius(20)};
-  height: 36px;
+  height: 35px;
   outline: none;
   overflow: hidden;
   padding: 0 16px 0 12px;
