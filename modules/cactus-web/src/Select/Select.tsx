@@ -235,7 +235,7 @@ const SelectTrigger = styled.button`
   width: 100%;
   height: 35px;
   ${(p) => textStyle(p.theme, 'body')}
-  padding: 0 28px 0 16px;
+  padding: 3px 28px 3px 16px;
   background-color: transparent;
   border-radius: ${radius(20)};
   ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
@@ -271,7 +271,7 @@ const SelectTrigger = styled.button`
   ${NavigationChevronDown} {
     position: absolute;
     right: 14px; // 14 + 2px from border
-    top: 14px;
+    top: 12.5px;
   }
 `
 
