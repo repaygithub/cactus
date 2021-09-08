@@ -19,7 +19,7 @@ import { useMergedRefs } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
 import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
-import { positionPanel, Sidebar as LayoutSidebar } from '../Layout/Sidebar'
+import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { MenuItemFunc, MenuItemType, MenuListItem } from '../MenuItem/MenuItem'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { SidebarMenu } from '../SidebarMenu/SidebarMenu'
@@ -286,7 +286,7 @@ const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
 
 const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ...props }, ref) => {
   const orientation = 'vertical'
-  const { expanded, wrapperProps, buttonProps, popupProps } = useMenu(id, positionPanel)
+  const { expanded, wrapperProps, buttonProps, popupProps } = useMenu(id)
   const [menuRef] = useScroll<HTMLUListElement>(orientation, expanded, getPanelScrollInfo)
 
   delete wrapperProps.role

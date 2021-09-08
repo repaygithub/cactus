@@ -22,7 +22,7 @@ import {
 } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { useLayout } from '../Layout/Layout'
-import { positionPanel, Sidebar } from '../Layout/Sidebar'
+import { Sidebar } from '../Layout/Sidebar'
 import { MenuItemFunc, MenuItemType } from '../MenuItem/MenuItem'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { SidebarMenu as ActionMenuPopup } from '../SidebarMenu/SidebarMenu'
@@ -195,7 +195,6 @@ const ActionBarUserMenu: React.FC<UserMenuProps> = ({
   const { buttonProps, toggle, popupProps, wrapperProps } = usePopup('menu', {
     id,
     focusControl,
-    positionPopup: positionPanel,
     onWrapperKeyDown: handleArrows,
   })
 

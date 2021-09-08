@@ -3,10 +3,12 @@ import pick from 'lodash/pick'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { layout, LayoutProps as LayoutStyleProps, padding, PaddingProps } from 'styled-system'
+import { layout, LayoutProps, padding, PaddingProps } from 'styled-system'
 
+import { usePositioning } from '../helpers/positionPopover'
+import { useMergedRefs } from '../helpers/react'
 import usePopup, { PopupType, PositionPopup, TogglePopup } from '../helpers/usePopup'
-import { positionPanel, Sidebar } from '../Layout/Sidebar'
+import { Sidebar } from '../Layout/Sidebar'
 import { OrderHint, OrderHintKey, useAction, useActionBarItems } from './ActionProvider'
 
 interface ItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -17,7 +19,7 @@ interface ItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   'aria-label': string
 }
 
-type StyleProps = LayoutStyleProps & PaddingProps
+type StyleProps = LayoutProps & PaddingProps
 // @ts-ignore
 const stylePropNames: string[] = layout.propNames.concat(padding.propNames)
 
@@ -59,10 +61,10 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
   ) => {
     const { expanded, toggle, wrapperProps, buttonProps, popupProps } = usePopup(popupType, {
       id,
-      positionPopup,
       onWrapperBlur: onBlur,
       onWrapperKeyDown: onKeyDown,
     })
+    const buttonRef = React.useRef<HTMLButtonElement>(null)
 
     const render = typeof children === 'function' ? (children as RenderFn) : null
     const styleProps = pick(props, stylePropNames) as StyleProps
@@ -80,16 +82,80 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
 
     return (
       <ActionBar.PanelWrapper {...wrapperProps} ref={ref}>
-        <ActionBar.Button {...ariaProps} {...buttonProps}>
+        <ActionBar.Button {...ariaProps} {...buttonProps} ref={buttonRef}>
           {icon}
         </ActionBar.Button>
-        <ActionBar.PanelPopup {...styleProps} {...popupProps}>
+        <ActionBar.PanelPopup
+          {...styleProps}
+          {...popupProps}
+          position={positionPopup}
+          anchorRef={buttonRef}
+        >
           {render ? render(toggle, expanded) : children}
         </ActionBar.PanelPopup>
       </ActionBar.PanelWrapper>
     )
   }
 )
+
+interface PanelPopupProps extends StyleProps {
+  position?: PositionPopup
+  anchorRef?: React.RefObject<HTMLElement | string>
+  children?: React.ReactNode
+}
+// A variation on "as props": for `usePositioning` to work, the component must support refs.
+type RequireRef<P> = P extends { ref?: React.Ref<infer R> }
+  ? R extends HTMLElement
+    ? P
+    : never
+  : never
+type RefProps<T extends React.ElementType> = T extends keyof JSX.IntrinsicElements
+  ? PanelPopupProps & Omit<JSX.IntrinsicElements[T], 'as'>
+  : T extends React.ComponentType<infer U>
+  ? PanelPopupProps & RequireRef<Omit<U, 'as' | keyof PanelPopupProps>>
+  : never
+interface PanelPopupType {
+  <T extends React.ElementType = 'div'>(p: { as?: T } & RefProps<T>): React.ReactElement | null
+  defaultProps?: Partial<PanelPopupProps>
+  displayName?: string
+}
+
+const positionPanel = (popup: HTMLElement): void => {
+  const parent = popup.offsetParent
+  if (parent) {
+    const rect = parent.getBoundingClientRect()
+    if (parent.matches('.cactus-fixed-bottom')) {
+      popup.style.top = 'unset'
+      popup.style.left = '0'
+      popup.style.bottom = `${rect.height}px`
+      popup.style.right = '0'
+      popup.style.maxHeight = `${rect.top}px`
+      popup.style.boxShadow = 'none'
+      popup.style.width = 'auto'
+    } else if (parent.matches('.cactus-fixed-left, .cactus-grid-left')) {
+      popup.style.top = '0'
+      popup.style.left = `${rect.width}px`
+      popup.style.bottom = '0'
+      popup.style.right = 'unset'
+      popup.style.maxHeight = ''
+      popup.style.boxShadow = ''
+      // This indicates a `width` prop has been used to override the default width.
+      popup.style.width = !popup.hasAttribute('width') ? 'max-content' : ''
+    }
+  }
+}
+
+const PanelPopup: PanelPopupType = React.forwardRef<HTMLElement, PanelPopupProps>(
+  ({ position = positionPanel, anchorRef, ...props }, ref_) => {
+    const ref = useMergedRefs(ref_)
+    // @ts-ignore
+    const visible = !(props['aria-hidden'] || props.hidden)
+    usePositioning({ position, visible, ref, anchorRef })
+    return <StyledPopup {...props} ref={ref} />
+  }
+) as any
+PanelPopup.displayName = 'ActionBar.PanelPopup'
+PanelPopup.defaultProps = { position: positionPanel }
 
 // The box shadow is #2, but shifted to be only on the right side.
 const StyledPopup = styled.div.withConfig({
@@ -120,7 +186,7 @@ interface ActionBarType extends React.FC<React.HTMLAttributes<HTMLDivElement>> {
   Item: typeof ActionBarItem
   Panel: typeof ActionBarPanel
   Button: typeof Sidebar.Button
-  PanelPopup: typeof StyledPopup
+  PanelPopup: typeof PanelPopup
   PanelWrapper: ReturnType<typeof styled.div>
 }
 
@@ -137,7 +203,7 @@ export const ActionBar: ActionBarType = ({ children, ...props }) => {
 ActionBar.Item = ActionBarItem
 ActionBar.Panel = ActionBarPanel
 ActionBar.Button = Sidebar.Button
-ActionBar.PanelPopup = StyledPopup
+ActionBar.PanelPopup = PanelPopup
 ActionBar.PanelWrapper = styled.div`
   outline: none;
   border: none;
@@ -166,4 +232,4 @@ ActionBarPanel.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 }
 
-ActionBarPanel.defaultProps = { popupType: 'dialog', positionPopup: positionPanel }
+ActionBarPanel.defaultProps = { popupType: 'dialog' }

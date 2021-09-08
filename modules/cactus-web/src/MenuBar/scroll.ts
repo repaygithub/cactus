@@ -2,7 +2,7 @@ import React from 'react'
 
 import { supportsScopeQuery } from '../helpers/constants'
 import { FocusControl, FocusSetter } from '../helpers/focus'
-import usePopup, { PositionPopup, TogglePopup, UsePopup } from '../helpers/usePopup'
+import usePopup, { TogglePopup } from '../helpers/usePopup'
 
 const IS_CHAR = /^\S$/
 const MENU_SELECTOR = 'nav [aria-orientation]'
@@ -97,7 +97,10 @@ function handleButtonClick(event: React.MouseEvent<HTMLElement>, toggle: ToggleP
   toggle(undefined, wrapper)
 }
 
-export function useSubmenu(id: string | undefined, usePositioning: boolean): UsePopup {
+export function useSubmenu(
+  id: string | undefined,
+  usePositioning: boolean
+): ReturnType<typeof usePopup> {
   const popup = usePopup('menu', {
     id,
     buttonId: id,
@@ -112,10 +115,9 @@ export function useSubmenu(id: string | undefined, usePositioning: boolean): Use
   return popup
 }
 
-export function useMenu(id: string | undefined, positionPopup?: PositionPopup): UsePopup {
+export function useMenu(id: string | undefined): ReturnType<typeof usePopup> {
   const popup = usePopup('menu', {
     id,
-    positionPopup,
     onButtonClick: handleButtonClick,
     focusControl: getOwnedMenuItems,
   })

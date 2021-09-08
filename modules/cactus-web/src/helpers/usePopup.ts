@@ -33,7 +33,7 @@ interface PopupOpts {
   focusOnClickExpand?: boolean
 }
 
-export interface UsePopup {
+interface UsePopup {
   expanded: boolean
   toggle: TogglePopup
   setFocus: FocusSetter
