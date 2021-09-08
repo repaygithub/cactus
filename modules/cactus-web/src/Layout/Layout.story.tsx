@@ -271,13 +271,12 @@ interface GridProps {
   role: string
   order?: number
   bg: string
-  text?: 'sideways'
+  style?: React.HTMLAttributes<any>['style']
 }
 const SIDEWAYS = { writingMode: 'vertical-rl' } as const
-const GridItem = ({ role, order, bg, text, ...position }: GridProps & Position) => {
+const GridItem = ({ role, order, bg, style, ...position }: GridProps & Position) => {
   const layoutClass = useLayout(role, position, order)
   const color = `hsl(${bg}, 30%, 70%)`
-  const style = text ? SIDEWAYS : undefined
   return (
     <Box backgroundColor={color} className={layoutClass} style={style} p={2}>
       {role}
@@ -291,13 +290,19 @@ export const CustomGrid = (): React.ReactElement => (
     <GridItem role="header2" bg="40" grid="header" height={50} col="main" />
     <GridItem role="upperLeft" bg="80" col={1} colSpan={2} row={1} rowSpan={2} />
     <GridItem role="upperRight" bg="120" row={1} col={-2} colEnd={-1} />
-    <GridItem role="main" bg="160" width="1fr" height="2fr" />
+    <GridItem
+      role="main"
+      bg="160"
+      width="1fr"
+      height="2fr"
+      style={{ height: text('height', '') || undefined }}
+    />
     <GridItem role="left1" bg="200" grid="left" width={50} rowEnd={-1} />
     <GridItem role="left2" bg="240" grid="left" width={50} />
-    <GridItem role="right" bg="280" grid="right" text="sideways" />
+    <GridItem role="right" bg="280" grid="right" style={SIDEWAYS} />
     <GridItem role="footer" bg="320" grid="footer" height="1fr" col="left2" />
     <GridItem role="fixed-bottom1" bg="20" fixed="bottom" size={28} order={1} />
-    <GridItem role="fixed-right" bg="160" fixed="right" size={40} order={2} text="sideways" />
+    <GridItem role="fixed-right" bg="160" fixed="right" size={40} order={2} style={SIDEWAYS} />
     <GridItem role="fixed-bottom2" bg="40" fixed="bottom" size={28} order={3} />
   </Layout>
 )
