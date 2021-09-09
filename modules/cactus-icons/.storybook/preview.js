@@ -1,8 +1,8 @@
-import { StyleProvider } from '@repay/cactus-web'
-import { withKnobs } from '@storybook/addon-knobs'
+import defaultTheme, { generateTheme } from '@repay/cactus-theme'
 import addons from '@storybook/addons'
-import { addDecorator, addParameters, configure } from '@storybook/react'
-import * as React from 'react'
+import { addDecorator, addParameters } from '@storybook/react'
+import React from 'react'
+import { ThemeProvider } from 'styled-components'
 
 import storybookTheme from './theme'
 
@@ -10,19 +10,18 @@ addons.setConfig({
   theme: storybookTheme,
 })
 
-addDecorator(withKnobs)
-addDecorator((story) => (
-  <div
-    style={{
-      fontFamily: 'Helvetica, Arial, sans serif',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 'calc(100vw - 16px)',
-      flexDirection: 'column',
-      marginTop: '20px',
-    }}
-  >
-    <StyleProvider>{story()}</StyleProvider>
-  </div>
+addParameters({ layout: 'fullscreen' })
+
+const useTheme = (hue) => {
+  const ref = React.useRef(defaultTheme)
+  if (ref.current.hue !== hue) {
+    ref.current = generateTheme({ primaryHue: hue })
+  }
+  return ref.current
+}
+
+addDecorator((Story, context) => (
+  <ThemeProvider theme={useTheme(context.args.hue)}>
+    <Story />
+  </ThemeProvider>
 ))

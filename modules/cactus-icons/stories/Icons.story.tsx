@@ -1,44 +1,58 @@
-import cactusTheme, { CactusTheme, generateTheme } from '@repay/cactus-theme'
-import { number, select, text } from '@storybook/addon-knobs'
 import React, { ReactElement } from 'react'
 
 import * as icons from '../i'
 
-type IconName = keyof typeof icons
-const iconNames: IconName[] = Object.keys(icons) as IconName[]
+type IconName = Exclude<keyof typeof icons, 'iconSizes'>
+const iconNames = Object.keys(icons).filter((x) => x !== 'iconSizes') as IconName[]
+
+type SizeArg = { iconSize: string }
+type Icon = (props: SizeArg & { color: string }) => ReactElement
+type IconArg = { Icon: Icon }
 
 export default {
   title: 'Icons',
   component: icons as any,
+  args: { hue: 210, iconSize: 'large' },
+  argTypes: {
+    hue: { control: { type: 'range', min: 0, max: 360, step: 1 } },
+  },
 }
 
-export const One = (): ReactElement => {
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const Icon = icons[iconName]
-  const hue: number = number('hue', 210)
-  const theme: CactusTheme = generateTheme({ primaryHue: hue })
-
-  return <Icon iconSize={text('iconSize', 'large')} style={{ color: theme.colors.callToAction }} />
+const FLEX = {
+  display: 'flex',
+  justifyContent: 'center',
+  height: '100vh',
+  alignItems: 'center',
+} as const
+export const One = ({ Icon, iconSize }: SizeArg & IconArg): ReactElement => (
+  <div style={FLEX}>
+    <Icon iconSize={iconSize} color="callToAction" />
+  </div>
+)
+One.args = { Icon: 'ActionsAdd' }
+One.argTypes = {
+  Icon: {
+    name: 'icon',
+    control: { type: 'select' },
+    options: iconNames,
+    mapping: iconNames.reduce((mapping, icon) => {
+      mapping[icon] = icons[icon]
+      return mapping
+    }, {} as Record<string, Icon>),
+  },
 }
 
-export const All = (): ReactElement => {
-  const size = text('iconSize', 'large')
-  return (
-    <div
-      style={{
-        color: cactusTheme.colors.callToAction,
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        gridGap: '16px',
-      }}
-    >
-      {Object.entries(icons)
-        .filter(([name]): boolean => name !== 'iconSizes')
-        .map(
-          ([name, Icon]): ReactElement => (
-            <Icon key={name} iconSize={size} />
-          )
-        )}
-    </div>
-  )
-}
+const GRID = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(12, 1fr)',
+  gap: '16px',
+  padding: '24px',
+  justifyItems: 'center',
+} as const
+export const All = ({ iconSize }: SizeArg): ReactElement => (
+  <div style={GRID}>
+    {iconNames.map((key) =>
+      React.createElement(icons[key], { key, iconSize, color: 'callToAction' })
+    )}
+  </div>
+)
