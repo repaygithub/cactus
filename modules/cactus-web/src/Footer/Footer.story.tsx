@@ -1,8 +1,7 @@
-import { text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Box, Footer } from '../'
+import { HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 const LOGO =
   'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg'
@@ -10,12 +9,19 @@ const LOGO =
 export default {
   title: 'Footer',
   component: Footer,
-} as Meta
+  argTypes: { variant: HIDE_CONTROL, logo: STRING },
+  args: {
+    textContent: 'Some Custom Footer Content',
+    logo: LOGO,
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => {
-  const customContent = text('Text Content', 'Some Custom Footer Content')
+export const BasicUsage: Story<typeof Footer, { textContent: string }> = ({
+  textContent,
+  logo,
+}) => {
   const content = [
-    customContent + ' ',
+    textContent + ' ',
     <a key="linkless">Linkless Anchor</a>,
     ' | ',
     <a key="repay" href="https://repay.com">
@@ -30,13 +36,13 @@ export const BasicUsage = (): React.ReactElement => {
     <Box width="100%">
       <div>
         White
-        <Footer variant="white" logo={LOGO}>
+        <Footer variant="white" logo={logo}>
           {content}
         </Footer>
       </div>
       <div style={{ marginTop: '20px' }}>
         Gray
-        <Footer logo={LOGO}>{content}</Footer>
+        <Footer logo={logo}>{content}</Footer>
       </div>
       <div style={{ marginTop: '20px' }}>
         Dark, no logo

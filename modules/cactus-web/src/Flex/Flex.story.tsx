@@ -1,9 +1,7 @@
-import { select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
-import { Property } from 'csstype'
 import React from 'react'
 
 import { Flex } from '../'
+import { Story } from '../helpers/storybook'
 
 const justifyOptions = [
   'unset',
@@ -24,17 +22,26 @@ const flexWrapOptions = ['unset', 'initial', 'wrap', 'nowrap', 'wrap-reverse']
 export default {
   title: 'Flex',
   component: Flex,
-} as Meta
+  argTypes: {
+    justifyContent: { options: justifyOptions },
+    alignItems: { options: alignOptions },
+    flexWrap: { options: flexWrapOptions },
+    flexDirection: { options: directionOptions },
+    height: { control: 'text' },
+    alignSelf: { options: alignOptions },
+  },
+  args: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    height: '100%',
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <Flex
-    justifyContent={select('justifyContent', justifyOptions, 'flex-end')}
-    alignItems={select('alignItems', alignOptions, 'center')}
-    flexWrap={select('flexWrap', flexWrapOptions, 'wrap') as Property.FlexWrap}
-    flexDirection={select('flexDirection', directionOptions, 'row') as Property.FlexDirection}
-    height={text('height', '100%')}
-  >
-    <Flex alignSelf={select('alignSelf', alignOptions, 'unset')} p={5} colors="base" />
+export const BasicUsage: Story<typeof Flex> = ({ alignSelf, ...args }) => (
+  <Flex {...args}>
+    <Flex alignSelf={alignSelf} p={5} colors="base" />
     <Flex p={5} colors="darkestContrast" />
   </Flex>
 )

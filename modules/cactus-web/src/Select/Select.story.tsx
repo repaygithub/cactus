@@ -1,94 +1,85 @@
 import { DescriptiveLocation } from '@repay/cactus-icons'
-import { array, boolean, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 import { Select } from '../'
+import { Action, actions, HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
 import arizonaCities from '../storySupport/arizonaCities'
 import { SelectValueType } from './Select'
-
-const eventLoggers = {
-  onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
-  onFocus: (e: any) => console.log('onFocus:', e.target.name),
-  onBlur: (e: any) => console.log('onBlur:', e.target.name),
-}
 
 const defaultMultiValue = arizonaCities.slice(6, 15).reverse()
 
 export default {
   title: 'Select',
   component: Select,
-} as Meta
+  argTypes: {
+    options: HIDE_CONTROL,
+    id: HIDE_CONTROL,
+    value: HIDE_CONTROL,
+    className: HIDE_CONTROL,
+    matchNotFoundText: STRING,
+    extraLabel: STRING,
+    noOptionsText: STRING,
+    placeholder: STRING,
+    status: { options: ['success', 'warning', 'error'] },
+    ...actions('onChange', 'onBlur', 'onFocus'),
+  },
+  args: {
+    id: 'select',
+    name: 'select',
+    disabled: false,
+    multiple: false,
+    comboBox: false,
+    canCreateOption: true,
+  },
+} as const
 
-export const BasicUsage = (): ReactElement => {
-  const optionsAvailable = boolean('Show options?', true)
-  const options = array('options', ['name', 'other', 'three'])
-  return (
-    <React.Fragment>
-      <Select
-        options={optionsAvailable ? options : []}
-        noOptionsText={text('No option text', 'No options available')}
-        name={text('name', 'random')}
-        id={text('id', 'select-input')}
-        disabled={boolean('disabled', false)}
-        multiple={boolean('multiple', false)}
-        m={text('m', '2')}
-        placeholder={text('placeHolder', 'Select an option')}
-        {...eventLoggers}
-      />
-    </React.Fragment>
-  )
-}
-export const CollisionsInAnOverSizedContainer = (): ReactElement => (
+type ChangeArg = { onChange: Action<React.ChangeEvent<{ value: SelectValueType | null }>> }
+type BasicStory = Story<typeof Select, { showOptions: boolean }>
+
+export const BasicUsage: BasicStory = ({ showOptions, options, ...args }) => (
+  <Select {...args} options={showOptions ? options : []} />
+)
+BasicUsage.argTypes = { options: { control: 'array' }, margin: SPACE }
+BasicUsage.args = { options: ['name', 'other', 'three'], showOptions: true, margin: '2' }
+
+export const CollisionsInLargeContainer: BasicStory = ({ showOptions, options, ...args }) => (
   <React.Fragment>
-    <Select
-      options={array('options', ['name', 'other', 'three'])}
-      name={text('name', 'random')}
-      id={text('id', 'select-input')}
-      disabled={boolean('disabled', false)}
-      {...eventLoggers}
-    />
+    <Select {...args} options={showOptions ? options : []} />
     <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
       Scroll down and to the right
     </div>
   </React.Fragment>
 )
-
-CollisionsInAnOverSizedContainer.storyName = 'Collisions in an over-sized container'
-CollisionsInAnOverSizedContainer.parameters = {
+CollisionsInLargeContainer.argTypes = { options: { control: 'array' }, margin: SPACE }
+CollisionsInLargeContainer.args = {
+  options: ['name', 'other', 'three'],
+  showOptions: true,
+  margin: '2',
+}
+CollisionsInLargeContainer.storyName = 'Collisions in an over-sized container'
+CollisionsInLargeContainer.parameters = {
   cactus: { overrides: { height: '220vh', width: '220vw' } },
   storyshots: false,
 }
 
-export const LongListOfOptions = (): ReactElement => {
+export const LongListOfOptions: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>(arizonaCities[6])
   return (
     <Select
+      {...args}
       options={arizonaCities}
-      name="random"
-      id="select-input"
-      disabled={boolean('disabled', false)}
-      {...eventLoggers}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={args.onChange.wrap(setValue, true)}
       value={value}
     />
   )
 }
-
 LongListOfOptions.storyName = 'Long list of options'
 
-export const LongOptionLabels = (): ReactElement => {
+export const LongOptionLabels: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>('')
   return (
     <div style={{ width: '194px' }}>
-      <Select
-        name="random"
-        id="select-input"
-        disabled={boolean('disabled', false)}
-        {...eventLoggers}
-        onChange={(e) => setValue(e.target.value)}
-        value={value}
-      >
+      <Select {...args} onChange={args.onChange.wrap(setValue, true)} value={value}>
         <option value="long-option">This should be the longest option available</option>
         <option value="another-option">Here is another option</option>
         <option value="the-last-option">One more option</option>
@@ -96,24 +87,12 @@ export const LongOptionLabels = (): ReactElement => {
     </div>
   )
 }
-
 LongOptionLabels.storyName = 'Long option labels'
 LongOptionLabels.parameters = { storyshots: false }
-export const WithMultiselect = (): ReactElement => {
+export const WithMultiselect: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>(defaultMultiValue)
   return (
-    <Select
-      name="random"
-      id="select-input"
-      disabled={boolean('disabled', false)}
-      {...eventLoggers}
-      onChange={(e) => {
-        eventLoggers.onChange(e)
-        setValue(e.target.value)
-      }}
-      value={value}
-      multiple
-    >
+    <Select {...args} onChange={args.onChange.wrap(setValue, true)} value={value}>
       {arizonaCities.map((city, ix) => (
         <option key={ix} value={city}>
           <DescriptiveLocation /> {city}
@@ -122,28 +101,19 @@ export const WithMultiselect = (): ReactElement => {
     </Select>
   )
 }
-
+WithMultiselect.args = { multiple: true }
 WithMultiselect.parameters = { cactus: { overrides: { overflow: 'hidden' } } }
 
-export const WithComboBox = (): ReactElement => {
+type OptionAl = ChangeArg & { showOptions: boolean }
+export const WithComboBox: Story<typeof Select, OptionAl> = ({
+  showOptions,
+  onChange,
+  ...args
+}) => {
   const [value, setValue] = React.useState<SelectValueType>(null)
-  const optionsAvailable = boolean('Show options?', true)
   return (
-    <Select
-      noOptionsText={text('No option text', 'No options available')}
-      name="random"
-      id="select-input"
-      disabled={boolean('disabled', false)}
-      {...eventLoggers}
-      onChange={(e) => {
-        eventLoggers.onChange(e)
-        setValue(e.target.value)
-      }}
-      value={value}
-      comboBox
-      canCreateOption={boolean('canCreateOption', true)}
-    >
-      {optionsAvailable &&
+    <Select {...args} onChange={onChange.wrap(setValue, true)} value={value}>
+      {showOptions &&
         arizonaCities.map((city, ix) => (
           <Select.Option key={ix} value={city} altText={city.toLowerCase()}>
             <DescriptiveLocation iconSize="medium" /> {city}
@@ -152,28 +122,22 @@ export const WithComboBox = (): ReactElement => {
     </Select>
   )
 }
-
+WithComboBox.args = { showOptions: true, comboBox: true }
 WithComboBox.storyName = 'With ComboBox'
 WithComboBox.parameters = { cactus: { overrides: { overflow: 'hidden' } }, storyshots: false }
 
-export const WithMultiSelectComboBox = (): ReactElement => {
+export const WithMultiSelectComboBox: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>([])
   return (
     <Select
+      {...args}
       options={arizonaCities}
-      name="random"
-      id="select-input"
-      disabled={boolean('disabled', false)}
-      {...eventLoggers}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={args.onChange.wrap(setValue, true)}
       value={value}
-      comboBox
-      multiple
-      canCreateOption={boolean('canCreateOption', true)}
     />
   )
 }
-
+WithMultiSelectComboBox.args = { comboBox: true, multiple: true }
 WithMultiSelectComboBox.storyName = 'With MultiSelect ComboBox'
 WithMultiSelectComboBox.parameters = {
   cactus: { overrides: { overflow: 'hidden' } },

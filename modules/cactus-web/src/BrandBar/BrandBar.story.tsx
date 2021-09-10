@@ -1,6 +1,4 @@
 import { DescriptiveAt } from '@repay/cactus-icons'
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 import styled from 'styled-components'
@@ -19,6 +17,7 @@ import {
   TextInput,
   useScreenSize,
 } from '../'
+import { Story, STRING } from '../helpers/storybook'
 import { insetBorder } from '../helpers/theme'
 import { SelectValueType } from '../Select/Select'
 
@@ -78,21 +77,26 @@ const action = (msg: string) => () => console.log(msg)
 export default {
   title: 'BrandBar',
   component: BrandBar,
-} as Meta
+  argTypes: { logo: STRING },
+  args: { logo: LOGO },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
+type LogoArg = { logo: string }
+export const BasicUsage: Story<
+  {
+    isProfilePage: boolean
+    menuLabel: string
+    userMenuItems: string[]
+  } & LogoArg
+> = ({ isProfilePage, menuLabel, userMenuItems, logo }) => (
   <Layout>
-    <BrandBar logo={LOGO}>
-      <BrandBar.UserMenu
-        isProfilePage={boolean('On profile page?', false)}
-        label={text('Menu Title', 'Hershell Jewess')}
-      >
-        <BrandBar.UserMenuItem onClick={action('Settings')}>
-          {text('Action one', 'Settings')}
-        </BrandBar.UserMenuItem>
-        <BrandBar.UserMenuItem onClick={action('Logout')}>
-          {text('Action two', 'Logout')}
-        </BrandBar.UserMenuItem>
+    <BrandBar logo={logo}>
+      <BrandBar.UserMenu isProfilePage={isProfilePage} label={menuLabel}>
+        {userMenuItems.map((item, ix) => (
+          <BrandBar.UserMenuItem key={ix} onClick={action(item)}>
+            {item}
+          </BrandBar.UserMenuItem>
+        ))}
         <BrandBar.UserMenuItem as={Link} to="https://www.google.com">
           Go to Google
         </BrandBar.UserMenuItem>
@@ -101,17 +105,31 @@ export const BasicUsage = (): React.ReactElement => (
     <Layout.Content />
   </Layout>
 )
+BasicUsage.argTypes = {
+  isProfilePage: { name: 'is on profile page' },
+  menuLabel: { name: 'user display name' },
+  userMenuItems: { name: 'user menu actions' },
+}
+BasicUsage.args = {
+  isProfilePage: false,
+  menuLabel: 'Hershell Jewess',
+  userMenuItems: ['Settings', 'Logout'],
+}
 
-export const CustomItems = (): React.ReactElement => {
+export const CustomItems: Story<
+  {
+    moveItem: boolean
+  } & LogoArg
+> = ({ logo, moveItem }): React.ReactElement => {
   const [org, setOrg] = React.useState<SelectValueType>('OWE')
   const onOrgChange = React.useCallback(
     (e: React.ChangeEvent<{ value: SelectValueType }>) => setOrg(e.target.value),
     [setOrg]
   )
-  const icon = boolean('Move to ActionBar', false) ? <DescriptiveAt /> : undefined
+  const icon = moveItem ? <DescriptiveAt /> : undefined
   return (
     <Layout>
-      <BrandBar logo={LOGO}>
+      <BrandBar logo={logo}>
         <BrandBar.Item id="org-item" mobileIcon={icon} aria-label="at">
           <SelectField
             m={3}
@@ -135,6 +153,8 @@ export const CustomItems = (): React.ReactElement => {
     </Layout>
   )
 }
+CustomItems.argTypes = { moveItem: { name: 'move org select to ActionBar' } }
+CustomItems.args = { moveItem: false }
 
 CustomItems.parameters = {
   beforeScreenshot: async (page: Page) => {
@@ -172,7 +192,8 @@ const ListItem = styled.li<{ $isLastItem: boolean }>`
   }
 `
 
-const BrandBarWithOrgDropdown = () => {
+type AlignArgs = LogoArg & { align: 'right' | 'left' }
+const BrandBarWithOrgDropdown = ({ logo, align }: AlignArgs) => {
   /*
    * Had to pull this into a separate component so we could use the
    * useScreenSize() hook.
@@ -181,7 +202,6 @@ const BrandBarWithOrgDropdown = () => {
   const [searchValue, setSearchValue] = React.useState<string>('')
   const [searchedOrgs, setSearchedOrgs] = React.useState<Org[]>([])
   const isTiny = SIZES.tiny === useScreenSize()
-  const align: 'left' | 'right' = select('align', ['left', 'right'], 'right')
 
   React.useEffect(() => {
     if (searchValue) {
@@ -198,7 +218,7 @@ const BrandBarWithOrgDropdown = () => {
   }
 
   return (
-    <BrandBar logo={LOGO}>
+    <BrandBar logo={logo}>
       <BrandBar.Item align="left">
         <Box
           p={4}
@@ -314,15 +334,17 @@ const BrandBarWithOrgDropdown = () => {
   )
 }
 
-export const WithOrgDropdown = (): React.ReactElement => {
+export const WithOrgDropdown: Story<AlignArgs> = (args) => {
   return (
     <Layout>
-      <BrandBarWithOrgDropdown />
+      <BrandBarWithOrgDropdown {...args} />
       <ActionBar />
       <Layout.Content />
     </Layout>
   )
 }
+WithOrgDropdown.argTypes = { align: { options: ['left', 'right'] } }
+WithOrgDropdown.args = { align: 'right' }
 
 WithOrgDropdown.parameters = {
   beforeScreenshot: async (page: Page) => {

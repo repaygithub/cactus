@@ -1,11 +1,7 @@
-import { select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Grid, StepAvatar } from '../'
-import { AvatarStep } from './StepAvatar'
-
-const avatarSteps: AvatarStep[] = ['notDone', 'inProcess', 'done']
+import { HIDE_STYLED, Story, STRING } from '../helpers/storybook'
 
 const StepManager = (props: {
   children: (state: { currentStep: number; setStep: (step: number) => void }) => React.ReactNode
@@ -18,15 +14,19 @@ const StepManager = (props: {
 export default {
   title: 'StepAvatar',
   component: StepAvatar,
-} as Meta
+  argTypes: {
+    ...HIDE_STYLED,
+  },
+  parameters: { controls: { disable: true } },
+} as const
 
-export const BasicUsage = (): React.ReactElement => {
-  return (
-    <StepAvatar status={select('current step', avatarSteps, 'inProcess')}>
-      {text('Step Number', '#')}
-    </StepAvatar>
-  )
+export const BasicUsage: Story<typeof StepAvatar> = (args) => <StepAvatar {...args} />
+BasicUsage.argTypes = {
+  status: { name: 'current step', options: ['notDone', 'inProcess', 'done'] },
+  children: { name: 'step number', ...STRING },
 }
+BasicUsage.args = { status: 'inProcess', children: '#' }
+BasicUsage.parameters = { controls: { disable: false } }
 
 export const BasicExampleHorizontal = (): React.ReactElement => {
   return (

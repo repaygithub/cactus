@@ -1,4 +1,3 @@
-import { withKnobs } from '@storybook/addon-knobs'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import addons from '@storybook/addons'
 import { addDecorator, addParameters } from '@storybook/react'
@@ -43,6 +42,7 @@ addons.setConfig({
 
 addParameters({
   layout: 'fullscreen',
+  controls: { sort: 'alpha' },
   viewport: {
     viewports: {
       ...INITIAL_VIEWPORTS,
@@ -52,5 +52,4 @@ addParameters({
 })
 export const parameters = { docs: { inlineStories: false, iframeHeight: 'auto' } }
 
-addDecorator(withKnobs)
 addDecorator(CactusAddon)

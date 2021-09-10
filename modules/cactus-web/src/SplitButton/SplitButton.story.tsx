@@ -1,118 +1,98 @@
-import * as icons from '@repay/cactus-icons'
-import { select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Flex, SplitButton } from '../'
-import { IconProps, SplitButtonVariant } from './SplitButton'
-type IconName = keyof typeof icons | 'None'
-const iconNames: IconName[] = Object.keys(icons) as IconName[]
+import {
+  actions,
+  ActionWrap,
+  HIDE_CONTROL,
+  Icon,
+  ICON_ARG,
+  Story,
+  STRING,
+} from '../helpers/storybook'
+
+const icon = (name: string) => ({ ...ICON_ARG, name, defaultValue: undefined })
 
 export default {
   title: 'SplitButton',
   component: SplitButton,
-} as Meta
+  argTypes: {
+    mainActionLabel: STRING,
+    onSelectMainAction: HIDE_CONTROL,
+    mainActionIcon: icon('mainActionIcon'),
+    ...actions({ name: 'onSelect', wrapper: true }),
+  },
+  args: {
+    mainActionLabel: 'Main Action',
+    disabled: false,
+  },
+} as const
 
-const SplitButtonBase = ({
-  variant,
-  disabled,
-}: {
-  disabled?: boolean
-  variant: SplitButtonVariant
-}) => {
-  iconNames.unshift('None')
-  const mainIconName: IconName = select('mainActionIcon', iconNames, 'None')
-  const actionIconName1: IconName = select('actionIcon1', iconNames, 'None')
-  const actionIconName2: IconName = select('actionIcon2', iconNames, 'None')
-  let MainIcon: React.FunctionComponent<IconProps>
-  let ActionIcon1: React.FunctionComponent<IconProps> | undefined = undefined
-  let ActionIcon2: React.FunctionComponent<IconProps> | undefined = undefined
-  if (mainIconName !== 'None') {
-    MainIcon = icons[mainIconName] as React.FunctionComponent<IconProps>
+type SelectArg = { onSelect: ActionWrap<React.MouseEvent | void> }
+type IconStory = Story<
+  typeof SplitButton,
+  SelectArg & {
+    ActionIcon1: Icon
+    ActionIcon2: Icon
   }
-  if (actionIconName1 !== 'None') {
-    ActionIcon1 = icons[actionIconName1] as React.FunctionComponent<IconProps>
-  }
-  if (actionIconName2 !== 'None') {
-    ActionIcon2 = icons[actionIconName2] as React.FunctionComponent<IconProps>
-  }
-  const getMainActionLabel = () => {
-    if (disabled) {
-      return 'Disabled'
-    } else if (variant === 'standard') {
-      return text('MainActionLabel', 'standard')
-    } else {
-      return variant
-    }
-  }
+>
+
+const SplitButtonBase: IconStory = ({ ActionIcon1, ActionIcon2, onSelect, ...args }) => {
   return (
-    <SplitButton
-      disabled={disabled}
-      margin="5px"
-      onSelectMainAction={(): void => {
-        console.log('Main Action')
-      }}
-      mainActionLabel={getMainActionLabel()}
-      // @ts-ignore
-      mainActionIcon={MainIcon ? MainIcon : undefined}
-      variant={variant}
-    >
-      <SplitButton.Action onSelect={(): void => console.log('Action One')} icon={ActionIcon1}>
+    <SplitButton {...args} margin="5px" onSelectMainAction={onSelect('Main Action')}>
+      <SplitButton.Action onSelect={onSelect('Action One')} icon={ActionIcon1}>
         Action One
       </SplitButton.Action>
-      <SplitButton.Action onSelect={(): void => console.log('Action Two')} icon={ActionIcon2}>
+      <SplitButton.Action onSelect={onSelect('Action Two')} icon={ActionIcon2}>
         Action Two
       </SplitButton.Action>
     </SplitButton>
   )
 }
-export const BasicUsage = (): React.ReactElement => {
+export const BasicUsage: IconStory = (args) => {
   return (
     <Flex flexWrap="wrap" justifyContent="center" alignItems="center" width="80%">
-      <SplitButtonBase variant="standard" />
-      <SplitButtonBase variant="danger" />
-      <SplitButtonBase variant="success" />
-      <SplitButtonBase variant="standard" disabled />
+      <SplitButtonBase {...args} variant="standard" />
+      <SplitButtonBase {...args} variant="danger" mainActionLabel="danger" />
+      <SplitButtonBase {...args} variant="success" mainActionLabel="success" />
+      <SplitButtonBase {...args} variant="standard" mainActionLabel="Disabled" disabled />
     </Flex>
   )
 }
+BasicUsage.argTypes = {
+  variant: HIDE_CONTROL,
+  ActionIcon1: icon('actionIcon1'),
+  ActionIcon2: icon('actionIcon2'),
+}
+BasicUsage.args = { mainActionLabel: 'standard' }
 
-export const WithCollisions = (): React.ReactElement => (
+type MultiStory = Story<typeof SplitButton, SelectArg & { actions: string[] }>
+export const WithCollisions: MultiStory = ({ actions, onSelect, ...args }) => (
   <React.Fragment>
     <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
       Scroll down and to the right
     </div>
-    <SplitButton
-      onSelectMainAction={(): void => console.log('Main Action')}
-      mainActionLabel="Main Action"
-    >
-      <SplitButton.Action onSelect={(): void => console.log('Action One')}>
-        {text('Action Label', 'Action One')}
-      </SplitButton.Action>
-      <SplitButton.Action onSelect={(): void => console.log('Action Two')}>
-        Action Two
-      </SplitButton.Action>
+    <SplitButton {...args} onSelectMainAction={onSelect('Main Action')}>
+      {actions.map((a, i) => (
+        <SplitButton.Action key={i} onSelect={onSelect(a)} children={a} />
+      ))}
     </SplitButton>
   </React.Fragment>
 )
-
+WithCollisions.args = { actions: ['Action One', 'Action Two'] }
 WithCollisions.parameters = {
   cactus: { overrides: { height: '220vh', width: '220vw' } },
   storyshots: false,
 }
 
-export const FixedWidthContainer = (): React.ReactElement => (
+export const FixedWidthContainer: Story<typeof SplitButton, SelectArg> = ({
+  onSelect,
+  ...args
+}) => (
   <div style={{ width: '125px' }}>
-    <SplitButton
-      onSelectMainAction={(): void => console.log('Main Action')}
-      mainActionLabel="Main Action"
-    >
-      <SplitButton.Action onSelect={(): void => console.log('Action One')}>
-        Action One
-      </SplitButton.Action>
-      <SplitButton.Action onSelect={(): void => console.log('Action Two')}>
-        Action Two
-      </SplitButton.Action>
+    <SplitButton {...args} onSelectMainAction={onSelect('Main Action')}>
+      <SplitButton.Action onSelect={onSelect('Action One')}>Action One</SplitButton.Action>
+      <SplitButton.Action onSelect={onSelect('Action Two')}>Action Two</SplitButton.Action>
     </SplitButton>
   </div>
 )

@@ -1,39 +1,27 @@
-import { text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { ToggleField } from '../'
-
-const eventLoggers = {
-  onClick: (e: any) => console.log(`onClick '${e.target.name}': ${e.target.checked}`),
-  onFocus: (e: any) => console.log('onFocus:', e.target.name),
-  onBlur: (e: any) => console.log('onBlur:', e.target.name),
-}
+import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'ToggleField',
   component: ToggleField,
-} as Meta
+  argTypes: {
+    label: STRING,
+    checked: HIDE_CONTROL,
+    ...actions('onChange', 'onFocus', 'onBlur'),
+  },
+  args: { name: 'tf', label: 'Boolean Field' },
+} as const
 
-const ToggleHandler = (props: any) => {
+type TFStory = Story<typeof ToggleField, { onChange: Action<React.ChangeEvent> }>
+export const BasicUsage: TFStory = (args) => {
   const [checked, setChecked] = React.useState<boolean>(false)
-  const onChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(`onChange '${e.target.name}': ${e.target.checked}`)
-      setChecked(e.target.checked)
-    },
-    [setChecked]
+  const onChange = args.onChange.wrap(setChecked, true)
+  return (
+    <div>
+      <ToggleField {...args} checked={checked} onChange={onChange} />
+      <ToggleField name="boolean_field_disabled" label="Disabled" disabled />
+    </div>
   )
-  return <ToggleField {...props} checked={checked} onChange={onChange} />
 }
-
-export const BasicUsage = (): React.ReactElement => (
-  <div>
-    <ToggleHandler
-      name={text('name', 'boolean_field')}
-      label={text('label', 'Boolean Field')}
-      {...eventLoggers}
-    />
-    <ToggleHandler name="boolean_field_disabled" label="Disabled" disabled />
-  </div>
-)

@@ -1,8 +1,7 @@
-import { boolean } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Button, Flex, Tag } from '../'
+import { Action, actions, Story } from '../helpers/storybook'
 
 const options = [
   {
@@ -26,25 +25,22 @@ const options = [
 export default {
   title: 'Tag',
   component: Tag,
-} as Meta
+  argTypes: actions('onCloseIconClick'),
+} as const
 
-export const WithCloseOption = (): React.ReactElement => {
+type TagStory = Story<typeof Tag, { onCloseIconClick: Action<void> }>
+export const WithCloseOption: TagStory = ({ closeOption, onCloseIconClick }) => {
   const [values, setValues] = React.useState(options)
 
-  const deleteTag = (id: string) => {
-    setValues(values.filter((e) => e.id !== id))
-  }
-  const closeOption = boolean('close option', true)
+  const deleteTag = (id: string) =>
+    closeOption
+      ? onCloseIconClick.wrap(() => setValues(values.filter((e) => e.id !== id)))
+      : undefined
   return (
     <Flex justifyContent="center" flexDirection="column">
       <div>
         {values.map((e) => (
-          <Tag
-            closeOption={closeOption}
-            id={e.id}
-            key={e.id}
-            onCloseIconClick={closeOption ? () => deleteTag(e.id) : undefined}
-          >
+          <Tag closeOption={closeOption} id={e.id} key={e.id} onCloseIconClick={deleteTag(e.id)}>
             {e.label}
           </Tag>
         ))}
@@ -57,5 +53,5 @@ export const WithCloseOption = (): React.ReactElement => {
     </Flex>
   )
 }
-
+WithCloseOption.args = { closeOption: true }
 WithCloseOption.storyName = 'With close option'

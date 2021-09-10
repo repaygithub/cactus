@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Avatar, Flex, Grid, Text } from '../'
@@ -6,7 +5,8 @@ import { AvatarStatus, AvatarType } from './Avatar'
 export default {
   title: 'Avatar',
   component: Avatar,
-} as Meta
+  parameters: { controls: { disable: true } },
+} as const
 
 const dictionary: AvatarStatus[] = ['error', 'warning', 'info', 'success']
 
@@ -35,10 +35,10 @@ export const BasicUsage = (): React.ReactElement => {
   return (
     <Grid justify="center">
       {dictionary.map((status) => (
-        <AvatarGenerator type="feedback" status={status} />
+        <AvatarGenerator key={status} type="feedback" status={status} />
       ))}
       {dictionary.map((status) => (
-        <AvatarGenerator type="alert" status={status} />
+        <AvatarGenerator key={status} type="alert" status={status} />
       ))}
       <AvatarGenerator type="feedback" status="info" disabled />
     </Grid>

@@ -1,21 +1,30 @@
-import { array, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement } from 'react'
 
 import { Breadcrumb, Link } from '../'
+import { HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'Breadcrumb',
   component: Breadcrumb,
-} as Meta
+  argTypes: { className: HIDE_CONTROL },
+} as const
 
-export const BasicUsage = (): ReactElement => (
+interface Args {
+  items: string[]
+  activeItem: string
+}
+export const BasicUsage: Story<Args> = ({ items, activeItem }) => (
   <Breadcrumb>
-    <Breadcrumb.Item href="/">{text('Label 1', 'Account')}</Breadcrumb.Item>
-    <Breadcrumb.Active>{text('Label 2', 'Make a Payment')}</Breadcrumb.Active>
+    {items.map((item, ix) => (
+      <Breadcrumb.Item key={ix} href="/">
+        {item}
+      </Breadcrumb.Item>
+    ))}
+    <Breadcrumb.Active>{activeItem}</Breadcrumb.Active>
   </Breadcrumb>
 )
+BasicUsage.args = { items: ['Account'], activeItem: 'Make a Payment' }
 
 const CustomLink: React.FC<{ className?: string; children: React.ReactNode; customTo: string }> = ({
   children,
@@ -27,19 +36,19 @@ const CustomLink: React.FC<{ className?: string; children: React.ReactNode; cust
   </a>
 )
 
-export const CustomItemElements = (): ReactElement => (
+export const CustomItemElements: Story<Args> = ({ items, activeItem }) => (
   <Breadcrumb>
-    <Breadcrumb.Item as={CustomLink} customTo="/">
-      {text('Label 1', 'Accounts')}
-    </Breadcrumb.Item>
-    <Breadcrumb.Item as={CustomLink} customTo="/">
-      {text('Label 2', 'Account Details')}
-    </Breadcrumb.Item>
+    {items.map((item, ix) => (
+      <Breadcrumb.Item key={ix} as={CustomLink} customTo="/">
+        {item}
+      </Breadcrumb.Item>
+    ))}
     <Breadcrumb.Item as={CustomLink} customTo="/" active>
-      {text('Label 3', 'Make a Payment')}
+      {activeItem}
     </Breadcrumb.Item>
   </Breadcrumb>
 )
+CustomItemElements.args = { items: ['Accounts', 'Account Details'], activeItem: 'Make a Payment' }
 
 CustomItemElements.parameters = {
   beforeScreenshot: async (page: Page) => {
@@ -64,27 +73,4 @@ export const HugeListOfBreadcrumbs = (): ReactElement => (
   </Breadcrumb>
 )
 HugeListOfBreadcrumbs.storyName = 'A huge list of Breadcrumbs'
-
-export const AddMoreBreadcrumbs = (): ReactElement => {
-  const values = array('Add new Links', ['Link 1', 'Link 2', 'Link 3'])
-
-  return (
-    <Breadcrumb>
-      {values.map(
-        (e, i, arr): ReactElement =>
-          arr.length - 1 === i ? (
-            <Breadcrumb.Item href="/" active key={i}>
-              {text(`Label ${i + 1}`, `${e}`)}
-            </Breadcrumb.Item>
-          ) : (
-            <Breadcrumb.Item href="/" key={i}>
-              {text(`Label ${i + 1}`, `${e}`)}
-            </Breadcrumb.Item>
-          )
-      )}
-    </Breadcrumb>
-  )
-}
-
-AddMoreBreadcrumbs.storyName = 'Add more Breadcrumbs'
-AddMoreBreadcrumbs.parameters = { storyshots: false }
+HugeListOfBreadcrumbs.parameters = { controls: { disable: true } }

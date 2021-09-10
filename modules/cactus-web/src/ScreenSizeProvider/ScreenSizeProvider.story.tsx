@@ -1,9 +1,7 @@
-import cactusTheme, { ColorStyle } from '@repay/cactus-theme'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
-import { Box, ScreenSizeContext, ScreenSizeProvider, StyleProvider } from '../'
+import { Box, ScreenSizeProvider, useScreenSize } from '../'
 
 const BreakpointBox = styled(Box)`
   max-width: 320px;
@@ -11,7 +9,7 @@ const BreakpointBox = styled(Box)`
   height: 50px;
   line-height: 50px;
   border-radius: 15%;
-  ${(p): ColorStyle => p.theme.colorStyles.base};
+  ${(p) => p.theme.colorStyles.base};
   text-align: center;
 
   ${(p): string => p.theme.mediaQueries.small} {
@@ -45,22 +43,21 @@ const BreakpointBox = styled(Box)`
 `
 
 const ScreenSize = (): React.ReactElement => {
-  const size = React.useContext(ScreenSizeContext)
+  const size = useScreenSize()
   return <>{size.size}</>
 }
 
 export default {
   title: 'ScreenSize Provider',
   component: ScreenSizeProvider,
-} as Meta
+  parameters: { controls: { disable: true } },
+} as const
 
 export const DisplayCurrentScreenSize = (): React.ReactElement => {
   return (
-    <StyleProvider theme={cactusTheme} global={true}>
-      <BreakpointBox>
-        <ScreenSize />
-      </BreakpointBox>
-    </StyleProvider>
+    <BreakpointBox>
+      <ScreenSize />
+    </BreakpointBox>
   )
 }
 

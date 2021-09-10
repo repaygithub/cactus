@@ -1,97 +1,59 @@
-import * as icons from '@repay/cactus-icons'
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { TextButton } from '../'
-import actions from '../helpers/storybookActionsWorkaround'
-import { TextButtonVariants } from './TextButton'
-
-const textButtonVariants: TextButtonVariants[] = ['standard', 'action', 'danger', 'dark']
-type IconName = keyof typeof icons
-const iconNames: IconName[] = Object.keys(icons) as IconName[]
-const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
+import { actions, HIDE_CONTROL, Icon, ICON_ARG, SPACE, Story } from '../helpers/storybook'
 
 export default {
   title: 'TextButton',
   component: TextButton,
-} as Meta
+  argTypes: {
+    variant: { options: ['standard', 'action', 'danger', 'dark'] },
+    disabled: { control: 'boolean' },
+    children: { name: 'button text' },
+    ...actions('onClick', 'onFocus', 'onBlur'),
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
+export const BasicUsage: Story<typeof TextButton> = (args) => (
   <div>
-    <TextButton
-      variant="standard"
-      inverse={boolean('inverse', false)}
-      m={text('m', '')}
-      {...eventLoggers}
-    >
-      {text('children', 'Standard')}
-    </TextButton>
-    <TextButton variant="danger" m={text('m', '')} {...eventLoggers}>
+    <TextButton {...args} variant="standard" />
+    <TextButton variant="danger" {...args} inverse={false}>
       Danger
     </TextButton>
-    <TextButton
-      variant="action"
-      inverse={boolean('inverse', false)}
-      m={text('m', '')}
-      {...eventLoggers}
-    >
+    <TextButton {...args} variant="action">
       Action
     </TextButton>
-    <TextButton
-      variant="dark"
-      inverse={boolean('inverse', false)}
-      m={text('m', '')}
-      {...eventLoggers}
-    >
+    <TextButton {...args} variant="dark">
       Dark
     </TextButton>
-    <TextButton
-      variant="standard"
-      disabled
-      inverse={boolean('inverse', false)}
-      m={text('m', '')}
-      {...eventLoggers}
-    >
+    <TextButton {...args} variant="standard" disabled>
       Disabled
     </TextButton>
   </div>
 )
+BasicUsage.argTypes = {
+  variant: HIDE_CONTROL,
+  disabled: HIDE_CONTROL,
+  margin: SPACE,
+}
+BasicUsage.args = { children: 'Standard' }
 
-export const Multiple = (): React.ReactElement => (
+export const Multiple: Story<typeof TextButton> = (args) => (
   <p>
-    <TextButton
-      variant={select('variant', textButtonVariants, 'standard', 'First')}
-      disabled={boolean('disabled', false, 'First')}
-      inverse={boolean('inverse', false, 'First')}
-      m={text('m', '', 'First')}
-    >
-      {text('children', 'Add')}
-    </TextButton>
+    <TextButton {...args} />
     {' | '}
-    <TextButton
-      variant={select('variant', textButtonVariants, 'danger', 'Second')}
-      disabled={boolean('disabled', false, 'Second')}
-      inverse={boolean('inverse', false, 'Second')}
-      m={text('m', '', 'Second')}
-    >
-      {text('children', 'Remove')}
-    </TextButton>
+    <TextButton {...args} />
   </p>
 )
+Multiple.args = { children: 'Add', variant: 'action' }
 
-export const WithIcon = (): React.ReactElement => {
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const Icon = icons[iconName] as React.ComponentType<any>
+export const WithIcon: Story<typeof TextButton, { Icon: Icon }> = ({ Icon, children, ...args }) => {
   return (
-    <TextButton
-      variant={select('variant', textButtonVariants, 'standard')}
-      disabled={boolean('disabled', false)}
-      inverse={boolean('inverse', false)}
-      {...eventLoggers}
-    >
+    <TextButton {...args}>
       <Icon />
-      {text('children', 'Add')}
+      {children}
     </TextButton>
   )
 }
+WithIcon.argTypes = { Icon: ICON_ARG }
+WithIcon.args = { children: 'Add' }

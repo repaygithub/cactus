@@ -1,53 +1,52 @@
-import * as icons from '@repay/cactus-icons'
-import { select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
 import { Button, ConfirmModal, Text, TextInput } from '../'
-import { ModalType } from '../Modal/Modal'
-
-type IconName = keyof typeof icons
-const iconNames: IconName[] = Object.keys(icons) as IconName[]
-
-type StatusOptions = { [k in ModalType]: ModalType }
-const statusOptions: StatusOptions = {
-  action: 'action',
-  danger: 'danger',
-  warning: 'warning',
-  success: 'success',
-}
+import { Action, actions, HIDE_CONTROL, ICON_ARG, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'ConfirmModal',
   component: ConfirmModal,
-} as Meta
+  argTypes: {
+    title: STRING,
+    confirmButtonText: STRING,
+    cancelButtonText: STRING,
+    iconName: { ...ICON_ARG, mapping: undefined },
+    closeLabel: STRING,
+    modalLabel: STRING,
+    className: HIDE_CONTROL,
+    isOpen: HIDE_CONTROL,
+    ...actions('onConfirm', 'onClose'),
+  },
+  args: {
+    cancelButtonText: 'Cancel',
+    confirmButtonText: 'Confirm',
+    variant: 'action',
+    description: 'Your actions can override past setting causing unintended consequences.',
+  },
+} as const
 
-const ConfirmModalExample = (): React.ReactElement => {
+interface Args {
+  description: string
+  onConfirm: Action<void>
+  onClose: Action<void>
+}
+
+export const BasicUsage: Story<typeof ConfirmModal, Args> = ({
+  description,
+  onConfirm,
+  onClose,
+  ...args
+}) => {
   const [isOpen, setOpen] = useState(true)
-  const cancelText = text('Cancel Button Text', 'Cancel')
-  const confirmText = text('Confirm Button Text', 'Confirm')
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const iconSize = select('Icon size', ['medium', 'large'], 'medium')
-  const variant = select('variant', statusOptions, statusOptions.action)
-  const descriptionText = text(
-    'Description text',
-    'Your actions can override past setting causing unintended consequences.'
-  )
-
   return isOpen ? (
     <ConfirmModal
+      {...args}
       isOpen={isOpen}
-      onClose={(): void => setOpen(false)}
-      variant={variant}
-      onConfirm={(): void => setOpen(false)}
-      confirmButtonText={confirmText}
-      cancelButtonText={cancelText}
-      iconName={iconName}
-      iconSize={iconSize}
-      title={text('Title', '')}
+      onClose={onClose.wrap(() => setOpen(false))}
+      onConfirm={onConfirm.wrap(() => setOpen(false))}
     >
       <Text as="h4" fontWeight="normal">
-        {descriptionText}
+        {description}
       </Text>
     </ConfirmModal>
   ) : (
@@ -56,43 +55,32 @@ const ConfirmModalExample = (): React.ReactElement => {
     </Button>
   )
 }
+// A little weird but needed to match how the knobs behaved.
+BasicUsage.argTypes = { title: { mapping: null } }
 
-const ConfirmModalExample2 = (): React.ReactElement => {
+export const WithTextInputIcon: Story<typeof ConfirmModal, Args> = ({
+  description,
+  onConfirm,
+  onClose,
+  ...args
+}) => {
   const [isOpen, setOpen] = useState(true)
-  const cancelText = text('Cancel Button Text', 'Cancel')
-  const confirmText = text('Confirm Button Text', 'Confirm')
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const iconSize = select('Icon size', ['medium', 'large'], 'medium')
-  const variant = select('variant', statusOptions, statusOptions.action)
-  const descriptionText = text(
-    'Description text',
-    'Your actions can override past setting causing unintended consequences.'
-  )
-
   return isOpen ? (
     <ConfirmModal
+      {...args}
       isOpen={isOpen}
-      onClose={(): void => setOpen(false)}
-      variant={variant}
-      onConfirm={(): void => setOpen(false)}
-      confirmButtonText={confirmText}
-      cancelButtonText={cancelText}
-      iconName={iconName}
-      iconSize={iconSize}
+      onClose={onClose.wrap(() => setOpen(false))}
+      onConfirm={onConfirm.wrap(() => setOpen(false))}
     >
       <Text as="h4" fontWeight="normal" margin="0 0 16px 0">
-        {descriptionText}
+        {description}
       </Text>
       <TextInput placeholder="Placeholder" width="60%" />
     </ConfirmModal>
   ) : (
-    <Button variant="action" onClick={(): void => setOpen(true)}>
+    <Button variant="action" onClick={() => setOpen(true)}>
       Open Modal
     </Button>
   )
 }
-
-export const BasicUsage = (): React.ReactElement => <ConfirmModalExample />
-export const WithTextInputIcon = (): React.ReactElement => <ConfirmModalExample2 />
-
 WithTextInputIcon.storyName = 'With text input icon'

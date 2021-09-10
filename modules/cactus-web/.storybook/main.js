@@ -1,10 +1,10 @@
 module.exports = {
   stories: ['../src/**/*.story.tsx'],
   addons: [
-    '@storybook/addon-knobs',
-    '../cactus-addon/register.jsx',
-    '@storybook/addon-actions',
     '@storybook/addon-viewport',
     '@storybook/addon-docs',
+    '../cactus-addon/preset.js',
+    '@storybook/addon-controls',
+    '../cactus-addon/register.jsx',
   ],
 }

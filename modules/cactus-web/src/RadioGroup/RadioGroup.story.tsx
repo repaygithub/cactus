@@ -1,35 +1,35 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Flex, RadioGroup } from '../'
+import { FIELD_ARGS, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'RadioGroup',
   component: RadioGroup,
-} as Meta
-export const BasicUsage = (): React.ReactElement => (
-  <RadioGroup
-    id="my-id"
-    name="you-are-group-one"
-    label={text('label', 'A Label')}
-    disabled={boolean('disabled', false)}
-    onChange={(e: any) => console.log(`'${e.target.name}' changed: ${e.target.value}`)}
-    onFocus={(e: any) => console.log(`'${e.target.value}' focused`)}
-    onBlur={(e: any) => console.log(`'${e.target.value}' blurred`)}
-    tooltip={text('tooltip', 'Here there be radio buttons')}
-    error={text('error', '')}
-    success={text('success', '')}
-    warning={text('warning', '')}
-    autoTooltip={boolean('autoTooltip', true)}
-    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
-    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-  >
+  argTypes: {
+    required: HIDE_CONTROL,
+    value: HIDE_CONTROL,
+    defaultValue: HIDE_CONTROL,
+    ...FIELD_ARGS,
+  },
+} as const
+
+type GroupStory = Story<typeof RadioGroup, { buttonLabel: string }>
+export const BasicUsage: GroupStory = ({ buttonLabel, ...args }) => (
+  <RadioGroup id="my-id" {...args}>
     <RadioGroup.Button label="That's right" value="right" />
     <RadioGroup.Button disabled label="That's wrong" value="left" />
-    <RadioGroup.Button label={text('button label', 'That is... ')} value="center" />
+    <RadioGroup.Button label={buttonLabel} value="center" />
   </RadioGroup>
 )
+BasicUsage.args = {
+  label: 'A Label',
+  disabled: false,
+  tooltip: 'Here there be radio buttons',
+  autoTooltip: true,
+  name: 'radios',
+  buttonLabel: 'That is...',
+}
 
 export const WithValues = (): React.ReactElement => {
   const [value, setValue] = React.useState<string>('strong')
@@ -53,6 +53,7 @@ export const WithValues = (): React.ReactElement => {
     </Flex>
   )
 }
+WithValues.parameters = { controls: { disable: true } }
 const noop = () => undefined // Fix propTypes warning.
 
 export const WithDefaultValues = (): React.ReactElement => {
@@ -83,3 +84,4 @@ export const WithDefaultValues = (): React.ReactElement => {
     </Flex>
   )
 }
+WithDefaultValues.parameters = { controls: { disable: true } }

@@ -109,7 +109,7 @@ export default makeDecorator({
   name: NAME,
   parameterName: PROP_NAME,
   wrapper: (
-    getStory: any,
+    Story: any,
     context: any,
     { parameters, options }: { parameters?: CactusAddonsOptions; options?: CactusAddonsOptions }
   ): React.ReactElement => {
@@ -118,7 +118,7 @@ export default makeDecorator({
 
     return (
       <ProvideCactusTheme {...parameters} channel={channel}>
-        {getStory(context)}
+        <Story />
       </ProvideCactusTheme>
     )
   },

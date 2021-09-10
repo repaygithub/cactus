@@ -1,28 +1,22 @@
-import { boolean } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { CheckBox } from '../'
-import actions from '../helpers/storybookActionsWorkaround'
-
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+import { actions, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'CheckBox',
   component: CheckBox,
-} as Meta
+  argTypes: {
+    id: HIDE_CONTROL,
+    ...actions('onChange', 'onFocus', 'onBlur'),
+  },
+  args: { id: 'test', disabled: false },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <CheckBox id="test" name="kaneki" disabled={boolean('disabled', false)} {...eventLoggers} />
-)
+export const BasicUsage: Story<typeof CheckBox> = (args) => <CheckBox name="kaneki" {...args} />
 
-export const ControllingValueThroughProps = (): React.ReactElement => (
-  <CheckBox
-    id="test"
-    name="touka"
-    disabled={boolean('disabled', false)}
-    checked={boolean('checked', false)}
-    {...eventLoggers}
-  />
+export const ControllingValueThroughProps: Story<typeof CheckBox> = (args) => (
+  <CheckBox name="touka" {...args} />
 )
+ControllingValueThroughProps.args = { checked: false }
 ControllingValueThroughProps.parameters = { storyshots: false }

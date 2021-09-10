@@ -1,52 +1,52 @@
-import { boolean, number, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Table } from '../'
-
-type CellAlignment = 'left' | 'right' | 'center'
-const alignOptions = {
-  left: 'left',
-  right: 'right',
-  center: 'center',
-  undefined: '',
-}
-
-type Variant = 'table' | 'card' | 'mini'
-const varOptions = {
-  undefined: '',
-  table: 'table',
-  card: 'card',
-  mini: 'mini',
-}
-
-const createAlignKnob = (): CellAlignment =>
-  select('align (prop on Table.Cell)', alignOptions, 'left') as CellAlignment
+import { HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'Table',
   component: Table,
-} as Meta
+  argTypes: {
+    fullWidth: { control: 'boolean', defaultValue: true },
+    cardBreakpoint: { options: ['tiny', 'small', 'medium', 'large', 'extraLarge'] },
+    variant: { options: ['table', 'card', 'mini'] },
+    dividers: { control: 'boolean' },
+    as: HIDE_CONTROL,
+  },
+} as const
 
-export const Layout = (): React.ReactElement => {
-  const fullWidth = boolean('fullWidth', true)
-  const captionText = text('Caption', '')
-  const hasHeader = boolean('Has Header', true)
-  const headerText = text('Header Text', 'Header')
-  const cellText = text('Cell Text', 'Cell')
-  const colCount = number('# Columns', 4)
-  const rowCount = number('# Rows', 3)
-  const alignment = createAlignKnob()
-  const hasBody = boolean('Has tbody', true)
-  const variant = select('Variant Override', varOptions, undefined) as Variant
+type TableStory = Story<
+  typeof Table,
+  {
+    captionText: string
+    hasHeader: boolean
+    headerText: string
+    cellText: string
+    columnCount: number
+    rowCount: number
+    alignment: 'left' | 'right' | 'center'
+    hasBody: boolean
+  }
+>
 
+export const Layout: TableStory = ({
+  captionText,
+  hasHeader,
+  headerText,
+  cellText,
+  columnCount,
+  rowCount,
+  alignment,
+  hasBody,
+  ...args
+}) => {
   const makeRow = (
     content: string,
     index: number,
     Row: React.ElementType = Table.Row
   ): React.ReactElement => {
     const cols = []
-    for (let i = 0; i < colCount; i++) {
+    for (let i = 0; i < columnCount; i++) {
       cols.push(
         <Table.Cell align={alignment} key={i}>
           {content ? `${content} ${i}` : null}
@@ -64,31 +64,47 @@ export const Layout = (): React.ReactElement => {
   }
 
   return (
-    <Table fullWidth={fullWidth} variant={variant} dividers={boolean('dividers', false)}>
+    <Table {...args}>
       {captionText && <caption>{captionText}</caption>}
       {header}
       <Body>{rows}</Body>
     </Table>
   )
 }
+Layout.argTypes = {
+  alignment: { name: 'cell align', options: ['left', 'center', 'right'] },
+  captionText: STRING,
+  hasHeader: { name: 'has thead' },
+  hasBody: { name: 'has tbody' },
+}
+Layout.args = {
+  captionText: '',
+  hasHeader: true,
+  headerText: 'Header',
+  cellText: 'Cell',
+  columnCount: 4,
+  rowCount: 3,
+  hasBody: true,
+}
 
-export const StylesOnly = (): React.ReactElement => {
-  const fullWidth = boolean('fullWidth', true)
-  const captionText = text('Caption', '')
-  const hasHeader = boolean('Has Header', true)
-  const headerText = text('Header Text', 'Header')
-  const cellText = text('Cell Text', 'Cell')
-  const colCount = number('# Columns', 4)
-  const rowCount = number('# Rows', 3)
-  const hasBody = boolean('Has tbody', true)
-
+export const StylesOnly: TableStory = ({
+  captionText,
+  hasHeader,
+  headerText,
+  cellText,
+  columnCount,
+  rowCount,
+  alignment,
+  hasBody,
+  ...args
+}) => {
   const makeRow = (
     content: string,
     index: number,
     Cell: React.ElementType = 'td'
   ): React.ReactElement => {
     const cols = []
-    for (let i = 0; i < colCount; i++) {
+    for (let i = 0; i < columnCount; i++) {
       cols.push(<Cell key={i}>{`${content} ${i}`}</Cell>)
     }
     return <tr key={index}>{cols}</tr>
@@ -102,15 +118,24 @@ export const StylesOnly = (): React.ReactElement => {
   }
 
   return (
-    <Table as="table" fullWidth={fullWidth}>
+    <Table {...args} as="table">
       {captionText && <caption>{captionText}</caption>}
       {header}
       <Body>{rows}</Body>
     </Table>
   )
 }
+StylesOnly.argTypes = { ...Layout.argTypes }
+delete StylesOnly.argTypes.alignment
+StylesOnly.args = { ...Layout.args }
 
-export const WithLongValues = (): React.ReactElement => {
+export const WithLongValues: Story<
+  typeof Table,
+  {
+    text1: string
+    text2: string
+  }
+> = ({ text1, text2 }) => {
   return (
     <Table variant="card">
       <Table.Header>
@@ -121,23 +146,13 @@ export const WithLongValues = (): React.ReactElement => {
       </Table.Header>
       <Table.Body>
         <Table.Row>
-          <Table.Cell>
-            {text(
-              'text 1',
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
-            )}
-          </Table.Cell>
+          <Table.Cell>{text1}</Table.Cell>
           <Table.Cell>Data cell</Table.Cell>
           <Table.Cell>Data cell</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>Data cell</Table.Cell>
-          <Table.Cell>
-            {text(
-              'text 2',
-              'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
-            )}
-          </Table.Cell>
+          <Table.Cell>{text2}</Table.Cell>
           <Table.Cell>Data cell</Table.Cell>
         </Table.Row>
         <Table.Row>
@@ -154,5 +169,16 @@ export const WithLongValues = (): React.ReactElement => {
     </Table>
   )
 }
-
+WithLongValues.argTypes = {
+  variant: HIDE_CONTROL,
+  fullWidth: HIDE_CONTROL,
+  cardBreakpoint: HIDE_CONTROL,
+  dividers: HIDE_CONTROL,
+}
+const text =
+  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta perspiciatis dolores autem reiciendis minus voluptates, necessitatibus expedita inventore id vel'
+WithLongValues.args = {
+  text1: text,
+  text2: text,
+}
 WithLongValues.storyName = 'With long values'

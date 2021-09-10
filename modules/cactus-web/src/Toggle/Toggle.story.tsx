@@ -1,48 +1,18 @@
-import { boolean } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
-import { Table, Toggle } from '../'
+import { Toggle } from '../'
+import { Action, actions, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'Toggle',
   component: Toggle,
-} as Meta
+  argTypes: { checked: HIDE_CONTROL, ...actions('onChange', 'onFocus', 'onBlur') },
+} as const
 
-const ToggleManager = (props: any) => {
+type TStory = Story<typeof Toggle, { onChange: Action<React.ChangeEvent> }>
+export const BasicUsage: TStory = (args) => {
   const [checked, setChecked] = React.useState<boolean>(false)
-  const onChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(`onChange '${e.target.name}': ${e.target.checked}`)
-      setChecked(e.target.checked)
-    },
-    [setChecked]
-  )
-  return <Toggle {...props} checked={checked} onChange={onChange} />
+  const onChange = args.onChange.wrap(setChecked, true)
+  return <Toggle {...args} checked={checked} onChange={onChange} />
 }
-
-export const BasicUsage = (): React.ReactElement => {
-  return <ToggleManager disabled={boolean('Disabled', false)} />
-}
-
-export const InAlignedTable = (): React.ReactElement => (
-  <Table fullWidth={true}>
-    <Table.Body>
-      <Table.Row>
-        <Table.Cell align="left">
-          <Toggle />
-        </Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell align="center">
-          <Toggle />
-        </Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell align="right">
-          <Toggle />
-        </Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-)
+BasicUsage.args = { name: 'toggle' }

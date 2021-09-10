@@ -1,6 +1,4 @@
-import { boolean, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
-import React, { ReactElement, useCallback, useReducer } from 'react'
+import React, { ReactElement, useReducer } from 'react'
 
 import {
   Box,
@@ -12,6 +10,7 @@ import {
   TextInputField,
   ToggleField,
 } from '../'
+import { Action, actions, HIDE_CONTROL, SPACE, Story } from '../helpers/storybook'
 import { OptionType } from '../Select/Select'
 
 type FieldTypes = 'text' | 'textarea' | 'select' | 'file' | 'toggle' | 'checkbox' | 'radio'
@@ -161,43 +160,23 @@ const formReducer = (state: FormState, action: FormAction): FormState | never =>
   return state
 }
 
-const parseMargin = (m: string): any => {
-  if (/^[\d\s]+$/.test(m)) {
-    return parseInt(m)
-  } else if (m.includes(',')) {
-    return m.split(',').map(parseMargin)
-  }
-  return m || undefined
-}
-
-const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactElement => {
+const ExampleForm: Story<{
+  withValidations: boolean
+  fullWidth: boolean
+  marginOverride: string
+  onChange: Action<React.ChangeEvent>
+  onBlur: Action<React.FocusEvent>
+}> = ({ withValidations, fullWidth, marginOverride, onChange, onBlur }) => {
   const [{ values, statuses }, dispatch] = useReducer(formReducer, null, initForm)
-  const fullWidth = boolean('fullWidth', false)
-  const marginOverride = parseMargin(text('margin override', ''))
-  const handleChange = useCallback(
-    (name: string, value: any): void => {
-      dispatch({ type: 'change', name, value })
-    },
-    [dispatch]
-  )
+  const handleChange = onChange.wrap(({ target }: any) => {
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    dispatch({ type: 'change', name: target.name, value })
+  })
 
-  const handleBlur = useCallback(
-    (name): void => {
-      console.log(`onBlur(${name})`)
-      dispatch({ type: 'blur', name })
-    },
-    [dispatch]
-  )
+  const handleBlur = onBlur.wrap((e: any) => dispatch({ type: 'blur', name: e.target.name }))
 
   return (
-    <div
-      style={{
-        overflowY: 'auto',
-        height: '100vh',
-        width: '100vw',
-        boxSizing: 'border-box',
-      }}
-    >
+    <Box overflowY="auto" height="100vh" width="100vw">
       <Box
         as="form"
         width={fullWidth ? '100vw' : '50vw'}
@@ -232,13 +211,17 @@ const ExampleForm = ({ withValidations }: { withValidations?: boolean }): ReactE
           return <Field key={field.type + field.label} {...props} />
         })}
       </Box>
-    </div>
+    </Box>
   )
 }
 
 export default {
   title: 'FormField',
-} as Meta
+  argTypes: { marginOverride: SPACE, ...actions('onChange', 'onBlur') },
+  args: { fullWidth: false },
+} as const
 
-export const BasicUsage = (): ReactElement => <ExampleForm />
-export const WithStatuses = (): ReactElement => <ExampleForm withValidations />
+export const BasicUsage = ExampleForm.bind(null)
+export const WithStatuses = ExampleForm.bind(null)
+WithStatuses.argTypes = { withValidations: HIDE_CONTROL }
+WithStatuses.args = { withValidations: true }

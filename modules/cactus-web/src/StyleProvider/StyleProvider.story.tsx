@@ -1,5 +1,4 @@
 import cactusTheme from '@repay/cactus-theme'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -40,7 +39,8 @@ const BreakpointBox = styled(Box)`
 export default {
   title: 'Style Provider',
   component: StyleProvider,
-} as Meta
+  parameters: { controls: { disable: true } },
+} as const
 
 export const ComponentAdjusmentsBasedOnMediaQueries = (): React.ReactElement => {
   return (

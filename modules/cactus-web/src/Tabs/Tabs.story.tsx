@@ -1,10 +1,8 @@
-import { boolean, number, select } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
 import { Tab, TabController, TabList, TabPanel } from '../'
-import { justifyOptions } from '../Flex/Flex'
+import { Story } from '../helpers/storybook'
 
 const LABELS = [
   'Ready!',
@@ -33,17 +31,13 @@ const LABELS = [
 export default {
   title: 'Tabs',
   component: TabList,
-} as Meta
+} as const
 
-export const BasicUsage = (): React.ReactElement => {
-  const breadth = number('Tab Count', 6)
-  const fullWidth = boolean('Full Width', true)
-  const justify = select('Justify Content', justifyOptions, 'space-evenly')
-  const fillGaps = boolean('Fill Gaps', false)
+export const BasicUsage: Story<typeof TabList, { tabCount: number }> = ({ tabCount, ...args }) => {
   const [active, setActive] = React.useState(-1)
 
   const tabs = []
-  for (let i = 1; i < breadth; i++) {
+  for (let i = 1; i < tabCount; i++) {
     const label = LABELS[i % LABELS.length]
     tabs.push(
       <Tab key={i} aria-selected={i === active} onClick={() => setActive(i)} children={label} />
@@ -51,8 +45,8 @@ export const BasicUsage = (): React.ReactElement => {
   }
 
   return (
-    <TabList fullWidth={fullWidth} justifyContent={justify} fillGaps={fillGaps}>
-      {breadth > 0 && (
+    <TabList {...args}>
+      {tabCount > 0 && (
         <Tab
           as="a"
           href="#"
@@ -68,31 +62,29 @@ export const BasicUsage = (): React.ReactElement => {
     </TabList>
   )
 }
+BasicUsage.args = { tabCount: 6, justifyContent: 'space-evenly' }
 
-export const WithController = (): React.ReactElement => {
-  const justify = select('Justify Content', justifyOptions, 'space-evenly')
-  return (
-    <TabController id="the-tabs" initialTabId="the-tabs-name-tab">
-      <TabList justifyContent={justify}>
-        <Tab name="name">Name</Tab>
-        <Tab name="rank">Rank</Tab>
-        <Tab id="serial-num" panelId="serial-box">
-          Serial #
-        </Tab>
-      </TabList>
-      <TabPanel tab="name" mx={5} my={4}>
-        <h1>Nebby Nebulous</h1>
-      </TabPanel>
-      <TabPanel id="the-tabs-rank-panel" tabId="the-tabs-rank-tab" mx={5} my={4}>
-        <h2>Cloudy Nebula</h2>
-      </TabPanel>
-      <TabPanel id="serial-box" tabId="serial-num" mx={5} my={4}>
-        <p>N3BU14</p>
-      </TabPanel>
-    </TabController>
-  )
-}
-
+export const WithController: Story<typeof TabList> = (args) => (
+  <TabController id="the-tabs" initialTabId="the-tabs-name-tab">
+    <TabList {...args}>
+      <Tab name="name">Name</Tab>
+      <Tab name="rank">Rank</Tab>
+      <Tab id="serial-num" panelId="serial-box">
+        Serial #
+      </Tab>
+    </TabList>
+    <TabPanel tab="name" mx={5} my={4}>
+      <h1>Nebby Nebulous</h1>
+    </TabPanel>
+    <TabPanel id="the-tabs-rank-panel" tabId="the-tabs-rank-tab" mx={5} my={4}>
+      <h2>Cloudy Nebula</h2>
+    </TabPanel>
+    <TabPanel id="serial-box" tabId="serial-num" mx={5} my={4}>
+      <p>N3BU14</p>
+    </TabPanel>
+  </TabController>
+)
+WithController.args = { justifyContent: 'space-evenly' }
 WithController.parameters = {
   beforeScreenshot: async (page: Page) => {
     await page.focus('#serial-num')
