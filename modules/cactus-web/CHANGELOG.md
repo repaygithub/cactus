@@ -1,3 +1,20 @@
+# v8.1.0 (Mon Sep 13 2021)
+
+#### 🚀 Enhancement
+
+- Add Calendar component [#651](https://github.com/repaygithub/cactus/pull/651) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- Fix inconsistent heights of Select and DateInput components [#653](https://github.com/repaygithub/cactus/pull/653) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 2
+
+- [@wilysword](https://github.com/wilysword)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v8.0.0 (Mon Aug 16 2021)
 
 #### 💥 Breaking Change
