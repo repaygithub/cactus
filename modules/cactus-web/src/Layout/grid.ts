@@ -240,7 +240,7 @@ const ZERO_POSITION: CSSPosition = { top: 0, left: 0, bottom: 0, right: 0 }
 const BASIC_GRID = `
   display: -ms-grid;
   display: grid;
-  position: fixed;
+  position: absolute;
   overflow: auto;
 `
 

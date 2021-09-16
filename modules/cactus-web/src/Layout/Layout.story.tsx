@@ -278,8 +278,8 @@ const GridItem = ({ role, order, bg, style, ...position }: GridProps & Position)
   const layoutClass = useLayout(role, position, order)
   const color = `hsl(${bg}, 30%, 70%)`
   return (
-    <Box backgroundColor={color} className={layoutClass} style={style} p={2}>
-      {role}
+    <Box backgroundColor={color} className={layoutClass} p={2}>
+      <span style={style}>{role}</span>
     </Box>
   )
 }
