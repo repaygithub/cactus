@@ -1,4 +1,4 @@
-import { isEqual, noop } from 'lodash'
+import { gte, isEqual, lte, noop } from 'lodash'
 import React from 'react'
 import { css } from 'styled-components'
 
@@ -145,7 +145,7 @@ const reduceLayout = (state: LayoutState, action: LayoutAction) => {
     if (!old || !isEqual(old.src, action.position) || old.order !== action.order) {
       const components = [...state.components]
       const layout = toComponentLayout(role, action.position, action.order)
-      components[index < 0 ? components.length : index] = layout
+      sortInsert(components, index, layout)
       const classes = { ...state.classes, [role]: generateCSSClass(layout) }
       newState = { ...state, components, classes }
     }
@@ -163,18 +163,48 @@ const useGridLayout = (): LayoutCtx => {
 
 export default useGridLayout
 
-const sortComponents = (a: ComponentLayout, b: ComponentLayout) => {
-  let key = 0
-  if (a.type === 'grid' && b.type === 'grid') {
-    key = a.index - b.index
-    if (!key && isAbsGridLine(a.row) && isAbsGridLine(b.row)) {
-      key = a.row - b.row
+const sortInsert = (components: ComponentLayout[], index: number, layout: ComponentLayout) => {
+  let insertIndex = index < 0 ? components.length : index
+  components[insertIndex] = layout
+
+  const sort = (ix: number, cmp: (a: number, b: number) => boolean) => {
+    const compareTo = components[ix]
+    const key = componentSortKey(compareTo, layout)
+    if (key !== undefined) {
+      // If the items are already ordered, break.
+      if (cmp(key, 0)) return false
+      // Otherwise, swap them and continue sorting.
+      components[insertIndex] = compareTo
+      components[ix] = layout
+      insertIndex = ix
     }
-    if (!key && isAbsGridLine(a.column) && isAbsGridLine(b.column)) {
-      key = a.column - b.column
+    return true
+  }
+
+  for (let i = insertIndex - 1; i >= 0; i--) {
+    if (!sort(i, lte)) break
+  }
+  // Now check up the list, but only if the item is in its original position.
+  if (insertIndex === index) {
+    for (let i = insertIndex + 1; i < components.length; i++) {
+      if (!sort(i, gte)) break
     }
   }
-  return key || a.order - b.order
+}
+const componentSortKey = (a: ComponentLayout, b: ComponentLayout) => {
+  if (a.type === b.type) {
+    let key = 0
+    if (a.type === 'grid' && b.type === 'grid') {
+      key = a.index - b.index
+      if (!key && isAbsGridLine(a.row) && isAbsGridLine(b.row)) {
+        key = a.row - b.row
+      }
+      if (!key && isAbsGridLine(a.column) && isAbsGridLine(b.column)) {
+        key = a.column - b.column
+      }
+    }
+    return key || a.order - b.order
+  }
 }
 
 // To simplify calculations, require certain values to be absolute grid lines.
@@ -253,7 +283,7 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
   const gridRows: GridMap = {}
   const gridCols: GridMap = {}
   const fixed: CSSPosition & Sizes = { ...ZERO_POSITION }
-  for (const layout of components.sort(sortComponents)) {
+  for (const layout of components) {
     if (layout.type === 'fixed') {
       styles.push(css`
         .cactus-layout-${layout.role} {
