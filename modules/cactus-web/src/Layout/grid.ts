@@ -16,8 +16,9 @@ type Length = string | number
 type Dimension = Length | undefined
 type GridLine = string | number | undefined
 type GridDimension = Dimension | Dimension[]
+type ZIndex = { zIndex?: number }
 
-interface FixedPosition {
+interface FixedPosition extends ZIndex {
   fixed: FixedKey
   size: number
 }
@@ -41,7 +42,7 @@ type Sizes = {
   width?: Length
   height?: Length
 }
-type FixedBox = { [K in FixedKey]?: Length } & Sizes
+type FixedBox = { [K in FixedKey]?: Length } & Sizes & ZIndex
 
 interface GridArea {
   row: GridLine
@@ -60,7 +61,7 @@ type GridMap = Record<string, GridItem>
 
 type RowCol = 'row' | 'column'
 
-interface FixedLayout {
+interface FixedLayout extends ZIndex {
   role: string
   order: number
   type: 'fixed'
@@ -223,6 +224,7 @@ const toComponentLayout = (role: string, position: Position, order: number): Com
       index,
       key: position.fixed,
       size: position.size,
+      zIndex: position.zIndex,
     }
   }
   const key = position.grid ?? 'component'
@@ -399,6 +401,7 @@ const asStyle = (dim: RowCol, grid: GridItem, namedItems: GridMap, lastLine: num
 // so they don't overlap with any fixed components.
 const getFixedBox = (fixed: CSSPosition, layout: FixedLayout) => {
   const box: FixedBox = { ...fixed }
+  if (layout.zIndex !== undefined) box.zIndex = layout.zIndex
   // Delete the opposite: e.g. if this is top, delete bottom.
   delete box[fixedKeyOrder[(layout.index + 2) % 4]]
   // left/right are odd indexes, top/bottom are evens.

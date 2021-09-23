@@ -19,9 +19,9 @@ export const Sidebar: SidebarType = ({ layoutRole, className, ...props }) => {
   const size = React.Children.toArray(props.children).length ? WIDTH : 0
   let position: Position
   if (screenSize < SIZES.small) {
-    position = { fixed: 'bottom', size }
+    position = { fixed: 'bottom', size, zIndex: 100 }
   } else if (screenSize < SIZES.large) {
-    position = { fixed: 'left', size }
+    position = { fixed: 'left', size, zIndex: 100 }
   } else {
     position = { grid: 'left', width: size }
   }
@@ -81,7 +81,6 @@ Sidebar.Button.defaultProps = { role: 'button', type: 'button' }
 const SidebarDiv = styled.div`
   ${(p) => p.theme.colorStyles.standard};
   position: relative;
-  z-index: 100;
   box-sizing: border-box;
   display: flex;
   :empty {
