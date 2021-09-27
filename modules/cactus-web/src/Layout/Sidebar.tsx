@@ -1,30 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { classes } from '../helpers/styled'
 import { insetBorder } from '../helpers/theme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import { Position, Role, useLayout } from './Layout'
+import { Position, useLayout } from './grid'
 
 const WIDTH = 60
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  layoutRole: Role
+  layoutRole: string
 }
 
 type SidebarType = React.FC<SidebarProps> & { Button: ReturnType<typeof styled.button> }
 
 export const Sidebar: SidebarType = ({ layoutRole, className, ...props }) => {
-  const size = React.useContext(ScreenSizeContext)
-  let position: Position = 'floatLeft'
-  if (size < SIZES.small) {
-    position = 'fixedBottom'
-  } else if (size < SIZES.large) {
-    position = 'fixedLeft'
+  const screenSize = React.useContext(ScreenSizeContext)
+  const size = React.Children.toArray(props.children).length ? WIDTH : 0
+  let position: Position
+  if (screenSize < SIZES.small) {
+    position = { fixed: 'bottom', size, zIndex: 100 }
+  } else if (screenSize < SIZES.large) {
+    position = { fixed: 'left', size, zIndex: 100 }
+  } else {
+    position = { grid: 'left', width: size }
   }
-  const offset = React.Children.toArray(props.children).length ? WIDTH : 0
-  const { cssClass } = useLayout(layoutRole, { position, offset })
-  className = className ? `${className} ${cssClass}` : cssClass
-  return <SidebarDiv {...props} className={className} />
+  const layoutClass = useLayout(layoutRole, position)
+  return <SidebarDiv {...props} className={classes(className, layoutClass)} />
 }
 
 Sidebar.Button = styled.button`
@@ -85,8 +87,8 @@ const SidebarDiv = styled.div`
     display: none;
   }
 
-  &.cactus-layout-floatLeft,
-  &.cactus-layout-fixedLeft {
+  &.cactus-grid-left,
+  &.cactus-fixed-left {
     flex-direction: column;
     ${(p) => insetBorder(p.theme, 'lightContrast', 'right')};
     ${Sidebar.Button} {
@@ -97,7 +99,7 @@ const SidebarDiv = styled.div`
     }
   }
 
-  &.cactus-layout-fixedBottom {
+  &.cactus-fixed-bottom {
     flex-direction: row;
     justify-content: flex-end;
     ${(p) => insetBorder(p.theme, 'lightContrast', 'top')};

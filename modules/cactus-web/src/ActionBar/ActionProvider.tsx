@@ -36,12 +36,12 @@ const ActionContext = React.createContext<ActionCtx | undefined>(undefined)
 const ActionControlContext = React.createContext<ActionControl>({ hasConsumer: false })
 
 export function useAction(
-  element: React.ReactElement,
+  element: React.ReactElement | null,
   orderHint?: OrderHint,
   key?: React.Key
 ): React.ReactElement | null {
   const { addAction, removeAction, hasConsumer } = React.useContext(ActionControlContext)
-  if (!key && key !== 0) {
+  if (element && !key && key !== 0) {
     key = element.key || element.key === 0 ? element.key : undefined
   }
   // TODO It'd be great if I could come up with some sort of hash that indicated
@@ -51,7 +51,7 @@ export function useAction(
   // worry about re-renders triggered by hooks, since that's handled internally
   // regardless of where the element ends up in the tree.
   React.useEffect(() => {
-    if (addAction) {
+    if (element && addAction) {
       if (key === undefined) {
         throw new Error('Cannot add action bar item without a key.')
       }

@@ -61,8 +61,6 @@ Panel dialog popups are opened and closed by clicking the button; they can also 
 
 By default, the dialog popup is positioned right next to the ActionBar. The width and padding can be changed via styled-system props, but you can also change the positioning by passing a `positionPopup` callback. This will be called every time the popup becomes visible, with two arguments: the popup div, and the control button.
 
-> **Note:** On smaller screens the popup uses `position: fixed` by default, while on large screens it uses `position: absolute`. Absolutely positioned block elements will try to fit inside their parents regardless of where they're actually placed, which in this case is the 60px sidebar; as such, using the `width` prop is recommended.
-
 ### Page-specific Actions
 
 Some actions (like a search filter panel) may only apply to some pages, not the entire website. To add an action to the ActionBar without needing to place the ActionBar at the "bottom" of the component tree, an ActionBar.Item can be rendered in any descendant of an ActionProvider and it will appear in the ActionBar rather than inline. The item will be added to the ActionBar when the ActionBar.Item is mounted, and removed when it is unmounted.

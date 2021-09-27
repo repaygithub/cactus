@@ -245,11 +245,12 @@ const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(
 
     const onMenuFocus = useFocusHandler(setFocus)
 
-    useLayout('menubar', { position: 'flow', offset: 0 })
+    const layoutClass = useLayout('menubar', { grid: 'header' }, 10)
 
     return (
       <Nav
         {...props}
+        className={layoutClass}
         variant={variant}
         ref={ref}
         tabIndex={-1}
@@ -291,15 +292,15 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
   delete wrapperProps.role
   return (
     <ActionBar.PanelWrapper
-      as={SideNav}
+      as="nav"
       ref={ref}
       {...props}
       {...wrapperProps}
       onClick={navClickHandler}
     >
-      <ActionBar.Button {...buttonProps}>
+      <SideButton {...buttonProps}>
         <NavigationHamburger />
-      </ActionBar.Button>
+      </SideButton>
       <ActionBar.PanelPopup
         padding="0"
         width="350px"
@@ -370,9 +371,8 @@ const Nav = styled.nav<MenuBarProps>`
   ${variantSelector}
 `
 
-// Don't need `addLayoutStyle` because there are no dynamic values in the nested style.
-const SideNav = styled.nav`
-  .cactus-layout-fixedBottom & {
+const SideButton = styled(ActionBar.Button)`
+  .cactus-fixed-bottom & {
     position: absolute;
     left: 0;
     bottom: 0;

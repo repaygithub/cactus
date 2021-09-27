@@ -7,13 +7,13 @@ import Layout from './Layout'
 
 # Layout
 
-Component that represents a web site's main responsive layout. It's specifically designed for use with cactus components; that may change in the future, but for now the code is relatively simple to copy & adapt if you wish for more custom layouts.
+Component that represents a web site's main responsive layout. It's specifically designed for use with Cactus components, but can be customized via the `useLayout` hook.
 
 The site's main content should be wrapped in `Layout.Content`; for example, if using a routing library that's where you would put the router so that changing pages doesn't affect the menu, etc.
 
 ## Basic Usage
 
-Acceptable children are:
+Acceptable children from cactus-web are:
 
 - BrandBar
 - MenuBar
@@ -35,29 +35,137 @@ const LOGO = 'https://mysite.com/logo'
 const MySite = () => (
   <Router>
     <Layout>
-        <BrandBar logo={LOGO} />
-        <MenuBar>
-          <MenuBar.Item as={Link} to="/home">Teenage Mutant</MenuBar.Item>
-          <MenuBar.Item as={Link} to="/other/path">Ninja Turtles</MenuBar.Item>
-        </MenuBar>
-        <ActionBar />
-        <Layout.Content>
-            <Switch>
-              <Route path="/home">
-                <Home />
-              </Route>
-              <Route path="/other/path">
-                <Customer />
-              </Route>
-            </Switch>
-        </Layout.Content>
-        <Footer logo={LOGO}>The Foot clan returns.</Footer>
-      </Layout>
-    </Router>
-  )
+      <BrandBar logo={LOGO} />
+      <MenuBar>
+        <MenuBar.Item as={Link} to="/home">Teenage Mutant</MenuBar.Item>
+        <MenuBar.Item as={Link} to="/other/path">Ninja Turtles</MenuBar.Item>
+      </MenuBar>
+      <ActionBar />
+      <Layout.Content>
+        <Switch>
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route path="/other/path">
+            <Customer />
+          </Route>
+        </Switch>
+      </Layout.Content>
+      <Footer logo={LOGO}>The Foot clan returns.</Footer>
+    </Layout>
+  </Router>
 )
 ```
 
 ## Properties
 
 `Layout` takes no props aside from `children`.
+
+## Layout Customization with `useLayout`
+
+The Layout component provides a CSS grid that can be customized with the `useLayout` hook:
+
+```
+function useLayout(role: string, position: Position, order: number = 0): string;
+type Position = FixedPosition | GridPosition
+
+type GridLine = number | string | undefined
+type Dimension = GridLine | GridLine[]
+interface FixedPosition {
+  fixed: 'top' | 'left' | 'bottom' | 'right'
+  size: number
+}
+interface GridPosition {
+  grid?: 'header' | 'footer' | 'left' | 'right' | 'component'
+  width?: Dimension
+  height?: Dimension
+  row?: GridLine
+  rowSpan?: GridLine
+  rowEnd?: GridLine
+  col?: GridLine
+  colSpan?: GridLine
+  colEnd?: GridLine
+}
+```
+The `role` serves as an ID to apply the layout styles, and as such should be unique within your app.
+The `position` specifies where on the screen your component should appear,
+and the `order` is used to decide which order the components should appear in
+if they are in the same area, e.g. the grid header.
+The return value is a string containing CSS classes that should be applied to an element:
+- `cactus-layout-[role]`: this class actually applies the positioning styles.
+- `cactus-[type]-[key]`, e.g. `cactus-fixed-bottom` or `cactus-grid-header`; this is useful for applying styles to descendents, especially in components like the ActionBar where the position changes based on screen size.
+
+Obviously, this hook must be called from a component rendered as a descendant of the Layout component. Additionally, while a fixed component can be rendered from anywhere, a grid component must create an element that is a direct child of the layout div in the DOM, according to the rules of CSS grid.
+
+### Fixed Positioning
+
+Components with fixed positioning are placed outside the main layout, and the edges
+of the layout grid are adjusted according to the given `size` so they don't overlap.
+For example, `{ fixed: 'right', size: 43 }` moves the _right edge_ of the layout grid
+43 pixels in, and places the fixed element in the resulting blank space.
+
+If there are multiple fixed components, they are applied in `order`:
+two `top` components will move the grid's top edge by the sum of their sizes,
+and then one will have the style `top: 0; height: [sizeA];`, and the other
+will have the style `top: [sizeA]; height: [sizeB];`.
+If there's partial overlap, they'll be interleaved: if a left is ordered before a top,
+then left will have the style `left: 0; width: [sizeL];`
+and top will have the style `left: [sizeL]; top: 0; height: [sizeT];`.
+
+### Grid Positioning
+
+The grid positioning can be used to place components anywhere in a CSS grid;
+as such it provides a great deal of flexibility, but can also be messed up easily.
+- _grid_ allows you to specify a shortcut type; defaults to `component`, i.e. a general grid item with no special defaults.
+- _width_ and _height_ are the dimensions of the grid.
+  - They are used to generate the `grid-template-columns` & `grid-template-rows` CSS properties, respectively.
+  - They can be numbers (pixel lengths) or CSS grid lengths, e.g. "1fr" or "min-content".
+  - If the grid item spans multiple rows/columns, use arrays to pass multiple lengths.
+  - If several grid items span the same row/column, only one of them needs to specify the length: the others can leave it undefined.
+  - If several grid items assign different lengths to a particular row/column, you'll get a message from `console.warn`.
+- _row_ and _col_ are the starting grid lines.
+  - They default to the next row/column in order: e.g. adding two grid items to column 1, but leaving row undefined, the first item will go to row 1 and the second item will go to row 2.
+  - Like regular CSS grid you can specify negative numbers: e.g. -1 is the last grid line, -2 is second-to-last, etc.
+  - You can also specify the role of another layout component: e.g. `row: 'logo'` would cause an item to start from the same grid line as the component with the "logo" role.
+- _rowSpan_ and _colSpan_ specify how many rows/columns the grid item spans.
+  - Defaults to 1.
+  - Specifying a layout role will cause this item to _use the same end line_ as the given grid item: e.g. if grid item "menu" goes from grid line 3 to grid line 5, `rowSpan: 'menu'` would be equivalent to `rowEnd: 5`.
+- _rowEnd_ and _colEnd_ are the ending grid lines.
+  - Should be used instead of, not alongside, `rowSpan` & `colSpan`.
+  - Defaults to undefined.
+  - Specifying a layout role will cause this item to _end on the start line_ of the given grid item: e.g. if grid item "menu" goes from grid line 3 to grid line 5, `rowEnd: 'menu'` would be equivalent to `rowEnd: 3`.
+  - This is a bit confusing, but just remember: `rowSpan: 'menu'` _spans_ the menu rows, while `rowEnd: 'menu'` _ends at_ the menu row.
+
+Role names and negative grid lines are considered _relative grid lines_ and have some caveats compared to undefined/positive grid lines.
+Because the grid is calculated in a single pass, you cannot define a grid item relative to another relative grid item:
+to use something like `row: 'main'`, the layout item with role "main" _must_ have
+its `row` & `rowSpan` or `rowEnd` either undefined or positive integers.
+(Undefined works because the defaults for row/col/rowSpan/colSpan are all positive integers.)
+Also, the `width` & `height` dimensions are ignored when their respective grid lines are relative,
+because there's no way to know in advance which rows/columns the dimensions apply to.
+
+#### Grid Shortcuts
+
+To make common layouts simpler, it has four "shortcut" types:
+- header and footer components appear at the top and bottom respectively.
+  - The `width` dimension is ignored; `height` defaults to "min-content".
+  - `row`, `rowSpan`, and `rowEnd`, if provided, should be positive integers.
+  - `col` defaults to 1, and `colEnd` defaults to -1; in other words, spanning all columns.
+- left and right components appear at the left and right respectively.
+  - The `height` dimension is ignored; `width` defaults to "min-content".
+  - `col`, `colSpan`, and `colEnd`, if provided, should be positive integers.
+  - `row` and `rowSpan` both default to `main`, i.e. they occupy the same row(s) as the component with the "main" role.
+  - Defaults only work if there _is_ a component with the "main" role (such as `Layout.Content`).
+
+### Built-in Cactus Layout
+
+Just for comparison purposes, these are the layouts of Cactus's built-in layout components.
+
+- BrandBar: grid header
+- MenuBar: grid header (only on large screens; otherwise rendered on the ActionBar)
+- ActionBar differs by screen size:
+  - _tiny_: fixed bottom
+  - _small & medium_: fixed left
+  - _large+_: grid left
+- Layout.Content: grid component, specifies width & height to fill all space unused by other items
+- Footer: grid footer
