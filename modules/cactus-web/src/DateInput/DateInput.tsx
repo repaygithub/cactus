@@ -378,6 +378,7 @@ export interface DateInputProps
 
 interface DateInputState {
   value: PartialDate
+  prevValue: string | Date | null | undefined
   focusMonth: number
   focusYear: number
   locale: string
@@ -406,8 +407,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
     const initValue = props.value === undefined ? props.defaultValue : props.value
     const value = PartialDate.from(initValue, { format, locale, type })
+    const prevValue = props.value
     this.state = {
       value,
+      prevValue,
       focusMonth: value.getMonth(),
       focusYear: value.getYear(),
       type,
@@ -466,8 +469,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   public static getDerivedStateFromProps(
-    props: Readonly<DateInputProps>,
-    state: Readonly<DateInputState>
+    props: Readonly<DateInputProps>, //nextProps
+    state: Readonly<DateInputState> //prevState
   ): Partial<DateInputState> | null {
     let updates: null | Partial<DateInputState> = null
     if (props.type && props.type !== state.value.getType()) {
@@ -482,21 +485,15 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       updates.locale = props.locale
       state.value.setLocale(props.locale)
     }
-    if (props.value) {
-      let value = state.value.clone()
 
-      if (props.value instanceof Date) {
-        value = PartialDate.from(props.value, { type: value.getType() })
-      } else {
-        value.parse(props.value, props.format)
-      }
-      // only update local value if provided value is a valid date
-      if (value.isValid() && !value.equals(state.value)) {
-        updates = updates || {}
-        updates.value = value
-        updates.focusMonth = value.getMonth()
-        updates.focusYear = value.getYear()
-      }
+    if (props.value !== undefined && props.value !== state.prevValue) {
+      const locale = props.locale || getLocale()
+      const type = props.type || 'date'
+      const format = props.format || getDefaultFormat(type)
+
+      updates = updates || {}
+      updates.prevValue = props.value
+      updates.value = PartialDate.from(props.value, { type: state.value.getType(), locale, format })
     }
 
     return updates

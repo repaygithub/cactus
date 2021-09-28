@@ -116,6 +116,27 @@ describe('component: DateInput', (): void => {
 
       expect(handleChange).toHaveBeenCalledTimes(7)
     })
+    test('Clear the value when it is controlled by string', () => {
+      const { getByLabelText, rerender } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value="2019-09-16" format="YYYY-MM-dd" />
+        </StyleProvider>
+      )
+
+      expect(getByLabelText('year')).toHaveProperty('value', '2019')
+      expect(getByLabelText('month')).toHaveProperty('value', '09')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '16')
+
+      rerender(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value="" format="YYYY-MM-dd" />
+        </StyleProvider>
+      )
+
+      expect(getByLabelText('year')).toHaveProperty('value', '')
+      expect(getByLabelText('month')).toHaveProperty('value', '')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '')
+    })
   })
 
   describe('using inputs', (): void => {
