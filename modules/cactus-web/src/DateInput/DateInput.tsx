@@ -378,6 +378,7 @@ export interface DateInputProps
 
 interface DateInputState {
   value: PartialDate
+  prevValue: string | Date | null | undefined
   focusMonth: number
   focusYear: number
   locale: string
@@ -406,8 +407,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
     const initValue = props.value === undefined ? props.defaultValue : props.value
     const value = PartialDate.from(initValue, { format, locale, type })
+    const prevValue = props.value
     this.state = {
       value,
+      prevValue,
       focusMonth: value.getMonth(),
       focusYear: value.getYear(),
       type,
@@ -497,6 +500,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         updates.focusMonth = value.getMonth()
         updates.focusYear = value.getYear()
       }
+    }
+    if (!props.value && props.value !== state.prevValue) {
+      updates = updates || {}
+      updates.value = PartialDate.from(null, { type: state.value.getType() })
     }
 
     return updates
