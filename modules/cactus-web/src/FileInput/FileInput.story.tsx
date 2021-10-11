@@ -1,14 +1,34 @@
-import { boolean, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
 import { Button, FileInput, Label } from '../'
+import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'FileInput',
   component: FileInput,
-} as Meta
+  argTypes: {
+    value: HIDE_CONTROL,
+    disabled: { control: 'boolean' },
+    multiple: { control: 'boolean' },
+    accept: { control: 'array' },
+    buttonText: STRING,
+    prompt: STRING,
+    ...actions('onChange', 'onBlur', 'onFocus'),
+  },
+  args: {
+    name: 'file-input',
+    disabled: false,
+    multiple: true,
+    accept: ['.doc', '.txt', '.md'],
+    labels: {
+      unloaded: 'Just chillin',
+      delete: 'Click to delete file',
+      loading: 'File uploading',
+      loaded: 'File uploaded successfully',
+    },
+  },
+} as const
 
 const dummyFile: File = Object.create(File.prototype)
 Object.defineProperty(dummyFile, 'name', { enumerable: true, value: 'boolest.txt' })
@@ -32,8 +52,8 @@ const Wrapper = styled.div`
   }
 `
 
-export const BasicUsage = (): React.ReactElement => {
-  const fileTypes = ['.doc', '.txt', '.md']
+type FIStory = Story<typeof FileInput, { onChange: Action<React.ChangeEvent<any>> }>
+export const BasicUsage: FIStory = (args) => {
   const [files, setState] = React.useState<any>()
   const loadFiles = React.useCallback(() => {
     for (const file of files) {
@@ -42,38 +62,12 @@ export const BasicUsage = (): React.ReactElement => {
   }, [files])
   return (
     <Wrapper>
-      <FileInput
-        name="my-file-loader"
-        disabled={boolean('disabled', false)}
-        multiple={boolean('multiple', true)}
-        accept={fileTypes}
-        labels={{
-          error: 'probably not used in this story',
-          unloaded: 'Just chillin',
-          delete: text('delete label', 'Click to delete file'),
-          loading: text('loading label', 'File uploading'),
-          loaded: text('loaded label', 'File uploaded successfully'),
-        }}
-        prompt={text('prompt', 'Drag files here or')}
-        buttonText={text('buttonText', 'Select Files...')}
-        onChange={({ target }) => {
-          console.log(`onChange '${target.name}':`, target.value)
-          setState(target.value)
-        }}
-        onFocus={({ target }) => console.log('onFocus:', target.name)}
-        onBlur={({ target }) => console.log('onBlur:', target.name)}
-        value={files}
-      />
+      <FileInput {...args} onChange={args.onChange.wrap(setState, true)} value={files} />
       <Button mt={3} onClick={loadFiles}>
         Load Files
       </Button>
       <Label my={3}>File Statuses</Label>
-      <FileInput
-        name="file-statuses"
-        disabled={boolean('disabled', false)}
-        multiple
-        value={fileStatuses}
-      />
+      <FileInput {...args} name="file-statuses" multiple value={fileStatuses} />
     </Wrapper>
   )
 }

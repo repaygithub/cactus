@@ -1,112 +1,52 @@
-import * as icons from '@repay/cactus-icons'
-import { boolean, select } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React, { useContext } from 'react'
 
 import { Grid, IconButton, ScreenSizeContext, SIZES, Text } from '../'
-import actions from '../helpers/storybookActionsWorkaround'
-import { IconButtonSizes, IconButtonVariants } from './IconButton'
-
-const iconButtonVariants: IconButtonVariants[] = [
-  'standard',
-  'action',
-  'danger',
-  'warning',
-  'success',
-  'dark',
-]
-
-type IconName = keyof typeof icons
-const iconNames: IconName[] = Object.keys(icons) as IconName[]
-const eventLoggers = actions('onClick', 'onFocus', 'onBlur')
+import { actions, HIDE_CONTROL, Icon, ICON_ARG, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'IconButton',
   component: IconButton,
-} as Meta
+  argTypes: actions('onClick', 'onFocus', 'onBlur'),
+} as const
 
-const IconButtonBase = ({
-  size,
-  disabled,
-  isTiny,
-}: {
-  size: IconButtonSizes
-  disabled?: boolean
-  isTiny?: boolean
-}) => {
-  const iconName: IconName = select('icon', iconNames, 'ActionsAdd')
-  const Icon = icons[iconName] as React.ComponentType<any>
+type IBStory = Story<
+  typeof IconButton,
+  {
+    Icon: Icon
+    isTiny?: boolean
+  }
+>
+
+const IconButtonBase: IBStory = ({ isTiny, Icon, ...args }) => {
   return (
     <>
       <Grid.Item tiny={isTiny ? 2 : 1}>
-        <IconButton
-          variant="standard"
-          inverse={boolean('inverse', false)}
-          iconSize={size}
-          label="add"
-          disabled={disabled}
-          {...eventLoggers}
-        >
+        <IconButton {...args} variant="standard">
           <Icon />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
-        <IconButton
-          variant="action"
-          inverse={boolean('inverse', false)}
-          iconSize={size}
-          label="add"
-          disabled={disabled}
-          {...eventLoggers}
-        >
+        <IconButton {...args} variant="action">
           <Icon />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
-        <IconButton
-          variant="danger"
-          inverse={boolean('inverse', false)}
-          iconSize={size}
-          label="add"
-          disabled={disabled}
-          {...eventLoggers}
-        >
+        <IconButton {...args} variant="danger">
           <Icon />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
-        <IconButton
-          variant="warning"
-          inverse={boolean('inverse', false)}
-          iconSize={size}
-          label="add"
-          disabled={disabled}
-          {...eventLoggers}
-        >
+        <IconButton {...args} variant="warning">
           <Icon />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
-        <IconButton
-          variant="success"
-          inverse={boolean('inverse', false)}
-          iconSize={size}
-          label="add"
-          disabled={disabled}
-          {...eventLoggers}
-        >
+        <IconButton {...args} variant="success">
           <Icon />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
-        <IconButton
-          variant="dark"
-          inverse={boolean('inverse', false)}
-          iconSize={size}
-          label="add"
-          disabled={disabled}
-          {...eventLoggers}
-        >
+        <IconButton {...args} variant="dark">
           <Icon />
         </IconButton>
       </Grid.Item>
@@ -114,9 +54,9 @@ const IconButtonBase = ({
   )
 }
 
-const IconsGrid = () => {
+export const BasicUsage: IBStory = (args) => {
   const size = useContext(ScreenSizeContext)
-  const isTiny = size.size === SIZES.tiny.size
+  const isTiny = size === SIZES.tiny
   return (
     <Grid justify="center">
       {!isTiny && (
@@ -163,7 +103,7 @@ const IconsGrid = () => {
           </Text>
         </Grid.Item>
       )}
-      <IconButtonBase size="tiny" isTiny={isTiny} />
+      <IconButtonBase {...args} iconSize="tiny" isTiny={isTiny} />
       {!isTiny && (
         <Grid.Item tiny={1}>
           <Text textStyle="small" margin="0">
@@ -171,7 +111,7 @@ const IconsGrid = () => {
           </Text>
         </Grid.Item>
       )}
-      <IconButtonBase size="small" isTiny={isTiny} />
+      <IconButtonBase {...args} iconSize="small" isTiny={isTiny} />
       {!isTiny && (
         <Grid.Item tiny={1}>
           <Text textStyle="small" margin="0">
@@ -179,7 +119,7 @@ const IconsGrid = () => {
           </Text>
         </Grid.Item>
       )}
-      <IconButtonBase size="medium" isTiny={isTiny} />
+      <IconButtonBase {...args} iconSize="medium" isTiny={isTiny} />
       {!isTiny && (
         <Grid.Item tiny={1}>
           <Text textStyle="small" margin="0">
@@ -187,7 +127,7 @@ const IconsGrid = () => {
           </Text>
         </Grid.Item>
       )}
-      <IconButtonBase size="large" isTiny={isTiny} />
+      <IconButtonBase {...args} iconSize="large" isTiny={isTiny} />
       {!isTiny && (
         <Grid.Item tiny={1}>
           <Text textStyle="small" margin="0">
@@ -195,30 +135,34 @@ const IconsGrid = () => {
           </Text>
         </Grid.Item>
       )}
-      <IconButtonBase size="large" disabled isTiny={isTiny} />
+      <IconButtonBase {...args} iconSize="large" disabled isTiny={isTiny} />
     </Grid>
   )
 }
-
-export const BasicUsage = (): React.ReactElement => {
-  return <IconsGrid />
+BasicUsage.argTypes = {
+  Icon: ICON_ARG,
+  iconSize: HIDE_CONTROL,
+  variant: HIDE_CONTROL,
+  disabled: HIDE_CONTROL,
+  display: HIDE_CONTROL,
 }
+BasicUsage.args = { label: 'icb' }
 
-export const AllIcons = (): React.ReactElement => {
-  const variantSelection = select('variant', iconButtonVariants, 'standard')
+const icons = ICON_ARG.mapping
+export const AllIcons: Story<typeof IconButton> = ({ label = 'icb', ...args }) => {
   return (
     <Grid justify="center">
       {Object.values(icons)
         .slice(0, Object.keys(icons).length - 2)
-        .map(
-          (Icon: React.ComponentType<any>, ix): React.ReactElement => (
-            <Grid.Item tiny={3} medium={2} large={1} key={ix}>
-              <IconButton label={`icb-${ix}`} variant={variantSelection}>
-                <Icon />
-              </IconButton>
-            </Grid.Item>
-          )
-        )}
+        .map((Icon, ix) => (
+          <Grid.Item tiny={3} medium={2} large={1} key={ix}>
+            <IconButton {...args} label={`${label}-${ix}`}>
+              <Icon />
+            </IconButton>
+          </Grid.Item>
+        ))}
     </Grid>
   )
 }
+AllIcons.argTypes = { iconSize: STRING, label: STRING }
+AllIcons.args = { disabled: false }

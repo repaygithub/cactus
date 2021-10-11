@@ -1,43 +1,36 @@
-import { select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
 import { Alert, Button, ColorPicker, DateInputField, Modal, SelectField, Text } from '../'
-import { ModalType } from './Modal'
+import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'Modal',
   component: Modal,
-} as Meta
+  argTypes: {
+    className: HIDE_CONTROL,
+    isOpen: HIDE_CONTROL,
+    variant: { options: ['action', 'danger', 'warning', 'success'] },
+    closeLabel: STRING,
+    modalLabel: STRING,
+    width: STRING,
+    innerHeight: STRING,
+    innerMaxHeight: STRING,
+    ...actions('onClose'),
+  },
+} as const
 
-type StatusOptions = { [k in ModalType]: ModalType }
+type CloseArg = { onClose: Action<React.MouseEvent | void> }
 
-const statusOptions: StatusOptions = {
-  action: 'action',
-  danger: 'danger',
-  warning: 'warning',
-  success: 'success',
-}
-
-const ModalWithState = (): React.ReactElement => {
+export const BasicUsage: Story<typeof Modal, CloseArg & { contents: string }> = ({
+  contents,
+  onClose,
+  ...args
+}) => {
   const [open, setOpen] = useState(true)
-  const variant = select('variant', statusOptions, statusOptions.action)
-  const modalLabel = text('Modal Label', 'Modal Label')
-  const closeLabel = text('Close icon label', 'Close Label')
-
   return open ? (
-    <Modal
-      variant={variant}
-      isOpen={open}
-      onClose={() => setOpen(false)}
-      modalLabel={modalLabel}
-      closeLabel={closeLabel}
-      width={text('width', '')}
-      innerHeight={text('innerHeight', '')}
-      innerMaxHeight={text('innerMaxHeight', '')}
-    >
-      <Text as="h3">{text('modal content', 'This is a Modal')}</Text>
+    <Modal {...args} isOpen={open} onClose={onClose.wrap(() => setOpen(false))}>
+      <Text as="h3">{contents}</Text>
     </Modal>
   ) : (
     <Button variant="action" onClick={(): void => setOpen(true)}>
@@ -45,25 +38,14 @@ const ModalWithState = (): React.ReactElement => {
     </Button>
   )
 }
+BasicUsage.args = { contents: 'This is a Modal' }
 
-const ModalWithAlert = (): React.ReactElement => {
+export const WithAlert: Story<typeof Modal, CloseArg> = ({ onClose, ...args }) => {
   const [open, setOpen] = useState(true)
-  const variant = select('variant', statusOptions, statusOptions.action)
-  const modalLabel = text('Modal Label', 'Modal Label')
-  const closeLabel = text('Close icon label', 'Close Label')
 
   return open ? (
-    <Modal
-      variant={variant}
-      isOpen={open}
-      onClose={() => setOpen(false)}
-      modalLabel={modalLabel}
-      closeLabel={closeLabel}
-      width={text('width', '')}
-      innerHeight={text('innerHeight', '')}
-      innerMaxHeight={text('innerMaxHeight', '')}
-    >
-      <Alert status="success" onClose={() => console.log('CLOSE pressed')}>
+    <Modal {...args} isOpen={open} onClose={onClose.wrap(() => setOpen(false))}>
+      <Alert status="success" onClose={onClose}>
         An alert inside the modal.
       </Alert>
     </Modal>
@@ -74,23 +56,10 @@ const ModalWithAlert = (): React.ReactElement => {
   )
 }
 
-const ModalWithPopups = () => {
+export const WithPopups: Story<typeof Modal, CloseArg> = ({ onClose, ...args }) => {
   const [open, setOpen] = useState(true)
-  const variant = select('variant', statusOptions, statusOptions.action)
-  const modalLabel = text('Modal Label', 'Modal Label')
-  const closeLabel = text('Close icon label', 'Close Label')
-
   return open ? (
-    <Modal
-      variant={variant}
-      isOpen={open}
-      onClose={() => setOpen(false)}
-      modalLabel={modalLabel}
-      closeLabel={closeLabel}
-      width={text('width', '')}
-      innerHeight={text('innerHeight', '')}
-      innerMaxHeight={text('innerMaxHeight', '')}
-    >
+    <Modal {...args} isOpen={open} onClose={onClose.wrap(() => setOpen(false))}>
       <ColorPicker name="color" id="color" />
       <DateInputField name="date" label="Pick a Date" defaultValue="2021-08-17" />
       <SelectField name="select" label="Pick an Option" options={['a', 'b', 'c']} />
@@ -102,9 +71,6 @@ const ModalWithPopups = () => {
   )
 }
 
-export const BasicUsage = (): React.ReactElement => <ModalWithState />
-export const WithAlert = (): React.ReactElement => <ModalWithAlert />
-export const WithPopups = (): React.ReactElement => <ModalWithPopups />
 WithPopups.parameters = {
   beforeScreenshot: async (page: Page) => {
     await page.click('[aria-label="Open date picker"]')

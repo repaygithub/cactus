@@ -1,13 +1,8 @@
 import { ActionsGear, ActionsRedo, ActionsRefresh, ActionsUndo } from '@repay/cactus-icons'
-import { boolean } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { ActionBar, Flex, Layout, Link, Text } from '../'
-
-function action(msg: string) {
-  return () => console.log('ITEM CLICKED:', msg)
-}
+import { actions, ActionWrap, Story } from '../helpers/storybook'
 
 const Undo = () => (
   <Flex flexDirection="column" alignItems="center">
@@ -54,39 +49,42 @@ const SimpleRouter = () => {
 export default {
   title: 'ActionBar',
   component: ActionBar,
-} as Meta
+  argTypes: actions({ name: 'onClick', wrapper: true }),
+} as const
 
-export const BasicUsage = (): React.ReactElement => {
-  const hasItems = boolean('Has Items', true)
-  return (
-    <ActionBar>
-      {hasItems && (
-        <>
-          <ActionBar.Item icon={<ActionsRedo />} aria-label="Redo" onClick={action('redo')} />
-          <ActionBar.Item icon={<Undo />} aria-label="Undo" onClick={action('undo')} />
-        </>
-      )}
-    </ActionBar>
-  )
-}
+type ClickArg = { onClick: ActionWrap<React.MouseEvent> }
+export const BasicUsage: Story<ClickArg & { hasItems: boolean }> = ({ hasItems, onClick }) => (
+  <ActionBar>
+    {hasItems && (
+      <>
+        <ActionBar.Item icon={<ActionsRedo />} aria-label="Redo" onClick={onClick('redo')} />
+        <ActionBar.Item icon={<Undo />} aria-label="Undo" onClick={onClick('undo')} />
+      </>
+    )}
+  </ActionBar>
+)
+BasicUsage.argTypes = { hasItems: { name: 'Has Items' } }
+BasicUsage.args = { hasItems: true }
 
-export const WithProvider = (): React.ReactElement => {
-  const hasActionBar = boolean('Has ActionBar', true)
-  return (
-    <Layout>
-      {hasActionBar && (
-        <ActionBar>
-          <ActionBar.Item
-            id="gear"
-            icon={<ActionsGear />}
-            onClick={action('gear')}
-            aria-label="Gear up"
-          />
-        </ActionBar>
-      )}
-      <Layout.Content>
-        <SimpleRouter />
-      </Layout.Content>
-    </Layout>
-  )
-}
+export const WithProvider: Story<ClickArg & { hasActionBar: boolean }> = ({
+  hasActionBar,
+  onClick,
+}) => (
+  <Layout>
+    {hasActionBar && (
+      <ActionBar>
+        <ActionBar.Item
+          id="gear"
+          icon={<ActionsGear />}
+          onClick={onClick('gear')}
+          aria-label="Gear up"
+        />
+      </ActionBar>
+    )}
+    <Layout.Content>
+      <SimpleRouter />
+    </Layout.Content>
+  </Layout>
+)
+WithProvider.argTypes = { hasActionBar: { name: 'Has ActionBar' } }
+WithProvider.args = { hasActionBar: true }

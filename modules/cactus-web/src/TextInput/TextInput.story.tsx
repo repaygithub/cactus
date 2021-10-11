@@ -1,72 +1,27 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Flex, TextInput } from '../'
-import actions from '../helpers/storybookActionsWorkaround'
-import { Status } from '../StatusMessage/StatusMessage'
-import { textStyles } from './TextInput'
+import { actions, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'TextInput',
   component: TextInput,
-} as Meta
+  argTypes: {
+    status: { options: ['success', 'warning', 'error'] },
+    ...actions('onChange', 'onFocus', 'onBlur'),
+  },
+} as const
 
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+export const BasicUsage: Story<typeof TextInput> = (args) => <TextInput {...args} />
+BasicUsage.args = { placeholder: 'Placeholder' }
 
-type StatusOptions = { [k in Status | 'none']: Status | null }
-
-const statusOptions: StatusOptions = {
-  none: null,
-  success: 'success',
-  warning: 'warning',
-  error: 'error',
-}
-
-const sizeOptions = [undefined, ...textStyles]
-
-export const BasicUsage = (): React.ReactElement => (
-  <TextInput
-    disabled={boolean('disabled', false)}
-    placeholder={text('placeholder', 'Placeholder')}
-    status={select('status', statusOptions, statusOptions.none)}
-    textStyle={select('text size', sizeOptions, undefined)}
-    {...eventLoggers}
-  />
-)
-
-export const TextInputStatus = (): React.ReactElement => (
+export const TextInputStatus: Story<typeof TextInput> = (args) => (
   <Flex justifyContent="center">
-    <TextInput
-      placeholder="Success"
-      status="success"
-      textStyle={select('text size', sizeOptions, undefined)}
-      m={2}
-      {...eventLoggers}
-    />
-    <TextInput
-      placeholder="Warning"
-      status="warning"
-      textStyle={select('text size', sizeOptions, undefined)}
-      m={2}
-      {...eventLoggers}
-    />
-    <TextInput
-      placeholder="Error"
-      status="error"
-      textStyle={select('text size', sizeOptions, undefined)}
-      m={2}
-      {...eventLoggers}
-    />
-    <TextInput
-      disabled
-      placeholder="Disabled"
-      status="error"
-      textStyle={select('text size', sizeOptions, undefined)}
-      m={2}
-      {...eventLoggers}
-    />
+    <TextInput {...args} placeholder="Success" status="success" m={2} />
+    <TextInput {...args} placeholder="Warning" status="warning" m={2} />
+    <TextInput {...args} placeholder="Error" status="error" m={2} />
+    <TextInput {...args} disabled placeholder="Disabled" status="error" m={2} />
   </Flex>
 )
-
-TextInputStatus.displayName = 'Text Input with status'
+TextInputStatus.argTypes = { status: HIDE_CONTROL, disabled: HIDE_CONTROL }
+TextInputStatus.storyName = 'Text Input with status'

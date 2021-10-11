@@ -1,31 +1,49 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
-import React, { ReactElement, useState } from 'react'
+import React, { useState } from 'react'
 
 import { DateInput, Flex, StatusMessage } from '../'
-
-const eventLoggers = {
-  onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
-  onFocus: (e: any) => console.log('onFocus:', e.target.name),
-  onBlur: (e: any) => console.log('onBlur:', e.target.name),
-}
+import { Action, actions, HIDE_CONTROL, HIDE_STYLED, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'DateInput',
   component: DateInput,
-} as Meta
+  argTypes: {
+    ...HIDE_STYLED,
+    locale: HIDE_CONTROL,
+    isValidDate: HIDE_CONTROL,
+    defaultValue: HIDE_CONTROL,
+    value: { control: 'text', mapping: STRING.mapping },
+    type: { options: ['date', 'time', 'datetime'] },
+    name: STRING,
+    status: { options: ['success', 'error', 'warning'] },
+    id: STRING,
+    ...actions('onChange', 'onFocus', 'onBlur', 'onInvalidDate'),
+  },
+  args: {
+    id: 'date-input',
+    type: 'date',
+    disabled: false,
+  },
+} as const
 
-export const BasicUsage = (): ReactElement => {
+type DateStory = Story<
+  typeof DateInput,
+  {
+    onInvalidDate: Action<boolean>
+    onChange: Action<React.ChangeEvent<any>>
+    // In these stories, type always has a value.
+    type: 'date' | 'time' | 'datetime'
+  }
+>
+
+export const BasicUsage: DateStory = (args) => {
   const [invalidDate, setInvalidDate] = useState<boolean>(false)
   return (
     <Flex flexDirection="column" alignItems="flex-start">
       <DateInput
-        id="date-input-uncontrolled"
-        name="date"
-        {...eventLoggers}
-        disabled={boolean('disabled', false)}
-        onInvalidDate={(isDateInvalid) => setInvalidDate(isDateInvalid)}
+        {...args}
+        name={args.name || args.type}
+        onInvalidDate={args.onInvalidDate.wrap(setInvalidDate)}
         data-testid="testing"
       />
       {invalidDate && (
@@ -36,25 +54,22 @@ export const BasicUsage = (): ReactElement => {
     </Flex>
   )
 }
-
 BasicUsage.parameters = {
   cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
 }
 
-export const ControlledWithDate = (): ReactElement => {
+export const ControlledWithDate: DateStory = (args) => {
   const [value, setValue] = React.useState<Date | string | null>(new Date('10/1/2020'))
   return (
     <DateInput
-      disabled={boolean('disabled', false)}
-      id="date-input-1"
-      name={text('name', 'date-input')}
-      type={select('type', ['date', 'datetime', 'time'], 'date')}
+      {...args}
+      name={args.name || args.type}
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={args.onChange.wrap(setValue, true)}
     />
   )
 }
-
+ControlledWithDate.argTypes = { value: HIDE_CONTROL }
 ControlledWithDate.storyName = 'Controlled with Date'
 ControlledWithDate.parameters = {
   cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
@@ -63,48 +78,36 @@ ControlledWithDate.parameters = {
   },
 }
 
-export const ControlledWithString = (): ReactElement => {
+export const ControlledWithString: DateStory = (args) => {
   const [value, setValue] = React.useState<Date | string | null>('2019-09-16')
   return (
     <DateInput
-      disabled={boolean('disabled', false)}
-      id="date-input-with-string-value"
-      name={text('name', 'date-input-with-string-value')}
+      {...args}
+      name={args.name || args.type}
       value={value}
-      format="YYYY-MM-dd"
-      onChange={(e) => setValue(e.target.value)}
+      onChange={args.onChange.wrap(setValue, true)}
     />
   )
 }
-
+ControlledWithString.argTypes = { value: HIDE_CONTROL }
+ControlledWithString.args = { format: 'YYYY-MM-dd' }
 ControlledWithString.storyName = 'Controlled with string'
 ControlledWithString.parameters = {
   cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
 }
 
-export const TypeTime = (): ReactElement => (
-  <DateInput
-    id="time-input"
-    name="time"
-    type="time"
-    {...eventLoggers}
-    disabled={boolean('disabled', false)}
-  />
-)
-
+export const TypeTime: DateStory = (args) => <DateInput {...args} name={args.name || args.type} />
+TypeTime.args = { type: 'time' }
 TypeTime.storyName = 'type="time"'
 
-export const TypeDatetime = (): ReactElement => {
+export const TypeDatetime: DateStory = (args) => {
   const [invalidDate, setInvalidDate] = useState<boolean>(false)
   return (
     <Flex flexDirection="column" alignItems="flex-start">
       <DateInput
-        id="datetime-input"
-        name="datetime"
-        type="datetime"
-        {...eventLoggers}
-        disabled={boolean('disabled', false)}
-        onInvalidDate={(isDateInvalid) => setInvalidDate(isDateInvalid)}
+        {...args}
+        name={args.name || args.type}
+        onInvalidDate={args.onInvalidDate.wrap(setInvalidDate)}
       />
       {invalidDate && (
         <StatusMessage status="error" style={{ marginTop: '4px' }}>
@@ -114,16 +117,14 @@ export const TypeDatetime = (): ReactElement => {
     </Flex>
   )
 }
-
+TypeDatetime.args = { type: 'datetime' }
 TypeDatetime.storyName = 'type="datetime"'
 
-export const WithIsValidDate = (): ReactElement => (
+export const WithIsValidDate: DateStory = (args) => (
   <div>
     <DateInput
-      disabled={boolean('disabled', false)}
-      type="date"
-      id="date-with-blackouts"
-      name="date_with_blackouts"
+      {...args}
+      name={args.name || args.type}
       isValidDate={(date): boolean => {
         const day = date.getDay()
         return day !== 0 && day !== 6
@@ -133,4 +134,4 @@ export const WithIsValidDate = (): ReactElement => (
   </div>
 )
 
-WithIsValidDate.storyname = 'with isValidDate'
+WithIsValidDate.storyName = 'with isValidDate'

@@ -1,38 +1,36 @@
-import { text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 import { Flex, Link } from '../'
+import { HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'Link',
   component: Link,
-} as Meta
+  args: { to: 'https://repaygithub.github.io/cactus/' },
+} as const
 
-export const BasicUsage = (): ReactElement => (
+export const BasicUsage: Story<typeof Link> = ({ children, to }) => (
   <Flex flexDirection="column">
-    <Link to={text('to', 'https://repaygithub.github.io/cactus/')}>
-      {text('text', 'Click me!')}
-    </Link>
-    <Link variant="dark" to={text('to', 'https://repaygithub.github.io/cactus/')}>
+    <Link to={to}>{children}</Link>
+    <Link variant="dark" to={to}>
       I'm a dark link!
     </Link>
   </Flex>
 )
+BasicUsage.argTypes = { variant: HIDE_CONTROL, children: { name: 'text' } }
+BasicUsage.args = { children: 'Click me!' }
 
-export const WithinABlockOfText = (): ReactElement => (
+export const WithinABlockOfText: Story<typeof Link> = (args) => (
   <span>
-    To review the cactus documentation site, click{' '}
-    <Link to={text('to', 'https://repaygithub.github.io/cactus/')}>here</Link>.
+    To review the cactus documentation site, click <Link {...args}>here</Link>.
   </span>
 )
 
 WithinABlockOfText.storyName = 'Within a block of text'
 
-export const MultiLineLink = (): ReactElement => (
+export const MultiLineLink: Story<typeof Link> = (args) => (
   <span style={{ width: '375px' }}>
-    To review the cactus documentation site,{' '}
-    <Link to={text('to', 'https://repaygithub.github.io/cactus/')}>click here</Link>.
+    To review the cactus documentation site, <Link {...args}>click here</Link>.
   </span>
 )
 

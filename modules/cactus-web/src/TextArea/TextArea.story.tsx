@@ -1,68 +1,28 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Flex, TextArea } from '../'
-import actions from '../helpers/storybookActionsWorkaround'
-import { Status } from '../StatusMessage/StatusMessage'
-
-type StatusOptions = { [k in Status | 'none']: Status | null }
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
-
-const statusOptions: StatusOptions = {
-  none: null,
-  success: 'success',
-  warning: 'warning',
-  error: 'error',
-}
+import { actions, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'TextArea',
   component: TextArea,
-} as Meta
+  argTypes: actions('onChange', 'onFocus', 'onBlur'),
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <TextArea
-    disabled={boolean('disabled', false)}
-    placeholder={text('placeholder', 'Placeholder')}
-    status={select('status', statusOptions, statusOptions.none)}
-    resize={boolean('resize', false)}
-    {...eventLoggers}
-  />
-)
+export const BasicUsage: Story<typeof TextArea> = (args) => <TextArea {...args} />
+BasicUsage.argTypes = {
+  status: { options: ['success', 'warning', 'error'] },
+}
+BasicUsage.args = { placeholder: 'Placeholder' }
 
-export const TextAreaVariants = (): React.ReactElement => (
+export const TextAreaVariants: Story<typeof TextArea> = (args) => (
   <Flex alignItems="center" justifyContent="center">
-    <TextArea
-      placeholder="Success"
-      status="success"
-      resize={boolean('resize', false)}
-      m={2}
-      {...eventLoggers}
-    />
-    <TextArea
-      placeholder="Warning"
-      status="warning"
-      resize={boolean('resize', false)}
-      m={2}
-      {...eventLoggers}
-    />
-    <TextArea
-      placeholder="Error"
-      status="error"
-      resize={boolean('resize', false)}
-      m={2}
-      {...eventLoggers}
-    />
-    <TextArea
-      disabled
-      placeholder="Disabled"
-      status="error"
-      resize={boolean('resize', false)}
-      m={2}
-      {...eventLoggers}
-    />
+    <TextArea {...args} placeholder="Success" status="success" m={2} />
+    <TextArea {...args} placeholder="Warning" status="warning" m={2} />
+    <TextArea {...args} placeholder="Error" status="error" m={2} />
+    <TextArea {...args} disabled placeholder="Disabled" status="error" m={2} />
   </Flex>
 )
-
+TextAreaVariants.argTypes = { disabled: HIDE_CONTROL, status: HIDE_CONTROL }
+TextAreaVariants.args = { resize: false }
 TextAreaVariants.storyName = 'Text Area with status'

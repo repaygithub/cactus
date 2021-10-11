@@ -1,4 +1,4 @@
 module.exports = {
   stories: ['../stories/Icons.story.tsx'],
-  addons: ['@storybook/addon-knobs'],
+  addons: ['@storybook/addon-controls'],
 }

@@ -1,11 +1,7 @@
-import { number, select } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { MenuBar } from '../'
-import { MenuBarVariants } from './MenuBar'
-
-const menuBarVariants: MenuBarVariants[] = ['light', 'dark']
+import { actions, ActionWrap, Story } from '../helpers/storybook'
 
 const LABELS = [
   'Ready!',
@@ -33,19 +29,20 @@ const LABELS = [
 
 const getLabel = () => LABELS[Math.floor(Math.random() * LABELS.length)]
 
-function action(msg: string) {
-  return () => console.log('ITEM CLICKED:', msg)
-}
-
 export default {
   title: 'MenuBar',
   component: MenuBar,
-} as Meta
+  argTypes: actions({ name: 'onClick', wrapper: true }),
+} as const
 
-export const BasicUsage = (): React.ReactElement => {
-  const breadth = number('Breadth', 8)
-  const totalDepth = number('Depth', 2)
+type MBStory = Story<{
+  breadth: number
+  totalDepth: number
+  onClick: ActionWrap<React.MouseEvent>
+  variant?: 'light' | 'dark'
+}>
 
+export const BasicUsage: MBStory = ({ breadth, totalDepth, onClick }) => {
   const makeList = (
     depth: number,
     props: any,
@@ -62,7 +59,7 @@ export const BasicUsage = (): React.ReactElement => {
         items.push(makeList(depth - 1, { title }, i))
       } else {
         items.push(
-          <MenuBar.Item key={i} onClick={action(`x: ${i}, y: ${totalDepth - depth}`)}>
+          <MenuBar.Item key={i} onClick={onClick(`x: ${i}, y: ${totalDepth - depth}`)}>
             {title}
           </MenuBar.Item>
         )
@@ -77,12 +74,9 @@ export const BasicUsage = (): React.ReactElement => {
 
   return <>{makeList(totalDepth, {}, 0, MenuBar)}</>
 }
+BasicUsage.args = { breadth: 8, totalDepth: 2 }
 
-export const MenuBarDark = (): React.ReactElement => {
-  const breadth = number('Breadth', 8)
-  const totalDepth = number('Depth', 2)
-  const variantSelection = select('variant', menuBarVariants, 'dark')
-
+export const MenuBarDark: MBStory = ({ breadth, totalDepth, variant, onClick }) => {
   const makeList = (
     depth: number,
     props: any,
@@ -99,14 +93,14 @@ export const MenuBarDark = (): React.ReactElement => {
         items.push(makeList(depth - 1, { title }, i))
       } else {
         items.push(
-          <MenuBar.Item key={i} onClick={action(`x: ${i}, y: ${totalDepth - depth}`)}>
+          <MenuBar.Item key={i} onClick={onClick(`x: ${i}, y: ${totalDepth - depth}`)}>
             {title}
           </MenuBar.Item>
         )
       }
     }
     return (
-      <Component key={ix} variant={variantSelection} {...props}>
+      <Component key={ix} variant={variant} {...props}>
         {items}
       </Component>
     )
@@ -114,3 +108,5 @@ export const MenuBarDark = (): React.ReactElement => {
 
   return <>{makeList(totalDepth, {}, 0, MenuBar)}</>
 }
+MenuBarDark.argTypes = { variant: { options: ['light', 'dark'] } }
+MenuBarDark.args = { breadth: 8, totalDepth: 2, variant: 'dark' }

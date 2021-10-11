@@ -1,47 +1,25 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Box, DateInputField } from '../'
-
-const dateInputTypes: ('date' | 'datetime' | 'time')[] = ['date', 'datetime', 'time']
+import { FIELD_ARGS, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'DateInputField',
   component: DateInputField,
-} as Meta
+  argTypes: {
+    className: HIDE_CONTROL,
+    id: HIDE_CONTROL,
+    invalidDateLabel: STRING,
+    type: { options: ['date', 'datetime', 'time'] },
+    ...FIELD_ARGS,
+  },
+  args: { label: 'Date Input Field', name: 'date-field', type: 'date', disabled: false },
+} as const
 
-export const DefaultUsage = (): React.ReactElement => (
+export const DefaultUsage: Story<typeof DateInputField> = (args) => (
   <Box width="350px">
-    <DateInputField
-      label={text('label', 'Date Input Field')}
-      name={text('name', 'date_input_field')}
-      type={select('type?', dateInputTypes, 'date')}
-    />
+    <DateInputField {...args} />
 
-    <DateInputField
-      disabled
-      label={text('label-disabled', 'Date Input Field Disabled')}
-      name="date_input_field_disabled"
-      type={select('type?', dateInputTypes, 'date')}
-    />
+    <DateInputField {...args} disabled label="Date Input Field Disabled" />
   </Box>
 )
-
-export const ExtendedProps = (): React.ReactElement => (
-  <DateInputField
-    disabled={boolean('disabled', false)}
-    label={text('label', 'Time field')}
-    name={text('name', 'date_input_field')}
-    type={select('type?', dateInputTypes, 'date')}
-    tooltip={text('tooltip?', '')}
-    error={text('error?', '')}
-    success={text('success?', '')}
-    warning={text('warning?', '')}
-    autoTooltip={boolean('autoTooltip', true)}
-    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
-    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-  />
-)
-
-ExtendedProps.storyName = 'extended props'

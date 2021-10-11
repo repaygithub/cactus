@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Box, Card, Divider, Flex } from '../'
@@ -6,7 +5,8 @@ import { Box, Card, Divider, Flex } from '../'
 export default {
   title: 'Divider',
   component: Divider,
-} as Meta
+  parameters: { controls: { disable: true } },
+} as const
 
 export const BasicUsage = (): React.ReactElement => {
   return (

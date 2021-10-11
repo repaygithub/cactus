@@ -1,27 +1,33 @@
-import { date, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Box, Card } from '../'
+import { SPACE, Story } from '../helpers/storybook'
 
 export default {
   title: 'Card',
   component: Card,
-} as Meta
+} as const
 
-const BaseComponent = ({ boxShadows, title }: { boxShadows: boolean; title: string }) => {
+interface Content {
+  title: string
+  subtitle: string
+  totalAmount: string
+  date: number
+  minAmount: string
+}
+
+const BaseComponent: Story<typeof Card, Content> = ({
+  title,
+  subtitle,
+  totalAmount,
+  date,
+  minAmount,
+  ...args
+}) => {
   return (
-    <Card
-      margin="30px"
-      useBoxShadow={boxShadows}
-      padding={text('padding', '')}
-      paddingX={text('paddingX', '')}
-      paddingY={text('paddingY', '')}
-    >
-      <h2 style={{ margin: 0 }}>{text(title, title)}</h2>
-      <h4 style={{ margin: '0 0 8px', fontWeight: 400, fontSize: '12px' }}>
-        {text('Subtitle', 'Subtitle')}
-      </h4>
+    <Card margin="30px" {...args}>
+      <h2 style={{ margin: 0 }}>{title}</h2>
+      <h4 style={{ margin: '0 0 8px', fontWeight: 400, fontSize: '12px' }}>{subtitle}</h4>
 
       <table style={{ fontSize: '15px', borderCollapse: 'collapse' }}>
         <tbody>
@@ -31,7 +37,7 @@ const BaseComponent = ({ boxShadows, title }: { boxShadows: boolean; title: stri
             </Box>
             <td>
               <span style={{ textAlign: 'right', fontWeight: 600, fontSize: '25.92px' }}>
-                {text('Total Amount', '$350.20')}
+                {totalAmount}
               </span>
             </td>
           </tr>
@@ -39,7 +45,7 @@ const BaseComponent = ({ boxShadows, title }: { boxShadows: boolean; title: stri
           <tr>
             <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}>Due Date</th>
             <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>
-              {new Date(date('Date', new Date('10/5/2020'))).toLocaleDateString()}
+              {new Date(date).toLocaleDateString()}
             </td>
           </tr>
 
@@ -47,9 +53,7 @@ const BaseComponent = ({ boxShadows, title }: { boxShadows: boolean; title: stri
             <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}>
               Minimum Amount Due
             </th>
-            <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>
-              {text('Minimum Amount', '$127.00')}
-            </td>
+            <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>{minAmount}</td>
           </tr>
         </tbody>
       </table>
@@ -57,18 +61,39 @@ const BaseComponent = ({ boxShadows, title }: { boxShadows: boolean; title: stri
   )
 }
 
-export const BasicUsage = (): React.ReactElement => (
+interface BasicArgs extends Omit<Content, 'title'> {
+  withShadow: string
+  noShadow: string
+}
+export const BasicUsage: Story<typeof Card, BasicArgs> = ({ withShadow, noShadow, ...args }) => (
   <div>
-    <BaseComponent boxShadows title="With Shadows on" />
-    <BaseComponent boxShadows={false} title="With Shadows off" />
+    <BaseComponent {...args} useBoxShadow title={withShadow} />
+    <BaseComponent {...args} title={noShadow} />
   </div>
 )
+BasicUsage.argTypes = {
+  padding: SPACE,
+  paddingX: SPACE,
+  paddingY: SPACE,
+  withShadow: { name: 'shadow card title' },
+  noShadow: { name: 'shadowless card title' },
+  date: { control: 'date' },
+}
+BasicUsage.args = {
+  withShadow: 'With Shadows on',
+  noShadow: 'With Shadows off',
+  subtitle: 'Subtitle',
+  totalAmount: '$350.20',
+  date: new Date(2020, 9, 5).valueOf(),
+  minAmount: '$127.00',
+  useBoxShadow: false,
+}
 
-export const NestedCards = (): React.ReactElement => (
-  <Card>
+export const NestedCards: Story<typeof Card> = (args) => (
+  <Card {...args}>
     Card 1
-    <Card>
-      Card 2<Card>Card 3</Card>
+    <Card {...args}>
+      Card 2<Card {...args}>Card 3</Card>
     </Card>
   </Card>
 )

@@ -1,33 +1,41 @@
 import { ActionsAdd, ActionsCopy, ActionsDelete } from '@repay/cactus-icons'
-import { select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Breadcrumb, Button, Header, Link, Text } from '../'
-import { BackgroundColorVariants } from './Header'
+import { Story } from '../helpers/storybook'
 
 export default {
   title: 'Header',
   component: Header,
-} as Meta
+  argTypes: {
+    bgColor: { name: 'background color' },
+  },
+  args: {
+    title: 'Header',
+    bgColor: 'lightContrast',
+  },
+} as const
 
-const bgColorVariants: BackgroundColorVariants[] = ['lightContrast', 'white']
+type HeaderStory = Story<
+  typeof Header,
+  {
+    title: string
+    description: string
+  }
+>
 
-export const BasicUsage = (): React.ReactElement => {
-  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
+export const BasicUsage: HeaderStory = ({ title, bgColor }) => {
   return (
-    <Header bgColor={bgSelection}>
-      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+    <Header bgColor={bgColor}>
+      <Header.Title>{title}</Header.Title>
     </Header>
   )
 }
 
-export const WithButton = (): React.ReactElement => {
-  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
-
+export const WithButton: HeaderStory = ({ title, bgColor }) => {
   return (
-    <Header bgColor={bgSelection}>
-      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+    <Header bgColor={bgColor}>
+      <Header.Title>{title}</Header.Title>
       <Header.Item>
         <Button variant="action">
           <ActionsAdd /> Add new configuration
@@ -37,12 +45,10 @@ export const WithButton = (): React.ReactElement => {
   )
 }
 
-export const WithBreadcrumbs = (): React.ReactElement => {
-  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
-
+export const WithBreadcrumbs: HeaderStory = ({ title, bgColor }) => {
   return (
-    <Header bgColor={bgSelection}>
-      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+    <Header bgColor={bgColor}>
+      <Header.Title>{title}</Header.Title>
       <Header.BreadcrumbRow>
         <Breadcrumb>
           <Breadcrumb.Item href="/">Label</Breadcrumb.Item>
@@ -60,12 +66,10 @@ export const WithBreadcrumbs = (): React.ReactElement => {
   )
 }
 
-export const WithALotOfBreadCrumbs = (): React.ReactElement => {
-  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
-
+export const WithALotOfBreadCrumbs: HeaderStory = ({ title, bgColor }) => {
   return (
-    <Header bgColor={bgSelection}>
-      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+    <Header bgColor={bgColor}>
+      <Header.Title>{title}</Header.Title>
       <Header.BreadcrumbRow>
         <Breadcrumb>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map((i) => (
@@ -88,11 +92,9 @@ export const WithALotOfBreadCrumbs = (): React.ReactElement => {
   )
 }
 
-export const WithLongTextItem = (): React.ReactElement => {
-  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
-
+export const WithLongTextItem: HeaderStory = ({ title, bgColor }) => {
   return (
-    <Header bgColor={bgSelection}>
+    <Header bgColor={bgColor}>
       <Header.BreadcrumbRow>
         <Breadcrumb>
           <Breadcrumb.Item href="/">Label 1</Breadcrumb.Item>
@@ -107,16 +109,14 @@ export const WithLongTextItem = (): React.ReactElement => {
       <Header.Item>
         <Text>You are configuring Merchant directory from OWE Demo Merchant</Text>
       </Header.Item>
-      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+      <Header.Title>{title}</Header.Title>
     </Header>
   )
 }
 
-export const WithMultipleItems = (): React.ReactElement => {
-  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
-
+export const WithMultipleItems: HeaderStory = ({ title, bgColor }) => {
   return (
-    <Header bgColor={bgSelection}>
+    <Header bgColor={bgColor}>
       <Header.BreadcrumbRow>
         <Breadcrumb>
           <Breadcrumb.Item href="/">Label</Breadcrumb.Item>
@@ -136,20 +136,18 @@ export const WithMultipleItems = (): React.ReactElement => {
         </Button>
       </Header.Item>
       <Header.Item> Some text because I like crowded UIs </Header.Item>
-      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+      <Header.Title>{title}</Header.Title>
     </Header>
   )
 }
 
-export const WithGoBackLink = (): React.ReactElement => {
-  const bgSelection = select('Background-color', bgColorVariants, 'lightContrast')
-
+export const WithGoBackLink: HeaderStory = ({ title, bgColor }) => {
   return (
-    <Header bgColor={bgSelection}>
+    <Header bgColor={bgColor}>
       <Header.BreadcrumbRow>
         <Link to="https://repaygithub.github.io/cactus/">Go back!</Link>
       </Header.BreadcrumbRow>
-      <Header.Title>{text('Header Title', 'Header')}</Header.Title>
+      <Header.Title>{title}</Header.Title>
       <Header.Item>
         <Button variant="action">
           <ActionsAdd /> Add new configuration
@@ -159,31 +157,30 @@ export const WithGoBackLink = (): React.ReactElement => {
   )
 }
 
-export const WithDescription = (): React.ReactElement => {
-  const descriptionText = text('Description Text', 'I am describing something about this page')
+export const WithDescription: HeaderStory = ({ title, description, bgColor }) => {
   return (
-    <Header>
-      <Header.Title>I Have a Description</Header.Title>
-      <Header.Description>{descriptionText}</Header.Description>
+    <Header bgColor={bgColor}>
+      <Header.Title>{title}</Header.Title>
+      <Header.Description>{description}</Header.Description>
     </Header>
   )
 }
+WithDescription.args = {
+  title: 'I Have a Description',
+  description: 'I am describing something about this page',
+}
 
-export const WithEverything = (): React.ReactElement => {
-  const descriptionText = text(
-    'Description Text',
-    'This story was put here to showcase the header with all sub-components that it offers'
-  )
+export const WithEverything: HeaderStory = ({ title, description, bgColor }) => {
   return (
-    <Header>
+    <Header bgColor={bgColor}>
       <Header.BreadcrumbRow>
         <Breadcrumb>
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
           <Breadcrumb.Active>Full Header</Breadcrumb.Active>
         </Breadcrumb>
       </Header.BreadcrumbRow>
-      <Header.Title>I Am a Jam-Packed Header</Header.Title>
-      <Header.Description>{descriptionText}</Header.Description>
+      <Header.Title>{title}</Header.Title>
+      <Header.Description>{description}</Header.Description>
       <Header.Item>
         <Button variant="action">
           <ActionsAdd /> Add new configuration
@@ -201,4 +198,9 @@ export const WithEverything = (): React.ReactElement => {
       </Header.Item>
     </Header>
   )
+}
+WithEverything.args = {
+  title: 'I Am a Jam-Packed Header',
+  description:
+    'This story was put here to showcase the header with all sub-components that it offers',
 }

@@ -1,34 +1,27 @@
-import { select } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React from 'react'
 
 import { Alert, Button, Notification } from '../'
+import { HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'Notification',
   component: Notification,
-} as Meta
+  parameters: { controls: { disable: true } },
+} as const
 
-export const BasicUsage = (): React.ReactElement => {
+export const BasicUsage: Story<typeof Notification> = (args) => {
   const [open, setOpen] = React.useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
-  const vertical: 'top' | 'bottom' = select('vertical', ['top', 'bottom'], 'bottom')
-  const horizontal: 'left' | 'center' | 'right' = select(
-    'horizontal',
-    ['left', 'center', 'right'],
-    'right'
-  )
 
   return (
     <>
       <Button id="open-notification" onClick={handleOpen}>
         Open Notification
       </Button>
-      <Notification open={open} vertical={vertical} horizontal={horizontal}>
+      <Notification {...args} open={open}>
         <Alert status="error" onClose={handleClose}>
           Message
         </Alert>
@@ -36,8 +29,11 @@ export const BasicUsage = (): React.ReactElement => {
     </>
   )
 }
-
+BasicUsage.argTypes = {
+  open: HIDE_CONTROL,
+}
 BasicUsage.parameters = {
+  controls: { disable: false },
   beforeScreenshot: async (page: Page) => {
     await page.click('#open-notification')
   },

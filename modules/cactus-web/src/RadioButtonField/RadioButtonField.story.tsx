@@ -1,30 +1,34 @@
-import { actions } from '@storybook/addon-actions'
-import { text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { RadioButtonField } from '../'
-
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+import { actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'RadioButtonField',
   component: RadioButtonField,
-} as Meta
+  argTypes: {
+    label: STRING,
+    ...actions('onChange', 'onFocus', 'onBlur'),
+  },
+  args: { name: 'rbf' },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
+export const BasicUsage: Story<typeof RadioButtonField> = (args) => (
   <div>
-    <RadioButtonField id="my-id" name="rbf" label={text('label', 'A Label')} {...eventLoggers} />
-    <RadioButtonField id="my-id" name="rbf" label="Disabled" disabled {...eventLoggers} />
+    <RadioButtonField {...args} />
+    <RadioButtonField {...args} label="Disabled" disabled />
   </div>
 )
+BasicUsage.args = { label: 'A Label' }
 
-export const MultipleRadioButtonFields = (): React.ReactElement => (
+type MultiStory = Story<typeof RadioButtonField, { buttons: string[] }>
+export const MultipleRadioButtonFields: MultiStory = ({ buttons, ...args }) => (
   <div>
-    <RadioButtonField name="rbf" label="Label 1" {...eventLoggers} />
-    <RadioButtonField name="rbf" label="Label 2" {...eventLoggers} />
-    <RadioButtonField name="rbf" label="Label 3" {...eventLoggers} />
+    {buttons.map((label, i) => (
+      <RadioButtonField key={i} {...args} label={label} />
+    ))}
   </div>
 )
-
+MultipleRadioButtonFields.argTypes = { label: HIDE_CONTROL }
+MultipleRadioButtonFields.args = { buttons: ['Label 1', 'Label 2', 'Label 3'] }
 MultipleRadioButtonFields.storyName = 'Multiple RadioButton Fields'

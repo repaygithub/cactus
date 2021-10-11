@@ -1,12 +1,16 @@
-import { text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Label } from '../'
+import { HIDE_STYLED, Story } from '../helpers/storybook'
 
 export default {
   title: 'Label',
   component: Label,
-} as Meta
+  argTypes: {
+    children: { name: 'text' },
+    ...HIDE_STYLED,
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => <Label>{text('label text', 'A Label')}</Label>
+export const BasicUsage: Story<typeof Label> = (args) => <Label {...args} />
+BasicUsage.args = { children: 'A Label' }

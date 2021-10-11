@@ -1,36 +1,32 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React, { useState } from 'react'
 
 import { CheckBoxGroup, Flex } from '../'
+import { FIELD_ARGS, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'CheckBoxGroup',
   component: CheckBoxGroup,
-} as Meta
+  argTypes: {
+    required: HIDE_CONTROL,
+    checked: HIDE_CONTROL,
+    ...FIELD_ARGS,
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <CheckBoxGroup
-    name="checkboxes"
-    id="cbg"
-    label={text('label', 'My Label')}
-    disabled={boolean('disabled', false)}
-    onChange={(e: any) => console.log(`'${e.target.name}' changed: ${e.target.checked}`)}
-    onFocus={(e: any) => console.log(`'${e.target.name}' focused`)}
-    onBlur={(e: any) => console.log(`'${e.target.name}' blurred`)}
-    tooltip={text('tooltip', 'Check some boxes')}
-    autoTooltip={boolean('autoTooltip', true)}
-    error={text('error', '')}
-    success={text('success', '')}
-    warning={text('warning', '')}
-    disableTooltip={select('disableTooltip', [false, true, undefined], false)}
-    alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-  >
+export const BasicUsage: Story<typeof CheckBoxGroup> = (args) => (
+  <CheckBoxGroup id="cbg" {...args}>
     <CheckBoxGroup.Item name="option-1" label="Option 1" />
     <CheckBoxGroup.Item name="option-2" label="Option 2" />
     <CheckBoxGroup.Item name="option-3" label="Option 3" />
   </CheckBoxGroup>
 )
+BasicUsage.args = {
+  label: 'My Label',
+  disabled: false,
+  tooltip: 'Check some boxes',
+  autoTooltip: true,
+  name: 'checkboxes',
+}
 
 export const WithValues = (): React.ReactElement => {
   const [value, setValue] = useState<{
@@ -60,4 +56,5 @@ export const WithValues = (): React.ReactElement => {
     </Flex>
   )
 }
+WithValues.parameters = { controls: { disable: true } }
 const noop = () => undefined // Fix propTypes warning.

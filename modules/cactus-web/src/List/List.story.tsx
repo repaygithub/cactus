@@ -1,16 +1,12 @@
-import * as icons from '@repay/cactus-icons'
-import { select } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { List } from '../'
+import { ICON_ARG, IconName, Story } from '../helpers/storybook'
 
 export default {
   title: 'List',
   component: List,
-} as Meta
-
-const iconNames: (keyof typeof icons)[] = Object.keys(icons) as (keyof typeof icons)[]
+} as const
 
 export const BasicUsage = (): React.ReactElement => (
   <List>
@@ -28,26 +24,26 @@ export const BasicUsage = (): React.ReactElement => (
     </List.Item>
   </List>
 )
+BasicUsage.parameters = { controls: { disable: true } }
 
-export const WithIcons = (): React.ReactElement => {
-  const iconName: keyof typeof icons = select('icon', iconNames, 'DescriptiveFolder')
-  return (
-    <List>
-      <List.Item icon={iconName}>Non-indented item</List.Item>
-      <List.Item icon={iconName}>
-        Non-indented item with children
-        <List>
-          <List.Item icon={iconName}>I am indented by 24px</List.Item>
-          <List.Item>
-            <List>
-              <List.Item icon={iconName}>I am indented by 48px</List.Item>
-            </List>
-          </List.Item>
-        </List>
-      </List.Item>
-    </List>
-  )
-}
+export const WithIcons: Story<typeof List, { iconName: IconName }> = ({ iconName, ...args }) => (
+  <List {...args}>
+    <List.Item icon={iconName}>Non-indented item</List.Item>
+    <List.Item icon={iconName}>
+      Non-indented item with children
+      <List>
+        <List.Item icon={iconName}>I am indented by 24px</List.Item>
+        <List.Item>
+          <List>
+            <List.Item icon={iconName}>I am indented by 48px</List.Item>
+          </List>
+        </List.Item>
+      </List>
+    </List.Item>
+  </List>
+)
+WithIcons.argTypes = { iconName: { ...ICON_ARG, mapping: undefined } }
+WithIcons.args = { dividers: false, iconName: 'DescriptiveFolder' }
 
 export const HeadersAndIcons = (): React.ReactElement => (
   <List>
@@ -74,6 +70,7 @@ export const HeadersAndIcons = (): React.ReactElement => (
     </List.Item>
   </List>
 )
+HeadersAndIcons.parameters = { controls: { disable: true } }
 
 export const WithDividers = (): React.ReactElement => (
   <List dividers>
@@ -82,3 +79,4 @@ export const WithDividers = (): React.ReactElement => (
     <List.Item>Each Item is separated by a line</List.Item>
   </List>
 )
+WithDividers.parameters = { controls: { disable: true } }

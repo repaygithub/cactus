@@ -332,7 +332,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
 
   static toFileObj(file: File, accept?: string[]): FileObject {
     const fileObj: FileObject = { file, load, status: 'unloaded' }
-    if (accept && !accepts(file, accept)) {
+    if (accept?.length && !accepts(file, accept)) {
       fileObj.error = getError(FILE_TYPE_ERR, accept)
       fileObj.status = 'error'
     }

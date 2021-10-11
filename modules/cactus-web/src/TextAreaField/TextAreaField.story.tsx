@@ -1,34 +1,25 @@
-import { actions } from '@storybook/addon-actions'
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { TextAreaField } from '../'
-
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+import { FIELD_ARGS, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'TextAreaField',
   component: TextAreaField,
-} as Meta
+  argTypes: {
+    resize: { control: 'boolean' },
+    ...FIELD_ARGS,
+  },
+  args: {
+    label: 'Field Label',
+    name: 'taf',
+    placeholder: 'Placeholder',
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
+export const BasicUsage: Story<typeof TextAreaField> = (args) => (
   <div>
-    <TextAreaField
-      label={text('label', 'Field Label')}
-      name="taf-1"
-      placeholder={text('placeholder', 'Placeholder')}
-      disabled={boolean('disabled', false)}
-      success={text('success', '')}
-      warning={text('warning', '')}
-      error={text('error', '')}
-      tooltip={text('tooltip', 'Some tooltip text')}
-      resize={boolean('resize', false)}
-      autoTooltip={boolean('autoTooltip', true)}
-      disableTooltip={select('disableTooltip', [false, true, undefined], false)}
-      alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
-      {...eventLoggers}
-    />
+    <TextAreaField {...args} />
     <TextAreaField
       label="Field Label Disabled"
       name="taf-1-diabled"
@@ -39,20 +30,16 @@ export const BasicUsage = (): React.ReactElement => (
     />
   </div>
 )
+BasicUsage.args = { tooltip: 'Some tooltip text' }
 
-export const FixedWidthContainer = (): React.ReactElement => (
+export const FixedWidthContainer: Story<typeof TextAreaField> = (args) => (
   <div style={{ width: '336px' }}>
-    <TextAreaField
-      label={text('label', 'Field Label')}
-      placeholder={text('placeholder', 'Placeholder')}
-      disabled={boolean('disabled', false)}
-      error={text(
-        'error',
-        'The input you have entered is unequivocally invalid because we absolutely do not support the information you have provided.'
-      )}
-      tooltip={text('tooltip', 'Enter some text')}
-      name="taf-2"
-      {...eventLoggers}
-    />
+    <TextAreaField {...args} />
   </div>
 )
+FixedWidthContainer.argTypes = { warning: HIDE_CONTROL, success: HIDE_CONTROL }
+FixedWidthContainer.args = {
+  tooltip: 'Enter some text',
+  error:
+    'The input you have entered is unequivocally invalid because we absolutely do not support the information you have provided.',
+}

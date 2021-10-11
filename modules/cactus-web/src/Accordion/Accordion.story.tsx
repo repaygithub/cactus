@@ -1,10 +1,8 @@
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
-import { boolean, number, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
 
 import { Accordion, Box, Flex, IconButton, Text, TextButton } from '../'
-import { AccordionVariants } from './Accordion'
+import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 interface ContentManagerState {
   [group: number]: number
@@ -13,8 +11,6 @@ interface ContentManagerState {
 type ContentManagerParams = ContentManagerState & {
   changeContent: (group: number, increase?: boolean) => void
 }
-
-const accordionVariants: AccordionVariants[] = ['simple', 'outline']
 
 const initializeContent = (): ContentManagerState => {
   let num = 4
@@ -47,10 +43,6 @@ const ContentManager = ({
   return children({ ...state, changeContent })
 }
 
-const textContent = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex,
-nec euismod augue aliquam vel.`
 const ContentBlocks = ({ number: num }: { number: number }): ReactElement | null => {
   if (num < 1) {
     return null
@@ -59,14 +51,20 @@ const ContentBlocks = ({ number: num }: { number: number }): ReactElement | null
   for (let i = 0; i < num; ++i) {
     children.push(
       <Text key={i} tabIndex={0}>
-        {textContent}
+        {longText}
       </Text>
     )
   }
   return <Fragment>{children}</Fragment>
 }
 
-const ReorderAccordions: React.FC<{ isControlled?: boolean }> = ({ isControlled }) => {
+type ChangeArg = { onChange: Action<string> }
+type ControlledArgs = { isControlled: boolean } & ChangeArg
+const WithOutline: Story<typeof Accordion, ControlledArgs> = ({
+  isControlled,
+  onChange,
+  ...args
+}) => {
   const [open, setOpen] = useState<string[]>([])
   const toggleAccordion = (toggleId: string) => {
     setOpen((currentOpen) => {
@@ -85,13 +83,7 @@ const ReorderAccordions: React.FC<{ isControlled?: boolean }> = ({ isControlled 
     'Fifth Accordion',
   ])
 
-  const handleChange = (id: string) => {
-    console.log(`onChange: ${id}`)
-
-    if (isControlled) {
-      toggleAccordion(id)
-    }
-  }
+  const handleChange = isControlled ? onChange.wrap(toggleAccordion) : onChange
 
   const handleUpClick = (index: number): void => {
     const headersCopy = [...accordionHeaders]
@@ -124,11 +116,7 @@ const ReorderAccordions: React.FC<{ isControlled?: boolean }> = ({ isControlled 
       >
         {accordionHeaders.map(
           (header, index): ReactElement => (
-            <Accordion
-              variant="outline"
-              key={header}
-              useBoxShadows={boolean('useBoxShadows', true)}
-            >
+            <Accordion key={header} {...args}>
               <Accordion.Header
                 render={({ isOpen, headerId }): ReactElement => {
                   return (
@@ -186,12 +174,7 @@ const ReorderAccordions: React.FC<{ isControlled?: boolean }> = ({ isControlled 
                   )
                 }}
               />
-              <Accordion.Body>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris
-                eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa.
-                Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis
-                gravida ex, nec euismod augue aliquam vel.
-              </Accordion.Body>
+              <Accordion.Body>{longText}</Accordion.Body>
             </Accordion>
           )
         )}
@@ -203,90 +186,88 @@ const ReorderAccordions: React.FC<{ isControlled?: boolean }> = ({ isControlled 
 export default {
   title: 'Accordion',
   component: Accordion,
-} as Meta
+  argTypes: { defaultOpen: HIDE_CONTROL },
+} as const
 
-export const BasicUsage = (): ReactElement => (
+interface LabelArgs {
+  header: string
+  content: string
+}
+// Force remount when defaultOpen changes, otherwise it has no effect.
+export const BasicUsage: Story<typeof Accordion, LabelArgs> = ({ header, content, ...props }) => (
   <Box width="312px">
-    <Accordion
-      variant={select('variant', accordionVariants, 'simple')}
-      useBoxShadows={boolean('useBoxShadows', true)}
-    >
+    <Accordion {...props} key={props.defaultOpen?.toString()}>
       <Accordion.Header>
-        <Text as="h3">{text('header', 'Accordion')}</Text>
+        <Text as="h3">{header}</Text>
       </Accordion.Header>
-      <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
+      <Accordion.Body>{content}</Accordion.Body>
     </Accordion>
   </Box>
 )
+BasicUsage.argTypes = {
+  defaultOpen: { control: 'boolean' },
+  header: STRING,
+  content: STRING,
+}
+BasicUsage.args = {
+  header: 'Accordion',
+  content: 'Some Accordion Content',
+}
 
-export const Long = (): ReactElement => (
+export const Long: Story<typeof Accordion, LabelArgs> = ({ header, content, ...props }) => (
   <Box width="960px">
-    <Accordion>
+    <Accordion {...props}>
       <Accordion.Header>
-        <Text as="h3">{text('header', 'Accordion')}</Text>
+        <Text as="h3">{header}</Text>
       </Accordion.Header>
-      <Accordion.Body>{text('content', 'Some Accordion Content')}</Accordion.Body>
+      <Accordion.Body>{content}</Accordion.Body>
     </Accordion>
   </Box>
 )
-export const Provider = (): ReactElement => (
+Long.argTypes = { header: STRING, content: STRING }
+Long.args = BasicUsage.args
+
+const longText = `
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar,
+  mauris eu tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et
+  massa. Vestibulum lacinia ultrices urna, non rhoncus justo mollis vitae.
+  Integer facilisis gravida ex, nec euismod augue aliquam vel.
+`
+
+interface ProviderArgs {
+  accordions: string[]
+  maxOpen: number
+}
+
+export const Provider: Story<typeof Accordion, ProviderArgs> = ({
+  accordions,
+  maxOpen,
+  ...props
+}) => (
   <Box width="312px">
-    <Accordion.Provider maxOpen={number('maxOpen', 1)}>
-      <Accordion>
-        <Accordion.Header>
-          <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
-        </Accordion.Header>
-        <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
-          euismod augue aliquam vel.
-        </Accordion.Body>
-      </Accordion>
-      <Accordion>
-        <Accordion.Header>
-          <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
-        </Accordion.Header>
-        <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
-          euismod augue aliquam vel.
-        </Accordion.Body>
-      </Accordion>
-      <Accordion>
-        <Accordion.Header>
-          <Text as="h3">{text('header 3', 'Accordion 3')}</Text>
-        </Accordion.Header>
-        <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
-          euismod augue aliquam vel.
-        </Accordion.Body>
-      </Accordion>
-      <Accordion>
-        <Accordion.Header>
-          <Text as="h3">{text('header 4', 'Accordion 4')}</Text>
-        </Accordion.Header>
-        <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
-          euismod augue aliquam vel.
-        </Accordion.Body>
-      </Accordion>
+    <Accordion.Provider maxOpen={maxOpen}>
+      {accordions.map((header, ix) => (
+        <Accordion {...props} key={ix}>
+          <Accordion.Header>
+            <Text as="h3">{header}</Text>
+          </Accordion.Header>
+          <Accordion.Body>{longText}</Accordion.Body>
+        </Accordion>
+      ))}
     </Accordion.Provider>
   </Box>
 )
-
+Provider.args = {
+  maxOpen: 1,
+  accordions: ['Accordion 1', 'Accordion 2', 'Accordion 3', 'Accordion 4'],
+}
 Provider.parameters = { cactus: { overrides: { height: '150vh' } } }
 
-export const WithDynamicContent = (): ReactElement => (
+export const WithDynamicContent: Story<typeof Accordion> = (args) => (
   <ContentManager>
     {({ changeContent, ...state }): ReactElement => {
       return (
-        <Box width="400px" maxWidth="90vw" height="100vh" py={5} style={{ overflowY: 'auto' }}>
+        <Box width="400px" maxWidth="90vw" height="100vh" py={5} px={3} overflowY="auto">
           <Accordion.Provider maxOpen={1}>
             {((): JSX.Element[] => {
               const blocks = []
@@ -294,7 +275,7 @@ export const WithDynamicContent = (): ReactElement => (
               while (typeof state[index] === 'number') {
                 const group = index
                 blocks.push(
-                  <Accordion key={group}>
+                  <Accordion key={group} {...args}>
                     <Accordion.Header>
                       <Text as="h3">{group} Accordion</Text>
                     </Accordion.Header>
@@ -331,39 +312,29 @@ export const WithDynamicContent = (): ReactElement => (
     }}
   </ContentManager>
 )
-export const WithOpenInitialization = (): ReactElement => (
+type OpenArgs = ProviderArgs & ChangeArg
+export const WithOpenInitialization: Story<typeof Accordion, OpenArgs> = ({
+  accordions,
+  maxOpen,
+  onChange,
+  ...args
+}) => (
   <Box width="312px">
-    <Accordion.Provider
-      maxOpen={number('maxOpen', 2)}
-      onChange={(id: string) => console.log(`onChange: ${id}`)}
-    >
-      <Accordion defaultOpen>
-        <Accordion.Header>
-          <Text as="h3">{text('header 1', 'Accordion 1')}</Text>
-        </Accordion.Header>
-        <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
-          euismod augue aliquam vel.
-        </Accordion.Body>
-      </Accordion>
-      <Accordion defaultOpen>
-        <Accordion.Header>
-          <Text as="h3">{text('header 2', 'Accordion 2')}</Text>
-        </Accordion.Header>
-        <Accordion.Body>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar, mauris eu
-          tempor accumsan, arcu nibh mattis tortor, id feugiat velit diam et massa. Vestibulum
-          lacinia ultrices urna, non rhoncus justo mollis vitae. Integer facilisis gravida ex, nec
-          euismod augue aliquam vel.
-        </Accordion.Body>
-      </Accordion>
+    <Accordion.Provider maxOpen={maxOpen} onChange={onChange}>
+      {accordions.map((header, ix) => (
+        <Accordion {...args} key={ix} defaultOpen>
+          <Accordion.Header>
+            <Text as="h3">{header}</Text>
+          </Accordion.Header>
+          <Accordion.Body>{longText}</Accordion.Body>
+        </Accordion>
+      ))}
     </Accordion.Provider>
   </Box>
 )
+WithOpenInitialization.argTypes = actions('onChange')
+WithOpenInitialization.args = { maxOpen: 2, accordions: ['Accordion 1', 'Accordion 2'] }
 
-export const WithOutline = (): ReactElement => <ReorderAccordions />
-
-export const WithControlledOutline = (): ReactElement => <ReorderAccordions isControlled={true} />
-WithControlledOutline.parameters = { storyshots: false }
+export { WithOutline }
+WithOutline.argTypes = actions('onChange')
+WithOutline.args = { variant: 'outline', isControlled: false }

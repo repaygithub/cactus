@@ -1,13 +1,12 @@
-import { boolean, select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { CheckBoxCard, Flex, Span, TextInputField } from '../'
+import { Action, FIELD_ARGS, Story } from '../helpers/storybook'
 
 export default {
   title: 'CheckBoxCard',
   component: CheckBoxCard,
-} as Meta
+} as const
 
 export const BasicUsage = (): React.ReactElement => {
   const ref = React.useRef({
@@ -44,40 +43,47 @@ export const BasicUsage = (): React.ReactElement => {
     </Flex>
   )
 }
+BasicUsage.parameters = { controls: { disable: true } }
 
-export const CheckBoxCardGroup = (): React.ReactElement => {
+export const CheckBoxCardGroup: Story<
+  typeof CheckBoxCard.Group,
+  {
+    buttonLabel: string
+    onChange: Action<React.ChangeEvent<HTMLInputElement>>
+  }
+> = ({ buttonLabel, onChange, ...args }) => {
   const [value, setValue] = React.useState<string[]>(['left'])
   return (
     <CheckBoxCard.Group
+      {...args}
       id="my-id"
-      name="you-are-group-one"
       value={value}
-      label={text('label', 'A Label')}
-      disabled={boolean('disabled', false)}
-      onChange={({ target }: any) => {
-        console.log(`'${target.value}' changed: ${target.checked}`)
+      onChange={onChange.wrap(({ target }) =>
         setValue((old) => {
           if (target.checked) {
             return [...old, target.value]
           }
           return old.filter((x) => x !== target.value)
         })
-      }}
-      onFocus={(e: any) => console.log(`'${e.target.value}' focused`)}
-      onBlur={(e: any) => console.log(`'${e.target.value}' blurred`)}
-      tooltip={text('tooltip', 'Here there be checkboxes')}
-      error={text('error', '')}
-      success={text('success', '')}
-      warning={text('warning', '')}
-      autoTooltip={boolean('autoTooltip', true)}
-      disableTooltip={select('disableTooltip', [false, true, undefined], false)}
-      alignTooltip={select('alignTooltip', ['left', 'right'], 'right')}
+      )}
     >
       <CheckBoxCard value="right">That's right</CheckBoxCard>
       <CheckBoxCard value="left">That's wrong</CheckBoxCard>
       <CheckBoxCard flexGrow={2} value="center">
-        {text('button label', 'Supercalifragilisticexpialidocious')}
+        {buttonLabel}
       </CheckBoxCard>
     </CheckBoxCard.Group>
   )
+}
+CheckBoxCardGroup.argTypes = {
+  ...FIELD_ARGS,
+  buttonLabel: { name: 'button label' },
+}
+CheckBoxCardGroup.args = {
+  label: 'A Label',
+  name: 'you-are-group-one',
+  disabled: false,
+  tooltip: 'Here there be checkboxes',
+  autoTooltip: true,
+  buttonLabel: 'Supercalifragilisticexpialidocious',
 }

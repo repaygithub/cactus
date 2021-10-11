@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Box, Grid } from '../'
@@ -6,7 +5,8 @@ import { Box, Grid } from '../'
 export default {
   title: 'Grid',
   component: Grid,
-} as Meta
+  parameters: { controls: { disable: true } },
+} as const
 
 export const BasicUsage = (): React.ReactElement => (
   <Grid>

@@ -1,4 +1,3 @@
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Preview } from '../'
@@ -6,7 +5,8 @@ import { Preview } from '../'
 export default {
   title: 'Preview',
   component: Preview,
-} as Meta
+  parameters: { controls: { disable: true } },
+} as const
 
 const IMAGES = [
   'https://repay-merchant-resources.s3.amazonaws.com/staging/24bd1970-a677-4ca7-a4d2-e328ddd4691b/repay_logo_new.jpg',

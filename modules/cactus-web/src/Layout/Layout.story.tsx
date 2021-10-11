@@ -1,6 +1,4 @@
 import { ActionsGear, DescriptiveClock } from '@repay/cactus-icons'
-import { boolean, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -23,10 +21,20 @@ import {
   ToggleField,
   useLayout,
 } from '../'
+import { actions, ActionWrap, Story, STRING } from '../helpers/storybook'
 import { Position } from './grid'
 
-function action(msg: string) {
-  return () => console.log('ITEM CLICKED:', msg)
+type ClickArg = { onClick: ActionWrap<React.SyntheticEvent | void> }
+interface BrandArgs extends ClickArg {
+  isProfilePage: boolean
+  userMenuTitle: string
+}
+interface LayoutArgs extends BrandArgs {
+  showBrandBar: boolean
+  showMenu: boolean
+  showActionBar: boolean
+  showFooter: boolean
+  footerText: string
 }
 
 const LOGO =
@@ -35,35 +43,33 @@ const LOGO =
 export default {
   title: 'Layout',
   component: Layout,
-} as Meta
+  argTypes: actions({ name: 'onClick', wrapper: true }),
+} as const
 
-const StoryBrandBar = () => (
+const StoryBrandBar = ({ onClick, isProfilePage, userMenuTitle }: BrandArgs) => (
   <BrandBar logo={LOGO}>
-    <BrandBar.UserMenu
-      isProfilePage={boolean('On profile page?', false)}
-      label={text('Menu Title', 'Hershell Jewess')}
-    >
-      <BrandBar.UserMenuItem onSelect={action('Settings')}>Settings</BrandBar.UserMenuItem>
-      <BrandBar.UserMenuItem onSelect={action('Logout')}>Logout</BrandBar.UserMenuItem>
+    <BrandBar.UserMenu isProfilePage={isProfilePage} label={userMenuTitle}>
+      <BrandBar.UserMenuItem onSelect={onClick('Settings')}>Settings</BrandBar.UserMenuItem>
+      <BrandBar.UserMenuItem onSelect={onClick('Logout')}>Logout</BrandBar.UserMenuItem>
     </BrandBar.UserMenu>
   </BrandBar>
 )
 
-const StoryMenuBar = () => (
+const StoryMenuBar = ({ onClick }: ClickArg) => (
   <MenuBar>
-    <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
-    <MenuBar.Item onClick={action('Mill')}>I saw</MenuBar.Item>
-    <MenuBar.Item onClick={action('Growl')}>A Bear</MenuBar.Item>
-    <MenuBar.Item onClick={action('And Powerful')}>A Great</MenuBar.Item>
-    <MenuBar.Item onClick={action('Iorek Byrnison')}>Big Bear</MenuBar.Item>
-    <MenuBar.Item onClick={action('Dao de jing')}>A Way</MenuBar.Item>
-    <MenuBar.Item onClick={action('Stars')}>Up There</MenuBar.Item>
-    <MenuBar.Item onClick={action('Over There')}>He Looked</MenuBar.Item>
-    <MenuBar.Item onClick={action('Myself And I')}>At Me</MenuBar.Item>
-    <MenuBar.Item onClick={action('In a Mirror')}>I Looked</MenuBar.Item>
-    <MenuBar.Item onClick={action('Reflected')}>At Him</MenuBar.Item>
-    <MenuBar.Item onClick={action('Mouthful')}>He Sized Me Up</MenuBar.Item>
-    <MenuBar.Item onClick={action('Scary')}>I Sized Up Him</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Tuesday')}>The Other Day</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Mill')}>I saw</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Growl')}>A Bear</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('And Powerful')}>A Great</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Iorek Byrnison')}>Big Bear</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Dao de jing')}>A Way</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Stars')}>Up There</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Over There')}>He Looked</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Myself And I')}>At Me</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('In a Mirror')}>I Looked</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Reflected')}>At Him</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Mouthful')}>He Sized Me Up</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Scary')}>I Sized Up Him</MenuBar.Item>
     <MenuBar.List title="Interlude: About Bears">
       <MenuBar.List title="Kuma">
         <MenuBar.Item>Ichi</MenuBar.Item>
@@ -79,24 +85,24 @@ const StoryMenuBar = () => (
         <MenuBar.Item>Juu-Ichi</MenuBar.Item>
         <MenuBar.Item>Juu-Ni</MenuBar.Item>
       </MenuBar.List>
-      <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
-      <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
-      <MenuBar.Item onClick={action('ZZZZ')}>Giant Panda</MenuBar.Item>
-      <MenuBar.Item onClick={action('SIZZLE')}>Sun Bear</MenuBar.Item>
+      <MenuBar.Item onClick={onClick('RAWR')}>Brown Bear</MenuBar.Item>
+      <MenuBar.Item onClick={onClick('GRR')}>Polar Bear</MenuBar.Item>
+      <MenuBar.Item onClick={onClick('ZZZZ')}>Giant Panda</MenuBar.Item>
+      <MenuBar.Item onClick={onClick('SIZZLE')}>Sun Bear</MenuBar.Item>
     </MenuBar.List>
-    <MenuBar.Item onClick={action('Yo Dude')}>He Said to Me</MenuBar.Item>
-    <MenuBar.Item onClick={action('AHHHH')}>Why Don't You Run</MenuBar.Item>
-    <MenuBar.Item onClick={action('Nai wa')}>I See You Ain't</MenuBar.Item>
-    <MenuBar.Item onClick={action('Boomstick')}>Got Any Gun</MenuBar.Item>
-    <MenuBar.Item onClick={action('WHOOSH')}>And So I Ran</MenuBar.Item>
-    <MenuBar.Item onClick={action('Escape')}>Away From There</MenuBar.Item>
-    <MenuBar.Item onClick={action('No, Left')}>And Right</MenuBar.Item>
-    <MenuBar.Item onClick={action('Jump Scare')}>Behind Me</MenuBar.Item>
-    <MenuBar.Item onClick={action('Hunger')}>Was That Bear</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Yo Dude')}>He Said to Me</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('AHHHH')}>Why Don't You Run</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Nai wa')}>I See You Ain't</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Boomstick')}>Got Any Gun</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('WHOOSH')}>And So I Ran</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Escape')}>Away From There</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('No, Left')}>And Right</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Jump Scare')}>Behind Me</MenuBar.Item>
+    <MenuBar.Item onClick={onClick('Hunger')}>Was That Bear</MenuBar.Item>
   </MenuBar>
 )
 
-const StoryActionBar = () => (
+const StoryActionBar = ({ onClick }: ClickArg) => (
   <ActionBar>
     <ActionBar.Item
       id="whattime"
@@ -108,11 +114,11 @@ const StoryActionBar = () => (
       <Flex flexDirection="column" flexWrap="nowrap">
         <SplitButton
           mb={3}
-          onSelectMainAction={action('Main Action')}
+          onSelectMainAction={onClick('Main Action')}
           mainActionLabel="Main Action"
         >
-          <SplitButton.Action onSelect={action('SplitButton One')}>Action One</SplitButton.Action>
-          <SplitButton.Action onSelect={action('SplitButton Two')}>Action Two</SplitButton.Action>
+          <SplitButton.Action onSelect={onClick('SplitButton One')}>Action One</SplitButton.Action>
+          <SplitButton.Action onSelect={onClick('SplitButton Two')}>Action Two</SplitButton.Action>
         </SplitButton>
         <Select
           id="select-number"
@@ -121,9 +127,9 @@ const StoryActionBar = () => (
           options={['one', 'two', 'four', 'hundred', 'seventy-six', 'zero']}
         />
         <MenuButton mb={3} label="Z-index Test">
-          <MenuButton.Item onSelect={action('MenuButton One')}>Action One</MenuButton.Item>
-          <MenuButton.Item onSelect={action('MenuButton Two')}>Action Two</MenuButton.Item>
-          <MenuButton.Item onSelect={action('MenuButton Three')}>Action Three</MenuButton.Item>
+          <MenuButton.Item onSelect={onClick('MenuButton One')}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={onClick('MenuButton Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Item onSelect={onClick('MenuButton Three')}>Action Three</MenuButton.Item>
         </MenuButton>
         <TextInputField label="Some Setting" name="setting" />
       </Flex>
@@ -131,42 +137,46 @@ const StoryActionBar = () => (
   </ActionBar>
 )
 
-const StoryFooter = () => (
+const StoryFooter = ({ text }: { text: string }) => (
   <Footer logo={LOGO}>
-    <em>{text('Footer', 'How will you REPAY us?') + ' '}</em>
+    <em>{text + ' '}</em>
     <a href="#">The Link To Nowhere</a>
     {' | '}
     <a href="https://google.com">The Giant</a>
   </Footer>
 )
 
-export const BasicUsage = (): React.ReactElement => {
-  const hasBrand = boolean('Show Brand Bar', true)
-  const hasMenu = boolean('Show Menu', true)
-  const hasActions = boolean('Show Action Bar', true)
-  const hasFooter = boolean('Show Footer', true)
-  const useDarkNav = boolean('Dark Navigation', false)
+export const BasicUsage: Story<LayoutArgs, { menuVariant: 'light' | 'dark' }> = ({
+  showBrandBar,
+  showMenu,
+  showActionBar,
+  showFooter,
+  menuVariant,
+  footerText,
+  onClick,
+  ...bbArgs
+}) => {
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false)
 
   return (
     <Layout>
-      {hasBrand && <StoryBrandBar />}
-      {hasMenu && (
-        <MenuBar variant={useDarkNav ? 'dark' : 'light'}>
-          <MenuBar.Item onClick={action('Tuesday')}>The Other Day</MenuBar.Item>
-          <MenuBar.Item onClick={action('Mill')}>I saw</MenuBar.Item>
+      {showBrandBar && <StoryBrandBar {...bbArgs} onClick={onClick} />}
+      {showMenu && (
+        <MenuBar variant={menuVariant}>
+          <MenuBar.Item onClick={onClick('Tuesday')}>The Other Day</MenuBar.Item>
+          <MenuBar.Item onClick={onClick('Mill')}>I saw</MenuBar.Item>
           <MenuBar.List title="Interlude: About Bears">
-            <MenuBar.Item onClick={action('RAWR')}>Brown Bear</MenuBar.Item>
-            <MenuBar.Item onClick={action('GRR')}>Polar Bear</MenuBar.Item>
+            <MenuBar.Item onClick={onClick('RAWR')}>Brown Bear</MenuBar.Item>
+            <MenuBar.Item onClick={onClick('GRR')}>Polar Bear</MenuBar.Item>
             <MenuBar.List title="Long Bears">
               <MenuBar.Item>A very long label about bears is wider than its parent</MenuBar.Item>
             </MenuBar.List>
           </MenuBar.List>
         </MenuBar>
       )}
-      {hasActions && <StoryActionBar />}
+      {showActionBar && <StoryActionBar onClick={onClick} />}
       <Layout.Content>
-        <Header bgColor={useDarkNav ? 'lightContrast' : 'white'}>
+        <Header bgColor={menuVariant === 'dark' ? 'lightContrast' : 'white'}>
           <Header.BreadcrumbRow>
             <Breadcrumb>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
@@ -220,11 +230,20 @@ export const BasicUsage = (): React.ReactElement => {
           Morbi eget tortor a orci finibus vulputate eu id felis.
         </p>
       </Layout.Content>
-      {hasFooter && <StoryFooter />}
+      {showFooter && <StoryFooter text={footerText} />}
     </Layout>
   )
 }
-
+BasicUsage.argTypes = { menuVariant: { options: ['light', 'dark'] } }
+BasicUsage.args = {
+  showBrandBar: true,
+  showMenu: true,
+  showActionBar: true,
+  showFooter: true,
+  isProfilePage: false,
+  userMenuTitle: 'Hershell Jewess',
+  footerText: 'How will you REPAY us?',
+}
 BasicUsage.parameters = {
   cactus: { overrides: { display: 'block', position: 'static', width: '100%', height: '100%' } },
 }
@@ -233,19 +252,22 @@ const SuperWideHeader = styled(Header)`
   min-width: 2000px;
 `
 
-export const ShortContent = (): React.ReactElement => {
-  const hasBrand = boolean('Show Brand Bar', true)
-  const hasMenu = boolean('Show Menu', true)
-  const hasActions = boolean('Show Action Bar', true)
-  const hasFooter = boolean('Show Footer', true)
-  const overflow = boolean('Main Scrollbar', true)
-
+export const ShortContent: Story<LayoutArgs, { showMainScrollbar: boolean }> = ({
+  showBrandBar,
+  showMenu,
+  showActionBar,
+  showMainScrollbar,
+  showFooter,
+  footerText,
+  onClick,
+  ...bbArgs
+}): React.ReactElement => {
   return (
     <Layout>
-      {hasBrand && <StoryBrandBar />}
-      {hasMenu && <StoryMenuBar />}
-      {hasActions && <StoryActionBar />}
-      <Layout.Content overflowX={overflow ? 'auto' : undefined}>
+      {showBrandBar && <StoryBrandBar {...bbArgs} onClick={onClick} />}
+      {showMenu && <StoryMenuBar onClick={onClick} />}
+      {showActionBar && <StoryActionBar onClick={onClick} />}
+      <Layout.Content overflowX={showMainScrollbar ? 'auto' : undefined}>
         <SuperWideHeader>
           <SuperWideHeader.BreadcrumbRow>
             <Breadcrumb>
@@ -256,11 +278,14 @@ export const ShortContent = (): React.ReactElement => {
           <SuperWideHeader.Title>Latin Or Something</SuperWideHeader.Title>
         </SuperWideHeader>
       </Layout.Content>
-      {hasFooter && <StoryFooter />}
+      {showFooter && <StoryFooter text={footerText} />}
     </Layout>
   )
 }
-
+ShortContent.args = {
+  ...BasicUsage.args,
+  showMainScrollbar: true,
+}
 ShortContent.parameters = {
   cactus: {
     overrides: { display: 'block', position: 'static', width: '100%', height: '100%' },
@@ -284,13 +309,13 @@ const GridItem = ({ role, order, bg, style, ...position }: GridProps & Position)
   )
 }
 
-export const CustomGrid = (): React.ReactElement => (
+export const CustomGrid: Story<{ height: string }> = ({ height }) => (
   <Layout>
     <GridItem role="header1" bg="0" grid="header" col={3} colEnd={-2} />
     <GridItem role="header2" bg="40" grid="header" height={50} col="main" />
     <GridItem role="upperLeft" bg="80" col={1} colSpan={2} row={1} rowSpan={2} />
     <GridItem role="upperRight" bg="120" row={1} col={-2} colEnd={-1} />
-    <GridItem role="main" bg="160" width="1fr" height={text('height', '') || '2fr'} />
+    <GridItem role="main" bg="160" width="1fr" height={height || '2fr'} />
     <GridItem role="left1" bg="200" grid="left" width={50} rowEnd={-1} />
     <GridItem role="left2" bg="240" grid="left" width={50} />
     <GridItem role="right" bg="280" grid="right" style={SIDEWAYS} />
@@ -300,3 +325,4 @@ export const CustomGrid = (): React.ReactElement => (
     <GridItem role="fixed-bottom2" bg="40" fixed="bottom" size={28} order={3} />
   </Layout>
 )
+CustomGrid.argTypes = { height: STRING }

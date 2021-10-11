@@ -1,19 +1,22 @@
-import { number } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Pagination } from '../'
+import { Action, actions, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'Pagination',
   component: Pagination,
-} as Meta
+  argTypes: {
+    currentPage: HIDE_CONTROL,
+    linkAs: HIDE_CONTROL,
+    makeLinkLabel: HIDE_CONTROL,
+    ...actions('onPageChange'),
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <ManagedPagination pageCount={number('Page Count', 10)} />
-)
-
-function ManagedPagination({ pageCount }: { pageCount: number }): React.ReactElement {
+type PStory = Story<typeof Pagination, { onPageChange: Action<number> }>
+export const BasicUsage: PStory = ({ onPageChange, ...args }) => {
   const [current, setCurrent] = React.useState(1)
-  return <Pagination currentPage={current} pageCount={pageCount} onPageChange={setCurrent} />
+  return <Pagination {...args} currentPage={current} onPageChange={onPageChange.wrap(setCurrent)} />
 }
+BasicUsage.args = { pageCount: 10 }

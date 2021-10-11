@@ -1,9 +1,8 @@
 import cactusTheme from '@repay/cactus-theme'
-import { select, text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { Spinner } from '../'
+import { SPACE, Story, STRING } from '../helpers/storybook'
 
 type IconSize = 'tiny' | 'small' | 'medium' | 'large'
 const iconSizes: IconSize[] = ['tiny', 'small', 'medium', 'large']
@@ -12,23 +11,19 @@ const colors = Object.keys(cactusTheme.colors)
 export default {
   title: 'Spinner',
   component: Spinner,
-} as Meta
+  argTypes: {
+    iconSize: STRING,
+    color: { options: colors },
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <Spinner
-    iconSize={select('iconSize', iconSizes, 'large')}
-    color={select('color', colors, 'darkestContrast')}
-  />
-)
+export const BasicUsage: Story<typeof Spinner> = (args): React.ReactElement => <Spinner {...args} />
+BasicUsage.argTypes = { iconSize: { options: iconSizes } }
+BasicUsage.args = { iconSize: 'large', color: 'darkestContrast' }
 
-export const CustomSizing = (): React.ReactElement => (
-  <Spinner iconSize={text('iconSize', '64px')} />
-)
+export const CustomSizing = BasicUsage.bind(null)
+CustomSizing.args = { iconSize: '64px' }
 
-export const UsingSpacing = (): React.ReactElement => (
-  <React.Fragment>
-    <Spinner m={text('m', '0 auto')} />
-  </React.Fragment>
-)
-
-UsingSpacing.storyName = 'using spacing'
+export const UsingSpacing = BasicUsage.bind(null)
+UsingSpacing.argTypes = { margin: SPACE }
+UsingSpacing.args = { margin: '0 auto' }

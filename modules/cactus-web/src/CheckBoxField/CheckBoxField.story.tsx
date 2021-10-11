@@ -1,31 +1,43 @@
-import { text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { CheckBoxField } from '../'
+import { HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'CheckBoxField',
   component: CheckBoxField,
-} as Meta
+  argTypes: { labelProps: HIDE_CONTROL },
+  args: { disabled: false, name: 'CheckBoxFormField' },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
+export const BasicUsage: Story<typeof CheckBoxField> = (args) => (
   <div>
-    <CheckBoxField
-      name={text('name', 'CheckBoxFormField')}
-      id={text('id', 'checkbox-1')}
-      label={text('label', 'A Label')}
-    />
+    <CheckBoxField {...args} />
     <CheckBoxField name="CheckBoxFormFieldDisabled" label="Disabled" disabled />
   </div>
 )
+BasicUsage.argTypes = { label: STRING }
+BasicUsage.args = {
+  label: 'A Label',
+  id: 'checkbox-1',
+  disabled: false,
+}
 
-export const MultipleCheckBoxFields = (): React.ReactElement => (
+export const MultipleCheckBoxFields: Story<
+  typeof CheckBoxField,
+  {
+    checkboxes: string[]
+  }
+> = ({ checkboxes, ...args }) => (
   <div>
-    <CheckBoxField name="CheckBoxFormField" label="Label 1" />
-    <CheckBoxField name="CheckBoxFormField" label="Label 2" />
-    <CheckBoxField name="CheckBoxFormField" label="Label 3" />
+    {checkboxes.map((label, ix) => (
+      <CheckBoxField {...args} key={ix} label={label} />
+    ))}
   </div>
 )
-
+MultipleCheckBoxFields.argTypes = {
+  label: HIDE_CONTROL,
+  id: HIDE_CONTROL,
+}
+MultipleCheckBoxFields.args = { checkboxes: ['Label 1', 'Label 2', 'Label 3'] }
 MultipleCheckBoxFields.storyName = 'Multiple CheckBox Fields'

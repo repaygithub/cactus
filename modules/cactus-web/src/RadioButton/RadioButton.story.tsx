@@ -1,38 +1,25 @@
-import { boolean } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { RadioButton } from '../'
-import actions from '../helpers/storybookActionsWorkaround'
-
-const eventLoggers = actions('onChange', 'onFocus', 'onBlur')
+import { actions, Story } from '../helpers/storybook'
 
 export default {
   title: 'RadioButton',
   component: RadioButton,
-} as Meta
+  argTypes: actions('onChange', 'onFocus', 'onBlur'),
+  args: { id: 'radio', name: 'radio', disabled: false },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <RadioButton id="some-id" name="test" disabled={boolean('disabled', false)} {...eventLoggers} />
-)
+export const BasicUsage: Story<typeof RadioButton> = (args) => <RadioButton {...args} />
 
-export const MultipleRadioButtons = (): React.ReactElement => (
+type MultiStory = Story<typeof RadioButton, { values: string[] }>
+export const MultipleRadioButtons: MultiStory = ({ id, values, ...args }) => (
   <div>
-    <div>
-      <RadioButton
-        id="some-id"
-        name="test"
-        disabled={boolean('disabled', false)}
-        {...eventLoggers}
-      />
-    </div>
-    <div>
-      <RadioButton
-        id="some-other-id"
-        name="test"
-        disabled={boolean('disabled', false)}
-        {...eventLoggers}
-      />
-    </div>
+    {values.map((value, i) => (
+      <div key={i}>
+        <RadioButton {...args} value={value} id={id + i} />
+      </div>
+    ))}
   </div>
 )
+MultipleRadioButtons.args = { values: ['one', 'two'] }

@@ -1,40 +1,24 @@
-import { action } from '@storybook/addon-actions'
-import { text } from '@storybook/addon-knobs'
-import { Meta } from '@storybook/react/types-6-0'
 import React from 'react'
 
 import { PrevNext } from '../'
+import { actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'PrevNext',
   component: PrevNext,
-} as Meta
+  argTypes: {
+    linkAs: HIDE_CONTROL,
+    prevText: STRING,
+    nextText: STRING,
+    ...actions('onNavigate'),
+  },
+} as const
 
-export const BasicUsage = (): React.ReactElement => (
+export const BasicUsage: Story<typeof PrevNext> = (args): React.ReactElement => (
   <div>
-    <PrevNext
-      onNavigate={action('PrevNext Navigate')}
-      prevText={text('Prev Text', 'Prev')}
-      nextText={text('Next Text', 'Next')}
-    />
-    <PrevNext
-      disablePrev
-      onNavigate={action('PrevNext Navigate')}
-      prevText={text('Prev Text', 'Prev')}
-      nextText={text('Next Text', 'Next')}
-    />
-    <PrevNext
-      disableNext
-      onNavigate={action('PrevNext Navigate')}
-      prevText={text('Prev Text', 'Prev')}
-      nextText={text('Next Text', 'Next')}
-    />
-    <PrevNext
-      disablePrev
-      disableNext
-      onNavigate={action('PrevNext Navigate')}
-      prevText={text('Prev Text', 'Prev')}
-      nextText={text('Next Text', 'Next')}
-    />
+    <PrevNext {...args} />
+    <PrevNext {...args} disablePrev />
+    <PrevNext {...args} disableNext />
+    <PrevNext {...args} disablePrev disableNext />
   </div>
 )
