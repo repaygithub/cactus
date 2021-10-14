@@ -821,8 +821,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private raiseChange = (event: React.SyntheticEvent<any>, value: PartialDate): void => {
     const { onChange } = this.props
-    if (typeof onChange === 'function') {
-      //if (typeof onChange === 'function' && value.isValid()) {
+    if (typeof onChange === 'function' && value.isValid()) {
       this.eventTarget.value = this._convertVal(value)
       const cactusEvent = new CactusChangeEvent(this.eventTarget, event)
       onChange(cactusEvent)
