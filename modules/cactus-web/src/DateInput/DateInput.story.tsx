@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react/types-6-0'
 import { Page } from 'puppeteer'
 import React, { ReactElement, useState } from 'react'
 
-import { DateInput, Flex, StatusMessage } from '../'
+import { Button, DateInput, Flex, StatusMessage } from '../'
 
 const eventLoggers = {
   onChange: (e: any) => console.log(`onChange '${e.target.name}': ${e.target.value}`),
@@ -63,7 +63,7 @@ ControlledWithDate.parameters = {
   },
 }
 
-export const ControlledWithString = (): ReactElement => {
+/* export const ControlledWithString = (): ReactElement => {
   const [value, setValue] = React.useState<Date | string | null>('2019-09-16')
   return (
     <DateInput
@@ -74,6 +74,32 @@ export const ControlledWithString = (): ReactElement => {
       format="YYYY-MM-dd"
       onChange={(e) => setValue(e.target.value)}
     />
+  )
+} */
+export const ControlledWithString = (): ReactElement => {
+  const [value, setValue] = React.useState<Date | string | null>('2019-09-16')
+  const [invalidDate, setInvalidDate] = useState<boolean>(false)
+
+  return (
+    <>
+      <DateInput
+        disabled={boolean('disabled', false)}
+        id="date-input-with-string-value"
+        name={text('name', 'date-input-with-string-value')}
+        value={value}
+        format="YYYY-MM-dd"
+        onChange={(e) => setValue(e.target.value)}
+        onInvalidDate={(isDateInvalid) => setInvalidDate(isDateInvalid)}
+      />
+      <Button ml={3} onClick={() => setValue(null)}>
+        Clear Value
+      </Button>
+      {invalidDate && (
+        <StatusMessage status="error" style={{ marginTop: '4px' }}>
+          The date you've selected is invalid. Please pick another date.
+        </StatusMessage>
+      )}
+    </>
   )
 }
 
