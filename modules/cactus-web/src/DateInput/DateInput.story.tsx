@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
-import { DateInput, Flex, StatusMessage } from '../'
+import { Button, DateInput, Flex, StatusMessage } from '../'
 import { Action, actions, HIDE_CONTROL, HIDE_STYLED, Story, STRING } from '../helpers/storybook'
 
 export default {
@@ -61,18 +61,25 @@ BasicUsage.parameters = {
 export const ControlledWithDate: DateStory = (args) => {
   const [value, setValue] = React.useState<Date | string | null>(new Date('10/1/2020'))
   return (
-    <DateInput
-      {...args}
-      name={args.name || args.type}
-      value={value}
-      onChange={args.onChange.wrap(setValue, true)}
-    />
+    <>
+      <DateInput
+        {...args}
+        name={args.name || args.type}
+        value={value}
+        onChange={args.onChange.wrap(setValue, true)}
+      />
+      <Button mt={4} onClick={() => setValue(null)}>
+        Clear
+      </Button>
+    </>
   )
 }
 ControlledWithDate.argTypes = { value: HIDE_CONTROL }
 ControlledWithDate.storyName = 'Controlled with Date'
 ControlledWithDate.parameters = {
-  cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
+  cactus: {
+    overrides: { justifyContent: 'flex-start', flexDirection: 'column', paddingTop: '32px' },
+  },
   beforeScreenshot: async (page: Page) => {
     await page.click('button')
   },

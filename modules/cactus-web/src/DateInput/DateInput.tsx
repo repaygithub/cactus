@@ -326,7 +326,7 @@ const PopupCalendar = styled(Calendar)`
   border-top-left-radius: 0;
 `
 
-type Target = CactusEventTarget<CalendarDate>
+type Target = CactusEventTarget<CalendarDate | number>
 
 export interface DateInputProps
   extends MarginProps,
@@ -339,7 +339,7 @@ export interface DateInputProps
   id: string
   className?: string
   /** When */
-  value?: string | Date | null
+  value?: string | Date | null | number
   defaultValue?: string | Date | null
   /**
    * Required when value is a string, then when events are called with the value they will be
@@ -378,11 +378,9 @@ export interface DateInputProps
 
 interface DateInputState {
   value: PartialDate
-  prevValue: string | Date | null | undefined
+  valueProp: DateInputProps['value']
   focusMonth: number
   focusYear: number
-  locale: string
-  type: DateType
   isOpen: boolean
   invalidDate: boolean
 }
@@ -401,20 +399,20 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   public constructor(props: DateInputProps) {
     super(props)
 
-    const locale = props.locale || getLocale()
-    const type = props.type || 'date'
-    const format = props.format || getDefaultFormat(type)
-
-    const initValue = props.value === undefined ? props.defaultValue : props.value
+    const {
+      defaultValue = '',
+      value: initValue = defaultValue,
+      locale = getLocale(),
+      type = 'date',
+      format = getDefaultFormat(type),
+    } = props
     const value = PartialDate.from(initValue, { format, locale, type })
-    const prevValue = props.value
+    const valueProp = Number.isNaN(props.value) ? undefined : props.value
     this.state = {
       value,
-      prevValue,
+      valueProp,
       focusMonth: value.getMonth(),
       focusYear: value.getYear(),
-      type,
-      locale,
       isOpen: false,
       invalidDate: false,
     }
@@ -431,12 +429,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private _setPortal = (target: any) => {
     ;(this._portal as React.MutableRefObject<HTMLDivElement>).current = target?.rootElement
   }
-  private eventTarget = new CactusEventTarget<CalendarDate>({})
+  private eventTarget = new CactusEventTarget<CalendarDate | number>({})
 
   public static propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]),
     format: function (props: any): Error | null {
       if (props.format) {
         if (typeof props.format !== 'string') {
@@ -469,33 +467,38 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
 
   public static getDerivedStateFromProps(
-    props: Readonly<DateInputProps>, //nextProps
-    state: Readonly<DateInputState> //prevState
+    props: Readonly<DateInputProps>,
+    state: Readonly<DateInputState>
   ): Partial<DateInputState> | null {
+    const value = state.value
+    const {
+      value: valueProp,
+      type = value.getType(),
+      locale = value.getLocale(),
+      // If the type changes and format is undefined, format should change as well.
+      format = type !== value.getType() ? getDefaultFormat(type) : value.getFormat(),
+    } = props
+
+    // Either `undefined` or `NaN` is ignored, causing no state change.
+    const ignoreProp = Number.isNaN(valueProp)
     let updates: null | Partial<DateInputState> = null
-    if (props.type && props.type !== state.value.getType()) {
-      const type = props.type || 'date'
-      updates = updates || {}
-      updates.type = type
-      const format = props.format || getDefaultFormat(type)
-      state.value.setType(type, format)
+    if (valueProp !== undefined && valueProp !== state.valueProp && !ignoreProp) {
+      updates = { valueProp }
+      const newValue = PartialDate.from(valueProp, { format, type, locale })
+      if (!newValue.equals(value)) {
+        updates.value = newValue
+        return updates
+      }
+    } else if (ignoreProp && state.valueProp !== undefined) {
+      // This is so it can be cleared twice with only partial changes in between.
+      updates = { valueProp: undefined }
     }
-    if (props.locale !== state.locale && typeof props.locale === 'string') {
-      updates = updates || {}
-      updates.locale = props.locale
-      state.value.setLocale(props.locale)
+    if (type !== value.getType() || format !== value.getFormat() || locale !== value.getLocale()) {
+      const newValue = value.clone()
+      newValue.setType(type, format)
+      newValue.setLocale(locale)
+      updates = { ...updates, value: newValue }
     }
-
-    if (props.value !== undefined && props.value !== state.prevValue) {
-      const locale = props.locale || getLocale()
-      const type = props.type || 'date'
-      const format = props.format || getDefaultFormat(type)
-
-      updates = updates || {}
-      updates.prevValue = props.value
-      updates.value = PartialDate.from(props.value, { type: state.value.getType(), locale, format })
-    }
-
     return updates
   }
 
@@ -592,7 +595,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       this._isFocused = false
       const { onBlur } = this.props
       if (typeof onBlur === 'function') {
-        this.eventTarget.value = this._convertVal(this.state.value)
+        this.eventTarget.value = this.state.value.toValue()
         const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
         onBlur(cactusEvent)
       }
@@ -806,7 +809,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private raiseChange = (event: React.SyntheticEvent<any>, value: PartialDate): void => {
     const { onChange } = this.props
     if (typeof onChange === 'function') {
-      this.eventTarget.value = this._convertVal(value)
+      this.eventTarget.value = value.toValue()
       const cactusEvent = new CactusChangeEvent(this.eventTarget, event)
       onChange(cactusEvent)
     }
@@ -828,16 +831,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       }
       return newState
     }, callback)
-  }
-
-  private _convertVal(value: PartialDate): CalendarDate {
-    const providedValue = this.props.value
-    const isExpectingDate = providedValue === null || providedValue instanceof Date
-    if (value.isValid()) {
-      return isExpectingDate ? value.toDate() : value.format()
-    } else {
-      return isExpectingDate ? new Date(NaN) : ''
-    }
   }
 
   private _isOutside(el?: null | EventTarget): boolean {
@@ -972,7 +965,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
               name={name}
               isValidDate={isValidDate}
               labels={phrases}
-              locale={this.state.locale}
+              locale={value.getLocale()}
               ref={this._setPortal}
               tabIndex={-1}
             >
