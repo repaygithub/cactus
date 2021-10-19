@@ -2,7 +2,7 @@ import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/
 import React, { Fragment, ReactElement, useCallback, useState } from 'react'
 
 import { Accordion, Box, Flex, IconButton, Text, TextButton } from '../'
-import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
+import { Action, actions, HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
 
 interface ContentManagerState {
   [group: number]: number
@@ -194,13 +194,18 @@ interface LabelArgs {
   content: string
 }
 // Force remount when defaultOpen changes, otherwise it has no effect.
-export const BasicUsage: Story<typeof Accordion, LabelArgs> = ({ header, content, ...props }) => (
+export const BasicUsage: Story<typeof Accordion, LabelArgs> = ({
+  header,
+  content,
+  margin,
+  ...props
+}) => (
   <Box width="312px">
     <Accordion {...props} key={props.defaultOpen?.toString()}>
       <Accordion.Header>
         <Text as="h3">{header}</Text>
       </Accordion.Header>
-      <Accordion.Body>{content}</Accordion.Body>
+      <Accordion.Body m={margin}>{content}</Accordion.Body>
     </Accordion>
   </Box>
 )
@@ -208,6 +213,7 @@ BasicUsage.argTypes = {
   defaultOpen: { control: 'boolean' },
   header: STRING,
   content: STRING,
+  margin: SPACE,
 }
 BasicUsage.args = {
   header: 'Accordion',
