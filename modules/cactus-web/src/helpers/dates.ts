@@ -323,16 +323,22 @@ export function getLastDayOfMonth(month: number, year: number = TODAY.getFullYea
  * in all getters and setters
  */
 export class PartialDate implements FormatTokenMap {
-  public constructor(date?: string, formatOrOpts?: string | Partial<PartialDateOpts>) {
+  public constructor(date?: string | Date, formatOrOpts?: string | Partial<PartialDateOpts>) {
     const { format, type, locale } = asOptions(formatOrOpts)
+    this._input = date || ''
     this._locale = locale
     this._localeFormat = getLocaleFormat(locale, { type })
     this._format = format
     this._type = type
     if (date) {
-      this.parse(date, this._format)
+      if (typeof date === 'string') {
+        this.parse(date, this._format)
+      } else if (!isNaN(+date)) {
+        this.parse(formatDate(date, format), format)
+      }
     }
   }
+  private _input: string | Date
   private _locale: string
   private _localeFormat: string
   private _format: string
@@ -536,6 +542,14 @@ export class PartialDate implements FormatTokenMap {
     return this._localeFormat
   }
 
+  public getFormat(): string {
+    return this._format
+  }
+
+  public getLocale(): string {
+    return this._locale
+  }
+
   public setLocale(locale: string): void {
     this._locale = locale
     this._localeFormat = getLocaleFormat(locale, { type: this._type })
@@ -681,6 +695,7 @@ export class PartialDate implements FormatTokenMap {
       type: this._type,
       locale: this._locale,
     })
+    pd._input = this._input
     pd.year = this.year
     pd.month = this.month
     pd.day = this.day
@@ -690,30 +705,27 @@ export class PartialDate implements FormatTokenMap {
     return pd
   }
 
+  public toValue(): Date | string | number {
+    if (this.isValid()) {
+      return typeof this._input === 'object' ? this.toDate() : this.format()
+    }
+    return NaN
+  }
+
   public static from(
-    date?: null | string | Date | PartialDate,
+    date: null | string | Date | number | PartialDate,
     formatOrOpts?: string | Partial<PartialDateOpts>
   ): PartialDate {
-    if (date == null) {
+    if (Number.isNaN(date)) {
       return new PartialDate('', formatOrOpts)
     } else if (date instanceof PartialDate) {
       return date.clone()
-    } else if (date instanceof Date) {
-      if (isNaN(+date)) {
-        return new PartialDate('', formatOrOpts)
-      } else {
-        const opts = asOptions(formatOrOpts)
-        const dateStr = formatDate(date, opts.format)
-        return new PartialDate(dateStr, opts)
-      }
+    } else if (typeof date !== 'string') {
+      return new PartialDate(new Date(date ?? NaN), formatOrOpts)
     } else {
       return new PartialDate(date, formatOrOpts)
     }
   }
-}
-
-export function isValidDate(date: Date): boolean {
-  return !isNaN(+date)
 }
 
 type FormatTokenMap = { [key in FormatTokenType]?: string | number }

@@ -22,6 +22,14 @@ If `format` is not provided, the component will default to match the provided ty
 
 When `value` is provided as a prop (i.e. controlled), the value will be raised as a Date or string to match the provided type. For example, `onChange` will be called with a date string when `props.value` is also a string. Additionally, if `props.value` is `undefined` it will be raised as a string, but if `props.value` is `null` it will be raised as a `Date`.
 
+The `onChange` handler is called when any of the date's individual fields is changed,
+even if that change makes the date invalid: for example if the month is changed to
+February when the day is already 31. Whenever `onChange` is called with an invalid
+or partially-filled-out date, `event.target.value` is set to JavaScript's `NaN` value.
+When `NaN` is passed back to the `value` prop, the date input's internal state
+is unchanged: this allows using the standard "controlled input pattern", without
+overwriting any in-progress changes the user may be making.
+
 ### Try it out
 
 export const code = `<DateInput id="date-input-uncontrolled" name="date" onChange={({ target: { name, value } })=> console.log(name, value)}/>`
@@ -47,5 +55,9 @@ One should avoid changing the type on a rendered DateInput after intial render -
 ```
 
 ## Properties
+
+Note that `value` accepts numbers for the sake of the sentinel value `NaN` which
+indicates invalid/partial dates; since Typescript doesn't have a specific `NaN`
+type, however, other numbers are also valid, and treated as equivalent to `new Date(number)`.
 
 <PropsTable of={DateInput} />
