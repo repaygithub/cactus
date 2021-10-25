@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Flex, RadioCard, Span, TextInputField } from '../'
+import { Flex, RadioCard, Text, TextInputField } from '../'
 import { Action, FIELD_ARGS, Story } from '../helpers/storybook'
 
 export default {
@@ -19,16 +19,16 @@ export const BasicUsage = (): React.ReactElement => {
       </RadioCard>
       <RadioCard name="basic" defaultChecked flex="1 0 0" m={2}>
         <RadioCard.Inverse>Above</RadioCard.Inverse>
-        <Span>Checked</Span>
+        <Text>Checked</Text>
       </RadioCard>
       <RadioCard name="basic" flex="1 0 0" m={2} disabled>
-        <Span>Disabled</Span>
+        <Text>Disabled</Text>
         <RadioCard.Inverse>Forever</RadioCard.Inverse>
       </RadioCard>
       <RadioCard name="basic" flex="1 0 0" m={2}>
         Title
         <br />
-        <Span textStyle="small">Description</Span>
+        <Text textStyle="small">Description</Text>
         <RadioCard.Inverse>Below</RadioCard.Inverse>
       </RadioCard>
       <RadioCard name="basic" m={2} focusRef={ref}>
