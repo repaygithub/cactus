@@ -6,7 +6,7 @@ import {
   MenuItems as ReachMenuItems,
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
-import { NavigationChevronDown } from '@repay/cactus-icons'
+import { IconProps, NavigationChevronDown } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -18,9 +18,6 @@ import { border, boxShadow, radius, textStyle } from '../helpers/theme'
 import cssVariant from '../helpers/variant'
 
 export type SplitButtonVariant = 'standard' | 'danger' | 'success'
-export interface IconProps {
-  iconSize: 'tiny' | 'small' | 'medium' | 'large'
-}
 
 interface IsOpenProp {
   isOpen: boolean

@@ -1,4 +1,4 @@
-import * as icons from '@repay/cactus-icons'
+import icons from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
