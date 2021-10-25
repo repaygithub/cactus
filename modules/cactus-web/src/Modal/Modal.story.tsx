@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import { Alert, Button, ColorPicker, DateInputField, Modal, SelectField, Text } from '../'
 import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
+import { modalType } from './Modal'
 
 export default {
   title: 'Modal',
@@ -10,26 +11,27 @@ export default {
   argTypes: {
     className: HIDE_CONTROL,
     isOpen: HIDE_CONTROL,
-    variant: { options: ['action', 'danger', 'warning', 'success'] },
-    closeLabel: STRING,
+    variant: { options: modalType },
     modalLabel: STRING,
-    width: STRING,
-    innerHeight: STRING,
-    innerMaxHeight: STRING,
     ...actions('onClose'),
   },
 } as const
 
 type CloseArg = { onClose: Action<React.MouseEvent | void> }
+interface BasicArgs extends CloseArg {
+  contents: string
+  styleProps: React.ComponentProps<typeof Modal>
+}
 
-export const BasicUsage: Story<typeof Modal, CloseArg & { contents: string }> = ({
+export const BasicUsage: Story<typeof Modal, BasicArgs> = ({
   contents,
   onClose,
+  styleProps,
   ...args
 }) => {
   const [open, setOpen] = useState(true)
   return open ? (
-    <Modal {...args} isOpen={open} onClose={onClose.wrap(() => setOpen(false))}>
+    <Modal {...styleProps} {...args} isOpen={open} onClose={onClose.wrap(() => setOpen(false))}>
       <Text as="h3">{contents}</Text>
     </Modal>
   ) : (
@@ -38,7 +40,7 @@ export const BasicUsage: Story<typeof Modal, CloseArg & { contents: string }> = 
     </Button>
   )
 }
-BasicUsage.args = { contents: 'This is a Modal' }
+BasicUsage.args = { contents: 'This is a Modal', styleProps: {} }
 
 export const WithAlert: Story<typeof Modal, CloseArg> = ({ onClose, ...args }) => {
   const [open, setOpen] = useState(true)

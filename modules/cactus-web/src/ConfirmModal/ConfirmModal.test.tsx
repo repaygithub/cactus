@@ -25,7 +25,7 @@ describe('component: ConfirmModal', () => {
         />
       </StyleProvider>
     )
-    const confirmModal = getByTestId('confirmModal').firstElementChild
+    const confirmModal = getByTestId('confirmModal')
     const styles = window.getComputedStyle(confirmModal as Element)
 
     expect(styles.borderColor.trim()).toBe(theme.colors.warning.replace(/ /g, ''))
@@ -47,7 +47,7 @@ describe('component: ConfirmModal', () => {
         />
       </StyleProvider>
     )
-    const confirmModal = getByTestId('confirmModal').firstElementChild
+    const confirmModal = getByTestId('confirmModal')
     const styles = window.getComputedStyle(confirmModal as Element)
 
     expect(styles.borderColor.trim()).toBe(theme.colors.success.replace(/ /g, ''))
@@ -69,7 +69,7 @@ describe('component: ConfirmModal', () => {
         />
       </StyleProvider>
     )
-    const confirmModal = getByTestId('confirmModal').firstElementChild
+    const confirmModal = getByTestId('confirmModal')
     const styles = window.getComputedStyle(confirmModal as Element)
 
     expect(styles.borderColor.trim()).toBe(theme.colors.error.replace(/ /g, ''))
@@ -118,7 +118,7 @@ describe('component: ConfirmModal', () => {
       </StyleProvider>
     )
 
-    const confirmModal = getByText('Flex Confirm Modal').parentElement?.parentElement
+    const confirmModal = getByText('Flex Confirm Modal').parentElement
     expect(confirmModal).toHaveStyle('flex: 1')
     expect(confirmModal).toHaveStyle('flex-grow: 1')
     expect(confirmModal).toHaveStyle('flex-shrink: 0')
