@@ -7,25 +7,12 @@ const exportedTemplate = ({ template }, opts, { componentName, jsx }) => {
   const code = `
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import {
-  color,
-  ColorProps,
-  compose,
-  space,
-  SpaceProps,
-  verticalAlign,
-  VerticalAlignProps,
-} from 'styled-system'
 import styled from 'styled-components'
-import { IconSizes, Omit } from './types'
+import { color, compose, space, verticalAlign } from 'styled-system'
 import iconSizes from './iconSizes'
+import { IconProps } from './types'
 
-export interface Props extends Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'color' | 'opacity'>, SpaceProps, ColorProps, VerticalAlignProps {
-  iconSize?: IconSizes
-  color?: string
-}
-
-const Base = ({ iconSize, verticalAlign, opacity, ...props }: Props) => {
+const Base = ({ iconSize, verticalAlign, opacity, ...props }: IconProps) => {
   return (
     JSX
   )
