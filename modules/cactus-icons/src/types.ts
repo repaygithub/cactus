@@ -1,6 +1,6 @@
 import { Property } from 'csstype'
 import { SVGProps } from 'react'
-import { ColorProps, SpaceProps, VerticalAlignProps } from 'styled-system'
+import { ColorProps, ResponsiveValue, SpaceProps, VerticalAlignProps } from 'styled-system'
 
 export type IconSizes = 'tiny' | 'small' | 'medium' | 'large' | Property.FontSize<number>
 export interface IconProps
@@ -8,6 +8,5 @@ export interface IconProps
     SpaceProps,
     ColorProps,
     VerticalAlignProps {
-  iconSize?: IconSizes
-  color?: string
+  iconSize?: ResponsiveValue<IconSizes>
 }

@@ -12,7 +12,7 @@ import { color, compose, space, verticalAlign } from 'styled-system'
 import iconSizes from './iconSizes'
 import { IconProps } from './types'
 
-const Base = ({ iconSize, verticalAlign, opacity, ...props }: IconProps) => {
+const Base = ({ iconSize, verticalAlign, opacity, color, ...props }: IconProps) => {
   return (
     JSX
   )
@@ -29,7 +29,7 @@ const COMPONENT_NAME = styled(Base)(
 
 COMPONENT_NAME.propTypes = {
   // @ts-ignore
-  iconSize: PropTypes.string,
+  iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
 }
 
 COMPONENT_NAME.defaultProps = {
