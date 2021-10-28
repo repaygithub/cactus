@@ -80,23 +80,21 @@ const IconbuttonExample: React.FC<RouteComponentProps> = (): React.ReactElement 
         />
       </Flex>
       <Grid justify="center" style={state.inverse ? containerStyle : {}}>
-        {Object.values(icons)
-          .slice(0, Object.keys(icons).length - 2)
-          .map(
-            (Icon, ix): React.ReactElement => (
-              <Grid.Item tiny={3} medium={2} large={1} key={ix}>
-                <IconButton
-                  label={`icb-${ix}`}
-                  variant={state.variant}
-                  iconSize={state.iconSize}
-                  disabled={state.disabled}
-                  inverse={state.inverse}
-                >
-                  <Icon />
-                </IconButton>
-              </Grid.Item>
-            )
-          )}
+        {Object.values(icons).map(
+          (Icon, ix): React.ReactElement => (
+            <Grid.Item tiny={3} medium={2} large={1} key={ix}>
+              <IconButton
+                label={`icb-${ix}`}
+                variant={state.variant}
+                iconSize={state.iconSize}
+                disabled={state.disabled}
+                inverse={state.inverse}
+              >
+                <Icon />
+              </IconButton>
+            </Grid.Item>
+          )
+        )}
       </Grid>
     </div>
   )
