@@ -134,6 +134,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   prevPageLabel,
   nextPageLabel,
   lastPageLabel,
+  margin,
 }) => {
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
@@ -248,6 +249,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
       fullWidth={fullWidth}
       cardBreakpoint={cardBreakpoint}
       variant={variant}
+      margin={margin}
     >
       {topSection && (
         <DataGrid.TopSection justifyContent={justifyTop} spacing={spacingTop}>
@@ -339,16 +341,6 @@ export default {
     cardBreakpoint: 'tiny',
     dividers: false,
   },
-  parameters: {
-    cactus: {
-      overrides: {
-        display: 'block',
-        textAlign: 'center',
-        paddingTop: '16px',
-        paddingBottom: '16px',
-      },
-    },
-  },
 } as const
 
 export const BasicUsage = DataGridContainer.bind(null)
@@ -377,6 +369,7 @@ BasicUsage.argTypes = {
   prevPageLabel: { name: 'Pagination: prevPageLabel', ...STRING },
   nextPageLabel: { name: 'Pagination: nextPageLabel', ...STRING },
   lastPageLabel: { name: 'Pagination: lastPageLabel', ...STRING },
+  margin: SPACE,
 }
 BasicUsage.args = {
   initialData: INITIAL_DATA,
@@ -422,5 +415,16 @@ LotsAndLotsOfRows.args = {
     .concat(INITIAL_DATA)
     .concat(INITIAL_DATA)
     .concat(INITIAL_DATA),
+}
+LotsAndLotsOfRows.parameters = {
+  cactus: {
+    overrides: {
+      display: 'block',
+      textAlign: 'center',
+      paddingTop: '16px',
+      paddingBottom: '16px',
+      maxWidth: '100%',
+    },
+  },
 }
 LotsAndLotsOfRows.storyName = 'Lots and Lots of Rows'

@@ -125,7 +125,6 @@ const StyledTopSection = styled.div<TransientProps & { $justifyContent: JustifyC
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 16px;
   ${(p) => textStyle(p.theme, p.$variant === 'mini' ? 'small' : 'body')}}
 
   &.has-content {
