@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Table } from '../'
-import { HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
+import { HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'Table',
@@ -76,6 +76,7 @@ Layout.argTypes = {
   captionText: STRING,
   hasHeader: { name: 'has thead' },
   hasBody: { name: 'has tbody' },
+  margin: SPACE,
 }
 Layout.args = {
   captionText: '',
