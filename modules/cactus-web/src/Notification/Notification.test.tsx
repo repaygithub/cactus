@@ -1,7 +1,6 @@
-import { render, waitFor, waitForElementToBeRemoved } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import * as React from 'react'
 
-import animationRender from '../../tests/helpers/animationRender'
 import Alert from '../Alert/Alert'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Notification from './Notification'
