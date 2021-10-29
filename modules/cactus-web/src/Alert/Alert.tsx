@@ -1,7 +1,7 @@
 import { NavigationClose } from '@repay/cactus-icons'
 import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, { css, ThemeProps } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
@@ -16,8 +16,9 @@ export type Type = 'general' | 'push'
 
 interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   status?: Status
-  onClose?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onClose?: (event?: React.MouseEvent<HTMLButtonElement>) => void
   closeLabel?: string
+  closeTimeout?: number
 }
 
 interface AlertStyleProps extends AlertProps, MarginProps, WidthProps, FlexItemProps {
@@ -79,7 +80,15 @@ const statusToVariantMap: { [K in Status]: 'success' | 'warning' | 'danger' | 'a
 }
 
 const AlertBase = (props: AlertProps): React.ReactElement => {
-  const { status = 'info', onClose, closeLabel, children, ...rest } = props
+  const { status = 'info', onClose, closeLabel, children, closeTimeout, ...rest } = props
+
+  useEffect(() => {
+    if (closeTimeout && typeof onClose === 'function') {
+      setTimeout(() => {
+        onClose()
+      }, closeTimeout)
+    }
+  }, [closeTimeout, onClose])
 
   return (
     <div {...rest}>
@@ -147,6 +156,7 @@ Alert.propTypes = {
   children: PropTypes.node,
   shadow: PropTypes.bool,
   closeLabel: PropTypes.string,
+  closeTimeout: PropTypes.number,
 }
 
 Alert.defaultProps = {
