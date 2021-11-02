@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import Alert from '../Alert/Alert'
@@ -92,24 +92,5 @@ describe('component: Notification', () => {
     )
 
     expect(queryByText('Error Notification')).toBeNull()
-  })
-
-  test('Should call the onClose fn after timeout', async () => {
-    const setOpen = jest.fn()
-    const { queryByText } = render(
-      <StyleProvider>
-        <Notification open={true} vertical="top" horizontal="left">
-          <Alert closeTimeout={3} onClose={setOpen}>
-            Notification
-          </Alert>
-        </Notification>
-      </StyleProvider>
-    )
-
-    expect(queryByText('Notification')).toBeInTheDocument()
-
-    await waitFor(() => {
-      expect(setOpen).toHaveBeenCalled()
-    })
   })
 })

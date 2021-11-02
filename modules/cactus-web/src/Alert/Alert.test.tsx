@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import * as React from 'react'
 
 import { StyleProvider } from '../StyleProvider/StyleProvider'
@@ -27,5 +27,19 @@ describe('component: Alert', (): void => {
     expect(alert).toHaveStyle('flex-grow: 1')
     expect(alert).toHaveStyle('flex-shrink: 0')
     expect(alert).toHaveStyle('flex-basis: 0')
+  })
+  test('Should call the onClose fn after timeout', async () => {
+    const setOpen = jest.fn()
+    const { queryByText } = render(
+      <StyleProvider>
+        <Alert closeTimeout={3} onClose={setOpen}>
+          Notification
+        </Alert>
+      </StyleProvider>
+    )
+
+    expect(queryByText('Notification')).toBeInTheDocument()
+
+    await waitFor(() => expect(setOpen).toHaveBeenCalled())
   })
 })
