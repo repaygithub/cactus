@@ -50,8 +50,9 @@ const assertPages = (
   expect(links).toHaveLength(length)
   expect(length).toBeLessThan(14)
 
+  const prevPage = Math.max(1, currentPage - 1)
   expectIcon(links[0], currentPage === 1, 'Go to page 1')
-  expectIcon(links[1], currentPage <= 1, `Go to previous page, ${currentPage - 1}`)
+  expectIcon(links[1], currentPage <= 1, `Go to previous page, ${prevPage}`)
   expect(links[1]).toHaveAttribute('rel', 'prev')
 
   let page = 1
@@ -62,7 +63,8 @@ const assertPages = (
     expectPageLink(links[ix], page++, currentPage)
   }
 
-  expectIcon(links[length - 2], currentPage >= size, `Go to next page, ${currentPage + 1}`)
+  const nextPage = Math.min(size, currentPage + 1)
+  expectIcon(links[length - 2], currentPage >= size, `Go to next page, ${nextPage}`)
   expect(links[length - 2]).toHaveAttribute('rel', 'next')
   expectIcon(links[length - 1], currentPage === size, `Go to last page, ${size}`)
 }
