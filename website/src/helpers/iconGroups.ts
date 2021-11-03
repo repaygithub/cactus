@@ -1,4 +1,4 @@
-import * as iconsList from '@repay/cactus-icons'
+import iconsList from '@repay/cactus-icons'
 
 interface IconObject {
   name: string

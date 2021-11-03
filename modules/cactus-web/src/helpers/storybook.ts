@@ -1,7 +1,5 @@
-import * as iconExport from '@repay/cactus-icons'
-import { IconSizes } from '@repay/cactus-icons'
+import icons, { IconProps } from '@repay/cactus-icons'
 import { ComponentType, JSXElementConstructor, ReactElement } from 'react'
-import { ColorProps, SpaceProps, VerticalAlignProps } from 'styled-system'
 
 type ArgType = Record<string, any>
 type ArgTypes = Record<string, ArgType>
@@ -77,14 +75,8 @@ export const FIELD_ARGS: ArgTypes = {
   name: STRING,
 }
 
-interface IconProps extends ColorProps, SpaceProps, VerticalAlignProps {
-  iconSize?: IconSizes
-}
 export type Icon = (props: IconProps) => ReactElement
-export type IconName = Exclude<keyof typeof iconExport, 'iconSizes'>
-
-const icons = { ...iconExport } as Record<string, Icon>
-delete icons.iconSizes
+export type IconName = keyof typeof icons
 
 export const ICON_ARG = {
   name: 'icon',
