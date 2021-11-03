@@ -55,10 +55,9 @@ describe('component: DateInput', (): void => {
       )
 
       userEvent.type(getByLabelText('month'), '2')
-      expect(isNaN(value)).toBe(true)
-      expect(value instanceof Date).toBe(true)
+      expect(Number.isNaN(value)).toBe(true)
       userEvent.type(getByLabelText('day of month'), '14')
-      expect(isNaN(value)).toBe(true)
+      expect(Number.isNaN(value)).toBe(true)
       userEvent.type(getByLabelText('year'), '2019')
       expect(value).toEqual(new Date(2019, 1, 14))
 
@@ -108,13 +107,60 @@ describe('component: DateInput', (): void => {
       )
 
       userEvent.type(getByLabelText('month'), '2')
-      expect(value).toEqual('')
+      expect(Number.isNaN(value)).toBe(true)
       userEvent.type(getByLabelText('day of month'), '14')
-      expect(value).toEqual('')
+      expect(Number.isNaN(value)).toBe(true)
       userEvent.type(getByLabelText('year'), '2019')
       expect(value).toEqual('2019-02-14')
 
       expect(handleChange).toHaveBeenCalledTimes(7)
+    })
+
+    test.each([
+      { date: '2019-09-16', clear: '', repr: 'empty string' },
+      { date: new Date(2019, 8, 16), clear: null, repr: 'null' },
+    ])('Clear the value with $repr', ({ date, clear }) => {
+      const { getByLabelText, rerender } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value={date} />
+        </StyleProvider>
+      )
+
+      expect(getByLabelText('year')).toHaveProperty('value', '2019')
+      expect(getByLabelText('month')).toHaveProperty('value', '09')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '16')
+
+      rerender(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value={clear} />
+        </StyleProvider>
+      )
+
+      expect(getByLabelText('year')).toHaveProperty('value', '')
+      expect(getByLabelText('month')).toHaveProperty('value', '')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '')
+    })
+
+    test('Ignores value prop when NaN', () => {
+      const { getByLabelText, rerender } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value="2019-09-16" />
+        </StyleProvider>
+      )
+
+      expect(getByLabelText('year')).toHaveProperty('value', '2019')
+      expect(getByLabelText('month')).toHaveProperty('value', '09')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '16')
+
+      rerender(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value={NaN} />
+        </StyleProvider>
+      )
+
+      expect(getByLabelText('year')).toHaveProperty('value', '2019')
+      expect(getByLabelText('month')).toHaveProperty('value', '09')
+      expect(getByLabelText('day of month')).toHaveProperty('value', '16')
     })
   })
 
