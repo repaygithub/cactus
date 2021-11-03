@@ -1,6 +1,6 @@
 import { ActionsDelete, NavigationCircleDown, NavigationCircleUp } from '@repay/cactus-icons'
 import { generateTheme } from '@repay/cactus-theme'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitForElementToBeRemoved } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React, { ReactElement } from 'react'
 
@@ -14,10 +14,8 @@ import Accordion from './Accordion'
 
 const openAccordion = async () => animationRender()
 
-const closeAccordion = async (accordionLabel: string) => {
-  await animationRender()
-  fireEvent.transitionEnd(screen.getByLabelText(accordionLabel, { selector: '[role="region"]' }))
-}
+const closeAccordion = async (accordionLabel: string) =>
+  waitForElementToBeRemoved(screen.getByLabelText(accordionLabel, { selector: '[role="region"]' }))
 
 const getAccordionButton = (accordionLabel: string) =>
   screen.getByLabelText(accordionLabel, { selector: '[data-role="accordion-button"]' })
@@ -788,9 +786,9 @@ describe('component: Accordion', (): void => {
         </StyleProvider>
       )
 
-      const accordion = container.querySelector('#accordion')?.firstChild
+      const accordion = container.querySelector('#accordion')
       const styles = window.getComputedStyle(accordion as Element)
-      expect(styles.borderWidth).toBe('2px')
+      expect(styles.borderBottomWidth).toBe('2px')
     })
 
     test('outline accordion should have 4px border-radius', (): void => {
@@ -811,7 +809,7 @@ describe('component: Accordion', (): void => {
       expect(styles.borderRadius).toBe('4px')
     })
 
-    test('outline accordion should have 1px border-radius', (): void => {
+    test('outline accordion should have 0px border-radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { container } = render(
         <StyleProvider theme={theme}>
@@ -826,7 +824,7 @@ describe('component: Accordion', (): void => {
 
       const accordion = container.querySelector('#accordion')
       const styles = window.getComputedStyle(accordion as Element)
-      expect(styles.borderRadius).toBe('1px')
+      expect(styles.borderRadius).toBe('0px')
     })
   })
 
