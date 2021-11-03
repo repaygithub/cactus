@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 
 import Link from '../components/Link'
 
-type ChangeHandler = React.ChangeEventHandler<{ value: Date | string | null }>
+type ChangeHandler = React.ChangeEventHandler<{ value: Date | string | null | number }>
 
 const DateInputExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [type, setType] = useState<DateType>('date')
