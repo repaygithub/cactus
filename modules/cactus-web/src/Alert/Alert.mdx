@@ -27,6 +27,8 @@ export const code = `<Alert status="success" type="general"> Message</Alert>`
 
 The `Alert` component should be used to provide users with feedback based on the user's status. The status can be success, error, warning, and info. The `Alert` component should be set to a general alert or a push notification alert. The general alert is larger in size than the push notifcation. The push notification alert has a button, on the top right side, and an onClick action should be set to handle the click event when implementing a push notification.
 
+*Timeout Feature*: The `Alert` component accepts a `closeTimeout` prop. This prop will set a timeout for the value provided and the `onClose` handler will be called after the time has elapsed.
+
 ## Basic usage
 
 ```jsx

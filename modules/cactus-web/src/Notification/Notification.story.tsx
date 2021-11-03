@@ -10,7 +10,10 @@ export default {
   parameters: { controls: { disable: true } },
 } as const
 
-export const BasicUsage: Story<typeof Notification> = (args) => {
+export const BasicUsage: Story<typeof Notification, { closeTimeout: number }> = ({
+  closeTimeout,
+  ...args
+}) => {
   const [open, setOpen] = React.useState<boolean>(false)
 
   const handleOpen = () => setOpen(true)
@@ -22,7 +25,7 @@ export const BasicUsage: Story<typeof Notification> = (args) => {
         Open Notification
       </Button>
       <Notification {...args} open={open}>
-        <Alert status="error" onClose={handleClose}>
+        <Alert status="error" onClose={handleClose} closeTimeout={closeTimeout}>
           Message
         </Alert>
       </Notification>
@@ -31,6 +34,10 @@ export const BasicUsage: Story<typeof Notification> = (args) => {
 }
 BasicUsage.argTypes = {
   open: HIDE_CONTROL,
+  closeTimeout: { name: 'Alert timeout (ms)' },
+}
+BasicUsage.args = {
+  closeTimeout: 3000,
 }
 BasicUsage.parameters = {
   controls: { disable: false },
