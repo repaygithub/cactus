@@ -12,7 +12,7 @@ interface Values {
 
 interface DateTarget {
   name?: string
-  value: Date | string | null
+  value: Date | string | null | number
 }
 
 function initValues(): Values {

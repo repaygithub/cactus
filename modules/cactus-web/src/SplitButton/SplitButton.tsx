@@ -1,32 +1,23 @@
-import {
-  Menu as ReachMenu,
-  MenuButton as ReachMenuButton,
-  MenuItem as ReachMenuItem,
-  MenuItemProps,
-  MenuItems as ReachMenuItems,
-  MenuPopover as ReachMenuPopover,
-} from '@reach/menu-button'
+import { MenuItemProps } from '@reach/menu-button'
 import { IconProps, NavigationChevronDown } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { createGlobalStyle, css } from 'styled-components'
+import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { keyDownAsClick } from '../helpers/a11y'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { border, boxShadow, radius, textStyle } from '../helpers/theme'
+import usePopup, { TogglePopup } from '../helpers/usePopup'
 import cssVariant from '../helpers/variant'
+import { MenuListItem } from '../MenuItem/MenuItem'
 
 export type SplitButtonVariant = 'standard' | 'danger' | 'success'
 
-interface IsOpenProp {
-  isOpen: boolean
-}
-
-interface DropDownProps extends IsOpenProp {
+interface DropDownProps extends React.HTMLAttributes<HTMLElement> {
   anchorRef: React.RefObject<HTMLElement | null>
   variant?: SplitButtonVariant
-  children?: React.ReactNode
 }
 
 interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
@@ -145,13 +136,9 @@ const MainActionButton = styled.button<VariantInterface>`
   }
 `
 
-const SplitButtonStyles = createGlobalStyle`
-  :root {
-    --reach-menu-button: 1;
-  }
-`
-
-const SplitButtonList = styled(ReachMenuItems)<VariantInterface>`
+const SplitButtonList = styled.div<VariantInterface>`
+  position: fixed;
+  z-index: 1000;
   padding: 8px 0;
   outline: none;
   border-radius: ${radius(8)};
@@ -159,17 +146,17 @@ const SplitButtonList = styled(ReachMenuItems)<VariantInterface>`
   background-color: ${(p): string => p.theme.colors.white};
   border: ${(p) => (!p.theme.boxShadows ? border(p.theme, 'lightContrast') : '0')};
 
-  [data-reach-menu-item] {
+  [role='menuitem'] {
     display: block;
-    cursor: pointer;
-    text-decoration: none;
     overflow-wrap: break-word;
     ${(p) => textStyle(p.theme, 'small')};
     ${(p): ColorStyle => p.theme.colorStyles.standard};
-    outline: none;
     padding: 4px 16px;
     text-align: center;
-    &[data-selected] {
+    &:hover {
+      color: ${(p) => p.theme.colors.callToAction};
+    }
+    &:focus {
       ${getVariantDark}
     }
   }
@@ -181,7 +168,7 @@ const dropdownButtonShapeMap: { [K in Shape]: string } = {
   round: 'border-radius: 1px 20px 20px 1px;',
 }
 
-const DropdownButton = styled(ReachMenuButton)<VariantInterface>`
+const DropdownButton = styled.button<VariantInterface>`
   box-sizing: border-box;
   background-color: ${(p): string => p.theme.colors.darkestContrast};
   height: 32px;
@@ -222,6 +209,31 @@ type SplitButtonType = React.FC<SplitButtonProps> & {
   Action: React.ComponentType<SplitButtonActionProps>
 }
 
+const getMenuItems = (root: HTMLElement) =>
+  Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'))
+
+const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
+  switch (event.key) {
+    case 'ArrowDown':
+      toggle(true, 1, { shift: true })
+      break
+    case 'ArrowUp':
+      toggle(true, -1, { shift: true })
+      break
+    case 'End':
+    case 'PageDown':
+      toggle(true, -1)
+      break
+    case 'Home':
+    case 'PageUp':
+      toggle(true, 0)
+      break
+    default:
+      return
+  }
+  event.preventDefault()
+}
+
 export const SplitButton: SplitButtonType = (props) => {
   const {
     mainActionLabel,
@@ -233,68 +245,67 @@ export const SplitButton: SplitButtonType = (props) => {
     variant,
     ...rest
   } = props
+  const { expanded, toggle, wrapperProps, buttonProps, popupProps } = usePopup('menu', {
+    id: props.id,
+    focusControl: getMenuItems,
+    onWrapperKeyDown: handleArrows,
+  })
+  popupProps.onClick = (e) => {
+    const target = e.target as HTMLElement
+    if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
+      const btn = document.getElementById(buttonProps.id as string)
+      toggle(false, btn)
+    }
+  }
   const anchorRef = React.useRef<HTMLDivElement>(null)
   return (
-    <Wrapper {...rest} ref={anchorRef}>
-      <ReachMenu>
-        {({ isOpen }: IsOpenProp): React.ReactElement => {
-          return (
-            <>
-              <MainActionButton
-                className={isOpen ? 'dd-open' : !disabled ? 'dd-closed' : ''}
-                type="button"
-                disabled={disabled}
-                onClick={onSelectMainAction}
-                variant={variant}
-              >
-                {MainActionIcon && <MainActionIcon iconSize="small" />}
-                {mainActionLabel}
-              </MainActionButton>
-              <SplitButtonStyles />
-              <DropdownButton disabled={disabled} aria-label={ariaLabel} variant={variant}>
-                <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
-              </DropdownButton>
-              <DropDown isOpen={isOpen} variant={variant} anchorRef={anchorRef}>
-                {children}
-              </DropDown>
-            </>
-          )
-        }}
-      </ReachMenu>
+    <Wrapper {...rest} ref={anchorRef} {...wrapperProps}>
+      <MainActionButton
+        className={expanded ? 'dd-open' : !disabled ? 'dd-closed' : ''}
+        type="button"
+        disabled={disabled}
+        onClick={onSelectMainAction}
+        variant={variant}
+      >
+        {MainActionIcon && <MainActionIcon iconSize="small" />}
+        {mainActionLabel}
+      </MainActionButton>
+      <DropdownButton disabled={disabled} aria-label={ariaLabel} variant={variant} {...buttonProps}>
+        <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
+      </DropdownButton>
+      <DropDown variant={variant} anchorRef={anchorRef} {...popupProps}>
+        {children}
+      </DropDown>
     </Wrapper>
   )
 }
 
-const DropDown: React.FC<DropDownProps> = ({ isOpen, variant, anchorRef, children }) => {
+const DropDown: React.FC<DropDownProps> = ({ anchorRef, ...props }) => {
   const ref = React.useRef<HTMLDivElement>(null)
+  const visible = !props['aria-hidden']
   usePositioning({
     position: positionDropDown,
-    visible: isOpen,
+    visible,
     ref,
     anchorRef,
     updateOnScroll: true,
   })
-  return (
-    <StyledPopover portal={false} ref={ref}>
-      <SplitButtonList variant={variant}>{children}</SplitButtonList>
-    </StyledPopover>
-  )
+  return <SplitButtonList ref={ref} hidden={!visible} {...props} />
 }
 
-export const SplitButtonAction: React.FC<SplitButtonActionProps> = (props) => {
-  const { children, icon: Icon, ...rest } = props
+const Action: React.FC<SplitButtonActionProps> = (props) => {
+  const { children, icon: Icon, disabled, onSelect, ...rest } = props
+  const onClick = disabled ? undefined : onSelect
   return (
-    <ReachMenuItem {...rest}>
-      {Icon && <StyledIcon as={Icon} iconSize="small" aria-hidden="true" />}
+    <div onClick={onClick} {...rest} aria-disabled={disabled} onKeyDown={keyDownAsClick}>
+      {Icon && <Icon mr="4px" mb="3px" iconSize="small" aria-hidden="true" />}
       {children}
-    </ReachMenuItem>
+    </div>
   )
 }
 
-const StyledIcon = styled.svg`
-  margin-right: 4px;
-  margin-bottom: 3px;
-`
+export const SplitButtonAction = MenuListItem.withComponent(Action)
+SplitButtonAction.displayName = 'SplitButton.Action'
 
 const Wrapper = styled.div<VariantInterface & MarginProps>`
   display: inline-flex;
@@ -308,11 +319,6 @@ const Wrapper = styled.div<VariantInterface & MarginProps>`
     }
     ${getVariantDark};
   }
-`
-
-const StyledPopover = styled(ReachMenuPopover)`
-  position: fixed;
-  z-index: 1000;
 `
 
 SplitButton.propTypes = {

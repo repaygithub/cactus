@@ -1,4 +1,4 @@
-FROM node
+FROM node:14
 COPY entrypoint.sh /entrypoint.sh
 RUN apt-get update && apt-get install -y \
   wget \
