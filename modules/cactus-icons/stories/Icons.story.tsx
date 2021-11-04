@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react'
 
-import * as icons from '../i'
+import icons, { IconProps } from '../i'
 
 type IconName = Exclude<keyof typeof icons, 'iconSizes'>
 const iconNames = Object.keys(icons).filter((x) => x !== 'iconSizes') as IconName[]
 
 type SizeArg = { iconSize: string }
-type Icon = (props: SizeArg & { color: string }) => ReactElement
+type Icon = (props: IconProps) => ReactElement
 type IconArg = { Icon: Icon }
 
 export default {
@@ -35,10 +35,7 @@ One.argTypes = {
     name: 'icon',
     control: { type: 'select' },
     options: iconNames,
-    mapping: iconNames.reduce((mapping, icon) => {
-      mapping[icon] = icons[icon]
-      return mapping
-    }, {} as Record<string, Icon>),
+    mapping: icons,
   },
 }
 

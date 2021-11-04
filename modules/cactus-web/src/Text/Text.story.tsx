@@ -1,7 +1,7 @@
 import cactusTheme from '@repay/cactus-theme'
 import React from 'react'
 
-import { Span, Text } from '../'
+import { Text } from '../'
 import { HIDE_STYLED, SPACE, Story } from '../helpers/storybook'
 
 const COLOR_STYLES = Object.keys(cactusTheme.colorStyles)
@@ -36,8 +36,3 @@ export default {
 
 export const BasicUsageOfText: Story<typeof Text> = (args) => <Text {...args} />
 BasicUsageOfText.storyName = 'Basic Usage of Text'
-
-export const BasicUsageOfSpan: Story<typeof Span> = (args) => <Span {...args} />
-
-BasicUsageOfSpan.storyName = 'Basic Usage of Span'
-BasicUsageOfSpan.parameters = { storyshots: false }

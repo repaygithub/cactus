@@ -1,8 +1,5 @@
-import Rect, { PRect } from '@reach/rect'
-import { assignRef } from '@reach/utils'
 import { NavigationChevronDown, NavigationChevronRight } from '@repay/cactus-icons'
-import { BorderSize } from '@repay/cactus-theme'
-import { CactusTheme } from '@repay/cactus-theme'
+import { border, CactusTheme, radius, shadow, space } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, {
   createContext,
@@ -14,19 +11,17 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import styled, { css, StyledComponentBase } from 'styled-components'
+import { Transition } from 'react-transition-group'
+import styled, { StyledComponentBase } from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import KeyCodes from '../helpers/keyCodes'
-import { omitMargins, omitProps } from '../helpers/omit'
-import { boxShadow, radius } from '../helpers/theme'
+import { omitProps } from '../helpers/omit'
 import useId from '../helpers/useId'
 import IconButton from '../IconButton/IconButton'
 
 export type AccordionVariants = 'simple' | 'outline'
-
-type VariantMap = { [K in AccordionVariants]: ReturnType<typeof css> }
 
 interface AccordionProps
   extends MarginProps,
@@ -102,18 +97,9 @@ const AccordionContext = createContext<AccordionContext>({
   focusLast: undefined,
 })
 
-const getBoxShadow = (theme: CactusTheme, useBoxShadows?: boolean): ReturnType<typeof css> => {
-  return theme.boxShadows && useBoxShadows
-    ? css`
-        border: 0px;
-        ${(p): string => `${boxShadow(p.theme, 1)}`}
-      `
-    : css``
-}
-
 const AccordionHeaderBase = (props: AccordionHeaderProps): ReactElement => {
-  const { className, children, render, ...rest } = props
-  const { isOpen, variant, bodyId, headerId, handleToggle, handleFocus, focusFirst, focusLast } =
+  const { children, render, ...rest } = props
+  const { isOpen, bodyId, headerId, handleToggle, handleFocus, focusFirst, focusLast } =
     useContext(AccordionContext)
 
   const handleHeaderClick = (event: React.MouseEvent<HTMLDivElement>): void => {
@@ -181,9 +167,6 @@ const AccordionHeaderBase = (props: AccordionHeaderProps): ReactElement => {
     <div
       {...rest}
       id={typeof render !== 'function' ? headerId : undefined}
-      className={`${className} ${variant === 'outline' ? 'outline-variant' : ''} ${
-        isOpen ? 'is-open' : ''
-      }`}
       onClick={handleHeaderClick}
     >
       <IconButton
@@ -212,18 +195,7 @@ const AccordionHeaderBase = (props: AccordionHeaderProps): ReactElement => {
   )
 }
 
-const headerBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
-  thin: css`
-    border-bottom: 1px solid;
-  `,
-  thick: css`
-    border-bottom: 2px solid;
-  `,
-}
-
-const getHeaderBorder = (borderSize: BorderSize): ReturnType<typeof css> =>
-  headerBorderMap[borderSize]
-
+// Not sure we actually need the min-height now I've added padding, but don't want to risk it.
 export const AccordionHeader = styled(AccordionHeaderBase)`
   box-sizing: border-box;
   width: 100%;
@@ -231,18 +203,11 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   display: flex;
   align-items: center;
   cursor: pointer;
-  background: none;
-  border: 2px transparent;
   outline: none;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
-
-  ::after {
-    content: '';
-    min-height: inherit;
-    font-size: 0;
-  }
+  padding: ${space(3)} 0;
 
   > :not(:first-child) {
     min-width: 1px;
@@ -260,124 +225,77 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
   h4 {
     margin: 0;
   }
-
-  &.outline-variant {
-    padding-left: 16px;
-    padding-right: 16px;
-
-    &.is-open {
-      ${(p): ReturnType<typeof css> => getHeaderBorder(p.theme.border)}
-      border-color: ${(p): string => p.theme.colors.lightContrast};
-    }
-  }
 `
 
-const AccordionBodyInner = styled.div`
-  box-sizing: border-box;
-  padding-top: 24px;
-  padding-bottom: 40px;
-
-  &.pad-x {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-`
-
-const getHeight = (element: Element | null): number => {
-  if (element !== null) {
-    const { height } = element.getBoundingClientRect()
-    return height
-  }
-  return 0
+const TIMEOUT = 200
+// CSSTransition does some of this for you, but unfortunately it can't do
+// transitions with `auto` height; we have to get the height dynamically.
+const TRANSITION = {
+  timeout: TIMEOUT,
+  style: { overflow: 'hidden', width: '100%', transition: `height ${TIMEOUT}ms ease-in` },
+  onEnter: function (this: { height: number }, node: HTMLElement) {
+    this.height = node.getBoundingClientRect().height
+    node.style.height = '0'
+    node.scrollTop // Force reflow.
+  },
+  onEntering: function (this: { height: number }, node: HTMLElement) {
+    node.style.height = `${this.height}px`
+  },
+  onEntered: (node: HTMLElement) => {
+    node.style.height = ''
+  },
+  onExit: (node: HTMLElement) => {
+    node.style.height = `${node.getBoundingClientRect().height}px`
+    node.scrollTop // Force reflow.
+  },
+  onExiting: (node: HTMLElement) => {
+    node.style.height = '0'
+  },
+  onExited: (node: HTMLElement) => {
+    node.style.height = ''
+  },
 }
 
-type AnimationStateType = 'open' | 'animating' | 'closed'
+const useTransition = () => {
+  const ref = useRef(TRANSITION)
+  if (ref.current === TRANSITION) {
+    const height = { height: 0 }
+    ref.current = {
+      ...ref.current,
+      onEnter: TRANSITION.onEnter.bind(height),
+      onEntering: TRANSITION.onEntering.bind(height),
+    }
+  }
+  return ref.current
+}
 
 const AccordionBodyBase = (props: AccordionBodyProps): ReactElement | null => {
-  const { className, children, ...restProps } = props
-  const { isOpen, variant, bodyId, headerId } = useContext(AccordionContext)
-  const previousIsOpen = useRef(isOpen)
-  const [state, setState] = useState<AnimationStateType>(isOpen ? 'open' : 'closed')
-  const innerRef = useRef<HTMLDivElement | null>(null)
-  const [height, setHeight] = useState(0)
-
-  useEffect((): (() => void) => {
-    let isSubscribed = true
-    window.requestAnimationFrame((): void => {
-      if (previousIsOpen.current !== isOpen && isSubscribed) {
-        setState('animating')
-        previousIsOpen.current = isOpen
-      }
-
-      const currentHeight = getHeight(innerRef.current)
-      if (currentHeight !== height && isSubscribed) {
-        setHeight(currentHeight)
-      }
-    })
-    return (): void => {
-      isSubscribed = false
-    }
-  })
-
-  const handleTransitionEnd = useCallback(
-    (event: React.TransitionEvent<HTMLDivElement>): void => {
-      if (getHeight(event.currentTarget) === 0) {
-        setState('closed')
-      } else {
-        setState('open')
-      }
-    },
-    [setState]
+  const { isOpen, bodyId, headerId } = useContext(AccordionContext)
+  const transition = useTransition()
+  return (
+    <Transition {...transition} in={isOpen} unmountOnExit>
+      <div>
+        <div
+          {...props}
+          id={bodyId}
+          tabIndex={typeof props.children === 'string' ? 0 : undefined}
+          role="region"
+          aria-labelledby={headerId}
+        />
+      </div>
+    </Transition>
   )
-
-  const handleRectChange = (rect: PRect): void => {
-    if (rect.height !== height) {
-      setHeight(rect.height)
-    }
-  }
-
-  const outerHeight = (isOpen && state === 'animating') || state === 'open' ? height : 0
-  const transitionDuration = state === 'animating' ? 200 : 0
-  const rest = omitMargins(restProps, 'width', 'maxWidth')
-  return state !== 'closed' ? (
-    <div
-      {...rest}
-      id={bodyId}
-      className={className}
-      tabIndex={typeof children === 'string' ? 0 : undefined}
-      style={{
-        height: outerHeight + 'px',
-        transitionDuration: transitionDuration + 'ms',
-      }}
-      onTransitionEnd={handleTransitionEnd}
-      role="region"
-      aria-labelledby={headerId}
-    >
-      <Rect observe={state === 'open'} onChange={handleRectChange}>
-        {({ ref }): ReactElement => {
-          const mergeRefs = (n: HTMLDivElement | null): void => {
-            innerRef.current = n
-            assignRef(ref, n)
-          }
-          return (
-            <AccordionBodyInner
-              className={`${variant === 'outline' ? 'pad-x' : ''}`}
-              ref={mergeRefs}
-            >
-              {children}
-            </AccordionBodyInner>
-          )
-        }}
-      </Rect>
-    </div>
-  ) : null
 }
 
-export const AccordionBody = styled(AccordionBodyBase)`
-  box-sizing: border-box;
-  overflow: hidden;
-  transition: all 200ms ease-in;
-  ${margin}
+export const AccordionBody = styled(AccordionBodyBase).withConfig(
+  omitProps<AccordionBodyProps>(margin, 'width')
+)`
+  margin-top: ${space(5)};
+  margin-bottom: ${space(7)};
+  // The extra specificity is to override the defaults in variantStyles.
+  &&& {
+    ${margin}
+  }
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({
@@ -593,9 +511,7 @@ interface AccordionComponent extends StyledComponentBase<'div', CactusTheme, Acc
   Provider: React.ComponentType<AccordionProviderProps>
 }
 
-interface AccordionState {
-  isOpen: boolean
-}
+const toggle = (state: boolean) => !state
 
 const AccordionBase = (props: AccordionProps): ReactElement => {
   const {
@@ -609,12 +525,12 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     registerAccordion,
     unregisterAccordion,
   } = useContext(ProviderContext)
-  const { defaultOpen = false, variant, className, useBoxShadows, ...restProps } = props
+  const { defaultOpen = false, variant, ...restProps } = props
   const id = useId(props.id)
   const headerId = `${id}-header`
   const bodyId = `${id}-body`
 
-  const [unmanagedState, setUnmanagedState] = useState<AccordionState>({ isOpen: defaultOpen })
+  const [unmanagedState, toggleUnmanagedState] = React.useReducer(toggle, defaultOpen)
   const isInitialRender = useRef<boolean>(true)
 
   useEffect((): (() => void) => {
@@ -648,7 +564,7 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     if (isManaged) {
       manageOpen?.(id, !getManagedOpen())
     } else {
-      setUnmanagedState((state): AccordionState => ({ ...state, isOpen: !state.isOpen }))
+      toggleUnmanagedState()
     }
   }
 
@@ -670,14 +586,10 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
     }
   }
 
-  const open = isManaged ? getManagedOpen() : unmanagedState.isOpen
+  const open = isManaged ? getManagedOpen() : unmanagedState
 
   return (
-    <div
-      id={id}
-      className={`${className} ${open && variant === 'outline' ? 'box-shadow' : ''}`}
-      {...restProps}
-    >
+    <div id={id} aria-expanded={open} {...restProps}>
       <AccordionContext.Provider
         value={{
           isOpen: open,
@@ -696,63 +608,49 @@ const AccordionBase = (props: AccordionProps): ReactElement => {
   )
 }
 
-const outlineBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
+const variantStyles = (props: AccordionProps & { theme: CactusTheme }): string => {
+  const borderCSS = border(props, 'lightContrast')
+  if (props.variant === 'outline') {
+    let shadowCSS = (props.useBoxShadows && shadow(props, 1)) || ''
+    if (shadowCSS) shadowCSS += 'border: none;'
+    return `
+      border: ${borderCSS};
+      border-radius: ${radius(props, 8)};
 
-const simpleBorderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
-  thin: css`
-    border-bottom: 1px solid;
-    &:first-of-type {
-      border-top: 1px solid ${(p): string => p.theme.colors.lightContrast};
-    }
-  `,
-  thick: css`
-    border-bottom: 2px solid;
-    &:first-of-type {
-      border-top: 2px solid ${(p): string => p.theme.colors.lightContrast};
-    }
-  `,
-}
+      &[aria-expanded='true'] {
+        ${shadowCSS}
+        ${AccordionHeader} {
+          border-bottom: ${borderCSS};
+        }
+      }
 
-const getOutlineBorder = (borderSize: BorderSize) => outlineBorderMap[borderSize]
-const getSimpleBorder = (borderSize: BorderSize) => simpleBorderMap[borderSize]
+      & + ${Accordion} {
+        margin-top: ${space(props, 3)};
+      }
 
-const accordionVariantMap: VariantMap = {
-  simple: css`
-    ${(p): ReturnType<typeof css> => getSimpleBorder(p.theme.border)}
-    border-color: ${(p): string => p.theme.colors.lightContrast};
-  `,
-  outline: css`
-    ${(p): ReturnType<typeof css> => getOutlineBorder(p.theme.border)}
-    border-color: ${(p): string => p.theme.colors.lightContrast};
-    border-radius: ${radius(8)};
-    & + & {
-      margin-top: 8px;
-    }
-  `,
-}
-
-const variantStyles = (props: AccordionProps): ReturnType<typeof css> | undefined => {
-  if (props.variant !== undefined) {
-    return accordionVariantMap[props.variant]
+      ${AccordionHeader} {
+        padding-left: ${space(props, 4)};
+        padding-right: ${space(props, 4)};
+      }
+      ${AccordionBody} {
+        margin-left: ${space(props, 7)};
+        margin-right: ${space(props, 7)};
+      }
+    `
   }
+  return `
+    border-bottom: ${borderCSS};
+    &:first-of-type {
+      border-top: ${borderCSS};
+    }
+  `
 }
 
 export const Accordion = styled(AccordionBase).withConfig(
-  omitProps<AccordionProps>(flexItem, margin, 'width', 'maxWidth')
+  omitProps<AccordionProps>(flexItem, margin, width, maxWidth, 'useBoxShadows')
 )`
   box-sizing: border-box;
   width: 100%;
-
-  &.box-shadow {
-    ${(p): ReturnType<typeof css> => getBoxShadow(p.theme, p.useBoxShadows)}
-  }
 
   ${variantStyles}
   ${margin}

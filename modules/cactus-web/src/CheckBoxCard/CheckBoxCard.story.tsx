@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CheckBoxCard, Flex, Span, TextInputField } from '../'
+import { CheckBoxCard, Flex, Text, TextInputField } from '../'
 import { Action, FIELD_ARGS, Story } from '../helpers/storybook'
 
 export default {
@@ -19,16 +19,16 @@ export const BasicUsage = (): React.ReactElement => {
       </CheckBoxCard>
       <CheckBoxCard defaultChecked flex="1 0 0" m={2}>
         <CheckBoxCard.Inverse>Above</CheckBoxCard.Inverse>
-        <Span>Checked</Span>
+        <Text>Checked</Text>
       </CheckBoxCard>
       <CheckBoxCard flex="1 0 0" m={2} disabled>
-        <Span>Disabled</Span>
+        <Text>Disabled</Text>
         <CheckBoxCard.Inverse>Forever</CheckBoxCard.Inverse>
       </CheckBoxCard>
       <CheckBoxCard flex="1 0 0" m={2}>
         Title
         <br />
-        <Span textStyle="small">Description</Span>
+        <Text textStyle="small">Description</Text>
         <CheckBoxCard.Inverse>Below</CheckBoxCard.Inverse>
       </CheckBoxCard>
       <CheckBoxCard m={2} focusRef={ref}>
