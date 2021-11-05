@@ -58,4 +58,27 @@ describe('component: Table', (): void => {
     expect(headerCell).toHaveStyle('padding: 8px')
     expect(dataCell).toHaveStyle('padding: 8px')
   })
+
+  test('supports margin space props', () => {
+    const { getByTitle } = render(
+      <StyleProvider>
+        <Table title="Table Title" marginTop={2} mb="100px" mx={7}>
+          <Table.Header>
+            <Table.Cell>Header Cell</Table.Cell>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Data cell</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </StyleProvider>
+    )
+
+    const tableWrapper = getByTitle('Table Title').parentElement
+    expect(tableWrapper).toHaveStyle('margin-top: 4px')
+    expect(tableWrapper).toHaveStyle('margin-bottom: 100px')
+    expect(tableWrapper).toHaveStyle('margin-left: 40px')
+    expect(tableWrapper).toHaveStyle('margin-right: 40px')
+  })
 })
