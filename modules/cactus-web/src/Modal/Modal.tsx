@@ -123,7 +123,7 @@ const ModalPopUp = styledWithClass(DialogContent, 'cactus-modal').withConfig(
   border: ${(p) => border(p, variantColors[p.variant as ModalType], { thin: '2px', thick: '3px' })};
   border-radius: ${radius(20)};
   outline: none;
-  margin: ${space(5)};
+  margin: 5vw;
   max-width: 90vw;
   padding: ${space(7)} ${space(5)};
   padding-top: 64px;
@@ -134,6 +134,7 @@ const ModalPopUp = styledWithClass(DialogContent, 'cactus-modal').withConfig(
   flex-direction: column;
 
   ${mediaGTE('small')} {
+    margin: ${space(5)};
     max-width: 70vw;
   }
 
