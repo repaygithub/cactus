@@ -278,9 +278,15 @@ const BrandBarWithOrgDropdown = ({ logo, align }: AlignArgs) => {
                 <strong>Current Org Info</strong>
               </Flex>
               <Box px={3}>
-                <Text my={1}>{currentOrg.name}</Text>
-                <Text my={1}>{currentOrg.id}</Text>
-                <Text my={1}>{currentOrg.subdomain}</Text>
+                <Text my={1} as="p">
+                  {currentOrg.name}
+                </Text>
+                <Text my={1} as="p">
+                  {currentOrg.id}
+                </Text>
+                <Text my={1} as="p">
+                  {currentOrg.subdomain}
+                </Text>
               </Box>
               <Box width="100%" backgroundColor="lightContrast" py={2}>
                 <Flex width="100%" justifyContent="center">

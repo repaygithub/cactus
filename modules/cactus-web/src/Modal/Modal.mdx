@@ -16,11 +16,12 @@ import { livePreviewStyle } from '../helpers/constants'
 
 # Modal
 
-The `Modal` component acts just as a container, and is usefull when no action from the user is required.
+The `Modal` component is a simple modal with dark overlay background.
+It supports a wide range of styling props for flexible sizing at any screen size.
 
 ### Try it out
 
-export const code = ` () => {
+export const code = `() => {
   const [modalOpen, setModalOpen] = React.useState(false)
   return modalOpen ? (
     <Modal
@@ -28,7 +29,7 @@ export const code = ` () => {
       isOpen={modalOpen}
       onClose={() => setModalOpen(false)}
       modalLabel="Modal Label"
-      closeLabel="Close Label"
+      closeButtonProps={{ label: 'Close Label' }}
     >
       <Text as="h1">This is a Modal</Text>
     </Modal>
@@ -48,32 +49,43 @@ export const code = ` () => {
 ## Best practices
 
 The `Modal` component locks all other user interactions on the web page until the user takes an action.
-It acts as a container that can contain any children the developer wants to put in it.
+It acts as a container that can contain any children the developer wants to put in it;
+note that its children are not rendered unless the modal is open, so effects are
+not run and any state internal to those components is reset when the modal is closed.
 
-It also has `modalLabel` and `closeLabel` props which act as aria-labels for the modal and close icon.
-Modal width is responsive by default, but may be overridden with the `width` prop. If the modal's width is
-set manually, device responsiveness must also be taken into account to ensure compatibility with devices of differing sizes.
+The `modalLabel` prop is the modal's `aria-label`; most of the other props are for styling.
+`closeButtonProps` are passed directly to the `IconButton` used as the close button for the modal;
+in addition to the `IconButton` props, you can also pass `top`, `left`, and/or `right` to position the button.
 
-## Basic usage
+#### Styling
 
-A basic modal is just an empty container. In this example it has a `Text` component as the only child
+Like other cactus components, the Modal uses `styled-system` for responsive styling.
+It has default margins, padding, and max-width which can be overridden;
+you can also set height & width (and min & max), text-align, and flex properties.
+Margins in particular are not very noticeable unless the modal overflows the screen;
+in that case the overlay will scroll and there will be at least _margin_ space around the modal.
 
-```jsx
-import { Modal } from '@repay/cactus-web'
-const ComponentWithModal = () => {
-  const [modalOpen, setModalOpen] = useState(false)
-  return (
-    <Modal
-      variant="action"
-      isOpen={modalOpen}
-      onClose={() => setModalOpen(false)}
-      modalLabel="Modal Label"
-      closeLabel="Close Label"
-    />
-  )
-}
+If you override the width/max-width, you should usually account for different screen sizes,
+e.g. by passing something like `width={['90%', '75%', '50%']}` to make the modal relatively larger at small screen sizes.
+
+Flex needs special mention: the modal is inside an `inline-flex` container with `flex-direction: row`.
+Generally setting width/height will be better, but item props like `flexGrow` are supported.
+You can also turn the modal into a flex container using a special shortcut prop:
+
+```
+// A simple boolean value makes the modal into a flex container.
+<Modal flexFlow>
+  <div>Default flex settings:</div>
+  <div>flexDirection="column"</div>
+  <div>alignItems="center"</div>
+</Modal>
+// You can also pass valid values for CSS flex-flow:
+<Modal flexFlow="row-reverse wrap">
+  <div>I'll be to the right</div>
+  <div>And I'll be on the left</div>
+</Modal>
 ```
 
 ## Properties
 
-<PropsTable of={Modal} />
+<PropsTable of={Modal} fileName="Modal/Modal.tsx" />

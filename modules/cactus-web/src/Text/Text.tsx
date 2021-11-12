@@ -31,7 +31,7 @@ export interface TextProps
   textStyle?: keyof TextStyleCollection
 }
 
-export const Text = styled('p')<TextProps>`
+export const Text = styled('span')<TextProps>`
   &:not(p) {
     margin: 0;
   }
@@ -48,7 +48,5 @@ export const Text = styled('p')<TextProps>`
   ${(p): FlattenSimpleInterpolation | TextStyle | undefined =>
     p.textStyle && textStyle(p.theme, p.textStyle)}
 `
-
-export const Span = Text.withComponent('span')
 
 export default Text

@@ -1,4 +1,4 @@
-import * as icons from '@repay/cactus-icons'
+import icons from '@repay/cactus-icons'
 import { ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -15,7 +15,7 @@ export type IconSizes = 'medium' | 'large'
 export type IconNames = keyof typeof icons
 const iconNames: IconNames[] = Object.keys(icons) as (keyof typeof icons)[]
 
-interface ConfirmModalProps extends ModalProps {
+interface ConfirmModalProps extends Omit<ModalProps, 'title'> {
   cancelButtonText?: React.ReactNode
   confirmButtonText?: React.ReactNode
   onConfirm: () => void
@@ -62,7 +62,7 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
   ...props
 }): React.ReactElement => {
   return (
-    <Modal variant={variant} onClose={onClose} {...props}>
+    <Modal variant={variant} onClose={onClose} flexFlow {...props}>
       <Flex alignItems="center" className="title-icon">
         {iconName && (
           <Icon iconSize={iconSize} iconName={iconName} variant={variant} className="icon" />
@@ -135,18 +135,13 @@ const Icon = styled(IconBase)<IconProps>`
   })}
 `
 ConfirmModal.propTypes = {
+  ...Modal.propTypes,
   cancelButtonText: PropTypes.node,
-  className: PropTypes.string,
-  closeLabel: PropTypes.string,
   confirmButtonText: PropTypes.node,
   iconName: PropTypes.oneOf([...iconNames]),
   iconSize: PropTypes.oneOf(['medium', 'large']),
-  isOpen: PropTypes.bool.isRequired,
-  modalLabel: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   title: PropTypes.node,
-  variant: PropTypes.oneOf(['action', 'danger', 'warning', 'success']),
 }
 
 ConfirmModal.defaultProps = {

@@ -46,13 +46,7 @@ const ModalComponent: React.FC<RouteComponentProps> = (): ReactElement => {
           margin="0"
         />
       </Flex>
-      <Modal
-        variant={variant}
-        isOpen={open}
-        onClose={(): void => setOpen(false)}
-        modalLabel="Modal Label"
-        closeLabel="Close Label"
-      >
+      <Modal variant={variant} isOpen={open} onClose={(): void => setOpen(false)}>
         <Text>This is a Modal</Text>
       </Modal>
     </div>

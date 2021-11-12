@@ -11,7 +11,6 @@ export default {
     confirmButtonText: STRING,
     cancelButtonText: STRING,
     iconName: { ...ICON_ARG, mapping: undefined },
-    closeLabel: STRING,
     modalLabel: STRING,
     className: HIDE_CONTROL,
     isOpen: HIDE_CONTROL,

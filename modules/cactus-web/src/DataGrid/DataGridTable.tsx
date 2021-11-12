@@ -38,7 +38,13 @@ const DataGridTable: React.FC<DataGridTableProps> = (props) => {
   return (
     <>
       {children}
-      <Table fullWidth={fullWidth} cardBreakpoint={cardBreakpoint} variant={variant} {...rest}>
+      <Table
+        margin={0}
+        fullWidth={fullWidth}
+        cardBreakpoint={cardBreakpoint}
+        variant={variant}
+        {...rest}
+      >
         <Table.Header>
           {[...columns.keys()].map((key) => {
             const column = columns.get(key)

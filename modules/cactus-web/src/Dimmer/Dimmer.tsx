@@ -6,7 +6,8 @@ export interface DimmerProps extends React.HTMLAttributes<HTMLDivElement> {
   active: boolean
 }
 
-class Dimmer extends React.Component<DimmerProps> {
+// TODO Use the idea from Modal of having separate scroll & flex elements? Also scroll trap.
+class DimmerBase extends React.Component<DimmerProps> {
   public static propTypes = {
     active: PropTypes.bool.isRequired,
   }
@@ -22,26 +23,22 @@ class Dimmer extends React.Component<DimmerProps> {
   }
   render(): React.ReactElement | null {
     const { active, ...rest } = this.props
-    return active ? <DimmerStyled {...rest} /> : null
+    return active ? <div {...rest} /> : null
   }
 }
 
-export const dimmerStyles = `
+export const Dimmer = styled(DimmerBase).attrs({ as: DimmerBase })`
   position: fixed;
   display: flex;
   background: rgba(46, 53, 56, 0.9);
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 100;
-`
-
-const DimmerStyled = styled.div`
-  ${dimmerStyles}
 `
 
 export default Dimmer

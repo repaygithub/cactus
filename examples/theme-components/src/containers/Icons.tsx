@@ -1,19 +1,18 @@
 import { RouteComponentProps } from '@reach/router'
-import * as icons from '@repay/cactus-icons'
+import icons, { IconSizes } from '@repay/cactus-icons'
 import { CactusColor, CactusTheme } from '@repay/cactus-theme'
 import { Box, Flex, Grid, SelectField, Text } from '@repay/cactus-web'
 import * as React from 'react'
 import { withTheme } from 'styled-components'
 
-type IconSize = 'tiny' | 'small' | 'medium' | 'large'
-const iconSizes: IconSize[] = ['tiny', 'small', 'medium', 'large']
+const iconSizes: IconSizes[] = ['tiny', 'small', 'medium', 'large']
 
 const IconsPage: React.FC<RouteComponentProps & { theme: CactusTheme }> = ({
   theme,
 }): React.ReactElement => {
   const themeColors = Object.keys(theme.colors) as CactusColor[]
   const [color, setColor] = React.useState(themeColors[0])
-  const [size, setSize] = React.useState('medium' as IconSize)
+  const [size, setSize] = React.useState<IconSizes>('medium')
 
   return (
     <Box p={4}>
@@ -31,8 +30,9 @@ const IconsPage: React.FC<RouteComponentProps & { theme: CactusTheme }> = ({
           label="Icon Size"
           value={size}
           options={iconSizes}
-          onChange={({ target: { value } }): void => setSize(value as IconSize)}
+          onChange={({ target: { value } }): void => setSize(value as IconSizes)}
           ml={4}
+          mt={0}
         />
       </Flex>
       <Box color={color}>

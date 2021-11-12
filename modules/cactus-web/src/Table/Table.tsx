@@ -8,8 +8,9 @@ import styled, {
   FlattenSimpleInterpolation,
   ThemeProps,
 } from 'styled-components'
-import { width, WidthProps } from 'styled-system'
+import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
+import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
 import { border, boxShadow, media, radius, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
@@ -30,7 +31,8 @@ interface TableContextProps {
 }
 
 interface TableProps
-  extends React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement> {
+  extends MarginProps,
+    React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement> {
   fullWidth?: boolean
   cardBreakpoint?: Size
   variant?: TableVariant
@@ -85,7 +87,8 @@ const Wrapper = styled.div<TableProps>`
   max-width: 100%;
   overflow-x: auto;
   margin: 0px 16px;
-  ${(p): string => (p.fullWidth ? 'min-width: calc(100% - 32px)' : '')};
+  ${margin}
+  ${(p) => (p.fullWidth ? 'width: 100%;' : '')};
 `
 
 interface heightInfoProps {
@@ -99,6 +102,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
     const tableRef = React.useRef<HTMLTableElement>(null)
     const mergedRef = useMergedRefs(ref, tableRef)
+    const marginProps = extractMargins(props)
     useLayoutEffect(() => {
       const heightInfo: heightInfoProps[] = []
       let height = 0
@@ -148,7 +152,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
             {children}
           </StyledTable>
         ) : (
-          <Wrapper fullWidth={props.fullWidth}>
+          <Wrapper {...marginProps} fullWidth={props.fullWidth}>
             <StyledTable {...props} ref={mergedRef}>
               {children}
             </StyledTable>

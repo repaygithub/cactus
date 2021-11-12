@@ -1,5 +1,5 @@
 import { MenuItemProps } from '@reach/menu-button'
-import { NavigationChevronDown } from '@repay/cactus-icons'
+import { IconProps, NavigationChevronDown } from '@repay/cactus-icons'
 import { ColorStyle, Shape } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -14,9 +14,6 @@ import cssVariant from '../helpers/variant'
 import { MenuListItem } from '../MenuItem/MenuItem'
 
 export type SplitButtonVariant = 'standard' | 'danger' | 'success'
-export interface IconProps extends MarginProps {
-  iconSize: 'tiny' | 'small' | 'medium' | 'large'
-}
 
 interface DropDownProps extends React.HTMLAttributes<HTMLElement> {
   anchorRef: React.RefObject<HTMLElement | null>

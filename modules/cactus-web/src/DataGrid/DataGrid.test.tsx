@@ -1,5 +1,6 @@
 import { fireEvent, render } from '@testing-library/react'
 import React, { useContext, useState } from 'react'
+import { MarginProps } from 'styled-system'
 
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
@@ -74,7 +75,7 @@ interface Datum {
   active: boolean
 }
 
-interface ContainerProps {
+interface ContainerProps extends MarginProps {
   providePageSizeOptions?: boolean
   providePageCount?: boolean
   showResultsCount?: boolean
@@ -87,6 +88,7 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
     providePageCount = true,
     showResultsCount = true,
     fullWidth,
+    ...rest
   } = props
   const size = useContext(ScreenSizeContext)
   const isCardView = size <= SIZES['tiny']
@@ -200,6 +202,7 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
       paginationOptions={getPaginationOptions()}
       onPageChange={onPageChange}
       fullWidth={fullWidth}
+      {...rest}
     >
       <DataGrid.TopSection>
         {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
@@ -324,5 +327,19 @@ describe('component: DataGrid', (): void => {
     )
 
     expect(getAllByText('Edit')[0]).toBeInTheDocument()
+  })
+
+  test('Should support margin props', () => {
+    const { getByTestId } = render(
+      <StyleProvider>
+        <DataGridContainer data-testid="data-grid" marginTop={2} mb="100px" mx={7} />
+      </StyleProvider>
+    )
+
+    const dataGrid = getByTestId('data-grid')
+    expect(dataGrid).toHaveStyle('margin-top: 4px')
+    expect(dataGrid).toHaveStyle('margin-bottom: 100px')
+    expect(dataGrid).toHaveStyle('margin-left: 40px')
+    expect(dataGrid).toHaveStyle('margin-right: 40px')
   })
 })
