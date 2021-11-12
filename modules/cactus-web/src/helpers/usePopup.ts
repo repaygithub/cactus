@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { isActionKey, preventAction } from './a11y'
-import { isFocusLost } from './events'
 import { FocusControl, FocusHint, FocusOpts, FocusSetter, useFocusControl } from './focus'
 import { useBox, useStateWithCallback } from './react'
 import useId from './useId'
@@ -109,8 +108,13 @@ function usePopup(
       }
       // Although blur events aren't cancelable, you can use `preventDefault()`
       // in this case to prevent the `usePopup`'s default behavior.
-      if (!event.isDefaultPrevented() && isFocusLost(event)) {
-        toggle(false)
+      if (!event.isDefaultPrevented()) {
+        const wrapper = event.currentTarget
+        setTimeout(() => {
+          if (!wrapper.contains(document.activeElement)) {
+            toggle(false)
+          }
+        }, 50)
       }
     },
     [toggle, onWrapperBlur]
