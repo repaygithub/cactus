@@ -1,3 +1,15 @@
+# v3.0.0 (Mon Nov 15 2021)
+
+#### 💥 Breaking Change
+
+- Default export is now an object containing all icons. IconProps & IconSizes types now exported. [#669](https://github.com/repaygithub/cactus/pull/669) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 1
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v2.6.0 (Mon Jul 19 2021)
 
 #### 🚀 Enhancement
