@@ -1,3 +1,34 @@
+# v9.0.0 (Mon Nov 15 2021)
+
+#### 💥 Breaking Change
+
+- Modal is no longer flex by default and does not have automatic internal scrolling. Default width has been replaced with default max-width [#673](https://github.com/repaygithub/cactus/pull/673) ([@wilysword](https://github.com/wilysword))
+- DataGrid now hard-codes DataGrid.Table margins to 0. Customizable margins supported on Table component. [#671](https://github.com/repaygithub/cactus/pull/671) ([@Dhalton](https://github.com/Dhalton))
+- Default Text element changed from p to span [#670](https://github.com/repaygithub/cactus/pull/670) ([@Dhalton](https://github.com/Dhalton))
+- When onChange is called with an invalid or partial date, event.target.value will be NaN. DateInput can now be cleared by passing a falsy value prop. [#667](https://github.com/repaygithub/cactus/pull/667) ([@daniloPenaR](https://github.com/daniloPenaR) [@wilysword](https://github.com/wilysword))
+
+#### 🚀 Enhancement
+
+- Alert now supports a timeout prop which will call the onClose handler after the time (in ms) has elapsed. [#672](https://github.com/repaygithub/cactus/pull/672) ([@daniloPenaR](https://github.com/daniloPenaR) [@wilysword](https://github.com/wilysword) [@mikesoltow](https://github.com/mikesoltow))
+- Accordion.Body accepts margin props that can be used to override default spacing [#668](https://github.com/repaygithub/cactus/pull/668) ([@wilysword](https://github.com/wilysword))
+- Reach removed from SplitButton [#675](https://github.com/repaygithub/cactus/pull/675) ([@wilysword](https://github.com/wilysword) [@Dhalton](https://github.com/Dhalton))
+- The pagination component can now be disabled using the disabled prop. [#666](https://github.com/repaygithub/cactus/pull/666) ([@wilysword](https://github.com/wilysword))
+- Fixed layout positions are now supported. useLayout hook is now being exported. [#658](https://github.com/repaygithub/cactus/pull/658) ([@wilysword](https://github.com/wilysword))
+
+#### 🔩 Dependency Updates
+
+- build(deps): bump tmpl from 1.0.4 to 1.0.5 [#662](https://github.com/repaygithub/cactus/pull/662) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 5
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@mikesoltow](https://github.com/mikesoltow)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v8.1.0 (Mon Sep 13 2021)
 
 #### 🚀 Enhancement
