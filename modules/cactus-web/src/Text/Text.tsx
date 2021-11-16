@@ -1,33 +1,24 @@
-import { TextStyle, TextStyleCollection } from '@repay/cactus-theme'
-import styled, { FlattenSimpleInterpolation } from 'styled-components'
+import { textStyle, TextStyleCollection } from '@repay/cactus-theme'
+import styled from 'styled-components'
 import {
   color,
   ColorProps,
   colorStyle,
   ColorStyleProps,
-  fontFamily,
-  FontFamilyProps,
-  fontStyle,
-  FontStyleProps,
-  fontWeight,
-  FontWeightProps,
-  margin,
+  compose,
   space,
   SpaceProps,
-  textAlign,
-  TextAlignProps,
+  typography,
+  TypographyProps,
 } from 'styled-system'
 
-import { textStyle } from '../helpers/theme'
+import { omitStyles } from '../helpers/styled'
 
-export interface TextProps
-  extends SpaceProps,
-    ColorProps,
-    ColorStyleProps,
-    FontFamilyProps,
-    FontWeightProps,
-    TextAlignProps,
-    FontStyleProps {
+// These are covered by `textStyle` instead.
+type FontProps = Omit<TypographyProps, 'fontSize' | 'lineHeight'>
+const font = omitStyles(typography, 'fontSize', 'lineHeight')
+
+export interface TextProps extends SpaceProps, ColorProps, ColorStyleProps, FontProps {
   textStyle?: keyof TextStyleCollection
 }
 
@@ -35,18 +26,10 @@ export const Text = styled('span')<TextProps>`
   &:not(p) {
     margin: 0;
   }
-  && {
-    ${margin}
+  &&& {
+    ${compose(space, color, colorStyle, font)}
+    ${(p) => p.textStyle && textStyle(p, p.textStyle)}
   }
-  ${space}
-  ${color}
-  ${colorStyle}
-  ${fontFamily}
-  ${fontWeight}
-  ${textAlign}
-  ${fontStyle}
-  ${(p): FlattenSimpleInterpolation | TextStyle | undefined =>
-    p.textStyle && textStyle(p.theme, p.textStyle)}
 `
 
 export default Text
