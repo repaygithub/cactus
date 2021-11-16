@@ -1,6 +1,6 @@
+import { iconSize, space } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
@@ -8,6 +8,7 @@ import { Flex } from '../Flex/Flex'
 import { isFocusOut } from '../helpers/events'
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { omitProps } from '../helpers/omit'
+import { styledUnpoly, styledWithClass } from '../helpers/styled'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
@@ -167,6 +168,11 @@ function AccessibleFieldBase(props: InnerProps) {
     rest['aria-labelledby'] = labelId
     rest['aria-describedby'] = ariaDescribedBy
   }
+  const $labelProps = { ...labelProps, id: labelId, htmlFor: fieldId }
+  if (disabled) {
+    delete $labelProps.colors
+    $labelProps.color = 'mediumGray'
+  }
 
   return (
     <div {...rest} ref={ref} onFocus={handleFieldFocus} onBlur={handleFieldBlur}>
@@ -176,9 +182,7 @@ function AccessibleFieldBase(props: InnerProps) {
         justifyContent={alignTooltip === 'right' ? 'space-between' : 'flex-start'}
         alignItems="center"
       >
-        <Label {...labelProps} id={labelId} htmlFor={fieldId}>
-          {label}
-        </Label>
+        <FieldLabel {...$labelProps}>{label}</FieldLabel>
         {tooltip && (
           <Tooltip
             label={tooltip}
@@ -208,33 +212,41 @@ function AccessibleFieldBase(props: InnerProps) {
     </div>
   )
 }
+AccessibleFieldBase.displayName = 'AccessibleField'
 
-export const AccessibleField = styled(FieldWrapper)
-  .withConfig(omitProps<AccessibleFieldProps>(width, margin, flexItem))
-  .attrs({ as: AccessibleFieldBase })`
+export const AccessibleField = styledUnpoly(FieldWrapper, AccessibleFieldBase).withConfig(
+  omitProps<AccessibleFieldProps>(width, margin, flexItem)
+)`
   position: relative;
   ${width}
   display: flex;
   flex-direction: column;
 
-  .field-label-row ${Label} {
-    display: block;
-    box-sizing: border-box;
-    padding-left: 16px;
-    padding-right: 8px;
-    color: ${(p) => p.disabled && p.theme.colors.mediumGray};
-  }
-
   .field-label-row ${Tooltip} {
     position: relative;
-    font-size: 16px;
-    padding-right: 8px;
+    font-size: ${iconSize('small')};
+    padding: 0 ${space(3)};
   }
 
   .field-status-row ${StatusMessage} {
-    margin-top: 4px;
+    margin-top: ${space(2)};
   }
 ` as React.FC<AccessibleFieldProps>
+
+const FieldLabel = styledWithClass(Label, 'field-label')`
+  display: block;
+  box-sizing: border-box;
+  min-width: 1px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  :first-child {
+    margin: 0 ${space(4)};
+  }
+  :not(:last-child) {
+    margin-right: 0;
+  }
+`
+FieldLabel.displayName = 'AccessibleField.Label'
 
 AccessibleField.propTypes = {
   label: PropTypes.node.isRequired,

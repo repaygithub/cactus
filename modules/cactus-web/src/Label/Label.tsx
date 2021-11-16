@@ -1,17 +1,16 @@
+import { CactusTheme, color, textStyle } from '@repay/cactus-theme'
 import React from 'react'
-import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import styled, { StyledComponent } from 'styled-components'
 
-import { textStyle } from '../helpers/theme'
+import Text, { TextProps } from '../Text/Text'
 
-export interface LabelProps extends React.ComponentPropsWithoutRef<'label'>, MarginProps {}
+type LabelAttributes = Omit<React.LabelHTMLAttributes<HTMLLabelElement>, 'color'>
+export interface LabelProps extends LabelAttributes, TextProps {}
 
-export const Label = styled.label<LabelProps>`
-  ${(p) => textStyle(p.theme, 'body')};
+export const Label = styled(Text.withComponent('label'))`
+  ${textStyle('body')}
   font-weight: 600;
-  color: ${(p): string => p.theme.colors.darkestContrast};
-
-  ${margin}
-`
+  color: ${color('darkestContrast')};
+` as StyledComponent<React.FC<LabelAttributes>, CactusTheme, TextProps>
 
 export default Label
