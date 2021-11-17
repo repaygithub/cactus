@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
@@ -32,7 +32,7 @@ describe('component: BrandBar', () => {
 
       userEvent.click(getByText('Click me'))
 
-      expect(settings).not.toBeVisible()
+      await waitFor(() => expect(settings).not.toBeVisible())
 
       userEvent.click(trigger)
       userEvent.click(settings)
@@ -70,7 +70,7 @@ describe('component: BrandBar', () => {
       expect(option1).toBeVisible()
 
       userEvent.click(getByText('Click me'))
-      expect(option1).not.toBeVisible()
+      await waitFor(() => expect(option1).not.toBeVisible())
 
       userEvent.click(trigger)
       userEvent.click(option1)
