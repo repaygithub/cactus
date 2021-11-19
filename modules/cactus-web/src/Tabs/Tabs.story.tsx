@@ -40,7 +40,6 @@ export const BasicUsage: Story<typeof TabList, FlexItemProps & { tabCount: numbe
   ...args
 }) => {
   const [active, setActive] = React.useState(-1)
-  const tabListProps = split(args, 'justifyContent', 'fillGaps', 'fullWidth')
   const tabProps = split(args, 'flex', 'flexGrow', 'flexShrink', 'flexBasis')
 
   const tabs = []
@@ -58,7 +57,7 @@ export const BasicUsage: Story<typeof TabList, FlexItemProps & { tabCount: numbe
   }
 
   return (
-    <TabList {...tabListProps}>
+    <TabList {...args}>
       {tabCount > 0 && (
         <Tab
           as="a"
@@ -86,11 +85,10 @@ BasicUsage.args = {
 }
 
 export const WithController: Story<typeof TabList, FlexItemProps> = (args) => {
-  const tabListProps = split(args, 'justifyContent', 'fillGaps', 'fullWidth')
   const tabProps = split(args, 'flex', 'flexGrow', 'flexShrink', 'flexBasis')
   return (
     <TabController id="the-tabs" initialTabId="the-tabs-name-tab">
-      <TabList {...tabListProps}>
+      <TabList {...args}>
         <Tab name="name" {...tabProps}>
           Name
         </Tab>
