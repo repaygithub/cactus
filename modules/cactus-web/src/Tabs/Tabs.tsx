@@ -6,7 +6,9 @@ import Box, { BoxProps } from '../Box/Box'
 import Flex, { JustifyContent } from '../Flex/Flex'
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
+import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
+import { omitProps } from '../helpers/omit'
 import { useValue } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
 import { border, insetBorder, isResponsiveTouchDevice, media, textStyle } from '../helpers/theme'
@@ -17,7 +19,7 @@ interface TabListProps extends Omit<React.HTMLAttributes<HTMLElement>, 'role'> {
   fillGaps?: boolean
 }
 
-interface TabProps {
+interface TabProps extends FlexItemProps {
   /** Name of the tab, used by the controller to auto-generate `id` and `panelId` */
   name?: string
   /** ID of the panel this tab controls; directly mapped to `aria-controls` */
@@ -276,10 +278,13 @@ const StyledTabList = styled(Flex)`
   }
 `
 
-const StyledTab = styled.div`
+const StyledTab = styled.div.withConfig(omitProps<TabProps>(flexItem))`
   display: block;
   position: relative;
   padding: 8px 16px;
+  && {
+    ${flexItem}
+  }
 
   &:focus::after {
     content: '';

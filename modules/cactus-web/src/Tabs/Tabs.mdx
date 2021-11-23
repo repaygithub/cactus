@@ -79,6 +79,8 @@ The IDs are critical to ensure the link between tabs and panels, so be sure to a
 
 For some reason our doc generator won't work on this component. The only two custom props are `name` and `panelId` mentioned above in the "Accessibility" section; both are optional strings.
 
+`Tab` also supports all `flex*` props, which can be found in the `TabPanel` Styling Props below. Setting `flexGrow` on a `Tab` element will override the value set by `fillGaps` on `TabList`.
+
 ### TabController
 
 <PropsTable of={TabController} staticProp="TabController" />
