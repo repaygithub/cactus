@@ -54,3 +54,6 @@ export default () => (
 ## Properties
 
 Has the same styled props as <a href="../box/">Box</a>, plus the [styled-system flexbox](https://styled-system.com/api/#flexbox) props.
+
+Note that, although `justifyContent="stretch"` is supported by this component, `stretch` is not supported in Internet Explorer, so make
+sure you know whether or not you need to support IE before using that value.

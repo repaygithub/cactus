@@ -14,6 +14,7 @@ export const justifyOptions = [
   'space-between',
   'space-around',
   'space-evenly',
+  'stretch',
 ] as const
 export type JustifyContent = typeof justifyOptions[number]
 
