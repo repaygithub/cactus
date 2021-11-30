@@ -16,7 +16,7 @@ export default {
     id: 'color-picker',
   },
   parameters: {
-    cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
+    cactus: { overrides: { alignItems: 'start' } },
   },
 } as const
 

@@ -45,7 +45,3 @@ export const BasicUsage: Story<typeof Flex> = ({ alignSelf, ...args }) => (
     <Flex p={5} colors="darkestContrast" />
   </Flex>
 )
-
-BasicUsage.parameters = {
-  cactus: { overrides: { width: '100%', height: '100vh', display: 'block' } },
-}

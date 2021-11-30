@@ -75,6 +75,14 @@ export const WithCollisions: Story<typeof MenuButton, ActionArg> = ({ menuAction
 WithCollisions.args = { label: 'Demo' }
 WithCollisions.storyName = 'with Collisions'
 WithCollisions.parameters = {
-  cactus: { overrides: { height: '220vh', width: '220vw' } },
+  cactus: {
+    overrides: {
+      height: '220vh',
+      width: '220vw',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
   storyshots: false,
 }

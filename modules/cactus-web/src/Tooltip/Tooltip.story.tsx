@@ -25,6 +25,14 @@ export const BasicUsage: Story<typeof Tooltip> = (args) => (
 export const CollisionDetection: Story<typeof Tooltip> = (args) => <Tooltip {...args} />
 
 CollisionDetection.parameters = {
-  cactus: { overrides: { height: '200vh', width: '200vw' } },
+  cactus: {
+    overrides: {
+      height: '200vh',
+      width: '200vw',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
   storyshots: false,
 }

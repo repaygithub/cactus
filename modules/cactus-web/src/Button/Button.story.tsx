@@ -23,7 +23,7 @@ export default {
 } as const
 
 export const BasicUsage: Story<typeof Button> = (args) => (
-  <Flex justifyContent="space-around">
+  <Flex>
     <Button {...args} variant="standard" margin="5px" />
     <Button {...args} variant="action" margin="5px">
       Action

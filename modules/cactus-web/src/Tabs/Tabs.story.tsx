@@ -122,5 +122,4 @@ WithController.parameters = {
   beforeScreenshot: async (page: Page) => {
     await page.focus('#serial-num')
   },
-  cactus: { overrides: { display: 'block' } },
 }

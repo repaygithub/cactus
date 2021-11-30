@@ -64,7 +64,7 @@ export const Layout: TableStory = ({
   }
 
   return (
-    <Table {...args}>
+    <Table {...args} marginLeft={2} marginRight="25px">
       {captionText && <caption>{captionText}</caption>}
       {header}
       <Body>{rows}</Body>
