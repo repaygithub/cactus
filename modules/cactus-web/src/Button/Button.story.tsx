@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Flex } from '../'
+import { Button } from '../'
 import { actions, HIDE_CONTROL, Icon, ICON_ARG, Story } from '../helpers/storybook'
 
 export default {
@@ -23,7 +23,7 @@ export default {
 } as const
 
 export const BasicUsage: Story<typeof Button> = (args) => (
-  <Flex>
+  <>
     <Button {...args} variant="standard" margin="5px" />
     <Button {...args} variant="action" margin="5px">
       Action
@@ -40,7 +40,7 @@ export const BasicUsage: Story<typeof Button> = (args) => (
     <Button {...args} disabled margin="5px">
       Disabled
     </Button>
-  </Flex>
+  </>
 )
 BasicUsage.parameters = { options: { showPanel: true } }
 BasicUsage.args = { children: 'Standard' }
