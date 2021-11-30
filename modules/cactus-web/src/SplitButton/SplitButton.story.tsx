@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Flex, SplitButton } from '../'
+import { SplitButton } from '../'
 import {
   actions,
   ActionWrap,
