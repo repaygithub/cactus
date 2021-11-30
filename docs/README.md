@@ -15,6 +15,7 @@ The Cactus Design System is built to aid designers and developers to make decisi
 
 - [`@repay/cactus-fwk`](../modules/cactus-fwk/) - Cactus Framework
 - [`@repay/cactus-i18n`](../modules/cactus-i18n/) - Cactus I18n library
+- [`@repay/cactus-form`](../modules/cactus-form/) - Cactus/Final Form wrapper library
 - [`@repay/cactus-icons`](../modules/cactus-icons/) - Cactus Icons
 - [`@repay/cactus-theme`](../modules/cactus-theme/) - Cactus UI Theme
 - [`@repay/cactus-web`](../modules/cactus-web/) - Cactus Web UI Components

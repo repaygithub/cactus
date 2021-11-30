@@ -10,6 +10,7 @@ An application framework and design system built in React at [REPAY](https://git
 
 - [`@repay/cactus-fwk`](./modules/cactus-fwk/) - Cactus Framework
 - [`@repay/cactus-i18n`](./modules/cactus-i18n/) - Cactus I18n library
+- [`@repay/cactus-form`](./modules/cactus-form/) - Cactus/Final Form wrapper library
 - [`@repay/cactus-icons`](./modules/cactus-icons/) - Cactus Icons
 - [`@repay/cactus-theme`](./modules/cactus-theme/) - Cactus UI Theme
 - [`@repay/cactus-web`](./modules/cactus-web/) - Cactus Web UI Components
@@ -75,6 +76,7 @@ yarn i18n tdd
 Similar shortcuts are available for all published modules:
 
 - `yarn i18n` => `yarn workspace @repay/cactus-i18n`
+- `yarn form` => `yarn workspace @repay/cactus-form`
 - `yarn icons` => `yarn workspace @repay/cactus-icons`
 - `yarn fwk` => `yarn workspace @repay/cactus-fwk`
 - `yarn theme` => `yarn workspace @repay/cactus-theme`
@@ -208,20 +210,20 @@ In addition to the creation of stories from specific components, we keep a track
 
 Every story has the `canvas` and the `docs` sections. On `canvas` section you’ll find the component running with the main props that you set for this specific permutation. Below the frame where the component is running, there are three addons: `Knobs`, `Cactus Theme`, and `Actions`.
 
-#### Cactus Theme 
-The **Cactus Theme** add-on allows you to play with a set of global parameters that modify the component appearance, such as the theme colors, the border width, component shape, the text’s font, and others. It allows us to make our components more customizable by the users. 
+#### Cactus Theme
+The **Cactus Theme** add-on allows you to play with a set of global parameters that modify the component appearance, such as the theme colors, the border width, component shape, the text’s font, and others. It allows us to make our components more customizable by the users.
 
 #### Actions
 The Actions add-on logs the events triggered by the user, such as onClick, onFocus, or onBlur.
 
 #### Knobs
 
-The [knobs](https://www.npmjs.com/package/@storybook/addon-knobs) are controls that allow the user to control and edit the component’s props dynamically, exploring the component behavior. These are the knobs that are available: 
+The [knobs](https://www.npmjs.com/package/@storybook/addon-knobs) are controls that allow the user to control and edit the component’s props dynamically, exploring the component behavior. These are the knobs that are available:
 
 - **`Text`:** To get a text from the user.
 - **`Boolean`:** To get a boolean value from the user.
 - **`Number`:** To get a number from the user.
-- **`Select`:** To get a value from a list of options. 
+- **`Select`:** To get a value from a list of options.
 - **`Radios`:** To get a value from a list of radio buttons.
 
 [More info here.](https://github.com/storybookjs/storybook/tree/master/addons/knobs#available-knobs)
@@ -230,9 +232,9 @@ Knobs should be used as much as possible to give the user access to the differen
 
 These are other use-cases where you must set up a knob for a prop from the parent component:
 - To Modify text from labels, inputs, textareas, headers and/or other contents.
-- To enable or disable user's actions like clicks. 
+- To enable or disable user's actions like clicks.
 - To change a specific CSS property like `justify-content`, `align-items`, `flex-direction`, `width`, `height`
-- To hide or show a specific component from the story. 
+- To hide or show a specific component from the story.
 
 #### Knobs vs Stories
 
