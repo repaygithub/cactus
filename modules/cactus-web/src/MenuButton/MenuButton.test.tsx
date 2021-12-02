@@ -22,9 +22,8 @@ describe('component: MenuButton', (): void => {
           </MenuButton>
         </StyleProvider>
       )
-
       userEvent.click(getByText('Demo'))
-      await animationRender()
+      fireEvent.focus(getByText('Action One'))
       userEvent.click(getByText('Action One'))
       expect(actionOne).toHaveBeenCalled()
     })
@@ -69,7 +68,7 @@ describe('component: MenuButton', (): void => {
 describe('With theme changes ', (): void => {
   test('Should have square borders', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
           <MenuButton.Item onSelect={(): void => console.log('Action One')}>
@@ -83,14 +82,13 @@ describe('With theme changes ', (): void => {
       </StyleProvider>
     )
 
-    const menuButton = container.querySelector('[aria-controls="menu--18"]')
-    const styles = window.getComputedStyle(menuButton as Element)
+    const styles = window.getComputedStyle(getByText('Demo'))
 
     expect(styles.borderRadius).toBe('1px')
   })
   test('Should have intermediate borders', (): void => {
     const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
           <MenuButton.Item onSelect={(): void => console.log('Action One')}>
@@ -104,15 +102,14 @@ describe('With theme changes ', (): void => {
       </StyleProvider>
     )
 
-    const menuButton = container.querySelector('[id="menu-button--menu--23"]')
-    const styles = window.getComputedStyle(menuButton as Element)
+    const styles = window.getComputedStyle(getByText('Demo'))
 
     expect(styles.borderRadius).toBe('8px')
   })
 
   test('Dropdown should not have box-shadows', (): void => {
     const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
           <MenuButton.Item onSelect={(): void => console.log('Action One')}>
@@ -125,15 +122,14 @@ describe('With theme changes ', (): void => {
         </MenuButton>
       </StyleProvider>
     )
-    const menuButton = container.querySelector('[id="menu-button--menu--28"]')
-    const styles = window.getComputedStyle(menuButton as Element)
+    const styles = window.getComputedStyle(getByText('Demo'))
 
     expect(styles.boxShadow).toBe('')
   })
 
   test('Border should be 2px', (): void => {
     const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-    const { container } = render(
+    const { getByText } = render(
       <StyleProvider theme={theme}>
         <MenuButton label="Demo">
           <MenuButton.Item onSelect={(): void => console.log('Action One')}>
@@ -146,8 +142,7 @@ describe('With theme changes ', (): void => {
         </MenuButton>
       </StyleProvider>
     )
-    const menuButton = container.querySelector('[id="menu-button--menu--33"]')
-    const styles = window.getComputedStyle(menuButton as Element)
+    const styles = window.getComputedStyle(getByText('Demo'))
 
     expect(styles.borderWidth).toBe('2px')
   })
