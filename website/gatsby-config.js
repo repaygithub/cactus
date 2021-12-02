@@ -45,7 +45,7 @@ module.exports = {
         extensions: ['.md', '.mdx'],
         gatsbyRemarkPlugins: [
           {
-            resolve: path.resolve('./tools/gatsby-remark-modify-links.js'),
+            resolve: require.resolve('./plugins/gatsby-remark-modify-links'),
             options: {
               repoBase: path.resolve('../'),
               repoUrl: 'https://github.com/repaygithub/cactus/tree/master',
@@ -63,7 +63,6 @@ module.exports = {
             resolve: 'gatsby-remark-images',
             options: {
               maxWidth: 1200,
-              sizeByPixelDensity: true,
             },
           },
           {
