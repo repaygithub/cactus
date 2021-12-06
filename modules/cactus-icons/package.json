@@ -78,7 +78,7 @@
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.11",
-    "@types/styled-components": "5.1.16",
+    "@types/styled-components": "5.1.17",
     "@types/styled-system": "^5.1.13",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",

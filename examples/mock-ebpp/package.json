@@ -23,7 +23,7 @@
     "@repay/testing-tools": "^0.1.3",
     "@testing-library/testcafe": "^4.4.0",
     "@types/reach__router": "^1.3.9",
-    "@types/styled-components": "5.1.16",
+    "@types/styled-components": "5.1.17",
     "testcafe": "^1.17.1",
     "typescript": "~4.5.2"
   },

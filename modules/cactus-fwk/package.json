@@ -57,7 +57,7 @@
     "@babel/core": "^7.16.0",
     "@repay/babel-preset": "1.1.1",
     "@repay/scripts": "^3.0.0",
-    "@testing-library/jest-dom": "^5.15.1",
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
     "@types/prop-types": "^15.7.4",
