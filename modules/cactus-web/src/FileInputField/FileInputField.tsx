@@ -5,8 +5,6 @@ import styled from 'styled-components'
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import FileInput, { FileInputProps } from '../FileInput/FileInput'
 import { extractFieldStyleProps } from '../helpers/omit'
-import Label from '../Label/Label'
-import Tooltip from '../Tooltip/Tooltip'
 
 interface FileInputFieldProps extends FileInputProps, FieldProps {
   className?: string
@@ -67,21 +65,8 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
 }
 
 export const FileInputField = styled(FileInputFieldBase)`
-  position: relative;
-
-  ${Label} {
-    display: block;
-    position: relative;
-    bottom: 4px;
-    padding-left: 16px;
-    ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
-  }
-
-  ${Tooltip} {
-    display: block;
-    bottom: 4px;
-    font-size: 16px;
-    ${(p): string => (p.disabled ? `color: ${p.theme.colors.mediumGray};` : '')}
+  .field-label-row {
+    margin-bottom: 4px;
   }
 `
 
