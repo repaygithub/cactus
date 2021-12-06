@@ -45,6 +45,17 @@ export const pickStyles = (styles: styleFn, ...keys: string[]): styleFn => {
   return compose(...picked)
 }
 
+export const omitStyles = (styles: styleFn, ...keys: string[]): styleFn => {
+  const picked: styleFn[] = []
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  for (const key of Object.keys(styles.config!)) {
+    if (!keys.includes(key)) {
+      picked.push((styles as any)[key])
+    }
+  }
+  return compose(...picked)
+}
+
 // Not exhaustive, but all possible values include at least one of these words.
 const isFlexKey = RegExp.prototype.test.bind(/row|column|reverse|wrap/)
 
