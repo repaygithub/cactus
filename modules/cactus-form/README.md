@@ -1,12 +1,10 @@
-# `@repay/cactus-i18n`
+# `@repay/cactus-form`
 
-A React library to implement i18n using Fluent.
+A React library to wrap [react-final-form](https://final-form.org). It has one component similar to the `Field` component from `react-final-form` but geared more toward our use cases, and several others with functionality not included in that package.
 
 ## Documentation
 
-Documentation is available in the [root of the repository](https://github.com/repaygithub/cactus/tree/master/docs/Internationalization/).
-
-Note, the `@fluent` libraries used here are not transpiled, therefore any necessary compatibility must be provided and the `@fluent` libraries should be transpiled as described under [Internationalization - Getting Started](https://github.com/repaygithub/cactus/tree/master/docs/Internationalization/)
+Documentation is available in the [root of the repository](https://github.com/repaygithub/cactus/tree/master/docs/Forms/).
 
 ## Contributing
 
