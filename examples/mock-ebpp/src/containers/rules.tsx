@@ -1,361 +1,265 @@
 import { RouteComponentProps } from '@reach/router'
+import { Field } from '@repay/cactus-form'
 import { ActionsAdd } from '@repay/cactus-icons'
-import { Accordion, Button, Flex, SelectField, Text, TextButton } from '@repay/cactus-web'
-import React, { ReactElement, useState } from 'react'
+import { Accordion, Box, Button, Flex, Text, TextButton } from '@repay/cactus-web'
+import arrayMutators from 'final-form-arrays'
+import React from 'react'
+import { Form, FormRenderProps, useForm } from 'react-final-form'
 import { Helmet } from 'react-helmet'
 
 import { post } from '../api'
 import FieldsAccordion from '../components/FieldsAccordion'
 
-let ruleKeyIndex = 0
-let conditionKeyIndex = 0
-let actionKeyIndex = 0
-
-type RulesState = {
+interface Field {
+  name: string
   key: string
-  conditions: { key: string; variable: string; operator: string; value: string }[]
-  actions: { key: string; action: string }[]
-}[]
+}
 
-//eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Rules = (props: RouteComponentProps): ReactElement => {
-  const [rules, setRules] = useState<RulesState>([])
-  const [newestRule, setNewestRule] = useState<string>('')
-  const [newestCondition, setNewestCondition] = useState<string>('')
-  const [newestAction, setNewestAction] = useState<string>('')
+interface Condition {
+  variable: string
+  operator: string
+  value: string
+}
 
-  const handleAddRule = (): void => {
-    const rulesCopy = [...rules]
-    const key = `rule-${ruleKeyIndex++}`
-    rulesCopy.push({
-      key,
-      conditions: [],
-      actions: [],
-    })
-    setNewestRule(key)
-    setRules(rulesCopy)
-  }
+type Action = { action: string }
 
-  const handleAddCondition = (index: number): void => {
-    const rulesCopy = [...rules]
-    const rule = rulesCopy[index]
-    const key = `condition-${conditionKeyIndex++}`
-    if (rule !== undefined) {
-      rule.conditions.push({
-        key,
-        variable: '',
-        operator: '',
-        value: '',
-      })
-      setNewestCondition(key)
-      setRules(rulesCopy)
-    }
-  }
+interface Rule {
+  conditions: Condition[]
+  actions: Action[]
+}
 
-  const handleAddAction = (index: number): void => {
-    const rulesCopy = [...rules]
-    const rule = rulesCopy[index]
-    const key = `action-${actionKeyIndex++}`
-    if (rule !== undefined) {
-      rule.actions.push({ key, action: '' })
-      setNewestAction(key)
-      setRules(rulesCopy)
-    }
-  }
+type FormRules = { rules: Rule[] }
 
-  const handleDeleteRule = (index: number): void => {
-    const rulesCopy = [...rules]
-    rulesCopy.splice(index, 1)
-    setRules(rulesCopy)
-  }
+type RuleSubComponent = React.FC<{ ruleName: string }>
 
-  const handleDeleteCondition = (ruleIndex: number, conditionIndex: number): void => {
-    const rulesCopy = [...rules]
-    rulesCopy[ruleIndex].conditions.splice(conditionIndex, 1)
-    setRules(rulesCopy)
-  }
+type KeyPrefix = 'rule' | 'condition' | 'action'
 
-  const handleDeleteAction = (ruleIndex: number, actionIndex: number): void => {
-    const rulesCopy = [...rules]
-    rulesCopy[ruleIndex].actions.splice(actionIndex, 1)
-    setRules(rulesCopy)
-  }
+const keyCounters: { [K in KeyPrefix]: number } = {
+  rule: 0,
+  condition: 0,
+  action: 0,
+}
 
-  const handleRuleUpClick = (index: number): void => {
-    const rulesCopy = [...rules]
-    const temp = rulesCopy[index - 1]
-    rulesCopy[index - 1] = rulesCopy[index]
-    rulesCopy[index] = temp
-    setRules(rulesCopy)
-  }
+const SUB = {}
 
-  const handleConditionUpClick = (ruleIndex: number, conditionIndex: number): void => {
-    const rulesCopy = [...rules]
-    const temp = rulesCopy[ruleIndex].conditions[conditionIndex - 1]
-    rulesCopy[ruleIndex].conditions[conditionIndex - 1] =
-      rulesCopy[ruleIndex].conditions[conditionIndex]
-    rulesCopy[ruleIndex].conditions[conditionIndex] = temp
-    setRules(rulesCopy)
-  }
-
-  const handleActionUpClick = (ruleIndex: number, actionIndex: number): void => {
-    const rulesCopy = [...rules]
-    const temp = rulesCopy[ruleIndex].actions[actionIndex - 1]
-    rulesCopy[ruleIndex].actions[actionIndex - 1] = rulesCopy[ruleIndex].actions[actionIndex]
-    rulesCopy[ruleIndex].actions[actionIndex] = temp
-    setRules(rulesCopy)
-  }
-
-  const handleRuleDownClick = (index: number): void => {
-    const rulesCopy = [...rules]
-    const temp = rulesCopy[index + 1]
-    rulesCopy[index + 1] = rulesCopy[index]
-    rulesCopy[index] = temp
-    setRules(rulesCopy)
-  }
-
-  const handleConditionDownClick = (ruleIndex: number, conditionIndex: number): void => {
-    const rulesCopy = [...rules]
-    const temp = rulesCopy[ruleIndex].conditions[conditionIndex + 1]
-    rulesCopy[ruleIndex].conditions[conditionIndex + 1] =
-      rulesCopy[ruleIndex].conditions[conditionIndex]
-    rulesCopy[ruleIndex].conditions[conditionIndex] = temp
-    setRules(rulesCopy)
-  }
-
-  const handleActionDownClick = (ruleIndex: number, actionIndex: number): void => {
-    const rulesCopy = [...rules]
-    const temp = rulesCopy[ruleIndex].actions[actionIndex + 1]
-    rulesCopy[ruleIndex].actions[actionIndex + 1] = rulesCopy[ruleIndex].actions[actionIndex]
-    rulesCopy[ruleIndex].actions[actionIndex] = temp
-    setRules(rulesCopy)
-  }
-
-  const disableUp = (index: number): boolean => index === 0
-
-  const disableRuleDown = (index: number): boolean => index === rules.length - 1
-
-  const disableConditionDown = (ruleIndex: number, conditionIndex: number): boolean => {
-    return conditionIndex === rules[ruleIndex].conditions.length - 1
-  }
-
-  const disableActionDown = (ruleIndex: number, actionIndex: number): boolean => {
-    return actionIndex === rules[ruleIndex].actions.length - 1
-  }
-
-  const handleConditionChange = (
-    ruleIndex: number,
-    conditionIndex: number,
-    key: 'variable' | 'operator' | 'value',
-    value: string
-  ): void => {
-    const rulesCopy = [...rules]
-    rulesCopy[ruleIndex].conditions[conditionIndex][key] = value
-    setRules(rulesCopy)
-  }
-
-  const handleActionChange = (ruleIndex: number, actionIndex: number, value: string): void => {
-    const rulesCopy = [...rules]
-    rulesCopy[ruleIndex].actions[actionIndex].action = value
-    setRules(rulesCopy)
-  }
-
-  const handleSubmit = (e: React.SyntheticEvent): void => {
-    e.preventDefault()
+const Rules: React.FC<RouteComponentProps> = () => {
+  const handleSubmit = ({ rules }: FormRules): void => {
     post(rules)
     console.log((window as any).apiData)
   }
-
   return (
-    <div>
+    <Form
+      component={RulesForm}
+      mutators={arrayMutators as any}
+      onSubmit={handleSubmit}
+      subscription={SUB}
+    />
+  )
+}
+
+const useFieldArray = (name: string, prefix: KeyPrefix) => {
+  const form = useForm('useFieldArray')
+  const [fields, setFields] = React.useState<Field[]>([])
+  const [newestKey, setNewest] = React.useState<string>('')
+  React.useEffect(
+    () =>
+      form.registerField(
+        name,
+        ({ value }: { value?: any[] }) => {
+          if (value) {
+            setFields((old) => {
+              const sameLength = value.length === old.length
+              const sameKeys = sameLength && value.every((v, i) => v.key === old[i].key)
+              return sameKeys ? old : value.map((v, i) => ({ name: `${name}[${i}]`, key: v.key }))
+            })
+          }
+        },
+        { value: true, length: true }
+      ),
+    [name, form, setFields]
+  )
+  return {
+    fields,
+    newestKey,
+    add: () => {
+      const key = `${prefix}-${keyCounters[prefix]++}`
+      form.mutators.push(name, { key })
+      setNewest(key)
+    },
+    remove: (index: number) => form.mutators.remove(name, index),
+    moveUp: (index: number) => form.mutators.swap(name, index - 1, index),
+    moveDown: (index: number) => form.mutators.swap(name, index, index + 1),
+  }
+}
+
+const RulesForm = ({ form, handleSubmit }: FormRenderProps<FormRules>) => {
+  const {
+    fields: rules,
+    newestKey: newestRule,
+    add: handleAddRule,
+    remove: handleDeleteRule,
+    moveUp: handleRuleUpClick,
+    moveDown: handleRuleDownClick,
+  } = useFieldArray('rules', 'rule')
+  return (
+    <Box
+      as="form"
+      onSubmit={handleSubmit}
+      onReset={() => form.reset()}
+      borderColor="base"
+      borderWidth="2px"
+      borderStyle="solid"
+      marginX="5%"
+    >
       <Helmet>
         <title>Rules</title>
       </Helmet>
-      <Flex justifyContent="center">
-        <Flex width="90%" backgroundColor="base" alignItems="center" paddingLeft="10px">
-          <Text color="white" textStyle="h2">
-            Rules
-          </Text>
-        </Flex>
+      <Text as="h2" colors="base" paddingLeft={3}>
+        Rules
+      </Text>
 
-        <Flex borderColor="base" borderWidth="2px" borderStyle="solid" width="90%" px={4} py={4}>
-          <TextButton ml="auto" mb={4} variant="action" onClick={handleAddRule}>
+      <Box padding={4}>
+        <Flex justifyContent="flex-end" marginBottom={4}>
+          <TextButton variant="action" onClick={handleAddRule}>
             <ActionsAdd mr={1} />
             Add Rule
           </TextButton>
-
-          <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-            <Accordion.Provider maxOpen={1}>
-              {rules.map((rule, ruleIndex): ReactElement => {
-                return (
-                  <FieldsAccordion
-                    key={rule.key}
-                    index={ruleIndex}
-                    header={`Rule #${ruleIndex + 1}`}
-                    onDelete={handleDeleteRule}
-                    onUpClick={handleRuleUpClick}
-                    onDownClick={handleRuleDownClick}
-                    disableUp={disableUp}
-                    disableDown={disableRuleDown}
-                    defaultOpen={rule.key === newestRule}
-                  >
-                    <Flex
-                      alignItems="center"
-                      width="100%"
-                      borderBottom="1px solid"
-                      borderBottomColor="lightContrast"
-                      pb={4}
-                      mb={4}
-                    >
-                      <Text as="h4">Conditions</Text>
-                      <TextButton
-                        ml="auto"
-                        variant="action"
-                        onClick={(): void => handleAddCondition(ruleIndex)}
-                      >
-                        <ActionsAdd mr={1} />
-                        Add Condition
-                      </TextButton>
-                    </Flex>
-                    <Accordion.Provider>
-                      {rule.conditions.map((condition, conditionIndex): ReactElement => {
-                        return (
-                          <FieldsAccordion
-                            as="h4"
-                            key={condition.key}
-                            index={conditionIndex}
-                            header={`Condition #${conditionIndex + 1}`}
-                            onDelete={(cIndex): void => handleDeleteCondition(ruleIndex, cIndex)}
-                            onUpClick={(cIndex): void => handleConditionUpClick(ruleIndex, cIndex)}
-                            onDownClick={(cIndex): void =>
-                              handleConditionDownClick(ruleIndex, cIndex)
-                            }
-                            disableUp={disableUp}
-                            disableDown={(cIndex): boolean =>
-                              disableConditionDown(ruleIndex, cIndex)
-                            }
-                            defaultOpen={condition.key === newestCondition}
-                          >
-                            <SelectField
-                              label="Name"
-                              name="variable"
-                              options={['A variable', 'Another variable', 'Final variable']}
-                              value={rules[ruleIndex].conditions[conditionIndex].variable}
-                              onChange={({ target: { value } }): void =>
-                                handleConditionChange(
-                                  ruleIndex,
-                                  conditionIndex,
-                                  'variable',
-                                  value as unknown as string
-                                )
-                              }
-                            />
-                            <SelectField
-                              label="Operator"
-                              name="operator"
-                              options={['Greater than', 'Less than', 'Equal to']}
-                              value={rules[ruleIndex].conditions[conditionIndex].operator}
-                              onChange={({ target: { value } }): void =>
-                                handleConditionChange(
-                                  ruleIndex,
-                                  conditionIndex,
-                                  'operator',
-                                  value as unknown as string
-                                )
-                              }
-                            />
-                            <SelectField
-                              label="Value"
-                              name="value"
-                              options={['-1', '0', '1']}
-                              value={rules[ruleIndex].conditions[conditionIndex].value}
-                              onChange={({ target: { value } }): void =>
-                                handleConditionChange(
-                                  ruleIndex,
-                                  conditionIndex,
-                                  'value',
-                                  value as unknown as string
-                                )
-                              }
-                            />
-                          </FieldsAccordion>
-                        )
-                      })}
-                    </Accordion.Provider>
-                    <Flex
-                      alignItems="center"
-                      width="100%"
-                      borderBottom="1px solid"
-                      borderBottomColor="lightContrast"
-                      pb={4}
-                      mb={4}
-                      mt={5}
-                    >
-                      <Text as="h4">Actions</Text>
-                      <TextButton
-                        ml="auto"
-                        variant="action"
-                        onClick={(): void => handleAddAction(ruleIndex)}
-                      >
-                        <ActionsAdd mr={1} />
-                        Add Action
-                      </TextButton>
-                    </Flex>
-                    <Accordion.Provider>
-                      {rule.actions.map(
-                        (action, actionIndex): ReactElement => (
-                          <FieldsAccordion
-                            as="h4"
-                            key={action.key}
-                            index={actionIndex}
-                            header={`Action #${actionIndex + 1}`}
-                            onDelete={(aIndex): void => handleDeleteAction(ruleIndex, aIndex)}
-                            onUpClick={(aIndex): void => handleActionUpClick(ruleIndex, aIndex)}
-                            onDownClick={(aIndex): void => handleActionDownClick(ruleIndex, aIndex)}
-                            disableUp={disableUp}
-                            disableDown={(aIndex): boolean => disableActionDown(ruleIndex, aIndex)}
-                            defaultOpen={action.key === newestAction}
-                          >
-                            <SelectField
-                              label="Name"
-                              name="action"
-                              options={['Do the thing', 'Do another thing', 'Do no things']}
-                              value={rules[ruleIndex].actions[actionIndex].action}
-                              onChange={({ target: { value } }): void =>
-                                handleActionChange(
-                                  ruleIndex,
-                                  actionIndex,
-                                  value as unknown as string
-                                )
-                              }
-                            />
-                          </FieldsAccordion>
-                        )
-                      )}
-                    </Accordion.Provider>
-                  </FieldsAccordion>
-                )
-              })}
-            </Accordion.Provider>
-            <Flex width="100%" justifyContent="center" mt={4}>
-              <Button
-                variant="standard"
-                my={3}
-                mr={3}
-                onClick={(): void => {
-                  setRules([])
-                }}
-              >
-                Reset
-              </Button>
-              <Button type="submit" variant="action" my={3} ml={3}>
-                Submit
-              </Button>
-            </Flex>
-          </form>
         </Flex>
+
+        <Accordion.Provider maxOpen={1}>
+          {rules.map((rule, ruleIndex) => (
+            <FieldsAccordion
+              key={rule.key}
+              index={ruleIndex}
+              lastIndex={rules.length - 1}
+              header={`Rule #${ruleIndex + 1}`}
+              onDelete={handleDeleteRule}
+              onUpClick={handleRuleUpClick}
+              onDownClick={handleRuleDownClick}
+              defaultOpen={rule.key === newestRule}
+            >
+              <Conditions ruleName={rule.name} />
+              <Actions ruleName={rule.name} />
+            </FieldsAccordion>
+          ))}
+        </Accordion.Provider>
+        <Flex width="100%" justifyContent="center" mt={4} py={3}>
+          <Button type="reset" variant="standard" mr={3}>
+            Reset
+          </Button>
+          <Button type="submit" variant="action" ml={3}>
+            Submit
+          </Button>
+        </Flex>
+      </Box>
+    </Box>
+  )
+}
+
+const Conditions: RuleSubComponent = ({ ruleName }) => {
+  const {
+    fields: conditions,
+    newestKey: newestCondition,
+    add: handleAddCondition,
+    remove: handleDeleteCondition,
+    moveUp: handleConditionUpClick,
+    moveDown: handleConditionDownClick,
+  } = useFieldArray(`${ruleName}.conditions`, 'condition')
+  return (
+    <>
+      <Flex
+        alignItems="center"
+        width="100%"
+        borderBottom="1px solid"
+        borderBottomColor="lightContrast"
+        pb={4}
+        mb={4}
+      >
+        <Text as="h4">Conditions</Text>
+        <TextButton ml="auto" variant="action" onClick={handleAddCondition}>
+          <ActionsAdd mr={1} />
+          Add Condition
+        </TextButton>
       </Flex>
-    </div>
+      <Accordion.Provider>
+        {conditions.map((condition, conditionIndex) => (
+          <FieldsAccordion
+            as="h4"
+            key={condition.key}
+            index={conditionIndex}
+            lastIndex={conditions.length - 1}
+            header={`Condition #${conditionIndex + 1}`}
+            onDelete={handleDeleteCondition}
+            onUpClick={handleConditionUpClick}
+            onDownClick={handleConditionDownClick}
+            defaultOpen={condition.key === newestCondition}
+          >
+            <Field
+              label="Name"
+              name={`${condition.name}.variable`}
+              options={['A variable', 'Another variable', 'Final variable']}
+            />
+            <Field
+              label="Operator"
+              name={`${condition.name}.operator`}
+              options={['Greater than', 'Less than', 'Equal to']}
+            />
+            <Field label="Value" name={`${condition.name}.value`} options={['-1', '0', '1']} />
+          </FieldsAccordion>
+        ))}
+      </Accordion.Provider>
+    </>
+  )
+}
+
+const Actions: RuleSubComponent = ({ ruleName }) => {
+  const {
+    fields: actions,
+    newestKey: newestAction,
+    add: handleAddAction,
+    remove: handleDeleteAction,
+    moveUp: handleActionUpClick,
+    moveDown: handleActionDownClick,
+  } = useFieldArray(`${ruleName}.actions`, 'action')
+  return (
+    <>
+      <Flex
+        alignItems="center"
+        width="100%"
+        borderBottom="1px solid"
+        borderBottomColor="lightContrast"
+        pb={4}
+        mb={4}
+        mt={5}
+      >
+        <Text as="h4">Actions</Text>
+        <TextButton ml="auto" variant="action" onClick={handleAddAction}>
+          <ActionsAdd mr={1} />
+          Add Action
+        </TextButton>
+      </Flex>
+      <Accordion.Provider>
+        {actions.map((action, actionIndex) => (
+          <FieldsAccordion
+            as="h4"
+            key={action.key}
+            index={actionIndex}
+            lastIndex={actions.length - 1}
+            header={`Action #${actionIndex + 1}`}
+            onDelete={handleDeleteAction}
+            onUpClick={handleActionUpClick}
+            onDownClick={handleActionDownClick}
+            defaultOpen={action.key === newestAction}
+          >
+            <Field
+              label="Name"
+              name={`${action.name}.action`}
+              options={['Do the thing', 'Do another thing', 'Do no things']}
+            />
+          </FieldsAccordion>
+        ))}
+      </Accordion.Provider>
+    </>
   )
 }
 
