@@ -2,11 +2,11 @@
 
 exports[`@repay/cactus-fwk should match snapshot of exports 1`] = `
 Array [
-  "useFeatureFlags",
-  "withFeatureFlags",
+  "ErrorBoundary",
   "FeatureFlag",
   "default",
+  "useFeatureFlags",
   "withErrorBoundary",
-  "ErrorBoundary",
+  "withFeatureFlags",
 ]
 `;
