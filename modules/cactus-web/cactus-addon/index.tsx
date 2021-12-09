@@ -44,8 +44,10 @@ const DefaultContainer = styled(StyledContainerBase)`
   height: 100vh;
   overflow-y: auto;
   ${(p) => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
-  ${(p) => p.overrides}
   ${(p) => p.borderBox && '* { box-sizing: border-box; }'}
+  && {
+    ${(p) => p.overrides}
+  }
 `
 
 const FlexContainer = styled(DefaultContainer)`
