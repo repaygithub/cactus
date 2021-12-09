@@ -4,5 +4,6 @@
     "test": {
       "plugins": ["require-context-hook"]
     }
-  }
+  },
+  "plugins": [["@babel/plugin-proposal-private-property-in-object", { "loose": true }]]
 }
