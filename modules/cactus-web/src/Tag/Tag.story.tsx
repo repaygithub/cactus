@@ -37,7 +37,7 @@ export const WithCloseOption: TagStory = ({ closeOption, onCloseIconClick }) => 
       ? onCloseIconClick.wrap(() => setValues(values.filter((e) => e.id !== id)))
       : undefined
   return (
-    <Flex justifyContent="center" flexDirection="column">
+    <Flex justifyContent="center" alignItems="flex-start" flexDirection="column">
       <div>
         {values.map((e) => (
           <Tag closeOption={closeOption} id={e.id} key={e.id} onCloseIconClick={deleteTag(e.id)}>
