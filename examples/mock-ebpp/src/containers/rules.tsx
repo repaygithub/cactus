@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet'
 import { post } from '../api'
 import FieldsAccordion from '../components/FieldsAccordion'
 
-interface Field {
+interface FieldInfo {
   name: string
   key: string
 }
@@ -59,7 +59,7 @@ const Rules: React.FC<RouteComponentProps> = () => {
 
 const useFieldArray = (name: string, prefix: KeyPrefix) => {
   const form = useForm('useFieldArray')
-  const [fields, setFields] = React.useState<Field[]>([])
+  const [fields, setFields] = React.useState<FieldInfo[]>([])
   const [newestKey, setNewest] = React.useState<string>('')
   React.useEffect(
     () =>

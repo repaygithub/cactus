@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-form",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Wrapper for final-form/react-final-form",
   "main": "dist/cactus-form.cjs.js",
   "module": "dist/cactus-form.js",

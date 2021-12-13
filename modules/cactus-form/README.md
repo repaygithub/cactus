@@ -12,7 +12,7 @@ Use the example applications for implementation testing and UAT.
 
 ### Commands
 
-> All of these commands can be run from the root of the repository using the `i18n` shortcut. (e.g. `yarn i18n test`)
+> All of these commands can be run from the root of the repository using the `form` shortcut. (e.g. `yarn form test`)
 
 Testing
 

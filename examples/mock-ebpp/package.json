@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.3.4",
-    "@repay/cactus-form": "^1.0.0",
+    "@repay/cactus-form": "^0.1.0",
     "@repay/cactus-icons": "^3.0.0",
     "@repay/cactus-theme": "^3.0.0",
     "@repay/cactus-web": "^9.0.0",
