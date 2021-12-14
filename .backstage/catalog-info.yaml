@@ -1,0 +1,214 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: cactus
+  description: An ecosystem of UI components and helpers for React, JS & TS projects
+  tags:
+    - react
+    - javascript
+    - typescript
+  annotations:
+    backstage.io/view-url: https://github.com/repaygithub/cactus/tree/master/.backstage/catalog-info.yaml
+    backstage.io/edit-url: https://github.com/repaygithub/cactus/edit/master/.backstage/catalog-info.yaml
+spec:
+  owner: ui-team
+  lifecycle: production
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cactus-fwk
+  description: A React framework to provide some common helpers
+  tags:
+    - react
+    - javascript
+    - typescript
+  annotations:
+    backstage.io/view-url: https://github.com/repaygithub/cactus/tree/master/.backstage/catalog-info.yaml
+    backstage.io/edit-url: https://github.com/repaygithub/cactus/edit/master/.backstage/catalog-info.yaml
+    backstage.io/source-location: url:https://github.com/repaygithub/cactus/tree/master/modules/cactus-fwk
+    jira/project-key: CACTUS
+spec:
+  system: cactus
+  type: library
+  owner: ui-team
+  lifecycle: production
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cactus-i18n
+  description: A React library to help implement internationalization
+  tags:
+    - react
+    - javascript
+    - typescript
+  annotations:
+    backstage.io/view-url: https://github.com/repaygithub/cactus/tree/master/.backstage/catalog-info.yaml
+    backstage.io/edit-url: https://github.com/repaygithub/cactus/edit/master/.backstage/catalog-info.yaml
+    backstage.io/source-location: url:https://github.com/repaygithub/cactus/tree/master/modules/cactus-i18n
+    jira/project-key: CACTUS
+spec:
+  system: cactus
+  type: library
+  owner: ui-team
+  lifecycle: production
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cactus-icons
+  description: A React library containing all icons created by our designers
+  tags:
+    - react
+    - javascript
+    - typescript
+  annotations:
+    backstage.io/view-url: https://github.com/repaygithub/cactus/tree/master/.backstage/catalog-info.yaml
+    backstage.io/edit-url: https://github.com/repaygithub/cactus/edit/master/.backstage/catalog-info.yaml
+    backstage.io/source-location: url:https://github.com/repaygithub/cactus/tree/master/modules/cactus-icons
+    jira/project-key: CACTUS
+spec:
+  system: cactus
+  type: library
+  owner: ui-team
+  lifecycle: production
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cactus-theme
+  description: A theme generator and style helper functions to be used with our framework & components
+  tags:
+    - react
+    - javascript
+    - typescript
+  annotations:
+    backstage.io/view-url: https://github.com/repaygithub/cactus/tree/master/.backstage/catalog-info.yaml
+    backstage.io/edit-url: https://github.com/repaygithub/cactus/edit/master/.backstage/catalog-info.yaml
+    backstage.io/source-location: url:https://github.com/repaygithub/cactus/tree/master/modules/cactus-theme
+    jira/project-key: CACTUS
+spec:
+  system: cactus
+  type: library
+  owner: ui-team
+  lifecycle: production
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cactus-web
+  description: A library of React components used for creating clean, unified user interfaces
+  tags:
+    - react
+    - javascript
+    - typescript
+  annotations:
+    backstage.io/view-url: https://github.com/repaygithub/cactus/tree/master/.backstage/catalog-info.yaml
+    backstage.io/edit-url: https://github.com/repaygithub/cactus/edit/master/.backstage/catalog-info.yaml
+    backstage.io/source-location: url:https://github.com/repaygithub/cactus/tree/master/modules/cactus-web
+    jira/project-key: CACTUS
+spec:
+  system: cactus
+  type: library
+  owner: ui-team
+  lifecycle: production
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ui-team
+  description: The UI Team
+  annotations:
+    backstage.io/view-url: https://github.com/repaygithub/cactus/tree/master/.backstage/catalog-info.yaml
+    backstage.io/edit-url: https://github.com/repaygithub/cactus/edit/master/.backstage/catalog-info.yaml
+    backstage.io/techdocs-ref: url:https://github.com/repaygithub/cactus/tree/master
+    jira/project-key: CACTUS
+  links:
+    - url: https://repay.slack.com/archives/CBSAMHCBS
+      title: UI Team Questions Channel
+    - url: https://repay.slack.com/archives/C01AA6R6W7P
+      title: UI Team Announcements Channel
+    - url: https://repayonline.atlassian.net/browse/CACTUS
+      title: UI Team Developer JIRA Board
+    - url: https://repayonline.atlassian.net/browse/DESIGN
+      title: UI Team Designer JIRA Board
+spec:
+  type: team
+  profile:
+    displayName: UI Team
+  parent: technology
+  children: []
+  members: [dhuber, gphelps, dpena, msoltow, hplata, mloureiro, jortega]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: dhuber
+spec:
+  profile:
+    displayName: Dhalton Huber
+    email: dhuber@repay.com
+  memberOf: [ui-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: gphelps
+spec:
+  profile:
+    displayName: Glen Phelps
+    email: gphelps@repay.com
+  memberOf: [ui-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: dpena
+spec:
+  profile:
+    displayName: Danilo Peña
+    email: dpena@repay.com
+  memberOf: [ui-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: msoltow
+spec:
+  profile:
+    displayName: Michael Soltow
+    email: msoltow@repay.com
+  memberOf: [ui-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: hplata
+spec:
+  profile:
+    displayName: Hector Plata
+    email: hplata@repay.com
+  memberOf: [ui-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: mloureiro
+spec:
+  profile:
+    displayName: Marcos Loureiro
+    email: mloureiro@repay.com
+  memberOf: [ui-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: jortega
+spec:
+  profile:
+    displayName: Juan Ortega
+    email: jortega@repay.com
+  memberOf: [ui-team]
+---

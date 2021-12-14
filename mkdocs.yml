@@ -1,0 +1,6 @@
+site_name: UI Team Docs
+nav:
+  - Home: index.md
+  - Best Practices: 'best-practices.md'
+plugins:
+  - techdocs-core

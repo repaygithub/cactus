@@ -1,0 +1,8 @@
+ui-techdocs:
+  image: 232624534379.dkr.ecr.us-west-2.amazonaws.com/repay-techdocs:6b23edce797a1b8ac21072d7f8252f879d13f23f
+  volumes:
+  - ./mkdocs.yml:/mkdocs.yml
+  - ./docs:/docs
+  command: ["techdocs-cli", "serve", "-v", "--no-docker"]
+  ports:
+      - 3000:3000

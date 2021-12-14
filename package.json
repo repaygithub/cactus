@@ -33,7 +33,8 @@
     "postinstall": "patch-package",
     "test:build": "docker build -t tests .",
     "test:docker": "docker run -v \"/$(pwd)/modules/cactus-web/__image_snapshots__:/code/modules/cactus-web/__image_snapshots__\" tests",
-    "test:docker-update": "yarn test:docker yarn web test:visual-update"
+    "test:docker-update": "yarn test:docker yarn web test:visual-update",
+    "techdocs": "docker-compose up -d ui-techdocs"
   },
   "license": "MIT",
   "private": true,
