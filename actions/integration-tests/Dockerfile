@@ -1,5 +1,5 @@
 
-FROM node
+FROM node:lts
 
 COPY entrypoint.sh /entrypoint.sh
 
