@@ -1,5 +1,5 @@
 
-FROM node:14
+FROM node
 
 COPY entrypoint.sh /entrypoint.sh
 
