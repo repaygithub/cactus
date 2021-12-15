@@ -15,3 +15,9 @@ export interface RenderProps {
   children?: React.ReactNode | RenderFunc
   render?: RenderFunc
 }
+
+export interface ConfigurableComponent<P> extends FC<P> {
+  withDefaults: (defaults: Partial<P>) => ConfigurableComponent<P>
+  configureDefaults: (defaults: Partial<P>) => Partial<P>
+  initialDefaults: () => Partial<P>
+}

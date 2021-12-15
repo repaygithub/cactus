@@ -41,24 +41,29 @@ defaults for certain props, under the assumption that most fields in a project w
 The configuration looks like this in Typescript:
 
 ```
-interface CactusFieldConfig {
-  getFieldComponent: (props: Record<string, any>) => React.ElementType;
+// You can actually use any props accepted by `Field`, but these are the most useful to configure.
+interface FieldProps {
+  getFieldComponent?: (props: Record<string, any>) => React.ElementType;
   // `FieldMetaState` is from React Final Form, ref `FieldRenderProps`.
-  processMeta: (props: Record<string, any>, meta: FieldMetaState) => Record<string, any>;
+  processMeta?: (props: Record<string, any>, meta: FieldMetaState) => Record<string, any>;
   // `FieldSubscription` is from Final Form, ref `registerField`.
-  subscription: FieldSubscription;
+  subscription?: FieldSubscription;
 }
 
 // Sets new config options, and returns the old config.
-Field.configureDefaults = (config: Partial<CactusFieldConfig) => CactusFieldConfig
+Field.configureDefaults = (defaults: FieldProps) => FieldProps
+
+// Creates a new component with the given defaults.
+Field.withDefaults = (defaults: FieldProps) => FunctionalComponent<FieldProps>
+
 // Returns the original config, as defined in the Cactus Form library.
-Field.defaultConfig = () => CactusFieldConfig
+Field.initialDefaults = () => FieldProps
 ```
 
-The `defaultConfig` is mostly provided so it can be extended without having to rewrite it entirely, and returns something like the following:
+The `initialDefaults` is mostly provided so it can be extended without having to rewrite it entirely, and returns something like the following:
 
 ```
-Field.defaultConfig = () => ({
+Field.initialDefaults = () => ({
   subscription: {
     value: true,
     error: true,
@@ -86,6 +91,20 @@ Field.defaultConfig = () => ({
 })
 ```
 
+Both `configureDefaults` and `withDefaults` work by setting the `defaultProps`
+property on the function they're attached to.
+The main difference is scope: `configureDefaults` applies to the `Field` component itself,
+and thus applies to the entire project (including uses of `DependentField`);
+`withDefaults` makes a new component that can be used on a single form or type of form,
+if it's somewhat different than how forms normally behave on the site.
+
+```
+const FieldWithAlwaysVisibleErrors = Field.withDefaults({
+  subscription: { value: true, error: true },
+  processMeta: (props, { error }) => ({ error, ...props }),
+})
+```
+
 ### Validation
 
 One other default behavior that differs from the base Field is that if a `required` prop is passed,
@@ -97,7 +116,7 @@ This validator is also available separately:
 import { validateRequired } from '@repay/cactus-form'
 ```
 
-To use `required` without the validator you'd need to pass an explicit `validate` function, like a noop.
+To use `required` without the validator you'd need to pass an explicit `validate` function, like a noop (or use `configureDefaults`/`withDefaults` to set a default validator).
 
 ### Refs & Extensions
 
@@ -165,6 +184,8 @@ const MyForm = (props) => (
   </Form>
 )
 ```
+
+`DependentField` also has the `configureDefaults` and `withDefaults` functions that `Field` has.
 
 ## FieldSpy
 

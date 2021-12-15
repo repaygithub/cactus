@@ -12,7 +12,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FieldMetaState } from 'react-final-form'
 
-import { FC, RenderFunc, RenderProps, UnknownProps } from './types'
+import makeConfigurableComponent from './config'
+import { RenderFunc, RenderProps, UnknownProps } from './types'
 import useField, { Config as UseFieldConfig } from './useField'
 
 const FIELD_PROPS: (keyof UseFieldConfig)[] = [
@@ -36,16 +37,10 @@ const FIELD_PROPS: (keyof UseFieldConfig)[] = [
 type ComponentMapper = (props: UnknownProps) => React.ElementType<any>
 type PostProcessor = (props: UnknownProps, meta: FieldMetaState<unknown>) => UnknownProps
 
-export interface CactusFieldConfig {
-  subscription: FieldSubscription
-  getFieldComponent: ComponentMapper
-  processMeta: PostProcessor
-}
-
 export interface FieldProps extends UnknownProps, RenderProps, UseFieldConfig {
   name: string
-  processMeta?: PostProcessor
   getFieldComponent?: ComponentMapper
+  processMeta?: PostProcessor
 }
 
 const DEFAULT_SUB: FieldSubscription = {
@@ -121,18 +116,13 @@ const popAttr = (obj: UnknownProps, attr: string) => {
   return val
 }
 
-interface FieldComponent extends FC<FieldProps> {
-  configureDefaults: (config: Partial<CactusFieldConfig>) => CactusFieldConfig
-  defaultConfig: () => CactusFieldConfig
-}
-
-const Field: FieldComponent = ({
+const Field: RenderFunc<FieldProps> = ({
   name,
   render,
   component,
-  subscription = CONFIG.subscription,
-  processMeta = CONFIG.processMeta,
-  getFieldComponent = CONFIG.getFieldComponent,
+  subscription = DEFAULT_SUB,
+  processMeta = addError,
+  getFieldComponent = defaultFieldComponent,
   ...props
 }) => {
   if (typeof props.children === 'function') {
@@ -169,22 +159,12 @@ const Field: FieldComponent = ({
   return null
 }
 
-Field.configureDefaults = (config: Partial<CactusFieldConfig>): CactusFieldConfig => {
-  const prevConfig = { ...CONFIG }
-  Object.assign(CONFIG, config)
-  return prevConfig
-}
-
-Field.defaultConfig = (): CactusFieldConfig => ({
+;(Field as any).propTypes = { name: PropTypes.string.isRequired }
+export default makeConfigurableComponent(Field, {
   subscription: DEFAULT_SUB,
   getFieldComponent: defaultFieldComponent,
   processMeta: addError,
 })
-
-Field.propTypes = { name: PropTypes.string.isRequired }
-export default Field
-
-const CONFIG = Field.defaultConfig()
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const validateRequired = (value: any): string | undefined => {

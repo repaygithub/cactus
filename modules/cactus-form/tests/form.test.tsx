@@ -188,7 +188,7 @@ describe('final-form functionality', () => {
       Component.mockReturnValue(null)
 
       afterEach(() => {
-        Field.configureDefaults(Field.defaultConfig())
+        Field.configureDefaults(Field.initialDefaults())
       })
 
       test('overrides default props using `configureDefaults`', () => {

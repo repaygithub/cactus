@@ -2,8 +2,9 @@ import { FieldState, FieldSubscription } from 'final-form'
 import React from 'react'
 import { useForm } from 'react-final-form'
 
+import makeConfigurableComponent from './config'
 import Field, { FieldProps } from './Field'
-import { FC, UnknownProps } from './types'
+import { RenderFunc, UnknownProps } from './types'
 
 type DependencyChangeHandler = (state: FieldState<unknown>, props: UnknownProps) => void
 
@@ -24,7 +25,7 @@ interface DependentFieldProps extends FieldProps {
 const DEFAULT_SUB: FieldSubscription = { value: true }
 const noop = () => undefined
 
-const DependentField: FC<DependentFieldProps> = ({
+const DependentField: RenderFunc<DependentFieldProps> = ({
   dependsOn,
   onDependencyChange = noop,
   ...props
@@ -62,4 +63,4 @@ const DependentField: FC<DependentFieldProps> = ({
   }, [dependsOn, box, form])
   return field
 }
-export default DependentField
+export default makeConfigurableComponent(DependentField, {})

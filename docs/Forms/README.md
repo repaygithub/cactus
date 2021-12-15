@@ -24,7 +24,7 @@ Both `final-form` and `react-final-form`, as well as `@repay/cactus-web` are pee
 Once those are installed, Cactus Form is used basically the same way as React Final Form.
 In particular, the `Field` component is very similar to
 [React Final Form's version](https://final-form.org/docs/react-final-form/api/Field),
-but it has three customization features and handles prop forwarding a bit differently:
+but it has customization features and handles prop forwarding a bit differently:
 
 - You can set a default `subscription` under the assumption that most fields in your project will work similarly. The included default includes the `value` and error fields.
 - You can provide a function to derive a component from the props. This is included to help with dynamic forms, where field types may be stored as strings in a configuration data structure; using this method, you can pass your configuration directly to the field, and map it to a concrete component class/function. The included default mostly maps the `type` prop to field components from Cactus Web.
