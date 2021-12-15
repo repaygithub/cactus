@@ -29,6 +29,7 @@ const FIELD_PROPS: (keyof UseFieldConfig)[] = [
   'parse',
   'type',
   'validate',
+  'validateFields',
   'value',
 ]
 
@@ -129,7 +130,6 @@ const Field: FieldComponent = ({
   name,
   render,
   component,
-  validateFields = [],
   subscription = CONFIG.subscription,
   processMeta = CONFIG.processMeta,
   getFieldComponent = CONFIG.getFieldComponent,
@@ -144,7 +144,7 @@ const Field: FieldComponent = ({
       component = getFieldComponent(props)
     }
   }
-  const fieldConfig: UseFieldConfig = { component, subscription, validateFields }
+  const fieldConfig: UseFieldConfig = { component, subscription }
   // This removes `type` && `multiple` from props, but they're re-added by `useField`.
   for (const key of FIELD_PROPS) {
     if (key in props) {
