@@ -285,7 +285,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ id, label, children, isProfilePage,
   )
   return (
     <StyledUserMenu {...wrapperProps}>
-      <MenuButton {...buttonProps} {...rest} ref={buttonRef}>
+      <MenuButton {...buttonProps} {...rest} ref={buttonRef} $isProfilePage={isProfilePage}>
         <DescriptiveProfile aria-hidden mr="8px" />
         <span>{label}</span>
         <NavigationChevronDown aria-hidden ml="8px" />
