@@ -214,6 +214,40 @@ describe('final-form functionality', () => {
         )
       })
     })
+
+    describe('Field.withDefaults', () => {
+      const Component = jest.fn()
+      Component.mockReturnValue(null)
+
+      test('creates new component using `withDefaults`', () => {
+        const NewField = Field.withDefaults({
+          subscription: { value: true, dirty: true, invalid: true },
+          processMeta: (p: any, m: any) => Object.assign(p, m),
+          getFieldComponent: () => Component as any,
+        })
+        const { container } = render(
+          <App>
+            <Field name="old" label="Old" required defaultValue="something" />
+            <NewField name="new" required defaultValue="something" />
+          </App>
+        )
+        expect(Component).toHaveBeenCalledTimes(1)
+        expect(Component).toHaveBeenCalledWith(
+          expect.objectContaining({
+            name: 'new',
+            value: 'something',
+            dirty: true,
+            invalid: false,
+            required: true,
+          }),
+          {}
+        )
+        const inputs = container.querySelectorAll<HTMLInputElement>('input')
+        expect(inputs).toHaveLength(1)
+        expect(inputs[0].type).toBe('text')
+        expect(inputs[0].name).toBe('old')
+      })
+    })
   })
 
   describe('<DependentField />', () => {
