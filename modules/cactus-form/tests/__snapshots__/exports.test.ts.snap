@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`@repay/cactus-form should match snapshot of exports 1`] = `
+Array [
+  "DependentField",
+  "FieldSpy",
+  "Field",
+  "validateRequired",
+]
+`;

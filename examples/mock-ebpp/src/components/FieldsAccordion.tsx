@@ -4,25 +4,23 @@ import React, { FunctionComponent } from 'react'
 
 interface FieldsAccordionProps {
   index: number
+  lastIndex: number
   header: string
   as?: keyof JSX.IntrinsicElements | React.ComponentType<any>
   defaultOpen?: boolean
   onDelete: (index: number) => void
   onUpClick: (index: number) => void
   onDownClick: (index: number) => void
-  disableUp: (index: number) => boolean
-  disableDown: (index: number) => boolean
 }
 
 const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props): React.ReactElement => {
   const {
     index,
+    lastIndex,
     header,
     onDelete,
     onUpClick,
     onDownClick,
-    disableUp,
-    disableDown,
     children,
     as: asProp,
     ...rest
@@ -72,7 +70,7 @@ const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props): React.
                     onDownClick(index)
                     e.stopPropagation()
                   }}
-                  disabled={disableDown(index)}
+                  disabled={index === lastIndex}
                 >
                   <NavigationCircleDown aria-hidden="true" />
                 </IconButton>
@@ -83,7 +81,7 @@ const FieldsAccordion: FunctionComponent<FieldsAccordionProps> = (props): React.
                     onUpClick(index)
                     e.stopPropagation()
                   }}
-                  disabled={disableUp(index)}
+                  disabled={index === 0}
                 >
                   <NavigationCircleUp aria-hidden="true" />
                 </IconButton>
