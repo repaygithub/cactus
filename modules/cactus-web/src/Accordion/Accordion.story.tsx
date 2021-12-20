@@ -108,7 +108,7 @@ const WithOutline: Story<typeof Accordion, ControlledArgs> = ({
   }
 
   return (
-    <Box width="968px">
+    <Box width={['100%', '75%']}>
       <Accordion.Provider
         openId={isControlled ? open : undefined}
         onChange={handleChange}

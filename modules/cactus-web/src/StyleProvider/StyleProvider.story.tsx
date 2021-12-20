@@ -81,7 +81,7 @@ export const ComponentAdjusmentsBasedOnMediaQueries = (): React.ReactElement => 
 ComponentAdjusmentsBasedOnMediaQueries.storyName = 'Component Adjusments based on Media Queries'
 
 export const StyleReset = (): React.ReactElement => (
-  <Flex flexDirection="column">
+  <Flex flexDirection="column" width={['100%', '50%', '25%']}>
     <span>Regular Text</span>
     <p>Paragraph</p>
     <a>Anchor</a>

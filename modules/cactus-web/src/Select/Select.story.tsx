@@ -58,7 +58,15 @@ CollisionsInLargeContainer.args = {
 }
 CollisionsInLargeContainer.storyName = 'Collisions in an over-sized container'
 CollisionsInLargeContainer.parameters = {
-  cactus: { overrides: { height: '220vh', width: '220vw' } },
+  cactus: {
+    overrides: {
+      height: '220vh',
+      width: '220vw',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
   storyshots: false,
 }
 

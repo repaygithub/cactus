@@ -7,6 +7,7 @@ import * as React from 'react'
 import {
   BACKGROUND_CHANGE,
   BORDER_BOX_CHANGE,
+  CONTAINER_CHANGE,
   DECORATOR_LISTENING,
   NAME,
   THEME_CHANGE,
@@ -35,6 +36,7 @@ class Panel extends React.Component {
     },
     backgroundInverse: false,
     borderBox: false,
+    flexContainer: false,
   }
 
   componentDidMount() {
@@ -57,6 +59,12 @@ class Panel extends React.Component {
     })
   }
 
+  emitContainerChange = () => {
+    this.props.channel.emit(CONTAINER_CHANGE, {
+      isFlexContainer: this.state.flexContainer,
+    })
+  }
+
   emitThemeChange = () => {
     const { values } = this.state
     const colors =
@@ -76,6 +84,8 @@ class Panel extends React.Component {
   handleDecoratorListening = () => {
     this.emitThemeChange()
     this.emitBackgroundChange()
+    this.emitBorderBoxChange()
+    this.emitContainerChange()
   }
 
   handleBackgroundChange = (name, value) => {
@@ -84,6 +94,10 @@ class Panel extends React.Component {
 
   handleBorderBoxChange = (name, value) => {
     this.setState(() => ({ [name]: value }), this.emitBorderBoxChange)
+  }
+
+  handleContainerChange = (name, value) => {
+    this.setState(() => ({ [name]: value }), this.emitContainerChange)
   }
 
   handleThemeChange = (name, value) => {
@@ -286,6 +300,22 @@ class Panel extends React.Component {
             />
             <label htmlFor="border-box">
               Force Storybook to render everything with box-sixing: border-box
+            </label>
+          </Form.Field>
+
+          <SectionTitle>Flex Container</SectionTitle>
+          <Form.Field>
+            <input
+              id="flex-container"
+              type="checkbox"
+              name="flexContainer"
+              onChange={({ currentTarget }) =>
+                this.handleContainerChange(currentTarget.name, currentTarget.checked)
+              }
+              checked={this.state.flexContainer}
+            />
+            <label htmlFor="flex-container">
+              Render story content inside a display: flex container
             </label>
           </Form.Field>
         </Form>

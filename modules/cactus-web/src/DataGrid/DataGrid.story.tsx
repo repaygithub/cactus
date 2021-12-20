@@ -419,12 +419,10 @@ LotsAndLotsOfRows.args = {
 LotsAndLotsOfRows.parameters = {
   cactus: {
     overrides: {
-      display: 'block',
       textAlign: 'center',
-      paddingTop: '16px',
-      paddingBottom: '16px',
-      maxWidth: '100%',
     },
+    // Only applies to flex container
+    align: 'top',
   },
 }
 LotsAndLotsOfRows.storyName = 'Lots and Lots of Rows'

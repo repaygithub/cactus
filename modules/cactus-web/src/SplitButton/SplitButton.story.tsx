@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Flex, SplitButton } from '../'
+import { SplitButton } from '../'
 import {
   actions,
   ActionWrap,
@@ -51,12 +51,12 @@ const SplitButtonBase: IconStory = ({ ActionIcon1, ActionIcon2, onSelect, ...arg
 }
 export const BasicUsage: IconStory = (args) => {
   return (
-    <Flex flexWrap="wrap" justifyContent="center" alignItems="center" width="80%">
+    <>
       <SplitButtonBase {...args} variant="standard" />
       <SplitButtonBase {...args} variant="danger" mainActionLabel="danger" />
       <SplitButtonBase {...args} variant="success" mainActionLabel="success" />
       <SplitButtonBase {...args} variant="standard" mainActionLabel="Disabled" disabled />
-    </Flex>
+    </>
   )
 }
 BasicUsage.argTypes = {
@@ -81,7 +81,15 @@ export const WithCollisions: MultiStory = ({ actions, onSelect, ...args }) => (
 )
 WithCollisions.args = { actions: ['Action One', 'Action Two'] }
 WithCollisions.parameters = {
-  cactus: { overrides: { height: '220vh', width: '220vw' } },
+  cactus: {
+    overrides: {
+      height: '220vh',
+      width: '220vw',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
   storyshots: false,
 }
 

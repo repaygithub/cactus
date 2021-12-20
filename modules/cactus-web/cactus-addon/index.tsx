@@ -1,4 +1,4 @@
-import cactusTheme, { ColorStyle, generateTheme } from '@repay/cactus-theme'
+import cactusTheme, { generateTheme } from '@repay/cactus-theme'
 import addons, { makeDecorator } from '@storybook/addons'
 import * as React from 'react'
 import styled, { CSSObject } from 'styled-components'
@@ -8,6 +8,7 @@ import { StyleProvider } from '../src/StyleProvider/StyleProvider'
 import {
   BACKGROUND_CHANGE,
   BORDER_BOX_CHANGE,
+  CONTAINER_CHANGE,
   DECORATOR_LISTENING,
   NAME,
   PROP_NAME,
@@ -37,20 +38,25 @@ const alignmentMap: { [k in AlignmentTypes]: CSSObject } = {
   top: { justifyContent: 'center', alignItems: 'start' },
 }
 
-const StyledContainer = styled(StyledContainerBase)`
+const DefaultContainer = styled(StyledContainerBase)`
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  display: flex;
   overflow-y: auto;
-  ${(p): ColorStyle => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
-  ${(p): CSSObject => alignmentMap[p.align]};
-  ${(p): CSSObject => p.overrides}
-
-  ${(p): string => p.borderBox && '* { box-sizing: border-box; }'}
+  ${(p) => (p.inverse ? p.theme.colorStyles.base : p.theme.colorStyles.standard)};
+  ${(p) => p.borderBox && '* { box-sizing: border-box; }'}
+  && {
+    ${(p) => p.overrides}
+  }
 `
 
-StyledContainer.defaultProps = {
+const FlexContainer = styled(DefaultContainer)`
+  width: 100vw;
+  display: flex;
+  ${(p) => alignmentMap[p.align]};
+`
+
+FlexContainer.defaultProps = {
   align: 'center',
 }
 
@@ -65,36 +71,45 @@ const ProvideCactusTheme: React.FC<ProvideCactusThemeProps> = ({
   const [theme, setTheme] = React.useState(cactusTheme)
   const [inverse, setInverse] = React.useState(false)
   const [borderBox, setBorderBox] = React.useState(false)
+  const [flexContainer, setFlexContainer] = React.useState(false)
+
+  const Container = flexContainer ? FlexContainer : DefaultContainer
 
   React.useEffect((): (() => void) => {
     const updateTheme = (params: any): void => {
       setTheme(generateTheme(params))
     }
 
-    const updateBackground = ({ inverse: newInverse }: any): void => {
+    const updateBackground = ({ inverse: newInverse }: any) => {
       setInverse(newInverse)
     }
 
-    const updateBorderBox = ({ borderBox: newBorderBox }: any): void => {
+    const updateBorderBox = ({ borderBox: newBorderBox }: any) => {
       setBorderBox(newBorderBox)
+    }
+
+    const updateContainerType = ({ isFlexContainer }: any) => {
+      setFlexContainer(isFlexContainer)
     }
 
     channel.on(THEME_CHANGE, updateTheme)
     channel.on(BACKGROUND_CHANGE, updateBackground)
     channel.on(BORDER_BOX_CHANGE, updateBorderBox)
+    channel.on(CONTAINER_CHANGE, updateContainerType)
 
     channel.emit(DECORATOR_LISTENING)
     return (): void => {
       channel.removeListener(THEME_CHANGE, updateTheme)
       channel.removeListener(BACKGROUND_CHANGE, updateBackground)
       channel.removeListener(BORDER_BOX_CHANGE, updateBorderBox)
+      channel.removeListener(CONTAINER_CHANGE, updateContainerType)
     }
   }, [channel])
 
   return (
     <StyleProvider theme={theme} global>
       <ScreenSizeProvider>
-        <StyledContainer {...props} inverse={inverse} borderBox={borderBox} />
+        <Container {...props} inverse={inverse} borderBox={borderBox} />
       </ScreenSizeProvider>
     </StyleProvider>
   )

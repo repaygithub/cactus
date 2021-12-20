@@ -29,7 +29,7 @@ export const WithinABlockOfText: Story<typeof Link> = (args) => (
 WithinABlockOfText.storyName = 'Within a block of text'
 
 export const MultiLineLink: Story<typeof Link> = (args) => (
-  <span style={{ width: '375px' }}>
+  <span style={{ width: '375px', display: 'block' }}>
     To review the cactus documentation site, <Link {...args}>click here</Link>.
   </span>
 )

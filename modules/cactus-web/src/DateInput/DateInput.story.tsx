@@ -54,9 +54,6 @@ export const BasicUsage: DateStory = (args) => {
     </Flex>
   )
 }
-BasicUsage.parameters = {
-  cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
-}
 
 export const ControlledWithDate: DateStory = (args) => {
   const [value, setValue] = React.useState<Date | string | null>(new Date('10/1/2020'))
@@ -78,7 +75,7 @@ ControlledWithDate.argTypes = { value: HIDE_CONTROL }
 ControlledWithDate.storyName = 'Controlled with Date'
 ControlledWithDate.parameters = {
   cactus: {
-    overrides: { justifyContent: 'flex-start', flexDirection: 'column', paddingTop: '32px' },
+    overrides: { flexDirection: 'column' },
   },
   beforeScreenshot: async (page: Page) => {
     await page.click('button')
@@ -100,7 +97,7 @@ ControlledWithString.argTypes = { value: HIDE_CONTROL }
 ControlledWithString.args = { format: 'YYYY-MM-dd' }
 ControlledWithString.storyName = 'Controlled with string'
 ControlledWithString.parameters = {
-  cactus: { overrides: { alignItems: 'start', paddingTop: '32px' } },
+  cactus: { overrides: { alignItems: 'start' } },
 }
 
 export const TypeTime: DateStory = (args) => <DateInput {...args} name={args.name || args.type} />

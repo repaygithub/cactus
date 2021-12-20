@@ -42,9 +42,8 @@ const fileStatuses: typeof unloaded[] = [
 ]
 
 const Wrapper = styled.div`
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  min-width: 1px;
   max-height: 100%;
   overflow-y: scroll;
   & > * {
