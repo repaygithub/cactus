@@ -12,6 +12,7 @@ import Faq from './containers/faq'
 import Home from './containers/home'
 import PaymentHistoryReport from './containers/payment-history-report'
 import Rules from './containers/rules'
+import RulesFields from './containers/rules-fields'
 import UIConfig from './containers/ui-config'
 
 const appRoot = document.createElement('div')
@@ -34,6 +35,7 @@ const App = (): React.ReactElement => {
             <UIConfig path="/ui-config" />
             <Faq path="/faq" />
             <Rules path="/rules" />
+            <RulesFields path="/rules-fields" />
             <Account path="/account/:accountId" />
             <DateTest path="/date-test" />
           </MenuBar>

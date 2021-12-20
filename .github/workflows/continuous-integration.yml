@@ -47,11 +47,15 @@ jobs:
       - name: Build cactus-web
         run: yarn web build
 
+      - name: Build cactus-form
+        run: yarn form build
+
       - name: Test Modules
         run: |
           yarn theme test:ci
           yarn fwk test:ci
           yarn i18n test:ci
+          yarn form test:ci
           yarn icons test:ci
           yarn web test:ci
 

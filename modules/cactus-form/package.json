@@ -1,0 +1,78 @@
+{
+  "name": "@repay/cactus-form",
+  "version": "0.1.0",
+  "description": "Wrapper for final-form/react-final-form",
+  "main": "dist/cactus-form.cjs.js",
+  "module": "dist/cactus-form.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/repaygithub/cactus/tree/master/modules/cactus-form",
+  "license": "MIT",
+  "scripts": {
+    "cleanup": "rm -rf dist coverage",
+    "predev": "yarn run cleanup && yarn build:types",
+    "dev": "repay-scripts dev --lib src/index.ts",
+    "build": "repay-scripts build --lib src/index.ts",
+    "postbuild": "yarn build:types",
+    "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly",
+    "test:types": "tsc --project ./tsconfig.json --noEmit",
+    "test:local": "yarn test:types && yarn test --coverage",
+    "test:ci": "yarn test:local --maxWorkers=2",
+    "test": "jest",
+    "tdd": "jest --watch"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.ts"
+    ],
+    "transform": {
+      "^.+\\.(t|j)sx?$": "babel-jest"
+    },
+    "testRegex": "tests/.*\\.test\\.(jsx?|tsx?)$",
+    "verbose": true,
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}"
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-sonar",
+        {
+          "outputDirectory": ".",
+          "outputName": "test-report.xml"
+        }
+      ]
+    ],
+    "testEnvironment": "jsdom"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@repay/babel-preset": "1.1.1",
+    "@repay/cactus-web": "^9.0.0",
+    "@repay/scripts": "^3.0.0",
+    "@testing-library/jest-dom": "^5.14.0",
+    "@testing-library/react": "^12.0.0",
+    "@types/jest": "^26.0.23",
+    "@types/react": "^17.0.11",
+    "babel-jest": "^27.0.2",
+    "final-form": "^4.20.4",
+    "jest": "^27.0.4",
+    "jest-sonar": "^0.2.12",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-final-form": "^6.5.7",
+    "typescript": "~4.2.4"
+  },
+  "peerDependencies": {
+    "@repay/cactus-web": ">=3.0.0",
+    "final-form": "^4.20.4",
+    "prop-types": ">=15.0.0",
+    "react": "^16.8.3 || ^17.0.0",
+    "react-final-form": "^6.5.7"
+  }
+}
