@@ -1,5 +1,4 @@
 {
   "presets": ["@repay/babel-preset"],
-  "sourceMaps": "inline",
-  "plugins": [["@babel/plugin-proposal-private-property-in-object", { "loose": true }]]
+  "sourceMaps": "inline"
 }
