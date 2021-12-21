@@ -6,6 +6,7 @@ import { FIELD_ARGS, Story } from '../helpers/storybook'
 export default {
   title: 'AccessibleField',
   component: AccessibleField,
+  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
 export const BasicUsage: Story<typeof AccessibleField> = (args) => (

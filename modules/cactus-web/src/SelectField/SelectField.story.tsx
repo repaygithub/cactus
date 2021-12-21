@@ -19,6 +19,7 @@ export default {
     options: ['bird', 'plane', 'superman'],
     tooltip: 'Select what you think you see in the sky.',
   },
+  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
 type SelectStory = Story<
@@ -30,10 +31,10 @@ type SelectStory = Story<
 >
 
 export const BasicUsage: SelectStory = (args) => (
-  <div>
+  <>
     <SelectField label="Disabled" name="disabled" options={[]} disabled tooltip="disabled" />
     <SelectField {...args} />
-  </div>
+  </>
 )
 BasicUsage.args = {
   label: `What's that in the sky?`,

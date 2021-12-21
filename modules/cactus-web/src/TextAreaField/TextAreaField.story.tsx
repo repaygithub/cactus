@@ -15,10 +15,11 @@ export default {
     name: 'taf',
     placeholder: 'Placeholder',
   },
+  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
 export const BasicUsage: Story<typeof TextAreaField> = (args) => (
-  <div>
+  <>
     <TextAreaField {...args} />
     <TextAreaField
       label="Field Label Disabled"
@@ -28,7 +29,7 @@ export const BasicUsage: Story<typeof TextAreaField> = (args) => (
       tooltip="Some tooltip text"
       disableTooltip
     />
-  </div>
+  </>
 )
 BasicUsage.args = { tooltip: 'Some tooltip text' }
 

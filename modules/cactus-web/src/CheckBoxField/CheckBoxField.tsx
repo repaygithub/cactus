@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import { FlexItemProps } from '../helpers/flexItem'
 import { extractFieldStyleProps } from '../helpers/omit'
+import { FlexItemProps } from '../helpers/styled'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 
