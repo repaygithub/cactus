@@ -17,6 +17,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
     labelProps,
     id,
     tooltip,
+    tooltipProps,
     name,
     success,
     warning,
@@ -36,6 +37,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
       label={label}
       labelProps={labelProps}
       tooltip={tooltip}
+      tooltipProps={tooltipProps}
       success={success}
       warning={warning}
       error={error}
@@ -77,6 +79,7 @@ FileInputFieldBase.propTypes = {
   label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   tooltip: PropTypes.node,
+  tooltipProps: PropTypes.object,
 }
 
 export default FileInputField

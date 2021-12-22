@@ -16,6 +16,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
     warning,
     error,
     tooltip,
+    tooltipProps,
     name,
     id,
     disabled,
@@ -37,6 +38,7 @@ const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
       warning={warning}
       error={error}
       tooltip={tooltip}
+      tooltipProps={tooltipProps}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
@@ -70,19 +72,12 @@ TextAreaField.propTypes = {
   label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
-  success: PropTypes.string,
-  warning: PropTypes.string,
-  error: PropTypes.string,
-  tooltip: PropTypes.string,
+  success: PropTypes.node,
+  warning: PropTypes.node,
+  error: PropTypes.node,
+  tooltip: PropTypes.node,
+  tooltipProps: PropTypes.object,
   value: PropTypes.string,
-}
-
-TextAreaField.defaultProps = {
-  success: undefined,
-  warning: undefined,
-  error: undefined,
-  tooltip: undefined,
-  labelProps: {},
 }
 
 export default TextAreaField

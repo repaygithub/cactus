@@ -22,6 +22,7 @@ const SelectFieldBase: SelectFieldType = (props): React.ReactElement => {
     label,
     labelProps,
     tooltip,
+    tooltipProps,
     success,
     warning,
     error,
@@ -41,6 +42,7 @@ const SelectFieldBase: SelectFieldType = (props): React.ReactElement => {
       label={label}
       labelProps={labelProps}
       tooltip={tooltip}
+      tooltipProps={tooltipProps}
       success={success}
       warning={warning}
       error={error}
@@ -83,7 +85,6 @@ export const SelectField = styled(SelectFieldBase)`
   }
 `
 
-// @ts-ignore
 SelectField.propTypes = {
   label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
@@ -92,10 +93,11 @@ SelectField.propTypes = {
   options: Select.propTypes.options,
   className: PropTypes.string,
   id: PropTypes.string,
-  success: PropTypes.string,
-  warning: PropTypes.string,
-  error: PropTypes.string,
-  tooltip: PropTypes.string,
+  success: PropTypes.node,
+  warning: PropTypes.node,
+  error: PropTypes.node,
+  tooltip: PropTypes.node,
+  tooltipProps: PropTypes.object,
 }
 
 export default SelectField

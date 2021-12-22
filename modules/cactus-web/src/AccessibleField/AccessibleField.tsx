@@ -12,7 +12,7 @@ import { styledUnpoly, styledWithClass } from '../helpers/styled'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
-import { Tooltip } from '../Tooltip/Tooltip'
+import { Tooltip, TooltipProps } from '../Tooltip/Tooltip'
 
 export type TooltipAlignment = 'left' | 'right'
 interface AccessibleProps {
@@ -35,6 +35,7 @@ interface CommonProps {
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor' | 'id'>
   tooltip?: React.ReactNode
+  tooltipProps?: Omit<TooltipProps, 'label' | 'id'>
   error?: React.ReactNode
   warning?: React.ReactNode
   success?: React.ReactNode
@@ -124,6 +125,7 @@ function AccessibleFieldBase(props: InnerProps) {
     name,
     success,
     tooltip,
+    tooltipProps,
     warning,
     onBlur,
     onFocus,
@@ -185,6 +187,7 @@ function AccessibleFieldBase(props: InnerProps) {
         <FieldLabel {...$labelProps}>{label}</FieldLabel>
         {tooltip && (
           <Tooltip
+            {...tooltipProps}
             label={tooltip}
             id={tooltipId}
             maxWidth={maxWidth}
@@ -258,6 +261,7 @@ AccessibleField.propTypes = {
   warning: PropTypes.node,
   error: PropTypes.node,
   tooltip: PropTypes.node,
+  tooltipProps: PropTypes.object,
   disabled: PropTypes.bool,
   autoTooltip: PropTypes.bool,
   disableTooltip: PropTypes.bool,
