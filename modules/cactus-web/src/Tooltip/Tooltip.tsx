@@ -2,17 +2,16 @@ import { Position } from '@reach/popover'
 import { TooltipPopup as ReachTooltipPopup, useTooltip } from '@reach/tooltip'
 import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
-import { ColorStyle } from '@repay/cactus-theme'
+import { border, CactusTheme, color, colorStyle, radius, shadow } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { cloneElement, useEffect, useRef, useState } from 'react'
-import styled, { css } from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import React, { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { margin, MarginProps, TextColorProps } from 'styled-system'
 
 import { getDataProps } from '../helpers/omit'
 import { getScrollX, getScrollY } from '../helpers/scrollOffset'
-import { border, boxShadow, radius } from '../helpers/theme'
 
-interface TooltipProps extends MarginProps {
+export interface TooltipProps extends MarginProps, TextColorProps {
   /** Text to be displayed */
   label: React.ReactNode
   ariaLabel?: string
@@ -81,37 +80,40 @@ const cactusPosition: Position = (triggerRect, tooltipRect) => {
   }
 }
 
-interface StyledInfoProps {
+interface StyledInfoProps extends TextColorProps {
   disabled?: boolean
   forceVisible?: boolean
 }
 
-const getStyledInfoColor = (props: StyledInfoProps): ReturnType<typeof css> => {
+const getStyledInfoColor = (props: StyledInfoProps & { theme: CactusTheme }) => {
   if (props.disabled) {
-    return css`
-      color: ${(p): string => p.theme.colors.mediumGray};
-    `
+    return `color: ${color(props, 'mediumGray')};`
   } else if (props.forceVisible) {
-    return css`
-      color: ${(p): string => p.theme.colors.callToAction};
-    `
+    return `color: ${color(props, 'callToAction')};`
+  } else if (!props.color) {
+    return `color: ${color(props, 'darkestContrast')};`
   }
-  return css`
-    color: ${(p): string => p.theme.colors.darkestContrast};
-  `
+  // The color prop is handled by the `NotificationInfo` icon.
 }
 const StyledInfo = styled(({ forceVisible, ...props }) => (
   <NotificationInfo {...props} />
 ))<StyledInfoProps>`
   outline: none;
   ${getStyledInfoColor};
-  &:hover {
-    color: ${(p): string => (p.disabled ? p.theme.colors.mediumGray : p.theme.colors.callToAction)};
-  }
 `
 
 const TooltipBase = (props: TooltipProps): React.ReactElement => {
-  const { className, disabled, label, ariaLabel, id, maxWidth, position, forceVisible } = props
+  const {
+    className,
+    color: colorProp,
+    disabled,
+    label,
+    ariaLabel,
+    id,
+    maxWidth,
+    position,
+    forceVisible,
+  } = props
   const triggerRef = useRef<HTMLSpanElement | null>(null)
   const widgetRef = useRef<HTMLDivElement | null>(null)
   const [trigger, tooltip] = useTooltip({ ref: triggerRef })
@@ -140,6 +142,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
     return cactusPosition(triggerRef.current?.getBoundingClientRect(), tooltipRect)
   }
 
+  const isVisible = stayOpen || hovering || forceVisible || tooltip.isVisible
   return (
     <>
       {!disabled && (
@@ -147,7 +150,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
           <TooltipPopup
             {...tooltip}
             ref={widgetRef}
-            isVisible={stayOpen || hovering || forceVisible || tooltip.isVisible}
+            isVisible={isVisible}
             label={label}
             ariaLabel={ariaLabel}
             position={position || defaultPosition}
@@ -164,12 +167,9 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
           </VisuallyHidden>
         </>
       )}
-      {cloneElement(
-        <span className={className} onClick={() => setStayOpen(true)}>
-          <StyledInfo disabled={disabled} forceVisible={stayOpen || hovering || forceVisible} />
-        </span>,
-        trigger
-      )}
+      <span {...trigger} className={className} onClick={() => setStayOpen(true)}>
+        <StyledInfo color={colorProp} disabled={disabled} forceVisible={isVisible} />
+      </span>
     </>
   )
 }
@@ -178,13 +178,13 @@ export const TooltipPopup = styled(ReachTooltipPopup)`
   z-index: 100;
   position: absolute;
   padding: 16px;
-  ${(p): string => boxShadow(p.theme, 1)};
+  ${shadow(1)};
   font-size: 15px;
-  ${(p): ColorStyle => p.theme.colorStyles.standard};
+  ${colorStyle('standard')};
   box-sizing: border-box;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  border: ${(p) => border(p.theme, 'callToAction')};
+  border: ${border('callToAction')};
   border-radius: ${radius(8)};
 `
 
