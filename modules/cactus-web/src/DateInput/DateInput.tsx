@@ -583,7 +583,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       const { onFocus } = this.props
       if (typeof onFocus === 'function') {
         const cactusEvent = new CactusFocusEvent('focus', this.eventTarget, event)
-        onFocus(cactusEvent)
+        onFocus(cactusEvent as React.FocusEvent<Target, Element>)
       }
     }
   }
@@ -597,7 +597,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       if (typeof onBlur === 'function') {
         this.eventTarget.value = this.state.value.toValue()
         const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
-        onBlur(cactusEvent)
+        onBlur(cactusEvent as React.FocusEvent<Target, Element>)
       }
       if (isFocusLost(event)) {
         this._close(false)

@@ -1157,7 +1157,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
       this.isFocused = false
       const cactusEvent = new CactusFocusEvent('blur', this.eventTarget, event)
       const { onBlur } = this.props
-      onBlur?.(cactusEvent)
+      onBlur?.(cactusEvent as React.FocusEvent<Target, Element>)
     }
   }
 
@@ -1166,7 +1166,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
       this.isFocused = true
       const cactusEvent = new CactusFocusEvent('focus', this.eventTarget, event)
       const { onFocus } = this.props
-      onFocus?.(cactusEvent)
+      onFocus?.(cactusEvent as React.FocusEvent<Target, Element>)
     }
   }
 

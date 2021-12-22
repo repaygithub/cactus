@@ -2,16 +2,16 @@
 
 exports[`@repay/cactus-i18n should match snapshot of exports 1`] = `
 Array [
-  "default",
-  "I18nSection",
+  "BaseI18nController",
+  "I18nContext",
   "I18nElement",
   "I18nFormatted",
   "I18nResource",
+  "I18nSection",
   "I18nText",
-  "useI18nText",
+  "default",
   "useI18nResource",
-  "I18nContext",
-  "BaseI18nController",
+  "useI18nText",
   "BundleInfo",
 ]
 `;

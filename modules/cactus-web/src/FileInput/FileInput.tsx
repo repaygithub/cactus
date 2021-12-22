@@ -296,7 +296,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
       const focusHandler = this.props.onFocus
       if (typeof focusHandler === 'function') {
         const cactusEvent = new CactusFocusEvent('focus', this.syncTarget(), event)
-        focusHandler(cactusEvent)
+        focusHandler(cactusEvent as React.FocusEvent<Target, Element>)
       }
     }
   }
@@ -308,7 +308,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
       const blurHandler = this.props.onBlur
       if (typeof blurHandler === 'function') {
         const cactusEvent = new CactusFocusEvent('blur', this.syncTarget(), event)
-        blurHandler(cactusEvent)
+        blurHandler(cactusEvent as React.FocusEvent<Target, Element>)
       }
     }
   }
