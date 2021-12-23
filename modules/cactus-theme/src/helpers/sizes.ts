@@ -18,14 +18,14 @@ export const iconSize = wrap(_iconSize)
  * and another from `theme.fontSizes` inside a `mediaGTE('medium')` block.
  */
 const _fontSize = (p: ThemeProps, size: keyof FontSizeObject) => {
-  const fontSize = p.theme.fontSizes[size]
+  const fSize = p.theme.fontSizes[size]
   const mobileSize = p.theme.mobileFontSizes[size]
-  return fontSize === mobileSize
-    ? `font-size: ${fontSize}px;`
+  return fSize === mobileSize
+    ? `font-size: ${fSize}px;`
     : `
     font-size: ${mobileSize}px;
     ${mediaGTE(p, 'medium')} {
-      font-size: ${fontSize}px;
+      font-size: ${fSize}px;
     }
   `
 }
