@@ -47,10 +47,10 @@ BasicUsage.args = { children: 'Standard' }
 BasicUsage.argTypes = { disabled: HIDE_CONTROL, variant: HIDE_CONTROL }
 
 export const WithIcon: Story<typeof Button, { Icon: Icon }> = (args) => {
-  const { Icon, children, ...props } = args
+  const { Icon: IconComponent, children, ...props } = args
   return (
     <Button {...props}>
-      <Icon /> {children}
+      <IconComponent /> {children}
     </Button>
   )
 }

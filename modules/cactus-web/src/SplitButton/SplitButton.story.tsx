@@ -67,13 +67,13 @@ BasicUsage.argTypes = {
 BasicUsage.args = { mainActionLabel: 'standard' }
 
 type MultiStory = Story<typeof SplitButton, SelectArg & { actions: string[] }>
-export const WithCollisions: MultiStory = ({ actions, onSelect, ...args }) => (
+export const WithCollisions: MultiStory = ({ actions: _actions, onSelect, ...args }) => (
   <React.Fragment>
     <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
       Scroll down and to the right
     </div>
     <SplitButton {...args} onSelectMainAction={onSelect('Main Action')}>
-      {actions.map((a, i) => (
+      {_actions.map((a, i) => (
         <SplitButton.Action key={i} onSelect={onSelect(a)} children={a} />
       ))}
     </SplitButton>

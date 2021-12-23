@@ -88,10 +88,10 @@ export const ICON_ARG = {
 
 export const actions = (...args: ActionParam[]): ArgTypes => args.reduce(reduceActions, {})
 
-const reduceActions = (actions: ArgTypes, configParam: ActionParam) => {
+const reduceActions = (_actions: ArgTypes, configParam: ActionParam) => {
   const config = typeof configParam === 'string' ? { name: configParam } : configParam
-  actions[config.name] = { control: false, defaultValue: getAction(config) }
-  return actions
+  _actions[config.name] = { control: false, defaultValue: getAction(config) }
+  return _actions
 }
 
 const getAction = (config: ActionConfig) => {

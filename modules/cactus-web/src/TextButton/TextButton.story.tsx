@@ -47,10 +47,14 @@ export const Multiple: Story<typeof TextButton> = (args) => (
 )
 Multiple.args = { children: 'Add', variant: 'action' }
 
-export const WithIcon: Story<typeof TextButton, { Icon: Icon }> = ({ Icon, children, ...args }) => {
+export const WithIcon: Story<typeof TextButton, { Icon: Icon }> = ({
+  Icon: IconComponent,
+  children,
+  ...args
+}) => {
   return (
     <TextButton {...args}>
-      <Icon />
+      <IconComponent />
       {children}
     </TextButton>
   )

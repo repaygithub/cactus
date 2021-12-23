@@ -17,37 +17,37 @@ type IBStory = Story<
   }
 >
 
-const IconButtonBase: IBStory = ({ isTiny, Icon, ...args }) => {
+const IconButtonBase: IBStory = ({ isTiny, Icon: IconComponent, ...args }) => {
   return (
     <>
       <Grid.Item tiny={isTiny ? 2 : 1}>
         <IconButton {...args} variant="standard">
-          <Icon />
+          <IconComponent />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
         <IconButton {...args} variant="action">
-          <Icon />
+          <IconComponent />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
         <IconButton {...args} variant="danger">
-          <Icon />
+          <IconComponent />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
         <IconButton {...args} variant="warning">
-          <Icon />
+          <IconComponent />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
         <IconButton {...args} variant="success">
-          <Icon />
+          <IconComponent />
         </IconButton>
       </Grid.Item>
       <Grid.Item tiny={2}>
         <IconButton {...args} variant="dark">
-          <Icon />
+          <IconComponent />
         </IconButton>
       </Grid.Item>
     </>
@@ -154,10 +154,10 @@ export const AllIcons: Story<typeof IconButton> = ({ label = 'icb', ...args }) =
     <Grid justify="center">
       {Object.values(icons)
         .slice(0, Object.keys(icons).length - 2)
-        .map((Icon, ix) => (
+        .map((IconComponent, ix) => (
           <Grid.Item tiny={3} medium={2} large={1} key={ix}>
             <IconButton {...args} label={`${label}-${ix}`}>
-              <Icon />
+              <IconComponent />
             </IconButton>
           </Grid.Item>
         ))}
