@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 
 import { Grid, IconButton, ScreenSizeContext, SIZES, Text } from '../'
 import { actions, HIDE_CONTROL, Icon, ICON_ARG, Story, STRING } from '../helpers/storybook'
+import { IconButtonVariants } from './IconButton'
 
 export default {
   title: 'IconButton',
@@ -18,38 +19,17 @@ type IBStory = Story<
 >
 
 const IconButtonBase: IBStory = ({ isTiny, Icon: IconComponent, ...args }) => {
+  const variants = ['standard', 'action', 'danger', 'warning', 'success', 'dark']
+  const tinyFirstItem = isTiny ? 2 : 1
   return (
     <>
-      <Grid.Item tiny={isTiny ? 2 : 1}>
-        <IconButton {...args} variant="standard">
-          <IconComponent />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="action">
-          <IconComponent />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="danger">
-          <IconComponent />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="warning">
-          <IconComponent />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="success">
-          <IconComponent />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="dark">
-          <IconComponent />
-        </IconButton>
-      </Grid.Item>
+      {variants.map((variant, index) => (
+        <Grid.Item tiny={index === 0 ? tinyFirstItem : 2}>
+          <IconButton {...args} variant={variant as IconButtonVariants}>
+            <IconComponent />
+          </IconButton>
+        </Grid.Item>
+      ))}
     </>
   )
 }
