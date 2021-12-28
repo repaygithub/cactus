@@ -25,6 +25,17 @@ describe('component: ToggleField', (): void => {
     expect(getByLabelText('Show me the money').id).toContain('show-me-the-money')
   })
 
+  test('should support ref prop', (): void => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByLabelText } = render(
+      <StyleProvider>
+        <ToggleField label="Show me the money" name="show-me-the-money" defaultChecked ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByLabelText('Show me the money')).toBe(ref.current)
+    expect(ref.current).toBeChecked()
+  })
+
   test('should trigger onChange event with next value', (): void => {
     const box: any = {}
     const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'checked'])))
