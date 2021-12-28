@@ -27,6 +27,7 @@ BasicUsage.args = {
   autoTooltip: true,
   name: 'checkboxes',
 }
+BasicUsage.parameters = { cactus: { overrides: { maxWidth: '500px' } } }
 
 export const WithValues = (): React.ReactElement => {
   const [value, setValue] = useState<{

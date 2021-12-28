@@ -30,6 +30,7 @@ export default {
       loaded: 'File uploaded successfully',
     },
   },
+  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
 type FIStory = Story<typeof FileInputField, { onChange: Action<React.ChangeEvent<any>> }>
@@ -44,7 +45,7 @@ export const BasicUsage: FIStory = (args) => {
     }
   }, [])
   return (
-    <div>
+    <>
       <FileInputField
         {...args}
         onChange={args.onChange.wrap(({ target }) => {
@@ -61,6 +62,6 @@ export const BasicUsage: FIStory = (args) => {
         name="input-field-disabled"
         disableTooltip
       />
-    </div>
+    </>
   )
 }

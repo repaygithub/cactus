@@ -31,6 +31,7 @@ export default {
     comboBox: false,
     canCreateOption: true,
   },
+  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
 type ChangeArg = { onChange: Action<React.ChangeEvent<{ value: SelectValueType | null }>> }
@@ -62,6 +63,7 @@ CollisionsInLargeContainer.parameters = {
     overrides: {
       height: '220vh',
       width: '220vw',
+      maxWidth: '220vw',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -110,7 +112,6 @@ export const WithMultiselect: Story<typeof Select, ChangeArg> = (args) => {
   )
 }
 WithMultiselect.args = { multiple: true }
-WithMultiselect.parameters = { cactus: { overrides: { overflow: 'hidden' } } }
 
 type OptionAl = ChangeArg & { showOptions: boolean }
 export const WithComboBox: Story<typeof Select, OptionAl> = ({
@@ -132,7 +133,7 @@ export const WithComboBox: Story<typeof Select, OptionAl> = ({
 }
 WithComboBox.args = { showOptions: true, comboBox: true }
 WithComboBox.storyName = 'With ComboBox'
-WithComboBox.parameters = { cactus: { overrides: { overflow: 'hidden' } }, storyshots: false }
+WithComboBox.parameters = { storyshots: false }
 
 export const WithMultiSelectComboBox: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>([])
@@ -148,6 +149,5 @@ export const WithMultiSelectComboBox: Story<typeof Select, ChangeArg> = (args) =
 WithMultiSelectComboBox.args = { comboBox: true, multiple: true }
 WithMultiSelectComboBox.storyName = 'With MultiSelect ComboBox'
 WithMultiSelectComboBox.parameters = {
-  cactus: { overrides: { overflow: 'hidden' } },
   storyshots: false,
 }

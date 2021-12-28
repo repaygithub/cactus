@@ -6,6 +6,7 @@ import { Action, FIELD_ARGS, Story } from '../helpers/storybook'
 export default {
   title: 'CheckBoxCard',
   component: CheckBoxCard,
+  parameters: { cactus: { overrides: { maxWidth: '700px' } } },
 } as const
 
 export const BasicUsage = (): React.ReactElement => {

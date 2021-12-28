@@ -1,22 +1,23 @@
 import React from 'react'
 
 import { List } from '../'
-import { ICON_ARG, IconName, Story } from '../helpers/storybook'
+import { ICON_ARG, IconName, SPACE, Story } from '../helpers/storybook'
 
 export default {
   title: 'List',
   component: List,
+  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
-export const BasicUsage = (): React.ReactElement => (
-  <List>
+export const BasicUsage: Story<typeof List> = ({ marginLeft, ...args }) => (
+  <List {...args}>
     <List.Item>Non-indented item</List.Item>
     <List.Item>
       Non-indented item with children
-      <List>
+      <List marginLeft={marginLeft}>
         <List.Item>I am indented by 24px</List.Item>
         <List.Item>
-          <List>
+          <List marginLeft={marginLeft}>
             <List.Item>I am indented by 48px</List.Item>
           </List>
         </List.Item>
@@ -24,7 +25,7 @@ export const BasicUsage = (): React.ReactElement => (
     </List.Item>
   </List>
 )
-BasicUsage.parameters = { controls: { disable: true } }
+BasicUsage.argTypes = { margin: SPACE, marginLeft: SPACE }
 
 export const WithIcons: Story<typeof List, { iconName: IconName }> = ({ iconName, ...args }) => (
   <List {...args}>

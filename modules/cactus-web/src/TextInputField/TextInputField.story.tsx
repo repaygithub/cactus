@@ -17,10 +17,11 @@ export default {
     tooltip: 'Enter some text',
     placeholder: 'Placeholder',
   },
+  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
 export const BasicUsage: Story<typeof TextInputField> = (args) => (
-  <div>
+  <>
     <TextInputField {...args} />
     <TextInputField
       label="Input Label Disabled"
@@ -30,7 +31,7 @@ export const BasicUsage: Story<typeof TextInputField> = (args) => (
       name="input-1"
       disableTooltip
     />
-  </div>
+  </>
 )
 BasicUsage.args = { placeholder: 'Placeholder' }
 

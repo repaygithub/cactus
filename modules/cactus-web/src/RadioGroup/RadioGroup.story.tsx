@@ -30,6 +30,7 @@ BasicUsage.args = {
   name: 'radios',
   buttonLabel: 'That is...',
 }
+BasicUsage.parameters = { cactus: { overrides: { maxWidth: '500px' } } }
 
 export const WithValues = (): React.ReactElement => {
   const [value, setValue] = React.useState<string>('strong')

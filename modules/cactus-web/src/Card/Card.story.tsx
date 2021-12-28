@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { Box, Card } from '../'
 import { SPACE, Story } from '../helpers/storybook'
@@ -16,6 +17,27 @@ interface Content {
   minAmount: string
 }
 
+const Table = styled.table`
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+  th {
+    text-align: left;
+    font-weight: 400;
+  }
+  th.total {
+    padding-right: 55px;
+    font-weight: 600;
+  }
+  td {
+    text-align: right;
+    font-weight: 600;
+  }
+  td.total {
+    font-size: 25.92px;
+  }
+`
+
 const BaseComponent: Story<typeof Card, Content> = ({
   title,
   subtitle,
@@ -25,38 +47,32 @@ const BaseComponent: Story<typeof Card, Content> = ({
   ...args
 }) => {
   return (
-    <Card margin="30px" {...args}>
-      <h2 style={{ margin: 0 }}>{title}</h2>
-      <h4 style={{ margin: '0 0 8px', fontWeight: 400, fontSize: '12px' }}>{subtitle}</h4>
+    <Card {...args}>
+      <Box as="h2" margin="0">
+        {title}
+      </Box>
+      <Box as="h4" margin="0 0 8px 0" fontWeight="400" fontSize="12px">
+        {subtitle}
+      </Box>
 
-      <table style={{ fontSize: '15px', borderCollapse: 'collapse' }}>
+      <Table>
         <tbody>
           <tr>
-            <Box as="th" style={{ textAlign: 'left', padding: '4px 60px 4px 0', fontSize: '12px' }}>
-              Total Amount Due
-            </Box>
-            <td>
-              <span style={{ textAlign: 'right', fontWeight: 600, fontSize: '25.92px' }}>
-                {totalAmount}
-              </span>
-            </td>
+            <th className="total">Total Amount Due</th>
+            <td className="total">{totalAmount}</td>
           </tr>
 
           <tr>
-            <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}>Due Date</th>
-            <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>
-              {new Date(date).toLocaleDateString()}
-            </td>
+            <th>Due Date</th>
+            <td>{new Date(date).toLocaleDateString()}</td>
           </tr>
 
           <tr>
-            <th style={{ textAlign: 'left', fontWeight: 'normal', fontSize: '12px' }}>
-              Minimum Amount Due
-            </th>
-            <td style={{ textAlign: 'right', fontWeight: 600, fontSize: '12px' }}>{minAmount}</td>
+            <th>Minimum Amount Due</th>
+            <td>{minAmount}</td>
           </tr>
         </tbody>
-      </table>
+      </Table>
     </Card>
   )
 }
@@ -72,6 +88,7 @@ export const BasicUsage: Story<typeof Card, BasicArgs> = ({ withShadow, noShadow
   </div>
 )
 BasicUsage.argTypes = {
+  margin: SPACE,
   padding: SPACE,
   paddingX: SPACE,
   paddingY: SPACE,
@@ -87,6 +104,8 @@ BasicUsage.args = {
   date: new Date(2020, 9, 5).valueOf(),
   minAmount: '$127.00',
   useBoxShadow: false,
+  margin: '30px',
+  maxWidth: '500px',
 }
 
 export const NestedCards: Story<typeof Card> = (args) => (

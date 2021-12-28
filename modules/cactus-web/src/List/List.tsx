@@ -1,12 +1,12 @@
 import icons from '@repay/cactus-icons'
+import { border } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import { compose, margin, MarginProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
-import { flexItem, FlexItemProps } from '../helpers/flexItem'
-import { border } from '../helpers/theme'
+import { flexItem, FlexItemProps } from '../helpers/styled'
 import Text, { TextProps } from '../Text/Text'
 
 interface ListProps extends MarginProps, FlexItemProps, React.HTMLAttributes<HTMLUListElement> {
@@ -19,27 +19,33 @@ interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
 
 interface ItemHeaderProps extends Omit<TextProps, 'color'> {
   icon?: keyof typeof icons
-  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>
+  as?: React.ElementType<any>
 }
+
+// Workaround for a styled-components bug when using `&` in a nested style.
+const nested = (): string => `
+  ${UL} {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 24px;
+  }
+`
 
 const UL = styled.ul<{ $dividers: boolean }>`
   padding: 0;
   margin: 0;
   list-style-type: none;
-  ${margin}
-  ${flexItem}
+  ${nested}
 
-  & & {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-left: 24px;
+  && {
+    ${compose(flexItem, margin)}
   }
 
   ${(p) =>
     p.$dividers &&
     `
     li {
-      border-top: ${border(p.theme, 'lightContrast')};
+      border-top: ${border(p, 'lightContrast')};
     }
     li:first-of-type {
       border-top: none;
