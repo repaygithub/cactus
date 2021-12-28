@@ -18,6 +18,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
     warning,
     error,
     tooltip,
+    tooltipProps,
     disabled,
     autoTooltip,
     disableTooltip,
@@ -37,6 +38,7 @@ const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
       warning={warning}
       error={error}
       tooltip={tooltip}
+      tooltipProps={tooltipProps}
       autoTooltip={autoTooltip}
       disableTooltip={disableTooltip}
       alignTooltip={alignTooltip}
@@ -70,18 +72,11 @@ TextInputField.propTypes = {
   label: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
   labelProps: PropTypes.object,
-  success: PropTypes.string,
-  warning: PropTypes.string,
-  error: PropTypes.string,
-  tooltip: PropTypes.string,
-}
-
-TextInputField.defaultProps = {
-  error: undefined,
-  labelProps: {},
-  success: undefined,
-  tooltip: undefined,
-  warning: undefined,
+  success: PropTypes.node,
+  warning: PropTypes.node,
+  error: PropTypes.node,
+  tooltip: PropTypes.node,
+  tooltipProps: PropTypes.object,
 }
 
 export default TextInputField

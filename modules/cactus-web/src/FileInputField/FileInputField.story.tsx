@@ -9,6 +9,7 @@ export default {
   argTypes: {
     value: HIDE_CONTROL,
     labelProps: HIDE_CONTROL,
+    tooltipProps: HIDE_CONTROL,
     isOpen: HIDE_CONTROL,
     multiple: { control: 'boolean' },
     accept: { control: 'array' },

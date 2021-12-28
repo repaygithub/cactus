@@ -60,6 +60,7 @@ CustomStyles.argTypes = {
   autoTooltip: HIDE_CONTROL,
   alignTooltip: HIDE_CONTROL,
   labelProps: HIDE_CONTROL,
+  tooltipProps: HIDE_CONTROL,
   id: HIDE_CONTROL,
   name: HIDE_CONTROL,
 }

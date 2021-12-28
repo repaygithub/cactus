@@ -19,6 +19,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
     label,
     labelProps,
     tooltip,
+    tooltipProps,
     success,
     warning,
     error,
@@ -45,6 +46,7 @@ function DateInputFieldBase(props: DateInputFieldProps): React.ReactElement {
       label={label}
       labelProps={labelProps}
       tooltip={tooltip}
+      tooltipProps={tooltipProps}
       error={invalidDate ? invalidDateLabel : error}
       warning={!invalidDate && warning}
       success={!invalidDate && success}
@@ -87,18 +89,15 @@ DateInputField.propTypes = {
   name: PropTypes.string.isRequired,
   className: PropTypes.string,
   id: PropTypes.string,
-  success: PropTypes.string,
-  warning: PropTypes.string,
-  error: PropTypes.string,
-  tooltip: PropTypes.string,
+  success: PropTypes.node,
+  warning: PropTypes.node,
+  error: PropTypes.node,
+  tooltip: PropTypes.node,
+  tooltipProps: PropTypes.object,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   invalidDateLabel: PropTypes.node,
-}
-
-DateInputField.defaultProps = {
-  labelProps: {},
 }
 
 export default DateInputField
