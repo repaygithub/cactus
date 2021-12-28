@@ -286,20 +286,22 @@ const CalendarGridBase = ({
   // Second effect: if the grid is not currently focused,
   // make sure there's exactly one gridcell with tabIndex == 0.
   React.useEffect(() => {
-    const grid = gridRef.current
+    const gridElement = gridRef.current
     const active = document.activeElement as HTMLElement | null
     // If the grid is currently focused, we don't need to do anything.
-    if (grid && !(active?.dataset.date && grid.contains(active))) {
-      const old = grid.querySelector<HTMLElement>('[tabindex="0"]')
+    if (gridElement && !(active?.dataset.date && gridElement.contains(active))) {
+      const old = gridElement.querySelector<HTMLElement>('[tabindex="0"]')
       let toFocus: HTMLElement | null = old
       // First choice is the selected date (first one this month if there's multiple).
       if (isSelected !== stubFalse) {
-        toFocus = grid.querySelector<HTMLElement>('[aria-selected="true"]:not(.outside-date)')
+        toFocus = gridElement.querySelector<HTMLElement>(
+          '[aria-selected="true"]:not(.outside-date)'
+        )
       }
       if (!toFocus) {
         const focusDay = getFocusDay(initialFocus) || state.day
         const fd = toISODate(clampDate(new Date(year, month, 1), 'day', focusDay))
-        toFocus = queryDate(grid, fd) || grid.querySelector<HTMLElement>(INSIDE_DATE)
+        toFocus = queryDate(gridElement, fd) || gridElement.querySelector<HTMLElement>(INSIDE_DATE)
       }
       if (toFocus) {
         if (old && old !== toFocus) {

@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FieldMetaState } from 'react-final-form'
 
-import makeConfigurableComponent from './config'
+import makeConfigurableComponent from './makeConfigurableComponent'
 import { RenderFunc, RenderProps, UnknownProps } from './types'
 import useField, { Config as UseFieldConfig } from './useField'
 

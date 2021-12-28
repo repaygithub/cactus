@@ -2,8 +2,8 @@ import { FieldState, FieldSubscription } from 'final-form'
 import React from 'react'
 import { useForm } from 'react-final-form'
 
-import makeConfigurableComponent from './config'
 import Field, { FieldProps } from './Field'
+import makeConfigurableComponent from './makeConfigurableComponent'
 import { RenderFunc, UnknownProps } from './types'
 
 type DependencyChangeHandler = (state: FieldState<unknown>, props: UnknownProps) => void

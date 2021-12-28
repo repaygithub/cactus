@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 
 import { Grid, IconButton, ScreenSizeContext, SIZES, Text } from '../'
 import { actions, HIDE_CONTROL, Icon, ICON_ARG, Story, STRING } from '../helpers/storybook'
+import { IconButtonVariants } from './IconButton'
 
 export default {
   title: 'IconButton',
@@ -17,39 +18,18 @@ type IBStory = Story<
   }
 >
 
-const IconButtonBase: IBStory = ({ isTiny, Icon, ...args }) => {
+const IconButtonBase: IBStory = ({ isTiny, Icon: IconComponent, ...args }) => {
+  const variants = ['standard', 'action', 'danger', 'warning', 'success', 'dark']
+  const tinyFirstItem = isTiny ? 2 : 1
   return (
     <>
-      <Grid.Item tiny={isTiny ? 2 : 1}>
-        <IconButton {...args} variant="standard">
-          <Icon />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="action">
-          <Icon />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="danger">
-          <Icon />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="warning">
-          <Icon />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="success">
-          <Icon />
-        </IconButton>
-      </Grid.Item>
-      <Grid.Item tiny={2}>
-        <IconButton {...args} variant="dark">
-          <Icon />
-        </IconButton>
-      </Grid.Item>
+      {variants.map((variant, index) => (
+        <Grid.Item tiny={index === 0 ? tinyFirstItem : 2}>
+          <IconButton {...args} variant={variant as IconButtonVariants}>
+            <IconComponent />
+          </IconButton>
+        </Grid.Item>
+      ))}
     </>
   )
 }
@@ -154,10 +134,10 @@ export const AllIcons: Story<typeof IconButton> = ({ label = 'icb', ...args }) =
     <Grid justify="center">
       {Object.values(icons)
         .slice(0, Object.keys(icons).length - 2)
-        .map((Icon, ix) => (
+        .map((IconComponent, ix) => (
           <Grid.Item tiny={3} medium={2} large={1} key={ix}>
             <IconButton {...args} label={`${label}-${ix}`}>
-              <Icon />
+              <IconComponent />
             </IconButton>
           </Grid.Item>
         ))}
