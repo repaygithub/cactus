@@ -1,27 +1,26 @@
-import { CactusTheme } from '@repay/cactus-theme'
+import { border, color, colorStyle, mediaGTE, radius, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { FlattenInterpolation, ThemeProps } from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import styled from 'styled-components'
+import { compose, height, HeightProps, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
 import { textFieldStatusMap } from '../helpers/status'
-import { border, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
-export interface TextAreaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
-    MarginProps {
+type AreaElementProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'height' | 'width'>
+export interface TextAreaProps extends AreaElementProps, MarginProps, HeightProps, WidthProps {
   disabled?: boolean
   status?: Status | null
-  width?: string
-  height?: string
   resize?: boolean
 }
 
-const displayStatus = (
-  props: TextAreaProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | string => {
+interface AreaProps extends TextAreaProps {
+  $height: string
+  $width: string
+}
+
+const displayStatus = (props: AreaProps) => {
   if (props.status && !props.disabled) {
     return textFieldStatusMap[props.status]
   } else {
@@ -29,58 +28,64 @@ const displayStatus = (
   }
 }
 
-const Area = styled.textarea<TextAreaProps>`
-  border: ${(p) => border(p.theme, p.disabled ? 'lightGray' : 'darkContrast')};
+const Area = styled.textarea<AreaProps>`
+  border: ${border('darkContrast')};
   border-radius: ${radius(8)};
   min-height: 100px;
-  ${(p): string => p.theme.mediaQueries.small} {
+  ${mediaGTE('small')} {
     min-width: 336px;
   }
   box-sizing: border-box;
-  ${(p) => textStyle(p.theme, 'body')}
+  ${textStyle('body')}
   padding: 8px 16px;
   outline: none;
-  background-color: ${(p): string => p.theme.colors.white};
-  height: ${(p): string => p.height || 'auto'};
-  width: ${(p): string => p.width || 'auto'};
+  ${colorStyle('standard')};
+  height: ${(p) => p.$height};
+  width: ${(p) => p.$width};
   display: block;
-  resize: ${(p): string => (p.resize ? 'vertical' : 'none')};
+  resize: ${(p) => (p.resize ? 'vertical' : 'none')};
 
   &:first-line {
     padding-right: 15px;
   }
 
   &:focus {
-    border-color: ${(p): string => p.theme.colors.callToAction};
+    border-color: ${color('callToAction')};
   }
 
   &:disabled {
     cursor: not-allowed;
-    ${(p) => p.theme.colorStyles.disable};
+    border-color: ${color('lightGray')};
+    ${colorStyle('disable')};
   }
 
   &:disabled::placeholder {
-    color: ${(p): string => p.theme.colors.mediumGray};
+    color: ${color('mediumGray')};
     font-style: oblique;
   }
   ${displayStatus}
 `
 
-const TextAreaBase = (props: TextAreaProps): React.ReactElement => {
-  const { className, ...rest } = omitMargins(props)
+const TextAreaBase = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  (props: TextAreaProps, ref) => {
+    const { className, height, width, ...rest } = omitMargins(props)
 
-  return (
-    <div className={className}>
-      <Area {...rest} />
-    </div>
-  )
-}
+    return (
+      <div className={className}>
+        <Area {...rest} ref={ref} $height={control(height)} $width={control(width)} />
+      </div>
+    )
+  }
+)
+const control = (val: unknown) => (val ? '100%' : 'auto')
 
 export const TextArea = styled(TextAreaBase)`
   position: relative;
   display: block;
 
-  ${margin}
+  &&& {
+    ${compose(margin, height, width)}
+  }
 `
 
 TextArea.propTypes = {
