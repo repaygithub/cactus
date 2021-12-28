@@ -1,18 +1,25 @@
-import defaultTheme, { ColorStyle, TextStyleCollection } from '@repay/cactus-theme'
+import defaultTheme, {
+  border,
+  color,
+  colorStyle,
+  radius,
+  textStyle,
+  TextStyleCollection,
+} from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
 import { textFieldStatusMap } from '../helpers/status'
-import { border, radius, textStyle } from '../helpers/theme'
 import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
 type TextStyleKey = keyof TextStyleCollection
 export const textStyles = Object.keys(defaultTheme.textStyles) as TextStyleKey[]
 
-export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
+type InputElementProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'width'>
+export interface TextInputProps extends InputElementProps, MarginProps, WidthProps {
   /** !important */
   disabled?: boolean
   status?: Status | null
@@ -20,6 +27,7 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
 }
 
 interface InputProps {
+  $width: string
   disabled?: boolean
   status?: Status | null
   textStyle?: TextStyleKey
@@ -35,11 +43,11 @@ const displayStatus = (props: TextInputProps) => {
 
 const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
   (props: TextInputProps, forwardRef): React.ReactElement => {
-    const { className, ...rest } = omitMargins(props)
+    const { className, width: widthProp, ...rest } = omitMargins(props)
 
     return (
       <div className={className}>
-        <Input ref={forwardRef} {...rest} />
+        <Input ref={forwardRef} {...rest} $width={widthProp ? '100%' : 'auto'} />
       </div>
     )
   }
@@ -47,29 +55,30 @@ const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
 
 const Input = styled.input<InputProps>`
   box-sizing: border-box;
-  border: ${(p) => border(p.theme, p.disabled ? 'lightGray' : 'darkContrast')};
+  border: ${border('darkContrast')};
   border-radius: ${radius(20)};
   outline: none;
   padding: 3px 28px 3px 15px;
-  ${(p) => textStyle(p.theme, p.textStyle || 'body')};
-  width: ${(p): string | number => p.width || 'auto'};
-  background-color: ${(p): string => p.theme.colors.white};
+  ${(p) => textStyle(p, p.textStyle || 'body')};
+  ${colorStyle('standard')}
+  width: ${(p) => p.$width};
 
   &:disabled {
     cursor: not-allowed;
-    border-color: ${(p): string => p.theme.colors.lightGray};
-    ${(p): ColorStyle => p.theme.colorStyles.disable};
+    border-color: ${color('lightGray')};
+    ${colorStyle('disable')}
   }
 
   &:disabled::placeholder {
-    color: ${(p): string => p.theme.colors.mediumGray};
+    color: ${color('mediumGray')};
   }
+
   &:focus {
-    border-color: ${(p): string => p.theme.colors.callToAction};
+    border-color: ${color('callToAction')};
   }
 
   &::placeholder {
-    color: ${(p): string => p.theme.colors.mediumContrast};
+    color: ${color('mediumContrast')};
     font-style: oblique;
   }
 
@@ -78,7 +87,9 @@ const Input = styled.input<InputProps>`
 
 export const TextInput = styled(TextInputBase)`
   box-sizing: border-box;
-  ${margin}
+  && {
+    ${compose(margin, width)}
+  }
 `
 
 TextInput.propTypes = {

@@ -8,59 +8,62 @@ import { TextInput, TextInputProps } from '../TextInput/TextInput'
 
 interface TextInputFieldProps extends FieldProps, Omit<TextInputProps, 'name' | 'status'> {}
 
-const TextInputFieldBase = (props: TextInputFieldProps): React.ReactElement => {
-  const {
-    id,
-    name,
-    label,
-    labelProps,
-    success,
-    warning,
-    error,
-    tooltip,
-    disabled,
-    autoTooltip,
-    disableTooltip,
-    alignTooltip,
-    ...inputProps
-  } = props
-  const styleProps = extractFieldStyleProps(inputProps)
+const TextInputFieldBase = React.forwardRef<HTMLInputElement, TextInputFieldProps>(
+  (props: TextInputFieldProps, ref) => {
+    const {
+      id,
+      name,
+      label,
+      labelProps,
+      success,
+      warning,
+      error,
+      tooltip,
+      disabled,
+      autoTooltip,
+      disableTooltip,
+      alignTooltip,
+      ...inputProps
+    } = props
+    const styleProps = extractFieldStyleProps(inputProps)
 
-  return (
-    <AccessibleField
-      disabled={disabled}
-      id={id}
-      name={name}
-      label={label}
-      labelProps={labelProps}
-      success={success}
-      warning={warning}
-      error={error}
-      tooltip={tooltip}
-      autoTooltip={autoTooltip}
-      disableTooltip={disableTooltip}
-      alignTooltip={alignTooltip}
-      {...styleProps}
-    >
-      {({
-        fieldId,
-        status,
-        ariaDescribedBy,
-        disabled: accessibilityDisabled,
-      }): React.ReactElement => (
-        <TextInput
-          {...inputProps}
-          disabled={accessibilityDisabled}
-          id={fieldId}
-          width="100%"
-          status={status}
-          name={name}
-          aria-describedby={ariaDescribedBy}
-        />
-      )}
-    </AccessibleField>
-  )
-}
+    return (
+      <AccessibleField
+        disabled={disabled}
+        id={id}
+        name={name}
+        label={label}
+        labelProps={labelProps}
+        success={success}
+        warning={warning}
+        error={error}
+        tooltip={tooltip}
+        autoTooltip={autoTooltip}
+        disableTooltip={disableTooltip}
+        alignTooltip={alignTooltip}
+        {...styleProps}
+      >
+        {({
+          fieldId,
+          status,
+          ariaDescribedBy,
+          disabled: accessibilityDisabled,
+        }): React.ReactElement => (
+          <TextInput
+            ref={ref}
+            {...inputProps}
+            disabled={accessibilityDisabled}
+            id={fieldId}
+            width="100%"
+            status={status}
+            name={name}
+            aria-describedby={ariaDescribedBy}
+          />
+        )}
+      </AccessibleField>
+    )
+  }
+)
 
 export const TextInputField = styled(TextInputFieldBase)`
   position: relative;
