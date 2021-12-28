@@ -18,6 +18,17 @@ describe('component: TextArea', (): void => {
     expect(styles.marginLeft).toBe('24px')
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLTextAreaElement>()
+    const { getByTestId } = render(
+      <StyleProvider>
+        <TextArea data-testid="textArea" defaultValue="something" ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByTestId('textArea')).toBe(ref.current)
+    expect(ref.current).toHaveValue('something')
+  })
+
   test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
@@ -57,7 +68,7 @@ describe('component: TextArea', (): void => {
       expect(styles.borderRadius).toBe('8px')
     })
 
-    test('should have 1px border radius', (): void => {
+    test('should have 0px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { getByTestId } = render(
         <StyleProvider theme={theme}>
@@ -66,7 +77,7 @@ describe('component: TextArea', (): void => {
       )
       const textArea = getByTestId('textArea')
       const styles = window.getComputedStyle(textArea)
-      expect(styles.borderRadius).toBe('1px')
+      expect(styles.borderRadius).toBe('0px')
     })
   })
 })

@@ -8,59 +8,62 @@ import TextArea, { TextAreaProps } from '../TextArea/TextArea'
 
 interface TextAreaFieldProps extends FieldProps, Omit<TextAreaProps, 'name' | 'status'> {}
 
-const TextAreaFieldBase = (props: TextAreaFieldProps): React.ReactElement => {
-  const {
-    label,
-    labelProps,
-    success,
-    warning,
-    error,
-    tooltip,
-    name,
-    id,
-    disabled,
-    autoTooltip,
-    disableTooltip,
-    alignTooltip,
-    ...textAreaProps
-  } = props
-  const styleProps = extractFieldStyleProps(textAreaProps)
+const TextAreaFieldBase = React.forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
+  (props: TextAreaFieldProps, ref) => {
+    const {
+      label,
+      labelProps,
+      success,
+      warning,
+      error,
+      tooltip,
+      name,
+      id,
+      disabled,
+      autoTooltip,
+      disableTooltip,
+      alignTooltip,
+      ...textAreaProps
+    } = props
+    const styleProps = extractFieldStyleProps(textAreaProps)
 
-  return (
-    <AccessibleField
-      disabled={disabled}
-      id={id}
-      name={name}
-      label={label}
-      labelProps={labelProps}
-      success={success}
-      warning={warning}
-      error={error}
-      tooltip={tooltip}
-      autoTooltip={autoTooltip}
-      disableTooltip={disableTooltip}
-      alignTooltip={alignTooltip}
-      {...styleProps}
-    >
-      {({
-        fieldId,
-        status,
-        ariaDescribedBy,
-        disabled: accessibilityDisabled,
-      }): React.ReactElement => (
-        <TextArea
-          disabled={accessibilityDisabled}
-          id={fieldId}
-          width="100%"
-          status={status}
-          aria-describedby={ariaDescribedBy}
-          name={name}
-          {...textAreaProps}
-        />
-      )}
-    </AccessibleField>
-  )
-}
+    return (
+      <AccessibleField
+        disabled={disabled}
+        id={id}
+        name={name}
+        label={label}
+        labelProps={labelProps}
+        success={success}
+        warning={warning}
+        error={error}
+        tooltip={tooltip}
+        autoTooltip={autoTooltip}
+        disableTooltip={disableTooltip}
+        alignTooltip={alignTooltip}
+        {...styleProps}
+      >
+        {({
+          fieldId,
+          status,
+          ariaDescribedBy,
+          disabled: accessibilityDisabled,
+        }): React.ReactElement => (
+          <TextArea
+            disabled={accessibilityDisabled}
+            id={fieldId}
+            width="100%"
+            status={status}
+            aria-describedby={ariaDescribedBy}
+            name={name}
+            {...textAreaProps}
+            ref={ref}
+          />
+        )}
+      </AccessibleField>
+    )
+  }
+)
 
 export const TextAreaField = styled(TextAreaFieldBase)`
   position: relative;
