@@ -1,12 +1,13 @@
 import React from 'react'
 
 import { Flex, TextInput } from '../'
-import { actions, HIDE_CONTROL, Story } from '../helpers/storybook'
+import { actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'TextInput',
   component: TextInput,
   argTypes: {
+    width: STRING,
     status: { options: ['success', 'warning', 'error'] },
     ...actions('onChange', 'onFocus', 'onBlur'),
   },
