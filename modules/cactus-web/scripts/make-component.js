@@ -5,12 +5,12 @@ if (includesAny(args, '-h', '--help')) {
 Usage: node make-component.js [...options] ComponentName
 - component name must be the last argument, contain no spaces,
   and should be pascal case.
-
   Options:
   --help, -h      display this information
   --force, -f     overwrite component if it exists
     `)
-  return
+
+  process.exit()
 }
 
 const fs = require('fs').promises

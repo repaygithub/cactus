@@ -457,7 +457,12 @@ export class ColorPicker extends React.Component<ColorPickerProps, ColorState> {
       this.hasFocus = true
       const focusHandler = this.props.onFocus
       if (typeof focusHandler === 'function') {
-        focusHandler(new CactusFocusEvent('focus', this.syncTarget(), event))
+        focusHandler(
+          new CactusFocusEvent('focus', this.syncTarget(), event) as React.FocusEvent<
+            CactusEventTarget<Color>,
+            Element
+          >
+        )
       }
     }
   }
@@ -469,7 +474,12 @@ export class ColorPicker extends React.Component<ColorPickerProps, ColorState> {
       this.hasFocus = false
       const blurHandler = this.props.onBlur
       if (typeof blurHandler === 'function') {
-        blurHandler(new CactusFocusEvent('blur', this.syncTarget(), event))
+        blurHandler(
+          new CactusFocusEvent('blur', this.syncTarget(), event) as React.FocusEvent<
+            CactusEventTarget<Color>,
+            Element
+          >
+        )
       }
       // `relatedTarget` is null when the entire window loses focus,
       // but `activeElement` will still point to a page element.

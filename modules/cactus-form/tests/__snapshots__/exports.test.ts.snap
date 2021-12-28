@@ -3,8 +3,8 @@
 exports[`@repay/cactus-form should match snapshot of exports 1`] = `
 Array [
   "DependentField",
-  "FieldSpy",
   "Field",
+  "FieldSpy",
   "validateRequired",
 ]
 `;
