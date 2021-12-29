@@ -17,6 +17,17 @@ describe('component: RadioButton', (): void => {
     expect(styles.margin).toBe('16px')
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByTestId } = render(
+      <StyleProvider>
+        <RadioButton data-testid="inreffable" name="ref" defaultChecked ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByTestId('inreffable')).toBe(ref.current)
+    expect(ref.current).toBeChecked()
+  })
+
   test('should trigger onChange event', (): void => {
     const onChange = jest.fn()
     const { getByLabelText } = render(
