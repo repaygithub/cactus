@@ -2,6 +2,7 @@ import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 import { textStyle } from '../helpers/theme'
 
@@ -9,7 +10,7 @@ export type Status = 'success' | 'warning' | 'error'
 
 export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
 
-interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement> {
+interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
   status: Status
 }
 
@@ -67,6 +68,7 @@ const StatusMessage = styled(StatusMessageBase)`
   color: ${(p) => p.theme.colors.darkestContrast};
   ${(p) => textStyle(p.theme, 'small')};
   ${(p) => statusMap[p.status]}
+  ${margin}
 
   ${NotificationError}, ${NotificationAlert}, ${StatusCheck} {
     margin-right: 4px;
