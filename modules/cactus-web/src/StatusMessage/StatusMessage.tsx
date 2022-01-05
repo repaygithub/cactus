@@ -17,13 +17,13 @@ type StatusMap = { [K in Status]: ReturnType<typeof css> }
 
 const statusMap: StatusMap = {
   success: css`
-    background-color: ${(p): string => p.theme.colors.status.background.success};
+    background-color: ${(p) => p.theme.colors.status.background.success};
   `,
   warning: css`
-    background-color: ${(p): string => p.theme.colors.status.background.warning};
+    background-color: ${(p) => p.theme.colors.status.background.warning};
   `,
   error: css`
-    background-color: ${(p): string => p.theme.colors.status.background.error};
+    background-color: ${(p) => p.theme.colors.status.background.error};
   `,
 }
 
@@ -64,6 +64,7 @@ const StatusMessage = styled(StatusMessageBase)`
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
+  color: ${(p) => p.theme.colors.darkestContrast};
   ${(p) => textStyle(p.theme, 'small')};
   ${(p) => statusMap[p.status]}
 
