@@ -7,10 +7,11 @@ import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import { Flex } from '../Flex/Flex'
 import { isFocusOut } from '../helpers/events'
 import { omitProps } from '../helpers/omit'
+import { Status } from '../helpers/status'
 import { flexItem, FlexItemProps, styledUnpoly, styledWithClass } from '../helpers/styled'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
-import StatusMessage, { Status } from '../StatusMessage/StatusMessage'
+import StatusMessage from '../StatusMessage/StatusMessage'
 import { Tooltip, TooltipProps } from '../Tooltip/Tooltip'
 
 export type TooltipAlignment = 'left' | 'right'
@@ -230,7 +231,7 @@ export const AccessibleField = styledUnpoly(FieldWrapper, AccessibleFieldBase).w
     padding: 0 ${space(3)};
   }
 
-  .field-status-row ${StatusMessage} {
+  .field-status-row div {
     margin-top: ${space(2)};
   }
 ` as React.FC<AccessibleFieldProps>

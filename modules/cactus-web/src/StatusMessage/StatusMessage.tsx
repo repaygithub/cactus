@@ -10,11 +10,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-export type Status = 'success' | 'warning' | 'error' | 'info'
+import { Status as BaseStatus } from '../helpers/status'
 
+type Status = BaseStatus | 'info'
 type ColorKey = 'successLight' | 'warningLight' | 'errorLight' | 'lightContrast'
 
-export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error', 'info'])
+const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error', 'info'])
 
 interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
   status: Status

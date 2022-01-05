@@ -5,9 +5,8 @@ import styled, { FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { textFieldStatusMap } from '../helpers/status'
+import { Status, StatusPropType, textFieldStatusMap } from '../helpers/status'
 import { border, radius, textStyle } from '../helpers/theme'
-import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
 
 export interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
