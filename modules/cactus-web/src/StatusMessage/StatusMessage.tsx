@@ -1,12 +1,13 @@
 import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
+import { colorStyle, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { textStyle } from '../helpers/theme'
-
 export type Status = 'success' | 'warning' | 'error'
+
+type ColorKey = 'successLight' | 'warningLight' | 'errorLight'
 
 export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
 
@@ -14,60 +15,45 @@ interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement>, Margi
   status: Status
 }
 
-type StatusMap = { [K in Status]: ReturnType<typeof css> }
+type StatusMap = { [K in Status]: ColorKey }
+type IconMap = { [K in Status]: React.ElementType<any> }
 
 const statusMap: StatusMap = {
-  success: css`
-    background-color: ${(p) => p.theme.colors.status.background.success};
-  `,
-  warning: css`
-    background-color: ${(p) => p.theme.colors.status.background.warning};
-  `,
-  error: css`
-    background-color: ${(p) => p.theme.colors.status.background.error};
-  `,
+  success: 'successLight',
+  warning: 'warningLight',
+  error: 'errorLight',
+}
+
+const iconMap: IconMap = {
+  success: StatusCheck,
+  warning: NotificationAlert,
+  error: NotificationError,
 }
 
 const Noop = (): null => null
 
-const StatusMessageBase: React.FC<StatusMessageProps> = ({
+const StatusMessage: React.FC<StatusMessageProps> = ({
   status,
-  className,
   children,
   ...rest
 }): React.ReactElement => {
-  let StatusIcon: React.ElementType<any> = Noop
-  switch (status) {
-    case 'error': {
-      StatusIcon = NotificationError
-      break
-    }
-    case 'warning': {
-      StatusIcon = NotificationAlert
-      break
-    }
-    case 'success': {
-      StatusIcon = StatusCheck
-      break
-    }
-  }
+  const StatusIcon: React.ElementType<any> = iconMap[status] || Noop
   return (
-    <div {...rest} role="alert" className={className}>
+    <StyledStatusMessage {...rest} role="alert" $status={status}>
       <StatusIcon aria-hidden="true" />
       <span>{children}</span>
-    </div>
+    </StyledStatusMessage>
   )
 }
 
-const StatusMessage = styled(StatusMessageBase)`
+const StyledStatusMessage = styled.div<{ $status: Status }>`
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
-  color: ${(p) => p.theme.colors.darkestContrast};
-  ${(p) => textStyle(p.theme, 'small')};
-  ${(p) => statusMap[p.status]}
+  ${textStyle('small')};
+  ${(p) => colorStyle(statusMap[p.$status])}
   ${margin}
 
   ${NotificationError}, ${NotificationAlert}, ${StatusCheck} {
