@@ -131,6 +131,17 @@ describe('component: TextInputField', (): void => {
     expect(container.firstElementChild).toHaveStyle('flex-basis: 0')
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByLabelText } = render(
+      <StyleProvider>
+        <TextInputField defaultValue="with-ref" name="reflected" label="Referred" ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByLabelText('Referred')).toBe(ref.current)
+    expect(ref.current).toHaveValue('with-ref')
+  })
+
   test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(

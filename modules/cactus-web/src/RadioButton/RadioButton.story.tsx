@@ -1,13 +1,16 @@
 import React from 'react'
 
 import { RadioButton } from '../'
-import { actions, Story } from '../helpers/storybook'
+import { actions, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'RadioButton',
   component: RadioButton,
-  argTypes: actions('onChange', 'onFocus', 'onBlur'),
-  args: { id: 'radio', name: 'radio', disabled: false },
+  argTypes: {
+    id: STRING,
+    ...actions('onChange', 'onFocus', 'onBlur'),
+  },
+  args: { name: 'radio', disabled: false },
 } as const
 
 export const BasicUsage: Story<typeof RadioButton> = (args) => <RadioButton {...args} />
@@ -17,7 +20,7 @@ export const MultipleRadioButtons: MultiStory = ({ id, values, ...args }) => (
   <div>
     {values.map((value, i) => (
       <div key={i}>
-        <RadioButton {...args} value={value} id={id + i} />
+        <RadioButton {...args} value={value} id={id && id + i} />
       </div>
     ))}
   </div>

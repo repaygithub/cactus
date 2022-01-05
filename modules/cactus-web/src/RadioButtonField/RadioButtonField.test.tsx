@@ -102,4 +102,15 @@ describe('component: RadioButtonField', (): void => {
     expect(radioField).toHaveStyle('flex-shrink: 0')
     expect(radioField).toHaveStyle('flex-basis: 0')
   })
+
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByLabelText } = render(
+      <StyleProvider>
+        <RadioButtonField name="yes" label="Oui" defaultChecked ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByLabelText('Oui')).toBe(ref.current)
+    expect(ref.current).toBeChecked()
+  })
 })

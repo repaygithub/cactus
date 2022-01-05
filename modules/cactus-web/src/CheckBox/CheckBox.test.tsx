@@ -67,6 +67,17 @@ describe('component: CheckBox', (): void => {
     expect(onFocus).not.toHaveBeenCalled()
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByTestId } = render(
+      <StyleProvider>
+        <CheckBox data-testid="inreffable" defaultChecked ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByTestId('inreffable')).toBe(ref.current)
+    expect(ref.current).toBeChecked()
+  })
+
   describe('with theme customization', (): void => {
     test('should have 2px border', (): void => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })

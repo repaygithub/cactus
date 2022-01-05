@@ -9,11 +9,11 @@ import { FlexItemProps } from '../helpers/styled'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 
-export interface CheckBoxFieldProps extends Omit<CheckBoxProps, 'id' | 'disabled'>, FlexItemProps {
+export interface CheckBoxFieldProps extends CheckBoxProps, FlexItemProps {
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
-  name: string
+  name?: string
   disabled?: boolean
 }
 
@@ -44,7 +44,7 @@ CheckBoxField.propTypes = {
   label: PropTypes.node.isRequired,
   labelProps: PropTypes.object,
   id: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   disabled: PropTypes.bool,
 }
 

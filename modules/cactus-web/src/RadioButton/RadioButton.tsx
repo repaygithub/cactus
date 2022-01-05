@@ -1,13 +1,13 @@
+import { color, shadow } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { boxShadow } from '../helpers/theme'
 
 export interface RadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
-  id: string
+  id?: string
   name: string
   disabled?: boolean
 }
@@ -18,11 +18,11 @@ interface StyledRadioButtonProps extends React.HTMLProps<HTMLSpanElement> {
 
 const RadioButtonBase = React.forwardRef<HTMLInputElement, RadioButtonProps>((props, ref) => {
   const componentProps = omitMargins(props) as Omit<RadioButtonProps, keyof MarginProps>
-  const { disabled, id, className, ...radioButtonProps } = componentProps
+  const { id, className, ...radioButtonProps } = componentProps
   return (
     <label className={className} htmlFor={id}>
-      <HiddenRadioButton ref={ref} id={id} disabled={disabled} {...radioButtonProps} />
-      <StyledRadioButton aria-hidden={true} disabled={disabled} />
+      <HiddenRadioButton ref={ref} id={id} {...radioButtonProps} />
+      <StyledRadioButton aria-hidden={true} />
     </label>
   )
 })
@@ -41,8 +41,8 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: ${(p): string => (p.disabled ? p.theme.colors.lightGray : 'transparent')};
-  border: 2px solid ${(p): string => (p.disabled ? p.theme.colors.lightGray : p.theme.colors.base)};
+  background-color: transparent;
+  border: 2px solid ${color('base')};
 
   ::after {
     position: absolute;
@@ -51,8 +51,7 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: ${(p): string =>
-      p.disabled ? p.theme.colors.lightGray : p.theme.colors.callToAction};
+    background-color: ${color('callToAction')};
     margin: 2px 2px;
     box-sizing: border-box;
   }
@@ -68,24 +67,29 @@ export const RadioButton = styled(RadioButtonBase)`
   cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
 
   input:checked ~ span {
-    border-color: ${(p): string | undefined =>
-      !p.disabled ? p.theme.colors.callToAction : undefined};
-    background-color: transparent;
-  }
-
-  input:checked ~ span::after {
-    display: block;
+    border-color: ${color('callToAction')};
+    &::after {
+      display: block;
+    }
   }
 
   input:focus ~ span {
-    ${(p): string => boxShadow(p.theme, 1)}
+    ${shadow(1)}
+  }
+
+  input:disabled ~ span {
+    background-color: ${color('lightGray')};
+    border-color: ${color('lightGray')};
+    &::after {
+      background-color: ${color('lightGray')};
+    }
   }
 
   ${margin}
 `
 
 RadioButton.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   name: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
 }

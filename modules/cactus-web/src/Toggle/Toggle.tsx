@@ -1,11 +1,11 @@
 import { NavigationClose, StatusCheck } from '@repay/cactus-icons'
+import { boxShadow, color, shadow } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
-import { boxShadow } from '../helpers/theme'
 
 export interface ToggleProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
   checked?: boolean
@@ -19,8 +19,8 @@ export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
       <Wrapper {...marginProps} className={className} role="none">
         <Checkbox {...props} role="switch" aria-checked={props.checked} ref={ref} />
         <Switch aria-hidden />
-        <StyledX aria-hidden />
-        <StyledCheck aria-hidden />
+        <StyledX aria-hidden color="white" />
+        <StyledCheck aria-hidden color="white" />
       </Wrapper>
     )
   }
@@ -51,7 +51,6 @@ const StyledX = styled(NavigationClose)`
   position: absolute;
   top: 7px;
   right: 9px;
-  color: ${(p): string => p.theme.colors.white};
   opacity: 1;
   transition: opacity 0.3s;
   input:checked ~ & {
@@ -65,7 +64,6 @@ const StyledCheck = styled(StatusCheck)`
   position: absolute;
   top: 5px;
   left: 6px;
-  color: ${(p): string => p.theme.colors.white};
   opacity: 0;
   transition: opacity 0.3s;
   input:checked ~ & {
@@ -89,15 +87,15 @@ const Switch = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 13px;
-  background-color: ${(p) => p.theme.colors.error};
+  background-color: ${color('error')};
   cursor: pointer;
   input:disabled ~ & {
-    background-color: ${(p) => p.theme.colors.lightGray};
+    background-color: ${color('lightGray')};
     cursor: cursor;
   }
 
   input:focus ~ & {
-    ${(p): string => boxShadow(p.theme, 1)};
+    ${shadow(1)};
   }
 
   ::after {
@@ -109,8 +107,8 @@ const Switch = styled.div`
     left: 0;
     position: absolute;
     transition: left 0.3s;
-    background-color: ${(p): string => p.theme.colors.white};
-    box-shadow: 0 0 3px ${(p): string => p.theme.colors.darkestContrast};
+    background-color: ${color('white')};
+    ${boxShadow(0, 'darkestContrast')};
   }
 
   input:checked ~ & {
@@ -120,7 +118,7 @@ const Switch = styled.div`
   }
 
   input:checked:not(:disabled) ~ & {
-    background-color: ${(p): string => p.theme.colors.success};
+    background-color: ${color('success')};
   }
 `
 

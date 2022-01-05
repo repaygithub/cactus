@@ -136,6 +136,17 @@ describe('component: TextAreaField', (): void => {
     expect(container.firstElementChild).toHaveStyle('flex-basis: 0')
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLTextAreaElement>()
+    const { getByLabelText } = render(
+      <StyleProvider>
+        <TextAreaField name="with-ref" label="Arreff Them!" defaultValue="something" ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByLabelText('Arreff Them!')).toBe(ref.current)
+    expect(ref.current).toHaveValue('something')
+  })
+
   test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(

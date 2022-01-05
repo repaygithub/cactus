@@ -9,7 +9,7 @@ import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import RadioButton, { RadioButtonProps } from '../RadioButton/RadioButton'
 
-export interface RadioButtonFieldProps extends Omit<RadioButtonProps, 'id'>, FlexItemProps {
+export interface RadioButtonFieldProps extends RadioButtonProps, FlexItemProps {
   label: React.ReactNode
   name: string
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
