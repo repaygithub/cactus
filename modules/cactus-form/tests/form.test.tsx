@@ -1,8 +1,8 @@
-import { StyleProvider } from '@repay/cactus-web'
+import { CheckBoxGroup, StyleProvider } from '@repay/cactus-web'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import { Form } from 'react-final-form'
+import { Form, FormSpy } from 'react-final-form'
 
 import { DependentField, Field, FieldSpy } from '../src/index'
 
@@ -247,6 +247,50 @@ describe('final-form functionality', () => {
         expect(inputs[0].type).toBe('text')
         expect(inputs[0].name).toBe('old')
       })
+    })
+
+    // This illustrates one of the more important fixes in the patch.
+    test('can handle checkbox group as array', () => {
+      const mock = jest.fn()
+      const spyValues = ({ values }: any) => mock(values)
+      const { getByLabelText } = render(
+        <App>
+          <Field as={CheckBoxGroup} name="array" label="Array">
+            <CheckBoxGroup.Item label="One" value="uno" />
+            <CheckBoxGroup.Item label="Two" value="dos" />
+            <CheckBoxGroup.Item label="Three" value="tres" />
+          </Field>
+          <FormSpy subscription={{ values: true }} onChange={spyValues} />
+        </App>
+      )
+      userEvent.click(getByLabelText('One'))
+      expect(mock).toHaveBeenCalledWith({ array: ['uno'] })
+      userEvent.click(getByLabelText('Three'))
+      expect(mock).toHaveBeenCalledWith({ array: ['uno', 'tres'] })
+      userEvent.click(getByLabelText('One'))
+      expect(mock).toHaveBeenCalledWith({ array: ['tres'] })
+    })
+
+    test('can handle checkbox group as booleans', () => {
+      const mock = jest.fn()
+      const spyValues = ({ values }: any) => mock(values)
+      // Remember, type="checkbox" is needed so final-form passes the right props.
+      const { getByLabelText } = render(
+        <App>
+          <CheckBoxGroup name="group" label="Bools">
+            <Field as={CheckBoxGroup.Item} type="checkbox" name="yi" label="One" />
+            <Field as={CheckBoxGroup.Item} type="checkbox" name="er" label="Two" />
+            <Field as={CheckBoxGroup.Item} type="checkbox" name="san" label="Three" />
+          </CheckBoxGroup>
+          <FormSpy subscription={{ values: true }} onChange={spyValues} />
+        </App>
+      )
+      userEvent.click(getByLabelText('One'))
+      expect(mock).toHaveBeenCalledWith({ yi: true })
+      userEvent.click(getByLabelText('Three'))
+      expect(mock).toHaveBeenCalledWith({ yi: true, san: true })
+      userEvent.click(getByLabelText('One'))
+      expect(mock).toHaveBeenCalledWith({ yi: false, san: true })
     })
   })
 

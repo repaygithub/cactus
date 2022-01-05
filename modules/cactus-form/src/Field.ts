@@ -10,13 +10,16 @@ import {
 import { FieldSubscription } from 'final-form'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { FieldMetaState } from 'react-final-form'
+import { FieldMetaState, useField, UseFieldConfig } from 'react-final-form'
 
 import makeConfigurableComponent from './makeConfigurableComponent'
 import { RenderFunc, RenderProps, UnknownProps } from './types'
-import useField, { Config as UseFieldConfig } from './useField'
 
-const FIELD_PROPS: (keyof UseFieldConfig)[] = [
+interface FieldConfig extends UseFieldConfig<unknown> {
+  component?: React.ElementType<any>
+}
+
+const FIELD_PROPS: (keyof FieldConfig)[] = [
   'afterSubmit',
   'allowNull',
   'beforeSubmit',
@@ -37,7 +40,7 @@ const FIELD_PROPS: (keyof UseFieldConfig)[] = [
 type ComponentMapper = (props: UnknownProps) => React.ElementType<any>
 type PostProcessor = (props: UnknownProps, meta: FieldMetaState<unknown>) => UnknownProps
 
-export interface FieldProps extends UnknownProps, RenderProps, UseFieldConfig {
+export interface FieldProps extends UnknownProps, RenderProps, FieldConfig {
   name: string
   getFieldComponent?: ComponentMapper
   processMeta?: PostProcessor
@@ -134,7 +137,7 @@ const Field: RenderFunc<FieldProps> = ({
       component = getFieldComponent(props)
     }
   }
-  const fieldConfig: UseFieldConfig = { component, subscription }
+  const fieldConfig: FieldConfig = { component, subscription }
   // This removes `type` && `multiple` from props, but they're re-added by `useField`.
   for (const key of FIELD_PROPS) {
     if (key in props) {
