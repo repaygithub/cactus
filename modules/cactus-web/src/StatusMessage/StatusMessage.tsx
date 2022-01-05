@@ -1,15 +1,20 @@
-import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
+import {
+  NotificationAlert,
+  NotificationError,
+  NotificationInfo,
+  StatusCheck,
+} from '@repay/cactus-icons'
 import { colorStyle, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-export type Status = 'success' | 'warning' | 'error'
+export type Status = 'success' | 'warning' | 'error' | 'info'
 
-type ColorKey = 'successLight' | 'warningLight' | 'errorLight'
+type ColorKey = 'successLight' | 'warningLight' | 'errorLight' | 'lightContrast'
 
-export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
+export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error', 'info'])
 
 interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
   status: Status
@@ -22,12 +27,14 @@ const statusMap: StatusMap = {
   success: 'successLight',
   warning: 'warningLight',
   error: 'errorLight',
+  info: 'lightContrast',
 }
 
 const iconMap: IconMap = {
   success: StatusCheck,
   warning: NotificationAlert,
   error: NotificationError,
+  info: NotificationInfo,
 }
 
 const Noop = (): null => null
@@ -56,7 +63,7 @@ const StyledStatusMessage = styled.div<{ $status: Status }>`
   ${(p) => colorStyle(statusMap[p.$status])}
   ${margin}
 
-  ${NotificationError}, ${NotificationAlert}, ${StatusCheck} {
+  ${NotificationError}, ${NotificationAlert}, ${StatusCheck}, ${NotificationInfo} {
     margin-right: 4px;
     vertical-align: -2px;
   }
