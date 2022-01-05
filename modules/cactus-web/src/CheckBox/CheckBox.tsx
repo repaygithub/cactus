@@ -1,42 +1,23 @@
 import { StatusCheck } from '@repay/cactus-icons'
-import { BorderSize } from '@repay/cactus-theme'
+import { border, borderSize, color, shadow } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { boxShadow } from '../helpers/theme'
 
 export interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
-  id: string
+  id?: string
 }
-
-interface StyledCheckBoxProps {
-  disabled?: boolean
-}
-
-const borderMap: { [K in BorderSize]: ReturnType<typeof css> } = {
-  thin: css`
-    border: 1px solid;
-    svg {
-      margin: 1px;
-    }
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
-
-const getBorder = (borderSize: BorderSize): ReturnType<typeof css> => borderMap[borderSize]
 
 const CheckBoxBase = React.forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => {
   const componentProps = omitMargins<CheckBoxProps>(props)
-  const { disabled, id, className, ...checkBoxProps } = componentProps
+  const { id, className, ...checkBoxProps } = componentProps
   return (
     <label className={className} htmlFor={id}>
-      <HiddenCheckBox id={id} ref={ref} disabled={disabled} {...checkBoxProps} />
-      <StyledCheckBox aria-hidden={true} disabled={disabled}>
+      <HiddenCheckBox id={id} ref={ref} {...checkBoxProps} />
+      <StyledCheckBox aria-hidden={true}>
         <StatusCheck />
       </StyledCheckBox>
     </label>
@@ -51,22 +32,20 @@ const HiddenCheckBox = styled.input.attrs({ type: 'checkbox' as string })`
   position: absolute;
 `
 
-const StyledCheckBox = styled.span<StyledCheckBoxProps>`
+const StyledCheckBox = styled.span`
   display: inline-block;
   box-sizing: border-box;
   width: 16px;
   height: 16px;
-  ${(p): ReturnType<typeof css> => getBorder(p.theme.border)}
-  border-color: ${(p): string =>
-    p.disabled ? p.theme.colors.lightGray : p.theme.colors.darkestContrast};
-  background: ${(p): string => (p.disabled ? p.theme.colors.lightGray : 'none')};
-  border-radius: 1px;
+  border: ${border('darkestContrast')};
+  background-color: transparent;
   svg {
     visibility: hidden;
     display: block;
-    color: ${(p): string => p.theme.colors.white};
+    color: ${color('white')};
     width: 12px;
     height: 12px;
+    margin: ${borderSize({ thin: '1px', thick: '0' }) as any};
   }
 `
 
@@ -78,28 +57,29 @@ export const CheckBox = styled(CheckBoxBase)`
   height: 16px;
   line-height: 16px;
   cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
-  input:checked ~ span {
-    border-color: ${(p): string | undefined =>
-      !p.disabled ? p.theme.colors.callToAction : undefined};
-    background-color: ${(p): string | undefined =>
-      !p.disabled ? p.theme.colors.callToAction : undefined};
-  }
 
   input:checked ~ span {
+    border-color: ${color('callToAction')};
+    background-color: ${color('callToAction')};
     svg {
       visibility: visible;
     }
   }
 
   input:focus ~ span {
-    ${(p): string => boxShadow(p.theme, 1)};
+    ${shadow(1)};
+  }
+
+  input:disabled ~ span {
+    border-color: ${color('lightGray')};
+    background-color: ${color('lightGray')};
   }
 
   ${margin}
 `
 
 CheckBox.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   disabled: PropTypes.bool,
 }
 

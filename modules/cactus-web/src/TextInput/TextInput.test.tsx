@@ -30,6 +30,17 @@ describe('component: TextInput', (): void => {
     expect(styles.marginTop).toBe('16px')
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByTestId } = render(
+      <StyleProvider>
+        <TextInput data-testid="with-ref" defaultValue="sentinel" ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByTestId('with-ref')).toBe(ref.current)
+    expect(ref.current).toHaveValue('sentinel')
+  })
+
   test('should trigger onChange handler', (): void => {
     const onChange = jest.fn()
     const { getByPlaceholderText } = render(
@@ -71,7 +82,7 @@ describe('component: TextInput', (): void => {
       expect(styles.borderRadius).toBe('8px')
     })
 
-    test('should have 1px border radius', (): void => {
+    test('should have 0px border radius', (): void => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { getByPlaceholderText } = render(
         <StyleProvider theme={theme}>
@@ -82,7 +93,7 @@ describe('component: TextInput', (): void => {
       const textInput = getByPlaceholderText('Do I wanna know?')
       const styles = window.getComputedStyle(textInput)
 
-      expect(styles.borderRadius).toBe('1px')
+      expect(styles.borderRadius).toBe('0px')
     })
   })
 })

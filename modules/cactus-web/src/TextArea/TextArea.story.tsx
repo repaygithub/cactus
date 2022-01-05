@@ -1,12 +1,17 @@
 import React from 'react'
 
 import { Flex, TextArea } from '../'
-import { actions, HIDE_CONTROL, Story } from '../helpers/storybook'
+import { actions, HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'TextArea',
   component: TextArea,
-  argTypes: actions('onChange', 'onFocus', 'onBlur'),
+  argTypes: {
+    margin: SPACE,
+    height: STRING,
+    width: STRING,
+    ...actions('onChange', 'onFocus', 'onBlur'),
+  },
 } as const
 
 export const BasicUsage: Story<typeof TextArea> = (args) => <TextArea {...args} />

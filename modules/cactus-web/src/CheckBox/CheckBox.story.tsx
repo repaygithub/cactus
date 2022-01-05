@@ -1,16 +1,16 @@
 import React from 'react'
 
 import { CheckBox } from '../'
-import { actions, HIDE_CONTROL, Story } from '../helpers/storybook'
+import { actions, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'CheckBox',
   component: CheckBox,
   argTypes: {
-    id: HIDE_CONTROL,
+    id: STRING,
     ...actions('onChange', 'onFocus', 'onBlur'),
   },
-  args: { id: 'test', disabled: false },
+  args: { disabled: false },
 } as const
 
 export const BasicUsage: Story<typeof CheckBox> = (args) => <CheckBox name="kaneki" {...args} />

@@ -66,6 +66,17 @@ describe('component: CheckBoxField', (): void => {
     expect(checkField).toHaveStyle('flex-basis: 0')
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByLabelText } = render(
+      <StyleProvider>
+        <CheckBoxField label="Oui" defaultChecked ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByLabelText('Oui')).toBe(ref.current)
+    expect(ref.current).toBeChecked()
+  })
+
   test('should trigger onChange event', (): void => {
     const box: any = {}
     const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'checked'])))

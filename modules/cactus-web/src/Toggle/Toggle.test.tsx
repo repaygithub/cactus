@@ -23,6 +23,17 @@ describe('component: Toggle', (): void => {
     expect(style.marginBottom).toBe('16px')
   })
 
+  test('should support ref prop', () => {
+    const ref = React.createRef<HTMLInputElement>()
+    const { getByTestId } = render(
+      <StyleProvider>
+        <Toggle data-testid="toggle" defaultChecked ref={ref} />
+      </StyleProvider>
+    )
+    expect(getByTestId('toggle')).toBe(ref.current)
+    expect(ref.current).toBeChecked()
+  })
+
   test('should trigger onChange event', (): void => {
     const box: any = {}
     const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['id', 'checked'])))
