@@ -1,19 +1,20 @@
 import {
+  IconProps,
   NotificationAlert,
   NotificationError,
   NotificationInfo,
   StatusCheck,
 } from '@repay/cactus-icons'
-import { colorStyle, textStyle } from '@repay/cactus-theme'
+import { colorStyle, ColorVariant, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { omitMargins } from '../helpers/omit'
 import { Status as BaseStatus } from '../helpers/status'
 
 type Status = BaseStatus | 'info'
-type ColorKey = 'successLight' | 'warningLight' | 'errorLight' | 'lightContrast'
 
 const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error', 'info'])
 
@@ -21,8 +22,8 @@ interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement>, Margi
   status: Status
 }
 
-type StatusMap = { [K in Status]: ColorKey }
-type IconMap = { [K in Status]: React.ElementType<any> }
+type StatusMap = { [K in Status]: ColorVariant }
+type IconMap = { [K in Status]: React.ElementType<IconProps> }
 
 const statusMap: StatusMap = {
   success: 'successLight',
@@ -40,16 +41,12 @@ const iconMap: IconMap = {
 
 const Noop = (): null => null
 
-const StatusMessageBase: React.FC<StatusMessageProps> = ({
-  status,
-  className,
-  children,
-  ...rest
-}): React.ReactElement => {
-  const StatusIcon: React.ElementType<any> = iconMap[status] || Noop
+const StatusMessageBase: React.FC<StatusMessageProps> = (props): React.ReactElement => {
+  const { status, className, children, ...rest } = omitMargins(props)
+  const StatusIcon: React.ElementType<any> = iconMap[status as Status] || Noop
   return (
     <div {...rest} role="alert" className={className}>
-      <StatusIcon aria-hidden="true" />
+      <StatusIcon aria-hidden="true" mr={2} verticalAlign="-2px" />
       <span>{children}</span>
     </div>
   )
@@ -62,13 +59,8 @@ const StatusMessage = styled(StatusMessageBase)`
   overflow-wrap: break-word;
   display: inline-block;
   ${textStyle('small')};
-  ${(p) => colorStyle(statusMap[p.status])}
+  ${(p) => colorStyle(p, statusMap[p.status])}
   ${margin}
-
-  ${NotificationError}, ${NotificationAlert}, ${StatusCheck}, ${NotificationInfo} {
-    margin-right: 4px;
-    vertical-align: -2px;
-  }
 `
 
 StatusMessage.propTypes = {
