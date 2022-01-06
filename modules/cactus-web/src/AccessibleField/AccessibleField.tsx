@@ -231,7 +231,7 @@ export const AccessibleField = styledUnpoly(FieldWrapper, AccessibleFieldBase).w
     padding: 0 ${space(3)};
   }
 
-  .field-status-row div {
+  .field-status-row ${StatusMessage} {
     margin-top: ${space(2)};
   }
 ` as React.FC<AccessibleFieldProps>

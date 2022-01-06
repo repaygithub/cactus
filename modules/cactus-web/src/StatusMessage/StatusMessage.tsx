@@ -40,28 +40,29 @@ const iconMap: IconMap = {
 
 const Noop = (): null => null
 
-const StatusMessage: React.FC<StatusMessageProps> = ({
+const StatusMessageBase: React.FC<StatusMessageProps> = ({
   status,
+  className,
   children,
   ...rest
 }): React.ReactElement => {
   const StatusIcon: React.ElementType<any> = iconMap[status] || Noop
   return (
-    <StyledStatusMessage {...rest} role="alert" $status={status}>
+    <div {...rest} role="alert" className={className}>
       <StatusIcon aria-hidden="true" />
       <span>{children}</span>
-    </StyledStatusMessage>
+    </div>
   )
 }
 
-const StyledStatusMessage = styled.div<{ $status: Status }>`
+const StatusMessage = styled(StatusMessageBase)`
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
   ${textStyle('small')};
-  ${(p) => colorStyle(statusMap[p.$status])}
+  ${(p) => colorStyle(statusMap[p.status])}
   ${margin}
 
   ${NotificationError}, ${NotificationAlert}, ${StatusCheck}, ${NotificationInfo} {

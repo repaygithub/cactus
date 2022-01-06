@@ -490,7 +490,7 @@ const FileInfo: React.FC<FileInfoProps> = (props) => {
         )}
       </FileBox>
       {errorMsg && (
-        <StatusMessage id={statusId} status="error" className="status-message">
+        <StatusMessage id={statusId} status="error">
           {errorMsg}
         </StatusMessage>
       )}
@@ -672,7 +672,7 @@ const InnerFileInput = styled(FileInputBase).withConfig(
     }
   }
 
-  .status-message {
+  ${StatusMessage} {
     margin-top: 4px;
     align-self: flex-start;
   }
