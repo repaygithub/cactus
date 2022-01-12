@@ -37,8 +37,8 @@ import getLocale from '../helpers/locale'
 import { getDataProps } from '../helpers/omit'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
+import { Status } from '../helpers/status'
 import IconButton from '../IconButton/IconButton'
-import { Status } from '../StatusMessage/StatusMessage'
 
 interface DateInputPhrasesType extends Partial<CalendarLabels> {
   inputKeyboardDirections: string

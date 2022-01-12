@@ -12,8 +12,7 @@ import styled from 'styled-components'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { textFieldStatusMap } from '../helpers/status'
-import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
+import { Status, StatusPropType, textFieldStatusMap } from '../helpers/status'
 
 type TextStyleKey = keyof TextStyleCollection
 export const textStyles = Object.keys(defaultTheme.textStyles) as TextStyleKey[]

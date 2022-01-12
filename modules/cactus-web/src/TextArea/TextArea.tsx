@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import { compose, height, HeightProps, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { textFieldStatusMap } from '../helpers/status'
-import { Status, StatusPropType } from '../StatusMessage/StatusMessage'
+import { Status, StatusPropType, textFieldStatusMap } from '../helpers/status'
 
 type AreaElementProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'height' | 'width'>
 export interface TextAreaProps extends AreaElementProps, MarginProps, HeightProps, WidthProps {

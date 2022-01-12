@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types'
 import { css } from 'styled-components'
 
-import { Status } from '../StatusMessage/StatusMessage'
+export type Status = 'success' | 'warning' | 'error'
+export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
 
 type StatusMap = { [K in Status]: ReturnType<typeof css> }
 

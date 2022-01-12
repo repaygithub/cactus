@@ -23,7 +23,9 @@ export const omitMargins = <Obj extends { [k: string]: any }>(
     'ml',
     'marginLeft',
     'mx',
+    'marginX',
     'my',
+    'marginY',
     ...undesired
   )
 

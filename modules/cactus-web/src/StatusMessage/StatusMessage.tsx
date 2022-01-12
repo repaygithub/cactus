@@ -1,58 +1,52 @@
-import { NotificationAlert, NotificationError, StatusCheck } from '@repay/cactus-icons'
+import {
+  IconProps,
+  NotificationAlert,
+  NotificationError,
+  NotificationInfo,
+  StatusCheck,
+} from '@repay/cactus-icons'
+import { colorStyle, ColorVariant, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
-import { textStyle } from '../helpers/theme'
+import { omitMargins } from '../helpers/omit'
+import { Status as BaseStatus } from '../helpers/status'
 
-export type Status = 'success' | 'warning' | 'error'
+type Status = BaseStatus | 'info'
 
-export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
+const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error', 'info'])
 
-interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement> {
+interface StatusMessageProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
   status: Status
 }
 
-type StatusMap = { [K in Status]: ReturnType<typeof css> }
+type StatusMap = { [K in Status]: ColorVariant }
+type IconMap = { [K in Status]: React.ElementType<IconProps> }
 
 const statusMap: StatusMap = {
-  success: css`
-    background-color: ${(p): string => p.theme.colors.status.background.success};
-  `,
-  warning: css`
-    background-color: ${(p): string => p.theme.colors.status.background.warning};
-  `,
-  error: css`
-    background-color: ${(p): string => p.theme.colors.status.background.error};
-  `,
+  success: 'successLight',
+  warning: 'warningLight',
+  error: 'errorLight',
+  info: 'lightContrast',
+}
+
+const iconMap: IconMap = {
+  success: StatusCheck,
+  warning: NotificationAlert,
+  error: NotificationError,
+  info: NotificationInfo,
 }
 
 const Noop = (): null => null
 
-const StatusMessageBase: React.FC<StatusMessageProps> = ({
-  status,
-  className,
-  children,
-  ...rest
-}): React.ReactElement => {
-  let StatusIcon: React.ElementType<any> = Noop
-  switch (status) {
-    case 'error': {
-      StatusIcon = NotificationError
-      break
-    }
-    case 'warning': {
-      StatusIcon = NotificationAlert
-      break
-    }
-    case 'success': {
-      StatusIcon = StatusCheck
-      break
-    }
-  }
+const StatusMessageBase: React.FC<StatusMessageProps> = (props): React.ReactElement => {
+  const { status, className, children, ...rest } = omitMargins(props)
+  const StatusIcon: React.ElementType<any> = iconMap[status as Status] || Noop
   return (
     <div {...rest} role="alert" className={className}>
-      <StatusIcon aria-hidden="true" />
+      <StatusIcon aria-hidden="true" mr={2} verticalAlign="-2px" />
       <span>{children}</span>
     </div>
   )
@@ -64,13 +58,9 @@ const StatusMessage = styled(StatusMessageBase)`
   box-sizing: border-box;
   overflow-wrap: break-word;
   display: inline-block;
-  ${(p) => textStyle(p.theme, 'small')};
-  ${(p) => statusMap[p.status]}
-
-  ${NotificationError}, ${NotificationAlert}, ${StatusCheck} {
-    margin-right: 4px;
-    vertical-align: -2px;
-  }
+  ${textStyle('small')};
+  ${(p) => colorStyle(p, statusMap[p.status])}
+  ${margin}
 `
 
 StatusMessage.propTypes = {
