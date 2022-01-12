@@ -21,7 +21,10 @@ while being more efficient when working on large forms than other options.
 ## Getting Started
 
 Both `final-form` and `react-final-form`, as well as `@repay/cactus-web` are peer dependencies of Cactus Form.
-Once those are installed, Cactus Form is used basically the same way as React Final Form.
+There's also an optional step to make React Final Form a little more cactus-friendly;
+see the "Patching React Final Form" section below.
+
+Once everything is installed, Cactus Form is used basically the same way as React Final Form.
 In particular, the `Field` component is very similar to
 [React Final Form's version](https://final-form.org/docs/react-final-form/api/Field),
 but it has customization features and handles prop forwarding a bit differently:
@@ -33,3 +36,32 @@ but it has customization features and handles prop forwarding a bit differently:
 
 More info on those, along with the two new components `FieldSpy` and `DependentField`,
 is in the <a to='./api-documentation/'>API documentation</a>.
+
+### Patching React Final Form
+
+Cactus Form should work fine out of the box, but there are a couple of issues
+with certain Cactus components and common design patterns:
+
+- React Final Form doesn't work with CheckBoxGroup/CheckBoxCard.Group & array values (i.e. multiple checkboxes with the same name); you have to wrap each checkbox individually, and pass `type="checkbox"` on each one.
+- With both checkbox groups and radio groups, React Final Form emits a warning that you need to pass `type="checkbox"` (or "radio"), but if you actually do so it will give the wrong checked/value props to the group component.
+- We often put fields into Accordions that can be re-ordered, e.g. when there's a repeatable subset of fields on the form. However, Accordion only renders its child fields when it's open, and the mutators in `final-form-arrays` are not compatible with `react-final-form` unless the source and destination fields being reordered are both rendered on the page.
+
+To work around these issues, we provide a patch that can be applied using [patch-package](https://www.npmjs.com/package/patch-package).
+Because this is a library we can't just apply the patch automatically, so it takes a couple of extra steps:
+
+1. Make sure you have `patch-package` in `devDependencies` or `dependencies`.
+2. Add the following to your `package.json`:
+
+```
+"scripts": {
+  "postinstall": "patch-package --patch-dir=node_modules/@repay/cactus-form/dist"
+}
+```
+
+Or, if you already use `patch-package` in your project, you may need to run it twice:
+
+```
+"scripts": {
+  "postinstall": "patch-package && patch-package --patch-dir=node_modules/@repay/cactus-form/dist"
+}
+```

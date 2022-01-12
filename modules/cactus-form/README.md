@@ -5,6 +5,8 @@ A React library to wrap [react-final-form](https://final-form.org). It has one c
 ## Documentation
 
 Documentation is available in the [root of the repository](https://github.com/repaygithub/cactus/tree/master/docs/Forms/).
+In particular, there's an optional set up step involving `patch-package`, which the docs cover in depth.
+
 
 ## Contributing
 
