@@ -5,6 +5,7 @@ import {
   NotificationError,
   StatusCheck,
 } from '@repay/cactus-icons'
+import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
 import PropTypes, { Validator } from 'prop-types'
 import React, { useRef } from 'react'
 import styled, { css } from 'styled-components'
@@ -21,7 +22,7 @@ import {
 } from '../helpers/events'
 import { omitProps, split } from '../helpers/omit'
 import { useRenderTrigger } from '../helpers/react'
-import { border, radius, textStyle } from '../helpers/theme'
+import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
 import useId from '../helpers/useId'
 import { IconButton } from '../IconButton/IconButton'
 import Spinner from '../Spinner/Spinner'
@@ -50,6 +51,7 @@ type InputProps = Pick<
 
 interface CommonProps extends MarginProps, MaxWidthProps, WidthProps, InputProps, WrapperProps {
   name: string
+  status?: Status | null
   accept?: string[]
   labels?: FileInfoLabels
   buttonText?: React.ReactNode
@@ -205,6 +207,7 @@ class FileInput extends React.Component<FileInputProps, FileInputState> {
   static displayName = 'FileInput'
   static propTypes = {
     name: PropTypes.string.isRequired,
+    status: StatusPropType,
     accept: PropTypes.arrayOf(PropTypes.string),
     disabled: PropTypes.bool,
     labels: PropTypes.shape({
@@ -351,23 +354,23 @@ const EmptyPrompts = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(p) => p.theme.colors.mediumContrast};
+  color: ${color('mediumContrast')};
 `
 
 const fileBoxColors = {
   unloaded: css`
-    border-color: ${(p) => p.theme.colors.mediumContrast};
+    border-color: ${color('mediumContrast')};
   `,
   loading: css`
-    background-color: ${(p) => p.theme.colors.lightContrast};
+    background-color: ${color('lightContrast')};
   `,
   loaded: css`
-    border-color: ${(p) => p.theme.colors.success};
-    background-color: ${(p) => p.theme.colors.successLight};
+    border-color: ${color('success')};
+    background-color: ${color('successLight')};
   `,
   error: css`
-    border-color: ${(p) => p.theme.colors.error};
-    background-color: ${(p) => p.theme.colors.errorLight};
+    border-color: ${color('error')};
+    background-color: ${color('errorLight')};
   `,
 }
 
@@ -380,14 +383,14 @@ const FileBox = styled.div<{ $status: FileStatus }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: ${(p) => p.theme.colors.darkestContrast};
-  border: ${(p) => border(p.theme, 'lightContrast')};
+  color: ${color('darkestContrast')};
+  border: ${border('lightContrast')};
   ${(p) => fileBoxColors[p.$status]};
 
   &[aria-disabled] {
-    color: ${(p) => p.theme.colors.mediumGray};
-    border: ${(p) => border(p.theme, 'mediumGray')};
-    background-color: ${(p) => p.theme.colors.lightGray};
+    color: ${color('mediumGray')};
+    border: ${border('mediumGray')};
+    background-color: ${color('lightGray')};
   }
 
   span {
@@ -634,13 +637,11 @@ const FileInputBase = (props: InnerInputProps): React.ReactElement => {
 }
 
 const InnerFileInput = styled(FileInputBase).withConfig(
-  omitProps<InnerInputProps>(margin, width, maxWidth)
+  omitProps<InnerInputProps>(margin, width, maxWidth, 'status')
 )`
-  ${(p) => textStyle(p.theme, 'body')};
-  ${(p) => p.theme.colorStyles.standard};
   box-sizing: border-box;
   border-radius: ${radius(8)};
-  border: 2px dotted ${(p) => p.theme.colors.darkestContrast};
+  border: 2px dotted ${color('darkestContrast')};
   min-width: 300px;
   max-width: 100%;
   min-height: 100px;
@@ -648,13 +649,13 @@ const InnerFileInput = styled(FileInputBase).withConfig(
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
 
   ${(p) =>
     !!p.files.length &&
     `
     flex-direction: column;
-    border-color: ${p.theme.colors.callToAction};
+    border-color: ${color(p, 'callToAction')};
     padding: 0 8px;
 
     ${TextButton} {
@@ -663,12 +664,15 @@ const InnerFileInput = styled(FileInputBase).withConfig(
     }
   `}
 
+  ${getStatusStyles}
+  ${colorStyle('standard')};
+
   &[aria-disabled] {
     border-style: solid;
-    border-color: ${(p) => p.theme.colors.lightGray};
-    background-color: ${(p) => p.theme.colors.lightGray};
+    border-color: ${color('lightGray')};
+    background-color: ${color('lightGray')};
     * {
-      color: ${(p) => p.theme.colors.mediumGray};
+      color: ${color('mediumGray')};
     }
   }
 
