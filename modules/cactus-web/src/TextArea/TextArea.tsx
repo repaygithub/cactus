@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { compose, height, HeightProps, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { Status, StatusPropType, textFieldStatusMap } from '../helpers/status'
+import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
 
 type AreaElementProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'height' | 'width'>
 export interface TextAreaProps extends AreaElementProps, MarginProps, HeightProps, WidthProps {
@@ -17,14 +17,6 @@ export interface TextAreaProps extends AreaElementProps, MarginProps, HeightProp
 interface AreaProps extends TextAreaProps {
   $height: string
   $width: string
-}
-
-const displayStatus = (props: AreaProps) => {
-  if (props.status && !props.disabled) {
-    return textFieldStatusMap[props.status]
-  } else {
-    return ''
-  }
 }
 
 const Area = styled.textarea<AreaProps>`
@@ -62,7 +54,7 @@ const Area = styled.textarea<AreaProps>`
     color: ${color('mediumGray')};
     font-style: oblique;
   }
-  ${displayStatus}
+  ${getStatusStyles}
 `
 
 const TextAreaBase = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(

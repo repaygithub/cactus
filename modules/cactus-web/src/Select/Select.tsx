@@ -20,7 +20,7 @@ import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { isPurelyEqual, useMergedRefs } from '../helpers/react'
 import { useScrollTrap } from '../helpers/scroll'
-import { Status, StatusPropType, textFieldStatusMap } from '../helpers/status'
+import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
 import { boxShadow, fontSize, isResponsiveTouchDevice, radius, textStyle } from '../helpers/theme'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
@@ -86,14 +86,6 @@ export interface SelectProps
 }
 
 type SelectPropsWithTheme = SelectProps & { theme: CactusTheme }
-
-const displayStatus: any = (props: SelectPropsWithTheme): ReturnType<typeof css> | string => {
-  if (props.status && !props.disabled) {
-    return textFieldStatusMap[props.status]
-  } else {
-    return ''
-  }
-}
 
 function isElement(el?: any): el is HTMLElement {
   return el && el.nodeType === 1
@@ -1572,7 +1564,7 @@ const Select = styled(SelectWithTheme)`
   ${styledSystemWidth}
   ${SelectTrigger} {
     background-color: ${(p) => p.theme.colors.white};
-    ${displayStatus}
+    ${getStatusStyles}
   }
 `
 

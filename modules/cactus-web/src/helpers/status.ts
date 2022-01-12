@@ -1,22 +1,23 @@
+import { CactusTheme, color } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import { css } from 'styled-components'
+import { CSSObject } from 'styled-components'
 
-export type Status = 'success' | 'warning' | 'error'
-export const StatusPropType = PropTypes.oneOf<Status>(['success', 'warning', 'error'])
+const statuses = ['success', 'warning', 'error'] as const
+export type Status = typeof statuses[number]
+type StatusBackground = 'successLight' | 'warningLight' | 'errorLight'
+export const StatusPropType = PropTypes.oneOf<Status>(statuses)
 
-type StatusMap = { [K in Status]: ReturnType<typeof css> }
+interface StatusProps {
+  theme: CactusTheme
+  status?: Status | null
+  disabled?: boolean
+}
 
-export const textFieldStatusMap: StatusMap = {
-  success: css`
-    border-color: ${(p): string => p.theme.colors.success};
-    background: ${(p): string => p.theme.colors.successLight};
-  `,
-  warning: css`
-    border-color: ${(p): string => p.theme.colors.warning};
-    background: ${(p): string => p.theme.colors.warningLight};
-  `,
-  error: css`
-    border-color: ${(p): string => p.theme.colors.error};
-    background: ${(p): string => p.theme.colors.errorLight};
-  `,
+export const getStatusStyles = (p: StatusProps): CSSObject | undefined => {
+  if (!p.disabled && statuses.includes(p.status as any)) {
+    return {
+      borderColor: color(p, p.status as Status),
+      backgroundColor: color(p, `${p.status}Light` as StatusBackground),
+    }
+  }
 }
