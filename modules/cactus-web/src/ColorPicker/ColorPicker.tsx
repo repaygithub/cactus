@@ -1,9 +1,10 @@
 import { DescriptivePalette } from '@repay/cactus-icons'
+import { border, boxShadow, color as themeColor, colorStyle, radius } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { ColorChangeHandler, CustomPicker, HSLColor, HSVColor } from 'react-color'
 import { EditableInput, Hue, Saturation } from 'react-color/lib/components/common'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 import tinycolor from 'tinycolor2'
 
@@ -14,7 +15,8 @@ import { CactusChangeEvent, CactusEventTarget, CactusFocusEvent } from '../helpe
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { SemiControlled } from '../helpers/react'
-import { border, popupBoxShadow, popupShape, radius } from '../helpers/theme'
+import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
+import { popupBoxShadow, popupShape } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import IconButton from '../IconButton/IconButton'
 import TextButton from '../TextButton/TextButton'
@@ -27,8 +29,9 @@ if (typeof document !== 'undefined' && document?.body && !document.contains) {
 interface BaseProps
   extends MarginProps,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'color' | 'onChange' | 'onFocus' | 'onBlur'> {
-  name: string
-  id: string
+  name?: string
+  id?: string
+  status?: Status | null
   phrases?: Partial<Phrases>
   disabled?: boolean
 }
@@ -127,20 +130,20 @@ const PickerDialog = styled(({ handleClose, color, setColor, phrases, ...props }
   z-index: 1000;
   width: 320px;
   padding: 16px;
-  background-color: ${(p): string => p.theme.colors.white};
-  ${(p): ReturnType<typeof css> => popupShape('dialog', p.theme.shape)}
-  ${(p): ReturnType<typeof css> => popupBoxShadow(p.theme)}
+  background-color: ${themeColor('white')};
+  ${(p) => popupShape('dialog', p.theme.shape)}
+  ${(p) => popupBoxShadow(p.theme)}
   overflow: hidden;
   outline: none;
 
   input {
-    border: ${(p) => border(p.theme, 'darkestContrast')};
+    border: ${border('darkestContrast')};
     border-radius: ${radius(20)};
     height: 32px;
     outline: none;
     padding: 0px 15px 0px 15px;
     &:focus {
-      border: ${(p) => border(p.theme, 'callToAction')};
+      border: ${border('callToAction')};
     }
   }
 
@@ -159,13 +162,15 @@ const PickerDialog = styled(({ handleClose, color, setColor, phrases, ...props }
   }
 `
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.div<{ status?: Status | null }>`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: ${(p) => border(p.theme, 'darkestContrast')};
+  background-color: ${themeColor('white')};
+  border: ${border('darkestContrast')};
   border-radius: ${radius(20)};
+  ${getStatusStyles}
   height: 36px;
   outline: none;
   padding: 0 16px 0 12px;
@@ -173,7 +178,7 @@ const InputWrapper = styled.div`
   ${margin}
 
   &:focus-within {
-    border-color: ${(p): string => p.theme.colors.callToAction};
+    border-color: ${themeColor('callToAction')};
   }
 
   input.hex-borderless {
@@ -185,14 +190,14 @@ const InputWrapper = styled.div`
     width: 5em;
 
     :disabled {
-      color: ${(p) => p.theme.colorStyles.disable.color};
+      ${colorStyle('disable')}
     }
   }
 
   &[aria-disabled] {
     cursor: not-allowed;
-    border-color: ${(p) => p.theme.colors.lightGray};
-    background-color: ${(p) => p.theme.colorStyles.disable.backgroundColor};
+    ${colorStyle('disable')}
+    border-color: ${themeColor('lightGray')};
   }
 `
 
@@ -215,8 +220,8 @@ const Pointer = styled.div<{ $type: 'hue' | 'saturation'; $hsl: HSLColor }>`
   height: 32px;
   border-radius: 50%;
   background-color: transparent;
-  border: 8px solid ${(p) => p.theme.colors.white};
-  box-shadow: 0 0 3px ${(p) => p.theme.colors.mediumGray};
+  border: 8px solid ${themeColor('white')};
+  ${boxShadow(0, 'mediumGray')};
   ${(p) => {
     // Adjust pointer translation based on where the pointer is at so it
     // doesn't leave the hue/saturation element visually
@@ -242,7 +247,7 @@ const SaturationPointer: React.FC<PointerProps> = ({ hsl = blackHsl }) => {
 }
 
 // These do their own styling, so we have to convert theme radius to a prop.
-const StyledHue = styled(Hue).attrs((p) => ({ radius: radius(20)(p) }))``
+const StyledHue = styled(Hue).attrs((p) => ({ radius: radius(p, 20) }))``
 const StyledSaturation = StyledHue.withComponent(Saturation)
 
 const PickerBase: React.FC<CustomPickerProps> = (props) => {
@@ -398,10 +403,11 @@ export class ColorPicker extends React.Component<ColorPickerProps, ColorState> {
   static displayName = 'ColorPicker'
 
   static propTypes = {
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    id: PropTypes.string,
     format: PropTypes.oneOf<Format>(['hex', 'hsl', 'hsv', 'rgb']),
     value: colorType,
+    status: StatusPropType,
     phrases: PropTypes.shape({
       colorLabel: PropTypes.string,
       hexLabel: PropTypes.string,
