@@ -35,7 +35,7 @@ but it has customization features and handles prop forwarding a bit differently:
 - Each of these can be configured project-wide, or overridden on a per-render basis.
 
 More info on those, along with the two new components `FieldSpy` and `DependentField`,
-is in the <a to='./api-documentation/'>API documentation</a>.
+is in the <a to='./api-documentation/'>API documentation</a>. Specific examples on how to use these components with along with Cactus Web is in the <a to='/how-tos/forms/'>how-to guide</a>.
 
 ### Patching React Final Form
 
