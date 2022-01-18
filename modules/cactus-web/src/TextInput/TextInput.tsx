@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { Status, StatusPropType, textFieldStatusMap } from '../helpers/status'
+import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
 
 type TextStyleKey = keyof TextStyleCollection
 export const textStyles = Object.keys(defaultTheme.textStyles) as TextStyleKey[]
@@ -30,14 +30,6 @@ interface InputProps {
   disabled?: boolean
   status?: Status | null
   textStyle?: TextStyleKey
-}
-
-const displayStatus = (props: TextInputProps) => {
-  if (props.status && !props.disabled) {
-    return textFieldStatusMap[props.status]
-  } else {
-    return ''
-  }
 }
 
 const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
@@ -81,7 +73,7 @@ const Input = styled.input<InputProps>`
     font-style: oblique;
   }
 
-  ${displayStatus}
+  ${getStatusStyles}
 `
 
 export const TextInput = styled(TextInputBase)`

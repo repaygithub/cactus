@@ -37,7 +37,7 @@ import getLocale from '../helpers/locale'
 import { getDataProps } from '../helpers/omit'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
-import { Status } from '../helpers/status'
+import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
 import IconButton from '../IconButton/IconButton'
 
 interface DateInputPhrasesType extends Partial<CalendarLabels> {
@@ -206,6 +206,7 @@ const InputWrapper = styled.div`
   align-items: center;
   border: ${border('darkestContrast')};
   border-radius: ${radius(20)};
+  ${getStatusStyles}
   height: 35px;
   outline: none;
   overflow: hidden;
@@ -434,6 +435,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   public static propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
+    status: StatusPropType,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]),
     format: function (props: any): Error | null {
       if (props.format) {
@@ -888,6 +890,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
           <InputWrapper
             className={className}
+            status={this.props.status}
             role="group"
             ref={this._inputWrapper}
             aria-describedby={ariaDescribedBy}

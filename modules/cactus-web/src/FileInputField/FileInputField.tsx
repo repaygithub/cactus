@@ -49,6 +49,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
       {({
         fieldId,
         labelId,
+        status,
         name: accessibilityName,
         ariaDescribedBy,
         disabled: accessibilityDisabled,
@@ -56,6 +57,7 @@ const FileInputFieldBase = (props: FileInputFieldProps): React.ReactElement => {
         <FileInput
           {...rest}
           id={fieldId}
+          status={status}
           name={accessibilityName}
           disabled={accessibilityDisabled}
           aria-labelledby={labelId}

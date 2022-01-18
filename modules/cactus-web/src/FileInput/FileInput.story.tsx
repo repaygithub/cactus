@@ -14,6 +14,7 @@ export default {
     accept: { control: 'array' },
     buttonText: STRING,
     prompt: STRING,
+    status: { options: ['success', 'warning', 'error'] },
     ...actions('onChange', 'onBlur', 'onFocus'),
   },
   args: {

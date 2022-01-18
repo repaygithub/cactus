@@ -9,6 +9,7 @@ export default {
   component: ColorPicker,
   argTypes: {
     value: HIDE_CONTROL,
+    status: { options: ['success', 'warning', 'error'] },
     ...actions('onChange', 'onFocus', 'onBlur'),
   },
   args: {
