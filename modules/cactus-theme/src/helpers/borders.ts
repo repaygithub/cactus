@@ -1,7 +1,14 @@
+import { DefaultTheme, Interpolation, ThemedCssFunction } from 'styled-components'
+
 import { BorderSize, CactusColor, Shape } from '../theme'
 import { memo, ThemeProps, wrap } from './base'
 
-type BorderSizeOpts = { [K in BorderSize]: unknown }
+type BorderSizeOpts = {
+  [K in BorderSize]:
+    | string
+    | ThemedCssFunction<DefaultTheme>
+    | ((p: ThemeProps) => Interpolation<ThemeProps>)
+}
 const DEFAULT_BORDER: BorderSizeOpts = { thin: '1px', thick: '2px' }
 const radiusFactors: { [K in Shape]: number | null } = { square: 0, intermediate: null, round: 1 }
 
