@@ -1,15 +1,12 @@
-import { DefaultTheme, Interpolation, ThemedCssFunction } from 'styled-components'
+import { CSSObject } from 'styled-components'
 
 import { BorderSize, CactusColor, Shape } from '../theme'
 import { memo, ThemeProps, wrap } from './base'
 
-type BorderSizeOpts = {
-  [K in BorderSize]:
-    | string
-    | ThemedCssFunction<DefaultTheme>
-    | ((p: ThemeProps) => Interpolation<ThemeProps>)
+type BorderSizeOpts<T> = {
+  [K in BorderSize]: T
 }
-const DEFAULT_BORDER: BorderSizeOpts = { thin: '1px', thick: '2px' }
+const DEFAULT_BORDER: BorderSizeOpts<string | CSSObject> = { thin: '1px', thick: '2px' }
 const radiusFactors: { [K in Shape]: number | null } = { square: 0, intermediate: null, round: 1 }
 
 /**
@@ -17,7 +14,8 @@ const radiusFactors: { [K in Shape]: number | null } = { square: 0, intermediate
  * By default returns the border thickness, but can select any kind of value
  * given an opts object: `{ thin: 'valueWhenThin', thick: 'valueWhenThick' }`.
  */
-const _borderSize = (p: ThemeProps, opts: BorderSizeOpts = DEFAULT_BORDER) => opts[p.theme.border]
+const _borderSize = (p: ThemeProps, opts: BorderSizeOpts<string | CSSObject> = DEFAULT_BORDER) =>
+  opts[p.theme.border]
 export const borderSize = wrap(_borderSize)
 
 /**
@@ -25,7 +23,7 @@ export const borderSize = wrap(_borderSize)
  * The color can be any color name or string, though `theme.colors` is checked first.
  * The thickness can be customized with an options object like `borderSize` accepts.
  */
-const _border = (p: ThemeProps, colorName: string, opts?: Partial<BorderSizeOpts>) => {
+const _border = (p: ThemeProps, colorName: string, opts?: Partial<BorderSizeOpts<string>>) => {
   const thickness = _borderSize(p, { ...DEFAULT_BORDER, ...opts })
   const color_ = p.theme.colors[colorName as CactusColor] || colorName
   return `${thickness} solid ${color_}`
@@ -50,7 +48,7 @@ const _insetBorder = (
   p: ThemeProps,
   colorName: string,
   direction?: 'top' | 'bottom' | 'left' | 'right',
-  opts?: Partial<BorderSizeOpts>
+  opts?: Partial<BorderSizeOpts<string>>
 ) => {
   let hOffset = '0',
     vOffset = '0',
