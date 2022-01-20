@@ -14,7 +14,7 @@ Cactus Form also has an optional setup step using [patch-package](https://www.np
 
 ## Using React Final Form
 
-The basic Final Form library is very flexible, and I highly recommend going through the docs to understand what it's capable of. However, the majority of use cases can be covered by the components in React Final Form and Cactus Form.
+The basic Final Form library is very flexible, and we highly recommend going through the docs to understand what it's capable of. However, the majority of use cases can be covered by the components in React Final Form and Cactus Form.
 
 To make a form you start with the [Form](https://final-form.org/docs/react-final-form/api/Form) component,
 which creates both a form and a React context that allows you to access it from any descendants.
