@@ -184,6 +184,7 @@ const status: StatusColors = {
 }
 
 interface SharedGeneratorOptions {
+  saturationMultiplier?: number
   border?: BorderSize
   shape?: Shape
   font?: Font
@@ -214,22 +215,28 @@ function getLightCallToAction(ctaParams: number[]): string {
   return getHslString([lightCTAHue, lightCTASaturation, lightCTALightness])
 }
 
+function getSaturation(satPercentage: number, saturationFactor: number): number {
+  const saturation = satPercentage * 0.01 * saturationFactor
+  return Number((saturation * 100).toFixed(2))
+}
+
 function fromHue({
   primaryHue,
+  saturationMultiplier = 1,
 }: HueGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   /** Core colors */
-  const base = `hsl(${primaryHue}, 96%, 11%)`
+  const base = `hsl(${primaryHue}, ${getSaturation(96, saturationMultiplier)}%, 11%)`
   const baseText = `hsl(0, 0%, 100%)`
-  const ctaParams = [primaryHue, 96, 35]
+  const ctaParams = [primaryHue, getSaturation(96, saturationMultiplier), 35]
   const callToAction = getHslString(ctaParams)
   const callToActionText = `hsl(0, 0%, 100%)`
   const lightCallToAction = getLightCallToAction(ctaParams)
 
   /** Contrasts */
-  const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
-  const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
-  const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
-  const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
+  const lightContrast = `hsl(${primaryHue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
+  const mediumContrast = `hsl(${primaryHue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
+  const darkContrast = `hsl(${primaryHue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
+  const darkestContrast = `hsl(${primaryHue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
 
   return [
     {
@@ -362,14 +369,17 @@ interface Color {
   rgb: [number, number, number]
 }
 
-function fromTwoWhite(primaryHue: number): [CactusTheme['colors'], CactusTheme['colorStyles']] {
+function fromTwoWhite(
+  primaryHue: number,
+  saturationMultiplier: number
+): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   /** Contrasts */
-  const lightContrast = `hsl(${primaryHue}, 29%, 90%)`
-  const mediumContrast = `hsl(${primaryHue}, 18%, 45%)`
-  const darkContrast = `hsl(${primaryHue}, 9%, 35%)`
-  const darkestContrast = `hsl(${primaryHue}, 10%, 20%)`
+  const lightContrast = `hsl(${primaryHue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
+  const mediumContrast = `hsl(${primaryHue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
+  const darkContrast = `hsl(${primaryHue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
+  const darkestContrast = `hsl(${primaryHue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
 
-  const ctaParams = [244, 48, 26]
+  const ctaParams = [244, getSaturation(48, saturationMultiplier), 26]
   const callToAction = getHslString(ctaParams)
   const lightCallToAction = getLightCallToAction(ctaParams)
   const callToActionText = white
@@ -495,17 +505,20 @@ function fromTwoWhite(primaryHue: number): [CactusTheme['colors'], CactusTheme['
 
 function fromWhiteSecondary(
   primary: Color,
-  secondary: Color
+  secondary: Color,
+  saturationMultiplier: number
 ): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   /** Core colors */
-  const base = `hsl(${primary.hue}, ${primary.saturation}%, ${primary.lightness}%)`
+  const base = `hsl(${primary.hue}, ${getSaturation(primary.saturation, saturationMultiplier)}%, ${
+    primary.lightness
+  }%)`
   const contrastHue = secondary.lightness === 100 ? primary.hue : secondary.hue
 
   /** Contrasts */
-  const lightContrast = `hsl(${contrastHue}, 29%, 90%)`
-  const mediumContrast = `hsl(${contrastHue}, 18%, 45%)`
-  const darkContrast = `hsl(${contrastHue}, 9%, 35%)`
-  const darkestContrast = `hsl(${contrastHue}, 10%, 20%)`
+  const lightContrast = `hsl(${contrastHue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
+  const mediumContrast = `hsl(${contrastHue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
+  const darkContrast = `hsl(${contrastHue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
+  const darkestContrast = `hsl(${contrastHue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
 
   const baseText = isDark(...primary.rgb) ? white : darkestContrast
 
@@ -513,7 +526,11 @@ function fromWhiteSecondary(
   const updatedSecondaryHue = primary.lightness !== 0 ? primary.hue : 244
   const updatedSecondarySaturation = primary.lightness > 21 ? 98 : 96
   const updatedSecondaryLightness = primary.lightness > 21 ? 10 : 35
-  const ctaParams = [updatedSecondaryHue, updatedSecondarySaturation, updatedSecondaryLightness]
+  const ctaParams = [
+    updatedSecondaryHue,
+    getSaturation(updatedSecondarySaturation, saturationMultiplier),
+    updatedSecondaryLightness,
+  ]
   const callToAction = getHslString(ctaParams)
   const callToActionText = white
   const lightCallToAction = getLightCallToAction(ctaParams)
@@ -639,20 +656,27 @@ function fromWhiteSecondary(
 
 function fromTwoNonWhite(
   primary: Color,
-  secondary: Color
+  secondary: Color,
+  saturationMultiplier: number
 ): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   /** Core colors */
-  const base = `hsl(${primary.hue}, ${primary.saturation}%, ${primary.lightness}%)`
+  const base = `hsl(${primary.hue}, ${getSaturation(primary.saturation, saturationMultiplier)}%, ${
+    primary.lightness
+  }%)`
 
   /** Contrasts */
-  const lightContrast = `hsl(${primary.hue}, 29%, 90%)`
-  const mediumContrast = `hsl(${primary.hue}, 18%, 45%)`
-  const darkContrast = `hsl(${primary.hue}, 9%, 35%)`
-  const darkestContrast = `hsl(${primary.hue}, 10%, 20%)`
+  const lightContrast = `hsl(${primary.hue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
+  const mediumContrast = `hsl(${primary.hue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
+  const darkContrast = `hsl(${primary.hue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
+  const darkestContrast = `hsl(${primary.hue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
 
   const baseText = isDark(...primary.rgb) ? white : darkestContrast
 
-  const ctaParams = [secondary.hue, secondary.saturation, secondary.lightness]
+  const ctaParams = [
+    secondary.hue,
+    getSaturation(secondary.saturation, saturationMultiplier),
+    secondary.lightness,
+  ]
   const callToAction = getHslString(ctaParams)
   const callToActionText = isDark(...secondary.rgb) ? white : darkestContrast
   const lightCallToAction = getLightCallToAction(ctaParams)
@@ -779,6 +803,7 @@ function fromTwoNonWhite(
 function fromTwoColor({
   primary,
   secondary,
+  saturationMultiplier = 1,
 }: TwoColorGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
   const primaryRgb = hexToRgb(primary)
   const secondaryRgb = hexToRgb(secondary || '')
@@ -802,16 +827,16 @@ function fromTwoColor({
 
   // both colors are undefined or white
   if (primaryLightness === 100 && isSecondaryWhite) {
-    return fromTwoWhite(primaryHue)
+    return fromTwoWhite(primaryHue, saturationMultiplier)
   }
 
   // primary is non-black and secondary is white
   if (isSecondaryWhite) {
-    return fromWhiteSecondary(primaryColor, secondaryColor)
+    return fromWhiteSecondary(primaryColor, secondaryColor, saturationMultiplier)
   }
 
   // both primary and secondary are non-white colors
-  return fromTwoNonWhite(primaryColor, secondaryColor)
+  return fromTwoNonWhite(primaryColor, secondaryColor, saturationMultiplier)
 }
 
 export type GeneratorOptions = HueGeneratorOptions | TwoColorGeneratorOptions
@@ -826,6 +851,7 @@ const repayOptions: GeneratorOptions = {
   shape: 'intermediate',
   font: 'Helvetica',
   boxShadows: true,
+  saturationMultiplier: 1,
 }
 
 const makeTextStyles = (fontSizes: FontSizeObject): TextStyleCollection => ({
