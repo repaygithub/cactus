@@ -23,8 +23,8 @@ describe('helper: borderSize', () => {
   })
 
   test('gets custom value from options', () => {
-    const opts = { thin: 3.1415, thick: 'tau is better' }
-    expect(borderSize(thin, opts)).toBe(3.1415)
+    const opts = { thin: '3.1415', thick: 'tau is better' }
+    expect(borderSize(thin, opts)).toBe('3.1415')
     expect(borderSize(thick, opts)).toBe('tau is better')
   })
 })

@@ -45,7 +45,7 @@ const StyledCheckBox = styled.span`
     color: ${color('white')};
     width: 12px;
     height: 12px;
-    margin: ${borderSize({ thin: '1px', thick: '0' }) as any};
+    margin: ${borderSize({ thin: '1px', thick: '0' })};
   }
 `
 
