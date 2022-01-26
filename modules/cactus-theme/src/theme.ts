@@ -215,9 +215,8 @@ function getLightCallToAction(ctaParams: number[]): string {
   return getHslString([lightCTAHue, lightCTASaturation, lightCTALightness])
 }
 
-function getSaturation(satPercentage: number, saturationFactor: number): number {
-  const saturation = satPercentage * 0.01 * saturationFactor
-  return Number((saturation * 100).toFixed(2))
+function getSaturation(satPercentage: number, saturationFactor: number = 1): number {
+  return Number((satPercentage * saturationFactor).toFixed(2))
 }
 
 function fromHue({
