@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-fwk",
-  "version": "0.5.4",
+  "version": "0.5.3",
   "description": "Cactus Framework for React",
   "main": "dist/cactus-fwk.cjs.js",
   "module": "dist/cactus-fwk.js",
