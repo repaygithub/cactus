@@ -6,6 +6,20 @@
 
 #### Authors: 3
 
+- [@Dhalton](https://github.com/Dhalton)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
+# v0.5.4 (Wed Jan 26 2022)
+
+#### 🔩 Dependency Updates
+
+- Cactus 715:: Dependency updates [#686](https://github.com/repaygithub/cactus/pull/686) ([@daniloPenaR](https://github.com/daniloPenaR) [@wilysword](https://github.com/wilysword) [@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 3
+
 - Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
 - Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
 - Glen Phelps ([@wilysword](https://github.com/wilysword))
