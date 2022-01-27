@@ -1,3 +1,25 @@
+# v3.1.0 (Wed Jan 26 2022)
+
+#### 🚀 Enhancement
+
+- Make borderSize helper more compatible with TS & styled components [#707](https://github.com/repaygithub/cactus/pull/707) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🏠 Internal
+
+- Fix SonarQube code smells [#696](https://github.com/repaygithub/cactus/pull/696) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🔩 Dependency Updates
+
+- Cactus 715:: Dependency updates [#686](https://github.com/repaygithub/cactus/pull/686) ([@daniloPenaR](https://github.com/daniloPenaR) [@wilysword](https://github.com/wilysword) [@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 3
+
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v3.0.0 (Mon Aug 16 2021)
 
 #### 💥 Breaking Change
