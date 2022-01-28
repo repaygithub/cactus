@@ -119,6 +119,23 @@ describe('@repay/cactus-theme', (): void => {
 
   themeAccessibility('primary theme', generateTheme({ primaryHue: 200 }))
 
+  test('Generaste a theme with primaryHue and saturation Multiplier', () => {
+    const theme = generateTheme({ primaryHue: 200, saturationMultiplier: 0.2 })
+    expect(theme.colors).toMatchObject({
+      base: 'hsl(200, 19.2%, 11%)',
+      callToAction: 'hsl(200, 19.2%, 35%)',
+      lightCallToAction: 'hsl(200, 5%, 81%)',
+      ...expectedActionColors,
+    })
+    expect(theme.colorStyles).toMatchObject({
+      ...expectedActionStyles,
+      lightCallToAction: {
+        backgroundColor: 'hsl(200, 5%, 81%)',
+        color: 'hsl(200, 2%, 20%)',
+      },
+    })
+  })
+
   test('generates a grayscale theme with primaryHue', (): void => {
     const theme = generateTheme({ primaryHue: 200, grayscaleContrast: true })
     expect(theme.colors).toMatchObject({
@@ -162,6 +179,23 @@ describe('@repay/cactus-theme', (): void => {
     })
   })
 
+  test('generates a theme when primary color and saturation multiplier are provided ', (): void => {
+    const theme = generateTheme({ primary: '#012537', saturationMultiplier: 0.5 })
+    expect(theme).toMatchObject({
+      colors: {
+        lightContrast: 'hsl(200, 14.5%, 90%)',
+        callToAction: 'hsl(200, 48%, 35%)',
+        lightCallToAction: 'hsl(200, 20%, 81%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        lightCallToAction: { backgroundColor: 'hsl(200, 20%, 81%)', color: 'hsl(200, 5%, 20%)' },
+        lightContrast: { backgroundColor: 'hsl(200, 14.5%, 90%)' },
+        ...expectedActionStyles,
+      },
+    })
+  })
+
   test('generates a theme when two colors are provided', (): void => {
     const theme = generateTheme({ primary: '#012537', secondary: ' #0000FF' })
     expect(theme).toMatchObject({
@@ -174,6 +208,26 @@ describe('@repay/cactus-theme', (): void => {
       colorStyles: {
         ...expectedActionStyles,
         lightCallToAction: { backgroundColor: 'hsl(240, 68%, 85%)', color: 'hsl(200, 10%, 20%)' },
+      },
+    })
+  })
+
+  test('Saturation Multiplier when two colors are provided to the theme', () => {
+    const theme = generateTheme({
+      primary: '#012537',
+      secondary: ' #0000FF',
+      saturationMultiplier: 0.5,
+    })
+    expect(theme).toMatchObject({
+      colors: {
+        base: 'hsl(200, 48%, 11%)',
+        callToAction: 'hsl(240, 50%, 50%)',
+        lightCallToAction: 'hsl(240, 30%, 85%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        ...expectedActionStyles,
+        lightCallToAction: { backgroundColor: 'hsl(240, 30%, 85%)', color: 'hsl(200, 5%, 20%)' },
       },
     })
   })
@@ -270,6 +324,22 @@ describe('@repay/cactus-theme', (): void => {
       colorStyles: {
         ...expectedActionStyles,
         lightCallToAction: { backgroundColor: 'hsl(244, 15%, 78%)', color: 'hsl(0, 10%, 20%)' },
+      },
+    })
+  })
+
+  test('generates a white theme when invalid colors and a saturation multiplier are provided', (): void => {
+    const theme = generateTheme({ primary: '', saturationMultiplier: 0.5 })
+    expect(theme).toMatchObject({
+      colors: {
+        base: 'hsl(0, 0%, 100%)',
+        callToAction: 'hsl(244, 24%, 26%)',
+        lightCallToAction: 'hsl(244, 5%, 78%)',
+        ...expectedActionColors,
+      },
+      colorStyles: {
+        ...expectedActionStyles,
+        lightCallToAction: { backgroundColor: 'hsl(244, 5%, 78%)', color: 'hsl(0, 5%, 20%)' },
       },
     })
   })

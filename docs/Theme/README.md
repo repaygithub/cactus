@@ -53,14 +53,15 @@ If only a `primary` color is provided or the secondary color is white, the theme
 
 Whether you generate a theme using a primary hue or with primary and secondary hex values, there are several other optional keys you can set in the options object:
 
-| Attr                | Type                                       | Required | Description                                                                        |
-| ------------------- | ------------------------------------------ | -------- | ---------------------------------------------------------------------------------- |
-| `border`            | `thin` \| `thick`                          | N        | Specifies theme border thickness. Thin is 1px and thick is 2px. Default is thin.   |
-| `shape`             | `round` \| `intermediate` \| `square`      | N        | Specifies general component shape. Default is intermediate.                        |
-| `font`              | `Helvetica Neue` \| `Helvetica` \| `Arial` | N        | Defines application font. Default is Helvetica.                                    |
-| `boxShadows`        | Boolean                                    | N        | Enabled/disables box shadows on cactus-web components. Enabled by default.         |
-| `grayscaleContrast` | Boolean                                    | N        | Enables/disables usage of grayscale colors for lightContrast. Disabled by default. |
-| `breakpoints`       | Object shape defined below                 | N        | Define custom breakpoints for your application.                                    |
+| Attr                   | Type                                       | Required | Description                                                                        |
+| -------------------    | ------------------------------------------ | -------- | ---------------------------------------------------------------------------------- |
+| `border`               | `thin` \| `thick`                          | N        | Specifies theme border thickness. Thin is 1px and thick is 2px. Default is thin.   |
+| `shape`                | `round` \| `intermediate` \| `square`      | N        | Specifies general component shape. Default is intermediate.                        |
+| `font`                 | `Helvetica Neue` \| `Helvetica` \| `Arial` | N        | Defines application font. Default is Helvetica.                                    |
+| `boxShadows`           | Boolean                                    | N        | Enabled/disables box shadows on cactus-web components. Enabled by default.         |
+| `grayscaleContrast`    | Boolean                                    | N        | Enables/disables usage of grayscale colors for lightContrast. Disabled by default. |
+| `breakpoints`          | Object shape defined below                 | N        | Define custom breakpoints for your application.                                    |
+| `saturationMultiplier` | Number between 0 and 1 inclusive.          | N        | Sets the saturation level for the Base, CTA and contrast colors of the theme.      |
 
 The `breakpoints` option should have the following form:
 
