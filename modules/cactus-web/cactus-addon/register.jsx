@@ -33,6 +33,7 @@ class Panel extends React.Component {
       shape: 'intermediate',
       font: 'Helvetica',
       boxShadows: true,
+      saturationMultiplier: 1,
     },
     backgroundInverse: false,
     borderBox: false,
@@ -77,6 +78,7 @@ class Panel extends React.Component {
       font: values.font,
       boxShadows: values.boxShadows,
       grayscaleContrast: values.grayscaleContrast,
+      saturationMultiplier: values.saturationMultiplier,
       ...colors,
     })
   }
@@ -143,6 +145,29 @@ class Panel extends React.Component {
                 </label>
               </div>
             </div>
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="saturationMultiplier">Saturation Multiplier</label>
+            <input
+              type="range"
+              id="saturationMultiplier"
+              name="saturationMultiplier"
+              min="0"
+              max="1"
+              step="0.01"
+              value={values.saturationMultiplier}
+              onChange={this.handleSimpleThemeChange}
+            />
+            <input
+              type="text"
+              id="saturationMultiplier-text"
+              name="saturationMultiplier"
+              value={values.saturationMultiplier}
+              onChange={({ currentTarget }) =>
+                this.handleThemeChange('saturationMultiplier', parseInt(currentTarget.value))
+              }
+              style={{ width: '32px', marginLeft: '8px' }}
+            />
           </Form.Field>
           {values.type === THEME_TYPES.use_hue ? (
             <Form.Field>
