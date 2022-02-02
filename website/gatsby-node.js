@@ -99,8 +99,27 @@ function getTitle({ node, getNode }) {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === 'Mdx') {
-    const isComponent = getNode(node.parent).sourceInstanceName === 'components'
+  const parentNode = getNode(node.parent)
+  const sourceInstanceName = parentNode?.sourceInstanceName
+
+  if (sourceInstanceName && sourceInstanceName.match(/cactus-web\/v[0-9]+/g)) {
+    createNodeField({
+      name: 'slug',
+      node,
+      value: `${sourceInstanceName}/components/${parentNode.name.toLowerCase()}`,
+    })
+    createNodeField({
+      name: 'isComponent',
+      node,
+      value: true,
+    })
+    createNodeField({
+      name: 'title',
+      node,
+      value: getTitle({ node, getNode }),
+    })
+  } else if (node.internal.type === 'Mdx') {
+    const isComponent = sourceInstanceName === 'components'
     createNodeField({
       name: 'slug',
       node,

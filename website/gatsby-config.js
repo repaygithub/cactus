@@ -37,6 +37,15 @@ module.exports = {
         ignore: ['**/*.ts', '**/*.tsx', '**/*.json', '**/*.snap'],
       },
     },
+    {
+      resolve: 'gatsby-source-git',
+      options: {
+        name: 'cactus-web/v8',
+        remote: 'https://github.com/repaygithub/cactus.git',
+        branch: '@repay/cactus-web@8.1.0',
+        patterns: 'modules/cactus-web/src/**/*.mdx',
+      },
+    },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
