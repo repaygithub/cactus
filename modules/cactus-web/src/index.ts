@@ -43,6 +43,8 @@ export { RadioButton } from './RadioButton/RadioButton'
 export { RadioButtonField } from './RadioButtonField/RadioButtonField'
 export { default as RadioCard } from './RadioCard/RadioCard'
 export { default as RadioGroup } from './RadioGroup/RadioGroup'
+export { default as Range } from './Range/Range'
+export { default as RangeField } from './RangeField/RangeField'
 export {
   ScreenSizeContext,
   ScreenSizeProvider,
