@@ -1606,6 +1606,7 @@ Select.propTypes = {
       PropTypes.shape({
         label: PropTypes.string.isRequired,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        disabled: PropTypes.bool,
       })
     ),
     PropTypes.arrayOf(PropTypes.string.isRequired),
