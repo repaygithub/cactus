@@ -1,4 +1,5 @@
 import { DescriptiveLocation } from '@repay/cactus-icons'
+import { Page } from 'puppeteer'
 import React from 'react'
 
 import { Select } from '../'
@@ -7,6 +8,15 @@ import arizonaCities from '../storySupport/arizonaCities'
 import { SelectValueType } from './Select'
 
 const defaultMultiValue = arizonaCities.slice(6, 15).reverse()
+
+const disabledOptions = [
+  { label: "You can't select me", value: 0, disabled: true },
+  { label: "Can't select me either", value: 1, disabled: true },
+  { label: "I'm up for grabs", value: 2 },
+  { label: 'Pick me pick me', value: 3 },
+  { label: 'Nope', value: 4, disabled: true },
+  { label: 'Yep', value: 5 },
+]
 
 export default {
   title: 'Select',
@@ -150,4 +160,22 @@ WithMultiSelectComboBox.args = { comboBox: true, multiple: true }
 WithMultiSelectComboBox.storyName = 'With MultiSelect ComboBox'
 WithMultiSelectComboBox.parameters = {
   storyshots: false,
+}
+
+export const WithDisabledOptions: Story<typeof Select, ChangeArg> = (args) => {
+  const [value, setValue] = React.useState<SelectValueType>([])
+  return (
+    <Select
+      {...args}
+      options={disabledOptions}
+      onChange={args.onChange.wrap(setValue, true)}
+      value={value}
+    />
+  )
+}
+WithDisabledOptions.storyName = 'With Disabled Options'
+WithDisabledOptions.parameters = {
+  beforeScreenshot: async (page: Page) => {
+    await page.click('button[name="select"]')
+  },
 }
