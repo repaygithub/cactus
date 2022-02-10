@@ -36,7 +36,7 @@ export const code = `<Select
 
 There are three ways you can pass options to the Select:
 - An array of values in the `options` prop, where the value is also used as the label.
-- An array of objects in the `options` prop, each of which has a `label` and a `value`.
+- An array of objects in the `options` prop, each of which has a `label`, a `value`, and an optional `disabled` flag.
 - As children, similar to a regular HTML select element.
 
 ```js
@@ -64,6 +64,7 @@ There are three ways you can pass options to the Select:
   - `value` is required, can be a string or a number
   - `children` is used as the label; if omitted, the `value` will be used for the label
   - `id` can be used to override the default generated ID for the option
+  - `disabled` can be used to disable individual options in the list
   - `altText` is an alternative text-only label for selected options when the drop-down is closed
   - `aria-label` can be used if a significant portion of the label is non-text or would be ambiguous to screen readers
 - The specific type of the element doesn't matter; you can use regular HTML `<option>` tags if you want. `<Select.Option>` is available for symmetry, and if you use Typescript, for the `altText` prop.
