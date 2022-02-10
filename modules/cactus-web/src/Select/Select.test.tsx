@@ -53,6 +53,33 @@ describe('component: Select', (): void => {
     expect(document.querySelector('#options-children')).toHaveTextContent('Demosthenes')
   })
 
+  test('can receive options as children, with disabled', () => {
+    const onChange = jest.fn()
+    const { getByRole, getByText } = render(
+      <StyleProvider>
+        <Select id="disabled-children" name="disabled-options" onChange={onChange}>
+          <Select.Option value="first" disabled>
+            Disabled 1
+          </Select.Option>
+          <Select.Option value="second">Enabled 1</Select.Option>
+          <Select.Option value="third">Enabled 2</Select.Option>
+          <Select.Option value="fourth" disabled>
+            Disabled 2
+          </Select.Option>
+        </Select>
+      </StyleProvider>
+    )
+
+    userEvent.click(getByRole('button'))
+
+    const enabled1 = getByText('Enabled 1')
+
+    expect(getByText('Disabled 1')).toHaveAttribute('aria-disabled', 'true')
+    expect(enabled1).toHaveAttribute('aria-disabled', 'false')
+    expect(getByText('Enabled 2')).toHaveAttribute('aria-disabled', 'false')
+    expect(getByText('Disabled 2')).toHaveAttribute('aria-disabled', 'true')
+  })
+
   test('should set placeholder when options are empty', async (): Promise<void> => {
     const { getByRole } = render(
       <StyleProvider>
@@ -91,6 +118,26 @@ describe('component: Select', (): void => {
     await animationRender()
     const topOption = getByText('yum')
     expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(topOption.id)
+  })
+
+  test('does not set active descendant to the top option when it is disabled', () => {
+    const options = [
+      { label: 'The #1 disabled option', value: 0, disabled: true },
+      { label: 'First the worst, second the best', value: 1 },
+    ]
+    const { getByText, getByRole } = render(
+      <StyleProvider>
+        <Select id="test-id" name="no-active-disabled" options={options} value={-1} />
+      </StyleProvider>
+    )
+
+    userEvent.click(getByRole('button'))
+    const activeDescendant = getByRole('listbox').getAttribute('aria-activedescendant')
+    const topOption = getByText('The #1 disabled option')
+    const bottomOption = getByText('First the worst, second the best')
+
+    expect(activeDescendant).not.toEqual(topOption.id)
+    expect(activeDescendant).toEqual(bottomOption.id)
   })
 
   test('can update value through props', async (): Promise<void> => {
@@ -392,6 +439,92 @@ describe('component: Select', (): void => {
       expect(box).toEqual({ name: 'city', value: 'flagstaff' })
     })
 
+    test('skips disabled options when navigating the list with the UP/DOWN keys', () => {
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="skip-disabled">
+            <option value="0" disabled>
+              Skip me
+            </option>
+            <option value="1">First active</option>
+            <option value="2" disabled>
+              Skipped
+            </option>
+            <option value="3">Second active</option>
+            <option value="4" disabled>
+              Skippidy-doo-da
+            </option>
+            <option value="5" disabled>
+              Double skip
+            </option>
+            <option value="6">Third active</option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const listbox = getByRole('listbox')
+      const firstActive = getByText('First active')
+      const secondActive = getByText('Second active')
+      const thirdActive = getByText('Third active')
+
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(thirdActive.id)
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+    })
+
+    test('sets the active descendant to the first/last option on HOME/END keydown, respectfully', () => {
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="home-end" options={['first', 'middle', 'last']} />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const listbox = getByRole('listbox')
+      const firstOption = getByText('first')
+      const lastOption = getByText('last')
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(lastOption.id)
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstOption.id)
+    })
+
+    test('sets the active descendant to the first/last non-disabled option on HOME/END keydown, respectfully', () => {
+      const options = [
+        { label: 'first disabled', value: 0, disabled: true },
+        { label: 'first enabled', value: 1 },
+        { label: 'middle', value: 2 },
+        { label: 'last enabled', value: 3 },
+        { label: 'last disabled', value: 4, disabled: true },
+      ]
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="home-end" options={options} />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const listbox = getByRole('listbox')
+      const firstEnabled = getByText('first enabled')
+      const lastEnabled = getByText('last enabled')
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(lastEnabled.id)
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstEnabled.id)
+    })
+
     describe('typing with open list', (): void => {
       test('will select matching first letter', async (): Promise<void> => {
         const { getByText, getByRole } = render(
@@ -481,6 +614,23 @@ describe('component: Select', (): void => {
       expect(box).toEqual({ name: 'city', value: 'tucson' })
     })
 
+    test('does not raise onChange event on click when the option is disabled', () => {
+      const onChange = jest.fn()
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="no-onchange" onChange={onChange}>
+            <Select.Option value="0" disabled>
+              I never got an onChange handler!
+            </Select.Option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      userEvent.click(getByText('I never got an onChange handler!'))
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
     test('does not raise duplicate onChange event on click', async (): Promise<void> => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -528,6 +678,24 @@ describe('component: Select', (): void => {
       fireEvent.mouseEnter(bensonOption)
       await animationRender()
       expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(bensonOption.id)
+    })
+
+    test('mouseEnter does not set activedescendant when the option is disabled', async (): Promise<void> => {
+      const { getByText, getByRole } = render(
+        <StyleProvider>
+          <Select id="test-id" name="no-set-active">
+            <Select.Option value="0" disabled>
+              not the active descendant
+            </Select.Option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const notActive = getByText('not the active descendant')
+
+      fireEvent.mouseEnter(notActive)
+      expect(getByRole('listbox').getAttribute('aria-activedescendant')).not.toEqual(notActive.id)
     })
   })
 
@@ -743,6 +911,27 @@ describe('component: Select', (): void => {
       await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: ['phoenix'] })
+    })
+
+    test('checkboxes are disabled for disabled options', () => {
+      const onChange = jest.fn()
+      const { getByRole } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="disabled-checkboxes"
+            options={[{ label: 'disable my checkbox', value: 0, disabled: true }]}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const disabledCheckbox = document.querySelector('input[type=checkbox]') as Element
+      expect(disabledCheckbox).toBeDisabled()
+      fireEvent.click(disabledCheckbox)
+      expect(onChange).not.toHaveBeenCalled()
     })
 
     test('can select multiple options', async (): Promise<void> => {
@@ -1013,6 +1202,42 @@ describe('component: Select', (): void => {
       expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-flagstaff')
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson')
+    })
+
+    test('UP/DOWN should not set the active descendant for disabled options', async () => {
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="skip-disabled" comboBox>
+            <option value="0">No skip</option>
+            <option value="1" disabled>
+              Skip
+            </option>
+            <option value="2" disabled>
+              Double skip
+            </option>
+            <option value="3">Don't skip me</option>
+            <option value="4" disabled>
+              Skip me
+            </option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      await animationRender()
+      const searchBox = document.activeElement as HTMLElement
+      const firstActive = getByText('No skip')
+      const secondActive = getByText("Don't skip me")
+
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
+
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
     })
 
     test('RETURN should select an option and focus on the trigger', async (): Promise<void> => {
