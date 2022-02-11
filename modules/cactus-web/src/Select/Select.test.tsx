@@ -462,7 +462,7 @@ describe('component: Select', () => {
       expect(listbox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
     })
 
-    test('sets the active descendant to the first/last option on HOME/END keydown, respectfully', () => {
+    test('sets the active descendant to the first/last option on HOME/END keydown, respectively', () => {
       const { getByRole, getByText } = render(
         <StyleProvider>
           <Select id="test-id" name="home-end" options={['first', 'middle', 'last']} />
@@ -481,7 +481,7 @@ describe('component: Select', () => {
       expect(listbox.getAttribute('aria-activedescendant')).toBe(firstOption.id)
     })
 
-    test('sets the active descendant to the first/last non-disabled option on HOME/END keydown, respectfully', () => {
+    test('sets the active descendant to the first/last non-disabled option on HOME/END keydown, respectively', () => {
       const options = [
         { label: 'first disabled', value: 0, disabled: true },
         { label: 'first enabled', value: 1 },
