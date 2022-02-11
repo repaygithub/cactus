@@ -48,6 +48,8 @@ Array [
   "RadioButtonField",
   "RadioCard",
   "RadioGroup",
+  "Range",
+  "RangeField",
   "SIZES",
   "ScreenSizeContext",
   "ScreenSizeProvider",

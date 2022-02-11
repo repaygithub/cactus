@@ -2,7 +2,26 @@ import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { StyledComponent, ThemedStyledFunction } from 'styled-components'
-import { compose, flexbox, FlexboxProps, ResponsiveValue, styleFn, system } from 'styled-system'
+import {
+  compose,
+  flexbox,
+  FlexboxProps,
+  height,
+  HeightProps,
+  maxHeight,
+  MaxHeightProps,
+  maxWidth,
+  MaxWidthProps,
+  minHeight,
+  MinHeightProps,
+  minWidth,
+  MinWidthProps,
+  ResponsiveValue,
+  styleFn,
+  system,
+  width,
+  WidthProps,
+} from 'styled-system'
 
 // This file exists, in part, because styled-components types are a PAIN.
 export type Styled<P> = StyledComponent<React.FC<P>, CactusTheme>
@@ -98,3 +117,12 @@ export type FlexItemProps = Pick<FlexboxProps, typeof itemKeys[number]>
 ;(flexbox as any).flexFlow = flexFlow
 export const flexContainer = pickStyles(flexbox, 'flexFlow', ...flexKeys)
 export const flexItem = pickStyles(flexbox, ...itemKeys)
+
+export type AllWidthProps = WidthProps & MinWidthProps & MaxWidthProps
+export const allWidth = compose(width, minWidth, maxWidth)
+
+export type AllHeightProps = HeightProps & MinHeightProps & MaxHeightProps
+export const allHeight = compose(height, minHeight, maxHeight)
+
+export type SizingProps = AllWidthProps & AllHeightProps
+export const sizing = compose(width, minWidth, maxWidth, height, minHeight, maxHeight)

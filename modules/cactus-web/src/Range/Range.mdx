@@ -1,0 +1,68 @@
+---
+name: Range
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import Range from './Range'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# Range
+
+The Range component is basically just a styled wrapper around `<input type=range>`,
+and has most of the same props and behaviors (see [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range)).
+We don't currently support vertical sliders, however.
+
+### Try it out
+
+export const code = `<Range marginTop={6} showValue />`
+
+<LiveProvider code={code} scope={{ Range }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Basic usage
+
+```jsx
+import { Range } from '@repay/cactus-web'
+...
+// Basic usage
+<Range />
+
+// Status
+<Range status="success" />
+
+// Range parameters/uncontrolled
+<Range min="42" max="57" step="3" defaultValue="51" />
+
+// Controlled
+<Range value={value} onChange={(e) => setValue(e.target.value)} />
+```
+
+Keep in mind that while `target.value` will always be a number, it's of _type_ string;
+if you want an actual number, you'll have to convert using `parseFloat` or `parseInt`.
+The `value`, `min`, `max`, and `step` props will accept numbers _or_ strings,
+but if the strings aren't valid numbers it behaves as if you hadn't passed them at all.
+
+### Show Value
+
+Although the exact value is typically not important when using a slider,
+that's not to say there's never any use for the user to know the value.
+For that reason we provide the `showValue` prop, which creates a small tooltip
+to show the current value over the slider. It has four possible values:
+- `false` (default) - don't show the value tooltip
+- `"hover"` - show the value tooltip when hovering over the slider
+- `"focus"` - show the value tooltip when the input has focus
+- `true` - combined behavior of "focus" + "hover"
+
+### Hash Marks
+
+Coming Soon...
+
+## Properties
+
+<PropsTable of={Range} />

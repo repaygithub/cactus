@@ -1,0 +1,61 @@
+---
+name: RangeField
+menu: Components
+---
+
+import PropsTable from 'website-src/components/PropsTable'
+import { livePreviewStyle } from '../helpers/constants'
+import RangeField from './RangeField'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+
+# RangeField
+
+The `RangeField` is a combination of `Range`, `Label`, and some handy tools to make integrating this field into a form easier.
+
+### Try it out
+
+export const code = `<RangeField name="range" label="Range" />`
+
+<LiveProvider code={code} scope={{ RangeField }}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+## Best practices
+
+- Use descriptive labels for the range field.
+- Be descriptive with the tooltip, if necessary.
+- Make use of the `success`, `warning`, and `error` message props when appropriate to make the validity of inputs obvious to the user.
+
+## Basic usage
+
+```jsx
+import React, { useState } from 'react'
+import { Button, RangeField } from '@repay/cactus-web'
+
+export default function Form() {
+  const [values, setValues] = useState({ range: '' })
+  const handleChange = ({ target }) => {
+    setValues(state => ({ ...state, [target.name]: target.value }))
+  }
+  const onSubmit = (event) => {
+    event.preventDefault()
+    const data = { ...values }
+    // send data to api
+  }
+  return (
+    <form onSubmit={onSubmit}>
+      <RangeField name="range" label="Range" onChange={handleChange} value={values.range} />
+      <Button type="submit" variant="action">
+        Submit
+      </Button>
+    </form>
+  )
+}
+```
+
+## Properties
+
+<PropsTable of={RangeField} />
