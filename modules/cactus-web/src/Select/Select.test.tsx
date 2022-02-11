@@ -9,14 +9,14 @@ import KeyCodes from '../helpers/keyCodes'
 import StyleProvider from '../StyleProvider/StyleProvider'
 import Select from './Select'
 
-function getActiveValue(): string {
+function getActiveValue() {
   // @ts-ignore
   return document.getElementById(document.activeElement.getAttribute('aria-activedescendant'))
     .textContent
 }
 
-describe('component: Select', (): void => {
-  test('can receive options as objects', (): void => {
+describe('component: Select', () => {
+  test('can receive options as objects', () => {
     const options = [
       { value: 'yum', label: 'Yum' },
       { value: 'who?', label: 'Who?' },
@@ -31,7 +31,7 @@ describe('component: Select', (): void => {
     expect(getByText('Who?')).not.toBeNull()
   })
 
-  test('can receive options as children, with altText', (): void => {
+  test('can receive options as children, with altText', () => {
     const { queryByText } = render(
       <StyleProvider>
         <Select id="options-children" name="test-options" value="second">
@@ -53,7 +53,34 @@ describe('component: Select', (): void => {
     expect(document.querySelector('#options-children')).toHaveTextContent('Demosthenes')
   })
 
-  test('should set placeholder when options are empty', async (): Promise<void> => {
+  test('can receive options as children, with disabled', () => {
+    const onChange = jest.fn()
+    const { getByRole, getByText } = render(
+      <StyleProvider>
+        <Select id="disabled-children" name="disabled-options" onChange={onChange}>
+          <Select.Option value="first" disabled>
+            Disabled 1
+          </Select.Option>
+          <Select.Option value="second">Enabled 1</Select.Option>
+          <Select.Option value="third">Enabled 2</Select.Option>
+          <Select.Option value="fourth" disabled>
+            Disabled 2
+          </Select.Option>
+        </Select>
+      </StyleProvider>
+    )
+
+    userEvent.click(getByRole('button'))
+
+    const enabled1 = getByText('Enabled 1')
+
+    expect(getByText('Disabled 1')).toHaveAttribute('aria-disabled', 'true')
+    expect(enabled1).toHaveAttribute('aria-disabled', 'false')
+    expect(getByText('Enabled 2')).toHaveAttribute('aria-disabled', 'false')
+    expect(getByText('Disabled 2')).toHaveAttribute('aria-disabled', 'true')
+  })
+
+  test('should set placeholder when options are empty', () => {
     const { getByRole } = render(
       <StyleProvider>
         <Select id="empty-options" name="test-empty-options" options={[]} />
@@ -64,7 +91,7 @@ describe('component: Select', (): void => {
     expect(trigger).toHaveTextContent('No options available')
   })
 
-  test('can receive options with number values', async (): Promise<void> => {
+  test('can receive options with number values', () => {
     const options = [
       { label: '1', value: 1 },
       { label: 'two', value: 2 },
@@ -78,22 +105,40 @@ describe('component: Select', (): void => {
     expect(getByText('two')).not.toBeNull()
   })
 
-  test('sets active descendant to the top option when value does not exist in options', async (): Promise<void> => {
+  test('sets active descendant to the top option when value does not exist in options', async () => {
     const { getByText, getByRole } = render(
       <StyleProvider>
         <Select id="test-id" name="city" options={['yum', 'who?', 'boss']} value="superman" />
       </StyleProvider>
     )
 
-    // @ts-ignore
-    const trigger: HTMLElement = getByText('Select an option')
+    const trigger = getByText('Select an option')
     userEvent.click(trigger)
-    await animationRender()
     const topOption = getByText('yum')
     expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(topOption.id)
   })
 
-  test('can update value through props', async (): Promise<void> => {
+  test('does not set active descendant to the top option when it is disabled', () => {
+    const options = [
+      { label: 'The #1 disabled option', value: 0, disabled: true },
+      { label: 'First the worst, second the best', value: 1 },
+    ]
+    const { getByText, getByRole } = render(
+      <StyleProvider>
+        <Select id="test-id" name="no-active-disabled" options={options} value={-1} />
+      </StyleProvider>
+    )
+
+    userEvent.click(getByRole('button'))
+    const activeDescendant = getByRole('listbox').getAttribute('aria-activedescendant')
+    const topOption = getByText('The #1 disabled option')
+    const bottomOption = getByText('First the worst, second the best')
+
+    expect(activeDescendant).not.toEqual(topOption.id)
+    expect(activeDescendant).toEqual(bottomOption.id)
+  })
+
+  test('can update value through props', () => {
     const { getByText, getByTestId, rerender } = render(
       <StyleProvider>
         <Select
@@ -105,12 +150,9 @@ describe('component: Select', (): void => {
       </StyleProvider>
     )
 
-    // @ts-ignore
-    let trigger: HTMLElement = getByTestId('my-select')
+    let trigger = getByTestId('my-select')
     userEvent.click(trigger)
-    await animationRender()
     userEvent.click(getByText('one'))
-    await animationRender()
     trigger = getByTestId('my-select')
     expect(trigger).toHaveTextContent('one')
 
@@ -125,7 +167,6 @@ describe('component: Select', (): void => {
         />
       </StyleProvider>
     )
-    await animationRender()
     trigger = getByTestId('my-select')
     expect(trigger).toHaveTextContent('two')
   })
@@ -210,15 +251,14 @@ describe('component: Select', (): void => {
     })
   })
 
-  describe('keyboard interactions', (): void => {
-    test('listbox gets focus on SPACE and first option selected', async (): Promise<void> => {
+  describe('keyboard interactions', () => {
+    test('listbox gets focus on SPACE and first option selected', async () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger = getByText('Select an option') // default placeholder
       userEvent.click(trigger) // space is actually a click on buttons
       await animationRender()
       const list = getByRole('listbox')
@@ -226,14 +266,13 @@ describe('component: Select', (): void => {
       expect(getActiveValue()).toEqual('phoenix')
     })
 
-    test('listbox gets focus on UP and first option selected', async (): Promise<void> => {
+    test('listbox gets focus on UP and first option selected', async () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
       await animationRender()
       const list = getByRole('listbox')
@@ -241,14 +280,13 @@ describe('component: Select', (): void => {
       expect(getActiveValue()).toEqual('phoenix')
     })
 
-    test('listbox gets focus on DOWN first option selected', async (): Promise<void> => {
+    test('listbox gets focus on DOWN first option selected', async () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       await animationRender()
       const list = getByRole('listbox')
@@ -256,7 +294,7 @@ describe('component: Select', (): void => {
       expect(getActiveValue()).toEqual('phoenix')
     })
 
-    test('returns focus to button on RETURN', async (): Promise<void> => {
+    test('returns focus to button on RETURN', async () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
@@ -265,7 +303,6 @@ describe('component: Select', (): void => {
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      await animationRender()
       fireEvent.keyDown(getByRole('listbox'), { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(getByRole('listbox'), {
         keyCode: KeyCodes.RETURN,
@@ -275,7 +312,7 @@ describe('component: Select', (): void => {
       expect(document.activeElement).toEqual(trigger)
     })
 
-    test('returns focus to button on ESC', async (): Promise<void> => {
+    test('returns focus to button on ESC', async () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
@@ -284,7 +321,6 @@ describe('component: Select', (): void => {
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      await animationRender()
       fireEvent.keyDown(getByRole('listbox'), {
         keyCode: KeyCodes.ESC,
         charCode: KeyCodes.ESC,
@@ -293,14 +329,13 @@ describe('component: Select', (): void => {
       expect(document.activeElement).toEqual(trigger)
     })
 
-    test('after open, DOWN on listbox selects second option', async (): Promise<void> => {
+    test('after open, DOWN on listbox selects second option', async () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Select an option') // default placeholder
+      const trigger = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       await animationRender()
       const list = getByRole('listbox')
@@ -309,7 +344,7 @@ describe('component: Select', (): void => {
       expect(getActiveValue()).toEqual('tucson')
     })
 
-    test('raises onChange event on RETURN keydown', async (): Promise<void> => {
+    test('raises onChange event on RETURN keydown', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, getByRole } = render(
@@ -322,11 +357,9 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Select an option')
+      const trigger = getByText('Select an option')
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       expect(box).toEqual({})
-      await animationRender()
       const list = getByRole('listbox')
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -340,7 +373,6 @@ describe('component: Select', (): void => {
 
       const newTrigger = getByRole('button', { name: 'flagstaff' })
       fireEvent.keyUp(newTrigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      await animationRender()
       fireEvent.keyDown(list, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
       fireEvent.keyDown(list, {
         keyCode: KeyCodes.RETURN,
@@ -351,7 +383,7 @@ describe('component: Select', (): void => {
       expect(box).toEqual({ name: 'city', value: 'tucson' })
     })
 
-    test('does not raise duplicate onChange event on RETURN keydown', async (): Promise<void> => {
+    test('does not raise duplicate onChange event on RETURN keydown', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, getByRole } = render(
@@ -364,11 +396,9 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Select an option')
+      const trigger = getByText('Select an option')
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       expect(box).toEqual({})
-      await animationRender()
       const list = getByRole('listbox')
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -382,7 +412,6 @@ describe('component: Select', (): void => {
 
       const newTrigger = getByRole('button', { name: 'flagstaff' })
       fireEvent.keyUp(newTrigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      await animationRender()
       fireEvent.keyDown(list, {
         keyCode: KeyCodes.RETURN,
         charCode: KeyCodes.RETURN,
@@ -392,15 +421,100 @@ describe('component: Select', (): void => {
       expect(box).toEqual({ name: 'city', value: 'flagstaff' })
     })
 
-    describe('typing with open list', (): void => {
-      test('will select matching first letter', async (): Promise<void> => {
+    test('skips disabled options when navigating the list with the UP/DOWN keys', () => {
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="skip-disabled">
+            <option value="0" disabled>
+              Skip me
+            </option>
+            <option value="1">First active</option>
+            <option value="2" disabled>
+              Skipped
+            </option>
+            <option value="3">Second active</option>
+            <option value="4" disabled>
+              Skippidy-doo-da
+            </option>
+            <option value="5" disabled>
+              Double skip
+            </option>
+            <option value="6">Third active</option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const listbox = getByRole('listbox')
+      const firstActive = getByText('First active')
+      const secondActive = getByText('Second active')
+      const thirdActive = getByText('Third active')
+
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(thirdActive.id)
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+    })
+
+    test('sets the active descendant to the first/last option on HOME/END keydown, respectively', () => {
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="home-end" options={['first', 'middle', 'last']} />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const listbox = getByRole('listbox')
+      const firstOption = getByText('first')
+      const lastOption = getByText('last')
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(lastOption.id)
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstOption.id)
+    })
+
+    test('sets the active descendant to the first/last non-disabled option on HOME/END keydown, respectively', () => {
+      const options = [
+        { label: 'first disabled', value: 0, disabled: true },
+        { label: 'first enabled', value: 1 },
+        { label: 'middle', value: 2 },
+        { label: 'last enabled', value: 3 },
+        { label: 'last disabled', value: 4, disabled: true },
+      ]
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="home-end" options={options} />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const listbox = getByRole('listbox')
+      const firstEnabled = getByText('first enabled')
+      const lastEnabled = getByText('last enabled')
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(lastEnabled.id)
+
+      fireEvent.keyDown(listbox, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      expect(listbox.getAttribute('aria-activedescendant')).toBe(firstEnabled.id)
+    })
+
+    describe('typing with open list', () => {
+      test('will select matching first letter', async () => {
         const { getByText, getByRole } = render(
           <StyleProvider>
             <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
           </StyleProvider>
         )
-        // @ts-ignore
-        const trigger: HTMLElement = getByText('Select an option') // default placeholder
+        const trigger = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
         await animationRender()
         const list = getByRole('listbox')
@@ -409,7 +523,7 @@ describe('component: Select', (): void => {
         expect(getActiveValue()).toEqual('tucson')
       })
 
-      test('will match multiple letters', async (): Promise<void> => {
+      test('will match multiple letters', async () => {
         const { getByText, getByRole } = render(
           <StyleProvider>
             <Select
@@ -419,8 +533,7 @@ describe('component: Select', (): void => {
             />
           </StyleProvider>
         )
-        // @ts-ignore
-        const trigger: HTMLElement = getByText('Select an option') // default placeholder
+        const trigger = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
         await animationRender()
         const list = getByRole('listbox')
@@ -433,8 +546,8 @@ describe('component: Select', (): void => {
     })
   })
 
-  describe('mouse interactions', (): void => {
-    test('closes on option click', async (): Promise<void> => {
+  describe('mouse interactions', () => {
+    test('closes on option click', async () => {
       const { getByText } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
@@ -443,13 +556,12 @@ describe('component: Select', (): void => {
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement
       userEvent.click(trigger)
-      await animationRender()
       userEvent.click(getByText('flagstaff'))
       await animationRender()
       expect(document.activeElement).toEqual(trigger)
     })
 
-    test('raises onChange event on click', async (): Promise<void> => {
+    test('raises onChange event on click', () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByRole, getByText } = render(
@@ -463,25 +575,37 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Click me!')
+      const trigger = getByText('Click me!')
       userEvent.click(trigger)
-      await animationRender()
       userEvent.click(getByText('flagstaff'))
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: 'flagstaff' })
 
       const newTrigger = getByRole('button', { name: 'flagstaff' })
       userEvent.click(newTrigger)
-      await animationRender()
       userEvent.click(getByText('tucson'))
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(2)
       expect(box).toEqual({ name: 'city', value: 'tucson' })
     })
 
-    test('does not raise duplicate onChange event on click', async (): Promise<void> => {
+    test('does not raise onChange event on click when the option is disabled', () => {
+      const onChange = jest.fn()
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="no-onchange" onChange={onChange}>
+            <Select.Option value="0" disabled>
+              I never got an onChange handler!
+            </Select.Option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      userEvent.click(getByText('I never got an onChange handler!'))
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
+    test('does not raise duplicate onChange event on click', () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByRole, getByText } = render(
@@ -495,44 +619,54 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Click me!')
+      const trigger = getByText('Click me!')
       userEvent.click(trigger)
-      await animationRender()
       userEvent.click(getByText('flagstaff'))
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: 'flagstaff' })
 
       const newTrigger = getByRole('button', { name: 'flagstaff' })
       userEvent.click(newTrigger)
-      await animationRender()
       userEvent.click(getByRole('option', { name: 'flagstaff' }))
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: 'flagstaff' })
     })
 
-    test('mouseEnter sets activedescendant', async (): Promise<void> => {
+    test('mouseEnter sets activedescendant', () => {
       const cities = ['Apache Junction', 'Avondale', 'Benson', 'Bisbee', 'Buckeye', 'Bullhead City']
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" placeholder="Click me!" options={cities} />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByText('Click me!')
+      const trigger = getByText('Click me!')
       userEvent.click(trigger)
-      await animationRender()
       const bensonOption = getByText('Benson')
       fireEvent.mouseEnter(bensonOption)
-      await animationRender()
       expect(getByRole('listbox').getAttribute('aria-activedescendant')).toEqual(bensonOption.id)
+    })
+
+    test('mouseEnter does not set activedescendant when the option is disabled', () => {
+      const { getByText, getByRole } = render(
+        <StyleProvider>
+          <Select id="test-id" name="no-set-active">
+            <Select.Option value="0" disabled>
+              not the active descendant
+            </Select.Option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const notActive = getByText('not the active descendant')
+
+      fireEvent.mouseEnter(notActive)
+      expect(getByRole('listbox').getAttribute('aria-activedescendant')).not.toEqual(notActive.id)
     })
   })
 
-  describe('onBlur()', (): void => {
-    test('is called when user blurs the closed Select', (): void => {
+  describe('onBlur()', () => {
+    test('is called when user blurs the closed Select', () => {
       const box: any = {}
       const onBlur = jest.fn((e) => {
         box.name = e.target.name
@@ -549,15 +683,14 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       fireEvent.focus(trigger)
       fireEvent.blur(trigger)
       expect(onBlur).toHaveBeenCalledTimes(1)
       expect(box.name).toEqual('city')
     })
 
-    test('is NOT called when list opens', async (): Promise<void> => {
+    test('is NOT called when list opens', async () => {
       const box: any = {}
       const onBlur = jest.fn((e) => {
         box.name = e.target.name
@@ -574,8 +707,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       trigger.focus()
       userEvent.click(trigger)
       await animationRender()
@@ -584,7 +716,7 @@ describe('component: Select', (): void => {
       expect(box).toEqual({})
     })
 
-    test('is called when list blurs by outside action', async (): Promise<void> => {
+    test('is called when list blurs by outside action', () => {
       const box: any = {}
       const onBlur = jest.fn((e) => {
         box.name = e.target.name
@@ -604,19 +736,17 @@ describe('component: Select', (): void => {
           </React.Fragment>
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       trigger.focus()
       userEvent.click(trigger)
-      await animationRender()
       getByText('lose focus').focus()
       expect(onBlur).toHaveBeenCalledTimes(1)
       expect(box.name).toEqual('city')
     })
   })
 
-  describe('onFocus()', (): void => {
-    test('is called when user focuses on Select', (): void => {
+  describe('onFocus()', () => {
+    test('is called when user focuses on Select', () => {
       const box: any = {}
       const onFocus = jest.fn((e) => {
         box.name = e.target.name
@@ -633,14 +763,13 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       fireEvent.focus(trigger)
       expect(onFocus).toHaveBeenCalledTimes(1)
       expect(box.name).toEqual('city')
     })
 
-    test('is NOT called when list closes via keyboard', async (): Promise<void> => {
+    test('is NOT called when list closes via keyboard', () => {
       const box: any = {}
       const onFocus = jest.fn((e) => {
         box.name = e.target.name
@@ -657,10 +786,8 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
-      await animationRender()
       expect(onFocus).toHaveBeenCalledTimes(1)
       expect(box.name).toEqual('city')
       onFocus.mockReset()
@@ -668,13 +795,12 @@ describe('component: Select', (): void => {
         keyCode: KeyCodes.ESC,
         charCode: KeyCodes.ESC,
       })
-      await animationRender()
       expect(onFocus).not.toHaveBeenCalled()
     })
   })
 
-  describe('with multiple=true', (): void => {
-    test('trigger is rendered with aria-multiselectable=true', async (): Promise<void> => {
+  describe('with multiple=true', () => {
+    test('trigger is rendered with aria-multiselectable=true', () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -693,7 +819,7 @@ describe('component: Select', (): void => {
       expect(document.querySelector('[aria-multiselectable=true]')).not.toBe(null)
     })
 
-    test('all options are rendered with aria-selected attribute as true or false', async (): Promise<void> => {
+    test('all options are rendered with aria-selected attribute as true or false', () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -710,7 +836,6 @@ describe('component: Select', (): void => {
         </StyleProvider>
       )
       userEvent.click(getByRole('button'))
-      await animationRender()
       const options = getAllByRole('option')
       options.forEach((o): void => {
         expect(o.getAttribute('aria-selected')).toBe(
@@ -719,7 +844,7 @@ describe('component: Select', (): void => {
       })
     })
 
-    test('can click checkboxes to add values', async (): Promise<void> => {
+    test('can click checkboxes to add values', () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText } = render(
@@ -735,17 +860,36 @@ describe('component: Select', (): void => {
       )
       const selectTrigger = getByText('Select an option')
       userEvent.click(selectTrigger)
-      await animationRender()
       const phoenixCheckbox = document.querySelector('input[type=checkbox]') as Element
       // We still need fireEvent for these elements because it's a weird setup with a
       // readonly checkbox, and userEvent doesn't handle that well
       fireEvent.click(phoenixCheckbox)
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: ['phoenix'] })
     })
 
-    test('can select multiple options', async (): Promise<void> => {
+    test('checkboxes are disabled for disabled options', () => {
+      const onChange = jest.fn()
+      const { getByRole } = render(
+        <StyleProvider>
+          <Select
+            id="test-id"
+            name="disabled-checkboxes"
+            options={[{ label: 'disable my checkbox', value: 0, disabled: true }]}
+            onChange={onChange}
+            multiple
+          />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      const disabledCheckbox = document.querySelector('input[type=checkbox]') as Element
+      expect(disabledCheckbox).toBeDisabled()
+      fireEvent.click(disabledCheckbox)
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
+    test('can select multiple options', async () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -761,8 +905,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const list = getByRole('listbox')
@@ -771,12 +914,11 @@ describe('component: Select', (): void => {
       // We still need fireEvent for these elements because it's a weird setup with a
       // readonly checkbox, and userEvent doesn't handle that well
       fireEvent.click(getByText('flagstaff', { selector: '[role="option"]' }))
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: ['tucson', 'flagstaff'] })
     })
 
-    test('removed value when selected again', async (): Promise<void> => {
+    test('removed value when selected again', async () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -792,8 +934,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const list = getByRole('listbox')
@@ -802,12 +943,11 @@ describe('component: Select', (): void => {
       // We still need fireEvent for these elements because it's a weird setup with a
       // readonly checkbox, and userEvent doesn't handle that well
       fireEvent.click(getByText('tucson', { selector: '[role="option"]' }))
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: [] })
     })
 
-    test('SPACE key will toggle option', async (): Promise<void> => {
+    test('SPACE key will toggle option', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByRole } = render(
@@ -821,8 +961,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const listbox = getByRole('listbox')
@@ -835,7 +974,6 @@ describe('component: Select', (): void => {
         keyCode: KeyCodes.SPACE,
         charCode: KeyCodes.SPACE,
       })
-      await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: ['tucson'] })
       expect(document.activeElement).toBe(listbox)
@@ -868,9 +1006,8 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
-      await animationRender()
       const listbox = getByRole('listbox')
       fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(listbox, {
@@ -897,7 +1034,7 @@ describe('component: Select', (): void => {
       expect(box).toEqual({ name: 'city', value: ['tucson'] })
     })
 
-    test('CLICK will toggle option but not close', async (): Promise<void> => {
+    test('CLICK will toggle option but not close', async () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
@@ -913,8 +1050,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      // @ts-ignore
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       expect(getActiveValue()).toBe('tucson')
@@ -928,29 +1064,28 @@ describe('component: Select', (): void => {
     })
   })
 
-  describe('with comboBox=true', (): void => {
-    test('CLICK should open the list and set focus on the input', async (): Promise<void> => {
+  describe('with comboBox=true', () => {
+    test('CLICK should open the list and set focus on the input', async () => {
       const { getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       expect(getByRole('listbox')).toBeInTheDocument()
       expect(document.activeElement).toBe(getByRole('textbox'))
     })
 
-    test('typing should filter options', async (): Promise<void> => {
+    test('typing should filter options', () => {
       const { getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
-      await animationRender()
       const searchBox = getByRole('textbox')
       userEvent.type(searchBox, 'phoe')
       const list = getByRole('listbox')
@@ -959,19 +1094,18 @@ describe('component: Select', (): void => {
       expect(list).not.toHaveTextContent('flagstaff')
     })
 
-    test('should be able to add options', async (): Promise<void> => {
+    test('should be able to add options', async () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      let trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
       userEvent.type(searchBox, 'camp verde')
       userEvent.click(getByText('Create "camp verde"'))
-      await animationRender()
       trigger = getByRole('button')
       expect(trigger).toHaveTextContent('camp verde')
     })
@@ -988,7 +1122,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
@@ -996,13 +1130,13 @@ describe('component: Select', (): void => {
       expect(getByText('No match found')).toBeInTheDocument()
     })
 
-    test('UP/DOWN should set the active descendant', async (): Promise<void> => {
+    test('UP/DOWN should set the active descendant', async () => {
       const { getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
@@ -1015,13 +1149,49 @@ describe('component: Select', (): void => {
       expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson')
     })
 
-    test('RETURN should select an option and focus on the trigger', async (): Promise<void> => {
+    test('UP/DOWN should not set the active descendant for disabled options', async () => {
+      const { getByRole, getByText } = render(
+        <StyleProvider>
+          <Select id="test-id" name="skip-disabled" comboBox>
+            <option value="0">No skip</option>
+            <option value="1" disabled>
+              Skip
+            </option>
+            <option value="2" disabled>
+              Double skip
+            </option>
+            <option value="3">Don't skip me</option>
+            <option value="4" disabled>
+              Skip me
+            </option>
+          </Select>
+        </StyleProvider>
+      )
+
+      userEvent.click(getByRole('button'))
+      await animationRender()
+      const searchBox = document.activeElement as HTMLElement
+      const firstActive = getByText('No skip')
+      const secondActive = getByText("Don't skip me")
+
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
+
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
+    })
+
+    test('RETURN should select an option and focus on the trigger', async () => {
       const { getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      let trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
@@ -1033,13 +1203,13 @@ describe('component: Select', (): void => {
       expect(document.activeElement).toBe(trigger)
     })
 
-    test('ESC should return focus to the trigger', async (): Promise<void> => {
+    test('ESC should return focus to the trigger', async () => {
       const { getByRole } = render(
         <StyleProvider>
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      let trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
@@ -1049,7 +1219,7 @@ describe('component: Select', (): void => {
       expect(document.activeElement).toBe(trigger)
     })
 
-    test('values that are not in options should be added', async (): Promise<void> => {
+    test('values that are not in options should be added', () => {
       const { getByRole } = render(
         <StyleProvider>
           <Select
@@ -1061,14 +1231,13 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('superior')
       userEvent.click(trigger)
-      await animationRender()
       expect(getByRole('listbox')).toHaveTextContent('superior')
     })
 
-    test('values should stay in options even after they are removed from the value', async (): Promise<void> => {
+    test('values should stay in options even after they are removed from the value', () => {
       const { getByRole, rerender } = render(
         <StyleProvider>
           <Select
@@ -1096,14 +1265,14 @@ describe('component: Select', (): void => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       const listbox = getByRole('listbox')
       expect(listbox).toHaveTextContent('superior')
       expect(listbox).toHaveTextContent('globe')
     })
 
-    test('values added should not be duplicated', async (): Promise<void> => {
+    test('values added should not be duplicated', () => {
       const DelayedOptions = () => {
         const [options, setOptions] = React.useState<string[]>([])
         React.useEffect(() => setOptions(['phoenix', 'tucson', 'flagstaff']), [])
@@ -1122,8 +1291,8 @@ describe('component: Select', (): void => {
     })
   })
 
-  describe('with multiple=true && comboBox=true', (): void => {
-    test('CLICK on option should select it and keep the list open', async (): Promise<void> => {
+  describe('with multiple=true && comboBox=true', () => {
+    test('CLICK on option should select it and keep the list open', () => {
       const { getByText, getByRole } = render(
         <StyleProvider>
           <Select
@@ -1135,11 +1304,10 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
-      await animationRender()
-      const flagstaff: HTMLElement = getByText('flagstaff')
-      const phoenix: HTMLElement = getByText('phoenix')
+      const flagstaff = getByText('flagstaff')
+      const phoenix = getByText('phoenix')
       // We still need fireEvent for these elements because it's a weird setup with a
       // readonly checkbox, and userEvent doesn't handle that well
       fireEvent.click(flagstaff)
@@ -1149,7 +1317,7 @@ describe('component: Select', (): void => {
       expect(getByRole('listbox')).not.toBeNull()
     })
 
-    test('RETURN on option should toggle it and keep the list open', async (): Promise<void> => {
+    test('RETURN on option should toggle it and keep the list open', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByText, getByRole } = render(
@@ -1164,7 +1332,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
@@ -1172,8 +1340,8 @@ describe('component: Select', (): void => {
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
-      const phoenix: HTMLElement = getByText('phoenix')
-      const tucson: HTMLElement = getByText('tucson')
+      const phoenix = getByText('phoenix')
+      const tucson = getByText('tucson')
       expect(phoenix.getAttribute('aria-selected')).toBe('true')
       expect(tucson.getAttribute('aria-selected')).toBe('true')
       expect(onChange).toHaveBeenCalledTimes(2)
@@ -1189,7 +1357,7 @@ describe('component: Select', (): void => {
       expect(getByRole('listbox')).not.toBeNull()
     })
 
-    test('RETURN w/ metaKey should select, NOT toggle, the option and close', async (): Promise<void> => {
+    test('RETURN w/ metaKey should select, NOT toggle, the option and close', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
       const { getByRole } = render(
@@ -1204,7 +1372,7 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      let trigger: HTMLElement = getByRole('button')
+      let trigger = getByRole('button')
       userEvent.click(trigger)
       await animationRender()
       let searchBox: HTMLElement = document.activeElement as HTMLElement
@@ -1238,7 +1406,7 @@ describe('component: Select', (): void => {
       expect(box).toEqual({ name: 'city', value: ['phoenix'] })
     })
 
-    test('blurring the list box to focus on the input should not close the list', async (): Promise<void> => {
+    test('blurring the list box to focus on the input should not close the list', () => {
       const { getByRole, getByText } = render(
         <StyleProvider>
           <Select
@@ -1250,9 +1418,8 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       userEvent.click(trigger)
-      await animationRender()
       // We still need fireEvent for these elements because it's a weird setup with a
       // readonly checkbox, and userEvent doesn't handle that well
       fireEvent.click(getByText('flagstaff'))
@@ -1260,7 +1427,7 @@ describe('component: Select', (): void => {
       expect(getByRole('listbox')).not.toBeNull()
     })
 
-    test('values that are not in options should be added', async (): Promise<void> => {
+    test('values that are not in options should be added', () => {
       const { getByRole } = render(
         <StyleProvider>
           <Select
@@ -1273,18 +1440,17 @@ describe('component: Select', (): void => {
           />
         </StyleProvider>
       )
-      const trigger: HTMLElement = getByRole('button')
+      const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('boolestcoolest')
       userEvent.click(trigger)
-      await animationRender()
       const listbox = getByRole('listbox')
       expect(listbox.childNodes[0]).toHaveTextContent('boolest')
       expect(listbox.childNodes[1]).toHaveTextContent('coolest')
     })
   })
 
-  describe('with theme customization', (): void => {
-    test('should have 2px border', (): void => {
+  describe('with theme customization', () => {
+    test('should have 2px border', () => {
       const theme = generateTheme({ primaryHue: 200, border: 'thick' })
       const { container } = render(
         <StyleProvider theme={theme}>
@@ -1297,7 +1463,7 @@ describe('component: Select', (): void => {
       expect(styles.borderWidth).toBe('2px')
     })
 
-    test('should match intermediate shape styles', (): void => {
+    test('should match intermediate shape styles', () => {
       const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
       const { container } = render(
         <StyleProvider theme={theme}>
@@ -1311,7 +1477,7 @@ describe('component: Select', (): void => {
       expect(styles.borderRadius).toBe('8px')
     })
 
-    test('should match square shape styles', (): void => {
+    test('should match square shape styles', () => {
       const theme = generateTheme({ primaryHue: 200, shape: 'square' })
       const { container } = render(
         <StyleProvider theme={theme}>
@@ -1325,7 +1491,7 @@ describe('component: Select', (): void => {
       expect(styles.borderRadius).toBe('1px')
     })
 
-    test('should not have box shadows set', (): void => {
+    test('should not have box shadows set', () => {
       const theme = generateTheme({ primaryHue: 200, boxShadows: false })
       const { container } = render(
         <StyleProvider theme={theme}>

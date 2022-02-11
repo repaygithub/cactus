@@ -34,6 +34,7 @@ interface WithValue {
 
 export interface OptionType extends WithValue {
   label: string
+  disabled?: boolean
 }
 
 interface OptionProps extends WithValue {
@@ -41,10 +42,12 @@ interface OptionProps extends WithValue {
   id?: string
   'aria-label'?: string
   altText?: string
+  disabled?: boolean
 }
 
 interface ExtendedOptionType extends WithValue {
   label: React.ReactNode
+  disabled: boolean
   id: string
   ariaLabel?: string
   altText?: string
@@ -380,6 +383,10 @@ const StyledOption = styled.li`
       border-color: white;
     }
   }
+  &[aria-disabled='true'] {
+    color: ${(p) => p.theme.colors.mediumContrast};
+    cursor: not-allowed;
+  }
   ${CheckBox} {
     pointer-events: none;
     margin-right: 4px;
@@ -544,6 +551,24 @@ function positionResponsive(dd: HTMLElement) {
   dd.style.width = `${window.innerWidth}px`
 }
 
+function getNextEnabledOption(args: {
+  options: ExtendedOptionType[]
+  currentActiveValue?: OptionValue
+  reverse: boolean
+  slice?: boolean
+}) {
+  const { options, currentActiveValue, reverse, slice } = args
+  let optionsCopy = [...options]
+  if (reverse) {
+    optionsCopy = optionsCopy.reverse()
+  }
+  if (slice && currentActiveValue) {
+    const currentActiveIndex = getSelectedIndex(optionsCopy, currentActiveValue)
+    optionsCopy = optionsCopy.slice(currentActiveIndex + 1)
+  }
+  return optionsCopy.find((opt) => !opt.disabled)?.id
+}
+
 interface ListState {
   activeDescendant: string
   searchValue: string
@@ -580,37 +605,36 @@ class List extends React.Component<ListProps, ListState> {
     if (active === null || options.length === 0) {
       return
     }
-    let nextIndex = getSelectedIndex(options, active.value)
 
     switch (key) {
       case KeyCodes.UP:
       case KeyCodes.DOWN: {
         event.preventDefault()
-        if (key === KeyCodes.UP) {
-          --nextIndex
-        } else {
-          ++nextIndex
-        }
 
-        if (nextIndex <= 0) {
-          this.setActiveDescendant(options[0].id)
-        } else if (nextIndex >= options.length - 1) {
-          this.setActiveDescendant(options[options.length - 1].id)
-        } else {
-          this.setActiveDescendant(options[nextIndex].id)
+        const nextActiveId = getNextEnabledOption({
+          options,
+          currentActiveValue: active.value,
+          reverse: key === KeyCodes.UP,
+          slice: true,
+        })
+        if (nextActiveId) {
+          this.setActiveDescendant(nextActiveId)
         }
 
         break
       }
-      case KeyCodes.HOME: {
+      case KeyCodes.HOME:
+      case KeyCodes.END: {
         event.preventDefault()
-        this.setActiveDescendant(options[0].id)
+        const nextActiveId = getNextEnabledOption({
+          options,
+          reverse: key === KeyCodes.END,
+        })
+        if (nextActiveId) {
+          this.setActiveDescendant(nextActiveId)
+        }
         break
       }
-      case KeyCodes.END:
-        event.preventDefault()
-        this.setActiveDescendant(options[options.length - 1].id)
-        break
       case KeyCodes.SPACE:
         event.preventDefault()
         if (this.props.multiple) {
@@ -712,7 +736,7 @@ class List extends React.Component<ListProps, ListState> {
     if (selected) {
       activeId = selected.id
     } else if (options.length) {
-      activeId = options[0].id
+      activeId = options.find((opt) => !opt.disabled)?.id || ''
     }
     return activeId
   }
@@ -758,6 +782,7 @@ class List extends React.Component<ListProps, ListState> {
         const addOpt: ExtendedOptionType = {
           value: 'create',
           label: `Create "${props.searchValue}"`,
+          disabled: false,
           id: `create-${props.searchValue}`,
           altText: props.searchValue,
         }
@@ -885,7 +910,8 @@ class List extends React.Component<ListProps, ListState> {
                   className={activeDescendant === optId ? 'highlighted-option' : undefined}
                   data-role={isCreateNewOption ? 'create' : 'option'}
                   aria-selected={ariaSelected}
-                  onMouseEnter={this.handleOptionMouseEnter}
+                  aria-disabled={opt.disabled}
+                  onMouseEnter={!opt.disabled ? this.handleOptionMouseEnter : undefined}
                 >
                   {isCreateNewOption ? (
                     <ActionsAdd mr={2} mb={2} />
@@ -894,6 +920,7 @@ class List extends React.Component<ListProps, ListState> {
                       id={`multiselect-option-check-${optId}`}
                       aria-hidden="true"
                       checked={isSelected}
+                      disabled={opt.disabled}
                       readOnly
                       mr={2}
                     />
@@ -962,12 +989,14 @@ class OptionState {
     stateValue: SelectValueType,
     optValue: OptionValue | OptionType,
     optLabel?: React.ReactNode,
+    isDisabled = false,
     id?: string,
     altText?: string,
     ariaLabel?: string
   ): boolean {
     if (typeof optValue === 'object') {
       optLabel = optValue.label
+      isDisabled = !!optValue.disabled
       optValue = optValue.value
     } else if (optLabel === undefined) {
       optLabel = optValue
@@ -977,6 +1006,7 @@ class OptionState {
       const extOpt = {
         value: optValue,
         label: optLabel,
+        disabled: isDisabled,
         altText: !altText && typeof strLabel === 'string' ? strLabel : altText,
         id: id || getOptionId(this.idPrefix, optValue),
         ariaLabel,
@@ -1024,7 +1054,13 @@ class OptionState {
       } else if (child?.props) {
         const value = child.props.value
         if (typeof value === 'string' || typeof value === 'number') {
-          const { altText: altProp, children: label, id, 'aria-label': ariaLabel } = child.props
+          const {
+            altText: altProp,
+            children: label,
+            id,
+            'aria-label': ariaLabel,
+            disabled,
+          } = child.props
           let altText: string | undefined = altProp || ariaLabel
           // If label is a component, try to minimize how often we have to pull from textContent;
           // this is to avoid the delay from `useEffect`, rather than performance reasons.
@@ -1034,7 +1070,7 @@ class OptionState {
               altText = prevOpt.altText
             }
           }
-          this.addOption(stateValue, value, label, id, altText, ariaLabel)
+          this.addOption(stateValue, value, label, disabled, id, altText, ariaLabel)
         }
       }
     }
@@ -1226,7 +1262,10 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
       }
       return
     }
-    if (target.getAttribute('role') === 'option') {
+    if (
+      target.getAttribute('role') === 'option' &&
+      target.getAttribute('aria-disabled') === 'false'
+    ) {
       event.preventDefault()
       const activeId = target.id
       const active = this.getExtOptions().find((o): boolean => o.id === activeId)
@@ -1284,23 +1323,14 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
             })
             return
           }
-          let nextIndex = getSelectedIndex(options, active.value)
-          if (key === KeyCodes.UP) {
-            --nextIndex
-          } else {
-            ++nextIndex
-          }
-
-          if (nextIndex <= 0) {
-            this.setState({ activeDescendant: options[0].id })
-          } else if (nextIndex >= options.length - 1) {
-            this.setState({
-              activeDescendant: options[options.length - 1].id,
-            })
-          } else {
-            this.setState({
-              activeDescendant: options[nextIndex].id,
-            })
+          const nextActiveId = getNextEnabledOption({
+            options,
+            currentActiveValue: active.value,
+            reverse: key === KeyCodes.UP,
+            slice: true,
+          })
+          if (nextActiveId) {
+            this.setActiveDescendant(nextActiveId)
           }
           break
         }
@@ -1450,7 +1480,6 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
       name,
       id,
       disabled,
-      options: mixOptions,
       className,
       placeholder,
       width,
@@ -1577,6 +1606,7 @@ Select.propTypes = {
       PropTypes.shape({
         label: PropTypes.string.isRequired,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        disabled: PropTypes.bool,
       })
     ),
     PropTypes.arrayOf(PropTypes.string.isRequired),
