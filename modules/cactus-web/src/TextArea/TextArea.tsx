@@ -59,11 +59,11 @@ const Area = styled.textarea<AreaProps>`
 
 const TextAreaBase = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props: TextAreaProps, ref) => {
-    const { className, height, width, ...rest } = omitMargins(props)
+    const { className, height: hasH, width: hasW, ...rest } = omitMargins(props)
 
     return (
       <div className={className}>
-        <Area {...rest} ref={ref} $height={control(height)} $width={control(width)} />
+        <Area {...rest} ref={ref} $height={control(hasH)} $width={control(hasW)} />
       </div>
     )
   }
