@@ -67,6 +67,45 @@ export interface BreakpointsObject {
   extraLarge: string
 }
 
+interface GeneratedColors {
+  /** Core colors */
+  base: string
+  baseText: string
+  callToAction: string
+  callToActionText: string
+  lightCallToAction: string
+
+  /** Contrasts */
+  lightContrast: string
+  mediumContrast: string
+  darkContrast: string
+  darkestContrast: string
+}
+
+interface ThemeColors extends GeneratedColors {
+  /** Neutrals */
+  white: string
+  lightGray: string
+  mediumGray: string
+  darkGray: string
+
+  /** Notification Colors */
+  success: string
+  warning: string
+  error: string
+  successLight: string
+  warningLight: string
+  errorLight: string
+  successMedium: string
+  warningMedium: string
+  errorMedium: string
+  successDark: string
+  warningDark: string
+  errorDark: string
+
+  status: StatusColors
+}
+
 export interface CactusTheme {
   breakpoints: string[]
   mediaQueries: {
@@ -75,42 +114,7 @@ export interface CactusTheme {
     large: string
     extraLarge: string
   }
-  colors: {
-    /** Core colors */
-    base: string
-    baseText: string
-    callToAction: string
-    callToActionText: string
-    lightCallToAction: string
-
-    /** Contrasts */
-    lightContrast: string
-    mediumContrast: string
-    darkContrast: string
-    darkestContrast: string
-
-    /** Neutrals */
-    white: string
-    lightGray: string
-    mediumGray: string
-    darkGray: string
-
-    /** Notification Colors */
-    success: string
-    warning: string
-    error: string
-    successLight: string
-    warningLight: string
-    errorLight: string
-    successMedium: string
-    warningMedium: string
-    errorMedium: string
-    successDark: string
-    warningDark: string
-    errorDark: string
-
-    status: StatusColors
-  }
+  colors: ThemeColors
   space: number[]
   fontSizes: FontSizeObject
   mobileFontSizes: FontSizeObject
@@ -219,141 +223,21 @@ function getSaturation(satPercentage: number, saturationFactor = 1): number {
   return Number((satPercentage * saturationFactor).toFixed(2))
 }
 
-function fromHue({
-  primaryHue,
-  saturationMultiplier = 1,
-}: HueGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
-  /** Core colors */
-  const base = `hsl(${primaryHue}, ${getSaturation(96, saturationMultiplier)}%, 11%)`
-  const baseText = `hsl(0, 0%, 100%)`
+function fromHue({ primaryHue, saturationMultiplier = 1 }: HueGeneratorOptions): GeneratedColors {
   const ctaParams = [primaryHue, getSaturation(96, saturationMultiplier), 35]
-  const callToAction = getHslString(ctaParams)
-  const callToActionText = `hsl(0, 0%, 100%)`
-  const lightCallToAction = getLightCallToAction(ctaParams)
-
-  /** Contrasts */
-  const lightContrast = `hsl(${primaryHue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
-  const mediumContrast = `hsl(${primaryHue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
-  const darkContrast = `hsl(${primaryHue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
-  const darkestContrast = `hsl(${primaryHue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
-
-  return [
-    {
-      /** Core colors */
-      base,
-      baseText,
-      callToAction,
-      callToActionText,
-      lightCallToAction,
-
-      /** Contrasts */
-      lightContrast,
-      mediumContrast,
-      darkContrast,
-      darkestContrast,
-
-      /** Neutrals */
-      white,
-      lightGray,
-      mediumGray,
-      darkGray,
-
-      /** Notification Colors */
-      success,
-      error,
-      warning,
-      successLight,
-      errorLight,
-      warningLight,
-      successMedium,
-      errorMedium,
-      warningMedium,
-      successDark,
-      errorDark,
-      warningDark,
-
-      /** Status Colors */
-      status,
-    },
-    {
-      base: {
-        backgroundColor: base,
-        color: baseText,
-      },
-      callToAction: {
-        backgroundColor: callToAction,
-        color: callToActionText,
-      },
-      standard: {
-        backgroundColor: white,
-        color: darkestContrast,
-      },
-      lightContrast: {
-        backgroundColor: lightContrast,
-        color: darkestContrast,
-      },
-      darkestContrast: {
-        backgroundColor: darkestContrast,
-        color: white,
-      },
-      success: {
-        backgroundColor: success,
-        color: white,
-      },
-      error: {
-        backgroundColor: error,
-        color: white,
-      },
-      warning: {
-        backgroundColor: warning,
-        color: darkestContrast,
-      },
-      disable: {
-        backgroundColor: lightGray,
-        color: mediumGray,
-      },
-      lightCallToAction: {
-        backgroundColor: lightCallToAction,
-        color: darkestContrast,
-      },
-      successLight: {
-        backgroundColor: successLight,
-        color: darkestContrast,
-      },
-      errorLight: {
-        backgroundColor: errorLight,
-        color: darkestContrast,
-      },
-      warningLight: {
-        backgroundColor: warningLight,
-        color: darkContrast,
-      },
-      successMedium: {
-        backgroundColor: successMedium,
-        color: darkestContrast,
-      },
-      errorMedium: {
-        backgroundColor: errorMedium,
-        color: darkestContrast,
-      },
-      warningMedium: {
-        backgroundColor: warningMedium,
-        color: darkContrast,
-      },
-      errorDark: {
-        backgroundColor: errorDark,
-        color: white,
-      },
-      warningDark: {
-        backgroundColor: warningDark,
-        color: white,
-      },
-      successDark: {
-        backgroundColor: successDark,
-        color: white,
-      },
-    },
-  ]
+  return {
+    /** Core colors */
+    base: `hsl(${primaryHue}, ${getSaturation(96, saturationMultiplier)}%, 11%)`,
+    baseText: white,
+    callToAction: getHslString(ctaParams),
+    callToActionText: white,
+    lightCallToAction: getLightCallToAction(ctaParams),
+    /** Contrasts */
+    lightContrast: `hsl(${primaryHue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`,
+    mediumContrast: `hsl(${primaryHue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`,
+    darkContrast: `hsl(${primaryHue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`,
+    darkestContrast: `hsl(${primaryHue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`,
+  }
 }
 
 interface TwoColorGeneratorOptions extends SharedGeneratorOptions {
@@ -368,158 +252,38 @@ interface Color {
   rgb: [number, number, number]
 }
 
-function fromTwoWhite(
-  primaryHue: number,
-  saturationMultiplier: number
-): [CactusTheme['colors'], CactusTheme['colorStyles']] {
-  /** Contrasts */
+function fromTwoWhite(primaryHue: number, saturationMultiplier: number): GeneratedColors {
   const lightContrast = `hsl(${primaryHue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
   const mediumContrast = `hsl(${primaryHue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
   const darkContrast = `hsl(${primaryHue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
   const darkestContrast = `hsl(${primaryHue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
-
   const ctaParams = [244, getSaturation(48, saturationMultiplier), 26]
-  const callToAction = getHslString(ctaParams)
-  const lightCallToAction = getLightCallToAction(ctaParams)
-  const callToActionText = white
+  return {
+    /** Core colors */
+    base: white,
+    baseText: darkestContrast,
+    callToAction: getHslString(ctaParams),
+    callToActionText: white,
+    lightCallToAction: getLightCallToAction(ctaParams),
 
-  return [
-    {
-      /** Core colors */
-      base: white,
-      baseText: darkestContrast,
-      callToAction,
-      callToActionText,
-      lightCallToAction,
-
-      /** Contrasts */
-      lightContrast,
-      mediumContrast,
-      darkContrast,
-      darkestContrast,
-
-      /** Neutrals */
-      white,
-      lightGray,
-      mediumGray,
-      darkGray,
-
-      /** Notification Colors */
-      success,
-      error,
-      warning,
-      successLight,
-      errorLight,
-      warningLight,
-      successMedium,
-      errorMedium,
-      warningMedium,
-      successDark,
-      errorDark,
-      warningDark,
-
-      /** Status Colors */
-      status,
-    },
-    {
-      base: {
-        backgroundColor: white,
-        color: darkestContrast,
-      },
-      callToAction: {
-        backgroundColor: callToAction,
-        color: callToActionText,
-      },
-      standard: {
-        backgroundColor: white,
-        color: darkestContrast,
-      },
-      lightContrast: {
-        backgroundColor: lightContrast,
-        color: darkestContrast,
-      },
-      darkestContrast: {
-        backgroundColor: darkestContrast,
-        color: white,
-      },
-      success: {
-        backgroundColor: success,
-        color: white,
-      },
-      error: {
-        backgroundColor: error,
-        color: white,
-      },
-      warning: {
-        backgroundColor: warning,
-        color: darkestContrast,
-      },
-      disable: {
-        backgroundColor: lightGray,
-        color: mediumGray,
-      },
-      lightCallToAction: {
-        backgroundColor: lightCallToAction,
-        color: darkestContrast,
-      },
-      successLight: {
-        backgroundColor: successLight,
-        color: darkestContrast,
-      },
-      errorLight: {
-        backgroundColor: errorLight,
-        color: darkestContrast,
-      },
-      warningLight: {
-        backgroundColor: warningLight,
-        color: darkContrast,
-      },
-      successMedium: {
-        backgroundColor: successMedium,
-        color: darkestContrast,
-      },
-      errorMedium: {
-        backgroundColor: errorMedium,
-        color: darkestContrast,
-      },
-      warningMedium: {
-        backgroundColor: warningMedium,
-        color: darkContrast,
-      },
-      errorDark: {
-        backgroundColor: errorDark,
-        color: white,
-      },
-      warningDark: {
-        backgroundColor: warningDark,
-        color: white,
-      },
-      successDark: {
-        backgroundColor: successDark,
-        color: white,
-      },
-    },
-  ]
+    /** Contrasts */
+    lightContrast,
+    mediumContrast,
+    darkContrast,
+    darkestContrast,
+  }
 }
 
 function fromWhiteSecondary(
   primary: Color,
   secondary: Color,
   saturationMultiplier: number
-): [CactusTheme['colors'], CactusTheme['colorStyles']] {
-  /** Core colors */
-  const base = `hsl(${primary.hue}, ${getSaturation(primary.saturation, saturationMultiplier)}%, ${
-    primary.lightness
-  }%)`
+): GeneratedColors {
   const contrastHue = secondary.lightness === 100 ? primary.hue : secondary.hue
-
-  /** Contrasts */
   const lightContrast = `hsl(${contrastHue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
   const mediumContrast = `hsl(${contrastHue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
   const darkContrast = `hsl(${contrastHue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
   const darkestContrast = `hsl(${contrastHue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
-
-  const baseText = isDark(...primary.rgb) ? white : darkestContrast
 
   // create secondary color from primary
   const updatedSecondaryHue = primary.lightness !== 0 ? primary.hue : 244
@@ -530,280 +294,53 @@ function fromWhiteSecondary(
     getSaturation(updatedSecondarySaturation, saturationMultiplier),
     updatedSecondaryLightness,
   ]
-  const callToAction = getHslString(ctaParams)
-  const callToActionText = white
-  const lightCallToAction = getLightCallToAction(ctaParams)
+  return {
+    /** Core colors */
+    base: `hsl(${primary.hue}, ${primary.saturation}%, ${primary.lightness}%)`,
+    baseText: isDark(...primary.rgb) ? white : darkestContrast,
+    callToAction: getHslString(ctaParams),
+    callToActionText: white,
+    lightCallToAction: getLightCallToAction(ctaParams),
 
-  return [
-    {
-      /** Core colors */
-      base,
-      baseText,
-      callToAction,
-      callToActionText,
-      lightCallToAction,
-
-      /** Contrasts */
-      lightContrast,
-      mediumContrast,
-      darkContrast,
-      darkestContrast,
-
-      /** Neutrals */
-      white,
-      lightGray,
-      mediumGray,
-      darkGray,
-
-      /** Notification Colors */
-      success,
-      error,
-      warning,
-      successLight,
-      errorLight,
-      warningLight,
-      successMedium,
-      errorMedium,
-      warningMedium,
-      successDark,
-      errorDark,
-      warningDark,
-
-      /** Status Colors */
-      status,
-    },
-    {
-      base: {
-        backgroundColor: base,
-        color: baseText,
-      },
-      callToAction: {
-        backgroundColor: callToAction,
-        color: callToActionText,
-      },
-      standard: {
-        backgroundColor: white,
-        color: darkestContrast,
-      },
-      lightContrast: {
-        backgroundColor: lightContrast,
-        color: darkestContrast,
-      },
-      darkestContrast: {
-        backgroundColor: darkestContrast,
-        color: white,
-      },
-      success: {
-        backgroundColor: success,
-        color: white,
-      },
-      error: {
-        backgroundColor: error,
-        color: white,
-      },
-      warning: {
-        backgroundColor: warning,
-        color: darkestContrast,
-      },
-      disable: {
-        backgroundColor: lightGray,
-        color: mediumGray,
-      },
-      lightCallToAction: {
-        backgroundColor: lightCallToAction,
-        color: darkestContrast,
-      },
-      successLight: {
-        backgroundColor: successLight,
-        color: darkestContrast,
-      },
-      errorLight: {
-        backgroundColor: errorLight,
-        color: darkestContrast,
-      },
-      warningLight: {
-        backgroundColor: warningLight,
-        color: darkContrast,
-      },
-      successMedium: {
-        backgroundColor: successMedium,
-        color: darkestContrast,
-      },
-      errorMedium: {
-        backgroundColor: errorMedium,
-        color: darkestContrast,
-      },
-      warningMedium: {
-        backgroundColor: warningMedium,
-        color: darkContrast,
-      },
-      errorDark: {
-        backgroundColor: errorDark,
-        color: white,
-      },
-      warningDark: {
-        backgroundColor: warningDark,
-        color: white,
-      },
-      successDark: {
-        backgroundColor: successDark,
-        color: white,
-      },
-    },
-  ]
+    /** Contrasts */
+    lightContrast,
+    mediumContrast,
+    darkContrast,
+    darkestContrast,
+  }
 }
 
 function fromTwoNonWhite(
   primary: Color,
   secondary: Color,
   saturationMultiplier: number
-): [CactusTheme['colors'], CactusTheme['colorStyles']] {
-  /** Core colors */
-  const base = `hsl(${primary.hue}, ${getSaturation(primary.saturation, saturationMultiplier)}%, ${
-    primary.lightness
-  }%)`
-
-  /** Contrasts */
+): GeneratedColors {
   const lightContrast = `hsl(${primary.hue}, ${getSaturation(29, saturationMultiplier)}%, 90%)`
   const mediumContrast = `hsl(${primary.hue}, ${getSaturation(18, saturationMultiplier)}%, 45%)`
   const darkContrast = `hsl(${primary.hue}, ${getSaturation(9, saturationMultiplier)}%, 35%)`
   const darkestContrast = `hsl(${primary.hue}, ${getSaturation(10, saturationMultiplier)}%, 20%)`
+  const ctaParams = [secondary.hue, secondary.saturation, secondary.lightness]
+  return {
+    /** Core colors */
+    base: `hsl(${primary.hue}, ${primary.saturation}%, ${primary.lightness}%)`,
+    baseText: isDark(...primary.rgb) ? white : darkestContrast,
+    callToAction: getHslString(ctaParams),
+    callToActionText: isDark(...secondary.rgb) ? white : darkestContrast,
+    lightCallToAction: getLightCallToAction(ctaParams),
 
-  const baseText = isDark(...primary.rgb) ? white : darkestContrast
-
-  const ctaParams = [
-    secondary.hue,
-    getSaturation(secondary.saturation, saturationMultiplier),
-    secondary.lightness,
-  ]
-  const callToAction = getHslString(ctaParams)
-  const callToActionText = isDark(...secondary.rgb) ? white : darkestContrast
-  const lightCallToAction = getLightCallToAction(ctaParams)
-
-  return [
-    {
-      /** Core colors */
-      base,
-      baseText,
-      callToAction,
-      callToActionText,
-      lightCallToAction,
-
-      /** Contrasts */
-      lightContrast,
-      mediumContrast,
-      darkContrast,
-      darkestContrast,
-
-      /** Neutrals */
-      white,
-      lightGray,
-      mediumGray,
-      darkGray,
-
-      /** Notification Colors */
-      success,
-      error,
-      warning,
-      successLight,
-      errorLight,
-      warningLight,
-      successMedium,
-      errorMedium,
-      warningMedium,
-      successDark,
-      errorDark,
-      warningDark,
-
-      /** Status Colors */
-      status,
-    },
-    {
-      base: {
-        backgroundColor: base,
-        color: baseText,
-      },
-      callToAction: {
-        backgroundColor: callToAction,
-        color: callToActionText,
-      },
-      standard: {
-        backgroundColor: white,
-        color: darkestContrast,
-      },
-      lightContrast: {
-        backgroundColor: lightContrast,
-        color: darkestContrast,
-      },
-      darkestContrast: {
-        backgroundColor: darkestContrast,
-        color: white,
-      },
-      success: {
-        backgroundColor: success,
-        color: white,
-      },
-      error: {
-        backgroundColor: error,
-        color: white,
-      },
-      warning: {
-        backgroundColor: warning,
-        color: darkestContrast,
-      },
-      disable: {
-        backgroundColor: lightGray,
-        color: mediumGray,
-      },
-      lightCallToAction: {
-        backgroundColor: lightCallToAction,
-        color: darkestContrast,
-      },
-      successLight: {
-        backgroundColor: successLight,
-        color: darkestContrast,
-      },
-      errorLight: {
-        backgroundColor: errorLight,
-        color: darkestContrast,
-      },
-      warningLight: {
-        backgroundColor: warningLight,
-        color: darkContrast,
-      },
-      successMedium: {
-        backgroundColor: successMedium,
-        color: darkestContrast,
-      },
-      errorMedium: {
-        backgroundColor: errorMedium,
-        color: darkestContrast,
-      },
-      warningMedium: {
-        backgroundColor: warningMedium,
-        color: darkContrast,
-      },
-      errorDark: {
-        backgroundColor: errorDark,
-        color: white,
-      },
-      warningDark: {
-        backgroundColor: warningDark,
-        color: white,
-      },
-      successDark: {
-        backgroundColor: successDark,
-        color: white,
-      },
-    },
-  ]
+    /** Contrasts */
+    lightContrast,
+    mediumContrast,
+    darkContrast,
+    darkestContrast,
+  }
 }
 
 function fromTwoColor({
   primary,
   secondary,
   saturationMultiplier = 1,
-}: TwoColorGeneratorOptions): [CactusTheme['colors'], CactusTheme['colorStyles']] {
+}: TwoColorGeneratorOptions): GeneratedColors {
   const primaryRgb = hexToRgb(primary)
   const secondaryRgb = hexToRgb(secondary || '')
   const [primaryHue, primarySaturation, primaryLightness] = rgbToHsl(...primaryRgb)
@@ -812,14 +349,14 @@ function fromTwoColor({
 
   const primaryColor: Color = {
     hue: primaryHue,
-    saturation: primarySaturation,
+    saturation: getSaturation(primarySaturation, saturationMultiplier),
     lightness: primaryLightness,
     rgb: primaryRgb,
   }
 
   const secondaryColor: Color = {
     hue: secondaryHue,
-    saturation: secondarySaturation,
+    saturation: getSaturation(secondarySaturation, saturationMultiplier),
     lightness: secondaryLightness,
     rgb: secondaryRgb,
   }
@@ -885,11 +422,10 @@ const makeTextStyles = (fontSizes: FontSizeObject): TextStyleCollection => ({
 })
 
 export function generateTheme(options: GeneratorOptions = repayOptions): CactusTheme {
-  const [colors, colorStyles] = isHue(options) ? fromHue(options) : fromTwoColor(options)
+  const colors: GeneratedColors = isHue(options) ? fromHue(options) : fromTwoColor(options)
 
   if (options.grayscaleContrast) {
     colors.lightContrast = grayscaleLightContrast
-    colorStyles.lightContrast.backgroundColor = grayscaleLightContrast
   }
 
   const fontSizes = [12.5, 15, 18, 21.6, 25.92, 31.104, 37.325] as FontSizeObject
@@ -938,8 +474,111 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
   }
 
   return {
-    colors,
-    colorStyles,
+    colors: {
+      /** Core colors & Contrasts */
+      ...colors,
+
+      /** Neutrals */
+      white,
+      lightGray,
+      mediumGray,
+      darkGray,
+
+      /** Notification Colors */
+      success,
+      error,
+      warning,
+      successLight,
+      errorLight,
+      warningLight,
+      successMedium,
+      errorMedium,
+      warningMedium,
+      successDark,
+      errorDark,
+      warningDark,
+
+      /** Status Colors */
+      status,
+    },
+    colorStyles: {
+      base: {
+        backgroundColor: colors.base,
+        color: colors.baseText,
+      },
+      callToAction: {
+        backgroundColor: colors.callToAction,
+        color: colors.callToActionText,
+      },
+      standard: {
+        backgroundColor: white,
+        color: colors.darkestContrast,
+      },
+      lightContrast: {
+        backgroundColor: colors.lightContrast,
+        color: colors.darkestContrast,
+      },
+      darkestContrast: {
+        backgroundColor: colors.darkestContrast,
+        color: white,
+      },
+      success: {
+        backgroundColor: success,
+        color: white,
+      },
+      error: {
+        backgroundColor: error,
+        color: white,
+      },
+      warning: {
+        backgroundColor: warning,
+        color: colors.darkestContrast,
+      },
+      disable: {
+        backgroundColor: lightGray,
+        color: mediumGray,
+      },
+      lightCallToAction: {
+        backgroundColor: colors.lightCallToAction,
+        color: colors.darkestContrast,
+      },
+      successLight: {
+        backgroundColor: successLight,
+        color: colors.darkestContrast,
+      },
+      errorLight: {
+        backgroundColor: errorLight,
+        color: colors.darkestContrast,
+      },
+      warningLight: {
+        backgroundColor: warningLight,
+        color: colors.darkContrast,
+      },
+      successMedium: {
+        backgroundColor: successMedium,
+        color: colors.darkestContrast,
+      },
+      errorMedium: {
+        backgroundColor: errorMedium,
+        color: colors.darkestContrast,
+      },
+      warningMedium: {
+        backgroundColor: warningMedium,
+        color: colors.darkContrast,
+      },
+      errorDark: {
+        backgroundColor: errorDark,
+        color: white,
+      },
+      warningDark: {
+        backgroundColor: warningDark,
+        color: white,
+      },
+      successDark: {
+        backgroundColor: successDark,
+        color: white,
+      },
+    },
     space: [0, 2, 4, 8, 16, 24, 32, 40],
     fontSizes,
     mobileFontSizes,
