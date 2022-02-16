@@ -14,18 +14,32 @@ describe('component: Tag', () => {
 
     expect(getByText('Test label')).toBeInTheDocument()
   })
-  test('Close icon is present', () => {
-    const onClick = jest.fn()
+
+  test('Close button is present', () => {
     const { container } = render(
       <StyleProvider>
-        <Tag closeOption onCloseIconClick={onClick}>
+        <Tag id="tag-one" closeOption>
           Test label
         </Tag>
       </StyleProvider>
     )
 
-    const icon = container.querySelector('svg')
-    expect(icon).toHaveAttribute('data-role', 'close')
+    const icon = container.querySelector('button')
+    expect(icon).toHaveAttribute('aria-controls', 'tag-one')
+  })
+
+  test('Close icon is present', () => {
+    const { container } = render(
+      <StyleProvider>
+        <Tag id="tag-one" closeOption="no-button">
+          Test label
+        </Tag>
+      </StyleProvider>
+    )
+
+    const icon = container.querySelector('span[aria-controls]')
+    expect(icon).toHaveAttribute('aria-controls', 'tag-one')
+    expect(icon).toHaveAttribute('aria-label', 'close')
   })
 
   test('Close icon is not present', () => {

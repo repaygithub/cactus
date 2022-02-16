@@ -1,16 +1,17 @@
 import { NavigationClose } from '@repay/cactus-icons'
-import { TextStyle } from '@repay/cactus-theme'
+import { color, colorStyle, lineHeight, radius, space, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { CSSObject, FlattenSimpleInterpolation } from 'styled-components'
+import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { radius, textStyle } from '../helpers/theme'
+import { IconButton } from '../IconButton/IconButton'
 
+const closeTypes = ['no-button', 'button'] as const
 interface TagProps extends MarginProps, React.HTMLAttributes<HTMLSpanElement> {
-  closeOption?: boolean
+  closeOption?: boolean | typeof closeTypes[number]
   children: React.ReactNode
-  onCloseIconClick?: () => void
+  onCloseIconClick?: React.MouseEventHandler<HTMLElement>
 }
 
 const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
@@ -18,8 +19,17 @@ const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
     return (
       <span ref={ref} {...props}>
         <span className="value-tag__label">{children}</span>
-        {(closeOption || typeof onCloseIconClick === 'function') && (
-          <NavigationClose data-role="close" onClick={onCloseIconClick} />
+        {(!!closeOption || typeof onCloseIconClick === 'function') && (
+          <IconButton
+            as={closeOption === 'no-button' ? 'span' : undefined}
+            iconSize="tiny"
+            marginLeft="12px"
+            aria-label="close"
+            aria-controls={props.id}
+            onClick={onCloseIconClick}
+          >
+            <NavigationClose />
+          </IconButton>
         )}
       </span>
     )
@@ -27,40 +37,32 @@ const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
 )
 
 export const Tag = styled(TagBase)`
-  ${(p) => p.theme.colorStyles.standard};
+  ${colorStyle('standard')};
   box-sizing: border-box;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
-  padding: 0 8px 0 8px;
-  border: 1px solid ${(p): string => p.theme.colors.lightContrast};
+  ${textStyle('small')};
+  padding: 0 ${space(3)};
+  border: 1px solid ${color('lightContrast')};
   border-radius: ${radius(8)};
-  margin-right: 2px;
+  margin-right: ${space(1)};
   display: inline-block;
-  height: 24px;
-  ${(p): CSSObject | undefined => (p.hidden ? { visibility: 'hidden' } : undefined)}
-
-  ${NavigationClose} {
-    appearance: none;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    font-size: 8px;
+  ${(p) => p.hidden && 'visibility: hidden;'}
+  ${lineHeight('small', 'height')};
+  ${IconButton} {
     padding: 4px;
-    margin-left: 12px;
-    vertical-align: -3px;
   }
+
   ${margin}
 `
 
 Tag.propTypes = {
   id: PropTypes.string,
-  closeOption: PropTypes.bool,
+  closeOption: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(closeTypes)]),
   children: PropTypes.node.isRequired,
   hidden: PropTypes.bool,
   onCloseIconClick: PropTypes.func,
 }
 
 Tag.defaultProps = {
-  id: 'tag-id',
   closeOption: false,
   hidden: false,
 }

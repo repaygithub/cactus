@@ -59,6 +59,32 @@ import { Tag } from '@repay/cactus-web'
 </Tag>
 ```
 
+### Close Button
+
+The visibility of the close button is controlled by either passing a handler to
+`onCloseIconClick` or the `closeOption` prop. Passing a handler is equivalent to
+`closeOption={true}`, but if you want the close button without using an actual
+`<button>` element, you can pass `closeOption="no-button"`.
+
+If you need to identify which tag of several was clicked, you can make it simpler
+by giving the tag an ID: then the close button will have an `aria-controls` attribute
+with the tag's ID in it. For example:
+
+```jsx
+const TagList = () => {
+  const [tags, setTags] = useState(['one', 'two'])
+  const onClose = (e) => {
+    const id = e.currentTarget.getAttribute('aria-controls')
+    setTags(tags.filter((t) => t !== id))
+  }
+  return (
+    <>
+      {tags.map((t) => <Tag key={t} id={t} onCloseIconClick={onClose}>{t}</Tag>)}
+    </>
+  )
+}
+```
+
 ## Properties
 
 <PropsTable of={Tag} />

@@ -6,41 +6,45 @@ import { Action, actions, Story } from '../helpers/storybook'
 const options = [
   {
     label: 'this',
-    id: '1',
+    id: 'tag-1',
   },
   {
     label: 'is',
-    id: '2',
+    id: 'tag-2',
   },
   {
     label: 'an',
-    id: '3',
+    id: 'tag-3',
   },
   {
     label: 'example',
-    id: '4',
+    id: 'tag-4',
   },
 ]
 
 export default {
   title: 'Tag',
   component: Tag,
-  argTypes: actions('onCloseIconClick'),
+  argTypes: {
+    ...actions('onCloseIconClick'),
+    closeOption: { options: ['none', 'button', 'no-button'], mapping: { none: false } },
+  },
 } as const
 
-type TagStory = Story<typeof Tag, { onCloseIconClick: Action<void> }>
+type TagStory = Story<typeof Tag, { onCloseIconClick: Action<React.MouseEvent> }>
 export const WithCloseOption: TagStory = ({ closeOption, onCloseIconClick }) => {
   const [values, setValues] = React.useState(options)
 
-  const deleteTag = (id: string) =>
-    closeOption
-      ? onCloseIconClick.wrap(() => setValues(values.filter((e) => e.id !== id)))
-      : undefined
+  const onClose = (event: React.MouseEvent) => {
+    const removeId = event.currentTarget.getAttribute('aria-controls')
+    setValues(values.filter((v) => v.id !== removeId))
+  }
+  const deleteTag = closeOption ? onCloseIconClick.wrap(onClose) : undefined
   return (
     <Flex justifyContent="center" alignItems="flex-start" flexDirection="column">
       <div>
         {values.map((e) => (
-          <Tag closeOption={closeOption} id={e.id} key={e.id} onCloseIconClick={deleteTag(e.id)}>
+          <Tag closeOption={closeOption} id={e.id} key={e.id} onCloseIconClick={deleteTag}>
             {e.label}
           </Tag>
         ))}
@@ -53,5 +57,5 @@ export const WithCloseOption: TagStory = ({ closeOption, onCloseIconClick }) => 
     </Flex>
   )
 }
-WithCloseOption.args = { closeOption: true }
+WithCloseOption.args = { closeOption: 'button' }
 WithCloseOption.storyName = 'With close option'

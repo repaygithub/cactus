@@ -213,7 +213,7 @@ IconButton.propTypes = {
   variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success', 'dark']),
   disabled: PropTypes.bool,
   label: (props: IconButtonProps, propName: string, componentName: string): Error | null => {
-    if (!props.label && !props['aria-labelledby']) {
+    if (!props.label && !props['aria-label'] && !props['aria-labelledby']) {
       return new Error(
         `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
       )
@@ -224,24 +224,7 @@ IconButton.propTypes = {
     }
     return null
   },
-  'aria-labelledby': (
-    props: IconButtonProps,
-    propName: string,
-    componentName: string
-  ): Error | null => {
-    if (!props['aria-labelledby'] && !props.label) {
-      return new Error(
-        `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
-      )
-    } else if (props['aria-labelledby'] && typeof props['aria-labelledby'] !== 'string') {
-      return new Error(
-        `Invalid prop 'aria-labelledby' of type '${typeof props[
-          'aria-labelledby'
-        ]}' supplied to '${componentName}', expected 'string'.`
-      )
-    }
-    return null
-  },
+  'aria-labelledby': PropTypes.string,
   display: PropTypes.oneOf(['flex', 'inline-flex']),
   inverse: PropTypes.bool,
 }
