@@ -1,3 +1,15 @@
+# v3.2.0 (Wed Feb 16 2022)
+
+#### 🚀 Enhancement
+
+- Add saturation multiplier to theme generator [#708](https://github.com/repaygithub/cactus/pull/708) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### Authors: 1
+
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+
+---
+
 # v3.1.0 (Wed Jan 26 2022)
 
 #### 🚀 Enhancement
