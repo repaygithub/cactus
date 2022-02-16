@@ -1,3 +1,17 @@
+# v9.2.0 (Wed Feb 16 2022)
+
+#### 🚀 Enhancement
+
+- Allow individual Select options to be disabled [#718](https://github.com/repaygithub/cactus/pull/718) ([@Dhalton](https://github.com/Dhalton))
+- Add Range & RangeField components [#717](https://github.com/repaygithub/cactus/pull/717) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 2
+
+- [@Dhalton](https://github.com/Dhalton)
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v9.1.0 (Wed Jan 26 2022)
 
 #### 🚀 Enhancement
