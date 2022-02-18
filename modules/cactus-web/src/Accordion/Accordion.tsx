@@ -228,6 +228,9 @@ export const AccordionHeader = styled(AccordionHeaderBase)`
 `
 
 const TIMEOUT = 200
+// Accessing the `scrollTop` property forces a page reflow.
+const forceReflow = (node: HTMLElement) => node.scrollTop
+
 // CSSTransition does some of this for you, but unfortunately it can't do
 // transitions with `auto` height; we have to get the height dynamically.
 const TRANSITION = {
@@ -236,7 +239,7 @@ const TRANSITION = {
   onEnter: function (this: { height: number }, node: HTMLElement) {
     this.height = node.getBoundingClientRect().height
     node.style.height = '0'
-    node.scrollTop // Force reflow.
+    forceReflow(node)
   },
   onEntering: function (this: { height: number }, node: HTMLElement) {
     node.style.height = `${this.height}px`
@@ -246,7 +249,7 @@ const TRANSITION = {
   },
   onExit: (node: HTMLElement) => {
     node.style.height = `${node.getBoundingClientRect().height}px`
-    node.scrollTop // Force reflow.
+    forceReflow(node)
   },
   onExiting: (node: HTMLElement) => {
     node.style.height = '0'

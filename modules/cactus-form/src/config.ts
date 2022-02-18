@@ -1,6 +1,6 @@
 import { ConfigurableComponent, RenderFunc } from './types'
 
-const makeConfigurableComponent = <P>(
+export const makeConfigurableComponent = <P>(
   fn: RenderFunc<P>,
   defaults: Partial<P>
 ): ConfigurableComponent<P> => {
@@ -19,4 +19,3 @@ const makeConfigurableComponent = <P>(
   component.initialDefaults = () => defaults
   return component
 }
-export default makeConfigurableComponent
