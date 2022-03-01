@@ -111,8 +111,9 @@ const ValueSwitch = (props: {
   placeholder: string | undefined
   extraLabel: string
   multiple?: boolean
+  onTagClick: React.MouseEventHandler<HTMLElement>
 }): React.ReactElement => {
-  const { selected } = props
+  const { selected, onTagClick } = props
   const numSelected = selected.length
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
@@ -169,7 +170,12 @@ const ValueSwitch = (props: {
         <ValueSpan ref={spanRef}>
           {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
             (opt): React.ReactElement => (
-              <Tag id={`value-tag::${opt.id}`} closeOption key={opt.id}>
+              <Tag
+                id={`value-tag::${opt.id}`}
+                closeOption="no-button"
+                key={opt.id}
+                onCloseIconClick={onTagClick}
+              >
                 {opt.altText || opt.value}
               </Tag>
             )
@@ -183,7 +189,7 @@ const ValueSwitch = (props: {
       const value = selected[0]
       return (
         <ValueSpan>
-          <Tag id={`value-tag::${value.id}`} closeOption>
+          <Tag id={`value-tag::${value.id}`} closeOption="no-button" onCloseIconClick={onTagClick}>
             {value.altText || value.value}
           </Tag>
         </ValueSpan>
@@ -1211,25 +1217,23 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
   }
 
   private handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    event.preventDefault()
-    let target: Element | null = event.target as HTMLElement
-    // Get element from point if in IE
-    if (/MSIE|Trident/.test(window.navigator.userAgent)) {
-      target = document.elementFromPoint(event.clientX, event.clientY)
-    }
-    if (target && target.tagName === 'path') {
-      target = target.closest('svg')
-    }
-    if (target && target.getAttribute('data-role') === 'close') {
-      const valueTag = target.closest('span')
-      let optId = valueTag ? valueTag.getAttribute('id') : null
-      if (optId) {
-        optId = optId.split('::')[1]
+    if (isIE) {
+      const realTarget = document.elementFromPoint(event.clientX, event.clientY)
+      if (realTarget?.matches('[aria-controls], [aria-controls] *')) {
+        event.currentTarget = realTarget.closest('[aria-controls]') as HTMLButtonElement
+        return this.handleTagClick(event)
       }
+    }
+    event.preventDefault()
+    this.openList()
+  }
+
+  private handleTagClick = (event: React.MouseEvent<HTMLElement>): void => {
+    const optId = event.currentTarget.getAttribute('aria-controls')?.split('::')[1]
+    if (optId) {
+      event.stopPropagation()
       const option = this.getExtOptions().find((opt): boolean => opt.id === optId)
       this.raiseChange(event, option || null)
-    } else {
-      this.openList()
     }
   }
 
@@ -1549,6 +1553,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
                 selected={this.getSelectedOptionsInOrder()}
                 placeholder={noOptsDisable ? noOptionsText : placeholder}
                 multiple={multiple}
+                onTagClick={this.handleTagClick}
               />
               <NavigationChevronDown iconSize="tiny" />
             </SelectTrigger>
