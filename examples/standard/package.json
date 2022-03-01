@@ -8,7 +8,7 @@
     "dev": "repay-scripts dev --config webpack.config.js -p 3435 src/index.tsx",
     "build": "repay-scripts build src/index.tsx --config webpack.config.js",
     "test": "yarn build && testing-tools run-ete-tests --src tests/**/*.test.ts",
-    "test:ci": "yarn test:types && yarn test -b 'browserstack:IE@11:Windows 10' -b 'browserstack:Chrome:Windows 10' -b 'browserstack:firefox:OS X' -b 'browserstack:safari@14.1:OS X'",
+    "test:ci": "yarn test:types && yarn test -b 'browserstack:IE@11:Windows 10' -b 'browserstack:Chrome:Windows 10' -b 'browserstack:firefox:OS X' -b 'browserstack:safari:OS X'",
     "test:local": "yarn test:types && yarn test -b 'browserstack:IE@11:Windows 10' -b 'browserstack:Chrome:Windows 10'",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
     "list-testcafe-browsers": "testcafe -b"
