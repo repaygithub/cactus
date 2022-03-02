@@ -1,3 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <polygon fill-rule="evenodd" points="7 12 17 2 17 22" transform="matrix(-1 0 0 1 24 0)"/>
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 12L8 2L8 22L18 12Z"/>
 </svg>
