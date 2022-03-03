@@ -13,19 +13,20 @@ import { useValue } from '../helpers/react'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
+export type InitialFocus =
+  | CalendarDate
+  | {
+      year?: number
+      month?: number
+      day?: number
+    }
 interface WeekdayLabel {
   long: string
   short: string
 }
 
 export interface FocusProps {
-  initialFocus?:
-    | CalendarDate
-    | {
-        year?: number
-        month?: number
-        day?: number
-      }
+  initialFocus?: InitialFocus
   month?: number
   year?: number
 }

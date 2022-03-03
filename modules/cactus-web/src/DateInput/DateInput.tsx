@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import Calendar, { CalendarLabels, MonthChange } from '../Calendar/Calendar'
-import { CalendarDate, CalendarValue } from '../Calendar/Grid'
+import { CalendarDate, CalendarValue, InitialFocus } from '../Calendar/Grid'
 import Flex from '../Flex/Flex'
 import FocusLock from '../FocusLock/FocusLock'
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
@@ -342,6 +342,7 @@ export interface DateInputProps
   /** When */
   value?: string | Date | null | number
   defaultValue?: string | Date | null
+  initialFocus?: InitialFocus
   /**
    * Required when value is a string, then when events are called with the value they will be
    * this format. Date will always be displayed based on locale preferences.
@@ -437,6 +438,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     id: PropTypes.string.isRequired,
     status: StatusPropType,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]),
+    initialFocus: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.instanceOf(Date),
+      PropTypes.shape({ year: PropTypes.number, month: PropTypes.number, day: PropTypes.number }),
+    ]),
     format: function (props: any): Error | null {
       if (props.format) {
         if (typeof props.format !== 'string') {
@@ -876,6 +882,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       type,
       isValidDate,
       disabled,
+      initialFocus,
     } = this.props
     const formatArray = parseFormat(value.getLocaleFormat())
     let isFirstInput = true
@@ -959,9 +966,10 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             onKeyDown={this.handlePortalKeydown}
           >
             <PopupCalendar
-              month={this.state.focusMonth}
-              year={this.state.focusYear}
+              month={selectedValue ? this.state.focusMonth : undefined}
+              year={selectedValue ? this.state.focusYear : undefined}
               value={selectedValue}
+              initialFocus={initialFocus}
               onChange={this.handleCalendarChange}
               onMonthChange={this.handleMonthYearChange}
               disabled={disabled}
