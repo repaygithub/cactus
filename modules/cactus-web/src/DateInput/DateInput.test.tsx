@@ -141,6 +141,44 @@ describe('component: DateInput', (): void => {
       expect(getByLabelText('day of month')).toHaveProperty('value', '')
     })
 
+    test.each([
+      { initFocus: '2019-09-16', repr: 'string' },
+      { initFocus: new Date(2019, 8, 16), repr: 'date' },
+      { initFocus: { year: 2019, month: 8, day: 16 }, repr: 'object' },
+    ])('Initially focus a date using $repr', async ({ initFocus }) => {
+      const { getByLabelText, getByRole } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" initialFocus={initFocus} />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByLabelText('Open date picker'))
+
+      await animationRender()
+
+      expect(getByRole('button', { name: 'September' })).toBeInTheDocument()
+      expect(getByRole('button', { name: '2019' })).toBeInTheDocument()
+      expect(getByLabelText('Monday, September 16, 2019')).toHaveFocus()
+    })
+
+    test('Ignore initialFocus if value is already set', async () => {
+      const value = new Date(2022, 2, 3)
+      const initFocus = new Date(2019, 8, 16)
+      const { getByLabelText, getByRole } = render(
+        <StyleProvider>
+          <DateInput name="date-input" id="date-input" value={value} initialFocus={initFocus} />
+        </StyleProvider>
+      )
+
+      userEvent.click(getByLabelText('Open date picker'))
+
+      await animationRender()
+
+      expect(getByRole('button', { name: 'March' })).toBeInTheDocument()
+      expect(getByRole('button', { name: '2022' })).toBeInTheDocument()
+      expect(getByLabelText('Thursday, March 3, 2022')).toHaveFocus()
+    })
+
     test('Ignores value prop when NaN', () => {
       const { getByLabelText, rerender } = render(
         <StyleProvider>
