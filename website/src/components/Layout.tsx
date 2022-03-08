@@ -341,7 +341,7 @@ const MenuList = styled('ul')`
 
 const Scrollable = styled.div`
   box-sizing: border-box;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 100vh;
   margin-top: 43px;
 `
