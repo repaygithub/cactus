@@ -68,9 +68,9 @@
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.16.0",
-    "@repay/babel-preset": "^1.1.1",
+    "@repay/babel-preset": "^1.1.4",
     "@repay/cactus-theme": "^3.2.0",
-    "@repay/scripts": "^3.0.0",
+    "@repay/scripts": "^3.0.3",
     "@storybook/addon-controls": "^6.3.8",
     "@storybook/react": "^6.3.8",
     "@storybook/theming": "^6.3.8",
