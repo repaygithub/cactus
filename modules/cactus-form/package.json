@@ -62,7 +62,7 @@
     "final-form": "^4.20.4",
     "jest": "^27.0.4",
     "jest-sonar": "^0.2.12",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-final-form": "^6.5.7",

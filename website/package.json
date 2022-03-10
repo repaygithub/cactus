@@ -58,7 +58,7 @@
     "@repay/cactus-web": "^9.0.0",
     "color": "^4.0.2",
     "normalize.css": "^8.0.1",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.1",
     "react": "^17.0.1",
     "react-docgen-typescript": "^2.2.1",
     "react-dom": "^17.0.1",
