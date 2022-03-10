@@ -1,3 +1,20 @@
+# v3.2.1 (Thu Mar 10 2022)
+
+#### 🏠 Internal
+
+- Resolve SonarQube code smells [#721](https://github.com/repaygithub/cactus/pull/721) ([@wilysword](https://github.com/wilysword))
+
+#### 🔩 Dependency Updates
+
+- build(deps): bump url-parse from 1.5.3 to 1.5.7 [#722](https://github.com/repaygithub/cactus/pull/722) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v3.2.0 (Wed Feb 16 2022)
 
 #### 🚀 Enhancement
