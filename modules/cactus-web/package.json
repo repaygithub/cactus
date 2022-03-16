@@ -74,7 +74,7 @@
     "testEnvironment": "jsdom"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.17.5",
     "@babel/plugin-proposal-private-property-in-object": "^7.16.0",
     "@repay/babel-preset": "^1.1.4",
     "@repay/cactus-theme": "^3.2.0",

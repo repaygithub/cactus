@@ -21,7 +21,7 @@
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.17.5",
     "@repay/babel-preset": "^1.1.4",
     "@repay/scripts": "^3.0.3",
     "@types/jest": "^27.0.3",

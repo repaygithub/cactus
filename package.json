@@ -51,7 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.17.5",
     "@repay/eslint-config": "^5.0.4",
     "commitizen": "^4.2.4",
     "conventional-commits-parser": "^3.2.3",

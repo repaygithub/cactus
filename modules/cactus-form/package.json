@@ -50,7 +50,7 @@
     "testEnvironment": "jsdom"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.6",
+    "@babel/core": "^7.17.5",
     "@repay/babel-preset": "1.1.4",
     "@repay/cactus-web": "^9.2.0",
     "@repay/scripts": "^3.0.3",
