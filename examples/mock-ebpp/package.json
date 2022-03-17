@@ -20,11 +20,11 @@
   },
   "devDependencies": {
     "@repay/scripts": "^3.0.0",
-    "@repay/testing-tools": "^0.1.3",
+    "@repay/testing-tools": "^0.1.7",
     "@testing-library/testcafe": "^4.4.0",
     "@types/reach__router": "^1.3.9",
     "@types/styled-components": "5.1.17",
-    "testcafe": "^1.17.1",
+    "testcafe": "^1.18.4",
     "typescript": "~4.5.2"
   },
   "dependencies": {
