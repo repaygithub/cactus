@@ -62,7 +62,7 @@
     "patch-package": "^6.4.7",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.6.0",
-    "typescript": "~4.5.2"
+    "typescript": "~4.6.2"
   },
   "dependencies": {},
   "config": {
