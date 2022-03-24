@@ -1,3 +1,26 @@
+# v9.3.0 (Thu Mar 10 2022)
+
+#### 🚀 Enhancement
+
+- Add initialFocus prop to DateInput [#727](https://github.com/repaygithub/cactus/pull/727) ([@Dhalton](https://github.com/Dhalton))
+- CACTUS-738: change Tag close icon to button [#723](https://github.com/repaygithub/cactus/pull/723) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- Resolve SonarQube code smells [#721](https://github.com/repaygithub/cactus/pull/721) ([@wilysword](https://github.com/wilysword))
+
+#### 🔩 Dependency Updates
+
+- build(deps): bump url-parse from 1.5.3 to 1.5.7 [#722](https://github.com/repaygithub/cactus/pull/722) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 3
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@Dhalton](https://github.com/Dhalton)
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v9.2.0 (Wed Feb 16 2022)
 
 #### 🚀 Enhancement
