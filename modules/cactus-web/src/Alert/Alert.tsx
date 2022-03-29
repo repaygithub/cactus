@@ -14,7 +14,7 @@ import IconButton from '../IconButton/IconButton'
 export type Status = 'error' | 'warning' | 'info' | 'success'
 export type Type = 'general' | 'push'
 
-interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   status?: Status
   onClose?: (event?: React.MouseEvent<HTMLButtonElement>) => void
   closeLabel?: string
