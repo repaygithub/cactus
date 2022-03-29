@@ -53,8 +53,6 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@repay/eslint-config": "^5.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
     "commitizen": "^4.2.4",
     "conventional-commits-parser": "^3.2.3",
     "cz-conventional-changelog": "3.3.0",

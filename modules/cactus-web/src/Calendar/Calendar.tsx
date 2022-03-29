@@ -337,7 +337,7 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
     )
   }
 
-  private _labelIDs: { [K in keyof CalendarLabels]?: string } = {}
+  private _labelIDs: { [K in keyof CalendarLabels]?: string } = {} //eslint-disable-line @typescript-eslint/no-unused-vars
   private getLabelId(label: keyof CalendarLabels) {
     return this._labelIDs[label] || (this._labelIDs[label] = generateId(label))
   }
