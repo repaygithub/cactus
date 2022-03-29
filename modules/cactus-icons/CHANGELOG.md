@@ -1,15 +1,3 @@
-# v3.1.0 (Thu Mar 10 2022)
-
-#### 🚀 Enhancement
-
-- Add new icon svgs with better optical alignment [#726](https://github.com/repaygithub/cactus/pull/726) ([@Dhalton](https://github.com/Dhalton))
-
-#### Authors: 1
-
-- [@Dhalton](https://github.com/Dhalton)
-
----
-
 # v3.0.1 (Wed Jan 26 2022)
 
 #### 🔩 Dependency Updates
