@@ -1,8 +1,8 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react'
+import { act, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Preview from './Preview'
 
 const IMAGES = ['http://placekitten.com/400/450', 'http://placekitten.com/450/250']
@@ -10,14 +10,12 @@ const IMAGES = ['http://placekitten.com/400/450', 'http://placekitten.com/450/25
 describe('component: Preview', () => {
   describe('Mouse Interactions', () => {
     test('Should be able to change the image using the arrows', () => {
-      const { getByAltText, queryByAltText, getByLabelText } = render(
-        <StyleProvider>
-          <Preview>
-            {IMAGES.map((src, ix) => (
-              <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
-            ))}
-          </Preview>
-        </StyleProvider>
+      const { getByAltText, queryByAltText, getByLabelText } = renderWithTheme(
+        <Preview>
+          {IMAGES.map((src, ix) => (
+            <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+          ))}
+        </Preview>
       )
 
       const leftArrow = getByLabelText('Go to the previous image')
@@ -35,14 +33,12 @@ describe('component: Preview', () => {
     })
 
     test('should be able to expand an image', async () => {
-      const { getByAltText, getAllByAltText, getByLabelText } = render(
-        <StyleProvider>
-          <Preview>
-            {IMAGES.map((src, ix) => (
-              <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
-            ))}
-          </Preview>
-        </StyleProvider>
+      const { getByAltText, getAllByAltText, getByLabelText } = renderWithTheme(
+        <Preview>
+          {IMAGES.map((src, ix) => (
+            <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+          ))}
+        </Preview>
       )
 
       const image = getByAltText('Cute kitten number 1')
@@ -58,14 +54,12 @@ describe('component: Preview', () => {
 
   describe('Keyboard Interactions', () => {
     test('Should be able to change the image using the arrows', () => {
-      const { getByAltText, queryByAltText, getByLabelText } = render(
-        <StyleProvider>
-          <Preview>
-            {IMAGES.map((src, ix) => (
-              <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
-            ))}
-          </Preview>
-        </StyleProvider>
+      const { getByAltText, queryByAltText, getByLabelText } = renderWithTheme(
+        <Preview>
+          {IMAGES.map((src, ix) => (
+            <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+          ))}
+        </Preview>
       )
 
       const leftArrow = getByLabelText('Go to the previous image')
@@ -83,14 +77,12 @@ describe('component: Preview', () => {
     })
 
     test('Should be able to expand an image', async () => {
-      const { getByAltText, getAllByAltText, getByLabelText } = render(
-        <StyleProvider>
-          <Preview>
-            {IMAGES.map((src, ix) => (
-              <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
-            ))}
-          </Preview>
-        </StyleProvider>
+      const { getByAltText, getAllByAltText, getByLabelText } = renderWithTheme(
+        <Preview>
+          {IMAGES.map((src, ix) => (
+            <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+          ))}
+        </Preview>
       )
 
       const image = getByAltText('Cute kitten number 1')
@@ -104,14 +96,12 @@ describe('component: Preview', () => {
     })
 
     test('should be able to close an image with the escape key', async () => {
-      const { getByAltText, getAllByAltText, getByLabelText } = render(
-        <StyleProvider>
-          <Preview>
-            {IMAGES.map((src, ix) => (
-              <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
-            ))}
-          </Preview>
-        </StyleProvider>
+      const { getByAltText, getAllByAltText, getByLabelText } = renderWithTheme(
+        <Preview>
+          {IMAGES.map((src, ix) => (
+            <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+          ))}
+        </Preview>
       )
 
       const image = getByAltText('Cute kitten number 1')
@@ -126,14 +116,12 @@ describe('component: Preview', () => {
   })
 
   test('should support flex item props', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Preview data-testid="flex-preview" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
-          {IMAGES.map((src, ix) => (
-            <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
-          ))}
-        </Preview>
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <Preview data-testid="flex-preview" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+        {IMAGES.map((src, ix) => (
+          <img src={src} alt={`Cute kitten number ${ix + 1}`} key={ix} />
+        ))}
+      </Preview>
     )
 
     const previewBox = getByTestId('flex-preview')

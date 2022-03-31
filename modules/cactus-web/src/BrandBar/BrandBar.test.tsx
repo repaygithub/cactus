@@ -1,17 +1,17 @@
-import { fireEvent, render, waitFor } from '@testing-library/react'
+import { fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import BrandBar from './BrandBar'
 
 describe('component: BrandBar', () => {
-  describe('mouse usage', (): void => {
-    test('can select an action', async (): Promise<void> => {
+  describe('mouse usage', () => {
+    test('can select an action', async () => {
       const actionOne = jest.fn()
-      const { getByText, getByRole } = render(
-        <StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <>
           <BrandBar>
             <BrandBar.UserMenu label="Test name">
               <BrandBar.UserMenuItem onClick={actionOne}>Settings</BrandBar.UserMenuItem>
@@ -21,7 +21,7 @@ describe('component: BrandBar', () => {
             </BrandBar.UserMenu>
           </BrandBar>
           <div>Click me</div>
-        </StyleProvider>
+        </>
       )
 
       const trigger = getByRole('button', { name: 'Test name' })
@@ -45,8 +45,8 @@ describe('component: BrandBar', () => {
 
     test('can interact with a dropdown', async () => {
       const firstOptionClick = jest.fn()
-      const { getByText, getByRole } = render(
-        <StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <>
           <BrandBar>
             <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
               <ul>
@@ -59,7 +59,7 @@ describe('component: BrandBar', () => {
             </BrandBar.Item>
           </BrandBar>
           <div>Click me</div>
-        </StyleProvider>
+        </>
       )
 
       const trigger = getByRole('button', { name: 'Test Dropdown' })
@@ -82,22 +82,20 @@ describe('component: BrandBar', () => {
     })
 
     test('item supports custom item selectors', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <BrandBar>
-            <BrandBar.Item
-              as={BrandBar.Dropdown}
-              listItemSelector='[role="custom-selector"], [role="custom-selector"] *'
-              label="Test Dropdown"
-            >
-              <ul>
-                <li role="menuitem">Option 1</li>
-                <li>Option 2</li>
-                <li role="custom-selector">Option 3</li>
-              </ul>
-            </BrandBar.Item>
-          </BrandBar>
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <BrandBar>
+          <BrandBar.Item
+            as={BrandBar.Dropdown}
+            listItemSelector='[role="custom-selector"], [role="custom-selector"] *'
+            label="Test Dropdown"
+          >
+            <ul>
+              <li role="menuitem">Option 1</li>
+              <li>Option 2</li>
+              <li role="custom-selector">Option 3</li>
+            </ul>
+          </BrandBar.Item>
+        </BrandBar>
       )
 
       const trigger = getByRole('button', { name: 'Test Dropdown' })
@@ -120,20 +118,18 @@ describe('component: BrandBar', () => {
     })
   })
 
-  describe('keyboard usage', (): void => {
-    test('can select an action', async (): Promise<void> => {
+  describe('keyboard usage', () => {
+    test('can select an action', async () => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
 
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <BrandBar>
-            <BrandBar.UserMenu label="Test name">
-              <BrandBar.UserMenuItem onClick={actionOne}>Settings</BrandBar.UserMenuItem>
-              <BrandBar.UserMenuItem onClick={actionTwo}>Logout</BrandBar.UserMenuItem>
-            </BrandBar.UserMenu>
-          </BrandBar>
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <BrandBar>
+          <BrandBar.UserMenu label="Test name">
+            <BrandBar.UserMenuItem onClick={actionOne}>Settings</BrandBar.UserMenuItem>
+            <BrandBar.UserMenuItem onClick={actionTwo}>Logout</BrandBar.UserMenuItem>
+          </BrandBar.UserMenu>
+        </BrandBar>
       )
 
       const trigger = getByRole('button', { name: 'Test name' })
@@ -175,20 +171,18 @@ describe('component: BrandBar', () => {
 
     test('can interact with a dropdown', () => {
       const thirdOptionClick = jest.fn()
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <BrandBar>
-            <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
-              <ul>
-                <li tabIndex={0}>Option 1</li>
-                <li tabIndex={0}>Option 2</li>
-                <li role="menuitem" onClick={thirdOptionClick} tabIndex={0}>
-                  Option 3
-                </li>
-              </ul>
-            </BrandBar.Item>
-          </BrandBar>
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <BrandBar>
+          <BrandBar.Item as={BrandBar.Dropdown} label="Test Dropdown">
+            <ul>
+              <li tabIndex={0}>Option 1</li>
+              <li tabIndex={0}>Option 2</li>
+              <li role="menuitem" onClick={thirdOptionClick} tabIndex={0}>
+                Option 3
+              </li>
+            </ul>
+          </BrandBar.Item>
+        </BrandBar>
       )
 
       const trigger = getByRole('button', { name: 'Test Dropdown' })

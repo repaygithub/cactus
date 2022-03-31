@@ -1,7 +1,6 @@
-import { render } from '@testing-library/react'
 import React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { Position } from './grid'
 import { Layout, useLayout } from './Layout'
 
@@ -31,12 +30,10 @@ beforeAll(() => {
 describe('useLayout tests', () => {
   describe('Grid', () => {
     test('Header classes and role', async () => {
-      const { getByTestId } = render(
-        <StyleProvider>
-          <Layout>
-            <LayoutItem role="header" grid="header" col={3} colEnd={-2} />
-          </Layout>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <Layout>
+          <LayoutItem role="header" grid="header" col={3} colEnd={-2} />
+        </Layout>
       )
       const testElement = getByTestId('test-component')
 
@@ -46,12 +43,10 @@ describe('useLayout tests', () => {
       expect(style.gridColumn).toBe('3')
     })
     test('Content component classes and role', async () => {
-      const { getByTestId } = render(
-        <StyleProvider>
-          <Layout>
-            <LayoutItem role="testComponent" />
-          </Layout>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <Layout>
+          <LayoutItem role="testComponent" />
+        </Layout>
       )
       const testElement = getByTestId('test-component')
 
@@ -66,12 +61,10 @@ describe('useLayout tests', () => {
   })
   describe('Fixed', () => {
     test('Fixed bottom classes and role', async () => {
-      const { container, getByTestId } = render(
-        <StyleProvider>
-          <Layout>
-            <LayoutItem role="bottom" fixed="bottom" />
-          </Layout>
-        </StyleProvider>
+      const { container, getByTestId } = renderWithTheme(
+        <Layout>
+          <LayoutItem role="bottom" fixed="bottom" />
+        </Layout>
       )
 
       expect(getByTestId('test-component').classList.contains('cactus-layout-bottom')).toBe(true)
@@ -85,19 +78,16 @@ describe('useLayout tests', () => {
       expect(style.bottom).toBe('0px')
     })
     test('Fixed right classes and role', async () => {
-      const { container, getByTestId } = render(
-        <StyleProvider>
-          <Layout>
-            <LayoutItem role="right" fixed="right" size={20} />
-          </Layout>
-        </StyleProvider>
+      const { container, getByTestId } = renderWithTheme(
+        <Layout>
+          <LayoutItem role="right" fixed="right" size={20} />
+        </Layout>
       )
 
       expect(getByTestId('test-component').classList.contains('cactus-layout-right')).toBe(true)
       expect(getByTestId('test-component').classList.contains('cactus-fixed-right')).toBe(true)
       const testElement = container.querySelector('.cactus-layout-right')
       const style = window.getComputedStyle(testElement as Element)
-      console.log(style)
       expect(style.position).toBe('fixed')
       expect(style.right).toBe('0px')
       expect(style.bottom).toBe('0px')

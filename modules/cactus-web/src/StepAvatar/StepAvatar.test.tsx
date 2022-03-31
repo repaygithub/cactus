@@ -1,15 +1,12 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import StepAvatar from './StepAvatar'
 
-describe('component: StepAvatar', (): void => {
-  test('exists', (): void => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <StepAvatar status="inProcess" data-testid="stepAvatar" />
-      </StyleProvider>
+describe('component: StepAvatar', () => {
+  test('exists', () => {
+    const { getByTestId } = renderWithTheme(
+      <StepAvatar status="inProcess" data-testid="stepAvatar" />
     )
     expect(getByTestId('stepAvatar')).toBeInTheDocument()
   })

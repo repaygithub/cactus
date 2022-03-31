@@ -1,16 +1,11 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Divider from './Divider'
 
 describe('component: Divider', () => {
   test('Should render HR element', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Divider />
-      </StyleProvider>
-    )
+    const { container } = renderWithTheme(<Divider />)
     const divider = container.firstElementChild
 
     expect(divider?.tagName).toBe('HR')

@@ -1,12 +1,11 @@
-import { generateTheme } from '@repay/cactus-theme'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import pick from 'lodash/pick'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import KeyCodes from '../helpers/keyCodes'
-import StyleProvider from '../StyleProvider/StyleProvider'
 import Select from './Select'
 
 function getActiveValue() {
@@ -22,18 +21,16 @@ describe('component: Select', () => {
       { value: 'who?', label: 'Who?' },
       { value: 'boss', label: 'Who is the boss?' },
     ]
-    const { getByText } = render(
-      <StyleProvider>
-        <Select id="options-objects" name="test-options" options={options} />
-      </StyleProvider>
+    const { getByText } = renderWithTheme(
+      <Select id="options-objects" name="test-options" options={options} />
     )
 
     expect(getByText('Who?')).not.toBeNull()
   })
 
   test('can receive options as children, with altText', () => {
-    const { queryByText } = render(
-      <StyleProvider>
+    const { queryByText } = renderWithTheme(
+      <>
         <Select id="options-children" name="test-options" value="second">
           <Select.Option value="first" altText="Locke">
             Peter
@@ -43,7 +40,7 @@ describe('component: Select', () => {
           </Select.Option>
           <Select.Option value="third">Ender</Select.Option>
         </Select>
-      </StyleProvider>
+      </>
     )
 
     expect(queryByText('Peter')).not.toBeNull()
@@ -55,19 +52,17 @@ describe('component: Select', () => {
 
   test('can receive options as children, with disabled', () => {
     const onChange = jest.fn()
-    const { getByRole, getByText } = render(
-      <StyleProvider>
-        <Select id="disabled-children" name="disabled-options" onChange={onChange}>
-          <Select.Option value="first" disabled>
-            Disabled 1
-          </Select.Option>
-          <Select.Option value="second">Enabled 1</Select.Option>
-          <Select.Option value="third">Enabled 2</Select.Option>
-          <Select.Option value="fourth" disabled>
-            Disabled 2
-          </Select.Option>
-        </Select>
-      </StyleProvider>
+    const { getByRole, getByText } = renderWithTheme(
+      <Select id="disabled-children" name="disabled-options" onChange={onChange}>
+        <Select.Option value="first" disabled>
+          Disabled 1
+        </Select.Option>
+        <Select.Option value="second">Enabled 1</Select.Option>
+        <Select.Option value="third">Enabled 2</Select.Option>
+        <Select.Option value="fourth" disabled>
+          Disabled 2
+        </Select.Option>
+      </Select>
     )
 
     userEvent.click(getByRole('button'))
@@ -81,10 +76,8 @@ describe('component: Select', () => {
   })
 
   test('should set placeholder when options are empty', () => {
-    const { getByRole } = render(
-      <StyleProvider>
-        <Select id="empty-options" name="test-empty-options" options={[]} />
-      </StyleProvider>
+    const { getByRole } = renderWithTheme(
+      <Select id="empty-options" name="test-empty-options" options={[]} />
     )
 
     const trigger = getByRole('button')
@@ -97,19 +90,15 @@ describe('component: Select', () => {
       { label: 'two', value: 2 },
       { label: '3', value: 3 },
     ]
-    const { getByText } = render(
-      <StyleProvider>
-        <Select id="test-numbers" name="test-number-options" options={options} />
-      </StyleProvider>
+    const { getByText } = renderWithTheme(
+      <Select id="test-numbers" name="test-number-options" options={options} />
     )
     expect(getByText('two')).not.toBeNull()
   })
 
   test('sets active descendant to the top option when value does not exist in options', async () => {
-    const { getByText, getByRole } = render(
-      <StyleProvider>
-        <Select id="test-id" name="city" options={['yum', 'who?', 'boss']} value="superman" />
-      </StyleProvider>
+    const { getByText, getByRole } = renderWithTheme(
+      <Select id="test-id" name="city" options={['yum', 'who?', 'boss']} value="superman" />
     )
 
     const trigger = getByText('Select an option')
@@ -123,10 +112,8 @@ describe('component: Select', () => {
       { label: 'The #1 disabled option', value: 0, disabled: true },
       { label: 'First the worst, second the best', value: 1 },
     ]
-    const { getByText, getByRole } = render(
-      <StyleProvider>
-        <Select id="test-id" name="no-active-disabled" options={options} value={-1} />
-      </StyleProvider>
+    const { getByText, getByRole } = renderWithTheme(
+      <Select id="test-id" name="no-active-disabled" options={options} value={-1} />
     )
 
     userEvent.click(getByRole('button'))
@@ -139,15 +126,8 @@ describe('component: Select', () => {
   })
 
   test('can update value through props', () => {
-    const { getByText, getByTestId, rerender } = render(
-      <StyleProvider>
-        <Select
-          id="test-id"
-          data-testid="my-select"
-          name="city"
-          options={['one', 'two', 'three']}
-        />
-      </StyleProvider>
+    const { getByText, getByTestId, rerender } = renderWithTheme(
+      <Select id="test-id" data-testid="my-select" name="city" options={['one', 'two', 'three']} />
     )
 
     let trigger = getByTestId('my-select')
@@ -157,15 +137,13 @@ describe('component: Select', () => {
     expect(trigger).toHaveTextContent('one')
 
     rerender(
-      <StyleProvider>
-        <Select
-          id="test-id"
-          data-testid="my-select"
-          name="city"
-          options={['one', 'two', 'three']}
-          value="two"
-        />
-      </StyleProvider>
+      <Select
+        id="test-id"
+        data-testid="my-select"
+        name="city"
+        options={['one', 'two', 'three']}
+        value="two"
+      />
     )
     trigger = getByTestId('my-select')
     expect(trigger).toHaveTextContent('two')
@@ -173,51 +151,41 @@ describe('component: Select', () => {
 
   describe('clears value on empty string', () => {
     test('single select', () => {
-      const { getByRole, rerender } = render(
-        <StyleProvider>
-          <Select id="x" name="x" value="y" options={['x', 'y', 'z']} />
-        </StyleProvider>
+      const { getByRole, rerender } = renderWithTheme(
+        <Select id="x" name="x" value="y" options={['x', 'y', 'z']} />
       )
       const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('y')
-      rerender(
-        <StyleProvider>
-          <Select id="x" name="x" value="" options={['x', 'y', 'z']} />
-        </StyleProvider>
-      )
+      rerender(<Select id="x" name="x" value="" options={['x', 'y', 'z']} />)
       expect(trigger).toHaveTextContent('Select an option')
     })
 
     test('...unless there is an option with a blank value', () => {
-      const { getByRole, rerender } = render(
-        <StyleProvider>
-          <Select
-            id="x"
-            name="x"
-            value="y"
-            options={[
-              { value: '', label: 'this page is intentionally blank' },
-              { value: 'y', label: 'this statement is false' },
-              { value: 'z', label: 'this land is my land' },
-            ]}
-          />
-        </StyleProvider>
+      const { getByRole, rerender } = renderWithTheme(
+        <Select
+          id="x"
+          name="x"
+          value="y"
+          options={[
+            { value: '', label: 'this page is intentionally blank' },
+            { value: 'y', label: 'this statement is false' },
+            { value: 'z', label: 'this land is my land' },
+          ]}
+        />
       )
       const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('this statement is false')
       rerender(
-        <StyleProvider>
-          <Select
-            id="x"
-            name="x"
-            value=""
-            options={[
-              { value: '', label: 'this page is intentionally blank' },
-              { value: 'y', label: 'this statement is false' },
-              { value: 'z', label: 'this land is my land' },
-            ]}
-          />
-        </StyleProvider>
+        <Select
+          id="x"
+          name="x"
+          value=""
+          options={[
+            { value: '', label: 'this page is intentionally blank' },
+            { value: 'y', label: 'this statement is false' },
+            { value: 'z', label: 'this land is my land' },
+          ]}
+        />
       )
       expect(trigger).toHaveTextContent('this page is intentionally blank')
     })
@@ -225,27 +193,23 @@ describe('component: Select', () => {
     test('multi select', () => {
       // Unlike the single select, having a "blank" value in multiselect
       // doesn't prevent the "clear"; instead, pass [''] to select that option.
-      const { getByRole, rerender } = render(
-        <StyleProvider>
-          <Select id="x" name="x" multiple value={['z', 'y', '']}>
-            <option value="">Blank</option>
-            <option value="x" />
-            <option value="y" />
-            <option value="z" />
-          </Select>
-        </StyleProvider>
+      const { getByRole, rerender } = renderWithTheme(
+        <Select id="x" name="x" multiple value={['z', 'y', '']}>
+          <option value="">Blank</option>
+          <option value="x" />
+          <option value="y" />
+          <option value="z" />
+        </Select>
       )
       const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('zyBlank')
       rerender(
-        <StyleProvider>
-          <Select id="x" name="x" multiple value="">
-            <option value="">Blank</option>
-            <option value="x" />
-            <option value="y" />
-            <option value="z" />
-          </Select>
-        </StyleProvider>
+        <Select id="x" name="x" multiple value="">
+          <option value="">Blank</option>
+          <option value="x" />
+          <option value="y" />
+          <option value="z" />
+        </Select>
       )
       expect(trigger).toHaveTextContent('Select an option')
     })
@@ -253,10 +217,8 @@ describe('component: Select', () => {
 
   describe('keyboard interactions', () => {
     test('listbox gets focus on SPACE and first option selected', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       const trigger = getByText('Select an option') // default placeholder
       userEvent.click(trigger) // space is actually a click on buttons
@@ -267,10 +229,8 @@ describe('component: Select', () => {
     })
 
     test('listbox gets focus on UP and first option selected', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       const trigger = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
@@ -281,10 +241,8 @@ describe('component: Select', () => {
     })
 
     test('listbox gets focus on DOWN first option selected', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       const trigger = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -295,10 +253,8 @@ describe('component: Select', () => {
     })
 
     test('returns focus to button on RETURN', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
@@ -313,10 +269,8 @@ describe('component: Select', () => {
     })
 
     test('returns focus to button on ESC', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
@@ -330,10 +284,8 @@ describe('component: Select', () => {
     })
 
     test('after open, DOWN on listbox selects second option', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       const trigger = getByText('Select an option') // default placeholder
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -347,15 +299,13 @@ describe('component: Select', () => {
     test('raises onChange event on RETURN keydown', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onChange={onChange}
+        />
       )
       const trigger = getByText('Select an option')
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -386,15 +336,13 @@ describe('component: Select', () => {
     test('does not raise duplicate onChange event on RETURN keydown', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onChange={onChange}
+        />
       )
       const trigger = getByText('Select an option')
       fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -422,26 +370,24 @@ describe('component: Select', () => {
     })
 
     test('skips disabled options when navigating the list with the UP/DOWN keys', () => {
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select id="test-id" name="skip-disabled">
-            <option value="0" disabled>
-              Skip me
-            </option>
-            <option value="1">First active</option>
-            <option value="2" disabled>
-              Skipped
-            </option>
-            <option value="3">Second active</option>
-            <option value="4" disabled>
-              Skippidy-doo-da
-            </option>
-            <option value="5" disabled>
-              Double skip
-            </option>
-            <option value="6">Third active</option>
-          </Select>
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select id="test-id" name="skip-disabled">
+          <option value="0" disabled>
+            Skip me
+          </option>
+          <option value="1">First active</option>
+          <option value="2" disabled>
+            Skipped
+          </option>
+          <option value="3">Second active</option>
+          <option value="4" disabled>
+            Skippidy-doo-da
+          </option>
+          <option value="5" disabled>
+            Double skip
+          </option>
+          <option value="6">Third active</option>
+        </Select>
       )
 
       userEvent.click(getByRole('button'))
@@ -463,10 +409,8 @@ describe('component: Select', () => {
     })
 
     test('sets the active descendant to the first/last option on HOME/END keydown, respectively', () => {
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select id="test-id" name="home-end" options={['first', 'middle', 'last']} />
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select id="test-id" name="home-end" options={['first', 'middle', 'last']} />
       )
 
       userEvent.click(getByRole('button'))
@@ -489,10 +433,8 @@ describe('component: Select', () => {
         { label: 'last enabled', value: 3 },
         { label: 'last disabled', value: 4, disabled: true },
       ]
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select id="test-id" name="home-end" options={options} />
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select id="test-id" name="home-end" options={options} />
       )
 
       userEvent.click(getByRole('button'))
@@ -509,10 +451,8 @@ describe('component: Select', () => {
 
     describe('typing with open list', () => {
       test('will select matching first letter', async () => {
-        const { getByText, getByRole } = render(
-          <StyleProvider>
-            <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-          </StyleProvider>
+        const { getByText, getByRole } = renderWithTheme(
+          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         )
         const trigger = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -524,14 +464,8 @@ describe('component: Select', () => {
       })
 
       test('will match multiple letters', async () => {
-        const { getByText, getByRole } = render(
-          <StyleProvider>
-            <Select
-              id="test-id"
-              name="city"
-              options={['phoenix', 'toledo', 'tucson', 'flagstaff']}
-            />
-          </StyleProvider>
+        const { getByText, getByRole } = renderWithTheme(
+          <Select id="test-id" name="city" options={['phoenix', 'toledo', 'tucson', 'flagstaff']} />
         )
         const trigger = getByText('Select an option') // default placeholder
         fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
@@ -548,10 +482,8 @@ describe('component: Select', () => {
 
   describe('mouse interactions', () => {
     test('closes on option click', async () => {
-      const { getByText } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
-        </StyleProvider>
+      const { getByText } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement
@@ -564,16 +496,14 @@ describe('component: Select', () => {
     test('raises onChange event on click', () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            placeholder="Click me!"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          placeholder="Click me!"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onChange={onChange}
+        />
       )
       const trigger = getByText('Click me!')
       userEvent.click(trigger)
@@ -590,14 +520,12 @@ describe('component: Select', () => {
 
     test('does not raise onChange event on click when the option is disabled', () => {
       const onChange = jest.fn()
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select id="test-id" name="no-onchange" onChange={onChange}>
-            <Select.Option value="0" disabled>
-              I never got an onChange handler!
-            </Select.Option>
-          </Select>
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select id="test-id" name="no-onchange" onChange={onChange}>
+          <Select.Option value="0" disabled>
+            I never got an onChange handler!
+          </Select.Option>
+        </Select>
       )
 
       userEvent.click(getByRole('button'))
@@ -608,16 +536,14 @@ describe('component: Select', () => {
     test('does not raise duplicate onChange event on click', () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            placeholder="Click me!"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          placeholder="Click me!"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onChange={onChange}
+        />
       )
       const trigger = getByText('Click me!')
       userEvent.click(trigger)
@@ -634,10 +560,8 @@ describe('component: Select', () => {
 
     test('mouseEnter sets activedescendant', () => {
       const cities = ['Apache Junction', 'Avondale', 'Benson', 'Bisbee', 'Buckeye', 'Bullhead City']
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" placeholder="Click me!" options={cities} />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" placeholder="Click me!" options={cities} />
       )
       const trigger = getByText('Click me!')
       userEvent.click(trigger)
@@ -647,14 +571,12 @@ describe('component: Select', () => {
     })
 
     test('mouseEnter does not set activedescendant when the option is disabled', () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="no-set-active">
-            <Select.Option value="0" disabled>
-              not the active descendant
-            </Select.Option>
-          </Select>
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="no-set-active">
+          <Select.Option value="0" disabled>
+            not the active descendant
+          </Select.Option>
+        </Select>
       )
 
       userEvent.click(getByRole('button'))
@@ -671,17 +593,15 @@ describe('component: Select', () => {
       const onBlur = jest.fn((e) => {
         box.name = e.target.name
       })
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            placeholder="Click me!"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onBlur={onBlur}
-            value="phoenix"
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          placeholder="Click me!"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onBlur={onBlur}
+          value="phoenix"
+        />
       )
       const trigger = getByRole('button')
       fireEvent.focus(trigger)
@@ -695,17 +615,15 @@ describe('component: Select', () => {
       const onBlur = jest.fn((e) => {
         box.name = e.target.name
       })
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            placeholder="Click me!"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onBlur={onBlur}
-            value="phoenix"
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          placeholder="Click me!"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onBlur={onBlur}
+          value="phoenix"
+        />
       )
       const trigger = getByRole('button')
       trigger.focus()
@@ -721,20 +639,18 @@ describe('component: Select', () => {
       const onBlur = jest.fn((e) => {
         box.name = e.target.name
       })
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <React.Fragment>
-            <div tabIndex={-1}>lose focus</div>
-            <Select
-              id="test-id"
-              name="city"
-              placeholder="Click me!"
-              options={['phoenix', 'tucson', 'flagstaff']}
-              onBlur={onBlur}
-              value="phoenix"
-            />
-          </React.Fragment>
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <React.Fragment>
+          <div tabIndex={-1}>lose focus</div>
+          <Select
+            id="test-id"
+            name="city"
+            placeholder="Click me!"
+            options={['phoenix', 'tucson', 'flagstaff']}
+            onBlur={onBlur}
+            value="phoenix"
+          />
+        </React.Fragment>
       )
       const trigger = getByRole('button')
       trigger.focus()
@@ -751,17 +667,15 @@ describe('component: Select', () => {
       const onFocus = jest.fn((e) => {
         box.name = e.target.name
       })
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            placeholder="Click me!"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onFocus={onFocus}
-            value="phoenix"
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          placeholder="Click me!"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onFocus={onFocus}
+          value="phoenix"
+        />
       )
       const trigger = getByRole('button')
       fireEvent.focus(trigger)
@@ -774,17 +688,15 @@ describe('component: Select', () => {
       const onFocus = jest.fn((e) => {
         box.name = e.target.name
       })
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            placeholder="Click me!"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onFocus={onFocus}
-            value="phoenix"
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          placeholder="Click me!"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onFocus={onFocus}
+          value="phoenix"
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -804,17 +716,15 @@ describe('component: Select', () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value={startingValue}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          value={startingValue}
+          onChange={onChange}
+          multiple
+        />
       )
       expect(document.querySelector('[aria-multiselectable=true]')).not.toBe(null)
     })
@@ -823,17 +733,15 @@ describe('component: Select', () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByRole, getAllByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value={startingValue}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      const { getByRole, getAllByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          value={startingValue}
+          onChange={onChange}
+          multiple
+        />
       )
       userEvent.click(getByRole('button'))
       const options = getAllByRole('option')
@@ -847,16 +755,14 @@ describe('component: Select', () => {
     test('can click checkboxes to add values', () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByText } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      const { getByText } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onChange={onChange}
+          multiple
+        />
       )
       const selectTrigger = getByText('Select an option')
       userEvent.click(selectTrigger)
@@ -870,16 +776,14 @@ describe('component: Select', () => {
 
     test('checkboxes are disabled for disabled options', () => {
       const onChange = jest.fn()
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="disabled-checkboxes"
-            options={[{ label: 'disable my checkbox', value: 0, disabled: true }]}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="disabled-checkboxes"
+          options={[{ label: 'disable my checkbox', value: 0, disabled: true }]}
+          onChange={onChange}
+          multiple
+        />
       )
 
       userEvent.click(getByRole('button'))
@@ -893,17 +797,15 @@ describe('component: Select', () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['flagstaff', 'tucson', 'phoenix']}
-            value={startingValue}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['flagstaff', 'tucson', 'phoenix']}
+          value={startingValue}
+          onChange={onChange}
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -922,17 +824,15 @@ describe('component: Select', () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value={startingValue}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          value={startingValue}
+          onChange={onChange}
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -950,16 +850,14 @@ describe('component: Select', () => {
     test('SPACE key will toggle option', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          onChange={onChange}
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -995,16 +893,14 @@ describe('component: Select', () => {
     test('RETURN key will select, NOT toggle, the option and close', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            onChange={onChange}
-            options={['phoenix', 'tucson', 'flagstaff']}
-            multiple
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          onChange={onChange}
+          options={['phoenix', 'tucson', 'flagstaff']}
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1038,17 +934,15 @@ describe('component: Select', () => {
       const startingValue = ['tucson']
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value={startingValue}
-            onChange={onChange}
-            multiple
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          value={startingValue}
+          onChange={onChange}
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1066,10 +960,8 @@ describe('component: Select', () => {
 
   describe('with comboBox=true', () => {
     test('CLICK should open the list and set focus on the input', async () => {
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1079,10 +971,8 @@ describe('component: Select', () => {
     })
 
     test('typing should filter options', () => {
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1095,10 +985,8 @@ describe('component: Select', () => {
     })
 
     test('should be able to add options', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
       )
       let trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1111,16 +999,14 @@ describe('component: Select', () => {
     })
 
     test('should show when no match is found', async () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            comboBox
-            canCreateOption={false}
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          comboBox
+          canCreateOption={false}
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1131,10 +1017,8 @@ describe('component: Select', () => {
     })
 
     test('UP/DOWN should set the active descendant', async () => {
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1150,22 +1034,20 @@ describe('component: Select', () => {
     })
 
     test('UP/DOWN should not set the active descendant for disabled options', async () => {
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select id="test-id" name="skip-disabled" comboBox>
-            <option value="0">No skip</option>
-            <option value="1" disabled>
-              Skip
-            </option>
-            <option value="2" disabled>
-              Double skip
-            </option>
-            <option value="3">Don't skip me</option>
-            <option value="4" disabled>
-              Skip me
-            </option>
-          </Select>
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select id="test-id" name="skip-disabled" comboBox>
+          <option value="0">No skip</option>
+          <option value="1" disabled>
+            Skip
+          </option>
+          <option value="2" disabled>
+            Double skip
+          </option>
+          <option value="3">Don't skip me</option>
+          <option value="4" disabled>
+            Skip me
+          </option>
+        </Select>
       )
 
       userEvent.click(getByRole('button'))
@@ -1186,10 +1068,8 @@ describe('component: Select', () => {
     })
 
     test('RETURN should select an option and focus on the trigger', async () => {
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
       )
       let trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1204,10 +1084,8 @@ describe('component: Select', () => {
     })
 
     test('ESC should return focus to the trigger', async () => {
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
       )
       let trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1220,16 +1098,14 @@ describe('component: Select', () => {
     })
 
     test('values that are not in options should be added', () => {
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value="superior"
-            comboBox
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          value="superior"
+          comboBox
+        />
       )
       const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('superior')
@@ -1238,32 +1114,26 @@ describe('component: Select', () => {
     })
 
     test('values should stay in options even after they are removed from the value', () => {
-      const { getByRole, rerender } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value="superior"
-            comboBox
-          />
-        </StyleProvider>
+      const { getByRole, rerender } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          value="superior"
+          comboBox
+        />
       )
       rerender(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            value="globe"
-            comboBox
-          />
-        </StyleProvider>
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          value="globe"
+          comboBox
+        />
       )
       rerender(
-        <StyleProvider>
-          <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
-        </StyleProvider>
+        <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} comboBox />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1278,11 +1148,7 @@ describe('component: Select', () => {
         React.useEffect(() => setOptions(['phoenix', 'tucson', 'flagstaff']), [])
         return <Select id="test-id" name="city" options={options} value="phoenix" comboBox />
       }
-      const { getByRole, getAllByRole } = render(
-        <StyleProvider>
-          <DelayedOptions />
-        </StyleProvider>
-      )
+      const { getByRole, getAllByRole } = renderWithTheme(<DelayedOptions />)
       const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('phoenix')
       userEvent.click(trigger)
@@ -1293,16 +1159,14 @@ describe('component: Select', () => {
 
   describe('with multiple=true && comboBox=true', () => {
     test('CLICK on option should select it and keep the list open', () => {
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            comboBox
-            multiple
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          comboBox
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1320,17 +1184,15 @@ describe('component: Select', () => {
     test('RETURN on option should toggle it and keep the list open', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByText, getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            onChange={onChange}
-            options={['phoenix', 'tucson', 'flagstaff']}
-            comboBox
-            multiple
-          />
-        </StyleProvider>
+      const { getByText, getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          onChange={onChange}
+          options={['phoenix', 'tucson', 'flagstaff']}
+          comboBox
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1360,17 +1222,15 @@ describe('component: Select', () => {
     test('RETURN w/ metaKey should select, NOT toggle, the option and close', async () => {
       const box: any = {}
       const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            onChange={onChange}
-            options={['phoenix', 'tucson', 'flagstaff']}
-            comboBox
-            multiple
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          onChange={onChange}
+          options={['phoenix', 'tucson', 'flagstaff']}
+          comboBox
+          multiple
+        />
       )
       let trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1407,16 +1267,14 @@ describe('component: Select', () => {
     })
 
     test('blurring the list box to focus on the input should not close the list', () => {
-      const { getByRole, getByText } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={['phoenix', 'tucson', 'flagstaff']}
-            comboBox
-            multiple
-          />
-        </StyleProvider>
+      const { getByRole, getByText } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={['phoenix', 'tucson', 'flagstaff']}
+          comboBox
+          multiple
+        />
       )
       const trigger = getByRole('button')
       userEvent.click(trigger)
@@ -1428,17 +1286,15 @@ describe('component: Select', () => {
     })
 
     test('values that are not in options should be added', () => {
-      const { getByRole } = render(
-        <StyleProvider>
-          <Select
-            id="test-id"
-            name="city"
-            options={[]}
-            value={['boolest', 'coolest']}
-            comboBox
-            multiple
-          />
-        </StyleProvider>
+      const { getByRole } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="city"
+          options={[]}
+          value={['boolest', 'coolest']}
+          comboBox
+          multiple
+        />
       )
       const trigger = getByRole('button')
       expect(trigger).toHaveTextContent('boolestcoolest')
@@ -1451,11 +1307,9 @@ describe('component: Select', () => {
 
   describe('with theme customization', () => {
     test('should have 2px border', () => {
-      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { container } = render(
-        <StyleProvider theme={theme}>
-          <Select id="test-id" name="customize" options={['thin', 'thick']} />
-        </StyleProvider>
+      const { container } = renderWithTheme(
+        <Select id="test-id" name="customize" options={['thin', 'thick']} />,
+        { border: 'thick' }
       )
 
       const selectComponent = container.querySelector('[id="test-id"]')
@@ -1464,11 +1318,9 @@ describe('component: Select', () => {
     })
 
     test('should match intermediate shape styles', () => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { container } = render(
-        <StyleProvider theme={theme}>
-          <Select id="test-id" name="customize" options={['shape', 'border']} />
-        </StyleProvider>
+      const { container } = renderWithTheme(
+        <Select id="test-id" name="customize" options={['shape', 'border']} />,
+        { shape: 'intermediate' }
       )
 
       const selectComponent = container.querySelector('[id="test-id"]')
@@ -1478,11 +1330,9 @@ describe('component: Select', () => {
     })
 
     test('should match square shape styles', () => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { container } = render(
-        <StyleProvider theme={theme}>
-          <Select id="test-id" name="customize" options={['shape', 'border']} />
-        </StyleProvider>
+      const { container } = renderWithTheme(
+        <Select id="test-id" name="customize" options={['shape', 'border']} />,
+        { shape: 'square' }
       )
 
       const selectComponent = container.querySelector('[id="test-id"]')
@@ -1492,11 +1342,9 @@ describe('component: Select', () => {
     })
 
     test('should not have box shadows set', () => {
-      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { container } = render(
-        <StyleProvider theme={theme}>
-          <Select id="test-id" name="customize" options={['shape', 'border']} />
-        </StyleProvider>
+      const { container } = renderWithTheme(
+        <Select id="test-id" name="customize" options={['shape', 'border']} />,
+        { boxShadows: false }
       )
 
       const selectComponent = container.querySelector('[id="test-id"]')

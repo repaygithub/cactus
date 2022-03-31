@@ -1,54 +1,47 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import TextAreaField from './TextAreaField'
 
-describe('component: TextAreaField', (): void => {
-  test('should render a disabled TextAreaField', (): void => {
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="boolest"
-          name="boolest"
-          label="boolest"
-          tooltip="the boolest dude in the office"
-          disabled={true}
-        />
-      </StyleProvider>
+describe('component: TextAreaField', () => {
+  test('should render a disabled TextAreaField', () => {
+    const { getByLabelText } = renderWithTheme(
+      <TextAreaField
+        id="boolest"
+        name="boolest"
+        label="boolest"
+        tooltip="the boolest dude in the office"
+        disabled={true}
+      />
     )
 
     expect(getByLabelText('boolest')).toBeDisabled()
   })
 
-  test('should render a TextAreaField with a placeholder', (): void => {
-    const { getByPlaceholderText } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="boolest"
-          name="boolest"
-          label="boolest"
-          tooltip="the boolest dude in the office"
-          placeholder="no question about it"
-        />
-      </StyleProvider>
+  test('should render a TextAreaField with a placeholder', () => {
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextAreaField
+        id="boolest"
+        name="boolest"
+        label="boolest"
+        tooltip="the boolest dude in the office"
+        placeholder="no question about it"
+      />
     )
 
     expect(getByPlaceholderText('no question about it')).toBeInTheDocument()
   })
 
-  test('should render a success TextAreaField', (): void => {
-    const { getByText, getByLabelText } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="darts"
-          name="darts"
-          label="master of darts"
-          tooltip="the dart master"
-          success="undoubtedly"
-        />
-      </StyleProvider>
+  test('should render a success TextAreaField', () => {
+    const { getByText, getByLabelText } = renderWithTheme(
+      <TextAreaField
+        id="darts"
+        name="darts"
+        label="master of darts"
+        tooltip="the dart master"
+        success="undoubtedly"
+      />
     )
 
     expect(getByLabelText('master of darts').getAttribute('aria-describedby')).toContain(
@@ -56,17 +49,15 @@ describe('component: TextAreaField', (): void => {
     )
   })
 
-  test('should render a warning TextAreaField', (): void => {
-    const { getByText, getByLabelText } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="darts"
-          name="darts"
-          label="master of darts"
-          tooltip="the dart master"
-          warning="undoubtedly"
-        />
-      </StyleProvider>
+  test('should render a warning TextAreaField', () => {
+    const { getByText, getByLabelText } = renderWithTheme(
+      <TextAreaField
+        id="darts"
+        name="darts"
+        label="master of darts"
+        tooltip="the dart master"
+        warning="undoubtedly"
+      />
     )
 
     expect(getByLabelText('master of darts').getAttribute('aria-describedby')).toContain(
@@ -74,17 +65,15 @@ describe('component: TextAreaField', (): void => {
     )
   })
 
-  test('should render an error TextAreaField', (): void => {
-    const { getByText, getByLabelText } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="darts"
-          name="darts"
-          label="master of darts"
-          tooltip="the dart master"
-          error="undoubtedly"
-        />
-      </StyleProvider>
+  test('should render an error TextAreaField', () => {
+    const { getByText, getByLabelText } = renderWithTheme(
+      <TextAreaField
+        id="darts"
+        name="darts"
+        label="master of darts"
+        tooltip="the dart master"
+        error="undoubtedly"
+      />
     )
 
     expect(getByLabelText('master of darts').getAttribute('aria-describedby')).toContain(
@@ -92,13 +81,13 @@ describe('component: TextAreaField', (): void => {
     )
   })
 
-  test('should support margin space props', (): void => {
-    const { getByTestId } = render(
-      <StyleProvider>
+  test('should support margin space props', () => {
+    const { getByTestId } = renderWithTheme(
+      <>
         <TextAreaField label="F" name="1st" data-testid="first" />
         <TextAreaField name="def" label="D" data-testid="default" mb={2} />
         <TextAreaField name="over" label="O" data-testid="override" mt={1} />
-      </StyleProvider>
+      </>
     )
 
     const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
@@ -115,19 +104,17 @@ describe('component: TextAreaField', (): void => {
   })
 
   test('should support flex item props', () => {
-    const { container } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="missing"
-          name="missing"
-          label="missing a comma"
-          tooltip="you are missing a comma, sir"
-          flex={1}
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={0}
-        />
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <TextAreaField
+        id="missing"
+        name="missing"
+        label="missing a comma"
+        tooltip="you are missing a comma, sir"
+        flex={1}
+        flexGrow={1}
+        flexShrink={0}
+        flexBasis={0}
+      />
     )
 
     expect(container.firstElementChild).toHaveStyle('flex: 1')
@@ -138,28 +125,24 @@ describe('component: TextAreaField', (): void => {
 
   test('should support ref prop', () => {
     const ref = React.createRef<HTMLTextAreaElement>()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <TextAreaField name="with-ref" label="Arreff Them!" defaultValue="something" ref={ref} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <TextAreaField name="with-ref" label="Arreff Them!" defaultValue="something" ref={ref} />
     )
     expect(getByLabelText('Arreff Them!')).toBe(ref.current)
     expect(ref.current).toHaveValue('something')
   })
 
-  test('should trigger onChange handler', (): void => {
+  test('should trigger onChange handler', () => {
     const onChange = jest.fn()
-    const { getByPlaceholderText } = render(
-      <StyleProvider>
-        <TextAreaField
-          id="throat"
-          name="punch"
-          label="throat punch"
-          tooltip="throat punch cancer"
-          placeholder="punch some throats"
-          onChange={onChange}
-        />
-      </StyleProvider>
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextAreaField
+        id="throat"
+        name="punch"
+        label="throat punch"
+        tooltip="throat punch cancer"
+        placeholder="punch some throats"
+        onChange={onChange}
+      />
     )
 
     userEvent.type(getByPlaceholderText('punch some throats'), 'miss you buddy')

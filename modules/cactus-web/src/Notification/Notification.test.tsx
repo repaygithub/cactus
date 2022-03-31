@@ -1,18 +1,15 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Alert from '../Alert/Alert'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Notification from './Notification'
 
 describe('component: Notification', () => {
   test('should render children in the correct position on the page', () => {
-    const { getByTestId, rerender } = render(
-      <StyleProvider>
-        <Notification open vertical="top" horizontal="left" data-testid="notification-wrapper">
-          <Alert status="error">Error Notification</Alert>
-        </Notification>
-      </StyleProvider>
+    const { getByTestId, rerender } = renderWithTheme(
+      <Notification open vertical="top" horizontal="left" data-testid="notification-wrapper">
+        <Alert status="error">Error Notification</Alert>
+      </Notification>
     )
 
     let wrapper = getByTestId('notification-wrapper')
@@ -20,11 +17,9 @@ describe('component: Notification', () => {
     expect(wrapper).toHaveStyle('left: 40px')
 
     rerender(
-      <StyleProvider>
-        <Notification open vertical="top" horizontal="center" data-testid="notification-wrapper">
-          <Alert status="error">Error Notification</Alert>
-        </Notification>
-      </StyleProvider>
+      <Notification open vertical="top" horizontal="center" data-testid="notification-wrapper">
+        <Alert status="error">Error Notification</Alert>
+      </Notification>
     )
 
     wrapper = getByTestId('notification-wrapper')
@@ -33,11 +28,9 @@ describe('component: Notification', () => {
     expect(wrapper).toHaveStyle('transform: translateX(-50%)')
 
     rerender(
-      <StyleProvider>
-        <Notification open vertical="top" horizontal="right" data-testid="notification-wrapper">
-          <Alert status="error">Error Notification</Alert>
-        </Notification>
-      </StyleProvider>
+      <Notification open vertical="top" horizontal="right" data-testid="notification-wrapper">
+        <Alert status="error">Error Notification</Alert>
+      </Notification>
     )
 
     wrapper = getByTestId('notification-wrapper')
@@ -45,11 +38,9 @@ describe('component: Notification', () => {
     expect(wrapper).toHaveStyle('right: 40px')
 
     rerender(
-      <StyleProvider>
-        <Notification open vertical="bottom" horizontal="left" data-testid="notification-wrapper">
-          <Alert status="error">Error Notification</Alert>
-        </Notification>
-      </StyleProvider>
+      <Notification open vertical="bottom" horizontal="left" data-testid="notification-wrapper">
+        <Alert status="error">Error Notification</Alert>
+      </Notification>
     )
 
     wrapper = getByTestId('notification-wrapper')
@@ -57,11 +48,9 @@ describe('component: Notification', () => {
     expect(wrapper).toHaveStyle('left: 40px')
 
     rerender(
-      <StyleProvider>
-        <Notification open vertical="bottom" horizontal="center" data-testid="notification-wrapper">
-          <Alert status="error">Error Notification</Alert>
-        </Notification>
-      </StyleProvider>
+      <Notification open vertical="bottom" horizontal="center" data-testid="notification-wrapper">
+        <Alert status="error">Error Notification</Alert>
+      </Notification>
     )
 
     wrapper = getByTestId('notification-wrapper')
@@ -70,11 +59,9 @@ describe('component: Notification', () => {
     expect(wrapper).toHaveStyle('transform: translateX(-50%)')
 
     rerender(
-      <StyleProvider>
-        <Notification open vertical="bottom" horizontal="right" data-testid="notification-wrapper">
-          <Alert status="error">Error Notification</Alert>
-        </Notification>
-      </StyleProvider>
+      <Notification open vertical="bottom" horizontal="right" data-testid="notification-wrapper">
+        <Alert status="error">Error Notification</Alert>
+      </Notification>
     )
 
     wrapper = getByTestId('notification-wrapper')
@@ -83,12 +70,10 @@ describe('component: Notification', () => {
   })
 
   test('should not render children when open is false', () => {
-    const { queryByText } = render(
-      <StyleProvider>
-        <Notification open={false} vertical="top" horizontal="left">
-          <Alert status="error">Error Notification</Alert>
-        </Notification>
-      </StyleProvider>
+    const { queryByText } = renderWithTheme(
+      <Notification open={false} vertical="top" horizontal="left">
+        <Alert status="error">Error Notification</Alert>
+      </Notification>
     )
 
     expect(queryByText('Error Notification')).toBeNull()

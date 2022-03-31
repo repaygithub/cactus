@@ -1,10 +1,10 @@
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import React, { useContext, useState } from 'react'
 import { MarginProps } from 'styled-system'
 
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DataGrid from './DataGrid'
 
 const TEST_DATA = [
@@ -253,48 +253,32 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
   )
 }
 
-describe('component: DataGrid', (): void => {
-  test('should be able to change page size', (): void => {
-    const { getByLabelText, getByText } = render(
-      <StyleProvider>
-        <DataGridContainer />
-      </StyleProvider>
-    )
+describe('component: DataGrid', () => {
+  test('should be able to change page size', () => {
+    const { getByLabelText, getByText } = renderWithTheme(<DataGridContainer />)
 
     const sixItemsButton = getByLabelText('View 6 rows per page')
     fireEvent.click(sixItemsButton)
     expect(getByText('Showing 1 to 6 of 11')).toBeInTheDocument()
   })
 
-  test('should be able to change sort direction', (): void => {
-    const { getByText } = render(
-      <StyleProvider>
-        <DataGridContainer />
-      </StyleProvider>
-    )
+  test('should be able to change sort direction', () => {
+    const { getByText } = renderWithTheme(<DataGridContainer />)
 
     const createdHeader = getByText('Created').parentElement as HTMLElement
     fireEvent.click(createdHeader)
     expect(createdHeader.parentElement).toHaveAttribute('aria-sort', 'ascending')
   })
 
-  test('should render using as prop', (): void => {
-    const { getAllByText } = render(
-      <StyleProvider>
-        <DataGridContainer />
-      </StyleProvider>
-    )
+  test('should render using as prop', () => {
+    const { getAllByText } = renderWithTheme(<DataGridContainer />)
 
     expect(getAllByText('YES')[0]).toBeInTheDocument()
     expect(getAllByText('NO')[0]).toBeInTheDocument()
   })
 
-  test('should be able to change the page using Pagination', (): void => {
-    const { getByText, getByLabelText } = render(
-      <StyleProvider>
-        <DataGridContainer />
-      </StyleProvider>
-    )
+  test('should be able to change the page using Pagination', () => {
+    const { getByText, getByLabelText } = renderWithTheme(<DataGridContainer />)
 
     const page2Button = getByLabelText('Go to page 2')
     fireEvent.click(page2Button)
@@ -304,12 +288,8 @@ describe('component: DataGrid', (): void => {
     expect(getByText('Config 8')).toBeInTheDocument()
   })
 
-  test('should be able to change the page using PrevNext', (): void => {
-    const { getByText } = render(
-      <StyleProvider>
-        <DataGridContainer providePageCount={false} />
-      </StyleProvider>
-    )
+  test('should be able to change the page using PrevNext', () => {
+    const { getByText } = renderWithTheme(<DataGridContainer providePageCount={false} />)
 
     const nextPageButton = getByText('Next')
     fireEvent.click(nextPageButton)
@@ -319,21 +299,15 @@ describe('component: DataGrid', (): void => {
     expect(getByText('Config 8')).toBeInTheDocument()
   })
 
-  test('should render content from Column component', (): void => {
-    const { getAllByText } = render(
-      <StyleProvider>
-        <DataGridContainer providePageCount={false} />
-      </StyleProvider>
-    )
+  test('should render content from Column component', () => {
+    const { getAllByText } = renderWithTheme(<DataGridContainer providePageCount={false} />)
 
     expect(getAllByText('Edit')[0]).toBeInTheDocument()
   })
 
   test('Should support margin props', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <DataGridContainer data-testid="data-grid" marginTop={2} mb="100px" mx={7} />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <DataGridContainer data-testid="data-grid" marginTop={2} mb="100px" mx={7} />
     )
 
     const dataGrid = getByTestId('data-grid')

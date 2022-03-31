@@ -1,16 +1,11 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Spinner from './Spinner'
 
-describe('component: Spinner', (): void => {
-  test('Exists', (): void => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Spinner data-testid="spin" />
-      </StyleProvider>
-    )
+describe('component: Spinner', () => {
+  test('Exists', () => {
+    const { getByTestId } = renderWithTheme(<Spinner data-testid="spin" />)
     const spinner = getByTestId('spin')
     expect(spinner.tagName).toBe('svg')
     expect(spinner).toBeInTheDocument()

@@ -1,16 +1,14 @@
-import { fireEvent, queryByAttribute, render } from '@testing-library/react'
+import { fireEvent, queryByAttribute } from '@testing-library/react'
 import pick from 'lodash/pick'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import RadioButtonField from './RadioButtonField'
 
-describe('component: RadioButtonField', (): void => {
-  test('should generate a unique id when none is provided', (): void => {
-    const { container, getByText } = render(
-      <StyleProvider>
-        <RadioButtonField name="field_name" label="Find This" />
-      </StyleProvider>
+describe('component: RadioButtonField', () => {
+  test('should generate a unique id when none is provided', () => {
+    const { container, getByText } = renderWithTheme(
+      <RadioButtonField name="field_name" label="Find This" />
     )
 
     const getById = queryByAttribute.bind(null, 'id')
@@ -20,13 +18,11 @@ describe('component: RadioButtonField', (): void => {
     expect(getById(container, labelElement.htmlFor)).not.toBeNull()
   })
 
-  test('should trigger onChange event', (): void => {
+  test('should trigger onChange event', () => {
     const box: any = {}
     const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'value'])))
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <RadioButtonField id="Ackermann" name="rbf" label="Levi" onChange={onChange} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <RadioButtonField id="Ackermann" name="rbf" label="Levi" onChange={onChange} />
     )
 
     fireEvent.click(getByLabelText('Levi'))
@@ -34,37 +30,33 @@ describe('component: RadioButtonField', (): void => {
     expect(box).toEqual({ name: 'rbf', value: 'on' })
   })
 
-  test('should trigger onFocus event', (): void => {
+  test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <RadioButtonField id="Yeager" name="rbf" label="Eren" onFocus={onFocus} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <RadioButtonField id="Yeager" name="rbf" label="Eren" onFocus={onFocus} />
     )
 
     fireEvent.focus(getByLabelText('Eren'))
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onBlur event', (): void => {
+  test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <RadioButtonField id="Targaryen" name="rbf" label="Aegon" onBlur={onBlur} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <RadioButtonField id="Targaryen" name="rbf" label="Aegon" onBlur={onBlur} />
     )
 
     fireEvent.blur(getByLabelText('Aegon'))
     expect(onBlur).toHaveBeenCalled()
   })
 
-  test('should support margin space props', (): void => {
-    const { getByTestId } = render(
-      <StyleProvider>
+  test('should support margin space props', () => {
+    const { getByTestId } = renderWithTheme(
+      <>
         <RadioButtonField label="F" name="1st" data-testid="first" />
         <RadioButtonField name="def" label="D" data-testid="default" mb={2} />
         <RadioButtonField name="over" label="O" data-testid="override" mt={4} />
-      </StyleProvider>
+      </>
     )
 
     const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
@@ -81,19 +73,17 @@ describe('component: RadioButtonField', (): void => {
   })
 
   test('should support flex item props', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <RadioButtonField
-          id="Targaryen"
-          name="rbf"
-          label="Aegon"
-          data-testid="flex-rbf"
-          flex={1}
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={0}
-        />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <RadioButtonField
+        id="Targaryen"
+        name="rbf"
+        label="Aegon"
+        data-testid="flex-rbf"
+        flex={1}
+        flexGrow={1}
+        flexShrink={0}
+        flexBasis={0}
+      />
     )
 
     const radioField = getByTestId('flex-rbf').parentElement?.parentElement
@@ -105,10 +95,8 @@ describe('component: RadioButtonField', (): void => {
 
   test('should support ref prop', () => {
     const ref = React.createRef<HTMLInputElement>()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <RadioButtonField name="yes" label="Oui" defaultChecked ref={ref} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <RadioButtonField name="yes" label="Oui" defaultChecked ref={ref} />
     )
     expect(getByLabelText('Oui')).toBe(ref.current)
     expect(ref.current).toBeChecked()

@@ -1,7 +1,6 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Footer from './Footer'
 
 const REPAY_LOGO =
@@ -10,21 +9,13 @@ const Logo = () => <img data-testid="image" src={REPAY_LOGO} />
 
 describe('component: Footer', () => {
   test('should be able to pass custom content using children', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Footer logo={REPAY_LOGO}>Custom Content</Footer>
-      </StyleProvider>
-    )
+    const { getByText } = renderWithTheme(<Footer logo={REPAY_LOGO}>Custom Content</Footer>)
 
     expect(getByText('Custom Content')).toBeInTheDocument()
   })
 
   test('should be able to pass a logo using a component', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Footer logo={<Logo />}>Custom Content</Footer>
-      </StyleProvider>
-    )
+    const { getByTestId } = renderWithTheme(<Footer logo={<Logo />}>Custom Content</Footer>)
 
     expect(getByTestId('image')).toBeInTheDocument()
   })

@@ -1,8 +1,7 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import FileInput from './FileInput'
 
 // Fake File object; aren't dynamic languages great?
@@ -12,46 +11,38 @@ Object.defineProperty(file, 'size', { enumerable: true, value: 42 })
 
 const fakeValue = [FileInput.toFileObj(file)]
 
-describe('component: FileInput', (): void => {
-  test('should clear input with empty string', (): void => {
-    const { getByText, rerender } = render(
-      <StyleProvider>
-        <FileInput name="throatpunch" value={fakeValue} />
-      </StyleProvider>
+describe('component: FileInput', () => {
+  test('should clear input with empty string', () => {
+    const { getByText, rerender } = renderWithTheme(
+      <FileInput name="throatpunch" value={fakeValue} />
     )
     const span = getByText('boolest.txt')
-    rerender(
-      <StyleProvider>
-        <FileInput name="throatpunch" value="" />
-      </StyleProvider>
-    )
+    rerender(<FileInput name="throatpunch" value="" />)
 
     expect(span).not.toBeInTheDocument()
   })
 
   test('should forward input-specific props to input', () => {
-    const { getByLabelText, getByTestId } = render(
-      <StyleProvider>
-        <FileInput
-          data-testid="wrapper"
-          aria-hidden
-          id="punchthroat"
-          name="throatpunch"
-          aria-label="Oh Yeah!"
-          aria-labelledby="punchthroat"
-          aria-describedby="desc"
-          aria-details="details"
-          aria-errormessage="Oh no!"
-          aria-invalid
-          aria-placeholder="Hold my _____"
-          capture="user"
-          form="other"
-          multiple
-          disabled
-          required
-          aria-required
-        />
-      </StyleProvider>
+    const { getByLabelText, getByTestId } = renderWithTheme(
+      <FileInput
+        data-testid="wrapper"
+        aria-hidden
+        id="punchthroat"
+        name="throatpunch"
+        aria-label="Oh Yeah!"
+        aria-labelledby="punchthroat"
+        aria-describedby="desc"
+        aria-details="details"
+        aria-errormessage="Oh no!"
+        aria-invalid
+        aria-placeholder="Hold my _____"
+        capture="user"
+        form="other"
+        multiple
+        disabled
+        required
+        aria-required
+      />
     )
     const wrapper = getByTestId('wrapper')
     expect(wrapper.matches(`div${FileInput}`)).toBe(true)
@@ -87,10 +78,8 @@ describe('component: FileInput', (): void => {
     const blur = jest.fn((e: any) => {
       blurTarget = { ...e.target }
     })
-    render(
-      <StyleProvider>
-        <FileInput name="throatpunch" value={fakeValue} onFocus={focus} onBlur={blur} />
-      </StyleProvider>
+    renderWithTheme(
+      <FileInput name="throatpunch" value={fakeValue} onFocus={focus} onBlur={blur} />
     )
     userEvent.tab()
     expect(document.activeElement).toHaveAttribute('name', 'throatpunch')
@@ -123,11 +112,7 @@ describe('component: FileInput', (): void => {
       return <FileInput name="controlled" onChange={change} value={state} />
     }
 
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <Controlled />
-      </StyleProvider>
-    )
+    const { getByLabelText } = renderWithTheme(<Controlled />)
     const deleteButton = getByLabelText('Delete File')
     userEvent.click(deleteButton)
     expect(deleteButton).not.toBeInTheDocument()

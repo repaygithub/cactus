@@ -1,24 +1,21 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import StyleProvider from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import RadioCard from './RadioCard'
 
 describe('component: RadioCard', () => {
   test('style props go to wrapper', () => {
     const style = { outline: '1px solid orange' }
-    const { getByTestId } = render(
-      <StyleProvider>
-        <RadioCard
-          id="what"
-          name="hope"
-          value="quest"
-          data-testid="myradio"
-          className="sup"
-          style={style}
-        />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <RadioCard
+        id="what"
+        name="hope"
+        value="quest"
+        data-testid="myradio"
+        className="sup"
+        style={style}
+      />
     )
     const input = getByTestId('myradio')
     const wrapper = input.parentElement
@@ -46,10 +43,8 @@ describe('component: RadioCard', () => {
     const click = jest.fn((e: React.MouseEvent<HTMLInputElement>) => {
       clickTarget = e.target as HTMLInputElement
     })
-    const { getByTestId } = render(
-      <StyleProvider>
-        <RadioCard data-testid="myradio" onChange={change} onClick={click} onFocus={focus} />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <RadioCard data-testid="myradio" onChange={change} onClick={click} onFocus={focus} />
     )
     const input = getByTestId('myradio')
     userEvent.click(input.parentElement as HTMLElement)
@@ -64,22 +59,14 @@ describe('component: RadioCard', () => {
   describe('focus behavior', () => {
     test('focus on tab', () => {
       const ref = React.createRef<HTMLInputElement>()
-      render(
-        <StyleProvider>
-          <RadioCard ref={ref} />
-        </StyleProvider>
-      )
+      renderWithTheme(<RadioCard ref={ref} />)
       userEvent.tab()
       expect(ref.current).toHaveFocus()
       expect(ref.current?.matches('input[type="radio"]')).toBe(true)
     })
 
     test('focus on click wrapper', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <RadioCard>Label Y'all</RadioCard>
-        </StyleProvider>
-      )
+      const { getByLabelText } = renderWithTheme(<RadioCard>Label Y'all</RadioCard>)
       const input = getByLabelText("Label Y'all")
       userEvent.click(input.parentElement as HTMLElement)
       expect(input).toHaveFocus()
@@ -88,12 +75,10 @@ describe('component: RadioCard', () => {
 
     test('focus forward to focusRef', () => {
       const ref = React.createRef<HTMLDivElement>()
-      const { getByTestId } = render(
-        <StyleProvider>
-          <RadioCard name="test" focusRef={ref} data-testid="radio">
-            <div tabIndex={-1} ref={ref} data-testid="focus" />
-          </RadioCard>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <RadioCard name="test" focusRef={ref} data-testid="radio">
+          <div tabIndex={-1} ref={ref} data-testid="focus" />
+        </RadioCard>
       )
       const input = getByTestId('radio')
       const focusable = getByTestId('focus')
@@ -102,15 +87,13 @@ describe('component: RadioCard', () => {
     })
 
     test('focus properly on click inner label', () => {
-      const { getByTestId } = render(
-        <StyleProvider>
-          <RadioCard>
-            <label data-testid="label" htmlFor="input">
-              Go Beyond
-            </label>
-            <input id="input" defaultValue="plus" data-testid="ultra" />
-          </RadioCard>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <RadioCard>
+          <label data-testid="label" htmlFor="input">
+            Go Beyond
+          </label>
+          <input id="input" defaultValue="plus" data-testid="ultra" />
+        </RadioCard>
       )
       userEvent.click(getByTestId('label'))
       expect(getByTestId('ultra')).toHaveFocus()
@@ -120,23 +103,21 @@ describe('component: RadioCard', () => {
   describe('RadioCard.Group', () => {
     test('group attributes', () => {
       const style = { outline: '1px solid orange' }
-      const { getByTestId } = render(
-        <StyleProvider>
-          <RadioCard.Group
-            id="group"
-            name="what"
-            className="yup"
-            style={style}
-            label="nope"
-            width="100px"
-            flex="1 0 30px"
-            mb="14px"
-            data-testid="group"
-            error="oh noes!"
-          >
-            <input data-testid="placeholder" />
-          </RadioCard.Group>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <RadioCard.Group
+          id="group"
+          name="what"
+          className="yup"
+          style={style}
+          label="nope"
+          width="100px"
+          flex="1 0 30px"
+          mb="14px"
+          data-testid="group"
+          error="oh noes!"
+        >
+          <input data-testid="placeholder" />
+        </RadioCard.Group>
       )
       const field = getByTestId('group')
       expect(field).toHaveAttribute('id', 'group')
@@ -163,14 +144,12 @@ describe('component: RadioCard', () => {
     })
 
     test('forwarded attributes', () => {
-      render(
-        <StyleProvider>
-          <RadioCard.Group name="forward" label="march" defaultValue="two" required disabled>
-            <RadioCard value="one" disabled={false} />
-            <RadioCard value="two" />
-            <RadioCard value="three" required={false} />
-          </RadioCard.Group>
-        </StyleProvider>
+      renderWithTheme(
+        <RadioCard.Group name="forward" label="march" defaultValue="two" required disabled>
+          <RadioCard value="one" disabled={false} />
+          <RadioCard value="two" />
+          <RadioCard value="three" required={false} />
+        </RadioCard.Group>
       )
       const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('input'))
       expect(inputs[0].value).toBe('one')
@@ -199,11 +178,7 @@ describe('component: RadioCard', () => {
           </form>
         )
       }
-      const { getByTestId } = render(
-        <StyleProvider>
-          <WithControl />
-        </StyleProvider>
-      )
+      const { getByTestId } = renderWithTheme(<WithControl />)
       expect(formRef.current).toHaveFormValues({ radios: undefined })
       userEvent.click(getByTestId('one'))
       expect(formRef.current).toHaveFormValues({ radios: 'uno' })

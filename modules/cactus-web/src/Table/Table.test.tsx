@@ -1,57 +1,52 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Table from './Table'
 
-describe('component: Table', (): void => {
-  test('ignores width on card', (): void => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Table variant="card">
-          <Table.Header>
-            <Table.Cell>Header Cell</Table.Cell>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell width="230px" data-testid="cell">
-                Data cell
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Data cell</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Data cell</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </StyleProvider>
+describe('component: Table', () => {
+  test('ignores width on card', () => {
+    const { getByTestId } = renderWithTheme(
+      <Table variant="card">
+        <Table.Header>
+          <Table.Cell>Header Cell</Table.Cell>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell width="230px" data-testid="cell">
+              Data cell
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     )
     const singleCell = getByTestId('cell')
     expect(singleCell).toHaveStyle('width: 240px')
   })
 
   test('renders mini table styles', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Table variant="mini">
-          <Table.Header>
-            <Table.Cell data-testid="header-cell">Header Cell</Table.Cell>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell data-testid="data-cell">Data cell</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Data cell</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>Data cell</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <Table variant="mini">
+        <Table.Header>
+          <Table.Cell data-testid="header-cell">Header Cell</Table.Cell>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell data-testid="data-cell">Data cell</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     )
     const headerCell = getByTestId('header-cell')
     const dataCell = getByTestId('data-cell')
@@ -60,19 +55,17 @@ describe('component: Table', (): void => {
   })
 
   test('supports margin space props', () => {
-    const { getByTitle } = render(
-      <StyleProvider>
-        <Table title="Table Title" marginTop={2} mb="100px" mx={7}>
-          <Table.Header>
-            <Table.Cell>Header Cell</Table.Cell>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell>Data cell</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </StyleProvider>
+    const { getByTitle } = renderWithTheme(
+      <Table title="Table Title" marginTop={2} mb="100px" mx={7}>
+        <Table.Header>
+          <Table.Cell>Header Cell</Table.Cell>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
     )
 
     const tableWrapper = getByTitle('Table Title').parentElement

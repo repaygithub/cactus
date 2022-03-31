@@ -1,31 +1,28 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import RadioGroup from './RadioGroup'
 
-describe('component: RadioGroup', (): void => {
-  test('should render a radio group', (): void => {
-    const { container, getByText } = render(
-      <StyleProvider>
-        <RadioGroup
-          id="rg"
-          name="places"
-          label="Realm"
-          required
-          disabled={false}
-          value="persephone"
-          tooltip="Select your preferred realm"
-          onChange={() => undefined}
-        >
-          <RadioGroup.Button id="earth" label="Glebe" value="james" />
-          <RadioGroup.Button id="life" label="Elysium" value="persephone" />
-          <RadioGroup.Button id="air" label="Empyrea" value="stratos" />
-          <RadioGroup.Button id="fire" label="Pyroborea" value="pyro" />
-          <RadioGroup.Button id="death" label="Stygia" value="charnel" disabled />
-        </RadioGroup>
-      </StyleProvider>
+describe('component: RadioGroup', () => {
+  test('should render a radio group', () => {
+    const { container, getByText } = renderWithTheme(
+      <RadioGroup
+        id="rg"
+        name="places"
+        label="Realm"
+        required
+        disabled={false}
+        value="persephone"
+        tooltip="Select your preferred realm"
+        onChange={() => undefined}
+      >
+        <RadioGroup.Button id="earth" label="Glebe" value="james" />
+        <RadioGroup.Button id="life" label="Elysium" value="persephone" />
+        <RadioGroup.Button id="air" label="Empyrea" value="stratos" />
+        <RadioGroup.Button id="fire" label="Pyroborea" value="pyro" />
+        <RadioGroup.Button id="death" label="Stygia" value="charnel" disabled />
+      </RadioGroup>
     )
 
     const radios = container.querySelectorAll('input')
@@ -43,24 +40,22 @@ describe('component: RadioGroup', (): void => {
     expect(tooltip).toHaveAttribute('role', 'tooltip')
   })
 
-  test('should render a disabled radio group', (): void => {
-    const { container, getByText } = render(
-      <StyleProvider>
-        <RadioGroup
-          id="rg"
-          name="cities"
-          label="Captitol"
-          disabled
-          defaultValue="stratos"
-          warning="Cannot travel right now"
-        >
-          <RadioGroup.Button id="earth" label="Agothera" value="james" />
-          <RadioGroup.Button id="life" label="Idylliac" value="persephone" />
-          <RadioGroup.Button id="air" label="Thryhring" value="stratos" />
-          <RadioGroup.Button id="fire" label="Helios" value="pyro" disabled={false} />
-          <RadioGroup.Button id="death" label="Dys" value="charnel" />
-        </RadioGroup>
-      </StyleProvider>
+  test('should render a disabled radio group', () => {
+    const { container, getByText } = renderWithTheme(
+      <RadioGroup
+        id="rg"
+        name="cities"
+        label="Captitol"
+        disabled
+        defaultValue="stratos"
+        warning="Cannot travel right now"
+      >
+        <RadioGroup.Button id="earth" label="Agothera" value="james" />
+        <RadioGroup.Button id="life" label="Idylliac" value="persephone" />
+        <RadioGroup.Button id="air" label="Thryhring" value="stratos" />
+        <RadioGroup.Button id="fire" label="Helios" value="pyro" disabled={false} />
+        <RadioGroup.Button id="death" label="Dys" value="charnel" />
+      </RadioGroup>
     )
 
     const radios = container.querySelectorAll('input')
@@ -77,7 +72,7 @@ describe('component: RadioGroup', (): void => {
     expect(warning).toHaveAttribute('role', 'alert')
   })
 
-  test('should trigger events', (): void => {
+  test('should trigger events', () => {
     const changes: [string, string][] = []
     const onChange = jest.fn((e) => changes.push([e.target.name, e.target.value]))
     const changeOne: [string, string][] = []
@@ -88,23 +83,21 @@ describe('component: RadioGroup', (): void => {
     const onFocusOne = jest.fn((e) => focusOne.push(e.target.id))
     const blurNames: string[] = []
     const onBlur = jest.fn((e) => blurNames.push(e.target.id))
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <RadioGroup
-          id="rg"
-          name="wizards"
-          label="Allies"
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        >
-          <RadioGroup.Button id="earth" label="Grakkus" value="james" onFocus={onFocusOne} />
-          <RadioGroup.Button id="life" label="Yogo" value="persephone" />
-          <RadioGroup.Button id="air" label="Jadugarr" value="stratos" disabled />
-          <RadioGroup.Button id="fire" label="Sorcha" value="pyro" onChange={onChangeOne} />
-          <RadioGroup.Button id="death" label="Acheron" value="charnel" />
-        </RadioGroup>
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <RadioGroup
+        id="rg"
+        name="wizards"
+        label="Allies"
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      >
+        <RadioGroup.Button id="earth" label="Grakkus" value="james" onFocus={onFocusOne} />
+        <RadioGroup.Button id="life" label="Yogo" value="persephone" />
+        <RadioGroup.Button id="air" label="Jadugarr" value="stratos" disabled />
+        <RadioGroup.Button id="fire" label="Sorcha" value="pyro" onChange={onChangeOne} />
+        <RadioGroup.Button id="death" label="Acheron" value="charnel" />
+      </RadioGroup>
     )
 
     userEvent.tab()

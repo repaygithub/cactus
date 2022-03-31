@@ -1,8 +1,7 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import StyleProvider from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import CheckBoxCard from './CheckBoxCard'
 
 // Click then wait for the `setTimeout` call in `ToggleCard.tsx` to clear.
@@ -16,17 +15,15 @@ const clickAndWait: typeof userEvent.click = async (...args) => {
 describe('component: CheckBoxCard', () => {
   test('style props go to wrapper', () => {
     const style = { outline: '1px solid orange' }
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBoxCard
-          id="what"
-          name="hope"
-          value="quest"
-          data-testid="mycheckbox"
-          className="sup"
-          style={style}
-        />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBoxCard
+        id="what"
+        name="hope"
+        value="quest"
+        data-testid="mycheckbox"
+        className="sup"
+        style={style}
+      />
     )
     const input = getByTestId('mycheckbox')
     const wrapper = input.parentElement
@@ -54,10 +51,8 @@ describe('component: CheckBoxCard', () => {
     const click = jest.fn((e: React.MouseEvent<HTMLInputElement>) => {
       clickTarget = e.target as HTMLInputElement
     })
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBoxCard data-testid="mycheckbox" onChange={change} onClick={click} onFocus={focus} />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBoxCard data-testid="mycheckbox" onChange={change} onClick={click} onFocus={focus} />
     )
     const input = getByTestId('mycheckbox')
     userEvent.click(input.parentElement as HTMLElement)
@@ -72,21 +67,15 @@ describe('component: CheckBoxCard', () => {
   describe('focus behavior', () => {
     test('focus on tab', () => {
       const ref = React.createRef<HTMLInputElement>()
-      render(
-        <StyleProvider>
-          <CheckBoxCard ref={ref} />
-        </StyleProvider>
-      )
+      renderWithTheme(<CheckBoxCard ref={ref} />)
       userEvent.tab()
       expect(ref.current).toHaveFocus()
       expect(ref.current?.matches('input[type="checkbox"]')).toBe(true)
     })
 
     test('focus on click wrapper', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <CheckBoxCard defaultChecked>Label Y'all</CheckBoxCard>
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <CheckBoxCard defaultChecked>Label Y'all</CheckBoxCard>
       )
       const input = getByLabelText("Label Y'all")
       userEvent.click(input.parentElement as HTMLElement)
@@ -97,12 +86,10 @@ describe('component: CheckBoxCard', () => {
 
     test('focus forward to focusRef', async () => {
       const ref = React.createRef<HTMLDivElement>()
-      const { getByTestId } = render(
-        <StyleProvider>
-          <CheckBoxCard name="test" focusRef={ref} data-testid="checkbox">
-            <div tabIndex={-1} ref={ref} data-testid="focus" />
-          </CheckBoxCard>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <CheckBoxCard name="test" focusRef={ref} data-testid="checkbox">
+          <div tabIndex={-1} ref={ref} data-testid="focus" />
+        </CheckBoxCard>
       )
       const input = getByTestId('checkbox')
       const focusable = getByTestId('focus')
@@ -116,15 +103,13 @@ describe('component: CheckBoxCard', () => {
     })
 
     test('focus properly on click inner label', async () => {
-      const { getByTestId } = render(
-        <StyleProvider>
-          <CheckBoxCard data-testid="checkbox">
-            <label data-testid="label" htmlFor="input">
-              Go Beyond
-            </label>
-            <input id="input" defaultValue="plus" data-testid="ultra" />
-          </CheckBoxCard>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <CheckBoxCard data-testid="checkbox">
+          <label data-testid="label" htmlFor="input">
+            Go Beyond
+          </label>
+          <input id="input" defaultValue="plus" data-testid="ultra" />
+        </CheckBoxCard>
       )
       const checkbox = getByTestId('checkbox')
       const label = getByTestId('label')
@@ -146,23 +131,21 @@ describe('component: CheckBoxCard', () => {
   describe('CheckBoxCard.Group', () => {
     test('group attributes', () => {
       const style = { outline: '1px solid orange' }
-      const { getByTestId } = render(
-        <StyleProvider>
-          <CheckBoxCard.Group
-            id="group"
-            name="what"
-            className="yup"
-            style={style}
-            label="nope"
-            width="100px"
-            flex="1 0 30px"
-            mb="14px"
-            data-testid="group"
-            error="oh noes!"
-          >
-            <input data-testid="placeholder" />
-          </CheckBoxCard.Group>
-        </StyleProvider>
+      const { getByTestId } = renderWithTheme(
+        <CheckBoxCard.Group
+          id="group"
+          name="what"
+          className="yup"
+          style={style}
+          label="nope"
+          width="100px"
+          flex="1 0 30px"
+          mb="14px"
+          data-testid="group"
+          error="oh noes!"
+        >
+          <input data-testid="placeholder" />
+        </CheckBoxCard.Group>
       )
       const field = getByTestId('group')
       expect(field).toHaveAttribute('id', 'group')
@@ -189,20 +172,12 @@ describe('component: CheckBoxCard', () => {
     })
 
     test('forwarded attributes', () => {
-      render(
-        <StyleProvider>
-          <CheckBoxCard.Group
-            name=""
-            label="march"
-            defaultChecked={{ two: true }}
-            required
-            disabled
-          >
-            <CheckBoxCard name="one" disabled={false} />
-            <CheckBoxCard name="two" />
-            <CheckBoxCard name="three" required={false} />
-          </CheckBoxCard.Group>
-        </StyleProvider>
+      renderWithTheme(
+        <CheckBoxCard.Group name="" label="march" defaultChecked={{ two: true }} required disabled>
+          <CheckBoxCard name="one" disabled={false} />
+          <CheckBoxCard name="two" />
+          <CheckBoxCard name="three" required={false} />
+        </CheckBoxCard.Group>
       )
       const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('input'))
       expect(inputs[0].name).toBe('one')
@@ -231,11 +206,7 @@ describe('component: CheckBoxCard', () => {
           </form>
         )
       }
-      const { getByTestId } = render(
-        <StyleProvider>
-          <WithControl />
-        </StyleProvider>
-      )
+      const { getByTestId } = renderWithTheme(<WithControl />)
       expect(formRef.current).toHaveFormValues({ uno: false, dos: false, tres: false })
       userEvent.click(getByTestId('one'))
       expect(formRef.current).toHaveFormValues({ uno: true, dos: false, tres: false })
@@ -261,11 +232,7 @@ describe('component: CheckBoxCard', () => {
           </form>
         )
       }
-      const { getByTestId } = render(
-        <StyleProvider>
-          <WithControl />
-        </StyleProvider>
-      )
+      const { getByTestId } = renderWithTheme(<WithControl />)
       expect(formRef.current).toHaveFormValues({ checkboxes: ['tres'] })
       userEvent.click(getByTestId('one'))
       expect(formRef.current).toHaveFormValues({ checkboxes: ['tres', 'uno'] })

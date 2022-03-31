@@ -1,25 +1,22 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { Tab, TabController, TabList, TabPanel } from './Tabs'
 
 // Tab, TabList, and TabPanel are basically just styled components,
 // so there's nothing to test independently of controller.
 describe('component: TabController', () => {
   test('switching tabs', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <TabController initialTabId="sorcerer-tab">
-          <TabList>
-            <Tab name="knight">Alanna</Tab>
-            <Tab name="sorcerer">Thom</Tab>
-          </TabList>
-          <TabPanel tab="knight">The Good Twin</TabPanel>
-          <TabPanel tab="sorcerer">The Jerk Twin</TabPanel>
-        </TabController>
-      </StyleProvider>
+    const { getByText } = renderWithTheme(
+      <TabController initialTabId="sorcerer-tab">
+        <TabList>
+          <Tab name="knight">Alanna</Tab>
+          <Tab name="sorcerer">Thom</Tab>
+        </TabList>
+        <TabPanel tab="knight">The Good Twin</TabPanel>
+        <TabPanel tab="sorcerer">The Jerk Twin</TabPanel>
+      </TabController>
     )
     const knightTab = getByText('Alanna')
     const knightPanel = getByText('The Good Twin')

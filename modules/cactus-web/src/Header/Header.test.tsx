@@ -1,15 +1,12 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Header from './Header'
 
 describe('component: Header', () => {
   test('Header component should change their background color by passing the bgColor prop', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Header bgColor="white" data-testid="headerComponent"></Header>
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <Header bgColor="white" data-testid="headerComponent"></Header>
     )
 
     const rawHeader = getByTestId('headerComponent')
@@ -18,13 +15,11 @@ describe('component: Header', () => {
   })
 
   test('Header should render its title and description', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Header>
-          <Header.Title>I Am a Title</Header.Title>
-          <Header.Description>I am a description</Header.Description>
-        </Header>
-      </StyleProvider>
+    const { getByText } = renderWithTheme(
+      <Header>
+        <Header.Title>I Am a Title</Header.Title>
+        <Header.Description>I am a description</Header.Description>
+      </Header>
     )
 
     const title = getByText('I Am a Title')

@@ -1,26 +1,21 @@
-import { generateTheme } from '@repay/cactus-theme'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import MenuButton from './MenuButton'
 
-describe('component: MenuButton', (): void => {
-  describe('mouse usage', (): void => {
-    test('can select an action', async (): Promise<void> => {
+describe('component: MenuButton', () => {
+  describe('mouse usage', () => {
+    test('can select an action', async () => {
       const actionOne = jest.fn()
-      const { getByText } = render(
-        <StyleProvider>
-          <MenuButton label="Demo">
-            <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
-            <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
-              Action Two
-            </MenuButton.Item>
-            <MenuButton.Link href="#">Action Three</MenuButton.Link>
-          </MenuButton>
-        </StyleProvider>
+      const { getByText } = renderWithTheme(
+        <MenuButton label="Demo">
+          <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+          <MenuButton.Link href="#">Action Three</MenuButton.Link>
+        </MenuButton>
       )
       userEvent.click(getByText('Demo'))
       fireEvent.focus(getByText('Action One'))
@@ -29,18 +24,16 @@ describe('component: MenuButton', (): void => {
     })
   })
 
-  describe('keyboard usage', (): void => {
-    test('can select an action', async (): Promise<void> => {
+  describe('keyboard usage', () => {
+    test('can select an action', async () => {
       const actionOne = jest.fn()
       const actionTwo = jest.fn()
-      const { getByText, rerender } = render(
-        <StyleProvider>
-          <MenuButton label="Demo" variant="unfilled">
-            <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
-            <MenuButton.Item onSelect={actionTwo}>Action Two</MenuButton.Item>
-            <MenuButton.Link href="#">Action Three</MenuButton.Link>
-          </MenuButton>
-        </StyleProvider>
+      const { getByText, rerender } = renderWithTheme(
+        <MenuButton label="Demo" variant="unfilled">
+          <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={actionTwo}>Action Two</MenuButton.Item>
+          <MenuButton.Link href="#">Action Three</MenuButton.Link>
+        </MenuButton>
       )
 
       fireEvent.keyDown(getByText('Demo'), { key: 'Enter' })
@@ -49,13 +42,11 @@ describe('component: MenuButton', (): void => {
       fireEvent.keyDown(document.activeElement, { key: 'ArrowDown' })
       await animationRender()
       rerender(
-        <StyleProvider>
-          <MenuButton label="Demo">
-            <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
-            <MenuButton.Item onSelect={actionTwo}>Action Two</MenuButton.Item>
-            <MenuButton.Link href="#">Action Three</MenuButton.Link>
-          </MenuButton>
-        </StyleProvider>
+        <MenuButton label="Demo">
+          <MenuButton.Item onSelect={actionOne}>Action One</MenuButton.Item>
+          <MenuButton.Item onSelect={actionTwo}>Action Two</MenuButton.Item>
+          <MenuButton.Link href="#">Action Three</MenuButton.Link>
+        </MenuButton>
       )
       // @ts-ignore
       fireEvent.keyDown(document.activeElement, { key: 'Enter' })
@@ -65,41 +56,29 @@ describe('component: MenuButton', (): void => {
   })
 })
 
-describe('With theme changes ', (): void => {
-  test('Should have square borders', (): void => {
-    const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <MenuButton label="Demo">
-          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
-            Action One
-          </MenuButton.Item>
-          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
-            Action Two
-          </MenuButton.Item>
-          <MenuButton.Link href="#">Action Three</MenuButton.Link>
-        </MenuButton>
-      </StyleProvider>
+describe('With theme changes ', () => {
+  test('Should have square borders', () => {
+    const { getByText } = renderWithTheme(
+      <MenuButton label="Demo">
+        <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+        <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+        <MenuButton.Link href="#">Action Three</MenuButton.Link>
+      </MenuButton>,
+      { shape: 'square' }
     )
 
     const styles = window.getComputedStyle(getByText('Demo'))
 
     expect(styles.borderRadius).toBe('1px')
   })
-  test('Should have intermediate borders', (): void => {
-    const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <MenuButton label="Demo">
-          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
-            Action One
-          </MenuButton.Item>
-          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
-            Action Two
-          </MenuButton.Item>
-          <MenuButton.Link href="#">Action Three</MenuButton.Link>
-        </MenuButton>
-      </StyleProvider>
+  test('Should have intermediate borders', () => {
+    const { getByText } = renderWithTheme(
+      <MenuButton label="Demo">
+        <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+        <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+        <MenuButton.Link href="#">Action Three</MenuButton.Link>
+      </MenuButton>,
+      { shape: 'intermediate' }
     )
 
     const styles = window.getComputedStyle(getByText('Demo'))
@@ -107,40 +86,28 @@ describe('With theme changes ', (): void => {
     expect(styles.borderRadius).toBe('8px')
   })
 
-  test('Dropdown should not have box-shadows', (): void => {
-    const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <MenuButton label="Demo">
-          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
-            Action One
-          </MenuButton.Item>
-          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
-            Action Two
-          </MenuButton.Item>
-          <MenuButton.Link href="#">Action Three</MenuButton.Link>
-        </MenuButton>
-      </StyleProvider>
+  test('Dropdown should not have box-shadows', () => {
+    const { getByText } = renderWithTheme(
+      <MenuButton label="Demo">
+        <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+        <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+        <MenuButton.Link href="#">Action Three</MenuButton.Link>
+      </MenuButton>,
+      { boxShadow: false }
     )
     const styles = window.getComputedStyle(getByText('Demo'))
 
     expect(styles.boxShadow).toBe('')
   })
 
-  test('Border should be 2px', (): void => {
-    const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <MenuButton label="Demo">
-          <MenuButton.Item onSelect={(): void => console.log('Action One')}>
-            Action One
-          </MenuButton.Item>
-          <MenuButton.Item onSelect={(): void => console.log('Action Two')}>
-            Action Two
-          </MenuButton.Item>
-          <MenuButton.Link href="#">Action Three</MenuButton.Link>
-        </MenuButton>
-      </StyleProvider>
+  test('Border should be 2px', () => {
+    const { getByText } = renderWithTheme(
+      <MenuButton label="Demo">
+        <MenuButton.Item onSelect={() => console.log('Action One')}>Action One</MenuButton.Item>
+        <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
+        <MenuButton.Link href="#">Action Three</MenuButton.Link>
+      </MenuButton>,
+      { border: 'thick' }
     )
     const styles = window.getComputedStyle(getByText('Demo'))
 
