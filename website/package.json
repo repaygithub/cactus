@@ -57,6 +57,7 @@
     "@repay/cactus-theme": "^3.0.0",
     "@repay/cactus-web": "^9.0.0",
     "color": "^4.0.2",
+    "gatsby-source-git": "^1.1.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
