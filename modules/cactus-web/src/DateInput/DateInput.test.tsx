@@ -1,30 +1,20 @@
-import { generateTheme } from '@repay/cactus-theme'
-import { act, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
+import animationRender from '../../tests/helpers/animationRender'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { PartialDate } from '../helpers/dates'
 import KeyCodes from '../helpers/keyCodes'
 import Modal from '../Modal/Modal'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import DateInput from './DateInput'
 
-function animationRender(): Promise<void> {
-  return new Promise((resolve): void => {
-    setTimeout((): void => {
-      window.requestAnimationFrame((): void => resolve())
-    }, 0)
-  })
-}
-
-describe('component: DateInput', (): void => {
-  describe('can be controlled', (): void => {
-    test('with value as a Date', (): void => {
+describe('component: DateInput', () => {
+  describe('can be controlled', () => {
+    test('with value as a Date', () => {
       const value = new Date(2018, 8, 30)
-      const { getByLabelText, rerender } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={new Date(+value)} />
-        </StyleProvider>
+      const { getByLabelText, rerender } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={new Date(+value)} />
       )
       expect(getByLabelText('year')).toHaveProperty('value', '2018')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
@@ -32,26 +22,20 @@ describe('component: DateInput', (): void => {
 
       value.setDate(12)
 
-      rerender(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={new Date(+value)} />
-        </StyleProvider>
-      )
+      rerender(<DateInput name="date-input" id="date-input" value={new Date(+value)} />)
 
       expect(getByLabelText('year')).toHaveProperty('value', '2018')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
       expect(getByLabelText('day of month')).toHaveProperty('value', '12')
     })
 
-    test('when initial value = null then a Date is raised', (): void => {
+    test('when initial value = null then a Date is raised', () => {
       let value: any = null
-      const handleChange = jest.fn((e): void => {
+      const handleChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
       )
 
       userEvent.type(getByLabelText('month'), '2')
@@ -64,12 +48,10 @@ describe('component: DateInput', (): void => {
       expect(handleChange).toHaveBeenCalledTimes(7)
     })
 
-    test('with value as a string', (): void => {
+    test('with value as a string', () => {
       const value = new PartialDate('2018-09-30', 'YYYY-MM-dd')
-      const { getByLabelText, rerender } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" format="YYYY-MM-dd" value={value.format()} />
-        </StyleProvider>
+      const { getByLabelText, rerender } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" format="YYYY-MM-dd" value={value.format()} />
       )
       expect(getByLabelText('year')).toHaveProperty('value', '2018')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
@@ -77,16 +59,9 @@ describe('component: DateInput', (): void => {
 
       value.setDate(12)
 
-      act((): void => {
+      act(() => {
         rerender(
-          <StyleProvider>
-            <DateInput
-              name="date-input"
-              id="date-input"
-              format="YYYY-MM-dd"
-              value={value.format()}
-            />
-          </StyleProvider>
+          <DateInput name="date-input" id="date-input" format="YYYY-MM-dd" value={value.format()} />
         )
       })
 
@@ -95,15 +70,13 @@ describe('component: DateInput', (): void => {
       expect(getByLabelText('day of month')).toHaveProperty('value', '12')
     })
 
-    test('when initial value = undefined then a string is raised', (): void => {
+    test('when initial value = undefined then a string is raised', () => {
       let value = undefined
-      const handleChange = jest.fn((e): void => {
+      const handleChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={value} onChange={handleChange} />
       )
 
       userEvent.type(getByLabelText('month'), '2')
@@ -120,21 +93,15 @@ describe('component: DateInput', (): void => {
       { date: '2019-09-16', clear: '', repr: 'empty string' },
       { date: new Date(2019, 8, 16), clear: null, repr: 'null' },
     ])('Clear the value with $repr', ({ date, clear }) => {
-      const { getByLabelText, rerender } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={date} />
-        </StyleProvider>
+      const { getByLabelText, rerender } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={date} />
       )
 
       expect(getByLabelText('year')).toHaveProperty('value', '2019')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
       expect(getByLabelText('day of month')).toHaveProperty('value', '16')
 
-      rerender(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={clear} />
-        </StyleProvider>
-      )
+      rerender(<DateInput name="date-input" id="date-input" value={clear} />)
 
       expect(getByLabelText('year')).toHaveProperty('value', '')
       expect(getByLabelText('month')).toHaveProperty('value', '')
@@ -146,10 +113,8 @@ describe('component: DateInput', (): void => {
       { initFocus: new Date(2019, 8, 16), repr: 'date' },
       { initFocus: { year: 2019, month: 8, day: 16 }, repr: 'object' },
     ])('Initially focus a date using $repr', async ({ initFocus }) => {
-      const { getByLabelText, getByRole } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" initialFocus={initFocus} />
-        </StyleProvider>
+      const { getByLabelText, getByRole } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" initialFocus={initFocus} />
       )
 
       userEvent.click(getByLabelText('Open date picker'))
@@ -164,10 +129,8 @@ describe('component: DateInput', (): void => {
     test('Ignore initialFocus if value is already set', async () => {
       const value = new Date(2022, 2, 3)
       const initFocus = new Date(2019, 8, 16)
-      const { getByLabelText, getByRole } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={value} initialFocus={initFocus} />
-        </StyleProvider>
+      const { getByLabelText, getByRole } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={value} initialFocus={initFocus} />
       )
 
       userEvent.click(getByLabelText('Open date picker'))
@@ -180,21 +143,15 @@ describe('component: DateInput', (): void => {
     })
 
     test('Ignores value prop when NaN', () => {
-      const { getByLabelText, rerender } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value="2019-09-16" />
-        </StyleProvider>
+      const { getByLabelText, rerender } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value="2019-09-16" />
       )
 
       expect(getByLabelText('year')).toHaveProperty('value', '2019')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
       expect(getByLabelText('day of month')).toHaveProperty('value', '16')
 
-      rerender(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" value={NaN} />
-        </StyleProvider>
-      )
+      rerender(<DateInput name="date-input" id="date-input" value={NaN} />)
 
       expect(getByLabelText('year')).toHaveProperty('value', '2019')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
@@ -202,21 +159,14 @@ describe('component: DateInput', (): void => {
     })
   })
 
-  describe('using inputs', (): void => {
-    test('the up arrow increases value', async (): Promise<void> => {
+  describe('using inputs', () => {
+    test('the up arrow increases value', async () => {
       let value = new Date(2018, 8, 30)
-      const onChange = jest.fn((e): void => {
+      const onChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput
-            name="date-input"
-            id="date-input"
-            value={new Date(+value)}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={new Date(+value)} onChange={onChange} />
       )
       const MM = getByLabelText('month')
       // @ts-ignore
@@ -226,20 +176,13 @@ describe('component: DateInput', (): void => {
       expect(value).toEqual(new Date(2018, 9, 30))
     })
 
-    test('the down arrow decreases value', async (): Promise<void> => {
+    test('the down arrow decreases value', async () => {
       let value = new Date(2018, 8, 30)
-      const onChange = jest.fn((e): void => {
+      const onChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput
-            name="date-input"
-            id="date-input"
-            value={new Date(+value)}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={new Date(+value)} onChange={onChange} />
       )
       const dd = getByLabelText('day of month')
       // @ts-ignore
@@ -249,20 +192,13 @@ describe('component: DateInput', (): void => {
       expect(value).toEqual(new Date(2018, 8, 29))
     })
 
-    test('the down arrow will loop when value is 1', async (): Promise<void> => {
+    test('the down arrow will loop when value is 1', async () => {
       let value = new Date(2018, 8, 1)
-      const onChange = jest.fn((e): void => {
+      const onChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput
-            name="date-input"
-            id="date-input"
-            value={new Date(+value)}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={new Date(+value)} onChange={onChange} />
       )
       const dd = getByLabelText('day of month')
       // @ts-ignore
@@ -272,20 +208,13 @@ describe('component: DateInput', (): void => {
       expect(value).toEqual(new Date(2018, 8, 30))
     })
 
-    test('the up arrow will loop when value is last day of month', async (): Promise<void> => {
+    test('the up arrow will loop when value is last day of month', async () => {
       let value = new Date(2018, 8, 30)
-      const onChange = jest.fn((e): void => {
+      const onChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput
-            name="date-input"
-            id="date-input"
-            value={new Date(+value)}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={new Date(+value)} onChange={onChange} />
       )
       const dd = getByLabelText('day of month')
       // @ts-ignore
@@ -295,20 +224,13 @@ describe('component: DateInput', (): void => {
       expect(value).toEqual(new Date(2018, 8, 1))
     })
 
-    test('looping works with February and leap year', async (): Promise<void> => {
+    test('looping works with February and leap year', async () => {
       let value = new Date(2020, 1, 28)
-      const onChange = jest.fn((e): void => {
+      const onChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText, rerender } = render(
-        <StyleProvider>
-          <DateInput
-            name="date-input"
-            id="date-input"
-            value={new Date(+value)}
-            onChange={onChange}
-          />
-        </StyleProvider>
+      const { getByLabelText, rerender } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" value={new Date(+value)} onChange={onChange} />
       )
       const dd = getByLabelText('day of month')
       // @ts-ignore
@@ -318,14 +240,7 @@ describe('component: DateInput', (): void => {
       expect(value).toEqual(new Date(2020, 1, 29))
 
       rerender(
-        <StyleProvider>
-          <DateInput
-            name="date-input"
-            id="date-input"
-            value={new Date(+value)}
-            onChange={onChange}
-          />
-        </StyleProvider>
+        <DateInput name="date-input" id="date-input" value={new Date(+value)} onChange={onChange} />
       )
       // @ts-ignore
       fireEvent.keyDown(dd, { key: 'ArrowUp', target: dd })
@@ -334,26 +249,20 @@ describe('component: DateInput', (): void => {
     })
   })
 
-  describe('type=date (default)', (): void => {
-    test('renders date picker button', (): void => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" />
-        </StyleProvider>
-      )
+  describe('type=date (default)', () => {
+    test('renders date picker button', () => {
+      const { getByLabelText } = renderWithTheme(<DateInput name="date-input" id="date-input" />)
 
       expect(getByLabelText('Open date picker')).toBeInTheDocument()
     })
 
-    test('can open portal', (): void => {
-      const { getByLabelText, getByRole } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" />
-        </StyleProvider>
+    test('can open portal', () => {
+      const { getByLabelText, getByRole } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" />
       )
 
       const portalTrigger = getByLabelText('Open date picker')
-      act((): void => {
+      act(() => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
@@ -362,13 +271,11 @@ describe('component: DateInput', (): void => {
     })
 
     test('can close calendar on blur, even inside a modal', () => {
-      const { getByLabelText, getByText } = render(
-        <StyleProvider>
-          <Modal isOpen={true} onClose={() => undefined}>
-            <div>Click here to blur the calendar</div>
-            <DateInput name="date-input" id="date-input" />
-          </Modal>
-        </StyleProvider>
+      const { getByLabelText, getByText } = renderWithTheme(
+        <Modal isOpen={true} onClose={() => undefined}>
+          <div>Click here to blur the calendar</div>
+          <DateInput name="date-input" id="date-input" />
+        </Modal>
       )
       const portalTrigger = getByLabelText('Open date picker')
       userEvent.click(portalTrigger)
@@ -378,12 +285,8 @@ describe('component: DateInput', (): void => {
       expect(elementInDialog).not.toBeInTheDocument()
     })
 
-    test('focus set to current date when no value selected', async (): Promise<void> => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" />
-        </StyleProvider>
-      )
+    test('focus set to current date when no value selected', async () => {
+      const { getByLabelText } = renderWithTheme(<DateInput name="date-input" id="date-input" />)
 
       const portalTrigger = getByLabelText('Open date picker')
       userEvent.click(portalTrigger)
@@ -392,21 +295,19 @@ describe('component: DateInput', (): void => {
       expect(document.activeElement).toBe(getByLabelText(today.toLocaleSpoken('date')))
     })
 
-    test('can select date from date picker and use month year selection', async (): Promise<void> => {
+    test('can select date from date picker and use month year selection', async () => {
       let value: any
       const handleChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText, getByRole, getByText } = render(
-        <StyleProvider>
-          <DateInput
-            name="date_input"
-            id="date-input"
-            format="YYYY-MM-dd"
-            onChange={handleChange}
-            defaultValue="2021-06-15"
-          />
-        </StyleProvider>
+      const { getByLabelText, getByRole, getByText } = renderWithTheme(
+        <DateInput
+          name="date_input"
+          id="date-input"
+          format="YYYY-MM-dd"
+          onChange={handleChange}
+          defaultValue="2021-06-15"
+        />
       )
 
       const portalTrigger = getByLabelText('Open date picker')
@@ -423,27 +324,25 @@ describe('component: DateInput', (): void => {
       expect(value).toEqual('2018-03-23')
     })
 
-    test('can change month using left arrow', async (): Promise<void> => {
+    test('can change month using left arrow', async () => {
       let value: any
       const handleChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput
-            name="date_input"
-            id="date-input"
-            format="YYYY-MM-dd"
-            value="2018-03-23"
-            onChange={handleChange}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput
+          name="date_input"
+          id="date-input"
+          format="YYYY-MM-dd"
+          value="2018-03-23"
+          onChange={handleChange}
+        />
       )
 
       const portalTrigger = getByLabelText('Open date picker')
       userEvent.click(portalTrigger)
       await animationRender()
-      await act(async (): Promise<void> => {
+      await act(async () => {
         fireEvent.click(getByLabelText('Click to go back one month'))
         await animationRender()
       })
@@ -451,27 +350,25 @@ describe('component: DateInput', (): void => {
       expect(value).toEqual('2018-02-23')
     })
 
-    test('can change month using right arrow', async (): Promise<void> => {
+    test('can change month using right arrow', async () => {
       let value: any
       const handleChange = jest.fn((e) => {
         value = e.target.value
       })
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput
-            name="date_input"
-            id="date-input"
-            format="YYYY-MM-dd"
-            value="2018-03-23"
-            onChange={handleChange}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput
+          name="date_input"
+          id="date-input"
+          format="YYYY-MM-dd"
+          value="2018-03-23"
+          onChange={handleChange}
+        />
       )
 
       const portalTrigger = getByLabelText('Open date picker')
       userEvent.click(portalTrigger)
       await animationRender()
-      await act(async (): Promise<void> => {
+      await act(async () => {
         fireEvent.click(getByLabelText('Click to go forward one month'))
         await animationRender()
       })
@@ -483,33 +380,31 @@ describe('component: DateInput', (): void => {
      * js-dom doesn't properly apply user interactions like tabs changing focus
      * or Space / Enter clicking buttons so we fake those a little here.
      */
-    describe('keyboard usage', (): void => {
-      test('can navigate and select dates using the keyboard', async (): Promise<void> => {
+    describe('keyboard usage', () => {
+      test('can navigate and select dates using the keyboard', async () => {
         let value: any
         const handleChange = jest.fn((e) => {
           value = e.target.value
         })
-        const { getByLabelText } = render(
-          <StyleProvider>
-            <DateInput
-              name="date_input"
-              id="date-input"
-              format="YYYY-MM-dd"
-              value="2018-03-22"
-              onChange={handleChange}
-            />
-          </StyleProvider>
+        const { getByLabelText } = renderWithTheme(
+          <DateInput
+            name="date_input"
+            id="date-input"
+            format="YYYY-MM-dd"
+            value="2018-03-22"
+            onChange={handleChange}
+          />
         )
 
         const portalTrigger = getByLabelText('Open date picker')
-        act((): void => {
+        act(() => {
           fireEvent.keyDown(portalTrigger, { key: ' ', keyCode: KeyCodes.SPACE })
           fireEvent.click(portalTrigger)
         })
         await animationRender()
         // @ts-ignore
         expect(document.activeElement.dataset.date).toEqual('2018-03-22')
-        await act(async (): Promise<void> => {
+        await act(async () => {
           // @ts-ignore
           fireEvent.keyDown(document.activeElement, {
             key: 'ArrowRight',
@@ -525,16 +420,14 @@ describe('component: DateInput', (): void => {
         expect(value).toEqual('2018-03-23')
       })
 
-      test('can change months using keyboard', async (): Promise<void> => {
-        const { getByLabelText, getByRole } = render(
-          <StyleProvider>
-            <DateInput
-              name="date_input"
-              id="date-input"
-              format="YYYY-MM-dd"
-              defaultValue="2018-03-22"
-            />
-          </StyleProvider>
+      test('can change months using keyboard', async () => {
+        const { getByLabelText, getByRole } = renderWithTheme(
+          <DateInput
+            name="date_input"
+            id="date-input"
+            format="YYYY-MM-dd"
+            defaultValue="2018-03-22"
+          />
         )
 
         const portalTrigger = getByLabelText('Open date picker')
@@ -551,16 +444,14 @@ describe('component: DateInput', (): void => {
         expect(listbox).not.toBeVisible()
       })
 
-      test('can change years using keyboard', async (): Promise<void> => {
-        const { getByLabelText, getByRole } = render(
-          <StyleProvider>
-            <DateInput
-              name="date_input"
-              id="date-input"
-              format="YYYY-MM-dd"
-              defaultValue="2018-03-22"
-            />
-          </StyleProvider>
+      test('can change years using keyboard', async () => {
+        const { getByLabelText, getByRole } = renderWithTheme(
+          <DateInput
+            name="date_input"
+            id="date-input"
+            format="YYYY-MM-dd"
+            defaultValue="2018-03-22"
+          />
         )
 
         const portalTrigger = getByLabelText('Open date picker')
@@ -579,13 +470,11 @@ describe('component: DateInput', (): void => {
     })
   })
 
-  describe('type=datetime', (): void => {
-    test('renders all date and time inputs', (): void => {
+  describe('type=datetime', () => {
+    test('renders all date and time inputs', () => {
       const value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
       )
       expect(getByLabelText('year')).toHaveProperty('value', '2018')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
@@ -595,22 +484,16 @@ describe('component: DateInput', (): void => {
       expect(getByLabelText('time period')).toHaveProperty('value', 'AM')
     })
 
-    test('renders date picker button', (): void => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" />
-        </StyleProvider>
-      )
+    test('renders date picker button', () => {
+      const { getByLabelText } = renderWithTheme(<DateInput name="date-input" id="date-input" />)
 
       expect(getByLabelText('Open date picker')).toBeInTheDocument()
     })
 
-    test('input type persists when value is Date and set externally', (): void => {
+    test('input type persists when value is Date and set externally', () => {
       const value = new PartialDate('2018-09-30 11:34 AM', 'YYYY-MM-dd hh:mm aa')
-      const { getByLabelText, rerender } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
-        </StyleProvider>
+      const { getByLabelText, rerender } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
       )
       expect(getByLabelText('year')).toHaveProperty('value', '2018')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
@@ -621,9 +504,7 @@ describe('component: DateInput', (): void => {
 
       value.setDate(20)
       rerender(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
-        </StyleProvider>
+        <DateInput name="date-input" id="date-input" type="datetime" value={value.toDate()} />
       )
       expect(getByLabelText('year')).toHaveProperty('value', '2018')
       expect(getByLabelText('month')).toHaveProperty('value', '09')
@@ -633,15 +514,13 @@ describe('component: DateInput', (): void => {
       expect(getByLabelText('time period')).toHaveProperty('value', 'AM')
     })
 
-    test('can open portal with time input', (): void => {
-      const { getByLabelText, getAllByLabelText, getByRole } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" type="datetime" />
-        </StyleProvider>
+    test('can open portal with time input', () => {
+      const { getByLabelText, getAllByLabelText, getByRole } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" type="datetime" />
       )
 
       const portalTrigger = getByLabelText('Open date picker')
-      act((): void => {
+      act(() => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
@@ -653,13 +532,24 @@ describe('component: DateInput', (): void => {
       expect(dialog).toContainElement(hoursInputs[1])
     })
 
-    test('can type into time input in portal', (): void => {
+    test('can type into time input in portal', () => {
       const value = PartialDate.from('2018-03-01 20:18', 'YYYY-MM-dd HH:mm')
-      const handleChange = jest.fn((e): void => {
+      const handleChange = jest.fn((e) => {
         value.parse(e.target.value, 'YYYY-MM-dd HH:mm')
       })
-      const { getByLabelText, getAllByLabelText, rerender } = render(
-        <StyleProvider>
+      const { getByLabelText, getAllByLabelText, rerender } = renderWithTheme(
+        <DateInput
+          name="date_input"
+          id="date-input"
+          type="datetime"
+          value={value.format()}
+          onChange={handleChange}
+          format="YYYY-MM-dd HH:mm"
+        />
+      )
+
+      const renderNewValue = () => {
+        rerender(
           <DateInput
             name="date_input"
             id="date-input"
@@ -668,32 +558,17 @@ describe('component: DateInput', (): void => {
             onChange={handleChange}
             format="YYYY-MM-dd HH:mm"
           />
-        </StyleProvider>
-      )
-
-      const renderNewValue = (): void => {
-        rerender(
-          <StyleProvider>
-            <DateInput
-              name="date_input"
-              id="date-input"
-              type="datetime"
-              value={value.format()}
-              onChange={handleChange}
-              format="YYYY-MM-dd HH:mm"
-            />
-          </StyleProvider>
         )
       }
 
       const portalTrigger = getByLabelText('Open date picker')
-      act((): void => {
+      act(() => {
         // mouse down and touch start used to ensure raised before blur events
         fireEvent.mouseDown(portalTrigger)
         fireEvent.click(portalTrigger)
       })
 
-      act((): void => {
+      act(() => {
         userEvent.type(getAllByLabelText('hours')[1], '1')
         renderNewValue()
         userEvent.type(getAllByLabelText('minutes')[1], '3')
@@ -709,13 +584,11 @@ describe('component: DateInput', (): void => {
     })
   })
 
-  describe('type=time', (): void => {
-    test('renders expected time inputs', (): void => {
+  describe('type=time', () => {
+    test('renders expected time inputs', () => {
       const value = '15:22'
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
       )
       expect((): HTMLElement => getByLabelText('year')).toThrow()
       expect((): HTMLElement => getByLabelText('month')).toThrow()
@@ -725,36 +598,30 @@ describe('component: DateInput', (): void => {
       expect(getByLabelText('time period')).toHaveProperty('value', 'PM')
     })
 
-    test('does not render picker button', (): void => {
+    test('does not render picker button', () => {
       const value = '15:22'
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
       )
       expect((): HTMLElement => getByLabelText('Open date picker')).toThrow()
     })
   })
 
-  describe('with theme customization', (): void => {
-    test('should have 2px border', (): void => {
-      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <DateInput name="thin" id="not-thicc" value="2020-01-01" data-testid="dateInput" />
-        </StyleProvider>
+  describe('with theme customization', () => {
+    test('should have 2px border', () => {
+      const { asFragment } = renderWithTheme(
+        <DateInput name="thin" id="not-thicc" value="2020-01-01" data-testid="dateInput" />,
+        { border: 'thick' }
       )
       const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
       expect(styles.borderWidth).toBe('2px')
     })
 
-    test('should match intermediate shape styles', (): void => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <DateInput name="intermediate" id="not-round" value="2020-01-01" />
-        </StyleProvider>
+    test('should match intermediate shape styles', () => {
+      const { asFragment } = renderWithTheme(
+        <DateInput name="intermediate" id="not-round" value="2020-01-01" />,
+        { shape: 'intermediate' }
       )
       const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
@@ -762,12 +629,10 @@ describe('component: DateInput', (): void => {
       expect(styles.borderRadius).toBe('8px')
     })
 
-    test('should match square shape styles', (): void => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <DateInput name="square" id="not-round" value="2020-01-01" />
-        </StyleProvider>
+    test('should match square shape styles', () => {
+      const { asFragment } = renderWithTheme(
+        <DateInput name="square" id="not-round" value="2020-01-01" />,
+        { shape: 'square' }
       )
 
       const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
@@ -776,12 +641,10 @@ describe('component: DateInput', (): void => {
       expect(styles.borderRadius).toBe('0px')
     })
 
-    test('should not have box shadows set', (): void => {
-      const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-      const { asFragment } = render(
-        <StyleProvider theme={theme}>
-          <DateInput name="shadows" id="none-of-em" value="2020-01-01" />
-        </StyleProvider>
+    test('should not have box shadows set', () => {
+      const { asFragment } = renderWithTheme(
+        <DateInput name="shadows" id="none-of-em" value="2020-01-01" />,
+        { boxShadows: false }
       )
 
       const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
