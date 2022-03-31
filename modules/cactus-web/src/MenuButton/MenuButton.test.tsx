@@ -93,7 +93,7 @@ describe('With theme changes ', () => {
         <MenuButton.Item onSelect={() => console.log('Action Two')}>Action Two</MenuButton.Item>
         <MenuButton.Link href="#">Action Three</MenuButton.Link>
       </MenuButton>,
-      { boxShadow: false }
+      { boxShadows: false }
     )
     const styles = window.getComputedStyle(getByText('Demo'))
 
