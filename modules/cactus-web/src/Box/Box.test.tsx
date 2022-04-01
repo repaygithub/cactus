@@ -1,5 +1,4 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
@@ -41,7 +40,6 @@ describe('component: Box', () => {
     expect(style.borderRadius).toBe('20px')
   })
 
-  // THos should Be solved first !!!!
   test('borderRadius prop should accept themed arg & custom shape definitions', () => {
     const { getByText, rerender } = renderWithTheme(<Box borderRadius="themed">Content</Box>, {
       shape: 'intermediate',
@@ -73,17 +71,16 @@ describe('component: Box', () => {
   })
 
   test('individual border radius props should accept custom shape definitions', () => {
-    const { getByText, rerender } = render(
-      <StyleProvider theme={generateTheme({ primaryHue: 200, shape: 'intermediate' })}>
-        <Box
-          borderTopLeftRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
-          borderTopRightRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
-          borderBottomRightRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
-          borderBottomLeftRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
-        >
-          Content
-        </Box>
-      </StyleProvider>
+    const { getByText, rerender } = renderWithTheme(
+      <Box
+        borderTopLeftRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
+        borderTopRightRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
+        borderBottomRightRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
+        borderBottomLeftRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
+      >
+        Content
+      </Box>,
+      { shape: 'intermediate' }
     )
 
     let myBox = getByText('Content')

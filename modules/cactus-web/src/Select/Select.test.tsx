@@ -30,17 +30,15 @@ describe('component: Select', () => {
 
   test('can receive options as children, with altText', () => {
     const { queryByText } = renderWithTheme(
-      <>
-        <Select id="options-children" name="test-options" value="second">
-          <Select.Option value="first" altText="Locke">
-            Peter
-          </Select.Option>
-          <Select.Option value="second" altText="Demosthenes">
-            Valentine
-          </Select.Option>
-          <Select.Option value="third">Ender</Select.Option>
-        </Select>
-      </>
+      <Select id="options-children" name="test-options" value="second">
+        <Select.Option value="first" altText="Locke">
+          Peter
+        </Select.Option>
+        <Select.Option value="second" altText="Demosthenes">
+          Valentine
+        </Select.Option>
+        <Select.Option value="third">Ender</Select.Option>
+      </Select>
     )
 
     expect(queryByText('Peter')).not.toBeNull()
