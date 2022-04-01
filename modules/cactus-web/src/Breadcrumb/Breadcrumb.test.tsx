@@ -1,19 +1,17 @@
-import { act, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Breadcrumb from './Breadcrumb'
 
-describe('Breadcrumb:', (): void => {
-  test('should have label and href', (): void => {
-    const { getAllByText } = render(
-      <StyleProvider>
-        <Breadcrumb>
-          <Breadcrumb.Item href="www.github.com">Link2</Breadcrumb.Item>
-        </Breadcrumb>
-      </StyleProvider>
+describe('Breadcrumb:', () => {
+  test('should have label and href', () => {
+    const { getAllByText } = renderWithTheme(
+      <Breadcrumb>
+        <Breadcrumb.Item href="www.github.com">Link2</Breadcrumb.Item>
+      </Breadcrumb>
     )
 
     expect(getAllByText('Link2')[0]).toBeInTheDocument()
@@ -23,16 +21,14 @@ describe('Breadcrumb:', (): void => {
   describe('mobile', () => {
     describe('mouse interactions', () => {
       test('should open a dropdown when the first breadcrumb is clicked', () => {
-        const { getByRole, getAllByText } = render(
-          <StyleProvider>
-            <ScreenSizeContext.Provider value={SIZES.tiny}>
-              <Breadcrumb>
-                <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
-              </Breadcrumb>
-            </ScreenSizeContext.Provider>
-          </StyleProvider>
+        const { getByRole, getAllByText } = renderWithTheme(
+          <ScreenSizeContext.Provider value={SIZES.tiny}>
+            <Breadcrumb>
+              <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
+            </Breadcrumb>
+          </ScreenSizeContext.Provider>
         )
 
         const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
@@ -43,16 +39,14 @@ describe('Breadcrumb:', (): void => {
       })
 
       test('should open a dropdown when the ellipsis button is clicked', () => {
-        const { getAllByText, getByRole } = render(
-          <StyleProvider>
-            <ScreenSizeContext.Provider value={SIZES.tiny}>
-              <Breadcrumb>
-                <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
-              </Breadcrumb>
-            </ScreenSizeContext.Provider>
-          </StyleProvider>
+        const { getAllByText, getByRole } = renderWithTheme(
+          <ScreenSizeContext.Provider value={SIZES.tiny}>
+            <Breadcrumb>
+              <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
+            </Breadcrumb>
+          </ScreenSizeContext.Provider>
         )
 
         const ellipsisButton = getByRole('button', { name: '...' })
@@ -64,18 +58,16 @@ describe('Breadcrumb:', (): void => {
 
       test('should be able to select an option from the dropdown', () => {
         const onLinkClick = jest.fn()
-        const { getAllByText, getByRole } = render(
-          <StyleProvider>
-            <ScreenSizeContext.Provider value={SIZES.tiny}>
-              <Breadcrumb>
-                <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com" onClick={onLinkClick}>
-                  Link 2
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
-              </Breadcrumb>
-            </ScreenSizeContext.Provider>
-          </StyleProvider>
+        const { getAllByText, getByRole } = renderWithTheme(
+          <ScreenSizeContext.Provider value={SIZES.tiny}>
+            <Breadcrumb>
+              <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com" onClick={onLinkClick}>
+                Link 2
+              </Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
+            </Breadcrumb>
+          </ScreenSizeContext.Provider>
         )
 
         const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
@@ -88,16 +80,14 @@ describe('Breadcrumb:', (): void => {
 
     describe('keyboard interactions', () => {
       test('should open a dropdown when the SPACE is pressed on the first breadcrumb', async () => {
-        const { getAllByText, getByRole } = render(
-          <StyleProvider>
-            <ScreenSizeContext.Provider value={SIZES.tiny}>
-              <Breadcrumb>
-                <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
-              </Breadcrumb>
-            </ScreenSizeContext.Provider>
-          </StyleProvider>
+        const { getAllByText, getByRole } = renderWithTheme(
+          <ScreenSizeContext.Provider value={SIZES.tiny}>
+            <Breadcrumb>
+              <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
+            </Breadcrumb>
+          </ScreenSizeContext.Provider>
         )
 
         const firstBreadcrumb = getByRole('button', { name: 'Link 1' })
@@ -109,16 +99,14 @@ describe('Breadcrumb:', (): void => {
       })
 
       test('should open a dropdown when SPACE is pressed on the ellipsis button', () => {
-        const { getAllByText, getByRole } = render(
-          <StyleProvider>
-            <ScreenSizeContext.Provider value={SIZES.tiny}>
-              <Breadcrumb>
-                <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
-                <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
-              </Breadcrumb>
-            </ScreenSizeContext.Provider>
-          </StyleProvider>
+        const { getAllByText, getByRole } = renderWithTheme(
+          <ScreenSizeContext.Provider value={SIZES.tiny}>
+            <Breadcrumb>
+              <Breadcrumb.Item href="www.github.com">Link 1</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 2</Breadcrumb.Item>
+              <Breadcrumb.Item href="www.github.com">Link 3</Breadcrumb.Item>
+            </Breadcrumb>
+          </ScreenSizeContext.Provider>
         )
 
         const ellipsisButton = getByRole('button', { name: '...' })

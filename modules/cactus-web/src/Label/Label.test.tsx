@@ -1,16 +1,11 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Label from './Label'
 
 describe('component: Label', (): void => {
   test('should support margin space props', (): void => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Label ml={2}>Test Label</Label>
-      </StyleProvider>
-    )
+    const { getByText } = renderWithTheme(<Label ml={2}>Test Label</Label>)
     const label = getByText('Test Label')
     const styles = window.getComputedStyle(label)
 

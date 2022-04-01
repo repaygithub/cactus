@@ -1,27 +1,20 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Tag from './Tag'
 
 describe('component: Tag', () => {
   test('can render content as children', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Tag>Test label</Tag>
-      </StyleProvider>
-    )
+    const { getByText } = renderWithTheme(<Tag>Test label</Tag>)
 
     expect(getByText('Test label')).toBeInTheDocument()
   })
 
   test('Close button is present', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Tag id="tag-one" closeOption>
-          Test label
-        </Tag>
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <Tag id="tag-one" closeOption>
+        Test label
+      </Tag>
     )
 
     const icon = container.querySelector('button')
@@ -29,12 +22,10 @@ describe('component: Tag', () => {
   })
 
   test('Close icon is present', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Tag id="tag-one" closeOption="no-button">
-          Test label
-        </Tag>
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <Tag id="tag-one" closeOption="no-button">
+        Test label
+      </Tag>
     )
 
     const icon = container.querySelector('span[aria-controls]')
@@ -43,11 +34,7 @@ describe('component: Tag', () => {
   })
 
   test('Close icon is not present', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Tag>Test label</Tag>
-      </StyleProvider>
-    )
+    const { container } = renderWithTheme(<Tag>Test label</Tag>)
 
     const icon = container.querySelector('svg')
     expect(icon).not.toBeInTheDocument()

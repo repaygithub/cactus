@@ -1,18 +1,14 @@
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import PrevNext from './PrevNext'
 
-describe('component: PrevNext', (): void => {
-  test('it calls the onNavigate handler when link is clicked', (): void => {
+describe('component: PrevNext', () => {
+  test('it calls the onNavigate handler when link is clicked', () => {
     const mockNavigate = jest.fn()
-    const { getByText } = render(
-      <StyleProvider>
-        <PrevNext onNavigate={mockNavigate} />
-      </StyleProvider>
-    )
+    const { getByText } = renderWithTheme(<PrevNext onNavigate={mockNavigate} />)
 
     expect(mockNavigate).not.toHaveBeenCalled()
     userEvent.click(getByText('Prev'))
@@ -23,13 +19,9 @@ describe('component: PrevNext', (): void => {
     expect(mockNavigate).toHaveBeenLastCalledWith('next')
   })
 
-  test('it calls the onNavigate handler when Enter is pressed on link focus', (): void => {
+  test('it calls the onNavigate handler when Enter is pressed on link focus', () => {
     const mockNavigate = jest.fn()
-    render(
-      <StyleProvider>
-        <PrevNext onNavigate={mockNavigate} />
-      </StyleProvider>
-    )
+    renderWithTheme(<PrevNext onNavigate={mockNavigate} />)
 
     expect(mockNavigate).not.toHaveBeenCalled()
     userEvent.tab() // Tab to Prev

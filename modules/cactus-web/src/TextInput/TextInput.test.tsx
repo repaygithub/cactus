@@ -1,27 +1,19 @@
-import { generateTheme } from '@repay/cactus-theme'
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import TextInput from './TextInput'
 
-describe('component: TextInput', (): void => {
-  test('should render an input with a placeholder', (): void => {
-    const { getByPlaceholderText } = render(
-      <StyleProvider>
-        <TextInput placeholder="hold my place" />
-      </StyleProvider>
-    )
+describe('component: TextInput', () => {
+  test('should render an input with a placeholder', () => {
+    const { getByPlaceholderText } = renderWithTheme(<TextInput placeholder="hold my place" />)
 
     expect(getByPlaceholderText('hold my place')).toBeInTheDocument()
   })
 
-  test('should support margin space props', (): void => {
-    const { getByPlaceholderText } = render(
-      <StyleProvider>
-        <TextInput marginTop={4} placeholder="Do I wanna know?" />
-      </StyleProvider>
+  test('should support margin space props', () => {
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextInput marginTop={4} placeholder="Do I wanna know?" />
     )
 
     const textInput = getByPlaceholderText('Do I wanna know?').parentElement
@@ -32,34 +24,28 @@ describe('component: TextInput', (): void => {
 
   test('should support ref prop', () => {
     const ref = React.createRef<HTMLInputElement>()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <TextInput data-testid="with-ref" defaultValue="sentinel" ref={ref} />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <TextInput data-testid="with-ref" defaultValue="sentinel" ref={ref} />
     )
     expect(getByTestId('with-ref')).toBe(ref.current)
     expect(ref.current).toHaveValue('sentinel')
   })
 
-  test('should trigger onChange handler', (): void => {
+  test('should trigger onChange handler', () => {
     const onChange = jest.fn()
-    const { getByPlaceholderText } = render(
-      <StyleProvider>
-        <TextInput placeholder="get this" onChange={onChange} />
-      </StyleProvider>
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextInput placeholder="get this" onChange={onChange} />
     )
 
     userEvent.type(getByPlaceholderText('get this'), 'typing...')
     expect(onChange).toHaveBeenCalled()
   })
 
-  describe('with theme customization', (): void => {
-    test('should have 2px border', (): void => {
-      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { getByPlaceholderText } = render(
-        <StyleProvider theme={theme}>
-          <TextInput placeholder="Do I wanna know?" />
-        </StyleProvider>
+  describe('with theme customization', () => {
+    test('should have 2px border', () => {
+      const { getByPlaceholderText } = renderWithTheme(
+        <TextInput placeholder="Do I wanna know?" />,
+        { border: 'thick' }
       )
 
       const textInput = getByPlaceholderText('Do I wanna know?')
@@ -68,12 +54,10 @@ describe('component: TextInput', (): void => {
       expect(styles.borderWidth).toBe('2px')
     })
 
-    test('should have 8px border radius', (): void => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { getByPlaceholderText } = render(
-        <StyleProvider theme={theme}>
-          <TextInput placeholder="Do I wanna know?" />
-        </StyleProvider>
+    test('should have 8px border radius', () => {
+      const { getByPlaceholderText } = renderWithTheme(
+        <TextInput placeholder="Do I wanna know?" />,
+        { shape: 'intermediate' }
       )
 
       const textInput = getByPlaceholderText('Do I wanna know?')
@@ -82,12 +66,10 @@ describe('component: TextInput', (): void => {
       expect(styles.borderRadius).toBe('8px')
     })
 
-    test('should have 0px border radius', (): void => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-      const { getByPlaceholderText } = render(
-        <StyleProvider theme={theme}>
-          <TextInput placeholder="Do I wanna know?" />
-        </StyleProvider>
+    test('should have 0px border radius', () => {
+      const { getByPlaceholderText } = renderWithTheme(
+        <TextInput placeholder="Do I wanna know?" />,
+        { shape: 'square' }
       )
 
       const textInput = getByPlaceholderText('Do I wanna know?')

@@ -1,9 +1,8 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
 import MenuBar from './MenuBar'
 
 // @ts-ignore
@@ -75,24 +74,20 @@ const Menu = () => {
 
 describe('component: MenuBar', () => {
   test('sidebar', () => {
-    const { container } = render(
-      <StyleProvider>
-        <ScreenSizeContext.Provider value={SIZES.medium}>
-          <Menu />
-        </ScreenSizeContext.Provider>
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <ScreenSizeContext.Provider value={SIZES.medium}>
+        <Menu />
+      </ScreenSizeContext.Provider>
     )
     const hamburger = container.querySelectorAll('[role="button"]')
     expect(hamburger).toHaveLength(1)
   })
 
   test('sidebar collapse', () => {
-    const { getByText, container } = render(
-      <StyleProvider>
-        <ScreenSizeContext.Provider value={SIZES.medium}>
-          <Menu />
-        </ScreenSizeContext.Provider>
-      </StyleProvider>
+    const { getByText, container } = renderWithTheme(
+      <ScreenSizeContext.Provider value={SIZES.medium}>
+        <Menu />
+      </ScreenSizeContext.Provider>
     )
 
     const hamburger = container.querySelector('[role="button"]') as HTMLElement
@@ -117,21 +112,19 @@ describe('component: MenuBar', () => {
   })
 
   test('focus', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <MenuBar aria-label="Menu of Main-ness">
-          <MenuBar.Item>First</MenuBar.Item>
-          <MenuBar.List title="Submenu">
-            <MenuBar.Item>Submenu First</MenuBar.Item>
-            <MenuBar.List title="Nested">
-              <MenuBar.Item>Nested First</MenuBar.Item>
-              <MenuBar.Item>Nested Last</MenuBar.Item>
-            </MenuBar.List>
-            <MenuBar.Item>Submenu Last</MenuBar.Item>
+    const { getByText } = renderWithTheme(
+      <MenuBar aria-label="Menu of Main-ness">
+        <MenuBar.Item>First</MenuBar.Item>
+        <MenuBar.List title="Submenu">
+          <MenuBar.Item>Submenu First</MenuBar.Item>
+          <MenuBar.List title="Nested">
+            <MenuBar.Item>Nested First</MenuBar.Item>
+            <MenuBar.Item>Nested Last</MenuBar.Item>
           </MenuBar.List>
-          <MenuBar.Item>Last</MenuBar.Item>
-        </MenuBar>
-      </StyleProvider>
+          <MenuBar.Item>Submenu Last</MenuBar.Item>
+        </MenuBar.List>
+        <MenuBar.Item>Last</MenuBar.Item>
+      </MenuBar>
     )
     userEvent.tab()
     expect(getByText('First')).toHaveFocus()

@@ -1,52 +1,45 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import TextInputField from './TextInputField'
 
-describe('component: TextInputField', (): void => {
-  test('should render a disabled TextInputField', (): void => {
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <TextInputField
-          id="trick"
-          name="trick"
-          label="Come on, type something"
-          tooltip="Sike!"
-          disabled
-        />
-      </StyleProvider>
+describe('component: TextInputField', () => {
+  test('Should render a disabled TextInputField', () => {
+    const { getByLabelText } = renderWithTheme(
+      <TextInputField
+        id="trick"
+        name="trick"
+        label="Come on, type something"
+        tooltip="Sike!"
+        disabled
+      />
     )
 
     expect(getByLabelText('Come on, type something')).toBeDisabled()
   })
 
-  test('should render a TextInputField with a placeholder', (): void => {
-    const { getByPlaceholderText } = render(
-      <StyleProvider>
-        <TextInputField
-          id="promise"
-          name="promise"
-          label="Ok ok, now do it"
-          placeholder="I won't disable it again, promise"
-        />
-      </StyleProvider>
+  test('Should render a TextInputField with a placeholder', () => {
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextInputField
+        id="promise"
+        name="promise"
+        label="Ok ok, now do it"
+        placeholder="I won't disable it again, promise"
+      />
     )
 
     expect(getByPlaceholderText(`I won't disable it again, promise`)).toBeInTheDocument()
   })
 
-  test('should render a success TextInputField', (): void => {
-    const { getByText, getByLabelText } = render(
-      <StyleProvider>
-        <TextInputField
-          id="success"
-          name="success"
-          label="No seriously, type something"
-          success="Great! you typed something!"
-        />
-      </StyleProvider>
+  test('Should render a success TextInputField', () => {
+    const { getByText, getByLabelText } = renderWithTheme(
+      <TextInputField
+        id="success"
+        name="success"
+        label="No seriously, type something"
+        success="Great! you typed something!"
+      />
     )
 
     expect(
@@ -54,16 +47,14 @@ describe('component: TextInputField', (): void => {
     ).toContain(getByText('Great! you typed something!').id)
   })
 
-  test('should render a warning TextInputField', (): void => {
-    const { getByText, getByLabelText } = render(
-      <StyleProvider>
-        <TextInputField
-          id="warn"
-          name="warn"
-          label="Do it again"
-          warning="Really? That's all you got?"
-        />
-      </StyleProvider>
+  test('Should render a warning TextInputField', () => {
+    const { getByText, getByLabelText } = renderWithTheme(
+      <TextInputField
+        id="warn"
+        name="warn"
+        label="Do it again"
+        warning="Really? That's all you got?"
+      />
     )
 
     expect(getByLabelText('Do it again').getAttribute('aria-describedby')).toContain(
@@ -71,16 +62,14 @@ describe('component: TextInputField', (): void => {
     )
   })
 
-  test('should render an error TextInputField', (): void => {
-    const { getByText, getByLabelText } = render(
-      <StyleProvider>
-        <TextInputField
-          id="error"
-          name="error"
-          label="Try again"
-          error="That's it, we're done here"
-        />
-      </StyleProvider>
+  test('Should render an error TextInputField', () => {
+    const { getByText, getByLabelText } = renderWithTheme(
+      <TextInputField
+        id="error"
+        name="error"
+        label="Try again"
+        error="That's it, we're done here"
+      />
     )
 
     expect(getByLabelText('Try again').getAttribute('aria-describedby')).toContain(
@@ -88,13 +77,13 @@ describe('component: TextInputField', (): void => {
     )
   })
 
-  test('should support margin space props', (): void => {
-    const { getByTestId } = render(
-      <StyleProvider>
+  test('Should support margin space props', () => {
+    const { getByTestId } = renderWithTheme(
+      <>
         <TextInputField label="F" name="1st" data-testid="first" />
         <TextInputField name="def" label="D" data-testid="default" mb={2} />
         <TextInputField name="over" label="O" data-testid="override" mt={1} />
-      </StyleProvider>
+      </>
     )
 
     const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
@@ -110,19 +99,17 @@ describe('component: TextInputField', (): void => {
     })
   })
 
-  test('should support flex item props', () => {
-    const { container } = render(
-      <StyleProvider>
-        <TextInputField
-          id="margins"
-          name="margins"
-          label="Check out all these sick margins"
-          flex={1}
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={0}
-        />
-      </StyleProvider>
+  test('Should support flex item props', () => {
+    const { container } = renderWithTheme(
+      <TextInputField
+        id="margins"
+        name="margins"
+        label="Check out all these sick margins"
+        flex={1}
+        flexGrow={1}
+        flexShrink={0}
+        flexBasis={0}
+      />
     )
 
     expect(container.firstElementChild).toHaveStyle('flex: 1')
@@ -131,28 +118,24 @@ describe('component: TextInputField', (): void => {
     expect(container.firstElementChild).toHaveStyle('flex-basis: 0')
   })
 
-  test('should support ref prop', () => {
+  test('Should support ref prop', () => {
     const ref = React.createRef<HTMLInputElement>()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <TextInputField defaultValue="with-ref" name="reflected" label="Referred" ref={ref} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <TextInputField defaultValue="with-ref" name="reflected" label="Referred" ref={ref} />
     )
     expect(getByLabelText('Referred')).toBe(ref.current)
     expect(ref.current).toHaveValue('with-ref')
   })
 
-  test('should trigger onChange handler', (): void => {
+  test('Should trigger onChange handler', () => {
     const onChange = jest.fn()
-    const { getByPlaceholderText } = render(
-      <StyleProvider>
-        <TextInputField
-          name="change"
-          label="Better type something this time"
-          placeholder="Type here!"
-          onChange={onChange}
-        />
-      </StyleProvider>
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextInputField
+        name="change"
+        label="Better type something this time"
+        placeholder="Type here!"
+        onChange={onChange}
+      />
     )
 
     userEvent.type(getByPlaceholderText('Type here!'), "Alright fine I'm typing, jeez")

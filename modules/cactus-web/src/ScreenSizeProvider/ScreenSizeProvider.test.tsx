@@ -1,7 +1,7 @@
-import { act, render } from '@testing-library/react'
+import { act } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { ScreenSizeContext, ScreenSizeProvider, SIZES } from './ScreenSizeProvider'
 
 const Size: React.FC = (): React.ReactElement => {
@@ -19,16 +19,16 @@ interface MQ {
   addListener: (x: () => void) => void
 }
 
-describe('component: ScreenSizeProvider', (): void => {
+describe('component: ScreenSizeProvider', () => {
   const matchMedia = window.matchMedia
 
   const media = {
     queries: [] as MQ[],
-    listener: (): void => {
+    listener: () => {
       return
     },
     //eslint-disable-next-line @typescript-eslint/no-unused-vars
-    setWidth: (x: number): void => {
+    setWidth: (x: number) => {
       return
     },
   }
@@ -39,10 +39,10 @@ describe('component: ScreenSizeProvider', (): void => {
       const result: MQ = {
         minPx: minPxMatch ? parseInt(minPxMatch[0]) : 0,
         matches: false,
-        removeListener: (): void => {
+        removeListener: () => {
           return
         },
-        addListener: (listener): void => {
+        addListener: (listener) => {
           media.listener = listener
         },
       }
@@ -51,7 +51,7 @@ describe('component: ScreenSizeProvider', (): void => {
     })
     window.matchMedia = mock as any
     media.queries = [] as MQ[]
-    media.setWidth = (width: number): void => {
+    media.setWidth = (width: number) => {
       for (const mq of media.queries) {
         mq.matches = width >= mq.minPx
       }
@@ -60,19 +60,17 @@ describe('component: ScreenSizeProvider', (): void => {
     return mock.mock
   }
 
-  afterEach((): void => {
+  afterEach(() => {
     window.matchMedia = matchMedia
   })
 
-  test('changing screen size', (): void => {
+  test('changing screen size', () => {
     const mock = mockMedia()
 
-    const { container } = render(
-      <StyleProvider>
-        <ScreenSizeProvider>
-          <Size />
-        </ScreenSizeProvider>
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <ScreenSizeProvider>
+        <Size />
+      </ScreenSizeProvider>
     )
 
     expect(container).toHaveTextContent('tiny')
@@ -101,7 +99,7 @@ describe('component: ScreenSizeProvider', (): void => {
     expect(container).toHaveTextContent('medium')
   })
 
-  test('size comparisons', (): void => {
+  test('size comparisons', () => {
     expect(SIZES.tiny < SIZES.small).toBe(true)
     expect(SIZES.tiny < SIZES.large).toBe(true)
     expect(SIZES.small < SIZES.large).toBe(true)

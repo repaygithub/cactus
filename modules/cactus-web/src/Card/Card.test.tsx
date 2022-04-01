@@ -1,48 +1,32 @@
-import { generateTheme } from '@repay/cactus-theme'
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Card from './Card'
 
-describe('component: Card', (): void => {
-  test('should support margin space props', (): void => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Card m={2}>Content</Card>
-      </StyleProvider>
-    )
+describe('component: Card', () => {
+  test('should support margin space props', () => {
+    const { getByText } = renderWithTheme(<Card m={2}>Content</Card>)
     const card = getByText('Content')
     const cardSyles = window.getComputedStyle(card)
 
     expect(cardSyles.margin).toBe('4px')
   })
 
-  test('should support padding props', (): void => {
-    const { getByText, rerender } = render(
-      <StyleProvider>
-        <Card>Content</Card>
-      </StyleProvider>
-    )
+  test('should support padding props', () => {
+    const { getByText, rerender } = renderWithTheme(<Card>Content</Card>)
 
     let card = getByText('Content')
     expect(window.getComputedStyle(card).padding).toBe('16px')
 
-    rerender(
-      <StyleProvider>
-        <Card padding={7}>Content</Card>
-      </StyleProvider>
-    )
+    rerender(<Card padding={7}>Content</Card>)
 
     card = getByText('Content')
     expect(window.getComputedStyle(card).padding).toBe('40px')
 
     rerender(
-      <StyleProvider>
-        <Card padding={7} paddingX={5}>
-          Content
-        </Card>
-      </StyleProvider>
+      <Card padding={7} paddingX={5}>
+        Content
+      </Card>
     )
 
     card = getByText('Content')
@@ -52,11 +36,9 @@ describe('component: Card', (): void => {
     expect(window.getComputedStyle(card).paddingRight).toBe('24px')
 
     rerender(
-      <StyleProvider>
-        <Card padding={7} paddingY={5}>
-          Content
-        </Card>
-      </StyleProvider>
+      <Card padding={7} paddingY={5}>
+        Content
+      </Card>
     )
 
     card = getByText('Content')
@@ -66,14 +48,12 @@ describe('component: Card', (): void => {
     expect(window.getComputedStyle(card).paddingRight).toBe('40px')
   })
 
-  describe('with theme customization', (): void => {
-    test('should have no box shadow & 2px borders', (): void => {
-      const theme = generateTheme({ primaryHue: 200, boxShadows: false, border: 'thick' })
-      const { getByText } = render(
-        <StyleProvider theme={theme}>
-          <Card>Content</Card>
-        </StyleProvider>
-      )
+  describe('with theme customization', () => {
+    test('should have no box shadow & 2px borders', () => {
+      const { getByText } = renderWithTheme(<Card>Content</Card>, {
+        boxShadows: false,
+        border: 'thick',
+      })
 
       const card = getByText('Content')
       const cardSyles = window.getComputedStyle(card)
@@ -82,13 +62,8 @@ describe('component: Card', (): void => {
       expect(cardSyles.boxShadow).toBe('')
     })
 
-    test('should have 4px border radius', (): void => {
-      const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-      const { getByText } = render(
-        <StyleProvider theme={theme}>
-          <Card>Content</Card>
-        </StyleProvider>
-      )
+    test('should have 4px border radius', () => {
+      const { getByText } = renderWithTheme(<Card>Content</Card>, { shape: 'intermediate' })
 
       const card = getByText('Content')
       const cardSyles = window.getComputedStyle(card)
@@ -98,12 +73,10 @@ describe('component: Card', (): void => {
   })
 
   test('should support flex item props', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Card flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
-          Flex Card
-        </Card>
-      </StyleProvider>
+    const { getByText } = renderWithTheme(
+      <Card flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+        Flex Card
+      </Card>
     )
 
     const card = getByText('Flex Card')

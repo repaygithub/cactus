@@ -1,25 +1,19 @@
-import { render, waitFor } from '@testing-library/react'
+import { waitFor } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Alert from './Alert'
 
 describe('component: Alert', (): void => {
   test('Should render the inner text', (): void => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Alert>Message</Alert>
-      </StyleProvider>
-    )
+    const { getByText } = renderWithTheme(<Alert>Message</Alert>)
     expect(getByText('Message')).toBeInTheDocument()
   })
   test('should support flex item props', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Alert data-testid="flex-alert" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
-          I have flex props
-        </Alert>
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <Alert data-testid="flex-alert" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+        I have flex props
+      </Alert>
     )
 
     const alert = getByTestId('flex-alert')
@@ -30,12 +24,10 @@ describe('component: Alert', (): void => {
   })
   test('Should call the onClose fn after timeout', async () => {
     const setOpen = jest.fn()
-    const { queryByText } = render(
-      <StyleProvider>
-        <Alert closeTimeout={3} onClose={setOpen}>
-          Notification
-        </Alert>
-      </StyleProvider>
+    const { queryByText } = renderWithTheme(
+      <Alert closeTimeout={3} onClose={setOpen}>
+        Notification
+      </Alert>
     )
 
     expect(queryByText('Notification')).toBeInTheDocument()

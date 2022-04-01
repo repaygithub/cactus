@@ -1,29 +1,16 @@
-import { act, render, waitFor } from '@testing-library/react'
+import { act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { toISODate } from '../helpers/dates'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
-import Calendar_, { CalendarProps, MonthChange } from './Calendar'
-import { CalendarGridProps } from './Grid'
+import Calendar, { MonthChange } from './Calendar'
 
 const NOW = new Date()
 const ISO_NOW = toISODate(NOW)
 const TODAY = ISO_NOW.slice(8)
 const THIS_YEAR = ISO_NOW.slice(0, 4)
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
-const Grid = (props: CalendarGridProps) => (
-  <StyleProvider>
-    <Calendar_.Grid {...props} />
-  </StyleProvider>
-)
-
-const Calendar = (props: CalendarProps) => (
-  <StyleProvider>
-    <Calendar_ {...props} />
-  </StyleProvider>
-)
 
 const queryByAttr = (root: Element, attr: string, value: unknown) =>
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -45,7 +32,7 @@ describe('component: Calendar', () => {
   describe('subcomponent: Grid', () => {
     describe('Grid props', () => {
       test('initialFocus controls displayed month', () => {
-        const { container } = render(<Grid initialFocus="2021-08-25" />)
+        const { container } = renderWithTheme(<Calendar.Grid initialFocus="2021-08-25" />)
         const days = queryAllByAttr(container, 'role', 'gridcell')
         expect(days).toHaveLength(35)
         expect(days[0]).toHaveAttribute('data-date', '2021-08-01')
@@ -57,7 +44,9 @@ describe('component: Calendar', () => {
       })
 
       test('month/year override initialFocus month/year', () => {
-        const { container } = render(<Grid initialFocus={NOW} month={6} year={2021} />)
+        const { container } = renderWithTheme(
+          <Calendar.Grid initialFocus={NOW} month={6} year={2021} />
+        )
         const days = queryAllByAttr(container, 'role', 'gridcell')
         expect(days).toHaveLength(35)
         // Overflows into June.
@@ -69,11 +58,11 @@ describe('component: Calendar', () => {
       })
 
       test('selected can override initialFocus day', () => {
-        const { container } = render(
-          <StyleProvider>
-            <Calendar_.Grid initialFocus="2020-09-03" selected="2020-09-15" />
-            <Calendar_.Grid initialFocus="2021-09-03" selected="2021-10-15" />
-          </StyleProvider>
+        const { container } = renderWithTheme(
+          <>
+            <Calendar.Grid initialFocus="2020-09-03" selected="2020-09-15" />
+            <Calendar.Grid initialFocus="2021-09-03" selected="2021-10-15" />
+          </>
         )
         const focused = queryAllByAttr(container, 'tabindex', '0')
         expect(focused).toHaveLength(2)
@@ -84,7 +73,9 @@ describe('component: Calendar', () => {
       })
 
       test('isValidDate disables matching dates', () => {
-        const { container } = render(<Grid isValidDate={(d) => !!(d.getDate() % 10)} />)
+        const { container } = renderWithTheme(
+          <Calendar.Grid isValidDate={(d) => !!(d.getDate() % 10)} />
+        )
         const query = queryAllByAttr(container, 'aria-disabled', 'true')
         const disabled = Array.prototype.filter.call(query, (x) => !x.matches('.outside-date'))
         expect(disabled).toHaveLength(NOW.getMonth() === 1 ? 2 : 3)
@@ -94,7 +85,9 @@ describe('component: Calendar', () => {
       })
 
       test('locale affects default labels', () => {
-        const { container } = render(<Grid initialFocus="2020-05-24" locale="es-US" />)
+        const { container } = renderWithTheme(
+          <Calendar.Grid initialFocus="2020-05-24" locale="es-US" />
+        )
         const sunday = queryByAttr(container, 'role', 'columnheader')
         expect(sunday).toHaveTextContent('do')
         expect(sunday).toHaveAttribute('aria-label', 'domingo')
@@ -103,8 +96,8 @@ describe('component: Calendar', () => {
       })
 
       test('labelDisabled is applied to disabled date labels', () => {
-        const { container } = render(
-          <Grid
+        const { container } = renderWithTheme(
+          <Calendar.Grid
             labels={{
               labelDate: toISODate,
               labelDisabled: (l) => 'DISABLED: ' + l,
@@ -119,14 +112,16 @@ describe('component: Calendar', () => {
       })
 
       test('weekday labels: null removes header row', () => {
-        const { container, queryByRole } = render(<Grid labels={{ weekdays: null }} />)
+        const { container, queryByRole } = renderWithTheme(
+          <Calendar.Grid labels={{ weekdays: null }} />
+        )
         expect(queryByRole('columnheader')).toBe(null)
         expect(queryByAttr(container, 'role', 'gridcell')).not.toBe(null)
       })
 
       test('weekday labels: string array controls visual text', () => {
         const weekdays = ['I', 'saw', 'the', 'sun']
-        const { container } = render(<Grid labels={{ weekdays }} />)
+        const { container } = renderWithTheme(<Calendar.Grid labels={{ weekdays }} />)
         const days = queryAllByAttr(container, 'role', 'columnheader')
         expect(days).toHaveLength(7)
         weekdays.push('Th', 'Fr', 'Sa')
@@ -143,7 +138,7 @@ describe('component: Calendar', () => {
           { short: '', long: 'the sun' },
           { short: 'stuff', long: 'John Silver' },
         ]
-        const { container } = render(<Grid labels={{ weekdays }} />)
+        const { container } = renderWithTheme(<Calendar.Grid labels={{ weekdays }} />)
         const days = queryAllByAttr(container, 'role', 'columnheader')
         expect(days).toHaveLength(7)
         for (let i = 0; i < 7; i++) {
@@ -154,7 +149,7 @@ describe('component: Calendar', () => {
       })
 
       test('supports style props: margin', () => {
-        const { getByRole } = render(<Grid mb={3} ml={4} />)
+        const { getByRole } = renderWithTheme(<Calendar.Grid mb={3} ml={4} />)
         expect(getByRole('grid')).toHaveStyle({
           marginTop: '',
           marginRight: '',
@@ -166,7 +161,9 @@ describe('component: Calendar', () => {
       test('can have multiple selected dates', () => {
         // Selected can be in a different month, as long as it's displayed on the grid.
         const selected = ['2021-04-27', '2021-05-13', '2021-05-24', '2022-10-28']
-        const { container } = render(<Grid month={4} year={2021} selected={selected} />)
+        const { container } = renderWithTheme(
+          <Calendar.Grid month={4} year={2021} selected={selected} />
+        )
         const cells = queryAllByAttr(container, 'aria-selected', 'true')
         // Three because the fourth isn't displayed on this grid.
         expect(cells).toHaveLength(3)
@@ -182,7 +179,7 @@ describe('component: Calendar', () => {
         const onOverflow = jest.fn((d: Date) => {
           lastOverflow = toISODate(d)
         })
-        render(<Grid initialFocus="2021-12-19" onFocusOverflow={onOverflow} />)
+        renderWithTheme(<Calendar.Grid initialFocus="2021-12-19" onFocusOverflow={onOverflow} />)
         userEvent.tab()
         expect(document.activeElement).toHaveAttribute('data-date', '2021-12-19')
         userEvent.keyboard('{arrowup}')
@@ -220,8 +217,12 @@ describe('component: Calendar', () => {
           lastOverflow = toISODate(d)
         })
         // Keyboard focus shifts even when dates are disabled.
-        render(
-          <Grid initialFocus="2021-12-01" onFocusOverflow={onOverflow} isValidDate={() => false} />
+        renderWithTheme(
+          <Calendar.Grid
+            initialFocus="2021-12-01"
+            onFocusOverflow={onOverflow}
+            isValidDate={() => false}
+          />
         )
         userEvent.tab()
         expect(document.activeElement).toHaveAttribute('data-date', '2021-12-01')
@@ -239,8 +240,8 @@ describe('component: Calendar', () => {
         const onOverflow = jest.fn((d: Date) => {
           lastOverflow = toISODate(d)
         })
-        const { getByLabelText } = render(
-          <Grid
+        const { getByLabelText } = renderWithTheme(
+          <Calendar.Grid
             initialFocus="2021-12-19"
             onFocusOverflow={onOverflow}
             isValidDate={(d) => d.getDate() !== 2}
@@ -257,15 +258,15 @@ describe('component: Calendar', () => {
       })
 
       test('focus shift on controlled month change', () => {
-        const { container, rerender } = render(
-          <Grid initialFocus={{ day: 3 }} month={8} year={2021} />
+        const { container, rerender } = renderWithTheme(
+          <Calendar.Grid initialFocus={{ day: 3 }} month={8} year={2021} />
         )
         expect(queryByAttr(container, 'tabindex', '0')).toHaveAttribute('data-date', '2021-09-03')
         // initialFocus is used in controlled month changes, but only the `day` part.
-        rerender(<Grid initialFocus={{ day: 17 }} month={2} year={2021} />)
+        rerender(<Calendar.Grid initialFocus={{ day: 17 }} month={2} year={2021} />)
         expect(queryByAttr(container, 'tabindex', '0')).toHaveAttribute('data-date', '2021-03-17')
         // If initialFocus isn't passed, it falls back to the original state.
-        rerender(<Grid month={2} year={2020} />)
+        rerender(<Calendar.Grid month={2} year={2020} />)
         expect(queryByAttr(container, 'tabindex', '0')).toHaveAttribute('data-date', '2020-03-03')
       })
     })
@@ -273,7 +274,7 @@ describe('component: Calendar', () => {
 
   describe('Calendar props', () => {
     test('initialFocus controls displayed month', () => {
-      const { container } = render(<Calendar initialFocus="2021-08-25" />)
+      const { container } = renderWithTheme(<Calendar initialFocus="2021-08-25" />)
       const dropDowns = queryAllByAttr(container, 'aria-haspopup', 'listbox')
       expect(dropDowns).toHaveLength(2)
       expect(dropDowns[0]).toHaveTextContent('August')
@@ -289,7 +290,7 @@ describe('component: Calendar', () => {
     })
 
     test('month/year override initialFocus month/year', () => {
-      const { container, rerender } = render(
+      const { container, rerender } = renderWithTheme(
         <Calendar initialFocus="1999-12-31" month={6} year={2021} />
       )
       const dropDowns = queryAllByAttr(container, 'aria-haspopup', 'listbox')
@@ -312,7 +313,7 @@ describe('component: Calendar', () => {
     })
 
     test('isValidDate, locale, labels forwarded to Grid', () => {
-      const { container } = render(
+      const { container } = renderWithTheme(
         <Calendar
           initialFocus="2020-05-24"
           locale="es-US"
@@ -345,7 +346,7 @@ describe('component: Calendar', () => {
         nextMonth: 'travel to the future',
         months,
       }
-      render(<Calendar labels={labels} />)
+      renderWithTheme(<Calendar labels={labels} />)
       // It's a convenient way to collect the controls, so I'll also test tab order.
       userEvent.tab()
       const prevMonth = getRelatedElement('aria-labelledby')
@@ -394,7 +395,7 @@ describe('component: Calendar', () => {
     })
 
     test('supports style props: margin', () => {
-      const { getByRole } = render(<Calendar mb={3} ml={4} />)
+      const { getByRole } = renderWithTheme(<Calendar mb={3} ml={4} />)
       expect(getByRole('group')).toHaveStyle({
         marginTop: '',
         marginRight: '',
@@ -412,7 +413,9 @@ describe('component: Calendar', () => {
     const onChange = (event: any) => mockChange(event.target.value)
 
     test('click to change value', () => {
-      const { getByLabelText } = render(<Calendar initialFocus="1986-04-02" onChange={onChange} />)
+      const { getByLabelText } = renderWithTheme(
+        <Calendar initialFocus="1986-04-02" onChange={onChange} />
+      )
       const cell = getByLabelText('Sunday, April 13, 1986')
       expect(cell).toHaveAttribute('aria-selected', 'false')
       userEvent.click(cell)
@@ -422,7 +425,7 @@ describe('component: Calendar', () => {
 
     test('keyboard to change value', () => {
       // Use null so dates will be raised as Date instances.
-      render(<Calendar defaultValue={null} onChange={onChange} />)
+      renderWithTheme(<Calendar defaultValue={null} onChange={onChange} />)
 
       userEvent.tab({ shift: true })
       const fromSpace = document.activeElement
@@ -445,7 +448,7 @@ describe('component: Calendar', () => {
     })
 
     test('readOnly prevents value change', () => {
-      render(<Calendar onChange={onChange} readOnly />)
+      renderWithTheme(<Calendar onChange={onChange} readOnly />)
       userEvent.tab({ shift: true })
       expect(document.activeElement).toHaveAttribute('data-date', ISO_NOW)
       expect(document.activeElement).toHaveAttribute('aria-selected', 'false')
@@ -455,7 +458,7 @@ describe('component: Calendar', () => {
     })
 
     test('disabled prevents value change', () => {
-      render(<Calendar onChange={onChange} disabled />)
+      renderWithTheme(<Calendar onChange={onChange} disabled />)
       userEvent.tab({ shift: true })
       expect(document.activeElement).toHaveAttribute('data-date', ISO_NOW)
       expect(document.activeElement).toHaveAttribute('aria-selected', 'false')
@@ -465,7 +468,7 @@ describe('component: Calendar', () => {
     })
 
     test('prevMonth button', async () => {
-      const { getByRole } = render(
+      const { getByRole } = renderWithTheme(
         <Calendar initialFocus={{ month: 5 }} onMonthChange={onMonthChange} />
       )
       const prevMonth = getByRole('button', { name: 'Click to go back one month' })
@@ -478,7 +481,7 @@ describe('component: Calendar', () => {
     })
 
     test('nextMonth button', async () => {
-      const { getByRole } = render(
+      const { getByRole } = renderWithTheme(
         <Calendar initialFocus={{ month: 11 }} onMonthChange={onMonthChange} />
       )
       const nextMonth = getByRole('button', { name: 'Click to go forward one month' })
@@ -491,7 +494,7 @@ describe('component: Calendar', () => {
     })
 
     test('click to change month', () => {
-      const { getByRole } = render(
+      const { getByRole } = renderWithTheme(
         <Calendar initialFocus={{ month: 9 }} onMonthChange={onMonthChange} />
       )
       const monthButton = getByRole('button', { name: 'October' })
@@ -510,7 +513,7 @@ describe('component: Calendar', () => {
     })
 
     test('keyboard to change month', () => {
-      const { getByRole } = render(
+      const { getByRole } = renderWithTheme(
         <Calendar initialFocus={{ month: 9 }} onMonthChange={onMonthChange} />
       )
       const monthButton = getByRole('button', { name: 'October' })
@@ -553,7 +556,7 @@ describe('component: Calendar', () => {
     })
 
     test('click to change year', () => {
-      const { getByRole } = render(<Calendar onMonthChange={onMonthChange} />)
+      const { getByRole } = renderWithTheme(<Calendar onMonthChange={onMonthChange} />)
       const yearButton = getByRole('button', { name: THIS_YEAR })
       const yearbox = getRelatedElement('aria-controls', yearButton)
       expect(yearbox).not.toBeVisible()
@@ -570,7 +573,7 @@ describe('component: Calendar', () => {
 
     test('keyboard to change year', () => {
       // This uses the same component as months, so I'm not going to re-test all the controls.
-      const { getByRole } = render(<Calendar onMonthChange={onMonthChange} />)
+      const { getByRole } = renderWithTheme(<Calendar onMonthChange={onMonthChange} />)
       const yearButton = getByRole('button', { name: THIS_YEAR })
       const yearbox = getRelatedElement('aria-controls', yearButton)
       yearButton.focus()
@@ -589,7 +592,7 @@ describe('component: Calendar', () => {
     })
 
     test('click to change value + grid overflow', () => {
-      const { getByLabelText } = render(
+      const { getByLabelText } = renderWithTheme(
         <Calendar initialFocus="2021-08-01" onChange={onChange} onMonthChange={onMonthChange} />
       )
       const cell = getByLabelText('Thursday, September 2, 2021')
@@ -602,7 +605,7 @@ describe('component: Calendar', () => {
     })
 
     test('keyboard grid overflow', () => {
-      render(<Calendar initialFocus="2021-12-31" onMonthChange={onMonthChange} />)
+      renderWithTheme(<Calendar initialFocus="2021-12-31" onMonthChange={onMonthChange} />)
       userEvent.tab({ shift: true })
       action('keyboard', '{arrowright}')
       expect(document.activeElement).toHaveAttribute('data-date', '2022-01-01')
