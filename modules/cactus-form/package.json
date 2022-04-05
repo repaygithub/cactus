@@ -73,6 +73,6 @@
     "final-form": "^4.20.4",
     "prop-types": ">=15.0.0",
     "react": "^16.8.3 || ^17.0.0",
-    "react-final-form": "^6.5.7"
+    "react-final-form": "^6.5.8"
   }
 }
