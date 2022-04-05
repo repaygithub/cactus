@@ -14,3 +14,10 @@ __diff_output__
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
