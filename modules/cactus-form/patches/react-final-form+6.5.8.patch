@@ -1,9 +1,9 @@
 diff --git a/node_modules/react-final-form/dist/react-final-form.cjs.js b/node_modules/react-final-form/dist/react-final-form.cjs.js
-index 853fec2..c82b57a 100644
+index b133951..eb4adf0 100644
 --- a/node_modules/react-final-form/dist/react-final-form.cjs.js
 +++ b/node_modules/react-final-form/dist/react-final-form.cjs.js
 @@ -439,6 +439,9 @@ var getValue = function getValue(event, currentValue, valueProp, isReactNative)
-
+ 
    switch (type) {
      case "checkbox":
 +      if (valueProp === undefined) {
@@ -14,11 +14,11 @@ index 853fec2..c82b57a 100644
          if (checked) {
 @@ -662,7 +665,7 @@ function useField(name, config) {
      },
-
+ 
      onBlur: useConstantCallback(function (event) {
 -      state.blur();
 +      form.blur(state.name);
-
+ 
        if (formatOnBlur) {
          /**
 @@ -673,27 +676,15 @@ function useField(name, config) {
@@ -51,13 +51,13 @@ index 853fec2..c82b57a 100644
 +      return form.focus(state.name);
      })
    };
-
+ 
 diff --git a/node_modules/react-final-form/dist/react-final-form.es.js b/node_modules/react-final-form/dist/react-final-form.es.js
-index ee33e7b..c12b314 100644
+index c69f57f..2fa01a4 100644
 --- a/node_modules/react-final-form/dist/react-final-form.es.js
 +++ b/node_modules/react-final-form/dist/react-final-form.es.js
 @@ -411,6 +411,9 @@ var getValue = function getValue(event, currentValue, valueProp, isReactNative)
-
+ 
    switch (type) {
      case "checkbox":
 +      if (valueProp === undefined) {
@@ -68,11 +68,11 @@ index ee33e7b..c12b314 100644
          if (checked) {
 @@ -634,7 +637,7 @@ function useField(name, config) {
      },
-
+ 
      onBlur: useConstantCallback(function (event) {
 -      state.blur();
 +      form.blur(state.name);
-
+ 
        if (formatOnBlur) {
          /**
 @@ -645,27 +648,15 @@ function useField(name, config) {
@@ -105,4 +105,4 @@ index ee33e7b..c12b314 100644
 +      return form.focus(state.name);
      })
    };
-
+ 

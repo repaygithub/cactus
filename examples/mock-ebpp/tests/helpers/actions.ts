@@ -1,12 +1,12 @@
 import { queryByLabelText, queryByRole, queryByText, within } from '@testing-library/testcafe'
 import { ClientFunction, Selector } from 'testcafe'
 
-const getCombo = Selector(() => {
-  if (document.activeElement && document.activeElement.getAttribute('role') === 'textbox') {
-    return document.activeElement
-  }
-  return null
-})
+const getCombo = Selector(
+  () =>
+    (document.activeElement && document.activeElement.getAttribute('role') === 'textbox'
+      ? document.activeElement
+      : null) as Node
+)
 
 const fillTextField =
   (t: TestController): ((label: string, text: string) => Promise<void>) =>
@@ -67,7 +67,7 @@ const focusAccordionHeaderByText = ClientFunction((text: string): void => {
     ?.focus()
 })
 
-const getActiveElement = Selector(() => document.activeElement)
+const getActiveElement = Selector(() => document.activeElement as Node)
 
 export default (
   t: TestController
