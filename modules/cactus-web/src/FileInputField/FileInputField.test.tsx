@@ -1,51 +1,44 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import FileInputField from './FileInputField'
 
 describe('component: FileInputField', (): void => {
   test('should render field validation messages', () => {
-    const { getByText, rerender } = render(
-      <StyleProvider>
-        <FileInputField
-          name="dabears"
-          id="free-fallin"
-          label="Bickin Back"
-          accept={['.txt']}
-          success="Mirror mirror on the wall"
-        />
-      </StyleProvider>
+    const { getByText, rerender } = renderWithTheme(
+      <FileInputField
+        name="dabears"
+        id="free-fallin"
+        label="Bickin Back"
+        accept={['.txt']}
+        success="Mirror mirror on the wall"
+      />
     )
 
     const successMsg = getByText('Mirror mirror on the wall')
     expect(successMsg).toBeInTheDocument()
 
     rerender(
-      <StyleProvider>
-        <FileInputField
-          name="dabears"
-          id="free-fallin"
-          label="Bickin Back"
-          accept={['.txt']}
-          warning="Who's the boolest of them all?"
-        />
-      </StyleProvider>
+      <FileInputField
+        name="dabears"
+        id="free-fallin"
+        label="Bickin Back"
+        accept={['.txt']}
+        warning="Who's the boolest of them all?"
+      />
     )
 
     const warningMsg = getByText("Who's the boolest of them all?")
     expect(warningMsg).toBeInTheDocument()
 
     rerender(
-      <StyleProvider>
-        <FileInputField
-          name="dabears"
-          id="free-fallin"
-          label="Bickin Back"
-          accept={['.txt']}
-          error="My boy's the boolest of them all"
-        />
-      </StyleProvider>
+      <FileInputField
+        name="dabears"
+        id="free-fallin"
+        label="Bickin Back"
+        accept={['.txt']}
+        error="My boy's the boolest of them all"
+      />
     )
 
     const errorMsg = getByText("My boy's the boolest of them all")
@@ -53,12 +46,12 @@ describe('component: FileInputField', (): void => {
   })
 
   test('should support margin space props', (): void => {
-    const { container } = render(
-      <StyleProvider>
+    const { container } = renderWithTheme(
+      <>
         <FileInputField label="F" name="first" />
         <FileInputField name="default" label="D" mb={2} />
         <FileInputField name="override" label="O" mt={1} />
-      </StyleProvider>
+      </>
     )
 
     const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
@@ -76,20 +69,18 @@ describe('component: FileInputField', (): void => {
   })
 
   test('should support flex item props', () => {
-    const { container } = render(
-      <StyleProvider>
-        <FileInputField
-          name="dabears"
-          id="free-fallin"
-          label="Bickin Back"
-          accept={['.txt']}
-          data-testid="flex-fileinput"
-          flex={1}
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={0}
-        />
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <FileInputField
+        name="dabears"
+        id="free-fallin"
+        label="Bickin Back"
+        accept={['.txt']}
+        data-testid="flex-fileinput"
+        flex={1}
+        flexGrow={1}
+        flexShrink={0}
+        flexBasis={0}
+      />
     )
 
     expect(container.firstElementChild).toHaveStyle('flex: 1')

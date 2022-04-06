@@ -1,19 +1,19 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import FocusLock from './FocusLock'
 
 describe('component: FocusLock', () => {
   test('prevents focus from leaving the focus lock when using the keyboard', () => {
-    const { getByText } = render(
-      <div>
+    const { getByText } = renderWithTheme(
+      <>
         <FocusLock>
           <div tabIndex={0}>Focus 1</div>
           <div tabIndex={0}>Focus 2</div>
         </FocusLock>
         <div tabIndex={0}>Don't focus me</div>
-      </div>
+      </>
     )
 
     const focus1 = getByText('Focus 1')

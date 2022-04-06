@@ -1,17 +1,14 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import AccessibleField from './AccessibleField'
 
-describe('component: AccessibleField', (): void => {
-  test('provides an accessible label', (): void => {
-    const { getByLabelText, getByTestId } = render(
-      <StyleProvider>
-        <AccessibleField data-testid="wrapper" label="Accessible Label" name="text_field">
-          <input data-is="accessible" />
-        </AccessibleField>
-      </StyleProvider>
+describe('component: AccessibleField', () => {
+  test('provides an accessible label', () => {
+    const { getByLabelText, getByTestId } = renderWithTheme(
+      <AccessibleField data-testid="wrapper" label="Accessible Label" name="text_field">
+        <input data-is="accessible" />
+      </AccessibleField>
     )
 
     const wrapper = getByTestId('wrapper')
@@ -22,13 +19,11 @@ describe('component: AccessibleField', (): void => {
     expect(input).not.toHaveAttribute('aria-describedby')
   })
 
-  test('provides accessible status message', (): void => {
-    const { getByLabelText, getByText } = render(
-      <StyleProvider>
-        <AccessibleField label="Accessible Label" name="text_field" error="This field has an error">
-          <input name="text_field" data-is="accessible" />
-        </AccessibleField>
-      </StyleProvider>
+  test('provides accessible status message', () => {
+    const { getByLabelText, getByText } = renderWithTheme(
+      <AccessibleField label="Accessible Label" name="text_field" error="This field has an error">
+        <input name="text_field" data-is="accessible" />
+      </AccessibleField>
     )
 
     expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toBe(
@@ -36,13 +31,11 @@ describe('component: AccessibleField', (): void => {
     )
   })
 
-  test('provides an accessible tooltip', (): void => {
-    const { getByLabelText, getByText } = render(
-      <StyleProvider>
-        <AccessibleField label="Accessible Label" name="text_field" tooltip="woot tooltips!">
-          <input name="text_field" data-is="accessible" />
-        </AccessibleField>
-      </StyleProvider>
+  test('provides an accessible tooltip', () => {
+    const { getByLabelText, getByText } = renderWithTheme(
+      <AccessibleField label="Accessible Label" name="text_field" tooltip="woot tooltips!">
+        <input name="text_field" data-is="accessible" />
+      </AccessibleField>
     )
 
     expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toBe(
@@ -51,20 +44,18 @@ describe('component: AccessibleField', (): void => {
   })
 
   test('supports flex item props', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <AccessibleField
-          label="Accessible Label"
-          name="text_field"
-          data-testid="flex-field"
-          flex={1}
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={0}
-        >
-          <input name="text_field" data-is="accessible" />
-        </AccessibleField>
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <AccessibleField
+        label="Accessible Label"
+        name="text_field"
+        data-testid="flex-field"
+        flex={1}
+        flexGrow={1}
+        flexShrink={0}
+        flexBasis={0}
+      >
+        <input name="text_field" data-is="accessible" />
+      </AccessibleField>
     )
 
     const field = getByTestId('flex-field')
@@ -74,21 +65,19 @@ describe('component: AccessibleField', (): void => {
     expect(field).toHaveStyle('flex-basis: 0')
   })
 
-  test('alternate prop types', (): void => {
-    const { container, getByText } = render(
-      <StyleProvider>
-        <AccessibleField
-          id="aftest"
-          label={<em>Accessible Label</em>}
-          name="text_field"
-          tooltip={<strong>JSX Tooltip</strong>}
-          error={<p>Error Paragraph</p>}
-          warning={<a>Warning Anchor</a>}
-          success={<b>Bold Success</b>}
-        >
-          {(field) => <input name={field.name} id={field.fieldId} />}
-        </AccessibleField>
-      </StyleProvider>
+  test('alternate prop types', () => {
+    const { container, getByText } = renderWithTheme(
+      <AccessibleField
+        id="aftest"
+        label={<em>Accessible Label</em>}
+        name="text_field"
+        tooltip={<strong>JSX Tooltip</strong>}
+        error={<p>Error Paragraph</p>}
+        warning={<a>Warning Anchor</a>}
+        success={<b>Bold Success</b>}
+      >
+        {(field) => <input name={field.name} id={field.fieldId} />}
+      </AccessibleField>
     )
 
     const labelText = getByText('Accessible Label')

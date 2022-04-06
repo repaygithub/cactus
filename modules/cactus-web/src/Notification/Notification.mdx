@@ -50,6 +50,52 @@ render(<ScreenSizeProvider><NotificationContainer /></ScreenSizeProvider>)
   <LivePreview />
 </LiveProvider>
 
+## NotificationProvider
+
+To make it possible to set notifications at any level without overlapping,
+we provide a `NotificationProvider` component along with a `useNotifications` hook.
+Simply wrap your app in the provider, which takes no props but children,
+and the hook gives two functions to manage notifications:
+
+```ts
+function useNotifications(): NotificationController;
+interface NotificationController {
+  setNotification: (args: AlertArgs | ElementArgs) => Key
+  clearNotification: Key
+}
+interface NotificationProps {
+  key?: string
+  vertical?: 'top' | 'bottom'
+  horizontal?: 'left' | 'center' | 'right'
+}
+interface AlertArgs extends AlertProps, NotificationProps {
+  message: React.ReactChild
+  status: AlertStatus
+  canClose?: boolean
+}
+interface ElementArgs extends NotificationProps {
+  element: React.ReactElement
+}
+```
+
+The easiest way to use `setNotification` is to pass the same props you would pass
+to the `Alert` component except that instead of passing the contents as children,
+it has the `message` property, `status` is required, and you can pass a `canClose` argument
+(default true) to automatically generate the `onClose` handler to call `clearNotification`.
+You can still pass a custom `onClose` handler or a `closeTimeout` as well.
+
+If you want to use something other than an `Alert`, you can pass a pre-built element instead.
+Both argument forms also accept the `Notification` positioning props, `vertical` and `horizontal`,
+and optionally a unique key to identify the note (if no key is provided, one will be generated).
+
+### Positioning & Multiple Notifications
+
+If multiple notifications are added with the same position, they will be combined
+into a single `Notification` element, rendered in the order they were added;
+given the fixed positioning of `Notification`, this prevents them from overlapping.
+However, if notifications are set in different positions there is no automatic
+way to keep them from overlapping, so keep that in mind if you use lots of notifications.
+
 ## Properties
 
 <PropsTable of={Notification} />

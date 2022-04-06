@@ -1,89 +1,73 @@
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import animationRender from '../../tests/helpers/animationRender'
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import ColorPicker from './ColorPicker'
 
 describe('component: ColorPicker', () => {
   describe('can be controlled', () => {
     test('with hsl', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker
-            id="color-picker"
-            name="color-test"
-            format="hsl"
-            value={{ h: 120, s: 1, l: 0.5 }}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker
+          id="color-picker"
+          name="color-test"
+          format="hsl"
+          value={{ h: 120, s: 1, l: 0.5 }}
+        />
       )
 
       expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
     })
 
     test('with hsv', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker
-            id="color-picker"
-            name="what-color"
-            format="hsv"
-            value={{ h: 120, s: 1, v: 1 }}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker
+          id="color-picker"
+          name="what-color"
+          format="hsv"
+          value={{ h: 120, s: 1, v: 1 }}
+        />
       )
 
       expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
     })
 
     test('with rgb', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker
-            id="color-picker"
-            name="color-me"
-            format="rgb"
-            value={{ r: 0, g: 255, b: 0 }}
-          />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker
+          id="color-picker"
+          name="color-me"
+          format="rgb"
+          value={{ r: 0, g: 255, b: 0 }}
+        />
       )
 
       expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
     })
 
     test('with hex', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="almost-there" value="00FF00" />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="almost-there" value="00FF00" />
       )
 
       expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#00FF00')
     })
 
     test('empty string resets value', () => {
-      const { getByLabelText, rerender } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="almost-there" value="00FF00" />
-        </StyleProvider>
+      const { getByLabelText, rerender } = renderWithTheme(
+        <ColorPicker id="color-picker" name="almost-there" value="00FF00" />
       )
-      rerender(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="almost-there" value="" />
-        </StyleProvider>
-      )
+      rerender(<ColorPicker id="color-picker" name="almost-there" value="" />)
 
       expect((getByLabelText('Color') as HTMLInputElement).value).toBe('#000000')
     })
   })
 
   test('can open portal', async () => {
-    const { getByLabelText, queryByRole } = render(
-      <StyleProvider>
-        <ColorPicker id="color-picker" name="pick-a-color" />
-      </StyleProvider>
+    const { getByLabelText, queryByRole } = renderWithTheme(
+      <ColorPicker id="color-picker" name="pick-a-color" />
     )
 
     const trigger = getByLabelText('Click to open the color picker')
@@ -98,10 +82,8 @@ describe('component: ColorPicker', () => {
   describe('calls onChange', () => {
     test('when apply button is clicked', () => {
       const onChange = jest.fn()
-      const { getByLabelText, getByText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
-        </StyleProvider>
+      const { getByLabelText, getByText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
       )
 
       const trigger = getByLabelText('Click to open the color picker')
@@ -134,10 +116,8 @@ describe('component: ColorPicker', () => {
 
     test('when outer hex input is changed', () => {
       const onChange = jest.fn()
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
       )
 
       const outerHexInput = getByLabelText('Color')
@@ -151,10 +131,8 @@ describe('component: ColorPicker', () => {
   describe('does not call onChange', () => {
     test('when cancel button is clicked', () => {
       const onChange = jest.fn()
-      const { getByLabelText, getByText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
-        </StyleProvider>
+      const { getByLabelText, getByText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="rainbow" onChange={onChange} />
       )
 
       const trigger = getByLabelText('Click to open the color picker')
@@ -190,10 +168,8 @@ describe('component: ColorPicker', () => {
   describe('calls onFocus', () => {
     test('when outer hex input is focused', () => {
       const onFocus = jest.fn()
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="rainbow" onFocus={onFocus} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="rainbow" onFocus={onFocus} />
       )
 
       const outerHexInput = getByLabelText('Color')
@@ -204,10 +180,8 @@ describe('component: ColorPicker', () => {
     test('when icon button is clicked', () => {
       const onFocus = jest.fn()
       const onBlur = jest.fn()
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="rainbow" onFocus={onFocus} onBlur={onBlur} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="rainbow" onFocus={onFocus} onBlur={onBlur} />
       )
 
       const trigger = getByLabelText('Click to open the color picker')
@@ -220,10 +194,8 @@ describe('component: ColorPicker', () => {
   describe('calls onBlur', () => {
     test('when the outer hex input is blurred', async () => {
       const onBlur = jest.fn()
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="rainbow" onBlur={onBlur} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="rainbow" onBlur={onBlur} />
       )
 
       const outerHexInput = getByLabelText('Color')
@@ -235,11 +207,11 @@ describe('component: ColorPicker', () => {
 
     test('when another element is focused', async () => {
       const onBlur = jest.fn()
-      const { getByLabelText, getByRole } = render(
-        <StyleProvider>
+      const { getByLabelText, getByRole } = renderWithTheme(
+        <>
           <ColorPicker id="color-picker" name="rainbow" onBlur={onBlur} />
           <input type="text" aria-label="sup" />
-        </StyleProvider>
+        </>
       )
 
       const trigger = getByLabelText('Click to open the color picker')
@@ -261,10 +233,8 @@ describe('component: ColorPicker', () => {
       const onChange = (e: any) => {
         value = e.target.value
       }
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="does-anyone-read-this" onChange={onChange} />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="does-anyone-read-this" onChange={onChange} />
       )
 
       const outerHexInput = getByLabelText('Color') as HTMLInputElement
@@ -283,10 +253,8 @@ describe('component: ColorPicker', () => {
     })
 
     test('using the inner hex input', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="cool-color" />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="cool-color" />
       )
 
       const trigger = getByLabelText('Click to open the color picker')
@@ -304,10 +272,8 @@ describe('component: ColorPicker', () => {
     })
 
     test('using the rgb inputs', () => {
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <ColorPicker id="color-picker" name="coooooolor" />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <ColorPicker id="color-picker" name="coooooolor" />
       )
 
       const trigger = getByLabelText('Click to open the color picker')

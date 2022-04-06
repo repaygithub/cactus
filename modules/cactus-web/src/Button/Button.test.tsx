@@ -1,65 +1,50 @@
 import { ActionsDelete } from '@repay/cactus-icons'
-import { generateTheme } from '@repay/cactus-theme'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Button from './Button'
 
-describe('component: Button', (): void => {
-  test('should support margin space props', (): void => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Button mt={5}>I have margins!</Button>
-      </StyleProvider>
-    )
+describe('component: Button', () => {
+  test('should support margin space props', () => {
+    const { getByText } = renderWithTheme(<Button mt={5}>I have margins!</Button>)
     const button = getByText('I have margins!').parentElement
     const styled = window.getComputedStyle(button as HTMLElement)
 
     expect(styled.marginTop).toBe('24px')
   })
 
-  test('should support svgs as children', (): void => {
-    render(
-      <StyleProvider>
-        <Button>
-          <ActionsDelete /> Delete
-        </Button>
-      </StyleProvider>
+  test('should support svgs as children', () => {
+    renderWithTheme(
+      <Button>
+        <ActionsDelete /> Delete
+      </Button>
     )
   })
 
-  test('should render Spinner when loading is true', (): void => {
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <Button loading>Submit</Button>
-      </StyleProvider>
-    )
+  test('should render Spinner when loading is true', () => {
+    const { getByLabelText } = renderWithTheme(<Button loading>Submit</Button>)
     expect(getByLabelText('loading')).toBeInTheDocument()
   })
 
-  test('should trigger onClick', (): void => {
+  test('should trigger onClick', () => {
     const onClick = jest.fn()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Button onClick={onClick} variant="action" data-testid="clicked">
-          Click me!
-        </Button>
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <Button onClick={onClick} variant="action" data-testid="clicked">
+        Click me!
+      </Button>
     )
 
     fireEvent.click(getByTestId('clicked'))
     expect(onClick).toHaveBeenCalled()
   })
 
-  test('should not trigger disabled onClick', (): void => {
+  test('should not trigger disabled onClick', () => {
     const onClick = jest.fn()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Button onClick={onClick} variant="action" disabled data-testid="not-clicked">
-          Click me!
-        </Button>
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <Button onClick={onClick} variant="action" disabled data-testid="not-clicked">
+        Click me!
+      </Button>
     )
 
     fireEvent.click(getByTestId('not-clicked'))
@@ -67,52 +52,32 @@ describe('component: Button', (): void => {
   })
 })
 
-describe('With theme changes ', (): void => {
-  test('should have 2px border', (): void => {
-    const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <Button>Click me!</Button>
-      </StyleProvider>
-    )
+describe('With theme changes ', () => {
+  test('should have 2px border', () => {
+    const { getByText } = renderWithTheme(<Button>Click me!</Button>, { border: 'thick' })
     const button = getByText('Click me!').parentElement
     const styled = window.getComputedStyle(button as HTMLElement)
     expect(styled.borderWidth).toBe('2px')
   })
 
-  test('Should have intermediate border radius', (): void => {
-    const theme = generateTheme({ primaryHue: 200, shape: 'intermediate' })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <Button>Click me!</Button>
-      </StyleProvider>
-    )
+  test('Should have intermediate border radius', () => {
+    const { getByText } = renderWithTheme(<Button>Click me!</Button>, { shape: 'intermediate' })
 
     const button = getByText('Click me!').parentElement
     const styled = window.getComputedStyle(button as HTMLElement)
     expect(styled.borderRadius).toBe('8px')
   })
 
-  test('Should have square border radius', (): void => {
-    const theme = generateTheme({ primaryHue: 200, shape: 'square' })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <Button>Click me!</Button>
-      </StyleProvider>
-    )
+  test('Should have square border radius', () => {
+    const { getByText } = renderWithTheme(<Button>Click me!</Button>, { shape: 'square' })
 
     const button = getByText('Click me!').parentElement
     const styled = window.getComputedStyle(button as HTMLElement)
     expect(styled.borderRadius).toBe('1px')
   })
 
-  test('Should not have box shadows applied', (): void => {
-    const theme = generateTheme({ primaryHue: 200, boxShadows: false })
-    const { getByText } = render(
-      <StyleProvider theme={theme}>
-        <Button>Click me!</Button>
-      </StyleProvider>
-    )
+  test('Should not have box shadows applied', () => {
+    const { getByText } = renderWithTheme(<Button>Click me!</Button>, { boxShadows: false })
     const button = getByText('Click me!').parentElement
     const styled = window.getComputedStyle(button as HTMLElement)
     expect(styled.boxShadow).toBe('')

@@ -1,28 +1,25 @@
-import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import CheckBoxGroup from './CheckBoxGroup'
 
-describe('component: CheckBoxGroup', (): void => {
-  test('should render a checkbox group', (): void => {
-    const { container, getByText } = render(
-      <StyleProvider>
-        <CheckBoxGroup
-          id="cbg"
-          name="checkboxes"
-          label="Checkboxes"
-          required
-          checked={{ cb1: true }}
-          tooltip="Check some boxes"
-          onChange={() => undefined}
-        >
-          <CheckBoxGroup.Item id="cb1" name="cb1" label="CB 1" />
-          <CheckBoxGroup.Item id="cb2" name="cb2" label="CB 2" />
-          <CheckBoxGroup.Item id="cb3" name="cb3" label="CB 3" disabled={true} />
-        </CheckBoxGroup>
-      </StyleProvider>
+describe('component: CheckBoxGroup', () => {
+  test('should render a checkbox group', () => {
+    const { container, getByText } = renderWithTheme(
+      <CheckBoxGroup
+        id="cbg"
+        name="checkboxes"
+        label="Checkboxes"
+        required
+        checked={{ cb1: true }}
+        tooltip="Check some boxes"
+        onChange={() => undefined}
+      >
+        <CheckBoxGroup.Item id="cb1" name="cb1" label="CB 1" />
+        <CheckBoxGroup.Item id="cb2" name="cb2" label="CB 2" />
+        <CheckBoxGroup.Item id="cb3" name="cb3" label="CB 3" disabled={true} />
+      </CheckBoxGroup>
     )
 
     const cbs = container.querySelectorAll('input')
@@ -37,22 +34,20 @@ describe('component: CheckBoxGroup', (): void => {
     expect(tooltip).toHaveAttribute('role', 'tooltip')
   })
 
-  test('should render a disabled checkbox group', (): void => {
-    const { container, getByText } = render(
-      <StyleProvider>
-        <CheckBoxGroup
-          id="cbg"
-          name="checkboxes"
-          label="Checkboxes"
-          disabled
-          checked={{ cb1: true }}
-          error="No box checking for you"
-        >
-          <CheckBoxGroup.Item id="cb1" name="cb1" label="CB 1" />
-          <CheckBoxGroup.Item id="cb2" name="cb2" label="CB 2" />
-          <CheckBoxGroup.Item id="cb3" name="cb3" label="CB 3" disabled={true} />
-        </CheckBoxGroup>
-      </StyleProvider>
+  test('should render a disabled checkbox group', () => {
+    const { container, getByText } = renderWithTheme(
+      <CheckBoxGroup
+        id="cbg"
+        name="checkboxes"
+        label="Checkboxes"
+        disabled
+        checked={{ cb1: true }}
+        error="No box checking for you"
+      >
+        <CheckBoxGroup.Item id="cb1" name="cb1" label="CB 1" />
+        <CheckBoxGroup.Item id="cb2" name="cb2" label="CB 2" />
+        <CheckBoxGroup.Item id="cb3" name="cb3" label="CB 3" disabled={true} />
+      </CheckBoxGroup>
     )
 
     const cbs = container.querySelectorAll('input')
@@ -78,21 +73,19 @@ describe('component: CheckBoxGroup', (): void => {
     const onFocusOne = jest.fn((e) => focusOne.push(e.target.name))
     const blurNames: string[] = []
     const onBlur = jest.fn((e) => blurNames.push(e.target.name))
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <CheckBoxGroup
-          id="cbg"
-          name="checkboxes"
-          label="Checkboxes"
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        >
-          <CheckBoxGroup.Item name="cb1" label="CB 1" onFocus={onFocusOne} />
-          <CheckBoxGroup.Item name="cb2" label="CB 2" onChange={onChangeOne} />
-          <CheckBoxGroup.Item name="cb3" label="CB 3" disabled />
-        </CheckBoxGroup>
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <CheckBoxGroup
+        id="cbg"
+        name="checkboxes"
+        label="Checkboxes"
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      >
+        <CheckBoxGroup.Item name="cb1" label="CB 1" onFocus={onFocusOne} />
+        <CheckBoxGroup.Item name="cb2" label="CB 2" onChange={onChangeOne} />
+        <CheckBoxGroup.Item name="cb3" label="CB 3" disabled />
+      </CheckBoxGroup>
     )
 
     userEvent.tab()

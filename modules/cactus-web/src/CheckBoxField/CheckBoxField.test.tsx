@@ -1,17 +1,15 @@
-import { fireEvent, queryByAttribute, render } from '@testing-library/react'
+import { fireEvent, queryByAttribute } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import pick from 'lodash/pick'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import CheckBoxField from './CheckBoxField'
 
-describe('component: CheckBoxField', (): void => {
-  test('should generate unique id when one is not provided', (): void => {
-    const { container, getByText } = render(
-      <StyleProvider>
-        <CheckBoxField label="Scoreboard" name="scoreboard" />
-      </StyleProvider>
+describe('component: CheckBoxField', () => {
+  test('should generate unique id when one is not provided', () => {
+    const { container, getByText } = renderWithTheme(
+      <CheckBoxField label="Scoreboard" name="scoreboard" />
     )
 
     const getById = queryByAttribute.bind(null, 'id')
@@ -21,13 +19,13 @@ describe('component: CheckBoxField', (): void => {
     expect(getById(container, labelElement.htmlFor)).not.toBeNull()
   })
 
-  test('should support margin space props', (): void => {
-    const { getByTestId } = render(
-      <StyleProvider>
+  test('should support margin space props', () => {
+    const { getByTestId } = renderWithTheme(
+      <>
         <CheckBoxField label="F" name="1st" data-testid="first" />
         <CheckBoxField name="def" label="D" data-testid="default" mb={2} />
         <CheckBoxField name="over" label="O" data-testid="override" mt={4} />
-      </StyleProvider>
+      </>
     )
 
     const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
@@ -44,19 +42,17 @@ describe('component: CheckBoxField', (): void => {
   })
 
   test('should support flex item props', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBoxField
-          label="space props"
-          name="space_props"
-          id="not-random"
-          flex={1}
-          flexGrow={1}
-          flexShrink={0}
-          flexBasis={0}
-          data-testid="flex-checkbox"
-        />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBoxField
+        label="space props"
+        name="space_props"
+        id="not-random"
+        flex={1}
+        flexGrow={1}
+        flexShrink={0}
+        flexBasis={0}
+        data-testid="flex-checkbox"
+      />
     )
 
     const checkField = getByTestId('flex-checkbox').parentElement?.parentElement as HTMLElement
@@ -68,22 +64,18 @@ describe('component: CheckBoxField', (): void => {
 
   test('should support ref prop', () => {
     const ref = React.createRef<HTMLInputElement>()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <CheckBoxField label="Oui" defaultChecked ref={ref} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <CheckBoxField label="Oui" defaultChecked ref={ref} />
     )
     expect(getByLabelText('Oui')).toBe(ref.current)
     expect(ref.current).toBeChecked()
   })
 
-  test('should trigger onChange event', (): void => {
+  test('should trigger onChange event', () => {
     const box: any = {}
     const onChange = jest.fn((e) => Object.assign(box, pick(e.target, ['name', 'checked'])))
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <CheckBoxField label="Katastro" name="katastro" defaultChecked onChange={onChange} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <CheckBoxField label="Katastro" name="katastro" defaultChecked onChange={onChange} />
     )
 
     fireEvent.click(getByLabelText('Katastro'))
@@ -91,49 +83,41 @@ describe('component: CheckBoxField', (): void => {
     expect(box).toEqual({ name: 'katastro', checked: false })
   })
 
-  test('should trigger onFocus event', (): void => {
+  test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <CheckBoxField label="Strange Nights" name="strange_nights" onFocus={onFocus} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <CheckBoxField label="Strange Nights" name="strange_nights" onFocus={onFocus} />
     )
 
     fireEvent.focus(getByLabelText('Strange Nights'))
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onBlur event', (): void => {
+  test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
-    const { getByLabelText } = render(
-      <StyleProvider>
-        <CheckBoxField label="Washed." name="washed" onBlur={onBlur} />
-      </StyleProvider>
+    const { getByLabelText } = renderWithTheme(
+      <CheckBoxField label="Washed." name="washed" onBlur={onBlur} />
     )
 
     fireEvent.blur(getByLabelText('Washed.'))
     expect(onBlur).toHaveBeenCalled()
   })
 
-  describe('when disabled', (): void => {
-    test('should not trigger onChange event', (): void => {
+  describe('when disabled', () => {
+    test('should not trigger onChange event', () => {
       const onChange = jest.fn()
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <CheckBoxField label="Flow" name="flow" onChange={onChange} disabled />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <CheckBoxField label="Flow" name="flow" onChange={onChange} disabled />
       )
 
       userEvent.click(getByLabelText('Flow'))
       expect(onChange).not.toHaveBeenCalled()
     })
 
-    test('should not trigger onFocus event', (): void => {
+    test('should not trigger onFocus event', () => {
       const onFocus = jest.fn()
-      const { getByLabelText } = render(
-        <StyleProvider>
-          <CheckBoxField label="Not For Sale" name="not_for_sale" onFocus={onFocus} disabled />
-        </StyleProvider>
+      const { getByLabelText } = renderWithTheme(
+        <CheckBoxField label="Not For Sale" name="not_for_sale" onFocus={onFocus} disabled />
       )
 
       userEvent.click(getByLabelText('Not For Sale'))

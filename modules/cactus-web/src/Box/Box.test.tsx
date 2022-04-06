@@ -1,38 +1,36 @@
 import { generateTheme } from '@repay/cactus-theme'
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { StyleProvider } from '../StyleProvider/StyleProvider'
 import Box from './Box'
 
-describe('component: Box', (): void => {
-  test('should accept built-in props', (): void => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Box
-          position="relative"
-          display="block"
-          top="-1"
-          right="auto"
-          bottom="auto"
-          left="-1"
-          margin={2}
-          padding={2}
-          width="120px"
-          height="120px"
-          backgroundColor="darkestContrast"
-          color="white"
-          borderColor="callToAction"
-          borderWidth="2px"
-          borderRadius="20px"
-          borderStyle="solid"
-          zIndex={100}
-          textStyle="h1"
-          overflow="scroll"
-        >
-          Content
-        </Box>
-      </StyleProvider>
+describe('component: Box', () => {
+  test('should accept built-in props', () => {
+    const { getByText } = renderWithTheme(
+      <Box
+        position="relative"
+        display="block"
+        top="-1"
+        right="auto"
+        bottom="auto"
+        left="-1"
+        margin={2}
+        padding={2}
+        width="120px"
+        height="120px"
+        backgroundColor="darkestContrast"
+        color="white"
+        borderColor="callToAction"
+        borderWidth="2px"
+        borderRadius="20px"
+        borderStyle="solid"
+        zIndex={100}
+        textStyle="h1"
+        overflow="scroll"
+      >
+        Content
+      </Box>
     )
     const box = getByText('Content')
     const style = window.getComputedStyle(box)
@@ -43,11 +41,9 @@ describe('component: Box', (): void => {
   })
 
   test('borderRadius prop should accept themed arg & custom shape definitions', () => {
-    const { getByText, rerender } = render(
-      <StyleProvider theme={generateTheme({ primaryHue: 200, shape: 'intermediate' })}>
-        <Box borderRadius="themed">Content</Box>
-      </StyleProvider>
-    )
+    const { getByText, rerender } = renderWithTheme(<Box borderRadius="themed">Content</Box>, {
+      shape: 'intermediate',
+    })
 
     let myBox = getByText('Content')
     let boxStyles = window.getComputedStyle(myBox)
@@ -75,17 +71,16 @@ describe('component: Box', (): void => {
   })
 
   test('individual border radius props should accept custom shape definitions', () => {
-    const { getByText, rerender } = render(
-      <StyleProvider theme={generateTheme({ primaryHue: 200, shape: 'intermediate' })}>
-        <Box
-          borderTopLeftRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
-          borderTopRightRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
-          borderBottomRightRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
-          borderBottomLeftRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
-        >
-          Content
-        </Box>
-      </StyleProvider>
+    const { getByText, rerender } = renderWithTheme(
+      <Box
+        borderTopLeftRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
+        borderTopRightRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
+        borderBottomRightRadius={{ square: '1px', intermediate: '10px', round: '20px' }}
+        borderBottomLeftRadius={{ square: '20px', intermediate: '10px', round: '1px' }}
+      >
+        Content
+      </Box>,
+      { shape: 'intermediate' }
     )
 
     let myBox = getByText('Content')
@@ -117,12 +112,10 @@ describe('component: Box', (): void => {
   })
 
   test('should accept flex item props', () => {
-    const { getByText } = render(
-      <StyleProvider>
-        <Box flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
-          Flex Item Box
-        </Box>
-      </StyleProvider>
+    const { getByText } = renderWithTheme(
+      <Box flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+        Flex Item Box
+      </Box>
     )
 
     const box = getByText('Flex Item Box')

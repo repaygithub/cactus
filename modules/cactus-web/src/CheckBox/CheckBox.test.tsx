@@ -1,66 +1,55 @@
-import { generateTheme } from '@repay/cactus-theme'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import CheckBox from './CheckBox'
 
-describe('component: CheckBox', (): void => {
-  test('should trigger onChange event', (): void => {
+describe('component: CheckBox', () => {
+  test('should trigger onChange event', () => {
     const onChange = jest.fn()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBox id="checked" onChange={onChange} data-testid="will-check" />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBox id="checked" onChange={onChange} data-testid="will-check" />
     )
 
     fireEvent.click(getByTestId('will-check'))
     expect(onChange).toHaveBeenCalled()
   })
 
-  test('should trigger onFocus event', (): void => {
+  test('should trigger onFocus event', () => {
     const onFocus = jest.fn()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBox id="checked" onFocus={onFocus} data-testid="will-check" />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBox id="checked" onFocus={onFocus} data-testid="will-check" />
     )
 
     fireEvent.focus(getByTestId('will-check'))
     expect(onFocus).toHaveBeenCalled()
   })
 
-  test('should trigger onBlur event', (): void => {
+  test('should trigger onBlur event', () => {
     const onBlur = jest.fn()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBox id="checked" onBlur={onBlur} data-testid="will-check" />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBox id="checked" onBlur={onBlur} data-testid="will-check" />
     )
 
     fireEvent.blur(getByTestId('will-check'))
     expect(onBlur).toHaveBeenCalled()
   })
 
-  test('should not trigger onChange event', (): void => {
+  test('should not trigger onChange event', () => {
     const onChange = jest.fn()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBox id="checked" onChange={onChange} data-testid="will-not-check" disabled />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBox id="checked" onChange={onChange} data-testid="will-not-check" disabled />
     )
 
     userEvent.click(getByTestId('will-not-check'))
     expect(onChange).not.toHaveBeenCalled()
   })
 
-  test('should not trigger onFocus event', (): void => {
+  test('should not trigger onFocus event', () => {
     const onFocus = jest.fn()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBox id="checked" onFocus={onFocus} data-testid="will-not-check" disabled />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBox id="checked" onFocus={onFocus} data-testid="will-not-check" disabled />
     )
 
     userEvent.click(getByTestId('will-not-check'))
@@ -69,23 +58,18 @@ describe('component: CheckBox', (): void => {
 
   test('should support ref prop', () => {
     const ref = React.createRef<HTMLInputElement>()
-    const { getByTestId } = render(
-      <StyleProvider>
-        <CheckBox data-testid="inreffable" defaultChecked ref={ref} />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <CheckBox data-testid="inreffable" defaultChecked ref={ref} />
     )
     expect(getByTestId('inreffable')).toBe(ref.current)
     expect(ref.current).toBeChecked()
   })
 
-  describe('with theme customization', (): void => {
-    test('should have 2px border', (): void => {
-      const theme = generateTheme({ primaryHue: 200, border: 'thick' })
-      const { getByTestId } = render(
-        <StyleProvider theme={theme}>
-          <CheckBox id="theme" data-testid="checkbox" />
-        </StyleProvider>
-      )
+  describe('with theme customization', () => {
+    test('should have 2px border', () => {
+      const { getByTestId } = renderWithTheme(<CheckBox id="theme" data-testid="checkbox" />, {
+        border: 'thick',
+      })
       const checkBox = getByTestId('checkbox')
       const checkboxStyles = window.getComputedStyle(checkBox)
       expect(checkboxStyles.borderWidth).toBe('0px')

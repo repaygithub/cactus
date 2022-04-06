@@ -1,41 +1,31 @@
-import { act, fireEvent, render } from '@testing-library/react'
+import { act, fireEvent } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Tooltip from './Tooltip'
 
-describe('component: Tooltip', (): void => {
+describe('component: Tooltip', () => {
   test('should always render label in invisible div', () => {
-    const { getByTestId } = render(
-      <StyleProvider>
-        <Tooltip label="I'm invisible, can you see me?" id="invisible" data-testid="elbisivni" />
-      </StyleProvider>
+    const { getByTestId } = renderWithTheme(
+      <Tooltip label="I'm invisible, can you see me?" id="invisible" data-testid="elbisivni" />
     )
     const label = getByTestId('elbisivni')
     expect(label).toHaveAttribute('id', 'invisible')
     expect(label).toHaveTextContent("I'm invisible, can you see me?")
   })
 
-  test('should not render portal without mouseenter event', (): void => {
-    render(
-      <StyleProvider>
-        <Tooltip label="This should be displayed" />
-      </StyleProvider>
-    )
+  test('should not render portal without mouseenter event', () => {
+    renderWithTheme(<Tooltip label="This should be displayed" />)
 
     const portal = document.querySelector('reach-portal')
 
     expect(portal).toBeNull()
   })
 
-  test('should render tooltip on hover', async (): Promise<void> => {
+  test('should render tooltip on hover', async () => {
     jest.useFakeTimers()
-    render(
-      <StyleProvider>
-        <Tooltip label="This should be displayed" />
-      </StyleProvider>
-    )
-    act((): void => {
+    renderWithTheme(<Tooltip label="This should be displayed" />)
+    act(() => {
       fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
@@ -45,19 +35,15 @@ describe('component: Tooltip', (): void => {
     expect(portal).not.toBeNull()
   })
 
-  test('should continue to render tooltip when content is hovered', async (): Promise<void> => {
+  test('should continue to render tooltip when content is hovered', async () => {
     jest.useFakeTimers()
-    render(
-      <StyleProvider>
-        <Tooltip label="This should be displayed" />
-      </StyleProvider>
-    )
-    act((): void => {
+    renderWithTheme(<Tooltip label="This should be displayed" />)
+    act(() => {
       fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runOnlyPendingTimers()
     })
-    act((): void => {
+    act(() => {
       fireEvent.mouseEnter(document.querySelector('div[role="tooltip"]') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runOnlyPendingTimers()
@@ -66,17 +52,17 @@ describe('component: Tooltip', (): void => {
     expect(tooltip).not.toBeNull()
   })
 
-  test('should stay open when tooltip icon is clicked', async (): Promise<void> => {
+  test('should stay open when tooltip icon is clicked', async () => {
     jest.useFakeTimers()
-    render(
-      <StyleProvider>
+    renderWithTheme(
+      <>
         <Tooltip label="Show me the money" />
         <button>Something Else to Focus</button>
-      </StyleProvider>
+      </>
     )
     const tooltipTrigger = document.querySelector('span[data-reach-tooltip-trigger]') as Element
     const btn = document.querySelector('button') as Element
-    act((): void => {
+    act(() => {
       fireEvent.click(tooltipTrigger)
       fireEvent.mouseEnter(btn)
       setTimeout(jest.fn(), 2000)

@@ -1,39 +1,34 @@
-import { render } from '@testing-library/react'
 import * as React from 'react'
 
-import { StyleProvider } from '../StyleProvider/StyleProvider'
+import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Dimmer from './Dimmer'
 
 describe('Dimmer render content as children', () => {
   test('Page Dimmer: Should render content when active=true', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Dimmer active>
-          <h2>Children is here!</h2>
-        </Dimmer>
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <Dimmer active>
+        <h2>Children is here!</h2>
+      </Dimmer>
     )
     expect(container).toHaveTextContent('Children is here!')
   })
 
   test('Page Dimmer: Should NOT render content when active=false', () => {
-    const { container } = render(
-      <StyleProvider>
-        <Dimmer active={false}>
-          <h2>Children is here!</h2>
-        </Dimmer>
-      </StyleProvider>
+    const { container } = renderWithTheme(
+      <Dimmer active={false}>
+        <h2>Children is here!</h2>
+      </Dimmer>
     )
     expect(container).not.toHaveTextContent('Children is here!')
   })
 
   test('Dimmer should blur elements that have focus when it becomes active', () => {
     const buttonBlur = jest.fn()
-    const { getByText, rerender } = render(
-      <StyleProvider>
+    const { getByText, rerender } = renderWithTheme(
+      <>
         <button onBlur={buttonBlur}>I should be blurred</button>
         <Dimmer active={false} />
-      </StyleProvider>
+      </>
     )
 
     const button = getByText('I should be blurred')
@@ -41,10 +36,10 @@ describe('Dimmer render content as children', () => {
     expect(document.activeElement).toBe(button)
 
     rerender(
-      <StyleProvider>
+      <>
         <button onBlur={buttonBlur}>I should be blurred</button>
         <Dimmer active />
-      </StyleProvider>
+      </>
     )
 
     expect(document.activeElement).not.toBe(button)

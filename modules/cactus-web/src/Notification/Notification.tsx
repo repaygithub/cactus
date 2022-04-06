@@ -8,10 +8,13 @@ import { ScreenSize, SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSi
 type Vertical = 'top' | 'bottom'
 type Horizontal = 'left' | 'center' | 'right'
 
-interface NotificationProps {
-  open: boolean
+export interface NotificationPositionProps {
   vertical?: Vertical
   horizontal?: Horizontal
+}
+
+interface NotificationProps extends NotificationPositionProps {
+  open: boolean
 }
 
 interface NotificationWrapperProps {
