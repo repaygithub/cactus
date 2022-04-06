@@ -65,7 +65,8 @@ function addNode(group: MenuGroup, node: MenuItem): void {
     const parent = group.items.find((g): boolean => g.url.endsWith(route))
     if (parent !== undefined) {
       addNode(parent, node)
-    } else {
+    } else if (!node.url.match(/cactus-web\/v[0-9]+/g)) {
+      // TODO: Remove this ^ condition when the older docs actually should have a group
       console.error(`Could not find group for: `, node)
       console.log(`${route} not found among:`)
       group.items.forEach((g): void => console.log('\t' + g.url))
