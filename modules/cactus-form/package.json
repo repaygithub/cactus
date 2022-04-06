@@ -53,7 +53,7 @@
     "@babel/core": "^7.17.5",
     "@repay/babel-preset": "1.1.4",
     "@repay/cactus-web": "^9.3.0",
-    "@repay/scripts": "^3.0.3",
+    "@repay/scripts": "^3.0.4",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@types/jest": "^27.4.1",
