@@ -72,7 +72,9 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "resComment": "higher versions of core-js cause the e2e tests in examples to hang forever",
   "resolutions": {
+    "core-js": "~3.15.0",
     "eslint-plugin-react-hooks": "^4.1.2",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
