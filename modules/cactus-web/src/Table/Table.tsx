@@ -250,7 +250,6 @@ Table.propTypes = {
   fullWidth: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
-  as: PropTypes.elementType as PropTypes.Validator<React.ElementType>,
 }
 
 Table.defaultProps = {

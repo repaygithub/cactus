@@ -147,10 +147,9 @@ export const Alert = styled(AlertBase).withConfig(
   }
 `
 
-// @ts-ignore
 Alert.propTypes = {
-  status: PropTypes.oneOf(['error', 'warning', 'info', 'success']),
-  type: PropTypes.oneOf(['general', 'push']),
+  status: PropTypes.oneOf<Status>(['error', 'warning', 'info', 'success']),
+  type: PropTypes.oneOf<Type>(['general', 'push']),
   onClose: PropTypes.func,
   className: PropTypes.string,
   children: PropTypes.node,

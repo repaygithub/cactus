@@ -6,6 +6,7 @@ import { compose, height, HeightProps, margin, MarginProps, width, WidthProps } 
 
 import { omitMargins } from '../helpers/omit'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
+import { styledProp } from '../helpers/styled'
 
 type AreaElementProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'height' | 'width'>
 export interface TextAreaProps extends AreaElementProps, MarginProps, HeightProps, WidthProps {
@@ -82,8 +83,8 @@ export const TextArea = styled(TextAreaBase)`
 TextArea.propTypes = {
   disabled: PropTypes.bool,
   status: StatusPropType,
-  width: PropTypes.string,
-  height: PropTypes.string,
+  width: styledProp,
+  height: styledProp,
   resize: PropTypes.bool,
 }
 

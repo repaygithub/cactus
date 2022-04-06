@@ -241,8 +241,6 @@ ButtonFR.propTypes = {
   inverse: PropTypes.bool,
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
-  // @ts-ignore
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
 }
 
 ButtonFR.defaultProps = {
