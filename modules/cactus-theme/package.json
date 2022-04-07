@@ -17,7 +17,7 @@
     "test:types": "tsc --project ./tsconfig.json --noEmit",
     "dev": "repay-scripts dev --lib src/index.ts",
     "prebuild": "yarn build:types",
-    "build": "repay-scripts build --lib src/index.ts",
+    "build": "yarn prebuild && repay-scripts build --lib src/index.ts",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly"
   },
   "devDependencies": {

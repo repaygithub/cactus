@@ -27,7 +27,7 @@ jobs:
         run: node --version
 
       - name: Install Packages
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Lint Packages
         run: yarn lint
