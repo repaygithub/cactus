@@ -188,6 +188,7 @@ const StyledButton = styled.button.withConfig({
   overflow: visible;
   box-sizing: border-box;
   text-decoration: none;
+  display: inline-block;
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
   ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
   border-radius: ${radius(20)};
