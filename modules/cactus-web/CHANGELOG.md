@@ -1,3 +1,25 @@
+# v9.4.0 (Mon Apr 11 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-883: add NotificationProvider and accompanying hook [#734](https://github.com/repaygithub/cactus/pull/734) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- CACTUS-884 :: Fix `<Button as={Link} />` Height [#736](https://github.com/repaygithub/cactus/pull/736) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🔩 Dependency Updates
+
+- CACTUS-846 :: Dependency updates [#730](https://github.com/repaygithub/cactus/pull/730) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### Authors: 3
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@Dhalton](https://github.com/Dhalton)
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v9.3.0 (Thu Mar 10 2022)
 
 #### 🚀 Enhancement

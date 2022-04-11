@@ -1,3 +1,15 @@
+# v0.5.5 (Mon Apr 11 2022)
+
+#### 🔩 Dependency Updates
+
+- CACTUS-846 :: Dependency updates [#730](https://github.com/repaygithub/cactus/pull/730) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### Authors: 1
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+
+---
+
 # v0.5.4 (Wed Jan 26 2022)
 
 #### 🔩 Dependency Updates
