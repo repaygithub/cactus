@@ -1,3 +1,4 @@
 {
-  "tsConfigPath": "tsconfig.json"
+  "tsConfigPath": "tsconfig.json",
+  "src": "tests/**/*.test.ts"
 }
