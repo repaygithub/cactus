@@ -158,7 +158,16 @@ function ButtonFunc<E, C extends GenericComponent = 'button'>(
   props: AsProps<C> & ButtonProps,
   ref: React.Ref<E>
 ): React.ReactElement {
-  const { loading, children, disabled, loadingText, inverse, variant, ...rest } = props
+  const {
+    loading,
+    children,
+    disabled,
+    loadingText,
+    inverse,
+    variant,
+    'aria-live': ariaLive,
+    ...rest
+  } = props
   let spanProps = null
   if (loading === true) {
     spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
@@ -170,7 +179,7 @@ function ButtonFunc<E, C extends GenericComponent = 'button'>(
       $inverse={inverse}
       $variant={variant}
       disabled={loading || disabled}
-      aria-live="assertive"
+      aria-live={ariaLive || 'assertive'}
     >
       <span {...spanProps}>{children}</span>
       {loading && <Spinner iconSize="small" aria-label={loadingText} />}
