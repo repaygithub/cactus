@@ -29,7 +29,7 @@
     "start": "start-storybook -p 9001 -c .storybook",
     "dev": "echo \"This now builds in watch mode, use yarn web start for storybook\\n\"; repay-scripts dev --lib --tree-shaking src/index.ts",
     "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
-    "build": "repay-scripts build --lib --tree-shaking src/index.ts",
+    "build": "repay-scripts build --lib --tree-shaking src/index.ts && yarn postbuild",
     "postbuild": "yarn build:types",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly"
   },

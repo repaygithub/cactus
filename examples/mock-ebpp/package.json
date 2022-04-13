@@ -12,7 +12,7 @@
     "dev": "repay-scripts dev src/index.tsx -p 3437",
     "build": "repay-scripts build src/index.tsx",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
-    "test": "yarn build && testing-tools run-ete-tests --src tests/**/*.test.ts",
+    "test": "yarn build && testing-tools run-ete-tests",
     "test:ci": "yarn test:types && yarn test -b 'browserstack:IE@11:Windows 10' -b 'browserstack:Chrome:Windows 10' -b 'browserstack:firefox:OS X' -b 'browserstack:safari:OS X'",
     "test:local": "yarn test:types && yarn test -b 'browserstack:IE@11:Windows 10' -b 'browserstack:Chrome:Windows 10'",
     "cleanup": "rm -rf dist",

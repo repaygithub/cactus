@@ -51,7 +51,7 @@ COPY modules/cactus-form/package.json /code/modules/cactus-form/
 COPY modules/cactus-icons/package.json /code/modules/cactus-icons/
 COPY modules/cactus-theme/package.json /code/modules/cactus-theme/
 COPY modules/cactus-web/package.json /code/modules/cactus-web/
-RUN yarn --frozen-lockfile
+RUN yarn --immutable
 COPY ["docs/Icons/Available Icons.md", "/code/docs/Icons/"]
 COPY modules/ /code/modules/
 COPY scripts/ /code/scripts/
