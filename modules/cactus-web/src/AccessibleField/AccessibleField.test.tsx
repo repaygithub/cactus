@@ -32,14 +32,14 @@ describe('component: AccessibleField', () => {
   })
 
   test('provides an accessible tooltip', () => {
-    const { getByLabelText, getByText } = renderWithTheme(
+    const { getByLabelText, getAllByText } = renderWithTheme(
       <AccessibleField label="Accessible Label" name="text_field" tooltip="woot tooltips!">
         <input name="text_field" data-is="accessible" />
       </AccessibleField>
     )
 
     expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toBe(
-      getByText('woot tooltips!').closest('[id]')?.id
+      getAllByText('woot tooltips!')[1].closest('[id]')?.id
     )
   })
 
@@ -66,7 +66,7 @@ describe('component: AccessibleField', () => {
   })
 
   test('alternate prop types', () => {
-    const { container, getByText } = renderWithTheme(
+    const { container, getByText, getAllByText } = renderWithTheme(
       <AccessibleField
         id="aftest"
         label={<em>Accessible Label</em>}
@@ -87,7 +87,7 @@ describe('component: AccessibleField', () => {
     const input = container.querySelector(`#${label?.getAttribute('for')}`)
     expect(input).toHaveAttribute('name', 'text_field')
 
-    const tooltipText = getByText('JSX Tooltip')
+    const tooltipText = getAllByText('JSX Tooltip')[1]
     expect(tooltipText.tagName).toBe('STRONG')
     expect(tooltipText.parentElement).toHaveAttribute('id', 'aftest-tip')
     expect(tooltipText.parentElement).toHaveAttribute('role', 'tooltip')

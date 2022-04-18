@@ -6,7 +6,7 @@ import RadioGroup from './RadioGroup'
 
 describe('component: RadioGroup', () => {
   test('should render a radio group', () => {
-    const { container, getByText } = renderWithTheme(
+    const { container, getAllByText } = renderWithTheme(
       <RadioGroup
         id="rg"
         name="places"
@@ -35,7 +35,7 @@ describe('component: RadioGroup', () => {
       expect(radio.checked).toBe(i === 1)
     }
 
-    const tooltip = getByText('Select your preferred realm')
+    const tooltip = getAllByText('Select your preferred realm')[1]
     expect(tooltip).toHaveAttribute('id', 'rg-tip')
     expect(tooltip).toHaveAttribute('role', 'tooltip')
   })
