@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
-import { Alert, Button, ColorPicker, DateInputField, Modal, SelectField, Text } from '../'
+import { Alert, Button, ColorPicker, DateInputField, Modal, SelectField, Text, Tooltip } from '../'
 import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 import { modalType } from './Modal'
 
@@ -64,7 +64,13 @@ export const WithPopups: Story<typeof Modal, CloseArg> = ({ onClose, ...args }) 
     <Modal {...args} isOpen={open} onClose={onClose.wrap(() => setOpen(false))}>
       <ColorPicker name="color" id="color" />
       <DateInputField name="date" label="Pick a Date" defaultValue="2021-08-17" />
-      <SelectField name="select" label="Pick an Option" options={['a', 'b', 'c']} />
+      <SelectField
+        name="select"
+        label="Pick an Option"
+        options={['a', 'b', 'c']}
+        tooltip="Select only one!"
+        autoTooltip={false}
+      />
     </Modal>
   ) : (
     <Button variant="action" onClick={(): void => setOpen(true)}>

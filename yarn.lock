@@ -5204,25 +5204,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reach/tooltip@npm:0.16.2":
-  version: 0.16.2
-  resolution: "@reach/tooltip@npm:0.16.2"
-  dependencies:
-    "@reach/auto-id": 0.16.0
-    "@reach/portal": 0.16.2
-    "@reach/rect": 0.16.0
-    "@reach/utils": 0.16.0
-    "@reach/visually-hidden": 0.16.0
-    prop-types: ^15.7.2
-    tiny-warning: ^1.0.3
-    tslib: ^2.3.0
-  peerDependencies:
-    react: ^16.8.0 || 17.x
-    react-dom: ^16.8.0 || 17.x
-  checksum: 2f58686ba7217aac817aad43bdb905fbfbad528df2ce1bf204ec46aeeb9dd87559be418b65fa8794bc27d11aea08ca1f43d8ded3fc2623592dd52ba2272868d7
-  languageName: node
-  linkType: hard
-
 "@reach/utils@npm:0.16.0, @reach/utils@npm:^0.16.0":
   version: 0.16.0
   resolution: "@reach/utils@npm:0.16.0"
@@ -5236,7 +5217,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reach/visually-hidden@npm:0.16.0, @reach/visually-hidden@npm:^0.16.0":
+"@reach/visually-hidden@npm:^0.16.0":
   version: 0.16.0
   resolution: "@reach/visually-hidden@npm:0.16.0"
   dependencies:
@@ -5419,7 +5400,6 @@ __metadata:
     "@reach/menu-button": ^0.16.2
     "@reach/popover": ^0.16.2
     "@reach/rect": ^0.16.0
-    "@reach/tooltip": 0.16.2
     "@reach/utils": ^0.16.0
     "@reach/visually-hidden": ^0.16.0
     "@repay/babel-preset": ^1.1.4
