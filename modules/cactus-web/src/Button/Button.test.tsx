@@ -50,6 +50,17 @@ describe('component: Button', () => {
     fireEvent.click(getByTestId('not-clicked'))
     expect(onClick).not.toHaveBeenCalled()
   })
+  test('aria-live prop default and custom', () => {
+    const { getByText, rerender } = renderWithTheme(<Button>Click me!</Button>)
+    const button = getByText('Click me!').parentElement
+
+    //aria-live should be assertive by default
+    expect(button?.getAttribute('aria-live')).toBe('assertive')
+
+    rerender(<Button aria-live="polite">Click me!</Button>)
+
+    expect(button?.getAttribute('aria-live')).toBe('polite')
+  })
 })
 
 describe('With theme changes ', () => {
