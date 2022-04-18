@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
-import { Alert, Button, ColorPicker, DateInputField, Modal, SelectField, Text, Tooltip } from '../'
+import { Alert, Button, ColorPicker, DateInputField, Modal, SelectField, Text } from '../'
 import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 import { modalType } from './Modal'
 

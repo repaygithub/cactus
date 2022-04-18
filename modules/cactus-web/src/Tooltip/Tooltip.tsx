@@ -93,7 +93,7 @@ const cactusPosition: (theme: CactusTheme) => PositionCallback = (theme) => {
   }
 }
 
-// TODO: Remove this wrapper when we're ready for v10 breaking changed
+// TODO: Remove this wrapper when we're ready for v10 breaking changes
 const wrapPosition = (position: Position): PositionCallback => {
   return (tooltip, trigger) => {
     const styles = position(trigger?.getBoundingClientRect(), tooltip.getBoundingClientRect())
