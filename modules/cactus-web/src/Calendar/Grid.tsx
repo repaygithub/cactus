@@ -286,7 +286,7 @@ const CalendarGridBase = ({
   }, [state.overflow])
   // Second effect: if the grid is not currently focused,
   // make sure there's exactly one gridcell with tabIndex == 0.
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const gridElement = gridRef.current
     const active = document.activeElement as HTMLElement | null
     // If the grid is currently focused, we don't need to do anything.
@@ -376,12 +376,14 @@ const CalendarGridBase = ({
 
 // TODO Figure out the right style for selected `.outside-date`
 const OUTLINE = { thin: '2px' }
+export const GRID_WIDTH = 300
 export const CalendarGrid = styled(CalendarGridBase)
   .withConfig(omitProps<CalendarGridProps>(margin))
   .attrs({ as: CalendarGridBase })`
   box-sizing: border-box;
   display: inline-block;
-  width: 300px;
+  width: ${GRID_WIDTH}px;
+  flex-shrink: 0;
   padding: 0 10px;
   ${margin}
   ${textStyle('small')}
@@ -394,6 +396,7 @@ export const CalendarGrid = styled(CalendarGridBase)
   }
 
   span {
+    user-select: none;
     box-sizing: border-box;
     display: inline-block;
     padding: 8px 0;
