@@ -1,10 +1,9 @@
 import { Position } from '@reach/popover'
-import VisuallyHidden from '@reach/visually-hidden'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { border, CactusTheme, color, colorStyle, radius, shadow } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useEffect, useRef, useState } from 'react'
-import styled, { useTheme } from 'styled-components'
+import styled from 'styled-components'
 import { margin, MarginProps, TextColorProps } from 'styled-system'
 
 import { getDataProps } from '../helpers/omit'
@@ -37,60 +36,75 @@ interface TooltipStyles {
   borderTopRightRadius?: number
 }
 
+const resetBorderRadii = (tooltip: HTMLElement, skip?: string) => {
+  const radiusKeys = [
+    'borderTopLeftRadius',
+    'borderTopRightRadius',
+    'borderBottomRightRadius',
+    'borderBottomLeftRadius',
+  ]
+  radiusKeys.forEach((key) => {
+    if (key !== skip) {
+      tooltip.style[key as keyof TooltipStyles] = ''
+    }
+  })
+}
+
 const OFFSET = 8
-const cactusPosition: (theme: CactusTheme) => PositionCallback = (theme) => {
-  const initialBR = radius(8)({ theme })
-  return (tooltip, trigger) => {
-    if (!trigger) return
-    const tooltipRect = tooltip.getBoundingClientRect()
-    const triggerRect = trigger.getBoundingClientRect()
-    const styles: TooltipStyles = {
-      left: triggerRect.left,
-      top: triggerRect.top - tooltipRect.height,
-    }
-
-    const collisions = {
-      top: triggerRect.top - tooltipRect.height < 0,
-      right: window.innerWidth < triggerRect.left + tooltipRect.width,
-      bottom: window.innerHeight < triggerRect.bottom + tooltipRect.height,
-      left: triggerRect.left - tooltipRect.width < 0,
-    }
-
-    tooltip.style.borderRadius = initialBR
-    const directionRight = collisions.left && !collisions.right
-    const directionBottom = collisions.top && !collisions.bottom
-    const center = collisions.right && collisions.left
-
-    if (center) {
-      styles.marginLeft = -tooltipRect.width / 2
-    } else if (directionRight && !directionBottom) {
-      styles.borderBottomLeftRadius = 0
-    } else if (directionRight && directionBottom) {
-      styles.borderTopLeftRadius = 0
-    } else if (!directionRight && !directionBottom) {
-      styles.borderBottomRightRadius = 0
-    } else if (!directionRight && directionBottom) {
-      styles.borderTopRightRadius = 0
-    }
-
-    const tooltipStyles = {
-      ...styles,
-      left: center
-        ? '50%'
-        : directionRight
-        ? triggerRect.left + OFFSET
-        : triggerRect.right - OFFSET - tooltipRect.width,
-      top: directionBottom
-        ? triggerRect.top + triggerRect.height
-        : triggerRect.top - tooltipRect.height,
-    }
-
-    const keys = Object.keys(tooltipStyles) as (keyof TooltipStyles)[]
-    keys.forEach((key: keyof TooltipStyles) => {
-      const style = tooltipStyles[key]
-      tooltip.style[key] = `${style}px`
-    })
+const cactusPosition: PositionCallback = (tooltip, trigger) => {
+  if (!trigger) return
+  const tooltipRect = tooltip.getBoundingClientRect()
+  const triggerRect = trigger.getBoundingClientRect()
+  const styles: TooltipStyles = {
+    left: triggerRect.left,
+    top: triggerRect.top - tooltipRect.height,
   }
+
+  const collisions = {
+    top: triggerRect.top - tooltipRect.height < 0,
+    right: window.innerWidth < triggerRect.left + tooltipRect.width,
+    bottom: window.innerHeight < triggerRect.bottom + tooltipRect.height,
+    left: triggerRect.left - tooltipRect.width < 0,
+  }
+
+  const directionRight = collisions.left && !collisions.right
+  const directionBottom = collisions.top && !collisions.bottom
+  const center = collisions.right && collisions.left
+
+  if (center) {
+    styles.marginLeft = -tooltipRect.width / 2
+    resetBorderRadii(tooltip)
+  } else if (directionRight && !directionBottom) {
+    styles.borderBottomLeftRadius = 0
+    resetBorderRadii(tooltip, 'borderBottomLeftRadius')
+  } else if (directionRight && directionBottom) {
+    styles.borderTopLeftRadius = 0
+    resetBorderRadii(tooltip, 'borderTopLeftRadius')
+  } else if (!directionRight && !directionBottom) {
+    styles.borderBottomRightRadius = 0
+    resetBorderRadii(tooltip, 'borderBottomRightRadius')
+  } else if (!directionRight && directionBottom) {
+    styles.borderTopRightRadius = 0
+    resetBorderRadii(tooltip, 'borderTopRightRadius')
+  }
+
+  const tooltipStyles = {
+    ...styles,
+    left: center
+      ? '50%'
+      : directionRight
+      ? triggerRect.left + OFFSET
+      : triggerRect.right - OFFSET - tooltipRect.width,
+    top: directionBottom
+      ? triggerRect.top + triggerRect.height
+      : triggerRect.top - tooltipRect.height,
+  }
+
+  const keys = Object.keys(tooltipStyles) as (keyof TooltipStyles)[]
+  keys.forEach((key: keyof TooltipStyles) => {
+    const style = tooltipStyles[key]
+    tooltip.style[key] = `${style}px`
+  })
 }
 
 // TODO: Remove this wrapper when we're ready for v10 breaking changes
@@ -148,8 +162,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const [stayOpen, setStayOpen] = useState<boolean>(false)
   const hoveringPopup = useRef<boolean>(false)
-  const theme = useTheme()
-  const positionFn = position ? wrapPosition(position) : cactusPosition(theme)
+  const positionFn = position ? wrapPosition(position) : cactusPosition
   const {
     buttonProps: triggerProps,
     popupProps,
@@ -197,27 +210,23 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
   return (
     <div onMouseEnter={() => delayHovering(true)} onMouseLeave={() => delayHovering(false)}>
       {!disabled && (
-        <>
-          <TooltipPopup
-            id={popupProps.id}
-            ref={tooltipRef}
-            aria-label={ariaLabel}
-            aria-hidden={!visible}
-            style={{ maxWidth }}
-            data-tooltip-popup="true"
-            onMouseEnter={() => {
-              hoveringPopup.current = true
-            }}
-            onMouseLeave={() => {
-              hoveringPopup.current = false
-            }}
-          >
-            {label}
-          </TooltipPopup>
-          <VisuallyHidden role="tooltip" id={id} {...getDataProps(props)}>
-            {label}
-          </VisuallyHidden>
-        </>
+        <TooltipPopup
+          id={popupProps.id}
+          role="tooltip"
+          ref={tooltipRef}
+          aria-label={ariaLabel}
+          $visible={visible}
+          style={{ maxWidth }}
+          onMouseEnter={() => {
+            hoveringPopup.current = true
+          }}
+          onMouseLeave={() => {
+            hoveringPopup.current = false
+          }}
+          {...getDataProps(props)}
+        >
+          {label}
+        </TooltipPopup>
       )}
       <span
         id={triggerProps.id}
@@ -233,7 +242,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
   )
 }
 
-export const TooltipPopup = styled.div`
+export const TooltipPopup = styled.div<{ $visible: boolean }>`
   z-index: 100;
   position: fixed;
   padding: 16px;
@@ -246,11 +255,7 @@ export const TooltipPopup = styled.div`
   border: ${border('callToAction')};
   border-radius: ${radius(8)};
 
-  display: block;
-  &[aria-hidden='true'] {
-    display: none;
-  }
-
+  display: ${(p) => (p.$visible ? 'block' : 'none')};
   ${Modal} & {
     z-index: 102;
   }
