@@ -208,7 +208,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
   }
 
   return (
-    <div onMouseEnter={() => delayHovering(true)} onMouseLeave={() => delayHovering(false)}>
+    <>
       {!disabled && (
         <TooltipPopup
           id={popupProps.id}
@@ -222,6 +222,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
           }}
           onMouseLeave={() => {
             hoveringPopup.current = false
+            delayHovering(false)
           }}
           {...getDataProps(props)}
         >
@@ -235,10 +236,12 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
         onClick={() => {
           setStayOpen(true)
         }}
+        onMouseEnter={() => delayHovering(true)}
+        onMouseLeave={() => delayHovering(false)}
       >
         <StyledInfo color={colorProp} disabled={disabled} forceVisible={visible} />
       </span>
-    </div>
+    </>
   )
 }
 
