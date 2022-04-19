@@ -32,14 +32,14 @@ describe('component: AccessibleField', () => {
   })
 
   test('provides an accessible tooltip', () => {
-    const { getByLabelText, getAllByText } = renderWithTheme(
+    const { getByLabelText, getByText } = renderWithTheme(
       <AccessibleField label="Accessible Label" name="text_field" tooltip="woot tooltips!">
         <input name="text_field" data-is="accessible" />
       </AccessibleField>
     )
 
     expect(getByLabelText('Accessible Label').getAttribute('aria-describedby')).toBe(
-      getAllByText('woot tooltips!')[1].closest('[id]')?.id
+      getByText('woot tooltips!').closest('[id]')?.id
     )
   })
 
@@ -66,7 +66,7 @@ describe('component: AccessibleField', () => {
   })
 
   test('alternate prop types', () => {
-    const { container, getByText, getAllByText } = renderWithTheme(
+    const { container, getByText } = renderWithTheme(
       <AccessibleField
         id="aftest"
         label={<em>Accessible Label</em>}
@@ -87,9 +87,9 @@ describe('component: AccessibleField', () => {
     const input = container.querySelector(`#${label?.getAttribute('for')}`)
     expect(input).toHaveAttribute('name', 'text_field')
 
-    const tooltipText = getAllByText('JSX Tooltip')[1]
+    const tooltipText = getByText('JSX Tooltip')
     expect(tooltipText.tagName).toBe('STRONG')
-    expect(tooltipText.parentElement).toHaveAttribute('id', 'aftest-tip')
+    expect(tooltipText.parentElement).toHaveAttribute('id', 'aftest-tip-popup')
     expect(tooltipText.parentElement).toHaveAttribute('role', 'tooltip')
 
     const errorText = getByText('Error Paragraph')

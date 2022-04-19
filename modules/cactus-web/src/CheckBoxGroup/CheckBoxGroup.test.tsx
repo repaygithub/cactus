@@ -6,7 +6,7 @@ import CheckBoxGroup from './CheckBoxGroup'
 
 describe('component: CheckBoxGroup', () => {
   test('should render a checkbox group', () => {
-    const { container, getAllByText } = renderWithTheme(
+    const { container, getByText } = renderWithTheme(
       <CheckBoxGroup
         id="cbg"
         name="checkboxes"
@@ -29,8 +29,8 @@ describe('component: CheckBoxGroup', () => {
       expect(cb.checked).toBe(ix === 0)
     })
 
-    const tooltip = getAllByText('Check some boxes')[1]
-    expect(tooltip).toHaveAttribute('id', 'cbg-tip')
+    const tooltip = getByText('Check some boxes')
+    expect(tooltip).toHaveAttribute('id', 'cbg-tip-popup')
     expect(tooltip).toHaveAttribute('role', 'tooltip')
   })
 

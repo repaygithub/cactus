@@ -11,26 +11,26 @@ describe('component: Tooltip', () => {
       <Tooltip label="I'm invisible, can you see me?" id="invisible" data-testid="elbisivni" />
     )
     const label = getByTestId('elbisivni')
-    expect(label).toHaveAttribute('id', 'invisible')
+    expect(label).toHaveAttribute('id', 'invisible-popup')
     expect(label).toHaveTextContent("I'm invisible, can you see me?")
   })
 
   test('should render tooltip on hover', async () => {
     jest.useFakeTimers()
     renderWithTheme(<Tooltip label="This should be displayed" />)
-    const popup = document.querySelector('div[data-tooltip-popup]')
-    expect(popup?.getAttribute('aria-hidden')).toBe('true')
+    const popup = document.querySelector('div[role=tooltip]')
+    expect(popup).toHaveStyle('display: none')
     act(() => {
       fireEvent.mouseEnter(document.querySelector('span') as Element)
       jest.runAllTimers()
     })
-    expect(popup?.getAttribute('aria-hidden')).toBe('false')
+    expect(popup).toHaveStyle('display: block')
   })
 
   test('should continue to render tooltip when content is hovered', async () => {
     jest.useFakeTimers()
     renderWithTheme(<Tooltip label="This should be displayed" />)
-    const popup = document.querySelector('div[data-tooltip-popup]') as Element
+    const popup = document.querySelector('div[role=tooltip]') as Element
     act(() => {
       fireEvent.mouseEnter(document.querySelector('span') as Element)
       setTimeout(jest.fn(), 2000)
@@ -41,7 +41,7 @@ describe('component: Tooltip', () => {
       setTimeout(jest.fn(), 2000)
       jest.runOnlyPendingTimers()
     })
-    expect(popup.getAttribute('aria-hidden')).toBe('false')
+    expect(popup).toHaveStyle('display: block')
   })
 
   test('should stay open when tooltip icon is clicked', async () => {
@@ -54,16 +54,16 @@ describe('component: Tooltip', () => {
     )
     const tooltipTrigger = document.querySelector('span') as Element
     const btn = document.querySelector('button') as Element
-    const popup = document.querySelector('div[data-tooltip-popup]') as Element
+    const popup = document.querySelector('div[role=tooltip]') as Element
     act(() => {
       userEvent.click(tooltipTrigger)
       fireEvent.mouseEnter(btn)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
     })
-    expect(popup.getAttribute('aria-hidden')).toBe('false')
+    expect(popup).toHaveStyle('display: block')
     fireEvent.click(btn)
-    expect(popup.getAttribute('aria-hidden')).toBe('true')
+    expect(popup).toHaveStyle('display: none')
   })
 
   test('should support custom position function', async () => {
@@ -78,7 +78,7 @@ describe('component: Tooltip', () => {
       fireEvent.mouseEnter(document.querySelector('span') as Element)
       jest.runAllTimers()
     })
-    const popup = document.querySelector('div[data-tooltip-popup]') as Element
+    const popup = document.querySelector('div[role=tooltip]') as Element
     expect(popup).toHaveStyle({ top: '25px', left: '150px', borderRadius: '0px' })
   })
 })

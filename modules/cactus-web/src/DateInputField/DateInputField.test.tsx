@@ -18,8 +18,8 @@ describe('component: DateInputField', () => {
       <DateInputField name="date_field" label="Date Field" tooltip="the date field group tooltip" />
     )
     const field = getByRole('group')
-    const tooltip = getByRole('tooltip')
-    expect(field.getAttribute('aria-describedby')).toContain(tooltip.id)
+    const tooltip = document.querySelector('div[role=tooltip]')
+    expect(field.getAttribute('aria-describedby')).toContain(tooltip?.id)
   })
 
   test('provides accessible error message', () => {

@@ -64,7 +64,7 @@ describe('component: SelectField', () => {
   })
 
   test('should render an attached tooltip', () => {
-    const { getAllByText, getByLabelText } = renderWithTheme(
+    const { getByText, getByLabelText } = renderWithTheme(
       <SelectField
         label="Requires a label"
         name="the-test-select-field"
@@ -74,7 +74,7 @@ describe('component: SelectField', () => {
       />
     )
 
-    const tooltipTextEl = getAllByText('This is some information')[1]
+    const tooltipTextEl = getByText('This is some information')
     const tooltipEl = closest(tooltipTextEl, (el): boolean => el.getAttribute('role') === 'tooltip')
     expect(tooltipEl).not.toBeNull()
 
