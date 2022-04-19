@@ -30,7 +30,7 @@ describe('component: CheckBoxGroup', () => {
     })
 
     const tooltip = getByText('Check some boxes')
-    expect(tooltip).toHaveAttribute('id', 'cbg-tip-popup')
+    expect(tooltip).toHaveAttribute('id', 'cbg-tip')
     expect(tooltip).toHaveAttribute('role', 'tooltip')
   })
 

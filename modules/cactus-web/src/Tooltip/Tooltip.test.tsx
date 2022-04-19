@@ -11,7 +11,7 @@ describe('component: Tooltip', () => {
       <Tooltip label="I'm invisible, can you see me?" id="invisible" data-testid="elbisivni" />
     )
     const label = getByTestId('elbisivni')
-    expect(label).toHaveAttribute('id', 'invisible-popup')
+    expect(label).toHaveAttribute('id', 'invisible')
     expect(label).toHaveTextContent("I'm invisible, can you see me?")
   })
 

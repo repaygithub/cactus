@@ -89,7 +89,7 @@ describe('component: AccessibleField', () => {
 
     const tooltipText = getByText('JSX Tooltip')
     expect(tooltipText.tagName).toBe('STRONG')
-    expect(tooltipText.parentElement).toHaveAttribute('id', 'aftest-tip-popup')
+    expect(tooltipText.parentElement).toHaveAttribute('id', 'aftest-tip')
     expect(tooltipText.parentElement).toHaveAttribute('role', 'tooltip')
 
     const errorText = getByText('Error Paragraph')

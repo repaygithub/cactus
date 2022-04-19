@@ -36,7 +36,7 @@ describe('component: RadioGroup', () => {
     }
 
     const tooltip = getByText('Select your preferred realm')
-    expect(tooltip).toHaveAttribute('id', 'rg-tip-popup')
+    expect(tooltip).toHaveAttribute('id', 'rg-tip')
     expect(tooltip).toHaveAttribute('role', 'tooltip')
   })
 
