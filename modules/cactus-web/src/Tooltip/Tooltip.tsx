@@ -169,7 +169,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
     toggle,
     expanded,
   } = usePopup('menu', {
-    id,
+    popupId: id,
     positionPopup: positionFn,
   })
   const visible = stayOpen || expanded || forceVisible || false

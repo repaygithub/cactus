@@ -95,7 +95,7 @@ export function useAccessibleField({
     statusMessage = success
   }
 
-  const describedByIds = [tooltip && `${tooltipId}-popup`, status && statusId].filter(Boolean)
+  const describedByIds = [tooltip && tooltipId, status && statusId].filter(Boolean)
 
   return {
     fieldId,
