@@ -257,8 +257,15 @@ export const TooltipPopup = styled.div<{ $visible: boolean }>`
   word-wrap: break-word;
   border: ${border('callToAction')};
   border-radius: ${radius(8)};
+  display: block;
 
-  display: ${(p) => (p.$visible ? 'block' : 'none')};
+  ${(p) =>
+    !p.$visible &&
+    `
+      transform: scale(0);
+      opacity: 0;
+    `}
+
   ${Modal} & {
     z-index: 102;
   }
