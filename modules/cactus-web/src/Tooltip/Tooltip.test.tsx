@@ -1,8 +1,11 @@
 import { act, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Tooltip from './Tooltip'
+
+const hiddenStyles = { transform: 'scale(0)', opacity: '0' }
 
 describe('component: Tooltip', () => {
   test('should always render label in invisible div', () => {
@@ -14,42 +17,33 @@ describe('component: Tooltip', () => {
     expect(label).toHaveTextContent("I'm invisible, can you see me?")
   })
 
-  test('should not render portal without mouseenter event', () => {
-    renderWithTheme(<Tooltip label="This should be displayed" />)
-
-    const portal = document.querySelector('reach-portal')
-
-    expect(portal).toBeNull()
-  })
-
   test('should render tooltip on hover', async () => {
     jest.useFakeTimers()
     renderWithTheme(<Tooltip label="This should be displayed" />)
+    const popup = document.querySelector('div[role=tooltip]')
+    expect(popup).toHaveStyle(hiddenStyles)
     act(() => {
-      fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
-      setTimeout(jest.fn(), 2000)
+      fireEvent.mouseEnter(document.querySelector('span') as Element)
       jest.runAllTimers()
     })
-
-    const portal = document.querySelector('reach-portal') as Element
-    expect(portal).not.toBeNull()
+    expect(popup).not.toHaveStyle(hiddenStyles)
   })
 
   test('should continue to render tooltip when content is hovered', async () => {
     jest.useFakeTimers()
     renderWithTheme(<Tooltip label="This should be displayed" />)
+    const popup = document.querySelector('div[role=tooltip]') as Element
     act(() => {
-      fireEvent.mouseEnter(document.querySelector('span[data-reach-tooltip-trigger]') as Element)
+      fireEvent.mouseEnter(document.querySelector('span') as Element)
       setTimeout(jest.fn(), 2000)
       jest.runOnlyPendingTimers()
     })
     act(() => {
-      fireEvent.mouseEnter(document.querySelector('div[role="tooltip"]') as Element)
+      fireEvent.mouseEnter(popup)
       setTimeout(jest.fn(), 2000)
       jest.runOnlyPendingTimers()
     })
-    const tooltip = document.querySelector('div[role="tooltip"]') as Element
-    expect(tooltip).not.toBeNull()
+    expect(popup).not.toHaveStyle(hiddenStyles)
   })
 
   test('should stay open when tooltip icon is clicked', async () => {
@@ -60,16 +54,33 @@ describe('component: Tooltip', () => {
         <button>Something Else to Focus</button>
       </>
     )
-    const tooltipTrigger = document.querySelector('span[data-reach-tooltip-trigger]') as Element
+    const tooltipTrigger = document.querySelector('span') as Element
     const btn = document.querySelector('button') as Element
+    const popup = document.querySelector('div[role=tooltip]') as Element
     act(() => {
-      fireEvent.click(tooltipTrigger)
+      userEvent.click(tooltipTrigger)
       fireEvent.mouseEnter(btn)
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
     })
-    expect(document.querySelector('div[role="tooltip"]') as Element).toBeInTheDocument()
+    expect(popup).not.toHaveStyle(hiddenStyles)
     fireEvent.click(btn)
-    expect(document.querySelector('div[role="tooltip"]') as Element).not.toBeInTheDocument()
+    expect(popup).toHaveStyle(hiddenStyles)
+  })
+
+  test('should support custom position function', async () => {
+    jest.useFakeTimers()
+    renderWithTheme(
+      <Tooltip
+        label="Custom Position"
+        position={() => ({ top: 25, left: '150px', borderRadius: 0 })}
+      />
+    )
+    act(() => {
+      fireEvent.mouseEnter(document.querySelector('span') as Element)
+      jest.runAllTimers()
+    })
+    const popup = document.querySelector('div[role=tooltip]') as Element
+    expect(popup).toHaveStyle({ top: '25px', left: '150px', borderRadius: '0px' })
   })
 })

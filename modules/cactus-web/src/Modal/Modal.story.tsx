@@ -64,7 +64,13 @@ export const WithPopups: Story<typeof Modal, CloseArg> = ({ onClose, ...args }) 
     <Modal {...args} isOpen={open} onClose={onClose.wrap(() => setOpen(false))}>
       <ColorPicker name="color" id="color" />
       <DateInputField name="date" label="Pick a Date" defaultValue="2021-08-17" />
-      <SelectField name="select" label="Pick an Option" options={['a', 'b', 'c']} />
+      <SelectField
+        name="select"
+        label="Pick an Option"
+        options={['a', 'b', 'c']}
+        tooltip="Select only one!"
+        autoTooltip={false}
+      />
     </Modal>
   ) : (
     <Button variant="action" onClick={(): void => setOpen(true)}>

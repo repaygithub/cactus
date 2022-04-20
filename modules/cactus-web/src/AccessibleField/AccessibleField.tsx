@@ -228,7 +228,7 @@ export const AccessibleField = styledUnpoly(FieldWrapper, AccessibleFieldBase).w
   .field-label-row ${Tooltip} {
     position: relative;
     font-size: ${iconSize('small')};
-    padding: 0 ${space(3)};
+    margin: 0 ${space(3)};
   }
 
   .field-status-row ${StatusMessage} {
