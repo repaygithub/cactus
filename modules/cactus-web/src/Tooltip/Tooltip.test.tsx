@@ -5,6 +5,8 @@ import * as React from 'react'
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Tooltip from './Tooltip'
 
+const hiddenStyles = { transform: 'scale(0)', opacity: '0' }
+
 describe('component: Tooltip', () => {
   test('should always render label in invisible div', () => {
     const { getByTestId } = renderWithTheme(
@@ -19,12 +21,12 @@ describe('component: Tooltip', () => {
     jest.useFakeTimers()
     renderWithTheme(<Tooltip label="This should be displayed" />)
     const popup = document.querySelector('div[role=tooltip]')
-    expect(popup).toHaveStyle('display: none')
+    expect(popup).toHaveStyle(hiddenStyles)
     act(() => {
       fireEvent.mouseEnter(document.querySelector('span') as Element)
       jest.runAllTimers()
     })
-    expect(popup).toHaveStyle('display: block')
+    expect(popup).not.toHaveStyle(hiddenStyles)
   })
 
   test('should continue to render tooltip when content is hovered', async () => {
@@ -41,7 +43,7 @@ describe('component: Tooltip', () => {
       setTimeout(jest.fn(), 2000)
       jest.runOnlyPendingTimers()
     })
-    expect(popup).toHaveStyle('display: block')
+    expect(popup).not.toHaveStyle(hiddenStyles)
   })
 
   test('should stay open when tooltip icon is clicked', async () => {
@@ -61,9 +63,9 @@ describe('component: Tooltip', () => {
       setTimeout(jest.fn(), 2000)
       jest.runAllTimers()
     })
-    expect(popup).toHaveStyle('display: block')
+    expect(popup).not.toHaveStyle(hiddenStyles)
     fireEvent.click(btn)
-    expect(popup).toHaveStyle('display: none')
+    expect(popup).toHaveStyle(hiddenStyles)
   })
 
   test('should support custom position function', async () => {
