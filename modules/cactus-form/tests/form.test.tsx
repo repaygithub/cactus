@@ -183,6 +183,51 @@ describe('final-form functionality', () => {
       )
     })
 
+    test('allows custom required messages', () => {
+      const rf = jest.fn()
+      rf.mockReturnValue(null)
+      const processMeta = (props: any, meta: any) => ({ ...props, error: meta.error })
+      // String messages
+      render(
+        <App>
+          <Field
+            name="test"
+            required
+            requiredMsg="You missed a spot"
+            processMeta={processMeta}
+            render={rf}
+          />
+        </App>
+      )
+      expect(rf).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'test',
+          required: true,
+          error: 'You missed a spot',
+        })
+      )
+
+      // React node messages
+      render(
+        <App>
+          <Field
+            name="test"
+            required
+            requiredMsg={<div>C'mon man you're skipping important steps</div>}
+            processMeta={processMeta}
+            render={rf}
+          />
+        </App>
+      )
+      expect(rf).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          name: 'test',
+          required: true,
+          error: <div>C'mon man you're skipping important steps</div>,
+        })
+      )
+    })
+
     describe('Field.configureDefaults', () => {
       const Component = jest.fn()
       Component.mockReturnValue(null)
