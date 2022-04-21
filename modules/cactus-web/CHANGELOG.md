@@ -1,3 +1,26 @@
+# v9.5.0 (Thu Apr 21 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-748 :: Expose aria-live on Button [#743](https://github.com/repaygithub/cactus/pull/743) ([@daniloPenaR](https://github.com/daniloPenaR))
+- CACTUS-753: fix styled-system `propTypes` [#740](https://github.com/repaygithub/cactus/pull/740) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- CACTUS-887 :: Fix Tooltip Scrolling/Remove @reach/tooltip [#744](https://github.com/repaygithub/cactus/pull/744) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🏠 Internal
+
+- CACTUS-885 :: Upgrade to Yarn Berry [#741](https://github.com/repaygithub/cactus/pull/741) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 3
+
+- [@Dhalton](https://github.com/Dhalton)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v9.4.0 (Mon Apr 11 2022)
 
 #### 🚀 Enhancement
