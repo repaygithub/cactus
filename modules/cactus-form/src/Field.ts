@@ -44,6 +44,7 @@ export interface FieldProps extends UnknownProps, RenderProps, FieldConfig {
   name: string
   getFieldComponent?: ComponentMapper
   processMeta?: PostProcessor
+  requiredMsg?: any
 }
 
 const DEFAULT_SUB: FieldSubscription = {
@@ -126,6 +127,7 @@ const Field: RenderFunc<FieldProps> = ({
   subscription = DEFAULT_SUB,
   processMeta = addError,
   getFieldComponent = defaultFieldComponent,
+  requiredMsg,
   ...props
 }) => {
   if (typeof props.children === 'function') {
@@ -148,7 +150,7 @@ const Field: RenderFunc<FieldProps> = ({
     }
   }
   if (props.required && !fieldConfig.validate) {
-    fieldConfig.validate = validateRequired
+    fieldConfig.validate = requiredMsg ? makeRequiredValidator(requiredMsg) : validateRequired
   }
 
   const field = useField(name, fieldConfig)
@@ -168,6 +170,15 @@ export default makeConfigurableComponent(Field, {
   getFieldComponent: defaultFieldComponent,
   processMeta: addError,
 })
+
+const makeRequiredValidator = (requiredMsg: React.ReactNode) => {
+  return (value: any): React.ReactNode | undefined => {
+    const result = validateRequired(value)
+    if (!!result) {
+      return requiredMsg || result
+    }
+  }
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const validateRequired = (value: any): string | undefined => {
