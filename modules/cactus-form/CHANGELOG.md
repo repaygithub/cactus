@@ -1,3 +1,15 @@
+# v1.0.4 (Thu Apr 21 2022)
+
+#### 🏠 Internal
+
+- CACTUS-885 :: Upgrade to Yarn Berry [#741](https://github.com/repaygithub/cactus/pull/741) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 1
+
+- [@Dhalton](https://github.com/Dhalton)
+
+---
+
 # v1.0.3 (Mon Apr 11 2022)
 
 #### 🔩 Dependency Updates
