@@ -7,9 +7,9 @@ import {
 } from '@repay/cactus-icons'
 import { border, color, colorStyle, space, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { ReactElement } from 'react'
+import React, { createRef, ReactElement, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
 
@@ -25,7 +25,7 @@ export interface PageLinkProps {
   onClick?: EmptyFn
 }
 
-export interface PaginationProps extends MarginProps {
+export interface PaginationProps extends MarginProps, MaxWidthProps, WidthProps {
   disabled?: boolean
   pageCount: number
   currentPage: number
@@ -38,6 +38,7 @@ export interface PaginationProps extends MarginProps {
   nextPageLabel?: string
   lastPageLabel?: string
   makeLinkLabel?: (page: number) => string
+  itemsMaxAmmount?: number
 }
 
 interface CommonPageProps {
@@ -85,45 +86,6 @@ function getPageButton(page: number, props: CommonPageProps, label: string): Rea
 }
 
 const ROTATE = { transform: 'rotate(90deg)' }
-function dots(key: string): ReactElement {
-  return (
-    <PageItem key={key}>
-      <NavigationMenuDots style={ROTATE} />
-    </PageItem>
-  )
-}
-
-function getPages(
-  commonProps: CommonPageProps,
-  lastPage: number,
-  makeLinkLabel: (page: number) => string
-): ReactElement[] {
-  // TODO At some point we might want to make these breakpoints configurable,
-  // or controlled by media queries.
-  const lastBreak = lastPage - 2
-  let lowerBreak = Math.max(2, commonProps.currentPage - 2)
-  let upperBreak = lowerBreak + 5
-  if (upperBreak >= lastBreak) {
-    lowerBreak = lowerBreak + lastBreak - upperBreak
-    upperBreak = lastPage - 1
-  }
-  if (lowerBreak <= 2) {
-    lowerBreak = 1
-  }
-
-  const pages: ReactElement[] = []
-  if (lowerBreak > 1) {
-    pages.push(dots('lower-break'))
-  }
-  for (let page = lowerBreak; page <= upperBreak; page++) {
-    pages.push(getPageButton(page, commonProps, makeLinkLabel(page)))
-  }
-  if (upperBreak <= lastBreak) {
-    pages.push(dots('upper-break'))
-  }
-  pages.push(getPageButton(lastPage, commonProps, makeLinkLabel(lastPage)))
-  return pages
-}
 
 const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps): ReactElement => {
   const { page, disabled, children, onClick, ...rest } = props
@@ -146,6 +108,138 @@ const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps): ReactEleme
 
 const noop = () => undefined
 
+const useGetWidth = (ref: React.MutableRefObject<HTMLElement | null>) => {
+  const [width, setWidth] = useState<number>(1)
+  useEffect(() => {
+    const { current } = ref
+    if (current) {
+      setWidth(current.offsetWidth)
+      window.addEventListener('resize', () => setWidth((value) => current?.offsetWidth || value))
+    }
+    return () => {
+      window.removeEventListener('resize', () => setWidth((value) => current?.offsetWidth || value))
+    }
+  }, [ref])
+
+  return width
+}
+
+const useGetListLimit = (navigationWidth: number, itemsMaxAmmount = 13) => {
+  const MIN_AMOUNT = 5
+  const [listLimit, setListLimit] = useState(5)
+
+  useEffect(() => {
+    if (Math.floor(navigationWidth / 32) < MIN_AMOUNT) {
+      setListLimit(5)
+    } else if (Math.floor(navigationWidth / 32) > itemsMaxAmmount) {
+      setListLimit(itemsMaxAmmount)
+    } else {
+      setListLimit(Math.floor(navigationWidth / 32))
+    }
+  }, [itemsMaxAmmount, navigationWidth])
+  return listLimit
+}
+
+const useGetItemsList = (
+  navigationWidth: number,
+  pageCount: number,
+  currentPage: number,
+  itemsMaxAmmount: number
+) => {
+  const listLimit = useGetListLimit(navigationWidth, itemsMaxAmmount)
+
+  const pagesShown = listLimit - 4
+  const pages: Array<number | string> = []
+
+  const neighbours = pagesShown - 1
+  const sideNeighbours = Math.floor((pagesShown - 1) / 2)
+
+  let leftBreak = currentPage - sideNeighbours
+  if (leftBreak <= 1) {
+    leftBreak = 1
+  }
+  let rightBreak = leftBreak + (pagesShown - 1)
+
+  if (rightBreak >= pageCount) {
+    leftBreak = pageCount - neighbours
+    rightBreak = pageCount
+  }
+  if (leftBreak === 0) {
+    rightBreak = pagesShown
+  }
+  for (let item = leftBreak; item <= rightBreak; item++) {
+    pages.push(item)
+  }
+
+  if (leftBreak > 1 && pagesShown > 2) {
+    pages[0] = 'left-break'
+  }
+
+  if (rightBreak <= pageCount - 1 && pagesShown > 2) {
+    pages[pages.length - 1] = 'right-break'
+  }
+
+  return ['first', 'prev', ...pages, 'next', 'last']
+}
+
+const itemRenderer = (
+  page: string | number,
+  props: CommonPageProps,
+  pageCount: number,
+  navigationLabels: Array<string | undefined>,
+  makeLinkLabel: (page: number) => string
+) => {
+  if (page === 'first') {
+    return (
+      <PageButton {...props} key={page} page={1} aria-label={makeLinkLabel(1)}>
+        <NavigationFirst />
+      </PageButton>
+    )
+  }
+  if (page === 'prev') {
+    return (
+      <PageButton
+        {...props}
+        key={page}
+        rel="prev"
+        page={Math.max(1, props.currentPage - 1)}
+        aria-label={navigationLabels[0] as string}
+      >
+        <NavigationChevronLeft />
+      </PageButton>
+    )
+  }
+  if (page === 'last') {
+    return (
+      <PageButton {...props} key={page} page={pageCount} aria-label={navigationLabels[2] as string}>
+        <NavigationLast />
+      </PageButton>
+    )
+  }
+  if (page === 'next') {
+    return (
+      <PageButton
+        {...props}
+        key={page}
+        rel="next"
+        page={Math.min(pageCount, props.currentPage + 1)}
+        aria-label={navigationLabels[1] as string}
+      >
+        <NavigationChevronRight />
+      </PageButton>
+    )
+  }
+  if (page === 'left-break' || page === 'right-break') {
+    return (
+      <PageItem key={page}>
+        <NavigationMenuDots style={ROTATE} />
+      </PageItem>
+    )
+  }
+
+  return getPageButton(page as number, props, makeLinkLabel(page as number))
+}
+
 export const Pagination: React.FC<PaginationProps> = ({
   disabled = false,
   label,
@@ -158,8 +252,18 @@ export const Pagination: React.FC<PaginationProps> = ({
   currentPageLabel,
   prevPageLabel,
   nextPageLabel,
+  itemsMaxAmmount,
   ...props
 }) => {
+  const navigation = createRef<HTMLElement>()
+  const navigationWidth = useGetWidth(navigation)
+  const itemsList = useGetItemsList(
+    navigationWidth,
+    pageCount,
+    currentPage,
+    itemsMaxAmmount as number
+  )
+
   if (pageCount < 1 || currentPage < 1 || currentPage > pageCount) {
     return null
   }
@@ -181,23 +285,17 @@ export const Pagination: React.FC<PaginationProps> = ({
   lastPageLabel = `${lastPageLabel}, ${pageCount}`
 
   return (
-    <Nav {...props} aria-label={label} aria-disabled={disabled}>
+    <Nav {...props} ref={navigation} aria-label={label} aria-disabled={disabled}>
       <PageList role="list">
-        <PageButton {...commonProps} page={1} aria-label={makeLinkLabel(1)}>
-          <NavigationFirst />
-        </PageButton>
-        <PageButton {...commonProps} rel="prev" page={prevPage} aria-label={prevPageLabel}>
-          <NavigationChevronLeft />
-        </PageButton>
-
-        {getPages(commonProps, pageCount, makeLinkLabel)}
-
-        <PageButton {...commonProps} rel="next" page={nextPage} aria-label={nextPageLabel}>
-          <NavigationChevronRight />
-        </PageButton>
-        <PageButton {...commonProps} page={pageCount} aria-label={lastPageLabel}>
-          <NavigationLast />
-        </PageButton>
+        {itemsList.map((page) => {
+          return itemRenderer(
+            page,
+            commonProps,
+            pageCount,
+            [prevPageLabel, nextPageLabel, lastPageLabel],
+            makeLinkLabel
+          )
+        })}
       </PageList>
     </Nav>
   )
@@ -242,6 +340,13 @@ Pagination.propTypes = {
   nextPageLabel: PropTypes.string.isRequired,
   lastPageLabel: PropTypes.string.isRequired,
   makeLinkLabel: PropTypes.func.isRequired,
+  itemsMaxAmmount: function (props: Record<string, any>): Error | null {
+    if (props.itemsMaxAmmount < 5) {
+      return new Error('Prop `itemsMaxAmmount` must be greather than 5.')
+    }
+
+    return null
+  },
 }
 
 const defaultLinkLabel = (page: number): string => `Go to page ${page}`
@@ -259,6 +364,10 @@ export default Pagination
 
 const Nav = styled.nav`
   ${margin}
+  width: inherit;
+  ${width}
+  ${maxWidth}
+
   ${textStyle('small')}
   ${colorStyle('standard')}
   text-align: center;
