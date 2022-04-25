@@ -364,7 +364,6 @@ export default Pagination
 
 const Nav = styled.nav`
   ${margin}
-  width: inherit;
   ${width}
   ${maxWidth}
 
