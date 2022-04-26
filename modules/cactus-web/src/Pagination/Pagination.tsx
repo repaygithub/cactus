@@ -112,12 +112,16 @@ const useGetWidth = (ref: React.MutableRefObject<HTMLElement | null>) => {
   const [width, setWidth] = useState<number>(1)
   useEffect(() => {
     const { current } = ref
-    if (current) {
-      setWidth(current.offsetWidth)
-      window.addEventListener('resize', () => setWidth((value) => current?.offsetWidth || value))
+    if (current && current.parentElement) {
+      setWidth(current.parentElement.offsetWidth)
+      window.addEventListener('resize', () =>
+        setWidth((value) => current?.parentElement?.offsetWidth || value)
+      )
     }
     return () => {
-      window.removeEventListener('resize', () => setWidth((value) => current?.offsetWidth || value))
+      window.removeEventListener('resize', () =>
+        setWidth((value) => current?.parentElement?.offsetWidth || value)
+      )
     }
   }, [ref])
 
@@ -148,7 +152,7 @@ const useGetItemsList = (
 ) => {
   const listLimit = useGetListLimit(navigationWidth, itemsMaxAmmount)
 
-  const pagesShown = listLimit - 4
+  const pagesShown = pageCount < listLimit - 4 ? pageCount : listLimit - 4
   const pages: Array<number | string> = []
 
   const neighbours = pagesShown - 1
@@ -159,7 +163,6 @@ const useGetItemsList = (
     leftBreak = 1
   }
   let rightBreak = leftBreak + (pagesShown - 1)
-
   if (rightBreak >= pageCount) {
     leftBreak = pageCount - neighbours
     rightBreak = pageCount
