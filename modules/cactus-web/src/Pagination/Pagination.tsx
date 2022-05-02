@@ -38,7 +38,7 @@ export interface PaginationProps extends MarginProps, MaxWidthProps, WidthProps 
   nextPageLabel?: string
   lastPageLabel?: string
   makeLinkLabel?: (page: number) => string
-  itemsMaxAmmount?: number
+  maxItems?: number
 }
 
 interface CommonPageProps {
@@ -57,6 +57,8 @@ interface PageProps extends CommonPageProps {
   children: React.ReactChild
   onClick?: EmptyFn
 }
+
+const ITEM_WIDTH = 32
 
 const PageButton = (props: PageProps): ReactElement => {
   const { currentPage, linkAs, makeChangeHandler, ...rest } = props
@@ -112,35 +114,34 @@ const useGetWidth = (ref: React.MutableRefObject<HTMLElement | null>) => {
   const [width, setWidth] = useState<number>(1)
   useEffect(() => {
     const { current } = ref
+    const widthCallBack = () =>
+      setWidth((value) => ref.current?.parentElement?.offsetWidth || value)
     if (current && current.parentElement) {
       setWidth(current.parentElement.offsetWidth)
-      window.addEventListener('resize', () =>
-        setWidth((value) => current?.parentElement?.offsetWidth || value)
-      )
+      window.addEventListener('resize', widthCallBack)
     }
     return () => {
-      window.removeEventListener('resize', () =>
-        setWidth((value) => current?.parentElement?.offsetWidth || value)
-      )
+      window.removeEventListener('resize', widthCallBack)
     }
   }, [ref])
 
   return width
 }
 
-const useGetListLimit = (navigationWidth: number, itemsMaxAmmount = 13) => {
+const useGetListLimit = (navigationWidth: number, maxItems = 13) => {
   const MIN_AMOUNT = 5
+
   const [listLimit, setListLimit] = useState(5)
 
   useEffect(() => {
-    if (Math.floor(navigationWidth / 32) < MIN_AMOUNT) {
+    if (Math.floor(navigationWidth / ITEM_WIDTH) < MIN_AMOUNT) {
       setListLimit(5)
-    } else if (Math.floor(navigationWidth / 32) > itemsMaxAmmount) {
-      setListLimit(itemsMaxAmmount)
+    } else if (Math.floor(navigationWidth / ITEM_WIDTH) > maxItems) {
+      setListLimit(maxItems)
     } else {
-      setListLimit(Math.floor(navigationWidth / 32))
+      setListLimit(Math.floor(navigationWidth / ITEM_WIDTH))
     }
-  }, [itemsMaxAmmount, navigationWidth])
+  }, [maxItems, navigationWidth])
   return listLimit
 }
 
@@ -148,9 +149,9 @@ const useGetItemsList = (
   navigationWidth: number,
   pageCount: number,
   currentPage: number,
-  itemsMaxAmmount: number
+  maxItems: number
 ) => {
-  const listLimit = useGetListLimit(navigationWidth, itemsMaxAmmount)
+  const listLimit = useGetListLimit(navigationWidth, maxItems)
 
   const pagesShown = pageCount < listLimit - 4 ? pageCount : listLimit - 4
   const pages: Array<number | string> = []
@@ -255,17 +256,12 @@ export const Pagination: React.FC<PaginationProps> = ({
   currentPageLabel,
   prevPageLabel,
   nextPageLabel,
-  itemsMaxAmmount,
+  maxItems,
   ...props
 }) => {
   const navigation = createRef<HTMLElement>()
   const navigationWidth = useGetWidth(navigation)
-  const itemsList = useGetItemsList(
-    navigationWidth,
-    pageCount,
-    currentPage,
-    itemsMaxAmmount as number
-  )
+  const itemsList = useGetItemsList(navigationWidth, pageCount, currentPage, maxItems as number)
 
   if (pageCount < 1 || currentPage < 1 || currentPage > pageCount) {
     return null
@@ -343,9 +339,9 @@ Pagination.propTypes = {
   nextPageLabel: PropTypes.string.isRequired,
   lastPageLabel: PropTypes.string.isRequired,
   makeLinkLabel: PropTypes.func.isRequired,
-  itemsMaxAmmount: function (props: Record<string, any>): Error | null {
-    if (props.itemsMaxAmmount < 5) {
-      return new Error('Prop `itemsMaxAmmount` must be greather than 5.')
+  maxItems: function (props: Record<string, any>): Error | null {
+    if (props.maxItems < 5) {
+      return new Error('Prop `maxItems` must be greather than 5.')
     }
 
     return null
