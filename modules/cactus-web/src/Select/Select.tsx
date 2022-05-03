@@ -108,7 +108,7 @@ function willTruncateBlockShow(
 
 const ValueSwitch = (props: {
   selected: ExtendedOptionType[]
-  placeholder: React.ReactNode
+  placeholder: React.ReactNode | undefined
   extraLabel: string
   multiple?: boolean
   onTagClick: React.MouseEventHandler<HTMLElement>
