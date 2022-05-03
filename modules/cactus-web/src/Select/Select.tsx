@@ -77,7 +77,7 @@ export interface SelectProps
   matchNotFoundText?: string
   comboBoxSearchLabel?: string
   onDropdownToggle?: (prop: boolean) => void
-  noOptionsText?: string
+  noOptionsText?: React.ReactNode
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -108,7 +108,7 @@ function willTruncateBlockShow(
 
 const ValueSwitch = (props: {
   selected: ExtendedOptionType[]
-  placeholder: string | undefined
+  placeholder: React.ReactNode
   extraLabel: string
   multiple?: boolean
   onTagClick: React.MouseEventHandler<HTMLElement>
@@ -1637,7 +1637,7 @@ Select.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  noOptionsText: PropTypes.string,
+  noOptionsText: PropTypes.node,
   children: function (props: Record<string, any>): Error | null {
     if (props.children && props.options) {
       return new Error('Should use `options` prop OR pass children, not both')
