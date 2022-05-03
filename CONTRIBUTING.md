@@ -40,7 +40,7 @@ The description here should be short, often just the title of the ticket, and in
 
 As an example, for jira task `cactus-001` that has the title `Configure Error Messages`, the command to create the new branch would be:
 ```
-git checkout -b CACTUS-001-configure-error-messages
+git checkout -b cactus-001-configure-error-messages
 ```
 
 
