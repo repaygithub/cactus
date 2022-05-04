@@ -1640,7 +1640,7 @@ Select.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  noOptionsText: PropTypes.string,
+  noOptionsText: PropTypes.node,
   children: function (props: Record<string, any>): Error | null {
     if (props.children && props.options) {
       return new Error('Should use `options` prop OR pass children, not both')
