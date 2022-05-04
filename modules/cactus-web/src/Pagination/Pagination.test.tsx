@@ -131,6 +131,6 @@ describe('component: Pagination', () => {
       <ManagedPagination size={12} start={1} width="400px" />
     )
 
-    expect(getByLabelText('Pages').getAttribute('width')).toBe('400px')
+    expect(getByLabelText('Pages')).toHaveStyle({ width: '400px' })
   })
 })

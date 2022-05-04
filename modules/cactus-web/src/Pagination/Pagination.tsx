@@ -7,7 +7,7 @@ import {
 } from '@repay/cactus-icons'
 import { border, color, colorStyle, space, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { createRef, ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
@@ -112,12 +112,24 @@ const noop = () => undefined
 
 const useGetWidth = (ref: React.MutableRefObject<HTMLElement | null>) => {
   const [width, setWidth] = useState<number>(1)
+
   useEffect(() => {
     const { current } = ref
+    const isParentFlex =
+      window.getComputedStyle(ref?.current?.parentElement as HTMLElement).display === 'flex'
     const widthCallBack = () =>
-      setWidth((value) => ref.current?.parentElement?.offsetWidth || value)
-    if (current && current.parentElement) {
-      setWidth(current.parentElement.offsetWidth)
+      setWidth(
+        (value) =>
+          (isParentFlex ? ref.current?.parentElement?.offsetWidth : ref.current?.offsetWidth) ||
+          value
+      )
+
+    if (current) {
+      setWidth(
+        (isParentFlex
+          ? ref.current?.parentElement?.offsetWidth
+          : ref.current?.offsetWidth) as number
+      )
       window.addEventListener('resize', widthCallBack)
     }
     return () => {
@@ -128,20 +140,12 @@ const useGetWidth = (ref: React.MutableRefObject<HTMLElement | null>) => {
   return width
 }
 
-const useGetListLimit = (navigationWidth: number, maxItems = 13) => {
+const getListLimit = (navigationWidth: number, maxItems = 13) => {
   const MIN_AMOUNT = 5
+  const CURRENT_AMOUNT = Math.floor(navigationWidth / ITEM_WIDTH)
+  const listLimit =
+    CURRENT_AMOUNT < MIN_AMOUNT ? MIN_AMOUNT : CURRENT_AMOUNT > maxItems ? maxItems : CURRENT_AMOUNT
 
-  const [listLimit, setListLimit] = useState(5)
-
-  useEffect(() => {
-    if (Math.floor(navigationWidth / ITEM_WIDTH) < MIN_AMOUNT) {
-      setListLimit(5)
-    } else if (Math.floor(navigationWidth / ITEM_WIDTH) > maxItems) {
-      setListLimit(maxItems)
-    } else {
-      setListLimit(Math.floor(navigationWidth / ITEM_WIDTH))
-    }
-  }, [maxItems, navigationWidth])
   return listLimit
 }
 
@@ -151,7 +155,7 @@ const useGetItemsList = (
   currentPage: number,
   maxItems: number
 ) => {
-  const listLimit = useGetListLimit(navigationWidth, maxItems)
+  const listLimit = getListLimit(navigationWidth, maxItems)
 
   const pagesShown = pageCount < listLimit - 4 ? pageCount : listLimit - 4
   const pages: Array<number | string> = []
@@ -190,7 +194,9 @@ const itemRenderer = (
   page: string | number,
   props: CommonPageProps,
   pageCount: number,
-  navigationLabels: Array<string | undefined>,
+  prevPageLabel: string,
+  nextPageLabel: string,
+  lastPageLabel: string,
   makeLinkLabel: (page: number) => string
 ) => {
   if (page === 'first') {
@@ -207,7 +213,7 @@ const itemRenderer = (
         key={page}
         rel="prev"
         page={Math.max(1, props.currentPage - 1)}
-        aria-label={navigationLabels[0] as string}
+        aria-label={prevPageLabel}
       >
         <NavigationChevronLeft />
       </PageButton>
@@ -215,7 +221,7 @@ const itemRenderer = (
   }
   if (page === 'last') {
     return (
-      <PageButton {...props} key={page} page={pageCount} aria-label={navigationLabels[2] as string}>
+      <PageButton {...props} key={page} page={pageCount} aria-label={lastPageLabel}>
         <NavigationLast />
       </PageButton>
     )
@@ -227,7 +233,7 @@ const itemRenderer = (
         key={page}
         rel="next"
         page={Math.min(pageCount, props.currentPage + 1)}
-        aria-label={navigationLabels[1] as string}
+        aria-label={nextPageLabel}
       >
         <NavigationChevronRight />
       </PageButton>
@@ -259,7 +265,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   maxItems,
   ...props
 }) => {
-  const navigation = createRef<HTMLElement>()
+  const navigation = useRef<HTMLElement>(null)
   const navigationWidth = useGetWidth(navigation)
   const itemsList = useGetItemsList(navigationWidth, pageCount, currentPage, maxItems as number)
 
@@ -278,10 +284,10 @@ export const Pagination: React.FC<PaginationProps> = ({
     commonProps.makeChangeHandler = (page: number) => () => onPageChange(page)
   }
   const prevPage = Math.max(1, currentPage - 1)
-  prevPageLabel = `${prevPageLabel}, ${prevPage}`
+  const itemPrevPageLabel = `${prevPageLabel}, ${prevPage}`
   const nextPage = Math.min(pageCount, currentPage + 1)
-  nextPageLabel = `${nextPageLabel}, ${nextPage}`
-  lastPageLabel = `${lastPageLabel}, ${pageCount}`
+  const itemNextPageLabel = `${nextPageLabel}, ${nextPage}`
+  const itemLastPageLabel = `${lastPageLabel}, ${pageCount}`
 
   return (
     <Nav {...props} ref={navigation} aria-label={label} aria-disabled={disabled}>
@@ -291,7 +297,9 @@ export const Pagination: React.FC<PaginationProps> = ({
             page,
             commonProps,
             pageCount,
-            [prevPageLabel, nextPageLabel, lastPageLabel],
+            itemPrevPageLabel,
+            itemNextPageLabel,
+            itemLastPageLabel,
             makeLinkLabel
           )
         })}

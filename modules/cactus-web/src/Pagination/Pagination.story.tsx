@@ -28,7 +28,7 @@ export const BasicUsage: PStory = ({ onPageChange, ...args }) => {
   const [current, setCurrent] = React.useState(1)
   return <Pagination {...args} currentPage={current} onPageChange={onPageChange.wrap(setCurrent)} />
 }
-BasicUsage.args = { pageCount: 10, width: 'inherit' }
+BasicUsage.args = { pageCount: 10, width: 'auto' }
 BasicUsage.argTypes = {
   linkAs: { options: ['link', 'button'], mapping: { link: LinkWithHref } },
 }
