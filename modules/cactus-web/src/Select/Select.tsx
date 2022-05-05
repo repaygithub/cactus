@@ -62,22 +62,25 @@ type Target = CactusEventTarget<SelectValueType>
 export interface SelectProps
   extends MarginProps,
     WidthProps,
-    Omit<React.HTMLAttributes<HTMLButtonElement>, 'onChange' | 'onBlur' | 'onFocus'> {
+    Omit<
+      React.HTMLAttributes<HTMLButtonElement>,
+      'onChange' | 'onBlur' | 'onFocus' | 'placeholder'
+    > {
   options?: (OptionType | OptionValue)[]
   id: string
   name: string
   value?: SelectValueType
-  placeholder?: string
+  placeholder?: React.ReactNode
   className?: string
   /** !important */
   disabled?: boolean
   multiple?: boolean
   comboBox?: boolean
   canCreateOption?: boolean
-  matchNotFoundText?: string
+  matchNotFoundText?: React.ReactNode
   comboBoxSearchLabel?: string
   onDropdownToggle?: (prop: boolean) => void
-  noOptionsText?: string
+  noOptionsText?: React.ReactNode
   /**
    * Used when there are multiple selected, but too many to show. place '{}' to insert unshown number in label
    */
@@ -108,7 +111,7 @@ function willTruncateBlockShow(
 
 const ValueSwitch = (props: {
   selected: ExtendedOptionType[]
-  placeholder: string | undefined
+  placeholder?: React.ReactNode
   extraLabel: string
   multiple?: boolean
   onTagClick: React.MouseEventHandler<HTMLElement>
@@ -503,7 +506,7 @@ interface ListProps {
   isOpen: boolean
   comboBox?: boolean
   canCreateOption: boolean
-  matchNotFoundText: string
+  matchNotFoundText: React.ReactNode
   comboBoxSearchLabel: string
   options: ExtendedOptionType[]
   getSelected: GetSelectedCallback
@@ -1625,19 +1628,19 @@ Select.propTypes = {
     PropTypes.number,
     PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   ]),
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.node,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   multiple: PropTypes.bool,
   comboBox: PropTypes.bool,
   canCreateOption: PropTypes.bool,
-  matchNotFoundText: PropTypes.string,
+  matchNotFoundText: PropTypes.node,
   extraLabel: PropTypes.string,
   status: StatusPropType,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
-  noOptionsText: PropTypes.string,
+  noOptionsText: PropTypes.node,
   children: function (props: Record<string, any>): Error | null {
     if (props.children && props.options) {
       return new Error('Should use `options` prop OR pass children, not both')
