@@ -6,6 +6,21 @@ An application framework and design system built in React at [REPAY](https://git
 
 ### [View the published documentation](https://repaygithub.github.io/cactus/).
 
+## Prerequisites
+
+You will need to install the following for runtime and package management:
+- [Node.js](https://nodejs.org/en/)  (LTS)
+- [Yarn](https://yarnpkg.com/en/docs/install) 
+- [Git](https://git-scm.com/) (MacOS comes with this pre-installed, but the first time you attempt to use it, you'll recieve a popup prompting you to install the `command line developer tools`)
+
+### Suggested Plugins
+
+The following are not required to use this repo, but make it easier to work within it. They can be installed on your machine, or added as an extension through your code editor.
+- [ESLint](https://eslint.org/) 
+- [Prettier](https://prettier.io/) (Largely overlaps with ESLint)
+- [GitLens](https://gitlens.amod.io/) (VS Code only)
+- [Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag) (VS Code only)
+
 ## Modules
 
 - [`@repay/cactus-fwk`](./modules/cactus-fwk/) - Cactus Framework
@@ -14,6 +29,12 @@ An application framework and design system built in React at [REPAY](https://git
 - [`@repay/cactus-icons`](./modules/cactus-icons/) - Cactus Icons
 - [`@repay/cactus-theme`](./modules/cactus-theme/) - Cactus UI Theme
 - [`@repay/cactus-web`](./modules/cactus-web/) - Cactus Web UI Components
+
+### Running Specific Modules
+
+To run and view the Storybook for Cactus Web, run `yarn web start`.
+To run and view the Storybook for Cactus Icons, run `yarn icons start`.
+For a more detailed rundown of commands for these two modules, as well as how to interact with the rest, go to the [Commands](#commands) section.
 
 ## Example Apps
 
@@ -47,7 +68,7 @@ npm install --save-dev @repay/cactus-fwk
 
 In particular, please ensure that you run `yarn commit` to run the prompts that format our commit messages.  When you do this, **please add the JIRA ticket number when asked if your change affects any issues.**. In addition, please add the JIRA ticket number to all PR titles.
 
-You will need to install [Node.js](https://nodejs.org/en/) runtime and [Yarn](https://yarnpkg.com/en/docs/install) for package management. Next clone the repository and install the dependencies. **Be sure to do this from the repository root.**
+After installing the [Prerequisites](#prerequisites), clone the repository and install the dependencies. **Be sure to do this from the repository root.**
 
 ```
 yarn install
@@ -61,19 +82,11 @@ yarn build
 
 Now you are ready to start developing on the modules, examples, or documentation website.
 
-We use [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) to help manage the dependencies for the monorepository; however, this also means you should initiate commands on individual modules from the root directory. We've added some aliases in the base package.json to ease the typing burden. `yarn w` is equivalent to `yarn workspace` and `yarn ws` is equivalent to `yarn workspaces`
+### Commands
 
-```
-yarn w @repay/cactus-i18n tdd # will run tests in watch mode for Cactus I18n
-```
+We use [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) to help manage the dependencies for the monorepository; however, this also means you should initiate commands on individual modules from the root directory. We've added some aliases in the base package.json to ease the typing burden. `yarn w` is equivalent to `yarn workspace` and `yarn ws` is equivalent to `yarn workspaces`.
 
-We also added a shortcut for Cactus I18n directly:
-
-```
-yarn i18n tdd
-```
-
-Similar shortcuts are available for all published modules:
+We've also added shortcuts for each of the published modules:
 
 - `yarn i18n` => `yarn workspace @repay/cactus-i18n`
 - `yarn form` => `yarn workspace @repay/cactus-form`
@@ -82,9 +95,16 @@ Similar shortcuts are available for all published modules:
 - `yarn theme` => `yarn workspace @repay/cactus-theme`
 - `yarn web` => `yarn workspace @repay/cactus-web`
 
-### Commands
+For example, the following two commands do the same thing. (They run tests in watch mode for Cactus I18n)
+```
+yarn w @repay/cactus-i18n tdd
+```
+```
+yarn i18n tdd
+```
+<br />
 
-> replace \<lib> in the following examples with the shortcut codes listed above.
+> replace \<lib> in the following examples with the module shortcut codes listed above.
 
 #### start
 

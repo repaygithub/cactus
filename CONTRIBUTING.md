@@ -12,6 +12,7 @@ This is a set of guidelines (not rules) for contributing to Cactus and the libra
 
 - [JavaScript / TypeScript](#javascript-typescript)
 - [Markdown](#markdown)
+- [Branches](#branches)
 - [Git Commit Messages](#git-commit-messages)
 
 Also see the documentation for [Coding Best Practices](./docs/Coding%20Best%20Practices/README.md).
@@ -29,6 +30,19 @@ We use Prettier for formatting and ESLint for all other style recommendations. S
 ### Markdown
 
 We use the Prettier defaults for this, but there is no validation and will not break a build.
+
+## Branches
+Any changes you make should be done in a new branch off of the `master` branch. 
+Create a new branch with the command `git checkout -b <branchName>`
+
+The branch name should follow the format `cactus-<ticketNumber>-<briefDescription>`.
+The description here should be short, often just the title of the ticket, and in kebab case.
+
+As an example, for jira task `cactus-001` that has the title `Configure Error Messages`, the command to create the new branch would be:
+```
+git checkout -b cactus-001-configure-error-messages
+```
+
 
 ### Git Commit Messages
 
