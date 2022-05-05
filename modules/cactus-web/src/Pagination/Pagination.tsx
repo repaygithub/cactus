@@ -6,12 +6,14 @@ import {
   NavigationMenuDots,
 } from '@repay/cactus-icons'
 import { border, color, colorStyle, space, textStyle } from '@repay/cactus-theme'
+import { debounce, noop } from 'lodash'
 import PropTypes from 'prop-types'
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
+import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 type EmptyFn = () => void
 export interface PageLinkProps {
@@ -48,7 +50,7 @@ interface CommonPageProps {
   'aria-label': string
   'aria-current'?: 'page'
   linkAs?: React.ComponentType<PageLinkProps>
-  makeChangeHandler: (() => undefined) | ((page: number) => EmptyFn)
+  makeChangeHandler: (page: number) => EmptyFn | undefined
 }
 
 interface PageProps extends CommonPageProps {
@@ -59,6 +61,12 @@ interface PageProps extends CommonPageProps {
 }
 
 const ITEM_WIDTH = 32
+const CHEVRONS = 4
+const MIN_ITEMS = CHEVRONS + 1
+const RESPONSIVE_MAX_ITEMS = [7, 10, 13, 13, 16]
+// If any of these props change we need to recalculate the width & item count.
+const recalcPropNames = ['maxItems', 'pageCount', 'currentPage', 'width', 'maxWidth'] as const
+const RECALC = { value: NaN }
 
 const PageButton = (props: PageProps): ReactElement => {
   const { currentPage, linkAs, makeChangeHandler, ...rest } = props
@@ -88,6 +96,13 @@ function getPageButton(page: number, props: CommonPageProps, label: string): Rea
 }
 
 const ROTATE = { transform: 'rotate(90deg)' }
+function dots(key: string): ReactElement {
+  return (
+    <PageItem key={key}>
+      <NavigationMenuDots style={ROTATE} />
+    </PageItem>
+  )
+}
 
 const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps): ReactElement => {
   const { page, disabled, children, onClick, ...rest } = props
@@ -108,201 +123,173 @@ const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps): ReactEleme
   )
 }
 
-const noop = () => undefined
+// Calculates a layout of page numbers, including whether or not to render breaks (ellipses).
+const getItems = (pageCount: number, currentPage: number, itemCount: number) => {
+  // Invariant: maxPages <= pageCount
+  const maxPages = itemCount - CHEVRONS
+  let leftBreak = false,
+    rightBreak = false,
+    leftPage = currentPage,
+    rightPage = currentPage + maxPages - 1
+  const lowestLeft = 1
+  const lowestRight = Math.min(pageCount, currentPage + Math.floor(maxPages / 2))
+  const shift = Math.min(leftPage - lowestLeft, rightPage - lowestRight)
+  leftPage -= shift
+  rightPage -= shift
+  let breakLimit = 1
+  if (rightPage < pageCount && maxPages > breakLimit) {
+    rightBreak = true
+    rightPage -= 1
+    breakLimit += 2
+  }
+  // The left break is more implicitly obvious, so we can exclude it easier than the right break.
+  breakLimit += 1
+  if (leftPage > lowestLeft && maxPages > breakLimit) {
+    leftBreak = true
+    leftPage += 1
+  }
+  return [leftBreak, leftPage, rightPage, rightBreak] as const
+}
 
-const useGetWidth = (ref: React.MutableRefObject<HTMLElement | null>) => {
-  const [width, setWidth] = useState<number>(1)
+const sumWidths = (sum: number, item: HTMLElement) => sum + item.getBoundingClientRect().width
 
-  useEffect(() => {
-    const { current } = ref
-    const isParentFlex =
-      window.getComputedStyle(ref?.current?.parentElement as HTMLElement).display === 'flex'
-    const widthCallBack = () =>
-      setWidth(
-        (value) =>
-          (isParentFlex ? ref.current?.parentElement?.offsetWidth : ref.current?.offsetWidth) ||
-          value
-      )
+const useMaxItemCount = (pageCount: number, maxItemProp: number | undefined) => {
+  const size = useScreenSize()
+  const definedMax = maxItemProp || RESPONSIVE_MAX_ITEMS[SIZES.indexOf(size)]
+  return Math.min(pageCount + CHEVRONS, Math.max(MIN_ITEMS, definedMax))
+}
 
-    if (current) {
-      setWidth(
-        (isParentFlex
-          ? ref.current?.parentElement?.offsetWidth
-          : ref.current?.offsetWidth) as number
-      )
-      window.addEventListener('resize', widthCallBack)
+const useItemCount = (navRef: React.RefObject<HTMLElement>, props: PaginationProps) => {
+  const { pageCount, currentPage } = props
+  // Calculate the max number of items, with default based on screen size.
+
+  const [itemCount, setItemCount] = useState<{ value: number }>(RECALC)
+  // Track changes to the "recalc" props; if any of these change, the number of items could change.
+  const newProps: unknown[] = recalcPropNames.map((k) => props[k])
+  const maxItems = (newProps[0] = useMaxItemCount(pageCount, props.maxItems))
+  const propsRef = React.useRef(newProps)
+  const oldProps = propsRef.current
+  const propsHaveChanged = !newProps.every((v, i) => v === oldProps[i])
+  if (propsHaveChanged) {
+    propsRef.current = newProps
+  }
+  // Since we already have this handy, might as well make it the hook's dependency array.
+  newProps.push(isNaN(itemCount.value))
+  const isSettingBaseline = propsHaveChanged || isNaN(itemCount.value)
+
+  React.useLayoutEffect(() => {
+    const nav = navRef.current
+    // No point in running if the nav is hidden (width = 0).
+    if (isSettingBaseline && nav && nav.clientWidth) {
+      const navWidth = nav.clientWidth
+      const currentItems = Array.from(nav.querySelectorAll<HTMLElement>('li'))
+      const totalWidth = Math.round(currentItems.reduce(sumWidths, 0))
+      let newItemCount = currentItems.length
+      // If the wide layout is TOO wide, propose smaller layouts till one fits.
+      if (totalWidth > navWidth && newItemCount > MIN_ITEMS) {
+        // Get the layout of the current items, so we can calculate array
+        // indexes in the proposed layout relative to the leftmost page.
+        const base = getItems(pageCount, currentPage, newItemCount)
+        const leftOffset = (base[0] ? 2 : 1) - base[1]
+        const widestItem = currentItems[base[2] + leftOffset].offsetWidth
+
+        // Skip all the intermediate values that we know would be too wide.
+        newItemCount -= Math.ceil((totalWidth - navWidth) / widestItem)
+        while (newItemCount > MIN_ITEMS) {
+          // Proposes a layout with the given number of pages, and checks if it fits.
+          const [lBreak, left, right, rBreak] = getItems(pageCount, currentPage, newItemCount)
+          let listWidth = CHEVRONS * ITEM_WIDTH
+          if (lBreak) listWidth += ITEM_WIDTH
+          if (rBreak) listWidth += ITEM_WIDTH
+          const itemSubset = currentItems.slice(left + leftOffset, 1 + right + leftOffset)
+          listWidth += Math.round(itemSubset.reduce(sumWidths, 0))
+          if (listWidth <= navWidth) break
+          newItemCount -= 1
+        }
+      }
+      setItemCount((old) => {
+        if (old.value === newItemCount) {
+          // If the last render was correct, we don't need to re-render.
+          return currentItems.length === newItemCount ? old : { ...old }
+        }
+        return { value: newItemCount }
+      })
     }
-    return () => {
-      window.removeEventListener('resize', widthCallBack)
-    }
-  }, [ref])
+  }, newProps) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return width
+  React.useEffect(() => {
+    const debounceOpts = { leading: true, trailing: true, maxWait: 300 }
+    const handler = debounce(() => setItemCount(RECALC), 200, debounceOpts)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
+
+  // If something has changed that could affect the width, render at the max widht possible;
+  // the layout effect will then calculate the number of items that fits in the real width.
+  return isSettingBaseline ? maxItems : itemCount.value
 }
 
-const getListLimit = (navigationWidth: number, maxItems = 13) => {
-  const MIN_AMOUNT = 5
-  const CURRENT_AMOUNT = Math.floor(navigationWidth / ITEM_WIDTH)
-  const listLimit =
-    CURRENT_AMOUNT < MIN_AMOUNT ? MIN_AMOUNT : CURRENT_AMOUNT > maxItems ? maxItems : CURRENT_AMOUNT
-
-  return listLimit
-}
-
-const useGetItemsList = (
-  navigationWidth: number,
-  pageCount: number,
-  currentPage: number,
-  maxItems: number
-) => {
-  const listLimit = getListLimit(navigationWidth, maxItems)
-
-  const pagesShown = pageCount < listLimit - 4 ? pageCount : listLimit - 4
-  const pages: Array<number | string> = []
-
-  const neighbours = pagesShown - 1
-  const sideNeighbours = Math.floor((pagesShown - 1) / 2)
-
-  let leftBreak = currentPage - sideNeighbours
-  if (leftBreak <= 1) {
-    leftBreak = 1
-  }
-  let rightBreak = leftBreak + (pagesShown - 1)
-  if (rightBreak >= pageCount) {
-    leftBreak = pageCount - neighbours
-    rightBreak = pageCount
-  }
-  if (leftBreak === 0) {
-    rightBreak = pagesShown
-  }
-  for (let item = leftBreak; item <= rightBreak; item++) {
-    pages.push(item)
-  }
-
-  if (leftBreak > 1 && pagesShown > 2) {
-    pages[0] = 'left-break'
-  }
-
-  if (rightBreak <= pageCount - 1 && pagesShown > 2) {
-    pages[pages.length - 1] = 'right-break'
-  }
-
-  return ['first', 'prev', ...pages, 'next', 'last']
-}
-
-const itemRenderer = (
-  page: string | number,
-  props: CommonPageProps,
-  pageCount: number,
-  prevPageLabel: string,
-  nextPageLabel: string,
-  lastPageLabel: string,
-  makeLinkLabel: (page: number) => string
-) => {
-  if (page === 'first') {
-    return (
-      <PageButton {...props} key={page} page={1} aria-label={makeLinkLabel(1)}>
-        <NavigationFirst />
-      </PageButton>
-    )
-  }
-  if (page === 'prev') {
-    return (
-      <PageButton
-        {...props}
-        key={page}
-        rel="prev"
-        page={Math.max(1, props.currentPage - 1)}
-        aria-label={prevPageLabel}
-      >
-        <NavigationChevronLeft />
-      </PageButton>
-    )
-  }
-  if (page === 'last') {
-    return (
-      <PageButton {...props} key={page} page={pageCount} aria-label={lastPageLabel}>
-        <NavigationLast />
-      </PageButton>
-    )
-  }
-  if (page === 'next') {
-    return (
-      <PageButton
-        {...props}
-        key={page}
-        rel="next"
-        page={Math.min(pageCount, props.currentPage + 1)}
-        aria-label={nextPageLabel}
-      >
-        <NavigationChevronRight />
-      </PageButton>
-    )
-  }
-  if (page === 'left-break' || page === 'right-break') {
-    return (
-      <PageItem key={page}>
-        <NavigationMenuDots style={ROTATE} />
-      </PageItem>
-    )
-  }
-
-  return getPageButton(page as number, props, makeLinkLabel(page as number))
-}
-
-export const Pagination: React.FC<PaginationProps> = ({
-  disabled = false,
-  label,
-  linkAs,
-  pageCount,
-  currentPage,
-  onPageChange,
-  makeLinkLabel = defaultLinkLabel,
-  lastPageLabel,
-  currentPageLabel,
-  prevPageLabel,
-  nextPageLabel,
-  maxItems,
-  ...props
-}) => {
+export const Pagination: React.FC<PaginationProps> = (props) => {
+  const {
+    disabled = false,
+    label,
+    linkAs,
+    pageCount,
+    currentPage,
+    onPageChange,
+    makeLinkLabel = defaultLinkLabel,
+    lastPageLabel,
+    currentPageLabel,
+    prevPageLabel,
+    nextPageLabel,
+    maxItems,
+    ...rest
+  } = props
   const navigation = useRef<HTMLElement>(null)
-  const navigationWidth = useGetWidth(navigation)
-  const itemsList = useGetItemsList(navigationWidth, pageCount, currentPage, maxItems as number)
+  const itemCount = useItemCount(navigation, props)
 
   if (pageCount < 1 || currentPage < 1 || currentPage > pageCount) {
     return null
   }
-
   const commonProps: CommonPageProps = {
     linkAs,
     disabled,
     currentPage,
-    makeChangeHandler: noop,
+    makeChangeHandler: noop as any,
     'aria-label': `${currentPageLabel}, ${currentPage}`,
   }
   if (onPageChange && !disabled) {
     commonProps.makeChangeHandler = (page: number) => () => onPageChange(page)
   }
   const prevPage = Math.max(1, currentPage - 1)
-  const itemPrevPageLabel = `${prevPageLabel}, ${prevPage}`
+  const prevLabel = `${prevPageLabel}, ${prevPage}`
   const nextPage = Math.min(pageCount, currentPage + 1)
-  const itemNextPageLabel = `${nextPageLabel}, ${nextPage}`
-  const itemLastPageLabel = `${lastPageLabel}, ${pageCount}`
+  const nextLabel = `${nextPageLabel}, ${nextPage}`
+  const lastLabel = `${lastPageLabel}, ${pageCount}`
 
+  const [leftBreak, left, right, rightBreak] = getItems(pageCount, currentPage, itemCount)
+  const pages: ReactElement[] = []
+  for (let pageNum = left; pageNum <= right; pageNum++) {
+    pages.push(getPageButton(pageNum, commonProps, makeLinkLabel(pageNum)))
+  }
   return (
-    <Nav {...props} ref={navigation} aria-label={label} aria-disabled={disabled}>
+    <Nav {...rest} ref={navigation} aria-label={label} aria-disabled={disabled}>
       <PageList role="list">
-        {itemsList.map((page) => {
-          return itemRenderer(
-            page,
-            commonProps,
-            pageCount,
-            itemPrevPageLabel,
-            itemNextPageLabel,
-            itemLastPageLabel,
-            makeLinkLabel
-          )
-        })}
+        <PageButton {...commonProps} page={1} aria-label={makeLinkLabel(1)}>
+          <NavigationFirst />
+        </PageButton>
+        <PageButton {...commonProps} rel="prev" page={prevPage} aria-label={prevLabel}>
+          <NavigationChevronLeft />
+        </PageButton>
+        {leftBreak && dots('left-break')}
+        {pages}
+        {rightBreak && dots('right-break')}
+        <PageButton {...commonProps} rel="next" page={nextPage} aria-label={nextLabel}>
+          <NavigationChevronRight />
+        </PageButton>
+        <PageButton {...commonProps} page={pageCount} aria-label={lastLabel}>
+          <NavigationLast />
+        </PageButton>
       </PageList>
     </Nav>
   )
@@ -348,7 +335,7 @@ Pagination.propTypes = {
   lastPageLabel: PropTypes.string.isRequired,
   makeLinkLabel: PropTypes.func.isRequired,
   maxItems: function (props: Record<string, any>): Error | null {
-    if (props.maxItems < 5) {
+    if (props.maxItems < MIN_ITEMS) {
       return new Error('Prop `maxItems` must be greather than 5.')
     }
 
@@ -370,9 +357,13 @@ Pagination.defaultProps = {
 export default Pagination
 
 const Nav = styled.nav`
-  ${margin}
-  ${width}
-  ${maxWidth}
+  min-width: ${MIN_ITEMS * ITEM_WIDTH}px;
+  max-width: 100%;
+  && {
+    ${margin}
+    ${width}
+    ${maxWidth}
+  }
 
   ${textStyle('small')}
   ${colorStyle('standard')}

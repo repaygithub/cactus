@@ -4,7 +4,7 @@ import * as React from 'react'
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Pagination from './Pagination'
 
-function ManagedPagination({ size, start, onClick, width }: any): React.ReactElement {
+function ManagedPagination({ size, start, onClick }: any): React.ReactElement {
   const [current, setCurrent] = React.useState(start)
   const callback = !onClick
     ? setCurrent
@@ -12,7 +12,7 @@ function ManagedPagination({ size, start, onClick, width }: any): React.ReactEle
         onClick(page)
         setCurrent(page)
       }
-  return <Pagination currentPage={current} pageCount={size} onPageChange={callback} width={width} />
+  return <Pagination currentPage={current} pageCount={size} onPageChange={callback} />
 }
 
 const expectIcon = (node: HTMLElement, disabled: boolean, label: string) => {
@@ -69,49 +69,65 @@ const assertPages = (
 }
 
 describe('component: Pagination', () => {
-  test('4 pages, first page selected', () => {
-    const { getAllByRole } = renderWithTheme(<ManagedPagination size={4} start={1} />)
-
-    assertPages(getAllByRole('link'), 4, 1, [2, 3, 4])
+  test('11 pages, first page selected', () => {
+    const { getAllByRole } = renderWithTheme(<ManagedPagination size={11} start={1} />)
+    assertPages(getAllByRole('link'), 11, 1, [9, 10, 11])
   })
 
-  test('4 pages, go to next page', () => {
+  test('11 pages, go to middle page', () => {
     const { getAllByRole, getByLabelText } = renderWithTheme(
-      <ManagedPagination width="400px" size={4} start={1} />
+      <ManagedPagination size={11} start={1} />
     )
-    userEvent.click(getByLabelText('Go to next page, 2'))
-    assertPages(getAllByRole('link'), 4, 2, [1, 3, 4])
+    userEvent.click(getByLabelText('Go to page 6'))
+    assertPages(getAllByRole('link'), 11, 6, [1, 2, 10, 11])
   })
 
-  test('4 pages, go to previous page', () => {
+  test('11 pages, go to next page', () => {
     const { getAllByRole, getByLabelText } = renderWithTheme(
-      <ManagedPagination width="400px" size={4} start={2} />
+      <ManagedPagination size={11} start={6} />
     )
-    userEvent.click(getByLabelText('Go to previous page, 1'))
-    assertPages(getAllByRole('link'), 4, 1, [2, 3, 4])
+    userEvent.click(getByLabelText('Go to next page, 7'))
+    assertPages(getAllByRole('link'), 11, 7, [1, 2, 3])
   })
 
-  test('4 pages, go to first page', () => {
+  test('11 pages, go to previous page', () => {
     const { getAllByRole, getByLabelText } = renderWithTheme(
-      <ManagedPagination width="400px" size={4} start={4} />
+      <ManagedPagination size={11} start={5} />
+    )
+    userEvent.click(getByLabelText('Go to previous page, 4'))
+    assertPages(getAllByRole('link'), 11, 4, [9, 10, 11])
+  })
+
+  test('11 pages, go to first page', () => {
+    const { getAllByRole, getByLabelText } = renderWithTheme(
+      <ManagedPagination size={11} start={6} />
     )
     userEvent.click(getByLabelText('Go to page 1'))
-    assertPages(getAllByRole('link'), 4, 1, [2, 3, 4])
+    assertPages(getAllByRole('link'), 11, 1, [9, 10, 11])
   })
 
-  test('4 pages, go to last page', () => {
+  test('11 pages, go to last page', () => {
     const { getAllByRole, getByLabelText } = renderWithTheme(
-      <ManagedPagination width="400px" size={4} start={1} />
+      <ManagedPagination size={11} start={5} />
     )
-    userEvent.click(getByLabelText('Go to last page, 4'))
-    assertPages(getAllByRole('link'), 4, 4, [1, 2, 3])
+    userEvent.click(getByLabelText('Go to last page, 11'))
+    assertPages(getAllByRole('link'), 11, 11, [1, 2, 3])
+  })
+
+  test('9 pages, no hidden pages', () => {
+    const { getAllByRole, getByLabelText } = renderWithTheme(
+      <ManagedPagination size={9} start={1} />
+    )
+    assertPages(getAllByRole('link'), 9, 1, [])
+    userEvent.click(getByLabelText('Go to last page, 9'))
+    assertPages(getAllByRole('link'), 9, 9, [])
   })
 
   test('test onclick for disabled buttons', () => {
     const func = jest.fn()
 
     const { getAllByRole } = renderWithTheme(
-      <ManagedPagination width="400px" size={2} start={1} onClick={func} />
+      <ManagedPagination size={2} start={1} onClick={func} />
     )
 
     const links = getAllByRole('link')
@@ -125,12 +141,5 @@ describe('component: Pagination', () => {
       userEvent.click(link)
     }
     expect(func).toHaveBeenCalledTimes(1)
-  })
-  test('Pagination: `width` prop', async () => {
-    const { getByLabelText } = renderWithTheme(
-      <ManagedPagination size={12} start={1} width="400px" />
-    )
-
-    expect(getByLabelText('Pages')).toHaveStyle({ width: '400px' })
   })
 })

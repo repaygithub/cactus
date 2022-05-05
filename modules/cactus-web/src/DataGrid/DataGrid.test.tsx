@@ -280,7 +280,7 @@ describe('component: DataGrid', () => {
   test('should be able to change the page using Pagination', () => {
     const { getByText, getByLabelText } = renderWithTheme(<DataGridContainer />)
 
-    const page2Button = getByLabelText('Go to next page, 2')
+    const page2Button = getByLabelText('Go to page 2')
     fireEvent.click(page2Button)
     // First result on page 2
     expect(getByText('Config 5')).toBeInTheDocument()
