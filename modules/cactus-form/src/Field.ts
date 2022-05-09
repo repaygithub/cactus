@@ -173,16 +173,11 @@ export default makeConfigurableComponent(Field, {
 
 const makeRequiredValidator = (requiredMsg: React.ReactNode) => {
   return (value: any): React.ReactNode | undefined => {
-    const result = validateRequired(value)
-    if (!!result) {
-      return requiredMsg || result
+    if ((!value && value !== 0 && value !== false) || value?.length === 0) {
+      return requiredMsg
     }
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const validateRequired = (value: any): string | undefined => {
-  if ((!value && value !== 0 && value !== false) || value?.length === 0) {
-    return 'Missing required field'
-  }
-}
+export const validateRequired = makeRequiredValidator('Missing required field')
