@@ -33,8 +33,8 @@
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
     "commit": "git-cz",
     "postinstall": "patch-package && patch-package --patch-dir=node_modules/@repay/cactus-form/patches",
-    "test:build": "docker build -t tests .",
-    "test:docker": "docker run -v \"/$(pwd)/modules/cactus-web/__image_snapshots__:/code/modules/cactus-web/__image_snapshots__\" tests",
+    "test:build": "docker build -t cactus/tests:base actions/storyshots && docker build -t cactus/tests:local .",
+    "test:docker": "docker run -v \"/$(pwd)/:/code/\" cactus/tests:local",
     "test:docker-update": "yarn test:docker yarn web test:visual-update"
   },
   "license": "MIT",
