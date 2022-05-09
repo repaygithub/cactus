@@ -126,7 +126,7 @@ You can also define custom required error messages with the `requiredMsg` prop. 
 <Field required requiredMsg={<div>Required Field</div>} {...fieldProps} />
 ```
 
-To use `required` without the validator you'd need to pass an explicit `validate` function, like a noop (or use `configureDefaults`/`withDefaults` to set a default validator).
+To use `required` without the validator you'd need to pass an explicit `validate` function, like a noop (or use `configureDefaults`/`withDefaults` to set a default validator or default `requiredMsg`).
 
 ### Refs & Extensions
 
