@@ -8,6 +8,11 @@ import { isIE } from '../helpers/constants'
 import { useBox, useRenderTrigger } from '../helpers/react'
 import { GRID_WIDTH } from './Grid'
 
+const GRID_HALF = GRID_WIDTH >> 1
+const TIMEOUT = isIE ? 400 : 300
+const GRAVITY = 0.007
+const CSS_CLASS = 'slider'
+
 export type SlideDirection = 'left' | 'right'
 type Transition = SlideDirection | 'recenter'
 
@@ -24,13 +29,7 @@ interface SliderProps
   year: number
   render: GridRenderer
   onChange: (date: Date, e: React.SyntheticEvent) => void
-  value: unknown
 }
-
-const GRID_HALF = GRID_WIDTH >> 1
-const TIMEOUT = isIE ? 400 : 300
-const GRAVITY = 0.007
-const CSS_CLASS = 'slider'
 
 interface Position {
   x: number
@@ -296,9 +295,9 @@ class SliderState {
           break
       }
       this.endEvent(e)
+    } else {
+      this.endInteraction(e)
     }
-    // TODO What should happen with multiple touches? Just ignore them?
-    // Or stop responding to pointermove events?
   }
 
   onPointerMove = (e: React.PointerEvent) => {
@@ -329,51 +328,55 @@ class SliderState {
     }
   }
 
+  endInteraction(e: React.PointerEvent) {
+    this.beginEvent()
+    switch (this.state) {
+      case 'preswipe':
+        this.exitSwipe(e.pointerId)
+        this.enterIdle('preswipe')
+        break
+      case 'swiping':
+        const now = Date.now()
+        const points = this.positions
+        const currentDeltaX = e.clientX - this.origin
+        this.exitSwipe(e.pointerId)
+        if (points.length && e.clientX === points[points.length - 1].x) {
+          points[points.length - 1].time = now
+        } else {
+          points.push({ x: e.clientX, time: now })
+        }
+        const velocity = calculateResidualVelocity(points)
+        const timeToZero = Math.min(1500, Math.abs(velocity / GRAVITY))
+        const accel = -velocity / timeToZero
+        const distance = timeToZero * (velocity + (timeToZero * accel) / 2)
+        const projectedX = currentDeltaX + distance
+        const absX = Math.abs(projectedX)
+        const shift = Math.ceil((absX - GRID_HALF) / GRID_WIDTH) * (projectedX > 0 ? -1 : 1)
+        if (shift) {
+          const opts: TransitionOpts = shift < 0 ? { right: -shift } : { left: shift }
+          if (timeToZero > TIMEOUT) opts.duration = `${timeToZero}ms`
+          this.enterAnimation('recenter', opts)
+          this.month += shift
+        } else if (!currentDeltaX) {
+          this.enterIdle('swiping')
+        } else {
+          // Here we need to trigger a render without any grid/date changes.
+          this.enterAnimation('recenter', {})
+          this.triggerRender()
+          return
+        }
+        break
+
+      case 'idle':
+      case 'animation':
+        break
+    }
+    this.endEvent(e)
+  }
+
   onPointerUp = (e: React.PointerEvent) => {
     if (e.isPrimary && e.button === 0) {
-      this.beginEvent()
-      switch (this.state) {
-        case 'preswipe':
-          this.exitSwipe(e.pointerId)
-          this.enterIdle('preswipe')
-          break
-        case 'swiping':
-          const now = Date.now()
-          const points = this.positions
-          const currentDeltaX = e.clientX - this.origin
-          this.exitSwipe(e.pointerId)
-          if (points.length && e.clientX === points[points.length - 1].x) {
-            points[points.length - 1].time = now
-          } else {
-            points.push({ x: e.clientX, time: now })
-          }
-          const velocity = calculateResidualVelocity(points)
-          const timeToZero = Math.min(1500, Math.abs(velocity / GRAVITY))
-          const accel = -velocity / timeToZero
-          const distance = timeToZero * (velocity + (timeToZero * accel) / 2)
-          const projectedX = currentDeltaX + distance
-          const absX = Math.abs(projectedX)
-          const shift = Math.ceil((absX - GRID_HALF) / GRID_WIDTH) * (projectedX > 0 ? -1 : 1)
-          if (shift) {
-            const opts: TransitionOpts = shift < 0 ? { right: -shift } : { left: shift }
-            if (timeToZero > TIMEOUT) opts.duration = `${timeToZero}ms`
-            this.enterAnimation('recenter', opts)
-            this.month += shift
-          } else if (!currentDeltaX) {
-            this.enterIdle('swiping')
-          } else {
-            // Here we need to trigger a render without any grid/date changes.
-            this.enterAnimation('recenter', {})
-            this.triggerRender()
-            return
-          }
-          break
-
-        case 'idle':
-        case 'animation':
-          break
-      }
-      this.endEvent(e)
+      this.endInteraction(e)
     }
   }
 }
@@ -411,7 +414,6 @@ const Slider = ({
   render,
   transition,
   transitionKey,
-  ...props
 }: SliderProps) => {
   const triggerRender = useRenderTrigger()
   const state: SliderState = useBox({ setDate, year, month }, initState, triggerRender)
@@ -428,19 +430,20 @@ const Slider = ({
 
   const grids = state.getGrids(render)
 
-  delete props.value
-  if (!isIE) {
-    props.onPointerDown = state.onPointerDown
-    props.onPointerMove = state.onPointerMove
-    props.onPointerUp = state.onPointerUp
-  }
+  const events = isIE
+    ? undefined
+    : {
+        onPointerDown: state.onPointerDown,
+        onPointerMove: state.onPointerMove,
+        onPointerUp: state.onPointerUp,
+      }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useLayoutEffect(state.layoutEffect, [state.eventData])
 
   const transitionProps = state.getTransitionProps()
   return (
-    <StyledSlider {...props} $offset={state.offset}>
+    <StyledSlider {...events} $offset={state.offset}>
       <div className={CSS_CLASS} ref={state.ref}>
         {grids}
       </div>
