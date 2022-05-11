@@ -1,3 +1,17 @@
+# v1.1.0 (Wed May 11 2022)
+
+#### 🚀 Enhancement
+
+- tmp ([@wilysword](https://github.com/wilysword))
+- CACTUS-900 :: Configurable Error Messages [#746](https://github.com/repaygithub/cactus/pull/746) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 2
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v1.0.4 (Thu Apr 21 2022)
 
 #### 🏠 Internal
