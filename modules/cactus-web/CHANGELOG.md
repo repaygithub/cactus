@@ -1,3 +1,20 @@
+# v9.5.1 (Wed May 11 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-900 :: Configurable Error Messages [#746](https://github.com/repaygithub/cactus/pull/746) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- cactus-898:: set prop type nooptionstext select [#750](https://github.com/repaygithub/cactus/pull/750) ([@maxrcollins](https://github.com/maxrcollins))
+
+#### Authors: 2
+
+- [@maxrcollins](https://github.com/maxrcollins)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v9.5.0 (Thu Apr 21 2022)
 
 #### 🚀 Enhancement
