@@ -71,23 +71,23 @@ const assertPages = (
 describe('component: Pagination', () => {
   test('11 pages, first page selected', () => {
     const { getAllByRole } = renderWithTheme(<ManagedPagination size={11} start={1} />)
-    assertPages(getAllByRole('link'), 11, 1, [8, 9, 10])
+    assertPages(getAllByRole('link'), 11, 1, [9, 10, 11])
   })
 
   test('11 pages, go to middle page', () => {
     const { getAllByRole, getByLabelText } = renderWithTheme(
       <ManagedPagination size={11} start={1} />
     )
-    userEvent.click(getByLabelText('Go to page 5'))
-    assertPages(getAllByRole('link'), 11, 5, [1, 2, 9, 10])
+    userEvent.click(getByLabelText('Go to page 6'))
+    assertPages(getAllByRole('link'), 11, 6, [1, 2, 10, 11])
   })
 
   test('11 pages, go to next page', () => {
     const { getAllByRole, getByLabelText } = renderWithTheme(
-      <ManagedPagination size={11} start={5} />
+      <ManagedPagination size={11} start={6} />
     )
-    userEvent.click(getByLabelText('Go to next page, 6'))
-    assertPages(getAllByRole('link'), 11, 6, [1, 2, 3])
+    userEvent.click(getByLabelText('Go to next page, 7'))
+    assertPages(getAllByRole('link'), 11, 7, [1, 2, 3])
   })
 
   test('11 pages, go to previous page', () => {
@@ -95,15 +95,15 @@ describe('component: Pagination', () => {
       <ManagedPagination size={11} start={5} />
     )
     userEvent.click(getByLabelText('Go to previous page, 4'))
-    assertPages(getAllByRole('link'), 11, 4, [8, 9, 10])
+    assertPages(getAllByRole('link'), 11, 4, [9, 10, 11])
   })
 
   test('11 pages, go to first page', () => {
     const { getAllByRole, getByLabelText } = renderWithTheme(
-      <ManagedPagination size={11} start={5} />
+      <ManagedPagination size={11} start={6} />
     )
     userEvent.click(getByLabelText('Go to page 1'))
-    assertPages(getAllByRole('link'), 11, 1, [8, 9, 10])
+    assertPages(getAllByRole('link'), 11, 1, [9, 10, 11])
   })
 
   test('11 pages, go to last page', () => {
